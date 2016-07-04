@@ -1,11 +1,11 @@
 /*
- * This file ("TexturedButton.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TexturedButton.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
@@ -14,22 +14,23 @@ import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SideOnly(Side.CLIENT)
 public class TexturedButton extends GuiButton{
 
+    public final List textList = new ArrayList();
     public int texturePosX;
     public int texturePosY;
-
-    public List textList = new ArrayList();
 
     public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height){
         this(id, x, y, texturePosX, texturePosY, width, height, new ArrayList());
     }
 
-    @SuppressWarnings("unchecked")
     public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height, List hoverTextList){
         super(id, x, y, width, height, "");
         this.texturePosX = texturePosX;
@@ -45,7 +46,7 @@ public class TexturedButton extends GuiButton{
     @Override
     public void drawButton(Minecraft minecraft, int x, int y){
         if(this.visible){
-            minecraft.getTextureManager().bindTexture(GuiBooklet.resLoc);
+            minecraft.getTextureManager().bindTexture(GuiBooklet.RES_LOC);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
             int k = this.getHoverState(this.hovered);

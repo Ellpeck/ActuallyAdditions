@@ -1,11 +1,11 @@
 /*
- * This file ("PagePicture.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("PagePicture.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
@@ -20,8 +20,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PagePicture extends PageTextOnly{
 
-    private ResourceLocation resLoc;
-    private int textStartY;
+    private final ResourceLocation resLoc;
+    private final int textStartY;
 
     public PagePicture(int id, String resLocName, int textStartY){
         super(id);
@@ -35,9 +35,9 @@ public class PagePicture extends PageTextOnly{
         Minecraft.getMinecraft().getTextureManager().bindTexture(this.resLoc);
         gui.drawRect(gui.getGuiLeft(), gui.getGuiTop(), 0, 0, gui.getXSize(), gui.getYSize());
 
-        String text = gui.getCurrentEntrySet().page.getText();
+        String text = gui.getCurrentEntrySet().getCurrentPage().getText();
         if(text != null && !text.isEmpty()){
-            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+textStartY, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+this.textStartY, 115, 0, false);
         }
     }
 }

@@ -1,17 +1,16 @@
 /*
- * This file ("ConfigBoolValues.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ConfigBoolValues.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.config.values;
 
 import de.ellpeck.actuallyadditions.mod.config.ConfigCategories;
-import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 
 public enum ConfigBoolValues{
 
@@ -21,7 +20,7 @@ public enum ConfigBoolValues{
     GENERATE_QUARTZ("Black Quartz", ConfigCategories.WORLD_GEN, true, "If the Black Quartz generates in the world"),
 
     DO_UPDATE_CHECK("Do Update Check", ConfigCategories.OTHER, true, "If Actually Additions should check for an Update on joining a World"),
-    UPDATE_CHECK_VERSION_SPECIFIC("Version Specific Update Checker", ConfigCategories.OTHER, false, "If Actually Additions' Update Check should only search for updates for the Minecraft Version you currently have"),
+    UPDATE_CHECK_VERSION_SPECIFIC("Version Specific Update Checker", ConfigCategories.OTHER, true, "If Actually Additions' Update Check should only search for updates for the Minecraft Version you currently have"),
 
     DO_CAT_DROPS("Do Cat Drops", ConfigCategories.OTHER, true, "If Cats drop Hairy Balls on Occasion"),
 
@@ -39,11 +38,6 @@ public enum ConfigBoolValues{
     DO_SPIDER_DROPS("Spider Cobweb Drop", ConfigCategories.MOB_DROPS, true, "If Cobwebs should sometimes drop from Spiders"),
     DO_BAT_DROPS("Bat Wing Drop", ConfigCategories.MOB_DROPS, true, "If Wings should sometimes drop from Bats"),
 
-    PREVENT_OIL_OVERRIDE("Oil Fluid Override", ConfigCategories.FLUIDS, false, "If not registering Oil Fluids from Actually Additions if other Oil is already registered should be prevented"+ConfigurationHandler.ISSUES_WARNING),
-    PREVENT_CANOLA_OVERRIDE("Canola Oil Fluid Override", ConfigCategories.FLUIDS, false, "If not registering Canola Oil Fluids from Actually Additions if other Canola Oil is already registered should be prevented"+ConfigurationHandler.ISSUES_WARNING),
-    PREVENT_OIL_BLOCK_OVERRIDE("Oil Block Override", ConfigCategories.FLUIDS, false, "If not registering Oil Blocks from Actually Additions if other Oil is already registered should be prevented"+ConfigurationHandler.ISSUES_WARNING),
-    PREVENT_CANOLA_BLOCK_OVERRIDE("Canola Oil Block Override", ConfigCategories.FLUIDS, false, "If not registering Canola Oil Blocks from Actually Additions if other Canola Oil is already registered should be prevented"+ConfigurationHandler.ISSUES_WARNING),
-
     CTRL_EXTRA_INFO("Advanced Info", ConfigCategories.OTHER, true, "Show Advanced Item Info when holding Control on every Item"),
     CTRL_INFO_FOR_EXTRA_INFO("Advanced Info Tooltips", ConfigCategories.OTHER, true, "Show the 'Press Control for more Info'-Text on Item Tooltips"),
 
@@ -52,7 +46,16 @@ public enum ConfigBoolValues{
 
     ENABLE_SEASONAL("Seasonal Mode", ConfigCategories.OTHER, true, "If Seasonal Mode is enabled"),
 
-    DUNGEON_LOOT("Dungeon Loot", ConfigCategories.OTHER, true, "Should Actually Additions Loot spawn in Dungeons");
+    DUNGEON_LOOT("Dungeon Loot", ConfigCategories.OTHER, true, "Should Actually Additions Loot spawn in Dungeons"),
+    GEN_LUSH_CAVES("Generate Lush Caves", ConfigCategories.WORLD_GEN, true, "Should caves with trees and grass randomly generate underground"),
+
+    BOOKLET_TEXT_TO_FILE("Booklet Text to File", ConfigCategories.OTHER, false, "Should the entire text of the booklet be put into a new file in the Minecraft Folder on startup or resource reload. This is for debug purposes only and shouldn't really ever be needed."),
+
+    WATER_BOWL("Water Bowl", ConfigCategories.OTHER, true, "If right-clicking a bowl on water should create a water bowl"),
+
+    LESS_SOUND("Less Sound", ConfigCategories.PERFORMANCE, false, "If blocks in Actually Additions should have less sounds"),
+    LESS_PARTICLES("Less Particles", ConfigCategories.PERFORMANCE, false, "If blocks in Actually Additions should have less particles"),
+    LESS_BLOCK_BREAKING_EFFECTS("Less Block Breaking Effects", ConfigCategories.PERFORMANCE, false, "If there should not be a sound effect and particles when a block is being destroyed by a breaker or similar");
 
     public final String name;
     public final String category;

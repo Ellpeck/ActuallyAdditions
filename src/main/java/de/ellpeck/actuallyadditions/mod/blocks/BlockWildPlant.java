@@ -1,11 +1,11 @@
 /*
- * This file ("BlockWildPlant.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BlockWildPlant.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.blocks;
@@ -16,10 +16,9 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBushBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
@@ -28,9 +27,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,39 +39,42 @@ import java.util.List;
 
 public class BlockWildPlant extends BlockBushBase{
 
-    public static final TheWildPlants[] allWildPlants = TheWildPlants.values();
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, allWildPlants.length-1);
+    public static final TheWildPlants[] ALL_WILD_PLANTS = TheWildPlants.values();
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, ALL_WILD_PLANTS.length-1);
 
     public BlockWildPlant(String name){
         super(name);
-        this.setStepSound(soundTypeGrass);
+        this.setSoundType(SoundType.PLANT);
     }
 
     @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state){
-        BlockPos offset = PosUtil.offset(pos, 0, -1, 0);
-        return PosUtil.getMetadata(pos, world) == TheWildPlants.RICE.ordinal() ? PosUtil.getMaterial(offset, world) == Material.water : PosUtil.getBlock(offset, world).canSustainPlant(world, offset, EnumFacing.UP, this);
+        BlockPos offset = pos.down();
+        IBlockState offsetState = world.getBlockState(offset);
+        Block offsetBlock = offsetState.getBlock();
+        return offsetBlock.getMetaFromState(offsetState) == TheWildPlants.RICE.ordinal() ? offsetBlock.getMaterial(offsetState) == Material.WATER : offsetBlock.canSustainPlant(world.getBlockState(offset), world, offset, EnumFacing.UP, this);
+    }
+
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player){
+        int metadata = this.getMetaFromState(state);
+        return metadata >= ALL_WILD_PLANTS.length ? null : new ItemStack(((BlockPlant)ALL_WILD_PLANTS[metadata].wildVersionOf).seedItem);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public Item getItem(World world, BlockPos pos){
-        int metadata = PosUtil.getMetadata(pos, world);
-        return metadata >= allWildPlants.length ? null : ((BlockPlant)allWildPlants[metadata].wildVersionOf).seedItem;
-    }
-
-    @SuppressWarnings("all")
-    @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allWildPlants.length; j++){
+        for(int j = 0; j < ALL_WILD_PLANTS.length; j++){
             list.add(new ItemStack(item, 1, j));
         }
     }
 
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-        int metadata = state.getBlock().getMetaFromState(state);
-        return metadata >= allWildPlants.length ? null : allWildPlants[metadata].wildVersionOf.getDrops(world, pos, allWildPlants[metadata].wildVersionOf.getStateFromMeta(7), fortune);
+        int metadata = this.getMetaFromState(state);
+        return metadata >= ALL_WILD_PLANTS.length ? null : ALL_WILD_PLANTS[metadata].wildVersionOf.getDrops(world, pos, ALL_WILD_PLANTS[metadata].wildVersionOf.getStateFromMeta(7), fortune);
     }
 
     @Override
@@ -81,8 +83,8 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
+    protected ItemBlockBase getItemBlock(){
+        return new TheItemBlock(this);
     }
 
     @Override
@@ -92,18 +94,14 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     protected void registerRendering(){
-        ResourceLocation[] resLocs = new ResourceLocation[allWildPlants.length];
-        for(int i = 0; i < allWildPlants.length; i++){
-            String name = this.getBaseName()+allWildPlants[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+        for(int i = 0; i < ALL_WILD_PLANTS.length; i++){
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), META.getName()+"="+i);
         }
-        ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allWildPlants.length ? EnumRarity.COMMON : allWildPlants[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? EnumRarity.COMMON : ALL_WILD_PLANTS[stack.getItemDamage()].rarity;
     }
 
     @Override
@@ -119,9 +117,10 @@ public class BlockWildPlant extends BlockBushBase{
             this.setMaxDamage(0);
         }
 
+
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return stack.getItemDamage() >= allWildPlants.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allWildPlants[stack.getItemDamage()].name;
+            return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_WILD_PLANTS[stack.getItemDamage()].name;
         }
     }
 }

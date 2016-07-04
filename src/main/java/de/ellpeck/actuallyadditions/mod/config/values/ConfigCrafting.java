@@ -1,11 +1,11 @@
 /*
- * This file ("ConfigCrafting.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ConfigCrafting.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.config.values;
@@ -61,6 +61,7 @@ public enum ConfigCrafting{
     KNIFE("Knife", ConfigCategories.ITEMS_CRAFTING),
     STICK_CRAFTER("Crafting Table On A Stick", ConfigCategories.ITEMS_CRAFTING),
     MASHED_FOOD("Mashed Food", ConfigCategories.ITEMS_CRAFTING),
+    RARMOR_RECONSTRUCTOR_MODULE("Rarmor Reconstructor Module", ConfigCategories.ITEMS_CRAFTING),
 
     RING_SPEED("Speed Ring", ConfigCategories.POTION_RING_CRAFTING),
     RING_HASTE("Haste Ring", ConfigCategories.POTION_RING_CRAFTING),
@@ -96,8 +97,10 @@ public enum ConfigCrafting{
     OIL_GENERATOR("Oil Generator", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOMFACE("Phantomface", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_CONNECTOR("Phantom Connector", ConfigCategories.ITEMS_CRAFTING),
+    PLAYER_INTERFACE("Player Interface", ConfigCategories.BLOCKS_CRAFTING),
 
     PHANTOM_ENERGYFACE("Phantom Energyface", ConfigCategories.BLOCKS_CRAFTING),
+    PHANTOM_REDSTONEFACE("Phantom Redstoneface", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_LIQUIFACE("Phantom Liquiface", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_PLACER("Phantom Placer", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_BREAKER("Phantom Breaker", ConfigCategories.BLOCKS_CRAFTING),
@@ -146,6 +149,8 @@ public enum ConfigCrafting{
     DIRECTIONAL_BREAKER("Long-Range Breaker", ConfigCategories.BLOCKS_CRAFTING),
     RANGED_COLLECTOR("Ranged Collector", ConfigCategories.BLOCKS_CRAFTING),
     LASER_RELAY("Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
+    LASER_RELAY_ITEM("Item Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
+    LASER_RELAY_ITEM_WHITELIST("Advanced Item Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
     LASER_WRENCH("Laser Wrench", ConfigCategories.ITEMS_CRAFTING),
 
     CHEST_TO_CRATE_UPGRADE("Chest To Crate Upgrade", ConfigCategories.ITEMS_CRAFTING),
@@ -153,7 +158,12 @@ public enum ConfigCrafting{
     DRILL_CORE("Drill Core", ConfigCategories.ITEMS_CRAFTING),
     ATOMIC_RECONSTRUCTOR("Atomic Reconstructor", ConfigCategories.BLOCKS_CRAFTING),
     MINER("Miner", ConfigCategories.BLOCKS_CRAFTING),
-    FIREWORK_BOX("Firework Box", ConfigCategories.BLOCKS_CRAFTING);
+    FIREWORK_BOX("Firework Box", ConfigCategories.BLOCKS_CRAFTING),
+    ENDER_STAR("Ender Star", ConfigCategories.ITEMS_CRAFTING),
+    SPAWNER_CHANGER("Spawner Changer", ConfigCategories.ITEMS_CRAFTING),
+    ITEM_INTERFACE("Item Interface", ConfigCategories.BLOCKS_CRAFTING),
+    DISPLAY_STAND("Display Stand", ConfigCategories.BLOCKS_CRAFTING),
+    FILTER("Item Filter", ConfigCategories.ITEMS_CRAFTING);
 
     public final String name;
     public final String category;

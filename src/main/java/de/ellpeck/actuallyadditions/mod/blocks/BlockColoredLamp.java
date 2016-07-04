@@ -1,11 +1,11 @@
 /*
- * This file ("BlockColoredLamp.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BlockColoredLamp.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.blocks;
@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -27,9 +26,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,12 +40,12 @@ import java.util.Random;
 
 public class BlockColoredLamp extends BlockBase{
 
-    public static TheColoredLampColors[] allLampTypes = TheColoredLampColors.values();
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, allLampTypes.length-1);
-    public boolean isOn;
+    public static final TheColoredLampColors[] ALL_LAMP_TYPES = TheColoredLampColors.values();
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, ALL_LAMP_TYPES.length-1);
+    public final boolean isOn;
 
     public BlockColoredLamp(boolean isOn, String name){
-        super(Material.redstoneLight, name);
+        super(Material.REDSTONE_LIGHT, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(0.5F);
         this.setResistance(3.0F);
@@ -64,16 +63,15 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ){
         //Turning On
         if(player.isSneaking()){
             if(!world.isRemote){
-                PosUtil.setBlock(pos, world, this.isOn ? InitBlocks.blockColoredLamp : InitBlocks.blockColoredLampOn, PosUtil.getMetadata(pos, world), 2);
+                world.setBlockState(pos, (this.isOn ? InitBlocks.blockColoredLamp : InitBlocks.blockColoredLampOn).getStateFromMeta(this.getMetaFromState(state)), 2);
             }
             return true;
         }
 
-        ItemStack stack = player.getCurrentEquippedItem();
         if(stack != null){
             //Changing Colors
             int[] oreIDs = OreDictionary.getOreIDs(stack);
@@ -82,9 +80,9 @@ public class BlockColoredLamp extends BlockBase{
                     String name = OreDictionary.getOreName(oreID);
                     TheColoredLampColors color = TheColoredLampColors.getColorFromDyeName(name);
                     if(color != null){
-                        if(PosUtil.getMetadata(pos, world) != color.ordinal()){
+                        if(this.getMetaFromState(state) != color.ordinal()){
                             if(!world.isRemote){
-                                PosUtil.setMetadata(pos, world, color.ordinal(), 2);
+                                world.setBlockState(pos, this.getStateFromMeta(color.ordinal()), 2);
                                 if(!player.capabilities.isCreativeMode){
                                     player.inventory.decrStackSize(player.inventory.currentItem, 1);
                                 }
@@ -106,37 +104,27 @@ public class BlockColoredLamp extends BlockBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public Item getItem(World world, BlockPos pos){
-        return Item.getItemFromBlock(InitBlocks.blockColoredLamp);
-    }
-
-    @SuppressWarnings("all")
-    @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allLampTypes.length; j++){
+        for(int j = 0; j < ALL_LAMP_TYPES.length; j++){
             list.add(new ItemStack(item, 1, j));
         }
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, BlockPos pos){
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
         return this.isOn ? 15 : 0;
     }
 
     @Override
-    public Class<? extends ItemBlockBase> getItemBlock(){
-        return TheItemBlock.class;
+    protected ItemBlockBase getItemBlock(){
+        return new TheItemBlock(this);
     }
 
     @Override
     protected void registerRendering(){
-        ResourceLocation[] resLocs = new ResourceLocation[allLampTypes.length];
-        for(int i = 0; i < allLampTypes.length; i++){
-            String name = this.getBaseName()+allLampTypes[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+        for(int i = 0; i < ALL_LAMP_TYPES.length; i++){
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), META.getName()+"="+i);
         }
-        ActuallyAdditions.proxy.addRenderVariant(Item.getItemFromBlock(this), resLocs);
     }
 
     @Override
@@ -157,17 +145,19 @@ public class BlockColoredLamp extends BlockBase{
             this.setMaxDamage(0);
         }
 
+
         @Override
         public String getItemStackDisplayName(ItemStack stack){
-            if(stack.getItemDamage() >= allLampTypes.length){
-                return null;
+            if(stack.getItemDamage() >= ALL_LAMP_TYPES.length){
+                return StringUtil.BUGGED_ITEM_NAME;
             }
-            return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".onSuffix.desc")+")" : "");
+            return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".onSuffix.desc")+")" : "");
         }
+
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return InitBlocks.blockColoredLamp.getUnlocalizedName()+allLampTypes[stack.getItemDamage()].name;
+            return InitBlocks.blockColoredLamp.getUnlocalizedName()+ALL_LAMP_TYPES[stack.getItemDamage()].name;
         }
     }
 }

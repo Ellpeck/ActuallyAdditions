@@ -1,33 +1,34 @@
 /*
- * This file ("TileEntityBreaker.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityBreaker.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
-import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.event.ForgeEventFactory;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class TileEntityBreaker extends TileEntityInventoryBase implements IRedstoneToggle{
+public class TileEntityBreaker extends TileEntityInventoryBase{
 
     public boolean isPlacer;
     private int currentTime;
-    private boolean activateOnceWithSignal;
 
     public TileEntityBreaker(int slots, String name){
         super(slots, name);
@@ -39,23 +40,26 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("CurrentTime", this.currentTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("CurrentTime", this.currentTime);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTime = compound.getInteger("CurrentTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentTime = compound.getInteger("CurrentTime");
+        }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
-            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
+        if(!this.worldObj.isRemote){
+            if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
@@ -75,31 +79,32 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     private void doWork(){
-        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj));
+        IBlockState state = this.worldObj.getBlockState(this.pos);
+        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
 
-        BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, 0);
-        if(coordsBlock != null){
-            Block blockToBreak = PosUtil.getBlock(coordsBlock, worldObj);
-            if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(worldObj, coordsBlock) > -1.0F){
-                ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                int meta = PosUtil.getMetadata(coordsBlock, worldObj);
-                drops.addAll(blockToBreak.getDrops(worldObj, coordsBlock, worldObj.getBlockState(coordsBlock), 0));
+        BlockPos coordsBlock = this.pos.offset(sideToManipulate, 0);
+        IBlockState stateToBreak = this.worldObj.getBlockState(coordsBlock);
+        Block blockToBreak = stateToBreak.getBlock();
+        if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(stateToBreak, this.worldObj, coordsBlock) > -1.0F){
+            List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, stateToBreak, 0);
+            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
 
+            if(Util.RANDOM.nextFloat() <= chance){
                 if(WorldUtil.addToInventory(this, drops, false, true)){
-                    if(!ConfigValues.lessBlockBreakingEffects){
-                        worldObj.playAuxSFX(2001, coordsBlock, Block.getStateId(worldObj.getBlockState(coordsBlock)));
+                    if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
+                        this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(stateToBreak));
                     }
-                    WorldUtil.breakBlockAtSide(sideToManipulate, worldObj, this.pos);
+                    this.worldObj.setBlockToAir(coordsBlock);
                     WorldUtil.addToInventory(this, drops, true, true);
                     this.markDirty();
                 }
             }
-            else if(this.isPlacer){
-                int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(sideToManipulate, worldObj, this.pos, this.slots[theSlot]));
-                if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
-                    this.slots[theSlot] = null;
-                }
+        }
+        else if(this.isPlacer){
+            int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
+            this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(sideToManipulate, this.worldObj, this.pos, this.slots[theSlot]));
+            if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
+                this.slots[theSlot] = null;
             }
         }
     }
@@ -115,27 +120,13 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public void toggle(boolean to){
-        this.activateOnceWithSignal = to;
-    }
-
-    @Override
-    public boolean isPulseMode(){
-        return this.activateOnceWithSignal;
+    public boolean isRedstoneToggle(){
+        return true;
     }
 
     @Override
     public void activateOnPulse(){
         this.doWork();
-    }
-
-    public static class TileEntityPlacer extends TileEntityBreaker{
-
-        public TileEntityPlacer(){
-            super(9, "placer");
-            this.isPlacer = true;
-        }
-
     }
 
 }

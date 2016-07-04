@@ -1,11 +1,11 @@
 /*
- * This file ("ContainerDrill.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ContainerDrill.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory;
@@ -14,28 +14,29 @@ import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
-import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 
-@InventoryContainer
+
 public class ContainerDrill extends Container{
 
-    private static final int SLOT_AMOUNT = 5;
+    public static final int SLOT_AMOUNT = 5;
 
-    private InventoryDrill drillInventory = new InventoryDrill();
-    private InventoryPlayer inventory;
+    private final InventoryDrill drillInventory = new InventoryDrill();
+    private final InventoryPlayer inventory;
 
     public ContainerDrill(InventoryPlayer inventory){
         this.inventory = inventory;
 
         for(int i = 0; i < SLOT_AMOUNT; i++){
-            this.addSlotToContainer(new Slot(drillInventory, i, 44+i*18, 19){
+            this.addSlotToContainer(new Slot(this.drillInventory, i, 44+i*18, 19){
                 @Override
                 public boolean isItemValid(ItemStack stack){
                     return stack.getItem() instanceof ItemDrillUpgrade || stack.getItem() instanceof IEnergyContainerItem;
@@ -59,19 +60,16 @@ public class ContainerDrill extends Container{
 
         ItemStack stack = inventory.getCurrentItem();
         if(stack != null && stack.getItem() instanceof ItemDrill){
-            ItemStack[] slots = ((ItemDrill)stack.getItem()).getSlotsFromNBT(inventory.getCurrentItem());
-            if(slots != null && slots.length > 0){
-                this.drillInventory.slots = slots;
-            }
+            ItemDrill.loadSlotsFromNBT(this.drillInventory.slots, inventory.getCurrentItem());
         }
     }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 5;
-        final int inventoryEnd = inventoryStart+26;
-        final int hotbarStart = inventoryEnd+1;
-        final int hotbarEnd = hotbarStart+8;
+        int inventoryStart = 5;
+        int inventoryEnd = inventoryStart+26;
+        int hotbarStart = inventoryEnd+1;
+        int hotbarEnd = hotbarStart+8;
 
         Slot theSlot = this.inventorySlots.get(slot);
 
@@ -102,7 +100,7 @@ public class ContainerDrill extends Container{
                 return null;
             }
 
-            if(newStack.stackSize == 0){
+            if(newStack.stackSize <= 0){
                 theSlot.putStack(null);
             }
             else{
@@ -120,22 +118,20 @@ public class ContainerDrill extends Container{
     }
 
     @Override
-    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player){
-        //par3 appears to be the type of clicking
-        //par3 == 2 appears to be one of the number keys being hit
-        if(par3 == 2 && par2 == inventory.currentItem){
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player){
+        if(clickTypeIn == ClickType.SWAP && dragType == this.inventory.currentItem){
             return null;
         }
         else{
-            return super.slotClick(par1, par2, par3, player);
+            return super.slotClick(slotId, dragType, clickTypeIn, player);
         }
     }
 
     @Override
     public void onContainerClosed(EntityPlayer player){
-        ItemStack stack = inventory.getCurrentItem();
+        ItemStack stack = this.inventory.getCurrentItem();
         if(stack != null && stack.getItem() instanceof ItemDrill){
-            ((ItemDrill)stack.getItem()).writeSlotsToNBT(this.drillInventory.slots, inventory.getCurrentItem());
+            ItemDrill.writeSlotsToNBT(this.drillInventory.slots, this.inventory.getCurrentItem());
         }
         super.onContainerClosed(player);
     }
@@ -155,16 +151,6 @@ public class ContainerDrill extends Container{
         }
 
         @Override
-        public boolean hasCustomName(){
-            return false;
-        }
-
-        @Override
-        public IChatComponent getDisplayName(){
-            return null;
-        }
-
-        @Override
         public int getInventoryStackLimit(){
             return 64;
         }
@@ -175,7 +161,22 @@ public class ContainerDrill extends Container{
         }
 
         @Override
-        public boolean isItemValidForSlot(int slot, ItemStack stack){
+        public boolean isUseableByPlayer(EntityPlayer player){
+            return true;
+        }
+
+        @Override
+        public void openInventory(EntityPlayer player){
+
+        }
+
+        @Override
+        public void closeInventory(EntityPlayer player){
+
+        }
+
+        @Override
+        public boolean isItemValidForSlot(int index, ItemStack stack){
             return true;
         }
 
@@ -196,22 +197,8 @@ public class ContainerDrill extends Container{
 
         @Override
         public void clear(){
-            this.slots = new ItemStack[this.slots.length];
-        }
-
-        @Override
-        public boolean isUseableByPlayer(EntityPlayer player){
-            return true;
-        }
-
-        @Override
-        public void openInventory(EntityPlayer player){
-
-        }
-
-        @Override
-        public void closeInventory(EntityPlayer player){
-
+            int length = this.slots.length;
+            this.slots = new ItemStack[length];
         }
 
         @Override
@@ -222,31 +209,31 @@ public class ContainerDrill extends Container{
 
         @Override
         public int getSizeInventory(){
-            return slots.length;
+            return this.slots.length;
         }
 
         @Override
         public ItemStack getStackInSlot(int i){
             if(i < this.getSizeInventory()){
-                return slots[i];
+                return this.slots[i];
             }
             return null;
         }
 
         @Override
         public ItemStack decrStackSize(int i, int j){
-            if(slots[i] != null){
+            if(this.slots[i] != null){
                 ItemStack stackAt;
-                if(slots[i].stackSize <= j){
-                    stackAt = slots[i];
-                    slots[i] = null;
+                if(this.slots[i].stackSize <= j){
+                    stackAt = this.slots[i];
+                    this.slots[i] = null;
                     this.markDirty();
                     return stackAt;
                 }
                 else{
-                    stackAt = slots[i].splitStack(j);
-                    if(slots[i].stackSize == 0){
-                        slots[i] = null;
+                    stackAt = this.slots[i].splitStack(j);
+                    if(this.slots[i].stackSize <= 0){
+                        this.slots[i] = null;
                     }
                     this.markDirty();
                     return stackAt;
@@ -260,6 +247,17 @@ public class ContainerDrill extends Container{
             ItemStack stack = this.slots[index];
             this.slots[index] = null;
             return stack;
+        }
+
+        @Override
+        public boolean hasCustomName(){
+            return false;
+        }
+
+
+        @Override
+        public ITextComponent getDisplayName(){
+            return new TextComponentTranslation(this.getName());
         }
     }
 }

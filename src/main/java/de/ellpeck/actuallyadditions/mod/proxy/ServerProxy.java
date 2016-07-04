@@ -1,11 +1,11 @@
 /*
- * This file ("ServerProxy.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ServerProxy.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.proxy;
@@ -18,7 +18,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@SuppressWarnings("unused")
 public class ServerProxy implements IProxy{
 
     @Override
@@ -37,12 +36,12 @@ public class ServerProxy implements IProxy{
     }
 
     @Override
-    public void addRenderRegister(ItemStack stack, ResourceLocation location){
+    public void addRenderRegister(ItemStack stack, ResourceLocation location, String variant){
 
     }
 
     @Override
-    public void addRenderVariant(Item item, ResourceLocation... location){
+    public void addColoredItem(Item item){
 
     }
 }

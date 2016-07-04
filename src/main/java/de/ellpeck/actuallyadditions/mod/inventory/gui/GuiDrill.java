@@ -1,11 +1,11 @@
 /*
- * This file ("GuiDrill.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("GuiDrill.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiDrill extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiDrill");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiDrill");
 
     public GuiDrill(InventoryPlayer inventory){
         super(new ContainerDrill(inventory));
@@ -33,7 +33,7 @@ public class GuiDrill extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, "container."+ModUtil.MOD_ID_LOWER+".drill");
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, "container."+ModUtil.MOD_ID+".drill");
     }
 
     @Override
@@ -43,7 +43,7 @@ public class GuiDrill extends GuiContainer{
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+54, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 54);
     }
 }

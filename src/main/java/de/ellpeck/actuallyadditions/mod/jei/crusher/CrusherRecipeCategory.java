@@ -1,11 +1,11 @@
 /*
- * This file ("CrusherRecipeCategor.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("CrusherRecipeCategory.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
@@ -20,32 +20,31 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class CrusherRecipeCategory implements IRecipeCategory{
 
     public static final String NAME = "actuallyadditions.crushing";
 
-    private IDrawable background;
+    private final IDrawable background;
 
     public CrusherRecipeCategory(IGuiHelper helper){
         this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiGrinder"), 60, 13, 56, 79);
     }
 
-    @Nonnull
+
     @Override
     public String getUid(){
         return NAME;
     }
 
-    @Nonnull
+
     @Override
     public String getTitle(){
         return StringUtil.localize("container.nei."+NAME+".name");
     }
 
-    @Nonnull
+
     @Override
     public IDrawable getBackground(){
         return this.background;
@@ -62,7 +61,7 @@ public class CrusherRecipeCategory implements IRecipeCategory{
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper){
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper){
         if(recipeWrapper instanceof CrusherRecipeWrapper){
             CrusherRecipeWrapper wrapper = (CrusherRecipeWrapper)recipeWrapper;
 

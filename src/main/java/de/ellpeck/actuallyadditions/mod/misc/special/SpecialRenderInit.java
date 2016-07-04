@@ -1,22 +1,22 @@
 /*
- * This file ("SpecialRenderInit.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("SpecialRenderInit.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.misc.special;
 
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -26,17 +26,17 @@ import java.util.Properties;
 
 public class SpecialRenderInit{
 
-    public static HashMap<String, RenderSpecial> specialList = new HashMap<String, RenderSpecial>();
+    public static final HashMap<String, RenderSpecial> SPECIAL_LIST = new HashMap<String, RenderSpecial>();
 
-    public static void init(){
+    public SpecialRenderInit(){
         new ThreadSpecialFetcher();
-        Util.registerEvent(new SpecialRenderInit());
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     public static void parse(Properties properties){
         for(String key : properties.stringPropertyNames()){
             String[] values = properties.getProperty(key).split("@");
-            if(values != null && values.length > 0){
+            if(values.length > 0){
                 String itemName = values[0];
 
                 int meta;
@@ -50,18 +50,18 @@ public class SpecialRenderInit{
                 ItemStack stack = null;
                 //Get the Item from the String
                 ResourceLocation resLoc = new ResourceLocation(itemName);
-                if(Item.itemRegistry.containsKey(resLoc)){
-                    stack = new ItemStack(Item.itemRegistry.getObject(resLoc), 1, meta);
+                if(Item.REGISTRY.containsKey(resLoc)){
+                    stack = new ItemStack(Item.REGISTRY.getObject(resLoc), 1, meta);
                 }
                 else{
-                    if(Block.blockRegistry.containsKey(resLoc)){
-                        stack = new ItemStack(Block.blockRegistry.getObject(resLoc), 1, meta);
+                    if(Block.REGISTRY.containsKey(resLoc)){
+                        stack = new ItemStack(Block.REGISTRY.getObject(resLoc), 1, meta);
                     }
                 }
 
                 //Add a new Special Renderer to the list
                 if(stack != null){
-                    specialList.put(key, new RenderSpecial(stack));
+                    SPECIAL_LIST.put(key, new RenderSpecial(stack));
                 }
             }
         }
@@ -69,13 +69,16 @@ public class SpecialRenderInit{
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerRender(RenderPlayerEvent.Pre event){
-        if(!specialList.isEmpty()){
-            for(Map.Entry<String, RenderSpecial> entry : specialList.entrySet()){
+        if(!SPECIAL_LIST.isEmpty()){
+            for(Map.Entry<String, RenderSpecial> entry : SPECIAL_LIST.entrySet()){
                 //Does the player have one of the names from the list?
-                if(StringUtil.equalsToLowerCase(entry.getKey(), event.entityPlayer.getName())){
-                    //Render the special Item/Block
-                    entry.getValue().render(event.entityPlayer, event.partialRenderTick);
-                    break;
+                String playerName = event.getEntityPlayer().getName();
+                if(entry.getKey() != null && playerName != null){
+                    if(entry.getKey().equalsIgnoreCase(playerName)){
+                        //Render the special Item/Block
+                        entry.getValue().render(event.getEntityPlayer(), event.getPartialRenderTick());
+                        break;
+                    }
                 }
             }
         }

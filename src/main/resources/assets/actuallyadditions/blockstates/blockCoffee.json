@@ -1,12 +1,23 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:crop",
+    "textures": {
+      "crop": "actuallyadditions:blocks/blockCoffeeStage1"
+    }
+  },
   "variants": {
-    "age=0": { "model": "actuallyadditions:blockCoffeeStage1" },
-    "age=1": { "model": "actuallyadditions:blockCoffeeStage2" },
-    "age=2": { "model": "actuallyadditions:blockCoffeeStage2" },
-    "age=3": { "model": "actuallyadditions:blockCoffeeStage3" },
-    "age=4": { "model": "actuallyadditions:blockCoffeeStage4" },
-    "age=5": { "model": "actuallyadditions:blockCoffeeStage4" },
-    "age=6": { "model": "actuallyadditions:blockCoffeeStage5" },
-    "age=7": { "model": "actuallyadditions:blockCoffeeStage6" }
+    "normal": [{}],
+    "inventory": [{}],
+    "age": {
+      "0": { "textures": { "crop": "actuallyadditions:blocks/blockCoffeeStage1" } },
+      "1": { "textures": { "crop": "actuallyadditions:blocks/blockCoffeeStage2" } },
+      "2": { "textures": { "crop": "actuallyadditions:blocks/blockCoffeeStage2" } },
+      "3": { "textures": { "crop": "actuallyadditions:blocks/blockCoffeeStage3" } },
+      "4": { "textures": { "crop": "actuallyadditions:blocks/blockCoffeeStage4" } },
+      "5": { "textures": { "crop": "actuallyadditions:blocks/blockCoffeeStage4" } },
+      "6": { "textures": { "crop": "actuallyadditions:blocks/blockCoffeeStage5" } },
+      "7": { "textures": { "crop": "actuallyadditions:blocks/blockCoffeeStage6" } }
+    }
   }
 }

@@ -1,18 +1,19 @@
 /*
- * This file ("TileEntityFurnaceDouble.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityFurnaceDouble.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,7 +21,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
+public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1 = 1;
@@ -28,7 +29,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public static final int SLOT_OUTPUT_2 = 3;
     public static final int ENERGY_USE = 25;
     private static final int SMELT_TIME = 80;
-    public EnergyStorage storage = new EnergyStorage(30000);
+    public final EnergyStorage storage = new EnergyStorage(30000);
     public int firstSmeltTime;
     public int secondSmeltTime;
     private int lastEnergy;
@@ -40,26 +41,29 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
-        compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
+            compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
+        }
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
-        this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
+            this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
+        }
         this.storage.readFromNBT(compound);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             boolean flag = this.firstSmeltTime > 0 || this.secondSmeltTime > 0;
 
             boolean canSmeltOnFirst = this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1);
@@ -72,6 +76,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                         this.finishBurning(SLOT_INPUT_1, SLOT_OUTPUT_1);
                         this.firstSmeltTime = 0;
                     }
+                    this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
             else{
@@ -85,30 +90,29 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                         this.finishBurning(SLOT_INPUT_2, SLOT_OUTPUT_2);
                         this.secondSmeltTime = 0;
                     }
+                    this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
             else{
                 this.secondSmeltTime = 0;
             }
 
-            if(this.storage.getEnergyStored() >= ENERGY_USE && (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
-                this.storage.extractEnergy(ENERGY_USE, false);
-            }
-
             if(flag != (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
                 this.markDirty();
-                int meta = PosUtil.getMetadata(this.pos, worldObj);
+                IBlockState state = this.worldObj.getBlockState(this.pos);
+                Block block = state.getBlock();
+                int meta = block.getMetaFromState(state);
                 if(meta > 3){
                     if(!this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1) && !this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2)){
-                        PosUtil.setMetadata(this.pos, worldObj, meta-4, 2);
+                        this.worldObj.setBlockState(this.pos, block.getStateFromMeta(meta-4), 2);
                     }
                 }
                 else{
-                    PosUtil.setMetadata(this.pos, worldObj, meta+4, 2);
+                    this.worldObj.setBlockState(this.pos, block.getStateFromMeta(meta+4), 2);
                 }
             }
 
-            if((lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime) && this.sendUpdateWithInterval()){
+            if((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime) && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastFirstSmelt = this.firstSmeltTime;
                 this.lastSecondSmelt = this.secondSmeltTime;
@@ -193,15 +197,5 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
-    }
-
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
     }
 }

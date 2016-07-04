@@ -1,11 +1,11 @@
 /*
- * This file ("TheFoods.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TheFoods.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items.metalists;
@@ -57,9 +57,9 @@ public enum TheFoods{
     }
 
     public static void setReturnItems(){
-        SPAGHETTI.returnItem = new ItemStack(Items.bowl);
-        PUMPKIN_STEW.returnItem = new ItemStack(Items.bowl);
-        CARROT_JUICE.returnItem = new ItemStack(Items.glass_bottle);
+        SPAGHETTI.returnItem = new ItemStack(Items.BOWL);
+        PUMPKIN_STEW.returnItem = new ItemStack(Items.BOWL);
+        CARROT_JUICE.returnItem = new ItemStack(Items.GLASS_BOTTLE);
         FRENCH_FRIES.returnItem = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal());
         FISH_N_CHIPS.returnItem = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal());
     }

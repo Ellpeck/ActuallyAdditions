@@ -1,16 +1,15 @@
 /*
- * This file ("CoffeeMachineRecipeCategory.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("CoffeeMachineRecipeCategory.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.jei.coffee;
 
-import de.ellpeck.actuallyadditions.mod.nei.NEICoffeeMachineRecipe;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
@@ -20,29 +19,29 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.Nonnull;
-
 public class CoffeeMachineRecipeCategory implements IRecipeCategory{
 
-    private IDrawable background;
+    public static final String NAME = "actuallyadditions.coffee";
+
+    private final IDrawable background;
 
     public CoffeeMachineRecipeCategory(IGuiHelper helper){
         this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEICoffeeMachine"), 0, 0, 126, 88);
     }
 
-    @Nonnull
+
     @Override
     public String getUid(){
-        return NEICoffeeMachineRecipe.NAME;
+        return NAME;
     }
 
-    @Nonnull
+
     @Override
     public String getTitle(){
-        return StringUtil.localize("container.nei."+NEICoffeeMachineRecipe.NAME+".name");
+        return StringUtil.localize("container.nei."+NAME+".name");
     }
 
-    @Nonnull
+
     @Override
     public IDrawable getBackground(){
         return this.background;
@@ -59,7 +58,7 @@ public class CoffeeMachineRecipeCategory implements IRecipeCategory{
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper){
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper){
         if(recipeWrapper instanceof CoffeeMachineRecipeWrapper){
             CoffeeMachineRecipeWrapper wrapper = (CoffeeMachineRecipeWrapper)recipeWrapper;
 

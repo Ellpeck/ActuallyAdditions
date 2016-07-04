@@ -1,11 +1,11 @@
 /*
- * This file ("ContainerEnergizer.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ContainerEnergizer.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory;
@@ -14,22 +14,23 @@ import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnergizer;
-import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@InventoryContainer
+
 public class ContainerEnergizer extends Container{
 
-    private TileEntityEnergizer energizer;
+    public static final EntityEquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EntityEquipmentSlot[]{EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
+    private final TileEntityEnergizer energizer;
 
-    public ContainerEnergizer(EntityPlayer player, TileEntityBase tile){
+    public ContainerEnergizer(final EntityPlayer player, TileEntityBase tile){
         this.energizer = (TileEntityEnergizer)tile;
         InventoryPlayer inventory = player.inventory;
 
@@ -44,24 +45,24 @@ public class ContainerEnergizer extends Container{
         for(int i = 0; i < 9; i++){
             this.addSlotToContainer(new Slot(inventory, i, 8+i*18, 155));
         }
-        final EntityPlayer finalPlayer = player;
-        for(int i = 0; i < 4; ++i){
-            final int finalI = i;
-            this.addSlotToContainer(new Slot(inventory, inventory.getSizeInventory()-1-i, 102, 19+i*18){
-                @Override
-                public boolean isItemValid(ItemStack stack){
-                    return stack != null && stack.getItem().isValidArmor(stack, finalI, finalPlayer);
-                }
 
+        for(int k = 0; k < 4; ++k){
+            final EntityEquipmentSlot slot = VALID_EQUIPMENT_SLOTS[k];
+            this.addSlotToContainer(new Slot(player.inventory, 36+(3-k), 102, 19+k*18){
                 @Override
                 public int getSlotStackLimit(){
                     return 1;
                 }
 
                 @Override
+                public boolean isItemValid(ItemStack stack){
+                    return stack != null && stack.getItem().isValidArmor(stack, slot, player);
+                }
+
+                @Override
                 @SideOnly(Side.CLIENT)
                 public String getSlotTexture(){
-                    return ItemArmor.EMPTY_SLOT_NAMES[finalI];
+                    return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
                 }
             });
         }
@@ -69,12 +70,12 @@ public class ContainerEnergizer extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 2;
-        final int inventoryEnd = inventoryStart+26;
-        final int hotbarStart = inventoryEnd+1;
-        final int hotbarEnd = hotbarStart+8;
+        int inventoryStart = 2;
+        int inventoryEnd = inventoryStart+26;
+        int hotbarStart = inventoryEnd+1;
+        int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
@@ -110,7 +111,7 @@ public class ContainerEnergizer extends Container{
                 return null;
             }
 
-            if(newStack.stackSize == 0){
+            if(newStack.stackSize <= 0){
                 theSlot.putStack(null);
             }
             else{

@@ -1,8 +1,0 @@
-{
-    "parent": "block/inner_stairs",
-    "textures": {
-        "bottom": "actuallyadditions:blocks/blockTestifiBucksWhiteWall",
-        "top": "actuallyadditions:blocks/blockTestifiBucksWhiteWall",
-        "side": "actuallyadditions:blocks/blockTestifiBucksWhiteWall"
-    }
-}

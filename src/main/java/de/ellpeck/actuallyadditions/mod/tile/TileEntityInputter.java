@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityInputter.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityInputter.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -38,8 +38,8 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public int slotToPullEnd;
     public TileEntity placeToPull;
     public boolean isAdvanced;
-    public boolean isPullWhitelist = true;
-    public boolean isPutWhitelist = true;
+    public boolean isPullWhitelist;
+    public boolean isPutWhitelist;
     private int lastPutSide;
     private int lastPutStart;
     private int lastPutEnd;
@@ -48,6 +48,8 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     private int lastPullEnd;
     private boolean lastPullWhite;
     private boolean lastPutWhite;
+
+    private boolean hasCheckedTilesAround;
 
     public TileEntityInputter(int slots, String name){
         super(slots, name);
@@ -61,88 +63,29 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public void onNumberReceived(int text, int textID, EntityPlayer player){
         if(text != -1){
-            //TODO Find a better solution for the Math.max and Math.min stuff here (also below in initVars()!)
             if(textID == 0){
-                this.slotToPutStart = this.placeToPut instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()-1), 0) : text;
+                this.slotToPutStart = Math.max(text, 0);
             }
             if(textID == 1){
-                this.slotToPutEnd = this.placeToPut instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPut).getSizeInventory()), 0) : text;
+                this.slotToPutEnd = Math.max(text, 0);
             }
 
             if(textID == 2){
-                this.slotToPullStart = this.placeToPull instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()-1), 0) : text;
+                this.slotToPullStart = Math.max(text, 0);
             }
             if(textID == 3){
-                this.slotToPullEnd = this.placeToPull instanceof IInventory ? Math.max(Math.min(text, ((IInventory)this.placeToPull).getSizeInventory()), 0) : text;
+                this.slotToPullEnd = Math.max(text, 0);
             }
         }
         this.markDirty();
-    }
-
-    //TODO Fix for new item system
-    private boolean newPull(){
-        /*for(EnumFacing facing : EnumFacing.values()){
-            IItemHandler handler = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
-            if(handler != null){
-                for(int i = Math.max(this.lastPullStart, 0); i < Math.min(this.slotToPullEnd, handler.getSlots()); i++){
-                    ItemStack stackInOtherInv = handler.getStackInSlot(i);
-                    if(stackInOtherInv != null){
-                        if(this.slots[0] == null || ItemUtil.areItemsEqual(stackInOtherInv, this.slots[0], false)){
-
-                            ItemStack pulled = handler.extractItem(i, this.slots[0] == null ? stackInOtherInv.stackSize : Math.min(stackInOtherInv.stackSize, this.slots[0].getMaxStackSize()-this.slots[0].stackSize), false);
-                            if(pulled != null){
-                                ItemStack slotCopy = this.slots[0] == null ? null : this.slots[0].copy();
-
-                                if(this.slots[0] == null){
-                                    this.slots[0] = pulled.copy();
-                                }
-                                else{
-                                    this.slots[0].stackSize+=pulled.stackSize;
-                                }
-
-                                if(!ItemUtil.areStacksEqualAndSameSize(slotCopy, this.slots[0], false)){
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
-        return false;
-    }
-
-    private boolean newPut(){
-        /*if(this.slots[0] != null){
-            for(EnumFacing facing : EnumFacing.values()){
-                IItemHandler handler = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
-                if(handler != null){
-                    for(int i = Math.max(this.slotToPutStart, 0); i < Math.min(this.slotToPutEnd, handler.getSlots()); i++){
-                        ItemStack slotCopy = this.slots[0].copy();
-
-                        ItemStack remaining = handler.insertItem(i, slotCopy, false);
-                        this.slots[0] = remaining == null ? null : remaining.copy();
-
-                        if(!ItemUtil.areStacksEqualAndSameSize(slotCopy, this.slots[0], false)){
-                            return true;
-                        }
-                    }
-                }
-            }
-        }*/
-        return false;
     }
 
     /**
      * Pulls Items from the specified Slots on the specified Side
      */
     private void pull(){
-        if(this.newPull()){
-            return;
-        }
-
         //The Inventory to pull from
-        IInventory theInventory = (IInventory)placeToPull;
+        IInventory theInventory = (IInventory)this.placeToPull;
         //Does the Inventory even have Slots!?
         if(theInventory.getSizeInventory() > 0){
             //The slot currently pulling from (for later)
@@ -173,7 +116,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     }
                 }
                 //If ESD has enough Space & Item in question is on whitelist
-                if(tempStack != null && (this.slots[0] == null || (tempStack.isItemEqual(this.slots[0]) && this.slots[0].stackSize < maxSize)) && this.checkBothFilters(tempStack)){
+                if(tempStack != null && (this.slots[0] == null || (tempStack.isItemEqual(this.slots[0]) && this.slots[0].stackSize < maxSize)) && this.checkBothFilters(tempStack, false)){
                     //Deal with ISided
                     if(theSided != null){
                         //Check if Item can be inserted from any Side (Because Sidedness gets ignored!)
@@ -240,11 +183,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * (Check pull() for Description, similar to this)
      */
     private void put(){
-        if(this.newPut()){
-            return;
-        }
-
-        IInventory theInventory = (IInventory)placeToPut;
+        IInventory theInventory = (IInventory)this.placeToPut;
         if(theInventory.getSizeInventory() > 0){
             int theSlotToPut = this.slotToPutStart;
             int maxSize = theInventory.getInventoryStackLimit();
@@ -266,7 +205,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                             maxSize = theInventory.getInventoryStackLimit();
                         }
                     }
-                    if(theInventory.isItemValidForSlot(i, this.slots[0]) && (tempStack == null || (tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < maxSize)) && this.checkBothFilters(this.slots[0])){
+                    if(theInventory.isItemValidForSlot(i, this.slots[0]) && (tempStack == null || (tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < maxSize)) && this.checkBothFilters(this.slots[0], true)){
                         if(theSided != null){
                             for(int j = 0; j <= 5; j++){
                                 if(theSided.canInsertItem(i, this.slots[0], EnumFacing.values()[j])){
@@ -323,57 +262,41 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     /**
      * Checks if one of the filters contains the ItemStack
-     * (Whitelist or empty Blacklist in one of them always lets the Item through!)
      *
      * @param stack The ItemStack
      * @return If the Item is filtered correctly
      */
-    private boolean checkBothFilters(ItemStack stack){
-        return this.checkFilter(stack, true, isPullWhitelist) || this.checkFilter(stack, false, isPutWhitelist);
-    }
-
-    /**
-     * Checks the Whitelist/Blacklist to see if Item fits
-     *
-     * @param stack       The Stack to check for
-     * @param isPull      If we're pulling or putting
-     * @param isWhitelist If it's set to white- or Blacklist
-     * @return Is Item on White-/Blacklist?
-     */
-    private boolean checkFilter(ItemStack stack, boolean isPull, boolean isWhitelist){
+    private boolean checkBothFilters(ItemStack stack, boolean output){
         if(!this.isAdvanced){
             return true;
         }
-
-        int slotStart = isPull ? PULL_FILTER_START : PUT_FILTER_START;
-        int slotStop = slotStart+12;
-
-        for(int i = slotStart; i < slotStop; i++){
-            if(this.slots[i] != null && this.slots[i].isItemEqual(stack)){
-                return isWhitelist;
-            }
+        else{
+            int slotStart = output ? PUT_FILTER_START : PULL_FILTER_START;
+            return TileEntityLaserRelayItemWhitelist.checkFilter(stack, output ? this.isPutWhitelist : this.isPullWhitelist, this.slots, slotStart, slotStart+12);
         }
-        return !isWhitelist;
     }
 
     /**
      * Sets all of the relevant variables
      */
     public void initVars(){
+        if(this.sideToPull != -1){
+            this.placeToPull = this.worldObj.getTileEntity(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(this.sideToPull)));
 
-        //Gets the Place to put and Pull
-        this.placeToPull = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPull), this.worldObj, this.pos);
-        this.placeToPut = WorldUtil.getTileEntityFromSide(WorldUtil.getDirectionBySidesInOrder(this.sideToPut), this.worldObj, this.pos);
-
-        //Resets the Variables
-        if(this.placeToPull instanceof IInventory){
-            if(this.slotToPullEnd <= 0){
-                this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
+            if(this.placeToPull instanceof IInventory){
+                if(this.slotToPullEnd <= 0){
+                    this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
+                }
             }
         }
-        if(this.placeToPut instanceof IInventory){
-            if(this.slotToPutEnd <= 0){
-                this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
+
+        if(this.sideToPut != -1){
+            this.placeToPut = this.worldObj.getTileEntity(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(this.sideToPut)));
+
+            if(this.placeToPut instanceof IInventory){
+                if(this.slotToPutEnd <= 0){
+                    this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
+                }
             }
         }
     }
@@ -427,54 +350,62 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         }
 
         this.markDirty();
+        this.initVars();
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("SideToPut", this.sideToPut);
-        compound.setInteger("SlotToPut", this.slotToPutStart);
-        compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
-        compound.setInteger("SideToPull", this.sideToPull);
-        compound.setInteger("SlotToPull", this.slotToPullStart);
-        compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
-        compound.setBoolean("PullWhitelist", this.isPullWhitelist);
-        compound.setBoolean("PutWhitelist", this.isPutWhitelist);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("SideToPut", this.sideToPut);
+            compound.setInteger("SlotToPut", this.slotToPutStart);
+            compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
+            compound.setInteger("SideToPull", this.sideToPull);
+            compound.setInteger("SlotToPull", this.slotToPullStart);
+            compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
+            compound.setBoolean("PullWhitelist", this.isPullWhitelist);
+            compound.setBoolean("PutWhitelist", this.isPutWhitelist);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.sideToPut = compound.getInteger("SideToPut");
-        this.slotToPutStart = compound.getInteger("SlotToPut");
-        this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
-        this.sideToPull = compound.getInteger("SideToPull");
-        this.slotToPullStart = compound.getInteger("SlotToPull");
-        this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
-        this.isPullWhitelist = compound.getBoolean("PullWhitelist");
-        this.isPutWhitelist = compound.getBoolean("PutWhitelist");
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            this.sideToPut = compound.getInteger("SideToPut");
+            this.slotToPutStart = compound.getInteger("SlotToPut");
+            this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
+            this.sideToPull = compound.getInteger("SideToPull");
+            this.slotToPullStart = compound.getInteger("SlotToPull");
+            this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
+            this.isPullWhitelist = compound.getBoolean("PullWhitelist");
+            this.isPutWhitelist = compound.getBoolean("PutWhitelist");
+        }
+        super.readSyncableNBT(compound, type);
     }
 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
-            this.initVars();
+        if(!this.worldObj.isRemote){
+            if(!this.hasCheckedTilesAround){
+                this.initVars();
+                this.hasCheckedTilesAround = true;
+            }
 
             //Is Block not powered by Redstone?
             if(!this.isRedstonePowered){
                 if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
-                    if(sideToPull != -1 && this.placeToPull instanceof IInventory){
+                    if(this.sideToPull != -1 && this.placeToPull instanceof IInventory){
                         this.pull();
                     }
-                    if(sideToPut != -1 && this.placeToPut instanceof IInventory){
+                    if(this.sideToPut != -1 && this.placeToPut instanceof IInventory){
                         this.put();
                     }
                 }
             }
 
             //Update the Client
-            if((this.sideToPut != this.lastPutSide || this.sideToPull != this.lastPullSide || this.slotToPullStart != this.lastPullStart || this.slotToPullEnd != this.lastPullEnd || this.slotToPutStart != this.lastPutStart || this.slotToPutEnd != this.lastPutEnd || this.isPullWhitelist != lastPullWhite || this.isPutWhitelist != this.lastPutWhite) && this.sendUpdateWithInterval()){
+            if((this.sideToPut != this.lastPutSide || this.sideToPull != this.lastPullSide || this.slotToPullStart != this.lastPullStart || this.slotToPullEnd != this.lastPullEnd || this.slotToPutStart != this.lastPutStart || this.slotToPutEnd != this.lastPutEnd || this.isPullWhitelist != this.lastPullWhite || this.isPutWhitelist != this.lastPutWhite) && this.sendUpdateWithInterval()){
                 this.lastPutSide = this.sideToPut;
                 this.lastPullSide = this.sideToPull;
                 this.lastPullStart = this.slotToPullStart;
@@ -500,14 +431,5 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot == 0;
-    }
-
-    public static class TileEntityInputterAdvanced extends TileEntityInputter{
-
-        public TileEntityInputterAdvanced(){
-            super(25, "inputterAdvanced");
-            this.isAdvanced = true;
-        }
-
     }
 }

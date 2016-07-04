@@ -1,45 +1,47 @@
 /*
- * This file ("TileEntityMiner.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityMiner.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergySaver, IEnergyDisplay{
+public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergyDisplay{
 
-    public static final int ENERGY_USE_PER_BLOCK = 500;
+    public static final int ENERGY_USE_PER_BLOCK = 1000;
     public static final int DEFAULT_RANGE = 2;
-    public EnergyStorage storage = new EnergyStorage(1000000);
+    public final EnergyStorage storage = new EnergyStorage(200000);
     public int layerAt = -1;
-    public boolean onlyMineOres = true;
+    public boolean onlyMineOres;
     private int oldLayerAt;
     private int oldEnergy;
 
@@ -48,18 +50,24 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
-        compound.setInteger("Layer", this.layerAt);
-        compound.setBoolean("OnlyOres", this.onlyMineOres);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("Layer", this.layerAt);
+        }
+        if(type != NBTType.SAVE_BLOCK || this.onlyMineOres){
+            compound.setBoolean("OnlyOres", this.onlyMineOres);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
-        this.layerAt = compound.getInteger("Layer");
+        if(type != NBTType.SAVE_BLOCK){
+            this.layerAt = compound.getInteger("Layer");
+        }
         this.onlyMineOres = compound.getBoolean("OnlyOres");
     }
 
@@ -74,7 +82,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
             if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
 
                 if(this.layerAt > 0){
-                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, worldObj, this.pos))){
+                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.worldObj, this.pos))){
                         this.layerAt--;
                     }
                 }
@@ -94,24 +102,27 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
                 if(this.storage.getEnergyStored() >= actualUse){
                     BlockPos pos = new BlockPos(this.pos.getX()+anX, this.layerAt, this.pos.getZ()+aZ);
 
-                    Block block = PosUtil.getBlock(pos, worldObj);
-                    int meta = PosUtil.getMetadata(pos, worldObj);
-                    if(block != null && !block.isAir(this.worldObj, pos)){
-                        if(block.getHarvestLevel(worldObj.getBlockState(pos)) <= 3F && block.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
-                            ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                            drops.addAll(block.getDrops(worldObj, pos, worldObj.getBlockState(pos), 0));
+                    IBlockState state = this.worldObj.getBlockState(pos);
+                    Block block = state.getBlock();
+                    int meta = block.getMetaFromState(state);
+                    if(!block.isAir(this.worldObj.getBlockState(pos), this.worldObj, pos)){
+                        if(block.getHarvestLevel(this.worldObj.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
+                            List<ItemStack> drops = block.getDrops(this.worldObj, pos, this.worldObj.getBlockState(pos), 0);
+                            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, pos, this.worldObj.getBlockState(pos), 0, 1, false, null);
 
-                            if(WorldUtil.addToInventory(this, drops, false, true)){
-                                if(!ConfigValues.lessBlockBreakingEffects){
-                                    worldObj.playAuxSFX(2001, pos, Block.getStateId(worldObj.getBlockState(pos)));
+                            if(Util.RANDOM.nextFloat() <= chance){
+                                if(WorldUtil.addToInventory(this, drops, false, true)){
+                                    if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
+                                        this.worldObj.playEvent(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
+                                    }
+                                    this.worldObj.setBlockToAir(pos);
+
+                                    WorldUtil.addToInventory(this, drops, true, true);
+                                    this.markDirty();
+
+                                    this.storage.extractEnergy(actualUse, false);
+                                    this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
                                 }
-                                worldObj.setBlockToAir(pos);
-
-                                WorldUtil.addToInventory(this, drops, true, true);
-                                this.markDirty();
-
-                                this.storage.extractEnergy(actualUse, false);
-                                this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
                             }
                             return false;
                         }
@@ -126,42 +137,48 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     private boolean isMinable(Block block, int meta){
-        if(!this.isBlacklisted(block)){
-            if(!this.onlyMineOres){
-                return true;
-            }
-            else{
-                int[] ids = OreDictionary.getOreIDs(new ItemStack(block, 1, meta));
-                for(int id : ids){
-                    String name = OreDictionary.getOreName(id);
-                    if(name.startsWith("ore") || name.startsWith("denseore")){
-                        return true;
-                    }
+        if(block != null){
+            if(!this.isBlacklisted(block)){
+                if(!this.onlyMineOres){
+                    return true;
                 }
+                else{
+                    ItemStack stack = new ItemStack(block, 1, meta);
+                    if(stack.getItem() != null){
+                        int[] ids = OreDictionary.getOreIDs(stack);
+                        for(int id : ids){
+                            String name = OreDictionary.getOreName(id);
+                            if(name.startsWith("ore") || name.startsWith("denseore")){
+                                return true;
+                            }
+                        }
 
-                String reg = block.getRegistryName();
-                if(reg != null && !reg.isEmpty()){
-                    for(String string : ConfigValues.minerExtraWhitelist){
-                        if(reg.equals(string)){
-                            return true;
+                        String reg = block.getRegistryName().toString();
+                        if(!reg.isEmpty()){
+                            for(String string : ConfigStringListValues.MINER_EXTRA_WHITELIST.getValue()){
+                                if(reg.equals(string)){
+                                    return true;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+
         return false;
     }
 
     private void shootParticles(int endX, int endY, int endZ){
-        if(!ConfigValues.lessParticles){
-            PacketHandler.theNetwork.sendToAllAround(new PacketParticle(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F), new NetworkRegistry.TargetPoint(worldObj.provider.getDimensionId(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 96));
+        if(!ConfigBoolValues.LESS_PARTICLES.isEnabled()){
+            AssetUtil.shootParticles(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F);
         }
     }
 
     private boolean isBlacklisted(Block block){
-        String reg = block.getRegistryName();
-        if(reg != null && !reg.isEmpty()){
-            for(String string : ConfigValues.minerBlacklist){
+        String reg = block.getRegistryName().toString();
+        if(!reg.isEmpty()){
+            for(String string : ConfigStringListValues.MINER_BLACKLIST.getValue()){
                 if(reg.equals(string)){
                     return true;
                 }
@@ -222,13 +239,13 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
     }
 
     @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
+    }
+
+    @Override
+    public boolean needsHoldShift(){
+        return false;
     }
 }

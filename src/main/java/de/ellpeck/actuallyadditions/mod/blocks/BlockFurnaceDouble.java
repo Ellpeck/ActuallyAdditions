@@ -1,11 +1,11 @@
 /*
- * This file ("BlockFurnaceDouble.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BlockFurnaceDouble.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.blocks;
@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
@@ -24,10 +24,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,13 +41,14 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 7);
 
     public BlockFurnaceDouble(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
-        this.setStepSound(soundTypeStone);
+        this.setSoundType(SoundType.STONE);
         this.setTickRandomly(true);
     }
+
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
@@ -55,8 +57,8 @@ public class BlockFurnaceDouble extends BlockContainerBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand){
-        int meta = PosUtil.getMetadata(pos, world);
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
+        int meta = this.getMetaFromState(state);
 
         if(meta > 3){
             float f = (float)pos.getX()+0.5F;
@@ -89,7 +91,7 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityFurnaceDouble furnace = (TileEntityFurnaceDouble)world.getTileEntity(pos);
             if(furnace != null){
@@ -101,8 +103,8 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, BlockPos pos){
-        return PosUtil.getMetadata(pos, world) > 3 ? 12 : 0;
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
+        return this.getMetaFromState(state) > 3 ? 12 : 0;
     }
 
     @Override
@@ -115,16 +117,16 @@ public class BlockFurnaceDouble extends BlockContainerBase{
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
         if(rotation == 0){
-            PosUtil.setMetadata(pos, world, 0, 2);
+            world.setBlockState(pos, this.getStateFromMeta(0), 2);
         }
         if(rotation == 1){
-            PosUtil.setMetadata(pos, world, 3, 2);
+            world.setBlockState(pos, this.getStateFromMeta(3), 2);
         }
         if(rotation == 2){
-            PosUtil.setMetadata(pos, world, 1, 2);
+            world.setBlockState(pos, this.getStateFromMeta(1), 2);
         }
         if(rotation == 3){
-            PosUtil.setMetadata(pos, world, 2, 2);
+            world.setBlockState(pos, this.getStateFromMeta(2), 2);
         }
 
         super.onBlockPlacedBy(world, pos, state, player, stack);

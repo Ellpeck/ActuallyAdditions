@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityFeeder.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityFeeder.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -14,9 +14,9 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -41,31 +41,30 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         compound.setInteger("Timer", this.currentTimer);
-        if(sync){
+        if(type == NBTType.SYNC){
             compound.setInteger("Animals", this.currentAnimalAmount);
         }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.currentTimer = compound.getInteger("Timer");
-        if(sync){
+        if(type == NBTType.SYNC){
             this.currentAnimalAmount = compound.getInteger("Animals");
         }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             boolean theFlag = this.currentTimer > 0;
             int range = 5;
-            List<EntityAnimal> animals = worldObj.getEntitiesWithinAABB(EntityAnimal.class, AxisAlignedBB.fromBounds(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
+            List<EntityAnimal> animals = this.worldObj.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
             if(animals != null){
                 this.currentAnimalAmount = animals.size();
                 if(this.currentAnimalAmount >= 2){
@@ -120,7 +119,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
             double d = Util.RANDOM.nextGaussian()*0.02D;
             double d1 = Util.RANDOM.nextGaussian()*0.02D;
             double d2 = Util.RANDOM.nextGaussian()*0.02D;
-            worldObj.spawnParticle(EnumParticleTypes.HEART, (animal.posX+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(Util.RANDOM.nextFloat()*animal.height), (animal.posZ+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
+            this.worldObj.spawnParticle(EnumParticleTypes.HEART, (animal.posX+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(Util.RANDOM.nextFloat()*animal.height), (animal.posZ+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
         }
     }
 

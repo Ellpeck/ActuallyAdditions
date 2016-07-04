@@ -1,36 +1,46 @@
 /*
- * This file ("TileEntityCompost.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityCompost.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.items.ItemFertilizer;
-import de.ellpeck.actuallyadditions.mod.items.ItemMisc;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
 public class TileEntityCompost extends TileEntityInventoryBase{
 
-    public static final int AMOUNT = 10;
     public int conversionTime;
 
     public TileEntityCompost(){
         super(1, "compost");
     }
 
+    public static CompostRecipe getRecipeForInput(ItemStack input){
+        if(input != null){
+            for(CompostRecipe recipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
+                if(input.isItemEqual(recipe.input)){
+                    return recipe;
+                }
+            }
+        }
+        return null;
+    }
+
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("ConversionTime", this.conversionTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("ConversionTime", this.conversionTime);
+        }
     }
 
     @Override
@@ -39,23 +49,34 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.conversionTime = compound.getInteger("ConversionTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.conversionTime = compound.getInteger("ConversionTime");
+        }
     }
 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             boolean theFlag = this.conversionTime > 0;
-            if(this.slots[0] != null && !(this.slots[0].getItem() instanceof ItemFertilizer) && this.slots[0].stackSize >= AMOUNT){
-                this.conversionTime++;
-                if(this.conversionTime >= 2000){
-                    this.slots[0] = new ItemStack(InitItems.itemFertilizer, AMOUNT);
+
+            if(this.slots[0] != null){
+                CompostRecipe recipe = getRecipeForInput(this.slots[0]);
+                if(recipe != null && this.slots[0].isItemEqual(recipe.input) && this.slots[0].stackSize >= recipe.input.stackSize){
+                    this.conversionTime++;
+                    if(this.conversionTime >= 3000){
+                        this.slots[0] = recipe.output.copy();
+                        this.conversionTime = 0;
+                        this.markDirty();
+                    }
+                }
+                else{
                     this.conversionTime = 0;
                 }
             }
+
             if(theFlag != this.conversionTime > 0){
                 this.markDirty();
             }
@@ -63,13 +84,8 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public int getInventoryStackLimit(){
-        return AMOUNT;
-    }
-
-    @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return stack.getItem() instanceof ItemMisc && stack.getItemDamage() == TheMiscItems.MASHED_FOOD.ordinal();
+        return getRecipeForInput(stack) != null;
     }
 
     @Override
@@ -79,12 +95,23 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
+    public int getInventoryStackLimit(){
+        if(this.slots[0] != null){
+            CompostRecipe recipe = getRecipeForInput(this.slots[0]);
+            if(recipe != null && recipe.input != null){
+                return recipe.input.stackSize;
+            }
+        }
+        return super.getInventoryStackLimit();
+    }
+
+    @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
         return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return stack.getItem() instanceof ItemFertilizer;
+        return getRecipeForInput(stack) == null;
     }
 }

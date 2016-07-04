@@ -1,11 +1,11 @@
 /*
- * This file ("BookletPage.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BookletPageAA.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
@@ -17,15 +17,15 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class BookletPageAA extends BookletPage{
 
-    protected int localizationKey;
-    private HashMap<String, String> textReplacements = new HashMap<String, String>();
+    protected final int localizationKey;
+    private final HashMap<String, String> textReplacements = new HashMap<String, String>();
     private boolean hasNoText;
 
     public BookletPageAA(int localizationKey){
@@ -43,13 +43,13 @@ public class BookletPageAA extends BookletPage{
             return null;
         }
 
-        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.localizationKey);
-        base = base.replaceAll("<imp>", EnumChatFormatting.DARK_GREEN+"");
-        base = base.replaceAll("<item>", EnumChatFormatting.BLUE+"");
-        base = base.replaceAll("<r>", EnumChatFormatting.BLACK+"");
+        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.localizationKey);
+        base = base.replaceAll("<imp>", TextFormatting.DARK_GREEN+"");
+        base = base.replaceAll("<item>", TextFormatting.BLUE+"");
+        base = base.replaceAll("<r>", TextFormatting.BLACK+"");
         base = base.replaceAll("<n>", "\n");
-        base = base.replaceAll("<i>", EnumChatFormatting.ITALIC+"");
-        base = base.replaceAll("<tifisgrin>", EnumChatFormatting.DARK_RED+""+EnumChatFormatting.UNDERLINE); //This is fucking important so go read it now
+        base = base.replaceAll("<i>", TextFormatting.ITALIC+"");
+        base = base.replaceAll("<tifisgrin>", TextFormatting.DARK_RED+""+TextFormatting.UNDERLINE); //This is fucking important so go read it now
 
         for(Object o : this.textReplacements.entrySet()){
             Map.Entry e = (Map.Entry)o;
@@ -80,7 +80,7 @@ public class BookletPageAA extends BookletPage{
 
     @Override
     public String getClickToSeeRecipeString(){
-        return EnumChatFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".clickToSeeRecipe");
+        return TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe");
     }
 
     public BookletPage setNoText(){
@@ -98,7 +98,7 @@ public class BookletPageAA extends BookletPage{
     }
 
     public void addToPagesWithItemStackData(){
-        if(!ActuallyAdditionsAPI.bookletPagesWithItemStackData.contains(this)){
+        if(!ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_DATA.contains(this)){
             ItemStack[] stacks = this.getItemStacksForPage();
             if(stacks != null && stacks.length > 0){
                 //Ensure that there is at least one ItemStack

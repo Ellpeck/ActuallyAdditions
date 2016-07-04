@@ -1,62 +1,65 @@
 /*
- * This file ("TileEntityHeatCollector.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityHeatCollector.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 
-public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider, IEnergySaver, IEnergyDisplay{
+public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider, IEnergyDisplay{
 
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
-    public EnergyStorage storage = new EnergyStorage(30000);
+    public final EnergyStorage storage = new EnergyStorage(30000);
     private int oldEnergy;
 
+    public TileEntityHeatCollector(){
+        super("heatCollector");
+    }
+
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.writeSyncableNBT(compound, isForSync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.readSyncableNBT(compound, isForSync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }
 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
             if(ENERGY_PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                 for(int i = 1; i <= 5; i++){
-                    BlockPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), this.pos, 0);
-                    if(coords != null){
-                        Block block = PosUtil.getBlock(coords, worldObj);
-                        if(block != null && block.getMaterial() == Material.lava && PosUtil.getMetadata(coords, worldObj) == 0){
-                            blocksAround.add(i);
-                        }
+                    BlockPos coords = this.pos.offset(WorldUtil.getDirectionBySidesInOrder(i));
+                    IBlockState state = this.worldObj.getBlockState(coords);
+                    Block block = state.getBlock();
+                    if(block != null && block.getMaterial(this.worldObj.getBlockState(coords)) == Material.LAVA && block.getMetaFromState(state) == 0){
+                        blocksAround.add(i);
                     }
                 }
 
@@ -66,13 +69,9 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
 
                     if(Util.RANDOM.nextInt(10000) == 0){
                         int randomSide = blocksAround.get(Util.RANDOM.nextInt(blocksAround.size()));
-                        WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), worldObj, this.pos);
+                        this.worldObj.setBlockToAir(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(randomSide)));
                     }
                 }
-            }
-
-            if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergy(worldObj, this.pos, EnumFacing.UP, this.storage);
             }
 
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
@@ -107,13 +106,13 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     }
 
     @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
+    }
+
+    @Override
+    public boolean needsHoldShift(){
+        return false;
     }
 }

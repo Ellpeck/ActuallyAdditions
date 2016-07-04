@@ -1,41 +1,34 @@
 /*
- * This file ("ContainerCanolaPress.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ContainerCanolaPress.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
-import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
-import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
 
-@InventoryContainer
+
 public class ContainerCanolaPress extends Container{
 
-    private TileEntityCanolaPress press;
+    private final TileEntityCanolaPress press;
 
     public ContainerCanolaPress(InventoryPlayer inventory, TileEntityBase tile){
         this.press = (TileEntityCanolaPress)tile;
 
         this.addSlotToContainer(new Slot(this.press, 0, 81, 10));
-        this.addSlotToContainer(new Slot(this.press, 1, 136, 73));
-        this.addSlotToContainer(new SlotOutput(this.press, 2, 136, 42));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -49,12 +42,12 @@ public class ContainerCanolaPress extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 3;
-        final int inventoryEnd = inventoryStart+26;
-        final int hotbarStart = inventoryEnd+1;
-        final int hotbarEnd = hotbarStart+8;
+        int inventoryStart = 1;
+        int inventoryEnd = inventoryStart+26;
+        int hotbarStart = inventoryEnd+1;
+        int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
@@ -65,11 +58,6 @@ public class ContainerCanolaPress extends Container{
                 //Shift from Inventory
                 if(newStack.getItem() == InitItems.itemMisc && newStack.getItemDamage() == TheMiscItems.CANOLA.ordinal()){
                     if(!this.mergeItemStack(newStack, 0, 1, false)){
-                        return null;
-                    }
-                }
-                else if(FluidContainerRegistry.getContainerCapacity(new FluidStack(InitFluids.fluidCanolaOil, 1), newStack) > 0){
-                    if(!this.mergeItemStack(newStack, 1, 2, false)){
                         return null;
                     }
                 }
@@ -88,7 +76,7 @@ public class ContainerCanolaPress extends Container{
                 return null;
             }
 
-            if(newStack.stackSize == 0){
+            if(newStack.stackSize <= 0){
                 theSlot.putStack(null);
             }
             else{

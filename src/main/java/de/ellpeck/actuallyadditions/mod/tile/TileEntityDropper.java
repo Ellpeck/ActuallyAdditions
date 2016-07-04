@@ -1,48 +1,50 @@
 /*
- * This file ("TileEntityDropper.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityDropper.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
-public class TileEntityDropper extends TileEntityInventoryBase implements IRedstoneToggle{
+public class TileEntityDropper extends TileEntityInventoryBase{
 
     private int currentTime;
-    private boolean activateOnceWithSignal;
 
     public TileEntityDropper(){
         super(9, "dropper");
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setInteger("CurrentTime", this.currentTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("CurrentTime", this.currentTime);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.currentTime = compound.getInteger("CurrentTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentTime = compound.getInteger("CurrentTime");
+        }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
-            if(!this.isRedstonePowered && !this.activateOnceWithSignal){
+        if(!this.worldObj.isRemote){
+            if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
@@ -65,7 +67,8 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
         if(this.removeFromInventory(false) != null){
             ItemStack stack = this.removeFromInventory(true);
             stack.stackSize = 1;
-            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, worldObj)), worldObj, this.pos, stack);
+            IBlockState state = this.worldObj.getBlockState(this.pos);
+            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state)), this.worldObj, this.pos, stack);
         }
     }
 
@@ -96,13 +99,8 @@ public class TileEntityDropper extends TileEntityInventoryBase implements IRedst
     }
 
     @Override
-    public void toggle(boolean to){
-        this.activateOnceWithSignal = to;
-    }
-
-    @Override
-    public boolean isPulseMode(){
-        return this.activateOnceWithSignal;
+    public boolean isRedstoneToggle(){
+        return true;
     }
 
     @Override

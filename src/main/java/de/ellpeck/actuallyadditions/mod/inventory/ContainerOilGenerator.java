@@ -1,38 +1,29 @@
 /*
- * This file ("ContainerOilGenerator.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ContainerOilGenerator.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
-import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
-import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
 
-@InventoryContainer
 public class ContainerOilGenerator extends Container{
 
-    private TileEntityOilGenerator generator;
+    private final TileEntityOilGenerator generator;
 
     public ContainerOilGenerator(InventoryPlayer inventory, TileEntityBase tile){
         this.generator = (TileEntityOilGenerator)tile;
-
-        this.addSlotToContainer(new Slot(this.generator, 0, 98, 74));
-        this.addSlotToContainer(new SlotOutput(this.generator, 1, 98, 43));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -46,12 +37,12 @@ public class ContainerOilGenerator extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 2;
-        final int inventoryEnd = inventoryStart+26;
-        final int hotbarStart = inventoryEnd+1;
-        final int hotbarEnd = hotbarStart+8;
+        int inventoryStart = 0;
+        int inventoryEnd = inventoryStart+26;
+        int hotbarStart = inventoryEnd+1;
+        int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
@@ -59,15 +50,7 @@ public class ContainerOilGenerator extends Container{
 
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
-                //Shift from Inventory
-                if(FluidContainerRegistry.containsFluid(newStack, new FluidStack(InitFluids.fluidOil, 1))){
-                    if(!this.mergeItemStack(newStack, 0, 1, false)){
-                        return null;
-                    }
-                }
-                //
-
-                else if(slot >= inventoryStart && slot <= inventoryEnd){
+                if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
                         return null;
                     }
@@ -80,7 +63,7 @@ public class ContainerOilGenerator extends Container{
                 return null;
             }
 
-            if(newStack.stackSize == 0){
+            if(newStack.stackSize <= 0){
                 theSlot.putStack(null);
             }
             else{
@@ -99,6 +82,6 @@ public class ContainerOilGenerator extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.generator.isUseableByPlayer(player);
+        return this.generator.canPlayerUse(player);
     }
 }

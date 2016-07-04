@@ -1,11 +1,11 @@
 /*
- * This file ("GuiRepairer.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("GuiRepairer.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
@@ -26,8 +26,8 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiRepairer extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiRepairer");
-    private TileEntityItemRepairer tileRepairer;
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiRepairer");
+    private final TileEntityItemRepairer tileRepairer;
 
     public GuiRepairer(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerRepairer(inventory, tile));
@@ -40,14 +40,14 @@ public class GuiRepairer extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         String text = this.tileRepairer.storage.getEnergyStored()+"/"+this.tileRepairer.storage.getMaxEnergyStored()+" RF";
-        if(x >= guiLeft+28 && y >= guiTop+6 && x <= guiLeft+43 && y <= guiTop+88){
+        if(x >= this.guiLeft+28 && y >= this.guiTop+6 && x <= this.guiLeft+43 && y <= this.guiTop+88){
             this.drawHoveringText(Collections.singletonList(text), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileRepairer.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileRepairer);
     }
 
     @Override
@@ -57,12 +57,12 @@ public class GuiRepairer extends GuiContainer{
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if(this.tileRepairer.storage.getEnergyStored() > 0){
             int i = this.tileRepairer.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft+28, this.guiTop+89-i, 176, 44, 16, i);
+            this.drawTexturedModalRect(this.guiLeft+28, this.guiTop+89-i, 176, 44, 16, i);
         }
         if(TileEntityItemRepairer.canBeRepaired(this.tileRepairer.slots[TileEntityItemRepairer.SLOT_INPUT])){
             int i = this.tileRepairer.getItemDamageToScale(22);

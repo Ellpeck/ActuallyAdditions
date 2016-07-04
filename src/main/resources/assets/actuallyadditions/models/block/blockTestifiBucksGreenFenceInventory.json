@@ -1,6 +1,6 @@
 {
-    "parent": "block/wall_inventory",
-    "textures": {
-        "wall": "actuallyadditions:blocks/blockTestifiBucksGreenWall"
-    }
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "actuallyadditions:blocks/blockTestifiBucksGreenWall"
+  }
 }

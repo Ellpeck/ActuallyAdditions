@@ -7,6 +7,75 @@ actuallyadditions.lolWutHowUDoDis.name=This is bugged. Throw it away. Please.
 fluid.actuallyadditions.oil=Oil
 fluid.actuallyadditions.canolaoil=Canola Oil
 
+#Banners
+item.banner.actuallyadditionsBook.black=Black Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.red=Red Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.green=Green Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.brown=Brown Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.blue=Blue Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.purple=Purple Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.cyan=Cyan Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.silver=Silver Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.gray=Gray Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.pink=Pink Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.lime=Lime Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.yellow=Yellow Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.lightBlue=LightBlue Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.magenta=Magenta Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.orange=Orange Actually Additions Manual Pattern
+item.banner.actuallyadditionsBook.white=White Actually Additions Manual Pattern
+
+item.banner.actuallyadditionsPhanCon.black=Black Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.red=Red Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.green=Green Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.brown=Brown Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.blue=Blue Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.purple=Purple Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.cyan=Cyan Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.silver=Silver Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.gray=Gray Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.pink=Pink Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.lime=Lime Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.yellow=Yellow Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.lightBlue=LightBlue Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.magenta=Magenta Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.orange=Orange Phantom Connector Pattern
+item.banner.actuallyadditionsPhanCon.white=White Phantom Connector Pattern
+
+item.banner.actuallyadditionsLeafBlo.black=Black Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.red=Red Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.green=Green Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.brown=Brown Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.blue=Blue Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.purple=Purple Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.cyan=Cyan Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.silver=Silver Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.gray=Gray Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.pink=Pink Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.lime=Lime Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.yellow=Yellow Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.lightBlue=LightBlue Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.magenta=Magenta Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.orange=Orange Leaf Blower Pattern
+item.banner.actuallyadditionsLeafBlo.white=White Leaf Blower Pattern
+
+item.banner.actuallyadditionsDrill.black=Black Drill Pattern
+item.banner.actuallyadditionsDrill.red=Red Drill Pattern
+item.banner.actuallyadditionsDrill.green=Green Drill Pattern
+item.banner.actuallyadditionsDrill.brown=Brown Drill Pattern
+item.banner.actuallyadditionsDrill.blue=Blue Drill Pattern
+item.banner.actuallyadditionsDrill.purple=Purple Drill Pattern
+item.banner.actuallyadditionsDrill.cyan=Cyan Drill Pattern
+item.banner.actuallyadditionsDrill.silver=Silver Drill Pattern
+item.banner.actuallyadditionsDrill.gray=Gray Drill Pattern
+item.banner.actuallyadditionsDrill.pink=Pink Drill Pattern
+item.banner.actuallyadditionsDrill.lime=Lime Drill Pattern
+item.banner.actuallyadditionsDrill.yellow=Yellow Drill Pattern
+item.banner.actuallyadditionsDrill.lightBlue=LightBlue Drill Pattern
+item.banner.actuallyadditionsDrill.magenta=Magenta Drill Pattern
+item.banner.actuallyadditionsDrill.orange=Orange Drill Pattern
+item.banner.actuallyadditionsDrill.white=White Drill Pattern
+
 #NEI Integration
 container.nei.actuallyadditions.crushing.name=Crusher
 container.nei.actuallyadditions.crushingDouble.name=Double Crusher
@@ -39,7 +108,9 @@ tile.actuallyadditions.blockMiscBlackQuartz.name=Block of Black Quartz
 tile.actuallyadditions.blockMiscBlackQuartzChiseled.name=Chiseled Block of Black Quartz
 tile.actuallyadditions.blockMiscBlackQuartzPillar.name=Pillar of Black Quartz
 tile.actuallyadditions.blockFeeder.name=Automatic Feeder
-tile.actuallyadditions.blockGiantChest.name=Storage Crate
+tile.actuallyadditions.blockGiantChest.name=Small Storage Crate
+tile.actuallyadditions.blockGiantChestMedium.name=Medium Storage Crate
+tile.actuallyadditions.blockGiantChestLarge.name=Large Storage Crate
 tile.actuallyadditions.blockGrinder.name=Crusher
 tile.actuallyadditions.blockGrinderDouble.name=Double Crusher
 tile.actuallyadditions.blockFurnaceDouble.name=Double Furnace
@@ -72,7 +143,9 @@ tile.actuallyadditions.blockColoredLampPink.name=Pink Lamp
 tile.actuallyadditions.blockColoredLampCyan.name=Cyan Lamp
 tile.actuallyadditions.blockColoredLampPurple.name=Purple Lamp
 tile.actuallyadditions.blockPhantomface.name=Phantomface
+tile.actuallyadditions.blockPlayerInterface.name=Player Interface
 tile.actuallyadditions.blockPhantomEnergyface.name=Phantom Energyface
+tile.actuallyadditions.blockPhantomRedstoneface.name=Phantom Redstoneface
 tile.actuallyadditions.blockPhantomLiquiface.name=Phantom Liquiface
 tile.actuallyadditions.blockPhantomPlacer.name=Phantom Placer
 tile.actuallyadditions.blockPhantomBreaker.name=Phantom Breaker
@@ -133,6 +206,12 @@ tile.actuallyadditions.blockChiseledQuartzSlab.name=Chiseled Black Quartz Slab
 tile.actuallyadditions.blockPillarQuartzWall.name=Black Quartz Pillar Wall
 tile.actuallyadditions.blockPillarQuartzStair.name=Black Quartz Pillar Stairs
 tile.actuallyadditions.blockPillarQuartzSlab.name=Black Quartz Pillar Slab
+tile.actuallyadditions.blockLaserRelayItem.name=Item Laser Relay
+tile.actuallyadditions.blockLaserRelayItemWhitelist.name=Advanced Item Laser Relay
+tile.actuallyadditions.blockItemViewer.name=Item Interface
+tile.actuallyadditions.blockImpureIron.name=Impure Iron
+tile.actuallyadditions.blockBookletStand.name=Wall-Mount Manual
+tile.actuallyadditions.blockDisplayStand.name=Display Stand
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -331,6 +410,7 @@ item.actuallyadditions.itemChestQuartz.name=Black Quartz Chestplate
 item.actuallyadditions.itemPantsQuartz.name=Black Quartz Pants
 item.actuallyadditions.itemBootsQuartz.name=Black Quartz Boots
 item.actuallyadditions.itemBooklet.name=Actually Additions Manual
+item.actuallyadditions.itemRarmorModuleReconstructor.name=Reconstruction Module
 item.actuallyadditions.itemLaserWrench.name=Laser Wrench
 item.actuallyadditions.itemChestToCrateUpgrade.name=Chest To Storage Crate Upgrade
 item.actuallyadditions.itemMiscDrillCore.name=Drill Core
@@ -407,6 +487,14 @@ item.actuallyadditions.itemPaxelCrystalBlack.name=Void Crystal AIOT
 item.actuallyadditions.itemPaxelCrystalWhite.name=Enori Crystal AIOT
 item.actuallyadditions.itemPaxelCrystalGreen.name=Emeradic Crystal AIOT
 item.actuallyadditions.itemFoodBacon.name=Bacon
+item.actuallyadditions.itemMiscEnderStar.name=Ender Star
+item.actuallyadditions.itemSpawnerChanger.name=Spawner Changer
+item.actuallyadditions.itemMiscSpawnerShard.name=Spawner Shards
+item.actuallyadditions.itemMinecartFireworkBox.name=Firework Box Cart
+item.actuallyadditions.itemWaterBowl.name=Bowl of Water
+item.actuallyadditions.itemFilter.name=Item Filter
+item.actuallyadditions.itemMiscBiomass.name=Biomass
+item.actuallyadditions.itemMiscBiocoal.name=Bio Coal
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -435,7 +523,7 @@ tooltip.actuallyadditions.extraInfo.desc=Advanced Info
 tooltip.actuallyadditions.blockPhantomRange.desc=Range
 tooltip.actuallyadditions.laser.stored.desc=<Laser stored!>
 tooltip.actuallyadditions.laser.connected.desc=<Laser connected!>
-tooltip.actuallyadditions.laser.cantConnect.desc=Can't connect: The relays are either part of the same network, the stored relay doesn't exist anymore or it is too far away!
+tooltip.actuallyadditions.laser.cantConnect.desc=Can't connect: The relays are either part of the same network, the stored relay isn't the same type or doesn't exist anymore or it is too far away!
 tooltip.actuallyadditions.itemBooklet.desc=Or "Booklet", if you will
 
 #Gui Information
@@ -458,13 +546,20 @@ info.actuallyadditions.gui.blacklist=Blacklist
 info.actuallyadditions.gui.coffee=Coffee
 info.actuallyadditions.gui.ok=Ok
 info.actuallyadditions.gui.the=the
+info.actuallyadditions.gui.smart=Smart Whitelist
+info.actuallyadditions.gui.smartInfo=When pressing this, all items from inventories adjacent to this relay will be added to this part of the white- or blacklist. Adding Item Filters to the list before will cause them to also be filled.
 info.actuallyadditions.inputter.info.1=This is the first Slot in the connected Inventory to <p> at.
 info.actuallyadditions.inputter.info.2=This is the slot after the last Slot in the connected Inventory to <p> at. What that means: If you, for example, write 2 in the field to the left and 5 in this one, it will <p> at Slot 2, 3, and 4.
-info.actuallyadditions.inputter.whitelistInfo=This applies for this part of the white-/blacklist. The other side applies as well, so you can have some Items whitelisted and some blacklisted. Note that, if you have an empty blacklist or an item whitelisted on at least one side, it will always go through.
+info.actuallyadditions.inputter.whitelistInfo=When pressing this, this side's whitelist mode will be changed. To let all items through, an empty blacklist can be used, to let no items through, an empty whitelist can be used. To configure certain items, place them or configured Item Filters in the slots.
 info.actuallyadditions.noLens=No Lens
-info.actuallyadditions.booklet.manualName.1=Actually Additions
+info.actuallyadditions.booklet.manualName.1.1=Actually Additions
+info.actuallyadditions.booklet.manualName.1.2=Actual Additions
+info.actuallyadditions.booklet.manualName.1.3=Actually Addiction
+info.actuallyadditions.booklet.manualName.1.4=Actual Edition
+info.actuallyadditions.booklet.manualName.1.5=Actual Addition
 info.actuallyadditions.booklet.manualName.2=Manual
 info.actuallyadditions.booklet.edition=Edition
+info.actuallyadditions.deathRecorded=Your death has been recorded. Use a Death Tracker to find the death location!
 
 #Container Names
 container.actuallyadditions.inputter.name=ESD
@@ -473,7 +568,9 @@ container.actuallyadditions.grinder.name=Crusher
 container.actuallyadditions.grinderDouble.name=Double Crusher
 container.actuallyadditions.furnaceDouble.name=Double Furnace
 container.actuallyadditions.feeder.name=Feeder
-container.actuallyadditions.giantChest.name=Storage Crate
+container.actuallyadditions.giantChest.name=Small Storage Crate
+container.actuallyadditions.giantChestMedium.name=Medium Storage Crate
+container.actuallyadditions.giantChestLarge.name=Large Storage Crate
 container.actuallyadditions.repairer.name=Repairer
 container.actuallyadditions.placer.name=Placer
 container.actuallyadditions.breaker.name=Breaker
@@ -499,6 +596,8 @@ container.actuallyadditions.cloud.name=Smiley Cloud
 container.actuallyadditions.directionalBreaker.name=Long-Range Breaker
 container.actuallyadditions.rangedCollector.name=Ranged Collector
 container.actuallyadditions.miner.name=Vertical Digger
+container.actuallyadditions.laserRelayItemWhitelist.name=Laser Relay
+container.actuallyadditions.filter.name=Item Filter
 
 #Update Information
 info.actuallyadditions.update.generic=[{"text":"There is an Update for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"available!","color":"none"}]
@@ -508,7 +607,7 @@ info.actuallyadditions.update.buttonOptions=Click: Changelog, Shift-Click: Downl
 info.actuallyadditions.update.failed=[{"text":"The Update Check for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"failed! Check Logs for more Info!","color":"none"}]
 
 #Achievements
-achievement.actuallyadditions.openBooklet=Screams of Knowledge
+achievement.actuallyadditions.openBooklet=Knowledge Bringer!
 achievement.actuallyadditions.openBooklet.desc=Open an Actually Additions Manual
 
 achievement.actuallyadditions.nameSmileyCloud=Your best friend
@@ -547,6 +646,12 @@ achievement.actuallyadditions.pickUpCoffee.desc=Harvest some coffee
 achievement.actuallyadditions.craftCoffeeMachine=Addiction in cups
 achievement.actuallyadditions.craftCoffeeMachine.desc=Craft a Coffee Machine
 
+achievement.actuallyadditions.obscured=§ksome chieve name
+achievement.actuallyadditions.obscured.desc=§klolwut y u actually look over meow
+
+achievement.actuallyadditions.craftFireworkBox=Bang Boom Bang
+achievement.actuallyadditions.craftFireworkBox.desc=Craft a Firework Box
+
 #Booklet Recipe Names
 booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe
 booklet.actuallyadditions.shapedRecipe=Shaped Recipe
@@ -556,6 +661,7 @@ booklet.actuallyadditions.shapedOreRecipe=Shaped OreDictionary Recipe
 #Booklet Entries
 booklet.actuallyadditions.indexEntry.gettingStarted.name=Getting Started
 booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
+booklet.actuallyadditions.indexEntry.crossover.name=Mod Crossover
 booklet.actuallyadditions.indexEntry.functionalNoRF.name=Blocks that don't use RF
 booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items and Search
 booklet.actuallyadditions.indexEntry.functionalRF.name=Blocks that use RF
@@ -565,7 +671,7 @@ booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
 
 #Booklet Info
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
-booklet.actuallyadditions.unavailable=Parts of this feature are currently disabled or incomplete due to the not fully complete 1.8.9 Port. You may experience something that's missing or doesn't fully work. Please use this item with caution!
+booklet.actuallyadditions.unavailable=Parts of this feature are currently disabled or incomplete due to the not fully complete 1.8.9 and 1.9 Port. You may experience something that's missing or doesn't fully work. Please use this item with caution!
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
 booklet.actuallyadditions.amountOfWords=%s words in total
 booklet.actuallyadditions.amountOfChars=%s characters in total
@@ -630,13 +736,13 @@ booklet.actuallyadditions.chapter.feeder.name=Feeder
 booklet.actuallyadditions.chapter.feeder.text.1=The <item>Feeder<r> is a good alternative to a manual animal farm. Place it in the middle of an animal pen and supply it with some wheat, seeds or carrots, depending on the animal you want to feed, and just wait. It will <imp>automatically feed the animals<r> and if there is enough animals near it, it will <imp>shut off on its own<r> to prevent lag or animal overflow. <n><n><i>Greenpeace approves
 
 booklet.actuallyadditions.chapter.compost.name=Compost and Fertilizer
-booklet.actuallyadditions.chapter.compost.text.1=The <item>Compost<r> is used to make <item>Fertilizier<r> from <item>Mashed Food<r>. <item>Fertilizer<r> acts just like Bone Meal, but can be crafted in a much simpler manner just by crafting <item>Mashed Food<r> and then putting <num> of those inside of a <item>Compost<r> and waiting for a bit. When the mashed food is composted, just take it out by right-clicking again.
+booklet.actuallyadditions.chapter.compost.text.1=The <item>Compost<r> is used to make <item>Fertilizier<r> from <item>Mashed Food<r>. <item>Fertilizer<r> acts just like Bone Meal, but can be crafted in a much simpler manner just by crafting <item>Mashed Food<r> and then putting 10 of those inside of a <item>Compost<r> and waiting for a bit. When the mashed food is composted, just take it out by right-clicking again. <n><n>This, however, also works for some other items, which will be explained when needed.
 booklet.actuallyadditions.chapter.compost.text.3=<item>Mashed Food<r> can be crafted from <imp>any type of food or plantable item<r>.
 
 booklet.actuallyadditions.chapter.crate.name=Storage Crates
-booklet.actuallyadditions.chapter.crate.text.1=<item>Storage Crates<r> are big. <imp>Really big<r>. They hold tons of items, more than 4 chests worth of them.
-booklet.actuallyadditions.chapter.crate.text.2=Placing a <item>Storage Crate Keeper<r> inside the Storage Crate before breaking it will cause it to <imp>keep all of its items<r>, however the Keeper will be destroyed upon placing the Crate back down.
-booklet.actuallyadditions.chapter.crate.text.3=The <item>Chest To Storage Crate Upgrade<r> allows you to <imp>convert any chest into a Storage Crate<r>, retaining its items! <n>Just <imp>shift-right-click<r> onto the chest to apply it.
+booklet.actuallyadditions.chapter.crate.text.1=<item>Storage Crates<r> are big. <imp>Really big<r>. They hold tons of items, more than 4 chests worth of them. <n>Not only that, but they can be <imp>upgraded in size<r>! View the following pages to get information on that and some other items regarding crates!
+booklet.actuallyadditions.chapter.crate.text.4=Placing a <item>Storage Crate Keeper<r> inside the Storage Crate before breaking it will cause it to <imp>keep all of its items<r>, however the Keeper will be destroyed upon placing the Crate back down.
+booklet.actuallyadditions.chapter.crate.text.5=The <item>Chest To Storage Crate Upgrade<r> allows you to <imp>convert any chest into a Storage Crate<r>, retaining its items! <n>Just <imp>shift-right-click<r> onto the chest to apply it.
 
 booklet.actuallyadditions.chapter.coffeeMachine.name=Coffee Machine
 booklet.actuallyadditions.chapter.coffeeMachine.text.1=The <item>Coffee Machine<r> is a block used to make <item>Coffee<r>, a <imp>potion-like<r> item that gives the user several buffs. <n>To use the coffee machine, you need a <item>Empty Cup<r>, <coffee> <item>Coffee Beans<r>, which can be found in the wild, harvested and <imp>planted on farmland<r> again, <rf> RF/t and <water>mB of Water per cup brewed. <n>On the coffee machine recipe pages at the back, to see what the item does, just hover over the Cup of Coffee.
@@ -646,7 +752,7 @@ booklet.actuallyadditions.chapter.coffeeMachine.text.6=<item>Milk<r> is an impor
 booklet.actuallyadditions.chapter.coffeeMachine.text.7=<i>The fact that you're reading this means that you either have <imp>HarvestCraft<r><i> installed, or that you're looking at the lang file. <r><n>This does the same thing as <item>Milk<r>, but for veggie guys.
 
 booklet.actuallyadditions.chapter.crusher.name=Crusher and Double Crusher
-booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns every ore, ingot and gem into its corresponding <imp>dust<r> using <rf1> RF/t. <n>When you put in <imp>Ores<r> however, they will yield <imp>2 pieces of dust<r>. <n>The <item>Double Crusher<r> basically does the same, however it can crush two ores at a time and uses <rf2> RF/t. <n>On the following pages, you can see some additional useful recipes for inside the crusher. <n><n><i>He's my crush
+booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns every ore, ingot and gem into its corresponding <imp>dust<r> using <rf> RF/t. <n>When you put in <imp>Ores<r> however, they will yield <imp>2 pieces of dust<r>. <n>The <item>Double Crusher<r> basically does the same, however it can crush two ores at a time. <n>On the following pages, you can see some additional useful recipes for inside the crusher. <n><n><i>He's my crush
 
 booklet.actuallyadditions.chapter.furnaceDouble.name=Double Furnace
 booklet.actuallyadditions.chapter.furnaceDouble.text.1=The <item>Double Furnace<r> works like a furnace, however, it uses <rf> RF/t and can smelt <imp>two items at a time<r>.
@@ -672,6 +778,7 @@ booklet.actuallyadditions.chapter.heatCollector.text.1=The <item>Heat Collector<
 
 booklet.actuallyadditions.chapter.canola.name=Everything Canola
 booklet.actuallyadditions.chapter.canola.text.1=There is lots of stuff that can be produced from Canola (which can be found in the wild and then planted and harvested!): You can make <imp>Canola Oil<r>, <imp>Oil<r> and produce <imp>RF<r> from it. <n>The way to do that is to take some <item>Canola, put it into a <item>Canola Press<r> which uses <pressRF> RF/t. That creates <imp><canola> mB of Canola Oil<r>. Put that into a <item>Fermenting Barrel<r>, let it sit there for a while before it converts into <imp>Oil<r>. That oil can then be used in a <item>Oil Generator<r> to create <imp><rf> RF/t<r>.
+booklet.actuallyadditions.chapter.canola.text.2=Additionally, if you have a lot of <item>Canola Seeds<r> left over from all of the farming you have been doing, you can <imp>put 20 at at time<r> into a <item>Compost<r>, which will turn them into <item>Biomass<r>. <n>The Biomass can then be put <imp>into a furnace<r>, causing it to be smelted into <item>Bio Coal<r> which can be used for <imp>smelting<r> almost as much items as a regular piece of coal.
 
 booklet.actuallyadditions.chapter.wings.name=Wings Of The Bats
 booklet.actuallyadditions.chapter.wings.text.1=Sometimes, bats will drop <item>Wings<r>. These wings can't really be used to fly, but that's just because they're not powerful enough. <n>To make them more powerful, you can craft <item>Wings Of The Bats<r>. When you have these in your inventory, they will allow you to <imp>fly like in creative mode<r>.
@@ -732,6 +839,7 @@ booklet.actuallyadditions.chapter.hairBalls.text.2=<item>Balls of Fur<r> are an 
 
 booklet.actuallyadditions.chapter.laserRelays.name=Laser Relays
 booklet.actuallyadditions.chapter.laserRelays.text.1=The <item>Laser Relay<r> is a block that can <imp>wirelessly transfer RF<r> just by being connected with a <item>Laser Wrench<r>, generating a network. <n>When placing a Power Generator or Receiver next to the relay, it can receive Power <imp>from any other relay<r> in the network. <n>Two relays can be at most <range> blocks apart. <n>During an energy transfer, they have an <imp>Energy Loss<r> of <loss>%.
+booklet.actuallyadditions.chapter.laserRelays.text.4=The <item>Laser Wrench<r>'s mode can be switched by <imp>sneak-right-clicking it<r> anywhere. <n>Possible modes are to <imp>always show lasers<r>, <imp>never show lasers<r> or only show lasers when <imp>holding the wrench<r>.
 
 booklet.actuallyadditions.chapter.blackLotus.name=Black Lotus
 booklet.actuallyadditions.chapter.blackLotus.text.1=Think of this: <n>You need to craft <imp>black wool<r>, <imp>black clay<r> or anything else that <imp>needs black dye<r> but you are just guilty about killing so many <imp>innocent squids<r>? <n>Well, the <item>Black Lotus<r> is exactly the thing you need! <n>Just look around <imp>in the wild<r> a bit, and you will find one, then being able to craft some <item>Black Dye<r> that can be used <imp>instead of Ink Sacs<r> so that you don't need to kill poor squids and L any longer.
@@ -766,5 +874,48 @@ booklet.actuallyadditions.chapter.fireworkBox.name=Firework Box
 booklet.actuallyadditions.chapter.fireworkBox.text.1=The <item>Firework Box<r> is a perfect thing for New Year's! When placed down and supplied with some <imp>RF<r>, it will shoot out some <imp>randomly generated<r> <item>Fireworks<r> around it. <n>For each shot, it uses <rf> RF. <n><n><i>You know, Vanilla Fireworks are just too bloody annoying to craft, but too awesome not to use. So here's the solution.
 booklet.actuallyadditions.chapter.fireworkBox.text.2=When right-clicking it with a <item>Redstone Torch<r> in hand, it will change between a mode where it <imp>gets deactivated by Redstone<r> and a mode where it <imp>responds to pulses<r>.
 
-booklet.actuallyadditions.chapter.rf.name=RF (Redstone Flux)
-booklet.actuallyadditions.chapter.rf.text.1=For anyone who hasn't used much of a mod that uses <imp>RF<r> yet, here's a quick explanation. <n><imp>Redstone Flux<r>, or RF for short, is a power system used by many mods. <n>The basic concept is is that lots of machines generate or use it <imp>every game tick<r>. That's what <imp>RF/t<r> means. <n>To connect a power generating (thus, outputting) machine to one that needs (thus, receives) power, just <imp>place it next to it<r>. <n><n><i>What's a fourth wall?
+booklet.actuallyadditions.chapter.rf.name=RF? Tesla?
+booklet.actuallyadditions.chapter.rf.text.1=For anyone who hasn't used much of a mod that uses <item>RF<r> yet, here's a quick explanation. <n><imp>Redstone Flux<r> is a power system used by many mods. <n>The basic concept is is that machines generate or use it <imp>every game tick<r>. That's what <imp>RF/t<r> means. <n>To connect machines, just <imp>place them next to each other<r>. <n>Also, if you fancy that sort of thing, all machines also work with <item>Tesla<r> in the same way they do with RF.
+
+booklet.actuallyadditions.chapter.enderStar.name=Ender Star
+booklet.actuallyadditions.chapter.enderStar.text.1=The <item>Ender Star<r> can be obtained by both killing a wither and going to the end to collect Dragon's Breath. The latter is obtained by using a bottle on the purple particles that the dragon spits out. <n>The <item>Ender Star<r> is used for <imp>multiple crafting recipes<r>.
+
+booklet.actuallyadditions.chapter.phantomRedstoneface.name=Phantom Redstoneface
+booklet.actuallyadditions.chapter.phantomRedstoneface.text.1=<imp>If you don't know what Phantomfaces are, check the Phantomfaces Entry first.<r> <n><n>The <item>Phantom Redstoneface<r> can be used to transmit redstone signals. This one, however, <imp>works differently<r> to the other Phantomfaces as it <imp>only works in one direction<r>. What this means is that the <imp>connected block has to provide redstone power<r> for redstone next to the Redstoneface to become powered. It does <imp>not work<r> the <imp>other way<r> around.
+
+booklet.actuallyadditions.chapter.spawnerShard.name=Spawner Shards
+booklet.actuallyadditions.chapter.spawnerShard.text.1=The <item>Spawner Shards<r> are a crafting ingredient found by <imp>breaking spawners<r>. Once a spawner in the world is broken, it will always drop <imp>one<r> Shard.
+
+booklet.actuallyadditions.chapter.spawnerChanger.name=Spawner Changer
+booklet.actuallyadditions.chapter.spawnerChanger.text.1=The <item>Spawner Changer<r> is an item that can be used to <imp>manipulate the mobs<r> that <imp>spawners spawn<r>. <n>This can be accomplished by first of all <imp>picking up<r> the desired mob to spawn with the Changer, killing it in the process. Next, the Changer can be <imp>right-clicked on the spawner<r>, causing the spawner to be changed. <n><n>This process probably won't work with every type of mob though.
+
+booklet.actuallyadditions.chapter.itemStorage.name=Laser Relay Item Storage
+booklet.actuallyadditions.chapter.itemStorage.text.1=Additionally to the <item>Laser Relays<r> that transfer RF, there are also <item>Item Laser Relays<r> that are able to transfer items. This works in a <imp>verry different way<r> though. <n>To connect <item>Item Laser Relays<r> together works the same as connecting normal ones, however, you need an <item>Item Interface<r> to be able to interact with them. <n>You can place <imp>any inventories<r> (such as chests and furnaces) next to the <item>Item Laser Relays<r>, but to be pulled out from or inputted into, there needs to be an <item>Item Interface<r> connected
+booklet.actuallyadditions.chapter.itemStorage.text.2=to one of the <item>Item Laser Relay<r>s. To input or output items in the system, just <imp>pipe them into the interface<r>. <n>If you want a way to make a storage system with this, there are also <item>Advanced Item Laser Relays<r>, in which, by <imp>sneak-right-clicking<r> them, you can specify which items are <imp>allowed and disallowed<r> to enter or exit inventories connected to this particular relay. When placing an advanced relay next to an <item>Item Interface<r>, this effect also applies.
+
+booklet.actuallyadditions.chapter.banners.name=Additional Banners
+booklet.actuallyadditions.chapter.banners.text.1=For <imp>special items<r> in <imp>Actually Additions<r>, there is also special <item>Banner<r> patterns. All of these just require the <imp>item next to the banner<r> in the crafting grid with, optionally, a <imp>color<r>. You can also combine them with a <item>Shield<r> like normal. <n>The items that have a banner pattern are: <n>The <item>Actually Additions Manual<r> <n>The <item>Phantom Connector<r> <n>The <item>Leaf Blower<r> (not the advanced version) <n>The <item>Drill<r> (only the white one works due to the way banners work)
+
+booklet.actuallyadditions.chapter.lushCaves.name=Lush Caves
+booklet.actuallyadditions.chapter.lushCaves.text.1=If you have ever done any <imp>Cave exploration<r>, you will have probably noticed some <imp>caves<r> that have <imp>trees and grass<r> inside of them. <n>These can be found at any height underground all over the world, and they can be very valuable when needing wood for torches and tools at some point. <n><n>If you didn't ever see one before, look on the <imp>next page<r> for a <imp>picture<r>!
+
+booklet.actuallyadditions.chapter.bookStand.name=Wall-Mount Manual
+booklet.actuallyadditions.chapter.bookStand.text.1=The <item>Manual Stand<r> is a block that is supposed to mainly be used on <imp>Servers<r>. <n>You can, provided you are the person who <imp>placed it down<r>, set a page in the GUI that will <imp>open when someone else accesses it<r> by pressing the "Set Page"-button while being on the desired page. <n>The Wall-Mount Manual <imp>does not save<r> pages another player navigated to, meaing re-accessing the Manual will cause it to always <imp>end up on the page speficied<r> by the placer.
+booklet.actuallyadditions.chapter.bookStand.text.2=People were using this not to have to have a manual item on their hotbar. <n>This is <imp>not supposed<r> to be used for that, because the <item>Actually Additions Manual<r> has <imp>bookmarks<r> and also <imp>keeps the page you were on before<r>. This, however, <imp>does neither<r>. <n><n>This was also originally made for Better Than Minecon. But whatever.
+
+booklet.actuallyadditions.chapter.waterBowl.name=Bowl of Water
+booklet.actuallyadditions.chapter.waterBowl.text.1=The <item>Bowl of Water<r> can be obtained by <imp>right-cliking a bowl on water<r> anywhere in the world. When the <item>Bowl of Water<r> is then right-clicked onto a block, the water will be placed, much like a <item>Bucket<r>. <n><n>This can be used, for example, for early game farms.
+
+booklet.actuallyadditions.chapter.playerInterface.name=Player Interface
+booklet.actuallyadditions.chapter.playerInterface.text.1=The <item>Player Interface<r> works in a similar way to the <item>Phantomface<r>, except it is <imp>connected to a player<r> instead of a block, and the connection is established by <imp>placing it down<r>. <n>When <imp>inputting items<r>, they will <imp>move to the player's inventory<r>. Also, when <imp>inputting RF<r>, it will <imp>charge the items<r> in the player's inventory. <n>It has a default range of <range> blocks, however, it can be expanded by placing up to 3 <item>Phantom Boosters<r> on top of it.
+
+booklet.actuallyadditions.chapter.displayStand.name=Display Stand
+booklet.actuallyadditions.chapter.displayStand.text.1=The <item>Display Stand<r> is a block that can, for one, <imp>display any item or block<r> by right-clicking with it onto the display stand. It will then be floating around on top. <n>To take it out of there again, just right-click with an empty hand. <n><n>The other feature, however, is that some items can be put onto it, <imp>having special effects<r>. This, however, will require the stand to <imp>get RF<r>. Read more on the next page.
+booklet.actuallyadditions.chapter.displayStand.text.2=The <item>Leaf Blower<r> and <item>Advanced Leaf Blower<r> can be placed onto the display stand, resulting in the grass and leaves around it to be blown away. <n><n><item>Potion Rings<r> can be placed onto the display stand. The normal version will give the specified potion effect to <imp>only one<r> living entity in a small area, while the advanced version will <imp>give a potion effect to all living entities<r> in a <imp>big area<r> while using up a significant amount of <imp>RF<r>.
+
+booklet.actuallyadditions.chapter.itemFilter.name=Item Filter
+booklet.actuallyadditions.chapter.itemFilter.text.1=The <item>Item Filter<r> can be used in <item>Advanced Item Laser Relays<r>, <item>ESDs<r> and <item>Ranged Collectors<r> to <imp>enlargen the size of their whitelist<r>. This can be done by right-clicking with the filter in hand and placing items to be filtered inside of it. The filter can then be placed into any whitelist slot in the desired machine. <n>For more information on this, <imp>hover over the whitelist buttons in the GUIs of whitelistable machines<r>!
+
+booklet.actuallyadditions.chapter.videoGuide.name=A Video Guide
+booklet.actuallyadditions.chapter.videoGuide.text.1=If you are a bit confused as to what is going on or just want to get a glimpse of what <imp>Actually Additions<r> has to offer, there is this <imp>brilliant video<r> by a guy called <item>Booty Toast<r> (yes, that is a weird name), that shows off what is possible in a really enjoyable way. <n>Just <imp>click the button<r> to have the video <imp>opened on YouTube<r>! <n><n><imp>Give it a watch!<r>
+booklet.actuallyadditions.chapter.videoGuide.page.1.button=Watch Video

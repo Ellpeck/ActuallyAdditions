@@ -1,11 +1,11 @@
 /*
- * This file ("ItemBlockBase.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemBlockBase.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
@@ -24,6 +24,7 @@ public class ItemBlockBase extends ItemBlock{
         this.setMaxDamage(0);
     }
 
+
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return this.getUnlocalizedName();
@@ -34,31 +35,20 @@ public class ItemBlockBase extends ItemBlock{
         return damage;
     }
 
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        if(this.block instanceof BlockBase){
-            return ((BlockBase)this.block).getRarity(stack);
-        }
-        else if(this.block instanceof BlockContainerBase){
-            return ((BlockContainerBase)this.block).getRarity(stack);
-        }
-        else if(this.block instanceof BlockFluidFlowing){
-            return ((BlockFluidFlowing)this.block).getRarity(stack);
-        }
-        else if(this.block instanceof BlockPlant){
-            return ((BlockPlant)this.block).getRarity(stack);
-        }
-        else if(this.block instanceof BlockStair){
-            return ((BlockStair)this.block).getRarity(stack);
-        }
-        else if(this.block instanceof BlockWallAA){
-            return ((BlockWallAA)this.block).getRarity(stack);
-        }
-        else if(this.block instanceof BlockBushBase){
-            return ((BlockBushBase)this.block).getRarity(stack);
+        if(this.block instanceof ICustomRarity){
+            return ((ICustomRarity)this.block).getRarity(stack);
         }
         else{
             return Util.FALLBACK_RARITY;
         }
+    }
+
+    public interface ICustomRarity{
+
+        EnumRarity getRarity(ItemStack stack);
+
     }
 }

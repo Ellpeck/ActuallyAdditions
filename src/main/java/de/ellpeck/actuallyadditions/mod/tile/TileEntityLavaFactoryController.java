@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityLavaFactoryController.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityLavaFactoryController.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -14,49 +14,57 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyReceiver, IEnergySaver, IEnergyDisplay{
+public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyReceiver, IEnergyDisplay{
 
     public static final int NOT_MULTI = 0;
     public static final int HAS_LAVA = 1;
     public static final int HAS_AIR = 2;
     public static final int ENERGY_USE = 150000;
-    public EnergyStorage storage = new EnergyStorage(3000000);
+    public final EnergyStorage storage = new EnergyStorage(3000000);
     private int currentWorkTime;
     private int oldEnergy;
 
+    public TileEntityLavaFactoryController(){
+        super("lavaFactory");
+    }
+
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
-        compound.setInteger("WorkTime", this.currentWorkTime);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("WorkTime", this.currentWorkTime);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
-        this.currentWorkTime = compound.getInteger("WorkTime");
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentWorkTime = compound.getInteger("WorkTime");
+        }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.storage.getEnergyStored() >= ENERGY_USE && this.isMultiblock() == HAS_AIR){
                 this.currentWorkTime++;
                 if(this.currentWorkTime >= 200){
                     this.currentWorkTime = 0;
-                    PosUtil.setBlock(PosUtil.offset(this.pos, 0, 1, 0), worldObj, Blocks.lava, 0, 2);
+                    this.worldObj.setBlockState(this.pos.up(), Blocks.LAVA.getDefaultState(), 2);
                     this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
@@ -73,18 +81,20 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public int isMultiblock(){
         BlockPos thisPos = this.pos;
         BlockPos[] positions = new BlockPos[]{
-                PosUtil.offset(thisPos, 1, 1, 0),
-                PosUtil.offset(thisPos, -1, 1, 0),
-                PosUtil.offset(thisPos, 0, 1, 1),
-                PosUtil.offset(thisPos, 0, 1, -1)
+                thisPos.add(1, 1, 0),
+                thisPos.add(-1, 1, 0),
+                thisPos.add(0, 1, 1),
+                thisPos.add(0, 1, -1)
         };
 
-        if(WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), worldObj)){
-            BlockPos pos = PosUtil.offset(thisPos, 0, 1, 0);
-            if(PosUtil.getBlock(pos, worldObj) == Blocks.lava || PosUtil.getBlock(pos, worldObj) == Blocks.flowing_lava){
+        if(WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), this.worldObj)){
+            BlockPos pos = thisPos.up();
+            IBlockState state = this.worldObj.getBlockState(pos);
+            Block block = state.getBlock();
+            if(block == Blocks.LAVA || block == Blocks.FLOWING_LAVA){
                 return HAS_LAVA;
             }
-            if(PosUtil.getBlock(pos, worldObj) == null || worldObj.isAirBlock(pos)){
+            if(block == null || this.worldObj.isAirBlock(pos)){
                 return HAS_AIR;
             }
         }
@@ -117,13 +127,13 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
+    }
+
+    @Override
+    public boolean needsHoldShift(){
+        return false;
     }
 }

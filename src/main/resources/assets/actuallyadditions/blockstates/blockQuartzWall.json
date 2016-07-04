@@ -1,36 +1,19 @@
 {
-    "variants": {
-        "east=false,north=false,south=false,up=false,west=false": { "model": "actuallyadditions:blockQuartzWallPost" },
-        "east=false,north=true,south=false,up=false,west=false":  { "model": "actuallyadditions:blockQuartzWallNorth" },
-        "east=true,north=false,south=false,up=false,west=false":  { "model": "actuallyadditions:blockQuartzWallNorth", "y": 90, "uvlock": true },
-        "east=false,north=false,south=true,up=false,west=false":  { "model": "actuallyadditions:blockQuartzWallNorth", "y": 180, "uvlock": true },
-        "east=false,north=false,south=false,up=false,west=true":  { "model": "actuallyadditions:blockQuartzWallNorth", "y": 270, "uvlock": true },
-        "east=true,north=true,south=false,up=false,west=false":   { "model": "actuallyadditions:blockQuartzWallNorthEast" },
-        "east=true,north=false,south=true,up=false,west=false":   { "model": "actuallyadditions:blockQuartzWallNorthEast", "y": 90, "uvlock": true },
-        "east=false,north=false,south=true,up=false,west=true":   { "model": "actuallyadditions:blockQuartzWallNorthEast", "y": 180, "uvlock": true },
-        "east=false,north=true,south=false,up=false,west=true":   { "model": "actuallyadditions:blockQuartzWallNorthEast", "y": 270, "uvlock": true },
-        "east=false,north=true,south=true,up=false,west=false":   { "model": "actuallyadditions:blockQuartzWallNorthSouth" },
-        "east=true,north=false,south=false,up=false,west=true":   { "model": "actuallyadditions:blockQuartzWallNorthSouth", "y": 90, "uvlock": true },
-        "east=true,north=true,south=true,up=false,west=false":    { "model": "actuallyadditions:blockQuartzWallNorthSouthEast" },
-        "east=true,north=false,south=true,up=false,west=true":    { "model": "actuallyadditions:blockQuartzWallNorthSouthEast", "y": 90, "uvlock": true },
-        "east=false,north=true,south=true,up=false,west=true":    { "model": "actuallyadditions:blockQuartzWallNorthSouthEast", "y": 180, "uvlock": true },
-        "east=true,north=true,south=false,up=false,west=true":    { "model": "actuallyadditions:blockQuartzWallNorthSouthEast", "y": 270, "uvlock": true },
-        "east=true,north=true,south=true,up=false,west=true":     { "model": "actuallyadditions:blockQuartzWallNorthSouthEastWest" },
-        "east=false,north=false,south=false,up=true,west=false":  { "model": "actuallyadditions:blockQuartzWallPost" },
-        "east=false,north=true,south=false,up=true,west=false":   { "model": "actuallyadditions:blockQuartzWallNorth" },
-        "east=true,north=false,south=false,up=true,west=false":   { "model": "actuallyadditions:blockQuartzWallNorth", "y": 90, "uvlock": true },
-        "east=false,north=false,south=true,up=true,west=false":   { "model": "actuallyadditions:blockQuartzWallNorth", "y": 180, "uvlock": true },
-        "east=false,north=false,south=false,up=true,west=true":   { "model": "actuallyadditions:blockQuartzWallNorth", "y": 270, "uvlock": true },
-        "east=true,north=true,south=false,up=true,west=false":    { "model": "actuallyadditions:blockQuartzWallNorthEast" },
-        "east=true,north=false,south=true,up=true,west=false":    { "model": "actuallyadditions:blockQuartzWallNorthEast", "y": 90, "uvlock": true },
-        "east=false,north=false,south=true,up=true,west=true":    { "model": "actuallyadditions:blockQuartzWallNorthEast", "y": 180, "uvlock": true },
-        "east=false,north=true,south=false,up=true,west=true":    { "model": "actuallyadditions:blockQuartzWallNorthEast", "y": 270, "uvlock": true },
-        "east=false,north=true,south=true,up=true,west=false":    { "model": "actuallyadditions:blockQuartzWallNorthSouthAbove" },
-        "east=true,north=false,south=false,up=true,west=true":    { "model": "actuallyadditions:blockQuartzWallNorthSouthAbove", "y": 90, "uvlock": true },
-        "east=true,north=true,south=true,up=true,west=false":     { "model": "actuallyadditions:blockQuartzWallNorthSouthEast" },
-        "east=true,north=false,south=true,up=true,west=true":     { "model": "actuallyadditions:blockQuartzWallNorthSouthEast", "y": 90, "uvlock": true },
-        "east=false,north=true,south=true,up=true,west=true":     { "model": "actuallyadditions:blockQuartzWallNorthSouthEast", "y": 180, "uvlock": true },
-        "east=true,north=true,south=false,up=true,west=true":     { "model": "actuallyadditions:blockQuartzWallNorthSouthEast", "y": 270, "uvlock": true },
-        "east=true,north=true,south=true,up=true,west=true":      { "model": "actuallyadditions:blockQuartzWallNorthSouthEastWest" }
+  "multipart": [
+    {   "when": { "up": "true" },
+      "apply": { "model": "actuallyadditions:blockQuartzWallPost" }
+    },
+    {   "when": { "north": "true" },
+      "apply": { "model": "actuallyadditions:blockQuartzWallSide", "uvlock": true }
+    },
+    {   "when": { "east": "true" },
+      "apply": { "model": "actuallyadditions:blockQuartzWallSide", "y": 90, "uvlock": true }
+    },
+    {   "when": { "south": "true" },
+      "apply": { "model": "actuallyadditions:blockQuartzWallSide", "y": 180, "uvlock": true }
+    },
+    {   "when": { "west": "true" },
+      "apply": { "model": "actuallyadditions:blockQuartzWallSide", "y": 270, "uvlock": true }
     }
+  ]
 }

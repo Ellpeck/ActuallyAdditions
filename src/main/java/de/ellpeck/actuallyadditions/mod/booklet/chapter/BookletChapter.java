@@ -1,11 +1,11 @@
 /*
- * This file ("BookletChapter.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BookletChapter.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.chapter;
@@ -17,7 +17,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 public class BookletChapter implements IBookletChapter{
 
@@ -25,9 +25,7 @@ public class BookletChapter implements IBookletChapter{
     public final IBookletEntry entry;
     public final ItemStack displayStack;
     private final String unlocalizedName;
-    public EnumChatFormatting color;
-
-    public boolean isIncomplete;
+    public TextFormatting color;
 
     public BookletChapter(String unlocalizedName, IBookletEntry entry, ItemStack displayStack, BookletPage... pages){
         this.pages = pages.clone();
@@ -42,7 +40,7 @@ public class BookletChapter implements IBookletChapter{
             page.setChapter(this);
         }
 
-        this.color = EnumChatFormatting.RESET;
+        this.color = TextFormatting.RESET;
     }
 
     @Override
@@ -57,7 +55,7 @@ public class BookletChapter implements IBookletChapter{
 
     @Override
     public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".chapter."+this.unlocalizedName+".name");
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.unlocalizedName+".name");
     }
 
     @Override
@@ -75,18 +73,11 @@ public class BookletChapter implements IBookletChapter{
         return this.displayStack;
     }
 
-    public BookletChapter setIncomplete(){
-        this.isIncomplete = true;
-        return this;
+    public void setImportant(){
+        this.color = TextFormatting.DARK_GREEN;
     }
 
-    public BookletChapter setImportant(){
-        this.color = EnumChatFormatting.DARK_GREEN;
-        return this;
-    }
-
-    public BookletChapter setSpecial(){
-        this.color = EnumChatFormatting.DARK_PURPLE;
-        return this;
+    public void setSpecial(){
+        this.color = TextFormatting.DARK_PURPLE;
     }
 }

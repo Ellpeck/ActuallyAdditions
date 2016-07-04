@@ -1,12 +1,23 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:crop",
+    "textures": {
+      "crop": "actuallyadditions:blocks/blockRiceStage1"
+    }
+  },
   "variants": {
-    "age=0": { "model": "actuallyadditions:blockRiceStage1" },
-    "age=1": { "model": "actuallyadditions:blockRiceStage2" },
-    "age=2": { "model": "actuallyadditions:blockRiceStage2" },
-    "age=3": { "model": "actuallyadditions:blockRiceStage3" },
-    "age=4": { "model": "actuallyadditions:blockRiceStage4" },
-    "age=5": { "model": "actuallyadditions:blockRiceStage4" },
-    "age=6": { "model": "actuallyadditions:blockRiceStage5" },
-    "age=7": { "model": "actuallyadditions:blockRiceStage6" }
+    "normal": [{}],
+    "inventory": [{}],
+    "age": {
+      "0": { "textures": { "crop": "actuallyadditions:blocks/blockRiceStage1" } },
+      "1": { "textures": { "crop": "actuallyadditions:blocks/blockRiceStage2" } },
+      "2": { "textures": { "crop": "actuallyadditions:blocks/blockRiceStage2" } },
+      "3": { "textures": { "crop": "actuallyadditions:blocks/blockRiceStage3" } },
+      "4": { "textures": { "crop": "actuallyadditions:blocks/blockRiceStage4" } },
+      "5": { "textures": { "crop": "actuallyadditions:blocks/blockRiceStage4" } },
+      "6": { "textures": { "crop": "actuallyadditions:blocks/blockRiceStage5" } },
+      "7": { "textures": { "crop": "actuallyadditions:blocks/blockRiceStage6" } }
+    }
   }
 }

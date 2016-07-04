@@ -1,11 +1,11 @@
 /*
- * This file ("JamVillagerTradeHandler.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("JamVillagerTradeHandler.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.gen;
@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.oredict.OreDictionary;
@@ -23,47 +23,44 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.ArrayList;
 import java.util.Random;
 
-//TODO Fix the villager
 public class JamVillagerTradeHandler{
 
-    private ArrayList<Trade> trades = new ArrayList<Trade>();
+    private final ArrayList<Trade> trades = new ArrayList<Trade>();
 
     public JamVillagerTradeHandler(){
         this.addWants("ingotGold", 5, 7);
         this.addWants("cropWheat", 15, 25);
         this.addWants("dustRedstone", 25, 40);
-        this.addWants(new ItemStack(Items.bucket), 5, 9);
-        this.addWants(new ItemStack(Items.glass_bottle), 12, 17);
-        this.addWants(new ItemStack(Items.potionitem), 1, 1);
+        this.addWants(new ItemStack(Items.BUCKET), 5, 9);
+        this.addWants(new ItemStack(Items.GLASS_BOTTLE), 12, 17);
+        this.addWants(new ItemStack(Items.POTIONITEM), 1, 1);
         this.addWants("ingotIron", 10, 15);
         this.addWants("gemDiamond", 1, 2);
         this.addWants("dustGlowstone", 12, 22);
     }
 
     public void addWants(String oredictName, int minSize, int maxSize){
-        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName);
-        trades.add(new Trade(stacks, minSize, maxSize));
+        ArrayList<ItemStack> stacks = (ArrayList<ItemStack>)OreDictionary.getOres(oredictName, false);
+        this.trades.add(new Trade(stacks, minSize, maxSize));
     }
 
     public void addWants(ItemStack stack, int minSize, int maxSize){
-        trades.add(new Trade(stack, minSize, maxSize));
+        this.trades.add(new Trade(stack, minSize, maxSize));
     }
 
-    //TODO Fix the Villager
     //@Override
-    @SuppressWarnings("all")
     public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random rand){
-        for(int trade = 0; trade < trades.size(); trade++){
-            for(int want = 0; want < trades.get(trade).wants.size(); want++){
-                ItemStack wantsOne = trades.get(trade).wants.get(want);
-                wantsOne.stackSize = MathHelper.getRandomIntegerInRange(rand, trades.get(trade).minStackSize, trades.get(trade).maxStackSize);
+        for(int trade = 0; trade < this.trades.size(); trade++){
+            for(int want = 0; want < this.trades.get(trade).wants.size(); want++){
+                ItemStack wantsOne = this.trades.get(trade).wants.get(want);
+                wantsOne.stackSize = MathHelper.getRandomIntegerInRange(rand, this.trades.get(trade).minStackSize, this.trades.get(trade).maxStackSize);
 
                 ItemStack wantsTwo = null;
                 if(rand.nextInt(3) == 0){
-                    int randomSecondTrade = rand.nextInt(trades.size());
-                    for(int randomSecondWant = 0; randomSecondWant < trades.get(randomSecondTrade).wants.size(); randomSecondWant++){
-                        wantsTwo = trades.get(randomSecondTrade).wants.get(randomSecondWant);
-                        wantsTwo.stackSize = MathHelper.getRandomIntegerInRange(rand, trades.get(randomSecondTrade).minStackSize, trades.get(randomSecondTrade).maxStackSize);
+                    int randomSecondTrade = rand.nextInt(this.trades.size());
+                    for(int randomSecondWant = 0; randomSecondWant < this.trades.get(randomSecondTrade).wants.size(); randomSecondWant++){
+                        wantsTwo = this.trades.get(randomSecondTrade).wants.get(randomSecondWant);
+                        wantsTwo.stackSize = MathHelper.getRandomIntegerInRange(rand, this.trades.get(randomSecondTrade).minStackSize, this.trades.get(randomSecondTrade).maxStackSize);
                     }
                 }
                 if(wantsOne == wantsTwo){

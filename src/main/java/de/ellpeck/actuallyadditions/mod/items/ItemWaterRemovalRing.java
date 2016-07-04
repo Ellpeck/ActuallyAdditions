@@ -1,26 +1,25 @@
 /*
- * This file ("ItemWaterRemovalRing.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemWaterRemovalRing.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items;
 
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class ItemWaterRemovalRing extends ItemEnergy{
@@ -36,7 +35,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
         }
 
         EntityPlayer player = (EntityPlayer)entity;
-        ItemStack equipped = player.getCurrentEquippedItem();
+        ItemStack equipped = player.getHeldItemMainhand();
 
         int energyUse = 350;
         if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
@@ -52,8 +51,8 @@ public class ItemWaterRemovalRing extends ItemEnergy{
 
                         //Remove Water
                         BlockPos pos = new BlockPos(theX, theY, theZ);
-                        Block block = PosUtil.getBlock(pos, world);
-                        if((block == Blocks.water || block == Blocks.flowing_water) && this.getEnergyStored(stack) >= energyUse){
+                        Block block = world.getBlockState(pos).getBlock();
+                        if((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && this.getEnergyStored(stack) >= energyUse){
                             world.setBlockToAir(pos);
 
                             if(!player.capabilities.isCreativeMode){
@@ -61,7 +60,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
                             }
                         }
                         //Remove Lava
-                        else if((block == Blocks.lava || block == Blocks.flowing_lava) && this.getEnergyStored(stack) >= energyUse*2){
+                        else if((block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) && this.getEnergyStored(stack) >= energyUse*2){
                             world.setBlockToAir(pos);
 
                             if(!player.capabilities.isCreativeMode){
@@ -73,6 +72,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
             }
         }
     }
+
 
     @Override
     public EnumRarity getRarity(ItemStack stack){

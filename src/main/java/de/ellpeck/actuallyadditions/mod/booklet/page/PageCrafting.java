@@ -1,11 +1,11 @@
 /*
- * This file ("PageCrafting.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("PageCrafting.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
@@ -22,7 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -52,26 +52,25 @@ public class PageCrafting extends BookletPageAA{
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.recipes[this.recipePos] != null){
-            Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
+            Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.RES_LOC_VALENTINE : GuiBooklet.RES_LOC);
             gui.drawRect(gui.getGuiLeft()+27, gui.getGuiTop()+20, 146, 20, 99, 60);
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
     public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         IRecipe recipe = this.recipes[this.recipePos];
 
         if(recipe == null){
-            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, EnumChatFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".recipeDisabled"), gui.getGuiLeft()+14, gui.getGuiTop()+15, 115, 0, false);
+            StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, TextFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID+".recipeDisabled"), gui.getGuiLeft()+14, gui.getGuiTop()+15, 115, 0, false);
         }
         else{
-            String strg = StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+"."+(recipe instanceof ShapedRecipes ? "shapedRecipe" : (recipe instanceof ShapelessRecipes ? "shapelessRecipe" : (recipe instanceof ShapelessOreRecipe ? "shapelessOreRecipe" : "shapedOreRecipe"))));
+            String strg = StringUtil.localize("booklet."+ModUtil.MOD_ID+"."+(recipe instanceof ShapedRecipes ? "shapedRecipe" : (recipe instanceof ShapelessRecipes ? "shapelessRecipe" : (recipe instanceof ShapelessOreRecipe ? "shapelessOreRecipe" : "shapedOreRecipe"))));
             Minecraft.getMinecraft().fontRendererObj.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
         }
 
-        String text = gui.getCurrentEntrySet().page.getText();
+        String text = gui.getCurrentEntrySet().getCurrentPage().getText();
         if(text != null && !text.isEmpty()){
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+90, 115, 0, false);
         }

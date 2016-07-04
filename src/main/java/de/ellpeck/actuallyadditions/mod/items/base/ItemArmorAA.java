@@ -1,37 +1,34 @@
 /*
- * This file ("ItemArmorAA.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemArmorAA.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnergizer;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemArmorAA extends ItemArmor{
 
-    private ItemStack repairItem;
-    private String name;
-    private EnumRarity rarity;
+    private final ItemStack repairItem;
+    private final String name;
+    private final EnumRarity rarity;
 
-    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase){
-        this(name, material, type, repairItem, textureBase, EnumRarity.RARE);
+    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem){
+        this(name, material, type, repairItem, EnumRarity.RARE);
     }
 
-    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, String textureBase, EnumRarity rarity){
-        super(material, 0, type);
+    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, EnumRarity rarity){
+        super(material, 0, ContainerEnergizer.VALID_EQUIPMENT_SLOTS[type]);
         this.repairItem = repairItem;
         this.name = name;
         this.rarity = rarity;
@@ -40,14 +37,7 @@ public class ItemArmorAA extends ItemArmor{
     }
 
     private void register(){
-        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
-        GameRegistry.registerItem(this, this.getBaseName());
-        if(this.shouldAddCreative()){
-            this.setCreativeTab(CreativeTab.instance);
-        }
-        else{
-            this.setCreativeTab(null);
-        }
+        ItemUtil.registerItem(this, this.getBaseName(), this.shouldAddCreative());
 
         this.registerRendering();
     }
@@ -61,8 +51,9 @@ public class ItemArmorAA extends ItemArmor{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
+
 
     @Override
     public EnumRarity getRarity(ItemStack stack){

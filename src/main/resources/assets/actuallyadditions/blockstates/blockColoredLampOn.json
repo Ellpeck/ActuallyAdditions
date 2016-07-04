@@ -1,20 +1,29 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "transform": "forge:default-block"
+  },
   "variants": {
-    "meta=0": { "model": "actuallyadditions:blockColoredLampWhiteOn" },
-    "meta=1": { "model": "actuallyadditions:blockColoredLampOrangeOn" },
-    "meta=2": { "model": "actuallyadditions:blockColoredLampMagentaOn" },
-    "meta=3": { "model": "actuallyadditions:blockColoredLampLightBlueOn" },
-    "meta=4": { "model": "actuallyadditions:blockColoredLampYellowOn" },
-    "meta=5": { "model": "actuallyadditions:blockColoredLampLimeOn" },
-    "meta=6": { "model": "actuallyadditions:blockColoredLampPinkOn" },
-    "meta=7": { "model": "actuallyadditions:blockColoredLampGrayOn" },
-    "meta=8": { "model": "actuallyadditions:blockColoredLampLightGrayOn" },
-    "meta=9": { "model": "actuallyadditions:blockColoredLampCyanOn" },
-    "meta=10": { "model": "actuallyadditions:blockColoredLampPurpleOn" },
-    "meta=11": { "model": "actuallyadditions:blockColoredLampBlueOn" },
-    "meta=12": { "model": "actuallyadditions:blockColoredLampBrownOn" },
-    "meta=13": { "model": "actuallyadditions:blockColoredLampGreenOn" },
-    "meta=14": { "model": "actuallyadditions:blockColoredLampRedOn" },
-    "meta=15": { "model": "actuallyadditions:blockColoredLampBlackOn" }
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnWhite" } },
+      "1": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnOrange" } },
+      "2": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnMagenta" } },
+      "3": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnLightBlue" } },
+      "4": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnYellow" } },
+      "5": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnLime" } },
+      "6": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnPink" } },
+      "7": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnGray" } },
+      "8": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnLightGray" } },
+      "9": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnCyan" } },
+      "10": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnPurple" } },
+      "11": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnBlue" } },
+      "12": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnBrown" } },
+      "13": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnGreen" } },
+      "14": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnRed" } },
+      "15": { "textures" : { "all" : "actuallyadditions:blocks/blockColoredLampOnBlack" } }
+    }
   }
 }

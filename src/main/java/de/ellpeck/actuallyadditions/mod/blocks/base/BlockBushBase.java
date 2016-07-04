@@ -1,47 +1,38 @@
 /*
- * This file ("BlockBushBase.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BlockBushBase.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockBushBase extends BlockBush{
+public class BlockBushBase extends BlockBush implements ItemBlockBase.ICustomRarity{
 
-    private String name;
+    private final String name;
 
     public BlockBushBase(String name){
         this.name = name;
-        this.setStepSound(soundTypeGrass);
+        this.setSoundType(SoundType.PLANT);
 
         this.register();
     }
 
     private void register(){
-        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
-        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
-        if(this.shouldAddCreative()){
-            this.setCreativeTab(CreativeTab.instance);
-        }
-        else{
-            this.setCreativeTab(null);
-        }
+        ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
 
         this.registerRendering();
     }
@@ -50,8 +41,8 @@ public class BlockBushBase extends BlockBush{
         return this.name;
     }
 
-    protected Class<? extends ItemBlockBase> getItemBlock(){
-        return ItemBlockBase.class;
+    protected ItemBlockBase getItemBlock(){
+        return new ItemBlockBase(this);
     }
 
     public boolean shouldAddCreative(){
@@ -59,9 +50,10 @@ public class BlockBushBase extends BlockBush{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.COMMON;
     }
@@ -76,9 +68,10 @@ public class BlockBushBase extends BlockBush{
         return this.getMetaProperty() == null ? super.getMetaFromState(state) : state.getValue(this.getMetaProperty());
     }
 
+
     @Override
-    protected BlockState createBlockState(){
-        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
+    protected BlockStateContainer createBlockState(){
+        return this.getMetaProperty() == null ? super.createBlockState() : new BlockStateContainer(this, this.getMetaProperty());
     }
 
     protected PropertyInteger getMetaProperty(){

@@ -1,18 +1,18 @@
 /*
- * This file ("GuiSmileyCloud.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("GuiSmileyCloud.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerSmileyCloud;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiString;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -22,8 +22,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -34,16 +35,14 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class GuiSmileyCloud extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiSmileyCloud");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiSmileyCloud");
 
-    private int x;
-    private int y;
-    private int z;
-    private World world;
-
+    private final int x;
+    private final int y;
+    private final int z;
+    private final World world;
+    private final TileEntitySmileyCloud cloud;
     private GuiTextField nameField;
-
-    private TileEntitySmileyCloud cloud;
 
     public GuiSmileyCloud(TileEntityBase tile, int x, int y, int z, World world){
         super(new ContainerSmileyCloud());
@@ -56,35 +55,28 @@ public class GuiSmileyCloud extends GuiContainer{
         this.ySize = 20;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
         super.initGui();
 
-        this.nameField = new GuiTextField(4000, this.fontRendererObj, guiLeft+5, guiTop+6, 114, 8);
+        this.nameField = new GuiTextField(4000, this.fontRendererObj, this.guiLeft+5, this.guiTop+6, 114, 8);
         this.nameField.setMaxStringLength(20);
         this.nameField.setEnableBackgroundDrawing(false);
         this.nameField.setFocused(true);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
-    }
-
-    @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        String name = cloud.name == null || cloud.name.isEmpty() ? "" : EnumChatFormatting.GOLD+cloud.name+EnumChatFormatting.RESET+" "+StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.the")+" ";
-        String localizedName = name+StringUtil.localize("container."+ModUtil.MOD_ID_LOWER+".cloud.name");
-        this.fontRendererObj.drawString(localizedName, xSize/2-this.fontRendererObj.getStringWidth(localizedName)/2, -10, StringUtil.DECIMAL_COLOR_WHITE);
+        String name = this.cloud.name == null || this.cloud.name.isEmpty() ? "" : TextFormatting.GOLD+this.cloud.name+TextFormatting.RESET+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.the")+" ";
+        String localizedName = name+StringUtil.localize("container."+ModUtil.MOD_ID+".cloud.name");
+        this.fontRendererObj.drawString(localizedName, this.xSize/2-this.fontRendererObj.getStringWidth(localizedName)/2, -10, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
     @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
         this.nameField.drawTextBox();
@@ -123,6 +115,14 @@ public class GuiSmileyCloud extends GuiContainer{
     }
 
     private void sendPacket(String text, int textID){
-        PacketHandler.theNetwork.sendToServer(new PacketGuiString(x, y, z, world, text, textID, Minecraft.getMinecraft().thePlayer));
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setInteger("X", this.x);
+        compound.setInteger("Y", this.y);
+        compound.setInteger("Z", this.z);
+        compound.setInteger("WorldID", this.world.provider.getDimension());
+        compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+        compound.setInteger("TextID", textID);
+        compound.setString("Text", text);
+        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }
 }

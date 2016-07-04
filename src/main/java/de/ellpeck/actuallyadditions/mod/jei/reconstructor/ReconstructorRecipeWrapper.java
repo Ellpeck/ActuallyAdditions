@@ -1,17 +1,17 @@
 /*
- * This file ("ReconstructorRecipeWrapper.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ReconstructorRecipeWrapper.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
@@ -20,16 +20,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
 
-    public LensNoneRecipe theRecipe;
+    public final LensConversionRecipe theRecipe;
 
-    public ReconstructorRecipeWrapper(LensNoneRecipe recipe){
+    public ReconstructorRecipeWrapper(LensConversionRecipe recipe){
         this.theRecipe = recipe;
     }
 
@@ -54,17 +53,12 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implemen
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight){
-
-    }
-
-    @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         this.updateButton(minecraft, mouseX, mouseY);
     }
 
     @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight){
+    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight){
 
     }
 
@@ -75,7 +69,7 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implemen
     }
 
     @Override
-    public boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
         return this.handleClick(minecraft, mouseX, mouseY);
     }
 

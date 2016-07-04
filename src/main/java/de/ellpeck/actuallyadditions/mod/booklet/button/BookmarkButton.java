@@ -1,34 +1,36 @@
 /*
- * This file ("BookmarkButton.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BookmarkButton.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
-import de.ellpeck.actuallyadditions.api.internal.EntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.KeyUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 
+@SideOnly(Side.CLIENT)
 public class BookmarkButton extends GuiButton{
 
+    private final GuiBooklet booklet;
     public EntrySet assignedEntry = new EntrySet(null);
-
-    private GuiBooklet booklet;
 
     public BookmarkButton(int id, int x, int y, GuiBooklet booklet){
         super(id, x, y, 16, 16, "");
@@ -37,8 +39,9 @@ public class BookmarkButton extends GuiButton{
 
     public void onPressed(){
         if(this.assignedEntry.entry != null){
-            if(KeyUtil.isShiftPressed()){
+            if(GuiScreen.isShiftKeyDown()){
                 this.assignedEntry.removeEntry();
+                this.booklet.shouldSaveDataNextClose = true;
             }
             else{
                 BookletUtils.openIndexEntry(this.booklet, this.assignedEntry.entry, this.assignedEntry.pageInIndex, true);
@@ -46,8 +49,9 @@ public class BookmarkButton extends GuiButton{
             }
         }
         else{
-            if(this.booklet.currentEntrySet.entry != null){
-                this.assignedEntry.setEntry(this.booklet.currentEntrySet.page, this.booklet.currentEntrySet.chapter, this.booklet.currentEntrySet.entry, this.booklet.currentEntrySet.pageInIndex);
+            if(this.booklet.currentEntrySet.getCurrentEntry() != null){
+                this.assignedEntry.setEntry(this.booklet.currentEntrySet.getCurrentPage(), this.booklet.currentEntrySet.getCurrentChapter(), this.booklet.currentEntrySet.getCurrentEntry(), this.booklet.currentEntrySet.getPageInIndex());
+                this.booklet.shouldSaveDataNextClose = true;
             }
         }
     }
@@ -55,7 +59,7 @@ public class BookmarkButton extends GuiButton{
     @Override
     public void drawButton(Minecraft minecraft, int x, int y){
         if(this.visible){
-            minecraft.getTextureManager().bindTexture(GuiBooklet.resLoc);
+            minecraft.getTextureManager().bindTexture(GuiBooklet.RES_LOC);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
             int k = this.getHoverState(this.hovered);
@@ -78,21 +82,20 @@ public class BookmarkButton extends GuiButton{
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void drawHover(int mouseX, int mouseY){
         ArrayList list = new ArrayList();
         if(this.assignedEntry.entry != null){
             if(this.assignedEntry.chapter != null){
-                list.add(EnumChatFormatting.GOLD+this.assignedEntry.chapter.getLocalizedName()+", Page "+this.assignedEntry.page.getID());
+                list.add(TextFormatting.GOLD+this.assignedEntry.chapter.getLocalizedName()+", Page "+this.assignedEntry.page.getID());
             }
             else{
-                list.add(EnumChatFormatting.GOLD+this.assignedEntry.entry.getLocalizedName()+", Page "+this.assignedEntry.pageInIndex);
+                list.add(TextFormatting.GOLD+this.assignedEntry.entry.getLocalizedName()+", Page "+this.assignedEntry.pageInIndex);
             }
             list.add("Click to open");
-            list.add(EnumChatFormatting.ITALIC+"Shift-Click to remove");
+            list.add(TextFormatting.ITALIC+"Shift-Click to remove");
         }
         else{
-            list.add(EnumChatFormatting.GOLD+"None");
+            list.add(TextFormatting.GOLD+"None");
             list.add("Click to save current page");
         }
         this.booklet.drawHoveringText(list, mouseX, mouseY);

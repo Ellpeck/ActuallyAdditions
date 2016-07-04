@@ -1,36 +1,30 @@
 /*
- * This file ("ContainerFluidCollector.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ContainerFluidCollector.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidCollector;
-import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 
-@InventoryContainer
+
 public class ContainerFluidCollector extends Container{
 
-    private TileEntityFluidCollector collector;
+    private final TileEntityFluidCollector collector;
 
     public ContainerFluidCollector(InventoryPlayer inventory, TileEntityBase tile){
         this.collector = (TileEntityFluidCollector)tile;
-
-        this.addSlotToContainer(new Slot(collector, 0, 90, 73));
-        this.addSlotToContainer(new SlotOutput(collector, 1, 90, 42));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -44,12 +38,12 @@ public class ContainerFluidCollector extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 2;
-        final int inventoryEnd = inventoryStart+26;
-        final int hotbarStart = inventoryEnd+1;
-        final int hotbarEnd = hotbarStart+8;
+        int inventoryStart = 0;
+        int inventoryEnd = inventoryStart+26;
+        int hotbarStart = inventoryEnd+1;
+        int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
@@ -64,15 +58,7 @@ public class ContainerFluidCollector extends Container{
             }
             //Other Slots in Inventory excluded
             else if(slot >= inventoryStart){
-                //Shift from Inventory
-                if(FluidContainerRegistry.isEmptyContainer(newStack)){
-                    if(!this.mergeItemStack(newStack, 0, 1, false)){
-                        return null;
-                    }
-                }
-                //
-
-                else if(slot >= inventoryStart && slot <= inventoryEnd){
+                if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
                         return null;
                     }
@@ -85,7 +71,7 @@ public class ContainerFluidCollector extends Container{
                 return null;
             }
 
-            if(newStack.stackSize == 0){
+            if(newStack.stackSize <= 0){
                 theSlot.putStack(null);
             }
             else{
@@ -104,6 +90,6 @@ public class ContainerFluidCollector extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.collector.isUseableByPlayer(player);
+        return this.collector.canPlayerUse(player);
     }
 }

@@ -1,11 +1,11 @@
 /*
- * This file ("GuiEnervator.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("GuiEnervator.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
@@ -26,8 +26,8 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiEnervator extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiEnergizer");
-    private TileEntityEnervator enervator;
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiEnergizer");
+    private final TileEntityEnervator enervator;
 
     public GuiEnervator(EntityPlayer inventory, TileEntityBase tile){
         super(new ContainerEnervator(inventory, tile));
@@ -40,14 +40,14 @@ public class GuiEnervator extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         String text1 = this.enervator.storage.getEnergyStored()+"/"+this.enervator.storage.getMaxEnergyStored()+" RF";
-        if(x >= guiLeft+57 && y >= guiTop+6 && x <= guiLeft+72 && y <= guiTop+88){
+        if(x >= this.guiLeft+57 && y >= this.guiTop+6 && x <= this.guiLeft+72 && y <= this.guiTop+88){
             this.drawHoveringText(Collections.singletonList(text1), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.enervator.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.enervator);
     }
 
     @Override
@@ -57,12 +57,12 @@ public class GuiEnervator extends GuiContainer{
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if(this.enervator.storage.getEnergyStored() > 0){
             int i = this.enervator.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft+57, this.guiTop+89-i, 176, 0, 16, i);
+            this.drawTexturedModalRect(this.guiLeft+57, this.guiTop+89-i, 176, 0, 16, i);
         }
     }
 }

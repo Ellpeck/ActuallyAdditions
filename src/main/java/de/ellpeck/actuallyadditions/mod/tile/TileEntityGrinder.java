@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityGrinder.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityGrinder.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -13,20 +13,22 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
+public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1_1 = 1;
@@ -34,7 +36,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public static final int SLOT_INPUT_2 = 3;
     public static final int SLOT_OUTPUT_2_1 = 4;
     public static final int SLOT_OUTPUT_2_2 = 5;
-    public EnergyStorage storage = new EnergyStorage(60000);
+    public static final int ENERGY_USE = 40;
+    public final EnergyStorage storage = new EnergyStorage(60000);
     public int firstCrushTime;
     public int secondCrushTime;
     public boolean isDouble;
@@ -49,10 +52,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public TileEntityGrinder(){
         super(3, "grinder");
         this.isDouble = false;
-    }
-
-    public static int getEnergyUse(boolean isDouble){
-        return isDouble ? 60 : 40;
     }
 
     @Override
@@ -76,26 +75,29 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("FirstCrushTime", this.firstCrushTime);
-        compound.setInteger("SecondCrushTime", this.secondCrushTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("FirstCrushTime", this.firstCrushTime);
+            compound.setInteger("SecondCrushTime", this.secondCrushTime);
+        }
         this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
+        super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.firstCrushTime = compound.getInteger("FirstCrushTime");
-        this.secondCrushTime = compound.getInteger("SecondCrushTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            this.firstCrushTime = compound.getInteger("FirstCrushTime");
+            this.secondCrushTime = compound.getInteger("SecondCrushTime");
+        }
         this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
+        super.readSyncableNBT(compound, type);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             boolean flag = this.firstCrushTime > 0 || this.secondCrushTime > 0;
 
             boolean canCrushOnFirst = this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
@@ -107,15 +109,16 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
             boolean shouldPlaySound = false;
 
             if(canCrushOnFirst){
-                if(this.storage.getEnergyStored() >= getEnergyUse(this.isDouble)){
+                if(this.storage.getEnergyStored() >= ENERGY_USE){
                     if(this.firstCrushTime%30 == 0){
                         shouldPlaySound = true;
                     }
                     this.firstCrushTime++;
-                    if(this.firstCrushTime >= getMaxCrushTime()){
+                    if(this.firstCrushTime >= this.getMaxCrushTime()){
                         this.finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
                         this.firstCrushTime = 0;
                     }
+                    this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
             else{
@@ -124,15 +127,16 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
             if(this.isDouble){
                 if(canCrushOnSecond){
-                    if(this.storage.getEnergyStored() >= getEnergyUse(this.isDouble)){
+                    if(this.storage.getEnergyStored() >= ENERGY_USE){
                         if(this.secondCrushTime%30 == 0){
                             shouldPlaySound = true;
                         }
                         this.secondCrushTime++;
-                        if(this.secondCrushTime >= getMaxCrushTime()){
+                        if(this.secondCrushTime >= this.getMaxCrushTime()){
                             this.finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
                             this.secondCrushTime = 0;
                         }
+                        this.storage.extractEnergy(ENERGY_USE, false);
                     }
                 }
                 else{
@@ -140,31 +144,29 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 }
             }
 
-            if(this.storage.getEnergyStored() >= getEnergyUse(this.isDouble) && (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
-                this.storage.extractEnergy(getEnergyUse(this.isDouble), false);
-            }
-
             if(flag != (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
                 this.markDirty();
-                int meta = PosUtil.getMetadata(this.pos, worldObj);
+                IBlockState state = this.worldObj.getBlockState(this.pos);
+                Block block = state.getBlock();
+                int meta = block.getMetaFromState(state);
                 if(meta == 1){
                     if(!this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2) && (!this.isDouble || !this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2))){
-                        PosUtil.setMetadata(this.pos, worldObj, 0, 2);
+                        this.worldObj.setBlockState(this.pos, block.getStateFromMeta(0), 2);
                     }
                 }
                 else{
-                    PosUtil.setMetadata(this.pos, worldObj, 1, 2);
+                    this.worldObj.setBlockState(this.pos, block.getStateFromMeta(1), 2);
                 }
             }
 
-            if((lastEnergy != this.storage.getEnergyStored() || this.lastFirstCrush != this.firstCrushTime || this.lastSecondCrush != this.secondCrushTime) && this.sendUpdateWithInterval()){
+            if((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstCrush != this.firstCrushTime || this.lastSecondCrush != this.secondCrushTime) && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastFirstCrush = this.firstCrushTime;
                 this.lastSecondCrush = this.secondCrushTime;
             }
 
-            if(shouldPlaySound && !ConfigValues.lessSound){
-                this.worldObj.playSoundEffect(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), ModUtil.MOD_ID_LOWER+":crusher", 0.25F, 1.0F);
+            if(shouldPlaySound && !ConfigBoolValues.LESS_SOUND.isEnabled()){
+                this.worldObj.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS, 0.25F, 1.0F);
             }
         }
     }
@@ -268,22 +270,4 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
     }
 
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
-    }
-
-    public static class TileEntityGrinderDouble extends TileEntityGrinder{
-
-        public TileEntityGrinderDouble(){
-            super(6, "grinderDouble");
-            this.isDouble = true;
-        }
-
-    }
 }

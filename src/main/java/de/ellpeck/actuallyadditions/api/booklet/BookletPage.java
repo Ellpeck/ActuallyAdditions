@@ -1,16 +1,17 @@
 /*
- * This file ("IBookletPage.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BookletPage.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.api.booklet;
 
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,6 +20,18 @@ public abstract class BookletPage{
 
     public boolean arePageStacksWildcard;
     protected IBookletChapter chapter;
+
+    public void onOpened(IBookletGui gui){
+
+    }
+
+    public void onClosed(IBookletGui gui){
+
+    }
+
+    public boolean onActionPerformed(IBookletGui gui, GuiButton button){
+        return false;
+    }
 
     /**
      * The ID of the page, for the page number etc.

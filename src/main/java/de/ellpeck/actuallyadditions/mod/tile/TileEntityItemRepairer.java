@@ -1,29 +1,31 @@
 /*
- * This file ("TileEntityItemRepairer.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityItemRepairer.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityItemRepairer extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
+public class TileEntityItemRepairer extends TileEntityInventoryBase implements IEnergyReceiver{
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
     public static final int ENERGY_USE = 1500;
-    public EnergyStorage storage = new EnergyStorage(300000);
+    public final EnergyStorage storage = new EnergyStorage(300000);
     public int nextRepairTick;
     private int lastEnergy;
 
@@ -32,28 +34,49 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     }
 
     public static boolean canBeRepaired(ItemStack stack){
-        return stack != null && stack.getItem().isRepairable();
+        if(stack != null){
+            Item item = stack.getItem();
+            if(item != null){
+                if(item.isRepairable()){
+                    return true;
+                }
+                else{
+                    String reg = item.getRegistryName().toString();
+                    if(reg != null){
+                        for(String strg : ConfigStringListValues.REPAIRER_EXTRA_WHITELIST.getValue()){
+                            if(reg.equals(strg)){
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("NextRepairTick", this.nextRepairTick);
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("NextRepairTick", this.nextRepairTick);
+        }
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.nextRepairTick = compound.getInteger("NextRepairTick");
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            this.nextRepairTick = compound.getInteger("NextRepairTick");
+        }
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.slots[SLOT_OUTPUT] == null && canBeRepaired(this.slots[SLOT_INPUT])){
                 if(this.slots[SLOT_INPUT].getItemDamage() <= 0){
                     this.slots[SLOT_OUTPUT] = this.slots[SLOT_INPUT].copy();
@@ -127,15 +150,5 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
-    }
-
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
     }
 }

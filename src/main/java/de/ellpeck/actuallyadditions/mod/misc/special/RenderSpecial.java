@@ -1,11 +1,11 @@
 /*
- * This file ("RenderSpecial.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("RenderSpecial.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.misc.special;
@@ -20,7 +20,7 @@ import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Calendar;
 
@@ -38,7 +38,7 @@ public class RenderSpecial{
         }
 
         if(ClientProxy.pumpkinBlurPumpkinBlur){
-            this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)%2 == 0 ? Blocks.lit_pumpkin : Blocks.pumpkin);
+            this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)%2 == 0 ? Blocks.LIT_PUMPKIN : Blocks.PUMPKIN);
         }
 
         boolean isBlock = this.theThingToRender.getItem() instanceof ItemBlock;
@@ -50,8 +50,8 @@ public class RenderSpecial{
 
         GlStateManager.pushMatrix();
 
-        Vec3 currentPos = Minecraft.getMinecraft().thePlayer.getPositionEyes(partialTicks);
-        Vec3 playerPos = player.getPositionEyes(partialTicks);
+        Vec3d currentPos = Minecraft.getMinecraft().thePlayer.getPositionEyes(partialTicks);
+        Vec3d playerPos = player.getPositionEyes(partialTicks);
         GlStateManager.translate(playerPos.xCoord-currentPos.xCoord, playerPos.yCoord-currentPos.yCoord-(player.isSneaking() || Minecraft.getMinecraft().thePlayer.isSneaking() ? 0.125D : 0D), playerPos.zCoord-currentPos.zCoord);
 
         GlStateManager.translate(0D, 2.435D+offsetUp, 0D);

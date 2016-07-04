@@ -1,18 +1,17 @@
 /*
- * This file ("ContainerFurnaceDouble.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ContainerFurnaceDouble.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
-import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -21,10 +20,10 @@ import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
-@InventoryContainer
+
 public class ContainerFurnaceDouble extends Container{
 
-    private TileEntityFurnaceDouble tileFurnace;
+    private final TileEntityFurnaceDouble tileFurnace;
 
     public ContainerFurnaceDouble(InventoryPlayer inventory, TileEntityBase tile){
         this.tileFurnace = (TileEntityFurnaceDouble)tile;
@@ -46,12 +45,12 @@ public class ContainerFurnaceDouble extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 4;
-        final int inventoryEnd = inventoryStart+26;
-        final int hotbarStart = inventoryEnd+1;
-        final int hotbarEnd = hotbarStart+8;
+        int inventoryStart = 4;
+        int inventoryEnd = inventoryStart+26;
+        int hotbarStart = inventoryEnd+1;
+        int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
@@ -89,7 +88,7 @@ public class ContainerFurnaceDouble extends Container{
                 return null;
             }
 
-            if(newStack.stackSize == 0){
+            if(newStack.stackSize <= 0){
                 theSlot.putStack(null);
             }
             else{

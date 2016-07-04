@@ -1,25 +1,30 @@
 /*
- * This file ("RenderReconstructorLens.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("RenderReconstructorLens.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 
+import de.ellpeck.actuallyadditions.api.lens.ILensItem;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
-//TODO Fix Reconstructor Lens rendering
 public class RenderReconstructorLens extends TileEntitySpecialRenderer{
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int par6){
-        /*if(!(tile instanceof TileEntityAtomicReconstructor)){
+        if(!(tile instanceof TileEntityAtomicReconstructor)){
             return;
         }
         ItemStack stack = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);
@@ -29,7 +34,8 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
             GlStateManager.translate((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
             GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
 
-            int meta = PosUtil.getMetadata(tile.getPos(), tile.getWorld());
+            IBlockState state = tile.getWorld().getBlockState(tile.getPos());
+            int meta = state.getBlock().getMetaFromState(state);
             if(meta == 0){
                 GlStateManager.translate(0F, -0.5F, 0F);
                 GlStateManager.rotate(90F, 1F, 0F, 0F);
@@ -61,6 +67,6 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
             AssetUtil.renderItemInWorld(stack);
 
             GlStateManager.popMatrix();
-        }*/
+        }
     }
 }

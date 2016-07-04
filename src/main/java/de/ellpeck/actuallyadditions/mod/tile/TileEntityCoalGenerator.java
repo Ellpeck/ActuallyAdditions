@@ -1,19 +1,17 @@
 /*
- * This file ("TileEntityCoalGenerator.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityCoalGenerator.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -21,10 +19,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider, IEnergySaver{
+public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider{
 
     public static final int PRODUCE = 30;
-    public EnergyStorage storage = new EnergyStorage(60000);
+    public final EnergyStorage storage = new EnergyStorage(60000);
     public int maxBurnTime;
     public int currentBurnTime;
     private int lastEnergy;
@@ -46,26 +44,29 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("BurnTime", this.currentBurnTime);
-        compound.setInteger("MaxBurnTime", this.maxBurnTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("BurnTime", this.currentBurnTime);
+            compound.setInteger("MaxBurnTime", this.maxBurnTime);
+        }
         this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
+        super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentBurnTime = compound.getInteger("BurnTime");
-        this.maxBurnTime = compound.getInteger("MaxBurnTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentBurnTime = compound.getInteger("BurnTime");
+            this.maxBurnTime = compound.getInteger("MaxBurnTime");
+        }
         this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
+        super.readSyncableNBT(compound, type);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             boolean flag = this.currentBurnTime > 0;
 
             if(this.currentBurnTime > 0){
@@ -84,21 +85,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 }
             }
 
-            if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
-            }
-
             if(flag != this.currentBurnTime > 0){
                 this.markDirty();
-                int meta = PosUtil.getMetadata(this.getPos(), worldObj);
-                if(meta == 1){
-                    if(!(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored())){
-                        PosUtil.setMetadata(this.pos, worldObj, 0, 2);
-                    }
-                }
-                else{
-                    PosUtil.setMetadata(this.pos, worldObj, 1, 2);
-                }
             }
 
             if((this.storage.getEnergyStored() != this.lastEnergy || this.currentBurnTime != this.lastCurrentBurnTime || this.lastBurnTime != this.maxBurnTime) && this.sendUpdateWithInterval()){
@@ -121,7 +109,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return false;
+        return TileEntityFurnace.getItemBurnTime(this.slots[0]) <= 0;
     }
 
     @Override
@@ -142,15 +130,5 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
-    }
-
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
     }
 }

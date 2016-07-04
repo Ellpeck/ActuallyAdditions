@@ -1,11 +1,11 @@
 /*
- * This file ("ItemKnife.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemKnife.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items;
@@ -14,6 +14,7 @@ import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
@@ -32,18 +33,22 @@ public class ItemKnife extends ItemBase{
         return true;
     }
 
+
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
     }
 
-    @SuppressWarnings("unchecked")
+
     @Override
-    public Multimap getAttributeModifiers(ItemStack stack){
-        Multimap map = super.getAttributeModifiers(stack);
-        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Knife Modifier", 3, 0));
+    public Multimap getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
+        Multimap map = super.getAttributeModifiers(slot, stack);
+        if(slot == EntityEquipmentSlot.MAINHAND){
+            map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Knife Modifier", 3, 0));
+        }
         return map;
     }
+
 
     @Override
     public ItemStack getContainerItem(ItemStack stack){

@@ -1,11 +1,11 @@
 /*
- * This file ("InitOreDict.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("InitOreDict.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.ore;
@@ -24,13 +24,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class InitOreDict{
+public final class InitOreDict{
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing OreDictionary Entries...");
 
         //Vanilla Ores
-        addOre(Items.coal, "coal");
+        addOre(Items.COAL, "coal");
 
         //Ores for Pulverizers etc.
         addOre(InitItems.itemDust, TheDusts.IRON.ordinal(), "dustIron");
@@ -50,7 +50,7 @@ public class InitOreDict{
         addOre(InitItems.itemRiceSeed, "seedRice");
         addOre(InitItems.itemFoods, TheFoods.RICE.ordinal(), "cropRice");
         addOre(InitItems.itemFlaxSeed, "seedFlax");
-        addOre(Items.string, "cropFlax");
+        addOre(Items.STRING, "cropFlax");
         addOre(InitItems.itemCoffeeSeed, "seedCoffee");
         addOre(InitItems.itemCoffeeBean, "cropCoffee");
 

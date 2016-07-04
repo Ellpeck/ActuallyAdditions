@@ -1,18 +1,18 @@
 /*
- * This file ("PageCoffeeRecipe.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("PageCoffeeRecipe.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeBrewing;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PageCoffeeRecipe extends BookletPageAA{
 
-    public CoffeeIngredient ingredient;
+    public final CoffeeIngredient ingredient;
 
     public PageCoffeeRecipe(int id, CoffeeIngredient ingredient){
         super(id);
@@ -37,18 +37,17 @@ public class PageCoffeeRecipe extends BookletPageAA{
     @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.resLocValentine : GuiBooklet.resLoc);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.RES_LOC_VALENTINE : GuiBooklet.RES_LOC);
         gui.drawRect(gui.getGuiLeft()+19, gui.getGuiTop()+20, 146, 94, 99, 60);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
     public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         String strg = "Coffee Machine Recipe";
         Minecraft.getMinecraft().fontRendererObj.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
 
-        String text = gui.getCurrentEntrySet().page.getText();
+        String text = gui.getCurrentEntrySet().getCurrentPage().getText();
         if(text != null && !text.isEmpty()){
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+100, 115, 0, false);
         }
@@ -76,7 +75,7 @@ public class PageCoffeeRecipe extends BookletPageAA{
                         break;
                     case 2:
                         stack = new ItemStack(InitItems.itemCoffee);
-                        CoffeeBrewing.addEffectToStack(stack, this.ingredient);
+                        ActuallyAdditionsAPI.methodHandler.addEffectToStack(stack, this.ingredient);
                         coordsOffsetX = 39;
                         coordsOffsetY = 39;
                         break;

@@ -1,17 +1,18 @@
 /*
- * This file ("ConfigurationHandler.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ConfigurationHandler.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.config;
 
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,22 +21,20 @@ import java.io.File;
 
 public class ConfigurationHandler{
 
-    public static final String ISSUES_WARNING = " [THIS COULD CAUSE ISSUES, CHANGE AT YOUR OWN RISK!]";
-
     public static Configuration config;
 
     public ConfigurationHandler(File configFile){
         ModUtil.LOGGER.info("Grabbing Configurations...");
 
-        Util.registerEvent(this);
+        MinecraftForge.EVENT_BUS.register(this);
 
-        if(config == null){
-            config = new Configuration(configFile, true);
-            loadConfig();
-        }
+        config = new Configuration(configFile);
+        config.load();
+
+        redefineConfigs();
     }
 
-    private static void loadConfig(){
+    private static void redefineConfigs(){
         ConfigValues.defineConfigValues(config);
 
         if(config.hasChanged()){
@@ -45,8 +44,8 @@ public class ConfigurationHandler{
 
     @SubscribeEvent
     public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event){
-        if(event.modID.equalsIgnoreCase(ModUtil.MOD_ID)){
-            loadConfig();
+        if(event.getModID().equalsIgnoreCase(ModUtil.MOD_ID)){
+            redefineConfigs();
         }
     }
 }

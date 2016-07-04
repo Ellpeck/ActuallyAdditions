@@ -1,8 +1,0 @@
-{
-    "parent": "block/outer_stairs",
-    "textures": {
-        "bottom": "actuallyadditions:blocks/blockTestifiBucksGreenWall",
-        "top": "actuallyadditions:blocks/blockTestifiBucksGreenWall",
-        "side": "actuallyadditions:blocks/blockTestifiBucksGreenWall"
-    }
-}

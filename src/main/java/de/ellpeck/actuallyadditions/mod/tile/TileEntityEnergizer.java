@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityEnergizer.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityEnergizer.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -19,9 +19,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityEnergizer extends TileEntityInventoryBase implements IEnergyReceiver, IEnergySaver{
+public class TileEntityEnergizer extends TileEntityInventoryBase implements IEnergyReceiver{
 
-    public EnergyStorage storage = new EnergyStorage(500000);
+    public final EnergyStorage storage = new EnergyStorage(500000);
     private int lastEnergy;
 
     public TileEntityEnergizer(){
@@ -29,21 +29,21 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
+        super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
+        super.readSyncableNBT(compound, type);
     }
 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.slots[0] != null && this.slots[0].getItem() instanceof IEnergyContainerItem && this.slots[1] == null){
                 if(this.storage.getEnergyStored() > 0){
                     int received = ((IEnergyContainerItem)this.slots[0].getItem()).receiveEnergy(this.slots[0], this.storage.getEnergyStored(), false);
@@ -59,7 +59,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
                 }
             }
 
-            if(lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+            if(this.lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
             }
         }
@@ -103,15 +103,5 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements IEne
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
-    }
-
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
     }
 }

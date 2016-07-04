@@ -1,27 +1,24 @@
 /*
- * This file ("ItemFoodBase.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemFoodBase.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class ItemFoodBase extends ItemFood{
 
-    private String name;
+    private final String name;
 
     public ItemFoodBase(int heal, float saturation, boolean wolfFood, String name){
         super(heal, saturation, wolfFood);
@@ -31,14 +28,7 @@ public class ItemFoodBase extends ItemFood{
     }
 
     private void register(){
-        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
-        GameRegistry.registerItem(this, this.getBaseName());
-        if(this.shouldAddCreative()){
-            this.setCreativeTab(CreativeTab.instance);
-        }
-        else{
-            this.setCreativeTab(null);
-        }
+        ItemUtil.registerItem(this, this.getBaseName(), this.shouldAddCreative());
 
         this.registerRendering();
     }
@@ -52,6 +42,6 @@ public class ItemFoodBase extends ItemFood{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 }

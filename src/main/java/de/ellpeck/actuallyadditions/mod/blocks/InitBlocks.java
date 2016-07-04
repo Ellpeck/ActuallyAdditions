@@ -1,30 +1,31 @@
 /*
- * This file ("InitBlocks.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("InitBlocks.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockStair;
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockWallAA;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
-import de.ellpeck.actuallyadditions.mod.util.CompatUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.block.Block;
 
-public class InitBlocks{
+public final class InitBlocks{
 
     public static Block blockCompost;
     public static Block blockMisc;
     public static Block blockWildPlant;
     public static Block blockFeeder;
     public static Block blockGiantChest;
+    public static Block blockGiantChestMedium;
+    public static Block blockGiantChestLarge;
 
     public static Block blockGrinder;
     public static Block blockGrinderDouble;
@@ -57,6 +58,8 @@ public class InitBlocks{
     public static Block blockPhantomBreaker;
     public static Block blockPhantomLiquiface;
     public static Block blockPhantomEnergyface;
+    public static Block blockPhantomRedstoneface;
+    public static Block blockPlayerInterface;
 
     public static Block blockFluidPlacer;
     public static Block blockFluidCollector;
@@ -92,6 +95,9 @@ public class InitBlocks{
     public static Block blockRangedCollector;
 
     public static Block blockLaserRelay;
+    public static Block blockLaserRelayItem;
+    public static Block blockLaserRelayItemWhitelist;
+    public static Block blockItemViewer;
 
     public static Block blockBlackLotus;
     public static Block blockCrystal;
@@ -111,15 +117,26 @@ public class InitBlocks{
     public static Block blockPillarQuartzStair;
     public static Block blockPillarQuartzSlab;
 
+    public static Block blockBookletStand;
+    public static Block blockDisplayStand;
+    public static Block blockShockSuppressor;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockShockSuppressor = new BlockShockSuppressor("blockShockSuppressor");
+        blockDisplayStand = new BlockDisplayStand("blockDisplayStand");
+        blockPlayerInterface = new BlockPlayerInterface("blockPlayerInterface");
+        blockBookletStand = new BlockBookletStand("blockBookletStand");
+        blockItemViewer = new BlockItemViewer("blockItemViewer");
         blockFireworkBox = new BlockFireworkBox("blockFireworkBox");
         blockMiner = new BlockMiner("blockMiner");
         blockAtomicReconstructor = new BlockAtomicReconstructor("blockAtomicReconstructor");
         blockCrystal = new BlockCrystal("blockCrystal");
         blockBlackLotus = new BlockBlackLotus("blockBlackLotus");
-        blockLaserRelay = new BlockLaserRelay("blockLaserRelay");
+        blockLaserRelay = new BlockLaserRelay("blockLaserRelay", BlockLaserRelay.Type.ENERGY);
+        blockLaserRelayItem = new BlockLaserRelay("blockLaserRelayItem", BlockLaserRelay.Type.ITEM);
+        blockLaserRelayItemWhitelist = new BlockLaserRelay("blockLaserRelayItemWhitelist", BlockLaserRelay.Type.ITEM_WHITELIST);
         blockRangedCollector = new BlockRangedCollector("blockRangedCollector");
         blockDirectionalBreaker = new BlockDirectionalBreaker("blockDirectionalBreaker");
         blockLeafGenerator = new BlockLeafGenerator("blockLeafGenerator");
@@ -145,6 +162,7 @@ public class InitBlocks{
         blockPhantomPlacer = new BlockPhantom(BlockPhantom.Type.PLACER, "blockPhantomPlacer");
         blockPhantomLiquiface = new BlockPhantom(BlockPhantom.Type.LIQUIFACE, "blockPhantomLiquiface");
         blockPhantomEnergyface = new BlockPhantom(BlockPhantom.Type.ENERGYFACE, "blockPhantomEnergyface");
+        blockPhantomRedstoneface = new BlockPhantom(BlockPhantom.Type.REDSTONEFACE, "blockPhantomRedstoneface");
         blockPhantomBreaker = new BlockPhantom(BlockPhantom.Type.BREAKER, "blockPhantomBreaker");
         blockCoalGenerator = new BlockCoalGenerator("blockCoalGenerator");
         blockOilGenerator = new BlockOilGenerator("blockOilGenerator");
@@ -160,7 +178,9 @@ public class InitBlocks{
         blockCompost = new BlockCompost("blockCompost");
         blockMisc = new BlockMisc("blockMisc");
         blockFeeder = new BlockFeeder("blockFeeder");
-        blockGiantChest = new BlockGiantChest("blockGiantChest");
+        blockGiantChest = new BlockGiantChest("blockGiantChest", 0);
+        blockGiantChestMedium = new BlockGiantChest("blockGiantChestMedium", 1);
+        blockGiantChestLarge = new BlockGiantChest("blockGiantChestLarge", 2);
         blockGrinder = new BlockGrinder(false, "blockGrinder");
         blockGrinderDouble = new BlockGrinder(true, "blockGrinderDouble");
         blockFurnaceDouble = new BlockFurnaceDouble("blockFurnaceDouble");

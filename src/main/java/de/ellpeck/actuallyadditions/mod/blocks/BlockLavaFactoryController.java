@@ -1,11 +1,11 @@
 /*
- * This file ("BlockLavaFactoryController.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BlockLavaFactoryController.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.blocks;
@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLavaFactoryController;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -22,7 +23,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,12 +31,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockLavaFactoryController extends BlockContainerBase implements IHudDisplay{
 
     public BlockLavaFactoryController(String name){
-        super(Material.rock, name);
+        super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(4.5F);
         this.setResistance(20.0F);
-        this.setStepSound(soundTypeStone);
+        this.setSoundType(SoundType.STONE);
     }
+
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
@@ -49,15 +51,15 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IH
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, MovingObjectPosition posHit, Profiler profiler, ScaledResolution resolution){
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, Profiler profiler, ScaledResolution resolution){
         TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController)minecraft.theWorld.getTileEntity(posHit.getBlockPos());
         if(factory != null){
             int state = factory.isMultiblock();
             if(state == TileEntityLavaFactoryController.NOT_MULTI){
-                StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".factory.notPart.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localize("tooltip."+ModUtil.MOD_ID+".factory.notPart.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
             }
             else if(state == TileEntityLavaFactoryController.HAS_AIR || state == TileEntityLavaFactoryController.HAS_LAVA){
-                StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localize("tooltip."+ModUtil.MOD_ID_LOWER+".factory.works.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localize("tooltip."+ModUtil.MOD_ID+".factory.works.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
             }
         }
     }

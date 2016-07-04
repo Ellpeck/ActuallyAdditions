@@ -1,22 +1,23 @@
 /*
- * This file ("GuiHandler.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("GuiHandler.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.booklet.GuiBookletStand;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -38,7 +39,11 @@ public class GuiHandler implements IGuiHandler{
             case FEEDER:
                 return new ContainerFeeder(entityPlayer.inventory, tile);
             case GIANT_CHEST:
-                return new ContainerGiantChest(entityPlayer.inventory, tile);
+                return new ContainerGiantChest(entityPlayer.inventory, tile, 0);
+            case GIANT_CHEST_PAGE_2:
+                return new ContainerGiantChest(entityPlayer.inventory, tile, 1);
+            case GIANT_CHEST_PAGE_3:
+                return new ContainerGiantChest(entityPlayer.inventory, tile, 2);
             case CRAFTER:
                 return new ContainerCrafter(entityPlayer);
             case GRINDER:
@@ -73,6 +78,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerCoffeeMachine(entityPlayer.inventory, tile);
             case DRILL:
                 return new ContainerDrill(entityPlayer.inventory);
+            case FILTER:
+                return new ContainerFilter(entityPlayer.inventory);
             case ENERGIZER:
                 return new ContainerEnergizer(entityPlayer, tile);
             case ENERVATOR:
@@ -87,6 +94,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerRangedCollector(entityPlayer.inventory, tile);
             case MINER:
                 return new ContainerMiner(entityPlayer.inventory, tile);
+            case LASER_RELAY_ITEM_WHITELIST:
+                return new ContainerLaserRelayItemWhitelist(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -102,7 +111,11 @@ public class GuiHandler implements IGuiHandler{
             case FEEDER:
                 return new GuiFeeder(entityPlayer.inventory, tile);
             case GIANT_CHEST:
-                return new GuiGiantChest(entityPlayer.inventory, tile);
+                return new GuiGiantChest(entityPlayer.inventory, tile, 0);
+            case GIANT_CHEST_PAGE_2:
+                return new GuiGiantChest(entityPlayer.inventory, tile, 1);
+            case GIANT_CHEST_PAGE_3:
+                return new GuiGiantChest(entityPlayer.inventory, tile, 2);
             case CRAFTER:
                 return new GuiCrafter(entityPlayer);
             case GRINDER:
@@ -137,6 +150,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiCoffeeMachine(entityPlayer.inventory, tile, x, y, z, world);
             case DRILL:
                 return new GuiDrill(entityPlayer.inventory);
+            case FILTER:
+                return new GuiFilter(entityPlayer.inventory);
             case ENERGIZER:
                 return new GuiEnergizer(entityPlayer, tile);
             case ENERVATOR:
@@ -153,6 +168,10 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiRangedCollector(entityPlayer.inventory, tile, x, y, z, world);
             case MINER:
                 return new GuiMiner(entityPlayer.inventory, tile);
+            case BOOK_STAND:
+                return new GuiBookletStand(tile);
+            case LASER_RELAY_ITEM_WHITELIST:
+                return new GuiLaserRelayItemWhitelist(entityPlayer.inventory, tile);
             default:
                 return null;
         }
@@ -161,6 +180,8 @@ public class GuiHandler implements IGuiHandler{
     public enum GuiTypes{
         FEEDER,
         GIANT_CHEST,
+        GIANT_CHEST_PAGE_2,
+        GIANT_CHEST_PAGE_3,
         CRAFTER(false),
         GRINDER,
         GRINDER_DOUBLE,
@@ -185,9 +206,12 @@ public class GuiHandler implements IGuiHandler{
         BOOK(false),
         DIRECTIONAL_BREAKER,
         RANGED_COLLECTOR,
-        MINER;
+        MINER,
+        BOOK_STAND,
+        LASER_RELAY_ITEM_WHITELIST,
+        FILTER(false);
 
-        public boolean checkTileEntity;
+        public final boolean checkTileEntity;
 
         GuiTypes(){
             this(true);

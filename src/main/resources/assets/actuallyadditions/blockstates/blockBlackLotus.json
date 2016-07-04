@@ -1,5 +1,14 @@
 {
-    "variants": {
-        "normal": { "model": "actuallyadditions:blockBlackLotus" }
-    }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cross",
+    "textures": {
+      "cross": "actuallyadditions:blocks/blockBlackLotus"
+    },
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
 }

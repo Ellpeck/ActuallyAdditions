@@ -1,39 +1,40 @@
 /*
- * This file ("ThePotionRings.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ThePotionRings.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 
 public enum ThePotionRings{
 
-    SPEED(Potion.moveSpeed.getName(), 8171462, Potion.moveSpeed.getId(), 0, 1, 10, false, EnumRarity.UNCOMMON, new ItemStack(Items.sugar)),
+    SPEED(MobEffects.SPEED.getName(), 8171462, MobEffects.SPEED, 0, 1, 10, false, EnumRarity.UNCOMMON, new ItemStack(Items.SUGAR)),
     //Slowness
-    HASTE(Potion.digSpeed.getName(), 14270531, Potion.digSpeed.getId(), 0, 1, 10, false, EnumRarity.EPIC, new ItemStack(Items.repeater)),
+    HASTE(MobEffects.HASTE.getName(), 14270531, MobEffects.HASTE, 0, 1, 10, false, EnumRarity.EPIC, new ItemStack(Items.REPEATER)),
     //Mining Fatigue
-    STRENGTH(Potion.damageBoost.getName(), 9643043, Potion.damageBoost.getId(), 0, 1, 10, false, EnumRarity.RARE, new ItemStack(Items.blaze_powder)),
+    STRENGTH(MobEffects.STRENGTH.getName(), 9643043, MobEffects.STRENGTH, 0, 1, 10, false, EnumRarity.RARE, new ItemStack(Items.BLAZE_POWDER)),
     //Health (Not Happening)
     //Damage
-    JUMP_BOOST(Potion.jump.getName(), 7889559, Potion.jump.getId(), 0, 1, 10, false, EnumRarity.RARE, new ItemStack(Blocks.piston)),
+    JUMP_BOOST(MobEffects.JUMP_BOOST.getName(), 7889559, MobEffects.JUMP_BOOST, 0, 1, 10, false, EnumRarity.RARE, new ItemStack(Blocks.PISTON)),
     //Nausea
-    REGEN(Potion.regeneration.getName(), 13458603, Potion.regeneration.getId(), 0, 1, 50, true, EnumRarity.RARE, new ItemStack(Items.ghast_tear)),
-    RESISTANCE(Potion.resistance.getName(), 10044730, Potion.resistance.getId(), 0, 1, 10, false, EnumRarity.EPIC, new ItemStack(Items.slime_ball)),
-    FIRE_RESISTANCE(Potion.fireResistance.getName(), 14981690, Potion.fireResistance.getId(), 0, 0, 10, false, EnumRarity.UNCOMMON, new ItemStack(Items.magma_cream)),
-    WATER_BREATHING(Potion.waterBreathing.getName(), 3035801, Potion.waterBreathing.getId(), 0, 0, 10, false, EnumRarity.RARE, new ItemStack(Items.fish, 1, 3)),
-    INVISIBILITY(Potion.invisibility.getName(), 8356754, Potion.invisibility.getId(), 0, 0, 10, false, EnumRarity.EPIC, new ItemStack(Items.fermented_spider_eye)),
+    REGEN(MobEffects.REGENERATION.getName(), 13458603, MobEffects.REGENERATION, 0, 1, 50, true, EnumRarity.RARE, new ItemStack(Items.GHAST_TEAR)),
+    RESISTANCE(MobEffects.RESISTANCE.getName(), 10044730, MobEffects.RESISTANCE, 0, 1, 10, false, EnumRarity.EPIC, new ItemStack(Items.SLIME_BALL)),
+    FIRE_RESISTANCE(MobEffects.FIRE_RESISTANCE.getName(), 14981690, MobEffects.FIRE_RESISTANCE, 0, 0, 10, false, EnumRarity.UNCOMMON, new ItemStack(Items.MAGMA_CREAM)),
+    WATER_BREATHING(MobEffects.WATER_BREATHING.getName(), 3035801, MobEffects.WATER_BREATHING, 0, 0, 10, false, EnumRarity.RARE, new ItemStack(Items.FISH, 1, 3)),
+    INVISIBILITY(MobEffects.INVISIBILITY.getName(), 8356754, MobEffects.INVISIBILITY, 0, 0, 10, false, EnumRarity.EPIC, new ItemStack(Items.FERMENTED_SPIDER_EYE)),
     //Blindness
-    NIGHT_VISION(Potion.nightVision.getName(), 2039713, Potion.nightVision.getId(), 0, 0, 300, false, EnumRarity.RARE, new ItemStack(Items.golden_carrot));
+    NIGHT_VISION(MobEffects.NIGHT_VISION.getName(), 2039713, MobEffects.NIGHT_VISION, 0, 0, 300, false, EnumRarity.RARE, new ItemStack(Items.GOLDEN_CARROT));
     //Hunger
     //Weakness
     //Poison
@@ -51,11 +52,11 @@ public enum ThePotionRings{
     public final boolean needsWaitBeforeActivating;
     public final ItemStack craftingItem;
 
-    ThePotionRings(String name, int color, int effectID, int normalAmplifier, int advancedAmplifier, int activeTime, boolean needsWaitBeforeActivating, EnumRarity rarity, ItemStack craftingItem){
+    ThePotionRings(String name, int color, Potion effect, int normalAmplifier, int advancedAmplifier, int activeTime, boolean needsWaitBeforeActivating, EnumRarity rarity, ItemStack craftingItem){
         this.name = name;
         this.color = color;
         this.rarity = rarity;
-        this.effectID = effectID;
+        this.effectID = Potion.getIdFromPotion(effect);
         this.normalAmplifier = normalAmplifier;
         this.advancedAmplifier = advancedAmplifier;
         this.activeTime = activeTime;

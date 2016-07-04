@@ -1,11 +1,11 @@
 /*
- * This file ("InitAchievements.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("InitAchievements.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.achievement;
@@ -17,20 +17,20 @@ import net.minecraftforge.common.AchievementPage;
 
 import java.util.ArrayList;
 
-public class InitAchievements{
+public final class InitAchievements{
 
+    public static final ArrayList<Achievement> ACHIEVEMENT_LIST = new ArrayList<Achievement>();
     public static int pageNumber;
     public static AchievementPage theAchievementPage;
-    public static ArrayList<Achievement> achievementList = new ArrayList<Achievement>();
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Achievements...");
 
         for(int i = 0; i < TheAchievements.values().length; i++){
-            achievementList.add(TheAchievements.values()[i].ach);
+            ACHIEVEMENT_LIST.add(TheAchievements.values()[i].chieve);
         }
 
-        theAchievementPage = new AchievementPage(StringUtil.localize("achievement.page."+ModUtil.MOD_ID_LOWER), achievementList.toArray(new Achievement[achievementList.size()]));
+        theAchievementPage = new AchievementPage(StringUtil.localize("achievement.page."+ModUtil.MOD_ID), ACHIEVEMENT_LIST.toArray(new Achievement[ACHIEVEMENT_LIST.size()]));
         pageNumber = AchievementPage.getAchievementPages().size();
         AchievementPage.registerAchievementPage(theAchievementPage);
     }

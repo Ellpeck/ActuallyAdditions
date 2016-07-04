@@ -1,3 +1,201 @@
+#1.10.2-r47
+* Updated to 1.10.2. Could've guessed that by the name.
+* Fixed a crash when searching the booklet
+* Made empty buckets be able to get pulled out of the coal generator
+* Added biomass and biocoal made from canola seeds and made canola edible
+* Added medium and large storage crates
+
+# 1.10-r46
+* Updated to 1.10. Obviously.
+* Made booklet actually save its bookmarks
+* Remove custom fake player in favor of vanilla one
+* Made fluid collector not input and output fluids all the time causing infinite loops
+
+# 1.9.4-r45
+* Added Tesla Energy System support to all RF-using and generating blocks
+* Added video introduction page to booklet
+* Added Laser Wrench mode switch. Just right-click with one at some point.
+* Fixed XP Solidifier values being off
+* Made crafter on a stick not randomly create stacks with no items in them
+* Changed the way fluids and RF are handled making them both pull AND push to other tiles
+* Removed Rarmor integration (for now!) as the mod is in the process of being re-written
+* Made Reconstructor and Display stand not keep their items on the client when having them removed
+* Updated banner in the mods screen~
+* Fixed nullpointer caused by getting capabilities with a null facing sometimes
+* Made the Miner less carry-around-y.
+
+# 1.9.4-r44
+* Fixed a weird crash with Item Laser Relays.
+* Fixed drills sometimes crashing when breaking certain blocks.
+###### I am extremely sorry for the amount of updates in the last couple of days. This is hopefully the last one for a few weeks as the most significant bugs with the new features have now been fixed. I hope this doesn't diminish your liking for the mod in any way.
+
+# 1.9.4-r43
+### This update increases the performance of some blocks by a significant bit. If you are experiencing lag in a world with many Laser Relays, install this.
+* More proper laser relay bounding boxes
+* Significantly upped the performance of Item Laser Relays
+* Increased ESD performance
+* Made Energy Laser Relays less performance intensive
+* Changed energy handling system a bit, should be the same in-game
+* Made coal and oil generator not randomly appear to be on even though they're not
+
+# 1.9.4-r42
+### The shut-up-about-EnderIO Update.
+* Changed ESD to allow higher numbers of slots and have no limit on input values so that you can basically make it pull from infintely many slots if the amount of slots present is able to change
+* Only add things to smart item laser relay whitelist when they aren't on it already
+* Re-added IFluidHandler since apparently everyone's moaning about EnderIO not having updated and my stuff breaking because of it or something like that.
+
+# 1.9.4-r41
+* Changed white- and blacklists of laser relays and ESDs to be for putting and pulling. Check them in your world, they might all not work like you want them to anymore!
+* Added item filters
+* Made ESD's whitelist be a blacklist by default when placing it down
+* Added display stand
+* Made leaf blower work on display stand
+* Made potion rings work on display stand
+* Re-add invtweaks support for the storage crate
+* Fixed a crash when having phantom liquifaces connected to a non-tileentity
+* Made player interface display the amount of RF it has stored
+* Made damage source from Reconstructor display properly
+* Added a config option to only display the laser relay particles when holding a laser wrench
+* Fixed miner sometimes crashing when placed next to certain blocks
+
+# 1.9.4-r40
+* Fixed a bug with Laser Relays sometimes randomly disconnecting on chunk load
+### You only need this when you have been or are wanting to use Laser Relays of any sort. This version fixes a hideous bug that caused them to randomly disconnect when re-loading chunks for a reason that makes absolutely no sense to me and the people I asked. If you want to know what the bug was, [click here](https://github.com/Ellpeck/ActuallyAdditions/commit/d46bb306d87da57ea180afcd9e6cc00fc96637ef). Again, sorry for the amount of updates, this has just been driving me crazy.
+
+# 1.9.4-r39
+* Updated to forge's new fluid transfer and storage system
+* Removed a possible memory leak source with world saving
+* Added Player Interface
+* Fixed configs resetting randomly sometimes
+### Sorry for this amount of updates. I've been trying to fix a lot of bugs with them, but it just hasn't been going the way I wanted.
+
+# 1.9.4-r38
+* Added custom system to save world data because the Minecraft one always failed on me.
+* Note: This WILL disconnect all of your laser relays, sorry. Just reconnect them again. If you find any bugs with the new system (Laser Relay connections), leave an issue on github. Thanks!
+
+# 1.9.4-r37
+* Fixed rendering bug with Greenhouse Glass
+* Removed unfinished feature tags in booklet
+* Added water bowl
+* Fixed block breaking effects playing just the sound (drill, leaf blower etc.)
+* Fixed aiots not having four times the durability of their base tools
+* Made compost only acceppt the current recipe's amount of items
+* Made shovels make path blocks instead of farmland
+* Changed world data save system to hopefully make laser relays not disconnect on certain occasions but only on the server and I don't get why this is happening
+* Made tools be held like tools and not like normal items in third person
+* Fixed a syncing bug with tileentities on world join
+
+# 1.9.4-r36
+* Added a config option to print all of the booklet's text into a file on startup
+* Made booklet words and characters not be more than they should be because everything was being done twice
+* Added view online button to booklet
+* Fixed a bug with some other mods causing NullPointerExceptions in ActAdd TileEntities
+* Fixed ArmorMaterial (sokratis12GR)
+* Removed ModelResourceLocation on server making servers not crash on startup anymore.
+
+# 1.9.4-r35
+* Added lush caves that spawn randomly in the overworld. Turn them off or change their spawn rate in the config if you don't like them.
+* Changed some world data mechanics. Might break some Laser Relay Networks. Sorry about that, just reconnect them.
+* Fixed a massive bug with TileEntities not syncing properly when re-entering unloaded chunks
+* Re-added booklet stand. Is now a thing on the wall. But works the same.
+
+# 1.9.4-r34
+### MINECRAFT 1.9.4!!
+* Made special drops dependent on the looting level you have
+* Made drop chances for wings, solid xp and cobweb more common
+* Added spawner changer to creative tab
+* API Version 14 because of multiple changes
+
+# 1.9-r33
+* Made Growth Ring performance better
+* Centered page number in booklet
+* Made placers be able to place anything again
+* Made Item Laser Relays that have a whitelist have more priority than those who don't
+* Fixed a massive console spam issue of Whitelisted Item Laser Relays trying to send client update packages FROM the client
+* The laser relay has less particles again now
+* Added custom banner patterns
+* Added custom shield patterns
+* Remove InvTweaks integration
+* Added a smart whitelist button to the whitelisted laser relay that automatically adds items in adjacent inventories to the filter
+* Lots of API restructuring
+* Bump API Version to 12
+* Put circles in front of the booklet entry buttons on the front page because it looks nice
+
+# 1.9-r32
+* Added Spawner Changer
+* Added Spawner Shards
+* Added Item Laser Relay Networks with Item Laser Relays, Advanced Item Laser Relays and Item Interfaces
+* Fixed booklet sometimes not typing a letter into the search box
+* Fixed sounds not working on servers
+* Use universal buckets instead of custom ones
+* Replaced bucket slots in GUIs with right click functionality
+* Re-implemented village structures. No Villagers though.
+* Fixed a bug with fluid placers replacing fluids in front of them
+* Added max damage display to the advanced tooltip
+
+# 1.9-r31
+* Added Phantom Redstoneface
+* Changed storage crate upgrade recipe because it was clashing with Storage Drawers
+* Added Reconstruction Module as Rarmor integration. Install Canitzp's Rarmor to find out what it is and does.
+* Added Patreon button to the booklet because I wantz all teh moneyz
+
+# 1.9-r30
+* Fixed mcmod.info being broken
+* Fixed OreDictionary creating empty entries when searching for names
+* Fixed laser relays making no particles when the less particle setting is on
+* Made HarvestDropsEvents be posted when mining blocks automatically
+* Rename itemPotionRIng to itemPotionRing so that it has a proper model and texture
+* Rename itemCrystalLightBLue to itemCrystalLightBlue so that it has a proper model and texture
+* Added the ender start which is a new crafting ingredient
+* Made double furnace and double crusher use the double amount of energy when smelting/crushing two items at once
+* Added a default extra whitelist config option for the Item Repairer
+* Made directional breaker need energy in pulse mode. Duh.
+* Added InvWrapper Capabilities so that inventories work with pipes from mods like NeoTech
+
+# 1.9-r29
+* Fixed blocks dropping twice when broken with the drill
+* Made drill GUI be openable again (how did I even miss this?)
+* Made XP drops from drill dependent on the forge event
+* Fixed and re-implemented sounds
+* Raised the amount of particles from the laser relay
+* Made the knife not give extra attack damage in armor slots
+* Fixed a couple of bugs with items that need to be held in hand not working
+* Fixed all item models so that they're not held like shields
+* Made slab placing a bit more proper
+* Fixed most bounding boxes
+* Fixed equipment slots in energizer and enervator being off
+* Fixed fluid placer not being able to place
+* Made fake player not persist into different worlds causing coordinate issues
+* Fixed all block models of custom rendered stuff
+
+# 1.9-r28
+* Fixed a crash when trying to fill a bucket
+##### Because it was pretty much gamebreaking.
+
+# 1.9-r27
+### Yes, really. This update pushes the mod's version to 1.9, however it probably is very unstable. There is a few notable bugs and things missing, but I wanted to push this version because a lot of people wanted it.
+## If you encounter any bugs, please post them on the Issue Tracker here: https://github.com/Ellpeck/ActuallyAdditions/issues
+* Updated the Mod to 1.9
+* Did some other stuff
+* All of the items, when holding them in your hands, also look like shields right now. I couldn't be bothered to change the JSONs yet, so you'll have to live with it.
+
+# 1.8.9-r26
+### This update was done by canitzp. Thanks for helping me out <3
+* Made the knife not repairable
+* Changed download link for updates to redirect to the proper page
+* added click area to JEI for easy recipe access
+* Set ESD incomplete. Because it's incomplete.
+* Haphazardly revert implementation of new item system for ESD as it was completely broken
+* Updated to official RF API.
+* Fixed tool JSONs
+* Reactivated Atomic Reconstructor Lens Renderer
+* Rewrote Smiley Cloud renderer
+* Hopefully fixed a minor miner bug (ha ha ha)
+* Fixed Double Plant crash
+* Fixed JEI booklet page rendering
+* New compost rendering
+* [API] Removed lens registry
+
 # 1.8.9-r25
 * Fixed assets derping because of wrong capitalization
 * Ignore NBT Tags of Energy items in JEI

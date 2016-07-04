@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityXPSolidifier.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityXPSolidifier.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -21,30 +21,98 @@ import net.minecraft.util.EnumFacing;
 
 public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor{
 
+    private static final Integer[] XP_MAP = new Integer[256];
+
+    static{
+        for(int i = 0; i < XP_MAP.length; i++){
+            XP_MAP[i] = getExperienceForLevelImpl(i);
+        }
+    }
+
+    private final int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
     public short amount;
     private short lastAmount;
-    private int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
 
     public TileEntityXPSolidifier(){
         super(1, "xpSolidifier");
     }
 
+    public static int getExperienceForLevel(int level){
+        if(level >= 0 && level < XP_MAP.length){
+            return XP_MAP[level];
+        }
+        if(level >= 21863){
+            return Integer.MAX_VALUE;
+        }
+        return getExperienceForLevelImpl(level);
+    }
+
+    private static int getExperienceForLevelImpl(int level){
+        int res = 0;
+        for(int i = 0; i < level; i++){
+            res += getXpBarCapacity(i);
+            if(res < 0){
+                return Integer.MAX_VALUE;
+            }
+        }
+        return res;
+    }
+
+    public static int getXpBarCapacity(int level){
+        if(level >= 30){
+            return 112+(level-30)*9;
+        }
+        else if(level >= 15){
+            return 37+(level-15)*5;
+        }
+        return 7+level*2;
+    }
+
+    public static int getLevelForExperience(int experience){
+        for(int i = 0; i < XP_MAP.length; i++){
+            if(XP_MAP[i] > experience){
+                return i-1;
+            }
+        }
+        int i = XP_MAP.length;
+        while(getExperienceForLevel(i) <= experience){
+            i++;
+        }
+        return i-1;
+    }
+
+    public static int getPlayerXP(EntityPlayer player){
+        return (int)(getExperienceForLevel(player.experienceLevel)+(player.experience*player.xpBarCap()));
+    }
+
+    /*
+     * The below methods were excerpted from EnderIO by SleepyTrousers with permission, thanks!
+     */
+
+    public static void addPlayerXP(EntityPlayer player, int amount){
+        int experience = Math.max(0, getPlayerXP(player)+amount);
+        player.experienceTotal = experience;
+        player.experienceLevel = getLevelForExperience(experience);
+        int expForLevel = getExperienceForLevel(player.experienceLevel);
+        player.experience = (float)(experience-expForLevel)/(float)player.xpBarCap();
+    }
+
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         compound.setShort("Amount", this.amount);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.amount = compound.getShort("Amount");
     }
 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.amount > 0){
                 if(this.slots[0] == null){
                     int toSet = this.amount > 64 ? 64 : this.amount;
@@ -83,71 +151,15 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     @Override
     public void onButtonPressed(int buttonID, EntityPlayer player){
         if(buttonID < this.buttonAmounts.length){
-            if(this.getPlayerXP(player) > 0){
-                int xp = this.buttonAmounts[buttonID] == -999 ? this.getPlayerXP(player)/ItemSolidifiedExperience.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
-                if(this.amount < Short.MAX_VALUE-xp && this.getPlayerXP(player) >= ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp){
-                    this.addPlayerXP(player, -(ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp));
-                    if(!worldObj.isRemote){
+            if(getPlayerXP(player) > 0){
+                int xp = this.buttonAmounts[buttonID] == -999 ? getPlayerXP(player)/ItemSolidifiedExperience.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
+                if(this.amount < Short.MAX_VALUE-xp && getPlayerXP(player) >= ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp){
+                    addPlayerXP(player, -(ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp));
+                    if(!this.worldObj.isRemote){
                         this.amount += xp;
                     }
                 }
             }
         }
-    }
-
-    //TODO Fix XP System to fit points needed in 1.8 (OpenBlocks?)
-
-    /**
-     * Gets the Player's XP
-     * (Excerpted from OpenBlocks' XP system with permission, thanks guys!)
-     *
-     * @param player The Player
-     * @return The XP
-     */
-    private int getPlayerXP(EntityPlayer player){
-        return (int)(this.getExperienceForLevel(player.experienceLevel)+(player.experience*player.xpBarCap()));
-    }
-
-    /**
-     * Adds (or removes, if negative) a certain amount of XP from a player
-     * (Excerpted from OpenBlocks' XP system with permission, thanks guys!)
-     *
-     * @param player The Player
-     * @param amount The Amount
-     */
-    private void addPlayerXP(EntityPlayer player, int amount){
-        int experience = getPlayerXP(player)+amount;
-        player.experienceTotal = experience;
-
-        int level = 0;
-        while(getExperienceForLevel(level) <= experience){
-            level++;
-        }
-        player.experienceLevel = level-1;
-
-        int expForLevel = this.getExperienceForLevel(player.experienceLevel);
-        player.experience = (float)(experience-expForLevel)/(float)player.xpBarCap();
-    }
-
-    /**
-     * Gets the amount of experience a certain level contains
-     * (Excerpted from OpenBlocks' XP system with permission, thanks guys!)
-     *
-     * @param level The Level in question
-     * @return The total XP the level has
-     */
-    private int getExperienceForLevel(int level){
-        if(level > 0){
-            if(level > 0 && level < 16){
-                return level*17;
-            }
-            else if(level > 15 && level < 31){
-                return (int)(1.5*Math.pow(level, 2)-29.5*level+360);
-            }
-            else{
-                return (int)(3.5*Math.pow(level, 2)-151.5*level+2220);
-            }
-        }
-        return 0;
     }
 }

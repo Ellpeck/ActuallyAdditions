@@ -1,11 +1,11 @@
 /*
- * This file ("PageTextOnly.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("PageTextOnly.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
@@ -19,14 +19,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PageTextOnly extends BookletPageAA{
 
-    private ItemStack stack;
+    private ItemStack[] stacks;
 
     public PageTextOnly(int id){
         super(id);
     }
 
-    public PageTextOnly setStack(ItemStack stack){
-        this.stack = stack;
+    public PageTextOnly setStacks(ItemStack... stacks){
+        this.stacks = stacks;
         this.addToPagesWithItemStackData();
         return this;
     }
@@ -34,7 +34,7 @@ public class PageTextOnly extends BookletPageAA{
     @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        String text = gui.getCurrentEntrySet().page.getText();
+        String text = gui.getCurrentEntrySet().getCurrentPage().getText();
         if(text != null && !text.isEmpty()){
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, text, gui.getGuiLeft()+14, gui.getGuiTop()+9, 115, 0, false);
         }
@@ -42,6 +42,6 @@ public class PageTextOnly extends BookletPageAA{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        return this.stack == null ? new ItemStack[0] : new ItemStack[]{this.stack};
+        return this.stacks == null ? new ItemStack[0] : this.stacks;
     }
 }

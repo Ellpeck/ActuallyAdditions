@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityPhantomItemface.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityPhantomItemface.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -16,15 +16,14 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
 
-//TODO completely adapt to new item system?
 public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
     public TileEntityPhantomItemface(){
         super("phantomface");
         this.type = BlockPhantom.Type.FACE;
     }
+
 
     @Override
     public int[] getSlotsForFace(EnumFacing side){
@@ -86,34 +85,18 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
         return null;
     }
 
-    @Override
-    public String getName(){
-        return this.name;
-    }
-
     public ISidedInventory getSided(){
         return this.getInventory() instanceof ISidedInventory ? (ISidedInventory)this.getInventory() : null;
     }
 
     public IInventory getInventory(){
         if(this.boundPosition != null){
-            TileEntity tile = worldObj.getTileEntity(boundPosition);
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
             if(tile instanceof IInventory){
                 return (IInventory)tile;
             }
         }
         return null;
-    }
-
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        if(this.isBoundThingInRange()){
-            TileEntity tile = worldObj.getTileEntity(this.boundPosition);
-            if(tile != null){
-                return tile.getCapability(capability, facing);
-            }
-        }
-        return super.getCapability(capability, facing);
     }
 
     @Override
@@ -123,7 +106,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && worldObj.getTileEntity(boundPosition) instanceof IInventory;
+        return super.isBoundThingInRange() && this.getInventory() != null;
     }
 
     @Override

@@ -1,26 +1,26 @@
 /*
- * This file ("BlockContainerBase.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BlockContainerBase.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
-import de.ellpeck.actuallyadditions.mod.tile.*;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -29,21 +29,24 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.FluidUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-public abstract class BlockContainerBase extends BlockContainer{
+public abstract class BlockContainerBase extends BlockContainer implements ItemBlockBase.ICustomRarity{
 
-    private String name;
+    private final String name;
 
     public BlockContainerBase(Material material, String name){
         super(material);
@@ -53,14 +56,7 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     private void register(){
-        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
-        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
-        if(this.shouldAddCreative()){
-            this.setCreativeTab(CreativeTab.instance);
-        }
-        else{
-            this.setCreativeTab(null);
-        }
+        ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
 
         this.registerRendering();
     }
@@ -69,8 +65,8 @@ public abstract class BlockContainerBase extends BlockContainer{
         return this.name;
     }
 
-    protected Class<? extends ItemBlockBase> getItemBlock(){
-        return ItemBlockBase.class;
+    protected ItemBlockBase getItemBlock(){
+        return new ItemBlockBase(this);
     }
 
     public boolean shouldAddCreative(){
@@ -78,9 +74,10 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.COMMON;
     }
@@ -106,9 +103,6 @@ public abstract class BlockContainerBase extends BlockContainer{
             float dY = Util.RANDOM.nextFloat()*0.8F+0.1F;
             float dZ = Util.RANDOM.nextFloat()*0.8F+0.1F;
             EntityItem entityItem = new EntityItem(world, pos.getX()+dX, pos.getY()+dY, pos.getZ()+dZ, stack.copy());
-            if(stack.hasTagCompound()){
-                entityItem.getEntityItem().setTagCompound((NBTTagCompound)stack.getTagCompound().copy());
-            }
             float factor = 0.05F;
             entityItem.motionX = Util.RANDOM.nextGaussian()*factor;
             entityItem.motionY = Util.RANDOM.nextGaussian()*factor+0.2F;
@@ -118,12 +112,13 @@ public abstract class BlockContainerBase extends BlockContainer{
     }
 
     public boolean tryToggleRedstone(World world, BlockPos pos, EntityPlayer player){
-        ItemStack stack = player.getCurrentEquippedItem();
+        ItemStack stack = player.getHeldItemMainhand();
         if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
             TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof IRedstoneToggle){
-                if(!world.isRemote){
-                    ((IRedstoneToggle)tile).toggle(!((IRedstoneToggle)tile).isPulseMode());
+            if(tile instanceof TileEntityBase){
+                TileEntityBase base = (TileEntityBase)tile;
+                if(!world.isRemote && base.isRedstoneToggle()){
+                    base.isPulseMode = !base.isPulseMode;
                     tile.markDirty();
 
                     if(tile instanceof TileEntityBase){
@@ -150,34 +145,42 @@ public abstract class BlockContainerBase extends BlockContainer{
     public void updateTick(World world, BlockPos pos, IBlockState state, Random random){
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
-                ((IRedstoneToggle)tile).activateOnPulse();
+            if(tile instanceof TileEntityBase){
+                TileEntityBase base = (TileEntityBase)tile;
+                if(base.isRedstoneToggle() && base.isPulseMode){
+                    base.activateOnPulse();
+                }
             }
         }
     }
 
     @Override
-    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock){
-        this.updateRedstoneState(world, pos);
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn){
+        this.updateRedstoneState(worldIn, pos);
     }
 
     public void updateRedstoneState(World world, BlockPos pos){
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityBase){
+                TileEntityBase base = (TileEntityBase)tile;
                 boolean powered = world.isBlockIndirectlyGettingPowered(pos) > 0;
-                boolean wasPowered = ((TileEntityBase)tile).isRedstonePowered;
+                boolean wasPowered = base.isRedstonePowered;
                 if(powered && !wasPowered){
-                    if(tile instanceof IRedstoneToggle && ((IRedstoneToggle)tile).isPulseMode()){
+                    if(base.isRedstoneToggle() && base.isPulseMode){
                         world.scheduleUpdate(pos, this, this.tickRate(world));
                     }
-                    ((TileEntityBase)tile).setRedstonePowered(true);
+                    base.setRedstonePowered(true);
                 }
                 else if(!powered && wasPowered){
-                    ((TileEntityBase)tile).setRedstonePowered(false);
+                    base.setRedstonePowered(false);
                 }
             }
         }
+    }
+
+    protected boolean checkFailUseItemOnTank(EntityPlayer player, ItemStack heldItem, FluidTank tank){
+        return heldItem == null || !FluidUtil.interactWithFluidHandler(heldItem, tank, player);
     }
 
     @Override
@@ -187,31 +190,12 @@ public abstract class BlockContainerBase extends BlockContainer{
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack){
-        if(stack.getTagCompound() != null){
+        if(stack.hasTagCompound()){
             TileEntity tile = world.getTileEntity(pos);
-
-            if(tile instanceof IEnergySaver){
-                ((IEnergySaver)tile).setEnergy(stack.getTagCompound().getInteger("Energy"));
-                stack.getTagCompound().removeTag("Energy");
-            }
-
-            if(tile instanceof IFluidSaver){
-                int amount = stack.getTagCompound().getInteger("FluidAmount");
-                stack.getTagCompound().removeTag("FluidAmount");
-
-                if(amount > 0){
-                    FluidStack[] fluids = new FluidStack[amount];
-
-                    for(int i = 0; i < amount; i++){
-                        NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Fluid"+i);
-                        stack.getTagCompound().removeTag("Fluid"+i);
-                        if(compound != null){
-                            fluids[i] = FluidStack.loadFluidStackFromNBT(compound);
-                        }
-                    }
-
-                    ((IFluidSaver)tile).setFluids(fluids);
-                }
+            if(tile instanceof TileEntityBase){
+                TileEntityBase base = (TileEntityBase)tile;
+                NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Data");
+                base.readSyncableNBT(compound, TileEntityBase.NBTType.SAVE_BLOCK);
             }
         }
     }
@@ -220,16 +204,18 @@ public abstract class BlockContainerBase extends BlockContainer{
     public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player){
         if(!player.capabilities.isCreativeMode){
             this.dropBlockAsItem(world, pos, state, 0);
+            //dirty workaround because of Forge calling Item.onBlockStartBreak() twice
+            world.setBlockToAir(pos);
         }
     }
 
     @Override
-    public boolean hasComparatorInputOverride(){
+    public boolean hasComparatorInputOverride(IBlockState state){
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(World world, BlockPos pos){
+    public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos){
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof IInventory){
             return Container.calcRedstoneFromInventory((IInventory)tile);
@@ -237,46 +223,43 @@ public abstract class BlockContainerBase extends BlockContainer{
         return 0;
     }
 
+
     @Override
-    protected BlockState createBlockState(){
-        return this.getMetaProperty() == null ? super.createBlockState() : new BlockState(this, this.getMetaProperty());
+    protected BlockStateContainer createBlockState(){
+        return this.getMetaProperty() == null ? super.createBlockState() : new BlockStateContainer(this, this.getMetaProperty());
     }
+
 
     @Override
     public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 
         TileEntity tile = world.getTileEntity(pos);
-        if(tile != null){
-            ItemStack stack = new ItemStack(this.getItemDropped(state, Util.RANDOM, fortune), 1, this.damageDropped(state));
+        if(tile instanceof TileEntityBase){
+            TileEntityBase base = (TileEntityBase)tile;
+            NBTTagCompound data = new NBTTagCompound();
+            base.writeSyncableNBT(data, TileEntityBase.NBTType.SAVE_BLOCK);
 
-            if(tile instanceof IEnergySaver){
-                int energy = ((IEnergySaver)tile).getEnergy();
-                if(energy > 0){
-                    if(stack.getTagCompound() == null){
-                        stack.setTagCompound(new NBTTagCompound());
+            //Remove unnecessarily saved default values to avoid unstackability
+            List<String> keysToRemove = new ArrayList<String>();
+            for(String key : data.getKeySet()){
+                NBTBase tag = data.getTag(key);
+                //Remove only ints because they are the most common ones
+                //Add else if below here to remove more types
+                if(tag instanceof NBTTagInt){
+                    if(((NBTTagInt)tag).getInt() == 0){
+                        keysToRemove.add(key);
                     }
-                    stack.getTagCompound().setInteger("Energy", energy);
                 }
             }
+            for(String key : keysToRemove){
+                data.removeTag(key);
+            }
 
-            if(tile instanceof IFluidSaver){
-                FluidStack[] fluids = ((IFluidSaver)tile).getFluids();
-
-                if(fluids != null && fluids.length > 0){
-                    if(stack.getTagCompound() == null){
-                        stack.setTagCompound(new NBTTagCompound());
-                    }
-
-                    stack.getTagCompound().setInteger("FluidAmount", fluids.length);
-                    for(int i = 0; i < fluids.length; i++){
-                        if(fluids[i] != null && fluids[i].amount > 0){
-                            NBTTagCompound compound = new NBTTagCompound();
-                            fluids[i].writeToNBT(compound);
-                            stack.getTagCompound().setTag("Fluid"+i, compound);
-                        }
-                    }
-                }
+            ItemStack stack = new ItemStack(this.getItemDropped(state, Util.RANDOM, fortune), 1, this.damageDropped(state));
+            if(!data.hasNoTags()){
+                stack.setTagCompound(new NBTTagCompound());
+                stack.getTagCompound().setTag("Data", data);
             }
 
             drops.add(stack);
@@ -289,8 +272,9 @@ public abstract class BlockContainerBase extends BlockContainer{
         return null;
     }
 
+
     @Override
-    public int getRenderType(){
-        return 3;
+    public EnumBlockRenderType getRenderType(IBlockState state){
+        return EnumBlockRenderType.MODEL;
     }
 }

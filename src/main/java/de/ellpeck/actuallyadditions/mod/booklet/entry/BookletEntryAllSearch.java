@@ -1,11 +1,11 @@
 /*
- * This file ("BookletEntryAllSearch.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BookletEntryAllSearch.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.entry;
@@ -29,7 +29,6 @@ public class BookletEntryAllSearch extends BookletEntry{
         this.chapters = (ArrayList<IBookletChapter>)this.allChapters.clone();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void addChapter(IBookletChapter chapter){
         this.allChapters.add(chapter);

@@ -1,11 +1,11 @@
 /*
- * This file ("GuiGrinder.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("GuiGrinder.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
@@ -26,10 +26,10 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiGrinder extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiGrinder");
-    private static final ResourceLocation resLocDouble = AssetUtil.getGuiLocation("guiGrinderDouble");
-    private TileEntityGrinder tileGrinder;
-    private boolean isDouble;
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiGrinder");
+    private static final ResourceLocation RES_LOC_DOUBLE = AssetUtil.getGuiLocation("guiGrinderDouble");
+    private final TileEntityGrinder tileGrinder;
+    private final boolean isDouble;
 
     public GuiGrinder(InventoryPlayer inventoryPlayer, TileEntityBase tile){
         this(inventoryPlayer, tile, false);
@@ -47,14 +47,14 @@ public class GuiGrinder extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         String text = this.tileGrinder.storage.getEnergyStored()+"/"+this.tileGrinder.storage.getMaxEnergyStored()+" RF";
-        if((this.isDouble && x >= guiLeft+14 && y >= guiTop+6 && x <= guiLeft+29 && y <= guiTop+88) || (!this.isDouble && x >= guiLeft+43 && y >= guiTop+6 && x <= guiLeft+58 && y <= guiTop+88)){
+        if((this.isDouble && x >= this.guiLeft+14 && y >= this.guiTop+6 && x <= this.guiLeft+29 && y <= this.guiTop+88) || (!this.isDouble && x >= this.guiLeft+43 && y >= this.guiTop+6 && x <= this.guiLeft+58 && y <= this.guiTop+88)){
             this.drawHoveringText(Collections.singletonList(text), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileGrinder.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileGrinder);
     }
 
     @Override
@@ -64,16 +64,16 @@ public class GuiGrinder extends GuiContainer{
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(this.isDouble ? resLocDouble : resLoc);
+        this.mc.getTextureManager().bindTexture(this.isDouble ? RES_LOC_DOUBLE : RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if(this.tileGrinder.storage.getEnergyStored() > 0){
             int i = this.tileGrinder.getEnergyScaled(83);
-            drawTexturedModalRect(this.guiLeft+(isDouble ? 14 : 43), this.guiTop+89-i, 176, (isDouble ? 44 : 23), 16, i);
+            this.drawTexturedModalRect(this.guiLeft+(this.isDouble ? 14 : 43), this.guiTop+89-i, 176, (this.isDouble ? 44 : 23), 16, i);
         }
         if(this.tileGrinder.firstCrushTime > 0){
             int i = this.tileGrinder.getFirstTimeToScale(23);
-            this.drawTexturedModalRect(this.guiLeft+(isDouble ? 51 : 80), this.guiTop+40, 176, 0, 24, i);
+            this.drawTexturedModalRect(this.guiLeft+(this.isDouble ? 51 : 80), this.guiTop+40, 176, 0, 24, i);
         }
         if(this.isDouble){
             if(this.tileGrinder.secondCrushTime > 0){

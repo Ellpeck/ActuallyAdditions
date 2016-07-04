@@ -1,11 +1,11 @@
 /*
- * This file ("ConfigIntValues.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ConfigIntValues.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.config.values;
@@ -21,6 +21,7 @@ public enum ConfigIntValues{
     FLAX_AMOUNT("Flax: Amount", ConfigCategories.WORLD_GEN, 8, 1, 50, "The Amount of Flax generating"),
     COFFEE_AMOUNT("Coffee: Amount", ConfigCategories.WORLD_GEN, 6, 1, 50, "The Amount of Coffee generating"),
     BLACK_LOTUS_AMOUNT("Black Lotus: Amount", ConfigCategories.WORLD_GEN, 14, 1, 50, "The Amount of Black Lotus generating"),
+    LUSH_CAVE_CHANCE("Lush Caves: Chance", ConfigCategories.WORLD_GEN, 20, 1, 100, "The chance for lush caves to generate. The lower the number, the likelier."),
 
     LASER_RELAY_LOSS("Laser Relay: Loss", ConfigCategories.MACHINE_VALUES, 5, 0, 80, "The Energy Loss of the Laser Relay per Transfer in Percent"),
     LASER_RELAY_MAX_TRANSFER("Laser Relay: Max Transfer", ConfigCategories.MACHINE_VALUES, 10000, 100, 1000000, "The max amount of RF a Laser Relay can receive and try to transfer (if it's given 100 RF and can only transfer 50, it will only accept 50, it won't waste any power!)"),

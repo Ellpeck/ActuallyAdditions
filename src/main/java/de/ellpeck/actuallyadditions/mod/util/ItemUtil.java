@@ -1,32 +1,62 @@
 /*
- * This file ("ItemUtil.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemUtil.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
+import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
+import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.List;
 
 
-public class ItemUtil{
+public final class ItemUtil{
 
     public static Item getItemFromName(String name){
         ResourceLocation resLoc = new ResourceLocation(name);
-        if(Item.itemRegistry.containsKey(resLoc)){
-            return Item.itemRegistry.getObject(resLoc);
+        if(Item.REGISTRY.containsKey(resLoc)){
+            return Item.REGISTRY.getObject(resLoc);
         }
         return null;
+    }
+
+    public static void registerBlock(Block block, ItemBlockBase itemBlock, String name, boolean addTab){
+        block.setUnlocalizedName(ModUtil.MOD_ID+"."+name);
+
+        block.setRegistryName(ModUtil.MOD_ID, name);
+        GameRegistry.register(block);
+
+        itemBlock.setRegistryName(block.getRegistryName());
+        GameRegistry.register(itemBlock);
+
+        block.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
+    }
+
+    public static void registerItem(Item item, String name, boolean addTab){
+        item.setUnlocalizedName(ModUtil.MOD_ID+"."+name);
+
+        item.setRegistryName(ModUtil.MOD_ID, name);
+        GameRegistry.register(item);
+
+        item.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
+
+        if(item instanceof IColorProvidingItem){
+            ActuallyAdditions.proxy.addColoredItem(item);
+        }
     }
 
     /**
@@ -54,10 +84,6 @@ public class ItemUtil{
         return stack1 != null && stack2 != null && (stack1.isItemEqual(stack2) || (checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD)));
     }
 
-    public static boolean areStacksEqualAndSameSize(ItemStack stack1, ItemStack stack2, boolean checkWildcard){
-        return areItemsEqual(stack1, stack2, checkWildcard) && stack1.stackSize == stack2.stackSize;
-    }
-
     /**
      * Returns true if list contains stack or if both contain null
      */
@@ -76,7 +102,7 @@ public class ItemUtil{
         if(ench != null){
             for(int i = 0; i < ench.tagCount(); i++){
                 short id = ench.getCompoundTagAt(i).getShort("id");
-                if(id == e.effectId){
+                if(id == Enchantment.getEnchantmentID(e)){
                     return true;
                 }
             }
@@ -89,7 +115,7 @@ public class ItemUtil{
         if(ench != null){
             for(int i = 0; i < ench.tagCount(); i++){
                 short id = ench.getCompoundTagAt(i).getShort("id");
-                if(id == e.effectId){
+                if(id == Enchantment.getEnchantmentID(e)){
                     ench.removeTag(i);
                 }
             }

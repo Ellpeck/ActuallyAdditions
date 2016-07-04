@@ -1,11 +1,11 @@
 /*
- * This file ("ContainerCoffeeMachine.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ContainerCoffeeMachine.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory;
@@ -16,36 +16,29 @@ import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
-import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 
-@InventoryContainer
+
 public class ContainerCoffeeMachine extends Container{
 
-    private TileEntityCoffeeMachine machine;
+    private final TileEntityCoffeeMachine machine;
 
     public ContainerCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile){
         this.machine = (TileEntityCoffeeMachine)tile;
 
-        this.addSlotToContainer(new Slot(machine, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, 37, 6));
-        this.addSlotToContainer(new Slot(machine, TileEntityCoffeeMachine.SLOT_INPUT, 80, 42));
-        this.addSlotToContainer(new SlotOutput(machine, TileEntityCoffeeMachine.SLOT_OUTPUT, 80, 73));
+        this.addSlotToContainer(new Slot(this.machine, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, 37, 6));
+        this.addSlotToContainer(new Slot(this.machine, TileEntityCoffeeMachine.SLOT_INPUT, 80, 42));
+        this.addSlotToContainer(new SlotOutput(this.machine, TileEntityCoffeeMachine.SLOT_OUTPUT, 80, 73));
 
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new Slot(machine, j+i*2+3, 125+j*18, 6+i*18));
+                this.addSlotToContainer(new Slot(this.machine, j+i*2+3, 125+j*18, 6+i*18));
             }
         }
-
-        this.addSlotToContainer(new Slot(machine, TileEntityCoffeeMachine.SLOT_WATER_INPUT, 26, 73));
-        this.addSlotToContainer(new SlotOutput(machine, TileEntityCoffeeMachine.SLOT_WATER_OUTPUT, 45, 73));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -59,12 +52,12 @@ public class ContainerCoffeeMachine extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 13;
-        final int inventoryEnd = inventoryStart+26;
-        final int hotbarStart = inventoryEnd+1;
-        final int hotbarEnd = hotbarStart+8;
+        int inventoryStart = 11;
+        int inventoryEnd = inventoryStart+26;
+        int hotbarStart = inventoryEnd+1;
+        int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
@@ -82,11 +75,6 @@ public class ContainerCoffeeMachine extends Container{
                 //Shift from Inventory
                 if(newStack.getItem() == InitItems.itemMisc && newStack.getItemDamage() == TheMiscItems.CUP.ordinal()){
                     if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT+1, false)){
-                        return null;
-                    }
-                }
-                else if(FluidContainerRegistry.containsFluid(newStack, new FluidStack(FluidRegistry.WATER, 1))){
-                    if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_WATER_INPUT, TileEntityCoffeeMachine.SLOT_WATER_INPUT+1, false)){
                         return null;
                     }
                 }
@@ -115,7 +103,7 @@ public class ContainerCoffeeMachine extends Container{
                 return null;
             }
 
-            if(newStack.stackSize == 0){
+            if(newStack.stackSize <= 0){
                 theSlot.putStack(null);
             }
             else{

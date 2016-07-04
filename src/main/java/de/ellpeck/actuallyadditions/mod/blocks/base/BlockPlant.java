@@ -1,18 +1,17 @@
 /*
- * This file ("BlockPlant.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BlockPlant.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -20,25 +19,24 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.List;
 import java.util.Random;
 
-public class BlockPlant extends BlockCrops{
+public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarity{
 
+    private final String name;
+    private final int minDropAmount;
+    private final int addDropAmount;
     public Item seedItem;
-    public Item returnItem;
-    public int returnMeta;
-    private String name;
-    private int minDropAmount;
-    private int addDropAmount;
+    private Item returnItem;
+    private int returnMeta;
 
     public BlockPlant(String name, int minDropAmount, int addDropAmount){
         this.name = name;
@@ -47,15 +45,14 @@ public class BlockPlant extends BlockCrops{
         this.register();
     }
 
+    public void doStuff(Item seedItem, Item returnItem, int returnMeta){
+        this.seedItem = seedItem;
+        this.returnItem = returnItem;
+        this.returnMeta = returnMeta;
+    }
+
     private void register(){
-        this.setUnlocalizedName(ModUtil.MOD_ID_LOWER+"."+this.getBaseName());
-        GameRegistry.registerBlock(this, this.getItemBlock(), this.getBaseName());
-        if(this.shouldAddCreative()){
-            this.setCreativeTab(CreativeTab.instance);
-        }
-        else{
-            this.setCreativeTab(null);
-        }
+        ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
 
         this.registerRendering();
     }
@@ -64,8 +61,8 @@ public class BlockPlant extends BlockCrops{
         return this.name;
     }
 
-    protected Class<? extends ItemBlockBase> getItemBlock(){
-        return ItemBlockBase.class;
+    protected ItemBlockBase getItemBlock(){
+        return new ItemBlockBase(this);
     }
 
     public boolean shouldAddCreative(){
@@ -73,9 +70,10 @@ public class BlockPlant extends BlockCrops{
     }
 
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID_LOWER, this.getBaseName()));
+        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
     }
@@ -91,36 +89,31 @@ public class BlockPlant extends BlockCrops{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing facing, float hitX, float hitY, float hitZ){
-        if(getMetaFromState(state) >= 7){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing facing, float hitX, float hitY, float hitZ){
+        if(this.getMetaFromState(state) >= 7){
             if(!world.isRemote){
 
-                List<ItemStack> drops = getDrops(world, pos, state, 0);
+                List<ItemStack> drops = this.getDrops(world, pos, state, 0);
                 boolean deductedSeedSize = false;
-                for(ItemStack stack : drops){
-                    if(stack != null){
-                        if(stack.getItem() == this.seedItem && !deductedSeedSize){
-                            stack.stackSize--;
+                for(ItemStack drop : drops){
+                    if(drop != null){
+                        if(drop.getItem() == this.seedItem && !deductedSeedSize){
+                            drop.stackSize--;
                             deductedSeedSize = true;
                         }
 
-                        if(stack.stackSize > 0){
-                            EntityItem entity = new EntityItem(world, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, stack);
+                        if(drop.stackSize > 0){
+                            EntityItem entity = new EntityItem(world, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, drop);
                             world.spawnEntityInWorld(entity);
                         }
                     }
                 }
 
-                world.setBlockState(pos, getStateFromMeta(0));
+                world.setBlockState(pos, this.getStateFromMeta(0));
             }
             return true;
         }
         return false;
-    }
-
-    @Override
-    public int getDamageValue(World world, BlockPos pos){
-        return 0;
     }
 
     @Override
@@ -130,14 +123,13 @@ public class BlockPlant extends BlockCrops{
 
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random){
-        return this.getMetaFromState(state) >= 7 ? random.nextInt(addDropAmount)+minDropAmount : super.quantityDropped(state, fortune, random);
+        return this.getMetaFromState(state) >= 7 ? random.nextInt(this.addDropAmount)+this.minDropAmount : super.quantityDropped(state, fortune, random);
     }
 
     @Override
     public Item getCrop(){
         return this.returnItem;
     }
-
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int par3){

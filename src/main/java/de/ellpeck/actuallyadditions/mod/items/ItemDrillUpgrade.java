@@ -1,11 +1,11 @@
 /*
- * This file ("ItemDrillUpgrade.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemDrillUpgrade.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items;
@@ -14,11 +14,14 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class ItemDrillUpgrade extends ItemBase{
 
-    public UpgradeType type;
+    public final UpgradeType type;
 
     public ItemDrillUpgrade(UpgradeType type, String unlocName){
         super(unlocName);
@@ -34,12 +37,14 @@ public class ItemDrillUpgrade extends ItemBase{
         return -1;
     }
 
+
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote && this.type == UpgradeType.PLACER){
             this.setSlotToPlaceFrom(stack, player.inventory.currentItem);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
-        return stack;
+        return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
 
     public void setSlotToPlaceFrom(ItemStack stack, int slot){

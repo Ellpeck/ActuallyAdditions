@@ -1,30 +1,33 @@
 /*
- * This file ("TileEntityFurnaceSolar.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityFurnaceSolar.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider, IEnergySaver, IEnergyDisplay{
+public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider, IEnergyDisplay{
 
     public static final int PRODUCE = 8;
-    public EnergyStorage storage = new EnergyStorage(30000);
+    public final EnergyStorage storage = new EnergyStorage(30000);
     private int oldEnergy;
+
+    public TileEntityFurnaceSolar(){
+        super("solarPanel");
+    }
 
     @Override
     public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
@@ -47,30 +50,26 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }
 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
-            if(!this.hasBlockAbove() && worldObj.isDaytime()){
+        if(!this.worldObj.isRemote){
+            if(!this.hasBlockAbove() && this.worldObj.isDaytime()){
                 if(PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                     this.storage.receiveEnergy(PRODUCE, false);
                     this.markDirty();
                 }
-            }
-
-            if(this.storage.getEnergyStored() > 0){
-                WorldUtil.pushEnergyToAllSides(worldObj, this.pos, this.storage);
             }
 
             if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
@@ -80,9 +79,10 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     }
 
     public boolean hasBlockAbove(){
-        for(int y = 1; y <= worldObj.getHeight(); y++){
-            BlockPos offset = PosUtil.offset(this.pos, 0, y, 0);
-            if(!PosUtil.getBlock(offset, worldObj).isAir(worldObj, offset)){
+        for(int y = 1; y <= this.worldObj.getHeight(); y++){
+            BlockPos offset = this.pos.down(y);
+            IBlockState state = this.worldObj.getBlockState(offset);
+            if(!state.getBlock().isAir(state, this.worldObj, offset)){
                 return true;
             }
         }
@@ -95,13 +95,13 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     }
 
     @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public int getMaxEnergy(){
         return this.storage.getMaxEnergyStored();
+    }
+
+    @Override
+    public boolean needsHoldShift(){
+        return false;
     }
 }

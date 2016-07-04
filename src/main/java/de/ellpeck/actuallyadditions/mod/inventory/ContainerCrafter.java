@@ -1,16 +1,16 @@
 /*
- * This file ("ContainerCrafter.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ContainerCrafter.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import invtweaks.api.container.InventoryContainer;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -18,23 +18,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
 
-@InventoryContainer
+
 public class ContainerCrafter extends Container{
 
-    public final int x;
-    public final int y;
-    public final int z;
     public final World world;
-    public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
-    public IInventory craftResult = new InventoryCraftResult();
+    public final InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
+    public final IInventory craftResult = new InventoryCraftResult();
 
     public ContainerCrafter(EntityPlayer player){
         InventoryPlayer inventory = player.inventory;
 
         this.world = player.worldObj;
-        this.x = (int)player.posX;
-        this.y = (int)player.posY;
-        this.z = (int)player.posZ;
 
         this.addSlotToContainer(new SlotCrafting(inventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
         for(int i = 0; i < 3; i++){
@@ -56,44 +50,55 @@ public class ContainerCrafter extends Container{
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        ItemStack stack = null;
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+    public ItemStack transferStackInSlot(EntityPlayer player, int index){
+        ItemStack itemstack = null;
+        Slot slot = this.inventorySlots.get(index);
 
-        if(theSlot != null && theSlot.getHasStack()){
-            ItemStack savedStack = theSlot.getStack();
-            stack = savedStack.copy();
+        if(slot != null && slot.getHasStack()){
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
 
-            if(slot == 0){
-                if(!this.mergeItemStack(savedStack, 10, 46, true)){
+            if(index == 0){
+                if(!this.mergeItemStack(itemstack1, 10, 46, true)){
                     return null;
                 }
-                theSlot.onSlotChange(savedStack, stack);
+
+                slot.onSlotChange(itemstack1, itemstack);
             }
-            else if(slot >= 10 && slot < 37 && !this.mergeItemStack(savedStack, 37, 46, false)){
-                return null;
+            else if(index >= 10 && index < 37){
+                if(!this.mergeItemStack(itemstack1, 37, 46, false)){
+                    return null;
+                }
             }
-            else if(slot >= 37 && slot < 46 && !this.mergeItemStack(savedStack, 10, 37, false)){
-                return null;
+            else if(index >= 37 && index < 46){
+                if(!this.mergeItemStack(itemstack1, 10, 37, false)){
+                    return null;
+                }
             }
-            else if(!this.mergeItemStack(savedStack, 10, 46, false)){
+            else if(!this.mergeItemStack(itemstack1, 10, 46, false)){
                 return null;
             }
 
-            if(savedStack.stackSize == 0){
-                theSlot.putStack(null);
+            if(itemstack1.stackSize <= 0){
+                slot.putStack(null);
             }
             else{
-                theSlot.onSlotChanged();
+                slot.onSlotChanged();
             }
 
-            if(savedStack.stackSize == stack.stackSize){
+            if(itemstack1.stackSize == itemstack.stackSize){
                 return null;
             }
 
-            theSlot.onPickupFromSlot(player, savedStack);
+            slot.onPickupFromSlot(player, itemstack1);
         }
-        return stack;
+
+        return itemstack;
+    }
+
+    @Override
+    public boolean canMergeSlot(ItemStack stack, Slot slotIn){
+        return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
     }
 
     @Override
@@ -104,7 +109,7 @@ public class ContainerCrafter extends Container{
             for(int i = 0; i < 9; ++i){
                 ItemStack stack = this.craftMatrix.removeStackFromSlot(i);
                 if(stack != null){
-                    player.dropPlayerItemWithRandomChoice(stack, false);
+                    player.dropItem(stack, false);
                 }
             }
         }

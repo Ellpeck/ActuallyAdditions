@@ -1,11 +1,11 @@
 /*
- * This file ("ItemMisc.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemMisc.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items;
@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
@@ -27,7 +26,7 @@ import java.util.List;
 
 public class ItemMisc extends ItemBase{
 
-    public static final TheMiscItems[] allMiscItems = TheMiscItems.values();
+    public static final TheMiscItems[] ALL_MISC_ITEMS = TheMiscItems.values();
 
     public ItemMisc(String name){
         super(name);
@@ -41,30 +40,30 @@ public class ItemMisc extends ItemBase{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= allMiscItems.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+allMiscItems[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_MISC_ITEMS[stack.getItemDamage()].name;
     }
+
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= allMiscItems.length ? EnumRarity.COMMON : allMiscItems[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? EnumRarity.COMMON : ALL_MISC_ITEMS[stack.getItemDamage()].rarity;
     }
 
-    @SuppressWarnings("all")
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list){
-        for(int j = 0; j < allMiscItems.length; j++){
-            list.add(new ItemStack(this, 1, j));
+        for(int j = 0; j < ALL_MISC_ITEMS.length; j++){
+            if(j != TheMiscItems.YOUTUBE_ICON.ordinal()){
+                list.add(new ItemStack(this, 1, j));
+            }
         }
     }
 
     @Override
     protected void registerRendering(){
-        ResourceLocation[] resLocs = new ResourceLocation[allMiscItems.length];
-        for(int i = 0; i < allMiscItems.length; i++){
-            String name = this.getBaseName()+allMiscItems[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+        for(int i = 0; i < ALL_MISC_ITEMS.length; i++){
+            String name = this.getRegistryName()+ALL_MISC_ITEMS[i].name;
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
-        ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }
 }

@@ -1,36 +1,19 @@
 {
-    "variants": {
-        "east=false,north=false,south=false,up=false,west=false": { "model": "actuallyadditions:blockChiseledQuartzWallPost" },
-        "east=false,north=true,south=false,up=false,west=false":  { "model": "actuallyadditions:blockChiseledQuartzWallNorth" },
-        "east=true,north=false,south=false,up=false,west=false":  { "model": "actuallyadditions:blockChiseledQuartzWallNorth", "y": 90, "uvlock": true },
-        "east=false,north=false,south=true,up=false,west=false":  { "model": "actuallyadditions:blockChiseledQuartzWallNorth", "y": 180, "uvlock": true },
-        "east=false,north=false,south=false,up=false,west=true":  { "model": "actuallyadditions:blockChiseledQuartzWallNorth", "y": 270, "uvlock": true },
-        "east=true,north=true,south=false,up=false,west=false":   { "model": "actuallyadditions:blockChiseledQuartzWallNorthEast" },
-        "east=true,north=false,south=true,up=false,west=false":   { "model": "actuallyadditions:blockChiseledQuartzWallNorthEast", "y": 90, "uvlock": true },
-        "east=false,north=false,south=true,up=false,west=true":   { "model": "actuallyadditions:blockChiseledQuartzWallNorthEast", "y": 180, "uvlock": true },
-        "east=false,north=true,south=false,up=false,west=true":   { "model": "actuallyadditions:blockChiseledQuartzWallNorthEast", "y": 270, "uvlock": true },
-        "east=false,north=true,south=true,up=false,west=false":   { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouth" },
-        "east=true,north=false,south=false,up=false,west=true":   { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouth", "y": 90, "uvlock": true },
-        "east=true,north=true,south=true,up=false,west=false":    { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthEast" },
-        "east=true,north=false,south=true,up=false,west=true":    { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthEast", "y": 90, "uvlock": true },
-        "east=false,north=true,south=true,up=false,west=true":    { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthEast", "y": 180, "uvlock": true },
-        "east=true,north=true,south=false,up=false,west=true":    { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthEast", "y": 270, "uvlock": true },
-        "east=true,north=true,south=true,up=false,west=true":     { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthEastWest" },
-        "east=false,north=false,south=false,up=true,west=false":  { "model": "actuallyadditions:blockChiseledQuartzWallPost" },
-        "east=false,north=true,south=false,up=true,west=false":   { "model": "actuallyadditions:blockChiseledQuartzWallNorth" },
-        "east=true,north=false,south=false,up=true,west=false":   { "model": "actuallyadditions:blockChiseledQuartzWallNorth", "y": 90, "uvlock": true },
-        "east=false,north=false,south=true,up=true,west=false":   { "model": "actuallyadditions:blockChiseledQuartzWallNorth", "y": 180, "uvlock": true },
-        "east=false,north=false,south=false,up=true,west=true":   { "model": "actuallyadditions:blockChiseledQuartzWallNorth", "y": 270, "uvlock": true },
-        "east=true,north=true,south=false,up=true,west=false":    { "model": "actuallyadditions:blockChiseledQuartzWallNorthEast" },
-        "east=true,north=false,south=true,up=true,west=false":    { "model": "actuallyadditions:blockChiseledQuartzWallNorthEast", "y": 90, "uvlock": true },
-        "east=false,north=false,south=true,up=true,west=true":    { "model": "actuallyadditions:blockChiseledQuartzWallNorthEast", "y": 180, "uvlock": true },
-        "east=false,north=true,south=false,up=true,west=true":    { "model": "actuallyadditions:blockChiseledQuartzWallNorthEast", "y": 270, "uvlock": true },
-        "east=false,north=true,south=true,up=true,west=false":    { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthAbove" },
-        "east=true,north=false,south=false,up=true,west=true":    { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthAbove", "y": 90, "uvlock": true },
-        "east=true,north=true,south=true,up=true,west=false":     { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthEast" },
-        "east=true,north=false,south=true,up=true,west=true":     { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthEast", "y": 90, "uvlock": true },
-        "east=false,north=true,south=true,up=true,west=true":     { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthEast", "y": 180, "uvlock": true },
-        "east=true,north=true,south=false,up=true,west=true":     { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthEast", "y": 270, "uvlock": true },
-        "east=true,north=true,south=true,up=true,west=true":      { "model": "actuallyadditions:blockChiseledQuartzWallNorthSouthEastWest" }
+  "multipart": [
+    {   "when": { "up": "true" },
+      "apply": { "model": "actuallyadditions:blockChiseledQuartzWallPost" }
+    },
+    {   "when": { "north": "true" },
+      "apply": { "model": "actuallyadditions:blockChiseledQuartzWallSide", "uvlock": true }
+    },
+    {   "when": { "east": "true" },
+      "apply": { "model": "actuallyadditions:blockChiseledQuartzWallSide", "y": 90, "uvlock": true }
+    },
+    {   "when": { "south": "true" },
+      "apply": { "model": "actuallyadditions:blockChiseledQuartzWallSide", "y": 180, "uvlock": true }
+    },
+    {   "when": { "west": "true" },
+      "apply": { "model": "actuallyadditions:blockChiseledQuartzWallSide", "y": 270, "uvlock": true }
     }
+  ]
 }

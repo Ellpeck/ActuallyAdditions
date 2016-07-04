@@ -1,20 +1,19 @@
 /*
- * This file ("ItemChestToCrateUpgrade.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemChestToCrateUpgrade.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,8 +21,10 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemChestToCrateUpgrade extends ItemBase{
@@ -32,11 +33,12 @@ public class ItemChestToCrateUpgrade extends ItemBase{
         super(name);
     }
 
+
     @Override
-    public boolean onItemUse(ItemStack heldStack, EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float par8, float par9, float par10){
+    public EnumActionResult onItemUse(ItemStack heldStack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float par8, float par9, float par10){
         if(player.isSneaking()){
             TileEntity tileHit = world.getTileEntity(pos);
-            Block block = PosUtil.getBlock(pos, world);
+            Block block = world.getBlockState(pos).getBlock();
             if(block instanceof BlockChest && tileHit instanceof TileEntityChest){
                 if(!world.isRemote){
                     TileEntityChest chest = (TileEntityChest)tileHit;
@@ -52,10 +54,10 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                     }
 
                     //Set New Block
-                    if(!ConfigValues.lessBlockBreakingEffects){
-                        world.playAuxSFX(2001, pos, Block.getStateId(world.getBlockState(pos)));
+                    if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
+                        world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
                     }
-                    PosUtil.setBlock(pos, world, InitBlocks.blockGiantChest, 0, 2);
+                    world.setBlockState(pos, InitBlocks.blockGiantChest.getDefaultState(), 2);
 
                     //Copy Items into new Chest
                     TileEntity newTileHit = world.getTileEntity(pos);
@@ -74,12 +76,13 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                         heldStack.stackSize--;
                     }
                 }
-                return true;
+                return EnumActionResult.SUCCESS;
             }
         }
 
-        return super.onItemUse(heldStack, player, world, pos, facing, par8, par9, par10);
+        return super.onItemUse(heldStack, player, world, pos, hand, facing, par8, par9, par10);
     }
+
 
     @Override
     public EnumRarity getRarity(ItemStack stack){

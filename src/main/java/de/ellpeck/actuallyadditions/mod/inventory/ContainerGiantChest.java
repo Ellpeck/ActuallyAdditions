@@ -1,11 +1,11 @@
 /*
- * This file ("ContainerGiantChest.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ContainerGiantChest.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory;
@@ -19,17 +19,17 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-@ChestContainer(rowSize = 13)
+@ChestContainer(rowSize = 13, isLargeChest = true)
 public class ContainerGiantChest extends Container{
 
-    public TileEntityGiantChest tileChest;
+    public final TileEntityGiantChest tileChest;
 
-    public ContainerGiantChest(InventoryPlayer inventory, TileEntityBase tile){
+    public ContainerGiantChest(InventoryPlayer inventory, TileEntityBase tile, int page){
         this.tileChest = (TileEntityGiantChest)tile;
 
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 13; j++){
-                this.addSlotToContainer(new Slot(this.tileChest, j+(i*13), 5+j*18, 5+i*18));
+                this.addSlotToContainer(new Slot(this.tileChest, (9*13*page)+j+(i*13), 5+j*18, 5+i*18));
             }
         }
 
@@ -45,12 +45,12 @@ public class ContainerGiantChest extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        final int inventoryStart = 117;
-        final int inventoryEnd = inventoryStart+26;
-        final int hotbarStart = inventoryEnd+1;
-        final int hotbarEnd = hotbarStart+8;
+        int inventoryStart = 117;
+        int inventoryEnd = inventoryStart+26;
+        int hotbarStart = inventoryEnd+1;
+        int hotbarEnd = hotbarStart+8;
 
-        Slot theSlot = (Slot)this.inventorySlots.get(slot);
+        Slot theSlot = this.inventorySlots.get(slot);
 
         if(theSlot != null && theSlot.getHasStack()){
             ItemStack newStack = theSlot.getStack();
@@ -75,7 +75,7 @@ public class ContainerGiantChest extends Container{
                 return null;
             }
 
-            if(newStack.stackSize == 0){
+            if(newStack.stackSize <= 0){
                 theSlot.putStack(null);
             }
             else{

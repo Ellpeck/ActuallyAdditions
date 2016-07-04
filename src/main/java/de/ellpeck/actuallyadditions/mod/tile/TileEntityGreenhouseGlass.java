@@ -1,56 +1,66 @@
 /*
- * This file ("TileEntityGreenhouseGlass.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityGreenhouseGlass.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.IPlantable;
 
 public class TileEntityGreenhouseGlass extends TileEntityBase{
 
     private int timeUntilNextFert;
 
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.writeSyncableNBT(compound, isForSync);
-        this.timeUntilNextFert = compound.getInteger("Time");
+    public TileEntityGreenhouseGlass(){
+        super("greenhouseGlass");
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean isForSync){
-        super.readSyncableNBT(compound, isForSync);
-        compound.setInteger("Time", this.timeUntilNextFert);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.timeUntilNextFert = compound.getInteger("Time");
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("Time", this.timeUntilNextFert);
+        }
     }
 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
-            if(worldObj.canBlockSeeSky(this.getPos()) && worldObj.isDaytime()){
+        if(!this.worldObj.isRemote){
+            if(this.worldObj.canBlockSeeSky(this.getPos()) && this.worldObj.isDaytime()){
                 if(this.timeUntilNextFert > 0){
                     this.timeUntilNextFert--;
-                    if(timeUntilNextFert <= 0){
+                    if(this.timeUntilNextFert <= 0){
                         BlockPos blockToFert = this.blockToFertilize();
                         if(blockToFert != null){
-                            int metaBefore = PosUtil.getMetadata(blockToFert, worldObj);
-                            PosUtil.getBlock(blockToFert, worldObj).updateTick(worldObj, blockToFert, worldObj.getBlockState(blockToFert), Util.RANDOM);
+                            IBlockState state = this.worldObj.getBlockState(blockToFert);
+                            Block block = state.getBlock();
+                            int metaBefore = block.getMetaFromState(state);
+                            block.updateTick(this.worldObj, blockToFert, this.worldObj.getBlockState(blockToFert), Util.RANDOM);
 
-                            if(PosUtil.getMetadata(blockToFert, worldObj) != metaBefore){
-                                worldObj.playAuxSFX(2005, blockToFert, 0);
+                            IBlockState newState = this.worldObj.getBlockState(blockToFert);
+                            if(newState.getBlock().getMetaFromState(newState) != metaBefore){
+                                this.worldObj.playEvent(2005, blockToFert, 0);
                             }
                         }
                     }
@@ -64,10 +74,10 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
     }
 
     public BlockPos blockToFertilize(){
-        for(int i = -1; i > 0; i--){
-            BlockPos offset = PosUtil.offset(this.pos, 0, i, 0);
-            Block block = PosUtil.getBlock(pos, worldObj);
-            if(block != null && !(worldObj.isAirBlock(offset))){
+        for(int i = this.pos.getY()-1; i > 0; i--){
+            BlockPos offset = new BlockPos(this.pos.getX(), i, this.pos.getZ());
+            Block block = this.worldObj.getBlockState(this.pos).getBlock();
+            if(block != null && !(this.worldObj.isAirBlock(offset))){
                 if((block instanceof IGrowable || block instanceof IPlantable) && !(block instanceof BlockGrass)){
                     return offset;
                 }

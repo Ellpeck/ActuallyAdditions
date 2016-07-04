@@ -1,6 +1,6 @@
 {
-    "parent": "block/wall_inventory",
-    "textures": {
-        "wall": "actuallyadditions:blocks/blockMiscBlackQuartz"
-    }
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "actuallyadditions:blocks/blockMiscBlackQuartz"
+  }
 }

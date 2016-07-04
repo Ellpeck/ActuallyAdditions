@@ -1,11 +1,11 @@
 /*
- * This file ("HairyBallHandler.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("HairyBallHandler.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.recipe;
@@ -16,32 +16,32 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class HairyBallHandler{
+public final class HairyBallHandler{
 
     public static void init(){
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.string), 100);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.diamond), 2);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.name_tag), 1);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.fish), 80);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.fish, 1, 1), 60);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.fish, 1, 2), 10);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.fish, 1, 3), 40);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.feather), 60);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.leather), 30);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.dye), 70);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.clay_ball), 40);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.stick), 40);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.iron_ingot), 10);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.gold_ingot), 6);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.beef), 30);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.ender_pearl), 2);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.planks), 20);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.waterlily), 10);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.experience_bottle), 3);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.gravel), 40);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.sand), 50);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.vine), 30);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.web), 4);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.STRING), 100);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.DIAMOND), 2);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.NAME_TAG), 1);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.FISH), 80);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.FISH, 1, 1), 60);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.FISH, 1, 2), 10);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.FISH, 1, 3), 40);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.FEATHER), 60);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.LEATHER), 30);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.DYE), 70);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.CLAY_BALL), 40);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.STICK), 40);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.IRON_INGOT), 10);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.GOLD_INGOT), 6);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.BEEF), 30);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.ENDER_PEARL), 2);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.PLANKS), 20);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.WATERLILY), 10);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.EXPERIENCE_BOTTLE), 3);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.GRAVEL), 40);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.SAND), 50);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.VINE), 30);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.WEB), 4);
         ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(InitItems.itemSolidifiedExperience), 20);
     }
 

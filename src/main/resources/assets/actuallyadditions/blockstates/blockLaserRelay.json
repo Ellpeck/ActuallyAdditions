@@ -1,10 +1,19 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "actuallyadditions:blockLaserRelay",
+    "transform": "forge:default-block"
+  },
   "variants": {
-    "meta=0": { "model": "actuallyadditions:blockLaserRelay", "x": 180 },
-    "meta=1": { "model": "actuallyadditions:blockLaserRelay"},
-    "meta=2": { "model": "actuallyadditions:blockLaserRelay", "x": 90 },
-    "meta=3": { "model": "actuallyadditions:blockLaserRelay", "x": 270 },
-    "meta=4": { "model": "actuallyadditions:blockLaserRelay", "x": 90, "y": 270 },
-    "meta=5": { "model": "actuallyadditions:blockLaserRelay", "x": 90, "y": 90 }
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": { "x": 180 },
+      "1": {},
+      "2": { "x": 90 },
+      "3": { "x": 270 },
+      "4": { "x": 90, "y": 270 },
+      "5": { "x": 270, "y": 270 }
+    }
   }
 }

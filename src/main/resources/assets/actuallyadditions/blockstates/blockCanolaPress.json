@@ -1,5 +1,16 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_bottom_top",
+    "textures": {
+      "side": "actuallyadditions:blocks/blockCanolaPress",
+      "bottom": "#top",
+      "top": "actuallyadditions:blocks/blockCanolaPressTop"
+    },
+    "transform": "forge:default-block"
+  },
   "variants": {
-    "normal": { "model": "actuallyadditions:blockCanolaPress" }
+    "normal": [{}],
+    "inventory": [{}]
   }
 }

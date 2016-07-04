@@ -7,22 +7,24 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.8.9-r25"
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'idea'
+
+version = "1.10.2-r47"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
 minecraft {
-    version = "1.8.9-11.15.1.1732"
+    version = "1.10.2-12.18.0.2002-1.10.0"
     runDir = "idea"
 
-    mappings = "stable_20"
+    mappings = "snapshot_20160519"
     makeObfSourceJar = false
-    useDepAts = true
+    //useDepAts = true
 
     replaceIn "ModUtil.java"
     replace "@VERSION@", project.version.toString()
@@ -35,6 +37,9 @@ repositories {
     maven {
         url "http://dvs1.progwml6.com/files/maven"
     }
+    maven {
+        url "http://maven.epoxide.xyz"
+    }
 }
 
 dependencies {
@@ -42,7 +47,8 @@ dependencies {
     //compile "codechicken:CodeChickenCore:1.8-1.0.5.36:dev"
     //compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
 
-    deobfCompile "mezz.jei:jei_1.8.9:2.25.6.140"
+    compile "net.darkhax.tesla:Tesla:1.9.4-1.1.0.24"
+    deobfCompile "mezz.jei:jei_1.10:3.7.1.219"
 }
 
 processResources {
@@ -60,10 +66,13 @@ processResources {
     }
 }
 
-jar {}
+jar {
+
+}
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
+    from sourceSets.main.java
     classifier = 'dev'
 }
 

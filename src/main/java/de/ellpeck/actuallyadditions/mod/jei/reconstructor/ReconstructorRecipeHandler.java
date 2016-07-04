@@ -1,44 +1,43 @@
 /*
- * This file ("ReconstructorRecipeHandler.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ReconstructorRecipeHandler.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
-import de.ellpeck.actuallyadditions.api.recipe.LensNoneRecipe;
-import de.ellpeck.actuallyadditions.mod.nei.NEIReconstructorRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
-import javax.annotation.Nonnull;
+public class ReconstructorRecipeHandler implements IRecipeHandler<LensConversionRecipe>{
 
-public class ReconstructorRecipeHandler implements IRecipeHandler<LensNoneRecipe>{
-
-    @Nonnull
     @Override
     public Class getRecipeClass(){
-        return LensNoneRecipe.class;
+        return LensConversionRecipe.class;
     }
 
-    @Nonnull
     @Override
     public String getRecipeCategoryUid(){
-        return NEIReconstructorRecipe.NAME;
+        return ReconstructorRecipeCategory.NAME;
     }
 
-    @Nonnull
     @Override
-    public IRecipeWrapper getRecipeWrapper(@Nonnull LensNoneRecipe recipe){
+    public String getRecipeCategoryUid(LensConversionRecipe recipe){
+        return this.getRecipeCategoryUid();
+    }
+
+    @Override
+    public IRecipeWrapper getRecipeWrapper(LensConversionRecipe recipe){
         return new ReconstructorRecipeWrapper(recipe);
     }
 
     @Override
-    public boolean isRecipeValid(@Nonnull LensNoneRecipe recipe){
+    public boolean isRecipeValid(LensConversionRecipe recipe){
         return true;
     }
 }

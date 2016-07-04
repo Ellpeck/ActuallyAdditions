@@ -1,19 +1,32 @@
 /*
- * This file ("ItemWingsOfTheBats.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemWingsOfTheBats.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import java.util.ArrayList;
 
@@ -29,11 +42,66 @@ public class ItemWingsOfTheBats extends ItemBase{
      * <p>
      * (Partially excerpted from Botania's Wing System by Vazkii (as I had fiddled around with the system and couldn't make it work) with permission, thanks!)
      */
-    public static ArrayList<String> wingedPlayers = new ArrayList<String>();
+    public static final ArrayList<String> WINGED_PLAYERS = new ArrayList<String>();
 
     public ItemWingsOfTheBats(String name){
         super(name);
         this.setMaxStackSize(1);
+
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @SubscribeEvent
+    public void onLogOutEvent(PlayerEvent.PlayerLoggedOutEvent event){
+        //Remove Player from Wings' Fly Permission List
+        ItemWingsOfTheBats.removeWingsFromPlayer(event.player, true);
+        ItemWingsOfTheBats.removeWingsFromPlayer(event.player, false);
+    }
+
+    @SubscribeEvent
+    public void onEntityDropEvent(LivingDropsEvent event){
+        if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
+            //Drop Wings from Bats
+            if(ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntityLiving() instanceof EntityBat){
+                if(Util.RANDOM.nextInt(15) <= event.getLootingLevel()*2){
+                    event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemMisc, Util.RANDOM.nextInt(2+event.getLootingLevel())+1, TheMiscItems.BAT_WING.ordinal()), 0);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event){
+        if(event.getEntityLiving() instanceof EntityPlayer){
+            EntityPlayer player = (EntityPlayer)event.getEntityLiving();
+            boolean wingsEquipped = ItemWingsOfTheBats.getWingItem(player) != null;
+
+            //If Player isn't (really) winged
+            if(!ItemWingsOfTheBats.isPlayerWinged(player)){
+                if(wingsEquipped){
+                    //Make the Player actually winged
+                    ItemWingsOfTheBats.addWingsToPlayer(player);
+                }
+            }
+            //If Player is (or should be) winged
+            else{
+                if(wingsEquipped){
+                    //Allow the Player to fly when he has Wings equipped
+                    player.capabilities.allowFlying = true;
+                }
+                else{
+                    //Make the Player not winged
+                    ItemWingsOfTheBats.removeWingsFromPlayer(player);
+                    //Reset Player's Values
+                    if(!player.capabilities.isCreativeMode){
+                        player.capabilities.allowFlying = false;
+                        player.capabilities.isFlying = false;
+                        //Enables Fall Damage again (Automatically gets disabled for some reason)
+                        player.capabilities.disableDamage = false;
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -43,7 +111,7 @@ public class ItemWingsOfTheBats extends ItemBase{
      * @return Winged?
      */
     public static boolean isPlayerWinged(EntityPlayer player){
-        return wingedPlayers.contains(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
+        return WINGED_PLAYERS.contains(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
     }
 
     /**
@@ -60,7 +128,7 @@ public class ItemWingsOfTheBats extends ItemBase{
      * @param worldRemote If the World the Player is in is remote
      */
     public static void removeWingsFromPlayer(EntityPlayer player, boolean worldRemote){
-        wingedPlayers.remove(player.getUniqueID()+(worldRemote ? "-Remote" : ""));
+        WINGED_PLAYERS.remove(player.getUniqueID()+(worldRemote ? "-Remote" : ""));
     }
 
     /**
@@ -69,7 +137,7 @@ public class ItemWingsOfTheBats extends ItemBase{
      * @param player The Player
      */
     public static void addWingsToPlayer(EntityPlayer player){
-        wingedPlayers.add(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
+        WINGED_PLAYERS.add(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
     }
 
     /**
@@ -86,6 +154,7 @@ public class ItemWingsOfTheBats extends ItemBase{
         }
         return null;
     }
+
 
     @Override
     public EnumRarity getRarity(ItemStack stack){

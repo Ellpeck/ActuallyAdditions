@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityRangedCollector.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityRangedCollector.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -16,8 +16,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 
 import java.util.ArrayList;
 
@@ -33,29 +33,32 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
-        compound.setBoolean("Whitelist", this.isWhitelist);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setBoolean("Whitelist", this.isWhitelist);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
-        this.isWhitelist = compound.getBoolean("Whitelist");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.isWhitelist = compound.getBoolean("Whitelist");
+        }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(!this.isRedstonePowered){
-                ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(this.pos.getX()-RANGE, this.pos.getY()-RANGE, this.pos.getZ()-RANGE, this.pos.getX()+RANGE, this.pos.getY()+RANGE, this.pos.getZ()+RANGE));
+                ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.worldObj.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.pos.getX()-RANGE, this.pos.getY()-RANGE, this.pos.getZ()-RANGE, this.pos.getX()+RANGE, this.pos.getY()+RANGE, this.pos.getZ()+RANGE));
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
                         if(!item.isDead && item.getEntityItem() != null){
                             ItemStack toAdd = item.getEntityItem().copy();
-                            if(this.checkFilter(toAdd)){
+                            if(TileEntityLaserRelayItemWhitelist.checkFilter(toAdd, this.isWhitelist, this.slots, WHITELIST_START, WHITELIST_START+12)){
                                 ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
                                 checkList.add(toAdd);
                                 if(WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, EnumFacing.UP, false, true)){
@@ -72,17 +75,6 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                 this.lastWhitelist = this.isWhitelist;
             }
         }
-    }
-
-    private boolean checkFilter(ItemStack stack){
-        int slotStop = WHITELIST_START+12;
-
-        for(int i = WHITELIST_START; i < slotStop; i++){
-            if(this.slots[i] != null && this.slots[i].isItemEqual(stack)){
-                return this.isWhitelist;
-            }
-        }
-        return !this.isWhitelist;
     }
 
     @Override

@@ -1,30 +1,29 @@
 /*
- * This file ("IndexButton.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("IndexButton.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class IndexButton extends GuiButton{
 
+    private final GuiBooklet gui;
     public IBookletChapter chap;
-    private GuiBooklet gui;
 
     public IndexButton(int id, int x, int y, int width, int height, String text, GuiBooklet gui){
         super(id, x, y, width, height, text);
@@ -58,12 +57,6 @@ public class IndexButton extends GuiButton{
             }
 
             this.gui.getFontRenderer().drawString(this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, 0);
-        }
-    }
-
-    public void drawHover(int mouseX, int mouseY){
-        if(this.chap instanceof BookletChapter && ((BookletChapter)this.chap).isIncomplete){
-            this.gui.drawHoveringText(this.gui.getFontRenderer().listFormattedStringToWidth(EnumChatFormatting.RED+StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".unavailable"), 250), mouseX, mouseY);
         }
     }
 }

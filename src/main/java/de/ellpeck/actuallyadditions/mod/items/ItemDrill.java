@@ -1,11 +1,11 @@
 /*
- * This file ("ItemDrill.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ItemDrill.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.items;
@@ -14,18 +14,18 @@ import cofh.api.energy.IEnergyContainerItem;
 import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
-import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -33,12 +33,16 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
@@ -48,11 +52,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@SuppressWarnings("unchecked")
 public class ItemDrill extends ItemEnergy{
 
     private static final int ENERGY_USE = 100;
-    private static final int HARVEST_LEVEL = 4;
+    public static final int HARVEST_LEVEL = 4;
 
     public ItemDrill(String name){
         super(500000, 5000, name);
@@ -69,9 +72,36 @@ public class ItemDrill extends ItemEnergy{
         this.setHarvestLevel("pickaxe", HARVEST_LEVEL);
     }
 
+    /**
+     * Gets all of the Slots from NBT
+     *
+     * @param stack The Drill
+     */
+    public static void loadSlotsFromNBT(ItemStack[] slots, ItemStack stack){
+        NBTTagCompound compound = stack.getTagCompound();
+        if(compound != null){
+            TileEntityInventoryBase.loadSlots(slots, compound);
+        }
+    }
+
+    /**
+     * Writes all of the Slots to NBT
+     *
+     * @param slots The Slots
+     * @param stack The Drill
+     */
+    public static void writeSlotsToNBT(ItemStack[] slots, ItemStack stack){
+        NBTTagCompound compound = stack.getTagCompound();
+        if(compound == null){
+            compound = new NBTTagCompound();
+        }
+        TileEntityInventoryBase.saveSlots(slots, compound);
+        stack.setTagCompound(compound);
+    }
+
     @Override
     //Places Blocks if the Placing Upgrade is installed
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
         ItemStack upgrade = this.getHasUpgradeAsStack(stack, ItemDrillUpgrade.UpgradeType.PLACER);
         if(upgrade != null){
             int slot = ItemDrillUpgrade.getSlotToPlaceFrom(upgrade);
@@ -83,28 +113,28 @@ public class ItemDrill extends ItemEnergy{
                         //tryPlaceItemIntoWorld could throw an Exception
                         try{
                             //Places the Block into the World
-                            if(equip.onItemUse(player, world, pos, side, hitX, hitY, hitZ)){
+                            if(equip.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ) != EnumActionResult.FAIL){
                                 if(!player.capabilities.isCreativeMode){
                                     player.inventory.setInventorySlotContents(slot, equip.stackSize <= 0 ? null : equip.copy());
                                 }
                                 //Synchronizes the Client
                                 player.inventoryContainer.detectAndSendChanges();
-                                return true;
+                                return EnumActionResult.SUCCESS;
                             }
                         }
                         //Notify the Player and log the Exception
                         catch(Exception e){
-                            player.addChatComponentMessage(new ChatComponentText("Ouch! That really hurt! You must have done something wrong, don't do that again please!"));
-                            ModUtil.LOGGER.error("Player "+player.getName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.getDimensionId()+" threw an Exception! Don't let that happen again!");
+                            player.addChatComponentMessage(new TextComponentString("Ouch! That really hurt! You must have done something wrong, don't do that again please!"));
+                            ModUtil.LOGGER.error("Player "+player.getName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.getDimension()+" threw an Exception! Don't let that happen again!");
                         }
                     }
                     else{
-                        return true;
+                        return EnumActionResult.SUCCESS;
                     }
                 }
             }
         }
-        return false;
+        return EnumActionResult.FAIL;
     }
 
     /**
@@ -120,7 +150,8 @@ public class ItemDrill extends ItemEnergy{
             return null;
         }
 
-        ItemStack[] slots = this.getSlotsFromNBT(stack);
+        ItemStack[] slots = new ItemStack[ContainerDrill.SLOT_AMOUNT];
+        loadSlotsFromNBT(slots, stack);
         if(slots != null && slots.length > 0){
             for(ItemStack slotStack : slots){
                 if(slotStack != null && slotStack.getItem() instanceof ItemDrillUpgrade){
@@ -133,40 +164,12 @@ public class ItemDrill extends ItemEnergy{
         return null;
     }
 
-    /**
-     * Gets all of the Slots from NBT
-     *
-     * @param stack The Drill
-     * @return All of the Slots
-     */
-    public ItemStack[] getSlotsFromNBT(ItemStack stack){
-        NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null){
-            return null;
-        }
-
-        int slotAmount = compound.getInteger("SlotAmount");
-        ItemStack[] slots = new ItemStack[slotAmount];
-
-        if(slots.length > 0){
-            NBTTagList tagList = compound.getTagList("Items", 10);
-            for(int i = 0; i < tagList.tagCount(); i++){
-                NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                byte slotIndex = tagCompound.getByte("Slot");
-                if(slotIndex >= 0 && slotIndex < slots.length){
-                    slots[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
-                }
-            }
-        }
-        return slots;
-    }
-
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player){
-        if(!world.isRemote && player.isSneaking() && stack == player.getCurrentEquippedItem()){
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+        if(!world.isRemote && player.isSneaking()){
             player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
-        return stack;
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
     }
 
     @Override
@@ -186,7 +189,8 @@ public class ItemDrill extends ItemEnergy{
     //Checks for Energy Containers in the Upgrade Slots and charges the Drill from them
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        ItemStack[] slots = this.getSlotsFromNBT(stack);
+        ItemStack[] slots = new ItemStack[ContainerDrill.SLOT_AMOUNT];
+        loadSlotsFromNBT(slots, stack);
         if(slots != null && slots.length > 0){
             for(ItemStack slotStack : slots){
                 if(slotStack != null && slotStack.getItem() instanceof IEnergyContainerItem){
@@ -211,14 +215,19 @@ public class ItemDrill extends ItemEnergy{
     }
 
     @Override
-    public Multimap getAttributeModifiers(ItemStack stack){
-        Multimap map = super.getAttributeModifiers(stack);
-        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Drill Modifier", this.getEnergyStored(stack) >= ENERGY_USE ? 8.0F : 0.1F, 0));
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
+        Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
+
+        if(slot == EntityEquipmentSlot.MAINHAND){
+            map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Drill Modifier", this.getEnergyStored(stack) >= ENERGY_USE ? 8.0F : 0.1F, 0));
+            map.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool Modifier", -2.5F, 0));
+        }
+
         return map;
     }
 
     @Override
-    public float getDigSpeed(ItemStack stack, IBlockState state){
+    public float getStrVsBlock(ItemStack stack, IBlockState state){
         return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) ? (this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state)) ? this.getEfficiencyFromUpgrade(stack) : 1.0F) : 0.1F;
     }
 
@@ -229,11 +238,11 @@ public class ItemDrill extends ItemEnergy{
         if(this.getEnergyStored(stack) >= use){
             //Enchants the Drill depending on the Upgrades it has
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
-                ItemUtil.addEnchantment(stack, Enchantment.silkTouch, 1);
+                ItemUtil.addEnchantment(stack, Enchantments.SILK_TOUCH, 1);
             }
             else{
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)){
-                    ItemUtil.addEnchantment(stack, Enchantment.fortune, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
+                    ItemUtil.addEnchantment(stack, Enchantments.FORTUNE, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
                 }
             }
 
@@ -251,16 +260,17 @@ public class ItemDrill extends ItemEnergy{
             }
 
             //Removes Enchantments added above
-            ItemUtil.removeEnchantment(stack, Enchantment.silkTouch);
-            ItemUtil.removeEnchantment(stack, Enchantment.fortune);
+            ItemUtil.removeEnchantment(stack, Enchantments.SILK_TOUCH);
+            ItemUtil.removeEnchantment(stack, Enchantments.FORTUNE);
         }
         return toReturn;
     }
 
     @Override
-    public boolean canHarvestBlock(Block block, ItemStack stack){
+    public boolean canHarvestBlock(IBlockState state, ItemStack stack){
         int harvestLevel = this.getHarvestLevel(stack, "");
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial().isToolNotRequired() || (block == Blocks.snow_layer || block == Blocks.snow || (block == Blocks.obsidian ? harvestLevel >= 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (block.getMaterial() == Material.rock || (block.getMaterial() == Material.iron || block.getMaterial() == Material.anvil)) : harvestLevel >= 2) : harvestLevel >= 1) : harvestLevel >= 1) : harvestLevel >= 2) : harvestLevel >= 2) : harvestLevel >= 2))));
+        Block block = state.getBlock();
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial(state).isToolNotRequired() || (block == Blocks.SNOW_LAYER || block == Blocks.SNOW || (block == Blocks.OBSIDIAN ? harvestLevel >= 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (block.getMaterial(state) == Material.ROCK || (block.getMaterial(state) == Material.IRON || block.getMaterial(state) == Material.ANVIL)) : harvestLevel >= 2) : harvestLevel >= 1) : harvestLevel >= 1) : harvestLevel >= 2) : harvestLevel >= 2) : harvestLevel >= 2))));
     }
 
     @Override
@@ -333,17 +343,13 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     protected void registerRendering(){
-        ResourceLocation[] resLocs = new ResourceLocation[16];
         for(int i = 0; i < 16; i++){
-            String name = this.getBaseName()+TheColoredLampColors.values()[i].name;
-            resLocs[i] = new ResourceLocation(ModUtil.MOD_ID_LOWER, name);
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(ModUtil.MOD_ID_LOWER, name));
+            String name = this.getRegistryName()+TheColoredLampColors.values()[i].name;
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
-        ActuallyAdditions.proxy.addRenderVariant(this, resLocs);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List list){
         for(int i = 0; i < 16; i++){
@@ -382,35 +388,13 @@ public class ItemDrill extends ItemEnergy{
                 efficiency += 8.0F;
             }
         }
-        return efficiency;
-    }
-
-    /**
-     * Writes all of the Slots to NBT
-     *
-     * @param slots The Slots
-     * @param stack The Drill
-     */
-    public void writeSlotsToNBT(ItemStack[] slots, ItemStack stack){
-        NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null){
-            compound = new NBTTagCompound();
-        }
-
-        if(slots != null && slots.length > 0){
-            compound.setInteger("SlotAmount", slots.length);
-            NBTTagList tagList = new NBTTagList();
-            for(int currentIndex = 0; currentIndex < slots.length; currentIndex++){
-                if(slots[currentIndex] != null){
-                    NBTTagCompound tagCompound = new NBTTagCompound();
-                    tagCompound.setByte("Slot", (byte)currentIndex);
-                    slots[currentIndex].writeToNBT(tagCompound);
-                    tagList.appendTag(tagCompound);
-                }
+        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
+            efficiency *= 0.5F;
+            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
+                efficiency *= 0.35F;
             }
-            compound.setTag("Items", tagList);
         }
-        stack.setTagCompound(compound);
+        return efficiency;
     }
 
     /**
@@ -428,7 +412,7 @@ public class ItemDrill extends ItemEnergy{
         int zRange = 0;
 
         //Block hit
-        MovingObjectPosition pos = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
+        RayTraceResult pos = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
         if(pos == null){
             return false;
         }
@@ -445,7 +429,8 @@ public class ItemDrill extends ItemEnergy{
         }
 
         //Not defined later because main Block is getting broken below
-        float mainHardness = PosUtil.getBlock(aPos, world).getBlockHardness(world, aPos);
+        IBlockState state = world.getBlockState(aPos);
+        float mainHardness = state.getBlockHardness(world, aPos);
 
         //Break Middle Block first
         int use = this.getEnergyUsePerBlock(stack);
@@ -467,7 +452,8 @@ public class ItemDrill extends ItemEnergy{
                             if(this.getEnergyStored(stack) >= use){
                                 //Only break Blocks around that are (about) as hard or softer
                                 BlockPos thePos = new BlockPos(xPos, yPos, zPos);
-                                if(PosUtil.getBlock(thePos, world).getBlockHardness(world, thePos) <= mainHardness+5.0F){
+                                IBlockState theState = world.getBlockState(thePos);
+                                if(theState.getBlockHardness(world, thePos) <= mainHardness+5.0F){
                                     this.tryHarvestBlock(world, thePos, true, stack, player, use);
                                 }
                             }
@@ -494,9 +480,10 @@ public class ItemDrill extends ItemEnergy{
      * @param use     The Energy that should be extracted per Block
      */
     private boolean tryHarvestBlock(World world, BlockPos pos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
-        Block block = PosUtil.getBlock(pos, world);
-        float hardness = block.getBlockHardness(world, pos);
-        boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(block, stack)) && (!isExtra || this.getDigSpeed(stack, world.getBlockState(pos)) > 1.0F);
+        IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
+        float hardness = block.getBlockHardness(state, world, pos);
+        boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(state, stack)) && (!isExtra || this.getStrVsBlock(stack, world.getBlockState(pos)) > 1.0F);
         if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(world.getBlockState(pos))))){
             this.extractEnergy(stack, use, false);
             //Break the Block
@@ -506,9 +493,9 @@ public class ItemDrill extends ItemEnergy{
     }
 
     private boolean hasExtraWhitelist(Block block){
-        String name = block.getRegistryName();
+        String name = block.getRegistryName().toString();
         if(name != null){
-            for(String list : ConfigValues.drillExtraminingWhitelist){
+            for(String list : ConfigStringListValues.DRILL_EXTRA_MINING_WHITELIST.getValue()){
                 if(list.equals(name)){
                     return true;
                 }

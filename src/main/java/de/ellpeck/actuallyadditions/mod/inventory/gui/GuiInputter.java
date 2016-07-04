@@ -1,19 +1,18 @@
 /*
- * This file ("GuiInputter.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("GuiInputter.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerInputter;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiButton;
-import de.ellpeck.actuallyadditions.mod.network.gui.PacketGuiNumber;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputter;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -25,8 +24,9 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -40,28 +40,28 @@ import java.util.List;
 public class GuiInputter extends GuiContainer{
 
     public static final int OFFSET_ADVANCED = 12+36;
-    public static final String[] sideString = new String[]{
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.disabled"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.up"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.down"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.north"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.east"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.south"),
-            StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.west")};
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
-    private static final ResourceLocation resLocAdvanced = AssetUtil.getGuiLocation("guiInputterAdvanced");
-    public TileEntityInputter tileInputter;
-    private int x;
-    private int y;
-    private int z;
-    private World world;
+    public static final String[] SIDES = new String[]{
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.disabled"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.up"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.down"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.north"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.east"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.south"),
+            StringUtil.localize("info."+ModUtil.MOD_ID+".gui.west")};
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiInputter");
+    private static final ResourceLocation RES_LOC_ADVANCED = AssetUtil.getGuiLocation("guiInputterAdvanced");
+    public final TileEntityInputter tileInputter;
+    private final int x;
+    private final int y;
+    private final int z;
+    private final World world;
+    private final boolean isAdvanced;
     private SmallerButton whitelistPut;
     private SmallerButton whitelistPull;
     private GuiTextField fieldPutStart;
     private GuiTextField fieldPutEnd;
     private GuiTextField fieldPullStart;
     private GuiTextField fieldPullEnd;
-    private boolean isAdvanced;
 
     public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world, boolean isAdvanced){
         super(new ContainerInputter(inventory, tile, isAdvanced));
@@ -71,52 +71,50 @@ public class GuiInputter extends GuiContainer{
         this.z = z;
         this.world = world;
         this.xSize = 176;
-        this.ySize = 93+86+(isAdvanced ? OFFSET_ADVANCED : 0);
+        this.ySize = 97+86+(isAdvanced ? OFFSET_ADVANCED : 0);
         this.isAdvanced = isAdvanced;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
         super.initGui();
 
-        this.fieldPullStart = new GuiTextField(3000, this.fontRendererObj, guiLeft+13, guiTop+80+(isAdvanced ? OFFSET_ADVANCED : 0), 27, 8);
-        this.fieldPullStart.setMaxStringLength(4);
+        this.fieldPullStart = new GuiTextField(3000, this.fontRendererObj, this.guiLeft+6, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPullStart.setMaxStringLength(5);
         this.fieldPullStart.setEnableBackgroundDrawing(false);
-        this.fieldPullEnd = new GuiTextField(3001, this.fontRendererObj, guiLeft+50, guiTop+80+(isAdvanced ? OFFSET_ADVANCED : 0), 27, 8);
-        this.fieldPullEnd.setMaxStringLength(4);
+        this.fieldPullEnd = new GuiTextField(3001, this.fontRendererObj, this.guiLeft+50, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPullEnd.setMaxStringLength(5);
         this.fieldPullEnd.setEnableBackgroundDrawing(false);
 
-        this.fieldPutStart = new GuiTextField(3002, this.fontRendererObj, guiLeft+98, guiTop+80+(isAdvanced ? OFFSET_ADVANCED : 0), 27, 8);
-        this.fieldPutStart.setMaxStringLength(4);
+        this.fieldPutStart = new GuiTextField(3002, this.fontRendererObj, this.guiLeft+91, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPutStart.setMaxStringLength(5);
         this.fieldPutStart.setEnableBackgroundDrawing(false);
-        this.fieldPutEnd = new GuiTextField(3004, this.fontRendererObj, guiLeft+135, guiTop+80+(isAdvanced ? OFFSET_ADVANCED : 0), 27, 8);
-        this.fieldPutEnd.setMaxStringLength(4);
+        this.fieldPutEnd = new GuiTextField(3004, this.fontRendererObj, this.guiLeft+135, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPutEnd.setMaxStringLength(5);
         this.fieldPutEnd.setEnableBackgroundDrawing(false);
 
-        SmallerButton buttonSidePutP = new SmallerButton(0, guiLeft+155, guiTop+43+(isAdvanced ? OFFSET_ADVANCED : 0), ">");
-        SmallerButton buttonSidePutM = new SmallerButton(1, guiLeft+90, guiTop+43+(isAdvanced ? OFFSET_ADVANCED : 0), "<");
+        SmallerButton buttonSidePutP = new SmallerButton(0, this.guiLeft+155, this.guiTop+43+(this.isAdvanced ? OFFSET_ADVANCED : 0), ">");
+        SmallerButton buttonSidePutM = new SmallerButton(1, this.guiLeft+90, this.guiTop+43+(this.isAdvanced ? OFFSET_ADVANCED : 0), "<");
 
-        SmallerButton buttonSidePullP = new SmallerButton(2, guiLeft+70, guiTop+43+(isAdvanced ? OFFSET_ADVANCED : 0), ">");
-        SmallerButton buttonSidePullM = new SmallerButton(3, guiLeft+5, guiTop+43+(isAdvanced ? OFFSET_ADVANCED : 0), "<");
+        SmallerButton buttonSidePullP = new SmallerButton(2, this.guiLeft+70, this.guiTop+43+(this.isAdvanced ? OFFSET_ADVANCED : 0), ">");
+        SmallerButton buttonSidePullM = new SmallerButton(3, this.guiLeft+5, this.guiTop+43+(this.isAdvanced ? OFFSET_ADVANCED : 0), "<");
 
-        whitelistPull = new SmallerButton(TileEntityInputter.WHITELIST_PULL_BUTTON_ID, guiLeft+3, guiTop+16, "");
-        whitelistPut = new SmallerButton(TileEntityInputter.WHITELIST_PUT_BUTTON_ID, guiLeft+157, guiTop+16, "");
+        this.whitelistPull = new SmallerButton(TileEntityInputter.WHITELIST_PULL_BUTTON_ID, this.guiLeft+3, this.guiTop+16, "");
+        this.whitelistPut = new SmallerButton(TileEntityInputter.WHITELIST_PUT_BUTTON_ID, this.guiLeft+157, this.guiTop+16, "");
 
         this.buttonList.add(buttonSidePutP);
         this.buttonList.add(buttonSidePullP);
         this.buttonList.add(buttonSidePutM);
         this.buttonList.add(buttonSidePullM);
         if(this.isAdvanced){
-            this.buttonList.add(whitelistPut);
-            this.buttonList.add(whitelistPull);
+            this.buttonList.add(this.whitelistPut);
+            this.buttonList.add(this.whitelistPull);
         }
 
-        this.buttonList.add(new TinyButton(TileEntityInputter.OKAY_BUTTON_ID, guiLeft+84, guiTop+80+(isAdvanced ? OFFSET_ADVANCED : 0)));
+        this.buttonList.add(new TinyButton(TileEntityInputter.OKAY_BUTTON_ID, this.guiLeft+84, this.guiTop+91+(this.isAdvanced ? OFFSET_ADVANCED : 0)));
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
@@ -124,18 +122,18 @@ public class GuiInputter extends GuiContainer{
         this.whitelistPut.displayString = this.tileInputter.isPutWhitelist ? "O" : "X";
 
         if(this.isAdvanced){
-            List infoList = this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.whitelistInfo"), 200);
-            String text1 = this.tileInputter.isPullWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
-            if(x >= guiLeft+3 && y >= guiTop+16 && x <= guiLeft+18 && y <= guiTop+31){
+            List infoList = this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.whitelistInfo"), 200);
+            String text1 = this.tileInputter.isPullWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist");
+            if(x >= this.guiLeft+3 && y >= this.guiTop+16 && x <= this.guiLeft+18 && y <= this.guiTop+31){
                 ArrayList list = new ArrayList();
-                list.add(EnumChatFormatting.BOLD+text1);
+                list.add(TextFormatting.BOLD+text1);
                 list.addAll(infoList);
                 this.drawHoveringText(list, x, y);
             }
-            String text2 = this.tileInputter.isPutWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.blacklist");
-            if(x >= guiLeft+157 && y >= guiTop+16 && x <= guiLeft+172 && y <= guiTop+31){
+            String text2 = this.tileInputter.isPutWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist");
+            if(x >= this.guiLeft+157 && y >= this.guiTop+16 && x <= this.guiLeft+172 && y <= this.guiTop+31){
                 ArrayList list = new ArrayList();
-                list.add(EnumChatFormatting.BOLD+text2);
+                list.add(TextFormatting.BOLD+text2);
                 list.addAll(infoList);
                 this.drawHoveringText(list, x, y);
             }
@@ -143,23 +141,23 @@ public class GuiInputter extends GuiContainer{
 
         int newTopOffset = this.guiTop+(this.isAdvanced ? OFFSET_ADVANCED : 0);
         //Info Mode on!
-        if(x >= guiLeft+11 && y >= newTopOffset+65 && x <= guiLeft+11+31 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")), 200), x, y);
+        if(x >= this.guiLeft+4 && y >= newTopOffset+65 && x <= this.guiLeft+4+38 && y <= newTopOffset+65+12){
+            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.pull")), 200), x, y);
         }
-        if(x >= guiLeft+96 && y >= newTopOffset+65 && x <= guiLeft+96+31 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")), 200), x, y);
+        if(x >= this.guiLeft+89 && y >= newTopOffset+65 && x <= this.guiLeft+89+38 && y <= newTopOffset+65+12){
+            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put")), 200), x, y);
         }
-        if(x >= guiLeft+48 && y >= newTopOffset+65 && x <= guiLeft+48+31 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull")), 200), x, y);
+        if(x >= this.guiLeft+48 && y >= newTopOffset+65 && x <= this.guiLeft+48+38 && y <= newTopOffset+65+12){
+            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.pull")), 200), x, y);
         }
-        if(x >= guiLeft+133 && y >= newTopOffset+65 && x <= guiLeft+133+31 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put")), 200), x, y);
+        if(x >= this.guiLeft+133 && y >= newTopOffset+65 && x <= this.guiLeft+133+38 && y <= newTopOffset+65+12){
+            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put")), 200), x, y);
         }
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.tileInputter.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileInputter);
     }
 
     @Override
@@ -167,21 +165,21 @@ public class GuiInputter extends GuiContainer{
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop+93+(isAdvanced ? OFFSET_ADVANCED : 0), 0, 0, 176, 86);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop+97+(this.isAdvanced ? OFFSET_ADVANCED : 0), 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(this.isAdvanced ? resLocAdvanced : resLoc);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93+(isAdvanced ? OFFSET_ADVANCED : 0));
+        this.mc.getTextureManager().bindTexture(this.isAdvanced ? RES_LOC_ADVANCED : RES_LOC);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 97+(this.isAdvanced ? OFFSET_ADVANCED : 0));
 
-        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.pull"), guiLeft+22+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".gui.put"), guiLeft+107+3, guiTop+32+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString("INBOUND", this.guiLeft+23+3, this.guiTop+32+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString("OUTBOUND", this.guiLeft+104+3, this.guiTop+32+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
-        this.fontRendererObj.drawString(sideString[tileInputter.sideToPull+1], guiLeft+24+1, guiTop+45+3+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRendererObj.drawString(sideString[tileInputter.sideToPut+1], guiLeft+109+1, guiTop+45+3+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(SIDES[this.tileInputter.sideToPull+1], this.guiLeft+24+1, this.guiTop+45+3+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRendererObj.drawString(SIDES[this.tileInputter.sideToPut+1], this.guiLeft+109+1, this.guiTop+45+3+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutStart), guiLeft+99, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutEnd), guiLeft+136, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullStart), guiLeft+14, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullEnd), guiLeft+51, guiTop+67+(isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutStart), this.guiLeft+92, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutEnd), this.guiLeft+136, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullStart), this.guiLeft+7, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullEnd), this.guiLeft+51, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
 
         this.fieldPutStart.drawTextBox();
         this.fieldPutEnd.drawTextBox();
@@ -238,13 +236,21 @@ public class GuiInputter extends GuiContainer{
 
     public void setVariable(GuiTextField field, int sendInt){
         if(!field.getText().isEmpty()){
-            this.sendPacket(parse(field.getText()), sendInt);
+            this.sendPacket(this.parse(field.getText()), sendInt);
             field.setText("");
         }
     }
 
     private void sendPacket(int text, int textID){
-        PacketHandler.theNetwork.sendToServer(new PacketGuiNumber(x, y, z, world, text, textID, Minecraft.getMinecraft().thePlayer));
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setInteger("X", this.x);
+        compound.setInteger("Y", this.y);
+        compound.setInteger("Z", this.z);
+        compound.setInteger("WorldID", this.world.provider.getDimension());
+        compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+        compound.setInteger("NumberID", textID);
+        compound.setInteger("Number", text);
+        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));
     }
 
     private int parse(String theInt){
@@ -265,10 +271,18 @@ public class GuiInputter extends GuiContainer{
             this.setVariable(this.fieldPullEnd, 3);
         }
         else{
-            PacketHandler.theNetwork.sendToServer(new PacketGuiButton(x, y, z, world, button.id, Minecraft.getMinecraft().thePlayer));
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setInteger("X", this.x);
+            compound.setInteger("Y", this.y);
+            compound.setInteger("Z", this.z);
+            compound.setInteger("WorldID", this.world.provider.getDimension());
+            compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+            compound.setInteger("ButtonID", button.id);
+            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
         }
     }
 
+    @SideOnly(Side.CLIENT)
     public static class SmallerButton extends GuiButton{
 
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
@@ -280,7 +294,7 @@ public class GuiInputter extends GuiContainer{
         @Override
         public void drawButton(Minecraft mc, int x, int y){
             if(this.visible){
-                mc.getTextureManager().bindTexture(resLoc);
+                mc.getTextureManager().bindTexture(this.resLoc);
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
                 int k = this.getHoverState(this.hovered);
@@ -291,8 +305,8 @@ public class GuiInputter extends GuiContainer{
                 this.mouseDragged(mc, x, y);
 
                 int color = 14737632;
-                if(packedFGColour != 0){
-                    color = packedFGColour;
+                if(this.packedFGColour != 0){
+                    color = this.packedFGColour;
                 }
                 else if(!this.enabled){
                     color = 10526880;
@@ -306,6 +320,7 @@ public class GuiInputter extends GuiContainer{
         }
     }
 
+    @SideOnly(Side.CLIENT)
     public static class TinyButton extends GuiButton{
 
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
@@ -317,7 +332,7 @@ public class GuiInputter extends GuiContainer{
         @Override
         public void drawButton(Minecraft mc, int x, int y){
             if(this.visible){
-                mc.getTextureManager().bindTexture(resLoc);
+                mc.getTextureManager().bindTexture(this.resLoc);
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
                 int k = this.getHoverState(this.hovered);

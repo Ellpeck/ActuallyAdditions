@@ -1,11 +1,11 @@
 /*
- * This file ("TileEntityCanolaPress.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityCanolaPress.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
@@ -15,29 +15,35 @@ import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.init.Items;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, IFluidHandler, IEnergySaver, IFluidSaver{
+public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, net.minecraftforge.fluids.IFluidHandler{
 
     public static final int PRODUCE = 80;
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
-    public EnergyStorage storage = new EnergyStorage(40000);
-    public FluidTank tank = new FluidTank(2*FluidContainerRegistry.BUCKET_VOLUME);
+    public final EnergyStorage storage = new EnergyStorage(40000);
+    public final FluidTank tank = new FluidTank(2*Util.BUCKET){
+        @Override
+        public boolean canFill(){
+            return false;
+        }
+    };
     public int currentProcessTime;
     private int lastEnergyStored;
     private int lastTankAmount;
     private int lastProcessTime;
 
     public TileEntityCanolaPress(){
-        super(3, "canolaPress");
+        super(1, "canolaPress");
     }
 
     @SideOnly(Side.CLIENT)
@@ -56,26 +62,29 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        compound.setInteger("ProcessTime", this.currentProcessTime);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("ProcessTime", this.currentProcessTime);
+        }
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
-        super.writeSyncableNBT(compound, sync);
+        super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        this.currentProcessTime = compound.getInteger("ProcessTime");
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        if(type != NBTType.SAVE_BLOCK){
+            this.currentProcessTime = compound.getInteger("ProcessTime");
+        }
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
-        super.readSyncableNBT(compound, sync);
+        super.readSyncableNBT(compound, type);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.isCanola(0) && PRODUCE <= this.tank.getCapacity()-this.tank.getFluidAmount()){
                 if(this.storage.getEnergyStored() >= ENERGY_USE){
                     this.currentProcessTime++;
@@ -88,25 +97,13 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
                             this.slots[0] = null;
                         }
 
-                        this.tank.fill(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
+                        this.tank.fillInternal(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
                         this.markDirty();
                     }
                 }
             }
             else{
                 this.currentProcessTime = 0;
-            }
-
-            WorldUtil.fillBucket(tank, slots, 1, 2);
-
-            if(this.tank.getFluidAmount() > 0){
-                WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.DOWN, this.tank);
-                if(!this.isRedstonePowered){
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.NORTH, this.tank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.EAST, this.tank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.SOUTH, this.tank);
-                    WorldUtil.pushFluid(worldObj, this.pos, EnumFacing.WEST, this.tank);
-                }
             }
 
             if((this.storage.getEnergyStored() != this.lastEnergyStored || this.tank.getFluidAmount() != this.lastTankAmount | this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()){
@@ -119,7 +116,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CANOLA.ordinal()) || (i == 1 && stack.getItem() == Items.bucket);
+        return (i == 0 && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CANOLA.ordinal());
     }
 
     public boolean isCanola(int slot){
@@ -133,7 +130,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return slot == 2 && FluidContainerRegistry.containsFluid(this.slots[0], new FluidStack(InitFluids.fluidCanolaOil, FluidContainerRegistry.BUCKET_VOLUME));
+        return false;
     }
 
     @Override
@@ -157,55 +154,62 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
     }
 
     @Override
+    public FluidTank getFluidHandler(EnumFacing facing){
+        return facing != EnumFacing.UP ? this.tank : null;
+    }
+
+    @Override
     public int fill(EnumFacing from, FluidStack resource, boolean doFill){
-        return 0;
+        IFluidHandler handler = this.getFluidHandler(from);
+        return handler == null ? 0 : handler.fill(resource, doFill);
     }
 
     @Override
     public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
-        if(resource.getFluid() == InitFluids.fluidCanolaOil){
-            return this.tank.drain(resource.amount, doDrain);
-        }
-        return null;
+        IFluidHandler handler = this.getFluidHandler(from);
+        return handler == null ? null : handler.drain(resource, doDrain);
     }
 
     @Override
     public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
-        return this.tank.drain(maxDrain, doDrain);
+        IFluidHandler handler = this.getFluidHandler(from);
+        return handler == null ? null : handler.drain(maxDrain, doDrain);
     }
 
     @Override
     public boolean canFill(EnumFacing from, Fluid fluid){
+        IFluidHandler handler = this.getFluidHandler(from);
+        if(handler != null){
+            for(IFluidTankProperties prop : handler.getTankProperties()){
+                if(prop != null && prop.canFillFluidType(new FluidStack(fluid, Integer.MAX_VALUE))){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
     @Override
     public boolean canDrain(EnumFacing from, Fluid fluid){
-        return from != EnumFacing.UP;
+        IFluidHandler handler = this.getFluidHandler(from);
+        if(handler != null){
+            for(IFluidTankProperties prop : handler.getTankProperties()){
+                if(prop != null && prop.canDrainFluidType(new FluidStack(fluid, Integer.MAX_VALUE))){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
     public FluidTankInfo[] getTankInfo(EnumFacing from){
-        return new FluidTankInfo[]{this.tank.getInfo()};
-    }
-
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
-    }
-
-    @Override
-    public FluidStack[] getFluids(){
-        return new FluidStack[]{this.tank.getFluid()};
-    }
-
-    @Override
-    public void setFluids(FluidStack[] fluids){
-        this.tank.setFluid(fluids[0]);
+        IFluidHandler handler = this.getFluidHandler(from);
+        if(handler instanceof IFluidTank){
+            return new FluidTankInfo[]{((IFluidTank)handler).getInfo()};
+        }
+        else{
+            return null;
+        }
     }
 }

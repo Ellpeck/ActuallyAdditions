@@ -1,47 +1,58 @@
 /*
- * This file ("TileEntityCoffeeMachine.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityCoffeeMachine.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.recipe.coffee.CoffeeIngredient;
-import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, IEnergyReceiver, IFluidSaver, IFluidHandler, IEnergySaver{
+public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, IEnergyReceiver, net.minecraftforge.fluids.IFluidHandler{
 
     public static final int SLOT_COFFEE_BEANS = 0;
     public static final int SLOT_INPUT = 1;
     public static final int SLOT_OUTPUT = 2;
-    public static final int SLOT_WATER_INPUT = 11;
-    public static final int SLOT_WATER_OUTPUT = 12;
     public static final int CACHE_USE = 15;
     public static final int ENERGY_USED = 150;
     public static final int WATER_USE = 500;
     public static final int COFFEE_CACHE_MAX_AMOUNT = 300;
     private static final int TIME_USED = 500;
-    public EnergyStorage storage = new EnergyStorage(300000);
-    public FluidTank tank = new FluidTank(4*FluidContainerRegistry.BUCKET_VOLUME);
+    public final EnergyStorage storage = new EnergyStorage(300000);
+    public final FluidTank tank = new FluidTank(4*Util.BUCKET){
+        @Override
+        public boolean canDrain(){
+            return false;
+        }
+
+        @Override
+        public boolean canFillFluidType(FluidStack fluid){
+            return fluid.getFluid() == FluidRegistry.WATER;
+        }
+    };
     public int coffeeCacheAmount;
     public int brewTime;
     private int lastEnergy;
@@ -50,7 +61,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     private int lastBrewTime;
 
     public TileEntityCoffeeMachine(){
-        super(13, "coffeeMachine");
+        super(11, "coffeeMachine");
     }
 
     @SideOnly(Side.CLIENT)
@@ -74,27 +85,31 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.writeSyncableNBT(compound, sync);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
-        compound.setInteger("Cache", this.coffeeCacheAmount);
-        compound.setInteger("Time", this.brewTime);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("Cache", this.coffeeCacheAmount);
+            compound.setInteger("Time", this.brewTime);
+        }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, boolean sync){
-        super.readSyncableNBT(compound, sync);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
-        this.coffeeCacheAmount = compound.getInteger("Cache");
-        this.brewTime = compound.getInteger("Time");
+        if(type != NBTType.SAVE_BLOCK){
+            this.coffeeCacheAmount = compound.getInteger("Cache");
+            this.brewTime = compound.getInteger("Time");
+        }
     }
 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             this.storeCoffee();
 
             if(this.brewTime > 0 || this.isRedstonePowered){
@@ -102,7 +117,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
             }
 
             if((this.coffeeCacheAmount != this.lastCoffeeAmount || this.storage.getEnergyStored() != this.lastEnergy || this.tank.getFluidAmount() != this.lastTank || this.brewTime != this.lastBrewTime) && this.sendUpdateWithInterval()){
-                this.lastCoffeeAmount = coffeeCacheAmount;
+                this.lastCoffeeAmount = this.coffeeCacheAmount;
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastTank = this.tank.getFluidAmount();
                 this.lastBrewTime = this.brewTime;
@@ -112,7 +127,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i >= 3 && ItemCoffee.getIngredientFromStack(stack) != null) || (i == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (i == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal()) || (i == SLOT_WATER_INPUT && FluidContainerRegistry.containsFluid(stack, new FluidStack(FluidRegistry.WATER, 1)));
+        return (i >= 3 && ItemCoffee.getIngredientFromStack(stack) != null) || (i == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (i == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal());
     }
 
     public void storeCoffee(){
@@ -126,16 +141,14 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                 this.coffeeCacheAmount += toAdd;
             }
         }
-
-        WorldUtil.emptyBucket(tank, slots, SLOT_WATER_INPUT, SLOT_WATER_OUTPUT, FluidRegistry.WATER);
     }
 
     public void brew(){
-        if(!worldObj.isRemote){
+        if(!this.worldObj.isRemote){
             if(this.slots[SLOT_INPUT] != null && this.slots[SLOT_INPUT].getItem() == InitItems.itemMisc && this.slots[SLOT_INPUT].getItemDamage() == TheMiscItems.CUP.ordinal() && this.slots[SLOT_OUTPUT] == null && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= WATER_USE){
                 if(this.storage.getEnergyStored() >= ENERGY_USED){
-                    if(this.brewTime%30 == 0 && !ConfigValues.lessSound){
-                        this.worldObj.playSoundEffect(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), ModUtil.MOD_ID_LOWER+":coffeeMachine", 0.35F, 1.0F);
+                    if(this.brewTime%30 == 0 && !ConfigBoolValues.LESS_SOUND.isEnabled()){
+                        this.worldObj.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.35F, 1.0F);
                     }
 
                     this.brewTime++;
@@ -162,7 +175,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                             this.slots[SLOT_INPUT] = null;
                         }
                         this.coffeeCacheAmount -= CACHE_USE;
-                        this.tank.drain(WATER_USE, true);
+                        this.tank.drainInternal(WATER_USE, true);
                     }
                 }
             }
@@ -179,7 +192,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return slot == SLOT_OUTPUT || (slot >= 3 && slot < this.slots.length-2 && ItemCoffee.getIngredientFromStack(stack) == null) || slot == SLOT_WATER_OUTPUT;
+        return slot == SLOT_OUTPUT || (slot >= 3 && slot < this.slots.length-2 && ItemCoffee.getIngredientFromStack(stack) == null);
     }
 
     @Override
@@ -210,52 +223,62 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
+    public FluidTank getFluidHandler(EnumFacing facing){
+        return facing != EnumFacing.DOWN ? this.tank : null;
+    }
+
+    @Override
     public int fill(EnumFacing from, FluidStack resource, boolean doFill){
-        return resource.getFluid() == FluidRegistry.WATER && from != EnumFacing.DOWN ? this.tank.fill(resource, doFill) : 0;
+        IFluidHandler handler = this.getFluidHandler(from);
+        return handler == null ? 0 : handler.fill(resource, doFill);
     }
 
     @Override
     public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
-        return null;
+        IFluidHandler handler = this.getFluidHandler(from);
+        return handler == null ? null : handler.drain(resource, doDrain);
     }
 
     @Override
     public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
-        return null;
+        IFluidHandler handler = this.getFluidHandler(from);
+        return handler == null ? null : handler.drain(maxDrain, doDrain);
     }
 
     @Override
     public boolean canFill(EnumFacing from, Fluid fluid){
-        return true;
+        IFluidHandler handler = this.getFluidHandler(from);
+        if(handler != null){
+            for(IFluidTankProperties prop : handler.getTankProperties()){
+                if(prop != null && prop.canFillFluidType(new FluidStack(fluid, Integer.MAX_VALUE))){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean canDrain(EnumFacing from, Fluid fluid){
+        IFluidHandler handler = this.getFluidHandler(from);
+        if(handler != null){
+            for(IFluidTankProperties prop : handler.getTankProperties()){
+                if(prop != null && prop.canDrainFluidType(new FluidStack(fluid, Integer.MAX_VALUE))){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
     @Override
     public FluidTankInfo[] getTankInfo(EnumFacing from){
-        return new FluidTankInfo[]{this.tank.getInfo()};
-    }
-
-    @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public void setEnergy(int energy){
-        this.storage.setEnergyStored(energy);
-    }
-
-    @Override
-    public FluidStack[] getFluids(){
-        return new FluidStack[]{this.tank.getFluid()};
-    }
-
-    @Override
-    public void setFluids(FluidStack[] fluids){
-        this.tank.setFluid(fluids[0]);
+        IFluidHandler handler = this.getFluidHandler(from);
+        if(handler instanceof IFluidTank){
+            return new FluidTankInfo[]{((IFluidTank)handler).getInfo()};
+        }
+        else{
+            return null;
+        }
     }
 }

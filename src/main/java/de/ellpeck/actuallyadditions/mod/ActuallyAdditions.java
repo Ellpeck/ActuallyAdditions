@@ -1,15 +1,16 @@
 /*
- * This file ("ActuallyAdditions.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("ActuallyAdditions.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
@@ -17,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.InitCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.ItemCrafting;
-import de.ellpeck.actuallyadditions.mod.event.InitEvents;
+import de.ellpeck.actuallyadditions.mod.event.CommonEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.InitVillager;
 import de.ellpeck.actuallyadditions.mod.gen.OreGen;
@@ -25,10 +26,14 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.InitForeignPaxels;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
-import de.ellpeck.actuallyadditions.mod.items.lens.LensNoneRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.material.InitArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.material.InitToolMaterials;
-import de.ellpeck.actuallyadditions.mod.misc.*;
+import de.ellpeck.actuallyadditions.mod.misc.BannerHelper;
+import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
+import de.ellpeck.actuallyadditions.mod.misc.MethodHandler;
+import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.ore.InitOreDict;
 import de.ellpeck.actuallyadditions.mod.proxy.IProxy;
@@ -37,16 +42,16 @@ import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.TreasureChestHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
-import de.ellpeck.actuallyadditions.mod.util.FakePlayerUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.init.Items;
-import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.util.Locale;
 
@@ -57,12 +62,21 @@ public class ActuallyAdditions{
     @Instance(ModUtil.MOD_ID)
     public static ActuallyAdditions instance;
 
-    @SidedProxy(clientSide = "de.ellpeck.actuallyadditions.mod.proxy.ClientProxy", serverSide = "de.ellpeck.actuallyadditions.mod.proxy.ServerProxy")
+    @SidedProxy(clientSide = ModUtil.PROXY_CLIENT, serverSide = ModUtil.PROXY_SERVER)
     public static IProxy proxy;
+
+    static{
+        //For some reason, this has to be done here
+        FluidRegistry.enableUniversalBucket();
+    }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
         ModUtil.LOGGER.info("Starting PreInitialization Phase...");
+
+        ActuallyAdditionsAPI.methodHandler = new MethodHandler();
+        Lenses.init();
+        InitBooklet.preInit();
 
         new ConfigurationHandler(event.getSuggestedConfigurationFile());
         PacketHandler.init();
@@ -72,8 +86,9 @@ public class ActuallyAdditions{
         InitFluids.init();
         InitItems.init();
         FuelHandler.init();
-        UpdateChecker.init();
-        InitBooklet.preInit();
+        BannerHelper.init();
+        SoundHandler.init();
+        new UpdateChecker();
         proxy.preInit(event);
 
         ModUtil.LOGGER.info("PreInitialization Finished.");
@@ -86,11 +101,12 @@ public class ActuallyAdditions{
         InitOreDict.init();
         InitAchievements.init();
         GuiHandler.init();
-        OreGen.init();
+        new OreGen();
         TileEntityBase.init();
-        InitEvents.init();
+        new CommonEvents();
         InitCrafting.init();
         DungeonLoot.init();
+
         proxy.init(event);
 
         ModUtil.LOGGER.info("Initialization Finished.");
@@ -106,41 +122,25 @@ public class ActuallyAdditions{
         ItemCrafting.initMashedFoodRecipes();
         HairyBallHandler.init();
         TreasureChestHandler.init();
-        LensNoneRecipeHandler.init();
+        LensRecipeHandler.init();
         InitForeignPaxels.init();
 
         InitBooklet.postInit();
         proxy.postInit(event);
 
         ModUtil.LOGGER.info("PostInitialization Finished.");
-        FakePlayerUtil.info();
-    }
-
-    @EventHandler
-    public void serverStarting(FMLServerStartingEvent event){
-        Util.registerDispenserHandler(InitItems.itemBucketOil, new DispenserHandlerEmptyBucket());
-        Util.registerDispenserHandler(InitItems.itemBucketCanolaOil, new DispenserHandlerEmptyBucket());
-        Util.registerDispenserHandler(Items.bucket, new DispenserHandlerFillBucket());
-        Util.registerDispenserHandler(InitItems.itemFertilizer, new DispenserHandlerFertilize());
-    }
-
-    @EventHandler
-    public void serverStarted(FMLServerStartedEvent event){
-        if(LaserRelayConnectionHandler.getInstance() == null){
-            LaserRelayConnectionHandler.setInstance(new LaserRelayConnectionHandler());
-        }
-
-        WorldData.init(MinecraftServer.getServer());
     }
 
     @EventHandler
     public void missingMapping(FMLMissingMappingsEvent event){
         for(FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()){
-            //Ignore removal of foreign paxels
-            if(mapping.name != null && mapping.name.toLowerCase(Locale.ROOT).startsWith(ModUtil.MOD_ID_LOWER+":")){
-                if(mapping.name.contains("paxel") || mapping.name.contains("itemSpecial") || mapping.name.contains("blockBookStand")){
-                    mapping.ignore();
-                    ModUtil.LOGGER.info("Missing Mapping "+mapping.name+" is getting ignored. This is intentional.");
+            if(mapping.name != null){
+                String name = mapping.name.toLowerCase(Locale.ROOT);
+                if(name.startsWith(ModUtil.MOD_ID+":")){
+                    if(name.contains("paxel") || name.contains("itemspecial") || name.contains("blockbookstand") || name.contains("rarmor") || name.contains("bucket") || name.contains("modulereconstructor")){
+                        mapping.ignore();
+                        ModUtil.LOGGER.info("Missing Mapping "+mapping.name+" is getting ignored. This is intentional.");
+                    }
                 }
             }
         }

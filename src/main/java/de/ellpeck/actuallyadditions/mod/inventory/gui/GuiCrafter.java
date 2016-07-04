@@ -1,11 +1,11 @@
 /*
- * This file ("GuiCrafter.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("GuiCrafter.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiCrafter extends GuiContainer{
 
-    private static final ResourceLocation resLoc = new ResourceLocation("textures/gui/container/crafting_table.png");
+    private static final ResourceLocation RES_LOC = new ResourceLocation("textures/gui/container/crafting_table.png");
 
     public GuiCrafter(EntityPlayer player){
         super(new ContainerCrafter(player));
@@ -34,13 +34,13 @@ public class GuiCrafter extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, "container."+ModUtil.MOD_ID_LOWER+".crafting");
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, "container."+ModUtil.MOD_ID+".crafting");
     }
 
     @Override
     public void drawGuiContainerBackgroundLayer(float f, int x, int y){
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
     }
 }

@@ -1,11 +1,11 @@
 /*
- * This file ("BookletEntry.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("BookletEntry.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.entry;
@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +24,13 @@ public class BookletEntry implements IBookletEntry{
 
     private final String unlocalizedName;
     public List<IBookletChapter> chapters = new ArrayList<IBookletChapter>();
-    private EnumChatFormatting color;
+    private TextFormatting color;
 
     public BookletEntry(String unlocalizedName){
         this.unlocalizedName = unlocalizedName;
         ActuallyAdditionsAPI.addBookletEntry(this);
 
-        this.color = EnumChatFormatting.RESET;
+        this.color = TextFormatting.RESET;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class BookletEntry implements IBookletEntry{
 
     @Override
     public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID_LOWER+".indexEntry."+this.unlocalizedName+".name");
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID+".indexEntry."+this.unlocalizedName+".name");
     }
 
     @Override
@@ -64,12 +64,12 @@ public class BookletEntry implements IBookletEntry{
     }
 
     public BookletEntry setImportant(){
-        this.color = EnumChatFormatting.DARK_GREEN;
+        this.color = TextFormatting.DARK_GREEN;
         return this;
     }
 
     public BookletEntry setSpecial(){
-        this.color = EnumChatFormatting.DARK_PURPLE;
+        this.color = TextFormatting.DARK_PURPLE;
         return this;
     }
 

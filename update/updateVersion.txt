@@ -1,2 +1,0 @@
-1.7.10-r21
-(This is a fallback for old versions which don't have the new update checker. Don't change.)

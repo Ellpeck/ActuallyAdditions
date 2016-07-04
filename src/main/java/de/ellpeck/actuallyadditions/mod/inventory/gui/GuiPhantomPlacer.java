@@ -1,11 +1,11 @@
 /*
- * This file ("GuiPhantomPlacer.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("GuiPhantomPlacer.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
@@ -24,8 +24,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiPhantomPlacer extends GuiContainer{
 
-    private static final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiBreaker");
-    private TileEntityPhantomPlacer placer;
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiBreaker");
+    private final TileEntityPhantomPlacer placer;
 
     public GuiPhantomPlacer(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerPhantomPlacer(inventory, tile));
@@ -35,13 +35,8 @@ public class GuiPhantomPlacer extends GuiContainer{
     }
 
     @Override
-    public void drawScreen(int x, int y, float f){
-        super.drawScreen(x, y, f);
-    }
-
-    @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, xSize, -10, this.placer.getName());
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.placer);
     }
 
     @Override
@@ -51,7 +46,7 @@ public class GuiPhantomPlacer extends GuiContainer{
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(resLoc);
+        this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
     }
 }

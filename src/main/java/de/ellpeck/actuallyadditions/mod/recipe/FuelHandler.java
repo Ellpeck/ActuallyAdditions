@@ -1,11 +1,11 @@
 /*
- * This file ("FuelHandler.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("FuelHandler.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.recipe;
@@ -20,55 +20,54 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
-@SuppressWarnings("unused")
 public class FuelHandler implements IFuelHandler{
 
-    private static HashMap<Pair<Item, Integer>, Integer> fuelList = new HashMap<Pair<Item, Integer>, Integer>();
+    private static final List<Fuel> FUEL_LIST = new ArrayList<Fuel>();
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Fuelstuffs...");
 
         GameRegistry.registerFuelHandler(new FuelHandler());
-        setFuelValues();
-    }
 
-    public static void setFuelValues(){
         addFuel(InitItems.itemMisc, TheMiscItems.TINY_CHAR.ordinal(), 200);
         addFuel(InitItems.itemMisc, TheMiscItems.TINY_COAL.ordinal(), 200);
         addFuel(InitBlocks.blockMisc, TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), 16000);
+        addFuel(InitItems.itemMisc, TheMiscItems.BIOCOAL.ordinal(), 180);
     }
 
-    private static void addFuel(Item item, int metadata, int value){
-        fuelList.put(Pair.of(item, metadata), value);
+    private static void addFuel(Item item, int meta, int value){
+        FUEL_LIST.add(new Fuel(new ItemStack(item, 1, meta), value));
     }
 
-    private static void addFuel(Block block, int metadata, int value){
-        addFuel(Item.getItemFromBlock(block), metadata, value);
+    private static void addFuel(Block block, int meta, int value){
+        addFuel(Item.getItemFromBlock(block), meta, value);
     }
 
-    private static int getFuelValue(ItemStack stack){
-        if(stack != null && stack.getItem() != null){
-            Pair<Item, Integer> pair = Pair.of(stack.getItem(), stack.getItemDamage());
-
-            if(fuelList.containsKey(pair)){
-                return fuelList.get(pair);
-            }
-            else{
-                pair = Pair.of(stack.getItem(), 0);
-                if(fuelList.containsKey(pair)){
-                    return fuelList.get(pair);
+    @Override
+    public int getBurnTime(ItemStack stack){
+        if(stack != null){
+            for(Fuel fuel : FUEL_LIST){
+                if(stack.isItemEqual(fuel.fuel)){
+                    return fuel.burnTime;
                 }
             }
         }
         return 0;
     }
 
-    @Override
-    public int getBurnTime(ItemStack fuel){
-        return getFuelValue(fuel);
+    private static class Fuel{
+
+        public ItemStack fuel;
+        public int burnTime;
+
+        public Fuel(ItemStack fuel, int burnTime){
+            this.fuel = fuel;
+            this.burnTime = burnTime;
+        }
+
     }
 }

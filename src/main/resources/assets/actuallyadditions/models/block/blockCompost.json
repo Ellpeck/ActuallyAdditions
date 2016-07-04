@@ -1,6 +1,6 @@
 {
     "__createdBy": "canitzp",
-    "ambientocclusion": true,
+    "ambientocclusion": false,
     "textures": {
         "particle": "blocks/planks_oak",
         "compost": "actuallyadditions:blocks/models/modelCompost"
@@ -16,7 +16,7 @@
                 },
                 "down": {
                     "uv": [0.0,0.0,2.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "west": {
                     "uv": [0,0.2,1.2,3.625],
@@ -46,7 +46,7 @@
                 },
                 "down": {
                     "uv": [0.0,0.0,2.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "west": {
                     "uv": [0,0.4,1.2,3.625],
@@ -76,7 +76,7 @@
                 },
                 "down": {
                     "uv": [0.0,0.0,2.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "west": {
                     "uv": [0,0.2,1.2,3.625],
@@ -106,7 +106,7 @@
                 },
                 "down": {
                     "uv": [0.0,0.0,2.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "west": {
                     "uv": [0,0.2,1.2,3.625],
@@ -136,7 +136,7 @@
                 },
                 "down": {
                     "uv": [0.0,0.0,1.0,10.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "west": {
                     "uv": [0,0.6,8.4,1.6],
@@ -148,11 +148,11 @@
                 },
                 "north": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "south": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 }
             }
         },
@@ -166,15 +166,15 @@
                 },
                 "down": {
                     "uv": [0.0,0.0,10.0,1.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "west": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "east": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "north": {
                     "uv": [0,1.375,7.5,2.125],
@@ -196,7 +196,7 @@
                 },
                 "down": {
                     "uv": [0.0,0.0,1.0,10.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "west": {
                     "uv": [0,1.375,7.5,2.125],
@@ -208,11 +208,11 @@
                 },
                 "north": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "south": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 }
             }
         },
@@ -226,15 +226,15 @@
                 },
                 "down": {
                     "uv": [0.0,0.0,10.0,1.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "west": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "east": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "north": {
                     "uv": [0,1.375,7.5,2.125],
@@ -260,11 +260,11 @@
                 },
                 "west": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "east": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "north": {
                     "uv": [0,1.375,7.5,2.125],
@@ -328,11 +328,11 @@
                 },
                 "north": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "south": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 }
             }
         },
@@ -350,11 +350,11 @@
                 },
                 "west": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "east": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "north": {
                     "uv": [0,1.375,7.5,2.125],
@@ -388,11 +388,11 @@
                 },
                 "north": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "south": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 }
             }
         },
@@ -418,11 +418,11 @@
                 },
                 "north": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "south": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 }
             }
         },
@@ -440,11 +440,11 @@
                 },
                 "west": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "east": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "north": {
                     "uv": [0,1.375,7.5,2],
@@ -470,11 +470,11 @@
                 },
                 "west": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "east": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "north": {
                     "uv": [0,1.375,7.5,2],
@@ -508,11 +508,11 @@
                 },
                 "north": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 },
                 "south": {
                     "uv": [0.0,0.0,1.0,2.0],
-                    "texture": "missingtexture"
+                    "texture": "#compost"
                 }
             }
         }

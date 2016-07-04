@@ -1,69 +1,81 @@
 /*
- * This file ("TileEntityLaserRelay.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("TileEntityLaserRelay.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
+import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
+import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench.WrenchMode;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
-import de.ellpeck.actuallyadditions.mod.network.PacketParticle;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler.ConnectionPair;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import io.netty.util.internal.ConcurrentSet;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityLaserRelay extends TileEntityBase implements IEnergyReceiver{
+import java.util.Set;
+
+public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     public static final int MAX_DISTANCE = 15;
     private static final float[] COLOR = new float[]{1F, 0F, 0F};
+    private static final float[] COLOR_ITEM = new float[]{139F/255F, 94F/255F, 1F};
 
-    @Override
-    public void receiveSyncCompound(NBTTagCompound compound){
-        BlockPos thisPos = this.pos;
-        if(compound != null){
-            LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
+    public final boolean isItem;
 
-            NBTTagList list = compound.getTagList("Connections", 10);
-            for(int i = 0; i < list.tagCount(); i++){
-                LaserRelayConnectionHandler.ConnectionPair pair = LaserRelayConnectionHandler.ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
-                LaserRelayConnectionHandler.getInstance().addConnection(pair.firstRelay, pair.secondRelay);
-            }
-        }
-        else{
-            LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(thisPos);
-        }
+    private Set<ConnectionPair> tempConnectionStorage;
+
+    private boolean hasCheckedHandlersAround;
+
+    public TileEntityLaserRelay(String name, boolean isItem){
+        super(name);
+        this.isItem = isItem;
     }
 
     @Override
-    public NBTTagCompound getSyncCompound(){
-        NBTTagCompound compound = new NBTTagCompound();
+    public void receiveSyncCompound(NBTTagCompound compound){
+        LaserRelayConnectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
 
-        BlockPos thisPos = this.pos;
-        ConcurrentSet<LaserRelayConnectionHandler.ConnectionPair> connections = LaserRelayConnectionHandler.getInstance().getConnectionsFor(thisPos);
+        NBTTagList list = compound.getTagList("Connections", 10);
+        if(!list.hasNoTags()){
+            for(int i = 0; i < list.tagCount(); i++){
+                ConnectionPair pair = ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
+                LaserRelayConnectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj);
+            }
+        }
 
-        if(connections != null){
-            NBTTagList list = new NBTTagList();
-            for(LaserRelayConnectionHandler.ConnectionPair pair : connections){
+        super.receiveSyncCompound(compound);
+    }
+
+
+    @Override
+    public NBTTagCompound getUpdateTag(){
+        NBTTagCompound compound = super.getUpdateTag();
+        NBTTagList list = new NBTTagList();
+
+        ConcurrentSet<ConnectionPair> connections = LaserRelayConnectionHandler.getConnectionsFor(this.pos, this.worldObj);
+        if(connections != null && !connections.isEmpty()){
+            for(ConnectionPair pair : connections){
                 list.appendTag(pair.writeToNBT());
             }
-            compound.setTag("Connections", list);
-            return compound;
         }
-        return null;
+
+        compound.setTag("Connections", list);
+        return compound;
     }
 
     @Override
@@ -72,17 +84,34 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
         if(this.worldObj.isRemote){
             this.renderParticles();
         }
+        else if(!this.hasCheckedHandlersAround){
+            this.saveAllHandlersAround();
+            this.hasCheckedHandlersAround = true;
+        }
+    }
+
+    public void saveAllHandlersAround(){
+
     }
 
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
-        if(Util.RANDOM.nextInt(ConfigValues.lessParticles ? 15 : 8) == 0){
-            BlockPos thisPos = this.pos;
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(thisPos);
-            if(network != null){
-                for(LaserRelayConnectionHandler.ConnectionPair aPair : network.connections){
-                    if(aPair.contains(thisPos) && PosUtil.areSamePos(thisPos, aPair.firstRelay)){
-                        PacketParticle.renderParticlesFromAToB(aPair.firstRelay.getX(), aPair.firstRelay.getY(), aPair.firstRelay.getZ(), aPair.secondRelay.getX(), aPair.secondRelay.getY(), aPair.secondRelay.getZ(), ConfigValues.lessParticles ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, COLOR, 1F);
+        if(Util.RANDOM.nextInt(ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 16 : 8) == 0){
+            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+            if(player != null){
+                PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
+                WrenchMode mode = WrenchMode.values()[data.theCompound.getInteger("LaserWrenchMode")];
+                if(mode != WrenchMode.NO_PARTICLES){
+                    ItemStack stack = player.getHeldItemMainhand();
+                    if(mode == WrenchMode.ALWAYS_PARTICLES || (stack != null && stack.getItem() instanceof ItemLaserWrench)){
+                        LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(this.pos, this.worldObj);
+                        if(network != null){
+                            for(ConnectionPair aPair : network.connections){
+                                if(aPair.contains(this.pos) && this.pos.equals(aPair.positions[0])){
+                                    AssetUtil.renderParticlesFromAToB(aPair.positions[0].getX(), aPair.positions[0].getY(), aPair.positions[0].getZ(), aPair.positions[1].getX(), aPair.positions[1].getY(), aPair.positions[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.isItem ? COLOR_ITEM : COLOR, 1F);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -92,37 +121,22 @@ public class TileEntityLaserRelay extends TileEntityBase implements IEnergyRecei
     @Override
     public void invalidate(){
         super.invalidate();
-        LaserRelayConnectionHandler.getInstance().removeRelayFromNetwork(this.pos);
+        //This is because Minecraft randomly invalidates tiles on world join and then validates them again
+        //We need to compensate for this so that connections don't get broken randomly
+        this.tempConnectionStorage = LaserRelayConnectionHandler.getConnectionsFor(this.pos, this.worldObj);
+
+        LaserRelayConnectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
     }
 
     @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.transmitEnergy(WorldUtil.getCoordsFromSide(from, this.pos, 0), maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return 0;
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return 0;
-    }
-
-    public int transmitEnergy(BlockPos blockFrom, int maxTransmit, boolean simulate){
-        int transmitted = 0;
-        if(maxTransmit > 0){
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getInstance().getNetworkFor(this.pos);
-            if(network != null){
-                transmitted = LaserRelayConnectionHandler.getInstance().transferEnergyToReceiverInNeed(worldObj, blockFrom, network, Math.min(ConfigIntValues.LASER_RELAY_MAX_TRANSFER.getValue(), maxTransmit), simulate);
+    public void validate(){
+        if(this.tempConnectionStorage != null){
+            for(ConnectionPair pair : this.tempConnectionStorage){
+                LaserRelayConnectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj);
             }
+            this.tempConnectionStorage = null;
         }
-        return transmitted;
-    }
 
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
+        super.validate();
     }
 }

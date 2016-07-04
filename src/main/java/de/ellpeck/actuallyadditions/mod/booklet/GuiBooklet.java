@@ -1,31 +1,37 @@
 /*
- * This file ("GuiBooklet.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("GuiBooklet.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.internal.EntrySet;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
+import de.ellpeck.actuallyadditions.api.internal.IEntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.IndexButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllSearch;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.config.GuiConfiguration;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.ItemBooklet;
+import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import de.ellpeck.actuallyadditions.mod.util.playerdata.PersistentClientData;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
@@ -33,10 +39,13 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
@@ -50,19 +59,24 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class GuiBooklet extends GuiScreen implements IBookletGui{
 
-    public static final ResourceLocation resLoc = AssetUtil.getBookletGuiLocation("guiBooklet");
-    public static final ResourceLocation resLocHalloween = AssetUtil.getBookletGuiLocation("guiBookletHalloween");
-    public static final ResourceLocation resLocChristmas = AssetUtil.getBookletGuiLocation("guiBookletChristmas");
-    public static final ResourceLocation resLocValentine = AssetUtil.getBookletGuiLocation("guiBookletValentinesDay");
+    public static final ResourceLocation RES_LOC = AssetUtil.getBookletGuiLocation("guiBooklet");
+    public static final ResourceLocation RES_LOC_HALLOWEEN = AssetUtil.getBookletGuiLocation("guiBookletHalloween");
+    public static final ResourceLocation RES_LOC_CHRISTMAS = AssetUtil.getBookletGuiLocation("guiBookletChristmas");
+    public static final ResourceLocation RES_LOC_VALENTINE = AssetUtil.getBookletGuiLocation("guiBookletValentinesDay");
 
     public static final int CHAPTER_BUTTONS_AMOUNT = 13;
     public static final int INDEX_BUTTONS_OFFSET = 3;
     private static final int[] AND_HIS_NAME_IS = new int[]{Keyboard.KEY_C, Keyboard.KEY_E, Keyboard.KEY_N, Keyboard.KEY_A};
-    public int xSize;
-    public int ySize;
+    public final int xSize;
+    public final int ySize;
+    public final IEntrySet currentEntrySet = new EntrySet(null);
+    public final GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
+    public final GuiButton[] bookmarkButtons = new GuiButton[8];
+    public final GuiScreen parentScreen;
+    private final boolean tryOpenMainPage;
+    private final boolean saveOnClose;
     public int guiLeft;
     public int guiTop;
-    public EntrySet currentEntrySet = new EntrySet(null);
     public int indexPageAmount;
     public GuiButton buttonForward;
     public GuiButton buttonBackward;
@@ -73,15 +87,14 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public GuiButton buttonAchievements;
     public GuiButton buttonConfig;
     public GuiButton buttonWebsite;
-    public GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
-    public GuiButton[] bookmarkButtons = new GuiButton[8];
+    public GuiButton buttonPatreon;
+    public GuiButton buttonViewOnline;
     public GuiTextField searchField;
-    public GuiScreen parentScreen;
+    public boolean shouldSaveDataNextClose;
     private int ticksElapsed;
     private boolean mousePressed;
-    private boolean tryOpenMainPage;
-    private boolean saveOnClose;
     private int hisNameIsAt;
+    public String bookletName;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
         this.xSize = 146;
@@ -95,6 +108,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         return this.fontRendererObj;
     }
 
+    @Override
     public List getButtonList(){
         return this.buttonList;
     }
@@ -117,12 +131,12 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
         //Draws the Background
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(ClientProxy.jingleAllTheWay ? resLocChristmas : (ClientProxy.pumpkinBlurPumpkinBlur ? resLocHalloween : (ClientProxy.bulletForMyValentine ? resLocValentine : resLoc)));
+        this.mc.getTextureManager().bindTexture(ClientProxy.jingleAllTheWay ? RES_LOC_CHRISTMAS : (ClientProxy.pumpkinBlurPumpkinBlur ? RES_LOC_HALLOWEEN : (ClientProxy.bulletForMyValentine ? RES_LOC_VALENTINE : RES_LOC)));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
         //Draws the search bar
-        if(this.currentEntrySet.entry instanceof BookletEntryAllSearch && this.currentEntrySet.chapter == null){
-            this.mc.getTextureManager().bindTexture(resLoc);
+        if(this.currentEntrySet.getCurrentEntry() instanceof BookletEntryAllSearch && this.currentEntrySet.getCurrentChapter() == null){
+            this.mc.getTextureManager().bindTexture(RES_LOC);
             this.drawTexturedModalRect(this.guiLeft+146, this.guiTop+160, 146, 80, 70, 14);
         }
 
@@ -137,59 +151,63 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         //Pre-Renders the current page's content etc.
         BookletUtils.renderPre(this, x, y, this.ticksElapsed, this.mousePressed);
 
-        //Does vanilla drawing stuff
-        super.drawScreen(x, y, f);
+        //Buttons and search field
+        if(this.currentEntrySet.getCurrentPage() != null){
+            this.fontRendererObj.setUnicodeFlag(false);
+        }
+        for(GuiButton button : this.buttonList){
+            button.drawButton(this.mc, x, y);
+        }
+        this.fontRendererObj.setUnicodeFlag(true);
+
         this.searchField.drawTextBox();
 
         //Renders the current page's content
-        if(this.currentEntrySet.entry != null && this.currentEntrySet.chapter != null && this.currentEntrySet.page != null){
-            this.currentEntrySet.page.render(this, x, y, this.ticksElapsed, this.mousePressed);
+        if(this.currentEntrySet.getCurrentEntry() != null && this.currentEntrySet.getCurrentChapter() != null && this.currentEntrySet.getCurrentPage() != null){
+            this.currentEntrySet.getCurrentPage().render(this, x, y, this.ticksElapsed, this.mousePressed);
         }
 
         //Draws hovering texts for buttons
         this.fontRendererObj.setUnicodeFlag(false);
         BookletUtils.doHoverTexts(this, x, y);
         BookletUtils.drawAchievementInfo(this, false, x, y);
-        this.fontRendererObj.setUnicodeFlag(true);
 
         this.fontRendererObj.setUnicodeFlag(unicodeBefore);
 
         //Resets mouse
-        if(this.mousePressed){
-            this.mousePressed = false;
-        }
+        this.mousePressed = false;
     }
 
     @Override
     public void keyTyped(char theChar, int key){
-        if(key == Keyboard.KEY_ESCAPE){
-            if(this.parentScreen != null){
-                this.mc.displayGuiScreen(this.parentScreen);
-            }
-            else{
-                this.mc.displayGuiScreen(null);
-                this.mc.setIngameFocus();
-            }
-        }
-        else if(this.searchField.isFocused()){
-            this.searchField.textboxKeyTyped(theChar, key);
-            BookletUtils.updateSearchBar(this);
-        }
-        else{
-            if(AND_HIS_NAME_IS.length > this.hisNameIsAt && AND_HIS_NAME_IS[this.hisNameIsAt] == key){
-                if(this.hisNameIsAt+1 >= AND_HIS_NAME_IS.length){
-                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation(ModUtil.MOD_ID_LOWER, "duhDuhDuhDuuuh")));
-                    ModUtil.LOGGER.info("AND HIS NAME IS JOHN CENA DUH DUH DUH DUUUH");
-                    this.hisNameIsAt = 0;
-                }
-                else{
-                    this.hisNameIsAt++;
-                }
-            }
-            else{
+        if(!this.searchField.isFocused() && AND_HIS_NAME_IS.length > this.hisNameIsAt && AND_HIS_NAME_IS[this.hisNameIsAt] == key){
+            if(this.hisNameIsAt+1 >= AND_HIS_NAME_IS.length){
+                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundHandler.duhDuhDuhDuuuh, 0.5F));
+                ModUtil.LOGGER.info("AND HIS NAME IS JOHN CENA DUH DUH DUH DUUUH");
                 this.hisNameIsAt = 0;
             }
+            else{
+                this.hisNameIsAt++;
+            }
         }
+        else{
+            this.hisNameIsAt = 0;
+
+            if(key == Keyboard.KEY_ESCAPE || (key == this.mc.gameSettings.keyBindInventory.getKeyCode() && !this.searchField.isFocused())){
+                if(this.parentScreen != null){
+                    this.mc.displayGuiScreen(this.parentScreen);
+                }
+                else{
+                    this.mc.displayGuiScreen(null);
+                    this.mc.setIngameFocus();
+                }
+            }
+            else if(this.searchField.isFocused()){
+                this.searchField.textboxKeyTyped(theChar, key);
+                BookletUtils.updateSearchBar(this);
+            }
+        }
+
     }
 
     @Override
@@ -201,13 +219,13 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     protected void mouseClicked(int par1, int par2, int par3) throws IOException{
         this.searchField.mouseClicked(par1, par2, par3);
         //Left mouse button
-        if(par3 == 0 && this.currentEntrySet.chapter != null){
+        if(par3 == 0 && this.currentEntrySet.getCurrentChapter() != null){
             this.mousePressed = true;
         }
         //Right mouse button
         else if(par3 == 1){
-            if(this.currentEntrySet.chapter != null){
-                BookletUtils.openIndexEntry(this, this.currentEntrySet.entry, this.currentEntrySet.pageInIndex, true);
+            if(this.currentEntrySet.getCurrentChapter() != null){
+                BookletUtils.openIndexEntry(this, this.currentEntrySet.getCurrentEntry(), this.currentEntrySet.getPageInIndex(), true);
             }
             else{
                 BookletUtils.openIndexEntry(this, null, 1, true);
@@ -218,15 +236,32 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     public void actionPerformed(GuiButton button){
+        if(this.currentEntrySet.getCurrentPage() != null){
+            if(this.currentEntrySet.getCurrentPage().onActionPerformed(this, button)){
+                return;
+            }
+        }
+
         //Handles update
         if(button == this.buttonUpdate){
             if(UpdateChecker.needsUpdateNotify){
                 BookletUtils.openBrowser(UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK);
             }
         }
+        //Handles View Online
+        else if(button == this.buttonViewOnline){
+            IBookletChapter chapter = this.currentEntrySet.getCurrentChapter();
+            if(chapter != null){
+                BookletUtils.openBrowser("http://ellpeck.de/actaddmanual/#"+chapter.getUnlocalizedName());
+            }
+        }
         //Handles Website
         else if(button == this.buttonWebsite){
             BookletUtils.openBrowser("http://ellpeck.de");
+        }
+        //Handles Patreon
+        else if(button == this.buttonPatreon){
+            BookletUtils.openBrowser("http://www.patreon.com/Ellpeck");
         }
         //Handles Twitter
         else if(button == this.buttonTwitter){
@@ -238,11 +273,11 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         }
         //Handles config
         else if(button == this.buttonConfig){
-            mc.displayGuiScreen(new GuiConfiguration(this));
+            this.mc.displayGuiScreen(new GuiConfiguration(this));
         }
         //Handles achievements
         else if(button == this.buttonAchievements){
-            mc.displayGuiScreen(new GuiAAAchievements(this, mc.thePlayer.getStatFileWriter()));
+            this.mc.displayGuiScreen(new GuiAAAchievements(this, this.mc.thePlayer.getStatFileWriter()));
         }
         else if(button == this.buttonForward){
             BookletUtils.handleNextPage(this);
@@ -252,8 +287,8 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         }
         //Handles gonig from page to chapter or from chapter to index
         else if(button == this.buttonPreviousScreen){
-            if(this.currentEntrySet.chapter != null){
-                BookletUtils.openIndexEntry(this, this.currentEntrySet.entry, this.currentEntrySet.pageInIndex, true);
+            if(this.currentEntrySet.getCurrentChapter() != null){
+                BookletUtils.openIndexEntry(this, this.currentEntrySet.getCurrentEntry(), this.currentEntrySet.getPageInIndex(), true);
             }
             else{
                 BookletUtils.openIndexEntry(this, null, 1, true);
@@ -268,68 +303,82 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui(){
+        int flavor = 1;
+        if(Util.RANDOM.nextFloat() <= 0.1){
+            flavor = MathHelper.getRandomIntegerInRange(Util.RANDOM, 2, 5);
+        }
+        this.bookletName = "info."+ModUtil.MOD_ID+".booklet.manualName.1."+flavor;
+
         this.guiLeft = (this.width-this.xSize)/2;
         this.guiTop = (this.height-this.ySize)/2;
 
-        this.buttonForward = new TexturedButton(0, this.guiLeft+this.xSize-26, this.guiTop+this.ySize+1, 164, 0, 18, 10, Collections.singletonList(EnumChatFormatting.GOLD+"Next Page"));
+        this.buttonForward = new TexturedButton(0, this.guiLeft+this.xSize-26, this.guiTop+this.ySize+1, 164, 0, 18, 10, Collections.singletonList(TextFormatting.GOLD+"Next Page"));
         this.buttonList.add(this.buttonForward);
 
-        this.buttonBackward = new TexturedButton(1, this.guiLeft+8, this.guiTop+this.ySize+1, 146, 0, 18, 10, Collections.singletonList(EnumChatFormatting.GOLD+"Previous Page"));
+        this.buttonBackward = new TexturedButton(1, this.guiLeft+8, this.guiTop+this.ySize+1, 146, 0, 18, 10, Collections.singletonList(TextFormatting.GOLD+"Previous Page"));
         this.buttonList.add(this.buttonBackward);
 
-        this.buttonPreviousScreen = new TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+1, 182, 0, 15, 10, Collections.singletonList(EnumChatFormatting.GOLD+"Back"));
+        this.buttonPreviousScreen = new TexturedButton(2, this.guiLeft+this.xSize/2-7, this.guiTop+this.ySize+1, 182, 0, 15, 10, Collections.singletonList(TextFormatting.GOLD+"Back"));
         this.buttonList.add(this.buttonPreviousScreen);
 
         ArrayList updateHover = new ArrayList();
         if(UpdateChecker.checkFailed){
-            updateHover.add(IChatComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.failed")).getFormattedText());
+            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.failed")).getFormattedText());
         }
         else if(UpdateChecker.needsUpdateNotify){
-            updateHover.add(IChatComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.generic")).getFormattedText());
-            updateHover.add(IChatComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID_LOWER+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)).getFormattedText());
-            updateHover.add(StringUtil.localize("info."+ModUtil.MOD_ID_LOWER+".update.buttonOptions"));
+            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.generic")).getFormattedText());
+            updateHover.add(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)).getFormattedText());
+            updateHover.add(StringUtil.localize("info."+ModUtil.MOD_ID+".update.buttonOptions"));
         }
         this.buttonUpdate = new TexturedButton(4, this.guiLeft-11, this.guiTop-11, 245, 0, 11, 11, updateHover);
-        this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify;
+        this.buttonUpdate.visible = UpdateChecker.needsUpdateNotify || UpdateChecker.checkFailed;
         this.buttonList.add(this.buttonUpdate);
 
-        this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop, 213, 0, 8, 8, Collections.singletonList(EnumChatFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"));
+        this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop+10, 213, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"));
         this.buttonList.add(this.buttonTwitter);
 
-        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+10, 221, 0, 8, 8, Collections.singletonList(EnumChatFormatting.GOLD+"Open Minecraft Forum Post in Browser"));
+        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+20, 221, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open Minecraft Forum Post in Browser"));
         this.buttonList.add(this.buttonForum);
 
-        this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8, Collections.singletonList(EnumChatFormatting.GOLD+"Show Achievements"));
+        this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Show Achievements"));
         this.buttonList.add(this.buttonAchievements);
 
         ArrayList websiteHover = new ArrayList();
-        websiteHover.add(EnumChatFormatting.GOLD+"Open Author's Website");
+        websiteHover.add(TextFormatting.GOLD+"Open Author's Website");
         websiteHover.add("(There's some cool stuff there!)");
-        websiteHover.add(EnumChatFormatting.GRAY+""+EnumChatFormatting.ITALIC+"Would you call this Product Placement?");
-        this.buttonWebsite = new TexturedButton(-99, this.guiLeft, this.guiTop+20, 228, 0, 8, 8, websiteHover);
+        websiteHover.add(TextFormatting.GRAY+""+TextFormatting.ITALIC+"Would you call this Product Placement?");
+        this.buttonWebsite = new TexturedButton(-99, this.guiLeft, this.guiTop+30, 229, 0, 8, 8, websiteHover);
         this.buttonList.add(this.buttonWebsite);
 
+        List<String> patreonHover = new ArrayList<String>();
+        patreonHover.add("Like the mod?");
+        patreonHover.add("Why don't support me on "+TextFormatting.GOLD+"Patreon"+TextFormatting.RESET+"?");
+        this.buttonPatreon = new TexturedButton(-100, this.guiLeft, this.guiTop, 237, 0, 8, 8, patreonHover);
+        this.buttonList.add(this.buttonPatreon);
+
+        this.buttonViewOnline = new TexturedButton(-101, this.guiLeft+146, this.guiTop+180, 245, 44, 11, 11, Collections.singletonList(TextFormatting.GOLD+"View Online"));
+        this.buttonList.add(this.buttonViewOnline);
+
         ArrayList configHover = new ArrayList();
-        configHover.add(EnumChatFormatting.GOLD+"Show Configuration GUI");
+        configHover.add(TextFormatting.GOLD+"Show Configuration GUI");
         configHover.addAll(this.fontRendererObj.listFormattedStringToWidth("It is highly recommended that you restart your game after changing anything as that prevents possible bugs occuring!", 200));
         this.buttonConfig = new TexturedButton(8, this.guiLeft+138, this.guiTop+10, 197, 0, 8, 8, configHover);
         this.buttonList.add(this.buttonConfig);
 
         for(int i = 0; i < this.chapterButtons.length; i++){
-            this.chapterButtons[i] = new IndexButton(9+i, guiLeft+15, guiTop+10+(i*12), 115, 10, "", this);
+            this.chapterButtons[i] = new IndexButton(9+i, this.guiLeft+15, this.guiTop+10+(i*12), 115, 10, "", this);
             this.buttonList.add(this.chapterButtons[i]);
         }
 
         for(int i = 0; i < this.bookmarkButtons.length; i++){
-            int x = this.guiLeft+xSize/2-(this.bookmarkButtons.length/2*16)+(i*16);
+            int x = this.guiLeft+this.xSize/2-(this.bookmarkButtons.length/2*16)+(i*16);
             this.bookmarkButtons[i] = new BookmarkButton(this.chapterButtons[this.chapterButtons.length-1].id+1+i, x, this.guiTop+this.ySize+13, this);
             this.buttonList.add(this.bookmarkButtons[i]);
         }
 
-        this.searchField = new GuiTextField(4500, this.fontRendererObj, guiLeft+148, guiTop+162, 66, 10);
+        this.searchField = new GuiTextField(4500, this.fontRendererObj, this.guiLeft+148, this.guiTop+162, 66, 10);
         this.searchField.setMaxStringLength(30);
         this.searchField.setEnableBackgroundDrawing(false);
         this.searchField.setCanLoseFocus(false);
@@ -338,14 +387,23 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
         if(ItemBooklet.forcedEntry == null){
             //Open last entry or introductory entry
-            if(this.tryOpenMainPage && !PersistentClientData.getBoolean("BookAlreadyOpened")){
-                BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
-                BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
+            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer);
+            if(data != null){
+                if(this.tryOpenMainPage && !data.theCompound.getBoolean("BookAlreadyOpened")){
+                    BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
+                    BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
 
-                PersistentClientData.setBoolean("BookAlreadyOpened", true);
-            }
-            else{
-                PersistentClientData.openLastBookPage(this);
+                    NBTTagCompound extraData = new NBTTagCompound();
+                    extraData.setBoolean("BookAlreadyOpened", true);
+                    NBTTagCompound dataToSend = new NBTTagCompound();
+                    dataToSend.setTag("Data", extraData);
+                    dataToSend.setInteger("WorldID", Minecraft.getMinecraft().theWorld.provider.getDimension());
+                    dataToSend.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+                    PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
+                }
+                else{
+                    BookletUtils.openLastBookPage(this, data.theCompound.getCompoundTag("BookletData"));
+                }
             }
         }
         else{
@@ -354,6 +412,8 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
             BookletUtils.openChapter(this, ItemBooklet.forcedEntry.chapter, ItemBooklet.forcedEntry.page);
             ItemBooklet.forcedEntry = null;
         }
+
+        this.shouldSaveDataNextClose = false;
     }
 
     @Override
@@ -376,11 +436,11 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         super.updateScreen();
         this.searchField.updateCursorCounter();
 
-        if(this.currentEntrySet.entry != null && this.currentEntrySet.chapter != null && this.currentEntrySet.page != null){
-            this.currentEntrySet.page.updateScreen(this.ticksElapsed);
+        if(this.currentEntrySet.getCurrentEntry() != null && this.currentEntrySet.getCurrentChapter() != null && this.currentEntrySet.getCurrentPage() != null){
+            this.currentEntrySet.getCurrentPage().updateScreen(this.ticksElapsed);
         }
 
-        boolean buttonThere = UpdateChecker.needsUpdateNotify;
+        boolean buttonThere = UpdateChecker.needsUpdateNotify || UpdateChecker.checkFailed;
         this.buttonUpdate.visible = buttonThere;
         if(buttonThere){
             if(this.ticksElapsed%8 == 0){
@@ -394,8 +454,18 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     public void onGuiClosed(){
-        if(this.saveOnClose){
-            PersistentClientData.saveBookPage(this);
+        if(this.saveOnClose && this.shouldSaveDataNextClose){
+            NBTTagCompound bookletData = new NBTTagCompound();
+            BookletUtils.saveBookPage(this, bookletData);
+
+            NBTTagCompound extraData = new NBTTagCompound();
+            extraData.setTag("BookletData", bookletData);
+
+            NBTTagCompound dataToSend = new NBTTagCompound();
+            dataToSend.setTag("Data", extraData);
+            dataToSend.setInteger("WorldID", Minecraft.getMinecraft().theWorld.provider.getDimension());
+            dataToSend.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
         }
     }
 
@@ -416,7 +486,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 list.set(k, stack.getRarity().rarityColor+(String)list.get(k));
             }
             else{
-                list.set(k, EnumChatFormatting.GRAY+(String)list.get(k));
+                list.set(k, TextFormatting.GRAY+(String)list.get(k));
             }
         }
 
@@ -426,9 +496,9 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 list.add(from.getClickToSeeRecipeString());
 
                 if(mousePressed){
-                    BookletUtils.openIndexEntry(this, page.getChapter().getEntry(), ActuallyAdditionsAPI.bookletEntries.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
+                    BookletUtils.openIndexEntry(this, page.getChapter().getEntry(), ActuallyAdditionsAPI.BOOKLET_ENTRIES.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
                     BookletUtils.openChapter(this, page.getChapter(), page);
-                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+                    Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
                 }
             }
         }
@@ -464,7 +534,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     }
 
     @Override
-    public EntrySet getCurrentEntrySet(){
+    public IEntrySet getCurrentEntrySet(){
         return this.currentEntrySet;
     }
 }

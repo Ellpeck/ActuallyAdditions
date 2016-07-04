@@ -1,11 +1,11 @@
 /*
- * This file ("CrusherRecipeWrapper.java") is part of the Actually Additions Mod for Minecraft.
+ * This file ("CrusherRecipeWrapper.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense/
+ * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2016 Ellpeck
+ * © 2015-2016 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
@@ -21,14 +21,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
 
-    public CrusherRecipe theRecipe;
+    public final CrusherRecipe theRecipe;
 
     public CrusherRecipeWrapper(CrusherRecipe recipe){
         this.theRecipe = recipe;
@@ -63,12 +62,7 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight){
-
-    }
-
-    @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         this.updateButton(minecraft, mouseX, mouseY);
 
         List<ItemStack> outputTwos = this.theRecipe.getRecipeOutputTwos();
@@ -78,7 +72,7 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight){
+    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight){
 
     }
 
@@ -89,7 +83,7 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
     }
 
     @Override
-    public boolean handleClick(@Nonnull Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
         return this.handleClick(minecraft, mouseX, mouseY);
     }
 
