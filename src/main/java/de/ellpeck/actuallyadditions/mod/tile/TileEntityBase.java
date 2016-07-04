@@ -50,7 +50,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         this.name = name;
     }
 
-    //TODO Change for next major update to use the name variable automatically
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");
 
