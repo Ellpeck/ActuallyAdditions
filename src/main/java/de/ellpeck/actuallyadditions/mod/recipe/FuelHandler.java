@@ -40,7 +40,7 @@ public class FuelHandler implements IFuelHandler{
     }
 
     private static void addFuel(Item item, int meta, int value){
-        FUEL_LIST.add(new Fuel(new ItemStack(item, meta), value));
+        FUEL_LIST.add(new Fuel(new ItemStack(item, 1, meta), value));
     }
 
     private static void addFuel(Block block, int meta, int value){
