@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench.WrenchMode;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler.ConnectionPair;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.client.Minecraft;
@@ -108,7 +107,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
                         LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(this.pos, this.worldObj);
                         if(network != null){
                             for(ConnectionPair aPair : network.connections){
-                                if(aPair.contains(this.pos) && PosUtil.areSamePos(this.pos, aPair.positions[0])){
+                                if(aPair.contains(this.pos) && this.pos.equals(aPair.positions[0])){
                                     AssetUtil.renderParticlesFromAToB(aPair.positions[0].getX(), aPair.positions[0].getY(), aPair.positions[0].getZ(), aPair.positions[1].getX(), aPair.positions[1].getY(), aPair.positions[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.isItem ? COLOR_ITEM : COLOR, 1F);
                                 }
                             }

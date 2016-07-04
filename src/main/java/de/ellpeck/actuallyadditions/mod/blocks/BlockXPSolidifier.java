@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -74,16 +73,16 @@ public class BlockXPSolidifier extends BlockContainerBase{
         int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
 
         if(rotation == 0){
-            PosUtil.setMetadata(pos, world, 0, 2);
+            world.setBlockState(pos, this.getStateFromMeta(0), 2);
         }
         if(rotation == 1){
-            PosUtil.setMetadata(pos, world, 3, 2);
+            world.setBlockState(pos, this.getStateFromMeta(3), 2);
         }
         if(rotation == 2){
-            PosUtil.setMetadata(pos, world, 1, 2);
+            world.setBlockState(pos, this.getStateFromMeta(1), 2);
         }
         if(rotation == 3){
-            PosUtil.setMetadata(pos, world, 2, 2);
+            world.setBlockState(pos, this.getStateFromMeta(2), 2);
         }
 
         super.onBlockPlacedBy(world, pos, state, player, stack);

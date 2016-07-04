@@ -10,12 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -63,39 +62,41 @@ public class TileEntityFluidCollector extends TileEntityBase implements net.mine
     }
 
     private void doWork(){
-        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
-        BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, 0);
+        IBlockState state = this.worldObj.getBlockState(this.pos);
+        Block block = state.getBlock();
+        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(block.getMetaFromState(state));
+        BlockPos coordsBlock = this.pos.offset(sideToManipulate, 0);
 
-        Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
-        if(!this.isPlacer && blockToBreak != null && PosUtil.getMetadata(coordsBlock, this.worldObj) == 0 && Util.BUCKET <= this.tank.getCapacity()-this.tank.getFluidAmount()){
+        IBlockState stateToBreak = this.worldObj.getBlockState(coordsBlock);
+        Block blockToBreak = stateToBreak.getBlock();
+        if(!this.isPlacer && blockToBreak != null && blockToBreak.getMetaFromState(stateToBreak) == 0 && Util.BUCKET <= this.tank.getCapacity()-this.tank.getFluidAmount()){
             if(blockToBreak instanceof IFluidBlock && ((IFluidBlock)blockToBreak).getFluid() != null){
                 if(this.tank.fillInternal(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), Util.BUCKET), false) >= Util.BUCKET){
                     this.tank.fillInternal(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), Util.BUCKET), true);
-                    WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
+                    this.worldObj.setBlockToAir(coordsBlock);
                 }
             }
             else if(blockToBreak == Blocks.LAVA || blockToBreak == Blocks.FLOWING_LAVA){
                 if(this.tank.fillInternal(new FluidStack(FluidRegistry.LAVA, Util.BUCKET), false) >= Util.BUCKET){
                     this.tank.fillInternal(new FluidStack(FluidRegistry.LAVA, Util.BUCKET), true);
-                    WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
+                    this.worldObj.setBlockToAir(coordsBlock);
                 }
             }
             else if(blockToBreak == Blocks.WATER || blockToBreak == Blocks.FLOWING_WATER){
                 if(this.tank.fillInternal(new FluidStack(FluidRegistry.WATER, Util.BUCKET), false) >= Util.BUCKET){
                     this.tank.fillInternal(new FluidStack(FluidRegistry.WATER, Util.BUCKET), true);
-                    WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.pos);
+                    this.worldObj.setBlockToAir(coordsBlock);
                 }
             }
         }
-        else if(this.isPlacer && PosUtil.getBlock(coordsBlock, this.worldObj).isReplaceable(this.worldObj, coordsBlock)){
+        else if(this.isPlacer && blockToBreak.isReplaceable(this.worldObj, coordsBlock)){
             if(this.tank.getFluidAmount() >= Util.BUCKET){
-                Block block = this.tank.getFluid().getFluid().getBlock();
-                if(block != null){
+                Block fluid = this.tank.getFluid().getFluid().getBlock();
+                if(fluid != null){
                     BlockPos offsetPos = this.pos.offset(sideToManipulate);
-                    Block blockPresent = PosUtil.getBlock(offsetPos, this.worldObj);
-                    boolean placeable = !(blockPresent instanceof BlockLiquid) && !(blockPresent instanceof IFluidBlock) && blockPresent.isReplaceable(this.worldObj, offsetPos);
+                    boolean placeable = !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && blockToBreak.isReplaceable(this.worldObj, offsetPos);
                     if(placeable){
-                        PosUtil.setBlock(offsetPos, this.worldObj, block, 0, 3);
+                        this.worldObj.setBlockState(offsetPos, fluid.getDefaultState(), 3);
                         this.tank.drainInternal(Util.BUCKET, true);
                     }
                 }

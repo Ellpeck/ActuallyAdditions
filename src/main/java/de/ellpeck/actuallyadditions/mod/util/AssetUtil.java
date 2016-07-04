@@ -35,20 +35,25 @@ import org.lwjgl.opengl.GL11;
 
 public final class AssetUtil{
 
+    @SideOnly(Side.CLIENT)
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
 
+    @SideOnly(Side.CLIENT)
     public static ResourceLocation getGuiLocation(String file){
         return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/"+file+".png");
     }
 
+    @SideOnly(Side.CLIENT)
     public static ResourceLocation getBookletGuiLocation(String file){
         return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/booklet/"+file+".png");
     }
 
+    @SideOnly(Side.CLIENT)
     public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, String text){
         font.drawString(text, xSize/2-font.getStringWidth(text)/2, yPositionOfMachineText, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
+    @SideOnly(Side.CLIENT)
     public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, TileEntity tile){
         displayNameString(font, xSize, yPositionOfMachineText, tile.getDisplayName().getFormattedText());
     }
@@ -94,6 +99,7 @@ public final class AssetUtil{
     }
 
     //Copied from Gui.class and changed
+    @SideOnly(Side.CLIENT)
     public static void drawHorizontalGradientRect(int left, int top, int right, int bottom, int startColor, int endColor, float zLevel){
         float f = (float)(startColor >> 24 & 255)/255.0F;
         float f1 = (float)(startColor >> 16 & 255)/255.0F;
@@ -122,6 +128,7 @@ public final class AssetUtil{
         GlStateManager.enableTexture2D();
     }
 
+    @SideOnly(Side.CLIENT)
     public static void renderNameTag(String tag, double x, double y, double z){
         FontRenderer fontrenderer = Minecraft.getMinecraft().fontRendererObj;
         float f = 1.6F;

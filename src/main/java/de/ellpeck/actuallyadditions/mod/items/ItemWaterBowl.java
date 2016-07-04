@@ -12,8 +12,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -97,7 +95,7 @@ public class ItemWaterBowl extends ItemBase{
                 return new ActionResult(EnumActionResult.FAIL, stack);
             }
             else{
-                BlockPos pos1 = PosUtil.getBlock(pos, world).isReplaceable(world, pos) && trace.sideHit == EnumFacing.UP ? pos : pos.offset(trace.sideHit);
+                BlockPos pos1 = world.getBlockState(pos).getBlock().isReplaceable(world, pos) && trace.sideHit == EnumFacing.UP ? pos : pos.offset(trace.sideHit);
 
                 if(!player.canPlayerEdit(pos1, trace.sideHit, stack)){
                     return new ActionResult(EnumActionResult.FAIL, stack);

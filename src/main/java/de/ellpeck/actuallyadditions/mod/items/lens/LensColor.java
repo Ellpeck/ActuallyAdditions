@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -53,10 +52,12 @@ public class LensColor extends Lens{
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         if(hitBlock != null){
             if(tile.getEnergy() >= ENERGY_USE){
-                int meta = PosUtil.getMetadata(hitBlock, tile.getWorldObject());
-                ItemStack returnStack = this.tryConvert(new ItemStack(PosUtil.getBlock(hitBlock, tile.getWorldObject()), 1, meta), hitState, hitBlock, tile);
+                IBlockState state = tile.getWorldObject().getBlockState(hitBlock);
+                Block block = state.getBlock();
+                int meta = block.getMetaFromState(state);
+                ItemStack returnStack = this.tryConvert(new ItemStack(block, 1, meta), hitState, hitBlock, tile);
                 if(returnStack != null && returnStack.getItem() instanceof ItemBlock){
-                    PosUtil.setBlock(hitBlock, tile.getWorldObject(), Block.getBlockFromItem(returnStack.getItem()), returnStack.getItemDamage(), 2);
+                    tile.getWorldObject().setBlockState(hitBlock, Block.getBlockFromItem(returnStack.getItem()).getStateFromMeta(returnStack.getItemDamage()), 2);
 
                     tile.extractEnergy(ENERGY_USE);
                 }

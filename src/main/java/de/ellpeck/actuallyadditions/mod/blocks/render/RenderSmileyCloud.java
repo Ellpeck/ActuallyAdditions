@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.misc.cloud.SmileyCloudEasterEggs;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -42,7 +42,8 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
                         if(triggerName != null && theCloud.name != null){
                             if(triggerName.equalsIgnoreCase(theCloud.name)){
                                 GlStateManager.pushMatrix();
-                                switch(PosUtil.getMetadata(theCloud.getPos(), theCloud.getWorld())){
+                                IBlockState state = theCloud.getWorld().getBlockState(theCloud.getPos());
+                                switch(state.getBlock().getMetaFromState(state)){
                                     case 1:
                                         GlStateManager.rotate(180, 0, 1, 0);
                                         break;

@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.misc.DamageSources;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -35,7 +34,7 @@ public class LensDeath extends Lens{
             }
         }
 
-        return hitBlock != null && !PosUtil.getBlock(hitBlock, tile.getWorldObject()).isAir(hitState, tile.getWorldObject(), hitBlock);
+        return hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock);
     }
 
     @Override

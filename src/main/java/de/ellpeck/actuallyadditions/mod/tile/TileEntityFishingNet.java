@@ -10,11 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -57,14 +56,14 @@ public class TileEntityFishingNet extends TileEntityBase{
         super.updateEntity();
         if(!this.worldObj.isRemote){
             if(!this.isRedstonePowered){
-                if(PosUtil.getMaterial(PosUtil.offset(this.pos, 0, -1, 0), this.worldObj) == Material.WATER){
+                if(this.worldObj.getBlockState(this.pos.down()).getMaterial() == Material.WATER){
                     if(this.timeUntilNextDrop > 0){
                         this.timeUntilNextDrop--;
                         if(this.timeUntilNextDrop <= 0){
                             LootContext.Builder builder = new LootContext.Builder((WorldServer)this.worldObj);
                             List<ItemStack> fishables = this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(Util.RANDOM, builder.build());
                             for(ItemStack fishable : fishables){
-                                TileEntity tile = this.worldObj.getTileEntity(PosUtil.offset(this.pos, 0, 1, 0));
+                                TileEntity tile = this.worldObj.getTileEntity(this.pos.up());
                                 if(tile != null && tile instanceof IInventory){
                                     ArrayList<ItemStack> list = new ArrayList<ItemStack>();
                                     list.add(fishable);

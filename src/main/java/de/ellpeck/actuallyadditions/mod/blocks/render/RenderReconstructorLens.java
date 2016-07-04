@@ -14,7 +14,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.render;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
@@ -34,7 +34,8 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
             GlStateManager.translate((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
             GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
 
-            int meta = PosUtil.getMetadata(tile.getPos(), tile.getWorld());
+            IBlockState state = tile.getWorld().getBlockState(tile.getPos());
+            int meta = state.getBlock().getMetaFromState(state);
             if(meta == 0){
                 GlStateManager.translate(0F, -0.5F, 0F);
                 GlStateManager.rotate(90F, 1F, 0F, 0F);

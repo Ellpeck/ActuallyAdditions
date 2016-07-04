@@ -53,14 +53,4 @@ public final class Util{
         }
         return -1;
     }
-
-    public static int arrayContains(int[] array, int num){
-        for(int i = 0; i < array.length; i++){
-            if(num == array[i]){
-                return i;
-            }
-        }
-        return -1;
-    }
-
 }

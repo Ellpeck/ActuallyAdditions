@@ -55,21 +55,9 @@ import java.util.List;
 
 public final class WorldUtil{
 
-    public static void breakBlockAtSide(EnumFacing side, World world, BlockPos pos){
-        breakBlockAtSide(side, world, pos, 0);
-    }
-
-    public static void breakBlockAtSide(EnumFacing side, World world, BlockPos pos, int offset){
-        world.setBlockToAir(getCoordsFromSide(side, pos, offset));
-    }
-
-    public static BlockPos getCoordsFromSide(EnumFacing side, BlockPos pos, int offset){
-        return new BlockPos(pos.getX()+side.getFrontOffsetX()*(offset+1), pos.getY()+side.getFrontOffsetY()*(offset+1), pos.getZ()+side.getFrontOffsetZ()*(offset+1));
-    }
-
     public static void doEnergyInteraction(TileEntity tile){
         for(EnumFacing side : EnumFacing.values()){
-            TileEntity otherTile = getTileEntityFromSide(side, tile.getWorld(), tile.getPos());
+            TileEntity otherTile = tile.getWorld().getTileEntity(tile.getPos().offset(side));
             if(otherTile != null){
                 IEnergyReceiver handlerTo = null;
                 IEnergyProvider handlerFrom = null;
@@ -103,7 +91,7 @@ public final class WorldUtil{
 
     public static void doFluidInteraction(TileEntity tile){
         for(EnumFacing side : EnumFacing.values()){
-            TileEntity otherTile = getTileEntityFromSide(side, tile.getWorld(), tile.getPos());
+            TileEntity otherTile = tile.getWorld().getTileEntity(tile.getPos().offset(side));
             if(otherTile != null){
                 for(int i = 0; i < 2; i++){
                     //Push and pull with old fluid system
@@ -137,11 +125,6 @@ public final class WorldUtil{
         }
     }
 
-    public static TileEntity getTileEntityFromSide(EnumFacing side, World world, BlockPos pos){
-        BlockPos c = getCoordsFromSide(side, pos, 0);
-        return world.getTileEntity(c);
-    }
-
     /**
      * Checks if a given Block with a given Meta is present in given Positions
      *
@@ -153,7 +136,8 @@ public final class WorldUtil{
      */
     public static boolean hasBlocksInPlacesGiven(BlockPos[] positions, Block block, int meta, World world){
         for(BlockPos pos : positions){
-            if(!(PosUtil.getBlock(pos, world) == block && PosUtil.getMetadata(pos, world) == meta)){
+            IBlockState state = world.getBlockState(pos);
+            if(!(state.getBlock() == block && block.getMetaFromState(state) == meta)){
                 return false;
             }
         }
@@ -163,7 +147,8 @@ public final class WorldUtil{
     public static ItemStack useItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
         if(world instanceof WorldServer && stack != null && stack.getItem() != null){
             BlockPos offsetPos = pos.offset(side);
-            Block block = PosUtil.getBlock(offsetPos, world);
+            IBlockState state = world.getBlockState(offsetPos);
+            Block block = state.getBlock();
             boolean replaceable = block.isReplaceable(world, offsetPos);
 
             //Fluids
@@ -177,7 +162,7 @@ public final class WorldUtil{
                 }
 
                 if(fluid != null && fluid.amount >= Util.BUCKET && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, offsetPos)){
-                    if(PosUtil.setBlock(offsetPos, world, fluid.getFluid().getBlock(), 0, 2)){
+                    if(world.setBlockState(offsetPos, fluid.getFluid().getBlock().getDefaultState(), 2)){
                         return stack.getItem().getContainerItem(stack);
                     }
                 }
@@ -185,7 +170,7 @@ public final class WorldUtil{
 
             //Redstone
             if(replaceable && stack.getItem() == Items.REDSTONE){
-                PosUtil.setBlock(offsetPos, world, Blocks.REDSTONE_WIRE, 0, 2);
+                world.setBlockState(offsetPos, Blocks.REDSTONE_WIRE.getDefaultState(), 2);
                 stack.stackSize--;
                 return stack;
             }
@@ -216,7 +201,7 @@ public final class WorldUtil{
     }
 
     public static void dropItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
-        BlockPos coords = getCoordsFromSide(side, pos, 0);
+        BlockPos coords = pos.offset(side);
         EntityItem item = new EntityItem(world, coords.getX()+0.5, coords.getY()+0.5, coords.getZ()+0.5, stack);
         item.motionX = 0;
         item.motionY = 0;
@@ -247,10 +232,10 @@ public final class WorldUtil{
 
     public static ArrayList<Material> getMaterialsAround(World world, BlockPos pos){
         ArrayList<Material> blocks = new ArrayList<Material>();
-        blocks.add(PosUtil.getMaterial(pos.offset(EnumFacing.NORTH), world));
-        blocks.add(PosUtil.getMaterial(pos.offset(EnumFacing.EAST), world));
-        blocks.add(PosUtil.getMaterial(pos.offset(EnumFacing.SOUTH), world));
-        blocks.add(PosUtil.getMaterial(pos.offset(EnumFacing.WEST), world));
+        blocks.add(world.getBlockState(pos.offset(EnumFacing.NORTH)).getMaterial());
+        blocks.add(world.getBlockState(pos.offset(EnumFacing.EAST)).getMaterial());
+        blocks.add(world.getBlockState(pos.offset(EnumFacing.SOUTH)).getMaterial());
+        blocks.add(world.getBlockState(pos.offset(EnumFacing.WEST)).getMaterial());
         return blocks;
     }
 
@@ -262,6 +247,7 @@ public final class WorldUtil{
         return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo, shouldAlwaysWork);
     }
 
+    //TODO This is disgusting and has to be updated to the capability system
     /**
      * Add an ArrayList of ItemStacks to an Array of slots
      *

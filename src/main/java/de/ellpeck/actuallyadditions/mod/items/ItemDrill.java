@@ -21,7 +21,6 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -430,7 +429,8 @@ public class ItemDrill extends ItemEnergy{
         }
 
         //Not defined later because main Block is getting broken below
-        float mainHardness = PosUtil.getBlock(aPos, world).getBlockHardness(world.getBlockState(aPos), world, aPos);
+        IBlockState state = world.getBlockState(aPos);
+        float mainHardness = state.getBlockHardness(world, aPos);
 
         //Break Middle Block first
         int use = this.getEnergyUsePerBlock(stack);
@@ -452,7 +452,8 @@ public class ItemDrill extends ItemEnergy{
                             if(this.getEnergyStored(stack) >= use){
                                 //Only break Blocks around that are (about) as hard or softer
                                 BlockPos thePos = new BlockPos(xPos, yPos, zPos);
-                                if(PosUtil.getBlock(thePos, world).getBlockHardness(world.getBlockState(thePos), world, thePos) <= mainHardness+5.0F){
+                                IBlockState theState = world.getBlockState(thePos);
+                                if(theState.getBlockHardness(world, thePos) <= mainHardness+5.0F){
                                     this.tryHarvestBlock(world, thePos, true, stack, player, use);
                                 }
                             }
@@ -479,8 +480,8 @@ public class ItemDrill extends ItemEnergy{
      * @param use     The Energy that should be extracted per Block
      */
     private boolean tryHarvestBlock(World world, BlockPos pos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
-        Block block = PosUtil.getBlock(pos, world);
         IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
         float hardness = block.getBlockHardness(state, world, pos);
         boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(state, stack)) && (!isExtra || this.getStrVsBlock(stack, world.getBlockState(pos)) > 1.0F);
         if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(world.getBlockState(pos))))){

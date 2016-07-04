@@ -11,11 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -57,7 +57,7 @@ public class ItemGrowthRing extends ItemEnergy{
                             int theY = MathHelper.floor_double(player.posY+y);
                             int theZ = MathHelper.floor_double(player.posZ+z);
                             BlockPos posInQuestion = new BlockPos(theX, theY, theZ);
-                            Block theBlock = PosUtil.getBlock(posInQuestion, world);
+                            Block theBlock = world.getBlockState(posInQuestion).getBlock();
                             if((theBlock instanceof IGrowable || theBlock instanceof IPlantable) && !(theBlock instanceof BlockGrass)){
                                 blocks.add(posInQuestion);
                             }
@@ -71,11 +71,14 @@ public class ItemGrowthRing extends ItemEnergy{
                         if(this.getEnergyStored(stack) >= energyUse){
                             BlockPos pos = blocks.get(Util.RANDOM.nextInt(blocks.size()));
 
-                            int metaBefore = PosUtil.getMetadata(pos, world);
-                            PosUtil.getBlock(pos, world).updateTick(world, pos, world.getBlockState(pos), Util.RANDOM);
+                            IBlockState state = world.getBlockState(pos);
+                            Block block = state.getBlock();
+                            int metaBefore = block.getMetaFromState(state);
+                            block.updateTick(world, pos, world.getBlockState(pos), Util.RANDOM);
 
                             //Show Particles if Metadata changed
-                            if(PosUtil.getMetadata(pos, world) != metaBefore){
+                            IBlockState newState = world.getBlockState(pos);
+                            if(newState.getBlock().getMetaFromState(newState) != metaBefore){
                                 world.playEvent(2005, pos, 0);
                             }
 

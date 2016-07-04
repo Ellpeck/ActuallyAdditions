@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -38,6 +37,7 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -59,7 +59,7 @@ public class OreGen implements IWorldGenerator{
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider){
         int dimension = world.provider.getDimension();
         if(dimension != -1 && dimension != 1){
-            if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ConfigIntListValues.ORE_GEN_DIMENSION_BLACKLIST.getValue(), world.provider.getDimension()) < 0){
+            if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ArrayUtils.toObject(ConfigIntListValues.ORE_GEN_DIMENSION_BLACKLIST.getValue()), world.provider.getDimension()) < 0){
                 this.generateDefault(world, random, chunkX*16, chunkZ*16);
             }
         }
@@ -94,7 +94,7 @@ public class OreGen implements IWorldGenerator{
     @SubscribeEvent
     public void onWorldDecoration(DecorateBiomeEvent.Decorate event){
         if((event.getResult() == Event.Result.ALLOW || event.getResult() == Event.Result.DEFAULT)){
-            if(Util.arrayContains(ConfigIntListValues.PLANT_DIMENSION_BLACKLIST.getValue(), event.getWorld().provider.getDimension()) < 0){
+            if(Util.arrayContains(ArrayUtils.toObject(ConfigIntListValues.PLANT_DIMENSION_BLACKLIST.getValue()), event.getWorld().provider.getDimension()) < 0){
                 this.generateRice(event);
                 this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.CANOLA.ordinal(), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.GRASS, event);
                 this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.FLAX.ordinal(), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.GRASS, event);
@@ -111,8 +111,8 @@ public class OreGen implements IWorldGenerator{
                     if(event.getWorld().getBiomeGenForCoords(randomPos) instanceof BiomeOcean){
                         if(randomPos.getY() >= 25 && randomPos.getY() <= 45){
                             if(event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER){
-                                if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.getWorld()).isSolid()){
-                                    PosUtil.setBlock(randomPos, event.getWorld(), InitBlocks.blockTreasureChest, event.getRand().nextInt(4), 2);
+                                if(event.getWorld().getBlockState(randomPos.down()).getMaterial().isSolid()){
+                                    event.getWorld().setBlockState(randomPos, InitBlocks.blockTreasureChest.getStateFromMeta(event.getRand().nextInt(4)), 2);
                                 }
                             }
                         }
@@ -128,13 +128,13 @@ public class OreGen implements IWorldGenerator{
                 if(event.getRand().nextInt(50) == 0){
                     BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
                     randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
-                    if(PosUtil.getMaterial(randomPos, event.getWorld()) == Material.WATER){
+                    if(event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER){
                         ArrayList<Material> blocksAroundBottom = WorldUtil.getMaterialsAround(event.getWorld(), randomPos);
-                        BlockPos posToGenAt = PosUtil.offset(randomPos, 0, 1, 0);
+                        BlockPos posToGenAt = randomPos.up();
                         ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.getWorld(), posToGenAt);
                         if(blocksAroundBottom.contains(Material.GRASS) || blocksAroundBottom.contains(Material.GROUND) || blocksAroundBottom.contains(Material.ROCK) || blocksAroundBottom.contains(Material.SAND)){
-                            if(!blocksAroundTop.contains(Material.WATER) && PosUtil.getMaterial(posToGenAt, event.getWorld()) == Material.AIR){
-                                PosUtil.setBlock(posToGenAt, event.getWorld(), InitBlocks.blockWildPlant, TheWildPlants.RICE.ordinal(), 2);
+                            if(!blocksAroundTop.contains(Material.WATER) && event.getWorld().getBlockState(posToGenAt).getMaterial() == Material.AIR){
+                                event.getWorld().setBlockState(posToGenAt, InitBlocks.blockWildPlant.getStateFromMeta(TheWildPlants.RICE.ordinal()), 2);
                             }
                         }
                     }
@@ -150,9 +150,9 @@ public class OreGen implements IWorldGenerator{
                     BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
                     randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
 
-                    if(PosUtil.getMaterial(PosUtil.offset(randomPos, 0, -1, 0), event.getWorld()) == blockBelow){
+                    if(event.getWorld().getBlockState(randomPos.down()).getMaterial() == blockBelow){
                         if(plant.canPlaceBlockAt(event.getWorld(), randomPos) && event.getWorld().isAirBlock(randomPos)){
-                            PosUtil.setBlock(randomPos, event.getWorld(), plant, meta, 2);
+                            event.getWorld().setBlockState(randomPos, plant.getStateFromMeta(meta), 2);
                         }
                     }
                 }

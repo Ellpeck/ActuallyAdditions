@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
@@ -51,23 +50,26 @@ public class BlockLampPowerer extends BlockBase{
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = BlockPistonBase.getFacingFromEntity(pos, player).ordinal();
-        PosUtil.setMetadata(pos, world, rotation, 2);
+        world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
     private void updateLamp(World world, BlockPos pos){
         if(!world.isRemote){
-            BlockPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(pos, world)), pos, 0);
-            if(PosUtil.getBlock(coords, world) instanceof BlockColoredLamp){
+            IBlockState state = world.getBlockState(pos);
+            BlockPos coords = pos.offset(WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state)));
+            IBlockState coordsState = world.getBlockState(coords);
+            if(coordsState.getBlock() instanceof BlockColoredLamp){
+                int meta = coordsState.getBlock().getMetaFromState(coordsState);
                 if(world.isBlockIndirectlyGettingPowered(pos) > 0){
-                    if(!((BlockColoredLamp)PosUtil.getBlock(coords, world)).isOn){
-                        PosUtil.setBlock(coords, world, InitBlocks.blockColoredLampOn, PosUtil.getMetadata(coords, world), 2);
+                    if(!((BlockColoredLamp)coordsState.getBlock()).isOn){
+                        world.setBlockState(coords, InitBlocks.blockColoredLampOn.getStateFromMeta(meta), 2);
                     }
                 }
                 else{
-                    if(((BlockColoredLamp)PosUtil.getBlock(coords, world)).isOn){
-                        PosUtil.setBlock(coords, world, InitBlocks.blockColoredLamp, PosUtil.getMetadata(coords, world), 2);
+                    if(((BlockColoredLamp)coordsState.getBlock()).isOn){
+                        world.setBlockState(coords, InitBlocks.blockColoredLamp.getStateFromMeta(meta), 2);
                     }
                 }
             }

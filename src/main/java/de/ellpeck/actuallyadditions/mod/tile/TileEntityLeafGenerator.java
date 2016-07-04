@@ -14,7 +14,6 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -65,8 +64,8 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                         for(int reachX = -RANGE; reachX < RANGE+1; reachX++){
                             for(int reachZ = -RANGE; reachZ < RANGE+1; reachZ++){
                                 for(int reachY = -RANGE; reachY < RANGE+1; reachY++){
-                                    BlockPos pos = PosUtil.offset(this.pos, reachX, reachY, reachZ);
-                                    Block block = PosUtil.getBlock(pos, this.worldObj);
+                                    BlockPos pos = this.pos.add(reachX, reachY, reachZ);
+                                    Block block = this.worldObj.getBlockState(pos).getBlock();
                                     if(block != null && block.isLeaves(this.worldObj.getBlockState(pos), this.worldObj, pos)){
                                         breakPositions.add(pos);
                                     }

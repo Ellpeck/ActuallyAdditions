@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +30,7 @@ public class LensDisruption extends Lens{
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         int energyUse = 150000;
-        if(tile.getEnergy() >= energyUse && hitBlock != null && !PosUtil.getBlock(hitBlock, tile.getWorldObject()).isAir(hitState, tile.getWorldObject(), hitBlock)){
+        if(tile.getEnergy() >= energyUse && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)){
             int range = 2;
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
             for(EntityItem item : items){

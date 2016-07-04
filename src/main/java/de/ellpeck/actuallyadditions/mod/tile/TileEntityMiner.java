@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -105,7 +104,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyR
 
                     IBlockState state = this.worldObj.getBlockState(pos);
                     Block block = state.getBlock();
-                    int meta = PosUtil.getMetadata(pos, this.worldObj);
+                    int meta = block.getMetaFromState(state);
                     if(!block.isAir(this.worldObj.getBlockState(pos), this.worldObj, pos)){
                         if(block.getHarvestLevel(this.worldObj.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
                             List<ItemStack> drops = block.getDrops(this.worldObj, pos, this.worldObj.getBlockState(pos), 0);

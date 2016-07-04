@@ -12,7 +12,8 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -98,14 +99,16 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
             if(flag != (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
                 this.markDirty();
-                int meta = PosUtil.getMetadata(this.pos, this.worldObj);
+                IBlockState state = this.worldObj.getBlockState(this.pos);
+                Block block = state.getBlock();
+                int meta = block.getMetaFromState(state);
                 if(meta > 3){
                     if(!this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1) && !this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2)){
-                        PosUtil.setMetadata(this.pos, this.worldObj, meta-4, 2);
+                        this.worldObj.setBlockState(this.pos, block.getStateFromMeta(meta-4), 2);
                     }
                 }
                 else{
-                    PosUtil.setMetadata(this.pos, this.worldObj, meta+4, 2);
+                    this.worldObj.setBlockState(this.pos, block.getStateFromMeta(meta+4), 2);
                 }
             }
 

@@ -141,7 +141,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = BlockPistonBase.getFacingFromEntity(pos, player).ordinal();
-        PosUtil.setMetadata(pos, world, rotation, 2);
+        world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
     }

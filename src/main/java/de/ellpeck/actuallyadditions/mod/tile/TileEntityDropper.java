@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -67,7 +67,8 @@ public class TileEntityDropper extends TileEntityInventoryBase{
         if(this.removeFromInventory(false) != null){
             ItemStack stack = this.removeFromInventory(true);
             stack.stackSize = 1;
-            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj)), this.worldObj, this.pos, stack);
+            IBlockState state = this.worldObj.getBlockState(this.pos);
+            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state)), this.worldObj, this.pos, stack);
         }
     }
 

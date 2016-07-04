@@ -67,7 +67,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
         this.receiversAround.clear();
 
         for(EnumFacing side : EnumFacing.values()){
-            BlockPos pos = WorldUtil.getCoordsFromSide(side, this.getPos(), 0);
+            BlockPos pos = this.getPos().offset(side);
             TileEntity tile = this.worldObj.getTileEntity(pos);
             if(tile instanceof IEnergyReceiver && !(tile instanceof TileEntityLaserRelay)){
                 this.receiversAround.put(side, (IEnergyReceiver)tile);

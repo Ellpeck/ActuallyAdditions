@@ -19,8 +19,8 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -99,7 +99,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     private void doWork(){
         if(this.storage.getEnergyStored() >= ENERGY_USE){
-            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
+            IBlockState state = this.worldObj.getBlockState(this.pos);
+            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
             //Extract energy for shooting the laser itself too!
             this.storage.extractEnergy(ENERGY_USE, false);
 
@@ -107,7 +108,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             Lens currentLens = this.getLens();
             int distance = currentLens.getDistance();
             for(int i = 0; i < distance; i++){
-                BlockPos hitBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, i);
+                BlockPos hitBlock = this.pos.offset(sideToManipulate, i);
 
                 if(currentLens.invoke(this.worldObj.getBlockState(hitBlock), hitBlock, this)){
                     shootLaser(this.worldObj, this.getX(), this.getY(), this.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);

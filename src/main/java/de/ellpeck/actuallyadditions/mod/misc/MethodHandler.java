@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -120,7 +119,7 @@ public class MethodHandler implements IMethodHandler{
 
     @Override
     public boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        if(hitBlock != null && !PosUtil.getBlock(hitBlock, tile.getWorldObject()).isAir(hitState, tile.getWorldObject(), hitBlock)){
+        if(hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)){
             int range = 2;
 
             //Converting the Blocks
@@ -128,7 +127,7 @@ public class MethodHandler implements IMethodHandler{
                 for(int reachZ = -range; reachZ < range+1; reachZ++){
                     for(int reachY = -range; reachY < range+1; reachY++){
                         BlockPos pos = new BlockPos(hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
-                        List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(PosUtil.getBlock(pos, tile.getWorldObject()), 1, PosUtil.getMetadata(pos, tile.getWorldObject())));
+                        List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(hitState.getBlock(), 1, hitState.getBlock().getMetaFromState(hitState)));
                         for(LensConversionRecipe recipe : recipes){
                             if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
                                 List<ItemStack> outputs = recipe.getOutputs();
@@ -138,7 +137,7 @@ public class MethodHandler implements IMethodHandler{
                                         if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                                             tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
                                         }
-                                        PosUtil.setBlock(pos, tile.getWorldObject(), Block.getBlockFromItem(output.getItem()), output.getItemDamage(), 2);
+                                        tile.getWorldObject().setBlockState(pos, Block.getBlockFromItem(output.getItem()).getStateFromMeta(output.getItemDamage()), 2);
                                     }
                                     else{
                                         EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());

@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBushBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -50,15 +49,17 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     public boolean canBlockStay(World world, BlockPos pos, IBlockState state){
-        BlockPos offset = PosUtil.offset(pos, 0, -1, 0);
-        return PosUtil.getMetadata(state) == TheWildPlants.RICE.ordinal() ? PosUtil.getMaterial(offset, world) == Material.WATER : PosUtil.getBlock(offset, world).canSustainPlant(world.getBlockState(offset), world, offset, EnumFacing.UP, this);
+        BlockPos offset = pos.down();
+        IBlockState offsetState = world.getBlockState(offset);
+        Block offsetBlock = offsetState.getBlock();
+        return offsetBlock.getMetaFromState(offsetState) == TheWildPlants.RICE.ordinal() ? offsetBlock.getMaterial(offsetState) == Material.WATER : offsetBlock.canSustainPlant(world.getBlockState(offset), world, offset, EnumFacing.UP, this);
     }
 
 
     @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player){
-        int metadata = PosUtil.getMetadata(pos, world);
+        int metadata = this.getMetaFromState(state);
         return metadata >= ALL_WILD_PLANTS.length ? null : new ItemStack(((BlockPlant)ALL_WILD_PLANTS[metadata].wildVersionOf).seedItem);
     }
 
@@ -72,7 +73,7 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-        int metadata = PosUtil.getMetadata(state);
+        int metadata = this.getMetaFromState(state);
         return metadata >= ALL_WILD_PLANTS.length ? null : ALL_WILD_PLANTS[metadata].wildVersionOf.getDrops(world, pos, ALL_WILD_PLANTS[metadata].wildVersionOf.getStateFromMeta(7), fortune);
     }
 

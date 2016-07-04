@@ -11,7 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.network.gui.IStringReactor;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -58,15 +59,17 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
     }
 
     public void setStatus(boolean pinkAndFluffy){
-        int meta = PosUtil.getMetadata(this.pos, this.worldObj);
+        IBlockState state = this.worldObj.getBlockState(this.pos);
+        Block block = state.getBlock();
+        int meta = block.getMetaFromState(state);
         if(pinkAndFluffy){
             if(meta <= 3){
-                PosUtil.setMetadata(this.pos, this.worldObj, meta+4, 2);
+                this.worldObj.setBlockState(this.pos, block.getStateFromMeta(meta+4), 2);
             }
         }
         else{
             if(meta >= 4){
-                PosUtil.setMetadata(this.pos, this.worldObj, meta-4, 2);
+                this.worldObj.setBlockState(this.pos, block.getStateFromMeta(meta-4), 2);
             }
         }
     }

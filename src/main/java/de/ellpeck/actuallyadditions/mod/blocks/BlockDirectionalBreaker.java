@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDirectionalBreaker;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -72,7 +71,7 @@ public class BlockDirectionalBreaker extends BlockContainerBase{
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         int rotation = BlockPistonBase.getFacingFromEntity(pos, player).ordinal();
-        PosUtil.setMetadata(pos, world, rotation, 2);
+        world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
     }

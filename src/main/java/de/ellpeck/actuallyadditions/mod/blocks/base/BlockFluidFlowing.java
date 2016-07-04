@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -52,12 +51,12 @@ public class BlockFluidFlowing extends BlockFluidClassic implements ItemBlockBas
 
     @Override
     public boolean canDisplace(IBlockAccess world, BlockPos pos){
-        return !PosUtil.getMaterial(pos, world).isLiquid() && super.canDisplace(world, pos);
+        return !world.getBlockState(pos).getMaterial().isLiquid() && super.canDisplace(world, pos);
     }
 
     @Override
     public boolean displaceIfPossible(World world, BlockPos pos){
-        return !PosUtil.getMaterial(pos, world).isLiquid() && super.displaceIfPossible(world, pos);
+        return !world.getBlockState(pos).getMaterial().isLiquid() && super.displaceIfPossible(world, pos);
     }
 
     @Override

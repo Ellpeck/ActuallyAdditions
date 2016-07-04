@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.entity.EntityLivingBase;
@@ -108,7 +107,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
                 for(int reachY = (this.isAdvanced ? -rangeSides : -rangeUp); reachY < (this.isAdvanced ? rangeSides : rangeUp)+1; reachY++){
                     //The current Block to break
                     BlockPos pos = new BlockPos(x+reachX, y+reachY, z+reachZ);
-                    Block block = PosUtil.getBlock(pos, world);
+                    Block block = world.getBlockState(pos).getBlock();
                     if(block != null && (block instanceof BlockBush || (this.isAdvanced && block.isLeaves(world.getBlockState(pos), world, pos)))){
                         breakPositions.add(pos);
                     }
@@ -120,7 +119,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
             Collections.shuffle(breakPositions);
 
             BlockPos theCoord = breakPositions.get(0);
-            Block theBlock = PosUtil.getBlock(theCoord, world);
+            Block theBlock = world.getBlockState(theCoord).getBlock();
 
             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
             //Gets all of the Drops the Block should have

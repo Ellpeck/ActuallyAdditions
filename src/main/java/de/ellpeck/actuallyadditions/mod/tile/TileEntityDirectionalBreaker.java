@@ -13,11 +13,11 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -82,11 +82,12 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
 
     private void doWork(){
         if(this.storage.getEnergyStored() >= ENERGY_USE*RANGE){
-            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(PosUtil.getMetadata(this.pos, this.worldObj));
+            IBlockState state = this.worldObj.getBlockState(this.pos);
+            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
 
             for(int i = 0; i < RANGE; i++){
-                BlockPos coordsBlock = WorldUtil.getCoordsFromSide(sideToManipulate, this.pos, i);
-                Block blockToBreak = PosUtil.getBlock(coordsBlock, this.worldObj);
+                BlockPos coordsBlock = this.pos.offset(sideToManipulate, i);
+                Block blockToBreak = this.worldObj.getBlockState(coordsBlock).getBlock();
                 if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(this.worldObj.getBlockState(coordsBlock), this.worldObj, this.pos) > -1.0F){
                     List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0);
                     float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
@@ -96,7 +97,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
                             if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                                 this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
                             }
-                            WorldUtil.breakBlockAtSide(sideToManipulate, this.worldObj, this.getPos(), i);
+                            this.worldObj.setBlockToAir(coordsBlock);
                             WorldUtil.addToInventory(this, drops, true, true);
                             this.storage.extractEnergy(ENERGY_USE, false);
                             this.markDirty();

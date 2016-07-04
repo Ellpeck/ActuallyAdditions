@@ -16,8 +16,9 @@ import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -145,14 +146,16 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
 
             if(flag != (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
                 this.markDirty();
-                int meta = PosUtil.getMetadata(this.pos, this.worldObj);
+                IBlockState state = this.worldObj.getBlockState(this.pos);
+                Block block = state.getBlock();
+                int meta = block.getMetaFromState(state);
                 if(meta == 1){
                     if(!this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2) && (!this.isDouble || !this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2))){
-                        PosUtil.setMetadata(this.pos, this.worldObj, 0, 2);
+                        this.worldObj.setBlockState(this.pos, block.getStateFromMeta(0), 2);
                     }
                 }
                 else{
-                    PosUtil.setMetadata(this.pos, this.worldObj, 1, 2);
+                    this.worldObj.setBlockState(this.pos, block.getStateFromMeta(1), 2);
                 }
             }
 

@@ -22,9 +22,9 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,8 +59,9 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing face, float hitX, float hitY, float hitZ){
         if(player.isSneaking()){
-            Block block = PosUtil.getBlock(pos, world);
-            ItemStack blockStack = new ItemStack(block, 1, PosUtil.getMetadata(pos, world));
+            IBlockState state = world.getBlockState(pos);
+            Block block = state.getBlock();
+            ItemStack blockStack = new ItemStack(block, 1, block.getMetaFromState(state));
             BookletPage page = BookletUtils.getFirstPageForStack(blockStack);
             if(page != null){
                 if(world.isRemote){
@@ -98,9 +99,10 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
     @Override
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, Profiler profiler, ScaledResolution resolution){
         if(posHit != null){
-            Block block = PosUtil.getBlock(posHit.getBlockPos(), minecraft.theWorld);
+            IBlockState state = minecraft.theWorld.getBlockState(posHit.getBlockPos());
+            Block block = state.getBlock();
             if(block != null && !block.isAir(minecraft.theWorld.getBlockState(posHit.getBlockPos()), minecraft.theWorld, posHit.getBlockPos())){
-                ItemStack blockStack = new ItemStack(block, 1, PosUtil.getMetadata(posHit.getBlockPos(), minecraft.theWorld));
+                ItemStack blockStack = new ItemStack(block, 1, block.getMetaFromState(state));
                 int height = resolution.getScaledHeight()/5*3;
                 if(player.isSneaking()){
                     BookletPage page = BookletUtils.getFirstPageForStack(blockStack);

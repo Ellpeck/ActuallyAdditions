@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,7 +38,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
     public EnumActionResult onItemUse(ItemStack heldStack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float par8, float par9, float par10){
         if(player.isSneaking()){
             TileEntity tileHit = world.getTileEntity(pos);
-            Block block = PosUtil.getBlock(pos, world);
+            Block block = world.getBlockState(pos).getBlock();
             if(block instanceof BlockChest && tileHit instanceof TileEntityChest){
                 if(!world.isRemote){
                     TileEntityChest chest = (TileEntityChest)tileHit;
@@ -58,7 +57,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                     if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                         world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
                     }
-                    PosUtil.setBlock(pos, world, InitBlocks.blockGiantChest, 0, 2);
+                    world.setBlockState(pos, InitBlocks.blockGiantChest.getDefaultState(), 2);
 
                     //Copy Items into new Chest
                     TileEntity newTileHit = world.getTileEntity(pos);

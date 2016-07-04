@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinderDouble;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -60,7 +59,7 @@ public class BlockGrinder extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
-        int meta = PosUtil.getMetadata(state);
+        int meta = this.getMetaFromState(state);
 
         if(meta == 1){
             for(int i = 0; i < 5; i++){
@@ -86,7 +85,7 @@ public class BlockGrinder extends BlockContainerBase{
 
     @Override
     public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
-        return PosUtil.getMetadata(pos, world) == 1 ? 12 : 0;
+        return this.getMetaFromState(state) == 1 ? 12 : 0;
     }
 
     @Override

@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.misc;
 
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -91,8 +90,8 @@ public final class LaserRelayConnectionHandler{
      * (Puts it into the correct network!)
      */
     public static boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, World world){
-        int distance = (int)PosUtil.toVec(firstRelay).distanceTo(PosUtil.toVec(secondRelay));
-        if(distance > TileEntityLaserRelay.MAX_DISTANCE || PosUtil.areSamePos(firstRelay, secondRelay)){
+        int distanceSq = (int)firstRelay.distanceSq(secondRelay);
+        if(distanceSq > TileEntityLaserRelay.MAX_DISTANCE*TileEntityLaserRelay.MAX_DISTANCE || firstRelay.equals(secondRelay)){
             return false;
         }
 
@@ -165,7 +164,7 @@ public final class LaserRelayConnectionHandler{
 
         public boolean contains(BlockPos relay){
             for(BlockPos position : this.positions){
-                if(position != null && PosUtil.areSamePos(position, relay)){
+                if(position != null && position.equals(relay)){
                     return true;
                 }
             }

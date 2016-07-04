@@ -14,8 +14,9 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -63,7 +64,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
                 this.currentWorkTime++;
                 if(this.currentWorkTime >= 200){
                     this.currentWorkTime = 0;
-                    PosUtil.setBlock(PosUtil.offset(this.pos, 0, 1, 0), this.worldObj, Blocks.LAVA, 0, 2);
+                    this.worldObj.setBlockState(this.pos.up(), Blocks.LAVA.getDefaultState(), 2);
                     this.storage.extractEnergy(ENERGY_USE, false);
                 }
             }
@@ -80,18 +81,20 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public int isMultiblock(){
         BlockPos thisPos = this.pos;
         BlockPos[] positions = new BlockPos[]{
-                PosUtil.offset(thisPos, 1, 1, 0),
-                PosUtil.offset(thisPos, -1, 1, 0),
-                PosUtil.offset(thisPos, 0, 1, 1),
-                PosUtil.offset(thisPos, 0, 1, -1)
+                thisPos.add(1, 1, 0),
+                thisPos.add(-1, 1, 0),
+                thisPos.add(0, 1, 1),
+                thisPos.add(0, 1, -1)
         };
 
         if(WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), this.worldObj)){
-            BlockPos pos = PosUtil.offset(thisPos, 0, 1, 0);
-            if(PosUtil.getBlock(pos, this.worldObj) == Blocks.LAVA || PosUtil.getBlock(pos, this.worldObj) == Blocks.FLOWING_LAVA){
+            BlockPos pos = thisPos.up();
+            IBlockState state = this.worldObj.getBlockState(pos);
+            Block block = state.getBlock();
+            if(block == Blocks.LAVA || block == Blocks.FLOWING_LAVA){
                 return HAS_LAVA;
             }
-            if(PosUtil.getBlock(pos, this.worldObj) == null || this.worldObj.isAirBlock(pos)){
+            if(block == null || this.worldObj.isAirBlock(pos)){
                 return HAS_AIR;
             }
         }

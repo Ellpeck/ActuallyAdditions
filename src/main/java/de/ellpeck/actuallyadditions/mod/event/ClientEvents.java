@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneTorch;
@@ -143,7 +142,7 @@ public class ClientEvents{
             }
 
             if(posHit != null && posHit.getBlockPos() != null){
-                Block blockHit = PosUtil.getBlock(posHit.getBlockPos(), minecraft.theWorld);
+                Block blockHit = minecraft.theWorld.getBlockState(posHit.getBlockPos()).getBlock();
                 TileEntity tileHit = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
 
                 if(blockHit instanceof IHudDisplay){

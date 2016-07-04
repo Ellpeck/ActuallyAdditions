@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -126,7 +125,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
     private void doWork(){
         if(this.isBreaker){
-            Block blockToBreak = PosUtil.getBlock(this.boundPosition, this.worldObj);
+            Block blockToBreak = this.worldObj.getBlockState(this.boundPosition).getBlock();
             if(blockToBreak != null && blockToBreak.getBlockHardness(this.worldObj.getBlockState(this.boundPosition), this.worldObj, this.boundPosition) > -1.0F){
                 ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
                 drops.addAll(blockToBreak.getDrops(this.worldObj, this.boundPosition, this.worldObj.getBlockState(this.boundPosition), 0));
@@ -171,7 +170,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
     @Override
     public boolean isBoundThingInRange(){
-        return this.hasBoundPosition() && PosUtil.toVec(this.boundPosition).distanceTo(new Vec3d(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ())) <= this.range;
+        return this.hasBoundPosition() && this.boundPosition.distanceSq(this.pos) <= this.range*this.range;
     }
 
     @Override
@@ -181,7 +180,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
     @Override
     public void setBoundPosition(BlockPos pos){
-        this.boundPosition = pos == null ? null : PosUtil.copyPos(pos);
+        this.boundPosition = pos;
     }
 
     @Override

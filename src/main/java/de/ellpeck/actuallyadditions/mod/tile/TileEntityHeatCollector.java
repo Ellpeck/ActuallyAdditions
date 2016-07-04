@@ -12,11 +12,11 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyProvider;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -55,9 +55,10 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
             if(ENERGY_PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                 for(int i = 1; i <= 5; i++){
-                    BlockPos coords = WorldUtil.getCoordsFromSide(WorldUtil.getDirectionBySidesInOrder(i), this.pos, 0);
-                    Block block = PosUtil.getBlock(coords, this.worldObj);
-                    if(block != null && block.getMaterial(this.worldObj.getBlockState(coords)) == Material.LAVA && PosUtil.getMetadata(coords, this.worldObj) == 0){
+                    BlockPos coords = this.pos.offset(WorldUtil.getDirectionBySidesInOrder(i));
+                    IBlockState state = this.worldObj.getBlockState(coords);
+                    Block block = state.getBlock();
+                    if(block != null && block.getMaterial(this.worldObj.getBlockState(coords)) == Material.LAVA && block.getMetaFromState(state) == 0){
                         blocksAround.add(i);
                     }
                 }
@@ -68,7 +69,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
 
                     if(Util.RANDOM.nextInt(10000) == 0){
                         int randomSide = blocksAround.get(Util.RANDOM.nextInt(blocksAround.size()));
-                        WorldUtil.breakBlockAtSide(WorldUtil.getDirectionBySidesInOrder(randomSide), this.worldObj, this.pos);
+                        this.worldObj.setBlockToAir(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(randomSide)));
                     }
                 }
             }

@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -45,7 +44,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     public static int upgradeRange(int defaultRange, World world, BlockPos pos){
         int newRange = defaultRange;
         for(int i = 0; i < 3; i++){
-            Block block = PosUtil.getBlock(PosUtil.offset(pos, 0, 1+i, 0), world);
+            Block block = world.getBlockState(pos.up(1+i)).getBlock();
             if(block == InitBlocks.blockPhantomBooster){
                 newRange = newRange*2;
             }
@@ -106,15 +105,15 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     protected boolean doesNeedUpdateSend(){
-        return this.boundPosition != this.boundPosBefore || (this.boundPosition != null && PosUtil.getBlock(this.boundPosition, this.worldObj) != this.boundBlockBefore) || this.rangeBefore != this.range;
+        return this.boundPosition != this.boundPosBefore || (this.boundPosition != null && this.worldObj.getBlockState(this.boundPosition).getBlock() != this.boundBlockBefore) || this.rangeBefore != this.range;
     }
 
     protected void onUpdateSent(){
         this.rangeBefore = this.range;
         this.boundPosBefore = this.boundPosition;
-        this.boundBlockBefore = this.boundPosition == null ? null : PosUtil.getBlock(this.boundPosition, this.worldObj);
+        this.boundBlockBefore = this.boundPosition == null ? null : this.worldObj.getBlockState(this.boundPosition).getBlock();
 
-        this.worldObj.notifyNeighborsOfStateChange(this.pos, PosUtil.getBlock(this.pos, this.worldObj));
+        this.worldObj.notifyNeighborsOfStateChange(this.pos, this.worldObj.getBlockState(this.boundPosition).getBlock());
 
         this.sendUpdate();
         this.markDirty();
@@ -158,7 +157,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     @Override
     public boolean isBoundThingInRange(){
-        return this.hasBoundPosition() && PosUtil.toVec(this.boundPosition).distanceTo(PosUtil.toVec(this.getPos())) <= this.range;
+        return this.hasBoundPosition() && this.boundPosition.distanceSq(this.getPos()) <= this.range*this.range;
     }
 
     @Override
@@ -168,7 +167,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     @Override
     public void setBoundPosition(BlockPos pos){
-        this.boundPosition = pos == null ? null : PosUtil.copyPos(pos);
+        this.boundPosition = pos;
     }
 
     @Override

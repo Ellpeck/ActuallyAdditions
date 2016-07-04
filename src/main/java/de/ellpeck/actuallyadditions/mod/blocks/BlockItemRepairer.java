@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemRepairer;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -60,7 +59,7 @@ public class BlockItemRepairer extends BlockContainerBase{
 
     @Override
     public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
-        return PosUtil.getMetadata(pos, world) == 1 ? 12 : 0;
+        return this.getMetaFromState(state) == 1 ? 12 : 0;
     }
 
     @Override

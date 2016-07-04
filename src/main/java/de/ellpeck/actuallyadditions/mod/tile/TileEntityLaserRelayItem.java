@@ -46,7 +46,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
         for(int i = 0; i <= 5; i++){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
-            BlockPos pos = WorldUtil.getCoordsFromSide(side, this.getPos(), 0);
+            BlockPos pos = this.getPos().offset(side);
             TileEntity tile = this.worldObj.getTileEntity(pos);
             if(tile != null && !(tile instanceof TileEntityItemViewer)){
                 IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());

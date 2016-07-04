@@ -15,8 +15,8 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -135,8 +135,10 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
                 minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.GOLD+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".blockPhantomRange.desc")+": "+phantom.getRange(), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-40, StringUtil.DECIMAL_COLOR_WHITE);
                 if(phantom.hasBoundPosition()){
                     int distance = (int)new Vec3d(posHit.getBlockPos()).distanceTo(new Vec3d(phantom.getBoundPosition()));
-                    Item item = PosUtil.getItemBlock(phantom.getBoundPosition(), minecraft.theWorld);
-                    String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(PosUtil.getBlock(phantom.getBoundPosition(), minecraft.theWorld), 1, PosUtil.getMetadata(phantom.getBoundPosition(), minecraft.theWorld)));
+                    IBlockState state = minecraft.theWorld.getBlockState(phantom.getBoundPosition());
+                    Block block = state.getBlock();
+                    Item item = Item.getItemFromBlock(block);
+                    String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(block, 1, block.getMetaFromState(state)));
                     StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID+".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-30, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
 
                     if(phantom.isBoundThingInRange()){

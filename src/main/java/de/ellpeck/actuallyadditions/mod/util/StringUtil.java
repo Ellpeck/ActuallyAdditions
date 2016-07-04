@@ -13,6 +13,8 @@ package de.ellpeck.actuallyadditions.mod.util;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -37,6 +39,7 @@ public final class StringUtil{
         return I18n.translateToLocalFormatted(text, replace);
     }
 
+    @SideOnly(Side.CLIENT)
     public static void drawSplitString(FontRenderer renderer, String strg, int x, int y, int width, int color, boolean shadow){
         List list = renderer.listFormattedStringToWidth(strg, width);
         for(int i = 0; i < list.size(); i++){
@@ -45,6 +48,7 @@ public final class StringUtil{
         }
     }
 
+    @SideOnly(Side.CLIENT)
     public static String getFluidInfo(FluidTank tank){
         return tank.getFluid() == null || tank.getFluid().getFluid() == null ? "0/"+tank.getCapacity()+" mB" : tank.getFluidAmount()+"/"+tank.getCapacity()+" mB "+tank.getFluid().getLocalizedName();
     }

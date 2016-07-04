@@ -79,7 +79,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         if(this.worldObj != null){ //Why is that even possible..?
             for(int i = 0; i <= 5; i++){
                 EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
-                BlockPos pos = WorldUtil.getCoordsFromSide(side, this.getPos(), 0);
+                BlockPos pos = this.getPos().offset(side);
                 TileEntity tile = this.worldObj.getTileEntity(pos);
 
                 if(tile instanceof TileEntityLaserRelayItem){

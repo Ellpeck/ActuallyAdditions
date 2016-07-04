@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
-import de.ellpeck.actuallyadditions.mod.util.PosUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockWall;
@@ -132,8 +131,8 @@ public class BlockWallAA extends BlockBase{
     }
 
     public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos){
-        Block block = PosUtil.getBlock(pos, worldIn);
         IBlockState state = worldIn.getBlockState(pos);
+        Block block = state.getBlock();
         return block != Blocks.BARRIER && (!(block != this && !(block instanceof BlockFenceGate)) || ((block.getMaterial(state).isOpaque() && block.isFullCube(state)) && block.getMaterial(state) != Material.GOURD));
     }
 
