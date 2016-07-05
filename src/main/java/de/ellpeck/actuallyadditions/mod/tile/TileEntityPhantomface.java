@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -197,11 +198,23 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing){
-        return this.isBoundThingInRange() ? this.worldObj.getTileEntity(this.boundPosition).hasCapability(capability, facing) : super.hasCapability(capability, facing);
+        if(this.isBoundThingInRange()){
+            TileEntity tile = this.worldObj.getTileEntity(this.getBoundPosition());
+            if(tile != null){
+                return tile.hasCapability(capability, facing);
+            }
+        }
+        return super.hasCapability(capability, facing);
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        return this.isBoundThingInRange() ? this.worldObj.getTileEntity(this.boundPosition).getCapability(capability, facing) : super.getCapability(capability, facing);
+        if(this.isBoundThingInRange()){
+            TileEntity tile = this.worldObj.getTileEntity(this.getBoundPosition());
+            if(tile != null){
+                return tile.getCapability(capability, facing);
+            }
+        }
+        return super.getCapability(capability, facing);
     }
 }
