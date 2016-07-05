@@ -159,6 +159,7 @@ public enum ConfigCrafting{
     ATOMIC_RECONSTRUCTOR("Atomic Reconstructor", ConfigCategories.BLOCKS_CRAFTING),
     MINER("Miner", ConfigCategories.BLOCKS_CRAFTING),
     FIREWORK_BOX("Firework Box", ConfigCategories.BLOCKS_CRAFTING),
+    SHOCK_SUPPRESSOR("Shock Absorber", ConfigCategories.BLOCKS_CRAFTING),
     ENDER_STAR("Ender Star", ConfigCategories.ITEMS_CRAFTING),
     SPAWNER_CHANGER("Spawner Changer", ConfigCategories.ITEMS_CRAFTING),
     ITEM_INTERFACE("Item Interface", ConfigCategories.BLOCKS_CRAFTING),

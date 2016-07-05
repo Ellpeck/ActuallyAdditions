@@ -90,6 +90,7 @@ public final class BlockCrafting{
     public static IRecipe recipeBookStand;
     public static IRecipe recipePlayerInterface;
     public static IRecipe recipeDisplayStand;
+    public static IRecipe recipeShockSuppressor;
 
     public static void init(){
 
@@ -105,6 +106,15 @@ public final class BlockCrafting{
                     'S', new ItemStack(Items.STICK),
                     'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal())));
             recipeFireworkBox = RecipeUtil.lastIRecipe();
+        }
+
+        //Shock Suppressor
+        if(ConfigCrafting.SHOCK_SUPPRESSOR.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockShockSuppressor),
+                    "OOO", "OCO", "OOO",
+                    'O', new ItemStack(Blocks.OBSIDIAN),
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+            recipeShockSuppressor = RecipeUtil.lastIRecipe();
         }
 
         //Display Stand

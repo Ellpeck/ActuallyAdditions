@@ -98,7 +98,7 @@ public class BlockShockSuppressor extends BlockContainerBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.RARE;
+        return EnumRarity.EPIC;
     }
 
     @Override

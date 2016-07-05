@@ -212,6 +212,7 @@ tile.actuallyadditions.blockItemViewer.name=Item Interface
 tile.actuallyadditions.blockImpureIron.name=Impure Iron
 tile.actuallyadditions.blockBookletStand.name=Wall-Mount Manual
 tile.actuallyadditions.blockDisplayStand.name=Display Stand
+tile.actuallyadditions.blockShockSuppressor.name=Shock Absorber
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -919,3 +920,6 @@ booklet.actuallyadditions.chapter.itemFilter.text.1=The <item>Item Filter<r> can
 booklet.actuallyadditions.chapter.videoGuide.name=A Video Guide
 booklet.actuallyadditions.chapter.videoGuide.text.1=If you are a bit confused as to what is going on or just want to get a glimpse of what <imp>Actually Additions<r> has to offer, there is this <imp>brilliant video<r> by a guy called <item>Booty Toast<r> (yes, that is a weird name), that shows off what is possible in a really enjoyable way. <n>Just <imp>click the button<r> to have the video <imp>opened on YouTube<r>! <n><n><imp>Give it a watch!<r>
 booklet.actuallyadditions.chapter.videoGuide.page.1.button=Watch Video
+
+booklet.actuallyadditions.chapter.shockSuppressor.name=Shock Absorber
+booklet.actuallyadditions.chapter.shockSuppressor.text.1=The <item>Shock Absorber<r> is a block that, when supplied with <imp>RF<r>, it will protect an area of <imp>up to <range> blocks around it<r> from any type of <imp>Explosion<r>, be it ghasts, TNT or creepers. <n>Every block that is protected will result in a loss of <imp><rf> RF<r>.
