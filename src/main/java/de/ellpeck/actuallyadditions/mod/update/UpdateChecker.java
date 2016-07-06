@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.update;
 
-import com.sun.deploy.util.UpdateCheck;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
