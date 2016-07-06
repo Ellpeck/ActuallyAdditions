@@ -19,12 +19,10 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -33,6 +31,7 @@ import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -43,6 +42,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -52,6 +52,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public final class WorldUtil{
 
@@ -248,6 +249,7 @@ public final class WorldUtil{
     }
 
     //TODO This is disgusting and has to be updated to the capability system
+
     /**
      * Add an ArrayList of ItemStacks to an Array of slots
      *
@@ -338,81 +340,77 @@ public final class WorldUtil{
         return getMovingObjectPosWithReachDistance(world, player, player instanceof EntityPlayerMP ? ((EntityPlayerMP)player).interactionManager.getBlockReachDistance() : 5.0D, stopOnLiquids, ignoreBlockWithoutBoundingBox, returnLastUncollidableBlock);
     }
 
-    /**
-     * Harvests a Block by a Player
-     *
-     * @param world  The World
-     * @param player The Player
-     * @return If the Block could be harvested normally (so that it drops an item)
-     */
-    public static boolean playerHarvestBlock(World world, BlockPos pos, EntityPlayer player){
+    //Cobbled together from Tinkers' Construct (with permission, thanks!) and PlayerInteractionManager code.
+    //Breaking blocks is a hideous pain so yea.
+    public static boolean playerHarvestBlock(ItemStack stack, World world, EntityPlayer player, BlockPos pos){
+        if(world.isAirBlock(pos)){
+            return false;
+        }
+
         IBlockState state = world.getBlockState(pos);
-        if(state == null){
-            return false;
-        }
-
         Block block = state.getBlock();
-        if(block == null){
+
+        boolean effective = false;
+        for(String type : stack.getItem().getToolClasses(stack)){
+            if(block.isToolEffective(type, state)){
+                effective = true;
+            }
+        }
+
+        if(!effective || !ForgeHooks.canHarvestBlock(block, player, world, pos)){
             return false;
         }
 
-        TileEntity tile = world.getTileEntity(pos);
-        ItemStack stack = player.getHeldItemMainhand();
-
-        //If the Block can be harvested or not
-        boolean canHarvest = block.canHarvestBlock(world, pos, player);
-
-        //Send Block Breaking Event
-        int xp = -1;
-        if(player instanceof EntityPlayerMP){
-            EntityPlayerMP playerMP = (EntityPlayerMP)player;
-            xp = ForgeHooks.onBlockBreakEvent(world, playerMP.interactionManager.getGameType(), playerMP, pos);
-            if(xp == -1){
-                return false;
-            }
-        }
-
-        if(!world.isRemote){
-            //Server-Side only, special cases
+        if(player.capabilities.isCreativeMode){
             block.onBlockHarvested(world, pos, state, player);
-        }
-        else{
-            //Shows the Harvest Particles and plays the Block's Sound
-            world.playEvent(2001, pos, Block.getStateId(state));
-        }
-
-        //If the Block was actually "removed", meaning it will drop an Item
-        boolean removed = block.removedByPlayer(state, world, pos, player, canHarvest);
-        //Actually removes the Block from the World
-        if(removed){
-            //Before the Block is destroyed, special cases
-            block.onBlockDestroyedByPlayer(world, pos, state);
-
-            if(!world.isRemote && !player.capabilities.isCreativeMode){
-                //Actually drops the Block's Items etc.
-                if(canHarvest){
-                    block.harvestBlock(world, player, pos, state, tile, stack);
-                }
-                //Only drop XP when no Silk Touch is applied
-                if(EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) <= 0){
-                    if(xp >= 0){
-                        block.dropXpOnBlockBreak(world, pos, xp);
-                    }
-                }
+            if(block.removedByPlayer(state, world, pos, player, false)){
+                block.onBlockDestroyedByPlayer(world, pos, state);
             }
-        }
 
-        if(!world.isRemote){
-            //Update the Client of a Block Change
-            if(player instanceof EntityPlayerMP){
+            if(!world.isRemote && player instanceof EntityPlayerMP){
                 ((EntityPlayerMP)player).connection.sendPacket(new SPacketBlockChange(world, pos));
             }
-        }
-        else{
-            //Check the Server if a Block that changed on the Client really changed, if not, revert the change
-            Minecraft.getMinecraft().getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft.getMinecraft().objectMouseOver.sideHit));
+            return true;
         }
 
-        return removed;
+        stack.onBlockDestroyed(world, state, pos, player);
+
+        if(!world.isRemote){
+            if(player instanceof EntityPlayerMP){
+                EntityPlayerMP playerMp = (EntityPlayerMP)player;
+
+                int xp = ForgeHooks.onBlockBreakEvent(world, playerMp.interactionManager.getGameType(), playerMp, pos);
+                if(xp == -1){
+                    return false;
+                }
+
+                TileEntity tileEntity = world.getTileEntity(pos);
+                if(block.removedByPlayer(state, world, pos, player, true)){
+                    block.onBlockDestroyedByPlayer(world, pos, state);
+                    block.harvestBlock(world, player, pos, state, tileEntity, stack);
+                    block.dropXpOnBlockBreak(world, pos, xp);
+                }
+
+                playerMp.connection.sendPacket(new SPacketBlockChange(world, pos));
+            }
+        }
+        else{
+            world.playEvent(2001, pos, Block.getStateId(state));
+
+            if(block.removedByPlayer(state, world, pos, player, true)){
+                block.onBlockDestroyedByPlayer(world, pos, state);
+            }
+
+            stack.onBlockDestroyed(world, state, pos, player);
+
+            if(stack.stackSize <= 0 && stack == player.getHeldItemMainhand()){
+                ForgeEventFactory.onPlayerDestroyItem(player, stack, EnumHand.MAIN_HAND);
+                player.setHeldItem(EnumHand.MAIN_HAND, null);
+            }
+
+            Minecraft mc = Minecraft.getMinecraft();
+            mc.getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, mc.objectMouseOver.sideHit));
+        }
+        return true;
     }
 }

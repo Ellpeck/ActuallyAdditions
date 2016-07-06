@@ -487,7 +487,7 @@ public class ItemDrill extends ItemEnergy{
         if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(world.getBlockState(pos))))){
             this.extractEnergy(stack, use, false);
             //Break the Block
-            return WorldUtil.playerHarvestBlock(world, pos, player);
+            return WorldUtil.playerHarvestBlock(stack, world, player, pos);
         }
         return false;
     }
