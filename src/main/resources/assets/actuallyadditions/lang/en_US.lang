@@ -902,10 +902,6 @@ booklet.actuallyadditions.chapter.banners.text.1=For <imp>special items<r> in <i
 booklet.actuallyadditions.chapter.lushCaves.name=Lush Caves
 booklet.actuallyadditions.chapter.lushCaves.text.1=If you have ever done any <imp>Cave exploration<r>, you will have probably noticed some <imp>caves<r> that have <imp>trees and grass<r> inside of them. <n>These can be found at any height underground all over the world, and they can be very valuable when needing wood for torches and tools at some point. <n><n>If you didn't ever see one before, look on the <imp>next page<r> for a <imp>picture<r>!
 
-booklet.actuallyadditions.chapter.bookStand.name=Wall-Mount Manual
-booklet.actuallyadditions.chapter.bookStand.text.1=The <item>Manual Stand<r> is a block that is supposed to mainly be used on <imp>Servers<r>. <n>You can, provided you are the person who <imp>placed it down<r>, set a page in the GUI that will <imp>open when someone else accesses it<r> by pressing the "Set Page"-button while being on the desired page. <n>The Wall-Mount Manual <imp>does not save<r> pages another player navigated to, meaing re-accessing the Manual will cause it to always <imp>end up on the page speficied<r> by the placer.
-booklet.actuallyadditions.chapter.bookStand.text.2=People were using this not to have to have a manual item on their hotbar. <n>This is <imp>not supposed<r> to be used for that, because the <item>Actually Additions Manual<r> has <imp>bookmarks<r> and also <imp>keeps the page you were on before<r>. This, however, <imp>does neither<r>. <n><n>This was also originally made for Better Than Minecon. But whatever.
-
 booklet.actuallyadditions.chapter.waterBowl.name=Bowl of Water
 booklet.actuallyadditions.chapter.waterBowl.text.1=The <item>Bowl of Water<r> can be obtained by <imp>right-cliking a bowl on water<r> anywhere in the world. When the <item>Bowl of Water<r> is then right-clicked onto a block, the water will be placed, much like a <item>Bucket<r>. <n><n>This can be used, for example, for early game farms.
 
