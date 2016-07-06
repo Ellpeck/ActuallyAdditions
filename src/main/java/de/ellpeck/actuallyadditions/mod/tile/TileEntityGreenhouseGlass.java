@@ -76,8 +76,8 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
     public BlockPos blockToFertilize(){
         for(int i = this.pos.getY()-1; i > 0; i--){
             BlockPos offset = new BlockPos(this.pos.getX(), i, this.pos.getZ());
-            Block block = this.worldObj.getBlockState(this.pos).getBlock();
-            if(block != null && !(this.worldObj.isAirBlock(offset))){
+            Block block = this.worldObj.getBlockState(offset).getBlock();
+            if(block != null && !this.worldObj.isAirBlock(offset)){
                 if((block instanceof IGrowable || block instanceof IPlantable) && !(block instanceof BlockGrass)){
                     return offset;
                 }

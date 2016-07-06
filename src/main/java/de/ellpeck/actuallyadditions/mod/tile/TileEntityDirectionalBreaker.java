@@ -86,7 +86,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
             EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
 
             for(int i = 0; i < RANGE; i++){
-                BlockPos coordsBlock = this.pos.offset(sideToManipulate, i);
+                BlockPos coordsBlock = this.pos.offset(sideToManipulate, i+1);
                 Block blockToBreak = this.worldObj.getBlockState(coordsBlock).getBlock();
                 if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(this.worldObj.getBlockState(coordsBlock), this.worldObj, this.pos) > -1.0F){
                     List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0);

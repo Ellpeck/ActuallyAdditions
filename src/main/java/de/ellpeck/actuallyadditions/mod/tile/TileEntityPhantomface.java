@@ -114,7 +114,9 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         this.boundPosBefore = this.boundPosition;
         this.boundBlockBefore = this.boundPosition == null ? null : this.worldObj.getBlockState(this.boundPosition).getBlock();
 
-        this.worldObj.notifyNeighborsOfStateChange(this.pos, this.worldObj.getBlockState(this.boundPosition).getBlock());
+        if(this.boundPosition != null){
+            this.worldObj.notifyNeighborsOfStateChange(this.pos, this.worldObj.getBlockState(this.boundPosition).getBlock());
+        }
 
         this.sendUpdate();
         this.markDirty();

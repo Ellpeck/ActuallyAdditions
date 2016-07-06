@@ -25,6 +25,7 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
     public static final int DEFAULT_RANGE = 32;
     public UUID connectedPlayer;
     private final EnergyStorage storage = new EnergyStorage(30000);
+    private int oldEnergy;
     private int range;
 
     public TileEntityPlayerInterface(){
@@ -71,6 +72,10 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
             if(changed){
                 this.markDirty();
                 this.sendUpdate();
+            }
+
+            if(this.storage.getEnergyStored() != this.oldEnergy && this.sendUpdateWithInterval()){
+                this.oldEnergy = this.storage.getEnergyStored();
             }
         }
     }

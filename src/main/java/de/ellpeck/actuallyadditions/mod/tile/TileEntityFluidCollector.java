@@ -65,7 +65,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements net.mine
         IBlockState state = this.worldObj.getBlockState(this.pos);
         Block block = state.getBlock();
         EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(block.getMetaFromState(state));
-        BlockPos coordsBlock = this.pos.offset(sideToManipulate, 0);
+        BlockPos coordsBlock = this.pos.offset(sideToManipulate);
 
         IBlockState stateToBreak = this.worldObj.getBlockState(coordsBlock);
         Block blockToBreak = stateToBreak.getBlock();

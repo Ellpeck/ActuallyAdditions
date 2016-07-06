@@ -157,11 +157,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         }
     }
 
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState){
-        return !(oldState.getBlock().isAssociatedBlock(newState.getBlock()));
-    }
-
     public void receiveSyncCompound(NBTTagCompound compound){
         this.readSyncableNBT(compound, NBTType.SYNC);
     }
@@ -175,7 +170,13 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     @Override
     public void handleUpdateTag(NBTTagCompound compound){
+        super.handleUpdateTag(compound);
         this.receiveSyncCompound(compound);
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState){
+        return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
     }
 
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){

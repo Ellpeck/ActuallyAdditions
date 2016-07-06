@@ -108,7 +108,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             Lens currentLens = this.getLens();
             int distance = currentLens.getDistance();
             for(int i = 0; i < distance; i++){
-                BlockPos hitBlock = this.pos.offset(sideToManipulate, i);
+                BlockPos hitBlock = this.pos.offset(sideToManipulate, i+1);
 
                 if(currentLens.invoke(this.worldObj.getBlockState(hitBlock), hitBlock, this)){
                     shootLaser(this.worldObj, this.getX(), this.getY(), this.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);

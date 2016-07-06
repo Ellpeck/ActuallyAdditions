@@ -80,7 +80,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
 
     public boolean hasBlockAbove(){
         for(int y = 1; y <= this.worldObj.getHeight(); y++){
-            BlockPos offset = this.pos.down(y);
+            BlockPos offset = this.pos.up(y);
             IBlockState state = this.worldObj.getBlockState(offset);
             if(!state.getBlock().isAir(state, this.worldObj, offset)){
                 return true;

@@ -118,6 +118,8 @@ public class BlockLaserRelay extends BlockContainerBase{
 
     @Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block){
+        super.neighborChanged(state, world, pos, block);
+
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityLaserRelay){
