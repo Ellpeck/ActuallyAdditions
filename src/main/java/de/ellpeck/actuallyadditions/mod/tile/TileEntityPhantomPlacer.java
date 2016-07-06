@@ -13,22 +13,23 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
+import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 
-public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile{
+public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IButtonReactor{
 
     public static final int RANGE = 3;
     public BlockPos boundPosition;
@@ -36,6 +37,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public int range;
     public boolean isBreaker;
     private int oldRange;
+    public int side;
 
     public TileEntityPhantomPlacer(int slots, String name){
         super(slots, name);
@@ -56,6 +58,9 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
                 compound.setInteger("YCoordOfTileStored", this.boundPosition.getY());
                 compound.setInteger("ZCoordOfTileStored", this.boundPosition.getZ());
             }
+            if(!this.isBreaker){
+                compound.setInteger("Side", this.side);
+            }
         }
     }
 
@@ -70,6 +75,9 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             if(!(x == 0 && y == 0 && z == 0)){
                 this.boundPosition = new BlockPos(x, y, z);
                 this.markDirty();
+            }
+            if(!this.isBreaker){
+                this.side = compound.getInteger("Side");
             }
         }
     }
@@ -142,7 +150,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         }
         else{
             int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-            this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(EnumFacing.UP, this.worldObj, this.boundPosition, this.slots[theSlot]));
+            this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.worldObj, this.boundPosition, this.slots[theSlot]));
             if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
                 this.slots[theSlot] = null;
             }
@@ -218,4 +226,15 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         this.doWork();
     }
 
+    @Override
+    public void onButtonPressed(int buttonID, EntityPlayer player){
+        if(this.side+1 >= EnumFacing.values().length){
+            this.side = 0;
+        }
+        else{
+            this.side++;
+        }
+
+        this.sendUpdate();
+    }
 }

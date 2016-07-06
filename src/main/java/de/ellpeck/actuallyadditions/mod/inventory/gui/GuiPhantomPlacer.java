@@ -11,15 +11,28 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerPhantomPlacer;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiPhantomPlacer extends GuiContainer{
@@ -32,6 +45,57 @@ public class GuiPhantomPlacer extends GuiContainer{
         this.placer = (TileEntityPhantomPlacer)tile;
         this.xSize = 176;
         this.ySize = 93+86;
+    }
+
+    @Override
+    public void initGui(){
+        super.initGui();
+
+        if(!this.placer.isBreaker){
+            this.buttonList.add(new GuiButton(0, this.guiLeft+63, this.guiTop+75, 50, 20, this.getSide()));
+        }
+    }
+
+    @Override
+    public void updateScreen(){
+        super.updateScreen();
+
+        if(!this.placer.isBreaker){
+            this.buttonList.get(0).displayString = this.getSide();
+        }
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks){
+        super.drawScreen(mouseX, mouseY, partialTicks);
+
+        if(!this.placer.isBreaker && this.buttonList.get(0).isMouseOver()){
+            String loc = "info."+ModUtil.MOD_ID+".placer.sides";
+
+            List<String> textList = new ArrayList<String>();
+            textList.add(TextFormatting.GOLD+StringUtil.localize(loc+".1"));
+            textList.addAll(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localize(loc+".2"), 200));
+            this.drawHoveringText(textList, mouseX, mouseY);
+        }
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) throws IOException{
+        if(!this.placer.isBreaker){
+            NBTTagCompound compound = new NBTTagCompound();
+            BlockPos pos = this.placer.getPos();
+            compound.setInteger("X", pos.getX());
+            compound.setInteger("Y", pos.getY());
+            compound.setInteger("Z", pos.getZ());
+            compound.setInteger("WorldID", this.placer.getWorld().provider.getDimension());
+            compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+            compound.setInteger("ButtonID", button.id);
+            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        }
+    }
+
+    private String getSide(){
+        return GuiInputter.SIDES[this.placer.side+1];
     }
 
     @Override

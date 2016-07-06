@@ -561,6 +561,8 @@ info.actuallyadditions.booklet.manualName.1.5=Actual Addition
 info.actuallyadditions.booklet.manualName.2=Manual
 info.actuallyadditions.booklet.edition=Edition
 info.actuallyadditions.deathRecorded=Your death has been recorded. Use a Death Tracker to find the death location!
+info.actuallyadditions.placer.sides.1=Placement Sides
+info.actuallyadditions.placer.sides.2=Usually when placing down blocks, they are placed towards the side of another block that you are looking at. Because the Phantom Placer can place blocks in mid-air, it doesn't know that. Usually you should just set it to a solid side.
 
 #Container Names
 container.actuallyadditions.inputter.name=ESD
