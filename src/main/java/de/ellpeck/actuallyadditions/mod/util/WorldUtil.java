@@ -52,7 +52,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public final class WorldUtil{
 
@@ -367,9 +366,14 @@ public final class WorldUtil{
                 block.onBlockDestroyedByPlayer(world, pos, state);
             }
 
-            if(!world.isRemote && player instanceof EntityPlayerMP){
-                ((EntityPlayerMP)player).connection.sendPacket(new SPacketBlockChange(world, pos));
+            if(!world.isRemote){
+                world.playEvent(2001, pos, Block.getStateId(state));
+
+                if(player instanceof EntityPlayerMP){
+                    ((EntityPlayerMP)player).connection.sendPacket(new SPacketBlockChange(world, pos));
+                }
             }
+
             return true;
         }
 
@@ -391,12 +395,12 @@ public final class WorldUtil{
                     block.dropXpOnBlockBreak(world, pos, xp);
                 }
 
+                world.playEvent(2001, pos, Block.getStateId(state));
                 playerMp.connection.sendPacket(new SPacketBlockChange(world, pos));
+                return true;
             }
         }
         else{
-            world.playEvent(2001, pos, Block.getStateId(state));
-
             if(block.removedByPlayer(state, world, pos, player, true)){
                 block.onBlockDestroyedByPlayer(world, pos, state);
             }
@@ -410,7 +414,9 @@ public final class WorldUtil{
 
             Minecraft mc = Minecraft.getMinecraft();
             mc.getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, mc.objectMouseOver.sideHit));
+
+            return true;
         }
-        return true;
+        return false;
     }
 }
