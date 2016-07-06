@@ -1,4 +1,16 @@
-#1.10.2-r47
+# 1.10.2-r48
+* Added Shock Suppressor, a block that will cause explosions not to happen
+* Added Phantom Placer Siding rule button
+* Memes
+* Made some more blocks store some more information when broken
+* Make the miner have the drill's harvest level (4)
+* Made display stand only display RF when sneaking
+* Remove NEI Integration because it's not getting updated anymore anyways
+* Fixed a crash with the phantom redstoneface
+* Fixed a dupe bug with the drill and skulls
+* Removed booklet stand crafting recipe and doc
+
+# 1.10.2-r47
 * Updated to 1.10.2. Could've guessed that by the name.
 * Fixed a crash when searching the booklet
 * Made empty buckets be able to get pulled out of the coal generator
