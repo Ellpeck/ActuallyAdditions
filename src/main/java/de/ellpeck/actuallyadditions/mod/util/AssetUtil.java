@@ -35,15 +35,12 @@ import org.lwjgl.opengl.GL11;
 
 public final class AssetUtil{
 
-    @SideOnly(Side.CLIENT)
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
 
-    @SideOnly(Side.CLIENT)
     public static ResourceLocation getGuiLocation(String file){
         return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/"+file+".png");
     }
 
-    @SideOnly(Side.CLIENT)
     public static ResourceLocation getBookletGuiLocation(String file){
         return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/booklet/"+file+".png");
     }
