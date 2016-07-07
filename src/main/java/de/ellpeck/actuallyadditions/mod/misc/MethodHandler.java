@@ -127,7 +127,8 @@ public class MethodHandler implements IMethodHandler{
                 for(int reachZ = -range; reachZ < range+1; reachZ++){
                     for(int reachY = -range; reachY < range+1; reachY++){
                         BlockPos pos = new BlockPos(hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
-                        List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(hitState.getBlock(), 1, hitState.getBlock().getMetaFromState(hitState)));
+                        IBlockState state = tile.getWorldObject().getBlockState(pos);
+                        List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
                         for(LensConversionRecipe recipe : recipes){
                             if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
                                 List<ItemStack> outputs = recipe.getOutputs();
