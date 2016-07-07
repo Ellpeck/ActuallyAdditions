@@ -14,12 +14,12 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'idea'
 
-version = "1.10.2-r48"
+version = "1.9.4-BTM2"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
 minecraft {
-    version = "1.10.2-12.18.0.2002-1.10.0"
+    version = "1.9.4-12.17.0.1987"
     runDir = "idea"
 
     mappings = "snapshot_20160519"
@@ -48,7 +48,7 @@ dependencies {
     //compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
 
     compile "net.darkhax.tesla:Tesla:1.9.4-1.1.0.24"
-    deobfCompile "mezz.jei:jei_1.10:3.7.1.219"
+    deobfCompile "mezz.jei:jei_1.9.4:3.6.7.216"
 }
 
 processResources {

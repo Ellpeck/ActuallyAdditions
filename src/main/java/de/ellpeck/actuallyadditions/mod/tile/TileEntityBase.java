@@ -188,7 +188,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         }
     }
 
-    @Override
     public ITextComponent getDisplayName(){
         return new TextComponentTranslation("container."+ModUtil.MOD_ID+"."+this.name+".name");
     }
