@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import net.minecraft.item.EnumRarity;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.oredict.OreDictionary;

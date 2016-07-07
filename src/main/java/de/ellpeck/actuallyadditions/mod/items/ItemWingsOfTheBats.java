@@ -14,17 +14,13 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
@@ -49,6 +45,57 @@ public class ItemWingsOfTheBats extends ItemBase{
         this.setMaxStackSize(1);
 
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    /**
+     * Checks if the Player is winged
+     *
+     * @param player The Player
+     * @return Winged?
+     */
+    public static boolean isPlayerWinged(EntityPlayer player){
+        return WINGED_PLAYERS.contains(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
+    }
+
+    /**
+     * Same as above, but Remote Checking is done automatically
+     */
+    public static void removeWingsFromPlayer(EntityPlayer player){
+        removeWingsFromPlayer(player, player.worldObj.isRemote);
+    }
+
+    /**
+     * Removes the Player from the List of Players that have Wings
+     *
+     * @param player      The Player
+     * @param worldRemote If the World the Player is in is remote
+     */
+    public static void removeWingsFromPlayer(EntityPlayer player, boolean worldRemote){
+        WINGED_PLAYERS.remove(player.getUniqueID()+(worldRemote ? "-Remote" : ""));
+    }
+
+    /**
+     * Adds the Player to the List of Players that have Wings
+     *
+     * @param player The Player
+     */
+    public static void addWingsToPlayer(EntityPlayer player){
+        WINGED_PLAYERS.add(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
+    }
+
+    /**
+     * Checks if the Player has Wings in its Inventory
+     *
+     * @param player The Player
+     * @return The Wings
+     */
+    public static ItemStack getWingItem(EntityPlayer player){
+        for(int i = 0; i < player.inventory.getSizeInventory(); i++){
+            if(player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i).getItem() instanceof ItemWingsOfTheBats){
+                return player.inventory.getStackInSlot(i);
+            }
+        }
+        return null;
     }
 
     @SubscribeEvent
@@ -103,58 +150,6 @@ public class ItemWingsOfTheBats extends ItemBase{
             }
         }
     }
-
-    /**
-     * Checks if the Player is winged
-     *
-     * @param player The Player
-     * @return Winged?
-     */
-    public static boolean isPlayerWinged(EntityPlayer player){
-        return WINGED_PLAYERS.contains(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
-    }
-
-    /**
-     * Same as above, but Remote Checking is done automatically
-     */
-    public static void removeWingsFromPlayer(EntityPlayer player){
-        removeWingsFromPlayer(player, player.worldObj.isRemote);
-    }
-
-    /**
-     * Removes the Player from the List of Players that have Wings
-     *
-     * @param player      The Player
-     * @param worldRemote If the World the Player is in is remote
-     */
-    public static void removeWingsFromPlayer(EntityPlayer player, boolean worldRemote){
-        WINGED_PLAYERS.remove(player.getUniqueID()+(worldRemote ? "-Remote" : ""));
-    }
-
-    /**
-     * Adds the Player to the List of Players that have Wings
-     *
-     * @param player The Player
-     */
-    public static void addWingsToPlayer(EntityPlayer player){
-        WINGED_PLAYERS.add(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
-    }
-
-    /**
-     * Checks if the Player has Wings in its Inventory
-     *
-     * @param player The Player
-     * @return The Wings
-     */
-    public static ItemStack getWingItem(EntityPlayer player){
-        for(int i = 0; i < player.inventory.getSizeInventory(); i++){
-            if(player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i).getItem() instanceof ItemWingsOfTheBats){
-                return player.inventory.getStackInSlot(i);
-            }
-        }
-        return null;
-    }
-
 
     @Override
     public EnumRarity getRarity(ItemStack stack){

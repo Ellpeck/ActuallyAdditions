@@ -91,10 +91,10 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public GuiButton buttonViewOnline;
     public GuiTextField searchField;
     public boolean shouldSaveDataNextClose;
+    public String bookletName;
     private int ticksElapsed;
     private boolean mousePressed;
     private int hisNameIsAt;
-    public String bookletName;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
         this.xSize = 146;

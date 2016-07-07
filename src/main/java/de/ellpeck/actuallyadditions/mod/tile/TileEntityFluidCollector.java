@@ -27,6 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityFluidCollector extends TileEntityBase implements net.minecraftforge.fluids.IFluidHandler{
 
+    public boolean isPlacer;
     public final FluidTank tank = new FluidTank(8*Util.BUCKET){
         @Override
         public boolean canFill(){
@@ -38,7 +39,6 @@ public class TileEntityFluidCollector extends TileEntityBase implements net.mine
             return !TileEntityFluidCollector.this.isPlacer;
         }
     };
-    public boolean isPlacer;
     private int lastTankAmount;
     private int currentTime;
 

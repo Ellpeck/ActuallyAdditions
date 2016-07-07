@@ -36,8 +36,8 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public int currentTime;
     public int range;
     public boolean isBreaker;
-    private int oldRange;
     public int side;
+    private int oldRange;
 
     public TileEntityPhantomPlacer(int slots, String name){
         super(slots, name);

@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.block.state.IBlockState;
@@ -41,10 +40,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     public static boolean teslaLoaded;
+    public final String name;
     public boolean isRedstonePowered;
     public boolean isPulseMode;
     protected int ticksElapsed;
-    public final String name;
 
     public TileEntityBase(String name){
         this.name = name;

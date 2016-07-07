@@ -44,6 +44,18 @@ public class CommonEvents{
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+    public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
+        for(TheAchievements ach : TheAchievements.values()){
+            if(ach.type == type){
+                if(gotten != null && ach.chieve.theItemStack != null && gotten.getItem() == ach.chieve.theItemStack.getItem()){
+                    if(gotten.getItemDamage() == ach.chieve.theItemStack.getItemDamage()){
+                        player.addStat(ach.chieve, 1);
+                    }
+                }
+            }
+        }
+    }
+
     @SubscribeEvent
     public void livingDeathEvent(LivingDeathEvent event){
         if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getEntityLiving() instanceof EntityPlayer){
@@ -86,18 +98,6 @@ public class CommonEvents{
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if(!data.theCompound.hasNoTags()){
                 PacketHandler.theNetwork.sendTo(new PacketServerToClient(data.theCompound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), player);
-            }
-        }
-    }
-
-    public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
-        for(TheAchievements ach : TheAchievements.values()){
-            if(ach.type == type){
-                if(gotten != null && ach.chieve.theItemStack != null && gotten.getItem() == ach.chieve.theItemStack.getItem()){
-                    if(gotten.getItemDamage() == ach.chieve.theItemStack.getItemDamage()){
-                        player.addStat(ach.chieve, 1);
-                    }
-                }
             }
         }
     }

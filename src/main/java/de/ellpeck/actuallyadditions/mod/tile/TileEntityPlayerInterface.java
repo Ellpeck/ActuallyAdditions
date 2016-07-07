@@ -23,8 +23,8 @@ import java.util.UUID;
 public class TileEntityPlayerInterface extends TileEntityInventoryBase implements IEnergyReceiver, IEnergyDisplay{
 
     public static final int DEFAULT_RANGE = 32;
-    public UUID connectedPlayer;
     private final EnergyStorage storage = new EnergyStorage(30000);
+    public UUID connectedPlayer;
     private int oldEnergy;
     private int range;
 
