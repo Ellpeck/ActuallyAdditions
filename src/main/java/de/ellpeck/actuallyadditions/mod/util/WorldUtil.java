@@ -341,6 +341,7 @@ public final class WorldUtil{
 
     //Cobbled together from Tinkers' Construct (with permission, thanks!) and PlayerInteractionManager code.
     //Breaking blocks is a hideous pain so yea.
+    //This doesn't do any additional harvestability checks that the blocks itself don't do!
     public static boolean playerHarvestBlock(ItemStack stack, World world, EntityPlayer player, BlockPos pos){
         if(world.isAirBlock(pos)){
             return false;
@@ -348,17 +349,6 @@ public final class WorldUtil{
 
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-
-        boolean effective = false;
-        for(String type : stack.getItem().getToolClasses(stack)){
-            if(block.isToolEffective(type, state)){
-                effective = true;
-            }
-        }
-
-        if(!effective || !ForgeHooks.canHarvestBlock(block, player, world, pos)){
-            return false;
-        }
 
         if(player.capabilities.isCreativeMode){
             block.onBlockHarvested(world, pos, state, player);
