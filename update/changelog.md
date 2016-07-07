@@ -1,3 +1,7 @@
+# 1.10.2-r49
+* Fixed a dube bug that caused the reconstructor to create about a thousand bajillion more items and blocks than it should.
+* Yea. I'm pretty great. >_<
+
 # 1.10.2-r48
 * Added Shock Suppressor, a block that will cause explosions not to happen
 * Added Phantom Placer Siding rule button
