@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.EntityCreature;
@@ -37,11 +38,13 @@ public class ItemSolidifiedExperience extends ItemBase{
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
-        if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
-            //Drop Solidified XP
-            if(event.getEntityLiving() instanceof EntityCreature){
-                if(Util.RANDOM.nextInt(10) <= event.getLootingLevel()*2){
-                    event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemSolidifiedExperience, Util.RANDOM.nextInt(2+event.getLootingLevel())+1), 0);
+        if(ConfigBoolValues.DO_XP_DROPS.isEnabled()){
+            if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
+                //Drop Solidified XP
+                if(event.getEntityLiving() instanceof EntityCreature){
+                    if(Util.RANDOM.nextInt(10) <= event.getLootingLevel()*2){
+                        event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemSolidifiedExperience, Util.RANDOM.nextInt(2+event.getLootingLevel())+1), 0);
+                    }
                 }
             }
         }
