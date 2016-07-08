@@ -77,9 +77,10 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(this.slots[SLOT_OUTPUT] == null && canBeRepaired(this.slots[SLOT_INPUT])){
-                if(this.slots[SLOT_INPUT].getItemDamage() <= 0){
-                    this.slots[SLOT_OUTPUT] = this.slots[SLOT_INPUT].copy();
+            ItemStack input = this.slots[SLOT_INPUT];
+            if(this.slots[SLOT_OUTPUT] == null && canBeRepaired(input)){
+                if(input.getItemDamage() <= 0){
+                    this.slots[SLOT_OUTPUT] = input.copy();
                     this.slots[SLOT_INPUT] = null;
                     this.nextRepairTick = 0;
                 }
@@ -89,7 +90,15 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
                         this.storage.extractEnergy(ENERGY_USE, false);
                         if(this.nextRepairTick >= 2){
                             this.nextRepairTick = 0;
-                            this.slots[SLOT_INPUT].setItemDamage(this.slots[SLOT_INPUT].getItemDamage()-1);
+                            input.setItemDamage(input.getItemDamage()-1);
+
+                            if(input.hasTagCompound()){
+                                //TiCon un-break tools
+                                if("tconstruct".equalsIgnoreCase(input.getItem().getRegistryName().getResourceDomain())){
+                                    NBTTagCompound stats = input.getTagCompound().getCompoundTag("Stats");
+                                    stats.removeTag("Broken");
+                                }
+                            }
                         }
                     }
                 }
