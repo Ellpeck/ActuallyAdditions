@@ -62,14 +62,16 @@ public class GuiGiantChest extends GuiContainer{
 
     @Override
     protected void actionPerformed(GuiButton button) throws IOException{
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("X", this.chest.getPos().getX());
-        compound.setInteger("Y", this.chest.getPos().getY());
-        compound.setInteger("Z", this.chest.getPos().getZ());
-        compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
-        compound.setInteger("WorldID", this.chest.getWorld().provider.getDimension());
-        compound.setInteger("ButtonID", button.id);
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        if(button.id >= 0 && button.id < 3){
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setInteger("X", this.chest.getPos().getX());
+            compound.setInteger("Y", this.chest.getPos().getY());
+            compound.setInteger("Z", this.chest.getPos().getZ());
+            compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+            compound.setInteger("WorldID", this.chest.getWorld().provider.getDimension());
+            compound.setInteger("ButtonID", button.id);
+            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        }
     }
 
     @Override
