@@ -136,9 +136,7 @@ public class ClientEvents{
             if(stack != null){
                 if(stack.getItem() instanceof IHudDisplay){
                     profiler.startSection("ItemHudDisplay");
-                    if(minecraft.theWorld != null){
-                        ((IHudDisplay)stack.getItem()).displayHud(minecraft, player, stack, posHit, profiler, event.getResolution());
-                    }
+                    ((IHudDisplay)stack.getItem()).displayHud(minecraft, player, stack, posHit, profiler, event.getResolution());
                     profiler.endSection();
                 }
             }
@@ -149,9 +147,7 @@ public class ClientEvents{
 
                 if(blockHit instanceof IHudDisplay){
                     profiler.startSection("BlockHudDisplay");
-                    if(minecraft.theWorld != null){
-                        ((IHudDisplay)blockHit).displayHud(minecraft, player, stack, posHit, profiler, event.getResolution());
-                    }
+                    ((IHudDisplay)blockHit).displayHud(minecraft, player, stack, posHit, profiler, event.getResolution());
                     profiler.endSection();
                 }
 
