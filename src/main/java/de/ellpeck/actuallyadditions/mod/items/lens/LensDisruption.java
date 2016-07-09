@@ -38,30 +38,17 @@ public class LensDisruption extends Lens{
                 ItemStack stack = item.getEntityItem();
                 if(!item.isDead && stack != null){
                     if(!stack.hasTagCompound() || !stack.getTagCompound().getBoolean(ModUtil.MOD_ID+"DisruptedAlready")){
-                        ItemStack newStack = null;
 
-                        boolean done = false;
-                        while(!done){
+                        ItemStack newStack;
+                        do{
                             if(Util.RANDOM.nextBoolean()){
                                 newStack = new ItemStack(Item.REGISTRY.getRandomObject(Util.RANDOM));
                             }
                             else{
                                 newStack = new ItemStack(Block.REGISTRY.getRandomObject(Util.RANDOM));
                             }
-
-                            if(newStack != null){
-                                Item newItem = newStack.getItem();
-                                if(newItem != null){
-                                    CreativeTabs[] tabs = newItem.getCreativeTabs();
-                                    for(CreativeTabs tab : tabs){
-                                        if(tab != null){
-                                            done = true;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
                         }
+                        while(newStack == null || newStack.getItem() == null);
 
                         newStack.stackSize = stack.stackSize;
 
