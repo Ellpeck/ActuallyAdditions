@@ -357,7 +357,7 @@ public final class WorldUtil{
             }
 
             if(!world.isRemote){
-                world.playEvent(2001, pos, Block.getStateId(state));
+                world.playEvent(player, 2001, pos, Block.getStateId(state));
 
                 if(player instanceof EntityPlayerMP){
                     ((EntityPlayerMP)player).connection.sendPacket(new SPacketBlockChange(world, pos));
@@ -385,7 +385,7 @@ public final class WorldUtil{
                     block.dropXpOnBlockBreak(world, pos, xp);
                 }
 
-                world.playEvent(2001, pos, Block.getStateId(state));
+                world.playEvent(player, 2001, pos, Block.getStateId(state));
                 playerMp.connection.sendPacket(new SPacketBlockChange(world, pos));
                 return true;
             }
@@ -396,6 +396,7 @@ public final class WorldUtil{
             }
 
             stack.onBlockDestroyed(world, state, pos, player);
+            world.playEvent(2001, pos, Block.getStateId(state));
 
             if(stack.stackSize <= 0 && stack == player.getHeldItemMainhand()){
                 ForgeEventFactory.onPlayerDestroyItem(player, stack, EnumHand.MAIN_HAND);
