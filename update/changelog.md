@@ -1,3 +1,13 @@
+# 1.10.2-r50
+* Changed the name of the coffee machine to coffee maker because that's apparently a more proper name
+* Fixed the drill sometimes acting up on redstone and glowstone
+* Fixed the particles of breaking with the drill being delayed making it look weird
+* Fixed a crash with the InvTweaks sorting buttons in a storage crate
+* TiCon tools now lose their broken tag when repairing them with the item repairer
+* Added a config option for Solid XP dropping
+* Fixed a bug with the game sometimes crashing when looking at an entity with the booklet in hand
+* Fixed Drill, Crafter and Filter having an unlocalized name in the GUIs
+
 # 1.10.2-r49
 * Fixed a dube bug that caused the reconstructor to create about a thousand bajillion more items and blocks than it should.
 * Yea. I'm pretty great. >_<
