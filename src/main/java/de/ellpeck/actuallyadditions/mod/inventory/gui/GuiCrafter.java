@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCrafter;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,7 +35,7 @@ public class GuiCrafter extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, "container."+ModUtil.MOD_ID+".crafting");
+        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, StringUtil.localize("container."+ModUtil.MOD_ID+".crafting.name"));
     }
 
     @Override
