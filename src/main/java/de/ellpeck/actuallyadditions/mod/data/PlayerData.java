@@ -14,48 +14,50 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
+//Yes, this is name based instead of UUID-based.
+//It just works better this way because of vanilla quirks. Don't judge me.
 public final class PlayerData{
 
-    public static PlayerSave getDataFromPlayer(EntityPlayer player){
+    public static PlayerSave getDataFromPlayer(String name){
         ArrayList<PlayerSave> data = WorldData.PLAYER_SAVE_DATA;
         //Get Data from existing data
         for(PlayerSave save : data){
-            if(save.thePlayerUUID.equals(player.getUniqueID())){
+            if(save.theName != null && save.theName.equals(name)){
                 return save;
             }
         }
 
         //Add Data if none is existant
-        PlayerSave aSave = new PlayerSave(player.getUniqueID(), new NBTTagCompound());
+        PlayerSave aSave = new PlayerSave(name, new NBTTagCompound());
         data.add(aSave);
         return aSave;
     }
 
+    public static PlayerSave getDataFromPlayer(EntityPlayer player){
+        return getDataFromPlayer(player.getName());
+    }
+
     public static class PlayerSave{
 
-        public final UUID thePlayerUUID;
+        public final String theName;
         public NBTTagCompound theCompound;
 
-        public PlayerSave(UUID theUUID, NBTTagCompound theCompound){
-            this.thePlayerUUID = theUUID;
+        public PlayerSave(String name, NBTTagCompound theCompound){
+            this.theName = name;
             this.theCompound = theCompound;
         }
 
         public static PlayerSave fromNBT(NBTTagCompound compound){
-            UUID theID = new UUID(compound.getLong("MostSignificant"), compound.getLong("LeastSignificant"));
+            String name = compound.getString("Name");
             NBTTagCompound theCompound = compound.getCompoundTag("Tag");
-            return new PlayerSave(theID, theCompound);
+            return new PlayerSave(name, theCompound);
         }
 
         public NBTTagCompound toNBT(){
             NBTTagCompound compound = new NBTTagCompound();
-            compound.setLong("LeastSignificant", this.thePlayerUUID.getLeastSignificantBits());
-            compound.setLong("MostSignificant", this.thePlayerUUID.getMostSignificantBits());
-
+            compound.setString("Name", this.theName);
             compound.setTag("Tag", this.theCompound);
-
             return compound;
         }
     }

@@ -97,7 +97,15 @@ public class CommonEvents{
             EntityPlayerMP player = (EntityPlayerMP)event.getEntity();
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if(!data.theCompound.hasNoTags()){
-                PacketHandler.theNetwork.sendTo(new PacketServerToClient(data.theCompound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), player);
+                NBTTagCompound compound = new NBTTagCompound();
+                compound.setString("Name", player.getName());
+                compound.setTag("Data", data.theCompound);
+                compound.setBoolean("Log", true);
+                PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), player);
+                ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with info "+data.theCompound+".");
+            }
+            else{
+                ModUtil.LOGGER.info("Not sending Player Data to player "+player.getName()+" because he doesn't have any.");
             }
         }
     }
