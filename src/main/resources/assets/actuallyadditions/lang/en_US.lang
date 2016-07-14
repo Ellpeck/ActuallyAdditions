@@ -794,7 +794,6 @@ booklet.actuallyadditions.chapter.wings.name=Wings Of The Bats
 booklet.actuallyadditions.chapter.wings.text.1=Sometimes, bats will drop <item>Wings<r>. These wings can't really be used to fly, but that's just because they're not powerful enough. <n>To make them more powerful, you can craft <item>Wings Of The Bats<r>. When you have these in your inventory, they will allow you to <imp>fly like in creative mode<r>.
 
 booklet.actuallyadditions.chapter.foods.name=Foodstuffs
-booklet.actuallyadditions.chapter.foods.text.1=Yes, this is <item>Bacon<r>. Don't try naming it <imp>Ellspeck<r>. <n><n><i>Please, just don't.
 
 booklet.actuallyadditions.chapter.leafBlower.name=Leaf Blowers
 booklet.actuallyadditions.chapter.leafBlower.text.1=The <item>Leaf Blower<r> can blow away tall grass, flowers and other stuff around you when you <imp>hold right-click<r>. There is an <item>Advanced Leaf Blower<r>, which works like the basic one, except that it operates <imp>much faster<r> and <imp>also breaks Leaves<r>.
@@ -854,7 +853,7 @@ booklet.actuallyadditions.chapter.laserRelays.text.5=The <item>Laser Wrench<r>'s
 
 booklet.actuallyadditions.chapter.blackLotus.name=Black Lotus
 booklet.actuallyadditions.chapter.blackLotus.text.1=Think of this: <n>You need to craft <imp>black wool<r>, <imp>black clay<r> or anything else that <imp>needs black dye<r> but you are just guilty about killing so many <imp>innocent squids<r>? <n>Well, the <item>Black Lotus<r> is exactly the thing you need! <n>Just look around <imp>in the wild<r> a bit, and you will find one, then being able to craft some <item>Black Dye<r> that can be used <imp>instead of Ink Sacs<r> so that you don't need to kill poor squids and L any longer.
-booklet.actuallyadditions.chapter.blackLotus.text.2=<i>No, not that one, Vaz
+booklet.actuallyadditions.chapter.blackLotus.text.2=<i>Do the lotus pose
 
 booklet.actuallyadditions.chapter.crystals.name=Crystals and Reconstructor
 booklet.actuallyadditions.chapter.crystals.text.1=The <item>Atomic Reconstructor<r> is used to craft <item>Crystals<r>, which are the main crafting ingredient in most items from <imp>Actually Additions<r>. <n>Upon being supplied with power, it shoots out a Laser. <tifisgrin>When the Laser hits a block<r>, it will convert all surrounding items and blocks, provided they can be converted. <n>When shooting a laser, it uses <imp><rf> RF<r>, but additional rates vary depending on the conversion.
