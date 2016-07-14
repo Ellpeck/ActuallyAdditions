@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import net.minecraft.tileentity.TileEntity;
@@ -26,8 +27,14 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
 
     public final Map<EnumFacing, IEnergyReceiver> receiversAround = new HashMap<EnumFacing, IEnergyReceiver>();
 
+    public static final int CAP = 1000;
+
+    public TileEntityLaserRelayEnergy(String name){
+        super(name, false);
+    }
+
     public TileEntityLaserRelayEnergy(){
-        super("laserRelay", false);
+        this("laserRelay");
     }
 
     @Override
@@ -50,7 +57,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
         if(maxTransmit > 0){
             LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(this.pos, this.worldObj);
             if(network != null){
-                transmitted = this.transferEnergyToReceiverInNeed(from, network, Math.min(ConfigIntValues.LASER_RELAY_MAX_TRANSFER.getValue(), maxTransmit), simulate);
+                transmitted = this.transferEnergyToReceiverInNeed(from, network, maxTransmit, simulate);
             }
         }
         return transmitted;
@@ -85,14 +92,17 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                     alreadyChecked.add(relay);
                     TileEntity relayTile = this.worldObj.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayEnergy){
-                        for(Map.Entry<EnumFacing, IEnergyReceiver> receiver : ((TileEntityLaserRelayEnergy)relayTile).receiversAround.entrySet()){
+                        TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy)relayTile;
+                        double highestLoss = Math.max(theRelay.getLossPercentage(), this.getLossPercentage());
+                        int lowestCap = Math.min(theRelay.getEnergyCap(), this.getEnergyCap());
+                        for(Map.Entry<EnumFacing, IEnergyReceiver> receiver : theRelay.receiversAround.entrySet()){
                             if(receiver != null && receiver.getKey() != null && receiver.getValue() != null){
                                 if(receiver.getKey() != from){
                                     if(receiver.getValue().canConnectEnergy(receiver.getKey().getOpposite())){
                                         //Transfer the energy (with the energy loss!)
-                                        int theoreticalReceived = receiver.getValue().receiveEnergy(receiver.getKey().getOpposite(), maxTransfer-transmitted, true);
+                                        int theoreticalReceived = receiver.getValue().receiveEnergy(receiver.getKey().getOpposite(), Math.min(maxTransfer, lowestCap)-transmitted, true);
                                         //The amount of energy lost during a transfer
-                                        int deduct = (int)(theoreticalReceived*((double)ConfigIntValues.LASER_RELAY_LOSS.getValue()/100));
+                                        int deduct = ConfigBoolValues.LASER_RELAY_LOSS.isEnabled() ? (int)(theoreticalReceived*(highestLoss/100)) : 0;
 
                                         transmitted += receiver.getValue().receiveEnergy(receiver.getKey().getOpposite(), theoreticalReceived-deduct, simulate);
                                         transmitted += deduct;
@@ -110,5 +120,13 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
             }
         }
         return transmitted;
+    }
+
+    public int getEnergyCap(){
+        return CAP;
+    }
+
+    public double getLossPercentage(){
+        return 5;
     }
 }

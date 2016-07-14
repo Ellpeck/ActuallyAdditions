@@ -98,6 +98,8 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         register(TileEntityPhantomRedstoneface.class, "PhantomRedstoneface");
         register(TileEntityLaserRelayItem.class, "LaserRelayItem");
         register(TileEntityLaserRelayEnergy.class, "LaserRelay");
+        register(TileEntityLaserRelayEnergyAdvanced.class);
+        register(TileEntityLaserRelayEnergyExtreme.class);
         register(TileEntityLaserRelayItemWhitelist.class, "LaserRelayItemWhitelist");
         register(TileEntityItemViewer.class, "ItemViewer");
         register(TileEntityBookletStand.class, "BookletStand");
@@ -117,12 +119,22 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         try{
             //This is hacky and dirty but it works so whatever
             String name = ModUtil.MOD_ID+":"+tileClass.newInstance().name;
-            String oldName = ModUtil.MOD_ID+":tileEntity"+legacyName;
-            GameRegistry.registerTileEntityWithAlternatives(tileClass, name, oldName);
+
+            if(legacyName != null && !legacyName.isEmpty()){
+                String oldName = ModUtil.MOD_ID+":tileEntity"+legacyName;
+                GameRegistry.registerTileEntityWithAlternatives(tileClass, name, oldName);
+            }
+            else{
+                GameRegistry.registerTileEntity(tileClass, name);
+            }
         }
         catch(Exception e){
             ModUtil.LOGGER.fatal("Registering a TileEntity failed!", e);
         }
+    }
+
+    private static void register(Class<? extends TileEntityBase> tileClass){
+        register(tileClass, null);
     }
 
     @Override

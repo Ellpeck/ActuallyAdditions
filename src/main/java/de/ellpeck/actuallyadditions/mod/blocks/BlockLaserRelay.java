@@ -13,10 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -135,13 +132,19 @@ public class BlockLaserRelay extends BlockContainerBase{
                 return new TileEntityLaserRelayItem();
             case ITEM_WHITELIST:
                 return new TileEntityLaserRelayItemWhitelist();
+            case ENERGY_ADVANCED:
+                return new TileEntityLaserRelayEnergyAdvanced();
+            case ENERGY_EXTREME:
+                return new TileEntityLaserRelayEnergyExtreme();
             default:
                 return new TileEntityLaserRelayEnergy();
         }
     }
 
     public enum Type{
-        ENERGY,
+        ENERGY_BASIC,
+        ENERGY_ADVANCED,
+        ENERGY_EXTREME,
         ITEM,
         ITEM_WHITELIST
     }
