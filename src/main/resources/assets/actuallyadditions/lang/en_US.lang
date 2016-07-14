@@ -215,6 +215,7 @@ tile.actuallyadditions.blockImpureIron.name=Impure Iron
 tile.actuallyadditions.blockBookletStand.name=Wall-Mount Manual
 tile.actuallyadditions.blockDisplayStand.name=Display Stand
 tile.actuallyadditions.blockShockSuppressor.name=Shock Absorber
+tile.actuallyadditions.blockTinyTorch.name=Tiny Torch
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -929,3 +930,6 @@ booklet.actuallyadditions.chapter.videoGuide.page.1.button=Watch Video
 booklet.actuallyadditions.chapter.shockSuppressor.name=Shock Absorber
 booklet.actuallyadditions.chapter.shockSuppressor.text.1=The <item>Shock Absorber<r> is a block that, when supplied with <imp>RF<r>, it will protect an area of <imp>up to <range> blocks around it<r> from any type of <imp>Explosion<r>, be it ghasts, TNT or creepers. <n>Every block that is protected will result in a loss of <imp><rf> RF<r>.
 booklet.actuallyadditions.chapter.shockSuppressor.text.2=<i>Credit where credit is due: <r><n><n>Or something like that. <n>Anyways, this thing was thought up and suggested to me by <imp>praetoras<r>. Thanks for that brilliant idea! <n><n><i>What's a fourth wall..?
+
+booklet.actuallyadditions.chapter.tinyTorch.name=Tiny Torch
+booklet.actuallyadditions.chapter.tinyTorch.text.1=<i>Yea.

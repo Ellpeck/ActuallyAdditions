@@ -124,9 +124,12 @@ public final class InitBlocks{
     public static Block blockDisplayStand;
     public static Block blockShockSuppressor;
 
+    public static Block blockTinyTorch;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockTinyTorch = new BlockTinyTorch("blockTinyTorch");
         blockShockSuppressor = new BlockShockSuppressor("blockShockSuppressor");
         blockDisplayStand = new BlockDisplayStand("blockDisplayStand");
         blockPlayerInterface = new BlockPlayerInterface("blockPlayerInterface");

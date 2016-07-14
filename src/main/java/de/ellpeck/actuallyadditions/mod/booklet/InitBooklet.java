@@ -88,6 +88,7 @@ public final class InitBooklet{
         new BookletChapter("hairBalls", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitItems.itemHairyBall), new PagePicture(1, "pageFurBalls", 110).setStacks(new ItemStack(InitItems.itemHairyBall)), new PageTextOnly(2)).setSpecial();
         new BookletChapter("blackLotus", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitBlocks.blockBlackLotus), new PageTextOnly(1).setStacks(new ItemStack(InitBlocks.blockBlackLotus)), new PageCrafting(2, ItemCrafting.recipeBlackDye));
         new BookletChapter("waterBowl", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitItems.itemWaterBowl), new PageTextOnly(1).setStacks(new ItemStack(InitItems.itemWaterBowl)));
+        new BookletChapter("tinyTorch", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitBlocks.blockTinyTorch), new PageCrafting(1, BlockCrafting.recipesTinyTorch).setPageStacksWildcard()).setSpecial();
 
         //No RF Using Blocks
         new BookletChapter("itemStorage", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(InitBlocks.blockLaserRelayItemWhitelist), new PageTextOnly(1), new PageTextOnly(2), new PageCrafting(3, BlockCrafting.recipeLaserRelayItem).setNoText().setPageStacksWildcard(), new PageCrafting(4, BlockCrafting.recipeLaserRelayItemWhitelist).setNoText().setPageStacksWildcard(), new PageCrafting(5, BlockCrafting.recipeItemInterface).setNoText()).setImportant();

@@ -90,8 +90,23 @@ public final class BlockCrafting{
     public static IRecipe recipePlayerInterface;
     public static IRecipe recipeDisplayStand;
     public static IRecipe recipeShockSuppressor;
+    public static IRecipe[] recipesTinyTorch = new IRecipe[2];
 
     public static void init(){
+
+        //Tiny Torch
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTinyTorch, 2),
+                "C",
+                "W",
+                'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal()),
+                'W', "stickWood"));
+        recipesTinyTorch[0] = RecipeUtil.lastIRecipe();
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTinyTorch, 2),
+                "C",
+                "W",
+                'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_CHAR.ordinal()),
+                'W', "stickWood"));
+        recipesTinyTorch[1] = RecipeUtil.lastIRecipe();
 
         //Firework Box
         if(ConfigCrafting.FIREWORK_BOX.isEnabled()){

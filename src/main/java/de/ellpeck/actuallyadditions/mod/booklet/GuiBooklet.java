@@ -405,15 +405,17 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                     BookletUtils.openLastBookPage(this, data.theCompound.getCompoundTag("BookletData"));
                 }
             }
+            this.shouldSaveDataNextClose = false;
         }
         else{
             //Open forced entry
             BookletUtils.openIndexEntry(this, ItemBooklet.forcedEntry.entry, ItemBooklet.forcedEntry.pageInIndex, true);
             BookletUtils.openChapter(this, ItemBooklet.forcedEntry.chapter, ItemBooklet.forcedEntry.page);
             ItemBooklet.forcedEntry = null;
+
+            this.shouldSaveDataNextClose = true;
         }
 
-        this.shouldSaveDataNextClose = false;
     }
 
     @Override
