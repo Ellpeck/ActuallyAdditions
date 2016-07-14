@@ -45,7 +45,7 @@ public class ItemPlayerProbe extends ItemBase{
         if(!world.isRemote){
             if(stack.hasTagCompound()){
                 NBTTagCompound compound = stack.getTagCompound();
-                if(compound.hasKey("UUID")){
+                if(compound.hasKey("UUIDMost")){
                     UUID id = compound.getUniqueId("UUID");
                     EntityPlayer player = world.getPlayerEntityByUUID(id);
                     if(player != null){
@@ -57,7 +57,7 @@ public class ItemPlayerProbe extends ItemBase{
                     }
                     else{
                         stack.setTagCompound(new NBTTagCompound());
-                        entity.addChatMessage(new TextComponentString("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.2"));
+                        entity.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.2"));
                     }
                 }
             }
@@ -70,13 +70,15 @@ public class ItemPlayerProbe extends ItemBase{
         if(tile instanceof TileEntityPlayerInterface){
             if(stack.hasTagCompound()){
                 NBTTagCompound compound = stack.getTagCompound();
-                if(compound.hasKey("UUID")){
+                if(compound.hasKey("UUIDMost")){
                     if(!world.isRemote){
                         TileEntityPlayerInterface face = (TileEntityPlayerInterface)tile;
                         face.connectedPlayer = compound.getUniqueId("UUID");
                         face.playerName = compound.getString("Name");
                         face.markDirty();
                         face.sendUpdate();
+
+                        stack.setTagCompound(new NBTTagCompound());
                     }
                     return EnumActionResult.SUCCESS;
                 }
@@ -86,19 +88,23 @@ public class ItemPlayerProbe extends ItemBase{
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand){
+    public boolean itemInteractionForEntity(ItemStack aStack, EntityPlayer player, EntityLivingBase entity, EnumHand hand){
         if(!player.worldObj.isRemote){
-            if(entity instanceof EntityPlayer){
-                EntityPlayer playerHit = (EntityPlayer)entity;
+            ItemStack stack = player.getHeldItemMainhand();
+            if(stack != null && stack.getItem() == this){
+                if(entity instanceof EntityPlayer){
+                    EntityPlayer playerHit = (EntityPlayer)entity;
 
-                if(!playerHit.isSneaking()){
-                    if(!stack.hasTagCompound()){
-                        stack.setTagCompound(new NBTTagCompound());
+                    if(!playerHit.isSneaking()){
+                        if(!stack.hasTagCompound()){
+                            stack.setTagCompound(new NBTTagCompound());
+                        }
+
+                        NBTTagCompound compound = stack.getTagCompound();
+                        compound.setString("Name", playerHit.getName());
+                        compound.setUniqueId("UUID", playerHit.getUniqueID());
+                        return true;
                     }
-
-                    NBTTagCompound compound = stack.getTagCompound();
-                    compound.setString("Name", playerHit.getName());
-                    compound.setUniqueId("UUID", playerHit.getUniqueID());
                 }
             }
         }
