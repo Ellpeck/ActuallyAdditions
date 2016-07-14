@@ -34,6 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public final class PacketHandler{
 
@@ -99,10 +100,10 @@ public final class PacketHandler{
         @SideOnly(Side.CLIENT)
         public void handleData(NBTTagCompound compound){
             NBTTagCompound data = compound.getCompoundTag("Data");
-            String name = compound.getString("Name");
-            PlayerData.getDataFromPlayer(name).theCompound = data;
+            UUID id = compound.getUniqueId("UUID");
+            PlayerData.getDataFromPlayer(id).theCompound = data;
             if(compound.getBoolean("Log")){
-                ModUtil.LOGGER.info("Receiving Player Data for player "+name+" with info "+data+".");
+                ModUtil.LOGGER.info("Receiving Player Data for current player with UUID "+id+" with info "+data+".");
             }
         }
     };
@@ -136,7 +137,7 @@ public final class PacketHandler{
                 playerData.theCompound.merge(data);
                 if(player instanceof EntityPlayerMP){
                     NBTTagCompound tag = new NBTTagCompound();
-                    tag.setString("Name", player.getName());
+                    tag.setUniqueId("UUID", player.getUniqueID());
                     tag.setTag("Data", playerData.theCompound);
                     PacketHandler.theNetwork.sendTo(new PacketServerToClient(tag, PLAYER_DATA_TO_CLIENT_HANDLER), (EntityPlayerMP)player);
                 }

@@ -95,7 +95,7 @@ public class ItemLaserWrench extends ItemBase{
 
             if(player instanceof EntityPlayerMP){
                 NBTTagCompound compound = new NBTTagCompound();
-                compound.setString("Name", player.getName());
+                compound.setUniqueId("UUID", player.getUniqueID());
                 compound.setTag("Data", save.theCompound);
                 PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), (EntityPlayerMP)player);
             }

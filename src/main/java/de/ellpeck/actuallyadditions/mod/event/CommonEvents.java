@@ -98,14 +98,14 @@ public class CommonEvents{
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if(!data.theCompound.hasNoTags()){
                 NBTTagCompound compound = new NBTTagCompound();
-                compound.setString("Name", player.getName());
+                compound.setUniqueId("UUID", player.getUniqueID());
                 compound.setTag("Data", data.theCompound);
                 compound.setBoolean("Log", true);
                 PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), player);
-                ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with info "+data.theCompound+".");
+                ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+" with info "+data.theCompound+".");
             }
             else{
-                ModUtil.LOGGER.info("Not sending Player Data to player "+player.getName()+" because he doesn't have any.");
+                ModUtil.LOGGER.info("Not sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+" because he doesn't have any.");
             }
         }
     }
