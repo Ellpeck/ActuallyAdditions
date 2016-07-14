@@ -136,6 +136,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockBlackLotus);
         this.add(InitBlocks.blockBookletStand);
 
+        this.add(InitItems.itemPlayerProbe);
         this.add(InitItems.itemColorLens);
         this.add(InitItems.itemExplosionLens);
         this.add(InitItems.itemDamageLens);

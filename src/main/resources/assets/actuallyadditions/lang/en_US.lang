@@ -496,6 +496,7 @@ item.actuallyadditions.itemWaterBowl.name=Bowl of Water
 item.actuallyadditions.itemFilter.name=Item Filter
 item.actuallyadditions.itemMiscBiomass.name=Biomass
 item.actuallyadditions.itemMiscBiocoal.name=Bio Coal
+item.actuallyadditions.itemPlayerProbe.name=Player Probe
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -526,6 +527,10 @@ tooltip.actuallyadditions.laser.stored.desc=<Laser stored!>
 tooltip.actuallyadditions.laser.connected.desc=<Laser connected!>
 tooltip.actuallyadditions.laser.cantConnect.desc=Can't connect: The relays are either part of the same network, the stored relay isn't the same type or doesn't exist anymore or it is too far away!
 tooltip.actuallyadditions.itemBooklet.desc=Or "Booklet", if you will
+tooltip.actuallyadditions.playerProbe.disconnect.1=The player you were probing has broken the connection before you could strap him to the Player Interface! Data will be cleared!
+tooltip.actuallyadditions.playerProbe.disconnect.2=The player you were probing has disconnected before you could strap him to the Player Interface! Data will be cleared!
+tooltip.actuallyadditions.playerProbe.probing=Probing
+tooltip.actuallyadditions.playerProbe.notice=Look out! Someone tried to probe you and strap you to a Player Interface, but they failed!
 
 #Gui Information
 info.actuallyadditions.gui.animals=Animals

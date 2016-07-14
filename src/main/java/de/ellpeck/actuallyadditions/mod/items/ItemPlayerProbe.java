@@ -1,0 +1,118 @@
+/*
+ * This file ("ItemPlayerProbe.java") is part of the Actually Additions mod for Minecraft.
+ * It is created and owned by Ellpeck and distributed
+ * under the Actually Additions License to be found at
+ * http://ellpeck.de/actaddlicense
+ * View the source code at https://github.com/Ellpeck/ActuallyAdditions
+ *
+ * © 2015-2016 Ellpeck
+ */
+
+package de.ellpeck.actuallyadditions.mod.items;
+
+import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
+import java.util.UUID;
+
+public class ItemPlayerProbe extends ItemBase{
+
+    public ItemPlayerProbe(String name){
+        super(name);
+        this.setMaxStackSize(1);
+    }
+
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
+        if(!world.isRemote){
+            if(stack.hasTagCompound()){
+                NBTTagCompound compound = stack.getTagCompound();
+                if(compound.hasKey("UUID")){
+                    UUID id = compound.getUniqueId("UUID");
+                    EntityPlayer player = world.getPlayerEntityByUUID(id);
+                    if(player != null){
+                        if(player.isSneaking()){
+                            stack.setTagCompound(new NBTTagCompound());
+                            entity.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.1"));
+                            player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.notice"));
+                        }
+                    }
+                    else{
+                        stack.setTagCompound(new NBTTagCompound());
+                        entity.addChatMessage(new TextComponentString("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.2"));
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+        TileEntity tile = world.getTileEntity(pos);
+        if(tile instanceof TileEntityPlayerInterface){
+            if(stack.hasTagCompound()){
+                NBTTagCompound compound = stack.getTagCompound();
+                if(compound.hasKey("UUID")){
+                    if(!world.isRemote){
+                        TileEntityPlayerInterface face = (TileEntityPlayerInterface)tile;
+                        face.connectedPlayer = compound.getUniqueId("UUID");
+                        face.playerName = compound.getString("Name");
+                        face.markDirty();
+                        face.sendUpdate();
+                    }
+                    return EnumActionResult.SUCCESS;
+                }
+            }
+        }
+        return EnumActionResult.FAIL;
+    }
+
+    @Override
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand){
+        if(!player.worldObj.isRemote){
+            if(entity instanceof EntityPlayer){
+                EntityPlayer playerHit = (EntityPlayer)entity;
+
+                if(!playerHit.isSneaking()){
+                    if(!stack.hasTagCompound()){
+                        stack.setTagCompound(new NBTTagCompound());
+                    }
+
+                    NBTTagCompound compound = stack.getTagCompound();
+                    compound.setString("Name", playerHit.getName());
+                    compound.setUniqueId("UUID", playerHit.getUniqueID());
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+        if(stack.hasTagCompound()){
+            String name = stack.getTagCompound().getString("Name");
+            if(name != null){
+                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".playerProbe.probing")+": "+name);
+            }
+        }
+    }
+}
