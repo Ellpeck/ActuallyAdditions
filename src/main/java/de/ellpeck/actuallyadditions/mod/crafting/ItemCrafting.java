@@ -37,7 +37,6 @@ import java.util.ArrayList;
 public final class ItemCrafting{
 
     public static final ArrayList<IRecipe> RECIPES_MASHED_FOOD = new ArrayList<IRecipe>();
-    public static final ArrayList<IRecipe> RECIPES_DRILL_COLORING = new ArrayList<IRecipe>();
     public static final ArrayList<IRecipe> RECIPES_POTION_RINGS = new ArrayList<IRecipe>();
     public static IRecipe recipePhantomConnector;
     public static IRecipe recipeCoil;
@@ -181,21 +180,13 @@ public final class ItemCrafting{
 
         //Drill
         if(ConfigCrafting.DRILL.isEnabled()){
-            ItemStack lightBlueDrill = new ItemStack(InitItems.itemDrill, 1, TheColoredLampColors.LIGHT_BLUE.ordinal());
-            GameRegistry.addRecipe(new ShapedOreRecipe(lightBlueDrill.copy(),
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrill, 1, TheColoredLampColors.LIGHT_BLUE.ordinal()),
                     "DDD", "CRC", "III",
                     'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()),
                     'I', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal())));
             recipeDrill = RecipeUtil.lastIRecipe();
-
-            for(int i = 0; i < 16; i++){
-                if(i != TheColoredLampColors.LIGHT_BLUE.ordinal()){
-                    GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemDrill, 1, i), lightBlueDrill.copy(), "dye"+TheColoredLampColors.values()[i].name));
-                    RECIPES_DRILL_COLORING.add(RecipeUtil.lastIRecipe());
-                }
-            }
         }
 
         //Drill Core
