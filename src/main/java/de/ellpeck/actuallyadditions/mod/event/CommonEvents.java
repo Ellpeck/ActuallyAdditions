@@ -92,9 +92,9 @@ public class CommonEvents{
     }
 
     @SubscribeEvent
-    public void onLogInEvent(EntityJoinWorldEvent event){
-        if(!event.getEntity().worldObj.isRemote && event.getEntity() instanceof EntityPlayerMP){
-            EntityPlayerMP player = (EntityPlayerMP)event.getEntity();
+    public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event){
+        if(!event.player.worldObj.isRemote && event.player instanceof EntityPlayerMP){
+            EntityPlayerMP player = (EntityPlayerMP)event.player;
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if(!data.theCompound.hasNoTags()){
                 NBTTagCompound compound = new NBTTagCompound();
