@@ -80,6 +80,8 @@ public final class BlockCrafting{
     public static IRecipe recipeDropper;
     public static IRecipe recipeRangedCollector;
     public static IRecipe recipeLaserRelay;
+    public static IRecipe recipeLaserRelayAdvanced;
+    public static IRecipe recipeLaserRelayExtreme;
     public static IRecipe recipeAtomicReconstructor;
     public static IRecipe recipeMiner;
     public static IRecipe recipeFireworkBox;
@@ -222,6 +224,20 @@ public final class BlockCrafting{
                     'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
             recipeLaserRelay = RecipeUtil.lastIRecipe();
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLaserRelayAdvanced),
+                    " I ", "XRX", " I ",
+                    'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
+                    'R', new ItemStack(InitBlocks.blockLaserRelay),
+                    'X', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal())));
+            recipeLaserRelayAdvanced = RecipeUtil.lastIRecipe();
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLaserRelayExtreme),
+                    " I ", "XRX", " I ",
+                    'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
+                    'R', new ItemStack(InitBlocks.blockLaserRelayAdvanced),
+                    'X', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal())));
+            recipeLaserRelayExtreme = RecipeUtil.lastIRecipe();
         }
 
         //Item Laser Relay

@@ -82,6 +82,7 @@ public final class ItemCrafting{
     public static IRecipe recipeEnderStar;
     public static IRecipe recipeSpawnerChanger;
     public static IRecipe recipeFilter;
+    public static IRecipe recipePlayerProbe;
 
     public static void init(){
 
@@ -439,6 +440,17 @@ public final class ItemCrafting{
                     'E', Items.ENDER_PEARL,
                     'S', "stickWood"));
             recipePhantomConnector = RecipeUtil.lastIRecipe();
+        }
+
+        //Player Probe
+        if(ConfigCrafting.PLAYER_PROBE.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemPlayerProbe),
+                    "A A", "AIA", "RHR",
+                    'A', new ItemStack(Blocks.IRON_BARS),
+                    'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
+                    'H', new ItemStack(Items.SKULL, 1, 1),
+                    'I', new ItemStack(Items.IRON_HELMET)));
+            recipePlayerProbe = RecipeUtil.lastIRecipe();
         }
 
         //Quartz
