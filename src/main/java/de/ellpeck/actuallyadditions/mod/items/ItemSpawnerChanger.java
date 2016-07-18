@@ -30,6 +30,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.BossInfo;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
@@ -106,7 +107,7 @@ public class ItemSpawnerChanger extends ItemBase{
             stack.setTagCompound(new NBTTagCompound());
         }
 
-        if(!(entity instanceof EntityPlayer)){
+        if(!(entity instanceof EntityPlayer) && !entity.isNonBoss()){
             String entityName = EntityList.getEntityString(entity);
             if(entityName != null && !entityName.isEmpty()){
                 for(String name : ConfigStringListValues.SPAWNER_CHANGER_BLACKLIST.getValue()){
