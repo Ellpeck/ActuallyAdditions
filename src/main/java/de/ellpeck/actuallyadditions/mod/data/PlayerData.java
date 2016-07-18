@@ -18,28 +18,32 @@ import java.util.UUID;
 
 public final class PlayerData{
 
-    public static PlayerSave getDataFromPlayer(EntityPlayer player){
+    public static PlayerSave getDataFromPlayer(UUID id){
         ArrayList<PlayerSave> data = WorldData.PLAYER_SAVE_DATA;
         //Get Data from existing data
         for(PlayerSave save : data){
-            if(save.thePlayerUUID.equals(player.getUniqueID())){
+            if(save.theId != null && save.theId.equals(id)){
                 return save;
             }
         }
 
         //Add Data if none is existant
-        PlayerSave aSave = new PlayerSave(player.getUniqueID(), new NBTTagCompound());
+        PlayerSave aSave = new PlayerSave(id, new NBTTagCompound());
         data.add(aSave);
         return aSave;
     }
 
+    public static PlayerSave getDataFromPlayer(EntityPlayer player){
+        return getDataFromPlayer(player.getUniqueID());
+    }
+
     public static class PlayerSave{
 
-        public final UUID thePlayerUUID;
+        public final UUID theId;
         public NBTTagCompound theCompound;
 
-        public PlayerSave(UUID theUUID, NBTTagCompound theCompound){
-            this.thePlayerUUID = theUUID;
+        public PlayerSave(UUID theId, NBTTagCompound theCompound){
+            this.theId = theId;
             this.theCompound = theCompound;
         }
 
@@ -51,13 +55,14 @@ public final class PlayerData{
 
         public NBTTagCompound toNBT(){
             NBTTagCompound compound = new NBTTagCompound();
-            compound.setLong("LeastSignificant", this.thePlayerUUID.getLeastSignificantBits());
-            compound.setLong("MostSignificant", this.thePlayerUUID.getMostSignificantBits());
+            compound.setLong("LeastSignificant", this.theId.getLeastSignificantBits());
+            compound.setLong("MostSignificant", this.theId.getMostSignificantBits());
 
             compound.setTag("Tag", this.theCompound);
 
             return compound;
         }
     }
+
 
 }

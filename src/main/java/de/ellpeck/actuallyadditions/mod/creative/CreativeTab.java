@@ -55,6 +55,8 @@ public class CreativeTab extends CreativeTabs{
 
         this.add(InitBlocks.blockFireworkBox);
         this.add(InitBlocks.blockLaserRelay);
+        this.add(InitBlocks.blockLaserRelayAdvanced);
+        this.add(InitBlocks.blockLaserRelayExtreme);
         this.add(InitBlocks.blockLaserRelayItem);
         this.add(InitBlocks.blockLaserRelayItemWhitelist);
         this.add(InitBlocks.blockItemViewer);
@@ -136,6 +138,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockBlackLotus);
         this.add(InitBlocks.blockBookletStand);
 
+        this.add(InitItems.itemPlayerProbe);
         this.add(InitItems.itemColorLens);
         this.add(InitItems.itemExplosionLens);
         this.add(InitItems.itemDamageLens);

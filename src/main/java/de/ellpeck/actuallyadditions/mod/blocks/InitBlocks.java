@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay.Type;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockStair;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
@@ -95,6 +96,8 @@ public final class InitBlocks{
     public static Block blockRangedCollector;
 
     public static Block blockLaserRelay;
+    public static Block blockLaserRelayAdvanced;
+    public static Block blockLaserRelayExtreme;
     public static Block blockLaserRelayItem;
     public static Block blockLaserRelayItemWhitelist;
     public static Block blockItemViewer;
@@ -121,9 +124,12 @@ public final class InitBlocks{
     public static Block blockDisplayStand;
     public static Block blockShockSuppressor;
 
+    public static Block blockTinyTorch;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockTinyTorch = new BlockTinyTorch("blockTinyTorch");
         blockShockSuppressor = new BlockShockSuppressor("blockShockSuppressor");
         blockDisplayStand = new BlockDisplayStand("blockDisplayStand");
         blockPlayerInterface = new BlockPlayerInterface("blockPlayerInterface");
@@ -134,9 +140,11 @@ public final class InitBlocks{
         blockAtomicReconstructor = new BlockAtomicReconstructor("blockAtomicReconstructor");
         blockCrystal = new BlockCrystal("blockCrystal");
         blockBlackLotus = new BlockBlackLotus("blockBlackLotus");
-        blockLaserRelay = new BlockLaserRelay("blockLaserRelay", BlockLaserRelay.Type.ENERGY);
-        blockLaserRelayItem = new BlockLaserRelay("blockLaserRelayItem", BlockLaserRelay.Type.ITEM);
-        blockLaserRelayItemWhitelist = new BlockLaserRelay("blockLaserRelayItemWhitelist", BlockLaserRelay.Type.ITEM_WHITELIST);
+        blockLaserRelay = new BlockLaserRelay("blockLaserRelay", Type.ENERGY_BASIC);
+        blockLaserRelayAdvanced = new BlockLaserRelay("blockLaserRelayAdvanced", Type.ENERGY_ADVANCED);
+        blockLaserRelayExtreme = new BlockLaserRelay("blockLaserRelayExtreme", Type.ENERGY_EXTREME);
+        blockLaserRelayItem = new BlockLaserRelay("blockLaserRelayItem", Type.ITEM);
+        blockLaserRelayItemWhitelist = new BlockLaserRelay("blockLaserRelayItemWhitelist", Type.ITEM_WHITELIST);
         blockRangedCollector = new BlockRangedCollector("blockRangedCollector");
         blockDirectionalBreaker = new BlockDirectionalBreaker("blockDirectionalBreaker");
         blockLeafGenerator = new BlockLeafGenerator("blockLeafGenerator");

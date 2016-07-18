@@ -24,9 +24,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiBookletStand extends GuiBooklet{
 
-    private GuiButton buttonSetPage;
-
     private final TileEntityBookletStand theStand;
+    private GuiButton buttonSetPage;
 
     public GuiBookletStand(TileEntityBase theStand){
         super(null, false, false);

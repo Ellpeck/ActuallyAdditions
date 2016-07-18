@@ -26,6 +26,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class ItemShovelAA extends ItemToolAA{
@@ -50,5 +51,10 @@ public class ItemShovelAA extends ItemToolAA{
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
         return Items.IRON_SHOVEL.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+    }
+
+    @Override
+    public Set<String> getToolClasses(ItemStack stack){
+        return Collections.singleton("shovel");
     }
 }

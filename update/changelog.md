@@ -1,3 +1,28 @@
+# 1.10.2-r51
+* Made TiCon Rapier be able to be repaired in the Item Repairer
+* Added Player Probe
+* Renamed Mashed Food to bio mash
+* Made the booklet search bar search a whole item's tooltip and not just the name
+* Added different Energy Laser Relays for different amounts of power transfer
+* Added Tiny Torch
+* Booklet now states that the drill needs previous tiers of upgrades
+* Made drill coloring not use all of the nbt, meaning you can color a drill without the upgrades being gone
+* Made ActAdd tools work in hopefully most automatic farms etc.
+
+# 1.10.2-r50
+* Changed the name of the coffee machine to coffee maker because that's apparently a more proper name
+* Fixed the drill sometimes acting up on redstone and glowstone
+* Fixed the particles of breaking with the drill being delayed making it look weird
+* Fixed a crash with the InvTweaks sorting buttons in a storage crate
+* TiCon tools now lose their broken tag when repairing them with the item repairer
+* Added a config option for Solid XP dropping
+* Fixed a bug with the game sometimes crashing when looking at an entity with the booklet in hand
+* Fixed Drill, Crafter and Filter having an unlocalized name in the GUIs
+
+# 1.10.2-r49
+* Fixed a dube bug that caused the reconstructor to create about a thousand bajillion more items and blocks than it should.
+* Yea. I'm pretty great. >_<
+
 # 1.10.2-r48
 * Added Shock Suppressor, a block that will cause explosions not to happen
 * Added Phantom Placer Siding rule button

@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,9 +38,9 @@ public class LensDisruption extends Lens{
                 ItemStack stack = item.getEntityItem();
                 if(!item.isDead && stack != null){
                     if(!stack.hasTagCompound() || !stack.getTagCompound().getBoolean(ModUtil.MOD_ID+"DisruptedAlready")){
-                        ItemStack newStack = null;
 
-                        while(newStack == null || newStack.getItem() == null){
+                        ItemStack newStack;
+                        do{
                             if(Util.RANDOM.nextBoolean()){
                                 newStack = new ItemStack(Item.REGISTRY.getRandomObject(Util.RANDOM));
                             }
@@ -47,6 +48,8 @@ public class LensDisruption extends Lens{
                                 newStack = new ItemStack(Block.REGISTRY.getRandomObject(Util.RANDOM));
                             }
                         }
+                        while(newStack == null || newStack.getItem() == null);
+
                         newStack.stackSize = stack.stackSize;
 
                         if(!newStack.hasTagCompound()){

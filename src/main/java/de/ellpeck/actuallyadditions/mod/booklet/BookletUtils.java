@@ -229,12 +229,20 @@ public final class BookletUtils{
     }
 
     private static boolean getChapterStacksContainString(String text, IBookletChapter chapter){
+        Minecraft mc = Minecraft.getMinecraft();
         for(BookletPage page : chapter.getPages()){
             ItemStack[] pageStacks = page.getItemStacksForPage();
             if(pageStacks != null){
                 for(ItemStack stack : pageStacks){
-                    if(stack != null && stack.getDisplayName().toLowerCase(Locale.ROOT).contains(text)){
-                        return true;
+                    if(stack != null && stack.getItem() != null){
+                        List<String> list = stack.getTooltip(mc.thePlayer, mc.gameSettings.advancedItemTooltips);
+                        for(String s : list){
+                            if(s != null && !s.isEmpty()){
+                                if(s.toLowerCase(Locale.ROOT).contains(text)){
+                                    return true;
+                                }
+                            }
+                        }
                     }
                 }
             }

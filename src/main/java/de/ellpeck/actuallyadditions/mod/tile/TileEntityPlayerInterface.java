@@ -23,8 +23,9 @@ import java.util.UUID;
 public class TileEntityPlayerInterface extends TileEntityInventoryBase implements IEnergyReceiver, IEnergyDisplay{
 
     public static final int DEFAULT_RANGE = 32;
-    public UUID connectedPlayer;
     private final EnergyStorage storage = new EnergyStorage(30000);
+    public UUID connectedPlayer;
+    public String playerName;
     private int oldEnergy;
     private int range;
 
@@ -85,6 +86,7 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
         this.storage.writeToNBT(compound);
         if(this.connectedPlayer != null && type != NBTType.SAVE_BLOCK){
             compound.setUniqueId("Player", this.connectedPlayer);
+            compound.setString("PlayerName", this.playerName);
         }
     }
 
@@ -93,6 +95,7 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
         this.storage.readFromNBT(compound);
         if(compound.hasKey("PlayerLeast") && type != NBTType.SAVE_BLOCK){
             this.connectedPlayer = compound.getUniqueId("Player");
+            this.playerName = compound.getString("PlayerName");
         }
     }
 

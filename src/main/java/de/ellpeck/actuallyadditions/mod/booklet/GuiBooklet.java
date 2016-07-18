@@ -91,10 +91,10 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public GuiButton buttonViewOnline;
     public GuiTextField searchField;
     public boolean shouldSaveDataNextClose;
+    public String bookletName;
     private int ticksElapsed;
     private boolean mousePressed;
     private int hisNameIsAt;
-    public String bookletName;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
         this.xSize = 146;
@@ -405,15 +405,17 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                     BookletUtils.openLastBookPage(this, data.theCompound.getCompoundTag("BookletData"));
                 }
             }
+            this.shouldSaveDataNextClose = false;
         }
         else{
             //Open forced entry
             BookletUtils.openIndexEntry(this, ItemBooklet.forcedEntry.entry, ItemBooklet.forcedEntry.pageInIndex, true);
             BookletUtils.openChapter(this, ItemBooklet.forcedEntry.chapter, ItemBooklet.forcedEntry.page);
             ItemBooklet.forcedEntry = null;
+
+            this.shouldSaveDataNextClose = true;
         }
 
-        this.shouldSaveDataNextClose = false;
     }
 
     @Override

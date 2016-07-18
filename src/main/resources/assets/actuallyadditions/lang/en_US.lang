@@ -84,7 +84,7 @@ container.nei.actuallyadditions.compost.name=Compost
 container.nei.actuallyadditions.furnaceDouble.name=Double Furnace
 container.nei.actuallyadditions.treasureChest.name=Treasure Chest
 container.nei.actuallyadditions.treasureChest.info=Items at
-container.nei.actuallyadditions.coffee.name=Coffee Machine
+container.nei.actuallyadditions.coffee.name=Coffee Maker
 container.nei.actuallyadditions.coffee.special=Special Feature
 container.nei.actuallyadditions.coffee.maxAmount=Max Amount
 container.nei.actuallyadditions.coffee.extra.milk=+01:00, -1 Level
@@ -178,13 +178,15 @@ tile.actuallyadditions.blockPlacer.name=Auto-Placer
 tile.actuallyadditions.blockDropper.name=Automatic Precision Dropper
 tile.actuallyadditions.blockMiscEnderCasing.name=Ender Casing
 tile.actuallyadditions.blockFlax.name=Flax Plant
-tile.actuallyadditions.blockCoffeeMachine.name=Coffee Machine
+tile.actuallyadditions.blockCoffeeMachine.name=Coffee Maker
 tile.actuallyadditions.blockXPSolidifier.name=Experience Solidifier
 tile.actuallyadditions.blockSmileyCloud.name=Smiley Cloud
 tile.actuallyadditions.blockLeafGenerator.name=Leaf-Eating Generator
 tile.actuallyadditions.blockDirectionalBreaker.name=Long-Range Breaker
 tile.actuallyadditions.blockRangedCollector.name=Ranged Collector
-tile.actuallyadditions.blockLaserRelay.name=Laser Relay
+tile.actuallyadditions.blockLaserRelay.name=Energy Laser Relay
+tile.actuallyadditions.blockLaserRelayAdvanced.name=Advanced Energy Laser Relay
+tile.actuallyadditions.blockLaserRelayExtreme.name=Extreme Energy Laser Relay
 tile.actuallyadditions.blockMiscIronCasing.name=Iron Casing
 tile.actuallyadditions.blockBlackLotus.name=Black Lotus
 tile.actuallyadditions.blockTestifiBucksWhiteFence.name=Ethetic Quartz Wall
@@ -213,6 +215,7 @@ tile.actuallyadditions.blockImpureIron.name=Impure Iron
 tile.actuallyadditions.blockBookletStand.name=Wall-Mount Manual
 tile.actuallyadditions.blockDisplayStand.name=Display Stand
 tile.actuallyadditions.blockShockSuppressor.name=Shock Absorber
+tile.actuallyadditions.blockTinyTorch.name=Tiny Torch
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -331,7 +334,7 @@ item.actuallyadditions.itemDrillUpgradeFortuneII.name=Drill Fortune Augment II (
 item.actuallyadditions.itemDrillUpgradeBlockPlacing.name=Drill Block Placing Augment
 item.actuallyadditions.itemDrillUpgradeThreeByThree.name=Drill Mining Augment I
 item.actuallyadditions.itemDrillUpgradeFiveByFive.name=Drill Mining Augment II
-item.actuallyadditions.itemMiscMashedFood.name=Mashed Food
+item.actuallyadditions.itemMiscMashedFood.name=Bio-Mash
 item.actuallyadditions.itemFertilizer.name=Fertilizer
 item.actuallyadditions.itemMiscDough.name=Dough
 item.actuallyadditions.itemMiscPaperCone.name=Paper Cone
@@ -496,6 +499,7 @@ item.actuallyadditions.itemWaterBowl.name=Bowl of Water
 item.actuallyadditions.itemFilter.name=Item Filter
 item.actuallyadditions.itemMiscBiomass.name=Biomass
 item.actuallyadditions.itemMiscBiocoal.name=Bio Coal
+item.actuallyadditions.itemPlayerProbe.name=Player Probe
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -526,6 +530,10 @@ tooltip.actuallyadditions.laser.stored.desc=<Laser stored!>
 tooltip.actuallyadditions.laser.connected.desc=<Laser connected!>
 tooltip.actuallyadditions.laser.cantConnect.desc=Can't connect: The relays are either part of the same network, the stored relay isn't the same type or doesn't exist anymore or it is too far away!
 tooltip.actuallyadditions.itemBooklet.desc=Or "Booklet", if you will
+tooltip.actuallyadditions.playerProbe.disconnect.1=The player you were probing has broken the connection before you could strap him to the Player Interface! Data will be cleared!
+tooltip.actuallyadditions.playerProbe.disconnect.2=The player you were probing has disconnected before you could strap him to the Player Interface! Data will be cleared!
+tooltip.actuallyadditions.playerProbe.probing=Probing
+tooltip.actuallyadditions.playerProbe.notice=Look out! Someone tried to probe you and strap you to a Player Interface, but they failed!
 
 #Gui Information
 info.actuallyadditions.gui.animals=Animals
@@ -590,7 +598,7 @@ container.actuallyadditions.liquiface.name=Liquiface
 container.actuallyadditions.energyface.name=Energyface
 container.actuallyadditions.fluidPlacer.name=Fluid Placer
 container.actuallyadditions.fluidCollector.name=Fluid Collector
-container.actuallyadditions.coffeeMachine.name=Coffee Machine
+container.actuallyadditions.coffeeMachine.name=Coffee Maker
 container.actuallyadditions.drill.name=Drill
 container.actuallyadditions.energizer.name=Energizer
 container.actuallyadditions.enervator.name=Enervator
@@ -647,7 +655,7 @@ achievement.actuallyadditions.pickUpCoffee=Makes you addicted
 achievement.actuallyadditions.pickUpCoffee.desc=Harvest some coffee
 
 achievement.actuallyadditions.craftCoffeeMachine=Addiction in cups
-achievement.actuallyadditions.craftCoffeeMachine.desc=Craft a Coffee Machine
+achievement.actuallyadditions.craftCoffeeMachine.desc=Craft a Coffee Maker
 
 achievement.actuallyadditions.obscured=§ksome chieve name
 achievement.actuallyadditions.obscured.desc=§klolwut y u actually look over meow
@@ -739,16 +747,16 @@ booklet.actuallyadditions.chapter.feeder.name=Feeder
 booklet.actuallyadditions.chapter.feeder.text.1=The <item>Feeder<r> is a good alternative to a manual animal farm. Place it in the middle of an animal pen and supply it with some wheat, seeds or carrots, depending on the animal you want to feed, and just wait. It will <imp>automatically feed the animals<r> and if there is enough animals near it, it will <imp>shut off on its own<r> to prevent lag or animal overflow. <n><n><i>Greenpeace approves
 
 booklet.actuallyadditions.chapter.compost.name=Compost and Fertilizer
-booklet.actuallyadditions.chapter.compost.text.1=The <item>Compost<r> is used to make <item>Fertilizier<r> from <item>Mashed Food<r>. <item>Fertilizer<r> acts just like Bone Meal, but can be crafted in a much simpler manner just by crafting <item>Mashed Food<r> and then putting 10 of those inside of a <item>Compost<r> and waiting for a bit. When the mashed food is composted, just take it out by right-clicking again. <n><n>This, however, also works for some other items, which will be explained when needed.
-booklet.actuallyadditions.chapter.compost.text.3=<item>Mashed Food<r> can be crafted from <imp>any type of food or plantable item<r>.
+booklet.actuallyadditions.chapter.compost.text.1=The <item>Compost<r> is used to make <item>Fertilizier<r> from <item>Bio-Mash<r>. <item>Fertilizer<r> acts just like Bone Meal, but can be crafted in a much simpler manner just by crafting <item>Bio-Mash<r> and then putting 10 of those inside of a <item>Compost<r> and waiting for a bit. When the mash is composted, just take it out by right-clicking again. <n><n>This, however, also works for some other items, which will be explained when needed.
+booklet.actuallyadditions.chapter.compost.text.3=<item>Bio-Mash<r> can be crafted from <imp>any type of food or plantable item<r>.
 
 booklet.actuallyadditions.chapter.crate.name=Storage Crates
 booklet.actuallyadditions.chapter.crate.text.1=<item>Storage Crates<r> are big. <imp>Really big<r>. They hold tons of items, more than 4 chests worth of them. <n>Not only that, but they can be <imp>upgraded in size<r>! View the following pages to get information on that and some other items regarding crates!
 booklet.actuallyadditions.chapter.crate.text.4=Placing a <item>Storage Crate Keeper<r> inside the Storage Crate before breaking it will cause it to <imp>keep all of its items<r>, however the Keeper will be destroyed upon placing the Crate back down.
 booklet.actuallyadditions.chapter.crate.text.5=The <item>Chest To Storage Crate Upgrade<r> allows you to <imp>convert any chest into a Storage Crate<r>, retaining its items! <n>Just <imp>shift-right-click<r> onto the chest to apply it.
 
-booklet.actuallyadditions.chapter.coffeeMachine.name=Coffee Machine
-booklet.actuallyadditions.chapter.coffeeMachine.text.1=The <item>Coffee Machine<r> is a block used to make <item>Coffee<r>, a <imp>potion-like<r> item that gives the user several buffs. <n>To use the coffee machine, you need a <item>Empty Cup<r>, <coffee> <item>Coffee Beans<r>, which can be found in the wild, harvested and <imp>planted on farmland<r> again, <rf> RF/t and <water>mB of Water per cup brewed. <n>On the coffee machine recipe pages at the back, to see what the item does, just hover over the Cup of Coffee.
+booklet.actuallyadditions.chapter.coffeeMachine.name=Coffee Maker
+booklet.actuallyadditions.chapter.coffeeMachine.text.1=The <item>Coffee Maker<r> is a block used to make <item>Coffee<r>, a <imp>potion-like<r> item that gives the user several buffs. <n>To use the coffee maker, you need a <item>Empty Cup<r>, <coffee> <item>Coffee Beans<r>, which can be found in the wild, harvested and <imp>planted on farmland<r> again, <rf> RF/t and <water>mB of Water per cup brewed. <n>On the coffee maker recipe pages at the back, to see what the item does, just hover over the Cup of Coffee.
 booklet.actuallyadditions.chapter.coffeeMachine.text.2=To actually give your coffee some buffs, <imp>put some of the items shown on the later pages into the slots on the right<r>. <n>The more slots are filled up with one item, the higher the <imp>Amplifier<r> of the effect will be. The <imp>Maximum Amplifier<r> is the max amount of items to be put into one coffee. <n>Order matters: When using, for example, <item>Milk<r> (to see what it does exactly, go to a later page), you are going to have to plan the items out inside the <imp>numbered slots<r> in such a way that it brews the coffee you want.
 booklet.actuallyadditions.chapter.coffeeMachine.text.3=This is an example of a recipe making a coffee containing <imp>Fire Resistance 1 for 0:20<r> and <imp>Speed 1 for 2:30<r>.
 booklet.actuallyadditions.chapter.coffeeMachine.text.6=<item>Milk<r> is an important item when brewing coffee: It <imp>adds 2 minutes<r> to all effects of items in slots with lower numbers while <imp>removing 1 amplifier<r>. When the amplifier of an effect is 1, however, it will remove the effect.
@@ -787,7 +795,6 @@ booklet.actuallyadditions.chapter.wings.name=Wings Of The Bats
 booklet.actuallyadditions.chapter.wings.text.1=Sometimes, bats will drop <item>Wings<r>. These wings can't really be used to fly, but that's just because they're not powerful enough. <n>To make them more powerful, you can craft <item>Wings Of The Bats<r>. When you have these in your inventory, they will allow you to <imp>fly like in creative mode<r>.
 
 booklet.actuallyadditions.chapter.foods.name=Foodstuffs
-booklet.actuallyadditions.chapter.foods.text.1=Yes, this is <item>Bacon<r>. Don't try naming it <imp>Ellspeck<r>. <n><n><i>Please, just don't.
 
 booklet.actuallyadditions.chapter.leafBlower.name=Leaf Blowers
 booklet.actuallyadditions.chapter.leafBlower.text.1=The <item>Leaf Blower<r> can blow away tall grass, flowers and other stuff around you when you <imp>hold right-click<r>. There is an <item>Advanced Leaf Blower<r>, which works like the basic one, except that it operates <imp>much faster<r> and <imp>also breaks Leaves<r>.
@@ -805,7 +812,7 @@ booklet.actuallyadditions.chapter.potionRings.text.1=The <item>Potion Rings<r> h
 
 booklet.actuallyadditions.chapter.drill.name=Drills
 booklet.actuallyadditions.chapter.drill.text.1=The <item>Drill<r> works like a Pickaxe and a Shovel. It uses <imp>RF<r> per block. It can be <imp>charged in an Energizer<r> and upgraded by <imp>right-clicking<r> with it in your hand. There is <imp>a lot of upgrades<r>, but here is an explanation of some of them: <n>The <item>Mining Uprgades<r> enlarge the hole which the Drill digs. <n>The <item>Placement Upgrade<r>, after you right-click it in any slot of your hotbar, will make the Drill able to <imp>place a block from that slot by right-clicking<r>. You can also put a <item>Battery<r> inside the Drill to give it more charge.
-booklet.actuallyadditions.chapter.drill.text.3=The <item>Drill<r> can also be <imp>dyed<r> in Minecraft's 16 colors. <n>It's only cosmetic and won't have any effect other than it looking different, however.
+booklet.actuallyadditions.chapter.drill.text.2=It should be noted that, in fact, the <item>Speed<r>, <item>Mining<r> and <item>Fortune Upgrades<r> <imp>need their previous tiers to be installed<r> for them to work. <n>This means that, if you want Speed III in the Drill, it needs Speed II and Speed I inside it as well. <n><n>Additionally, the <item>Drill<r> can also be <imp>dyed<r> in Minecraft's 16 colors by crafting it together with one. <n>It's only cosmetic and won't have any effect other than it looking different, however.
 
 booklet.actuallyadditions.chapter.staff.name=Staff
 booklet.actuallyadditions.chapter.staff.text.1=The <item>Teleport Staff<r>, when charged in an Energizer, can be <imp>right-clicked<r> to <imp>teleport you to where you're looking<r>. When you are looking at a block, it will teleport you there, however, when you aren't looking at a block, you can only be looking upwards up to <imp>5 degrees<r>, otherwise the teleport will fail.
@@ -840,13 +847,14 @@ booklet.actuallyadditions.chapter.hairBalls.name=Ball of Fur-s
 booklet.actuallyadditions.chapter.hairBalls.text.1=<item>Balls of Fur<r> dropped by <imp>live<r> cats. <n>More information on the next page.
 booklet.actuallyadditions.chapter.hairBalls.text.2=<item>Balls of Fur<r> are an item rarely dropped by <imp>cats<r> which have been <imp>tamed<r> by the player. <n>Cats are very mysterious creatures as they <imp>appear to get everything stuck in their fur<r>. <item>Balls of Fur<r> may seem disgusting at first, but when removing all of the hair by <imp>right-clicking<r>, they will reveal some <imp>valuable items<r>. <n>Or just some String. <n><n><n><i>FUURRRRRR!!
 
-booklet.actuallyadditions.chapter.laserRelays.name=Laser Relays
-booklet.actuallyadditions.chapter.laserRelays.text.1=The <item>Laser Relay<r> is a block that can <imp>wirelessly transfer RF<r> just by being connected with a <item>Laser Wrench<r>, generating a network. <n>When placing a Power Generator or Receiver next to the relay, it can receive Power <imp>from any other relay<r> in the network. <n>Two relays can be at most <range> blocks apart. <n>During an energy transfer, they have an <imp>Energy Loss<r> of <loss>%.
-booklet.actuallyadditions.chapter.laserRelays.text.4=The <item>Laser Wrench<r>'s mode can be switched by <imp>sneak-right-clicking it<r> anywhere. <n>Possible modes are to <imp>always show lasers<r>, <imp>never show lasers<r> or only show lasers when <imp>holding the wrench<r>.
+booklet.actuallyadditions.chapter.laserRelays.name=Energy Laser Relays
+booklet.actuallyadditions.chapter.laserRelays.text.1=The <item>Energy Laser Relay<r> is a block that can <imp>wirelessly transfer RF (or Tesla)<r> just by being connected with a <item>Laser Wrench<r>, generating a network. <n>When placing a Power Generator or Receiver next to the relay, it can receive Power <imp>from any other relay<r> in the network. This system always works in both directions simultaneously. <n>Two relays can be at most <range> blocks apart. <n>During an energy transfer, they have a light <imp>Energy Loss<r>, but nothing to worry about.
+booklet.actuallyadditions.chapter.laserRelays.text.2=There are <imp>three tiers<r> of Energy Laser Relay. They have different maximum amounts of energy to be transferred through them in one tick. The <imp>energy caps<r> are, in order, <cap1>, <cap2>, and <cap3>. <n>Additionally, the energy loss is a bit higher every tier. <n><n><imp>Interconnecting<r> different tiers is possible, however the <imp>lowest cap<r> and <imp>highest loss<r> of the two relays connected to the blocks involved in the transfer is considered.
+booklet.actuallyadditions.chapter.laserRelays.text.7=The <item>Laser Wrench<r>'s mode can be switched by <imp>sneak-right-clicking it<r> anywhere. <n>Possible modes are to <imp>always show lasers<r>, <imp>never show lasers<r> or only show lasers when <imp>holding the wrench<r>.
 
 booklet.actuallyadditions.chapter.blackLotus.name=Black Lotus
 booklet.actuallyadditions.chapter.blackLotus.text.1=Think of this: <n>You need to craft <imp>black wool<r>, <imp>black clay<r> or anything else that <imp>needs black dye<r> but you are just guilty about killing so many <imp>innocent squids<r>? <n>Well, the <item>Black Lotus<r> is exactly the thing you need! <n>Just look around <imp>in the wild<r> a bit, and you will find one, then being able to craft some <item>Black Dye<r> that can be used <imp>instead of Ink Sacs<r> so that you don't need to kill poor squids and L any longer.
-booklet.actuallyadditions.chapter.blackLotus.text.2=<i>No, not that one, Vaz
+booklet.actuallyadditions.chapter.blackLotus.text.2=<i>Do the lotus pose
 
 booklet.actuallyadditions.chapter.crystals.name=Crystals and Reconstructor
 booklet.actuallyadditions.chapter.crystals.text.1=The <item>Atomic Reconstructor<r> is used to craft <item>Crystals<r>, which are the main crafting ingredient in most items from <imp>Actually Additions<r>. <n>Upon being supplied with power, it shoots out a Laser. <tifisgrin>When the Laser hits a block<r>, it will convert all surrounding items and blocks, provided they can be converted. <n>When shooting a laser, it uses <imp><rf> RF<r>, but additional rates vary depending on the conversion.
@@ -922,3 +930,9 @@ booklet.actuallyadditions.chapter.videoGuide.page.1.button=Watch Video
 booklet.actuallyadditions.chapter.shockSuppressor.name=Shock Absorber
 booklet.actuallyadditions.chapter.shockSuppressor.text.1=The <item>Shock Absorber<r> is a block that, when supplied with <imp>RF<r>, it will protect an area of <imp>up to <range> blocks around it<r> from any type of <imp>Explosion<r>, be it ghasts, TNT or creepers. <n>Every block that is protected will result in a loss of <imp><rf> RF<r>.
 booklet.actuallyadditions.chapter.shockSuppressor.text.2=<i>Credit where credit is due: <r><n><n>Or something like that. <n>Anyways, this thing was thought up and suggested to me by <imp>praetoras<r>. Thanks for that brilliant idea! <n><n><i>What's a fourth wall..?
+
+booklet.actuallyadditions.chapter.tinyTorch.name=Tiny Torch
+booklet.actuallyadditions.chapter.tinyTorch.text.1=<i>Yea.
+
+booklet.actuallyadditions.chapter.playerProbe.name=Player Probe
+booklet.actuallyadditions.chapter.playerProbe.text.1=The <item>Player Probe<r> can be used to change the player a <item>Player Interface<r> is connected to. If you don't know what the <item>Player Interface<r> does, look it up in here first! <n><n>To use the Player Probe, simply <imp>right-click any player<r> with it and then <imp>right-click the interface<r>. But watch out! <n>The Probe will <imp>notify the player and disconenct<r> from him whenever he sneaks and will also do so when he <imp>leaves the server<r>! <n><n><i>Shenanigans

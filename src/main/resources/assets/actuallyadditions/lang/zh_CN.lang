@@ -546,7 +546,11 @@ info.actuallyadditions.gui.whitelist=白名单
 info.actuallyadditions.gui.blacklist=黑名单
 info.actuallyadditions.gui.coffee=咖啡
 info.actuallyadditions.gui.ok=Ok
+<<<<<<< HEAD
 info.actuallyadditions.gui.the=\ 
+=======
+info.actuallyadditions.gui.the=\
+>>>>>>> master
 #info.actuallyadditions.gui.smart=
 #info.actuallyadditions.gui.smartInfo=
 #info.actuallyadditions.inputter.info.1=This is the first Slot in the connected Inventory to <p> at.
@@ -921,4 +925,8 @@ booklet.actuallyadditions.chapter.videoGuide.page.1.button=立即浏览
 
 booklet.actuallyadditions.chapter.shockSuppressor.name=震波吸收器
 booklet.actuallyadditions.chapter.shockSuppressor.text.1=<item>震波吸收器<r>在供应<imp>RF<r>能量后，能够保护周围<imp>至少<range>个方块的区域<r>免受各类<imp>爆炸<r>的破坏，无论是恶魂，TNT还是爬行者发生的爆炸。<n>保护一个方块需要消耗<imp><rf> RF<r>。
+<<<<<<< HEAD
 #booklet.actuallyadditions.chapter.shockSuppressor.text.2=<i>Credit where credit is due: <r><n><n>Or something like that. <n>Anyways, this thing was thought up and suggested to me by <imp>praetoras<r>. Thanks for that brilliant idea! <n><n><i>What's a fourth wall..?
+=======
+#booklet.actuallyadditions.chapter.shockSuppressor.text.2=<i>Credit where credit is due: <r><n><n>Or something like that. <n>Anyways, this thing was thought up and suggested to me by <imp>praetoras<r>. Thanks for that brilliant idea! <n><n><i>What's a fourth wall..?
+>>>>>>> master

@@ -23,6 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -93,7 +94,10 @@ public class ItemLaserWrench extends ItemBase{
             save.theCompound.setInteger("LaserWrenchMode", currMode);
 
             if(player instanceof EntityPlayerMP){
-                PacketHandler.theNetwork.sendTo(new PacketServerToClient(save.theCompound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), (EntityPlayerMP)player);
+                NBTTagCompound compound = new NBTTagCompound();
+                compound.setUniqueId("UUID", player.getUniqueID());
+                compound.setTag("Data", save.theCompound);
+                PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), (EntityPlayerMP)player);
             }
 
             player.addChatComponentMessage(new TextComponentString("Mode changed to "+WrenchMode.values()[currMode].name+"!"));

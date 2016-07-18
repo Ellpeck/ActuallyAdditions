@@ -20,6 +20,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class ItemAxeAA extends ItemToolAA{
@@ -38,5 +39,10 @@ public class ItemAxeAA extends ItemToolAA{
     public float getStrVsBlock(ItemStack stack, IBlockState state){
         Material material = state.getMaterial();
         return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
+    }
+
+    @Override
+    public Set<String> getToolClasses(ItemStack stack){
+        return Collections.singleton("axe");
     }
 }

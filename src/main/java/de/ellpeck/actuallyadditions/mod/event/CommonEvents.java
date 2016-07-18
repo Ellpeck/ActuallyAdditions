@@ -44,6 +44,18 @@ public class CommonEvents{
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+    public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
+        for(TheAchievements ach : TheAchievements.values()){
+            if(ach.type == type){
+                if(gotten != null && ach.chieve.theItemStack != null && gotten.getItem() == ach.chieve.theItemStack.getItem()){
+                    if(gotten.getItemDamage() == ach.chieve.theItemStack.getItemDamage()){
+                        player.addStat(ach.chieve, 1);
+                    }
+                }
+            }
+        }
+    }
+
     @SubscribeEvent
     public void livingDeathEvent(LivingDeathEvent event){
         if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getEntityLiving() instanceof EntityPlayer){
@@ -80,24 +92,20 @@ public class CommonEvents{
     }
 
     @SubscribeEvent
-    public void onLogInEvent(EntityJoinWorldEvent event){
-        if(!event.getEntity().worldObj.isRemote && event.getEntity() instanceof EntityPlayerMP){
-            EntityPlayerMP player = (EntityPlayerMP)event.getEntity();
+    public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event){
+        if(!event.player.worldObj.isRemote && event.player instanceof EntityPlayerMP){
+            EntityPlayerMP player = (EntityPlayerMP)event.player;
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if(!data.theCompound.hasNoTags()){
-                PacketHandler.theNetwork.sendTo(new PacketServerToClient(data.theCompound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), player);
+                NBTTagCompound compound = new NBTTagCompound();
+                compound.setUniqueId("UUID", player.getUniqueID());
+                compound.setTag("Data", data.theCompound);
+                compound.setBoolean("Log", true);
+                PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), player);
+                ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+" with info "+data.theCompound+".");
             }
-        }
-    }
-
-    public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
-        for(TheAchievements ach : TheAchievements.values()){
-            if(ach.type == type){
-                if(gotten != null && ach.chieve.theItemStack != null && gotten.getItem() == ach.chieve.theItemStack.getItem()){
-                    if(gotten.getItemDamage() == ach.chieve.theItemStack.getItemDamage()){
-                        player.addStat(ach.chieve, 1);
-                    }
-                }
+            else{
+                ModUtil.LOGGER.info("Not sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+" because he doesn't have any.");
             }
         }
     }

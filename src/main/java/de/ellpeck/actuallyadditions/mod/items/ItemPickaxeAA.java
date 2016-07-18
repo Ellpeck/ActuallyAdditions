@@ -20,6 +20,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class ItemPickaxeAA extends ItemToolAA{
@@ -79,5 +80,10 @@ public class ItemPickaxeAA extends ItemToolAA{
     public float getStrVsBlock(ItemStack stack, IBlockState state){
         Material material = state.getMaterial();
         return material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
+    }
+
+    @Override
+    public Set<String> getToolClasses(ItemStack stack){
+        return Collections.singleton("pickaxe");
     }
 }
