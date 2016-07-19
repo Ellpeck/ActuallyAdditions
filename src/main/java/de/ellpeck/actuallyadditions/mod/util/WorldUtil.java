@@ -350,15 +350,21 @@ public final class WorldUtil{
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
+        if(!world.isRemote){
+            world.playEvent(player, 2001, pos, Block.getStateId(state));
+        }
+        else{
+            world.playEvent(2001, pos, Block.getStateId(state));
+        }
+
         if(player.capabilities.isCreativeMode){
+
             block.onBlockHarvested(world, pos, state, player);
             if(block.removedByPlayer(state, world, pos, player, false)){
                 block.onBlockDestroyedByPlayer(world, pos, state);
             }
 
             if(!world.isRemote){
-                world.playEvent(player, 2001, pos, Block.getStateId(state));
-
                 if(player instanceof EntityPlayerMP){
                     ((EntityPlayerMP)player).connection.sendPacket(new SPacketBlockChange(world, pos));
                 }
@@ -385,7 +391,6 @@ public final class WorldUtil{
                     block.dropXpOnBlockBreak(world, pos, xp);
                 }
 
-                world.playEvent(player, 2001, pos, Block.getStateId(state));
                 playerMp.connection.sendPacket(new SPacketBlockChange(world, pos));
                 return true;
             }
@@ -394,9 +399,6 @@ public final class WorldUtil{
             if(block.removedByPlayer(state, world, pos, player, true)){
                 block.onBlockDestroyedByPlayer(world, pos, state);
             }
-
-            stack.onBlockDestroyed(world, state, pos, player);
-            world.playEvent(2001, pos, Block.getStateId(state));
 
             if(stack.stackSize <= 0 && stack == player.getHeldItemMainhand()){
                 ForgeEventFactory.onPlayerDestroyItem(player, stack, EnumHand.MAIN_HAND);
