@@ -119,6 +119,9 @@ public final class ItemUtil{
                     ench.removeTag(i);
                 }
             }
+            if(ench.hasNoTags() && stack.hasTagCompound()){
+                stack.getTagCompound().removeTag("ench");
+            }
         }
     }
 }

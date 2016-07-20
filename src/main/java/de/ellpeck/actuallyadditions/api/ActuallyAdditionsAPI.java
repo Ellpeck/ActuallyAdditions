@@ -65,6 +65,7 @@ public final class ActuallyAdditionsAPI{
     public static Lens lensDeath;
     public static Lens lensColor;
     public static Lens lensDisruption;
+    public static Lens lensDisenchanting;
 
     /**
      * Adds a Recipe to the Crusher Recipe Registry

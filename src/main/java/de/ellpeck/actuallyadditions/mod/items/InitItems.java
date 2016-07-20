@@ -138,6 +138,7 @@ public final class InitItems{
     public static Item itemColorLens;
     public static Item itemExplosionLens;
     public static Item itemDamageLens;
+    public static Item itemDisenchantingLens;
 
     public static Item itemPickaxeCrystalRed;
     public static Item itemAxeCrystalRed;
@@ -221,6 +222,7 @@ public final class InitItems{
         itemColorLens = new ItemLens("itemColorLens", ActuallyAdditionsAPI.lensColor);
         itemExplosionLens = new ItemLens("itemExplosionLens", ActuallyAdditionsAPI.lensDetonation);
         itemDamageLens = new ItemLens("itemDamageLens", ActuallyAdditionsAPI.lensDeath);
+        itemDisenchantingLens = new ItemLens("itemDisenchantingLens", ActuallyAdditionsAPI.lensDisenchanting);
         itemCrystal = new ItemCrystal("itemCrystal");
         itemLaserWrench = new ItemLaserWrench("itemLaserWrench");
         itemChestToCrateUpgrade = new ItemChestToCrateUpgrade("itemChestToCrateUpgrade");

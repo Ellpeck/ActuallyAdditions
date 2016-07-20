@@ -21,5 +21,6 @@ public final class Lenses{
         ActuallyAdditionsAPI.lensDeath = new LensDeath();
         ActuallyAdditionsAPI.lensColor = new LensColor();
         ActuallyAdditionsAPI.lensDisruption = new LensDisruption();
+        ActuallyAdditionsAPI.lensDisenchanting = new LensDisenchanting();
     }
 }
