@@ -49,11 +49,36 @@ import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class WorldUtil{
+
+    //This is probably hideous. Just saying.
+    public static boolean doItemInteraction(int slotExtract, int slotInsert, TileEntity extract, TileEntity insert, EnumFacing extractSide, EnumFacing insertSide){
+        if(extract.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide) && insert.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, insertSide)){
+            IItemHandler extractCap = extract.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide);
+            IItemHandler insertCap = insert.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, insertSide);
+
+            if(extractCap != null && insertCap != null){
+                ItemStack theoreticalExtract = extractCap.extractItem(slotExtract, Integer.MAX_VALUE, true);
+                if(theoreticalExtract != null){
+                    ItemStack remaining = insertCap.insertItem(slotInsert, theoreticalExtract, false);
+
+                    if(!ItemStack.areItemStacksEqual(remaining, theoreticalExtract)){
+                        int toExtract = remaining == null ? theoreticalExtract.stackSize : theoreticalExtract.stackSize-remaining.stackSize;
+                        extractCap.extractItem(slotExtract, toExtract, false);
+
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     public static void doEnergyInteraction(TileEntity tile){
         for(EnumFacing side : EnumFacing.values()){

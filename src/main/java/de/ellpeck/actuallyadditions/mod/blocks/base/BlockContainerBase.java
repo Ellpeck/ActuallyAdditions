@@ -154,10 +154,22 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         }
     }
 
+    public void neighborsChangedCustom(World world, BlockPos pos){
+        this.updateRedstoneState(world, pos);
+    }
+
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn){
         super.neighborChanged(state, worldIn, pos, blockIn);
-        this.updateRedstoneState(worldIn, pos);
+        this.neighborsChangedCustom(worldIn, pos);
+    }
+
+    @Override
+    public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor){
+        super.onNeighborChange(world, pos, neighbor);
+        if(world instanceof World){
+            this.neighborsChangedCustom((World)world, pos);
+        }
     }
 
     public void updateRedstoneState(World world, BlockPos pos){

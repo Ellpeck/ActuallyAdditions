@@ -32,6 +32,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockInputter extends BlockContainerBase{
@@ -91,14 +92,12 @@ public class BlockInputter extends BlockContainerBase{
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block){
-        super.neighborChanged(state, world, pos, block);
+    public void neighborsChangedCustom(World world, BlockPos pos){
+        super.neighborsChangedCustom(world, pos);
 
-        if(!world.isRemote){
-            TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof TileEntityInputter){
-                ((TileEntityInputter)tile).initVars();
-            }
+        TileEntity tile = world.getTileEntity(pos);
+        if(tile instanceof TileEntityInputter){
+            ((TileEntityInputter)tile).initVars();
         }
     }
 

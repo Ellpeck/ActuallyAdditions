@@ -21,6 +21,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor{
 
@@ -80,10 +83,46 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         this.markDirty();
     }
 
+    private boolean newPulling(){
+        for(EnumFacing side : EnumFacing.values()){
+            if(this.placeToPull.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side)){
+                IItemHandler cap = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
+                if(cap != null){
+                    for(int i = Math.max(this.slotToPullStart, 0); i < Math.min(this.slotToPullEnd, cap.getSlots()); i++){
+                        if(WorldUtil.doItemInteraction(i, 0, this.placeToPull, this, side, null)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean newPutting(){
+        for(EnumFacing side : EnumFacing.values()){
+            if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side)){
+                IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
+                if(cap != null){
+                    for(int i = Math.max(this.slotToPutStart, 0); i < Math.min(this.slotToPutEnd, cap.getSlots()); i++){
+                        if(WorldUtil.doItemInteraction(0, i, this, this.placeToPut, null, side)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * Pulls Items from the specified Slots on the specified Side
      */
     private void pull(){
+        if(this.newPulling()){
+            return;
+        }
+
         //The Inventory to pull from
         IInventory theInventory = (IInventory)this.placeToPull;
         //Does the Inventory even have Slots!?
@@ -183,6 +222,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * (Check pull() for Description, similar to this)
      */
     private void put(){
+        if(this.newPutting()){
+            return;
+        }
+
         IInventory theInventory = (IInventory)this.placeToPut;
         if(theInventory.getSizeInventory() > 0){
             int theSlotToPut = this.slotToPutStart;
@@ -281,20 +324,22 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      */
     public void initVars(){
         if(this.sideToPull != -1){
-            this.placeToPull = this.worldObj.getTileEntity(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(this.sideToPull)));
+            EnumFacing side = WorldUtil.getDirectionBySidesInOrder(this.sideToPull);
+            this.placeToPull = this.worldObj.getTileEntity(this.pos.offset(side));
 
-            if(this.placeToPull instanceof IInventory){
-                if(this.slotToPullEnd <= 0){
+            if(this.slotToPullEnd <= 0 && this.placeToPull != null){
+                if(this.placeToPull instanceof IInventory){
                     this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
                 }
             }
         }
 
         if(this.sideToPut != -1){
-            this.placeToPut = this.worldObj.getTileEntity(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(this.sideToPut)));
+            EnumFacing side = WorldUtil.getDirectionBySidesInOrder(this.sideToPut);
+            this.placeToPut = this.worldObj.getTileEntity(this.pos.offset(side));
 
-            if(this.placeToPut instanceof IInventory){
-                if(this.slotToPutEnd <= 0){
+            if(this.slotToPutEnd <= 0 && this.placeToPut != null){
+                if(this.placeToPut instanceof IInventory){
                     this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
                 }
             }
@@ -395,10 +440,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             //Is Block not powered by Redstone?
             if(!this.isRedstonePowered){
                 if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
-                    if(this.sideToPull != -1 && this.placeToPull instanceof IInventory){
+                    if(this.sideToPull != -1 && this.placeToPull != null){
                         this.pull();
                     }
-                    if(this.sideToPut != -1 && this.placeToPut instanceof IInventory){
+                    if(this.slots[0] != null && this.sideToPut != -1 && this.placeToPut != null){
                         this.put();
                     }
                 }
