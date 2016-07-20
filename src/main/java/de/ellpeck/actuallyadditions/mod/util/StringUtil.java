@@ -48,8 +48,7 @@ public final class StringUtil{
         }
     }
 
-    @SideOnly(Side.CLIENT)
     public static String getFluidInfo(FluidTank tank){
-        return tank.getFluid() == null || tank.getFluid().getFluid() == null ? "0/"+tank.getCapacity()+" mB" : tank.getFluidAmount()+"/"+tank.getCapacity()+" mB "+tank.getFluid().getLocalizedName();
+        return "";
     }
 }
