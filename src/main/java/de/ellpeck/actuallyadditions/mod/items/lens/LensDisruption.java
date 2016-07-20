@@ -21,6 +21,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
@@ -28,10 +29,11 @@ import java.util.ArrayList;
 
 public class LensDisruption extends Lens{
 
+    private static final int ENERGY_USE = 150000;
+
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        int energyUse = 150000;
-        if(tile.getEnergy() >= energyUse && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)){
+        if(tile.getEnergy() >= ENERGY_USE && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)){
             int range = 2;
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
             for(EntityItem item : items){
@@ -62,7 +64,7 @@ public class LensDisruption extends Lens{
                         EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, newStack);
                         tile.getWorldObject().spawnEntityInWorld(newItem);
 
-                        tile.extractEnergy(energyUse);
+                        tile.extractEnergy(ENERGY_USE);
                     }
                 }
             }
@@ -79,5 +81,10 @@ public class LensDisruption extends Lens{
     @Override
     public int getDistance(){
         return 3;
+    }
+
+    @Override
+    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot){
+        return tile.getEnergy()-energyUsePerShot >= ENERGY_USE;
     }
 }

@@ -22,6 +22,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
@@ -105,5 +106,10 @@ public class LensColor extends Lens{
     @Override
     public int getDistance(){
         return 10;
+    }
+
+    @Override
+    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot){
+        return tile.getEnergy()-energyUsePerShot >= ENERGY_USE;
     }
 }

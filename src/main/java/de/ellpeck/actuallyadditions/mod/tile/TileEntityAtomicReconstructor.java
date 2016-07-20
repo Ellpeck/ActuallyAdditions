@@ -101,21 +101,20 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         if(this.storage.getEnergyStored() >= ENERGY_USE){
             IBlockState state = this.worldObj.getBlockState(this.pos);
             EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
-            //Extract energy for shooting the laser itself too!
-            this.storage.extractEnergy(ENERGY_USE, false);
-
             //The Lens the Reconstructor currently has installed
             Lens currentLens = this.getLens();
-            int distance = currentLens.getDistance();
-            for(int i = 0; i < distance; i++){
-                BlockPos hitBlock = this.pos.offset(sideToManipulate, i+1);
+            if(currentLens.canInvoke(this, sideToManipulate, ENERGY_USE)){
+                //Extract energy for shooting the laser itself too!
+                this.storage.extractEnergy(ENERGY_USE, false);
 
-                if(currentLens.invoke(this.worldObj.getBlockState(hitBlock), hitBlock, this)){
-                    shootLaser(this.worldObj, this.getX(), this.getY(), this.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
-                    break;
-                }
-                else if(i >= distance-1){
-                    shootLaser(this.worldObj, this.getX(), this.getY(), this.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                int distance = currentLens.getDistance();
+                for(int i = 0; i < distance; i++){
+                    BlockPos hitBlock = this.pos.offset(sideToManipulate, i+1);
+
+                    if(currentLens.invoke(this.worldObj.getBlockState(hitBlock), hitBlock, this) || i >= distance-1){
+                        shootLaser(this.worldObj, this.getX(), this.getY(), this.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                        break;
+                    }
                 }
             }
         }

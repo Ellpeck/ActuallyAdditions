@@ -14,6 +14,7 @@ package de.ellpeck.actuallyadditions.api.lens;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 /**
