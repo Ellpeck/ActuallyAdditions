@@ -42,6 +42,7 @@ public class ItemWaterBowl extends ItemBase{
 
     @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent event){
+        System.out.println("ACTIVE");
         if(event.getWorld() != null){
             if(ConfigBoolValues.WATER_BOWL.isEnabled()){
                 if(event.getItemStack() != null && event.getItemStack().getItem() == Items.BOWL){
@@ -60,7 +61,10 @@ public class ItemWaterBowl extends ItemBase{
                                     event.getItemStack().stackSize--;
 
                                     ItemStack bowl = new ItemStack(InitItems.itemWaterBowl);
-                                    if(!event.getEntityPlayer().inventory.addItemStackToInventory(bowl.copy())){
+                                    if(event.getItemStack().stackSize <= 0){
+                                        event.getEntityPlayer().setHeldItem(event.getHand(), bowl);
+                                    }
+                                    else if(!event.getEntityPlayer().inventory.addItemStackToInventory(bowl.copy())){
                                         EntityItem entityItem = new EntityItem(event.getWorld(), event.getEntityPlayer().posX, event.getEntityPlayer().posY, event.getEntityPlayer().posZ, bowl.copy());
                                         entityItem.setPickupDelay(0);
                                         event.getWorld().spawnEntityInWorld(entityItem);
