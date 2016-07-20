@@ -50,6 +50,7 @@ public final class ActuallyAdditionsAPI{
     //These are getting initialized in Actually Additions' PreInit phase
     //DO NOT CHANGE/OVERRIDE THESE!!
     public static IBookletEntry entryGettingStarted;
+    public static IBookletEntry entryReconstruction;
     public static IBookletEntry entryFunctionalNonRF;
     public static IBookletEntry entryFunctionalRF;
     public static IBookletEntry entryGeneratingRF;

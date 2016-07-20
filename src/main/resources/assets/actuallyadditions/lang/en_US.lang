@@ -680,6 +680,7 @@ booklet.actuallyadditions.indexEntry.functionalRF.name=Blocks that use RF
 booklet.actuallyadditions.indexEntry.generatingRF.name=Blocks that generate RF
 booklet.actuallyadditions.indexEntry.itemsNoRF.name=Items that don't use RF
 booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
+booklet.actuallyadditions.indexEntry.reconstruction.name=Reconstruction
 
 #Booklet Info
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
@@ -859,7 +860,7 @@ booklet.actuallyadditions.chapter.blackLotus.text.2=<i>Do the lotus pose
 
 booklet.actuallyadditions.chapter.crystals.name=Crystals and Reconstructor
 booklet.actuallyadditions.chapter.crystals.text.1=The <item>Atomic Reconstructor<r> is used to craft <item>Crystals<r>, which are the main crafting ingredient in most items from <imp>Actually Additions<r>. <n>Upon being supplied with power, it shoots out a Laser. <tifisgrin>When the Laser hits a block<r>, it will convert all surrounding items and blocks, provided they can be converted. <n>When shooting a laser, it uses <imp><rf> RF<r>, but additional rates vary depending on the conversion.
-booklet.actuallyadditions.chapter.crystals.text.2=There are various <item>Lenses<r> that can be attached to the Reconstructor that don't all follow the default behavior of the Reconstructor and are able to do some neat things. <n>See the <imp>"Reconstructor Lenses & Misc"<r> chapter in the booklet's Miscellaneous section <imp>for more information<r>. <n><n>When right-clicking the Reconstructor with a <item>Redstone Torch<r> in hand, it will change between a mode where it <imp>gets deactivated by Redstone<r> and a mode where it <imp>responds to pulses<r>.
+booklet.actuallyadditions.chapter.crystals.text.2=There are various <item>Lenses<r> that can be attached to the Reconstructor that don't all follow the default behavior of the Reconstructor and are able to do some neat things. <n>See the <imp>Reconstruction section<r> in the booklet <imp>for more information<r>. <n><n>When right-clicking the Reconstructor with a <item>Redstone Torch<r> in hand, it will change between a mode where it <imp>gets deactivated by Redstone<r> and a mode where it <imp>responds to pulses<r>.
 booklet.actuallyadditions.chapter.crystals.text.3=It should be noted that any recipes listed without information about Lenses <imp>don't use one<r>. <n><i>I thought that was obvious.
 booklet.actuallyadditions.chapter.crystals.text.5=When you have crafted a couple of items, you might want to find a way to <imp>automate this<r>. <n>There is a very simple way to do accomplish this: <n>Place the <item>Atomic Reconstructor<r> down facing into a <item>Precision Dropper<r> (to find it, look it up in the <imp>All Items and Search<r> Entry!). <n>Next, place a <item>Ranged Collector<r> in the area that has the converted items set as a whitelist. <n>Now you can just chuck your raw materials into the Dropper to convert them!
 booklet.actuallyadditions.chapter.crystals.text.6=<n><n><n><i>Molecular Transformilator
@@ -869,11 +870,19 @@ booklet.actuallyadditions.chapter.bookTutorial.text.1=The <item>Actually Additio
 booklet.actuallyadditions.chapter.bookTutorial.text.2=<imp>The Buttons at the top right<r> lead you to the Achievements or Configuration Screen. When looking at a chapter that is somehow connected to an achievement, a speech bubble that you can hover over to see the Achievement in question will point to the Achievements Button. <n><imp>The Buttons on the top left<r> can be used to be directed to various Webpages that have to do with the mod. <n>When an update is available, a button to download it will also show up on the top left.
 booklet.actuallyadditions.chapter.bookTutorial.text.3=If you, for some reason, want to craft this book again, just take a <item>piece of paper<r> and a <item>canola seed<r> which you can find randomly generated and craft them together!
 
-booklet.actuallyadditions.chapter.reconstructorLenses.name=Reconstructor Lenses & Misc
-booklet.actuallyadditions.chapter.reconstructorLenses.text.1=The <item>Atomic Reconstructor<r>, by default, can only convert some blocks. <n>This can be changed, however, with <item>Lenses<r>. They can be, once crafted, attached to the Reconstructor via <imp>right-clicking<r> the Reconstructor with them in hand. To remove them, right-click it with an empty hand. <n><item>Lenses<r> have lots of different features and uses, as you can see on <imp>the following pages<r>. <n>However, there is also some <imp>other useful recipes<r> to be found there too.
-booklet.actuallyadditions.chapter.reconstructorLenses.text.3=The <item>Lens of Color<r> changes the color of <imp>Stained Glass and Panes, Stained Clay, Carpetet, Dye, Lamps, Wool<r> in its sight. <n>Contrary to using no lens, it goes <imp>through blocks<r> and only converts blocks it touches.
-booklet.actuallyadditions.chapter.reconstructorLenses.text.4=The <item>Lens of Detonation<r> will create a firey explosion <imp>around the block the laser hits<r>. <n>Be careful with this. Seriously. <n>(With this lens, the laser also goes 3 times as far!)
-booklet.actuallyadditions.chapter.reconstructorLenses.text.5=The <item>Lens of Certain Death<r> will, <imp>deal lots of damage<r> to whatever steps into it, enough, in fact, to kill a player <imp>in a single hit<r>.
+booklet.actuallyadditions.chapter.reconstructorLenses.name=Intro to Lenses
+booklet.actuallyadditions.chapter.reconstructorLenses.text.1=The <item>Atomic Reconstructor<r>, by default, can only convert some blocks. <n>This can be changed, however, with <item>Lenses<r>. They can be attached to the Reconstructor via <imp>right-clicking<r> with them in hand. To remove them, right-click with an empty hand. <n>They all use a different amount of power and will only activate <imp>once they have it<r>. <n><item>Lenses<r> have lots of different features and uses, as you can see in <imp>this chapter<r>. <n>However, there is also some <imp>other useful recipes<r> too.
+
+booklet.actuallyadditions.chapter.additionalRecipes.name=Additional Recipes
+
+booklet.actuallyadditions.chapter.lensColor.name=Lens of Color
+booklet.actuallyadditions.chapter.lensColor.text.1=The <item>Lens of Color<r> changes the color of <imp>Stained Glass and Panes, Stained Clay, Carpetet, Dye, Lamps, Wool<r> in its sight. <n>Contrary to using no lens, it goes <imp>through blocks<r> and only converts blocks it touches.
+
+booklet.actuallyadditions.chapter.lensDeath.name=Lens of Certain Death
+booklet.actuallyadditions.chapter.lensDeath.text.1=The <item>Lens of Certain Death<r> will, <imp>deal lots of damage<r> to whatever steps into it, enough, in fact, to kill a player <imp>in a single hit<r>.
+
+booklet.actuallyadditions.chapter.lensDetonation.name=Lens of Detonation
+booklet.actuallyadditions.chapter.lensDetonation.text.1=The <item>Lens of Detonation<r> will create a firey explosion <imp>around the block the laser hits<r>. <n>Be careful with this. Seriously. <n>(With this lens, the laser also goes 3 times as far!)
 
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.name=Some Decor
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.text.1=Sometimes, when you build, you notice there is just <imp>not enough decor blocks<r>. Well, we present to you: <item>Ethetic Blocks<r>! <n>These are some quartz-like decor blocks with lovely patterns that can also be <imp>converted<r> into <imp>Stairs<r>, <imp>Slabs<r> and <imp>Walls<r> using the usual, well-known recipe patterns.
