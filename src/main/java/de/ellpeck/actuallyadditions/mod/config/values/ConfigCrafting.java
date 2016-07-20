@@ -155,6 +155,7 @@ public enum ConfigCrafting{
     LASER_WRENCH("Laser Wrench", ConfigCategories.ITEMS_CRAFTING),
 
     CHEST_TO_CRATE_UPGRADE("Chest To Crate Upgrade", ConfigCategories.ITEMS_CRAFTING),
+    DISENCHANTING_LENS("Disenchanting Lens", ConfigCategories.ITEMS_CRAFTING),
     CRATE_KEEPER("Crate Keeper", ConfigCategories.ITEMS_CRAFTING),
     DRILL_CORE("Drill Core", ConfigCategories.ITEMS_CRAFTING),
     ATOMIC_RECONSTRUCTOR("Atomic Reconstructor", ConfigCategories.BLOCKS_CRAFTING),

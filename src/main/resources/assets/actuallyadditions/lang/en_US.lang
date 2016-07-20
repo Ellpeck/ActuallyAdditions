@@ -884,6 +884,9 @@ booklet.actuallyadditions.chapter.lensDeath.text.1=The <item>Lens of Certain Dea
 booklet.actuallyadditions.chapter.lensDetonation.name=Lens of Detonation
 booklet.actuallyadditions.chapter.lensDetonation.text.1=The <item>Lens of Detonation<r> will create a firey explosion <imp>around the block the laser hits<r>. <n>Be careful with this. Seriously. <n>(With this lens, the laser also goes 3 times as far!)
 
+booklet.actuallyadditions.chapter.lensDisenchanting.name=Lens of Disenchanting
+booklet.actuallyadditions.chapter.lensDisenchanting.text.1=The <item>Lens of Disenchanting<r> can be used to <imp>tranfer<r> a single <imp>enchantment<r> from an enchanted item to either a <item>Book<r> or an already <item>Enchanted Book<r>. <n>This can be achieved by <imp>throwing the two items in front of the laser<r>, but they have to be together <imp>in one blockspace<r>. <n>When they are hit by the laser, the <imp>topmost enchantment<r> from the non-book item is <imp>removed<r> and <imp>added onto the book<r>. <n><n>However, this uses <imp><energy> RF<r>.
+
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.name=Some Decor
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.text.1=Sometimes, when you build, you notice there is just <imp>not enough decor blocks<r>. Well, we present to you: <item>Ethetic Blocks<r>! <n>These are some quartz-like decor blocks with lovely patterns that can also be <imp>converted<r> into <imp>Stairs<r>, <imp>Slabs<r> and <imp>Walls<r> using the usual, well-known recipe patterns.
 

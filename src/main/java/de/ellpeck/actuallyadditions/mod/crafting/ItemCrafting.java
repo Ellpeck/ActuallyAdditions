@@ -83,6 +83,7 @@ public final class ItemCrafting{
     public static IRecipe recipeSpawnerChanger;
     public static IRecipe recipeFilter;
     public static IRecipe recipePlayerProbe;
+    public static IRecipe recipeDisenchantingLens;
 
     public static void init(){
 
@@ -113,6 +114,22 @@ public final class ItemCrafting{
                     'C', new ItemStack(InitBlocks.blockGiantChest),
                     'W', "plankWood"));
             recipeChestToCrateUpgrade = RecipeUtil.lastIRecipe();
+        }
+
+        //Disenchanting Lens
+        if(ConfigCrafting.DISENCHANTING_LENS.isEnabled()){
+            ItemStack crystal = new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal());
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemDisenchantingLens),
+                    new ItemStack(Blocks.ENCHANTING_TABLE),
+                    crystal.copy(),
+                    crystal.copy(),
+                    crystal.copy(),
+                    crystal.copy(),
+                    crystal.copy(),
+                    crystal.copy(),
+                    crystal.copy(),
+                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal())));
+            recipeDisenchantingLens = RecipeUtil.lastIRecipe();
         }
 
         //Filter

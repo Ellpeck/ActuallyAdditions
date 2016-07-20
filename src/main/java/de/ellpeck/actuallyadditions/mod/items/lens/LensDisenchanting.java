@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class LensDisenchanting extends Lens{
 
-    private static final int ENERGY_USE = 250000;
+    public static final int ENERGY_USE = 250000;
 
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
