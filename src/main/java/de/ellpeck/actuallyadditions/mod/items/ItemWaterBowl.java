@@ -42,7 +42,6 @@ public class ItemWaterBowl extends ItemBase{
 
     @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent event){
-        System.out.println("ACTIVE");
         if(event.getWorld() != null){
             if(ConfigBoolValues.WATER_BOWL.isEnabled()){
                 if(event.getItemStack() != null && event.getItemStack().getItem() == Items.BOWL){
