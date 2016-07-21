@@ -33,6 +33,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModAPIManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -106,12 +107,12 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         register(TileEntityDisplayStand.class, "DisplayStand");
         register(TileEntityShockSuppressor.class, "ShockSuppressor");
 
-        if(ModAPIManager.INSTANCE.hasAPI("Tesla|API")){
-            ModUtil.LOGGER.info("Tesla API loaded... Activating Tesla Power System integration...");
+        if(Loader.isModLoaded("Tesla")){
+            ModUtil.LOGGER.info("Tesla loaded... Activating Tesla Power System integration...");
             teslaLoaded = true;
         }
         else{
-            ModUtil.LOGGER.info("Tesla API not found! Skipping Tesla Power System integration.");
+            ModUtil.LOGGER.info("Tesla not found! Skipping Tesla Power System integration.");
         }
     }
 
