@@ -49,6 +49,7 @@ public class GuiCanolaPress extends GuiContainer{
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+        super.mouseClicked(mouseX, mouseY, mouseButton);
         this.energy.onMouseClick(mouseX, mouseY, mouseButton);
     }
 

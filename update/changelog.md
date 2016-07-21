@@ -1,3 +1,6 @@
+# 1.10.2-r53
+* Made the player able to click in GUIs again. Pretend this never happened please.
+
 # 1.10.2-r52
 * Added lens of disenchanting. It's awesome, I promise.
 * Awesome new energy and fluid displays in GUIs
