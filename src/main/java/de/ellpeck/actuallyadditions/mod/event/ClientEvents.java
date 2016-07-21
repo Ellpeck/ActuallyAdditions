@@ -22,6 +22,7 @@ import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -180,7 +181,11 @@ public class ClientEvents{
                             energyDisplay = new EnergyDisplay(0, 0, null);
                         }
                         energyDisplay.setData(2, event.getResolution().getScaledHeight()-96, display.getEnergyStorage(), true, true);
+
+                        GlStateManager.pushMatrix();
+                        GlStateManager.color(1F, 1F, 1F, 1F);
                         energyDisplay.draw();
+                        GlStateManager.popMatrix();
 
                         profiler.endSection();
                     }
