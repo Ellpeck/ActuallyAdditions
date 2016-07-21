@@ -88,7 +88,8 @@ public final class MiscCrafting{
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()),
                     new ItemStack(Items.NETHER_STAR),
                     new ItemStack(Items.DRAGON_BREATH),
-                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
+                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
+                    new ItemStack(Items.PRISMARINE_SHARD)));
             ItemCrafting.recipeEnderStar = RecipeUtil.lastIRecipe();
         }
     }

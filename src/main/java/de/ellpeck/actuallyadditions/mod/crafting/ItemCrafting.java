@@ -432,9 +432,9 @@ public final class ItemCrafting{
         //Advanced Coil
         if(ConfigCrafting.ADV_COIL.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
-                    " G ", "GCG", " G ",
+                    "GGG", "GCG", "GGG",
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
-                    'G', "ingotGold"));
+                    'G', "nuggetGold"));
             recipeCoilAdvanced = RecipeUtil.lastIRecipe();
         }
 
