@@ -105,7 +105,7 @@ public class EnergyDisplay extends Gui{
     }
 
     private String getOverlayText(){
-        return this.rfReference.getEnergyStored()+"/"+this.rfReference.getMaxEnergyStored()+(this.displayTesla ? " Tesla" : " RF");
+        return this.rfReference.getEnergyStored()+"/"+this.rfReference.getMaxEnergyStored()+(this.displayTesla ? " T" : " RF");
     }
 
     private void changeDisplayMode(){
