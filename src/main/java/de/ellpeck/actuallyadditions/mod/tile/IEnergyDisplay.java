@@ -10,16 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import cofh.api.energy.EnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IEnergyDisplay{
 
     @SideOnly(Side.CLIENT)
-    int getEnergy();
-
-    @SideOnly(Side.CLIENT)
-    int getMaxEnergy();
+    EnergyStorage getEnergyStorage();
 
     @SideOnly(Side.CLIENT)
     boolean needsHoldShift();

@@ -41,6 +41,9 @@ public class GuiCoffeeMachine extends GuiContainer{
     private final int z;
     private final World world;
 
+    private EnergyDisplay energy;
+    private FluidDisplay fluid;
+
     public GuiCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world){
         super(new ContainerCoffeeMachine(inventory, tile));
         this.machine = (TileEntityCoffeeMachine)tile;
@@ -58,6 +61,9 @@ public class GuiCoffeeMachine extends GuiContainer{
 
         GuiButton buttonOkay = new GuiButton(0, this.guiLeft+60, this.guiTop+11, 58, 20, StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ok"));
         this.buttonList.add(buttonOkay);
+
+        this.energy = new EnergyDisplay(this.guiLeft+16, this.guiTop+5, this.machine.storage);
+        this.fluid = new FluidDisplay(this.guiLeft-30, this.guiTop+1, this.machine.tank, true, false);
     }
 
     @Override
@@ -77,6 +83,9 @@ public class GuiCoffeeMachine extends GuiContainer{
         if(x >= this.guiLeft+40 && y >= this.guiTop+25 && x <= this.guiLeft+49 && y <= this.guiTop+56){
             this.drawHoveringText(Collections.singletonList(text2), x, y);
         }
+
+        this.energy.drawOverlay(x, y);
+        this.fluid.drawOverlay(x, y);
     }
 
     @Override
@@ -94,15 +103,6 @@ public class GuiCoffeeMachine extends GuiContainer{
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.machine.storage.getEnergyStored() > 0){
-            int i = this.machine.getEnergyScaled(83);
-            this.drawTexturedModalRect(this.guiLeft+17, this.guiTop+89-i, 176, 0, 6, i);
-        }
-        if(this.machine.tank.getFluidAmount() > 0){
-            int i = this.machine.getWaterScaled(64);
-            this.drawTexturedModalRect(this.guiLeft+27, this.guiTop+70-i, 182, 0, 6, i);
-        }
-
         if(this.machine.coffeeCacheAmount > 0){
             int i = this.machine.getCoffeeScaled(30);
             this.drawTexturedModalRect(this.guiLeft+41, this.guiTop+56-i, 192, 0, 8, i);
@@ -115,6 +115,9 @@ public class GuiCoffeeMachine extends GuiContainer{
             int j = this.machine.getBrewScaled(26);
             this.drawTexturedModalRect(this.guiLeft+99+25-j, this.guiTop+44, 192+25-j, 46, j, 12);
         }
+
+        this.energy.draw();
+        this.fluid.draw();
     }
 
     @Override

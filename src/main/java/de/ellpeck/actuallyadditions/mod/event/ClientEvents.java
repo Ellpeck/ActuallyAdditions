@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.event;
 
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.EnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -44,6 +45,8 @@ public class ClientEvents{
 
     private static final String ADVANCED_INFO_TEXT_PRE = TextFormatting.DARK_GRAY+"     ";
     private static final String ADVANCED_INFO_HEADER_PRE = TextFormatting.GRAY+"  -";
+
+    private static final EnergyDisplay ENERGY_DISPLAY = new EnergyDisplay(0, 0, null);
 
     public ClientEvents(){
         MinecraftForge.EVENT_BUS.register(this);
@@ -172,8 +175,8 @@ public class ClientEvents{
                     IEnergyDisplay display = (IEnergyDisplay)tileHit;
                     if(!display.needsHoldShift() || player.isSneaking()){
                         profiler.startSection("EnergyDisplay");
-                        String strg = display.getEnergy()+"/"+display.getMaxEnergy()+" RF";
-                        font.drawStringWithShadow(TextFormatting.GOLD+strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2-10, StringUtil.DECIMAL_COLOR_WHITE);
+                        ENERGY_DISPLAY.setData(2, event.getResolution().getScaledHeight()-96, display.getEnergyStorage(), true, true);
+                        ENERGY_DISPLAY.draw();
                         profiler.endSection();
                     }
                 }

@@ -28,6 +28,7 @@ public class GuiDirectionalBreaker extends GuiContainer{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiDirectionalBreaker");
     private final TileEntityDirectionalBreaker breaker;
+    private EnergyDisplay energy;
 
     public GuiDirectionalBreaker(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerDirectionalBreaker(inventory, tile));
@@ -37,13 +38,16 @@ public class GuiDirectionalBreaker extends GuiContainer{
     }
 
     @Override
+    public void initGui(){
+        super.initGui();
+        this.energy = new EnergyDisplay(this.guiLeft+42, this.guiTop+5, this.breaker.storage);
+    }
+
+    @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        String text1 = this.breaker.storage.getEnergyStored()+"/"+this.breaker.storage.getMaxEnergyStored()+" RF";
-        if(x >= this.guiLeft+43 && y >= this.guiTop+6 && x <= this.guiLeft+58 && y <= this.guiTop+88){
-            this.drawHoveringText(Collections.singletonList(text1), x, y);
-        }
+        this.energy.drawOverlay(x, y);
     }
 
     @Override
@@ -61,9 +65,6 @@ public class GuiDirectionalBreaker extends GuiContainer{
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.breaker.storage.getEnergyStored() > 0){
-            int i = this.breaker.getEnergyScaled(83);
-            this.drawTexturedModalRect(this.guiLeft+43, this.guiTop+89-i, 176, 29, 16, i);
-        }
+        this.energy.draw();
     }
 }

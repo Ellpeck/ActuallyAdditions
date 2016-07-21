@@ -98,13 +98,8 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergy(){
-        return this.storage.getMaxEnergyStored();
+    public EnergyStorage getEnergyStorage(){
+        return this.storage;
     }
 
     @Override

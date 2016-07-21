@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -20,20 +21,26 @@ import java.util.Collections;
 
 public class EnergyDisplay extends Gui{
 
-    private final EnergyStorage rfReference;
-    private final int x;
-    private final int y;
-    private final boolean outline;
+    private EnergyStorage rfReference;
+    private int x;
+    private int y;
+    private boolean outline;
+    private boolean drawTextNextTo;
 
-    public EnergyDisplay(int x, int y, EnergyStorage rfReference, boolean outline){
+    public EnergyDisplay(int x, int y, EnergyStorage rfReference, boolean outline, boolean drawTextNextTo){
+        this.setData(x, y, rfReference, outline, drawTextNextTo);
+    }
+
+    public EnergyDisplay(int x, int y, EnergyStorage rfReference){
+        this(x, y, rfReference, false, false);
+    }
+
+    public void setData(int x, int y, EnergyStorage rfReference, boolean outline, boolean drawTextNextTo){
         this.x = x;
         this.y = y;
         this.rfReference = rfReference;
         this.outline = outline;
-    }
-
-    public EnergyDisplay(int x, int y, EnergyStorage rfReference){
-        this(x, y, rfReference, false);
+        this.drawTextNextTo = drawTextNextTo;
     }
 
     public void draw(){
@@ -55,13 +62,20 @@ public class EnergyDisplay extends Gui{
             int i = this.rfReference.getEnergyStored()*83/this.rfReference.getMaxEnergyStored();
             this.drawTexturedModalRect(barX+1, barY+84-i, 36, 172, 16, i);
         }
+
+        if(this.drawTextNextTo){
+            this.drawString(mc.fontRendererObj, this.getOverlayText(), barX+25, barY+78, StringUtil.DECIMAL_COLOR_WHITE);
+        }
     }
 
     public void drawOverlay(int mouseX, int mouseY){
         if(mouseX >= this.x && mouseY >= this.y && mouseX < this.x+(this.outline ? 26 : 18) && mouseY < this.y+(this.outline ? 93 : 85)){
             Minecraft mc = Minecraft.getMinecraft();
-            String text = this.rfReference.getEnergyStored()+"/"+this.rfReference.getMaxEnergyStored()+" RF";
-            GuiUtils.drawHoveringText(Collections.singletonList(text), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
+            GuiUtils.drawHoveringText(Collections.singletonList(this.getOverlayText()), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
+    }
+
+    private String getOverlayText(){
+        return this.rfReference.getEnergyStored()+"/"+this.rfReference.getMaxEnergyStored()+" RF";
     }
 }

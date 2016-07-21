@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
@@ -25,24 +26,31 @@ import java.util.Collections;
 
 public class FluidDisplay extends Gui{
 
-    private final FluidTank fluidReference;
+    private FluidTank fluidReference;
     private Fluid oldFluid;
 
-    private final int x;
-    private final int y;
-    private final boolean outline;
+    private int x;
+    private int y;
+    private boolean outline;
 
     private ResourceLocation resLoc;
 
-    public FluidDisplay(int x, int y, FluidTank fluidReference, boolean outline){
+    private boolean drawTextNextTo;
+
+    public FluidDisplay(int x, int y, FluidTank fluidReference, boolean outline, boolean drawTextNextTo){
+        this.setData(x, y, fluidReference, outline, drawTextNextTo);
+    }
+
+    public FluidDisplay(int x, int y, FluidTank fluidReference){
+        this(x, y, fluidReference, false, false);
+    }
+
+    public void setData(int x, int y, FluidTank fluidReference, boolean outline, boolean drawTextNextTo){
         this.x = x;
         this.y = y;
         this.fluidReference = fluidReference;
         this.outline = outline;
-    }
-
-    public FluidDisplay(int x, int y, FluidTank fluidReference){
-        this(x, y, fluidReference, false);
+        this.drawTextNextTo = drawTextNextTo;
     }
 
     public void draw(){
@@ -82,15 +90,21 @@ public class FluidDisplay extends Gui{
             GlStateManager.disableBlend();
             GlStateManager.enableAlpha();
         }
+
+        if(this.drawTextNextTo){
+            this.drawString(mc.fontRendererObj, this.getOverlayText(), barX+25, barY+78, StringUtil.DECIMAL_COLOR_WHITE);
+        }
     }
 
     public void drawOverlay(int mouseX, int mouseY){
         if(mouseX >= this.x && mouseY >= this.y && mouseX < this.x+(this.outline ? 26 : 18) && mouseY < this.y+(this.outline ? 93 : 85)){
-            FluidStack stack = this.fluidReference.getFluid();
             Minecraft mc = Minecraft.getMinecraft();
-
-            String text = stack == null || stack.getFluid() == null ? "0/"+this.fluidReference.getCapacity()+" mB" : this.fluidReference.getFluidAmount()+"/"+this.fluidReference.getCapacity()+" mB "+stack.getLocalizedName();
-            GuiUtils.drawHoveringText(Collections.singletonList(text), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
+            GuiUtils.drawHoveringText(Collections.singletonList(this.getOverlayText()), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
+    }
+
+    private String getOverlayText(){
+        FluidStack stack = this.fluidReference.getFluid();
+        return stack == null || stack.getFluid() == null ? "0/"+this.fluidReference.getCapacity()+" mB" : this.fluidReference.getFluidAmount()+"/"+this.fluidReference.getCapacity()+" mB "+stack.getLocalizedName();
     }
 }

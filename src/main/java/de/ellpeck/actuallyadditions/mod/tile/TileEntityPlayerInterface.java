@@ -216,13 +216,8 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
     }
 
     @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergy(){
-        return this.storage.getMaxEnergyStored();
+    public EnergyStorage getEnergyStorage(){
+        return this.storage;
     }
 
     @Override

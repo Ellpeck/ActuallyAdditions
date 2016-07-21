@@ -30,6 +30,7 @@ public class GuiGrinder extends GuiContainer{
     private static final ResourceLocation RES_LOC_DOUBLE = AssetUtil.getGuiLocation("guiGrinderDouble");
     private final TileEntityGrinder tileGrinder;
     private final boolean isDouble;
+    private EnergyDisplay energy;
 
     public GuiGrinder(InventoryPlayer inventoryPlayer, TileEntityBase tile){
         this(inventoryPlayer, tile, false);
@@ -44,12 +45,15 @@ public class GuiGrinder extends GuiContainer{
     }
 
     @Override
+    public void initGui(){
+        super.initGui();
+        this.energy = new EnergyDisplay(this.guiLeft+(this.isDouble ? 13 : 42), this.guiTop+5, this.tileGrinder.storage);
+    }
+
+    @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text = this.tileGrinder.storage.getEnergyStored()+"/"+this.tileGrinder.storage.getMaxEnergyStored()+" RF";
-        if((this.isDouble && x >= this.guiLeft+14 && y >= this.guiTop+6 && x <= this.guiLeft+29 && y <= this.guiTop+88) || (!this.isDouble && x >= this.guiLeft+43 && y >= this.guiTop+6 && x <= this.guiLeft+58 && y <= this.guiTop+88)){
-            this.drawHoveringText(Collections.singletonList(text), x, y);
-        }
+        this.energy.drawOverlay(x, y);
     }
 
     @Override
@@ -67,10 +71,6 @@ public class GuiGrinder extends GuiContainer{
         this.mc.getTextureManager().bindTexture(this.isDouble ? RES_LOC_DOUBLE : RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.tileGrinder.storage.getEnergyStored() > 0){
-            int i = this.tileGrinder.getEnergyScaled(83);
-            this.drawTexturedModalRect(this.guiLeft+(this.isDouble ? 14 : 43), this.guiTop+89-i, 176, (this.isDouble ? 44 : 23), 16, i);
-        }
         if(this.tileGrinder.firstCrushTime > 0){
             int i = this.tileGrinder.getFirstTimeToScale(23);
             this.drawTexturedModalRect(this.guiLeft+(this.isDouble ? 51 : 80), this.guiTop+40, 176, 0, 24, i);
@@ -81,6 +81,8 @@ public class GuiGrinder extends GuiContainer{
                 this.drawTexturedModalRect(this.guiLeft+101, this.guiTop+40, 176, 22, 24, i);
             }
         }
+
+        this.energy.draw();
     }
 
     public static class GuiGrinderDouble extends GuiGrinder{

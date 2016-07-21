@@ -28,6 +28,7 @@ public class GuiFurnaceDouble extends GuiContainer{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFurnaceDouble");
     private final TileEntityFurnaceDouble tileFurnace;
+    private EnergyDisplay energy;
 
     public GuiFurnaceDouble(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerFurnaceDouble(inventory, tile));
@@ -39,10 +40,13 @@ public class GuiFurnaceDouble extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text = this.tileFurnace.storage.getEnergyStored()+"/"+this.tileFurnace.storage.getMaxEnergyStored()+" RF";
-        if(x >= this.guiLeft+28 && y >= this.guiTop+6 && x <= this.guiLeft+43 && y <= this.guiTop+88){
-            this.drawHoveringText(Collections.singletonList(text), x, y);
-        }
+        this.energy.drawOverlay(x, y);
+    }
+
+    @Override
+    public void initGui(){
+        super.initGui();
+        this.energy = new EnergyDisplay(this.guiLeft+27, this.guiTop+5, this.tileFurnace.storage);
     }
 
     @Override
@@ -60,10 +64,6 @@ public class GuiFurnaceDouble extends GuiContainer{
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.tileFurnace.storage.getEnergyStored() > 0){
-            int i = this.tileFurnace.getEnergyScaled(83);
-            this.drawTexturedModalRect(this.guiLeft+28, this.guiTop+89-i, 176, 44, 16, i);
-        }
         if(this.tileFurnace.firstSmeltTime > 0){
             int i = this.tileFurnace.getFirstTimeToScale(23);
             this.drawTexturedModalRect(this.guiLeft+51, this.guiTop+40, 176, 0, 24, i);
@@ -72,5 +72,7 @@ public class GuiFurnaceDouble extends GuiContainer{
             int i = this.tileFurnace.getSecondTimeToScale(23);
             this.drawTexturedModalRect(this.guiLeft+101, this.guiTop+40, 176, 22, 24, i);
         }
+
+        this.energy.draw();
     }
 }

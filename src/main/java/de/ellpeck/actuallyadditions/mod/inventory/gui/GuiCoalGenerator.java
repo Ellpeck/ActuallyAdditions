@@ -28,6 +28,7 @@ public class GuiCoalGenerator extends GuiContainer{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiCoalGenerator");
     private final TileEntityCoalGenerator generator;
+    private EnergyDisplay energy;
 
     public GuiCoalGenerator(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerCoalGenerator(inventory, tile));
@@ -37,12 +38,15 @@ public class GuiCoalGenerator extends GuiContainer{
     }
 
     @Override
+    public void initGui(){
+        super.initGui();
+        this.energy = new EnergyDisplay(this.guiLeft+42, this.guiTop+5, this.generator.storage);
+    }
+
+    @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text1 = this.generator.storage.getEnergyStored()+"/"+this.generator.storage.getMaxEnergyStored()+" RF";
-        if(x >= this.guiLeft+43 && y >= this.guiTop+6 && x <= this.guiLeft+58 && y <= this.guiTop+88){
-            this.drawHoveringText(Collections.singletonList(text1), x, y);
-        }
+        this.energy.drawOverlay(x, y);
     }
 
     @Override
@@ -60,14 +64,11 @@ public class GuiCoalGenerator extends GuiContainer{
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.generator.storage.getEnergyStored() > 0){
-            int i = this.generator.getEnergyScaled(83);
-            this.drawTexturedModalRect(this.guiLeft+43, this.guiTop+89-i, 176, 0, 16, i);
-        }
-
         if(this.generator.currentBurnTime > 0){
             int i = this.generator.getBurningScaled(13);
             this.drawTexturedModalRect(this.guiLeft+87, this.guiTop+27+12-i, 176, 96-i, 14, i);
         }
+
+        this.energy.draw();
     }
 }

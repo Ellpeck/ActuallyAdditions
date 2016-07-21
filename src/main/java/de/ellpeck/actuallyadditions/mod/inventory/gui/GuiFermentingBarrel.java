@@ -29,6 +29,8 @@ public class GuiFermentingBarrel extends GuiContainer{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFermentingBarrel");
     private final TileEntityFermentingBarrel press;
+    private FluidDisplay input;
+    private FluidDisplay output;
 
     public GuiFermentingBarrel(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerFermentingBarrel(inventory, tile));
@@ -40,16 +42,15 @@ public class GuiFermentingBarrel extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
+        this.input.drawOverlay(x, y);
+        this.output.drawOverlay(x, y);
+    }
 
-        String text1 = StringUtil.getFluidInfo(this.press.canolaTank);
-        if(x >= this.guiLeft+61 && y >= this.guiTop+6 && x <= this.guiLeft+76 && y <= this.guiTop+88){
-            this.drawHoveringText(Collections.singletonList(text1), x, y);
-        }
-
-        String text2 = StringUtil.getFluidInfo(this.press.oilTank);
-        if(x >= this.guiLeft+99 && y >= this.guiTop+6 && x <= this.guiLeft+114 && y <= this.guiTop+88){
-            this.drawHoveringText(Collections.singletonList(text2), x, y);
-        }
+    @Override
+    public void initGui(){
+        super.initGui();
+        this.input = new FluidDisplay(this.guiLeft+60, this.guiTop+5, this.press.canolaTank);
+        this.output = new FluidDisplay(this.guiLeft+98, this.guiTop+5, this.press.oilTank);
     }
 
     @Override
@@ -67,19 +68,12 @@ public class GuiFermentingBarrel extends GuiContainer{
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.press.canolaTank.getFluidAmount() > 0){
-            int i = this.press.getCanolaTankScaled(83);
-            this.drawTexturedModalRect(this.guiLeft+61, this.guiTop+89-i, 192, 29, 16, i);
-        }
-
-        if(this.press.oilTank.getFluidAmount() > 0){
-            int i = this.press.getOilTankScaled(83);
-            this.drawTexturedModalRect(this.guiLeft+99, this.guiTop+89-i, 176, 29, 16, i);
-        }
-
         if(this.press.currentProcessTime > 0){
             int i = this.press.getProcessScaled(29);
             this.drawTexturedModalRect(this.guiLeft+82, this.guiTop+34, 176, 0, 12, i);
         }
+
+        this.input.draw();
+        this.output.draw();
     }
 }

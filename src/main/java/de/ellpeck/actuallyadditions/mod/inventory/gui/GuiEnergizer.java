@@ -28,6 +28,7 @@ public class GuiEnergizer extends GuiContainer{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiEnergizer");
     private final TileEntityEnergizer energizer;
+    private EnergyDisplay energy;
 
     public GuiEnergizer(EntityPlayer inventory, TileEntityBase tile){
         super(new ContainerEnergizer(inventory, tile));
@@ -37,12 +38,15 @@ public class GuiEnergizer extends GuiContainer{
     }
 
     @Override
+    public void initGui(){
+        super.initGui();
+        this.energy = new EnergyDisplay(this.guiLeft+56, this.guiTop+5, this.energizer.storage);
+    }
+
+    @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text1 = this.energizer.storage.getEnergyStored()+"/"+this.energizer.storage.getMaxEnergyStored()+" RF";
-        if(x >= this.guiLeft+57 && y >= this.guiTop+6 && x <= this.guiLeft+72 && y <= this.guiTop+88){
-            this.drawHoveringText(Collections.singletonList(text1), x, y);
-        }
+        this.energy.drawOverlay(x, y);
     }
 
     @Override
@@ -60,9 +64,6 @@ public class GuiEnergizer extends GuiContainer{
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.energizer.storage.getEnergyStored() > 0){
-            int i = this.energizer.getEnergyScaled(83);
-            this.drawTexturedModalRect(this.guiLeft+57, this.guiTop+89-i, 176, 0, 16, i);
-        }
+        this.energy.draw();
     }
 }

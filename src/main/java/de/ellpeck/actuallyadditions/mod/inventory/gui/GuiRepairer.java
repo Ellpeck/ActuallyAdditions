@@ -28,6 +28,7 @@ public class GuiRepairer extends GuiContainer{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiRepairer");
     private final TileEntityItemRepairer tileRepairer;
+    private EnergyDisplay energy;
 
     public GuiRepairer(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerRepairer(inventory, tile));
@@ -37,12 +38,15 @@ public class GuiRepairer extends GuiContainer{
     }
 
     @Override
+    public void initGui(){
+        super.initGui();
+        this.energy = new EnergyDisplay(this.guiLeft+27, this.guiTop+5, this.tileRepairer.storage);
+    }
+
+    @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-        String text = this.tileRepairer.storage.getEnergyStored()+"/"+this.tileRepairer.storage.getMaxEnergyStored()+" RF";
-        if(x >= this.guiLeft+28 && y >= this.guiTop+6 && x <= this.guiLeft+43 && y <= this.guiTop+88){
-            this.drawHoveringText(Collections.singletonList(text), x, y);
-        }
+        this.energy.drawOverlay(x, y);
     }
 
     @Override
@@ -60,13 +64,11 @@ public class GuiRepairer extends GuiContainer{
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.tileRepairer.storage.getEnergyStored() > 0){
-            int i = this.tileRepairer.getEnergyScaled(83);
-            this.drawTexturedModalRect(this.guiLeft+28, this.guiTop+89-i, 176, 44, 16, i);
-        }
         if(TileEntityItemRepairer.canBeRepaired(this.tileRepairer.slots[TileEntityItemRepairer.SLOT_INPUT])){
             int i = this.tileRepairer.getItemDamageToScale(22);
             this.drawTexturedModalRect(this.guiLeft+73, this.guiTop+52, 176, 28, i, 16);
         }
+
+        this.energy.draw();
     }
 }

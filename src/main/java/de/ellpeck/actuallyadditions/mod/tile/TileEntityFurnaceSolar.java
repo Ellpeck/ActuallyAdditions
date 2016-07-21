@@ -90,14 +90,8 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     }
 
     @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getMaxEnergy(){
-        return this.storage.getMaxEnergyStored();
+    public EnergyStorage getEnergyStorage(){
+        return this.storage;
     }
 
     @Override

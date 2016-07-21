@@ -104,13 +104,8 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public int getEnergy(){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergy(){
-        return this.storage.getMaxEnergyStored();
+    public EnergyStorage getEnergyStorage(){
+        return this.storage;
     }
 
     @Override

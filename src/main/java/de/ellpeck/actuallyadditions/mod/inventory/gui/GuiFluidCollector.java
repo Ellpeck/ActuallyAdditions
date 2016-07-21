@@ -29,6 +29,7 @@ public class GuiFluidCollector extends GuiContainer{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFluidCollector");
     private final TileEntityFluidCollector collector;
+    private FluidDisplay fluid;
 
     public GuiFluidCollector(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerFluidCollector(inventory, tile));
@@ -41,10 +42,13 @@ public class GuiFluidCollector extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        String text2 = StringUtil.getFluidInfo(this.collector.tank);
-        if(x >= this.guiLeft+68 && y >= this.guiTop+6 && x <= this.guiLeft+83 && y <= this.guiTop+88){
-            this.drawHoveringText(Collections.singletonList(text2), x, y);
-        }
+        this.fluid.drawOverlay(x, y);
+    }
+
+    @Override
+    public void initGui(){
+        super.initGui();
+        this.fluid = new FluidDisplay(this.guiLeft+67, this.guiTop+5, this.collector.tank);
     }
 
     @Override
@@ -62,9 +66,6 @@ public class GuiFluidCollector extends GuiContainer{
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.collector.tank.getFluidAmount() > 0){
-            int i = this.collector.getTankScaled(83);
-            this.drawTexturedModalRect(this.guiLeft+68, this.guiTop+89-i, 176, 0, 16, i);
-        }
+        this.fluid.draw();
     }
 }
