@@ -49,7 +49,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
 
     @Override
     public int getMaxEnergyStored(EnumFacing from){
-        return 0;
+        return this.getEnergyCap();
     }
 
     public int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate){
