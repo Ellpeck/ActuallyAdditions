@@ -32,9 +32,6 @@ minecraft {
 
 repositories {
     maven {
-        url "http://chickenbones.net/maven/"
-    }
-    maven {
         url "http://dvs1.progwml6.com/files/maven"
     }
     maven {
@@ -43,10 +40,6 @@ repositories {
 }
 
 dependencies {
-    //compile "codechicken:CodeChickenLib:1.8-1.1.2.139:dev"
-    //compile "codechicken:CodeChickenCore:1.8-1.0.5.36:dev"
-    //compile "codechicken:NotEnoughItems:1.8-1.0.5.104:dev"
-
     compile "net.darkhax.tesla:Tesla:1.10.2-1.2.0.38"
     deobfCompile "mezz.jei:jei_1.10.2:3.7.8.234"
 }
