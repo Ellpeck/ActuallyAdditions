@@ -1,3 +1,7 @@
+# 1.10.2-r54
+* Fixed Tesla power system integration.
+* Yay for update spam. Or something to that effect.
+
 # 1.10.2-r53
 * Made the player able to click in GUIs again. Pretend this never happened please.
 
