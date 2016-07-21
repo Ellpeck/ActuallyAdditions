@@ -46,7 +46,7 @@ public class ClientEvents{
     private static final String ADVANCED_INFO_TEXT_PRE = TextFormatting.DARK_GRAY+"     ";
     private static final String ADVANCED_INFO_HEADER_PRE = TextFormatting.GRAY+"  -";
 
-    private static final EnergyDisplay ENERGY_DISPLAY = new EnergyDisplay(0, 0, null);
+    private static EnergyDisplay energyDisplay;
 
     public ClientEvents(){
         MinecraftForge.EVENT_BUS.register(this);
@@ -175,8 +175,13 @@ public class ClientEvents{
                     IEnergyDisplay display = (IEnergyDisplay)tileHit;
                     if(!display.needsHoldShift() || player.isSneaking()){
                         profiler.startSection("EnergyDisplay");
-                        ENERGY_DISPLAY.setData(2, event.getResolution().getScaledHeight()-96, display.getEnergyStorage(), true, true);
-                        ENERGY_DISPLAY.draw();
+
+                        if(energyDisplay == null){
+                            energyDisplay = new EnergyDisplay(0, 0, null);
+                        }
+                        energyDisplay.setData(2, event.getResolution().getScaledHeight()-96, display.getEnergyStorage(), true, true);
+                        energyDisplay.draw();
+
                         profiler.endSection();
                     }
                 }

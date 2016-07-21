@@ -22,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.IOException;
 import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
@@ -46,6 +47,12 @@ public class GuiOilGenerator extends GuiContainer{
         this.energy = new EnergyDisplay(this.guiLeft+42, this.guiTop+5, this.generator.storage);
         this.fluid = new FluidDisplay(this.guiLeft+116, this.guiTop+5, this.generator.tank);
     }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+        this.energy.onMouseClick(mouseX, mouseY, mouseButton);
+    }
+
 
     @Override
     public void drawScreen(int x, int y, float f){

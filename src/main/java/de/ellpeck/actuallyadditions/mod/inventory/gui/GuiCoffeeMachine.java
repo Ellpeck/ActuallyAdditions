@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.IOException;
 import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
@@ -54,6 +55,12 @@ public class GuiCoffeeMachine extends GuiContainer{
         this.z = z;
         this.world = world;
     }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+        this.energy.onMouseClick(mouseX, mouseY, mouseButton);
+    }
+
 
     @Override
     public void initGui(){

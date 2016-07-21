@@ -21,6 +21,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.IOException;
 import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
@@ -42,6 +43,12 @@ public class GuiFurnaceDouble extends GuiContainer{
         super.drawScreen(x, y, f);
         this.energy.drawOverlay(x, y);
     }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+        this.energy.onMouseClick(mouseX, mouseY, mouseButton);
+    }
+
 
     @Override
     public void initGui(){

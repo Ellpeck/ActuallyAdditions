@@ -21,6 +21,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.IOException;
 import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
@@ -36,6 +37,12 @@ public class GuiRepairer extends GuiContainer{
         this.xSize = 176;
         this.ySize = 93+86;
     }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+        this.energy.onMouseClick(mouseX, mouseY, mouseButton);
+    }
+
 
     @Override
     public void initGui(){

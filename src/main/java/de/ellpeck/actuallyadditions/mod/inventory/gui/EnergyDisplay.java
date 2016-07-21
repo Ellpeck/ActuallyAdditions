@@ -11,13 +11,20 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import cofh.api.energy.EnergyStorage;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnergyDisplay extends Gui{
 
@@ -26,6 +33,7 @@ public class EnergyDisplay extends Gui{
     private int y;
     private boolean outline;
     private boolean drawTextNextTo;
+    private boolean displayTesla;
 
     public EnergyDisplay(int x, int y, EnergyStorage rfReference, boolean outline, boolean drawTextNextTo){
         this.setData(x, y, rfReference, outline, drawTextNextTo);
@@ -41,6 +49,10 @@ public class EnergyDisplay extends Gui{
         this.rfReference = rfReference;
         this.outline = outline;
         this.drawTextNextTo = drawTextNextTo;
+
+        if(TileEntityBase.teslaLoaded){
+            this.displayTesla = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer).theCompound.getBoolean("DisplayTesla");
+        }
     }
 
     public void draw(){
@@ -49,6 +61,7 @@ public class EnergyDisplay extends Gui{
 
         int barX = this.x;
         int barY = this.y;
+        int vOffset = this.displayTesla ? 85 : 0;
 
         if(this.outline){
             this.drawTexturedModalRect(this.x, this.y, 52, 163, 26, 93);
@@ -56,11 +69,11 @@ public class EnergyDisplay extends Gui{
             barX += 4;
             barY += 4;
         }
-        this.drawTexturedModalRect(barX, barY, 18, 171, 18, 85);
+        this.drawTexturedModalRect(barX, barY, 18, 171-vOffset, 18, 85);
 
         if(this.rfReference.getEnergyStored() > 0){
             int i = this.rfReference.getEnergyStored()*83/this.rfReference.getMaxEnergyStored();
-            this.drawTexturedModalRect(barX+1, barY+84-i, 36, 172, 16, i);
+            this.drawTexturedModalRect(barX+1, barY+84-i, 36, 172-vOffset, 16, i);
         }
 
         if(this.drawTextNextTo){
@@ -69,13 +82,44 @@ public class EnergyDisplay extends Gui{
     }
 
     public void drawOverlay(int mouseX, int mouseY){
-        if(mouseX >= this.x && mouseY >= this.y && mouseX < this.x+(this.outline ? 26 : 18) && mouseY < this.y+(this.outline ? 93 : 85)){
+        if(this.isMouseOver(mouseX, mouseY)){
             Minecraft mc = Minecraft.getMinecraft();
-            GuiUtils.drawHoveringText(Collections.singletonList(this.getOverlayText()), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
+
+            List<String> text = new ArrayList<String>();
+            text.add(this.getOverlayText());
+            if(TileEntityBase.teslaLoaded){
+                text.add(TextFormatting.GRAY+""+TextFormatting.ITALIC+"Click to change mode!");
+            }
+            GuiUtils.drawHoveringText(text, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
     }
 
+    public void onMouseClick(int mouseX, int mouseY, int mouseButton){
+        if(mouseButton == 0 && this.isMouseOver(mouseX, mouseY)){
+            this.changeDisplayMode();
+        }
+    }
+
+    private boolean isMouseOver(int mouseX, int mouseY){
+        return mouseX >= this.x && mouseY >= this.y && mouseX < this.x+(this.outline ? 26 : 18) && mouseY < this.y+(this.outline ? 93 : 85);
+    }
+
     private String getOverlayText(){
-        return this.rfReference.getEnergyStored()+"/"+this.rfReference.getMaxEnergyStored()+" RF";
+        return this.rfReference.getEnergyStored()+"/"+this.rfReference.getMaxEnergyStored()+(this.displayTesla ? " Tesla" : " RF");
+    }
+
+    private void changeDisplayMode(){
+        if(TileEntityBase.teslaLoaded){
+            NBTTagCompound data = new NBTTagCompound();
+
+            this.displayTesla = !this.displayTesla;
+            data.setBoolean("DisplayTesla", this.displayTesla);
+
+            NBTTagCompound dataToSend = new NBTTagCompound();
+            dataToSend.setTag("Data", data);
+            dataToSend.setInteger("WorldID", Minecraft.getMinecraft().theWorld.provider.getDimension());
+            dataToSend.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
+        }
     }
 }
