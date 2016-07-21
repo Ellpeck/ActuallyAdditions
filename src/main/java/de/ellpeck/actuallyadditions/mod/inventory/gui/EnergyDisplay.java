@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -50,9 +51,7 @@ public class EnergyDisplay extends Gui{
         this.outline = outline;
         this.drawTextNextTo = drawTextNextTo;
 
-        if(TileEntityBase.teslaLoaded){
-            this.displayTesla = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer).theCompound.getBoolean("DisplayTesla");
-        }
+        this.displayTesla = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer).theCompound.getBoolean("DisplayTesla");
     }
 
     public void draw(){
@@ -87,9 +86,7 @@ public class EnergyDisplay extends Gui{
 
             List<String> text = new ArrayList<String>();
             text.add(this.getOverlayText());
-            if(TileEntityBase.teslaLoaded){
-                text.add(TextFormatting.GRAY+""+TextFormatting.ITALIC+"Click to change mode!");
-            }
+            text.add(TextFormatting.GRAY+""+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".energy.to"+(this.displayTesla ? "RF" : "T")));
             GuiUtils.drawHoveringText(text, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
     }
@@ -109,17 +106,15 @@ public class EnergyDisplay extends Gui{
     }
 
     private void changeDisplayMode(){
-        if(TileEntityBase.teslaLoaded){
-            NBTTagCompound data = new NBTTagCompound();
+        NBTTagCompound data = new NBTTagCompound();
 
-            this.displayTesla = !this.displayTesla;
-            data.setBoolean("DisplayTesla", this.displayTesla);
+        this.displayTesla = !this.displayTesla;
+        data.setBoolean("DisplayTesla", this.displayTesla);
 
-            NBTTagCompound dataToSend = new NBTTagCompound();
-            dataToSend.setTag("Data", data);
-            dataToSend.setInteger("WorldID", Minecraft.getMinecraft().theWorld.provider.getDimension());
-            dataToSend.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
-            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
-        }
+        NBTTagCompound dataToSend = new NBTTagCompound();
+        dataToSend.setTag("Data", data);
+        dataToSend.setInteger("WorldID", Minecraft.getMinecraft().theWorld.provider.getDimension());
+        dataToSend.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
     }
 }
