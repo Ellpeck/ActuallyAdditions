@@ -1,3 +1,16 @@
+# 1.10.2-r52
+* Added lens of disenchanting. It's awesome, I promise.
+* Awesome new energy and fluid displays in GUIs
+* Added the ability to change between RF and Tesla display modes in energy GUIs
+* Changed advanced coil and ender star recipes a bit
+* Fixed log spam when switching worlds
+* Made JEI know about the drills so that people don't not know how to craft them.
+* Disallow bosses to be spawner changed
+* Fixed a crash when breaking soulshards spawners with a drill (hopefully)
+* Reconstructed book (ha ha) to have a reconstruction section
+* Made ESD use new capability item system. It might be broken in your world now, go look at all of the ones you're using and fix their settings if that's the case.
+* Fixed bowls of water being hideous because they weren't going into the right slots
+
 # 1.10.2-r51
 * Made TiCon Rapier be able to be repaired in the Item Repairer
 * Added Player Probe
