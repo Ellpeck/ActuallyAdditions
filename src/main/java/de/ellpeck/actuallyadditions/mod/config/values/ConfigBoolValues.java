@@ -23,6 +23,7 @@ public enum ConfigBoolValues{
     UPDATE_CHECK_VERSION_SPECIFIC("Version Specific Update Checker", ConfigCategories.OTHER, true, "If Actually Additions' Update Check should only search for updates for the Minecraft Version you currently have"),
 
     DO_CAT_DROPS("Do Cat Drops", ConfigCategories.OTHER, true, "If Cats drop Hairy Balls on Occasion"),
+    WORMS("Worms", ConfigCategories.OTHER, true, "If worms should drop from tilling the ground"),
 
     TF_PAXELS("Thermal Foundation Paxels", ConfigCategories.OTHER, true, "If Paxels made of Thermal Foundation Materials should exist"),
     MT_PAXELS("MekanismTools Paxels", ConfigCategories.OTHER, true, "If Paxels made of MekanismTools Materials should exist"),
