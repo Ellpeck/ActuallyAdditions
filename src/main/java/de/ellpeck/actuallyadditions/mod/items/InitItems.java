@@ -209,10 +209,12 @@ public final class InitItems{
     public static Item itemWaterBowl;
     public static Item itemFilter;
     public static Item itemPlayerProbe;
+    public static Item itemWorm;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
+        itemWorm = new ItemWorm("itemWorm");
         itemPlayerProbe = new ItemPlayerProbe("itemPlayerProbe");
         itemFilter = new ItemFilter("itemFilter");
         itemWaterBowl = new ItemWaterBowl("itemWaterBowl");

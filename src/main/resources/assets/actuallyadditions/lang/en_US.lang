@@ -501,6 +501,7 @@ item.actuallyadditions.itemFilter.name=Item Filter
 item.actuallyadditions.itemMiscBiomass.name=Biomass
 item.actuallyadditions.itemMiscBiocoal.name=Bio Coal
 item.actuallyadditions.itemPlayerProbe.name=Player Probe
+item.actuallyadditions.itemWorm.name=Worm
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On

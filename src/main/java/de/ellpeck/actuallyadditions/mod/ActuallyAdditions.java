@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.InitCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.ItemCrafting;
+import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.CommonEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.InitVillager;
@@ -106,6 +107,7 @@ public class ActuallyAdditions{
         new CommonEvents();
         InitCrafting.init();
         DungeonLoot.init();
+        InitEntities.init();
 
         proxy.init(event);
 

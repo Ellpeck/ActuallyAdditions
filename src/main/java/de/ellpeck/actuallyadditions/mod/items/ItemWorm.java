@@ -1,0 +1,84 @@
+/*
+ * This file ("ItemWorm.java") is part of the Actually Additions mod for Minecraft.
+ * It is created and owned by Ellpeck and distributed
+ * under the Actually Additions License to be found at
+ * http://ellpeck.de/actaddlicense
+ * View the source code at https://github.com/Ellpeck/ActuallyAdditions
+ *
+ * © 2015-2016 Ellpeck
+ */
+
+package de.ellpeck.actuallyadditions.mod.items;
+
+import de.ellpeck.actuallyadditions.mod.data.WorldData;
+import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.util.Util;
+import io.netty.util.internal.ConcurrentSet;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.BlockGrass;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.particle.ParticleDigging;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.List;
+
+public class ItemWorm extends ItemBase{
+
+    public ItemWorm(String name){
+        super(name);
+
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @Override
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float par8, float par9, float par10){
+        IBlockState state = world.getBlockState(pos);
+        if(EntityWorm.canWormify(world, pos, state)){
+            List<EntityWorm> worms = world.getEntitiesWithinAABB(EntityWorm.class, new AxisAlignedBB(pos.getX()-1, pos.getY(), pos.getZ()-1, pos.getX()+2, pos.getY()+1, pos.getZ()+2));
+            if(worms == null || worms.isEmpty()){
+                if(!world.isRemote){
+                    EntityWorm worm = new EntityWorm(world);
+                    worm.setPosition(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
+                    world.spawnEntityInWorld(worm);
+
+                    stack.stackSize--;
+                }
+                return EnumActionResult.SUCCESS;
+            }
+        }
+        return super.onItemUse(stack, player, world, pos, hand, side, par8, par9, par10);
+    }
+
+    @SubscribeEvent
+    public void onHoe(UseHoeEvent event){
+        World world = event.getWorld();
+        if(!world.isRemote){
+            BlockPos pos = event.getPos();
+            IBlockState state = world.getBlockState(pos);
+            if(state.getBlock() instanceof BlockGrass && world.rand.nextFloat() > 0.7F){
+                ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2)+1);
+                EntityItem item = new EntityItem(event.getWorld(), pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5, stack);
+                world.spawnEntityInWorld(item);
+            }
+        }
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.UNCOMMON;
+    }
+}

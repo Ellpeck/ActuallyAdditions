@@ -194,6 +194,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         if(type == NBTType.SAVE_TILE){
             compound.setBoolean("Redstone", this.isRedstonePowered);
+            compound.setInteger("TicksElapsed", this.ticksElapsed);
         }
         if(this.isRedstoneToggle() && (type != NBTType.SAVE_BLOCK || this.isPulseMode)){
             compound.setBoolean("IsPulseMode", this.isPulseMode);
@@ -208,6 +209,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         if(type == NBTType.SAVE_TILE){
             this.isRedstonePowered = compound.getBoolean("Redstone");
+            this.ticksElapsed = compound.getInteger("TicksElapsed");
         }
         if(this.isRedstoneToggle()){
             this.isPulseMode = compound.getBoolean("IsPulseMode");
