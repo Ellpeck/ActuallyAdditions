@@ -317,13 +317,15 @@ public final class BlockCrafting{
             recipeSolidifier = RecipeUtil.lastIRecipe();
         }
 
-        //Charcoal Block
-        GameRegistry.addRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.CHARCOAL_BLOCK.ordinal()),
-                "CCC", "CCC", "CCC",
-                'C', new ItemStack(Items.COAL, 1, 1));
-        recipeBlockChar = RecipeUtil.lastIRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(Items.COAL, 9, 1),
-                new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.CHARCOAL_BLOCK.ordinal()));
+        if(ConfigCrafting.CHARCOAL_BLOCK.isEnabled()){
+            //Charcoal Block
+            GameRegistry.addRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.CHARCOAL_BLOCK.ordinal()),
+                    "CCC", "CCC", "CCC",
+                    'C', new ItemStack(Items.COAL, 1, 1));
+            recipeBlockChar = RecipeUtil.lastIRecipe();
+            GameRegistry.addShapelessRecipe(new ItemStack(Items.COAL, 9, 1),
+                    new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.CHARCOAL_BLOCK.ordinal()));
+        }
 
         //Wood Casing
         if(ConfigCrafting.WOOD_CASING.isEnabled()){

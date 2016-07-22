@@ -490,12 +490,14 @@ public final class ItemCrafting{
         }
 
         //Tiny Coal
-        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_COAL.ordinal()),
-                new ItemStack(Items.COAL));
-        recipeTinyCoal = RecipeUtil.lastIRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_CHAR.ordinal()),
-                new ItemStack(Items.COAL, 1, 1));
-        recipeTinyChar = RecipeUtil.lastIRecipe();
+        if(ConfigCrafting.TINY_COAL.isEnabled()){
+            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_COAL.ordinal()),
+                    new ItemStack(Items.COAL));
+            recipeTinyCoal = RecipeUtil.lastIRecipe();
+            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_CHAR.ordinal()),
+                    new ItemStack(Items.COAL, 1, 1));
+            recipeTinyChar = RecipeUtil.lastIRecipe();
+        }
 
         //Rice Seeds
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemRiceSeed),

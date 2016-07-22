@@ -166,7 +166,10 @@ public enum ConfigCrafting{
     SPAWNER_CHANGER("Spawner Changer", ConfigCategories.ITEMS_CRAFTING),
     ITEM_INTERFACE("Item Interface", ConfigCategories.BLOCKS_CRAFTING),
     DISPLAY_STAND("Display Stand", ConfigCategories.BLOCKS_CRAFTING),
-    FILTER("Item Filter", ConfigCategories.ITEMS_CRAFTING);
+    FILTER("Item Filter", ConfigCategories.ITEMS_CRAFTING),
+
+    CHARCOAL_BLOCK("Charcoal Block", ConfigCategories.BLOCKS_CRAFTING),
+    TINY_COAL("Tiny Coal", ConfigCategories.ITEMS_CRAFTING);
 
     public final String name;
     public final String category;
