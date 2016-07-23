@@ -75,14 +75,18 @@ public class EntityWorm extends Entity{
                                 }
                             }
 
-                            if(isFarmland && this.worldObj.rand.nextFloat() >= 0.95F){
+                            if(isFarmland && this.worldObj.rand.nextFloat() >= 0.8F){
                                 BlockPos plant = pos.up();
                                 if(!this.worldObj.isAirBlock(plant)){
                                     IBlockState plantState = this.worldObj.getBlockState(plant);
                                     Block plantBlock = plantState.getBlock();
 
                                     plantBlock.updateTick(this.worldObj, plant, plantState, Util.RANDOM);
-                                    this.worldObj.playEvent(2005, plant, 0);
+
+                                    IBlockState newState = this.worldObj.getBlockState(plant);
+                                    if(newState.getBlock().getMetaFromState(newState) != plantBlock.getMetaFromState(plantState)){
+                                        this.worldObj.playEvent(2005, plant, 0);
+                                    }
                                 }
                             }
                         }
