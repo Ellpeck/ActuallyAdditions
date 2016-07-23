@@ -119,7 +119,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * Pulls Items from the specified Slots on the specified Side
      */
     private void pull(){
-        if(this.newPulling()){
+        if(this.newPulling() || !(this.placeToPull instanceof IInventory)){
             return;
         }
 
@@ -222,7 +222,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * (Check pull() for Description, similar to this)
      */
     private void put(){
-        if(this.newPutting()){
+        if(this.newPutting() || !(this.placeToPut instanceof IInventory)){
             return;
         }
 
@@ -331,6 +331,14 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 if(this.placeToPull instanceof IInventory){
                     this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
                 }
+                else{
+                    if(this.placeToPull.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
+                        IItemHandler cap = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                        if(cap != null){
+                            this.slotToPullEnd = cap.getSlots();
+                        }
+                    }
+                }
             }
         }
 
@@ -341,6 +349,14 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             if(this.slotToPutEnd <= 0 && this.placeToPut != null){
                 if(this.placeToPut instanceof IInventory){
                     this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
+                }
+                else{
+                    if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
+                        IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                        if(cap != null){
+                            this.slotToPutEnd = cap.getSlots();
+                        }
+                    }
                 }
             }
         }
