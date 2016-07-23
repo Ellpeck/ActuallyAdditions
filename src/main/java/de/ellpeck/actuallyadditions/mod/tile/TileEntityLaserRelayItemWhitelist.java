@@ -27,11 +27,9 @@ import java.util.List;
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
 
     public final IInventory filterInventory;
-    public boolean isLeftWhitelist;
-    public boolean isRightWhitelist;
     private ItemStack[] slots = new ItemStack[24];
-    private boolean lastLeftWhitelist;
-    private boolean lastRightWhitelist;
+    public FilterSettings leftFilter = new FilterSettings(0, 12, true, true, false, -1000);
+    public FilterSettings rightFilter = new FilterSettings(12, 24, true, true, false, -2000);
 
     public TileEntityLaserRelayItemWhitelist(){
         super("laserRelayItemWhitelist");
@@ -163,34 +161,9 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         }.setTile(this);
     }
 
-    public static boolean checkFilter(ItemStack stack, boolean isWhitelist, ItemStack[] slots, int start, int end){
-        if(stack != null){
-            for(int i = start; i < end; i++){
-                if(slots[i] != null){
-                    if(slots[i].isItemEqual(stack)){
-                        return isWhitelist;
-                    }
-                    else if(slots[i].getItem() instanceof ItemFilter){
-                        ItemStack[] filterSlots = new ItemStack[ContainerFilter.SLOT_AMOUNT];
-                        ItemDrill.loadSlotsFromNBT(filterSlots, slots[i]);
-                        if(filterSlots != null && filterSlots.length > 0){
-                            for(ItemStack filterSlot : filterSlots){
-                                if(filterSlot != null && filterSlot.isItemEqual(stack)){
-                                    return isWhitelist;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return !isWhitelist;
-    }
-
     @Override
     public boolean isWhitelisted(ItemStack stack, boolean output){
-        int slotStart = output ? 12 : 0;
-        return checkFilter(stack, output ? this.isRightWhitelist : this.isLeftWhitelist, this.slots, slotStart, slotStart+12);
+        return output ? this.rightFilter.check(stack, this.slots) : this.leftFilter.check(stack, this.slots);
     }
 
     @Override
@@ -199,8 +172,10 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         if(type == NBTType.SAVE_TILE){
             TileEntityInventoryBase.saveSlots(this.slots, compound);
         }
-        compound.setBoolean("LeftWhitelist", this.isLeftWhitelist);
-        compound.setBoolean("RightWhitelist", this.isRightWhitelist);
+        if(type != NBTType.SAVE_BLOCK){
+            this.leftFilter.writeToNBT(compound, "LeftFilter");
+            this.rightFilter.writeToNBT(compound, "RightFilter");
+        }
     }
 
     @Override
@@ -209,19 +184,17 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         if(type == NBTType.SAVE_TILE){
             TileEntityInventoryBase.loadSlots(this.slots, compound);
         }
-        this.isLeftWhitelist = compound.getBoolean("LeftWhitelist");
-        this.isRightWhitelist = compound.getBoolean("RightWhitelist");
+        if(type != NBTType.SAVE_BLOCK){
+            this.leftFilter.readFromNBT(compound, "LeftFilter");
+            this.rightFilter.readFromNBT(compound, "RightFilter");
+        }
     }
 
     @Override
     public void onButtonPressed(int buttonID, EntityPlayer player){
-        if(buttonID == 0){
-            this.isLeftWhitelist = !this.isLeftWhitelist;
-        }
-        else if(buttonID == 1){
-            this.isRightWhitelist = !this.isRightWhitelist;
-        }
-        else if(buttonID == 2){
+        this.leftFilter.onButtonPressed(buttonID);
+        this.rightFilter.onButtonPressed(buttonID);
+        if(buttonID == 2){
             this.addWhitelistSmart(false);
         }
         else if(buttonID == 3){
@@ -230,9 +203,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     }
 
     private void addWhitelistSmart(boolean output){
-        int slotStart = output ? 12 : 0;
-        int slotStop = slotStart+12;
-
+        FilterSettings usedSettings = output ? this.rightFilter : this.leftFilter;
         List<IItemHandler> handlers = this.handlersAround;
         for(IItemHandler handler : handlers){
             for(int i = 0; i < handler.getSlots(); i++){
@@ -241,8 +212,8 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                     ItemStack copy = stack.copy();
                     copy.stackSize = 1;
 
-                    if(!checkFilter(copy, true, this.slots, slotStart, slotStop)){
-                        for(int k = slotStart; k < slotStop; k++){
+                    if(!FilterSettings.check(copy, this.slots, usedSettings.startSlot, usedSettings.endSlot, true, usedSettings.respectMeta, usedSettings.respectNBT)){
+                        for(int k = usedSettings.startSlot; k < usedSettings.endSlot; k++){
                             if(this.slots[k] != null){
                                 if(this.slots[k].getItem() instanceof ItemFilter){
                                     ItemStack[] filterSlots = new ItemStack[ContainerFilter.SLOT_AMOUNT];
@@ -281,9 +252,9 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         super.updateEntity();
 
         if(!this.worldObj.isRemote){
-            if((this.isLeftWhitelist != this.lastLeftWhitelist || this.isRightWhitelist != this.lastRightWhitelist) && this.sendUpdateWithInterval()){
-                this.lastLeftWhitelist = this.isLeftWhitelist;
-                this.lastRightWhitelist = this.isRightWhitelist;
+            if((this.leftFilter.needsUpdateSend() || this.rightFilter.needsUpdateSend()) && this.sendUpdateWithInterval()){
+                this.leftFilter.updateLasts();
+                this.rightFilter.updateLasts();
             }
         }
     }

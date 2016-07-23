@@ -25,8 +25,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
 
     public static final int WHITELIST_START = 6;
     public static final int RANGE = 6;
-    public boolean isWhitelist = true;
-    private boolean lastWhitelist;
+    public FilterSettings filter = new FilterSettings(WHITELIST_START, WHITELIST_START+12, true, true, false, -1000);
 
     public TileEntityRangedCollector(){
         super(18, "rangedCollector");
@@ -36,7 +35,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
         if(type != NBTType.SAVE_BLOCK){
-            compound.setBoolean("Whitelist", this.isWhitelist);
+            this.filter.writeToNBT(compound, "Filter");
         }
     }
 
@@ -44,7 +43,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
         if(type != NBTType.SAVE_BLOCK){
-            this.isWhitelist = compound.getBoolean("Whitelist");
+            this.filter.readFromNBT(compound, "Filter");
         }
     }
 
@@ -58,7 +57,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                     for(EntityItem item : items){
                         if(!item.isDead && item.getEntityItem() != null){
                             ItemStack toAdd = item.getEntityItem().copy();
-                            if(TileEntityLaserRelayItemWhitelist.checkFilter(toAdd, this.isWhitelist, this.slots, WHITELIST_START, WHITELIST_START+12)){
+                            if(this.filter.check(toAdd, this.slots)){
                                 ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
                                 checkList.add(toAdd);
                                 if(WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, EnumFacing.UP, false, true)){
@@ -71,8 +70,8 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                 }
             }
 
-            if(this.isWhitelist != this.lastWhitelist && this.sendUpdateWithInterval()){
-                this.lastWhitelist = this.isWhitelist;
+            if(this.filter.needsUpdateSend() && this.sendUpdateWithInterval()){
+                this.filter.updateLasts();
             }
         }
     }
@@ -94,6 +93,6 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
 
     @Override
     public void onButtonPressed(int buttonID, EntityPlayer player){
-        this.isWhitelist = !this.isWhitelist;
+        this.filter.onButtonPressed(buttonID);
     }
 }

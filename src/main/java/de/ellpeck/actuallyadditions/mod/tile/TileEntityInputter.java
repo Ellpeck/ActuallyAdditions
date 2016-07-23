@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
+import com.sun.org.apache.bcel.internal.generic.PUTFIELD;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -41,16 +42,14 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public int slotToPullEnd;
     public TileEntity placeToPull;
     public boolean isAdvanced;
-    public boolean isPullWhitelist;
-    public boolean isPutWhitelist;
     private int lastPutSide;
     private int lastPutStart;
     private int lastPutEnd;
     private int lastPullSide;
     private int lastPullStart;
     private int lastPullEnd;
-    private boolean lastPullWhite;
-    private boolean lastPutWhite;
+    public FilterSettings leftFilter = new FilterSettings(PULL_FILTER_START, PULL_FILTER_START+12, true, true, false, -1000);
+    public FilterSettings rightFilter = new FilterSettings(PUT_FILTER_START, PUT_FILTER_START+12, true, true, false, -2000);
 
     private boolean hasCheckedTilesAround;
 
@@ -314,8 +313,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             return true;
         }
         else{
-            int slotStart = output ? PUT_FILTER_START : PULL_FILTER_START;
-            return TileEntityLaserRelayItemWhitelist.checkFilter(stack, output ? this.isPutWhitelist : this.isPullWhitelist, this.slots, slotStart, slotStart+12);
+            return (output ? this.rightFilter : this.leftFilter).check(stack, this.slots);
         }
     }
 
@@ -364,14 +362,8 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     @Override
     public void onButtonPressed(int buttonID, EntityPlayer player){
-        if(buttonID == WHITELIST_PULL_BUTTON_ID){
-            this.isPullWhitelist = !this.isPullWhitelist;
-            return;
-        }
-        if(buttonID == WHITELIST_PUT_BUTTON_ID){
-            this.isPutWhitelist = !this.isPutWhitelist;
-            return;
-        }
+        this.leftFilter.onButtonPressed(buttonID);
+        this.rightFilter.onButtonPressed(buttonID);
 
         //Reset the Slots
         if(buttonID == 0 || buttonID == 1){
@@ -424,8 +416,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             compound.setInteger("SideToPull", this.sideToPull);
             compound.setInteger("SlotToPull", this.slotToPullStart);
             compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
-            compound.setBoolean("PullWhitelist", this.isPullWhitelist);
-            compound.setBoolean("PutWhitelist", this.isPutWhitelist);
+
+            this.leftFilter.writeToNBT(compound, "LeftFilter");
+            this.rightFilter.writeToNBT(compound, "RightFilter");
         }
     }
 
@@ -438,8 +431,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             this.sideToPull = compound.getInteger("SideToPull");
             this.slotToPullStart = compound.getInteger("SlotToPull");
             this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
-            this.isPullWhitelist = compound.getBoolean("PullWhitelist");
-            this.isPutWhitelist = compound.getBoolean("PutWhitelist");
+
+            this.leftFilter.readFromNBT(compound, "LeftFilter");
+            this.rightFilter.readFromNBT(compound, "RightFilter");
         }
         super.readSyncableNBT(compound, type);
     }
@@ -466,15 +460,15 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             }
 
             //Update the Client
-            if((this.sideToPut != this.lastPutSide || this.sideToPull != this.lastPullSide || this.slotToPullStart != this.lastPullStart || this.slotToPullEnd != this.lastPullEnd || this.slotToPutStart != this.lastPutStart || this.slotToPutEnd != this.lastPutEnd || this.isPullWhitelist != this.lastPullWhite || this.isPutWhitelist != this.lastPutWhite) && this.sendUpdateWithInterval()){
+            if((this.sideToPut != this.lastPutSide || this.sideToPull != this.lastPullSide || this.slotToPullStart != this.lastPullStart || this.slotToPullEnd != this.lastPullEnd || this.slotToPutStart != this.lastPutStart || this.slotToPutEnd != this.lastPutEnd || this.leftFilter.needsUpdateSend() || this.rightFilter.needsUpdateSend()) && this.sendUpdateWithInterval()){
                 this.lastPutSide = this.sideToPut;
                 this.lastPullSide = this.sideToPull;
                 this.lastPullStart = this.slotToPullStart;
                 this.lastPullEnd = this.slotToPullEnd;
                 this.lastPutStart = this.slotToPutStart;
                 this.lastPutEnd = this.slotToPutEnd;
-                this.lastPullWhite = this.isPullWhitelist;
-                this.lastPutWhite = this.isPutWhitelist;
+                this.leftFilter.updateLasts();
+                this.rightFilter.updateLasts();
             }
         }
     }

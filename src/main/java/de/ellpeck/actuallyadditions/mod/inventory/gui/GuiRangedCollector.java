@@ -40,7 +40,8 @@ public class GuiRangedCollector extends GuiContainer{
     private final int y;
     private final int z;
     private final World world;
-    private GuiInputter.SmallerButton whitelistButton;
+
+    private FilterSettingsGui filter;
 
     public GuiRangedCollector(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world){
         super(new ContainerRangedCollector(inventory, tile));
@@ -57,20 +58,21 @@ public class GuiRangedCollector extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        this.whitelistButton = new GuiInputter.SmallerButton(0, this.guiLeft+3, this.guiTop+16, "");
-        this.buttonList.add(this.whitelistButton);
+        this.filter = new FilterSettingsGui(this.collector.filter, this.guiLeft+3, this.guiTop+16, this.buttonList);
     }
 
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        this.whitelistButton.displayString = this.collector.isWhitelist ? "O" : "X";
+        this.filter.drawHover(x, y);
+    }
 
-        String text1 = this.collector.isWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist");
-        if(x >= this.guiLeft+3 && y >= this.guiTop+16 && x <= this.guiLeft+18 && y <= this.guiTop+31){
-            this.drawHoveringText(Collections.singletonList(text1), x, y);
-        }
+    @Override
+    public void updateScreen(){
+        super.updateScreen();
+
+        this.filter.update();
     }
 
     @Override

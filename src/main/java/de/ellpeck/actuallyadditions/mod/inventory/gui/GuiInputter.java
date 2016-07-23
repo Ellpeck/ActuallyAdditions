@@ -56,12 +56,13 @@ public class GuiInputter extends GuiContainer{
     private final int z;
     private final World world;
     private final boolean isAdvanced;
-    private SmallerButton whitelistPut;
-    private SmallerButton whitelistPull;
     private GuiTextField fieldPutStart;
     private GuiTextField fieldPutEnd;
     private GuiTextField fieldPullStart;
     private GuiTextField fieldPullEnd;
+
+    private FilterSettingsGui leftFilter;
+    private FilterSettingsGui rightFilter;
 
     public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world, boolean isAdvanced){
         super(new ContainerInputter(inventory, tile, isAdvanced));
@@ -78,6 +79,11 @@ public class GuiInputter extends GuiContainer{
     @Override
     public void initGui(){
         super.initGui();
+
+        if(this.isAdvanced){
+            this.leftFilter = new FilterSettingsGui(this.tileInputter.leftFilter, this.guiLeft+3, this.guiTop+16, this.buttonList);
+            this.rightFilter = new FilterSettingsGui(this.tileInputter.rightFilter, this.guiLeft+157, this.guiTop+16, this.buttonList);
+        }
 
         this.fieldPullStart = new GuiTextField(3000, this.fontRendererObj, this.guiLeft+6, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
         this.fieldPullStart.setMaxStringLength(5);
@@ -99,17 +105,10 @@ public class GuiInputter extends GuiContainer{
         SmallerButton buttonSidePullP = new SmallerButton(2, this.guiLeft+70, this.guiTop+43+(this.isAdvanced ? OFFSET_ADVANCED : 0), ">");
         SmallerButton buttonSidePullM = new SmallerButton(3, this.guiLeft+5, this.guiTop+43+(this.isAdvanced ? OFFSET_ADVANCED : 0), "<");
 
-        this.whitelistPull = new SmallerButton(TileEntityInputter.WHITELIST_PULL_BUTTON_ID, this.guiLeft+3, this.guiTop+16, "");
-        this.whitelistPut = new SmallerButton(TileEntityInputter.WHITELIST_PUT_BUTTON_ID, this.guiLeft+157, this.guiTop+16, "");
-
         this.buttonList.add(buttonSidePutP);
         this.buttonList.add(buttonSidePullP);
         this.buttonList.add(buttonSidePutM);
         this.buttonList.add(buttonSidePullM);
-        if(this.isAdvanced){
-            this.buttonList.add(this.whitelistPut);
-            this.buttonList.add(this.whitelistPull);
-        }
 
         this.buttonList.add(new TinyButton(TileEntityInputter.OKAY_BUTTON_ID, this.guiLeft+84, this.guiTop+91+(this.isAdvanced ? OFFSET_ADVANCED : 0)));
     }
@@ -117,27 +116,6 @@ public class GuiInputter extends GuiContainer{
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
-
-        this.whitelistPull.displayString = this.tileInputter.isPullWhitelist ? "O" : "X";
-        this.whitelistPut.displayString = this.tileInputter.isPutWhitelist ? "O" : "X";
-
-        if(this.isAdvanced){
-            List infoList = this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.whitelistInfo"), 200);
-            String text1 = this.tileInputter.isPullWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist");
-            if(x >= this.guiLeft+3 && y >= this.guiTop+16 && x <= this.guiLeft+18 && y <= this.guiTop+31){
-                ArrayList list = new ArrayList();
-                list.add(TextFormatting.BOLD+text1);
-                list.addAll(infoList);
-                this.drawHoveringText(list, x, y);
-            }
-            String text2 = this.tileInputter.isPutWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist");
-            if(x >= this.guiLeft+157 && y >= this.guiTop+16 && x <= this.guiLeft+172 && y <= this.guiTop+31){
-                ArrayList list = new ArrayList();
-                list.add(TextFormatting.BOLD+text2);
-                list.addAll(infoList);
-                this.drawHoveringText(list, x, y);
-            }
-        }
 
         int newTopOffset = this.guiTop+(this.isAdvanced ? OFFSET_ADVANCED : 0);
         //Info Mode on!
@@ -152,6 +130,11 @@ public class GuiInputter extends GuiContainer{
         }
         if(x >= this.guiLeft+133 && y >= newTopOffset+65 && x <= this.guiLeft+133+38 && y <= newTopOffset+65+12){
             this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put")), 200), x, y);
+        }
+
+        if(this.isAdvanced){
+            this.leftFilter.drawHover(x, y);
+            this.rightFilter.drawHover(x, y);
         }
     }
 
@@ -232,6 +215,11 @@ public class GuiInputter extends GuiContainer{
         this.fieldPutEnd.updateCursorCounter();
         this.fieldPullStart.updateCursorCounter();
         this.fieldPullEnd.updateCursorCounter();
+
+        if(this.isAdvanced){
+            this.leftFilter.update();
+            this.rightFilter.update();
+        }
     }
 
     public void setVariable(GuiTextField field, int sendInt){

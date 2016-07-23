@@ -28,7 +28,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     public TileEntityInventoryBase(int slots, String name){
         super(name);
 
-        this.initializeSlots(slots);
+        this.slots = new ItemStack[slots];
 
         if(this.hasInvWrapperCapabilities()){
             for(int i = 0; i < this.invWrappers.length; i++){
@@ -59,10 +59,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
                 slots[i] = tagCompound != null && tagCompound.hasKey("id") ? ItemStack.loadItemStackFromNBT(tagCompound) : null;
             }
         }
-    }
-
-    public void initializeSlots(int itemAmount){
-        this.slots = new ItemStack[itemAmount];
     }
 
     @Override
@@ -138,7 +134,9 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public void clear(){
-        this.initializeSlots(this.slots.length);
+        for(int i = 0; i < this.slots.length; i++){
+            this.removeStackFromSlot(i);
+        }
     }
 
     @Override

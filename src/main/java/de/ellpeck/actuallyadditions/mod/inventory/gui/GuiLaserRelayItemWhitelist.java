@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhiteli
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -39,8 +40,11 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiLaserRelayItemWhitelist");
     private final TileEntityLaserRelayItemWhitelist tile;
 
-    private SmallerButton whitelistLeft;
-    private SmallerButton whitelistRight;
+    private FilterSettingsGui leftFilter;
+    private FilterSettingsGui rightFilter;
+
+    private GuiButton buttonSmartWhitelistLeft;
+    private GuiButton buttonSmartWhitelistRight;
 
     public GuiLaserRelayItemWhitelist(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerLaserRelayItemWhitelist(inventory, tile));
@@ -50,18 +54,24 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
     }
 
     @Override
+    public void updateScreen(){
+        super.updateScreen();
+
+        this.leftFilter.update();
+        this.rightFilter.update();
+    }
+
+    @Override
     public void initGui(){
         super.initGui();
 
-        this.whitelistLeft = new SmallerButton(0, this.guiLeft+3, this.guiTop+16, "");
-        this.whitelistRight = new SmallerButton(1, this.guiLeft+157, this.guiTop+16, "");
-        SmallerButton smartWhitelistLeft = new SmallerButton(2, this.guiLeft+3, this.guiTop+34, "S");
-        SmallerButton smartWhitelistRight = new SmallerButton(3, this.guiLeft+157, this.guiTop+34, "S");
+        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.guiLeft+3, this.guiTop+8, this.buttonList);
+        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.guiLeft+157, this.guiTop+8, this.buttonList);
 
-        this.buttonList.add(this.whitelistLeft);
-        this.buttonList.add(this.whitelistRight);
-        this.buttonList.add(smartWhitelistLeft);
-        this.buttonList.add(smartWhitelistRight);
+        this.buttonSmartWhitelistLeft = new SmallerButton(2, this.guiLeft+3, this.guiTop+64, "S");
+        this.buttonSmartWhitelistRight = new SmallerButton(3, this.guiLeft+157, this.guiTop+64, "S");
+        this.buttonList.add(this.buttonSmartWhitelistLeft);
+        this.buttonList.add(this.buttonSmartWhitelistRight);
     }
 
     @Override
@@ -80,30 +90,15 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        this.whitelistLeft.displayString = this.tile.isLeftWhitelist ? "O" : "X";
-        this.whitelistRight.displayString = this.tile.isRightWhitelist ? "O" : "X";
-
-        List infoList = this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.whitelistInfo"), 200);
-        String text1 = this.tile.isLeftWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist");
-        if(x >= this.guiLeft+3 && y >= this.guiTop+16 && x <= this.guiLeft+18 && y <= this.guiTop+31){
-            ArrayList list = new ArrayList();
-            list.add(TextFormatting.BOLD+text1);
-            list.addAll(infoList);
-            this.drawHoveringText(list, x, y);
-        }
-        String text2 = this.tile.isRightWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist");
-        if(x >= this.guiLeft+157 && y >= this.guiTop+16 && x <= this.guiLeft+172 && y <= this.guiTop+31){
-            ArrayList list = new ArrayList();
-            list.add(TextFormatting.BOLD+text2);
-            list.addAll(infoList);
-            this.drawHoveringText(list, x, y);
-        }
-        if(((x >= this.guiLeft+3 && x <= this.guiLeft+3+15) || (x >= this.guiLeft+157 && x <= this.guiLeft+157+15)) && y <= this.guiTop+34+15 && y >= this.guiTop+34){
+        if(this.buttonSmartWhitelistLeft.isMouseOver() || this.buttonSmartWhitelistRight.isMouseOver()){
             List<String> list = new ArrayList<String>();
             list.add(TextFormatting.BOLD+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.smart"));
             list.addAll(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.smartInfo"), 200));
             this.drawHoveringText(list, x, y);
         }
+
+        this.leftFilter.drawHover(x, y);
+        this.rightFilter.drawHover(x, y);
     }
 
     @Override
