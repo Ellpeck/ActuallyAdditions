@@ -1,3 +1,14 @@
+# 1.10.2-r55
+* The _balanced farming buttons-Update!
+* Added worms found by tilling the ground. When placed on dirt or grass, they till, irrigate and fertilize it
+* Added NBT and Metadata respecting options to ESDs, Ranged Collectors and Whitelist Item Lasers
+* Made Greenhouse glass a bit faster because it was ineffective
+* Made food less OP
+* Fixed armor values a bit
+* Fixed a crash when placing an ESD next to a non-IInventory block
+* Added config option for tiny coal and charcoal block
+* Fixed the energy bar turning green when holding a redstone torch
+
 # 1.10.2-r54
 * Fixed Tesla power system integration.
 * Yay for update spam. Or something to that effect.
