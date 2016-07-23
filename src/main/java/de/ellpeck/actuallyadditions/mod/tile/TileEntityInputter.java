@@ -30,8 +30,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     public static final int PUT_FILTER_START = 13;
     public static final int PULL_FILTER_START = 1;
-    public static final int WHITELIST_PULL_BUTTON_ID = 87;
-    public static final int WHITELIST_PUT_BUTTON_ID = 88;
     public static final int OKAY_BUTTON_ID = 133;
     public int sideToPut = -1;
     public int slotToPutStart;
@@ -88,8 +86,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 IItemHandler cap = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
                 if(cap != null){
                     for(int i = Math.max(this.slotToPullStart, 0); i < Math.min(this.slotToPullEnd, cap.getSlots()); i++){
-                        if(WorldUtil.doItemInteraction(i, 0, this.placeToPull, this, side, null)){
-                            return true;
+                        if(this.checkBothFilters(cap.getStackInSlot(i), false)){
+                            if(WorldUtil.doItemInteraction(i, 0, this.placeToPull, this, side, null)){
+                                return true;
+                            }
                         }
                     }
                 }
@@ -99,13 +99,15 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     private boolean newPutting(){
-        for(EnumFacing side : EnumFacing.values()){
-            if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side)){
-                IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
-                if(cap != null){
-                    for(int i = Math.max(this.slotToPutStart, 0); i < Math.min(this.slotToPutEnd, cap.getSlots()); i++){
-                        if(WorldUtil.doItemInteraction(0, i, this, this.placeToPut, null, side)){
-                            return true;
+        if(this.checkBothFilters(this.slots[0], true)){
+            for(EnumFacing side : EnumFacing.values()){
+                if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side)){
+                    IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
+                    if(cap != null){
+                        for(int i = Math.max(this.slotToPutStart, 0); i < Math.min(this.slotToPutEnd, cap.getSlots()); i++){
+                            if(WorldUtil.doItemInteraction(0, i, this, this.placeToPut, null, side)){
+                                return true;
+                            }
                         }
                     }
                 }
@@ -309,12 +311,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * @return If the Item is filtered correctly
      */
     private boolean checkBothFilters(ItemStack stack, boolean output){
-        if(!this.isAdvanced){
-            return true;
-        }
-        else{
-            return (output ? this.rightFilter : this.leftFilter).check(stack, this.slots);
-        }
+        return !this.isAdvanced || (output ? this.rightFilter : this.leftFilter).check(stack, this.slots);
     }
 
     /**
