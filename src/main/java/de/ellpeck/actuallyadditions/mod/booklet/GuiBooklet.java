@@ -307,7 +307,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public void initGui(){
         int flavor = 1;
         if(Util.RANDOM.nextFloat() <= 0.1){
-            flavor = MathHelper.getRandomIntegerInRange(Util.RANDOM, 2, 5);
+            flavor = MathHelper.getRandomIntegerInRange(Util.RANDOM, 2, 6);
         }
         this.bookletName = "info."+ModUtil.MOD_ID+".booklet.manualName.1."+flavor;
 
