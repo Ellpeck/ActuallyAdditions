@@ -45,18 +45,20 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
 
     @Override
     public void onButtonPressed(int buttonID, EntityPlayer player){
-        GuiHandler.GuiTypes type;
+        if(player != null && this.pos != null){
+            GuiHandler.GuiTypes type;
 
-        if(buttonID == 0){
-            type = GuiHandler.GuiTypes.GIANT_CHEST;
-        }
-        else if(buttonID == 1){
-            type = GuiHandler.GuiTypes.GIANT_CHEST_PAGE_2;
-        }
-        else{
-            type = GuiHandler.GuiTypes.GIANT_CHEST_PAGE_3;
-        }
+            if(buttonID == 0){
+                type = GuiHandler.GuiTypes.GIANT_CHEST;
+            }
+            else if(buttonID == 1){
+                type = GuiHandler.GuiTypes.GIANT_CHEST_PAGE_2;
+            }
+            else{
+                type = GuiHandler.GuiTypes.GIANT_CHEST_PAGE_3;
+            }
 
-        player.openGui(ActuallyAdditions.instance, type.ordinal(), this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
+            player.openGui(ActuallyAdditions.instance, type.ordinal(), this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
+        }
     }
 }

@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBookletStand;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -67,7 +68,10 @@ public final class PacketHandler{
 
             if(tile instanceof IButtonReactor){
                 IButtonReactor reactor = (IButtonReactor)tile;
-                reactor.onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID")));
+                Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
+                if(entity != null && entity instanceof EntityPlayer){
+                    reactor.onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)entity);
+                }
             }
         }
     };
