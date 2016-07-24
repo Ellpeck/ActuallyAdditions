@@ -34,7 +34,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModAPIManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -282,7 +281,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
             }
         }
         else if(teslaLoaded){
-            T cap = TeslaUtil.getTeslaCapability(this, capability, facing);
+            T cap = TeslaUtil.wrapTeslaToRF(this, capability, facing);
             if(cap != null){
                 return cap;
             }

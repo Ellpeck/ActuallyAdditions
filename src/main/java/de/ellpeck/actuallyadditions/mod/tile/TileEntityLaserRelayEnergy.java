@@ -14,6 +14,8 @@ import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
+import net.darkhax.tesla.api.ITeslaConsumer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -25,7 +27,7 @@ import java.util.Map;
 
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements IEnergyReceiver{
 
-    public final Map<EnumFacing, IEnergyReceiver> receiversAround = new HashMap<EnumFacing, IEnergyReceiver>();
+    public final Map<EnumFacing, TileEntity> receiversAround = new HashMap<EnumFacing, TileEntity>();
 
     public static final int CAP = 1000;
 
@@ -75,8 +77,10 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
         for(EnumFacing side : EnumFacing.values()){
             BlockPos pos = this.getPos().offset(side);
             TileEntity tile = this.worldObj.getTileEntity(pos);
-            if(tile instanceof IEnergyReceiver && !(tile instanceof TileEntityLaserRelay)){
-                this.receiversAround.put(side, (IEnergyReceiver)tile);
+            if(tile != null && !(tile instanceof TileEntityLaserRelay)){
+                if(tile instanceof IEnergyReceiver || (teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite()))){
+                    this.receiversAround.put(side, tile);
+                }
             }
         }
     }
@@ -95,22 +99,34 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                         TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy)relayTile;
                         double highestLoss = Math.max(theRelay.getLossPercentage(), this.getLossPercentage());
                         int lowestCap = Math.min(theRelay.getEnergyCap(), this.getEnergyCap());
-                        for(Map.Entry<EnumFacing, IEnergyReceiver> receiver : theRelay.receiversAround.entrySet()){
-                            if(receiver != null && receiver.getKey() != null && receiver.getValue() != null){
-                                if(theRelay != this || receiver.getKey() != from){
-                                    if(receiver.getValue().canConnectEnergy(receiver.getKey().getOpposite())){
-                                        //Transfer the energy (with the energy loss!)
-                                        int theoreticalReceived = receiver.getValue().receiveEnergy(receiver.getKey().getOpposite(), Math.min(maxTransfer, lowestCap)-transmitted, true);
-                                        //The amount of energy lost during a transfer
-                                        int deduct = ConfigBoolValues.LASER_RELAY_LOSS.isEnabled() ? (int)(theoreticalReceived*(highestLoss/100)) : 0;
-
-                                        transmitted += receiver.getValue().receiveEnergy(receiver.getKey().getOpposite(), theoreticalReceived-deduct, simulate);
-                                        transmitted += deduct;
-
-                                        //If everything that could be transmitted was transmitted
-                                        if(transmitted >= maxTransfer){
-                                            return transmitted;
+                        for(Map.Entry<EnumFacing, TileEntity> receiver : theRelay.receiversAround.entrySet()){
+                            if(receiver != null){
+                                EnumFacing side = receiver.getKey();
+                                EnumFacing opp = side.getOpposite();
+                                TileEntity tile = receiver.getValue();
+                                if(theRelay != this || side != from){
+                                    if(tile instanceof IEnergyReceiver){
+                                        IEnergyReceiver iReceiver = (IEnergyReceiver)tile;
+                                        if(iReceiver.canConnectEnergy(opp)){
+                                            int theoreticalReceived = iReceiver.receiveEnergy(opp, Math.min(maxTransfer, lowestCap)-transmitted, true);
+                                            int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
+                                            transmitted += iReceiver.receiveEnergy(opp, theoreticalReceived-deduct, simulate);
+                                            transmitted += deduct;
                                         }
+                                    }
+                                    else if(teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
+                                        ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
+                                        if(cap != null){
+                                            int theoreticalReceived = (int)cap.givePower(Math.min(maxTransfer, lowestCap)-transmitted, true);
+                                            int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
+                                            transmitted += cap.givePower(theoreticalReceived-deduct, simulate);
+                                            transmitted += deduct;
+                                        }
+                                    }
+
+                                    //If everything that could be transmitted was transmitted
+                                    if(transmitted >= maxTransfer){
+                                        return transmitted;
                                     }
                                 }
                             }
@@ -120,6 +136,10 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
             }
         }
         return transmitted;
+    }
+
+    private int calcDeduction(int theoreticalReceived, double highestLoss){
+        return ConfigBoolValues.LASER_RELAY_LOSS.isEnabled() ? (int)(theoreticalReceived*(highestLoss/100)) : 0;
     }
 
     public int getEnergyCap(){

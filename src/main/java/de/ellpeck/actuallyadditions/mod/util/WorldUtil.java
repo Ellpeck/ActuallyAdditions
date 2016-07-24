@@ -119,7 +119,7 @@ public final class WorldUtil{
                     }
                 }
                 else if(TileEntityBase.teslaLoaded){
-                    TeslaUtil.doTeslaInteraction(tile, otherTile, side);
+                    TeslaUtil.doWrappedTeslaRFInteraction(tile, otherTile, side);
                 }
             }
         }

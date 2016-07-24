@@ -35,7 +35,7 @@ public final class TeslaUtil{
     @CapabilityInject(ITeslaHolder.class)
     public static Capability<ITeslaHolder> teslaHolder;
 
-    public static <T> T getTeslaCapability(TileEntityBase tile, Capability<T> capability, EnumFacing facing){
+    public static <T> T wrapTeslaToRF(TileEntityBase tile, Capability<T> capability, EnumFacing facing){
         boolean receive = tile instanceof IEnergyReceiver && capability == teslaConsumer;
         boolean provide = tile instanceof IEnergyProvider && capability == teslaProducer;
         boolean hold = tile instanceof IEnergyHandler && capability == teslaHolder;
@@ -47,7 +47,7 @@ public final class TeslaUtil{
         }
     }
 
-    public static void doTeslaInteraction(TileEntity tile, TileEntity otherTile, EnumFacing side){
+    public static void doWrappedTeslaRFInteraction(TileEntity tile, TileEntity otherTile, EnumFacing side){
         ITeslaConsumer handlerTo = null;
         ITeslaProducer handlerFrom = null;
 

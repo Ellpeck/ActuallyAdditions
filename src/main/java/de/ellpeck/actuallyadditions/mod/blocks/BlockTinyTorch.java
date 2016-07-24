@@ -48,7 +48,6 @@ public class BlockTinyTorch extends BlockBase{
         super(Material.CIRCUITS, name);
         this.setDefaultState(this.blockState.getBaseState().withProperty(BlockTorch.FACING, EnumFacing.UP));
         this.setTickRandomly(true);
-        this.setCreativeTab(CreativeTabs.DECORATIONS);
 
         this.setHardness(0.0F);
         this.setLightLevel(0.67F);

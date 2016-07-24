@@ -10,9 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import cofh.api.energy.IEnergyConnection;
+import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
+import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.ITeslaHolder;
+import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
@@ -25,22 +31,56 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     @Override
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.isBoundThingInRange() && this.getReceiver() != null ? this.getReceiver().receiveEnergy(from, maxReceive, simulate) : 0;
+        if(this.isBoundThingInRange()){
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                if(tile instanceof IEnergyReceiver){
+                    return ((IEnergyReceiver)tile).receiveEnergy(from, maxReceive, simulate);
+                }
+                else if(teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, from)){
+                    ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, from);
+                    if(cap != null){
+                        return (int)cap.givePower(maxReceive, simulate);
+                    }
+                }
+            }
+        }
+        return 0;
     }
 
     @Override
     public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
-        return this.isBoundThingInRange() && this.getProvider() != null ? this.getProvider().extractEnergy(from, maxExtract, simulate) : 0;
+        if(this.isBoundThingInRange()){
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                if(tile instanceof IEnergyProvider){
+                    return ((IEnergyProvider)tile).extractEnergy(from, maxExtract, simulate);
+                }
+                else if(teslaLoaded && tile.hasCapability(TeslaUtil.teslaProducer, from)){
+                    ITeslaProducer cap = tile.getCapability(TeslaUtil.teslaProducer, from);
+                    if(cap != null){
+                        return (int)cap.takePower(maxExtract, simulate);
+                    }
+                }
+            }
+        }
+        return 0;
     }
 
     @Override
     public int getEnergyStored(EnumFacing from){
         if(this.isBoundThingInRange()){
-            if(this.getProvider() != null){
-                return this.getProvider().getEnergyStored(from);
-            }
-            if(this.getReceiver() != null){
-                return this.getReceiver().getEnergyStored(from);
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                if(tile instanceof IEnergyHandler){
+                    return ((IEnergyHandler)tile).getEnergyStored(from);
+                }
+                else if(teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from)){
+                    ITeslaHolder cap = tile.getCapability(TeslaUtil.teslaHolder, from);
+                    if(cap != null){
+                        return (int)cap.getStoredPower();
+                    }
+                }
             }
         }
         return 0;
@@ -49,49 +89,44 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     @Override
     public int getMaxEnergyStored(EnumFacing from){
         if(this.isBoundThingInRange()){
-            if(this.getProvider() != null){
-                return this.getProvider().getMaxEnergyStored(from);
-            }
-            if(this.getReceiver() != null){
-                return this.getReceiver().getMaxEnergyStored(from);
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                if(tile instanceof IEnergyHandler){
+                    return ((IEnergyHandler)tile).getMaxEnergyStored(from);
+                }
+                else if(teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from)){
+                    ITeslaHolder cap = tile.getCapability(TeslaUtil.teslaHolder, from);
+                    if(cap != null){
+                        return (int)cap.getCapacity();
+                    }
+                }
             }
         }
         return 0;
     }
 
-    public IEnergyProvider getProvider(){
-        if(this.boundPosition != null){
-            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
-            if(tile instanceof IEnergyProvider){
-                return (IEnergyProvider)tile;
-            }
-        }
-        return null;
-    }
-
-    public IEnergyReceiver getReceiver(){
-        if(this.boundPosition != null){
-            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
-            if(tile instanceof IEnergyReceiver){
-                return (IEnergyReceiver)tile;
-            }
-        }
-        return null;
-    }
-
     @Override
     public boolean isBoundThingInRange(){
-        return super.isBoundThingInRange() && (this.worldObj.getTileEntity(this.boundPosition) instanceof IEnergyReceiver || this.worldObj.getTileEntity(this.boundPosition) instanceof IEnergyProvider);
+        if(super.isBoundThingInRange()){
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            return tile != null && (tile instanceof IEnergyHandler || (teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, null)));
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         if(this.isBoundThingInRange()){
-            if(this.getProvider() != null){
-                return this.getProvider().canConnectEnergy(from);
-            }
-            if(this.getReceiver() != null){
-                return this.getReceiver().canConnectEnergy(from);
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                if(tile instanceof IEnergyConnection){
+                    return ((IEnergyConnection)tile).canConnectEnergy(from);
+                }
+                else{
+                    return teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from);
+                }
             }
         }
         return false;
