@@ -34,7 +34,7 @@ public class WorldData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"data";
     public static final ArrayList<PlayerSave> PLAYER_SAVE_DATA = new ArrayList<PlayerSave>();
-    private static final Map<Integer, WorldData> WORLD_DATA = new ConcurrentHashMap<Integer, WorldData>();
+    private static final ConcurrentHashMap<Integer, WorldData> WORLD_DATA = new ConcurrentHashMap<Integer, WorldData>();
     public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<Network>();
     private final ISaveHandler handler;
     private final int dimension;

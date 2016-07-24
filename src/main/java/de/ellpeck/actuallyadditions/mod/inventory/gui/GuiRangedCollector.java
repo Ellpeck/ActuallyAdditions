@@ -58,7 +58,7 @@ public class GuiRangedCollector extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        this.filter = new FilterSettingsGui(this.collector.filter, this.guiLeft+3, this.guiTop+16, this.buttonList);
+        this.filter = new FilterSettingsGui(this.collector.filter, this.guiLeft+3, this.guiTop+6, this.buttonList);
     }
 
     @Override

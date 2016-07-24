@@ -41,15 +41,4 @@ public final class Util{
     public static boolean isDevVersion(){
         return ModUtil.VERSION.equals("@VERSION@");
     }
-
-    public static int arrayContains(Object[] array, Object obj){
-        if(obj != null){
-            for(int i = 0; i < array.length; i++){
-                if(array[i] != null && (obj == array[i] || array[i].equals(obj))){
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
 }

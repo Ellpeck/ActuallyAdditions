@@ -33,6 +33,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.text.TextFormatting;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.awt.*;
 import java.net.URI;
@@ -309,7 +310,7 @@ public final class BookletUtils{
      * Called when one of the buttons to open an index or a chapter is pressed
      */
     public static void handleChapterButtonClick(GuiBooklet booklet, GuiButton button){
-        int place = Util.arrayContains(booklet.chapterButtons, button);
+        int place = ArrayUtils.indexOf(booklet.chapterButtons, button);
         if(place >= 0){
             if(booklet.currentEntrySet.getCurrentEntry() != null){
                 if(booklet.currentEntrySet.getCurrentChapter() == null){

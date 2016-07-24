@@ -28,8 +28,8 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
 
     public final IInventory filterInventory;
     private ItemStack[] slots = new ItemStack[24];
-    public FilterSettings leftFilter = new FilterSettings(0, 12, true, true, false, -1000);
-    public FilterSettings rightFilter = new FilterSettings(12, 24, true, true, false, -2000);
+    public FilterSettings leftFilter = new FilterSettings(0, 12, true, true, false, 0, -1000);
+    public FilterSettings rightFilter = new FilterSettings(12, 24, true, true, false, 0, -2000);
 
     public TileEntityLaserRelayItemWhitelist(){
         super("laserRelayItemWhitelist");
@@ -212,7 +212,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                     ItemStack copy = stack.copy();
                     copy.stackSize = 1;
 
-                    if(!FilterSettings.check(copy, this.slots, usedSettings.startSlot, usedSettings.endSlot, true, usedSettings.respectMeta, usedSettings.respectNBT)){
+                    if(!FilterSettings.check(copy, this.slots, usedSettings.startSlot, usedSettings.endSlot, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectOredict)){
                         for(int k = usedSettings.startSlot; k < usedSettings.endSlot; k++){
                             if(this.slots[k] != null){
                                 if(this.slots[k].getItem() instanceof ItemFilter){

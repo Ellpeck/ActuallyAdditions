@@ -81,8 +81,8 @@ public class GuiInputter extends GuiContainer{
         super.initGui();
 
         if(this.isAdvanced){
-            this.leftFilter = new FilterSettingsGui(this.tileInputter.leftFilter, this.guiLeft+3, this.guiTop+16, this.buttonList);
-            this.rightFilter = new FilterSettingsGui(this.tileInputter.rightFilter, this.guiLeft+157, this.guiTop+16, this.buttonList);
+            this.leftFilter = new FilterSettingsGui(this.tileInputter.leftFilter, this.guiLeft+3, this.guiTop+6, this.buttonList);
+            this.rightFilter = new FilterSettingsGui(this.tileInputter.rightFilter, this.guiLeft+157, this.guiTop+6, this.buttonList);
         }
 
         this.fieldPullStart = new GuiTextField(3000, this.fontRendererObj, this.guiLeft+6, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);

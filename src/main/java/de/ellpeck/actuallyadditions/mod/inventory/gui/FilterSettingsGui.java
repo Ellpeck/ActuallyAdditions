@@ -34,6 +34,7 @@ public class FilterSettingsGui extends Gui{
     public SmallerButton whitelistButton;
     public SmallerButton metaButton;
     public SmallerButton nbtButton;
+    public SmallerButton oredictButton;
 
     public FilterSettingsGui(FilterSettings settings, int x, int y, List<GuiButton> buttonList){
         this.theSettings = settings;
@@ -47,6 +48,9 @@ public class FilterSettingsGui extends Gui{
         this.nbtButton = new SmallerButton(this.theSettings.nbtButtonId, x, y+36, "");
         buttonList.add(this.nbtButton);
 
+        this.oredictButton = new SmallerButton(this.theSettings.oredictButtonId, x, y+54, "");
+        buttonList.add(this.oredictButton);
+
         this.update();
     }
 
@@ -54,6 +58,7 @@ public class FilterSettingsGui extends Gui{
         this.whitelistButton.displayString = (this.theSettings.isWhitelist ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"W";
         this.metaButton.displayString = (this.theSettings.respectMeta ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"M";
         this.nbtButton.displayString = (this.theSettings.respectNBT ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"N";
+        this.oredictButton.displayString = (this.theSettings.respectOredict == 0 ? TextFormatting.RED : (this.theSettings.respectOredict == 1 ? TextFormatting.GREEN : TextFormatting.DARK_GREEN))+"O";
     }
 
     public void drawHover(int mouseX, int mouseY){
@@ -70,6 +75,23 @@ public class FilterSettingsGui extends Gui{
         }
         else if(this.nbtButton.isMouseOver()){
             GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.theSettings.respectNBT ? "Respecting" : "Ignoring")+" NBT"), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
+        }
+        else if(this.oredictButton.isMouseOver()){
+            List<String> list = new ArrayList<String>();
+            list.add(TextFormatting.BOLD+(this.theSettings.respectOredict == 0 ? "Ignoring" : (this.theSettings.respectOredict == 1 ? "Soft Respecting" : "Hard Respecting"))+" OreDictionary");
+
+            String type = null;
+            if(this.theSettings.respectOredict == 1){
+                type = "only one";
+            }
+            else if(this.theSettings.respectOredict == 2){
+                type = "all";
+            }
+
+            if(type != null){
+                list.addAll(mc.fontRendererObj.listFormattedStringToWidth("The item being passed only has to contain "+TextFormatting.DARK_GREEN+type+TextFormatting.RESET+" of the OreDictionary tags of the item in the filter.", 200));
+            }
+            GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
     }
 }

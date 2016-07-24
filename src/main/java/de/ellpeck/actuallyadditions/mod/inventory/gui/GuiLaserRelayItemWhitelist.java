@@ -65,11 +65,11 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
     public void initGui(){
         super.initGui();
 
-        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.guiLeft+3, this.guiTop+8, this.buttonList);
-        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.guiLeft+157, this.guiTop+8, this.buttonList);
+        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.guiLeft+3, this.guiTop+6, this.buttonList);
+        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.guiLeft+157, this.guiTop+6, this.buttonList);
 
-        this.buttonSmartWhitelistLeft = new SmallerButton(2, this.guiLeft+3, this.guiTop+64, "S");
-        this.buttonSmartWhitelistRight = new SmallerButton(3, this.guiLeft+157, this.guiTop+64, "S");
+        this.buttonSmartWhitelistLeft = new SmallerButton(2, this.guiLeft+3, this.guiTop+79, "S");
+        this.buttonSmartWhitelistRight = new SmallerButton(3, this.guiLeft+157, this.guiTop+79, "S");
         this.buttonList.add(this.buttonSmartWhitelistLeft);
         this.buttonList.add(this.buttonSmartWhitelistRight);
     }

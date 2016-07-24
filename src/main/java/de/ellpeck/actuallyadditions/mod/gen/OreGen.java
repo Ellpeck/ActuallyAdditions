@@ -59,7 +59,7 @@ public class OreGen implements IWorldGenerator{
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider){
         int dimension = world.provider.getDimension();
         if(dimension != -1 && dimension != 1){
-            if(world.getWorldType() != WorldType.FLAT && Util.arrayContains(ArrayUtils.toObject(ConfigIntListValues.ORE_GEN_DIMENSION_BLACKLIST.getValue()), world.provider.getDimension()) < 0){
+            if(world.getWorldType() != WorldType.FLAT && !ArrayUtils.contains(ConfigIntListValues.ORE_GEN_DIMENSION_BLACKLIST.getValue(), world.provider.getDimension())){
                 this.generateDefault(world, random, chunkX*16, chunkZ*16);
             }
         }
@@ -94,7 +94,7 @@ public class OreGen implements IWorldGenerator{
     @SubscribeEvent
     public void onWorldDecoration(DecorateBiomeEvent.Decorate event){
         if((event.getResult() == Event.Result.ALLOW || event.getResult() == Event.Result.DEFAULT)){
-            if(Util.arrayContains(ArrayUtils.toObject(ConfigIntListValues.PLANT_DIMENSION_BLACKLIST.getValue()), event.getWorld().provider.getDimension()) < 0){
+            if(!ArrayUtils.contains(ConfigIntListValues.PLANT_DIMENSION_BLACKLIST.getValue(), event.getWorld().provider.getDimension())){
                 this.generateRice(event);
                 this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.CANOLA.ordinal(), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.GRASS, event);
                 this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.FLAX.ordinal(), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.GRASS, event);
