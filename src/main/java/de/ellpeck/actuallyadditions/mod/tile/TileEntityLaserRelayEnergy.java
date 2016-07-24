@@ -97,7 +97,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                         int lowestCap = Math.min(theRelay.getEnergyCap(), this.getEnergyCap());
                         for(Map.Entry<EnumFacing, IEnergyReceiver> receiver : theRelay.receiversAround.entrySet()){
                             if(receiver != null && receiver.getKey() != null && receiver.getValue() != null){
-                                if(receiver.getKey() != from){
+                                if(theRelay != this || receiver.getKey() != from){
                                     if(receiver.getValue().canConnectEnergy(receiver.getKey().getOpposite())){
                                         //Transfer the energy (with the energy loss!)
                                         int theoreticalReceived = receiver.getValue().receiveEnergy(receiver.getKey().getOpposite(), Math.min(maxTransfer, lowestCap)-transmitted, true);
