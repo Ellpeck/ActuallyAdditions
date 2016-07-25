@@ -97,8 +97,8 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack){
-        double energyDif = this.getMaxEnergyStored(stack)-this.getEnergyStored(stack);
         double maxAmount = this.getMaxEnergyStored(stack);
+        double energyDif = maxAmount-this.getEnergyStored(stack);
         return energyDif/maxAmount;
     }
 

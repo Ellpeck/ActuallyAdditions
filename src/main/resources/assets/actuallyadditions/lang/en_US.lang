@@ -836,7 +836,7 @@ booklet.actuallyadditions.chapter.waterRemovalRing.name=Ring Of Liquid Banning
 booklet.actuallyadditions.chapter.waterRemovalRing.text.1=The <item>Ring Of Liquid Banning<r>, when it is charged in an Energizer and in your hand, uses <imp>RF<r> to remove <imp>Lava<r> and <imp>Water<r>.
 
 booklet.actuallyadditions.chapter.batteries.name=Batteries
-booklet.actuallyadditions.chapter.batteries.text.1=<item>Batteries<r> are a good way to store RF to move around. They can be <imp>charged in an Energizer<r> and <imp>discharged in an Enervator<r>.
+booklet.actuallyadditions.chapter.batteries.text.1=<item>Batteries<r> are a good way to store RF to move around. They can be <imp>charged in an Energizer<r> and <imp>discharged in an Enervator<r>. <n><n>When holding them in hand, they can be <imp>sneak-right-clicked<r> to put them into <imp>discharge mode<r>. This means that they will <imp>charge<r> any <imp>other items in your inventory<r>.
 
 booklet.actuallyadditions.chapter.leafGen.name=Leaf-Eating Generator
 booklet.actuallyadditions.chapter.leafGen.text.1=The <item>Leaf Generator<r> can generate <imp>RF<r> just by being placed alongside some <item>Leaves<r>. <n>It will destroy the leaves, generating <imp><rf> RF per leaf broken<r> in the process. <n>By right-clicking the generator, you can see how much RF it has stored. <n>It has a <imp>range of <range><r> blocks.
