@@ -38,21 +38,31 @@ public class ItemMagnetRing extends ItemEnergy{
             if(!items.isEmpty()){
                 for(EntityItem item : items){
                     if(this.getEnergyStored(stack) >= energyUse){
-                        //If the Item is near enough to get picked up
-                        //(So it doesn't bounce around until it notices itself..)
-                        if(new Vec3d(entity.posX, entity.posY, entity.posZ).distanceTo(new Vec3d(item.posX, item.posY, item.posZ)) <= 1.5){
-                            item.onCollideWithPlayer((EntityPlayer)entity);
+                        double x = entity.posX+0.5D-item.posX;
+                        double y = entity.posY+1D-item.posY;
+                        double z = entity.posZ+0.5D-item.posZ;
+
+                        double distance = x*x+y*y+z*z;
+                        if(distance <= 1.5){
+                            if(entity instanceof EntityPlayer){
+                                item.onCollideWithPlayer((EntityPlayer)entity);
+                            }
                         }
                         else{
-                            double speed = 0.02;
-                            //Move the Item closer to the Player
-                            item.motionX += (entity.posX+0.5-item.posX)*speed;
-                            item.motionY += (entity.posY+1.0-item.posY)*speed;
-                            item.motionZ += (entity.posZ+0.5-item.posZ)*speed;
+                            double speed = 0.035/distance;
 
-                            if(!((EntityPlayer)entity).capabilities.isCreativeMode){
-                                this.extractEnergy(stack, energyUse, false);
+                            item.motionX += x*speed;
+                            if(y >= 0){
+                                item.motionY = 0.125;
                             }
+                            else{
+                                item.motionY += y*speed;
+                            }
+                            item.motionZ += z*speed;
+                        }
+
+                        if(!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).capabilities.isCreativeMode){
+                            this.extractEnergy(stack, energyUse, false);
                         }
                     }
                     else{
