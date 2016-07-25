@@ -123,6 +123,6 @@ public class GuiSmileyCloud extends GuiContainer{
         compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
         compound.setInteger("TextID", textID);
         compound.setString("Text", text);
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_STRING_TO_TILE_HANDLER));
     }
 }
