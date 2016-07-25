@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -118,7 +118,7 @@ public final class WorldUtil{
                         }
                     }
                 }
-                else if(TileEntityBase.teslaLoaded){
+                else if(ActuallyAdditions.teslaLoaded){
                     TeslaUtil.doWrappedTeslaRFInteraction(tile, otherTile, side);
                 }
             }

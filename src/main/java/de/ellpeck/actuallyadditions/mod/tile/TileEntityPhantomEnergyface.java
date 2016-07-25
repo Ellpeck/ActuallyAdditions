@@ -14,6 +14,7 @@ import cofh.api.energy.IEnergyConnection;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
@@ -37,7 +38,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
                 if(tile instanceof IEnergyReceiver){
                     return ((IEnergyReceiver)tile).receiveEnergy(from, maxReceive, simulate);
                 }
-                else if(teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, from)){
+                else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, from)){
                     ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, from);
                     if(cap != null){
                         return (int)cap.givePower(maxReceive, simulate);
@@ -56,7 +57,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
                 if(tile instanceof IEnergyProvider){
                     return ((IEnergyProvider)tile).extractEnergy(from, maxExtract, simulate);
                 }
-                else if(teslaLoaded && tile.hasCapability(TeslaUtil.teslaProducer, from)){
+                else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaProducer, from)){
                     ITeslaProducer cap = tile.getCapability(TeslaUtil.teslaProducer, from);
                     if(cap != null){
                         return (int)cap.takePower(maxExtract, simulate);
@@ -75,7 +76,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
                 if(tile instanceof IEnergyHandler){
                     return ((IEnergyHandler)tile).getEnergyStored(from);
                 }
-                else if(teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from)){
+                else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from)){
                     ITeslaHolder cap = tile.getCapability(TeslaUtil.teslaHolder, from);
                     if(cap != null){
                         return (int)cap.getStoredPower();
@@ -94,7 +95,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
                 if(tile instanceof IEnergyHandler){
                     return ((IEnergyHandler)tile).getMaxEnergyStored(from);
                 }
-                else if(teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from)){
+                else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from)){
                     ITeslaHolder cap = tile.getCapability(TeslaUtil.teslaHolder, from);
                     if(cap != null){
                         return (int)cap.getCapacity();
@@ -109,7 +110,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     public boolean isBoundThingInRange(){
         if(super.isBoundThingInRange()){
             TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
-            return tile != null && (tile instanceof IEnergyHandler || (teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, null)));
+            return tile != null && (tile instanceof IEnergyHandler || (ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, null)));
         }
         else{
             return false;
@@ -125,7 +126,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
                     return ((IEnergyConnection)tile).canConnectEnergy(from);
                 }
                 else{
-                    return teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from);
+                    return ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from);
                 }
             }
         }

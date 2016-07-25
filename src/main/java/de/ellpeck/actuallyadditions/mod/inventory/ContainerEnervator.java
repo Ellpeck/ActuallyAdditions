@@ -11,9 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import cofh.api.energy.IEnergyContainerItem;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -90,7 +92,7 @@ public class ContainerEnervator extends Container{
             //Other Slots in Inventory excluded
             else if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(newStack.getItem() instanceof IEnergyContainerItem){
+                if(newStack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && newStack.hasCapability(TeslaUtil.teslaProducer, null))){
                     if(!this.mergeItemStack(newStack, 0, 1, false)){
                         return null;
                     }

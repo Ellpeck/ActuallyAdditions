@@ -45,6 +45,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -66,6 +67,8 @@ public class ActuallyAdditions{
     @SidedProxy(clientSide = ModUtil.PROXY_CLIENT, serverSide = ModUtil.PROXY_SERVER)
     public static IProxy proxy;
 
+    public static boolean teslaLoaded;
+
     static{
         //For some reason, this has to be done here
         FluidRegistry.enableUniversalBucket();
@@ -78,6 +81,14 @@ public class ActuallyAdditions{
         ActuallyAdditionsAPI.methodHandler = new MethodHandler();
         Lenses.init();
         InitBooklet.preInit();
+
+        if(Loader.isModLoaded("Tesla")){
+            ModUtil.LOGGER.info("Tesla loaded... Activating Tesla Power System integration...");
+            ActuallyAdditions.teslaLoaded = true;
+        }
+        else{
+            ModUtil.LOGGER.info("Tesla not found! Skipping Tesla Power System integration.");
+        }
 
         new ConfigurationHandler(event.getSuggestedConfigurationFile());
         PacketHandler.init();

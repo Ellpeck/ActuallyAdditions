@@ -22,6 +22,8 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
+import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -193,16 +195,23 @@ public class ItemDrill extends ItemEnergy{
         loadSlotsFromNBT(slots, stack);
         if(slots != null && slots.length > 0){
             for(ItemStack slotStack : slots){
-                if(slotStack != null && slotStack.getItem() instanceof IEnergyContainerItem){
-                    if(this.getEnergyStored(stack) < this.getMaxEnergyStored(stack)){
-                        int energy = ((IEnergyContainerItem)slotStack.getItem()).getEnergyStored(slotStack);
-                        if(energy > 0){
-                            //Charge the Drill and discharge the "Upgrade"
-                            int toReceive = ((IEnergyContainerItem)stack.getItem()).receiveEnergy(stack, energy, true);
-                            int actualReceive = ((IEnergyContainerItem)slotStack.getItem()).extractEnergy(slotStack, toReceive, false);
-                            ((IEnergyContainerItem)stack.getItem()).receiveEnergy(stack, actualReceive, false);
+                if(slotStack != null){
+                    Item item = slotStack.getItem();
 
+                    int extracted = 0;
+                    int maxExtract = this.getMaxEnergyStored(stack)-this.getEnergyStored(stack);
+                    if(item instanceof IEnergyContainerItem){
+                        extracted = ((IEnergyContainerItem)item).extractEnergy(slotStack, maxExtract, false);
+                    }
+                    else if(ActuallyAdditions.teslaLoaded && slotStack.hasCapability(TeslaUtil.teslaProducer, null)){
+                        ITeslaProducer cap = slotStack.getCapability(TeslaUtil.teslaProducer, null);
+                        if(cap != null){
+                            extracted = (int)cap.takePower(maxExtract, false);
                         }
+                    }
+
+                    if(extracted > 0){
+                        this.receiveEnergy(stack, extracted, false);
                     }
                 }
             }

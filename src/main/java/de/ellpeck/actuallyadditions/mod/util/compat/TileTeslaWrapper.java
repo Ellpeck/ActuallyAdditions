@@ -19,12 +19,12 @@ import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.util.EnumFacing;
 
-public class TeslaHandler implements ITeslaProducer, ITeslaHolder, ITeslaConsumer{
+public class TileTeslaWrapper implements ITeslaProducer, ITeslaHolder, ITeslaConsumer{
 
     private final EnumFacing side;
     private final TileEntityBase tile;
 
-    public TeslaHandler(TileEntityBase tile, EnumFacing side){
+    public TileTeslaWrapper(TileEntityBase tile, EnumFacing side){
         this.tile = tile;
         this.side = side;
     }

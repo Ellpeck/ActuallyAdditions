@@ -536,6 +536,9 @@ tooltip.actuallyadditions.playerProbe.disconnect.1=The player you were probing h
 tooltip.actuallyadditions.playerProbe.disconnect.2=The player you were probing has disconnected before you could strap him to the Player Interface! Data will be cleared!
 tooltip.actuallyadditions.playerProbe.probing=Probing
 tooltip.actuallyadditions.playerProbe.notice=Look out! Someone tried to probe you and strap you to a Player Interface, but they failed!
+tooltip.actuallyadditions.battery.discharge=Charging other items in inventory
+tooltip.actuallyadditions.battery.noDischarge=Not charging other items in inventory
+tooltip.actuallyadditions.battery.changeMode=Sneak-right-click to toggle.
 
 #Gui Information
 info.actuallyadditions.gui.animals=Animals

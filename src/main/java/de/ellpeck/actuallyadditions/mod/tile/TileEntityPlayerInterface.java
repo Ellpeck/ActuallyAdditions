@@ -13,7 +13,11 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
+import net.darkhax.tesla.api.ITeslaConsumer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -58,10 +62,23 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
                 for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                     if(this.storage.getEnergyStored() > 0){
                         ItemStack slot = player.inventory.getStackInSlot(i);
-                        if(slot != null && slot.getItem() instanceof IEnergyContainerItem){
-                            int received = ((IEnergyContainerItem)slot.getItem()).receiveEnergy(slot, this.storage.getEnergyStored(), false);
-                            this.storage.extractEnergy(received, false);
-                            changed = true;
+                        if(slot != null){
+                            Item item = slot.getItem();
+
+                            int received = 0;
+                            if(item instanceof IEnergyContainerItem){
+                                received = ((IEnergyContainerItem)item).receiveEnergy(slot, this.storage.getEnergyStored(), false);
+                            }
+                            else if(ActuallyAdditions.teslaLoaded && slot.hasCapability(TeslaUtil.teslaConsumer, null)){
+                                ITeslaConsumer cap = slot.getCapability(TeslaUtil.teslaConsumer, null);
+                                if(cap != null){
+                                    received = (int)cap.givePower(this.storage.getEnergyStored(), false);
+                                }
+                            }
+
+                            if(received > 0){
+                                this.storage.extractEnergy(received, false);
+                            }
                         }
                     }
                     else{

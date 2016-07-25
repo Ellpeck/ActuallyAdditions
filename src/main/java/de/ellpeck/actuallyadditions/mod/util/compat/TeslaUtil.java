@@ -27,7 +27,7 @@ import java.util.Map;
 
 public final class TeslaUtil{
 
-    private static final Map<TileEntityBase, TeslaHandler[]> TESLA_MAP = new HashMap<TileEntityBase, TeslaHandler[]>();
+    private static final Map<TileEntityBase, TileTeslaWrapper[]> TESLA_MAP = new HashMap<TileEntityBase, TileTeslaWrapper[]>();
     @CapabilityInject(ITeslaConsumer.class)
     public static Capability<ITeslaConsumer> teslaConsumer;
     @CapabilityInject(ITeslaProducer.class)
@@ -67,16 +67,16 @@ public final class TeslaUtil{
         }
     }
 
-    private static TeslaHandler getHandler(TileEntityBase tile, EnumFacing facing){
-        TeslaHandler[] handlers = TESLA_MAP.get(tile);
+    private static TileTeslaWrapper getHandler(TileEntityBase tile, EnumFacing facing){
+        TileTeslaWrapper[] handlers = TESLA_MAP.get(tile);
         if(handlers == null || handlers.length != 6){
-            handlers = new TeslaHandler[6];
+            handlers = new TileTeslaWrapper[6];
             TESLA_MAP.put(tile, handlers);
         }
 
         int side = facing.ordinal();
         if(handlers[side] == null){
-            handlers[side] = new TeslaHandler(tile, facing);
+            handlers[side] = new TileTeslaWrapper(tile, facing);
         }
         return handlers[side];
     }

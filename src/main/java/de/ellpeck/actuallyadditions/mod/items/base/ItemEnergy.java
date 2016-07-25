@@ -13,12 +13,14 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import cofh.api.energy.ItemEnergyContainer;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.compat.ItemTeslaWrapper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -107,5 +109,10 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
         }
         compound.setInteger("Energy", energy);
         stack.setTagCompound(compound);
+    }
+
+    @Override
+    public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt){
+        return ActuallyAdditions.teslaLoaded ? new ItemTeslaWrapper(stack, this) : null;
     }
 }

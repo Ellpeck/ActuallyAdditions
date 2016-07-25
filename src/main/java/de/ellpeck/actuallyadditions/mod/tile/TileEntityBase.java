@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
@@ -39,7 +40,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public abstract class TileEntityBase extends TileEntity implements ITickable{
 
-    public static boolean teslaLoaded;
     public final String name;
     public boolean isRedstonePowered;
     public boolean isPulseMode;
@@ -105,14 +105,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         register(TileEntityBookletStand.class, "BookletStand");
         register(TileEntityDisplayStand.class, "DisplayStand");
         register(TileEntityShockSuppressor.class, "ShockSuppressor");
-
-        if(Loader.isModLoaded("Tesla")){
-            ModUtil.LOGGER.info("Tesla loaded... Activating Tesla Power System integration...");
-            teslaLoaded = true;
-        }
-        else{
-            ModUtil.LOGGER.info("Tesla not found! Skipping Tesla Power System integration.");
-        }
     }
 
     private static void register(Class<? extends TileEntityBase> tileClass, String legacyName){
@@ -280,7 +272,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                 return (T)tank;
             }
         }
-        else if(teslaLoaded){
+        else if(ActuallyAdditions.teslaLoaded){
             T cap = TeslaUtil.wrapTeslaToRF(this, capability, facing);
             if(cap != null){
                 return cap;

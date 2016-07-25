@@ -11,8 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
@@ -78,7 +78,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
             BlockPos pos = this.getPos().offset(side);
             TileEntity tile = this.worldObj.getTileEntity(pos);
             if(tile != null && !(tile instanceof TileEntityLaserRelay)){
-                if(tile instanceof IEnergyReceiver || (teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite()))){
+                if(tile instanceof IEnergyReceiver || (ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite()))){
                     this.receiversAround.put(side, tile);
                 }
             }
@@ -114,7 +114,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                                             transmitted += deduct;
                                         }
                                     }
-                                    else if(teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
+                                    else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
                                         ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
                                         if(cap != null){
                                             int theoreticalReceived = (int)cap.givePower(Math.min(maxTransfer, lowestCap)-transmitted, true);

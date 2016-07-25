@@ -11,9 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import cofh.api.energy.IEnergyContainerItem;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
@@ -39,7 +41,7 @@ public class ContainerDrill extends Container{
             this.addSlotToContainer(new Slot(this.drillInventory, i, 44+i*18, 19){
                 @Override
                 public boolean isItemValid(ItemStack stack){
-                    return stack.getItem() instanceof ItemDrillUpgrade || stack.getItem() instanceof IEnergyContainerItem;
+                    return stack.getItem() instanceof ItemDrillUpgrade || stack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaProducer, null));
                 }
             });
         }
@@ -80,7 +82,7 @@ public class ContainerDrill extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(newStack.getItem() instanceof ItemDrillUpgrade || newStack.getItem() instanceof IEnergyContainerItem){
+                if(newStack.getItem() instanceof ItemDrillUpgrade || newStack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && newStack.hasCapability(TeslaUtil.teslaProducer, null))){
                     if(!this.mergeItemStack(newStack, 0, 5, false)){
                         return null;
                     }

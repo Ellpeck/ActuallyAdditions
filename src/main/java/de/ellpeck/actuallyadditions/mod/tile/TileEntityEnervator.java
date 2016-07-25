@@ -13,6 +13,10 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyProvider;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
+import net.darkhax.tesla.api.ITeslaHolder;
+import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -44,17 +48,41 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(this.slots[0] != null && this.slots[0].getItem() instanceof IEnergyContainerItem && this.slots[1] == null){
-                if(((IEnergyContainerItem)this.slots[0].getItem()).getEnergyStored(this.slots[0]) > 0){
-                    int toReceive = ((IEnergyContainerItem)this.slots[0].getItem()).extractEnergy(this.slots[0], this.storage.getMaxEnergyStored()-this.storage.getEnergyStored(), false);
-                    this.storage.receiveEnergy(toReceive, false);
-                }
+            if(this.slots[0] != null && this.slots[1] == null){
+                if(this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
+                    int extracted = 0;
+                    boolean canTakeUp = false;
 
-                if(((IEnergyContainerItem)this.slots[0].getItem()).getEnergyStored(this.slots[0]) <= 0){
-                    this.slots[1] = this.slots[0].copy();
-                    this.slots[0].stackSize--;
-                    if(this.slots[0].stackSize <= 0){
-                        this.slots[0] = null;
+                    int maxExtract = this.storage.getMaxEnergyStored()-this.storage.getEnergyStored();
+                    if(this.slots[0].getItem() instanceof IEnergyContainerItem){
+                        IEnergyContainerItem item = (IEnergyContainerItem)this.slots[0].getItem();
+                        extracted = item.extractEnergy(this.slots[0], maxExtract, false);
+                        canTakeUp = item.getEnergyStored(this.slots[0]) <= 0;
+                    }
+                    else if(ActuallyAdditions.teslaLoaded){
+                        if(this.slots[0].hasCapability(TeslaUtil.teslaProducer, null)){
+                            ITeslaProducer cap = this.slots[0].getCapability(TeslaUtil.teslaProducer, null);
+                            if(cap != null){
+                                extracted = (int)cap.takePower(maxExtract, false);
+                            }
+                        }
+                        if(this.slots[0].hasCapability(TeslaUtil.teslaHolder, null)){
+                            ITeslaHolder cap = this.slots[0].getCapability(TeslaUtil.teslaHolder, null);
+                            if(cap != null){
+                                canTakeUp = cap.getStoredPower() <= 0;
+                            }
+                        }
+                    }
+                    if(extracted > 0){
+                        this.storage.receiveEnergy(extracted, false);
+                    }
+
+                    if(canTakeUp){
+                        this.slots[1] = this.slots[0].copy();
+                        this.slots[0].stackSize--;
+                        if(this.slots[0].stackSize <= 0){
+                            this.slots[0] = null;
+                        }
                     }
                 }
             }
@@ -67,7 +95,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0 && stack.getItem() instanceof IEnergyContainerItem;
+        return i == 0 && (stack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaProducer, null)));
     }
 
     @Override
