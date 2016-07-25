@@ -129,19 +129,14 @@ public class ClientEvents{
     public void onGameOverlay(RenderGameOverlayEvent.Post event){
         if(event.getType() == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getMinecraft().currentScreen == null){
             Minecraft minecraft = Minecraft.getMinecraft();
-            Profiler profiler = minecraft.mcProfiler;
             EntityPlayer player = minecraft.thePlayer;
             RayTraceResult posHit = minecraft.objectMouseOver;
             FontRenderer font = minecraft.fontRendererObj;
             ItemStack stack = player.getHeldItemMainhand();
 
-            profiler.startSection(ModUtil.MOD_ID+"Hud");
-
             if(stack != null){
                 if(stack.getItem() instanceof IHudDisplay){
-                    profiler.startSection("ItemHudDisplay");
-                    ((IHudDisplay)stack.getItem()).displayHud(minecraft, player, stack, posHit, profiler, event.getResolution());
-                    profiler.endSection();
+                    ((IHudDisplay)stack.getItem()).displayHud(minecraft, player, stack, posHit, event.getResolution());
                 }
             }
 
@@ -150,16 +145,12 @@ public class ClientEvents{
                 TileEntity tileHit = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
 
                 if(blockHit instanceof IHudDisplay){
-                    profiler.startSection("BlockHudDisplay");
-                    ((IHudDisplay)blockHit).displayHud(minecraft, player, stack, posHit, profiler, event.getResolution());
-                    profiler.endSection();
+                    ((IHudDisplay)blockHit).displayHud(minecraft, player, stack, posHit, event.getResolution());
                 }
 
                 if(tileHit instanceof TileEntityBase){
                     TileEntityBase base = (TileEntityBase)tileHit;
                     if(base.isRedstoneToggle()){
-                        profiler.startSection("RedstoneToggleHudDisplay");
-
                         String strg = "Redstone Mode: "+TextFormatting.DARK_RED+(base.isPulseMode ? "Pulse" : "Deactivation")+TextFormatting.RESET;
                         font.drawStringWithShadow(strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
@@ -167,16 +158,12 @@ public class ClientEvents{
                             String expl = TextFormatting.GREEN+"Right-Click to toggle!";
                             font.drawStringWithShadow(expl, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
                         }
-
-                        profiler.endSection();
                     }
                 }
 
                 if(tileHit instanceof IEnergyDisplay){
                     IEnergyDisplay display = (IEnergyDisplay)tileHit;
                     if(!display.needsHoldShift() || player.isSneaking()){
-                        profiler.startSection("EnergyDisplay");
-
                         if(energyDisplay == null){
                             energyDisplay = new EnergyDisplay(0, 0, null);
                         }
@@ -186,13 +173,9 @@ public class ClientEvents{
                         GlStateManager.color(1F, 1F, 1F, 1F);
                         energyDisplay.draw();
                         GlStateManager.popMatrix();
-
-                        profiler.endSection();
                     }
                 }
             }
-
-            profiler.endSection();
         }
     }
 

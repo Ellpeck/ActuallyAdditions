@@ -114,7 +114,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, Profiler profiler, ScaledResolution resolution){
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityAtomicReconstructor){
             ItemStack slot = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);

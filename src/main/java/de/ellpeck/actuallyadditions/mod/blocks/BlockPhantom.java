@@ -127,7 +127,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, Profiler profiler, ScaledResolution resolution){
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
         if(tile != null){
             if(tile instanceof IPhantomTile){

@@ -22,6 +22,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public interface IHudDisplay{
 
     @SideOnly(Side.CLIENT)
-    void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, Profiler profiler, ScaledResolution resolution);
+    void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution);
 
 }
