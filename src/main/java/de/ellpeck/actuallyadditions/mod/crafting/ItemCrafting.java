@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigCrafting;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -409,7 +410,7 @@ public final class ItemCrafting{
         if(ConfigCrafting.COIL.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     " R ", "RIR", " R ",
-                    'I', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
+                    'I', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()) : new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
                     'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal())));
             recipeCoil = RecipeUtil.lastIRecipe();
         }

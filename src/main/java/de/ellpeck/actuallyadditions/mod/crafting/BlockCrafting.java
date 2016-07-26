@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockColoredLamp;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigCrafting;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
@@ -333,7 +334,7 @@ public final class BlockCrafting{
                     "WSW", "SRS", "WSW",
                     'W', "plankWood",
                     'R', "logWood",
-                    'S', "stickWood"));
+                    'S', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()) : "stickWood"));
             recipeCase = RecipeUtil.lastIRecipe();
         }
 
@@ -343,7 +344,7 @@ public final class BlockCrafting{
                     "WSW", "SQS", "WSW",
                     'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
                     'W', "ingotIron",
-                    'S', "stickWood"));
+                    'S', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()) : "stickWood"));
             recipeIronCase = RecipeUtil.lastIRecipe();
         }
 
@@ -351,9 +352,9 @@ public final class BlockCrafting{
         if(ConfigCrafting.ENDER_CASING.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()),
                     "WSW", "SRS", "WSW",
-                    'W', new ItemStack(Items.ENDER_PEARL),
+                    'W', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()) : new ItemStack(Items.ENDER_PEARL),
                     'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()),
-                    'S', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal())));
+                    'S', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(Blocks.DIAMOND_BLOCK) : new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal())));
             recipeEnderCase = RecipeUtil.lastIRecipe();
         }
 

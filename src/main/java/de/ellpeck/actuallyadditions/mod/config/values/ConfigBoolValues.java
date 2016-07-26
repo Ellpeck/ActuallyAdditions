@@ -59,7 +59,9 @@ public enum ConfigBoolValues{
     LESS_PARTICLES("Less Particles", ConfigCategories.PERFORMANCE, false, "If blocks in Actually Additions should have less particles"),
     LESS_BLOCK_BREAKING_EFFECTS("Less Block Breaking Effects", ConfigCategories.PERFORMANCE, false, "If there should not be a sound effect and particles when a block is being destroyed by a breaker or similar"),
 
-    LASER_RELAY_LOSS("Laser Relay Energy Loss", ConfigCategories.MACHINE_VALUES, true, "If Energy Laser Relays should have energy loss");
+    LASER_RELAY_LOSS("Laser Relay Energy Loss", ConfigCategories.MACHINE_VALUES, true, "If Energy Laser Relays should have energy loss"),
+
+    SUPER_DUPER_HARD_MODE("Super Duper Hard Recipes", ConfigCategories.OTHER, false, "Turn this on to make recipes for items from the mod really hard. (This is a joke feature making fun of the whole FTB Infinity Expert Mode style of playing. You shouldn't really turn this on as it makes the mod completely unplayable.)");
 
     public final String name;
     public final String category;
