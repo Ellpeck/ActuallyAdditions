@@ -56,7 +56,7 @@ public class ClientEvents{
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){
         //Advanced Item Info
-        if(event.getItemStack().getItem() != null){
+        if(event.getItemStack() != null && event.getItemStack().getItem() != null){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
                 if(GuiScreen.isCtrlKeyDown()){
                     event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".extraInfo.desc")+":");
@@ -102,10 +102,7 @@ public class ClientEvents{
                     if(compound != null && !compound.hasNoTags()){
                         event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".nbt.desc")+":");
                         if(GuiScreen.isShiftKeyDown()){
-                            List<String> strgList = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(compound.toString(), 200);
-                            for(String strg : strgList){
-                                event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+strg);
-                            }
+                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+compound.toString());
                         }
                         else{
                             event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+TextFormatting.ITALIC+"["+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".pressShift.desc")+"]");
@@ -113,7 +110,7 @@ public class ClientEvents{
                     }
 
                     //Disabling Info
-                    event.getToolTip().addAll(Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".disablingInfo.desc"), 200));
+                    event.getToolTip().add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".disablingInfo.desc"));
 
                 }
                 else{
