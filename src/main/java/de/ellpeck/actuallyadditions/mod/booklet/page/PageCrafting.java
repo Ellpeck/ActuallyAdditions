@@ -85,12 +85,20 @@ public class PageCrafting extends BookletPageAA{
                 ShapedRecipes shaped = (ShapedRecipes)recipe;
                 width = shaped.recipeWidth;
                 height = shaped.recipeHeight;
-                stacks = shaped.recipeItems;
+                for(int i = 0; i < shaped.recipeItems.length; i++){
+                    ItemStack stack = shaped.recipeItems[i];
+                    if(stack != null){
+                        stacks[i] = stack.copy();
+                    }
+                }
             }
             else if(recipe instanceof ShapelessRecipes){
                 ShapelessRecipes shapeless = (ShapelessRecipes)recipe;
                 for(int i = 0; i < shapeless.recipeItems.size(); i++){
-                    stacks[i] = shapeless.recipeItems.get(i);
+                    ItemStack stack = shapeless.recipeItems.get(i);
+                    if(stack != null){
+                        stacks[i] = stack.copy();
+                    }
                 }
             }
             else if(recipe instanceof ShapedOreRecipe){
@@ -105,7 +113,10 @@ public class PageCrafting extends BookletPageAA{
                 for(int i = 0; i < shaped.getInput().length; i++){
                     Object input = shaped.getInput()[i];
                     if(input != null){
-                        stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? null : ((List<ItemStack>)input).get(0));
+                        ItemStack stack = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? null : ((List<ItemStack>)input).get(0));
+                        if(stack != null){
+                            stacks[i] = stack.copy();
+                        }
                     }
                 }
             }
@@ -113,7 +124,10 @@ public class PageCrafting extends BookletPageAA{
                 ShapelessOreRecipe shapeless = (ShapelessOreRecipe)recipe;
                 for(int i = 0; i < shapeless.getInput().size(); i++){
                     Object input = shapeless.getInput().get(i);
-                    stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? null : ((List<ItemStack>)input).get(0));
+                    ItemStack stack = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? null : ((List<ItemStack>)input).get(0));
+                    if(stack != null){
+                        stacks[i] = stack.copy();
+                    }
                 }
             }
 
