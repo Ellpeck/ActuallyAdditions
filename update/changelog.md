@@ -1,3 +1,16 @@
+# 1.10.2-r56
+* Made batteries have an output mode activated by sneak-right-clicking them
+* Added Oredictionary-based checking to ESDs, Advanced Item Relays and Ranged Collectors
+* Added Tesla Support for Phantom Energyfaces and Laser Relays
+* Added Tesla Support for items and the Energizer/Enervator
+* Made Magnet Ring pull items upwards
+* Fixed a bug with the manual sometimes making recipes using wildcards not use wildcards anymore
+* Made the miner use more power (again) because people were complaining (again)
+* Made Smiley Cloud nameable again
+* Add some null checks to packets so that storage crates don't crash with FTBUtils (whatever..)
+* Made the advanced ESD respect its whitelist again
+* Fixed Laser Relays sometimes not properly dealing with sides
+
 # 1.10.2-r55
 * The _balanced farming buttons-Update!
 * Added worms found by tilling the ground. When placed on dirt or grass, they till, irrigate and fertilize it
