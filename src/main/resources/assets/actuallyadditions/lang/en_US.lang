@@ -944,7 +944,7 @@ booklet.actuallyadditions.chapter.itemFilter.name=Item Filter
 booklet.actuallyadditions.chapter.itemFilter.text.1=The <item>Item Filter<r> can be used in <item>Advanced Item Laser Relays<r>, <item>ESDs<r> and <item>Ranged Collectors<r> to <imp>enlargen the size of their whitelist<r>. This can be done by right-clicking with the filter in hand and placing items to be filtered inside of it. The filter can then be placed into any whitelist slot in the desired machine. <n>For more information on this, <imp>hover over the whitelist buttons in the GUIs of whitelistable machines<r>!
 
 booklet.actuallyadditions.chapter.videoGuide.name=A Video Guide
-booklet.actuallyadditions.chapter.videoGuide.text.1=If you are a bit confused as to what is going on or just want to get a glimpse of what <imp>Actually Additions<r> has to offer, there is this <imp>brilliant video<r> by a guy called <item>Booty Toast<r> (yes, that is a weird name), that shows off what is possible in a really enjoyable way. <n>Just <imp>click the button<r> to have the video <imp>opened on YouTube<r>! <n><n><imp>Give it a watch!<r>
+booklet.actuallyadditions.chapter.videoGuide.text.1=If you want to have a <imp>visual introduction<r> to see what <item>Actually Additions<r> has to offer, you can watch this really awesome video by a friend of mine, <imp>Booty Toast<r> (yes, weird name, I know). <n>His video covers most of the main stuff the mod has to offer, however it is <imp>a bit outdated<r> and doesn't cover everything. It's still a <imp>great introduction to the mod<r> though.
 booklet.actuallyadditions.chapter.videoGuide.page.1.button=Watch Video
 
 booklet.actuallyadditions.chapter.shockSuppressor.name=Shock Absorber
