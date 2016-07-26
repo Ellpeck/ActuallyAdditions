@@ -269,7 +269,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         }
         //Handles forum
         else if(button == this.buttonForum){
-            BookletUtils.openBrowser("http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2551118");
+            BookletUtils.openBrowser("http://ellpeck.de/actadd");
         }
         //Handles config
         else if(button == this.buttonConfig){
@@ -339,7 +339,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         this.buttonTwitter = new TexturedButton(5, this.guiLeft, this.guiTop+10, 213, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open @ActAddMod on Twitter in Browser"));
         this.buttonList.add(this.buttonTwitter);
 
-        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+20, 221, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open Minecraft Forum Post in Browser"));
+        this.buttonForum = new TexturedButton(6, this.guiLeft, this.guiTop+20, 221, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Open CurseForge Page in Browser"));
         this.buttonList.add(this.buttonForum);
 
         this.buttonAchievements = new TexturedButton(7, this.guiLeft+138, this.guiTop, 205, 0, 8, 8, Collections.singletonList(TextFormatting.GOLD+"Show Achievements"));
