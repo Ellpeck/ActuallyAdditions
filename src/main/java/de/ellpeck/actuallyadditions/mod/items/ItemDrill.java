@@ -501,11 +501,16 @@ public class ItemDrill extends ItemEnergy{
     }
 
     private boolean hasExtraWhitelist(Block block){
-        String name = block.getRegistryName().toString();
-        if(name != null){
-            for(String list : ConfigStringListValues.DRILL_EXTRA_MINING_WHITELIST.getValue()){
-                if(list.equals(name)){
-                    return true;
+        if(block != null){
+            ResourceLocation location = block.getRegistryName();
+            if(location != null){
+                String name = location.toString();
+                if(name != null){
+                    for(String s : ConfigStringListValues.DRILL_EXTRA_MINING_WHITELIST.getValue()){
+                        if(s != null && s.equals(name)){
+                            return true;
+                        }
+                    }
                 }
             }
         }
