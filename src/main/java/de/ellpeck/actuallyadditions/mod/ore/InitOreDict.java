@@ -56,12 +56,8 @@ public final class InitOreDict{
 
         //For Crafting
         addOre(InitItems.itemMisc, TheMiscItems.RICE_SLIME.ordinal(), "slimeball");
-
-        //For Crafting
+        addOre(InitBlocks.blockMisc, TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), "blockCharcoal");
         addOre(InitItems.itemMisc, TheMiscItems.BLACK_DYE.ordinal(), "dyeBlack");
-
-        //For Repairing
-        addOre(InitItems.itemCrystal, TheCrystals.REDSTONE.ordinal(), "actAddCrystalRed");
     }
 
     private static void addOre(Item item, int meta, String name){
