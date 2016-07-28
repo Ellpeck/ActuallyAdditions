@@ -255,22 +255,28 @@ public class ItemDrill extends ItemEnergy{
                 }
             }
 
-            //Breaks the Blocks
-            if(!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
-                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                    toReturn = this.breakBlocks(stack, 2, player.worldObj, pos, player);
+            //Block hit
+            RayTraceResult ray = WorldUtil.getNearestBlockWithDefaultReachDistance(player.worldObj, player);
+            if(ray != null){
+                int side = ray.sideHit.ordinal();
+
+                //Breaks the Blocks
+                if(!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
+                    if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
+                        toReturn = this.breakBlocks(stack, 2, player.worldObj, side != 0 && side != 1 ? pos.up() : pos, side, player);
+                    }
+                    else{
+                        toReturn = this.breakBlocks(stack, 1, player.worldObj, pos, side, player);
+                    }
                 }
                 else{
-                    toReturn = this.breakBlocks(stack, 1, player.worldObj, pos, player);
+                    toReturn = this.breakBlocks(stack, 0, player.worldObj, pos, side, player);
                 }
-            }
-            else{
-                toReturn = this.breakBlocks(stack, 0, player.worldObj, pos, player);
-            }
 
-            //Removes Enchantments added above
-            ItemUtil.removeEnchantment(stack, Enchantments.SILK_TOUCH);
-            ItemUtil.removeEnchantment(stack, Enchantments.FORTUNE);
+                //Removes Enchantments added above
+                ItemUtil.removeEnchantment(stack, Enchantments.SILK_TOUCH);
+                ItemUtil.removeEnchantment(stack, Enchantments.FORTUNE);
+            }
         }
         return toReturn;
     }
@@ -414,19 +420,12 @@ public class ItemDrill extends ItemEnergy{
      * @param world  The World
      * @param player The Player who breaks the Blocks
      */
-    public boolean breakBlocks(ItemStack stack, int radius, World world, BlockPos aPos, EntityPlayer player){
+    public boolean breakBlocks(ItemStack stack, int radius, World world, BlockPos aPos, int side, EntityPlayer player){
         int xRange = radius;
         int yRange = radius;
         int zRange = 0;
 
-        //Block hit
-        RayTraceResult pos = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
-        if(pos == null){
-            return false;
-        }
-
         //Corrects Blocks to hit depending on Side of original Block hit
-        int side = pos.sideHit.ordinal();
         if(side == 0 || side == 1){
             zRange = radius;
             yRange = 0;
