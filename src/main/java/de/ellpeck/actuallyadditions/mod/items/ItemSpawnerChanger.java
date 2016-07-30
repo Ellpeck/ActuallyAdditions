@@ -67,6 +67,14 @@ public class ItemSpawnerChanger extends ItemBase{
                     String entity = this.getStoredEntity(stack);
                     if(entity != null){
                         MobSpawnerBaseLogic logic = ((TileEntityMobSpawner)tile).getSpawnerBaseLogic();
+
+                        //This is a hacky way to remove the spawn potentials that make the spawner reset from time to time
+                        //Don't judge, there isn't a method for it and it's better than Reflection hackiness
+                        NBTTagCompound compound = new NBTTagCompound();
+                        logic.writeToNBT(compound);
+                        compound.removeTag("SpawnPotentials");
+                        logic.readFromNBT(compound);
+
                         logic.setEntityName(entity);
 
                         tile.markDirty();
