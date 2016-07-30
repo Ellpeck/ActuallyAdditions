@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
@@ -59,11 +60,12 @@ public class ItemLaserWrench extends ItemBase{
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
                     if(savedPos != null){
                         TileEntity savedTile = world.getTileEntity(savedPos);
-                        if(ItemPhantomConnector.getStoredWorld(stack) == world && savedTile instanceof TileEntityLaserRelay && ((TileEntityLaserRelay)savedTile).isItem == ((TileEntityLaserRelay)tile).isItem && LaserRelayConnectionHandler.addConnection(savedPos, pos, world)){
+                        int distanceSq = (int)savedPos.distanceSq(pos);
+                        if(ItemPhantomConnector.getStoredWorld(stack) == world && savedTile instanceof TileEntityLaserRelay && ((TileEntityLaserRelay)savedTile).isItem == ((TileEntityLaserRelay)tile).isItem && distanceSq <= TileEntityLaserRelay.MAX_DISTANCE*TileEntityLaserRelay.MAX_DISTANCE && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, world)){
                             ItemPhantomConnector.clearStorage(stack);
 
-                            ((TileEntityLaserRelay)world.getTileEntity(savedPos)).sendUpdate();
-                            ((TileEntityLaserRelay)world.getTileEntity(pos)).sendUpdate();
+                            ((TileEntityLaserRelay)savedTile).sendUpdate();
+                            ((TileEntityLaserRelay)tile).sendUpdate();
 
                             player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.connected.desc"));
                         }

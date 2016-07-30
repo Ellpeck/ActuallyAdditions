@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
-import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler.Network;
+import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
@@ -59,7 +59,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
     public List<GenericItemHandlerInfo> getItemHandlersInNetwork(Network network){
         List<GenericItemHandlerInfo> handlers = new ArrayList<GenericItemHandlerInfo>();
-        for(LaserRelayConnectionHandler.ConnectionPair pair : network.connections){
+        for(ConnectionPair pair : network.connections){
             for(BlockPos relay : pair.positions){
                 if(relay != null){
                     TileEntity aRelayTile = this.worldObj.getTileEntity(relay);

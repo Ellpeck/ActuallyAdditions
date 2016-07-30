@@ -11,6 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
@@ -57,7 +60,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
     public int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate){
         int transmitted = 0;
         if(maxTransmit > 0){
-            LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(this.pos, this.worldObj);
+            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);
             if(network != null){
                 transmitted = this.transferEnergyToReceiverInNeed(from, network, maxTransmit, simulate);
             }
@@ -85,11 +88,11 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
         }
     }
 
-    private int transferEnergyToReceiverInNeed(EnumFacing from, LaserRelayConnectionHandler.Network network, int maxTransfer, boolean simulate){
+    private int transferEnergyToReceiverInNeed(EnumFacing from, Network network, int maxTransfer, boolean simulate){
         int transmitted = 0;
         List<BlockPos> alreadyChecked = new ArrayList<BlockPos>();
         //Go through all of the connections in the network
-        for(LaserRelayConnectionHandler.ConnectionPair pair : network.connections){
+        for(ConnectionPair pair : network.connections){
             //Go through both relays in the connection
             for(BlockPos relay : pair.positions){
                 if(relay != null && !alreadyChecked.contains(relay)){

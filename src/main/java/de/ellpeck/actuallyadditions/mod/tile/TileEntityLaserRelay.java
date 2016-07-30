@@ -10,12 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench.WrenchMode;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
-import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import io.netty.util.internal.ConcurrentSet;
@@ -48,13 +50,13 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     @Override
     public void receiveSyncCompound(NBTTagCompound compound){
-        LaserRelayConnectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
+        ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
 
         NBTTagList list = compound.getTagList("Connections", 10);
         if(!list.hasNoTags()){
             for(int i = 0; i < list.tagCount(); i++){
                 ConnectionPair pair = ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
-                LaserRelayConnectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj);
+                ActuallyAdditionsAPI.connectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj);
             }
         }
 
@@ -67,7 +69,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         NBTTagCompound compound = super.getUpdateTag();
         NBTTagList list = new NBTTagList();
 
-        ConcurrentSet<ConnectionPair> connections = LaserRelayConnectionHandler.getConnectionsFor(this.pos, this.worldObj);
+        ConcurrentSet<ConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.worldObj);
         if(connections != null && !connections.isEmpty()){
             for(ConnectionPair pair : connections){
                 list.appendTag(pair.writeToNBT());
@@ -104,7 +106,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
                 if(mode != WrenchMode.NO_PARTICLES){
                     ItemStack stack = player.getHeldItemMainhand();
                     if(mode == WrenchMode.ALWAYS_PARTICLES || (stack != null && stack.getItem() instanceof ItemLaserWrench)){
-                        LaserRelayConnectionHandler.Network network = LaserRelayConnectionHandler.getNetworkFor(this.pos, this.worldObj);
+                        Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);
                         if(network != null){
                             for(ConnectionPair aPair : network.connections){
                                 if(aPair.contains(this.pos) && this.pos.equals(aPair.positions[0])){
@@ -123,16 +125,16 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         super.invalidate();
         //This is because Minecraft randomly invalidates tiles on world join and then validates them again
         //We need to compensate for this so that connections don't get broken randomly
-        this.tempConnectionStorage = LaserRelayConnectionHandler.getConnectionsFor(this.pos, this.worldObj);
+        this.tempConnectionStorage = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.worldObj);
 
-        LaserRelayConnectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
+        ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
     }
 
     @Override
     public void validate(){
         if(this.tempConnectionStorage != null){
             for(ConnectionPair pair : this.tempConnectionStorage){
-                LaserRelayConnectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj);
+                ActuallyAdditionsAPI.connectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj);
             }
             this.tempConnectionStorage = null;
         }

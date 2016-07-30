@@ -31,10 +31,7 @@ import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.material.InitArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.material.InitToolMaterials;
-import de.ellpeck.actuallyadditions.mod.misc.BannerHelper;
-import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
-import de.ellpeck.actuallyadditions.mod.misc.MethodHandler;
-import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
+import de.ellpeck.actuallyadditions.mod.misc.*;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.ore.InitOreDict;
 import de.ellpeck.actuallyadditions.mod.proxy.IProxy;
@@ -79,6 +76,7 @@ public class ActuallyAdditions{
         ModUtil.LOGGER.info("Starting PreInitialization Phase...");
 
         ActuallyAdditionsAPI.methodHandler = new MethodHandler();
+        ActuallyAdditionsAPI.connectionHandler = new LaserRelayConnectionHandler();
         Lenses.init();
         InitBooklet.preInit();
 

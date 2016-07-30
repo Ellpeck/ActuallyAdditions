@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.data;
 
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
-import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler.Network;
+import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WorldData{

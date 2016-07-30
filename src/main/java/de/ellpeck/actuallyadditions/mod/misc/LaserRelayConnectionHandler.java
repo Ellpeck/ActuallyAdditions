@@ -10,15 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
+import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
+import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public final class LaserRelayConnectionHandler{
+public final class LaserRelayConnectionHandler implements ILaserRelayConnectionHandler{
 
     public static NBTTagCompound writeNetworkToNBT(Network network){
         NBTTagList list = new NBTTagList();
@@ -42,7 +44,8 @@ public final class LaserRelayConnectionHandler{
     /**
      * Gets all Connections for a Relay
      */
-    public static ConcurrentSet<ConnectionPair> getConnectionsFor(BlockPos relay, World world){
+    @Override
+    public ConcurrentSet<ConnectionPair> getConnectionsFor(BlockPos relay, World world){
         ConcurrentSet<ConnectionPair> allPairs = new ConcurrentSet<ConnectionPair>();
         for(Network aNetwork : WorldData.getDataForWorld(world).laserRelayNetworks){
             for(ConnectionPair pair : aNetwork.connections){
@@ -57,14 +60,15 @@ public final class LaserRelayConnectionHandler{
     /**
      * Removes a Relay from its Network
      */
-    public static void removeRelayFromNetwork(BlockPos relay, World world){
-        Network network = getNetworkFor(relay, world);
+    @Override
+    public void removeRelayFromNetwork(BlockPos relay, World world){
+        Network network = this.getNetworkFor(relay, world);
         if(network != null){
             //Setup new network (so that splitting a network will cause it to break into two)
             WorldData.getDataForWorld(world).laserRelayNetworks.remove(network);
             for(ConnectionPair pair : network.connections){
                 if(!pair.contains(relay)){
-                    addConnection(pair.positions[0], pair.positions[1], world);
+                    this.addConnection(pair.positions[0], pair.positions[1], world);
                 }
             }
             //System.out.println("Removing a Relay from the Network!");
@@ -74,7 +78,8 @@ public final class LaserRelayConnectionHandler{
     /**
      * Gets a Network for a Relay
      */
-    public static Network getNetworkFor(BlockPos relay, World world){
+    @Override
+    public Network getNetworkFor(BlockPos relay, World world){
         for(Network aNetwork : WorldData.getDataForWorld(world).laserRelayNetworks){
             for(ConnectionPair pair : aNetwork.connections){
                 if(pair.contains(relay)){
@@ -89,14 +94,14 @@ public final class LaserRelayConnectionHandler{
      * Adds a new connection between two relays
      * (Puts it into the correct network!)
      */
-    public static boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, World world){
-        int distanceSq = (int)firstRelay.distanceSq(secondRelay);
-        if(distanceSq > TileEntityLaserRelay.MAX_DISTANCE*TileEntityLaserRelay.MAX_DISTANCE || firstRelay.equals(secondRelay)){
+    @Override
+    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, World world){
+        if(firstRelay == null || secondRelay == null || firstRelay == secondRelay || firstRelay.equals(secondRelay)){
             return false;
         }
 
-        Network firstNetwork = getNetworkFor(firstRelay, world);
-        Network secondNetwork = getNetworkFor(secondRelay, world);
+        Network firstNetwork = this.getNetworkFor(firstRelay, world);
+        Network secondNetwork = this.getNetworkFor(secondRelay, world);
 
         //No Network exists
         if(firstNetwork == null && secondNetwork == null){
@@ -131,7 +136,7 @@ public final class LaserRelayConnectionHandler{
      * Merges two laserRelayNetworks together
      * (Actually puts everything from the second network into the first one and removes the second one)
      */
-    public static void mergeNetworks(Network firstNetwork, Network secondNetwork, World world){
+    private static void mergeNetworks(Network firstNetwork, Network secondNetwork, World world){
         for(ConnectionPair secondPair : secondNetwork.connections){
             firstNetwork.connections.add(secondPair);
         }
@@ -139,85 +144,4 @@ public final class LaserRelayConnectionHandler{
         //System.out.println("Merged Two Networks!");
     }
 
-    public static class ConnectionPair{
-
-        public final BlockPos[] positions = new BlockPos[2];
-
-        public ConnectionPair(BlockPos firstRelay, BlockPos secondRelay){
-            this.positions[0] = firstRelay;
-            this.positions[1] = secondRelay;
-        }
-
-        public static ConnectionPair readFromNBT(NBTTagCompound compound){
-            if(compound != null){
-                BlockPos[] pos = new BlockPos[2];
-                for(int i = 0; i < pos.length; i++){
-                    int anX = compound.getInteger("x"+i);
-                    int aY = compound.getInteger("y"+i);
-                    int aZ = compound.getInteger("z"+i);
-                    pos[i] = new BlockPos(anX, aY, aZ);
-                }
-                return new ConnectionPair(pos[0], pos[1]);
-            }
-            return null;
-        }
-
-        public boolean contains(BlockPos relay){
-            for(BlockPos position : this.positions){
-                if(position != null && position.equals(relay)){
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        @Override
-        public String toString(){
-            return (this.positions[0] == null ? "-" : this.positions[0].toString())+" | "+(this.positions[1] == null ? "-" : this.positions[1].toString());
-        }
-
-        public NBTTagCompound writeToNBT(){
-            NBTTagCompound compound = new NBTTagCompound();
-            for(int i = 0; i < this.positions.length; i++){
-                BlockPos relay = this.positions[i];
-                compound.setInteger("x"+i, relay.getX());
-                compound.setInteger("y"+i, relay.getY());
-                compound.setInteger("z"+i, relay.getZ());
-            }
-            return compound;
-        }
-
-        @Override
-        public boolean equals(Object obj){
-            if(obj instanceof ConnectionPair){
-                ConnectionPair pair = (ConnectionPair)obj;
-                for(int i = 0; i < this.positions.length; i++){
-                    if(this.positions[i] == pair.positions[i] || (this.positions[i] != null && this.positions[i].equals(pair.positions[i]))){
-                        return true;
-                    }
-                }
-            }
-            return super.equals(obj);
-        }
-    }
-
-    public static class Network{
-
-        public final ConcurrentSet<ConnectionPair> connections = new ConcurrentSet<ConnectionPair>();
-
-        @Override
-        public String toString(){
-            return this.connections.toString();
-        }
-
-        @Override
-        public boolean equals(Object obj){
-            if(obj instanceof Network){
-                if(this.connections.equals(((Network)obj).connections)){
-                    return true;
-                }
-            }
-            return super.equals(obj);
-        }
-    }
 }
