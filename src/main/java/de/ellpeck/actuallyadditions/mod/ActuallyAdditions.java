@@ -80,7 +80,7 @@ public class ActuallyAdditions{
         Lenses.init();
         InitBooklet.preInit();
 
-        if(Loader.isModLoaded("Tesla")){
+        if(Loader.isModLoaded("tesla")){
             ModUtil.LOGGER.info("Tesla loaded... Activating Tesla Power System integration...");
             ActuallyAdditions.teslaLoaded = true;
         }
