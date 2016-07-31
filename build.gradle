@@ -18,6 +18,10 @@ version = "1.10.2-r56"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
+if(hasProperty('buildnumber')){
+    version = "${version}-${this.properties['buildnumber']}"
+}
+
 minecraft {
     version = "1.10.2-12.18.1.2011"
     runDir = "idea"
@@ -74,4 +78,44 @@ task apiJar(type: Jar) {
     from sourceSets.main.java
     classifier = 'api'
     include 'de/ellpeck/actuallyadditions/api/**'
+}
+
+javadoc {
+    include 'de/ellpeck/actuallyadditions/api/**'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from 'build/docs/javadoc'
+    classifier 'javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.java
+    classifier = 'sources'
+}
+
+artifacts {
+    archives apiJar
+    archives javadocJar
+    archives sourcesJar
+    archives deobfJar
+}
+
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+            artifact apiJar
+            artifact javadocJar
+            artifact sourcesJar
+            artifact deobfJar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///srv/nginx/maven"
+        }
+    }
 }
