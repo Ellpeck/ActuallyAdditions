@@ -10,10 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrafting;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageFurnace;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import net.minecraft.block.Block;
@@ -21,9 +26,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
@@ -181,5 +188,25 @@ public class MethodHandler implements IMethodHandler{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public BookletPage generateTextPage(int id){
+        return new PageTextOnly(id);
+    }
+
+    @Override
+    public BookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY){
+        return new PagePicture(id, resLoc, textStartY);
+    }
+
+    @Override
+    public BookletPage generateCraftingPage(int id, IRecipe... recipes){
+        return new PageCrafting(id, recipes);
+    }
+
+    @Override
+    public BookletPage generateFurnacePage(int id, ItemStack input, ItemStack result){
+        return new PageFurnace(id, input, result);
     }
 }

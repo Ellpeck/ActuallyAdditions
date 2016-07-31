@@ -10,10 +10,13 @@
 
 package de.ellpeck.actuallyadditions.api.internal;
 
+import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 /**
@@ -34,4 +37,12 @@ public interface IMethodHandler{
     PotionEffect[] getEffectsFromStack(ItemStack stack);
 
     boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile);
+
+    BookletPage generateTextPage(int id);
+
+    BookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY);
+
+    BookletPage generateCraftingPage(int id, IRecipe... recipes);
+
+    BookletPage generateFurnacePage(int id, ItemStack input, ItemStack result);
 }

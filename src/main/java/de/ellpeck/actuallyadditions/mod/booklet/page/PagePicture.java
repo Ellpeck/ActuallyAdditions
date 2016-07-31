@@ -24,9 +24,13 @@ public class PagePicture extends PageTextOnly{
     private final int textStartY;
 
     public PagePicture(int id, String resLocName, int textStartY){
+        this(id, AssetUtil.getBookletGuiLocation(resLocName), textStartY);
+    }
+
+    public PagePicture(int id, ResourceLocation resLoc, int textStartY){
         super(id);
         this.textStartY = textStartY;
-        this.resLoc = AssetUtil.getBookletGuiLocation(resLocName);
+        this.resLoc = resLoc;
     }
 
     @Override
