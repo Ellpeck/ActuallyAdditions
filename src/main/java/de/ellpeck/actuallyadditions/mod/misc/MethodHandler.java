@@ -11,10 +11,13 @@
 package de.ellpeck.actuallyadditions.mod.misc;
 
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrafting;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageFurnace;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
@@ -208,5 +211,10 @@ public class MethodHandler implements IMethodHandler{
     @Override
     public BookletPage generateFurnacePage(int id, ItemStack input, ItemStack result){
         return new PageFurnace(id, input, result);
+    }
+
+    @Override
+    public IBookletChapter generateBookletChapter(String unlocalizedName, IBookletEntry entry, ItemStack displayStack, BookletPage... pages){
+        return new BookletChapter(unlocalizedName, entry, displayStack, pages);
     }
 }
