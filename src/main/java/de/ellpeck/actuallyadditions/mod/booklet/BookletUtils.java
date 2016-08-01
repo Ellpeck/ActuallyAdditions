@@ -490,9 +490,9 @@ public final class BookletUtils{
         EntrySet set = EntrySet.readFromNBT(compound.getCompoundTag("SavedEntry"));
         if(set != null){
 
-            BookletUtils.openIndexEntry(gui, set.entry, set.pageInIndex, true);
-            if(set.chapter != null){
-                BookletUtils.openChapter(gui, set.chapter, set.page);
+            BookletUtils.openIndexEntry(gui, set.getCurrentEntry(), set.getPageInIndex(), true);
+            if(set.getCurrentChapter() != null){
+                BookletUtils.openChapter(gui, set.getCurrentChapter(), set.getCurrentPage());
             }
 
             String searchText = compound.getString("SearchWord");

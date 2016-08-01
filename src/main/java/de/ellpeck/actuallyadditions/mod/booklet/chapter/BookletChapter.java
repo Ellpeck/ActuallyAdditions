@@ -18,19 +18,20 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class BookletChapter implements IBookletChapter{
 
     public final BookletPage[] pages;
     public final IBookletEntry entry;
     public final ItemStack displayStack;
-    private final String unlocalizedName;
+    private final String identifier;
     public TextFormatting color;
 
-    public BookletChapter(String unlocalizedName, IBookletEntry entry, ItemStack displayStack, BookletPage... pages){
+    public BookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, BookletPage... pages){
         this.pages = pages.clone();
 
-        this.unlocalizedName = unlocalizedName;
+        this.identifier = identifier;
         entry.addChapter(this);
         ActuallyAdditionsAPI.allAndSearch.addChapter(this);
         this.entry = entry;
@@ -49,13 +50,18 @@ public class BookletChapter implements IBookletChapter{
     }
 
     @Override
-    public String getUnlocalizedName(){
-        return this.unlocalizedName;
+    public BookletPage getPageById(int id){
+        return this.getPages()[id-1];
+    }
+
+    @Override
+    public int getPageId(BookletPage page){
+        return ArrayUtils.indexOf(this.getPages(), page)+1;
     }
 
     @Override
     public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.unlocalizedName+".name");
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.getIdentifier()+".name");
     }
 
     @Override
@@ -71,6 +77,11 @@ public class BookletChapter implements IBookletChapter{
     @Override
     public ItemStack getDisplayItemStack(){
         return this.displayStack;
+    }
+
+    @Override
+    public String getIdentifier(){
+        return this.identifier;
     }
 
     public void setImportant(){

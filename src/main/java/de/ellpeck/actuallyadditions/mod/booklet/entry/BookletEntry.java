@@ -22,12 +22,12 @@ import java.util.List;
 
 public class BookletEntry implements IBookletEntry{
 
-    private final String unlocalizedName;
+    private final String identifier;
     public List<IBookletChapter> chapters = new ArrayList<IBookletChapter>();
     private TextFormatting color;
 
-    public BookletEntry(String unlocalizedName){
-        this.unlocalizedName = unlocalizedName;
+    public BookletEntry(String identifier){
+        this.identifier = identifier;
         ActuallyAdditionsAPI.addBookletEntry(this);
 
         this.color = TextFormatting.RESET;
@@ -44,13 +44,13 @@ public class BookletEntry implements IBookletEntry{
     }
 
     @Override
-    public String getUnlocalizedName(){
-        return this.unlocalizedName;
+    public String getIdentifier(){
+        return this.identifier;
     }
 
     @Override
     public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID+".indexEntry."+this.unlocalizedName+".name");
+        return StringUtil.localize("booklet."+ModUtil.MOD_ID+".indexEntry."+this.getIdentifier()+".name");
     }
 
     @Override

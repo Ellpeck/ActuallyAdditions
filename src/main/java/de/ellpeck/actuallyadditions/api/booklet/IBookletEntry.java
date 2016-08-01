@@ -18,7 +18,7 @@ public interface IBookletEntry{
 
     void setChapters(List<IBookletChapter> chapters);
 
-    String getUnlocalizedName();
+    String getIdentifier();
 
     String getLocalizedName();
 

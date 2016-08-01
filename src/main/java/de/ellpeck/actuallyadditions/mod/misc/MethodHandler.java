@@ -214,7 +214,7 @@ public class MethodHandler implements IMethodHandler{
     }
 
     @Override
-    public IBookletChapter generateBookletChapter(String unlocalizedName, IBookletEntry entry, ItemStack displayStack, BookletPage... pages){
-        return new BookletChapter(unlocalizedName, entry, displayStack, pages);
+    public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, BookletPage... pages){
+        return new BookletChapter(identifier, entry, displayStack, pages);
     }
 }

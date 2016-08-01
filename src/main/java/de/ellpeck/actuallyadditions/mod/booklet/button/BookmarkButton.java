@@ -38,14 +38,14 @@ public class BookmarkButton extends GuiButton{
     }
 
     public void onPressed(){
-        if(this.assignedEntry.entry != null){
+        if(this.assignedEntry.getCurrentEntry() != null){
             if(GuiScreen.isShiftKeyDown()){
                 this.assignedEntry.removeEntry();
                 this.booklet.shouldSaveDataNextClose = true;
             }
             else{
-                BookletUtils.openIndexEntry(this.booklet, this.assignedEntry.entry, this.assignedEntry.pageInIndex, true);
-                BookletUtils.openChapter(this.booklet, this.assignedEntry.chapter, this.assignedEntry.page);
+                BookletUtils.openIndexEntry(this.booklet, this.assignedEntry.getCurrentEntry(), this.assignedEntry.getPageInIndex(), true);
+                BookletUtils.openChapter(this.booklet, this.assignedEntry.getCurrentChapter(), this.assignedEntry.getCurrentPage());
             }
         }
         else{
@@ -71,12 +71,12 @@ public class BookmarkButton extends GuiButton{
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GlStateManager.blendFunc(770, 771);
             int renderHeight = 25;
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, 146+(this.assignedEntry.entry == null ? 0 : 16), 194-renderHeight+k*renderHeight, this.width, renderHeight);
+            this.drawTexturedModalRect(this.xPosition, this.yPosition, 146+(this.assignedEntry.getCurrentEntry() == null ? 0 : 16), 194-renderHeight+k*renderHeight, this.width, renderHeight);
             this.mouseDragged(minecraft, x, y);
 
-            if(this.assignedEntry.entry != null){
+            if(this.assignedEntry.getCurrentEntry() != null){
                 GlStateManager.pushMatrix();
-                AssetUtil.renderStackToGui(this.assignedEntry.chapter != null && this.assignedEntry.chapter.getDisplayItemStack() != null ? this.assignedEntry.chapter.getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), this.xPosition+2, this.yPosition+1, 0.725F);
+                AssetUtil.renderStackToGui(this.assignedEntry.getCurrentChapter() != null && this.assignedEntry.getCurrentChapter().getDisplayItemStack() != null ? this.assignedEntry.getCurrentChapter().getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), this.xPosition+2, this.yPosition+1, 0.725F);
                 GlStateManager.popMatrix();
             }
         }
@@ -84,12 +84,12 @@ public class BookmarkButton extends GuiButton{
 
     public void drawHover(int mouseX, int mouseY){
         ArrayList list = new ArrayList();
-        if(this.assignedEntry.entry != null){
-            if(this.assignedEntry.chapter != null){
-                list.add(TextFormatting.GOLD+this.assignedEntry.chapter.getLocalizedName()+", Page "+this.assignedEntry.page.getID());
+        if(this.assignedEntry.getCurrentEntry() != null){
+            if(this.assignedEntry.getCurrentChapter() != null){
+                list.add(TextFormatting.GOLD+this.assignedEntry.getCurrentChapter().getLocalizedName()+", Page "+this.assignedEntry.getCurrentPage().getID());
             }
             else{
-                list.add(TextFormatting.GOLD+this.assignedEntry.entry.getLocalizedName()+", Page "+this.assignedEntry.pageInIndex);
+                list.add(TextFormatting.GOLD+this.assignedEntry.getCurrentEntry().getLocalizedName()+", Page "+this.assignedEntry.getPageInIndex());
             }
             list.add("Click to open");
             list.add(TextFormatting.ITALIC+"Shift-Click to remove");

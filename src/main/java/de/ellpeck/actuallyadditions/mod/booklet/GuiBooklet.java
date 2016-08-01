@@ -252,7 +252,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         else if(button == this.buttonViewOnline){
             IBookletChapter chapter = this.currentEntrySet.getCurrentChapter();
             if(chapter != null){
-                BookletUtils.openBrowser("http://ellpeck.de/actaddmanual/#"+chapter.getUnlocalizedName());
+                BookletUtils.openBrowser("http://ellpeck.de/actaddmanual/#"+chapter.getIdentifier());
             }
         }
         //Handles Website
@@ -409,8 +409,8 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         }
         else{
             //Open forced entry
-            BookletUtils.openIndexEntry(this, ItemBooklet.forcedEntry.entry, ItemBooklet.forcedEntry.pageInIndex, true);
-            BookletUtils.openChapter(this, ItemBooklet.forcedEntry.chapter, ItemBooklet.forcedEntry.page);
+            BookletUtils.openIndexEntry(this, ItemBooklet.forcedEntry.getCurrentEntry(), ItemBooklet.forcedEntry.getPageInIndex(), true);
+            BookletUtils.openChapter(this, ItemBooklet.forcedEntry.getCurrentChapter(), ItemBooklet.forcedEntry.getCurrentPage());
             ItemBooklet.forcedEntry = null;
 
             this.shouldSaveDataNextClose = true;

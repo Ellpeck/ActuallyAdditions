@@ -35,7 +35,7 @@ public class BookletPageAA extends BookletPage{
 
     @Override
     public int getID(){
-        return ArrayUtils.indexOf(this.chapter.getPages(), this)+1;
+        return this.chapter.getPageId(this);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class BookletPageAA extends BookletPage{
             return null;
         }
 
-        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getUnlocalizedName()+".text."+this.localizationKey);
+        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getIdentifier()+".text."+this.localizationKey);
         base = base.replaceAll("<imp>", TextFormatting.DARK_GREEN+"");
         base = base.replaceAll("<item>", TextFormatting.BLUE+"");
         base = base.replaceAll("<r>", TextFormatting.BLACK+"");

@@ -48,5 +48,5 @@ public interface IMethodHandler{
 
     BookletPage generateFurnacePage(int id, ItemStack input, ItemStack result);
 
-    IBookletChapter generateBookletChapter(String unlocalizedName, IBookletEntry entry, ItemStack displayStack, BookletPage... pages);
+    IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, BookletPage... pages);
 }

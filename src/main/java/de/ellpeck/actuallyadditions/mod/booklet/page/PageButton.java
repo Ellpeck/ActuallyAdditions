@@ -26,7 +26,7 @@ public abstract class PageButton extends PageTextOnly{
 
     @Override
     public void onOpened(IBookletGui gui){
-        String text = StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getUnlocalizedName()+".page."+this.localizationKey+".button");
+        String text = StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getIdentifier()+".page."+this.localizationKey+".button");
         int width = Minecraft.getMinecraft().fontRendererObj.getStringWidth(text);
         this.button = new GuiButton(-1239, gui.getGuiLeft()+gui.getXSize()/2-width/2-8, gui.getGuiTop()+gui.getYSize()-40, width+15, 20, text);
         gui.getButtonList().add(this.button);

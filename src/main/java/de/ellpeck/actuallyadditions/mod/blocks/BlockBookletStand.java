@@ -140,19 +140,19 @@ public class BlockBookletStand extends BlockContainerBase implements IHudDisplay
 
             String strg1;
             String strg2;
-            if(set.entry == null){
+            if(set.getCurrentEntry() == null){
                 strg1 = "No entry saved! Save one if";
                 strg2 = "you are the player who placed it!";
             }
-            else if(set.chapter == null){
-                strg1 = set.entry.getLocalizedName();
-                strg2 = "Page "+set.pageInIndex;
+            else if(set.getCurrentChapter() == null){
+                strg1 = set.getCurrentEntry().getLocalizedName();
+                strg2 = "Page "+set.getPageInIndex();
             }
             else{
-                strg1 = set.chapter.getLocalizedName();
-                strg2 = "Page "+set.page.getID();
+                strg1 = set.getCurrentChapter().getLocalizedName();
+                strg2 = "Page "+set.getCurrentPage().getID();
 
-                AssetUtil.renderStackToGui(set.chapter.getDisplayItemStack() != null ? set.chapter.getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+10, 1F);
+                AssetUtil.renderStackToGui(set.getCurrentChapter().getDisplayItemStack() != null ? set.getCurrentChapter().getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+10, 1F);
             }
             minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg1, resolution.getScaledWidth()/2+25, resolution.getScaledHeight()/2+8, StringUtil.DECIMAL_COLOR_WHITE);
             minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg2, resolution.getScaledWidth()/2+25, resolution.getScaledHeight()/2+18, StringUtil.DECIMAL_COLOR_WHITE);

@@ -16,7 +16,9 @@ public interface IBookletChapter{
 
     BookletPage[] getPages();
 
-    String getUnlocalizedName();
+    BookletPage getPageById(int id);
+
+    int getPageId(BookletPage page);
 
     String getLocalizedName();
 
@@ -25,5 +27,7 @@ public interface IBookletChapter{
     IBookletEntry getEntry();
 
     ItemStack getDisplayItemStack();
+
+    String getIdentifier();
 
 }

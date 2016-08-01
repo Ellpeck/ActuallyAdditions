@@ -73,7 +73,7 @@ public class GuiBookletStand extends GuiBooklet{
         }
 
         //Open the pages the book was assigned
-        BookletUtils.openIndexEntry(this, this.theStand.assignedEntry.entry, this.theStand.assignedEntry.pageInIndex, true);
-        BookletUtils.openChapter(this, this.theStand.assignedEntry.chapter, this.theStand.assignedEntry.page);
+        BookletUtils.openIndexEntry(this, this.theStand.assignedEntry.getCurrentEntry(), this.theStand.assignedEntry.getPageInIndex(), true);
+        BookletUtils.openChapter(this, this.theStand.assignedEntry.getCurrentChapter(), this.theStand.assignedEntry.getCurrentPage());
     }
 }
