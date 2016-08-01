@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.update;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -33,7 +34,7 @@ public class ThreadUpdateChecker extends Thread{
             Properties updateProperties = new Properties();
             updateProperties.load(new InputStreamReader(newestURL.openStream()));
 
-            String currentMcVersion = ModUtil.VERSION.split("-")[0];
+            String currentMcVersion = Util.getMcVersion();
             if(ConfigBoolValues.UPDATE_CHECK_VERSION_SPECIFIC.isEnabled()){
                 String newestVersionProp = updateProperties.getProperty(currentMcVersion);
 
@@ -57,7 +58,7 @@ public class ThreadUpdateChecker extends Thread{
                 UpdateChecker.updateVersionString = highestString;
             }
 
-            String clientVersionString = ModUtil.VERSION.substring(ModUtil.VERSION.indexOf("r")+1);
+            String clientVersionString = Util.getMajorModVersion();
             int clientVersion = Integer.parseInt(clientVersionString.contains("_") ? clientVersionString.substring(0, clientVersionString.indexOf("_")) : clientVersionString);
             if(UpdateChecker.updateVersionInt > clientVersion){
                 UpdateChecker.needsUpdateNotify = true;

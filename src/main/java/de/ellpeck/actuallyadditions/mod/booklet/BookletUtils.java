@@ -107,7 +107,7 @@ public final class BookletUtils{
                 version = "Dev's Edition";
             }
             else{
-                version = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.edition")+" "+ModUtil.VERSION.substring(ModUtil.VERSION.indexOf("r")+1);
+                version = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.edition")+" "+Util.getMajorModVersion();
             }
             strg = TextFormatting.GOLD+TextFormatting.ITALIC.toString()+"-"+version+"-";
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+33, 0);

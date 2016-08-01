@@ -41,4 +41,16 @@ public final class Util{
     public static boolean isDevVersion(){
         return ModUtil.VERSION.equals("@VERSION@");
     }
+
+    private static String[] splitVersion(){
+        return ModUtil.VERSION.split("-");
+    }
+
+    public static String getMcVersion(){
+        return splitVersion()[0];
+    }
+
+    public static String getMajorModVersion(){
+        return splitVersion()[1].substring(1);
+    }
 }
