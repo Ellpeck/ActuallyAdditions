@@ -16,10 +16,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.HashMap;
+
 public abstract class BookletPage{
 
     public boolean arePageStacksWildcard;
     protected IBookletChapter chapter;
+    protected final HashMap<String, String> textReplacements = new HashMap<String, String>();
+    protected boolean hasNoText;
 
     public void onOpened(IBookletGui gui){
 
@@ -86,6 +90,20 @@ public abstract class BookletPage{
      */
     public BookletPage setPageStacksWildcard(){
         this.arePageStacksWildcard = true;
+        return this;
+    }
+
+    public BookletPage setNoText(){
+        this.hasNoText = true;
+        return this;
+    }
+
+    public BookletPage addTextReplacement(String text, int replacement){
+        return this.addTextReplacement(text, Integer.toString(replacement));
+    }
+
+    public BookletPage addTextReplacement(String text, String replacement){
+        this.textReplacements.put(text, replacement);
         return this;
     }
 }

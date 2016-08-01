@@ -26,8 +26,6 @@ import java.util.Map;
 public class BookletPageAA extends BookletPage{
 
     protected final int localizationKey;
-    private final HashMap<String, String> textReplacements = new HashMap<String, String>();
-    private boolean hasNoText;
 
     public BookletPageAA(int localizationKey){
         this.localizationKey = localizationKey;
@@ -39,7 +37,7 @@ public class BookletPageAA extends BookletPage{
     }
 
     @Override
-    public final String getText(){
+    public String getText(){
         if(this.hasNoText){
             return null;
         }
@@ -81,20 +79,6 @@ public class BookletPageAA extends BookletPage{
     @Override
     public String getClickToSeeRecipeString(){
         return TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe");
-    }
-
-    public BookletPage setNoText(){
-        this.hasNoText = true;
-        return this;
-    }
-
-    public BookletPageAA addTextReplacement(String text, int replacement){
-        return this.addTextReplacement(text, Integer.toString(replacement));
-    }
-
-    public BookletPageAA addTextReplacement(String text, String replacement){
-        this.textReplacements.put(text, replacement);
-        return this;
     }
 
     public void addToPagesWithItemStackData(){
