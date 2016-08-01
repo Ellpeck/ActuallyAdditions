@@ -16,10 +16,12 @@ import net.minecraft.util.math.BlockPos;
 public class ConnectionPair{
 
     public final BlockPos[] positions = new BlockPos[2];
+    public final boolean suppressConnectionRender;
 
-    public ConnectionPair(BlockPos firstRelay, BlockPos secondRelay){
+    public ConnectionPair(BlockPos firstRelay, BlockPos secondRelay, boolean suppressConnectionRender){
         this.positions[0] = firstRelay;
         this.positions[1] = secondRelay;
+        this.suppressConnectionRender = suppressConnectionRender;
     }
 
     public static ConnectionPair readFromNBT(NBTTagCompound compound){
@@ -31,7 +33,7 @@ public class ConnectionPair{
                 int aZ = compound.getInteger("z"+i);
                 pos[i] = new BlockPos(anX, aY, aZ);
             }
-            return new ConnectionPair(pos[0], pos[1]);
+            return new ConnectionPair(pos[0], pos[1], compound.getBoolean("SuppressRender"));
         }
         return null;
     }
@@ -58,6 +60,7 @@ public class ConnectionPair{
             compound.setInteger("y"+i, relay.getY());
             compound.setInteger("z"+i, relay.getZ());
         }
+        compound.setBoolean("SuppressRender", this.suppressConnectionRender);
         return compound;
     }
 
