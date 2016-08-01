@@ -52,9 +52,8 @@ public class BookletPageAA extends BookletPage{
         base = base.replaceAll("<i>", TextFormatting.ITALIC+"");
         base = base.replaceAll("<tifisgrin>", TextFormatting.DARK_RED+""+TextFormatting.UNDERLINE); //This is fucking important so go read it now
 
-        for(Object o : this.textReplacements.entrySet()){
-            Map.Entry e = (Map.Entry)o;
-            base = base.replaceAll((String)e.getKey(), (String)e.getValue());
+        for(Map.Entry<String, String> entry : this.textReplacements.entrySet()){
+            base = base.replaceAll(entry.getKey(), entry.getValue());
         }
         return base;
     }
