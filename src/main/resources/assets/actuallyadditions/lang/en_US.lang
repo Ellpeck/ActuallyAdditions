@@ -502,6 +502,8 @@ item.actuallyadditions.itemMiscBiomass.name=Biomass
 item.actuallyadditions.itemMiscBiocoal.name=Bio Coal
 item.actuallyadditions.itemPlayerProbe.name=Player Probe
 item.actuallyadditions.itemWorm.name=Worm
+item.actuallyadditions.itemBag.name=Bag
+item.actuallyadditions.itemVoidBag.name=Void Bag
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -617,6 +619,8 @@ container.actuallyadditions.rangedCollector.name=Ranged Collector
 container.actuallyadditions.miner.name=Vertical Digger
 container.actuallyadditions.laserRelayItemWhitelist.name=Laser Relay
 container.actuallyadditions.filter.name=Item Filter
+container.actuallyadditions.bag.name=Bag
+container.actuallyadditions.voidBag.name=Void Bag
 
 #Update Information
 info.actuallyadditions.update.generic=[{"text":"There is an Update for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"available!","color":"none"}]
@@ -961,3 +965,6 @@ booklet.actuallyadditions.chapter.playerProbe.text.1=The <item>Player Probe<r> c
 booklet.actuallyadditions.chapter.worms.name=Worms
 booklet.actuallyadditions.chapter.worms.text.1=The <item>Worms<r> are a pretty useful species. <n>They will, once <imp>placed down on dirt or grass<r>, help you <imp>till the land<r> around them in a 3x3 area and <imp>keep it wet<r>. <n>Additionally, they will help the crops <imp>grow faster<r> by making the ground nice and soft. <n><n><item>Worms<r> can be gotten by simply <imp>tilling grass<r> with a hoe.
 booklet.actuallyadditions.chapter.worms.text.2=<i>A worm at work
+
+booklet.actuallyadditions.chapter.bags.name=Bag and Void Bag
+booklet.actuallyadditions.chapter.bags.text.1=<item>Bags<r> are an easy way to <imp>transport items around<r>, however, they have some additional functions. <n>First of all, in their GUI that is accessed by <imp>right-clicking<r>, they can be set to automatically <imp>suck up items on the ground<r>. Also, they have a couple of <imp>filter slots<r> where you can configure what can actually go into the bags. <n><n><item>Void Bags<r> have the same functionality as normal bags, however, they <imp>remove items<r> from the world instead of storing them.

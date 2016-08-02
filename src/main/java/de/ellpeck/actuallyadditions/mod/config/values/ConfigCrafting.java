@@ -169,7 +169,10 @@ public enum ConfigCrafting{
     FILTER("Item Filter", ConfigCategories.ITEMS_CRAFTING),
 
     CHARCOAL_BLOCK("Charcoal Block", ConfigCategories.BLOCKS_CRAFTING),
-    TINY_COAL("Tiny Coal", ConfigCategories.ITEMS_CRAFTING);
+    TINY_COAL("Tiny Coal", ConfigCategories.ITEMS_CRAFTING),
+
+    BAG("Bag", ConfigCategories.ITEMS_CRAFTING),
+    VOID_BAG("Void Bag", ConfigCategories.ITEMS_CRAFTING);
 
     public final String name;
     public final String category;

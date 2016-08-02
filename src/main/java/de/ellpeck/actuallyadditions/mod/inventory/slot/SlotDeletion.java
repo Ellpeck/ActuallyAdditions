@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -24,10 +23,5 @@ public class SlotDeletion extends Slot{
     @Override
     public void putStack(ItemStack stack){
         this.onSlotChanged();
-    }
-
-    @Override
-    public boolean canTakeStack(EntityPlayer player){
-        return false;
     }
 }

@@ -85,8 +85,31 @@ public final class ItemCrafting{
     public static IRecipe recipeFilter;
     public static IRecipe recipePlayerProbe;
     public static IRecipe recipeDisenchantingLens;
+    public static IRecipe recipeBag;
+    public static IRecipe recipeVoidBag;
 
     public static void init(){
+
+        //Bag
+        if(ConfigCrafting.BAG.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemBag),
+                    "SLS", "SCS", "LVL",
+                    'S', new ItemStack(Items.STRING),
+                    'L', new ItemStack(Items.LEATHER),
+                    'C', new ItemStack(Blocks.CHEST),
+                    'V', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal())));
+            recipeBag = RecipeUtil.lastIRecipe();
+        }
+
+        //Void Bag
+        if(ConfigCrafting.VOID_BAG.isEnabled()){
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemVoidBag),
+                    new ItemStack(InitItems.itemBag),
+                    new ItemStack(Items.ENDER_PEARL),
+                    new ItemStack(Blocks.OBSIDIAN),
+                    new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal())));
+            recipeVoidBag = RecipeUtil.lastIRecipe();
+        }
 
         //Lens
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()),
