@@ -211,9 +211,14 @@ public final class InitItems{
     public static Item itemPlayerProbe;
     public static Item itemWorm;
 
+    public static Item itemBag;
+    public static Item itemVoidBag;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
+        itemBag = new ItemBag("itemBag", false);
+        itemVoidBag = new ItemBag("itemVoidBag", true);
         itemWorm = new ItemWorm("itemWorm");
         itemPlayerProbe = new ItemPlayerProbe("itemPlayerProbe");
         itemFilter = new ItemFilter("itemFilter");

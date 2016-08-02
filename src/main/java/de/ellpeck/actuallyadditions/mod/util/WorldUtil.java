@@ -312,7 +312,7 @@ public final class WorldUtil{
             for(int i = start; i < end; i++){
                 if(shouldAlwaysWork || ((!(inventory instanceof ISidedInventory) || ((ISidedInventory)inventory).canInsertItem(i, stackToPutIn, side)) && inventory.isItemValidForSlot(i, stackToPutIn))){
                     ItemStack stackInQuestion = inventory.getStackInSlot(i);
-                    if(stackToPutIn != null && (stackInQuestion == null || (stackInQuestion.isItemEqual(stackToPutIn) && stackInQuestion.getMaxStackSize() >= stackInQuestion.stackSize+stackToPutIn.stackSize))){
+                    if(stackToPutIn != null && (stackInQuestion == null || (ItemUtil.canBeStacked(stackInQuestion, stackToPutIn) && stackInQuestion.getMaxStackSize() >= stackInQuestion.stackSize+stackToPutIn.stackSize))){
                         if(stackInQuestion == null){
                             inventory.setInventorySlotContents(i, stackToPutIn.copy());
                         }

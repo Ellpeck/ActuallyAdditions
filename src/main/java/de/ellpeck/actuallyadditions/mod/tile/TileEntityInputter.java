@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -154,7 +155,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     }
                 }
                 //If ESD has enough Space & Item in question is on whitelist
-                if(tempStack != null && (this.slots[0] == null || (tempStack.isItemEqual(this.slots[0]) && this.slots[0].stackSize < maxSize)) && this.checkBothFilters(tempStack, false)){
+                if(tempStack != null && (this.slots[0] == null || (ItemUtil.canBeStacked(tempStack, this.slots[0]) && this.slots[0].stackSize < maxSize)) && this.checkBothFilters(tempStack, false)){
                     //Deal with ISided
                     if(theSided != null){
                         //Check if Item can be inserted from any Side (Because Sidedness gets ignored!)
@@ -183,7 +184,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             if(can){
                 //If ESD already has Items
                 if(this.slots[0] != null){
-                    if(theStack.isItemEqual(this.slots[0])){
+                    if(ItemUtil.canBeStacked(theStack, this.slots[0])){
                         //If the StackSize is smaller than the space the ESD has left
                         if(theStack.stackSize <= maxSize-this.slots[0].stackSize){
                             this.slots[0].stackSize += theStack.stackSize;
@@ -247,7 +248,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                             maxSize = theInventory.getInventoryStackLimit();
                         }
                     }
-                    if(theInventory.isItemValidForSlot(i, this.slots[0]) && (tempStack == null || (tempStack.isItemEqual(this.slots[0]) && tempStack.stackSize < maxSize)) && this.checkBothFilters(this.slots[0], true)){
+                    if(theInventory.isItemValidForSlot(i, this.slots[0]) && (tempStack == null || (ItemUtil.canBeStacked(tempStack, this.slots[0]) && tempStack.stackSize < maxSize)) && this.checkBothFilters(this.slots[0], true)){
                         if(theSided != null){
                             for(int j = 0; j <= 5; j++){
                                 if(theSided.canInsertItem(i, this.slots[0], EnumFacing.values()[j])){
@@ -271,7 +272,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 if(can){
                     if(theStack != null){
                         ItemStack copiedStack = theStack.copy();
-                        if(copiedStack.isItemEqual(this.slots[0])){
+                        if(ItemUtil.canBeStacked(copiedStack, this.slots[0])){
                             if(this.slots[0].stackSize <= maxSize-copiedStack.stackSize){
                                 copiedStack.stackSize += this.slots[0].stackSize;
                                 this.slots[0] = null;

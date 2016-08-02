@@ -96,6 +96,10 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerMiner(entityPlayer.inventory, tile);
             case LASER_RELAY_ITEM_WHITELIST:
                 return new ContainerLaserRelayItemWhitelist(entityPlayer.inventory, tile);
+            case BAG:
+                return new ContainerBag(entityPlayer.inventory, false);
+            case VOID_BAG:
+                return new ContainerBag(entityPlayer.inventory, true);
             default:
                 return null;
         }
@@ -172,6 +176,10 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiBookletStand(tile);
             case LASER_RELAY_ITEM_WHITELIST:
                 return new GuiLaserRelayItemWhitelist(entityPlayer.inventory, tile);
+            case BAG:
+                return new GuiBag(entityPlayer.inventory, false);
+            case VOID_BAG:
+                return new GuiBag(entityPlayer.inventory, true);
             default:
                 return null;
         }
@@ -209,7 +217,9 @@ public class GuiHandler implements IGuiHandler{
         MINER,
         BOOK_STAND,
         LASER_RELAY_ITEM_WHITELIST,
-        FILTER(false);
+        FILTER(false),
+        BAG(false),
+        VOID_BAG(false);
 
         public final boolean checkTileEntity;
 

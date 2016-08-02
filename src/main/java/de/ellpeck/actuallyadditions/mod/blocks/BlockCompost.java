@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -119,7 +120,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                         compost.setInventorySlotContents(0, null);
                         return true;
                     }
-                    else if(stackPlayer.isItemEqual(slot)){
+                    else if(ItemUtil.canBeStacked(stackPlayer, slot)){
                         int addedStackSize = Math.min(slot.stackSize, stackPlayer.getMaxStackSize()-stackPlayer.stackSize);
                         ItemStack stackToAdd = stackPlayer.copy();
                         stackToAdd.stackSize += addedStackSize;

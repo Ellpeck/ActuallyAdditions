@@ -20,9 +20,11 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBookletStand;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -39,7 +41,9 @@ import java.util.UUID;
 
 public final class PacketHandler{
 
+    public static SimpleNetworkWrapper theNetwork;
     public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<IDataHandler>();
+
     public static final IDataHandler PARTICLE_HANDLER = new IDataHandler(){
         @Override
         @SideOnly(Side.CLIENT)
@@ -71,6 +75,19 @@ public final class PacketHandler{
                 Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
                 if(entity != null && entity instanceof EntityPlayer){
                     reactor.onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)entity);
+                }
+            }
+        }
+    };
+    public static final IDataHandler GUI_BUTTON_TO_CONTAINER_HANDLER = new IDataHandler(){
+        @Override
+        public void handleData(NBTTagCompound compound){
+            World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
+            Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
+            if(entity != null && entity instanceof EntityPlayer){
+                Container container = ((EntityPlayer)entity).openContainer;
+                if(container != null && container instanceof IButtonReactor){
+                    ((IButtonReactor)container).onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)entity);
                 }
             }
         }
@@ -111,7 +128,6 @@ public final class PacketHandler{
             }
         }
     };
-    public static SimpleNetworkWrapper theNetwork;
     public static final IDataHandler BOOKLET_STAND_BUTTON_HANDLER = new IDataHandler(){
         @Override
         public void handleData(NBTTagCompound compound){
@@ -162,5 +178,6 @@ public final class PacketHandler{
         DATA_HANDLERS.add(GUI_NUMBER_TO_TILE_HANDLER);
         DATA_HANDLERS.add(CHANGE_PLAYER_DATA_HANDLER);
         DATA_HANDLERS.add(PLAYER_DATA_TO_CLIENT_HANDLER);
+        DATA_HANDLERS.add(GUI_BUTTON_TO_CONTAINER_HANDLER);
     }
 }
