@@ -20,8 +20,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 
@@ -104,6 +102,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     public EnergyStorage getEnergyStorage(){
         return this.storage;
     }
+
     @Override
     public boolean needsHoldShift(){
         return false;

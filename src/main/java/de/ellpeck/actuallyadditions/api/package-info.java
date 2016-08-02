@@ -7,6 +7,7 @@
  *
  * © 2015-2016 Ellpeck
  */
+
 @API(owner = ActuallyAdditionsAPI.MOD_ID, apiVersion = ActuallyAdditionsAPI.API_VERSION, provides = ActuallyAdditionsAPI.API_ID)
 package de.ellpeck.actuallyadditions.api;
 

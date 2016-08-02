@@ -1,5 +1,5 @@
 /*
- * This file ("EntityColoredParticleFX.java") is part of the Actually Additions mod for Minecraft.
+ * This file ("ParticleColored.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://ellpeck.de/actaddlicense

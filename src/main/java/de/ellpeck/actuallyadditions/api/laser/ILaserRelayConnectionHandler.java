@@ -18,7 +18,7 @@ import net.minecraft.world.World;
  * This is the internal laser relay connection handler.
  * Use ActuallyAdditionsAPI.connectionHandler for calling
  * This is not supposed to be implemented.
- *
+ * <p>
  * The network system is built in a way that doesn't need the individual
  * positions to be Laser Relays, it relies only on BlockPos
  */
