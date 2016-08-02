@@ -52,7 +52,7 @@ public class BlockWildPlant extends BlockBushBase{
         BlockPos offset = pos.down();
         IBlockState offsetState = world.getBlockState(offset);
         Block offsetBlock = offsetState.getBlock();
-        return offsetBlock.getMetaFromState(offsetState) == TheWildPlants.RICE.ordinal() ? offsetBlock.getMaterial(offsetState) == Material.WATER : offsetBlock.canSustainPlant(world.getBlockState(offset), world, offset, EnumFacing.UP, this);
+        return this.getMetaFromState(state) == TheWildPlants.RICE.ordinal() ? offsetBlock.getMaterial(offsetState) == Material.WATER : offsetBlock.canSustainPlant(offsetState, world, offset, EnumFacing.UP, this);
     }
 
 
