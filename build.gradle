@@ -23,7 +23,7 @@ if(hasProperty('buildnumber')){
 }
 
 minecraft {
-    version = "1.10.2-12.18.1.2011"
+    version = "1.10.2-12.18.1.2044"
     runDir = "idea"
 
     mappings = "snapshot_20160519"
@@ -44,8 +44,8 @@ repositories {
 }
 
 dependencies {
-    compile "net.darkhax.tesla:Tesla:1.10.2-1.2.0.38"
-    deobfCompile "mezz.jei:jei_1.10.2:3.7.8.234"
+    compile "net.darkhax.tesla:Tesla:1.10.2-1.2.1.42"
+    deobfCompile "mezz.jei:jei_1.10.2:3.7.8.235"
 }
 
 processResources {
