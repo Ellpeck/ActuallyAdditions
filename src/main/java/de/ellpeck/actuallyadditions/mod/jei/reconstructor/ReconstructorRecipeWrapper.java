@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
+import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -34,12 +35,12 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implemen
 
     @Override
     public List getInputs(){
-        return this.theRecipe.getInputs();
+        return RecipeUtil.getConversionLensInputs(this.theRecipe);
     }
 
     @Override
     public List getOutputs(){
-        return this.theRecipe.getOutputs();
+        return RecipeUtil.getConversionLensOutputs(this.theRecipe);
     }
 
     @Override

@@ -24,6 +24,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -141,7 +142,7 @@ public class MethodHandler implements IMethodHandler{
                         List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
                         for(LensConversionRecipe recipe : recipes){
                             if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
-                                List<ItemStack> outputs = recipe.getOutputs();
+                                List<ItemStack> outputs = RecipeUtil.getConversionLensOutputs(recipe);
                                 if(outputs != null && !outputs.isEmpty()){
                                     ItemStack output = outputs.get(0);
                                     if(output.getItem() instanceof ItemBlock){
@@ -171,7 +172,7 @@ public class MethodHandler implements IMethodHandler{
                     List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
                     for(LensConversionRecipe recipe : recipes){
                         if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
-                            List<ItemStack> outputs = recipe.getOutputs();
+                            List<ItemStack> outputs = RecipeUtil.getConversionLensOutputs(recipe);
                             if(outputs != null && !outputs.isEmpty()){
                                 ItemStack outputCopy = outputs.get(0).copy();
                                 outputCopy.stackSize = stack.stackSize;

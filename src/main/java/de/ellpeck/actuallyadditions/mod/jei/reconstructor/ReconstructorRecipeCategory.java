@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -66,10 +67,10 @@ public class ReconstructorRecipeCategory implements IRecipeCategory{
             ReconstructorRecipeWrapper wrapper = (ReconstructorRecipeWrapper)recipeWrapper;
 
             recipeLayout.getItemStacks().init(0, true, 4, 18);
-            recipeLayout.getItemStacks().set(0, wrapper.theRecipe.getInputs());
+            recipeLayout.getItemStacks().set(0, RecipeUtil.getConversionLensInputs(wrapper.theRecipe));
 
             recipeLayout.getItemStacks().init(1, true, 66, 18);
-            recipeLayout.getItemStacks().set(1, wrapper.theRecipe.getOutputs());
+            recipeLayout.getItemStacks().set(1, RecipeUtil.getConversionLensOutputs(wrapper.theRecipe));
 
         }
     }

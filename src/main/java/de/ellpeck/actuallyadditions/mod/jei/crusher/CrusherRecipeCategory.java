@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
 
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -66,12 +67,12 @@ public class CrusherRecipeCategory implements IRecipeCategory{
             CrusherRecipeWrapper wrapper = (CrusherRecipeWrapper)recipeWrapper;
 
             recipeLayout.getItemStacks().init(0, true, 19, 7);
-            recipeLayout.getItemStacks().set(0, wrapper.theRecipe.getRecipeInputs());
+            recipeLayout.getItemStacks().set(0, RecipeUtil.getCrusherRecipeInputs(wrapper.theRecipe));
 
             recipeLayout.getItemStacks().init(1, true, 7, 55);
-            recipeLayout.getItemStacks().set(1, wrapper.theRecipe.getRecipeOutputOnes());
+            recipeLayout.getItemStacks().set(1, RecipeUtil.getCrusherRecipeOutputOnes(wrapper.theRecipe));
 
-            List<ItemStack> outputTwos = wrapper.theRecipe.getRecipeOutputTwos();
+            List<ItemStack> outputTwos = RecipeUtil.getCrusherRecipeOutputTwos(wrapper.theRecipe);
             if(outputTwos != null && !outputTwos.isEmpty()){
                 recipeLayout.getItemStacks().init(2, true, 31, 55);
                 recipeLayout.getItemStacks().set(2, outputTwos);

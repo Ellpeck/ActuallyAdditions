@@ -11,11 +11,17 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class RecipeUtil{
@@ -34,5 +40,49 @@ public final class RecipeUtil{
         List list = CraftingManager.getInstance().getRecipeList();
         Object recipe = list.get(list.size()-1);
         return recipe instanceof IRecipe ? (IRecipe)recipe : null;
+    }
+
+    public static List<ItemStack> getCrusherRecipeOutputOnes(CrusherRecipe recipe){
+        return doRecipeOrWhatever(recipe.outputOneStack, recipe.outputOne, recipe.outputOneAmount);
+    }
+
+    public static List<ItemStack> getCrusherRecipeOutputTwos(CrusherRecipe recipe){
+        return doRecipeOrWhatever(recipe.outputTwoStack, recipe.outputTwo, recipe.outputTwoAmount);
+    }
+
+    public static List<ItemStack> getCrusherRecipeInputs(CrusherRecipe recipe){
+        return doRecipeOrWhatever(recipe.inputStack, recipe.input, 1);
+    }
+
+    public static List<ItemStack> getConversionLensInputs(LensConversionRecipe recipe){
+        return doRecipeOrWhatever(recipe.inputStack, recipe.input, 1);
+    }
+
+    public static List<ItemStack> getConversionLensOutputs(LensConversionRecipe recipe){
+        return doRecipeOrWhatever(recipe.outputStack, recipe.output, 1);
+    }
+
+    private static List<ItemStack> doRecipeOrWhatever(ItemStack stack, String oredict, int amount){
+        if(stack != null){
+            return Collections.singletonList(stack.copy());
+        }
+
+        if(oredict == null || oredict.isEmpty()){
+            return null;
+        }
+
+        List<ItemStack> stacks = OreDictionary.getOres(oredict, false);
+        if(stacks != null && !stacks.isEmpty()){
+            List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
+            for(ItemStack aStack : stacks){
+                if(aStack != null){
+                    ItemStack stackCopy = aStack.copy();
+                    stackCopy.stackSize = amount;
+                    stacksCopy.add(stackCopy);
+                }
+            }
+            return stacksCopy;
+        }
+        return null;
     }
 }

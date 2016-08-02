@@ -12,20 +12,15 @@ package de.ellpeck.actuallyadditions.api.recipe;
 
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class LensConversionRecipe{
 
     public final int energyUse;
     public final LensConversion type;
-    private String input;
-    private String output;
-    private ItemStack inputStack;
-    private ItemStack outputStack;
+    public String input;
+    public String output;
+    public ItemStack inputStack;
+    public ItemStack outputStack;
 
     public LensConversionRecipe(ItemStack input, ItemStack output, int energyUse, LensConversion type){
         this.inputStack = input;
@@ -41,51 +36,4 @@ public class LensConversionRecipe{
         this.type = type;
     }
 
-    public List<ItemStack> getOutputs(){
-        if(this.outputStack != null){
-            return Collections.singletonList(this.outputStack.copy());
-        }
-
-        if(this.output == null || this.output.isEmpty()){
-            return null;
-        }
-
-        List<ItemStack> stacks = OreDictionary.getOres(this.output, false);
-        if(stacks != null && !stacks.isEmpty()){
-            List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
-            for(ItemStack stack : stacks){
-                if(stack != null){
-                    ItemStack stackCopy = stack.copy();
-                    stackCopy.stackSize = 1;
-                    stacksCopy.add(stackCopy);
-                }
-            }
-            return stacksCopy;
-        }
-        return null;
-    }
-
-    public List<ItemStack> getInputs(){
-        if(this.inputStack != null){
-            return Collections.singletonList(this.inputStack.copy());
-        }
-
-        if(this.input == null || this.input.isEmpty()){
-            return null;
-        }
-
-        List<ItemStack> stacks = OreDictionary.getOres(this.input, false);
-        if(stacks != null && !stacks.isEmpty()){
-            List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
-            for(ItemStack stack : stacks){
-                if(stack != null){
-                    ItemStack stackCopy = stack.copy();
-                    stackCopy.stackSize = 1;
-                    stacksCopy.add(stackCopy);
-                }
-            }
-            return stacksCopy;
-        }
-        return null;
-    }
 }

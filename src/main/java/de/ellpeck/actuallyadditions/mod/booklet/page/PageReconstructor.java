@@ -15,10 +15,7 @@ import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
+import de.ellpeck.actuallyadditions.mod.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -73,7 +70,7 @@ public class PageReconstructor extends BookletPageAA{
             AssetUtil.renderStackToGui(new ItemStack(InitBlocks.blockAtomicReconstructor), gui.getGuiLeft()+37+22, gui.getGuiTop()+20+21, 1.0F);
             for(int i = 0; i < 2; i++){
                 for(int x = 0; x < 2; x++){
-                    List<ItemStack> stacks = x == 0 ? recipe.getInputs() : recipe.getOutputs();
+                    List<ItemStack> stacks = x == 0 ? RecipeUtil.getConversionLensInputs(recipe) : RecipeUtil.getConversionLensOutputs(recipe);
                     if(stacks != null && !stacks.isEmpty()){
                         ItemStack stack = stacks.get(0);
 
@@ -117,7 +114,7 @@ public class PageReconstructor extends BookletPageAA{
             ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
             for(LensConversionRecipe recipe : this.recipes){
                 if(recipe != null){
-                    stacks.addAll(recipe.getOutputs());
+                    stacks.addAll(RecipeUtil.getConversionLensOutputs(recipe));
                 }
             }
             return stacks.toArray(new ItemStack[stacks.size()]);

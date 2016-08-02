@@ -14,16 +14,14 @@ import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
+import de.ellpeck.actuallyadditions.mod.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -69,19 +67,21 @@ public class PageCrusherRecipe extends BookletPageAA{
                 Minecraft.getMinecraft().fontRendererObj.drawString(this.recipe.outputTwoChance+"%", gui.getGuiLeft()+37+62, gui.getGuiTop()+20+33, 0);
             }
 
-            if(this.recipe.getRecipeOutputOnes() != null){
+            List<ItemStack> outputOnes = RecipeUtil.getCrusherRecipeOutputOnes(this.recipe);
+            if(outputOnes != null){
                 for(int i = 0; i < 2; i++){
                     for(int j = 0; j < 3; j++){
                         ItemStack stack;
                         switch(j){
                             case 0:
-                                stack = this.recipe.getRecipeInputs().get(Math.min(this.recipe.getRecipeInputs().size()-1, this.recipePos));
+                                List<ItemStack> inputs = RecipeUtil.getCrusherRecipeInputs(this.recipe);
+                                stack = inputs.get(Math.min(inputs.size()-1, this.recipePos));
                                 break;
                             case 1:
-                                stack = this.recipe.getRecipeOutputOnes().get(Math.min(this.recipe.getRecipeOutputOnes().size()-1, this.recipePos));
+                                stack = outputOnes.get(Math.min(outputOnes.size()-1, this.recipePos));
                                 break;
                             default:
-                                List<ItemStack> outputTwos = this.recipe.getRecipeOutputTwos();
+                                List<ItemStack> outputTwos = RecipeUtil.getCrusherRecipeOutputTwos(this.recipe);
                                 stack = outputTwos == null ? null : outputTwos.get(Math.min(outputTwos.size()-1, this.recipePos));
                                 break;
                         }
@@ -114,8 +114,8 @@ public class PageCrusherRecipe extends BookletPageAA{
     @SideOnly(Side.CLIENT)
     public void updateScreen(int ticksElapsed){
         if(ticksElapsed%10 == 0){
-            List<ItemStack> outputTwos = this.recipe.getRecipeOutputTwos();
-            if(this.recipePos+1 >= Math.max(this.recipe.getRecipeInputs().size(), Math.max(this.recipe.getRecipeOutputOnes().size(), outputTwos == null ? 0 : outputTwos.size()))){
+            List<ItemStack> outputTwos = RecipeUtil.getCrusherRecipeOutputTwos(this.recipe);
+            if(this.recipePos+1 >= Math.max(RecipeUtil.getCrusherRecipeInputs(this.recipe).size(), Math.max(RecipeUtil.getCrusherRecipeOutputOnes(this.recipe).size(), outputTwos == null ? 0 : outputTwos.size()))){
                 this.recipePos = 0;
             }
             else{
@@ -126,6 +126,7 @@ public class PageCrusherRecipe extends BookletPageAA{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        return this.recipe == null ? new ItemStack[0] : this.recipe.getRecipeOutputOnes().toArray(new ItemStack[this.recipe.getRecipeOutputOnes().size()]);
+        List<ItemStack> outputOnes = RecipeUtil.getCrusherRecipeOutputOnes(this.recipe);
+        return this.recipe == null ? new ItemStack[0] : outputOnes.toArray(new ItemStack[outputOnes.size()]);
     }
 }

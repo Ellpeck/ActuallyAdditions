@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -82,12 +83,12 @@ public final class CrusherRecipeRegistry{
 
     public static List<ItemStack> getOutputOnes(ItemStack input){
         CrusherRecipe recipe = getRecipeFromInput(input);
-        return recipe == null ? null : recipe.getRecipeOutputOnes();
+        return recipe == null ? null : RecipeUtil.getCrusherRecipeOutputOnes(recipe);
     }
 
     public static CrusherRecipe getRecipeFromInput(ItemStack input){
         for(CrusherRecipe recipe : ActuallyAdditionsAPI.CRUSHER_RECIPES){
-            if(ItemUtil.contains(recipe.getRecipeInputs(), input, true)){
+            if(ItemUtil.contains(RecipeUtil.getCrusherRecipeInputs(recipe), input, true)){
                 return recipe;
             }
         }
@@ -96,7 +97,7 @@ public final class CrusherRecipeRegistry{
 
     public static List<ItemStack> getOutputTwos(ItemStack input){
         CrusherRecipe recipe = getRecipeFromInput(input);
-        return recipe == null ? null : recipe.getRecipeOutputTwos();
+        return recipe == null ? null : RecipeUtil.getCrusherRecipeOutputTwos(recipe);
     }
 
     public static int getOutputTwoChance(ItemStack input){

@@ -25,9 +25,9 @@ public class CrusherRecipe{
     public int outputOneAmount;
     public String outputTwo;
     public int outputTwoAmount;
-    private ItemStack inputStack;
-    private ItemStack outputOneStack;
-    private ItemStack outputTwoStack;
+    public ItemStack inputStack;
+    public ItemStack outputOneStack;
+    public ItemStack outputTwoStack;
 
     public CrusherRecipe(ItemStack input, String outputOne, int outputOneAmount){
         this.inputStack = input;
@@ -51,75 +51,4 @@ public class CrusherRecipe{
         this.outputTwoChance = outputTwoChance;
     }
 
-    public List<ItemStack> getRecipeOutputOnes(){
-        if(this.outputOneStack != null){
-            return Collections.singletonList(this.outputOneStack.copy());
-        }
-
-        if(this.outputOne == null || this.outputOne.isEmpty()){
-            return null;
-        }
-
-        List<ItemStack> stacks = OreDictionary.getOres(this.outputOne, false);
-        if(stacks != null && !stacks.isEmpty()){
-            List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
-            for(ItemStack stack : stacks){
-                if(stack != null){
-                    ItemStack stackCopy = stack.copy();
-                    stackCopy.stackSize = this.outputOneAmount;
-                    stacksCopy.add(stackCopy);
-                }
-            }
-            return stacksCopy;
-        }
-        return null;
-    }
-
-    public List<ItemStack> getRecipeOutputTwos(){
-        if(this.outputTwoStack != null){
-            return Collections.singletonList(this.outputTwoStack.copy());
-        }
-
-        if(this.outputTwo == null || this.outputTwo.isEmpty()){
-            return null;
-        }
-
-        List<ItemStack> stacks = OreDictionary.getOres(this.outputTwo, false);
-        if(stacks != null && !stacks.isEmpty()){
-            List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
-            for(ItemStack stack : stacks){
-                if(stack != null){
-                    ItemStack stackCopy = stack.copy();
-                    stackCopy.stackSize = this.outputTwoAmount;
-                    stacksCopy.add(stackCopy);
-                }
-            }
-            return stacksCopy;
-        }
-        return null;
-    }
-
-    public List<ItemStack> getRecipeInputs(){
-        if(this.inputStack != null){
-            return Collections.singletonList(this.inputStack.copy());
-        }
-
-        if(this.input == null || this.input.isEmpty()){
-            return null;
-        }
-
-        List<ItemStack> stacks = OreDictionary.getOres(this.input, false);
-        if(stacks != null && !stacks.isEmpty()){
-            List<ItemStack> stacksCopy = new ArrayList<ItemStack>();
-            for(ItemStack stack : stacks){
-                if(stack != null){
-                    ItemStack stackCopy = stack.copy();
-                    stackCopy.stackSize = 1;
-                    stacksCopy.add(stackCopy);
-                }
-            }
-            return stacksCopy;
-        }
-        return null;
-    }
 }

@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
+import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
@@ -35,15 +36,15 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
 
     @Override
     public List getInputs(){
-        return this.theRecipe.getRecipeInputs();
+        return RecipeUtil.getCrusherRecipeInputs(this.theRecipe);
     }
 
     @Override
     public List getOutputs(){
         List list = new ArrayList();
-        list.addAll(this.theRecipe.getRecipeOutputOnes());
+        list.addAll(RecipeUtil.getCrusherRecipeOutputOnes(this.theRecipe));
 
-        List<ItemStack> outputTwos = this.theRecipe.getRecipeOutputTwos();
+        List<ItemStack> outputTwos = RecipeUtil.getCrusherRecipeOutputTwos(this.theRecipe);
         if(outputTwos != null && !outputTwos.isEmpty()){
             list.addAll(outputTwos);
         }
@@ -65,7 +66,7 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         this.updateButton(minecraft, mouseX, mouseY);
 
-        List<ItemStack> outputTwos = this.theRecipe.getRecipeOutputTwos();
+        List<ItemStack> outputTwos = RecipeUtil.getCrusherRecipeOutputTwos(this.theRecipe);
         if(outputTwos != null && !outputTwos.isEmpty()){
             minecraft.fontRendererObj.drawString(this.theRecipe.outputTwoChance+"%", 60, 60, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
