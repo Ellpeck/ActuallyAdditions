@@ -1,5 +1,5 @@
 /*
- * This file ("BlockDisplayStand.java") is part of the Actually Additions mod for Minecraft.
+ * This file ("BlockQuartzInfuser.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://ellpeck.de/actaddlicense
@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -25,9 +26,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockDisplayStand extends BlockContainerBase{
+public class BlockEmpowerer extends BlockContainerBase{
 
-    public BlockDisplayStand(String name){
+    public BlockEmpowerer(String name){
         super(Material.ROCK, name);
 
         this.setHarvestLevel("pickaxe", 0);
@@ -38,38 +39,38 @@ public class BlockDisplayStand extends BlockContainerBase{
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta){
-        return new TileEntityDisplayStand();
+        return new TileEntityEmpowerer();
     }
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
-            TileEntityDisplayStand stand = (TileEntityDisplayStand)world.getTileEntity(pos);
-            if(stand != null){
-                ItemStack display = stand.getStackInSlot(0);
+            TileEntityEmpowerer empowerer = (TileEntityEmpowerer)world.getTileEntity(pos);
+            if(empowerer != null){
+                ItemStack stackThere = empowerer.getStackInSlot(0);
                 if(heldItem != null){
-                    if(display == null){
+                    if(stackThere == null && TileEntityEmpowerer.getRecipeForInput(heldItem) != null){
                         ItemStack toPut = heldItem.copy();
                         toPut.stackSize = 1;
-                        stand.setInventorySlotContents(0, toPut);
+                        empowerer.setInventorySlotContents(0, toPut);
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
                         return true;
                     }
-                    else if(ItemUtil.canBeStacked(heldItem, display)){
-                        int maxTransfer = Math.min(display.stackSize, heldItem.getMaxStackSize()-heldItem.stackSize);
+                    else if(ItemUtil.canBeStacked(heldItem, stackThere)){
+                        int maxTransfer = Math.min(stackThere.stackSize, heldItem.getMaxStackSize()-heldItem.stackSize);
                         if(maxTransfer > 0){
                             heldItem.stackSize += maxTransfer;
-                            ItemStack newDisplay = display.copy();
-                            newDisplay.stackSize -= maxTransfer;
-                            stand.setInventorySlotContents(0, newDisplay.stackSize <= 0 ? null : newDisplay);
+                            ItemStack newStackThere = stackThere.copy();
+                            newStackThere.stackSize -= maxTransfer;
+                            empowerer.setInventorySlotContents(0, newStackThere.stackSize <= 0 ? null : newStackThere);
                             return true;
                         }
                     }
                 }
                 else{
-                    if(display != null){
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, display.copy());
-                        stand.setInventorySlotContents(0, null);
+                    if(stackThere != null){
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, stackThere.copy());
+                        empowerer.setInventorySlotContents(0, null);
                         return true;
                     }
                 }

@@ -37,6 +37,7 @@ public final class ActuallyAdditionsAPI{
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
     public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<TreasureChestLoot>();
     public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<LensConversionRecipe>();
+    public static final List<EmpowererRecipe> EMPOWERER_RECIPES = new ArrayList<EmpowererRecipe>();
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<Item, IColorLensChanger>();
     public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<CoffeeIngredient>();
     public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<CompostRecipe>();
@@ -179,6 +180,10 @@ public final class ActuallyAdditionsAPI{
      */
     public static void addTreasureChestLoot(ItemStack stack, int chance, int minAmount, int maxAmount){
         TREASURE_CHEST_LOOT.add(new TreasureChestLoot(stack, chance, minAmount, maxAmount));
+    }
+
+    public static void addEmpowererRecipe(ItemStack input, ItemStack output, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4, int energyPerStand, float[] particleColor){
+        EMPOWERER_RECIPES.add(new EmpowererRecipe(input, output, modifier1, modifier2, modifier3, modifier4, energyPerStand, particleColor));
     }
 
     /**

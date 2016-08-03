@@ -24,6 +24,8 @@ import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeCategory;
+import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -43,20 +45,23 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
                 new BookletRecipeCategory(helpers.getGuiHelper()),
                 new CoffeeMachineRecipeCategory(helpers.getGuiHelper()),
                 new CrusherRecipeCategory(helpers.getGuiHelper()),
-                new ReconstructorRecipeCategory(helpers.getGuiHelper())
+                new ReconstructorRecipeCategory(helpers.getGuiHelper()),
+                new EmpowererRecipeCategory(helpers.getGuiHelper())
         );
 
         registry.addRecipeHandlers(
                 new BookletRecipeHandler(),
                 new CoffeeMachineRecipeHandler(),
                 new CrusherRecipeHandler(),
-                new ReconstructorRecipeHandler()
+                new ReconstructorRecipeHandler(),
+                new EmpowererRecipeHandler()
         );
 
         registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_DATA);
         registry.addRecipes(ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS);
         registry.addRecipes(ActuallyAdditionsAPI.CRUSHER_RECIPES);
         registry.addRecipes(ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES);
+        registry.addRecipes(ActuallyAdditionsAPI.EMPOWERER_RECIPES);
 
         registry.addRecipeClickArea(GuiCoffeeMachine.class, 53, 42, 22, 16, CoffeeMachineRecipeCategory.NAME);
         registry.addRecipeClickArea(GuiGrinder.class, 80, 40, 24, 22, CrusherRecipeCategory.NAME);
@@ -81,6 +86,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         registry.addRecipeCategoryCraftingItem(new ItemStack(InitBlocks.blockGrinderDouble), CrusherRecipeCategory.NAME);
         registry.addRecipeCategoryCraftingItem(new ItemStack(InitBlocks.blockCoffeeMachine), CoffeeMachineRecipeCategory.NAME);
         registry.addRecipeCategoryCraftingItem(new ItemStack(InitBlocks.blockAtomicReconstructor), ReconstructorRecipeCategory.NAME);
+        registry.addRecipeCategoryCraftingItem(new ItemStack(InitBlocks.blockEmpowerer), EmpowererRecipeCategory.NAME);
         registry.addRecipeCategoryCraftingItem(new ItemStack(InitItems.itemBooklet), BookletRecipeCategory.NAME);
     }
 

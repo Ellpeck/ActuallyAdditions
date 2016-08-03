@@ -163,7 +163,7 @@ public final class AssetUtil{
         GlStateManager.popMatrix();
     }
 
-    public static void shootParticles(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int particleAmount, float particleSize){
+    public static void shootParticles(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int particleAmount, float particleSize, float ageMultiplier){
         if(!world.isRemote){
             NBTTagCompound data = new NBTTagCompound();
             data.setDouble("StartX", startX);
@@ -177,7 +177,7 @@ public final class AssetUtil{
             data.setFloat("Color3", color[2]);
             data.setInteger("ParticleAmount", particleAmount);
             data.setFloat("ParticleSize", particleSize);
-            data.setFloat("AgeMultiplier", 1F);
+            data.setFloat("AgeMultiplier", ageMultiplier);
             PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.PARTICLE_HANDLER), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 96));
         }
     }

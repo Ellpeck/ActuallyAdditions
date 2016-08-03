@@ -35,6 +35,7 @@ import de.ellpeck.actuallyadditions.mod.misc.*;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.ore.InitOreDict;
 import de.ellpeck.actuallyadditions.mod.proxy.IProxy;
+import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.FuelHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.TreasureChestHandler;
@@ -134,6 +135,7 @@ public class ActuallyAdditions{
         HairyBallHandler.init();
         TreasureChestHandler.init();
         LensRecipeHandler.init();
+        EmpowererHandler.init();
         InitForeignPaxels.init();
 
         InitBooklet.postInit();

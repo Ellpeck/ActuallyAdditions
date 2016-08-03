@@ -104,6 +104,7 @@ public final class InitBlocks{
 
     public static Block blockBlackLotus;
     public static Block blockCrystal;
+    public static Block blockCrystalEmpowered;
     public static Block blockAtomicReconstructor;
 
     public static Block blockMiner;
@@ -123,12 +124,14 @@ public final class InitBlocks{
     public static Block blockBookletStand;
     public static Block blockDisplayStand;
     public static Block blockShockSuppressor;
+    public static Block blockEmpowerer;
 
     public static Block blockTinyTorch;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockEmpowerer = new BlockEmpowerer("blockEmpowerer");
         blockTinyTorch = new BlockTinyTorch("blockTinyTorch");
         blockShockSuppressor = new BlockShockSuppressor("blockShockSuppressor");
         blockDisplayStand = new BlockDisplayStand("blockDisplayStand");
@@ -139,6 +142,7 @@ public final class InitBlocks{
         blockMiner = new BlockMiner("blockMiner");
         blockAtomicReconstructor = new BlockAtomicReconstructor("blockAtomicReconstructor");
         blockCrystal = new BlockCrystal("blockCrystal");
+        blockCrystalEmpowered = new BlockCrystal("blockCrystalEmpowered");
         blockBlackLotus = new BlockBlackLotus("blockBlackLotus");
         blockLaserRelay = new BlockLaserRelay("blockLaserRelay", Type.ENERGY_BASIC);
         blockLaserRelayAdvanced = new BlockLaserRelay("blockLaserRelayAdvanced", Type.ENERGY_ADVANCED);

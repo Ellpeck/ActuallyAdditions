@@ -69,12 +69,12 @@ public class CrusherRecipeCategory implements IRecipeCategory{
             recipeLayout.getItemStacks().init(0, true, 19, 7);
             recipeLayout.getItemStacks().set(0, RecipeUtil.getCrusherRecipeInputs(wrapper.theRecipe));
 
-            recipeLayout.getItemStacks().init(1, true, 7, 55);
+            recipeLayout.getItemStacks().init(1, false, 7, 55);
             recipeLayout.getItemStacks().set(1, RecipeUtil.getCrusherRecipeOutputOnes(wrapper.theRecipe));
 
             List<ItemStack> outputTwos = RecipeUtil.getCrusherRecipeOutputTwos(wrapper.theRecipe);
             if(outputTwos != null && !outputTwos.isEmpty()){
-                recipeLayout.getItemStacks().init(2, true, 31, 55);
+                recipeLayout.getItemStacks().init(2, false, 31, 55);
                 recipeLayout.getItemStacks().set(2, outputTwos);
             }
         }

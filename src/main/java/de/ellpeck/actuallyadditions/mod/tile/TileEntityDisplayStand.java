@@ -22,7 +22,7 @@ import net.minecraft.util.EnumFacing;
 
 public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay, IEnergyReceiver{
 
-    private final EnergyStorage storage = new EnergyStorage(300000);
+    public final EnergyStorage storage = new EnergyStorage(800000);
     private int oldEnergy;
 
     public TileEntityDisplayStand(){

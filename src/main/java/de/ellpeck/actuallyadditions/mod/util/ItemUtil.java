@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -66,13 +67,17 @@ public final class ItemUtil{
         return getPlaceAt(array, stack, checkWildcard) != -1;
     }
 
+    public static int getPlaceAt(ItemStack[] array, ItemStack stack, boolean checkWildcard){
+        return getPlaceAt(Arrays.asList(array), stack, checkWildcard);
+    }
+
     /**
      * Returns the place of stack in array, -1 if not present
      */
-    public static int getPlaceAt(ItemStack[] array, ItemStack stack, boolean checkWildcard){
-        if(array != null && array.length > 0){
-            for(int i = 0; i < array.length; i++){
-                if((stack == null && array[i] == null) || areItemsEqual(stack, array[i], checkWildcard)){
+    public static int getPlaceAt(List<ItemStack> list, ItemStack stack, boolean checkWildcard){
+        if(list != null && list.size() > 0){
+            for(int i = 0; i < list.size(); i++){
+                if((stack == null && list.get(i) == null) || areItemsEqual(stack, list.get(i), checkWildcard)){
                     return i;
                 }
             }
@@ -88,7 +93,7 @@ public final class ItemUtil{
      * Returns true if list contains stack or if both contain null
      */
     public static boolean contains(List<ItemStack> list, ItemStack stack, boolean checkWildcard){
-        return !(list == null || list.isEmpty()) && getPlaceAt(list.toArray(new ItemStack[list.size()]), stack, checkWildcard) != -1;
+        return !(list == null || list.isEmpty()) && getPlaceAt(list, stack, checkWildcard) != -1;
     }
 
     public static void addEnchantment(ItemStack stack, Enchantment e, int level){

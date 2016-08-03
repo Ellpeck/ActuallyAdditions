@@ -8,7 +8,7 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
+package de.ellpeck.actuallyadditions.mod.jei.empowerer;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -20,25 +20,21 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
 
-public class ReconstructorRecipeCategory implements IRecipeCategory{
+public class EmpowererRecipeCategory implements IRecipeCategory{
 
-    public static final String NAME = "actuallyadditions.reconstructor";
+    public static final String NAME = "actuallyadditions.empowerer";
 
-    private static final ItemStack RECONSTRUCTOR = new ItemStack(InitBlocks.blockAtomicReconstructor);
     private final IDrawable background;
 
-    public ReconstructorRecipeCategory(IGuiHelper helper){
-        this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEIAtomicReconstructor"), 0, 0, 96, 60);
+    public EmpowererRecipeCategory(IGuiHelper helper){
+        this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEIEmpowerer"), 0, 0, 135, 80);
     }
-
 
     @Override
     public String getUid(){
         return NAME;
     }
-
 
     @Override
     public String getTitle(){
@@ -53,7 +49,7 @@ public class ReconstructorRecipeCategory implements IRecipeCategory{
 
     @Override
     public void drawExtras(Minecraft minecraft){
-        AssetUtil.renderStackToGui(RECONSTRUCTOR, 34, 19, 1.0F);
+
     }
 
     @Override
@@ -63,15 +59,26 @@ public class ReconstructorRecipeCategory implements IRecipeCategory{
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper){
-        if(recipeWrapper instanceof ReconstructorRecipeWrapper){
-            ReconstructorRecipeWrapper wrapper = (ReconstructorRecipeWrapper)recipeWrapper;
+        if(recipeWrapper instanceof EmpowererRecipeWrapper){
+            EmpowererRecipeWrapper wrapper = (EmpowererRecipeWrapper)recipeWrapper;
 
-            recipeLayout.getItemStacks().init(0, true, 4, 18);
-            recipeLayout.getItemStacks().set(0, RecipeUtil.getConversionLensInputs(wrapper.theRecipe));
+            recipeLayout.getItemStacks().init(0, true, 31, 31);
+            recipeLayout.getItemStacks().set(0, wrapper.theRecipe.input);
 
-            recipeLayout.getItemStacks().init(1, false, 66, 18);
-            recipeLayout.getItemStacks().set(1, RecipeUtil.getConversionLensOutputs(wrapper.theRecipe));
+            recipeLayout.getItemStacks().init(1, true, 1, 31);
+            recipeLayout.getItemStacks().set(1, wrapper.theRecipe.modifier1);
 
+            recipeLayout.getItemStacks().init(2, true, 31, 1);
+            recipeLayout.getItemStacks().set(2, wrapper.theRecipe.modifier2);
+
+            recipeLayout.getItemStacks().init(3, true, 61, 31);
+            recipeLayout.getItemStacks().set(3, wrapper.theRecipe.modifier3);
+
+            recipeLayout.getItemStacks().init(4, true, 31, 61);
+            recipeLayout.getItemStacks().set(4, wrapper.theRecipe.modifier4);
+
+            recipeLayout.getItemStacks().init(5, false, 112, 31);
+            recipeLayout.getItemStacks().set(5, wrapper.theRecipe.output);
         }
     }
 }

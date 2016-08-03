@@ -84,7 +84,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
                             this.storage.receiveEnergy(ENERGY_PRODUCED, false);
 
                             if(!ConfigBoolValues.LESS_PARTICLES.isEnabled()){
-                                AssetUtil.shootParticles(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F);
+                                AssetUtil.shootParticles(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F, 1F);
                             }
                         }
                     }

@@ -62,6 +62,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockLaserRelayItemWhitelist);
         this.add(InitBlocks.blockItemViewer);
         this.add(InitBlocks.blockAtomicReconstructor);
+        this.add(InitBlocks.blockEmpowerer);
         this.add(InitBlocks.blockPhantomface);
         this.add(InitBlocks.blockPhantomEnergyface);
         this.add(InitBlocks.blockPhantomLiquiface);
@@ -217,7 +218,9 @@ public class CreativeTab extends CreativeTabs{
         InitForeignPaxels.addToCreativeTab();
 
         this.add(InitBlocks.blockCrystal);
+        this.add(InitBlocks.blockCrystalEmpowered);
         this.add(InitItems.itemCrystal);
+        this.add(InitItems.itemCrystalEmpowered);
 
         this.add(InitItems.itemJams);
 

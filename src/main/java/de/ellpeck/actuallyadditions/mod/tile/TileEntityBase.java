@@ -51,6 +51,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");
 
+        //TODO Remove legacy names at some point
         register(TileEntityCompost.class, "Compost");
         register(TileEntityFeeder.class, "Feeder");
         register(TileEntityGiantChest.class, "GiantChest");
@@ -104,6 +105,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         register(TileEntityBookletStand.class, "BookletStand");
         register(TileEntityDisplayStand.class, "DisplayStand");
         register(TileEntityShockSuppressor.class, "ShockSuppressor");
+        register(TileEntityEmpowerer.class);
     }
 
     private static void register(Class<? extends TileEntityBase> tileClass, String legacyName){

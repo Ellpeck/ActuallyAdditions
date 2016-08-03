@@ -34,7 +34,7 @@ public class LensColor extends Lens{
     public static final int ENERGY_USE = 200;
 
     //Thanks to xdjackiexd for this, as I couldn't be bothered
-    private static final float[][] POSSIBLE_COLORS = {
+    public static final float[][] POSSIBLE_COLORS = {
             {158F, 43F, 39F}, //Red
             {234F, 126F, 53F}, //Orange
             {194F, 181F, 28F}, //Yellow
