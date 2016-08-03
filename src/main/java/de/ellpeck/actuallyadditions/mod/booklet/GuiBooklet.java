@@ -458,17 +458,21 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     @Override
     public void onGuiClosed(){
         if(this.saveOnClose && this.shouldSaveDataNextClose){
-            NBTTagCompound bookletData = new NBTTagCompound();
-            BookletUtils.saveBookPage(this, bookletData);
+            Minecraft mc = Minecraft.getMinecraft();
+            //Happens when you get thrown out with the book open
+            if(mc.theWorld != null && mc.thePlayer != null){
+                NBTTagCompound bookletData = new NBTTagCompound();
+                BookletUtils.saveBookPage(this, bookletData);
 
-            NBTTagCompound extraData = new NBTTagCompound();
-            extraData.setTag("BookletData", bookletData);
+                NBTTagCompound extraData = new NBTTagCompound();
+                extraData.setTag("BookletData", bookletData);
 
-            NBTTagCompound dataToSend = new NBTTagCompound();
-            dataToSend.setTag("Data", extraData);
-            dataToSend.setInteger("WorldID", Minecraft.getMinecraft().theWorld.provider.getDimension());
-            dataToSend.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
-            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
+                NBTTagCompound dataToSend = new NBTTagCompound();
+                dataToSend.setTag("Data", extraData);
+                dataToSend.setInteger("WorldID", mc.theWorld.provider.getDimension());
+                dataToSend.setInteger("PlayerID", mc.thePlayer.getEntityId());
+                PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
+            }
         }
     }
 

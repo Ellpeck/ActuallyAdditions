@@ -33,6 +33,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.awt.*;
@@ -46,6 +48,7 @@ public final class BookletUtils{
     /**
      * Tries to open a URL in the Browser
      */
+    @SideOnly(Side.CLIENT)
     public static void openBrowser(String url){
         openBrowser(url, url);
     }
@@ -56,6 +59,7 @@ public final class BookletUtils{
      * @param url      The URL
      * @param shiftUrl The URL to open when Shift is held
      */
+    @SideOnly(Side.CLIENT)
     public static void openBrowser(String url, String shiftUrl){
         try{
             if(Desktop.isDesktopSupported()){
@@ -75,6 +79,7 @@ public final class BookletUtils{
     /**
      * Draws the Title of the current chapter, current index entry or just "Actually Additions" if neither is present
      */
+    @SideOnly(Side.CLIENT)
     public static void drawTitle(GuiBooklet booklet){
         booklet.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC);
         //Upper title
@@ -122,6 +127,7 @@ public final class BookletUtils{
      *
      * @param pre If the hover info texts or the icon should be drawn
      */
+    @SideOnly(Side.CLIENT)
     public static void drawAchievementInfo(GuiBooklet booklet, boolean pre, int mouseX, int mouseY){
         if(booklet.currentEntrySet.getCurrentChapter() == null){
             return;
@@ -167,6 +173,7 @@ public final class BookletUtils{
      * -the number of a page in a chapter
      * -the amount of words and chars in the index (Just for teh lulz)
      */
+    @SideOnly(Side.CLIENT)
     public static void renderPre(GuiBooklet booklet, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(booklet.currentEntrySet.getCurrentEntry() != null){
             //Renders Booklet Page Number and Content
@@ -192,6 +199,7 @@ public final class BookletUtils{
     /**
      * Draws all of the hovering texts for the buttons that need explanation in the booklet
      */
+    @SideOnly(Side.CLIENT)
     public static void doHoverTexts(GuiBooklet booklet, int mouseX, int mouseY){
         //Update all of the buttons' hovering texts
         for(Object button : booklet.getButtonList()){
@@ -209,6 +217,7 @@ public final class BookletUtils{
     /**
      * Updates the search bar, should be called when it is getting typed into
      */
+    @SideOnly(Side.CLIENT)
     public static void updateSearchBar(GuiBooklet booklet){
         if(booklet.currentEntrySet.getCurrentEntry() instanceof BookletEntryAllSearch){
             BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)booklet.currentEntrySet.getCurrentEntry();
@@ -229,6 +238,7 @@ public final class BookletUtils{
         }
     }
 
+    @SideOnly(Side.CLIENT)
     private static boolean getChapterStacksContainString(String text, IBookletChapter chapter){
         Minecraft mc = Minecraft.getMinecraft();
         for(BookletPage page : chapter.getPages()){
@@ -251,6 +261,7 @@ public final class BookletUtils{
         return false;
     }
 
+    @SideOnly(Side.CLIENT)
     public static void openIndexEntry(GuiBooklet booklet, IBookletEntry entry, int page, boolean resetTextField){
         booklet.searchField.setVisible(entry instanceof BookletEntryAllSearch);
         booklet.searchField.setFocused(entry instanceof BookletEntryAllSearch);
@@ -309,6 +320,7 @@ public final class BookletUtils{
     /**
      * Called when one of the buttons to open an index or a chapter is pressed
      */
+    @SideOnly(Side.CLIENT)
     public static void handleChapterButtonClick(GuiBooklet booklet, GuiButton button){
         int place = ArrayUtils.indexOf(booklet.chapterButtons, button);
         if(place >= 0){
@@ -332,6 +344,7 @@ public final class BookletUtils{
      * Opens a chapter in the booklet.
      * Can only be done when the chapter is not null and an index entry is opened in the booklet
      */
+    @SideOnly(Side.CLIENT)
     public static void openChapter(GuiBooklet booklet, IBookletChapter chapter, BookletPage page){
         if(chapter == null || booklet.currentEntrySet.getCurrentEntry() == null){
             return;
@@ -366,6 +379,7 @@ public final class BookletUtils{
     /**
      * Checks if a chapter has a certain page
      */
+    @SideOnly(Side.CLIENT)
     private static boolean doesChapterHavePage(IBookletChapter chapter, BookletPage page){
         for(BookletPage aPage : chapter.getPages()){
             if(aPage == page){
@@ -378,6 +392,7 @@ public final class BookletUtils{
     /**
      * Gets the next available page in the booklet (or null if there is none)
      */
+    @SideOnly(Side.CLIENT)
     private static BookletPage getNextPage(IBookletChapter chapter, BookletPage page){
         for(int i = 0; i < chapter.getPages().length; i++){
             if(chapter.getPages()[i] == page){
@@ -392,6 +407,7 @@ public final class BookletUtils{
     /**
      * Gets the previous available page in the booklet (or null if there is none)
      */
+    @SideOnly(Side.CLIENT)
     private static BookletPage getPrevPage(IBookletChapter chapter, BookletPage page){
         for(int i = 0; i < chapter.getPages().length; i++){
             if(chapter.getPages()[i] == page){
@@ -406,6 +422,7 @@ public final class BookletUtils{
     /**
      * Called when the "next page"-button is pressed
      */
+    @SideOnly(Side.CLIENT)
     public static void handleNextPage(GuiBooklet booklet){
         if(booklet.currentEntrySet.getCurrentEntry() != null){
             if(booklet.currentEntrySet.getCurrentPage() != null){
@@ -432,6 +449,7 @@ public final class BookletUtils{
     /**
      * Called when the "previous page"-button is pressed
      */
+    @SideOnly(Side.CLIENT)
     public static void handlePreviousPage(GuiBooklet booklet){
         if(booklet.currentEntrySet.getCurrentEntry() != null){
             if(booklet.currentEntrySet.getCurrentPage() != null){
@@ -470,6 +488,7 @@ public final class BookletUtils{
         return possiblePages;
     }
 
+    @SideOnly(Side.CLIENT)
     public static void saveBookPage(GuiBooklet gui, NBTTagCompound compound){
         //Save Entry etc.
         compound.setTag("SavedEntry", gui.currentEntrySet.writeToNBT());
@@ -485,6 +504,7 @@ public final class BookletUtils{
         compound.setTag("Bookmarks", list);
     }
 
+    @SideOnly(Side.CLIENT)
     public static void openLastBookPage(GuiBooklet gui, NBTTagCompound compound){
         //Open Entry etc.
         EntrySet set = EntrySet.readFromNBT(compound.getCompoundTag("SavedEntry"));
