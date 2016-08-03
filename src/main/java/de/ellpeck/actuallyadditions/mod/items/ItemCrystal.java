@@ -26,8 +26,11 @@ import java.util.List;
 
 public class ItemCrystal extends ItemBase{
 
-    public ItemCrystal(String name){
+    private boolean isEmpowered;
+
+    public ItemCrystal(String name, boolean isEmpowered){
         super(name);
+        this.isEmpowered = isEmpowered;
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
     }
@@ -37,6 +40,10 @@ public class ItemCrystal extends ItemBase{
         return damage;
     }
 
+    @Override
+    public boolean hasEffect(ItemStack stack){
+        return this.isEmpowered;
+    }
 
     @Override
     public String getUnlocalizedName(ItemStack stack){

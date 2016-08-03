@@ -33,8 +33,11 @@ public class BlockCrystal extends BlockBase{
     public static final TheCrystals[] ALL_CRYSTALS = TheCrystals.values();
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, ALL_CRYSTALS.length-1);
 
-    public BlockCrystal(String name){
+    private boolean isEmpowered;
+
+    public BlockCrystal(String name, boolean isEmpowered){
         super(Material.ROCK, name);
+        this.isEmpowered = isEmpowered;
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setHarvestLevel("pickaxe", 1);
@@ -86,6 +89,11 @@ public class BlockCrystal extends BlockBase{
         @Override
         public String getUnlocalizedName(ItemStack stack){
             return stack.getItemDamage() >= ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_CRYSTALS[stack.getItemDamage()].name;
+        }
+
+        @Override
+        public boolean hasEffect(ItemStack stack){
+            return this.block instanceof BlockCrystal && ((BlockCrystal)this.block).isEmpowered;
         }
     }
 }

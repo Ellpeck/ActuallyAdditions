@@ -40,7 +40,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
         if(!this.worldObj.isRemote){
             EmpowererRecipe recipe = getRecipeForInput(this.slots[0]);
             if(recipe != null){
-                int processTimeGoal = 150;
+                int processTimeGoal = 200;
                 TileEntityDisplayStand[] modifierStands = this.getFittingModifiers(recipe, processTimeGoal);
                 if(modifierStands != null){ //Meaning the display stands around match all the criteria
 
@@ -62,7 +62,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
                     }
 
                     if(done){
-                        ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 80, 0, 0, 0, 0.25D);
+                        ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 300, 0, 0, 0, 0.25D);
 
                         this.slots[0] = recipe.output.copy();
                         this.markDirty();
@@ -83,7 +83,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
 
         for(int i = 0; i < EnumFacing.HORIZONTALS.length; i++){
             EnumFacing facing = EnumFacing.HORIZONTALS[i];
-            BlockPos offset = this.pos.offset(facing, 2);
+            BlockPos offset = this.pos.offset(facing, 3);
             TileEntity tile = this.worldObj.getTileEntity(offset);
 
             if(tile != null && tile instanceof TileEntityDisplayStand){

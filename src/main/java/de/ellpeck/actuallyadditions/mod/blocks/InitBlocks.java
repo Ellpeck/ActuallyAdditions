@@ -141,8 +141,8 @@ public final class InitBlocks{
         blockFireworkBox = new BlockFireworkBox("blockFireworkBox");
         blockMiner = new BlockMiner("blockMiner");
         blockAtomicReconstructor = new BlockAtomicReconstructor("blockAtomicReconstructor");
-        blockCrystal = new BlockCrystal("blockCrystal");
-        blockCrystalEmpowered = new BlockCrystal("blockCrystalEmpowered");
+        blockCrystal = new BlockCrystal("blockCrystal", false);
+        blockCrystalEmpowered = new BlockCrystal("blockCrystalEmpowered", true);
         blockBlackLotus = new BlockBlackLotus("blockBlackLotus");
         blockLaserRelay = new BlockLaserRelay("blockLaserRelay", Type.ENERGY_BASIC);
         blockLaserRelayAdvanced = new BlockLaserRelay("blockLaserRelayAdvanced", Type.ENERGY_ADVANCED);

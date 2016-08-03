@@ -231,8 +231,8 @@ public final class InitItems{
         itemExplosionLens = new ItemLens("itemExplosionLens", ActuallyAdditionsAPI.lensDetonation);
         itemDamageLens = new ItemLens("itemDamageLens", ActuallyAdditionsAPI.lensDeath);
         itemDisenchantingLens = new ItemLens("itemDisenchantingLens", ActuallyAdditionsAPI.lensDisenchanting);
-        itemCrystal = new ItemCrystal("itemCrystal");
-        itemCrystalEmpowered = new ItemCrystal("itemCrystalEmpowered");
+        itemCrystal = new ItemCrystal("itemCrystal", false);
+        itemCrystalEmpowered = new ItemCrystal("itemCrystalEmpowered", true);
         itemLaserWrench = new ItemLaserWrench("itemLaserWrench");
         itemChestToCrateUpgrade = new ItemChestToCrateUpgrade("itemChestToCrateUpgrade");
         itemBooklet = new ItemBooklet("itemBooklet");
