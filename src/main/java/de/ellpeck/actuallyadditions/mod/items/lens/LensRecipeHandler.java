@@ -67,6 +67,7 @@ public final class LensRecipeHandler{
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.COAL), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), 60);
         MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.IRON_INGOT), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 80);
+        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
 
         //Lenses
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), new ItemStack(InitItems.itemColorLens), 5000);
