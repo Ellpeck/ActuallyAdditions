@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.event;
 
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.EnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
@@ -99,7 +100,18 @@ public class ClientEvents{
                     if(compound != null && !compound.hasNoTags()){
                         event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".nbt.desc")+":");
                         if(GuiScreen.isShiftKeyDown()){
-                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+compound.toString());
+                            int limit = ConfigIntValues.CTRL_INFO_NBT_CHAR_LIMIT.getValue();
+                            String compoundStrg = compound.toString();
+                            int compoundStrgLength = compoundStrg.length();
+
+                            String compoundDisplay;
+                            if(limit > 0 && compoundStrgLength > limit){
+                                compoundDisplay = compoundStrg.substring(0, limit)+TextFormatting.GRAY+" ("+(compoundStrgLength-limit)+" more characters...)";
+                            }
+                            else{
+                                compoundDisplay = compoundStrg;
+                            }
+                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+compoundDisplay);
                         }
                         else{
                             event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+TextFormatting.ITALIC+"["+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".pressShift.desc")+"]");
