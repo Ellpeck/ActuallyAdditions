@@ -24,8 +24,9 @@ public class EmpowererRecipe{
 
     public int energyPerStand;
     public float[] particleColor;
+    public int time;
 
-    public EmpowererRecipe(ItemStack input, ItemStack output, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4, int energyPerStand, float[] particleColor){
+    public EmpowererRecipe(ItemStack input, ItemStack output, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4, int energyPerStand, int time, float[] particleColor){
         this.input = input;
         this.output = output;
         this.modifier1 = modifier1;
@@ -34,5 +35,6 @@ public class EmpowererRecipe{
         this.modifier4 = modifier4;
         this.energyPerStand = energyPerStand;
         this.particleColor = particleColor;
+        this.time = time;
     }
 }

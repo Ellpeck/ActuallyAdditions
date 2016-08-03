@@ -29,6 +29,9 @@ public final class MiscCrafting{
     public static final IRecipe[] RECIPES_CRYSTALS = new IRecipe[TheCrystals.values().length];
     public static final IRecipe[] RECIPES_CRYSTAL_BLOCKS = new IRecipe[TheCrystals.values().length];
 
+    public static final IRecipe[] RECIPES_EMPOWERED_CRYSTALS = new IRecipe[TheCrystals.values().length];
+    public static final IRecipe[] RECIPES_EMPOWERED_CRYSTAL_BLOCKS = new IRecipe[TheCrystals.values().length];
+
     public static void init(){
 
         //Bio Coal
@@ -43,6 +46,13 @@ public final class MiscCrafting{
             RECIPES_CRYSTAL_BLOCKS[i] = RecipeUtil.lastIRecipe();
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemCrystal, 9, i), new ItemStack(InitBlocks.blockCrystal, 1, i)));
             RECIPES_CRYSTALS[i] = RecipeUtil.lastIRecipe();
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCrystalEmpowered, 1, i),
+                    "XXX", "XXX", "XXX",
+                    'X', new ItemStack(InitItems.itemCrystalEmpowered, 1, i)));
+            RECIPES_EMPOWERED_CRYSTAL_BLOCKS[i] = RecipeUtil.lastIRecipe();
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemCrystalEmpowered, 9, i), new ItemStack(InitBlocks.blockCrystalEmpowered, 1, i)));
+            RECIPES_EMPOWERED_CRYSTALS[i] = RecipeUtil.lastIRecipe();
         }
 
         //Dough

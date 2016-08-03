@@ -40,15 +40,14 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
         if(!this.worldObj.isRemote){
             EmpowererRecipe recipe = getRecipeForInput(this.slots[0]);
             if(recipe != null){
-                int processTimeGoal = 200;
-                TileEntityDisplayStand[] modifierStands = this.getFittingModifiers(recipe, processTimeGoal);
+                TileEntityDisplayStand[] modifierStands = this.getFittingModifiers(recipe, recipe.time);
                 if(modifierStands != null){ //Meaning the display stands around match all the criteria
 
                     this.processTime++;
-                    boolean done = this.processTime >= processTimeGoal;
+                    boolean done = this.processTime >= recipe.time;
 
                     for(TileEntityDisplayStand stand : modifierStands){
-                        stand.storage.extractEnergy(recipe.energyPerStand/processTimeGoal, false);
+                        stand.storage.extractEnergy(recipe.energyPerStand/recipe.time, false);
 
                         if(done){
                             stand.decrStackSize(0, 1);

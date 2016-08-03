@@ -23,8 +23,8 @@ public final class EmpowererHandler{
         ItemStack m = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal());
         for(int i = 0; i < TheCrystals.values().length; i++){
             float[] color = TheCrystals.values()[i].conversionColorParticles;
-            ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitItems.itemCrystal, 1, i), new ItemStack(InitItems.itemCrystalEmpowered, 1, i), m, m, m, m, 50000, color);
-            ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitBlocks.blockCrystal, 1, i), new ItemStack(InitBlocks.blockCrystalEmpowered, 1, i), m, m, m, m, 500000, color);
+            ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitItems.itemCrystal, 1, i), new ItemStack(InitItems.itemCrystalEmpowered, 1, i), m, m, m, m, 50000, 200, color);
+            ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitBlocks.blockCrystal, 1, i), new ItemStack(InitBlocks.blockCrystalEmpowered, 1, i), m, m, m, m, 500000, 2000, color);
         }
     }
 

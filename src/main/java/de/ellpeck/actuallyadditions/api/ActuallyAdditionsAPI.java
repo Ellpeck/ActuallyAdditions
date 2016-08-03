@@ -182,8 +182,8 @@ public final class ActuallyAdditionsAPI{
         TREASURE_CHEST_LOOT.add(new TreasureChestLoot(stack, chance, minAmount, maxAmount));
     }
 
-    public static void addEmpowererRecipe(ItemStack input, ItemStack output, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4, int energyPerStand, float[] particleColor){
-        EMPOWERER_RECIPES.add(new EmpowererRecipe(input, output, modifier1, modifier2, modifier3, modifier4, energyPerStand, particleColor));
+    public static void addEmpowererRecipe(ItemStack input, ItemStack output, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4, int energyPerStand, int time, float[] particleColor){
+        EMPOWERER_RECIPES.add(new EmpowererRecipe(input, output, modifier1, modifier2, modifier3, modifier4, energyPerStand, time, particleColor));
     }
 
     /**
