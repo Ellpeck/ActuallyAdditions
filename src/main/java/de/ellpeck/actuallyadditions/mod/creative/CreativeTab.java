@@ -33,6 +33,17 @@ public class CreativeTab extends CreativeTabs{
 
     public CreativeTab(){
         super(ModUtil.MOD_ID);
+        this.setBackgroundImageName(ModUtil.MOD_ID+".png");
+    }
+
+    @Override
+    public boolean hasSearchBar(){
+        return true;
+    }
+
+    @Override
+    public int getSearchbarWidth(){
+        return 70;
     }
 
     @Override
