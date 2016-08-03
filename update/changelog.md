@@ -1,3 +1,25 @@
+# 1.10.2-r57
+##### This update introduces a new mechanic called the Empowerer. Most of the mid- to endgame crafting recipes have been changed to use items created via the Empowerer. Because of this mechanic being very new, there might be a couple of bugs. Please report them to the issue tracker accordingly.
+* Added Empowerer
+* Added Bag and Void Bag
+* Fixed Display Stand's bounding box
+* Added a character limit to the NBT display of the advanced tooltip, changeable in the config
+* Added Creative Tab search bar
+* Made the Reconstructor book entry show every crystal recipe seperately
+* Fixed wild rice popping off of water when updated
+* Added an info for the priority system to the Item Laser Relay booklet entry
+* Fixed Water Bowls sometimes doing their action twice
+* Made the Update Checker not break when on an unstable build
+* Made booklet save its data via identifiers instead of number ids. This should mean that saved pages don't get offset anymore when adding new items
+* Fix ActAdd now being incompatible with Tesla because of modid casing
+* Hopefully finally fix spawners resetting from time to time when used with a Spawner Changer
+* Made the Drill's 5x5 mode mine one block higher
+* Added charcoal block to Ore Dictionary
+* Add some more null checks to the drill's block harvesting to prevent crashes with weird blocks
+* Changed the description of the introduction video page a bit
+* Adder super hard crafting recipes mode
+* [API] Lots of changes, check the Github commit history for more info
+
 # 1.10.2-r56
 * Made batteries have an output mode activated by sneak-right-clicking them
 * Added Oredictionary-based checking to ESDs, Advanced Item Relays and Ranged Collectors

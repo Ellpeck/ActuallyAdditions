@@ -14,7 +14,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'idea'
 
-version = "1.10.2-r56"
+version = "1.10.2-r57"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
@@ -92,13 +92,6 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 task sourcesJar(type: Jar) {
     from sourceSets.main.java
     classifier = 'sources'
-}
-
-artifacts {
-    archives apiJar
-    archives javadocJar
-    archives sourcesJar
-    archives deobfJar
 }
 
 apply plugin: 'maven-publish'
