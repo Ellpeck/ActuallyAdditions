@@ -48,20 +48,22 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
                     boolean done = this.processTime >= processTimeGoal;
 
                     for(TileEntityDisplayStand stand : modifierStands){
-                        if(done){
-                            stand.decrStackSize(0, 1);
-                            ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 30, 0, 0, 0, 0.25D);
-                        }
-
                         stand.storage.extractEnergy(recipe.energyPerStand/processTimeGoal, false);
 
-                        if(this.processTime%5 == 0 && this.worldObj instanceof WorldServer){
-                            ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 1, 0, 0, 0, 0.1D);
+                        if(done){
+                            stand.decrStackSize(0, 1);
                         }
+
                         AssetUtil.shootParticles(this.worldObj, stand.getPos().getX(), stand.getPos().getY()+0.45F, stand.getPos().getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), recipe.particleColor, 8, 0.5F, 1F);
                     }
 
+                    if(this.processTime%5 == 0 && this.worldObj instanceof WorldServer){
+                        ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 3, 0, 0, 0, 0.1D);
+                    }
+
                     if(done){
+                        ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 80, 0, 0, 0, 0.25D);
+
                         this.slots[0] = recipe.output.copy();
                         this.markDirty();
 
