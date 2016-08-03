@@ -982,3 +982,8 @@ booklet.actuallyadditions.chapter.worms.text.2=<i>A worm at work
 
 booklet.actuallyadditions.chapter.bags.name=Bag and Void Bag
 booklet.actuallyadditions.chapter.bags.text.1=<item>Bags<r> are an easy way to <imp>transport items around<r>, however, they have some additional functions. <n>First of all, in their GUI that is accessed by <imp>right-clicking<r>, they can be set to automatically <imp>suck up items on the ground<r>. Also, they have a couple of <imp>filter slots<r> where you can configure what can actually go into the bags. <n><n><item>Void Bags<r> have the same functionality as normal bags, however, they <imp>remove items<r> from the world instead of storing them.
+
+booklet.actuallyadditions.chapter.empowerer.name=Empowerer
+booklet.actuallyadditions.chapter.empowerer.text.1=The <item>Empowerer<r> is a mid-tier block that can be used to <imp>empower<r> crystals and other items. <n>To use it, items that should be empowered can be <imp>right-clicked onto the Empowerer<r>, and empowering items need to be placed on <item>Display Stands<r> that are <imp>two blocks away<r>, like seen in the <imp>picture on the next page<r>. <n>To then activate the process, <imp>every Display Stand needs to be powered with a lot of RF<r> that is then drained to empower the item on the Empowerer.
+booklet.actuallyadditions.chapter.empowerer.text.2=<i>The placement of the <item>Display Stands<r>
+booklet.actuallyadditions.chapter.empowerer.text.4=The <item>Display Stand<r> can also be used for other things! See the <imp>Blocks that use RF<r> section for more info about it!

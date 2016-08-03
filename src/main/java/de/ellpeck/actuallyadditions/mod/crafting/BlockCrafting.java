@@ -93,9 +93,21 @@ public final class BlockCrafting{
     public static IRecipe recipePlayerInterface;
     public static IRecipe recipeDisplayStand;
     public static IRecipe recipeShockSuppressor;
+    public static IRecipe recipeEmpowerer;
     public static IRecipe[] recipesTinyTorch = new IRecipe[2];
 
     public static void init(){
+
+        //Empowerer
+        if(ConfigCrafting.EMPOWERER.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockEmpowerer),
+                    " R ", " B ", "CDC",
+                    'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
+                    'B', new ItemStack(InitItems.itemBatteryDouble, 1, Util.WILDCARD),
+                    'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
+                    'D', new ItemStack(InitBlocks.blockDisplayStand)));
+            recipeEmpowerer = RecipeUtil.lastIRecipe();
+        }
 
         //Tiny Torch
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockTinyTorch, 2),

@@ -28,6 +28,7 @@ import de.ellpeck.actuallyadditions.mod.items.lens.LensDisenchanting;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Blocks;
@@ -70,6 +71,12 @@ public final class InitBooklet{
         }
         new BookletChapter("crystals", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitBlocks.blockAtomicReconstructor), crystalPages.toArray(new BookletPage[crystalPages.size()])).setSpecial();
         new BookletChapter("coalGen", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitBlocks.blockCoalGenerator), new PageCrafting(1, BlockCrafting.recipeCoalGen).addTextReplacement("<rf>", TileEntityCoalGenerator.PRODUCE).setPageStacksWildcard());
+        ArrayList<BookletPage> empowererPages = new ArrayList<BookletPage>();
+        empowererPages.addAll(Arrays.asList(new PageTextOnly(1), new PagePicture(2, "pageEmpowerer", 137), new PageCrafting(3, BlockCrafting.recipeEmpowerer).setNoText(), new PageCrafting(4, BlockCrafting.recipeDisplayStand), new PageCrafting(5, MiscCrafting.RECIPES_EMPOWERED_CRYSTALS).setNoText(), new PageCrafting(6, MiscCrafting.RECIPES_EMPOWERED_CRYSTAL_BLOCKS).setNoText()));
+        for(int i = 0; i < EmpowererHandler.MAIN_PAGE_RECIPES.size(); i++){
+            empowererPages.add(new PageEmpowerer(7+i, EmpowererHandler.MAIN_PAGE_RECIPES.get(i)).setNoText());
+        }
+        new BookletChapter("empowerer", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitBlocks.blockEmpowerer), empowererPages.toArray(new BookletPage[empowererPages.size()])).setSpecial();
         new BookletChapter("craftingIngs", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeCoil).setNoText(), new PageCrafting(3, ItemCrafting.recipeCoilAdvanced).setNoText(), new PageCrafting(4, BlockCrafting.recipeCase).setNoText(), new PageCrafting(5, BlockCrafting.recipeEnderPearlBlock).setNoText(), new PageCrafting(6, BlockCrafting.recipeEnderCase).setNoText(), new PageCrafting(7, ItemCrafting.recipeRing).setNoText(), new PageCrafting(8, ItemCrafting.recipeKnifeHandle).setNoText(), new PageCrafting(9, ItemCrafting.recipeKnifeBlade).setNoText(), new PageCrafting(10, ItemCrafting.recipeKnife).setNoText(), new PageCrafting(11, ItemCrafting.recipeDough).setNoText(), new PageCrafting(12, ItemCrafting.recipeRiceDough).setNoText(), new PageCrafting(13, BlockCrafting.recipeIronCase).setNoText(), new PageCrafting(14, ItemCrafting.recipeLens).setNoText()).setImportant();
         new BookletChapter("rf", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(Items.REDSTONE), new PageTextOnly(1));
 

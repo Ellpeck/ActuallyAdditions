@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -40,6 +41,11 @@ public final class RecipeUtil{
         List list = CraftingManager.getInstance().getRecipeList();
         Object recipe = list.get(list.size()-1);
         return recipe instanceof IRecipe ? (IRecipe)recipe : null;
+    }
+
+    public static EmpowererRecipe lastEmpowererRecipe(){
+        List<EmpowererRecipe> list = ActuallyAdditionsAPI.EMPOWERER_RECIPES;
+        return list.get(list.size()-1);
     }
 
     public static List<ItemStack> getCrusherRecipeOutputOnes(CrusherRecipe recipe){

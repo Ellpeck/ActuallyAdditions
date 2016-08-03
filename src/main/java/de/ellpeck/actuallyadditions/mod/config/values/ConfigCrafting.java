@@ -172,7 +172,8 @@ public enum ConfigCrafting{
     TINY_COAL("Tiny Coal", ConfigCategories.ITEMS_CRAFTING),
 
     BAG("Bag", ConfigCategories.ITEMS_CRAFTING),
-    VOID_BAG("Void Bag", ConfigCategories.ITEMS_CRAFTING);
+    VOID_BAG("Void Bag", ConfigCategories.ITEMS_CRAFTING),
+    EMPOWERER("Empowerer", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;
     public final String category;

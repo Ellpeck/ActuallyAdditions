@@ -60,6 +60,7 @@ import java.util.List;
 public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     public static final ResourceLocation RES_LOC = AssetUtil.getBookletGuiLocation("guiBooklet");
+    public static final ResourceLocation RES_LOC_ADDON = AssetUtil.getBookletGuiLocation("guiBookletAddon");
     public static final ResourceLocation RES_LOC_HALLOWEEN = AssetUtil.getBookletGuiLocation("guiBookletHalloween");
     public static final ResourceLocation RES_LOC_CHRISTMAS = AssetUtil.getBookletGuiLocation("guiBookletChristmas");
     public static final ResourceLocation RES_LOC_VALENTINE = AssetUtil.getBookletGuiLocation("guiBookletValentinesDay");
