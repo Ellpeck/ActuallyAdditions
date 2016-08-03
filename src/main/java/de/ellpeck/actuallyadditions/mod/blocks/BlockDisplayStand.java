@@ -22,7 +22,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockDisplayStand extends BlockContainerBase{
@@ -39,6 +41,11 @@ public class BlockDisplayStand extends BlockContainerBase{
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta){
         return new TileEntityDisplayStand();
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+        return BlockSlabs.AABB_BOTTOM_HALF;
     }
 
     @Override
