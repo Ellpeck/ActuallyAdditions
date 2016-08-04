@@ -12,9 +12,11 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -29,11 +31,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
 import java.util.Random;
 
 public class BlockFurnaceDouble extends BlockContainerBase{
@@ -141,5 +145,22 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     public void breakBlock(World world, BlockPos pos, IBlockState state){
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
+    }
+
+    @Override
+    protected ItemBlockBase getItemBlock(){
+        return new TheItemBlock(this);
+    }
+
+    public static class TheItemBlock extends ItemBlockBase{
+
+        public TheItemBlock(Block block){
+            super(block);
+        }
+
+        @Override
+        public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
+            tooltip.add(TextFormatting.ITALIC+"Previously Double Furnace");
+        }
     }
 }
