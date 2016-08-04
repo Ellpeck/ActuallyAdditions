@@ -78,7 +78,7 @@ public class EntityWorm extends Entity{
                                 }
                             }
 
-                            if(isFarmland && this.worldObj.rand.nextFloat() >= 0.8F){
+                            if(isFarmland && this.worldObj.rand.nextFloat() >= 0.9F){
                                 BlockPos plant = pos.up();
                                 if(!this.worldObj.isAirBlock(plant)){
                                     IBlockState plantState = this.worldObj.getBlockState(plant);
