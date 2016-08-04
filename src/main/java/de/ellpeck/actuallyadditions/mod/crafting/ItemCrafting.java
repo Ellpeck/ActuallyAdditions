@@ -39,6 +39,7 @@ public final class ItemCrafting{
 
     public static final ArrayList<IRecipe> RECIPES_MASHED_FOOD = new ArrayList<IRecipe>();
     public static final ArrayList<IRecipe> RECIPES_POTION_RINGS = new ArrayList<IRecipe>();
+    public static final ArrayList<IRecipe> RECIPES_DRILL_COLORING = new ArrayList<IRecipe>();
     public static IRecipe recipePhantomConnector;
     public static IRecipe recipeCoil;
     public static IRecipe recipeCoilAdvanced;
@@ -236,13 +237,21 @@ public final class ItemCrafting{
 
         //Drill
         if(ConfigCrafting.DRILL.isEnabled()){
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemDrill, 1, TheColoredLampColors.LIGHT_BLUE.ordinal()),
+            ItemStack lightBlueDrill = new ItemStack(InitItems.itemDrill, 1, TheColoredLampColors.LIGHT_BLUE.ordinal());
+            GameRegistry.addRecipe(new ShapedOreRecipe(lightBlueDrill.copy(),
                     "DDD", "CRC", "III",
                     'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
                     'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'R', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()),
                     'I', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal())));
             recipeDrill = RecipeUtil.lastIRecipe();
+
+            for(int i = 0; i < 16; i++){
+                if(i != TheColoredLampColors.LIGHT_BLUE.ordinal()){
+                    GameRegistry.addRecipe(new RecipeKeepDataShapeless(new ItemStack(InitItems.itemDrill, 1, i), new ItemStack(InitItems.itemDrill, 1, Util.WILDCARD), lightBlueDrill.copy(), "dye"+TheColoredLampColors.values()[i].name));
+                    RECIPES_DRILL_COLORING.add(RecipeUtil.lastIRecipe());
+                }
+            }
         }
 
         //Drill Core
@@ -357,7 +366,7 @@ public final class ItemCrafting{
 
         //Double Battery
         if(ConfigCrafting.DOUBLE_BATTERY.isEnabled()){
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemBatteryDouble),
+            GameRegistry.addRecipe(new RecipeKeepDataShaped(new ItemStack(InitItems.itemBatteryDouble), new ItemStack(InitItems.itemBattery),
                     " R ", "ICI", "III",
                     'R', new ItemStack(InitItems.itemBattery),
                     'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
@@ -398,7 +407,7 @@ public final class ItemCrafting{
 
         //Triple Battery
         if(ConfigCrafting.TRIPLE_BATTERY.isEnabled()){
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemBatteryTriple),
+            GameRegistry.addRecipe(new RecipeKeepDataShaped(new ItemStack(InitItems.itemBatteryTriple), new ItemStack(InitItems.itemBatteryDouble),
                     " R ", "ICI", "III",
                     'R', new ItemStack(InitItems.itemBatteryDouble),
                     'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()),
@@ -408,7 +417,7 @@ public final class ItemCrafting{
 
         //Quadruple Battery
         if(ConfigCrafting.QUADRUPLE_BATTERY.isEnabled()){
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemBatteryQuadruple),
+            GameRegistry.addRecipe(new RecipeKeepDataShaped(new ItemStack(InitItems.itemBatteryQuadruple), new ItemStack(InitItems.itemBatteryTriple),
                     " R ", "ICI", "III",
                     'R', new ItemStack(InitItems.itemBatteryTriple),
                     'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()),
@@ -418,7 +427,7 @@ public final class ItemCrafting{
 
         //Quintuple Battery
         if(ConfigCrafting.QUINTUPLE_BATTERY.isEnabled()){
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemBatteryQuintuple),
+            GameRegistry.addRecipe(new RecipeKeepDataShaped(new ItemStack(InitItems.itemBatteryQuintuple), new ItemStack(InitItems.itemBatteryQuadruple),
                     " R ", "ICI", "III",
                     'R', new ItemStack(InitItems.itemBatteryQuadruple),
                     'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()),
