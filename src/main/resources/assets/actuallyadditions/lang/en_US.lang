@@ -425,6 +425,8 @@ item.actuallyadditions.itemBooklet.name=Actually Additions Manual
 item.actuallyadditions.itemRarmorModuleReconstructor.name=Reconstruction Module
 item.actuallyadditions.itemLaserWrench.name=Laser Wrench
 item.actuallyadditions.itemChestToCrateUpgrade.name=Chest To Storage Crate Upgrade
+item.actuallyadditions.itemSmallToMediumCrateUpgrade.name=Small To Medium Storage Crate Upgrade
+item.actuallyadditions.itemMediumToLargeCrateUpgrade.name=Medium To Large Storage Crate Upgrade
 item.actuallyadditions.itemMiscDrillCore.name=Drill Core
 item.actuallyadditions.itemMiscBlackDye.name=Black Dye
 item.actuallyadditions.itemCrystalRed.name=Restonia Crystal
@@ -779,8 +781,10 @@ booklet.actuallyadditions.chapter.compost.text.3=<item>Bio-Mash<r> can be crafte
 
 booklet.actuallyadditions.chapter.crate.name=Storage Crates
 booklet.actuallyadditions.chapter.crate.text.1=<item>Storage Crates<r> are big. <imp>Really big<r>. They hold tons of items, more than 4 chests worth of them. <n>Not only that, but they can be <imp>upgraded in size<r>! View the following pages to get information on that and some other items regarding crates!
-booklet.actuallyadditions.chapter.crate.text.4=Placing a <item>Storage Crate Keeper<r> inside the Storage Crate before breaking it will cause it to <imp>keep all of its items<r>, however the Keeper will be destroyed upon placing the Crate back down.
+booklet.actuallyadditions.chapter.crate.text.4=Placing a <item>Storage Crate Keeper<r> inside the Storage Crate before breaking it will cause it to <imp>keep all of its items<r>, however the Keeper will be destroyed in the process. <n>Also note that using a filled crate for crafting will <imp>destroy its contents<r>.
 booklet.actuallyadditions.chapter.crate.text.5=The <item>Chest To Storage Crate Upgrade<r> allows you to <imp>convert any chest into a Storage Crate<r>, retaining its items! <n>Just <imp>shift-right-click<r> onto the chest to apply it.
+booklet.actuallyadditions.chapter.crate.text.6=Similar to the <item>Chest To Storage Crate Upgrade<r>, the <item>Small To Medium Storage Crate Upgrade<r> will convert any <imp>Small Storage Crate<r> into a <imp>Medium Storage Crate<r> by simply shift-right-clicking it. It will retain its items.
+booklet.actuallyadditions.chapter.crate.text.7=Similar to the <item>Chest To Storage Crate Upgrade<r>, the <item>Medium To Large Storage Crate Upgrade<r> will convert any <imp>Medium Storage Crate<r> into a <imp>Large Storage Crate<r> by simply shift-right-clicking it. It will retain its items.
 
 booklet.actuallyadditions.chapter.coffeeMachine.name=Coffee Maker
 booklet.actuallyadditions.chapter.coffeeMachine.text.1=The <item>Coffee Maker<r> is a block used to make <item>Coffee<r>, a <imp>potion-like<r> item that gives the user several buffs. <n>To use the coffee maker, you need a <item>Empty Cup<r>, <coffee> <item>Coffee Beans<r>, which can be found in the wild, harvested and <imp>planted on farmland<r> again, <rf> RF/t and <water>mB of Water per cup brewed. <n>On the coffee maker recipe pages at the back, to see what the item does, just hover over the Cup of Coffee.

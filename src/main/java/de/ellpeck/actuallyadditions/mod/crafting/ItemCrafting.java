@@ -75,6 +75,8 @@ public final class ItemCrafting{
     public static IRecipe recipeLeafBlower;
     public static IRecipe recipeLeafBlowerAdvanced;
     public static IRecipe recipeChestToCrateUpgrade;
+    public static IRecipe recipeSmallToMediumCrateUpgrade;
+    public static IRecipe recipeMediumToLargeCrateUpgrade;
     public static IRecipe recipeLaserWrench;
     public static IRecipe recipeDrillCore;
     public static IRecipe recipeBlackDye;
@@ -138,6 +140,18 @@ public final class ItemCrafting{
                     'C', new ItemStack(InitBlocks.blockGiantChest),
                     'W', "plankWood"));
             recipeChestToCrateUpgrade = RecipeUtil.lastIRecipe();
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemSmallToMediumCrateUpgrade),
+                    " W ", "WCW", " W ",
+                    'C', new ItemStack(InitBlocks.blockGiantChestMedium),
+                    'W', "plankWood"));
+            recipeSmallToMediumCrateUpgrade = RecipeUtil.lastIRecipe();
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMediumToLargeCrateUpgrade),
+                    " W ", "WCW", " W ",
+                    'C', new ItemStack(InitBlocks.blockGiantChestLarge),
+                    'W', "plankWood"));
+            recipeMediumToLargeCrateUpgrade = RecipeUtil.lastIRecipe();
         }
 
         //Disenchanting Lens

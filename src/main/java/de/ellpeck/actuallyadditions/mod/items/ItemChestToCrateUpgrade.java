@@ -10,13 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.blocks.BlockGiantChest;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -29,21 +32,24 @@ import net.minecraft.world.World;
 
 public class ItemChestToCrateUpgrade extends ItemBase{
 
-    public ItemChestToCrateUpgrade(String name){
-        super(name);
-    }
+    private final Class<? extends IInventory> start;
+    private final IBlockState end;
 
+    public ItemChestToCrateUpgrade(String name, Class<? extends IInventory> start, IBlockState end){
+        super(name);
+        this.start = start;
+        this.end = end;
+    }
 
     @Override
     public EnumActionResult onItemUse(ItemStack heldStack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float par8, float par9, float par10){
         if(player.isSneaking()){
             TileEntity tileHit = world.getTileEntity(pos);
-            Block block = world.getBlockState(pos).getBlock();
-            if(block instanceof BlockChest && tileHit instanceof TileEntityChest){
+            if(tileHit.getClass() == this.start){
                 if(!world.isRemote){
-                    TileEntityChest chest = (TileEntityChest)tileHit;
 
                     //Copy Slots
+                    IInventory chest = (IInventory)tileHit;
                     ItemStack[] stacks = new ItemStack[chest.getSizeInventory()];
                     for(int i = 0; i < stacks.length; i++){
                         ItemStack aStack = chest.getStackInSlot(i);
@@ -57,12 +63,12 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                     if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                         world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
                     }
-                    world.setBlockState(pos, InitBlocks.blockGiantChest.getDefaultState(), 2);
+                    world.setBlockState(pos, this.end, 2);
 
                     //Copy Items into new Chest
                     TileEntity newTileHit = world.getTileEntity(pos);
-                    if(newTileHit instanceof TileEntityGiantChest){
-                        TileEntityGiantChest newChest = (TileEntityGiantChest)newTileHit;
+                    if(newTileHit instanceof IInventory){
+                        IInventory newChest = (IInventory)newTileHit;
                         for(int i = 0; i < stacks.length; i++){
                             if(stacks[i] != null){
                                 if(newChest.getSizeInventory() > i){
