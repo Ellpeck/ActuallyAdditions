@@ -51,9 +51,7 @@ public class ClientProxy implements IProxy{
 
     private static final List<Item> COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING = new ArrayList<Item>();
     private static final Map<ItemStack, ModelResourceLocation> MODEL_LOCATIONS_FOR_REGISTERING = new HashMap<ItemStack, ModelResourceLocation>();
-    public static boolean pumpkinBlurPumpkinBlur;
-    public static boolean jingleAllTheWay;
-    public static boolean bulletForMyValentine;
+
     public static int bookletWordCount;
     public static int bookletCharCount;
 
@@ -105,16 +103,6 @@ public class ClientProxy implements IProxy{
     @Override
     public void preInit(FMLPreInitializationEvent event){
         ModUtil.LOGGER.info("PreInitializing ClientProxy...");
-
-        if(ConfigBoolValues.ENABLE_SEASONAL.isEnabled()){
-            Calendar c = Calendar.getInstance();
-            pumpkinBlurPumpkinBlur = c.get(Calendar.MONTH) == Calendar.OCTOBER;
-            jingleAllTheWay = c.get(Calendar.MONTH) == Calendar.DECEMBER && c.get(Calendar.DAY_OF_MONTH) >= 6 && c.get(Calendar.DAY_OF_MONTH) <= 26;
-            bulletForMyValentine = c.get(Calendar.MONTH) == Calendar.FEBRUARY && c.get(Calendar.DAY_OF_MONTH) >= 12 && c.get(Calendar.DAY_OF_MONTH) <= 16;
-        }
-        else{
-            ModUtil.LOGGER.warn("You have turned Seasonal Mode off. Therefore, you are evil.");
-        }
 
         for(Map.Entry<ItemStack, ModelResourceLocation> entry : MODEL_LOCATIONS_FOR_REGISTERING.entrySet()){
             ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), entry.getValue());

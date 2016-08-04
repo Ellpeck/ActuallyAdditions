@@ -33,7 +33,7 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
             GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
             GlStateManager.translate(0.0F, -2F, 0.0F);
 
-            theCloud.setStatus(ClientProxy.bulletForMyValentine || (theCloud.name != null && !theCloud.name.isEmpty() && theCloud.name.equals("Pink Fluffy Unicloud")));
+            theCloud.setStatus(theCloud.name != null && !theCloud.name.isEmpty() && theCloud.name.equals("Pink Fluffy Unicloud"));
 
             if(theCloud.name != null && !theCloud.name.isEmpty()){
                 easterEggs:

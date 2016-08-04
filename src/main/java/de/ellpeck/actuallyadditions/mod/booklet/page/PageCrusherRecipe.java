@@ -41,7 +41,7 @@ public class PageCrusherRecipe extends BookletPageAA{
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
         if(this.recipe != null){
-            Minecraft.getMinecraft().getTextureManager().bindTexture(ClientProxy.bulletForMyValentine ? GuiBooklet.RES_LOC_VALENTINE : GuiBooklet.RES_LOC);
+            Minecraft.getMinecraft().getTextureManager().bindTexture(GuiBooklet.RES_LOC);
             gui.drawRect(gui.getGuiLeft()+37, gui.getGuiTop()+20, 60, 180, 60, 60);
         }
     }

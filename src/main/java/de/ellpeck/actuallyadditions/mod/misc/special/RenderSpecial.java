@@ -26,7 +26,7 @@ import java.util.Calendar;
 
 public class RenderSpecial{
 
-    private ItemStack theThingToRender;
+    private final ItemStack theThingToRender;
 
     public RenderSpecial(ItemStack stack){
         this.theThingToRender = stack;
@@ -35,10 +35,6 @@ public class RenderSpecial{
     public void render(EntityPlayer player, float partialTicks){
         if(player.isInvisible() || !player.isWearing(EnumPlayerModelParts.CAPE)){
             return;
-        }
-
-        if(ClientProxy.pumpkinBlurPumpkinBlur){
-            this.theThingToRender = new ItemStack(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)%2 == 0 ? Blocks.LIT_PUMPKIN : Blocks.PUMPKIN);
         }
 
         boolean isBlock = this.theThingToRender.getItem() instanceof ItemBlock;

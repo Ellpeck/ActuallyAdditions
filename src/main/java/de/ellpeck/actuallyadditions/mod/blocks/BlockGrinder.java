@@ -67,7 +67,7 @@ public class BlockGrinder extends BlockContainerBase{
                 double zRand = rand.nextDouble()/0.75D-0.5D;
                 world.spawnParticle(EnumParticleTypes.CRIT, (double)pos.getX()+0.4F, (double)pos.getY()+0.8F, (double)pos.getZ()+0.4F, xRand, 0.5D, zRand);
             }
-            world.spawnParticle(ClientProxy.bulletForMyValentine ? EnumParticleTypes.HEART : EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
+            world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
         }
     }
 
