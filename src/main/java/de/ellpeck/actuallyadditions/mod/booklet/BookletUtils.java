@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
+import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.IndexButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
@@ -138,8 +139,8 @@ public final class BookletUtils{
             if(page != null && page.getItemStacksForPage() != null){
                 for(ItemStack stack : page.getItemStacksForPage()){
                     if(stack != null){
-                        for(Achievement achievement : InitAchievements.ACHIEVEMENT_LIST){
-                            if(achievement.theItemStack != null && ItemUtil.areItemsEqual(stack, achievement.theItemStack, true)){
+                        for(TheAchievements achievement : TheAchievements.values()){
+                            if(ItemUtil.contains(achievement.itemsToBeGotten, stack, true)){
                                 if(pre){
                                     booklet.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC);
                                     booklet.drawTexturedModalRect(booklet.guiLeft+booklet.xSize+1, booklet.guiTop-18, 166, 154, 22, 21);
@@ -151,8 +152,8 @@ public final class BookletUtils{
                                             infoList = new ArrayList<String>();
                                             infoList.add(TextFormatting.GOLD+"Achievements related to this chapter:");
                                         }
-                                        infoList.add("-"+StringUtil.localize(achievement.statId));
-                                        infoList.add(TextFormatting.GRAY+"("+achievement.getDescription()+")");
+                                        infoList.add("-"+StringUtil.localize(achievement.chieve.statId));
+                                        infoList.add(TextFormatting.GRAY+"("+achievement.chieve.getDescription()+")");
                                     }
                                 }
                             }
