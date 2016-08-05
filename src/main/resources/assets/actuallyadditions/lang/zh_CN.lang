@@ -89,6 +89,7 @@ container.nei.actuallyadditions.coffee.special=特殊效果
 container.nei.actuallyadditions.coffee.maxAmount=最大加入量
 container.nei.actuallyadditions.coffee.extra.milk=+2:00,-1Lv
 container.nei.actuallyadditions.reconstructor.name=原子再构机
+container.nei.actuallyadditions.empowerer.name=充能台
 
 container.nei.actuallyadditions.booklet.name=实用拓展手册
 container.nei.actuallyadditions.booklet.header=<item>实用拓展手册<r>说道：
@@ -197,6 +198,12 @@ tile.actuallyadditions.blockCrystalLightBlue.name=钻石水晶块
 tile.actuallyadditions.blockCrystalGreen.name=绿宝石水晶块
 tile.actuallyadditions.blockCrystalBlack.name=煤晶块
 tile.actuallyadditions.blockCrystalWhite.name=铁晶块
+tile.actuallyadditions.blockCrystalEmpoweredRed.name=充能红石水晶块
+tile.actuallyadditions.blockCrystalEmpoweredBlue.name=充能青金石水晶块
+tile.actuallyadditions.blockCrystalEmpoweredLightBlue.name=充能钻石水晶块
+tile.actuallyadditions.blockCrystalEmpoweredGreen.name=充能绿宝石水晶块
+tile.actuallyadditions.blockCrystalEmpoweredBlack.name=充能煤晶块
+tile.actuallyadditions.blockCrystalEmpoweredWhite.name=充能铁晶块
 tile.actuallyadditions.blockMiner.name=垂直挖矿机
 tile.actuallyadditions.blockFireworkBox.name=烟花发射器
 tile.actuallyadditions.blockQuartzWall.name=焦黑石英围墙
@@ -216,6 +223,7 @@ tile.actuallyadditions.blockBookletStand.name=壁挂式手册
 tile.actuallyadditions.blockDisplayStand.name=物品展示台
 tile.actuallyadditions.blockShockSuppressor.name=震波吸收器
 tile.actuallyadditions.blockTinyTorch.name=微型火把
+tile.actuallyadditions.blockEmpowerer.name=Empowerer
 
 #ESD #这些词条都是作者在玩梗，请不要翻译
 tile.actuallyadditions.blockInputter.name=ESD
@@ -417,6 +425,8 @@ item.actuallyadditions.itemBooklet.name=实用拓展手册
 item.actuallyadditions.itemRarmorModuleReconstructor.name=重组模块
 item.actuallyadditions.itemLaserWrench.name=中继器扳手
 item.actuallyadditions.itemChestToCrateUpgrade.name=板条箱升级徽章
+item.actuallyadditions.itemSmallToMediumCrateUpgrade.name=扩容升级徽章（小转中）
+item.actuallyadditions.itemMediumToLargeCrateUpgrade.name=扩容升级徽章（中转大）
 item.actuallyadditions.itemMiscDrillCore.name=钻头核心
 item.actuallyadditions.itemMiscBlackDye.name=黑色染料
 item.actuallyadditions.itemCrystalRed.name=红石水晶
@@ -425,6 +435,12 @@ item.actuallyadditions.itemCrystalLightBlue.name=钻石水晶
 item.actuallyadditions.itemCrystalGreen.name=绿宝石水晶
 item.actuallyadditions.itemCrystalBlack.name=煤晶
 item.actuallyadditions.itemCrystalWhite.name=铁晶
+item.actuallyadditions.itemCrystalEmpoweredRed.name=充能红石水晶
+item.actuallyadditions.itemCrystalEmpoweredBlue.name=充能青金石水晶
+item.actuallyadditions.itemCrystalEmpoweredLightBlue.name=充能钻石水晶
+item.actuallyadditions.itemCrystalEmpoweredGreen.name=充能绿宝石水晶
+item.actuallyadditions.itemCrystalEmpoweredBlack.name=充能煤晶
+item.actuallyadditions.itemCrystalEmpoweredWhite.name=充能铁晶
 item.actuallyadditions.itemMiscLens.name=透镜
 item.actuallyadditions.itemColorLens.name=斑斓透镜
 item.actuallyadditions.itemExplosionLens.name=爆破透镜
@@ -502,8 +518,8 @@ item.actuallyadditions.itemMiscBiomass.name=生物质
 item.actuallyadditions.itemMiscBiocoal.name=生物燃料
 item.actuallyadditions.itemPlayerProbe.name=玩家探测器
 item.actuallyadditions.itemWorm.name=蚯蚓
-item.actuallyadditions.itemBag.name=Bag
-item.actuallyadditions.itemVoidBag.name=Void Bag
+item.actuallyadditions.itemBag.name=袋子
+item.actuallyadditions.itemVoidBag.name=虚空袋子
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=开启
@@ -619,8 +635,8 @@ container.actuallyadditions.rangedCollector.name=物品吸收器
 container.actuallyadditions.miner.name=垂直挖矿机
 container.actuallyadditions.laserRelayItemWhitelist.name=激光中继器
 container.actuallyadditions.filter.name=物品过滤器
-container.actuallyadditions.bag.name=Bag
-container.actuallyadditions.voidBag.name=Void Bag
+container.actuallyadditions.bag.name=袋子
+container.actuallyadditions.voidBag.name=虚空袋子
 
 #UpdateInformation
 info.actuallyadditions.update.generic=[{"text":"有新的"},{"text":"实用拓展","color":"dark_green"},{"text":"版本可用！","color":"none"}]
@@ -648,20 +664,41 @@ achievement.actuallyadditions.craftLiquiface.desc=制造一个幻灵流体接口
 achievement.actuallyadditions.craftEnergyface=放大，再放大，是RF！
 achievement.actuallyadditions.craftEnergyface.desc=制造一个幻灵能量接口
 
-achievement.actuallyadditions.craftCoalGen=熔炉真是太棒了
+achievement.actuallyadditions.craftCoalGen=发电机真是太棒了
 achievement.actuallyadditions.craftCoalGen.desc=制造一个煤炭发电机
 
-achievement.actuallyadditions.craftLeafGen=给我嚼树叶,伙计！
+achievement.actuallyadditions.craftLeafGen=咀叶花？
 achievement.actuallyadditions.craftLeafGen.desc=制造一个咀叶发电机
 
-achievement.actuallyadditions.craftReconstructor=原子再构一些东西
+achievement.actuallyadditions.craftReconstructor=滋滋滋
 achievement.actuallyadditions.craftReconstructor.desc=制造一台原子再构机
+
+achievement.actuallyadditions.craftEmpowerer=激活祭坛吧
+achievement.actuallyadditions.craftEmpowerer.desc=制造一个充能台
+
+achievement.actuallyadditions.makeCrystal=晶莹剔透
+achievement.actuallyadditions.makeCrystal.desc=使用原子再构机制作一个水晶
 
 achievement.actuallyadditions.craftLaserRelay=是中继,不是延迟
 achievement.actuallyadditions.craftLaserRelay.desc=制造一个镭射中继器
 
+achievement.actuallyadditions.craftLaserRelayItem=物流信息
+achievement.actuallyadditions.craftLaserRelayItem.desc=制作一个物品中继器
+
+achievement.actuallyadditions.craftItemInterface=露出你的脸吧
+achievement.actuallyadditions.craftItemInterface.desc=制作一个物品传输接口
+
+achievement.actuallyadditions.craftLaserRelayAdvanced=能量膨胀
+achievement.actuallyadditions.craftLaserRelayAdvanced.desc=制作一个高级能量激光中继器
+
+achievement.actuallyadditions.craftLaserRelayExtreme=为能量而疯狂吧
+achievement.actuallyadditions.craftLaserRelayExtreme.desc=制作一个超级能量激光中继器
+
 achievement.actuallyadditions.craftCrusher=双倍走起！
 achievement.actuallyadditions.craftCrusher.desc=制造一台磨粉机
+
+achievement.actuallyadditions.craftDoubleCrusher=双倍的双倍走起!
+achievement.actuallyadditions.craftCrusher.desc=制造一台两仓磨粉机
 
 achievement.actuallyadditions.pickUpCoffee=让你上瘾！
 achievement.actuallyadditions.pickUpCoffee.desc=采集一些咖啡
@@ -669,11 +706,14 @@ achievement.actuallyadditions.pickUpCoffee.desc=采集一些咖啡
 achievement.actuallyadditions.craftCoffeeMachine=可不要贪杯哦
 achievement.actuallyadditions.craftCoffeeMachine.desc=制造一个咖啡制造机
 
-achievement.actuallyadditions.obscured=§k一些成就的名字
-achievement.actuallyadditions.obscured.desc=§k233，为啥你看起来像只猫
-
-achievement.actuallyadditions.craftFireworkBox=！砰！！
+achievement.actuallyadditions.craftFireworkBox=砰！砰！砰！
 achievement.actuallyadditions.craftFireworkBox.desc=制作一个烟花发射器
+
+achievement.actuallyadditions.getCrystalsMilestone=原子再构大师
+achievement.actuallyadditions.getCrystalsMilestone.desc=制作水晶数量达到200个
+
+achievement.actuallyadditions.openBookletMilestone=书呆子！
+achievement.actuallyadditions.openBookletMilestone.desc=打开手册次数达50次
 
 #BookletRecipeNames
 booklet.actuallyadditions.shapelessRecipe=无序合成
@@ -765,8 +805,10 @@ booklet.actuallyadditions.chapter.compost.text.3=<item>捣碎的食物<r>可以�
 
 booklet.actuallyadditions.chapter.crate.name=板条箱
 booklet.actuallyadditions.chapter.crate.text.1=<item>板条箱<r>很大。<imp>真的很大<r>。它们可以存储成千上万的物品，存储量比四个箱子还要多。
-booklet.actuallyadditions.chapter.crate.text.4=在破坏板条箱前把<item>板条箱守护徽章<r>放置在板条箱内将会使得它<imp>保留内部所有物品<r>，但是，在板条箱被再次放置后，守护徽章将会被销毁。
+booklet.actuallyadditions.chapter.crate.text.4=在破坏板条箱前把<item>板条箱守护徽章<r>放置在板条箱内，可以让板条箱<imp>保留内部所有物品<r>，但是这个过程中守护徽章将会被销毁。<n>Also note that using a filled crate for crafting will <imp>destroy its contents<r>.
 booklet.actuallyadditions.chapter.crate.text.5=<item>板条箱升级徽章<r>允许你<imp>把任意箱子转换成板条箱<r>，并保留其中物品！<n>只需<imp>按住shift右键单击<r>箱子即可使用。
+booklet.actuallyadditions.chapter.crate.text.6=和<item>板条箱升级徽章<r>一样, 只需要手持<item>扩容升级徽章（小转中）<r>Shift右击任意一个<imp>小型板条箱<r>，都可以将其扩容为<imp>中型板条箱<r>，里面的物品也会得到保留。
+booklet.actuallyadditions.chapter.crate.text.7=和<item>板条箱升级徽章<r>一样, 只需要手持<item>扩容升级徽章（中转大）<r>Shift右击任意一个<imp>中型板条箱<r>，都可以将其扩容为<imp>大型板条箱<r>，里面的物品也会得到保留。
 
 booklet.actuallyadditions.chapter.coffeeMachine.name=咖啡制造机
 booklet.actuallyadditions.chapter.coffeeMachine.text.1=<item>咖啡机<r>用于制造一种<imp>类似于药水<r>，可以给予玩家几种附加效果的<item>咖啡<r>。<n>为了使用它，你需要<item>空杯子<r>和<coffee><item>咖啡豆<r>。在野外可以发现咖啡豆，你可以<imp>在耕地上种植它<r>。咖啡机需要<rf>RF/t的能源供给，每制作一杯咖啡需要<water>mB的水。<n>如果你想知道每种加入咖啡的物品都有什么用，翻到后几面的咖啡机配方，然后把鼠标悬停在物品的上方即可。
@@ -927,6 +969,7 @@ booklet.actuallyadditions.chapter.spawnerChanger.text.1=<item>刷怪笼控制工
 booklet.actuallyadditions.chapter.itemStorage.name=物品激光中继器
 booklet.actuallyadditions.chapter.itemStorage.text.1=<item>激光中继器<r>可以传输RF能量，<item>物品激光中继器<r>可以传输物品。但是这两者运转原理<imp>完全不同<r>。<n><item>物品中继器<r>之间的互联和激光中继器是相同的。但是中继器和容器的相连需要<item>物品传输接口<r>。<n>首先，你需要在<item>物品传输接口<r>旁边放置<imp>任何拥有物品栏<r>的容器（比如箱子和熔炉），之后把<item>物品传输接口<r>
 booklet.actuallyadditions.chapter.itemStorage.text.2=和<item>物品激光中继器<r>相连。之后<imp>再用管道和物品传输接口<r>相连。<n>如果你还想做个存储系统，可以使用<item>高级物品激光中继器<r>，只需要<imp>Shift右击<r>中继器，你就可以指定哪些物品<imp>允许或者不允许<r>通过中继器。<item>物品传输接口<r>也可以这样用。
+booklet.actuallyadditions.chapter.itemStorage.text.3=需要注意的是，<item>高级物品激光中继器<r>拥有比其他中继器更高的<imp>优先级<r>，换句话说，物品在传输过程中会优先选择通过它。<n>这在物流系统中非常有用，你可以在一个全是高级物品激光中继器的系统中摆放一个依附箱子物品中继器，当该系统中其他位置全部溢出时，才会有物品进入这个箱子。
 
 booklet.actuallyadditions.chapter.banners.name=实用拓展的旗帜
 booklet.actuallyadditions.chapter.banners.text.1=对于<imp>实用拓展<r>中的一些<imp>特殊的物品<r>，也有其对应的特殊<item>旗帜<r>图案。旗帜的合成都很简单，只需要<imp>在旗帜的下方摆上对应的物品<r>就能制作，同样的，<imp>不同的颜色<r>也是可行的。你也可以把它们和<item>盾牌<r>相合成。<n>可以制作特殊旗帜的物品有：<n><item>实用拓展手册<r><n><item>幻灵连接器<r><n><item>吹叶机<r>（高级吹叶机不能做）<n><item>手钻<r>（只有白色的可以）
@@ -965,5 +1008,10 @@ booklet.actuallyadditions.chapter.worms.name=蚯蚓
 booklet.actuallyadditions.chapter.worms.text.1=<item>蚯蚓<r>真是一个有用的物种。<n>把它们<imp>放置在泥土或者草方块上面<r>就可以自动<imp>耕种<r>周围3×3的范围，并且<imp>还能保持其湿润<r>。<n>除此之外，它还能促进作物<imp>更快的生长<r>。<n><n><item>蚯蚓<r>可以在用锄头耕种<imp>草方块<r>时随机掉落。
 booklet.actuallyadditions.chapter.worms.text.2=<i>正在工作的蚯蚓
 
-booklet.actuallyadditions.chapter.bags.name=Bag and Void Bag
-booklet.actuallyadditions.chapter.bags.text.1=<item>Bags<r> are an easy way to <imp>transport items around<r>, however, they have some additional functions. <n>First of all, in their GUI that is accessed by <imp>right-clicking<r>, they can be set to automatically <imp>suck up items on the ground<r>. Also, they have a couple of <imp>filter slots<r> where you can configure what can actually go into the bags. <n><n><item>Void Bags<r> have the same functionality as normal bags, however, they <imp>remove items<r> from the world instead of storing them.
+booklet.actuallyadditions.chapter.bags.name=袋子和虚空袋子
+booklet.actuallyadditions.chapter.bags.text.1=<item>袋子<r>是一种简单的<imp>存储物品<r>的工具，除此之外它还有一些附加功能。<n>首先，手持袋子<imp>右键<r>打开GUI，可以设置模式为自动<imp>吸取周围掉落物<r>。其次，它还可以设置<imp>过滤名单<r>。<n><n><item>虚空袋子<r>和普通的用法类似，它主要是用来<imp>销毁物品<r>的。
+
+booklet.actuallyadditions.chapter.empowerer.name=充能台
+booklet.actuallyadditions.chapter.empowerer.text.1=<item>充能台<r>是一个用来<imp>充能<r>水晶和其他物品的东西。<n>首先，把需要充能的物品<imp>右击放置在充能台上面<r>，之后在充能台四个方向<imp>相距两格的位置<r>摆放上物品展示台，最后再在物品展示台上摆放上四个焦黑石英。<imp>下一页给出了一张说明图<r><n>要激活这个仪式，那么<imp>每一个物品展示台都需要供应大量的RF能量<r>，之后它们才能正常运转来给物品充能。
+booklet.actuallyadditions.chapter.empowerer.text.2=<i><item>物品展示台<r><i>的布局
+booklet.actuallyadditions.chapter.empowerer.text.4=<item>物品展示台<r>也可以用来做很多其他的事情！翻到<imp>耗能方块<r>查询更多信息！ 
