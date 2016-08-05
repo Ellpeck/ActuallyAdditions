@@ -171,7 +171,7 @@ public class MethodHandler implements IMethodHandler{
                 if(!item.isDead && stack != null){
                     List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
                     for(LensConversionRecipe recipe : recipes){
-                        if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
+                        if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse*stack.stackSize){
                             List<ItemStack> outputs = RecipeUtil.getConversionLensOutputs(recipe);
                             if(outputs != null && !outputs.isEmpty()){
                                 ItemStack outputCopy = outputs.get(0).copy();
@@ -182,7 +182,7 @@ public class MethodHandler implements IMethodHandler{
                                 EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
                                 tile.getWorldObject().spawnEntityInWorld(newItem);
 
-                                tile.extractEnergy(recipe.energyUse);
+                                tile.extractEnergy(recipe.energyUse*stack.stackSize);
                                 break;
                             }
                         }
