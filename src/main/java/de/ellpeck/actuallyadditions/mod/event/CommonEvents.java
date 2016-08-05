@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.item.EntityItem;
@@ -44,11 +45,11 @@ public class CommonEvents{
     }
 
     public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
-        for(TheAchievements ach : TheAchievements.values()){
-            if(ach.type == type){
-                if(gotten != null && ach.chieve.theItemStack != null && gotten.getItem() == ach.chieve.theItemStack.getItem()){
-                    if(gotten.getItemDamage() == ach.chieve.theItemStack.getItemDamage()){
-                        player.addStat(ach.chieve, 1);
+        if(gotten != null){
+            for(TheAchievements ach : TheAchievements.values()){
+                if(ach.type == type){
+                    if(ItemUtil.contains(ach.itemsToBeGotten, gotten, true)){
+                        ach.get(player);
                     }
                 }
             }

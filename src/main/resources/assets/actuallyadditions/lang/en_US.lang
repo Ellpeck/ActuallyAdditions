@@ -664,20 +664,41 @@ achievement.actuallyadditions.craftLiquiface.desc=Craft a Phantom Liquiface
 achievement.actuallyadditions.craftEnergyface=Zoom, Zoom, RF!
 achievement.actuallyadditions.craftEnergyface.desc=Craft a Phantom Energyface
 
-achievement.actuallyadditions.craftCoalGen=Furnace for cools
+achievement.actuallyadditions.craftCoalGen=Cool Generator
 achievement.actuallyadditions.craftCoalGen.desc=Craft a Coal Generator
 
-achievement.actuallyadditions.craftLeafGen=Munch, dude!
+achievement.actuallyadditions.craftLeafGen=Munchdew?
 achievement.actuallyadditions.craftLeafGen.desc=Craft a Leaf-Eating Generator
 
-achievement.actuallyadditions.craftReconstructor=Bzrrrrt something else
+achievement.actuallyadditions.craftReconstructor=Bzzzzrrrrt
 achievement.actuallyadditions.craftReconstructor.desc=Craft an Atomic Reconstructor
+
+achievement.actuallyadditions.craftEmpowerer=Infusion Altar
+achievement.actuallyadditions.craftEmpowerer.desc=Craft an Empowerer
+
+achievement.actuallyadditions.makeCrystal=Crystal clear
+achievement.actuallyadditions.makeCrystal.desc=Make a Crystal with the Atomic Reconstructor
 
 achievement.actuallyadditions.craftLaserRelay=Relayed, not delayed
 achievement.actuallyadditions.craftLaserRelay.desc=Craft a Laser Relay
 
+achievement.actuallyadditions.craftLaserRelayItem=Conducting information
+achievement.actuallyadditions.craftLaserRelayItem.desc=Craft an Item Laser Relay
+
+achievement.actuallyadditions.craftItemInterface=Show your face
+achievement.actuallyadditions.craftItemInterface.desc=Craft an Item Interface
+
+achievement.actuallyadditions.craftLaserRelayAdvanced=Energetic expansion
+achievement.actuallyadditions.craftLaserRelayAdvanced.desc=Craft an Advanced Laser Relay
+
+achievement.actuallyadditions.craftLaserRelayExtreme=Mad with power
+achievement.actuallyadditions.craftLaserRelayExtreme.desc=Craft an Extreme Laser Relay
+
 achievement.actuallyadditions.craftCrusher=Doublin' up!
 achievement.actuallyadditions.craftCrusher.desc=Craft a Crusher
+
+achievement.actuallyadditions.craftDoubleCrusher=Double doublin' up!
+achievement.actuallyadditions.craftCrusher.desc=Craft a Double Crusher
 
 achievement.actuallyadditions.pickUpCoffee=Makes you addicted
 achievement.actuallyadditions.pickUpCoffee.desc=Harvest some coffee
@@ -685,11 +706,14 @@ achievement.actuallyadditions.pickUpCoffee.desc=Harvest some coffee
 achievement.actuallyadditions.craftCoffeeMachine=Addiction in cups
 achievement.actuallyadditions.craftCoffeeMachine.desc=Craft a Coffee Maker
 
-achievement.actuallyadditions.obscured=§ksome chieve name
-achievement.actuallyadditions.obscured.desc=§klolwut y u actually look over meow
-
 achievement.actuallyadditions.craftFireworkBox=Bang Boom Bang
 achievement.actuallyadditions.craftFireworkBox.desc=Craft a Firework Box
+
+achievement.actuallyadditions.getCrystalsMilestone=Reconstruction Master
+achievement.actuallyadditions.getCrystalsMilestone.desc=Create 200 Crystals
+
+achievement.actuallyadditions.openBookletMilestone=Bookworm!
+achievement.actuallyadditions.openBookletMilestone.desc=Open the Manual 50 times
 
 #Booklet Recipe Names
 booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe

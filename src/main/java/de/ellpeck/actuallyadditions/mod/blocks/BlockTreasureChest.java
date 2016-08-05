@@ -72,7 +72,7 @@ public class BlockTreasureChest extends BlockBase{
             this.dropItems(world, pos);
             world.setBlockToAir(pos);
 
-            player.addStat(TheAchievements.OPEN_TREASURE_CHEST.chieve);
+            TheAchievements.OPEN_TREASURE_CHEST.get(player);
         }
         return true;
     }

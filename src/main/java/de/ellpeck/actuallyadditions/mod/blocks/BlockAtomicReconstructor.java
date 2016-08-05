@@ -84,7 +84,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                     else if(item == Items.RECORD_11){
                         reconstructor.counter++;
                         reconstructor.markDirty();
-                        player.addStat(TheAchievements.OBSCURED.chieve);
                     }
                 }
                 else{

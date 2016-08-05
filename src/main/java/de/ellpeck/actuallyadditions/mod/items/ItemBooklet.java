@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
@@ -79,7 +80,8 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
         player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
 
         if(!world.isRemote){
-            player.addStat(TheAchievements.OPEN_BOOKLET.chieve);
+            TheAchievements.OPEN_BOOKLET.get(player);
+            TheAchievements.OPEN_BOOKLET_MILESTONE.get(player);
         }
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
