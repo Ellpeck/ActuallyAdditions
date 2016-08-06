@@ -74,7 +74,7 @@ public final class InitBooklet{
         new BookletChapter("crystals", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitBlocks.blockAtomicReconstructor), crystalPages.toArray(new BookletPage[crystalPages.size()])).setSpecial();
         new BookletChapter("coalGen", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitBlocks.blockCoalGenerator), new PageCrafting(1, BlockCrafting.recipeCoalGen).addTextReplacement("<rf>", TileEntityCoalGenerator.PRODUCE).setPageStacksWildcard());
         ArrayList<BookletPage> empowererPages = new ArrayList<BookletPage>();
-        empowererPages.addAll(Arrays.asList(new PageTextOnly(1), new PagePicture(2, "pageEmpowerer", 137), new PageCrafting(3, BlockCrafting.recipeEmpowerer).setNoText(), new PageCrafting(4, BlockCrafting.recipeDisplayStand)));
+        empowererPages.addAll(Arrays.asList(new PageTextOnly(1), new PagePicture(2, "pageEmpowerer", 137), new PageCrafting(3, BlockCrafting.recipeEmpowerer), new PageCrafting(4, BlockCrafting.recipeDisplayStand)));
         for(int i = 0; i < EmpowererHandler.MAIN_PAGE_RECIPES.size(); i++){
             empowererPages.add(new PageEmpowerer(7+i, EmpowererHandler.MAIN_PAGE_RECIPES.get(i)).setNoText());
         }
