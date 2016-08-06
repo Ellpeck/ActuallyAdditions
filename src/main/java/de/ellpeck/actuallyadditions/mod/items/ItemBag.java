@@ -20,14 +20,19 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class ItemBag extends ItemBase{
 
@@ -38,7 +43,9 @@ public class ItemBag extends ItemBase{
         this.isVoid = isVoid;
         this.setMaxStackSize(1);
 
-        MinecraftForge.EVENT_BUS.register(this);
+        if(!this.isVoid){ //So that the event stuff only runs once because this class is initialized twice
+            MinecraftForge.EVENT_BUS.register(this);
+        }
     }
 
     @SubscribeEvent
@@ -109,6 +116,47 @@ public class ItemBag extends ItemBase{
                 }
             }
         }
+    }
+
+    @Override
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+        if(!this.isVoid){
+            TileEntity tile = worldIn.getTileEntity(pos);
+            if(tile != null && tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)){
+                if(!worldIn.isRemote){
+                    IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+                    if(handler != null){
+                        boolean changed = false;
+
+                        ItemStack[] inventory = new ItemStack[ContainerBag.getSlotAmount(this.isVoid)];
+                        ItemDrill.loadSlotsFromNBT(inventory, stack);
+
+                        for(int j = 4; j < inventory.length; j++){
+                            ItemStack invStack = inventory[j];
+                            if(invStack != null){
+                                for(int i = 0; i < handler.getSlots(); i++){
+                                    ItemStack remain = handler.insertItem(i, invStack, false);
+                                    if(!ItemStack.areItemStacksEqual(remain, invStack)){
+                                        inventory[j] = remain == null ? null : remain.copy();
+                                        changed = true;
+
+                                        if(remain == null){
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if(changed){
+                            ItemDrill.writeSlotsToNBT(inventory, stack);
+                        }
+                    }
+                }
+                return EnumActionResult.SUCCESS;
+            }
+        }
+        return EnumActionResult.PASS;
     }
 
     @Override
