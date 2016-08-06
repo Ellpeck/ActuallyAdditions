@@ -11,10 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.entity;
 
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -78,17 +75,19 @@ public class EntityWorm extends Entity{
                                 }
                             }
 
-                            if(isFarmland && this.worldObj.rand.nextFloat() >= 0.9F){
+                            if(isFarmland && this.worldObj.rand.nextFloat() >= 0.95F){
                                 BlockPos plant = pos.up();
                                 if(!this.worldObj.isAirBlock(plant)){
                                     IBlockState plantState = this.worldObj.getBlockState(plant);
                                     Block plantBlock = plantState.getBlock();
 
-                                    plantBlock.updateTick(this.worldObj, plant, plantState, Util.RANDOM);
+                                    if((plantBlock instanceof IGrowable || plantBlock instanceof IPlantable) && !(plantBlock instanceof BlockGrass)){
+                                        plantBlock.updateTick(this.worldObj, plant, plantState, Util.RANDOM);
 
-                                    IBlockState newState = this.worldObj.getBlockState(plant);
-                                    if(newState.getBlock().getMetaFromState(newState) != plantBlock.getMetaFromState(plantState)){
-                                        this.worldObj.playEvent(2005, plant, 0);
+                                        IBlockState newState = this.worldObj.getBlockState(plant);
+                                        if(newState.getBlock().getMetaFromState(newState) != plantBlock.getMetaFromState(plantState)){
+                                            this.worldObj.playEvent(2005, plant, 0);
+                                        }
                                     }
                                 }
                             }
