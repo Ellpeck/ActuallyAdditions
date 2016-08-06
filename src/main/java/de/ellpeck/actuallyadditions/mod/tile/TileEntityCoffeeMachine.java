@@ -156,7 +156,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                     if(this.brewTime >= TIME_USED){
                         this.brewTime = 0;
                         ItemStack output = new ItemStack(InitItems.itemCoffee);
-                        for(int i = 3; i < this.slots.length-2; i++){
+                        for(int i = 3; i < this.slots.length; i++){
                             if(this.slots[i] != null){
                                 CoffeeIngredient ingredient = ItemCoffee.getIngredientFromStack(this.slots[i]);
                                 if(ingredient != null){
@@ -192,7 +192,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return slot == SLOT_OUTPUT || (slot >= 3 && slot < this.slots.length-2 && ItemCoffee.getIngredientFromStack(stack) == null);
+        return slot == SLOT_OUTPUT || (slot >= 3 && slot < this.slots.length && ItemCoffee.getIngredientFromStack(stack) == null);
     }
 
     @Override
