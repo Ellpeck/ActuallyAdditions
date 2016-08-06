@@ -51,6 +51,7 @@ public enum TheAchievements{
     PICK_UP_COFFEE("pickUpCoffee", -2, 2, new ItemStack(InitItems.itemCoffeeBean), CRAFT_COAL_GEN, Type.PICK_UP),
     CRAFT_COFFEE_MACHINE("craftCoffeeMachine", -1, 3, new ItemStack(InitBlocks.blockCoffeeMachine), PICK_UP_COFFEE),
     CRAFT_FIREWORK_BOX("craftFireworkBox", -4, -5, new ItemStack(InitBlocks.blockFireworkBox), null, Type.CRAFTING, true, 0),
+    GET_UNPROBED("getUnProbed", -7, 3, new ItemStack(InitItems.itemPlayerProbe), null, Type.MISC, true, 0),
 
     GET_CRYSTALS_MILESTONE("getCrystalsMilestone", 6, -3, new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), null, Type.PICK_UP, true, 200, new ItemStack(InitItems.itemCrystal, 1, Util.WILDCARD), new ItemStack(InitBlocks.blockCrystal, 1, Util.WILDCARD)),
     OPEN_BOOKLET_MILESTONE("openBookletMilestone", 6, -1, new ItemStack(InitItems.itemBooklet), null, Type.MISC, true, 50);
@@ -106,7 +107,7 @@ public enum TheAchievements{
     }
 
     private void updateStatus(EntityPlayer player, int amount){
-        if(this.progressToReach > 0 && player instanceof EntityPlayerMP){
+        if(player instanceof EntityPlayerMP){
 
             StatisticsManager manager = ((EntityPlayerMP)player).getStatFile();
             if(manager != null && !manager.hasAchievementUnlocked(this.chieve) && manager.canUnlockAchievement(this.chieve)){

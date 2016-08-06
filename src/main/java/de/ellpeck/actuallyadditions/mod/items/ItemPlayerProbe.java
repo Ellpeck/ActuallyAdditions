@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -52,6 +53,7 @@ public class ItemPlayerProbe extends ItemBase{
                             stack.setTagCompound(new NBTTagCompound());
                             entity.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.1"));
                             player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.notice"));
+                            TheAchievements.GET_UNPROBED.get(player);
                         }
                     }
                     else{

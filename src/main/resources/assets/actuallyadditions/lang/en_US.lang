@@ -715,6 +715,9 @@ achievement.actuallyadditions.getCrystalsMilestone.desc=Create 200 Crystals
 achievement.actuallyadditions.openBookletMilestone=Bookworm!
 achievement.actuallyadditions.openBookletMilestone.desc=Open the Manual 50 times
 
+achievement.actuallyadditions.getUnProbed=Sneaky!
+achievement.actuallyadditions.getUnProbed.desc=Be probed by someone but sneak and notice it
+
 #Booklet Recipe Names
 booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe
 booklet.actuallyadditions.shapedRecipe=Shaped Recipe
