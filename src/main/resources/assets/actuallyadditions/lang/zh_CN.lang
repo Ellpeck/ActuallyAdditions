@@ -715,6 +715,9 @@ achievement.actuallyadditions.getCrystalsMilestone.desc=制作水晶数量达到
 achievement.actuallyadditions.openBookletMilestone=书呆子！
 achievement.actuallyadditions.openBookletMilestone.desc=打开手册次数达50次
 
+achievement.actuallyadditions.getUnProbed=鬼鬼祟祟!
+achievement.actuallyadditions.getUnProbed.desc=被别的玩家用玩家探测器探测到，但是按下了Shift键脱离了探测
+
 #BookletRecipeNames
 booklet.actuallyadditions.shapelessRecipe=无序合成
 booklet.actuallyadditions.shapedRecipe=有序合成
