@@ -22,11 +22,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
-    public final List<IItemHandler> handlersAround = new ArrayList<IItemHandler>();
+    public final Map<BlockPos, IItemHandler> handlersAround = new HashMap<BlockPos, IItemHandler>();
 
     public TileEntityLaserRelayItem(String name){
         super(name, true);
@@ -48,35 +50,39 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
             BlockPos pos = this.getPos().offset(side);
             TileEntity tile = this.worldObj.getTileEntity(pos);
-            if(tile != null && !(tile instanceof TileEntityItemViewer)){
+            if(tile != null && !(tile instanceof TileEntityItemViewer) && !(tile instanceof TileEntityLaserRelay)){
                 IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
                 if(handler != null){
-                    this.handlersAround.add(handler);
+                    this.handlersAround.put(tile.getPos(), handler);
                 }
             }
         }
     }
 
     public List<GenericItemHandlerInfo> getItemHandlersInNetwork(Network network){
+        //Keeps track of all the Laser Relays and Item Handlers that have been checked already to make nothing run multiple times
+        List<BlockPos> alreadyChecked = new ArrayList<BlockPos>();
+
         List<GenericItemHandlerInfo> handlers = new ArrayList<GenericItemHandlerInfo>();
         for(ConnectionPair pair : network.connections){
             for(BlockPos relay : pair.positions){
-                if(relay != null){
+                if(relay != null && !alreadyChecked.contains(relay)){
+                    alreadyChecked.add(relay);
                     TileEntity aRelayTile = this.worldObj.getTileEntity(relay);
                     if(aRelayTile instanceof TileEntityLaserRelayItem){
                         TileEntityLaserRelayItem relayTile = (TileEntityLaserRelayItem)aRelayTile;
-                        if(!GenericItemHandlerInfo.containsTile(handlers, relayTile)){
-                            GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);
+                        GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);
 
-                            List<IItemHandler> handlersAroundTile = relayTile.handlersAround;
-                            for(IItemHandler handler : handlersAroundTile){
-                                if(!GenericItemHandlerInfo.containsHandler(handlers, handler)){
-                                    info.handlers.add(handler);
-                                }
+                        Map<BlockPos, IItemHandler> handlersAroundTile = relayTile.handlersAround;
+                        for(Map.Entry<BlockPos, IItemHandler> handler : handlersAroundTile.entrySet()){
+                            if(!alreadyChecked.contains(handler.getKey())){
+                                alreadyChecked.add(handler.getKey());
+
+                                info.handlers.add(handler.getValue());
                             }
-
-                            handlers.add(info);
                         }
+
+                        handlers.add(info);
                     }
                 }
             }

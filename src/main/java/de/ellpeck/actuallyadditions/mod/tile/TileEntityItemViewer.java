@@ -231,24 +231,6 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
             this.relayInQuestion = relayInQuestion;
         }
 
-        public static boolean containsHandler(List<GenericItemHandlerInfo> infos, IItemHandler handler){
-            for(GenericItemHandlerInfo info : infos){
-                if(info.handlers.contains(handler)){
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public static boolean containsTile(List<GenericItemHandlerInfo> infos, TileEntityLaserRelayItem tile){
-            for(GenericItemHandlerInfo info : infos){
-                if(info.relayInQuestion == tile){
-                    return true;
-                }
-            }
-            return false;
-        }
-
         @Override
         public int compareTo(GenericItemHandlerInfo other){
             boolean thisWhitelist = this.relayInQuestion instanceof TileEntityLaserRelayItemWhitelist;

@@ -89,10 +89,10 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
 
     private int transferEnergyToReceiverInNeed(EnumFacing from, Network network, int maxTransfer, boolean simulate){
         int transmitted = 0;
+        //Keeps track of all the Laser Relays and Energy Acceptors that have been checked already to make nothing run multiple times
         List<BlockPos> alreadyChecked = new ArrayList<BlockPos>();
-        //Go through all of the connections in the network
+
         for(ConnectionPair pair : network.connections){
-            //Go through both relays in the connection
             for(BlockPos relay : pair.positions){
                 if(relay != null && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
@@ -106,29 +106,32 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                                 EnumFacing side = receiver.getKey();
                                 EnumFacing opp = side.getOpposite();
                                 TileEntity tile = receiver.getValue();
-                                if(theRelay != this || side != from){
-                                    if(tile instanceof IEnergyReceiver){
-                                        IEnergyReceiver iReceiver = (IEnergyReceiver)tile;
-                                        if(iReceiver.canConnectEnergy(opp)){
-                                            int theoreticalReceived = iReceiver.receiveEnergy(opp, Math.min(maxTransfer, lowestCap)-transmitted, true);
-                                            int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
-                                            transmitted += iReceiver.receiveEnergy(opp, theoreticalReceived-deduct, simulate);
-                                            transmitted += deduct;
+                                if(!alreadyChecked.contains(tile.getPos())){
+                                    alreadyChecked.add(tile.getPos());
+                                    if(theRelay != this || side != from){
+                                        if(tile instanceof IEnergyReceiver){
+                                            IEnergyReceiver iReceiver = (IEnergyReceiver)tile;
+                                            if(iReceiver.canConnectEnergy(opp)){
+                                                int theoreticalReceived = iReceiver.receiveEnergy(opp, Math.min(maxTransfer, lowestCap)-transmitted, true);
+                                                int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
+                                                transmitted += iReceiver.receiveEnergy(opp, theoreticalReceived-deduct, simulate);
+                                                transmitted += deduct;
+                                            }
                                         }
-                                    }
-                                    else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
-                                        ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
-                                        if(cap != null){
-                                            int theoreticalReceived = (int)cap.givePower(Math.min(maxTransfer, lowestCap)-transmitted, true);
-                                            int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
-                                            transmitted += cap.givePower(theoreticalReceived-deduct, simulate);
-                                            transmitted += deduct;
+                                        else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
+                                            ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
+                                            if(cap != null){
+                                                int theoreticalReceived = (int)cap.givePower(Math.min(maxTransfer, lowestCap)-transmitted, true);
+                                                int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
+                                                transmitted += cap.givePower(theoreticalReceived-deduct, simulate);
+                                                transmitted += deduct;
+                                            }
                                         }
-                                    }
 
-                                    //If everything that could be transmitted was transmitted
-                                    if(transmitted >= maxTransfer){
-                                        return transmitted;
+                                        //If everything that could be transmitted was transmitted
+                                        if(transmitted >= maxTransfer){
+                                            return transmitted;
+                                        }
                                     }
                                 }
                             }
