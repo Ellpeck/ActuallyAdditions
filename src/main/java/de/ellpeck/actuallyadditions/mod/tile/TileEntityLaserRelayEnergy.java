@@ -23,13 +23,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements IEnergyReceiver{
 
-    public final Map<EnumFacing, TileEntity> receiversAround = new HashMap<EnumFacing, TileEntity>();
+    public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
 
     public static final int CAP = 1000;
 

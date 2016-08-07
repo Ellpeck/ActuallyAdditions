@@ -22,13 +22,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
-    public final Map<BlockPos, IItemHandler> handlersAround = new HashMap<BlockPos, IItemHandler>();
+    public final Map<BlockPos, IItemHandler> handlersAround = new ConcurrentHashMap<BlockPos, IItemHandler>();
 
     public TileEntityLaserRelayItem(String name){
         super(name, true);
