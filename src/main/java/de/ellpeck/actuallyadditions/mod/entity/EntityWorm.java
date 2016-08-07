@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.entity;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
@@ -50,9 +51,9 @@ public class EntityWorm extends Entity{
 
     @Override
     public void onEntityUpdate(){
-        this.timer++;
-
         if(!this.worldObj.isRemote){
+            this.timer++;
+
             if(this.timer%50 == 0){
                 for(int x = -1; x <= 1; x++){
                     for(int z = -1; z <= 1; z++){
@@ -97,6 +98,11 @@ public class EntityWorm extends Entity{
                         }
                     }
                 }
+            }
+
+            int dieTime = ConfigIntValues.WORMS_DIE_TIME.getValue();
+            if(dieTime > 0 && this.timer >= dieTime){
+                this.setDead();
             }
         }
     }

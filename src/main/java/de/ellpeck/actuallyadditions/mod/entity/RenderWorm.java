@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.entity;
 
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -47,7 +48,8 @@ public class RenderWorm extends Render<EntityWorm>{
     public void doRender(EntityWorm entity, double x, double y, double z, float entityYaw, float partialTicks){
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y+0.7F, z);
-        GlStateManager.rotate((float)(((entity.timer)%360)), 0, 1, 0);
+        double boop = Minecraft.getSystemTime()/70D;
+        GlStateManager.rotate((float)((boop%360)), 0, 1, 0);
         GlStateManager.translate(0, 0, 0.4);
         AssetUtil.renderItemInWorld(STACK);
         GlStateManager.popMatrix();
