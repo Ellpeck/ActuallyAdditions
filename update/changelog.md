@@ -1,3 +1,21 @@
+# 1.10.2-r58
+* Added more Storage Crate Upgrades
+* Added a lot more Achievements
+* Made bags be able to be right-clicked onto chests to make them empty out into the chest
+* Fixed a stupd ConcurrentModificationException crash with Laser Relays that was putting the world into a crash loop whenever something was constantly updating the Laser Relay (for whatever reason it was doing that)
+* Made the Reconstructor use the right amount of energy for item transformation recipes
+* Turned some recipe ordering around in the booklet for it to be easier to find
+* Re-did the Laser Relay checking system so that it will never target one block twice. I think.
+* Made a note in the Bag GUI that the auto-pickup will only work when the bag is not in hand
+* Fixed the coffee machine ignoring the last 2 slots
+* Removed Seasonal Mode
+* Renamed the Double Furnace to Powered Furnace
+* Added keep data recipes, meaning batteries keep their power, drills keep their upgrades and storage crates keep their items when they are used in crafting recipes
+* Nerfed Greenhouse Glass and Worms
+* Made the Crusher a bit quieter
+* Fixed an exception being thrown on the server when sneak-right-clicking a block with the booklet
+* Fixed the client crashing when being kicked out of the world while the booklet is open
+
 # 1.10.2-r57
 ##### This update introduces a new mechanic called the Empowerer. Most of the mid- to endgame crafting recipes have been changed to use items created via the Empowerer. Because of this mechanic being very new, there might be a couple of bugs. Please report them to the issue tracker accordingly.
 * Added Empowerer

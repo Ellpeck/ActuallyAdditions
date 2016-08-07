@@ -14,7 +14,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'idea'
 
-version = "1.10.2-r57"
+version = "1.10.2-r58"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
