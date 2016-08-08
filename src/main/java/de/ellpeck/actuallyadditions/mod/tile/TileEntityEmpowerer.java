@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.item.ItemStack;
@@ -42,6 +43,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
             if(recipe != null){
                 TileEntityDisplayStand[] modifierStands = this.getFittingModifiers(recipe, recipe.time);
                 if(modifierStands != null){ //Meaning the display stands around match all the criteria
+                    boolean lessParticles = ConfigBoolValues.LESS_PARTICLES.isEnabled();
 
                     this.processTime++;
                     boolean done = this.processTime >= recipe.time;
@@ -53,15 +55,19 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
                             stand.decrStackSize(0, 1);
                         }
 
-                        AssetUtil.shootParticles(this.worldObj, stand.getPos().getX(), stand.getPos().getY()+0.45F, stand.getPos().getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), recipe.particleColor, 8, 0.5F, 1F);
+                        if(!lessParticles){
+                            AssetUtil.shootParticles(this.worldObj, stand.getPos().getX(), stand.getPos().getY()+0.45F, stand.getPos().getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), recipe.particleColor, 8, 0.5F, 1F);
+                        }
                     }
 
-                    if(this.processTime%5 == 0 && this.worldObj instanceof WorldServer){
+                    if(!lessParticles && this.processTime%5 == 0 && this.worldObj instanceof WorldServer){
                         ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 3, 0, 0, 0, 0.1D);
                     }
 
                     if(done){
-                        ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 300, 0, 0, 0, 0.25D);
+                        if(!lessParticles){
+                            ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 300, 0, 0, 0, 0.25D);
+                        }
 
                         this.slots[0] = recipe.output.copy();
                         this.markDirty();
