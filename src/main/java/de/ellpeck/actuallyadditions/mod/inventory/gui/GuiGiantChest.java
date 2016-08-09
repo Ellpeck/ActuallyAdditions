@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGiantChest;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestLarge;
@@ -63,14 +64,7 @@ public class GuiGiantChest extends GuiContainer{
     @Override
     protected void actionPerformed(GuiButton button) throws IOException{
         if(button.id >= 0 && button.id < 3){
-            NBTTagCompound compound = new NBTTagCompound();
-            compound.setInteger("X", this.chest.getPos().getX());
-            compound.setInteger("Y", this.chest.getPos().getY());
-            compound.setInteger("Z", this.chest.getPos().getZ());
-            compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
-            compound.setInteger("WorldID", this.chest.getWorld().provider.getDimension());
-            compound.setInteger("ButtonID", button.id);
-            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+            PacketHandlerHelper.sendButtonPacket(this.chest, button.id);
         }
     }
 

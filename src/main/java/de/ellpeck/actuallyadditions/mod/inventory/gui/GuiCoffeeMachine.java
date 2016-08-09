@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -130,13 +131,6 @@ public class GuiCoffeeMachine extends GuiContainer{
 
     @Override
     public void actionPerformed(GuiButton button){
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("X", this.x);
-        compound.setInteger("Y", this.y);
-        compound.setInteger("Z", this.z);
-        compound.setInteger("WorldID", this.world.provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
-        compound.setInteger("ButtonID", button.id);
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        PacketHandlerHelper.sendButtonPacket(this.machine, button.id);
     }
 }

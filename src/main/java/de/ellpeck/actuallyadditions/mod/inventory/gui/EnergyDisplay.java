@@ -14,6 +14,7 @@ import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -110,10 +111,6 @@ public class EnergyDisplay extends Gui{
         this.displayTesla = !this.displayTesla;
         data.setBoolean("DisplayTesla", this.displayTesla);
 
-        NBTTagCompound dataToSend = new NBTTagCompound();
-        dataToSend.setTag("Data", data);
-        dataToSend.setInteger("WorldID", Minecraft.getMinecraft().theWorld.provider.getDimension());
-        dataToSend.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
+        PacketHandlerHelper.sendChangePlayerDataPacket(data);
     }
 }

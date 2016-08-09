@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -97,11 +98,7 @@ public class CommonEvents{
             EntityPlayerMP player = (EntityPlayerMP)event.player;
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if(!data.theCompound.hasNoTags()){
-                NBTTagCompound compound = new NBTTagCompound();
-                compound.setUniqueId("UUID", player.getUniqueID());
-                compound.setTag("Data", data.theCompound);
-                compound.setBoolean("Log", true);
-                PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), player);
+                PacketHandlerHelper.sendPlayerDataToClientPacket(player, data.theCompound, true);
                 ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+" with info "+data.theCompound+".");
             }
             else{

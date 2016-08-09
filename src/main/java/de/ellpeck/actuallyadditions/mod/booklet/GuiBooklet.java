@@ -26,6 +26,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemBooklet;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -392,11 +393,6 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
                     NBTTagCompound extraData = new NBTTagCompound();
                     extraData.setBoolean("BookAlreadyOpened", true);
-                    NBTTagCompound dataToSend = new NBTTagCompound();
-                    dataToSend.setTag("Data", extraData);
-                    dataToSend.setInteger("WorldID", Minecraft.getMinecraft().theWorld.provider.getDimension());
-                    dataToSend.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
-                    PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
                 }
                 else{
                     BookletUtils.openLastBookPage(this, data.theCompound.getCompoundTag("BookletData"));
@@ -463,11 +459,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
                 NBTTagCompound extraData = new NBTTagCompound();
                 extraData.setTag("BookletData", bookletData);
 
-                NBTTagCompound dataToSend = new NBTTagCompound();
-                dataToSend.setTag("Data", extraData);
-                dataToSend.setInteger("WorldID", mc.theWorld.provider.getDimension());
-                dataToSend.setInteger("PlayerID", mc.thePlayer.getEntityId());
-                PacketHandler.theNetwork.sendToServer(new PacketClientToServer(dataToSend, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
+                PacketHandlerHelper.sendChangePlayerDataPacket(extraData);
             }
         }
     }

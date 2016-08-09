@@ -156,10 +156,7 @@ public final class PacketHandler{
                 PlayerData.PlayerSave playerData = PlayerData.getDataFromPlayer(player);
                 playerData.theCompound.merge(data);
                 if(player instanceof EntityPlayerMP){
-                    NBTTagCompound tag = new NBTTagCompound();
-                    tag.setUniqueId("UUID", player.getUniqueID());
-                    tag.setTag("Data", playerData.theCompound);
-                    PacketHandler.theNetwork.sendTo(new PacketServerToClient(tag, PLAYER_DATA_TO_CLIENT_HANDLER), (EntityPlayerMP)player);
+
                 }
             }
         }

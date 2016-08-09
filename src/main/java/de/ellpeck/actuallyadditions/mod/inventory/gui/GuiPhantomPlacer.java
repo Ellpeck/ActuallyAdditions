@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -82,15 +83,7 @@ public class GuiPhantomPlacer extends GuiContainer{
     @Override
     protected void actionPerformed(GuiButton button) throws IOException{
         if(!this.placer.isBreaker){
-            NBTTagCompound compound = new NBTTagCompound();
-            BlockPos pos = this.placer.getPos();
-            compound.setInteger("X", pos.getX());
-            compound.setInteger("Y", pos.getY());
-            compound.setInteger("Z", pos.getZ());
-            compound.setInteger("WorldID", this.placer.getWorld().provider.getDimension());
-            compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
-            compound.setInteger("ButtonID", button.id);
-            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+            PacketHandlerHelper.sendButtonPacket(this.placer, button.id);
         }
     }
 

@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerMiner;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -72,13 +73,6 @@ public class GuiMiner extends GuiContainer{
 
     @Override
     public void actionPerformed(GuiButton button){
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("X", this.miner.getPos().getX());
-        compound.setInteger("Y", this.miner.getPos().getY());
-        compound.setInteger("Z", this.miner.getPos().getZ());
-        compound.setInteger("WorldID", this.miner.getWorld().provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
-        compound.setInteger("ButtonID", button.id);
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        PacketHandlerHelper.sendButtonPacket(this.miner, button.id);
     }
 }

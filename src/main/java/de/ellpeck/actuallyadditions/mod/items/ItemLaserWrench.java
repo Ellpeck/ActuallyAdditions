@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -95,10 +96,7 @@ public class ItemLaserWrench extends ItemBase{
             save.theCompound.setInteger("LaserWrenchMode", currMode);
 
             if(player instanceof EntityPlayerMP){
-                NBTTagCompound compound = new NBTTagCompound();
-                compound.setUniqueId("UUID", player.getUniqueID());
-                compound.setTag("Data", save.theCompound);
-                PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), (EntityPlayerMP)player);
+                PacketHandlerHelper.sendPlayerDataToClientPacket(player, save.theCompound, false);
             }
 
             player.addChatComponentMessage(new TextComponentString("Mode changed to "+WrenchMode.values()[currMode].name+"!"));

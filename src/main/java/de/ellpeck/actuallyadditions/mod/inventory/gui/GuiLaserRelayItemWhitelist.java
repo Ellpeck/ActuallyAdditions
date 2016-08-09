@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhiteli
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -75,14 +76,7 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
 
     @Override
     public void actionPerformed(GuiButton button){
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("X", this.tile.getPos().getX());
-        compound.setInteger("Y", this.tile.getPos().getY());
-        compound.setInteger("Z", this.tile.getPos().getZ());
-        compound.setInteger("WorldID", this.tile.getWorld().provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
-        compound.setInteger("ButtonID", button.id);
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        PacketHandlerHelper.sendButtonPacket(this.tile, button.id);
     }
 
     @Override
