@@ -3,14 +3,21 @@
   "defaults": {
     "model": "minecraft:cube_bottom_top",
     "textures": {
-      "side": "actuallyadditions:blocks/blockCoalGenerator",
+      "side": "actuallyadditions:blocks/blockCoalGeneratorSide",
       "bottom": "actuallyadditions:blocks/blockCoalGeneratorBottom",
-      "top": "actuallyadditions:blocks/blockCoalGeneratorTop"
+      "top": "actuallyadditions:blocks/blockCoalGeneratorTop",
+      "north": "actuallyadditions:blocks/blockCoalGenerator"
     },
     "transform": "forge:default-block"
   },
   "variants": {
     "normal": [{}],
-    "inventory": [{}]
+    "inventory": [{}],
+    "meta": {
+      "0": { "y" : 0 },
+      "1": { "y" : 180 },
+      "2": { "y" : 270 },
+      "3": { "y" : 90 }
+    }
   }
 }
