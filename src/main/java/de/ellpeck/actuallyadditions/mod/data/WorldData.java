@@ -64,6 +64,9 @@ public class WorldData{
 
     public static void load(World world){
         if(!world.isRemote && world instanceof WorldServer){
+            //Just to be sure it actually gets cleared all the time
+            PLAYER_SAVE_DATA.clear();
+
             WorldData data = new WorldData(new WorldSpecificSaveHandler((WorldServer)world, world.getSaveHandler()), world.provider.getDimension());
             WORLD_DATA.put(data.dimension, data);
 

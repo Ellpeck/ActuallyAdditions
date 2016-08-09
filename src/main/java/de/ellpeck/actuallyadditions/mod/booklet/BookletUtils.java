@@ -134,7 +134,7 @@ public final class BookletUtils{
             return;
         }
 
-        ArrayList<String> infoList = null;
+        List<TheAchievements> achievements = null;
         for(BookletPage page : booklet.currentEntrySet.getCurrentChapter().getPages()){
             if(page != null && page.getItemStacksForPage() != null){
                 for(ItemStack stack : page.getItemStacksForPage()){
@@ -148,12 +148,12 @@ public final class BookletUtils{
                                 }
                                 else{
                                     if(mouseX >= booklet.guiLeft+booklet.xSize+1 && mouseX < booklet.guiLeft+booklet.xSize+1+22 && mouseY >= booklet.guiTop-18 && mouseY < booklet.guiTop-18+21){
-                                        if(infoList == null){
-                                            infoList = new ArrayList<String>();
-                                            infoList.add(TextFormatting.GOLD+"Achievements related to this chapter:");
+                                        if(achievements == null){
+                                            achievements = new ArrayList<TheAchievements>();
                                         }
-                                        infoList.add("-"+StringUtil.localize(achievement.chieve.statId));
-                                        infoList.add(TextFormatting.GRAY+"("+achievement.chieve.getDescription()+")");
+                                        if(!achievements.contains(achievement)){
+                                            achievements.add(achievement);
+                                        }
                                     }
                                 }
                             }
@@ -163,8 +163,20 @@ public final class BookletUtils{
             }
         }
 
-        if(infoList != null){
-            booklet.drawHoveringText(infoList, mouseX, mouseY);
+        if(achievements != null){
+            List<String> infoList = null;
+            for(TheAchievements achievement : achievements){
+                if(infoList == null){
+                    infoList = new ArrayList<String>();
+                    infoList.add(TextFormatting.GOLD+"Achievements related to this chapter:");
+                }
+                infoList.add("-"+StringUtil.localize(achievement.chieve.statId));
+                infoList.add(TextFormatting.GRAY+"("+achievement.chieve.getDescription()+")");
+            }
+
+            if(infoList != null){
+                booklet.drawHoveringText(infoList, mouseX, mouseY);
+            }
         }
     }
 
