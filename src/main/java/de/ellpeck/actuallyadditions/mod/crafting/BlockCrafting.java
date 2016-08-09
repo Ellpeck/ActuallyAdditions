@@ -268,7 +268,7 @@ public final class BlockCrafting{
                     new ItemStack(InitBlocks.blockLaserRelayItem),
                     new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
-                    new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.REDSTONE.ordinal())));
+                    new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal())));
             recipeLaserRelayItemWhitelist = RecipeUtil.lastIRecipe();
         }
 
