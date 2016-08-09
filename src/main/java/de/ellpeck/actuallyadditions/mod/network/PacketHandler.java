@@ -156,7 +156,7 @@ public final class PacketHandler{
                 PlayerData.PlayerSave playerData = PlayerData.getDataFromPlayer(player);
                 playerData.theCompound.merge(data);
                 if(player instanceof EntityPlayerMP){
-
+                    PacketHandlerHelper.sendPlayerDataToClientPacket(player, playerData.theCompound, false);
                 }
             }
         }

@@ -393,6 +393,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
                     NBTTagCompound extraData = new NBTTagCompound();
                     extraData.setBoolean("BookAlreadyOpened", true);
+                    PacketHandlerHelper.sendChangePlayerDataPacket(extraData);
                 }
                 else{
                     BookletUtils.openLastBookPage(this, data.theCompound.getCompoundTag("BookletData"));
