@@ -62,8 +62,13 @@ public class ItemPhantomConnector extends ItemBase{
         return null;
     }
 
-    public static void clearStorage(ItemStack stack){
-        stack.setTagCompound(new NBTTagCompound());
+    public static void clearStorage(ItemStack stack, String... keys){
+        if(stack.hasTagCompound()){
+            NBTTagCompound compound = stack.getTagCompound();
+            for(String key : keys){
+                compound.removeTag(key);
+            }
+        }
     }
 
     public static void storeConnection(ItemStack stack, int x, int y, int z, World world){
@@ -94,7 +99,7 @@ public class ItemPhantomConnector extends ItemBase{
                         if(tile instanceof TileEntityBase){
                             ((TileEntityBase)tile).sendUpdate();
                         }
-                        clearStorage(stack);
+                        clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
                         player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.connected.desc"));
                         return EnumActionResult.SUCCESS;
                     }
@@ -124,13 +129,6 @@ public class ItemPhantomConnector extends ItemBase{
     @Override
     public boolean getShareTag(){
         return true;
-    }
-
-    @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(getStoredPosition(stack) == null){
-            clearStorage(stack);
-        }
     }
 
     @Override

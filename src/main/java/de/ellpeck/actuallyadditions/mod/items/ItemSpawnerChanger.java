@@ -81,7 +81,7 @@ public class ItemSpawnerChanger extends ItemBase{
                         IBlockState state = world.getBlockState(pos);
                         world.notifyBlockUpdate(pos, state, state, 3);
 
-                        ItemPhantomConnector.clearStorage(stack);
+                        ItemPhantomConnector.clearStorage(stack, "Entity");
 
                         if(!player.capabilities.isCreativeMode){
                             stack.stackSize--;

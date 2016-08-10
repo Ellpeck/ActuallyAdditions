@@ -62,7 +62,7 @@ public class ItemLaserWrench extends ItemBase{
                         TileEntity savedTile = world.getTileEntity(savedPos);
                         int distanceSq = (int)savedPos.distanceSq(pos);
                         if(ItemPhantomConnector.getStoredWorld(stack) == world && savedTile instanceof TileEntityLaserRelay && ((TileEntityLaserRelay)savedTile).isItem == ((TileEntityLaserRelay)tile).isItem && distanceSq <= TileEntityLaserRelay.MAX_DISTANCE*TileEntityLaserRelay.MAX_DISTANCE && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, world)){
-                            ItemPhantomConnector.clearStorage(stack);
+                            ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
 
                             ((TileEntityLaserRelay)savedTile).sendUpdate();
                             ((TileEntityLaserRelay)tile).sendUpdate();
@@ -71,7 +71,7 @@ public class ItemLaserWrench extends ItemBase{
                         }
                         else{
                             player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.cantConnect.desc"));
-                            ItemPhantomConnector.clearStorage(stack);
+                            ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
                         }
                     }
                 }
@@ -107,13 +107,6 @@ public class ItemLaserWrench extends ItemBase{
     @Override
     public boolean getShareTag(){
         return true;
-    }
-
-    @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(ItemPhantomConnector.getStoredPosition(stack) == null){
-            ItemPhantomConnector.clearStorage(stack);
-        }
     }
 
     @Override

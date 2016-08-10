@@ -50,14 +50,14 @@ public class ItemPlayerProbe extends ItemBase{
                     EntityPlayer player = world.getPlayerEntityByUUID(id);
                     if(player != null){
                         if(player.isSneaking()){
-                            stack.setTagCompound(new NBTTagCompound());
+                            ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
                             entity.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.1"));
                             player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.notice"));
                             TheAchievements.GET_UNPROBED.get(player);
                         }
                     }
                     else{
-                        stack.setTagCompound(new NBTTagCompound());
+                        ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
                         entity.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.2"));
                     }
                 }
@@ -79,7 +79,7 @@ public class ItemPlayerProbe extends ItemBase{
                         face.markDirty();
                         face.sendUpdate();
 
-                        stack.setTagCompound(new NBTTagCompound());
+                        ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
                     }
                     return EnumActionResult.SUCCESS;
                 }
