@@ -870,7 +870,8 @@ booklet.actuallyadditions.chapter.potionRings.text.1=<item>药水指环<r>有两
 
 booklet.actuallyadditions.chapter.drill.name=钻头
 booklet.actuallyadditions.chapter.drill.text.1=<item>手钻<r>用起来就像一把镐或者锹一样。它使用<imp>RF<r>来破坏方块。它可以<imp>在充能站中被充能<r>，你还可以通过把它拿在手上<imp>按住Shift右键单击<r>来升级。有<imp>大量的升级<r>可用，这里是其中一部分的解释：<n><item>范围采掘升级<r>增大手钻开掘的范围的大小。<n><item>方块放置升级<r>，在你手持它右键单击后，它就会记录下它所在的快捷栏格子。在将它放入手钻后，你就可以通过拿着手钻右键单击<imp>把那个格子的方块放置在地上<r>。你也可以把<item>电池<r>安装到手钻来升级它的储电量。
-booklet.actuallyadditions.chapter.drill.text.2=需要注意的是，<item>急迫<r>, <item>范围采集<r>和<item>时运<r><imp>需要逐等级安装<r>才能正常工作。<n>这意味着你如果想要给你的手钻急迫Ⅲ的效果，你需要先安装急迫Ⅰ和急迫Ⅱ才可以。<n><n><item>手钻<r>也可以被<imp>染料<r>成Minecraft的16种颜色。<n>但是，这只是装饰性的，除了让它看起来不同，对它不会有任何其他的效果。
+booklet.actuallyadditions.chapter.drill.text.2=需要注意的是，<item>急迫<r>, <item>范围采集<r>和<item>时运<r><imp>需要逐等级安装<r>才能正常工作。<n>这意味着你如果想要给你的手钻急迫Ⅲ的效果，你需要先安装急迫Ⅰ和急迫Ⅱ才可以。
+booklet.actuallyadditions.chapter.drill.text.4=<item>手钻<r>也可以被<imp>染料<r>成Minecraft的16种颜色。<n>但是，这只是装饰性的，除了让它看起来不同，对它不会有任何其他的效果。
 
 booklet.actuallyadditions.chapter.staff.name=法杖
 booklet.actuallyadditions.chapter.staff.text.1=<item>传送法杖<r>，当在充能站中充能后，只需<imp>右击<r>，就可以<imp>把你传送到屏幕中央十字准星所指的地方<r>。当你的十字准星对着一个方块时，它会把你传送到那个方块的位置，但是，如果你的十字准星没有指着一个方块，准星所对着的方向的仰角就不能超过<imp>5°<r>，否则传送将会失败。
@@ -972,7 +973,8 @@ booklet.actuallyadditions.chapter.spawnerChanger.text.1=<item>刷怪笼控制工
 booklet.actuallyadditions.chapter.itemStorage.name=物品激光中继器
 booklet.actuallyadditions.chapter.itemStorage.text.1=<item>激光中继器<r>可以传输RF能量，<item>物品激光中继器<r>可以传输物品。但是这两者运转原理<imp>完全不同<r>。<n><item>物品中继器<r>之间的互联和激光中继器是相同的。但是中继器和容器的相连需要<item>物品传输接口<r>。<n>首先，你需要在<item>物品传输接口<r>旁边放置<imp>任何拥有物品栏<r>的容器（比如箱子和熔炉），之后把<item>物品传输接口<r>
 booklet.actuallyadditions.chapter.itemStorage.text.2=和<item>物品激光中继器<r>相连。之后<imp>再用管道和物品传输接口<r>相连。<n>如果你还想做个存储系统，可以使用<item>高级物品激光中继器<r>，只需要<imp>Shift右击<r>中继器，你就可以指定哪些物品<imp>允许或者不允许<r>通过中继器。<item>物品传输接口<r>也可以这样用。
-booklet.actuallyadditions.chapter.itemStorage.text.3=需要注意的是，<item>高级物品激光中继器<r>拥有比其他中继器更高的<imp>优先级<r>，换句话说，物品在传输过程中会优先选择通过它。<n>这在物流系统中非常有用，你可以在一个全是高级物品激光中继器的系统中摆放一个依附箱子物品中继器，当该系统中其他位置全部溢出时，才会有物品进入这个箱子。
+booklet.actuallyadditions.chapter.itemStorage.text.3=当你想用<item>物品激光中继器<r>把物品<imp>从A点传往B点时<r>，你会发现放置了两个中继器和两个<item>物品传输接口<r>后并不能正常工作，那是因为在这个网络中需要有<imp>物品缓存区<r>才能工作，<n>为了避免这种情况的发生，你只需要<imp>放置一个漏斗<r>（或者箱子）<imp>对着<r>输出端的<item>物品中继器<r>，之后物品就能顺利传输了，因为漏斗也算是一种<imp>有效的缓存区<r>。
+booklet.actuallyadditions.chapter.itemStorage.text.4=需要注意的是，<item>高级物品激光中继器<r>拥有比其他中继器更高的<imp>优先级<r>，换句话说，物品在传输过程中会优先选择通过它。<n>这在物流系统中非常有用，你可以在一个全是高级物品激光中继器的系统中摆放一个依附箱子物品中继器，当该系统中其他位置全部溢出时，才会有物品进入这个箱子。
 
 booklet.actuallyadditions.chapter.banners.name=实用拓展的旗帜
 booklet.actuallyadditions.chapter.banners.text.1=对于<imp>实用拓展<r>中的一些<imp>特殊的物品<r>，也有其对应的特殊<item>旗帜<r>图案。旗帜的合成都很简单，只需要<imp>在旗帜的下方摆上对应的物品<r>就能制作，同样的，<imp>不同的颜色<r>也是可行的。你也可以把它们和<item>盾牌<r>相合成。<n>可以制作特殊旗帜的物品有：<n><item>实用拓展手册<r><n><item>幻灵连接器<r><n><item>吹叶机<r>（高级吹叶机不能做）<n><item>手钻<r>（只有白色的可以）
@@ -1013,8 +1015,10 @@ booklet.actuallyadditions.chapter.worms.text.2=<i>正在工作的蚯蚓
 
 booklet.actuallyadditions.chapter.bags.name=袋子和虚空袋子
 booklet.actuallyadditions.chapter.bags.text.1=<item>袋子<r>是一种简单的<imp>存储物品<r>的工具，除此之外它还有一些附加功能。<n>首先，手持袋子<imp>右键<r>打开GUI，可以设置模式为自动<imp>吸取周围掉落物<r>。其次，它还可以设置<imp>过滤名单<r>。<n><n><item>虚空袋子<r>和普通的用法类似，它主要是用来<imp>销毁物品<r>的。
+booklet.actuallyadditions.chapter.bags.text.2=另外，当<item>袋子<r>里装有很多物品时，你只需要手持袋子<imp>右击存储的容器，<r>比如箱子或者<item>板条箱<r>，就可以快速的把袋子中<imp>所有的物品<r>放进箱子里面。
 
 booklet.actuallyadditions.chapter.empowerer.name=充能台
 booklet.actuallyadditions.chapter.empowerer.text.1=<item>充能台<r>是一个用来<imp>充能<r>水晶和其他物品的东西。<n>首先，把需要充能的物品<imp>右击放置在充能台上面<r>，之后在充能台四个方向<imp>相距两格的位置<r>摆放上物品展示台，最后再在物品展示台上摆放上四个焦黑石英。<imp>下一页给出了一张说明图<r><n>要激活这个仪式，那么<imp>每一个物品展示台都需要供应大量的RF能量<r>，之后它们才能正常运转来给物品充能。
 booklet.actuallyadditions.chapter.empowerer.text.2=<i><item>物品展示台<r><i>的布局
+booklet.actuallyadditions.chapter.empowerer.text.3=<n><n><n><i>我想所有MOD都得来个注魔祭坛
 booklet.actuallyadditions.chapter.empowerer.text.4=<item>物品展示台<r>也可以用来做很多其他的事情！翻到<imp>耗能方块<r>查询更多信息！ 
