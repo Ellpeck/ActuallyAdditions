@@ -518,8 +518,8 @@ item.actuallyadditions.itemMiscBiomass.name=Biomass
 item.actuallyadditions.itemMiscBiocoal.name=Bio Coal
 item.actuallyadditions.itemPlayerProbe.name=Player Probe
 item.actuallyadditions.itemWorm.name=Worm
-item.actuallyadditions.itemBag.name=Bag
-item.actuallyadditions.itemVoidBag.name=Void Bag
+item.actuallyadditions.itemBag.name=Traveler's Sack
+item.actuallyadditions.itemVoidBag.name=Void Sack
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On
@@ -557,6 +557,9 @@ tooltip.actuallyadditions.playerProbe.notice=Look out! Someone tried to probe yo
 tooltip.actuallyadditions.battery.discharge=Charging other items in inventory
 tooltip.actuallyadditions.battery.noDischarge=Not charging other items in inventory
 tooltip.actuallyadditions.battery.changeMode=Sneak-right-click to toggle.
+tooltip.actuallyadditions.previouslyDoubleFurnace=Previously "Double Furnace"
+tooltip.actuallyadditions.previouslyBag=Previously "Bag"
+tooltip.actuallyadditions.previouslyVoidBag=Previously "Void Bag"
 
 #Gui Information
 info.actuallyadditions.gui.animals=Animals
@@ -635,8 +638,8 @@ container.actuallyadditions.rangedCollector.name=Ranged Collector
 container.actuallyadditions.miner.name=Vertical Digger
 container.actuallyadditions.laserRelayItemWhitelist.name=Laser Relay
 container.actuallyadditions.filter.name=Item Filter
-container.actuallyadditions.bag.name=Bag
-container.actuallyadditions.voidBag.name=Void Bag
+container.actuallyadditions.bag.name=Traveler's Sack
+container.actuallyadditions.voidBag.name=Void Sack
 
 #Update Information
 info.actuallyadditions.update.generic=[{"text":"There is an Update for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"available!","color":"none"}]
@@ -1013,9 +1016,9 @@ booklet.actuallyadditions.chapter.worms.name=Worms
 booklet.actuallyadditions.chapter.worms.text.1=The <item>Worms<r> are a pretty useful species. <n>They will, once <imp>placed down on dirt or grass<r>, help you <imp>till the land<r> around them in a 3x3 area and <imp>keep it wet<r>. <n>Additionally, they will help the crops <imp>grow faster<r> by making the ground nice and soft. <n><n><item>Worms<r> can be gotten by simply <imp>tilling grass<r> with a hoe.
 booklet.actuallyadditions.chapter.worms.text.2=<i>A worm at work
 
-booklet.actuallyadditions.chapter.bags.name=Bag and Void Bag
-booklet.actuallyadditions.chapter.bags.text.1=<item>Bags<r> are an easy way to <imp>transport items around<r>, however, they have some additional functions. <n>First of all, in their GUI that is accessed by <imp>right-clicking<r>, they can be set to automatically <imp>suck up items on the ground<r>. Also, they have a couple of <imp>filter slots<r> where you can configure what can actually go into the bags. <n><n><item>Void Bags<r> have the same functionality as normal bags, however, they <imp>remove items<r> from the world instead of storing them.
-booklet.actuallyadditions.chapter.bags.text.2=Additionally, <item>Bags<r> can be, when filled up with a lot of items, <imp>right-clicked on a container<r> like a Chest or a <item>Storage Crate<r> to quickly <imp>move all of the items<r> in the bag into the chest.
+booklet.actuallyadditions.chapter.bags.name=Traveler's Sack and Void Sack
+booklet.actuallyadditions.chapter.bags.text.1=<item>Sacks<r> are an easy way to <imp>transport items around<r>, however, they have some additional functions. <n>First of all, in their GUI that is accessed by <imp>right-clicking<r>, they can be set to automatically <imp>suck up items on the ground<r>. Also, they have a couple of <imp>filter slots<r> where you can configure what can actually go into the sacks. <n><n><item>Void Sacks<r> have the same functionality as normal ones, however, they <imp>remove items<r> from the world instead of storing them.
+booklet.actuallyadditions.chapter.bags.text.2=Additionally, <item>Sacks<r> can be, when filled up with a lot of items, <imp>right-clicked on a container<r> like a Chest or a <item>Storage Crate<r> to quickly <imp>move all of the items<r> in the sack into the chest.
 
 booklet.actuallyadditions.chapter.empowerer.name=Empowerer
 booklet.actuallyadditions.chapter.empowerer.text.1=The <item>Empowerer<r> is a mid-tier block that can be used to <imp>empower<r> crystals and other items. <n>To use it, items that should be empowered can be <imp>right-clicked onto the Empowerer<r>, and empowering items need to be placed on <item>Display Stands<r> that are <imp>two blocks away<r>, like seen in the <imp>picture on the next page<r>. <n>To then activate the process, <imp>every Display Stand needs to be powered with a lot of RF<r> that is then drained to empower the item on the Empowerer.
