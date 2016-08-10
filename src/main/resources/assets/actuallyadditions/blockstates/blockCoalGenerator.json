@@ -1,8 +1,9 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "minecraft:cube_bottom_top",
+    "model": "actuallyadditions:blockCoalGenerator",
     "textures": {
+      "particle": "actuallyadditions:blocks/blockCoalGenerator",
       "side": "actuallyadditions:blocks/blockCoalGeneratorSide",
       "bottom": "actuallyadditions:blocks/blockCoalGeneratorBottom",
       "top": "actuallyadditions:blocks/blockCoalGeneratorTop",
