@@ -14,10 +14,15 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor{
 
@@ -32,6 +37,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     private final int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
     public int amount;
     private int lastAmount;
+    private int singlePointAmount;
 
     public TileEntityXPSolidifier(){
         super(2, "xpSolidifier");
@@ -101,12 +107,14 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
         compound.setInteger("Amount", this.amount);
+        compound.setInteger("SinglePointAmount", this.singlePointAmount);
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
         this.amount = compound.getInteger("Amount");
+        this.singlePointAmount = compound.getInteger("SinglePointAmount");
     }
 
     @Override
@@ -124,6 +132,24 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                     int toAdd = this.amount > needed ? needed : this.amount;
                     this.slots[0].stackSize += toAdd;
                     this.amount -= toAdd;
+                }
+            }
+
+            if(!this.isRedstonePowered){
+                int range = 5;
+                List<EntityXPOrb> orbs = this.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+1+range, this.pos.getY()+1+range, this.pos.getZ()+1+range));
+                if(orbs != null && !orbs.isEmpty()){
+                    for(EntityXPOrb orb : orbs){
+                        if(orb != null && !orb.isDead){
+                            this.singlePointAmount+=orb.getXpValue();
+                            orb.setDead();
+
+                            if(this.singlePointAmount >= ItemSolidifiedExperience.SOLID_XP_AMOUNT){
+                                this.amount += this.singlePointAmount/ItemSolidifiedExperience.SOLID_XP_AMOUNT;
+                                this.singlePointAmount = 0;
+                            }
+                        }
+                    }
                 }
             }
             
@@ -156,9 +182,10 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     @Override
     public void onButtonPressed(int buttonID, EntityPlayer player){
         if(buttonID < this.buttonAmounts.length){
-            if(getPlayerXP(player) > 0){
-                int xp = this.buttonAmounts[buttonID] == -999 ? getPlayerXP(player)/ItemSolidifiedExperience.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
-                if(this.amount < Integer.MAX_VALUE-xp && getPlayerXP(player) >= ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp){
+            int playerXP = getPlayerXP(player);
+            if(playerXP > 0){
+                int xp = this.buttonAmounts[buttonID] == -999 ? playerXP/ItemSolidifiedExperience.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
+                if(this.amount < Integer.MAX_VALUE-xp && playerXP >= ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp){
                     addPlayerXP(player, -(ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp));
                     if(!this.worldObj.isRemote){
                         this.amount += xp;
