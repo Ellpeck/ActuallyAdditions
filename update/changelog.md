@@ -1,3 +1,18 @@
+# 1.10.2-r59
+#### This update mainly consists of new models and textures that were done by the lovely [BootyToast](https://www.youtube.com/user/toastacle) (yes, the name's still weird, I know). Notable model/texture changes incluse the storage crate, the reconstructor, coal generator, display stand, bag and void bag (which are now called sacks), however he is planning on redoing most of the textures. So: Overhaul time! Awesome. Definitely check out the new models and textures as they're pretty sweet. Also, he does awesome videos on Youtube. So go check those out too. But also check out this update. It's pretty nice as well. Yea.
+* Made the XP Solidifier pick up any XP orbs nearby when not powered by redstone
+* Fixed a massive dupe bug with the XP solidifier :v
+* Added the ability to put items back into the XP solidifier
+* Added an auto-split button to the double furnace and double crusher
+* Fixed some items removing their entire NBT tag on clearing their storage, so you can now use them with the Morph-o-Tool mod again
+* Made the Phantom Booster a bit less annoying to craft
+* Made the greenhouse glass a bit less useless
+* Made the crafting recipe for the advanced item laser relay not use an empowered crystal becasue that's just madness
+* Added info about transport from A to B to the Item Laser Relay chapter
+* Fixed the booklet showing achievements about a million times when an item involved is wildcard
+* Made the empowerer react to the less particles option. If you're lagging, turn that on in the Config GUI.
+* Added a config option to make worms die after a certain amount of time (It's off by default, don't worry.)
+
 # 1.10.2-r58
 * Added more Storage Crate Upgrades
 * Added a lot more Achievements
