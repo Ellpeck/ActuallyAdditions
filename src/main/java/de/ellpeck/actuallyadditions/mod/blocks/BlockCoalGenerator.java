@@ -51,6 +51,17 @@ public class BlockCoalGenerator extends BlockContainerBase{
 
 
     @Override
+    public boolean isFullCube(IBlockState state){
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state){
+        return false;
+    }
+
+
+    @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityCoalGenerator();
     }
