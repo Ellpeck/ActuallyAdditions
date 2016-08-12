@@ -1,11 +1,9 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "minecraft:half_slab",
+    "model": "actuallyadditions:blockEmpowerer",
     "textures": {
-      "bottom": "actuallyadditions:blocks/blockEmpowerer",
-      "top": "#bottom",
-      "side": "actuallyadditions:blocks/blockEmpowererSide"
+      "particle": "actuallyadditions:blocks/blockEmpowerer"
     },
     "transform": "forge:default-block"
   },

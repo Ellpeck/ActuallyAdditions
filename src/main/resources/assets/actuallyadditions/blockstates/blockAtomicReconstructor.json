@@ -5,9 +5,7 @@
         "textures": {
             "particle": "actuallyadditions:blocks/blockAtomicReconstructor",
             "down": "#particle",
-            "up": "actuallyadditions:blocks/blockAtomicReconstructorTop",
             "south": "#particle",
-            "north": "actuallyadditions:blocks/blockAtomicReconstructorFront",
             "east": "#particle",
             "west": "#particle"
         },

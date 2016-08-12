@@ -3,11 +3,7 @@
   "defaults": {
     "model": "actuallyadditions:blockCoalGenerator",
     "textures": {
-      "particle": "actuallyadditions:blocks/blockCoalGenerator",
-      "side": "actuallyadditions:blocks/blockCoalGeneratorSide",
-      "bottom": "actuallyadditions:blocks/blockCoalGeneratorBottom",
-      "top": "actuallyadditions:blocks/blockCoalGeneratorTop",
-      "north": "actuallyadditions:blocks/blockCoalGenerator"
+      "particle": "actuallyadditions:blocks/blockCoalGenerator"
     },
     "transform": "forge:default-block"
   },

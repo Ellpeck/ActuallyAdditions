@@ -3,10 +3,7 @@
   "defaults": {
     "model": "actuallyadditions:blockDisplayStand",
     "textures": {
-      "particle": "actuallyadditions:blocks/blockGiantChestTop",
-      "bottom": "actuallyadditions:blocks/blockDisplayStand",
-      "top": "#bottom",
-      "side": "actuallyadditions:blocks/blockDisplayStandSide"
+      "particle": "actuallyadditions:blocks/blockGiantChestTop"
     },
     "transform": "forge:default-block"
   },

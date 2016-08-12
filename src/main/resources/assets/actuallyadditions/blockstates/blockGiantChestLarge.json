@@ -1,11 +1,9 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "minecraft:cube_bottom_top",
+    "model": "actuallyadditions:blockGiantChestLarge",
     "textures": {
-      "side": "actuallyadditions:blocks/blockGiantChestLarge",
-      "bottom": "actuallyadditions:blocks/blockGiantChestTop",
-      "top": "actuallyadditions:blocks/blockGiantChestTop"
+      "particle": "actuallyadditions:blocks/blockGiantChest"
     },
     "transform": "forge:default-block"
   },
