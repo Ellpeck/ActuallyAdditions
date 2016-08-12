@@ -11,17 +11,21 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
+import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
 public class GuiGrinder extends GuiContainer{
@@ -31,6 +35,8 @@ public class GuiGrinder extends GuiContainer{
     private final TileEntityGrinder tileGrinder;
     private final boolean isDouble;
     private EnergyDisplay energy;
+
+    private GuiButton buttonAutoSplit;
 
     public GuiGrinder(InventoryPlayer inventoryPlayer, TileEntityBase tile){
         this(inventoryPlayer, tile, false);
@@ -48,6 +54,11 @@ public class GuiGrinder extends GuiContainer{
     public void initGui(){
         super.initGui();
         this.energy = new EnergyDisplay(this.guiLeft+(this.isDouble ? 13 : 42), this.guiTop+5, this.tileGrinder.storage);
+
+        if(this.isDouble){
+            this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.guiLeft-10, this.guiTop, "S");
+            this.buttonList.add(this.buttonAutoSplit);
+        }
     }
 
     @Override
@@ -56,11 +67,28 @@ public class GuiGrinder extends GuiContainer{
         this.energy.onMouseClick(mouseX, mouseY, mouseButton);
     }
 
+    @Override
+    protected void actionPerformed(GuiButton button) throws IOException{
+        if(this.isDouble && button.id == 0){
+            PacketHandlerHelper.sendButtonPacket(this.tileGrinder, button.id);
+        }
+    }
+
+    @Override
+    public void updateScreen(){
+        super.updateScreen();
+
+        this.buttonAutoSplit.displayString = (this.tileGrinder.isAutoSplit ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"S";
+    }
 
     @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         this.energy.drawOverlay(x, y);
+
+        if(this.isDouble && this.buttonAutoSplit.isMouseOver()){
+            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+"Auto-Split Items "+(this.tileGrinder.isAutoSplit ? "On" : "Off")), x, y);
+        }
     }
 
     @Override

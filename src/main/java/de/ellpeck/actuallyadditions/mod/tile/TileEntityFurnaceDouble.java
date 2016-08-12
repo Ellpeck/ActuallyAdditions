@@ -12,8 +12,11 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,7 +24,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1 = 1;
@@ -36,6 +39,9 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     private int lastFirstSmelt;
     private int lastSecondSmelt;
 
+    public boolean isAutoSplit;
+    private boolean lastAutoSplit;
+
     public TileEntityFurnaceDouble(){
         super(4, "furnaceDouble");
     }
@@ -46,6 +52,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         if(type != NBTType.SAVE_BLOCK){
             compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
             compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
+            compound.setBoolean("IsAutoSplit", this.isAutoSplit);
         }
         this.storage.writeToNBT(compound);
     }
@@ -56,6 +63,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         if(type != NBTType.SAVE_BLOCK){
             this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
             this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
+            this.isAutoSplit = compound.getBoolean("IsAutoSplit");
         }
         this.storage.readFromNBT(compound);
     }
@@ -64,6 +72,10 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
+            if(this.isAutoSplit){
+                autoSplit(this.slots, SLOT_INPUT_1, SLOT_INPUT_2);
+            }
+
             boolean flag = this.firstSmeltTime > 0 || this.secondSmeltTime > 0;
 
             boolean canSmeltOnFirst = this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1);
@@ -112,10 +124,42 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 }
             }
 
-            if((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime) && this.sendUpdateWithInterval()){
+            if((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime || this.isAutoSplit != this.lastAutoSplit) && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastFirstSmelt = this.firstSmeltTime;
+                this.lastAutoSplit = this.isAutoSplit;
                 this.lastSecondSmelt = this.secondSmeltTime;
+            }
+        }
+    }
+
+    public static void autoSplit(ItemStack[] slots, int slot1, int slot2){
+        ItemStack first = slots[slot1];
+        ItemStack second = slots[slot2];
+
+        if(first != null || second != null){
+            ItemStack toSplit = null;
+            if(first == null && second != null){
+                toSplit = second;
+            }
+            else if(second == null && first != null){
+                toSplit = first;
+            }
+            else if(ItemUtil.canBeStacked(first, second)){
+                if(first.stackSize < first.getMaxStackSize() || second.stackSize < second.getMaxStackSize()){
+                    if(!((first.stackSize <= second.stackSize+1 && first.stackSize >= second.stackSize-1) || (second.stackSize <= first.stackSize+1 && second.stackSize >= first.stackSize-1))){
+                        toSplit = first;
+                        toSplit.stackSize += second.stackSize;
+                    }
+                }
+            }
+
+            if(toSplit != null && toSplit.stackSize > 1){
+                ItemStack splitFirst = toSplit.copy();
+                ItemStack secondSplit = splitFirst.splitStack(splitFirst.stackSize/2);
+
+                slots[slot1] = splitFirst;
+                slots[slot2] = secondSplit;
             }
         }
     }
@@ -152,11 +196,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         if(this.slots[theInput].stackSize <= 0){
             this.slots[theInput] = null;
         }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)
@@ -197,5 +236,13 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
+    }
+
+    @Override
+    public void onButtonPressed(int buttonID, EntityPlayer player){
+        if(buttonID == 0){
+            this.isAutoSplit = !this.isAutoSplit;
+            this.markDirty();
+        }
     }
 }

@@ -15,10 +15,12 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
+import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -28,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1_1 = 1;
@@ -44,6 +46,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     private int lastEnergy;
     private int lastFirstCrush;
     private int lastSecondCrush;
+
+    public boolean isAutoSplit;
+    private boolean lastAutoSplit;
 
     public TileEntityGrinder(int slots, String name){
         super(slots, name);
@@ -79,6 +84,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         if(type != NBTType.SAVE_BLOCK){
             compound.setInteger("FirstCrushTime", this.firstCrushTime);
             compound.setInteger("SecondCrushTime", this.secondCrushTime);
+            compound.setBoolean("IsAutoSplit", this.isAutoSplit);
         }
         this.storage.writeToNBT(compound);
         super.writeSyncableNBT(compound, type);
@@ -89,6 +95,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         if(type != NBTType.SAVE_BLOCK){
             this.firstCrushTime = compound.getInteger("FirstCrushTime");
             this.secondCrushTime = compound.getInteger("SecondCrushTime");
+            this.isAutoSplit = compound.getBoolean("IsAutoSplit");
         }
         this.storage.readFromNBT(compound);
         super.readSyncableNBT(compound, type);
@@ -98,6 +105,10 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
+            if(this.isDouble && this.isAutoSplit){
+                TileEntityFurnaceDouble.autoSplit(this.slots, SLOT_INPUT_1, SLOT_INPUT_2);
+            }
+
             boolean flag = this.firstCrushTime > 0 || this.secondCrushTime > 0;
 
             boolean canCrushOnFirst = this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
@@ -159,10 +170,11 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
                 }
             }
 
-            if((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstCrush != this.firstCrushTime || this.lastSecondCrush != this.secondCrushTime) && this.sendUpdateWithInterval()){
+            if((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstCrush != this.firstCrushTime || this.lastSecondCrush != this.secondCrushTime || this.isAutoSplit != this.lastAutoSplit) && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastFirstCrush = this.firstCrushTime;
                 this.lastSecondCrush = this.secondCrushTime;
+                this.lastAutoSplit = this.isAutoSplit;
             }
 
             if(shouldPlaySound && !ConfigBoolValues.LESS_SOUND.isEnabled()){
@@ -270,4 +282,11 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IEnerg
         return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
     }
 
+    @Override
+    public void onButtonPressed(int buttonID, EntityPlayer player){
+        if(buttonID == 0){
+            this.isAutoSplit = !this.isAutoSplit;
+            this.markDirty();
+        }
+    }
 }

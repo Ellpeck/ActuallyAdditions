@@ -11,17 +11,22 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
+import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
 public class GuiFurnaceDouble extends GuiContainer{
@@ -29,6 +34,8 @@ public class GuiFurnaceDouble extends GuiContainer{
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFurnaceDouble");
     private final TileEntityFurnaceDouble tileFurnace;
     private EnergyDisplay energy;
+
+    private GuiButton buttonAutoSplit;
 
     public GuiFurnaceDouble(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerFurnaceDouble(inventory, tile));
@@ -41,6 +48,10 @@ public class GuiFurnaceDouble extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         this.energy.drawOverlay(x, y);
+
+        if(this.buttonAutoSplit.isMouseOver()){
+            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+"Auto-Split Items "+(this.tileFurnace.isAutoSplit ? "On" : "Off")), x, y);
+        }
     }
 
     @Override
@@ -49,11 +60,27 @@ public class GuiFurnaceDouble extends GuiContainer{
         this.energy.onMouseClick(mouseX, mouseY, mouseButton);
     }
 
-
     @Override
     public void initGui(){
         super.initGui();
         this.energy = new EnergyDisplay(this.guiLeft+27, this.guiTop+5, this.tileFurnace.storage);
+
+        this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.guiLeft, this.guiTop, "S");
+        this.buttonList.add(this.buttonAutoSplit);
+    }
+
+    @Override
+    public void updateScreen(){
+        super.updateScreen();
+
+        this.buttonAutoSplit.displayString = (this.tileFurnace.isAutoSplit ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"S";
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) throws IOException{
+        if(button.id == 0){
+            PacketHandlerHelper.sendButtonPacket(this.tileFurnace, button.id);
+        }
     }
 
     @Override
