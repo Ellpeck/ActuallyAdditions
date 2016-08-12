@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
+import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +28,8 @@ public class ContainerXPSolidifier extends Container{
     public ContainerXPSolidifier(InventoryPlayer inventory, TileEntityBase tile){
         this.solidifier = (TileEntityXPSolidifier)tile;
 
-        this.addSlotToContainer(new SlotOutput(this.solidifier, 0, 80, 8));
+        this.addSlotToContainer(new SlotOutput(this.solidifier, 0, 95, 8));
+        this.addSlotToContainer(new Slot(this.solidifier, 1, 65, 8));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -41,7 +43,7 @@ public class ContainerXPSolidifier extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        int inventoryStart = 1;
+        int inventoryStart = 2;
         int inventoryEnd = inventoryStart+26;
         int hotbarStart = inventoryEnd+1;
         int hotbarEnd = hotbarStart+8;
@@ -54,7 +56,12 @@ public class ContainerXPSolidifier extends Container{
 
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
-                if(slot >= inventoryStart && slot <= inventoryEnd){
+                if(newStack.getItem() instanceof ItemSolidifiedExperience){
+                    if(!this.mergeItemStack(newStack, 1, 2, false)){
+                        return null;
+                    }
+                }
+                else if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
                         return null;
                     }

@@ -21,7 +21,7 @@ import net.minecraft.util.EnumFacing;
 
 public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor{
 
-    private static final Integer[] XP_MAP = new Integer[256];
+    private static final int[] XP_MAP = new int[256];
 
     static{
         for(int i = 0; i < XP_MAP.length; i++){
@@ -30,12 +30,16 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     private final int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
-    public short amount;
-    private short lastAmount;
+    public int amount;
+    private int lastAmount;
 
     public TileEntityXPSolidifier(){
-        super(1, "xpSolidifier");
+        super(2, "xpSolidifier");
     }
+
+    /*
+     * The below methods were excerpted from EnderIO by SleepyTrousers with permission, thanks!
+     */
 
     public static int getExperienceForLevel(int level){
         if(level >= 0 && level < XP_MAP.length){
@@ -85,10 +89,6 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         return (int)(getExperienceForLevel(player.experienceLevel)+(player.experience*player.xpBarCap()));
     }
 
-    /*
-     * The below methods were excerpted from EnderIO by SleepyTrousers with permission, thanks!
-     */
-
     public static void addPlayerXP(EntityPlayer player, int amount){
         int experience = Math.max(0, getPlayerXP(player)+amount);
         player.experienceTotal = experience;
@@ -100,13 +100,13 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
-        compound.setShort("Amount", this.amount);
+        compound.setInteger("Amount", this.amount);
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
-        this.amount = compound.getShort("Amount");
+        this.amount = compound.getInteger("Amount");
     }
 
     @Override
@@ -125,6 +125,11 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                     this.slots[0].stackSize += toAdd;
                     this.amount -= toAdd;
                 }
+            }
+            
+            if(this.slots[1] != null && this.slots[1].getItem() instanceof ItemSolidifiedExperience){
+                this.amount+=this.slots[1].stackSize;
+                this.slots[1] = null;
             }
 
             if(this.lastAmount != this.amount && this.sendUpdateWithInterval()){
