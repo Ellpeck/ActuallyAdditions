@@ -158,7 +158,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         if(buttonID < this.buttonAmounts.length){
             if(getPlayerXP(player) > 0){
                 int xp = this.buttonAmounts[buttonID] == -999 ? getPlayerXP(player)/ItemSolidifiedExperience.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
-                if(this.amount < Short.MAX_VALUE-xp && getPlayerXP(player) >= ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp){
+                if(this.amount < Integer.MAX_VALUE-xp && getPlayerXP(player) >= ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp){
                     addPlayerXP(player, -(ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp));
                     if(!this.worldObj.isRemote){
                         this.amount += xp;

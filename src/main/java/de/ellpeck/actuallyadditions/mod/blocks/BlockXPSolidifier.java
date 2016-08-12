@@ -96,32 +96,6 @@ public class BlockXPSolidifier extends BlockContainerBase{
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state){
         this.dropInventory(world, pos);
-        TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileEntityXPSolidifier){
-            TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)tile;
-            if(solidifier.amount > 0){
-                int stacks = solidifier.amount/64;
-                int rest = solidifier.amount%64;
-                for(int i = 0; i < stacks; i++){
-                    this.spawnItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(InitItems.itemSolidifiedExperience, 64));
-                }
-                this.spawnItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(InitItems.itemSolidifiedExperience, rest));
-                solidifier.amount = 0;
-            }
-        }
-
         super.breakBlock(world, pos, state);
-    }
-
-    private void spawnItem(World world, int x, int y, int z, ItemStack stack){
-        float dX = Util.RANDOM.nextFloat()*0.8F+0.1F;
-        float dY = Util.RANDOM.nextFloat()*0.8F+0.1F;
-        float dZ = Util.RANDOM.nextFloat()*0.8F+0.1F;
-        EntityItem entityItem = new EntityItem(world, x+dX, y+dY, z+dZ, stack);
-        float factor = 0.05F;
-        entityItem.motionX = Util.RANDOM.nextGaussian()*factor;
-        entityItem.motionY = Util.RANDOM.nextGaussian()*factor+0.2F;
-        entityItem.motionZ = Util.RANDOM.nextGaussian()*factor;
-        world.spawnEntityInWorld(entityItem);
     }
 }
