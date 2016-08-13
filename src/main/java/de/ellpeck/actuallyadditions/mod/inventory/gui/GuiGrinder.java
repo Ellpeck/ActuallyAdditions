@@ -78,7 +78,9 @@ public class GuiGrinder extends GuiContainer{
     public void updateScreen(){
         super.updateScreen();
 
-        this.buttonAutoSplit.displayString = (this.tileGrinder.isAutoSplit ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"S";
+        if(this.isDouble){
+            this.buttonAutoSplit.displayString = (this.tileGrinder.isAutoSplit ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"S";
+        }
     }
 
     @Override
