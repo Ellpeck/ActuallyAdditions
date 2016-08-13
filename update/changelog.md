@@ -1,3 +1,9 @@
+# 1.10.2-r60
+* Fixed infinite worm tilling
+* Made the grinder not crash you once opening it
+* Fixed a stupid error with items randomly disappearing out of containers sometimes
+* Made Player data less world independent but still world dependent. If you're a server owner or have a console open in Singleplayer, try to look at that from time to time to see if ActAdd throws any errors. From my testing, though, it shouldn't. I hope. Yes. :v
+
 # 1.10.2-r59
 #### This update mainly consists of new models and textures that were done by the lovely [BootyToast](https://www.youtube.com/user/toastacle) (yes, the name's still weird, I know). Notable model/texture changes incluse the storage crate, the reconstructor, coal generator, display stand, bag and void bag (which are now called sacks), however he is planning on redoing most of the textures. So: Overhaul time! Awesome. Definitely check out the new models and textures as they're pretty sweet. Also, he does awesome videos on Youtube. So go check those out too. But also check out this update. It's pretty nice as well. Yea.
 * Made the XP Solidifier pick up any XP orbs nearby when not powered by redstone
