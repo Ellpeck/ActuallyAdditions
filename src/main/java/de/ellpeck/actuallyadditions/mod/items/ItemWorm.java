@@ -64,11 +64,13 @@ public class ItemWorm extends ItemBase{
             World world = event.getWorld();
             if(!world.isRemote){
                 BlockPos pos = event.getPos();
-                IBlockState state = world.getBlockState(pos);
-                if(state.getBlock() instanceof BlockGrass && world.rand.nextFloat() >= 0.95F){
-                    ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2)+1);
-                    EntityItem item = new EntityItem(event.getWorld(), pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5, stack);
-                    world.spawnEntityInWorld(item);
+                if(world.isAirBlock(pos.up())){
+                    IBlockState state = world.getBlockState(pos);
+                    if(state.getBlock() instanceof BlockGrass && world.rand.nextFloat() >= 0.95F){
+                        ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2)+1);
+                        EntityItem item = new EntityItem(event.getWorld(), pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5, stack);
+                        world.spawnEntityInWorld(item);
+                    }
                 }
             }
         }
