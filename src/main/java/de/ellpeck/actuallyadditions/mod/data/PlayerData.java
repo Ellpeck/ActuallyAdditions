@@ -13,13 +13,13 @@ package de.ellpeck.actuallyadditions.mod.data;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public final class PlayerData{
 
     public static PlayerSave getDataFromPlayer(UUID id){
-        ArrayList<PlayerSave> data = WorldData.PLAYER_SAVE_DATA;
+        List<PlayerSave> data = WorldData.getWorldUnspecificData().playerSaveData;
         //Get Data from existing data
         for(PlayerSave save : data){
             if(save.theId != null && save.theId.equals(id)){

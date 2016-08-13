@@ -18,6 +18,7 @@ import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.ISaveHandler;
@@ -27,14 +28,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WorldData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"data";
-    public static final ArrayList<PlayerSave> PLAYER_SAVE_DATA = new ArrayList<PlayerSave>();
     private static final ConcurrentHashMap<Integer, WorldData> WORLD_DATA = new ConcurrentHashMap<Integer, WorldData>();
     public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<Network>();
+    public final ArrayList<PlayerSave> playerSaveData = new ArrayList<PlayerSave>();
     private final ISaveHandler handler;
     private final int dimension;
 
@@ -43,20 +45,20 @@ public class WorldData{
         this.dimension = dimension;
     }
 
+    public static WorldData getWorldUnspecificData(){
+        return getDataForWorld(DimensionType.OVERWORLD.getId());
+    }
+
     public static WorldData getDataForWorld(World world){
-        int dim = world.provider.getDimension();
+        return getDataForWorld(world.provider.getDimension());
+    }
+
+    public static WorldData getDataForWorld(int dim){
         WorldData data = WORLD_DATA.get(dim);
 
         if(data == null){
             data = new WorldData(null, dim);
-
-            if(world.isRemote){
-                WORLD_DATA.put(dim, data);
-                ModUtil.LOGGER.info("Creating temporary WorldData for world "+dim+" on the client!");
-            }
-            else{
-                ModUtil.LOGGER.warn("Trying to get WorldData from world "+dim+" that doesn't have any data!? This shouldn't happen!");
-            }
+            WORLD_DATA.put(dim, data);
         }
 
         return data;
@@ -64,9 +66,6 @@ public class WorldData{
 
     public static void load(World world){
         if(!world.isRemote && world instanceof WorldServer){
-            //Just to be sure it actually gets cleared all the time
-            PLAYER_SAVE_DATA.clear();
-
             WorldData data = new WorldData(new WorldSpecificSaveHandler((WorldServer)world, world.getSaveHandler()), world.provider.getDimension());
             WORLD_DATA.put(data.dimension, data);
 
@@ -117,7 +116,7 @@ public class WorldData{
                 }
             }
             else{
-                ModUtil.LOGGER.error("Tried to save WorldData for "+world.provider.getDimension()+" without any data being present!?");
+                ModUtil.LOGGER.error("Tried to save WorldData for "+world.provider.getDimension()+" without any data handler being present!?");
             }
         }
     }
@@ -139,15 +138,12 @@ public class WorldData{
             this.laserRelayNetworks.add(network);
         }
 
-        if(this.dimension == 0){
-            //Player Data
-            PLAYER_SAVE_DATA.clear();
-
-            NBTTagList playerList = compound.getTagList("PlayerData", 10);
-            for(int i = 0; i < playerList.tagCount(); i++){
-                PlayerSave aSave = PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
-                PLAYER_SAVE_DATA.add(aSave);
-            }
+        //Player Data
+        this.playerSaveData.clear();
+        NBTTagList playerList = compound.getTagList("PlayerData", 10);
+        for(int i = 0; i < playerList.tagCount(); i++){
+            PlayerSave aSave = PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
+            this.playerSaveData.add(aSave);
         }
     }
 
@@ -159,13 +155,11 @@ public class WorldData{
         }
         compound.setTag("Networks", networkList);
 
-        if(this.dimension == 0){
-            //Player Data
-            NBTTagList playerList = new NBTTagList();
-            for(PlayerSave theSave : PLAYER_SAVE_DATA){
-                playerList.appendTag(theSave.toNBT());
-            }
-            compound.setTag("PlayerData", playerList);
+        //Player Data
+        NBTTagList playerList = new NBTTagList();
+        for(PlayerSave theSave : this.playerSaveData){
+            playerList.appendTag(theSave.toNBT());
         }
+        compound.setTag("PlayerData", playerList);
     }
 }
