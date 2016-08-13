@@ -157,7 +157,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
         if(pkt != null){
-            this.receiveSyncCompound(pkt.getNbtCompound());
+            NBTTagCompound compound = pkt.getNbtCompound();
+            this.readFromNBT(compound);
+            this.receiveSyncCompound(compound);
         }
     }
 
