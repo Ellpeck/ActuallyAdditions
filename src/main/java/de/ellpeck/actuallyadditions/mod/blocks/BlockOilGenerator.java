@@ -18,7 +18,9 @@ import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -27,6 +29,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -35,6 +38,8 @@ import java.util.Random;
 
 public class BlockOilGenerator extends BlockContainerBase{
 
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 7);
+
     public BlockOilGenerator(String name){
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
@@ -42,6 +47,17 @@ public class BlockOilGenerator extends BlockContainerBase{
         this.setResistance(10.0F);
         this.setSoundType(SoundType.STONE);
         this.setTickRandomly(true);
+    }
+
+
+    @Override
+    public boolean isFullCube(IBlockState state){
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state){
+        return false;
     }
 
 
@@ -78,6 +94,26 @@ public class BlockOilGenerator extends BlockContainerBase{
     }
 
     @Override
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
+        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
+
+        if(rotation == 0){
+            world.setBlockState(pos, this.getStateFromMeta(0), 2);
+        }
+        if(rotation == 1){
+            world.setBlockState(pos, this.getStateFromMeta(3), 2);
+        }
+        if(rotation == 2){
+            world.setBlockState(pos, this.getStateFromMeta(1), 2);
+        }
+        if(rotation == 3){
+            world.setBlockState(pos, this.getStateFromMeta(2), 2);
+        }
+
+        super.onBlockPlacedBy(world, pos, state, player, stack);
+    }
+
+    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
     }
@@ -87,4 +123,10 @@ public class BlockOilGenerator extends BlockContainerBase{
         this.dropInventory(world, pos);
         super.breakBlock(world, pos, state);
     }
+
+    @Override
+    protected PropertyInteger getMetaProperty(){
+        return META;
+    }
+
 }
