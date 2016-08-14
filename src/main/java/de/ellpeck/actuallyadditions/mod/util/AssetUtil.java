@@ -62,15 +62,17 @@ public final class AssetUtil{
 
     @SideOnly(Side.CLIENT)
     public static void renderItemInWorld(ItemStack stack){
-        GlStateManager.pushMatrix();
-        GlStateManager.disableLighting();
-        GlStateManager.pushAttrib();
-        RenderHelper.enableStandardItemLighting();
-        Minecraft.getMinecraft().getRenderItem().renderItem(stack, TransformType.FIXED);
-        RenderHelper.disableStandardItemLighting();
-        GlStateManager.popAttrib();
-        GlStateManager.enableLighting();
-        GlStateManager.popMatrix();
+        if(stack != null && stack.getItem() != null){
+            GlStateManager.pushMatrix();
+            GlStateManager.disableLighting();
+            GlStateManager.pushAttrib();
+            RenderHelper.enableStandardItemLighting();
+            Minecraft.getMinecraft().getRenderItem().renderItem(stack, TransformType.FIXED);
+            RenderHelper.disableStandardItemLighting();
+            GlStateManager.popAttrib();
+            GlStateManager.enableLighting();
+            GlStateManager.popMatrix();
+        }
     }
 
     @SideOnly(Side.CLIENT)

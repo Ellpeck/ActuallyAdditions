@@ -91,7 +91,7 @@ public final class SmileyCloudEasterEggs{
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(true, new ItemStack(Items.MILK_BUCKET));
-                renderHeadBlock(Blocks.LIT_REDSTONE_LAMP, 0, 35F);
+                renderHeadBlock(Blocks.REDSTONE_LAMP, 0, 35F);
             }
         });
         //Vazkii
