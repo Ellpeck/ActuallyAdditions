@@ -279,7 +279,7 @@ public final class BlockCrafting{
                     'B', new ItemStack(Items.REDSTONE),
                     'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                     'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
-                    'C', new ItemStack(Blocks.CHEST)));
+                    'C', "chestWood"));
             recipeItemInterface = RecipeUtil.lastIRecipe();
         }
 
@@ -459,7 +459,7 @@ public final class BlockCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockPhantomface),
                     " C ", "EBE", " S ",
                     'E', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()),
-                    'C', Blocks.CHEST,
+                    'C', "chestWood",
                     'S', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                     'B', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal())));
             recipePhantomface = RecipeUtil.lastIRecipe();
@@ -710,7 +710,7 @@ public final class BlockCrafting{
         if(ConfigCrafting.GIANT_CHEST.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGiantChest),
                     "CWC", "WDW", "CWC",
-                    'C', new ItemStack(Blocks.CHEST),
+                    'C', "chestWood",
                     'D', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()),
                     'W', "plankWood"));
             recipeCrate = RecipeUtil.lastIRecipe();

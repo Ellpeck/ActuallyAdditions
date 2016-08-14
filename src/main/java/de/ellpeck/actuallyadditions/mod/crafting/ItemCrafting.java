@@ -99,7 +99,7 @@ public final class ItemCrafting{
                     "SLS", "SCS", "LVL",
                     'S', new ItemStack(Items.STRING),
                     'L', new ItemStack(Items.LEATHER),
-                    'C', new ItemStack(Blocks.CHEST),
+                    'C', "chestWood",
                     'V', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal())));
             recipeBag = RecipeUtil.lastIRecipe();
         }
