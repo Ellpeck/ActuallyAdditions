@@ -38,7 +38,7 @@ import java.util.Random;
 
 public class BlockOilGenerator extends BlockContainerBase{
 
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 7);
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
 
     public BlockOilGenerator(String name){
         super(Material.ROCK, name);
@@ -49,7 +49,6 @@ public class BlockOilGenerator extends BlockContainerBase{
         this.setTickRandomly(true);
     }
 
-
     @Override
     public boolean isFullCube(IBlockState state){
         return false;
@@ -59,7 +58,6 @@ public class BlockOilGenerator extends BlockContainerBase{
     public boolean isOpaqueCube(IBlockState state){
         return false;
     }
-
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){

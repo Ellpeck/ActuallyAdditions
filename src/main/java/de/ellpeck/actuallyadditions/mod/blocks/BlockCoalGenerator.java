@@ -49,7 +49,6 @@ public class BlockCoalGenerator extends BlockContainerBase{
         this.setTickRandomly(true);
     }
 
-
     @Override
     public boolean isFullCube(IBlockState state){
         return false;
@@ -59,7 +58,6 @@ public class BlockCoalGenerator extends BlockContainerBase{
     public boolean isOpaqueCube(IBlockState state){
         return false;
     }
-
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
