@@ -132,13 +132,11 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
         this.readSyncableNBT(compound, NBTType.SAVE_TILE);
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound){
-        compound = super.writeToNBT(compound);
         this.writeSyncableNBT(compound, NBTType.SAVE_TILE);
         return compound;
     }
@@ -155,10 +153,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
+    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
         if(pkt != null){
             NBTTagCompound compound = pkt.getNbtCompound();
-            this.readFromNBT(compound);
             this.receiveSyncCompound(compound);
         }
     }
@@ -169,14 +166,13 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     @Override
     public NBTTagCompound getUpdateTag(){
-        NBTTagCompound tag = super.getUpdateTag();
-        this.writeSyncableNBT(tag, NBTType.SYNC);
-        return tag;
+        NBTTagCompound compound = new NBTTagCompound();
+        this.writeSyncableNBT(compound, NBTType.SYNC);
+        return compound;
     }
 
     @Override
-    public void handleUpdateTag(NBTTagCompound compound){
-        super.handleUpdateTag(compound);
+    public final void handleUpdateTag(NBTTagCompound compound){
         this.receiveSyncCompound(compound);
     }
 
@@ -186,6 +182,8 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeToNBT(compound);
+
         if(type == NBTType.SAVE_TILE){
             compound.setBoolean("Redstone", this.isRedstonePowered);
             compound.setInteger("TicksElapsed", this.ticksElapsed);
@@ -201,6 +199,8 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readFromNBT(compound);
+
         if(type == NBTType.SAVE_TILE){
             this.isRedstonePowered = compound.getBoolean("Redstone");
             this.ticksElapsed = compound.getInteger("TicksElapsed");
