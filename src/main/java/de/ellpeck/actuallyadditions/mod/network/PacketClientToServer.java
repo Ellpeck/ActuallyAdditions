@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -59,10 +60,16 @@ public class PacketClientToServer implements IMessage{
     public static class Handler implements IMessageHandler<PacketClientToServer, IMessage>{
 
         @Override
-        public IMessage onMessage(PacketClientToServer message, MessageContext ctx){
-            if(message.data != null && message.handler != null){
-                message.handler.handleData(message.data);
-            }
+        public IMessage onMessage(PacketClientToServer aMessage, MessageContext ctx){
+            final PacketClientToServer message = aMessage;
+            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(new Runnable(){
+                @Override
+                public void run(){
+                    if(message.data != null && message.handler != null){
+                        message.handler.handleData(message.data);
+                    }
+                }
+            });
             return null;
         }
     }
