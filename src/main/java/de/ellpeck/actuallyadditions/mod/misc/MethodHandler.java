@@ -145,18 +145,23 @@ public class MethodHandler implements IMethodHandler{
                                 List<ItemStack> outputs = RecipeUtil.getConversionLensOutputs(recipe);
                                 if(outputs != null && !outputs.isEmpty()){
                                     ItemStack output = outputs.get(0);
-                                    if(output.getItem() instanceof ItemBlock){
+                                    if(output != null){
                                         if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                                             tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
                                         }
-                                        tile.getWorldObject().setBlockState(pos, Block.getBlockFromItem(output.getItem()).getStateFromMeta(output.getItemDamage()), 2);
+
+                                        if(output.getItem() instanceof ItemBlock){
+                                            tile.getWorldObject().setBlockState(pos, Block.getBlockFromItem(output.getItem()).getStateFromMeta(output.getItemDamage()), 2);
+                                        }
+                                        else{
+                                            EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
+                                            tile.getWorldObject().spawnEntityInWorld(item);
+                                            tile.getWorldObject().setBlockToAir(pos);
+                                        }
+
+                                        tile.extractEnergy(recipe.energyUse);
+                                        break;
                                     }
-                                    else{
-                                        EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
-                                        tile.getWorldObject().spawnEntityInWorld(item);
-                                    }
-                                    tile.extractEnergy(recipe.energyUse);
-                                    break;
                                 }
                             }
                         }
