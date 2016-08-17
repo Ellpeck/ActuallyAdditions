@@ -36,6 +36,15 @@ public class BlockCanolaPress extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
+    @Override
+    public boolean isFullCube(IBlockState state){
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state){
+        return false;
+    }
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
