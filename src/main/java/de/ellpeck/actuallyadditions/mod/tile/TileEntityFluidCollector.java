@@ -16,9 +16,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
@@ -91,13 +95,26 @@ public class TileEntityFluidCollector extends TileEntityBase implements net.mine
         }
         else if(this.isPlacer && blockToBreak.isReplaceable(this.worldObj, coordsBlock)){
             if(this.tank.getFluidAmount() >= Util.BUCKET){
-                Block fluid = this.tank.getFluid().getFluid().getBlock();
+                FluidStack stack = this.tank.getFluid();
+                Block fluid = stack.getFluid().getBlock();
                 if(fluid != null){
                     BlockPos offsetPos = this.pos.offset(sideToManipulate);
                     boolean placeable = !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && blockToBreak.isReplaceable(this.worldObj, offsetPos);
                     if(placeable){
-                        this.worldObj.setBlockState(offsetPos, fluid.getDefaultState(), 3);
                         this.tank.drainInternal(Util.BUCKET, true);
+
+                        if(this.worldObj.provider.doesWaterVaporize() && stack.getFluid().doesVaporize(stack)){
+                            this.worldObj.playSound(null, offsetPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F+(this.worldObj.rand.nextFloat()-this.worldObj.rand.nextFloat())*0.8F);
+
+                            if(this.worldObj instanceof WorldServer){
+                                for(int l = 0; l < 8; ++l){
+                                    ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, (double)offsetPos.getX()+Math.random(), (double)offsetPos.getY()+Math.random(), (double)offsetPos.getZ()+Math.random(), 1, 0.0D, 0.0D, 0.0D, 0);
+                                }
+                            }
+                        }
+                        else{
+                            this.worldObj.setBlockState(offsetPos, fluid.getDefaultState(), 3);
+                        }
                     }
                 }
             }
