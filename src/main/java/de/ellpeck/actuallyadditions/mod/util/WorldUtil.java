@@ -181,7 +181,7 @@ public final class WorldUtil{
     }
 
     public static ItemStack useItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
-        if(world instanceof WorldServer && stack != null && stack.getItem() != null){
+        if(world instanceof WorldServer && stack != null && stack.getItem() != null && pos != null){
             BlockPos offsetPos = pos.offset(side);
             IBlockState state = world.getBlockState(offsetPos);
             Block block = state.getBlock();

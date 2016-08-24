@@ -132,27 +132,29 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     private void doWork(){
-        if(this.isBreaker){
-            Block blockToBreak = this.worldObj.getBlockState(this.boundPosition).getBlock();
-            if(blockToBreak != null && blockToBreak.getBlockHardness(this.worldObj.getBlockState(this.boundPosition), this.worldObj, this.boundPosition) > -1.0F){
-                ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                drops.addAll(blockToBreak.getDrops(this.worldObj, this.boundPosition, this.worldObj.getBlockState(this.boundPosition), 0));
+        if(this.isBoundThingInRange()){
+            if(this.isBreaker){
+                Block blockToBreak = this.worldObj.getBlockState(this.boundPosition).getBlock();
+                if(blockToBreak != null && blockToBreak.getBlockHardness(this.worldObj.getBlockState(this.boundPosition), this.worldObj, this.boundPosition) > -1.0F){
+                    ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+                    drops.addAll(blockToBreak.getDrops(this.worldObj, this.boundPosition, this.worldObj.getBlockState(this.boundPosition), 0));
 
-                if(WorldUtil.addToInventory(this, drops, false, true)){
-                    if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                        this.worldObj.playEvent(2001, this.boundPosition, Block.getStateId(this.worldObj.getBlockState(this.boundPosition)));
+                    if(WorldUtil.addToInventory(this, drops, false, true)){
+                        if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
+                            this.worldObj.playEvent(2001, this.boundPosition, Block.getStateId(this.worldObj.getBlockState(this.boundPosition)));
+                        }
+                        this.worldObj.setBlockToAir(this.boundPosition);
+                        WorldUtil.addToInventory(this, drops, true, true);
+                        this.markDirty();
                     }
-                    this.worldObj.setBlockToAir(this.boundPosition);
-                    WorldUtil.addToInventory(this, drops, true, true);
-                    this.markDirty();
                 }
             }
-        }
-        else{
-            int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-            this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.worldObj, this.boundPosition, this.slots[theSlot]));
-            if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
-                this.slots[theSlot] = null;
+            else{
+                int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
+                this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.worldObj, this.boundPosition, this.slots[theSlot]));
+                if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
+                    this.slots[theSlot] = null;
+                }
             }
         }
     }
