@@ -16,12 +16,15 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fluids.IFluidBlock;
 
 import java.util.List;
 
@@ -85,7 +88,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
         BlockPos coordsBlock = this.pos.offset(sideToManipulate);
         IBlockState stateToBreak = this.worldObj.getBlockState(coordsBlock);
         Block blockToBreak = stateToBreak.getBlock();
-        if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(stateToBreak, this.worldObj, coordsBlock) > -1.0F){
+        if(!this.isPlacer && blockToBreak != null && !(blockToBreak instanceof BlockAir) && !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && blockToBreak.getBlockHardness(stateToBreak, this.worldObj, coordsBlock) >= 0.0F){
             List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, stateToBreak, 0);
             float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
 
