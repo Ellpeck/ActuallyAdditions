@@ -27,6 +27,7 @@ public class EntityWorm extends Entity{
 
     public EntityWorm(World world){
         super(world);
+        this.setEntityBoundingBox(null);
     }
 
     @Override
