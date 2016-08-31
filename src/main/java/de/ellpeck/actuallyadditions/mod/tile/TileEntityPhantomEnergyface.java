@@ -23,7 +23,7 @@ import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
-public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements IEnergyReceiver, IEnergyProvider{
+public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements ICustomEnergyReceiver, ISharingEnergyProvider{
 
     public TileEntityPhantomEnergyface(){
         super("energyface");
@@ -131,5 +131,20 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
             }
         }
         return false;
+    }
+
+    @Override
+    public int getEnergyToSplitShare(){
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public boolean doesShareEnergy(){
+        return true;
+    }
+
+    @Override
+    public EnumFacing[] getEnergyShareSides(){
+        return EnumFacing.values();
     }
 }

@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
@@ -33,7 +32,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
-public class TileEntityMiner extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor, IEnergyDisplay{
+public class TileEntityMiner extends TileEntityInventoryBase implements ICustomEnergyReceiver, IButtonReactor, IEnergyDisplay{
 
     public static final int ENERGY_USE_PER_BLOCK = 1500;
     public static final int DEFAULT_RANGE = 2;

@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -20,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
-public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay, IEnergyReceiver{
+public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay, ICustomEnergyReceiver{
 
     public final EnergyStorage storage = new EnergyStorage(800000);
     private int oldEnergy;

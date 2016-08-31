@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -25,7 +24,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCanolaPress extends TileEntityInventoryBase implements IEnergyReceiver, net.minecraftforge.fluids.IFluidHandler{
+public class TileEntityCanolaPress extends TileEntityInventoryBase implements ICustomEnergyReceiver, ISharingFluidHandler{
 
     public static final int PRODUCE = 80;
     public static final int ENERGY_USE = 35;
@@ -211,5 +210,20 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IE
         else{
             return null;
         }
+    }
+
+    @Override
+    public int getFluidAmountToSplitShare(){
+        return this.tank.getFluidAmount();
+    }
+
+    @Override
+    public boolean doesShareFluid(){
+        return true;
+    }
+
+    @Override
+    public EnumFacing[] getFluidShareSides(){
+        return EnumFacing.values();
     }
 }

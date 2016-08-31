@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -30,7 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class TileEntityGrinder extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor{
+public class TileEntityGrinder extends TileEntityInventoryBase implements ICustomEnergyReceiver, IButtonReactor{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1_1 = 1;

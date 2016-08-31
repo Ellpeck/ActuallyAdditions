@@ -21,13 +21,14 @@ import net.darkhax.tesla.api.ITeslaConsumer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements IEnergyReceiver{
+public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements ICustomEnergyReceiver{
 
     public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
 
@@ -92,6 +93,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
         //Keeps track of all the Laser Relays and Energy Acceptors that have been checked already to make nothing run multiple times
         List<BlockPos> alreadyChecked = new ArrayList<BlockPos>();
 
+        List<TileEntityLaserRelayEnergy> relaysThatWork = new ArrayList<TileEntityLaserRelayEnergy>();
+        int totalReceiverAmount = 0;
+
         for(ConnectionPair pair : network.connections){
             for(BlockPos relay : pair.positions){
                 if(relay != null && !alreadyChecked.contains(relay)){
@@ -99,40 +103,52 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                     TileEntity relayTile = this.worldObj.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayEnergy){
                         TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy)relayTile;
-                        double highestLoss = Math.max(theRelay.getLossPercentage(), this.getLossPercentage());
-                        int lowestCap = Math.min(theRelay.getEnergyCap(), this.getEnergyCap());
-                        for(Map.Entry<EnumFacing, TileEntity> receiver : theRelay.receiversAround.entrySet()){
-                            if(receiver != null){
-                                EnumFacing side = receiver.getKey();
-                                EnumFacing opp = side.getOpposite();
-                                TileEntity tile = receiver.getValue();
-                                if(!alreadyChecked.contains(tile.getPos())){
-                                    alreadyChecked.add(tile.getPos());
-                                    if(theRelay != this || side != from){
-                                        if(tile instanceof IEnergyReceiver){
-                                            IEnergyReceiver iReceiver = (IEnergyReceiver)tile;
-                                            if(iReceiver.canConnectEnergy(opp)){
-                                                int theoreticalReceived = iReceiver.receiveEnergy(opp, Math.min(maxTransfer, lowestCap)-transmitted, true);
-                                                int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
-                                                transmitted += iReceiver.receiveEnergy(opp, theoreticalReceived-deduct, simulate);
-                                                transmitted += deduct;
-                                            }
-                                        }
-                                        else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
-                                            ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
-                                            if(cap != null){
-                                                int theoreticalReceived = (int)cap.givePower(Math.min(maxTransfer, lowestCap)-transmitted, true);
-                                                int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
-                                                transmitted += cap.givePower(theoreticalReceived-deduct, simulate);
-                                                transmitted += deduct;
-                                            }
-                                        }
+                        int amount = theRelay.receiversAround.size();
+                        if(amount > 0){
+                            relaysThatWork.add(theRelay);
+                            totalReceiverAmount += amount;
+                        }
+                    }
+                }
+            }
+        }
 
-                                        //If everything that could be transmitted was transmitted
-                                        if(transmitted >= maxTransfer){
-                                            return transmitted;
-                                        }
+        if(totalReceiverAmount > 0 && !relaysThatWork.isEmpty()){
+            int amountPer = maxTransfer/totalReceiverAmount;
+
+            for(TileEntityLaserRelayEnergy theRelay : relaysThatWork){
+                double highestLoss = Math.max(theRelay.getLossPercentage(), this.getLossPercentage());
+                int lowestCap = Math.min(theRelay.getEnergyCap(), this.getEnergyCap());
+                for(Map.Entry<EnumFacing, TileEntity> receiver : theRelay.receiversAround.entrySet()){
+                    if(receiver != null){
+                        EnumFacing side = receiver.getKey();
+                        EnumFacing opp = side.getOpposite();
+                        TileEntity tile = receiver.getValue();
+                        if(!alreadyChecked.contains(tile.getPos())){
+                            alreadyChecked.add(tile.getPos());
+                            if(theRelay != this || side != from){
+                                if(tile instanceof IEnergyReceiver){
+                                    IEnergyReceiver iReceiver = (IEnergyReceiver)tile;
+                                    if(iReceiver.canConnectEnergy(opp)){
+                                        int theoreticalReceived = iReceiver.receiveEnergy(opp, Math.min(amountPer, lowestCap), true);
+                                        int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
+                                        transmitted += iReceiver.receiveEnergy(opp, theoreticalReceived-deduct, simulate);
+                                        transmitted += deduct;
                                     }
+                                }
+                                else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
+                                    ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
+                                    if(cap != null){
+                                        int theoreticalReceived = (int)cap.givePower(Math.min(amountPer, lowestCap), true);
+                                        int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
+                                        transmitted += cap.givePower(theoreticalReceived-deduct, simulate);
+                                        transmitted += deduct;
+                                    }
+                                }
+
+                                //If everything that could be transmitted was transmitted
+                                if(transmitted >= maxTransfer){
+                                    return transmitted;
                                 }
                             }
                         }
@@ -140,11 +156,12 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                 }
             }
         }
+
         return transmitted;
     }
 
     private int calcDeduction(int theoreticalReceived, double highestLoss){
-        return ConfigBoolValues.LASER_RELAY_LOSS.isEnabled() ? (int)(theoreticalReceived*(highestLoss/100)) : 0;
+        return ConfigBoolValues.LASER_RELAY_LOSS.isEnabled() ? MathHelper.ceiling_double_int(theoreticalReceived*(highestLoss/100)) : 0;
     }
 
     public int getEnergyCap(){

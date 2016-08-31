@@ -22,7 +22,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityOilGenerator extends TileEntityBase implements IEnergyProvider, net.minecraftforge.fluids.IFluidHandler{
+public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler{
 
     public static final int ENERGY_PRODUCED = 76;
     private static final int BURN_TIME = 100;
@@ -191,5 +191,35 @@ public class TileEntityOilGenerator extends TileEntityBase implements IEnergyPro
         else{
             return null;
         }
+    }
+
+    @Override
+    public int getFluidAmountToSplitShare(){
+        return 0;
+    }
+
+    @Override
+    public boolean doesShareFluid(){
+        return false;
+    }
+
+    @Override
+    public EnumFacing[] getFluidShareSides(){
+        return null;
+    }
+
+    @Override
+    public int getEnergyToSplitShare(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public boolean doesShareEnergy(){
+        return true;
+    }
+
+    @Override
+    public EnumFacing[] getEnergyShareSides(){
+        return EnumFacing.values();
     }
 }

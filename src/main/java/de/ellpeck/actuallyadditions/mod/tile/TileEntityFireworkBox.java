@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.init.Items;
@@ -23,7 +22,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class TileEntityFireworkBox extends TileEntityBase implements IEnergyReceiver, IEnergyDisplay{
+public class TileEntityFireworkBox extends TileEntityBase implements ICustomEnergyReceiver, IEnergyDisplay{
 
     public static final int USE_PER_SHOT = 300;
     public final EnergyStorage storage = new EnergyStorage(20000);

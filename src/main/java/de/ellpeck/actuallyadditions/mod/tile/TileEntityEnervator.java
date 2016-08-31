@@ -23,7 +23,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityEnervator extends TileEntityInventoryBase implements IEnergyProvider{
+public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
     public final EnergyStorage storage = new EnergyStorage(500000);
     private int lastEnergy;
@@ -131,5 +131,20 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements IEne
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot == 1;
+    }
+
+    @Override
+    public int getEnergyToSplitShare(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public boolean doesShareEnergy(){
+        return true;
+    }
+
+    @Override
+    public EnumFacing[] getEnergyShareSides(){
+        return EnumFacing.values();
     }
 }

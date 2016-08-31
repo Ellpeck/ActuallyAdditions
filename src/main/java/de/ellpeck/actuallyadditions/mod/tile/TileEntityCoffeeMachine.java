@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -31,7 +30,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, IEnergyReceiver, net.minecraftforge.fluids.IFluidHandler{
+public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, ICustomEnergyReceiver, ISharingFluidHandler{
 
     public static final int SLOT_COFFEE_BEANS = 0;
     public static final int SLOT_INPUT = 1;
@@ -280,5 +279,20 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         else{
             return null;
         }
+    }
+
+    @Override
+    public int getFluidAmountToSplitShare(){
+        return 0;
+    }
+
+    @Override
+    public boolean doesShareFluid(){
+        return false;
+    }
+
+    @Override
+    public EnumFacing[] getFluidShareSides(){
+        return null;
     }
 }

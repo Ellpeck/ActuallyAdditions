@@ -17,7 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyProvider, IEnergyDisplay{
+public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay{
 
     public static final int PRODUCE = 8;
     public final EnergyStorage storage = new EnergyStorage(30000);
@@ -95,5 +95,20 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements IEnergyPro
     @Override
     public boolean needsHoldShift(){
         return false;
+    }
+
+    @Override
+    public int getEnergyToSplitShare(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public boolean doesShareEnergy(){
+        return true;
+    }
+
+    @Override
+    public EnumFacing[] getEnergyShareSides(){
+        return EnumFacing.values();
     }
 }

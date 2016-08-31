@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerFluidMap;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFermentingBarrel extends TileEntityBase implements net.minecraftforge.fluids.IFluidHandler{
+public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler{
 
     private static final int PROCESS_TIME = 100;
     public final FluidTank canolaTank = new FluidTank(2*Util.BUCKET){
@@ -175,5 +175,20 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements net.mi
         else{
             return null;
         }
+    }
+
+    @Override
+    public int getFluidAmountToSplitShare(){
+        return this.oilTank.getFluidAmount();
+    }
+
+    @Override
+    public boolean doesShareFluid(){
+        return true;
+    }
+
+    @Override
+    public EnumFacing[] getFluidShareSides(){
+        return EnumFacing.values();
     }
 }

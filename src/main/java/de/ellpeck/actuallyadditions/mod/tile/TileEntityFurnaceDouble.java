@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.Block;
@@ -24,7 +23,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IEnergyReceiver, IButtonReactor{
+public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements ICustomEnergyReceiver, IButtonReactor{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1 = 1;

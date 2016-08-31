@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -28,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements ICustomEnergyReceiver{
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;

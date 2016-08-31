@@ -13,13 +13,10 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements IFluidHandler{
+public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements ISharingFluidHandler{
 
     public TileEntityPhantomLiquiface(){
         super("liquiface");
@@ -87,5 +84,20 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
             }
         }
         return null;
+    }
+
+    @Override
+    public int getFluidAmountToSplitShare(){
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public boolean doesShareFluid(){
+        return true;
+    }
+
+    @Override
+    public EnumFacing[] getFluidShareSides(){
+        return EnumFacing.values();
     }
 }

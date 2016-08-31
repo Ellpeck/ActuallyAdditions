@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,7 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityItemRepairer extends TileEntityInventoryBase implements IEnergyReceiver{
+public class TileEntityItemRepairer extends TileEntityInventoryBase implements ICustomEnergyReceiver{
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;

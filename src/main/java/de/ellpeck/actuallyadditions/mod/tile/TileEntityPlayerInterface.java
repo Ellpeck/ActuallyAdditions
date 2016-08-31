@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyContainerItem;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
@@ -24,7 +23,7 @@ import net.minecraft.util.EnumFacing;
 
 import java.util.UUID;
 
-public class TileEntityPlayerInterface extends TileEntityInventoryBase implements IEnergyReceiver, IEnergyDisplay{
+public class TileEntityPlayerInterface extends TileEntityInventoryBase implements ICustomEnergyReceiver, IEnergyDisplay{
 
     public static final int DEFAULT_RANGE = 32;
     private final EnergyStorage storage = new EnergyStorage(30000);

@@ -29,7 +29,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFluidCollector extends TileEntityBase implements net.minecraftforge.fluids.IFluidHandler{
+public class TileEntityFluidCollector extends TileEntityBase implements ISharingFluidHandler{
 
     public boolean isPlacer;
     public final FluidTank tank = new FluidTank(8*Util.BUCKET){
@@ -224,5 +224,20 @@ public class TileEntityFluidCollector extends TileEntityBase implements net.mine
         else{
             return null;
         }
+    }
+
+    @Override
+    public int getFluidAmountToSplitShare(){
+        return this.tank.getFluidAmount();
+    }
+
+    @Override
+    public boolean doesShareFluid(){
+        return true;
+    }
+
+    @Override
+    public EnumFacing[] getFluidShareSides(){
+        return EnumFacing.values();
     }
 }

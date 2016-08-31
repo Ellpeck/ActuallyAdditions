@@ -19,7 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoalGenerator extends TileEntityInventoryBase implements IEnergyProvider{
+public class TileEntityCoalGenerator extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
     public static final int PRODUCE = 30;
     public final EnergyStorage storage = new EnergyStorage(60000);
@@ -130,5 +130,20 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
+    }
+
+    @Override
+    public int getEnergyToSplitShare(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public boolean doesShareEnergy(){
+        return true;
+    }
+
+    @Override
+    public EnumFacing[] getEnergyShareSides(){
+        return EnumFacing.values();
     }
 }

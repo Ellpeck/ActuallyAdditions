@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -22,7 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyReceiver, IEnergyDisplay{
+public class TileEntityLavaFactoryController extends TileEntityBase implements ICustomEnergyReceiver, IEnergyDisplay{
 
     public static final int NOT_MULTI = 0;
     public static final int HAS_LAVA = 1;

@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
@@ -219,12 +217,26 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         this.ticksElapsed++;
 
         if(!this.worldObj.isRemote){
-            if(this instanceof IEnergyReceiver || this instanceof IEnergyProvider){
-                WorldUtil.doEnergyInteraction(this);
+            if(this instanceof ISharingEnergyProvider){
+                ISharingEnergyProvider provider = (ISharingEnergyProvider)this;
+                if(provider.doesShareEnergy()){
+                    EnumFacing[] sides = provider.getEnergyShareSides();
+                    int amount = provider.getEnergyToSplitShare()/sides.length;
+                    for(EnumFacing side : sides){
+                        WorldUtil.doEnergyInteraction(this, side, amount);
+                    }
+                }
             }
 
-            if(this instanceof net.minecraftforge.fluids.IFluidHandler || this.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)){
-                WorldUtil.doFluidInteraction(this);
+            if(this instanceof ISharingFluidHandler){
+                ISharingFluidHandler handler = (ISharingFluidHandler)this;
+                if(handler.doesShareFluid()){
+                    EnumFacing[] sides = handler.getFluidShareSides();
+                    int amount = handler.getFluidAmountToSplitShare()/sides.length;
+                    for(EnumFacing side : sides){
+                        WorldUtil.doFluidInteraction(this, side, amount);
+                    }
+                }
             }
         }
     }

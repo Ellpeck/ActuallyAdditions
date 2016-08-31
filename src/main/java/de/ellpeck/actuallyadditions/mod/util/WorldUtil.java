@@ -91,70 +91,51 @@ public final class WorldUtil{
         return null;
     }
 
-    public static void doEnergyInteraction(TileEntity tile){
-        for(EnumFacing side : EnumFacing.values()){
-            TileEntity otherTile = tile.getWorld().getTileEntity(tile.getPos().offset(side));
-            if(otherTile != null){
-                IEnergyReceiver handlerTo = null;
-                IEnergyProvider handlerFrom = null;
+    public static void doEnergyInteraction(TileEntity tileFrom, EnumFacing sideTo, int maxTransfer){
+        TileEntity tileTo = tileFrom.getWorld().getTileEntity(tileFrom.getPos().offset(sideTo));
+        if(tileTo != null){
+            if(tileFrom instanceof IEnergyProvider && tileTo instanceof IEnergyReceiver){
+                IEnergyReceiver handlerTo = (IEnergyReceiver)tileTo;
+                IEnergyProvider handlerFrom = (IEnergyProvider)tileFrom;
 
-                //Push RF
-                if(tile instanceof IEnergyProvider && otherTile instanceof IEnergyReceiver){
-                    handlerTo = (IEnergyReceiver)otherTile;
-                    handlerFrom = (IEnergyProvider)tile;
-                }
-                //Pull RF
-                else if(tile instanceof IEnergyReceiver && otherTile instanceof IEnergyProvider){
-                    handlerTo = (IEnergyReceiver)tile;
-                    handlerFrom = (IEnergyProvider)otherTile;
-                }
-
-                if(handlerFrom != null && handlerTo != null){
-                    int drain = handlerFrom.extractEnergy(side, Integer.MAX_VALUE, true);
-                    if(drain > 0){
-                        if(handlerTo.canConnectEnergy(side.getOpposite())){
-                            int filled = handlerTo.receiveEnergy(side.getOpposite(), drain, false);
-                            handlerFrom.extractEnergy(side, filled, false);
-                        }
+                int drain = handlerFrom.extractEnergy(sideTo, maxTransfer, true);
+                if(drain > 0){
+                    if(handlerTo.canConnectEnergy(sideTo.getOpposite())){
+                        int filled = handlerTo.receiveEnergy(sideTo.getOpposite(), drain, false);
+                        handlerFrom.extractEnergy(sideTo, filled, false);
                     }
                 }
-                else if(ActuallyAdditions.teslaLoaded){
-                    TeslaUtil.doWrappedTeslaRFInteraction(tile, otherTile, side);
-                }
+            }
+            else if(ActuallyAdditions.teslaLoaded){
+                TeslaUtil.doWrappedTeslaRFInteraction(tileFrom, tileTo, sideTo, maxTransfer);
             }
         }
     }
 
-    public static void doFluidInteraction(TileEntity tile){
-        for(EnumFacing side : EnumFacing.values()){
-            TileEntity otherTile = tile.getWorld().getTileEntity(tile.getPos().offset(side));
-            if(otherTile != null){
-                for(int i = 0; i < 2; i++){
-                    //Push and pull with old fluid system
-                    if(tile instanceof net.minecraftforge.fluids.IFluidHandler && otherTile instanceof net.minecraftforge.fluids.IFluidHandler){
-                        net.minecraftforge.fluids.IFluidHandler handlerTo = (net.minecraftforge.fluids.IFluidHandler)(i == 0 ? tile : otherTile);
-                        net.minecraftforge.fluids.IFluidHandler handlerFrom = (net.minecraftforge.fluids.IFluidHandler)(i == 0 ? otherTile : tile);
-                        FluidStack drain = handlerFrom.drain(side, Integer.MAX_VALUE, false);
-                        if(drain != null){
-                            if(handlerTo.canFill(side.getOpposite(), drain.getFluid())){
-                                int filled = handlerTo.fill(side.getOpposite(), drain.copy(), true);
-                                handlerFrom.drain(side, filled, true);
-                                break;
-                            }
-                        }
+    public static void doFluidInteraction(TileEntity tileFrom, EnumFacing sideTo, int maxTransfer){
+        TileEntity tileTo = tileFrom.getWorld().getTileEntity(tileFrom.getPos().offset(sideTo));
+        if(tileTo != null){
+            //Push and pull with old fluid system
+            if(tileFrom instanceof net.minecraftforge.fluids.IFluidHandler && tileTo instanceof net.minecraftforge.fluids.IFluidHandler){
+                net.minecraftforge.fluids.IFluidHandler handlerTo = (net.minecraftforge.fluids.IFluidHandler)tileTo;
+                net.minecraftforge.fluids.IFluidHandler handlerFrom = (net.minecraftforge.fluids.IFluidHandler)tileFrom;
+                FluidStack drain = handlerFrom.drain(sideTo, maxTransfer, false);
+                if(drain != null){
+                    if(handlerTo.canFill(sideTo.getOpposite(), drain.getFluid())){
+                        int filled = handlerTo.fill(sideTo.getOpposite(), drain.copy(), true);
+                        handlerFrom.drain(sideTo, filled, true);
                     }
-                    //Push and pull with new fluid system
-                    else{
-                        IFluidHandler handlerFrom = (i == 0 ? tile : otherTile).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i == 0 ? side : side.getOpposite());
-                        IFluidHandler handlerTo = (i == 0 ? otherTile : tile).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i == 0 ? side.getOpposite() : side);
-                        if(handlerFrom != null && handlerTo != null){
-                            FluidStack drain = handlerFrom.drain(Integer.MAX_VALUE, false);
-                            if(drain != null){
-                                int filled = handlerTo.fill(drain.copy(), true);
-                                handlerFrom.drain(filled, true);
-                                break;
-                            }
-                        }
+                }
+            }
+            //Push and pull with new fluid system
+            else{
+                if(tileFrom.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo) && tileTo.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite())){
+                    IFluidHandler handlerFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo);
+                    IFluidHandler handlerTo = tileTo.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite());
+                    FluidStack drain = handlerFrom.drain(maxTransfer, false);
+                    if(drain != null){
+                        int filled = handlerTo.fill(drain.copy(), true);
+                        handlerFrom.drain(filled, true);
                     }
                 }
             }

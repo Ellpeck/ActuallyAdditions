@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
@@ -28,7 +27,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyReceiver, IEnergyDisplay, IAtomicReconstructor{
+public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements ICustomEnergyReceiver, IEnergyDisplay, IAtomicReconstructor{
 
     public static final int ENERGY_USE = 1000;
     public final EnergyStorage storage = new EnergyStorage(300000);

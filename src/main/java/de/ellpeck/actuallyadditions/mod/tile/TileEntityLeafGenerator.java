@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyProvider, IEnergyDisplay{
+public class TileEntityLeafGenerator extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay{
 
     public static final int RANGE = 7;
     public static final int ENERGY_PRODUCED = 300;
@@ -128,5 +128,20 @@ public class TileEntityLeafGenerator extends TileEntityBase implements IEnergyPr
     @Override
     public boolean needsHoldShift(){
         return false;
+    }
+
+    @Override
+    public int getEnergyToSplitShare(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public boolean doesShareEnergy(){
+        return true;
+    }
+
+    @Override
+    public EnumFacing[] getEnergyShareSides(){
+        return EnumFacing.values();
     }
 }

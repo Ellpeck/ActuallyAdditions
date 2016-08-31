@@ -11,14 +11,13 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityShockSuppressor extends TileEntityBase implements IEnergyReceiver, IEnergyDisplay{
+public class TileEntityShockSuppressor extends TileEntityBase implements ICustomEnergyReceiver, IEnergyDisplay{
 
     public static final List<TileEntityShockSuppressor> SUPPRESSORS = new ArrayList<TileEntityShockSuppressor>();
 

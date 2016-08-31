@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 
-public class TileEntityHeatCollector extends TileEntityBase implements IEnergyProvider, IEnergyDisplay{
+public class TileEntityHeatCollector extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay{
 
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
@@ -106,5 +106,20 @@ public class TileEntityHeatCollector extends TileEntityBase implements IEnergyPr
     @Override
     public boolean needsHoldShift(){
         return false;
+    }
+
+    @Override
+    public int getEnergyToSplitShare(){
+        return this.storage.getEnergyStored();
+    }
+
+    @Override
+    public boolean doesShareEnergy(){
+        return true;
+    }
+
+    @Override
+    public EnumFacing[] getEnergyShareSides(){
+        return EnumFacing.values();
     }
 }
