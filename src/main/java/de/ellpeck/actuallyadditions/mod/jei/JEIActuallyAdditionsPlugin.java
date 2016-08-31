@@ -42,19 +42,19 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         IJeiHelpers helpers = registry.getJeiHelpers();
 
         registry.addRecipeCategories(
-                new BookletRecipeCategory(helpers.getGuiHelper()),
                 new CoffeeMachineRecipeCategory(helpers.getGuiHelper()),
                 new CrusherRecipeCategory(helpers.getGuiHelper()),
                 new ReconstructorRecipeCategory(helpers.getGuiHelper()),
-                new EmpowererRecipeCategory(helpers.getGuiHelper())
+                new EmpowererRecipeCategory(helpers.getGuiHelper()),
+                new BookletRecipeCategory(helpers.getGuiHelper())
         );
 
         registry.addRecipeHandlers(
-                new BookletRecipeHandler(),
                 new CoffeeMachineRecipeHandler(),
                 new CrusherRecipeHandler(),
                 new ReconstructorRecipeHandler(),
-                new EmpowererRecipeHandler()
+                new EmpowererRecipeHandler(),
+                new BookletRecipeHandler()
         );
 
         registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_DATA);
