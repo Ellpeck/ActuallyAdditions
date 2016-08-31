@@ -39,6 +39,7 @@ public final class LensRecipeHandler{
     public static LensConversionRecipe recipeDamageLens;
     public static LensConversionRecipe recipeLeather;
     public static LensConversionRecipe recipeNetherWart;
+    public static LensConversionRecipe recipePrismarine;
 
     public static void init(){
         //Crystal Blocks
@@ -94,6 +95,8 @@ public final class LensRecipeHandler{
 
             ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Items.NETHER_WART), 150000);
             recipeNetherWart = RecipeUtil.lastReconstructorRecipe();
+            ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Items.QUARTZ), new ItemStack(Items.PRISMARINE_SHARD), 30000);
+            recipePrismarine = RecipeUtil.lastReconstructorRecipe();
         }
 
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.QUARTZ_BLOCK), new ItemStack(InitBlocks.blockTestifiBucksWhiteWall), 10);
