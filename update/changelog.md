@@ -1,3 +1,24 @@
+# 1.10.2-r61
+* Made machines split their energy/fluids when putting them into other blocks
+* Removed worm's bounding box as it was showing up on some HUD mods
+* Move JEI booklet handler so that people notice the other JEI handlers and don't just click away
+* Made empowerer recipes take different items, so they're sort of a little bit like Botania runes now, yay
+* Made empowerer recipes take less energy and time
+* Made the display stand always show its RF, not just by sneaking
+* Fixed crash with null facing in tesla integration
+* Stopped the breaker from mining liquids because it doesn't even make any sense anyway
+* Fixed the phantom placer just crashing in pulse mode .-.
+* Made water vaporize in the nether with the Fluid Placer
+* New Fermenting barrel texture and model
+* New Canola press texture and model
+* Fixed mushrooms creating nether wart infinitely with the Reconstructor
+* Use that weird new runnable thing now that apparently prevents crashes in some way
+* Made the smiley cloud not crash with ItemBlock-less blocks on them
+* Use Oredictionary Chests for crafting
+* Finally hopefully fix weird syncing bugs
+* New Oil Gen texture/model
+* Tweaked empowerer and display stand models
+
 # 1.10.2-r60
 * Fixed infinite worm tilling
 * Made the grinder not crash you once opening it
