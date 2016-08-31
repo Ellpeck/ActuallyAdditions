@@ -23,6 +23,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -84,7 +85,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
 
     private TileEntityDisplayStand[] getFittingModifiers(EmpowererRecipe recipe, int powerDivider){
         TileEntityDisplayStand[] modifierStands = new TileEntityDisplayStand[4];
-        List<ItemStack> itemsStillNeeded = Arrays.asList(recipe.modifier1, recipe.modifier2, recipe.modifier3, recipe.modifier4);
+        List<ItemStack> itemsStillNeeded = new ArrayList<ItemStack>(Arrays.asList(recipe.modifier1, recipe.modifier2, recipe.modifier3, recipe.modifier4));
 
         for(int i = 0; i < EnumFacing.HORIZONTALS.length; i++){
             EnumFacing facing = EnumFacing.HORIZONTALS[i];
@@ -94,9 +95,10 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
             if(tile != null && tile instanceof TileEntityDisplayStand){
                 TileEntityDisplayStand stand = (TileEntityDisplayStand)tile;
                 ItemStack standItem = stand.getStackInSlot(0);
-                if(stand.storage.getEnergyStored() >= recipe.energyPerStand/powerDivider && ItemUtil.contains(itemsStillNeeded, standItem, true)){
+                int containPlace = ItemUtil.getPlaceAt(itemsStillNeeded, standItem, true);
+                if(stand.storage.getEnergyStored() >= recipe.energyPerStand/powerDivider && containPlace != -1){
                     modifierStands[i] = stand;
-                    itemsStillNeeded.remove(standItem);
+                    itemsStillNeeded.remove(containPlace);
                 }
                 else{
                     return null;
