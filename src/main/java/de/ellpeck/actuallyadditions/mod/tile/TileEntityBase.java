@@ -26,6 +26,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -220,10 +221,17 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
             if(this instanceof ISharingEnergyProvider){
                 ISharingEnergyProvider provider = (ISharingEnergyProvider)this;
                 if(provider.doesShareEnergy()){
-                    EnumFacing[] sides = provider.getEnergyShareSides();
-                    int amount = provider.getEnergyToSplitShare()/sides.length;
-                    for(EnumFacing side : sides){
-                        WorldUtil.doEnergyInteraction(this, side, amount);
+                    int total = provider.getEnergyToSplitShare();
+                    if(total > 0){
+                        EnumFacing[] sides = provider.getEnergyShareSides();
+
+                        int amount = total/sides.length;
+                        if(amount <= 0){
+                            amount = total;
+                        }
+                        for(EnumFacing side : sides){
+                            WorldUtil.doEnergyInteraction(this, side, amount);
+                        }
                     }
                 }
             }
@@ -231,10 +239,17 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
             if(this instanceof ISharingFluidHandler){
                 ISharingFluidHandler handler = (ISharingFluidHandler)this;
                 if(handler.doesShareFluid()){
-                    EnumFacing[] sides = handler.getFluidShareSides();
-                    int amount = handler.getFluidAmountToSplitShare()/sides.length;
-                    for(EnumFacing side : sides){
-                        WorldUtil.doFluidInteraction(this, side, amount);
+                    int total = handler.getFluidAmountToSplitShare();
+                    if(total > 0){
+                        EnumFacing[] sides = handler.getFluidShareSides();
+
+                        int amount = total/sides.length;
+                        if(amount <= 0){
+                            amount = total;
+                        }
+                        for(EnumFacing side : sides){
+                            WorldUtil.doFluidInteraction(this, side, amount);
+                        }
                     }
                 }
             }

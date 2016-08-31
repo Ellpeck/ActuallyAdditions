@@ -115,6 +115,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
 
         if(totalReceiverAmount > 0 && !relaysThatWork.isEmpty()){
             int amountPer = maxTransfer/totalReceiverAmount;
+            if(amountPer <= 0){
+                amountPer = maxTransfer;
+            }
 
             for(TileEntityLaserRelayEnergy theRelay : relaysThatWork){
                 double highestLoss = Math.max(theRelay.getLossPercentage(), this.getLossPercentage());
