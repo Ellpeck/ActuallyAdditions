@@ -97,19 +97,19 @@ public final class BookletUtils{
 
             String version;
             String playerName = Minecraft.getMinecraft().thePlayer.getName();
-            if(playerName.equals("dqmhose")){
+            if(playerName.equalsIgnoreCase("dqmhose")){
                 version = "Pants Edition";
             }
-            else if(playerName.equals("TwoOfEight")){
+            else if(playerName.equalsIgnoreCase("TwoOfEight") || playerName.equalsIgnoreCase("BootyToast")){
                 version = "Illustrator's Edition";
             }
-            else if(playerName.equals("KittyVanCat")){
+            else if(playerName.equalsIgnoreCase("KittyVanCat")){
                 version = "Cat's Edition";
             }
-            else if(playerName.equals("canitzp")){
+            else if(playerName.equalsIgnoreCase("canitzp")){
                 version = "P's Edition";
             }
-            else if(playerName.equals("Ellpeck") || Util.isDevVersion()){
+            else if(playerName.equalsIgnoreCase("Ellpeck") || Util.isDevVersion()){
                 version = "Dev's Edition";
             }
             else{
