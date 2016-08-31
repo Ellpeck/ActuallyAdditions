@@ -110,7 +110,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
 
     @Override
     public boolean needsHoldShift(){
-        return true;
+        return false;
     }
 
     @Override
