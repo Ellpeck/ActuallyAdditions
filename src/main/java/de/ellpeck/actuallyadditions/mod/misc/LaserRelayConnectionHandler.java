@@ -92,6 +92,16 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
     }
 
     @Override
+    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, World world){
+        return this.addConnection(firstRelay, secondRelay, null, world);
+    }
+
+    @Override
+    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, World world, boolean suppressConnectionRender){
+        return this.addConnection(firstRelay, secondRelay, null, world, suppressConnectionRender);
+    }
+
+    @Override
     public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world){
         return this.addConnection(firstRelay, secondRelay, type, world, false);
     }

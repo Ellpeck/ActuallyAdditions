@@ -164,7 +164,9 @@ public class CommonEvents{
 
                 if(!fixed){
                     for(int i = 0; i < pair.positions.length; i++){
-                        ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(pair.positions[i], event.getWorld());
+                        if(ActuallyAdditionsAPI.connectionHandler.getNetworkFor(pair.positions[i], event.getWorld()) != null){
+                            ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(pair.positions[i], event.getWorld());
+                        }
                     }
                     ModUtil.LOGGER.error("Had to remove a Laser Relay connection between "+pair.positions[0]+" and "+pair.positions[1]+" because it couldn't be adapted to the new system!");
                 }

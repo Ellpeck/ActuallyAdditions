@@ -78,7 +78,9 @@ public class ConnectionPair{
             compound.setInteger("y"+i, relay.getY());
             compound.setInteger("z"+i, relay.getZ());
         }
-        compound.setString("Type", this.type.name());
+        if(this.type != null){
+            compound.setString("Type", this.type.name());
+        }
         compound.setBoolean("SuppressRender", this.suppressConnectionRender);
         return compound;
     }
