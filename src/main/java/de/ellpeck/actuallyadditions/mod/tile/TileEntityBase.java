@@ -104,6 +104,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         register(TileEntityDisplayStand.class, "DisplayStand");
         register(TileEntityShockSuppressor.class, "ShockSuppressor");
         register(TileEntityEmpowerer.class);
+        register(TileEntityLaserRelayFluids.class);
     }
 
     private static void register(Class<? extends TileEntityBase> tileClass, String legacyName){
@@ -178,7 +179,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
-        super.writeToNBT(compound);
+        if(type != NBTType.SAVE_BLOCK){
+            super.writeToNBT(compound);
+        }
 
         if(type == NBTType.SAVE_TILE){
             compound.setBoolean("Redstone", this.isRedstonePowered);
@@ -190,7 +193,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
-        super.readFromNBT(compound);
+        if(type != NBTType.SAVE_BLOCK){
+            super.readFromNBT(compound);
+        }
 
         if(type == NBTType.SAVE_TILE){
             this.isRedstonePowered = compound.getBoolean("Redstone");
