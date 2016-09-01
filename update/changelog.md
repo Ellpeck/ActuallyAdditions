@@ -1,3 +1,8 @@
+# 1.10.2-r62
+* Fixed a MASSIVE derpup breaking basically all of the things that ever existed ever. _Dang, I was hoping I could get a version out without needing a fix a day after for once. Whatevs. ¯\_(ツ)_/¯_
+* Implemented new system of detemining the type of laser relay connection. There might be a bit of lag occuring when you join a world for the first time with this version.
+* Added an extra check to block placing mechanisms so that they don't crash with weird semi-fluids
+
 # 1.10.2-r61
 * Made machines split their energy/fluids when putting them into other blocks
 * Removed worm's bounding box as it was showing up on some HUD mods
