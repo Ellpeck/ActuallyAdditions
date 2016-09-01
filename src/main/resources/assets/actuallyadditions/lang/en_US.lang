@@ -188,6 +188,7 @@ tile.actuallyadditions.blockRangedCollector.name=Ranged Collector
 tile.actuallyadditions.blockLaserRelay.name=Energy Laser Relay
 tile.actuallyadditions.blockLaserRelayAdvanced.name=Advanced Energy Laser Relay
 tile.actuallyadditions.blockLaserRelayExtreme.name=Extreme Energy Laser Relay
+tile.actuallyadditions.blockLaserRelayFluids.name=Fluid Laser Relay
 tile.actuallyadditions.blockMiscIronCasing.name=Iron Casing
 tile.actuallyadditions.blockBlackLotus.name=Black Lotus
 tile.actuallyadditions.blockTestifiBucksWhiteFence.name=Ethetic Quartz Wall

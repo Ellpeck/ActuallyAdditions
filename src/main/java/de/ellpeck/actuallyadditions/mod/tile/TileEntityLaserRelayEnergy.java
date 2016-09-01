@@ -58,7 +58,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
         return this.getEnergyCap();
     }
 
-    public int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate){
+    private int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate){
         int transmitted = 0;
         if(maxTransmit > 0){
             Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);

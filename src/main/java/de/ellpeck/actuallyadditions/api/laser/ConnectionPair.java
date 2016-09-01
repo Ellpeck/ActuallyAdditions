@@ -19,6 +19,7 @@ import java.util.List;
 public class ConnectionPair{
 
     //TODO Remove eventually, just for making the implementation of LaserType work
+    //TODO Also remove those deprecated methods in the API
     public static final List<ConnectionPair> PAIRS_FOR_FIXING = new ArrayList<ConnectionPair>();
 
     public final BlockPos[] positions = new BlockPos[2];

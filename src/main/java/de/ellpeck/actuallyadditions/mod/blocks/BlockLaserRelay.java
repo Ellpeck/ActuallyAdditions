@@ -133,6 +133,8 @@ public class BlockLaserRelay extends BlockContainerBase{
                 return new TileEntityLaserRelayEnergyAdvanced();
             case ENERGY_EXTREME:
                 return new TileEntityLaserRelayEnergyExtreme();
+            case FLUIDS:
+                return new TileEntityLaserRelayFluids();
             default:
                 return new TileEntityLaserRelayEnergy();
         }
@@ -142,6 +144,7 @@ public class BlockLaserRelay extends BlockContainerBase{
         ENERGY_BASIC,
         ENERGY_ADVANCED,
         ENERGY_EXTREME,
+        FLUIDS,
         ITEM,
         ITEM_WHITELIST
     }

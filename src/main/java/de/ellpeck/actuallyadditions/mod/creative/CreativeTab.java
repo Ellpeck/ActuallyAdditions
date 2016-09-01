@@ -69,6 +69,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockLaserRelay);
         this.add(InitBlocks.blockLaserRelayAdvanced);
         this.add(InitBlocks.blockLaserRelayExtreme);
+        this.add(InitBlocks.blockLaserRelayFluids);
         this.add(InitBlocks.blockLaserRelayItem);
         this.add(InitBlocks.blockLaserRelayItemWhitelist);
         this.add(InitBlocks.blockItemViewer);

@@ -98,6 +98,7 @@ public final class InitBlocks{
     public static Block blockLaserRelay;
     public static Block blockLaserRelayAdvanced;
     public static Block blockLaserRelayExtreme;
+    public static Block blockLaserRelayFluids;
     public static Block blockLaserRelayItem;
     public static Block blockLaserRelayItemWhitelist;
     public static Block blockItemViewer;
@@ -147,6 +148,7 @@ public final class InitBlocks{
         blockLaserRelay = new BlockLaserRelay("blockLaserRelay", Type.ENERGY_BASIC);
         blockLaserRelayAdvanced = new BlockLaserRelay("blockLaserRelayAdvanced", Type.ENERGY_ADVANCED);
         blockLaserRelayExtreme = new BlockLaserRelay("blockLaserRelayExtreme", Type.ENERGY_EXTREME);
+        blockLaserRelayFluids = new BlockLaserRelay("blockLaserRelayFluids", Type.FLUIDS);
         blockLaserRelayItem = new BlockLaserRelay("blockLaserRelayItem", Type.ITEM);
         blockLaserRelayItemWhitelist = new BlockLaserRelay("blockLaserRelayItemWhitelist", Type.ITEM_WHITELIST);
         blockRangedCollector = new BlockRangedCollector("blockRangedCollector");
