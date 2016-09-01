@@ -43,10 +43,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fluids.IFluidContainerItem;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -182,9 +179,15 @@ public final class WorldUtil{
                     fluid = ((IFluidContainerItem)stack.getItem()).getFluid(stack);
                 }
 
-                if(fluid != null && fluid.amount >= Util.BUCKET && fluid.getFluid().getBlock() != null && fluid.getFluid().getBlock().canPlaceBlockAt(world, offsetPos)){
-                    if(world.setBlockState(offsetPos, fluid.getFluid().getBlock().getDefaultState(), 2)){
-                        return stack.getItem().getContainerItem(stack);
+                if(fluid != null && fluid.amount >= Util.BUCKET){
+                    Fluid theFluid = fluid.getFluid();
+                    if(theFluid != null){
+                        Block fluidBlock = theFluid.getBlock();
+                        if(fluidBlock != null && fluidBlock.canPlaceBlockAt(world, offsetPos)){
+                            if(world.setBlockState(offsetPos, fluidBlock.getDefaultState(), 2)){
+                                return stack.getItem().getContainerItem(stack);
+                            }
+                        }
                     }
                 }
             }
