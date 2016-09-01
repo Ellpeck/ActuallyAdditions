@@ -48,35 +48,38 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     }
 
     @Override
-    public void receiveSyncCompound(NBTTagCompound compound){
-        ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
 
-        NBTTagList list = compound.getTagList("Connections", 10);
-        if(!list.hasNoTags()){
-            for(int i = 0; i < list.tagCount(); i++){
-                ConnectionPair pair = ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
-                ActuallyAdditionsAPI.connectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj, pair.suppressConnectionRender);
+        if(type == NBTType.SYNC){
+            ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
+
+            NBTTagList list = compound.getTagList("Connections", 10);
+            if(!list.hasNoTags()){
+                for(int i = 0; i < list.tagCount(); i++){
+                    ConnectionPair pair = ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
+                    ActuallyAdditionsAPI.connectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj, pair.suppressConnectionRender);
+                }
             }
         }
-
-        super.receiveSyncCompound(compound);
     }
 
-
     @Override
-    public NBTTagCompound getUpdateTag(){
-        NBTTagCompound compound = super.getUpdateTag();
-        NBTTagList list = new NBTTagList();
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
 
-        ConcurrentSet<ConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.worldObj);
-        if(connections != null && !connections.isEmpty()){
-            for(ConnectionPair pair : connections){
-                list.appendTag(pair.writeToNBT());
+        if(type == NBTType.SYNC){
+            NBTTagList list = new NBTTagList();
+
+            ConcurrentSet<ConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.worldObj);
+            if(connections != null && !connections.isEmpty()){
+                for(ConnectionPair pair : connections){
+                    list.appendTag(pair.writeToNBT());
+                }
             }
-        }
 
-        compound.setTag("Connections", list);
-        return compound;
+            compound.setTag("Connections", list);
+        }
     }
 
     @Override

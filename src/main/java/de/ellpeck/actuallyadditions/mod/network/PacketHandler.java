@@ -59,7 +59,7 @@ public final class PacketHandler{
             if(world != null){
                 TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
                 if(tile != null && tile instanceof TileEntityBase){
-                    ((TileEntityBase)tile).receiveSyncCompound(compound.getCompoundTag("Data"));
+                    ((TileEntityBase)tile).readSyncableNBT(compound.getCompoundTag("Data"), TileEntityBase.NBTType.SYNC);
                 }
             }
         }

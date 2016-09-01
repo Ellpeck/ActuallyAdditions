@@ -26,7 +26,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -130,41 +129,30 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        this.readSyncableNBT(compound, NBTType.SAVE_TILE);
-    }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound){
+    public final NBTTagCompound writeToNBT(NBTTagCompound compound){
         this.writeSyncableNBT(compound, NBTType.SAVE_TILE);
         return compound;
     }
 
     @Override
-    public SPacketUpdateTileEntity getUpdatePacket(){
-        NBTTagCompound compound = this.getUpdateTag();
-        if(compound != null){
-            return new SPacketUpdateTileEntity(this.pos, 0, compound);
-        }
-        else{
-            return null;
-        }
+    public final void readFromNBT(NBTTagCompound compound){
+        this.readSyncableNBT(compound, NBTType.SAVE_TILE);
+    }
+
+    @Override
+    public final SPacketUpdateTileEntity getUpdatePacket(){
+        NBTTagCompound compound = new NBTTagCompound();
+        this.writeSyncableNBT(compound, NBTType.SYNC);
+        return new SPacketUpdateTileEntity(this.pos, -1, compound);
     }
 
     @Override
     public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
-        if(pkt != null){
-            NBTTagCompound compound = pkt.getNbtCompound();
-            this.receiveSyncCompound(compound);
-        }
-    }
-
-    public void receiveSyncCompound(NBTTagCompound compound){
-        this.readSyncableNBT(compound, NBTType.SYNC);
+        this.readSyncableNBT(pkt.getNbtCompound(), NBTType.SYNC);
     }
 
     @Override
-    public NBTTagCompound getUpdateTag(){
+    public final NBTTagCompound getUpdateTag(){
         NBTTagCompound compound = new NBTTagCompound();
         this.writeSyncableNBT(compound, NBTType.SYNC);
         return compound;
@@ -172,12 +160,21 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     @Override
     public final void handleUpdateTag(NBTTagCompound compound){
-        this.receiveSyncCompound(compound);
+        this.readSyncableNBT(compound, NBTType.SYNC);
     }
 
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState){
-        return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
+    public final void sendUpdate(){
+        if(!this.worldObj.isRemote){
+            NBTTagCompound compound = new NBTTagCompound();
+            this.writeSyncableNBT(compound, NBTType.SYNC);
+
+            NBTTagCompound data = new NBTTagCompound();
+            data.setTag("Data", compound);
+            data.setInteger("X", this.pos.getX());
+            data.setInteger("Y", this.pos.getY());
+            data.setInteger("Z", this.pos.getZ());
+            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 128));
+        }
     }
 
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
@@ -190,11 +187,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         if(this.isRedstoneToggle() && (type != NBTType.SAVE_BLOCK || this.isPulseMode)){
             compound.setBoolean("IsPulseMode", this.isPulseMode);
         }
-    }
-
-    @Override
-    public ITextComponent getDisplayName(){
-        return new TextComponentTranslation("container."+ModUtil.MOD_ID+"."+this.name+".name");
     }
 
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
@@ -210,7 +202,17 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     @Override
-    public void update(){
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState){
+        return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
+    }
+
+    @Override
+    public ITextComponent getDisplayName(){
+        return new TextComponentTranslation("container."+ModUtil.MOD_ID+"."+this.name+".name");
+    }
+
+    @Override
+    public final void update(){
         this.updateEntity();
     }
 
@@ -272,20 +274,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         }
         else{
             return false;
-        }
-    }
-
-    public void sendUpdate(){
-        if(!this.worldObj.isRemote){
-            NBTTagCompound compound = this.getUpdateTag();
-            if(compound != null){
-                NBTTagCompound data = new NBTTagCompound();
-                data.setTag("Data", compound);
-                data.setInteger("X", this.pos.getX());
-                data.setInteger("Y", this.pos.getY());
-                data.setInteger("Z", this.pos.getZ());
-                PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 128));
-            }
         }
     }
 
