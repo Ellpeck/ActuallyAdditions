@@ -10,15 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -30,6 +32,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -142,6 +145,33 @@ public class CommonEvents{
     @SubscribeEvent
     public void onLoad(WorldEvent.Load event){
         WorldData.load(event.getWorld());
+
+        //TODO Remove this eventually (part of the ConnectionPair system change)
+        if(!ConnectionPair.PAIRS_FOR_FIXING.isEmpty()){
+            for(ConnectionPair pair : ConnectionPair.PAIRS_FOR_FIXING){
+                TileEntity first = event.getWorld().getTileEntity(pair.positions[0]);
+                TileEntity second = event.getWorld().getTileEntity(pair.positions[1]);
+
+                boolean fixed = false;
+                if(first instanceof TileEntityLaserRelay && second instanceof TileEntityLaserRelay){
+                    LaserType firstType = ((TileEntityLaserRelay)first).type;
+                    LaserType secondType = ((TileEntityLaserRelay)second).type;
+                    if(firstType == secondType){
+                        pair.type = firstType;
+                        fixed = true;
+                    }
+                }
+
+                if(!fixed){
+                    for(int i = 0; i < pair.positions.length; i++){
+                        ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(pair.positions[i], event.getWorld());
+                    }
+                    ModUtil.LOGGER.error("Had to remove a Laser Relay connection between "+pair.positions[0]+" and "+pair.positions[1]+" because it couldn't be adapted to the new system!");
+                }
+            }
+            ModUtil.LOGGER.info("Adapted "+ConnectionPair.PAIRS_FOR_FIXING.size()+" Laser Relay Connections to the new system!");
+            ConnectionPair.PAIRS_FOR_FIXING.clear();
+        }
     }
 
     @SubscribeEvent

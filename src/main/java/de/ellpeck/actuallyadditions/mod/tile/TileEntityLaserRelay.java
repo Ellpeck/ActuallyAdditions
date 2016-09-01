@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
@@ -36,15 +37,15 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     private static final float[] COLOR = new float[]{1F, 0F, 0F};
     private static final float[] COLOR_ITEM = new float[]{139F/255F, 94F/255F, 1F};
 
-    public final boolean isItem;
+    public final LaserType type;
 
     private Set<ConnectionPair> tempConnectionStorage;
 
     private boolean hasCheckedHandlersAround;
 
-    public TileEntityLaserRelay(String name, boolean isItem){
+    public TileEntityLaserRelay(String name, LaserType type){
         super(name);
-        this.isItem = isItem;
+        this.type = type;
     }
 
     @Override
@@ -58,7 +59,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
             if(!list.hasNoTags()){
                 for(int i = 0; i < list.tagCount(); i++){
                     ConnectionPair pair = ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
-                    ActuallyAdditionsAPI.connectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj, pair.suppressConnectionRender);
+                    ActuallyAdditionsAPI.connectionHandler.addConnection(pair.positions[0], pair.positions[1], this.type, this.worldObj, pair.suppressConnectionRender);
                 }
             }
         }
@@ -112,7 +113,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
                         if(network != null){
                             for(ConnectionPair aPair : network.connections){
                                 if(!aPair.suppressConnectionRender && aPair.contains(this.pos) && this.pos.equals(aPair.positions[0])){
-                                    AssetUtil.renderParticlesFromAToB(aPair.positions[0].getX(), aPair.positions[0].getY(), aPair.positions[0].getZ(), aPair.positions[1].getX(), aPair.positions[1].getY(), aPair.positions[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.isItem ? COLOR_ITEM : COLOR, 1F);
+                                    AssetUtil.renderParticlesFromAToB(aPair.positions[0].getX(), aPair.positions[0].getY(), aPair.positions[0].getZ(), aPair.positions[1].getX(), aPair.positions[1].getY(), aPair.positions[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.type == LaserType.ITEM ? COLOR_ITEM : COLOR, 1F);
                                 }
                             }
                         }
@@ -136,7 +137,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     public void validate(){
         if(this.tempConnectionStorage != null){
             for(ConnectionPair pair : this.tempConnectionStorage){
-                ActuallyAdditionsAPI.connectionHandler.addConnection(pair.positions[0], pair.positions[1], this.worldObj, pair.suppressConnectionRender);
+                ActuallyAdditionsAPI.connectionHandler.addConnection(pair.positions[0], pair.positions[1], pair.type, this.worldObj, pair.suppressConnectionRender);
             }
             this.tempConnectionStorage = null;
         }

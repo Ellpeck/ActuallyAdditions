@@ -13,15 +13,23 @@ package de.ellpeck.actuallyadditions.api.laser;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConnectionPair{
+
+    //TODO Remove eventually, just for making the implementation of LaserType work
+    public static final List<ConnectionPair> PAIRS_FOR_FIXING = new ArrayList<ConnectionPair>();
 
     public final BlockPos[] positions = new BlockPos[2];
     public final boolean suppressConnectionRender;
+    public LaserType type;
 
-    public ConnectionPair(BlockPos firstRelay, BlockPos secondRelay, boolean suppressConnectionRender){
+    public ConnectionPair(BlockPos firstRelay, BlockPos secondRelay, LaserType type, boolean suppressConnectionRender){
         this.positions[0] = firstRelay;
         this.positions[1] = secondRelay;
         this.suppressConnectionRender = suppressConnectionRender;
+        this.type = type;
     }
 
     public static ConnectionPair readFromNBT(NBTTagCompound compound){
@@ -33,7 +41,17 @@ public class ConnectionPair{
                 int aZ = compound.getInteger("z"+i);
                 pos[i] = new BlockPos(anX, aY, aZ);
             }
-            return new ConnectionPair(pos[0], pos[1], compound.getBoolean("SuppressRender"));
+
+            LaserType type = null;
+            String typeStrg = compound.getString("Type");
+            if(typeStrg != null && !typeStrg.isEmpty()){
+                type = LaserType.valueOf(typeStrg);
+            }
+            ConnectionPair pair = new ConnectionPair(pos[0], pos[1], type, compound.getBoolean("SuppressRender"));
+            if(type == null){
+                PAIRS_FOR_FIXING.add(pair);
+            }
+            return pair;
         }
         return null;
     }
@@ -60,6 +78,7 @@ public class ConnectionPair{
             compound.setInteger("y"+i, relay.getY());
             compound.setInteger("z"+i, relay.getZ());
         }
+        compound.setString("Type", this.type.name());
         compound.setBoolean("SuppressRender", this.suppressConnectionRender);
         return compound;
     }

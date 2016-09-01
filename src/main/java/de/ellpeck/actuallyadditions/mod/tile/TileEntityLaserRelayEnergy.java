@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
@@ -35,7 +36,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
     public static final int CAP = 1000;
 
     public TileEntityLaserRelayEnergy(String name){
-        super(name, false);
+        super(name, LaserType.ENERGY);
     }
 
     public TileEntityLaserRelayEnergy(){

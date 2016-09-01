@@ -61,11 +61,12 @@ public class ItemLaserWrench extends ItemBase{
                     if(savedPos != null){
                         TileEntity savedTile = world.getTileEntity(savedPos);
                         int distanceSq = (int)savedPos.distanceSq(pos);
-                        if(ItemPhantomConnector.getStoredWorld(stack) == world && savedTile instanceof TileEntityLaserRelay && ((TileEntityLaserRelay)savedTile).isItem == ((TileEntityLaserRelay)tile).isItem && distanceSq <= TileEntityLaserRelay.MAX_DISTANCE*TileEntityLaserRelay.MAX_DISTANCE && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, world)){
+                        TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
+                        if(ItemPhantomConnector.getStoredWorld(stack) == world && savedTile instanceof TileEntityLaserRelay && ((TileEntityLaserRelay)savedTile).type == relay.type && distanceSq <= TileEntityLaserRelay.MAX_DISTANCE*TileEntityLaserRelay.MAX_DISTANCE && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world)){
                             ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
 
                             ((TileEntityLaserRelay)savedTile).sendUpdate();
-                            ((TileEntityLaserRelay)tile).sendUpdate();
+                            relay.sendUpdate();
 
                             player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.connected.desc"));
                         }

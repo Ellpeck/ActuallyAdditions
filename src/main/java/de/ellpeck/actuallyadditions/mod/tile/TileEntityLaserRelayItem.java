@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -31,7 +32,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
     public final Map<BlockPos, IItemHandler> handlersAround = new ConcurrentHashMap<BlockPos, IItemHandler>();
 
     public TileEntityLaserRelayItem(String name){
-        super(name, true);
+        super(name, LaserType.ITEM);
     }
 
     public TileEntityLaserRelayItem(){

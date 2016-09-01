@@ -30,7 +30,7 @@ public interface ILaserRelayConnectionHandler{
 
     Network getNetworkFor(BlockPos relay, World world);
 
-    boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, World world);
+    boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world);
 
-    boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, World world, boolean suppressConnectionRender);
+    boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world, boolean suppressConnectionRender);
 }
