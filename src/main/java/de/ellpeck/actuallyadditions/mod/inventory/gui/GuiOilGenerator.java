@@ -80,6 +80,10 @@ public class GuiOilGenerator extends GuiContainer{
             this.drawTexturedModalRect(this.guiLeft+72, this.guiTop+44+12-i, 176, 96-i, 14, i);
         }
 
+        if(this.generator.currentEnergyProduce > 0){
+            this.drawCenteredString(this.fontRendererObj, this.generator.currentEnergyProduce+" RF/t", this.guiLeft+87, this.guiTop+75, 0xFFFFFF);
+        }
+
         this.energy.draw();
         this.fluid.draw();
     }

@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.api.recipe.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public final class ActuallyAdditionsAPI{
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<Item, IColorLensChanger>();
     public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<CoffeeIngredient>();
     public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<CompostRecipe>();
+    public static final Map<String, Integer> OIL_GENERATOR_RECIPES = new HashMap<String, Integer>();
     public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<IBookletEntry>();
     public static final List<BookletPage> BOOKLET_PAGES_WITH_ITEM_DATA = new ArrayList<BookletPage>();
 
@@ -145,6 +147,15 @@ public final class ActuallyAdditionsAPI{
         if(!OreDictionary.getOres(outputOne, false).isEmpty()){
             CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputOneAmount));
         }
+    }
+
+    /**
+     * Adds a Recipe to the Oil generator
+     * @param fluidName The name of the fluid to be consumed
+     * @param genAmount The amount of energy generated per operation
+     */
+    public static void addOilGenRecipe(String fluidName, int genAmount){
+        OIL_GENERATOR_RECIPES.put(fluidName, genAmount);
     }
 
     /**

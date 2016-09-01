@@ -189,8 +189,11 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemMagnetRing);
         this.add(InitItems.itemWaterRemovalRing);
 
-        this.list.add(UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, InitFluids.fluidCanolaOil));
-        this.list.add(UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, InitFluids.fluidOil));
+        UniversalBucket bucket = ForgeModContainer.getInstance().universalBucket;
+        this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidCanolaOil));
+        this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidOil));
+        this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidCrystalOil));
+        this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidEmpoweredOil));
 
         this.add(InitItems.itemPhantomConnector);
         this.add(InitItems.itemFilter);

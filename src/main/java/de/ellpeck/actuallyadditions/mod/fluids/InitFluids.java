@@ -23,16 +23,24 @@ public final class InitFluids{
 
     public static Fluid fluidCanolaOil;
     public static Fluid fluidOil;
+    public static Fluid fluidCrystalOil;
+    public static Fluid fluidEmpoweredOil;
 
     public static Block blockCanolaOil;
     public static Block blockOil;
+    public static Block blockCrystalOil;
+    public static Block blockEmpoweredOil;
 
     public static void init(){
         fluidCanolaOil = registerFluid("canolaoil", "blockCanolaOil", EnumRarity.UNCOMMON);
         fluidOil = registerFluid("oil", "blockOil", EnumRarity.UNCOMMON);
+        fluidCrystalOil = registerFluid("crystaloil", "blockCrystalOil", EnumRarity.RARE);
+        fluidEmpoweredOil = registerFluid("empoweredoil", "blockEmpoweredOil", EnumRarity.EPIC);
 
         blockCanolaOil = registerFluidBlock(fluidCanolaOil, Material.WATER, "blockCanolaOil");
         blockOil = registerFluidBlock(fluidOil, Material.WATER, "blockOil");
+        blockCrystalOil = registerFluidBlock(fluidCrystalOil, Material.WATER, "blockCrystalOil");
+        blockEmpoweredOil = registerFluidBlock(fluidEmpoweredOil, Material.WATER, "blockEmpoweredOil");
     }
 
     private static Fluid registerFluid(String fluidName, String fluidTextureName, EnumRarity rarity){

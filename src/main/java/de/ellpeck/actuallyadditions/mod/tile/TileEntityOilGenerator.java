@@ -11,8 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyProvider;
-import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -24,7 +23,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler{
 
-    public static final int ENERGY_PRODUCED = 76;
     private static final int BURN_TIME = 100;
     public final EnergyStorage storage = new EnergyStorage(50000);
     public final FluidTank tank = new FluidTank(2*Util.BUCKET){
@@ -34,27 +32,20 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
         }
 
         @Override
-        public boolean canFillFluidType(FluidStack fluid){
-            return fluid.getFluid() == InitFluids.fluidOil;
+        public boolean canFillFluidType(FluidStack stack){
+            Fluid fluid = stack.getFluid();
+            return fluid != null && ActuallyAdditionsAPI.OIL_GENERATOR_RECIPES.containsKey(fluid.getName());
         }
     };
+    public int currentEnergyProduce;
     public int currentBurnTime;
     private int lastEnergy;
     private int lastTank;
     private int lastBurnTime;
+    private int lastEnergyProduce;
 
     public TileEntityOilGenerator(){
         super("oilGenerator");
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public int getTankScaled(int i){
-        return this.tank.getFluidAmount()*i/this.tank.getCapacity();
     }
 
     @SideOnly(Side.CLIENT)
@@ -66,6 +57,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         if(type != NBTType.SAVE_BLOCK){
             compound.setInteger("BurnTime", this.currentBurnTime);
+            compound.setInteger("CurrentEnergy", this.currentEnergyProduce);
         }
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
@@ -76,6 +68,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         if(type != NBTType.SAVE_BLOCK){
             this.currentBurnTime = compound.getInteger("BurnTime");
+            this.currentEnergyProduce = compound.getInteger("CurrentEnergy");
         }
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
@@ -88,16 +81,20 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
         if(!this.worldObj.isRemote){
             boolean flag = this.currentBurnTime > 0;
 
-            if(this.currentBurnTime > 0){
+            if(this.currentBurnTime > 0 && this.currentEnergyProduce > 0){
                 this.currentBurnTime--;
-                this.storage.receiveEnergy(ENERGY_PRODUCED, false);
+                this.storage.receiveEnergy(this.currentEnergyProduce, false);
             }
+            else{
+                this.currentEnergyProduce = this.getEnergyForCurrentFluid();
 
-            int fuelUsed = 50;
-            if(ENERGY_PRODUCED*BURN_TIME <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
-                if(this.currentBurnTime <= 0 && this.tank.getFluidAmount() >= fuelUsed){
+                int fuelUsed = 50;
+                if(this.storage.getEnergyStored() < this.storage.getMaxEnergyStored() && this.tank.getFluidAmount() >= fuelUsed){
                     this.currentBurnTime = BURN_TIME;
                     this.tank.drainInternal(fuelUsed, true);
+                }
+                else{
+                    this.currentBurnTime = 0;
                 }
             }
 
@@ -105,12 +102,24 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
                 this.markDirty();
             }
 
-            if((this.storage.getEnergyStored() != this.lastEnergy || this.tank.getFluidAmount() != this.lastTank || this.lastBurnTime != this.currentBurnTime) && this.sendUpdateWithInterval()){
+            if((this.storage.getEnergyStored() != this.lastEnergy || this.tank.getFluidAmount() != this.lastTank || this.lastBurnTime != this.currentBurnTime || this.lastEnergyProduce != this.currentEnergyProduce) && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastTank = this.tank.getFluidAmount();
                 this.lastBurnTime = this.currentBurnTime;
+                this.lastEnergyProduce = this.currentEnergyProduce;
             }
         }
+    }
+
+    private int getEnergyForCurrentFluid(){
+        FluidStack stack = this.tank.getFluid();
+        if(stack != null){
+            Fluid fluid = stack.getFluid();
+            if(fluid != null){
+                return ActuallyAdditionsAPI.OIL_GENERATOR_RECIPES.get(fluid.getName());
+            }
+        }
+        return 0;
     }
 
     @Override

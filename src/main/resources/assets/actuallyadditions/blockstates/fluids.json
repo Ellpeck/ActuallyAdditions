@@ -8,6 +8,14 @@
     "oil": {
       "model": "forge:fluid",
       "custom": { "fluid": "oil" }
+    },
+    "crystaloil": {
+      "model": "forge:fluid",
+      "custom": { "fluid": "crystaloil" }
+    },
+    "empoweredoil": {
+      "model": "forge:fluid",
+      "custom": { "fluid": "empoweredoil" }
     }
   }
 }
