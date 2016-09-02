@@ -110,11 +110,20 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     public boolean isBoundThingInRange(){
         if(super.isBoundThingInRange()){
             TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
-            return tile != null && (tile instanceof IEnergyHandler || (ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, null)));
+            if(tile != null){
+                if(tile instanceof IEnergyHandler){
+                    return true;
+                }
+                else if(ActuallyAdditions.teslaLoaded){
+                    for(EnumFacing facing : EnumFacing.values()){
+                        if(tile.hasCapability(TeslaUtil.teslaHolder, facing)){
+                            return true;
+                        }
+                    }
+                }
+            }
         }
-        else{
-            return false;
-        }
+        return false;
     }
 
     @Override

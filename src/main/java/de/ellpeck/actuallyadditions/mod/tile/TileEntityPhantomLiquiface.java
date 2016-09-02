@@ -13,8 +13,12 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements ISharingFluidHandler{
 
@@ -28,7 +32,16 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
         if(super.isBoundThingInRange()){
             TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
             if(tile != null){
-                return tile instanceof IFluidHandler || tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+                if(tile instanceof net.minecraftforge.fluids.IFluidHandler){
+                    return true;
+                }
+                else{
+                    for(EnumFacing facing : EnumFacing.values()){
+                        if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)){
+                            return true;
+                        }
+                    }
+                }
             }
         }
         return false;
@@ -37,7 +50,20 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     @Override
     public int fill(EnumFacing from, FluidStack resource, boolean doFill){
         if(this.isBoundThingInRange()){
-            return this.getHandler().fill(from, resource, doFill);
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                if(tile instanceof net.minecraftforge.fluids.IFluidHandler){
+                    return ((net.minecraftforge.fluids.IFluidHandler)tile).fill(from, resource, doFill);
+                }
+                else{
+                    if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, from)){
+                        IFluidHandler cap = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, from);
+                        if(cap != null){
+                            return cap.fill(resource, doFill);
+                        }
+                    }
+                }
+            }
         }
         return 0;
     }
@@ -45,7 +71,20 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     @Override
     public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
         if(this.isBoundThingInRange()){
-            return this.getHandler().drain(from, resource, doDrain);
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                if(tile instanceof net.minecraftforge.fluids.IFluidHandler){
+                    return ((net.minecraftforge.fluids.IFluidHandler)tile).drain(from, resource, doDrain);
+                }
+                else{
+                    if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, from)){
+                        IFluidHandler cap = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, from);
+                        if(cap != null){
+                            return cap.drain(resource, doDrain);
+                        }
+                    }
+                }
+            }
         }
         return null;
     }
@@ -53,37 +92,91 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     @Override
     public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
         if(this.isBoundThingInRange()){
-            return this.getHandler().drain(from, maxDrain, doDrain);
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                if(tile instanceof net.minecraftforge.fluids.IFluidHandler){
+                    return ((net.minecraftforge.fluids.IFluidHandler)tile).drain(from, maxDrain, doDrain);
+                }
+                else{
+                    if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, from)){
+                        IFluidHandler cap = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, from);
+                        if(cap != null){
+                            return cap.drain(maxDrain, doDrain);
+                        }
+                    }
+                }
+            }
         }
         return null;
     }
 
     @Override
     public boolean canFill(EnumFacing from, Fluid fluid){
-        return this.isBoundThingInRange() && this.getHandler().canFill(from, fluid);
+        if(this.isBoundThingInRange()){
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                if(tile instanceof net.minecraftforge.fluids.IFluidHandler){
+                    return ((net.minecraftforge.fluids.IFluidHandler)tile).canFill(from, fluid);
+                }
+                else{
+                    if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, from)){
+                        IFluidHandler cap = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, from);
+                        if(cap != null){
+                            FluidStack stack = new FluidStack(fluid, 1);
+                            IFluidTankProperties[] props = cap.getTankProperties();
+                            if(props != null){
+                                for(IFluidTankProperties prop : props){
+                                    if(prop.canFillFluidType(stack)){
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean canDrain(EnumFacing from, Fluid fluid){
-        return this.isBoundThingInRange() && this.getHandler().canDrain(from, fluid);
+        if(this.isBoundThingInRange()){
+            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            if(tile != null){
+                if(tile instanceof net.minecraftforge.fluids.IFluidHandler){
+                    return ((net.minecraftforge.fluids.IFluidHandler)tile).canDrain(from, fluid);
+                }
+                else{
+                    if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, from)){
+                        IFluidHandler cap = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, from);
+                        if(cap != null){
+                            FluidStack stack = new FluidStack(fluid, 1);
+                            IFluidTankProperties[] props = cap.getTankProperties();
+                            if(props != null){
+                                for(IFluidTankProperties prop : props){
+                                    if(prop.canDrainFluidType(stack)){
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Override
     public FluidTankInfo[] getTankInfo(EnumFacing from){
-        if(this.isBoundThingInRange()){
-            return this.getHandler().getTankInfo(from);
+        TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+        if(tile instanceof net.minecraftforge.fluids.IFluidHandler){
+            return ((net.minecraftforge.fluids.IFluidHandler)tile).getTankInfo(from);
         }
-        return new FluidTankInfo[0];
-    }
-
-    public IFluidHandler getHandler(){
-        if(this.boundPosition != null){
-            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
-            if(tile instanceof IFluidHandler){
-                return (IFluidHandler)tile;
-            }
+        else{
+            return new FluidTankInfo[0];
         }
-        return null;
     }
 
     @Override
