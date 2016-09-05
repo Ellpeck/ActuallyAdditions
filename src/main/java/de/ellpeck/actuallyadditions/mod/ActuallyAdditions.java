@@ -24,7 +24,6 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.InitVillager;
 import de.ellpeck.actuallyadditions.mod.gen.OreGen;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
-import de.ellpeck.actuallyadditions.mod.items.InitForeignPaxels;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
@@ -136,7 +135,6 @@ public class ActuallyAdditions{
         TreasureChestHandler.init();
         LensRecipeHandler.init();
         EmpowererHandler.init();
-        InitForeignPaxels.init();
 
         InitBooklet.postInit();
         proxy.postInit(event);

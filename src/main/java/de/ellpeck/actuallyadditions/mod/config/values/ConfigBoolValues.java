@@ -25,10 +25,6 @@ public enum ConfigBoolValues{
     DO_CAT_DROPS("Do Cat Drops", ConfigCategories.OTHER, true, "If Cats drop Hairy Balls on Occasion"),
     WORMS("Worms", ConfigCategories.OTHER, true, "If worms should drop from tilling the ground"),
 
-    TF_PAXELS("Thermal Foundation Paxels", ConfigCategories.OTHER, true, "If Paxels made of Thermal Foundation Materials should exist"),
-    MT_PAXELS("MekanismTools Paxels", ConfigCategories.OTHER, true, "If Paxels made of MekanismTools Materials should exist"),
-    SO_PAXELS("Simpleores Paxels", ConfigCategories.OTHER, true, "If Paxels made of SimpleOres Materials should exist"),
-
     DO_RICE_GEN("Rice Gen", ConfigCategories.WORLD_GEN, true, "If Rice should generate in the World"),
     DO_CANOLA_GEN("Canola Gen", ConfigCategories.WORLD_GEN, true, "If Canola should generate in the World"),
     DO_FLAX_GEN("Flax Gen", ConfigCategories.WORLD_GEN, true, "If Flax should generate in the World"),

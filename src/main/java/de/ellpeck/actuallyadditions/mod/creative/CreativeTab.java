@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.creative;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
-import de.ellpeck.actuallyadditions.mod.items.InitForeignPaxels;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
@@ -232,7 +231,6 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemPaxelCrystalBlack);
         this.add(InitItems.itemPaxelCrystalGreen);
         this.add(InitItems.itemPaxelCrystalWhite);
-        InitForeignPaxels.addToCreativeTab();
 
         this.add(InitBlocks.blockCrystal);
         this.add(InitBlocks.blockCrystalEmpowered);
