@@ -51,7 +51,7 @@ public class PageCrafting extends BookletPageAA{
     @Override
     @SideOnly(Side.CLIENT)
     public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        if(this.recipes[this.recipePos] != null){
+        if(this.recipes != null && this.recipes.length > 0 && this.recipes[this.recipePos] != null){
             Minecraft.getMinecraft().getTextureManager().bindTexture(GuiBooklet.RES_LOC);
             gui.drawRect(gui.getGuiLeft()+27, gui.getGuiTop()+20, 146, 20, 99, 60);
         }
@@ -60,7 +60,7 @@ public class PageCrafting extends BookletPageAA{
     @Override
     @SideOnly(Side.CLIENT)
     public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-        IRecipe recipe = this.recipes[this.recipePos];
+        IRecipe recipe = this.recipes != null && this.recipes.length > 0 ? this.recipes[this.recipePos] : null;
 
         if(recipe == null){
             StringUtil.drawSplitString(Minecraft.getMinecraft().fontRendererObj, TextFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID+".recipeDisabled"), gui.getGuiLeft()+14, gui.getGuiTop()+15, 115, 0, false);
@@ -179,7 +179,7 @@ public class PageCrafting extends BookletPageAA{
 
     @Override
     public ItemStack[] getItemStacksForPage(){
-        if(this.recipes != null){
+        if(this.recipes != null && this.recipes.length > 0){
             ItemStack[] stacks = new ItemStack[this.recipes.length];
             for(int i = 0; i < this.recipes.length; i++){
                 if(this.recipes[i] != null){
