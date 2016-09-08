@@ -95,6 +95,7 @@ public final class BlockCrafting{
     public static IRecipe recipeShockSuppressor;
     public static IRecipe recipeEmpowerer;
     public static IRecipe[] recipesTinyTorch = new IRecipe[2];
+    public static IRecipe recipeFluidLaser;
 
     public static void init(){
 
@@ -270,6 +271,14 @@ public final class BlockCrafting{
                     new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
                     new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal())));
             recipeLaserRelayItemWhitelist = RecipeUtil.lastIRecipe();
+        }
+
+        //Fluid Laser Relay
+        if(ConfigCrafting.LASER_RELAY_FLUIDS.isEnabled()){
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockLaserRelayFluids),
+                    new ItemStack(InitBlocks.blockLaserRelay),
+                    new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal())));
+            recipeFluidLaser = RecipeUtil.lastIRecipe();
         }
 
         //Item Interface

@@ -153,6 +153,7 @@ public enum ConfigCrafting{
     LASER_RELAY_ITEM("Item Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
     LASER_RELAY_ITEM_WHITELIST("Advanced Item Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
     LASER_WRENCH("Laser Wrench", ConfigCategories.ITEMS_CRAFTING),
+    LASER_RELAY_FLUIDS("Fluid Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
 
     CHEST_TO_CRATE_UPGRADE("Chest To Crate Upgrade", ConfigCategories.ITEMS_CRAFTING),
     DISENCHANTING_LENS("Disenchanting Lens", ConfigCategories.ITEMS_CRAFTING),

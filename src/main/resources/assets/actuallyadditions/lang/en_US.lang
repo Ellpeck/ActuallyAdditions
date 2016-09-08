@@ -1013,3 +1013,6 @@ booklet.actuallyadditions.chapter.empowerer.text.1=The <item>Empowerer<r> is a m
 booklet.actuallyadditions.chapter.empowerer.text.2=<i>The placement of the <item>Display Stands<r>
 booklet.actuallyadditions.chapter.empowerer.text.3=<n><n><n><i>Because every mod needs an Infusion Altar
 booklet.actuallyadditions.chapter.empowerer.text.4=The <item>Display Stand<r> can also be used for other things! See the <imp>Blocks that use RF<r> section for more info about it!
+
+booklet.actuallyadditions.chapter.fluidLaser.name=Fluid Laser Relays
+booklet.actuallyadditions.chapter.fluidLaser.text.1=The <item>Fluid Laser Relays<r> work much in the same way that normal Laser Relays do, so if you want to know anything about them, visit the <imp>Blocks that use RF<r> section of the manual. <n><n>The thing that makes the <item>Fluid Laser Relay<r> different from the <item>Energy Laser Relay<r>, however, is that it transfers <imp>fluids<r> from internal tanks of blocks into other blocks.

@@ -38,9 +38,8 @@ public final class RecipeUtil{
     }
 
     public static IRecipe lastIRecipe(){
-        List list = CraftingManager.getInstance().getRecipeList();
-        Object recipe = list.get(list.size()-1);
-        return recipe instanceof IRecipe ? (IRecipe)recipe : null;
+        List<IRecipe> list = CraftingManager.getInstance().getRecipeList();
+        return list.get(list.size()-1);
     }
 
     public static EmpowererRecipe lastEmpowererRecipe(){
