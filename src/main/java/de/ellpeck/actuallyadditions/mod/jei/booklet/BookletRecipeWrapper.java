@@ -79,7 +79,6 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
 
     }
 
-    @Nullable
     @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY){
         return null;

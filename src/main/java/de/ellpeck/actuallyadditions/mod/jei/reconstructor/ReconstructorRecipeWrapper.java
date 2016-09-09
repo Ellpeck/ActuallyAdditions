@@ -63,7 +63,6 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implemen
 
     }
 
-    @Nullable
     @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY){
         return null;

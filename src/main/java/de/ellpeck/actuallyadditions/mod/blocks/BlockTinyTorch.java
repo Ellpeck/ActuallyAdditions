@@ -68,7 +68,6 @@ public class BlockTinyTorch extends BlockBase{
     }
 
     @Override
-    @Nullable
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos){
         return NULL_AABB;
     }

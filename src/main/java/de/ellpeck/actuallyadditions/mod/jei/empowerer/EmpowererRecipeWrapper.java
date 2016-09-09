@@ -66,7 +66,6 @@ public class EmpowererRecipeWrapper extends RecipeWrapperWithButton implements I
 
     }
 
-    @Nullable
     @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY){
         return null;

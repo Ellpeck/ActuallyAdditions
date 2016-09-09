@@ -51,7 +51,7 @@ public class ContainerBag extends Container implements IButtonReactor{
         if(this.isVoid){
             this.addSlotToContainer(new SlotDeletion(this.bagInventory, 4, 64, 65){
                 @Override
-                public boolean isItemValid(@Nullable ItemStack stack){
+                public boolean isItemValid(ItemStack stack){
                     return ContainerBag.this.filter.check(stack, ContainerBag.this.bagInventory.slots);
                 }
             });
@@ -61,7 +61,7 @@ public class ContainerBag extends Container implements IButtonReactor{
                 for(int j = 0; j < 7; j++){
                     this.addSlotToContainer(new Slot(this.bagInventory, j+i*7+4, 10+j*18, 10+i*18){
                         @Override
-                        public boolean isItemValid(@Nullable ItemStack stack){
+                        public boolean isItemValid(ItemStack stack){
                             return ContainerBag.this.filter.check(stack, ContainerBag.this.bagInventory.slots);
                         }
                     });

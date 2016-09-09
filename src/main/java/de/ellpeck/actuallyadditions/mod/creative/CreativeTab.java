@@ -87,6 +87,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockCoffeeMachine);
         this.add(InitBlocks.blockXPSolidifier);
         this.add(InitBlocks.blockDisplayStand);
+        this.add(InitBlocks.blockDistributorItem);
 
         this.add(InitBlocks.blockShockSuppressor);
         this.add(InitBlocks.blockMiner);

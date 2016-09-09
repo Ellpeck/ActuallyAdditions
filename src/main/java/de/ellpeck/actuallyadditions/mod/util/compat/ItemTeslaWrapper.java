@@ -52,12 +52,12 @@ public class ItemTeslaWrapper implements ITeslaProducer, ITeslaHolder, ITeslaCon
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing){
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing){
         return capability == TeslaUtil.teslaProducer || capability == TeslaUtil.teslaHolder || capability == TeslaUtil.teslaConsumer;
     }
 
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing){
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
         return this.hasCapability(capability, facing) ? (T)this : null;
     }
 }
