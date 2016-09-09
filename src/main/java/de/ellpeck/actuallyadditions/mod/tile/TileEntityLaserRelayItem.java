@@ -44,6 +44,11 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
     }
 
     @Override
+    public boolean shouldSaveHandlersAround(){
+        return true;
+    }
+
+    @Override
     public void saveAllHandlersAround(){
         this.handlersAround.clear();
 

@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
@@ -156,6 +157,14 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
 
     public void neighborsChangedCustom(World world, BlockPos pos){
         this.updateRedstoneState(world, pos);
+
+        TileEntity tile = world.getTileEntity(pos);
+        if(tile instanceof TileEntityBase){
+            TileEntityBase base = (TileEntityBase)tile;
+            if(base.shouldSaveHandlersAround()){
+                base.saveAllHandlersAround();
+            }
+        }
     }
 
     @Override

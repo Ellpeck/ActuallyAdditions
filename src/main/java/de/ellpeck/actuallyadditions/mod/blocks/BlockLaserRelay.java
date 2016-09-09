@@ -113,16 +113,6 @@ public class BlockLaserRelay extends BlockContainerBase{
     }
 
     @Override
-    public void neighborsChangedCustom(World world, BlockPos pos){
-        super.neighborsChangedCustom(world, pos);
-
-        TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileEntityLaserRelay){
-            ((TileEntityLaserRelay)tile).saveAllHandlersAround();
-        }
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world, int i){
         switch(this.type){
             case ITEM:

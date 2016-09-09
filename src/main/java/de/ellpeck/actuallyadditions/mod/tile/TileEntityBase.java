@@ -42,6 +42,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public boolean isPulseMode;
     protected int ticksElapsed;
 
+    protected TileEntity[] tilesAround = new TileEntity[6];
+    protected boolean hasCheckedHandlersAround;
+
     public TileEntityBase(String name){
         this.name = name;
     }
@@ -236,8 +239,12 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                         if(amount <= 0){
                             amount = total;
                         }
+
                         for(EnumFacing side : sides){
-                            WorldUtil.doEnergyInteraction(this, side, amount);
+                            TileEntity tile = this.tilesAround[side.ordinal()];
+                            if(tile != null){
+                                WorldUtil.doEnergyInteraction(this, tile, side, amount);
+                            }
                         }
                     }
                 }
@@ -254,13 +261,35 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                         if(amount <= 0){
                             amount = total;
                         }
+
                         for(EnumFacing side : sides){
-                            WorldUtil.doFluidInteraction(this, side, amount);
+                            TileEntity tile = this.tilesAround[side.ordinal()];
+                            if(tile != null){
+                                WorldUtil.doFluidInteraction(this, tile, side, amount);
+                            }
                         }
                     }
                 }
             }
+
+            if(!this.hasCheckedHandlersAround){
+                if(this.shouldSaveHandlersAround()){
+                    this.saveAllHandlersAround();
+                }
+
+                this.hasCheckedHandlersAround = true;
+            }
         }
+    }
+
+    public void saveAllHandlersAround(){
+        for(EnumFacing side : EnumFacing.values()){
+            this.tilesAround[side.ordinal()] = this.worldObj.getTileEntity(this.pos.offset(side));
+        }
+    }
+
+    public boolean shouldSaveHandlersAround(){
+        return this instanceof ISharingEnergyProvider || this instanceof ISharingFluidHandler;
     }
 
     public void setRedstonePowered(boolean powered){

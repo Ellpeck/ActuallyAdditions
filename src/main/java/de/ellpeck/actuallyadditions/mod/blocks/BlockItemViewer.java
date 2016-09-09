@@ -30,17 +30,6 @@ public class BlockItemViewer extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
-
-    @Override
-    public void neighborsChangedCustom(World world, BlockPos pos){
-        super.neighborsChangedCustom(world, pos);
-
-        TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileEntityItemViewer){
-            ((TileEntityItemViewer)tile).saveConnectedRelay();
-        }
-    }
-
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta){
         return new TileEntityItemViewer();

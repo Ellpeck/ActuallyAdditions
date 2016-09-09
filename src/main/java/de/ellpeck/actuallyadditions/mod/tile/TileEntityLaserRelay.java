@@ -42,8 +42,6 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     private Set<ConnectionPair> tempConnectionStorage;
 
-    private boolean hasCheckedHandlersAround;
-
     public TileEntityLaserRelay(String name, LaserType type){
         super(name);
         this.type = type;
@@ -90,14 +88,6 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         if(this.worldObj.isRemote){
             this.renderParticles();
         }
-        else if(!this.hasCheckedHandlersAround){
-            this.saveAllHandlersAround();
-            this.hasCheckedHandlersAround = true;
-        }
-    }
-
-    public void saveAllHandlersAround(){
-
     }
 
     @SideOnly(Side.CLIENT)

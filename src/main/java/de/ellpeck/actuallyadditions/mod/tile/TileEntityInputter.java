@@ -48,8 +48,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public FilterSettings leftFilter = new FilterSettings(PULL_FILTER_START, PULL_FILTER_START+12, true, true, false, 0, -1000);
     public FilterSettings rightFilter = new FilterSettings(PUT_FILTER_START, PUT_FILTER_START+12, true, true, false, 0, -2000);
 
-    private boolean hasCheckedTilesAround;
-
     public TileEntityInputter(int slots, String name){
         super(slots, name);
     }
@@ -313,10 +311,16 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         return !this.isAdvanced || (output ? this.rightFilter : this.leftFilter).check(stack, this.slots);
     }
 
+    @Override
+    public boolean shouldSaveHandlersAround(){
+        return true;
+    }
+
     /**
      * Sets all of the relevant variables
      */
-    public void initVars(){
+    @Override
+    public void saveAllHandlersAround(){
         if(this.sideToPull != -1){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(this.sideToPull);
             this.placeToPull = this.worldObj.getTileEntity(this.pos.offset(side));
@@ -399,7 +403,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         }
 
         this.markDirty();
-        this.initVars();
+        this.saveAllHandlersAround();
     }
 
     @Override
@@ -438,10 +442,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(!this.hasCheckedTilesAround){
-                this.initVars();
-                this.hasCheckedTilesAround = true;
-            }
 
             //Is Block not powered by Redstone?
             if(!this.isRedstonePowered){

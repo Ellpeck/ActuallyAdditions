@@ -26,7 +26,6 @@ import java.util.List;
 public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     public TileEntityLaserRelayItem connectedRelay;
-    private boolean hasCheckedRelayOnLoad;
 
     public TileEntityItemViewer(){
         super(0, "itemViewer");
@@ -35,11 +34,6 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-
-        if(!this.worldObj.isRemote && !this.hasCheckedRelayOnLoad){
-            this.saveConnectedRelay();
-            this.hasCheckedRelayOnLoad = true;
-        }
     }
 
     private List<GenericItemHandlerInfo> getItemHandlerInfos(){
@@ -75,7 +69,13 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         return null;
     }
 
-    public void saveConnectedRelay(){
+    @Override
+    public boolean shouldSaveHandlersAround(){
+        return true;
+    }
+
+    @Override
+    public void saveAllHandlersAround(){
         TileEntityLaserRelayItem tileFound = null;
         if(this.worldObj != null){ //Why is that even possible..?
             for(int i = 0; i <= 5; i++){

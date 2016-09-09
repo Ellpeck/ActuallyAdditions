@@ -40,6 +40,11 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
     }
 
     @Override
+    public boolean shouldSaveHandlersAround(){
+        return true;
+    }
+
+    @Override
     public void saveAllHandlersAround(){
         this.receiversAround.clear();
 
