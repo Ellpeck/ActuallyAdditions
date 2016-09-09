@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
-import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.IndexButton;
@@ -32,7 +31,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.stats.Achievement;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -504,7 +502,9 @@ public final class BookletUtils{
     @SideOnly(Side.CLIENT)
     public static void saveBookPage(GuiBooklet gui, NBTTagCompound compound){
         //Save Entry etc.
-        compound.setTag("SavedEntry", gui.currentEntrySet.writeToNBT());
+        NBTTagCompound tag = new NBTTagCompound();
+        gui.currentEntrySet.writeToNBT(tag);
+        compound.setTag("SavedEntry", tag);
         compound.setString("SearchWord", gui.searchField.getText());
 
         //Save Bookmarks
@@ -512,7 +512,9 @@ public final class BookletUtils{
         for(int i = 0; i < gui.bookmarkButtons.length; i++){
             BookmarkButton button = (BookmarkButton)gui.bookmarkButtons[i];
 
-            list.appendTag(button.assignedEntry.writeToNBT());
+            NBTTagCompound buttonTag = new NBTTagCompound();
+            button.assignedEntry.writeToNBT(buttonTag);
+            list.appendTag(buttonTag);
         }
         compound.setTag("Bookmarks", list);
     }
@@ -520,7 +522,8 @@ public final class BookletUtils{
     @SideOnly(Side.CLIENT)
     public static void openLastBookPage(GuiBooklet gui, NBTTagCompound compound){
         //Open Entry etc.
-        EntrySet set = EntrySet.readFromNBT(compound.getCompoundTag("SavedEntry"));
+        EntrySet set = new EntrySet(null);
+        set.readFromNBT(compound.getCompoundTag("SavedEntry"));
         if(set != null){
 
             BookletUtils.openIndexEntry(gui, set.getCurrentEntry(), set.getPageInIndex(), true);
@@ -544,7 +547,7 @@ public final class BookletUtils{
         if(list != null){
             for(int i = 0; i < list.tagCount(); i++){
                 BookmarkButton button = (BookmarkButton)gui.bookmarkButtons[i];
-                button.assignedEntry = EntrySet.readFromNBT(list.getCompoundTagAt(i));
+                button.assignedEntry.readFromNBT(list.getCompoundTagAt(i));
             }
         }
     }

@@ -26,7 +26,9 @@ public class TileEntityBookletStand extends TileEntityBase{
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
         if(type != NBTType.SAVE_BLOCK){
-            compound.setTag("SavedEntry", this.assignedEntry.writeToNBT());
+            NBTTagCompound tag = new NBTTagCompound();
+            this.assignedEntry.writeToNBT(tag);
+            compound.setTag("SavedEntry", tag);
 
             if(this.assignedPlayer != null){
                 compound.setString("Player", this.assignedPlayer);
@@ -38,7 +40,7 @@ public class TileEntityBookletStand extends TileEntityBase{
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
         if(type != NBTType.SAVE_BLOCK){
-            this.assignedEntry = EntrySet.readFromNBT(compound.getCompoundTag("SavedEntry"));
+            this.assignedEntry.readFromNBT(compound.getCompoundTag("SavedEntry"));
             this.assignedPlayer = compound.getString("Player");
         }
     }

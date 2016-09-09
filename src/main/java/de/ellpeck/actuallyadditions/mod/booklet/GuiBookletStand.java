@@ -41,7 +41,9 @@ public class GuiBookletStand extends GuiBooklet{
             compound.setInteger("Z", this.theStand.getPos().getZ());
             compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
             compound.setInteger("WorldID", this.theStand.getWorld().provider.getDimension());
-            compound.setTag("EntrySet", this.currentEntrySet.writeToNBT());
+            NBTTagCompound tag = new NBTTagCompound();
+            this.currentEntrySet.writeToNBT(tag);
+            compound.setTag("EntrySet", tag);
             PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.BOOKLET_STAND_BUTTON_HANDLER));
         }
         super.actionPerformed(button);

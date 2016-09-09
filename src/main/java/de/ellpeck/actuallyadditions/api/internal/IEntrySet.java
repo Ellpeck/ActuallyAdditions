@@ -21,7 +21,9 @@ public interface IEntrySet{
 
     void removeEntry();
 
-    NBTTagCompound writeToNBT();
+    void writeToNBT(NBTTagCompound compound);
+
+    void readFromNBT(NBTTagCompound compound);
 
     BookletPage getCurrentPage();
 

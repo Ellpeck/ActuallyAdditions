@@ -138,7 +138,7 @@ public final class PacketHandler{
             if(player != null && tile instanceof TileEntityBookletStand){
                 TileEntityBookletStand stand = (TileEntityBookletStand)tile;
                 if(player.getName() != null && player.getName().equalsIgnoreCase(stand.assignedPlayer)){
-                    stand.assignedEntry = EntrySet.readFromNBT(compound.getCompoundTag("EntrySet"));
+                    stand.assignedEntry.readFromNBT(compound.getCompoundTag("EntrySet"));
                     stand.markDirty();
                     stand.sendUpdate();
                 }

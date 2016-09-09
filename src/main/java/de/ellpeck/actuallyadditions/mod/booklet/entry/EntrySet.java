@@ -32,7 +32,8 @@ public class EntrySet implements IEntrySet{
         this.setEntry(page, chapter, entry, pageInIndex);
     }
 
-    public static EntrySet readFromNBT(NBTTagCompound compound){
+    @Override
+    public void readFromNBT(NBTTagCompound compound){
         if(compound != null){
             String entryName = compound.getString("Entry");
             if(!entryName.isEmpty()){
@@ -46,18 +47,19 @@ public class EntrySet implements IEntrySet{
                                 if(chapterName.equals(chapter.getIdentifier())){
                                     int page = compound.getInteger("Page");
                                     if(page != -1){
-                                        return new EntrySet(chapter.getPageById(page), chapter, entry, indexPage);
+                                        this.page = chapter.getPageById(page);
+                                        this.chapter = chapter;
                                     }
                                     break;
                                 }
                             }
                         }
-                        return new EntrySet(null, null, entry, indexPage);
+                        this.entry = entry;
+                        this.pageInIndex = indexPage;
                     }
                 }
             }
         }
-        return new EntrySet(null);
     }
 
     @Override
@@ -74,14 +76,11 @@ public class EntrySet implements IEntrySet{
     }
 
     @Override
-    public NBTTagCompound writeToNBT(){
-        NBTTagCompound compound = new NBTTagCompound();
+    public void writeToNBT(NBTTagCompound compound){
         compound.setInteger("PageInIndex", this.pageInIndex);
         compound.setString("Entry", this.entry != null ? this.entry.getIdentifier() : "");
         compound.setString("Chapter", this.chapter != null ? this.chapter.getIdentifier() : "");
         compound.setInteger("Page", this.page != null ? this.page.getChapter().getPageId(this.page) : -1);
-
-        return compound;
     }
 
     @Override
