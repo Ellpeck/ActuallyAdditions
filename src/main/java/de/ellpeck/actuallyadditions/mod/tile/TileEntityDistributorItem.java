@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -34,7 +35,33 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
         super.updateEntity();
 
         if(!this.worldObj.isRemote){
-            if(!this.handlersAround.isEmpty() && this.slots[0] != null){
+            boolean shouldMarkDirty = false;
+
+            IItemHandler handlerUp = this.handlersAround.get(EnumFacing.UP);
+            if(handlerUp != null){
+                for(int i = 0; i < handlerUp.getSlots(); i++){
+
+                    ItemStack pullable = handlerUp.extractItem(i, Integer.MAX_VALUE, true);
+                    if(pullable != null && (this.slots[0] == null || ItemUtil.canBeStacked(this.slots[0], pullable))){
+                        ItemStack pulled = handlerUp.extractItem(i, this.slots[0] != null ? this.slots[0].getMaxStackSize()-this.slots[0].stackSize : Integer.MAX_VALUE, false);
+                        if(pulled != null){
+                            if(this.slots[0] == null){
+                                this.slots[0] = pulled.copy();
+                            }
+                            else{
+                                this.slots[0].stackSize += pulled.stackSize;
+                            }
+                            shouldMarkDirty = true;
+                        }
+                    }
+
+                    if(this.slots[0] != null && this.slots[0].stackSize >= this.slots[0].getMaxStackSize()){
+                        break;
+                    }
+                }
+            }
+
+            if(!this.handlersAround.isEmpty() && (!this.handlersAround.containsKey(EnumFacing.UP) || this.handlersAround.size() >= 2) && this.slots[0] != null){
                 EnumFacing[] allFacings = EnumFacing.values();
                 do{
                     this.putSide++;
@@ -43,14 +70,13 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
                         this.putSide = 0;
                     }
                 }
-                while(!this.handlersAround.containsKey(allFacings[this.putSide]));
+                while(allFacings[this.putSide] == EnumFacing.UP || !this.handlersAround.containsKey(allFacings[this.putSide]));
 
                 EnumFacing putFacing = allFacings[this.putSide];
                 IItemHandler handler = this.handlersAround.get(putFacing);
                 if(handler != null){
-                    boolean shouldMarkDirty = false;
-
-                    int amount = this.slots[0].stackSize/this.handlersAround.size();
+                    int aroundAmount = this.handlersAround.containsKey(EnumFacing.UP) ? this.handlersAround.size()-1 : this.handlersAround.size();
+                    int amount = this.slots[0].stackSize/aroundAmount;
                     if(amount <= 0){
                         amount = this.slots[0].stackSize;
                     }
@@ -79,12 +105,12 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
                             this.slots[0] = null;
                             shouldMarkDirty = true;
                         }
-
-                        if(shouldMarkDirty){
-                            this.markDirty();
-                        }
                     }
                 }
+            }
+
+            if(shouldMarkDirty){
+                this.markDirty();
             }
         }
     }
@@ -94,13 +120,11 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
         this.handlersAround.clear();
 
         for(EnumFacing side : EnumFacing.values()){
-            if(side != EnumFacing.UP){
-                TileEntity tile = this.worldObj.getTileEntity(this.pos.offset(side));
-                if(tile != null && tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())){
-                    IItemHandler cap = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                    if(cap != null){
-                        this.handlersAround.put(side, cap);
-                    }
+            TileEntity tile = this.worldObj.getTileEntity(this.pos.offset(side));
+            if(tile != null && tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())){
+                IItemHandler cap = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                if(cap != null){
+                    this.handlersAround.put(side, cap);
                 }
             }
         }
