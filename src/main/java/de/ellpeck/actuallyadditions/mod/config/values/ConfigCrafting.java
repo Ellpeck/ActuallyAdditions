@@ -29,13 +29,11 @@ public enum ConfigCrafting{
     DOUBLE_FURNACE("Double Furnace", ConfigCategories.BLOCKS_CRAFTING),
     FEEDER("Feeder", ConfigCategories.BLOCKS_CRAFTING),
     GIANT_CHEST("Storage Crate", ConfigCategories.BLOCKS_CRAFTING),
-
     GREENHOUSE_GLASS("Greenhouse Glass", ConfigCategories.BLOCKS_CRAFTING),
     BREAKER("Breaker", ConfigCategories.BLOCKS_CRAFTING),
     PLACER("Placer", ConfigCategories.BLOCKS_CRAFTING),
     DROPPER("Dropper", ConfigCategories.BLOCKS_CRAFTING),
     SPEED_UPGRADE("Speed Upgrade", ConfigCategories.BLOCKS_CRAFTING),
-
     BAGUETTE("Baguette", ConfigCategories.FOOD_CRAFTING),
     PIZZA("Pizza", ConfigCategories.FOOD_CRAFTING),
     HAMBURGER("Hamburger", ConfigCategories.FOOD_CRAFTING),
@@ -53,7 +51,6 @@ public enum ConfigCrafting{
     CHOCOLATE_CAKE("Chocolate Cake", ConfigCategories.FOOD_CRAFTING),
     TOAST("Toast", ConfigCategories.FOOD_CRAFTING),
     CHOCOLATE_TOAST("Chocolate Toast", ConfigCategories.FOOD_CRAFTING),
-
     LEAF_BLOWER("Leaf Blower", ConfigCategories.ITEMS_CRAFTING),
     LEAF_BLOWER_ADVANCED("Advanced Leaf Blower", ConfigCategories.ITEMS_CRAFTING),
     COIL("Coil", ConfigCategories.ITEMS_CRAFTING),
@@ -62,7 +59,6 @@ public enum ConfigCrafting{
     STICK_CRAFTER("Crafting Table On A Stick", ConfigCategories.ITEMS_CRAFTING),
     MASHED_FOOD("Mashed Food", ConfigCategories.ITEMS_CRAFTING),
     RARMOR_RECONSTRUCTOR_MODULE("Rarmor Reconstructor Module", ConfigCategories.ITEMS_CRAFTING),
-
     RING_SPEED("Speed Ring", ConfigCategories.POTION_RING_CRAFTING),
     RING_HASTE("Haste Ring", ConfigCategories.POTION_RING_CRAFTING),
     RING_STRENGTH("Strength Ring", ConfigCategories.POTION_RING_CRAFTING),
@@ -73,12 +69,10 @@ public enum ConfigCrafting{
     RING_WATER_BREATHING("Water Breathing Ring", ConfigCategories.POTION_RING_CRAFTING),
     RING_INVISIBILITY("Invisibility Ring", ConfigCategories.POTION_RING_CRAFTING),
     RING_NIGHT_VISION("Night Vision Ring", ConfigCategories.POTION_RING_CRAFTING),
-
     DOUGH("Dough", ConfigCategories.ITEMS_CRAFTING),
     PAPER_CONE("Paper Cone", ConfigCategories.ITEMS_CRAFTING),
     KNIFE_HANDLE("Knife Handle", ConfigCategories.ITEMS_CRAFTING),
     KNIFE_BLADE("Knife Blade", ConfigCategories.ITEMS_CRAFTING),
-
     TOOL_EMERALD("Emerald Tools", ConfigCategories.ITEMS_CRAFTING),
     TOOL_OBSIDIAN("Obsidian Tools", ConfigCategories.ITEMS_CRAFTING),
     TOOL_QUARTZ("Quartz Tools", ConfigCategories.ITEMS_CRAFTING),
@@ -86,10 +80,8 @@ public enum ConfigCrafting{
     RICE_BREAD("Rice Bread", ConfigCategories.FOOD_CRAFTING),
     RICE_DOUGH("Rice Dough", ConfigCategories.FOOD_CRAFTING),
     BACON("Bacon", ConfigCategories.FOOD_CRAFTING),
-
     RICE_GADGETS("Rice Gadgets", ConfigCategories.ITEMS_CRAFTING),
     RESONANT_RICE("Resonant Rice", ConfigCategories.ITEMS_CRAFTING),
-
     CANOLA_PRESS("Canola Press", ConfigCategories.BLOCKS_CRAFTING),
     FERMENTING_BARREL("Fermenting Barrel", ConfigCategories.BLOCKS_CRAFTING),
     COAL_GENERATOR("Coal Generator", ConfigCategories.BLOCKS_CRAFTING),
@@ -99,7 +91,6 @@ public enum ConfigCrafting{
     PHANTOM_CONNECTOR("Phantom Connector", ConfigCategories.ITEMS_CRAFTING),
     PLAYER_INTERFACE("Player Interface", ConfigCategories.BLOCKS_CRAFTING),
     PLAYER_PROBE("Player Probe", ConfigCategories.ITEMS_CRAFTING),
-
     PHANTOM_ENERGYFACE("Phantom Energyface", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_REDSTONEFACE("Phantom Redstoneface", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_LIQUIFACE("Phantom Liquiface", ConfigCategories.BLOCKS_CRAFTING),
@@ -107,16 +98,12 @@ public enum ConfigCrafting{
     PHANTOM_BREAKER("Phantom Breaker", ConfigCategories.BLOCKS_CRAFTING),
     LIQUID_PLACER("Liquid Placer", ConfigCategories.BLOCKS_CRAFTING),
     LIQUID_BREAKER("Liquid Collector", ConfigCategories.BLOCKS_CRAFTING),
-
     CUP("Cup", ConfigCategories.ITEMS_CRAFTING),
     PAXELS("Paxels", ConfigCategories.ITEMS_CRAFTING),
-
-
     ENDER_CASING("Ender Casing", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_BOOSTER("Phantom Booster", ConfigCategories.BLOCKS_CRAFTING),
     COFFEE_MACHINE("Coffee Machine", ConfigCategories.BLOCKS_CRAFTING),
     LAVA_FACTORY("Lava Factory", ConfigCategories.BLOCKS_CRAFTING),
-
     DRILL("Drill", ConfigCategories.ITEMS_CRAFTING),
     DRILL_SPEED("Drill Speed Upgrades", ConfigCategories.ITEMS_CRAFTING),
     DRILL_FORTUNE("Drill Fortune Upgrades", ConfigCategories.ITEMS_CRAFTING),
@@ -129,21 +116,15 @@ public enum ConfigCrafting{
     QUADRUPLE_BATTERY("Quadruple Battery", ConfigCategories.ITEMS_CRAFTING),
     QUINTUPLE_BATTERY("Quintuple Battery", ConfigCategories.ITEMS_CRAFTING),
     BAT_WINGS("Wings Of The Bats", ConfigCategories.ITEMS_CRAFTING),
-
     ENERGIZER("Energizer", ConfigCategories.BLOCKS_CRAFTING),
     ENERVATOR("Enervator", ConfigCategories.BLOCKS_CRAFTING),
-
     QUARTZ("Black Quartz in a Crafting Table", ConfigCategories.ITEMS_CRAFTING),
     LAMPS("Lamps", ConfigCategories.BLOCKS_CRAFTING),
-
     HORSE_ARMORS("Horse Armor -> Raw Materials (Crusher)", ConfigCategories.OTHER),
-
     RECONSTRUCTOR_MISC("Misc. Recipes like Soul Sand (Reconstructor)", ConfigCategories.OTHER),
     RECONSTRUCTOR_EXPLOSION_LENS("Lens of Detonation (Reconstructor)", ConfigCategories.OTHER),
-
     TELE_STAFF("Tele Staff", ConfigCategories.ITEMS_CRAFTING),
     CASING("Casing", ConfigCategories.BLOCKS_CRAFTING),
-
     MAGNET_RING("Magnet Ring", ConfigCategories.ITEMS_CRAFTING),
     WATER_RING("Water Ring", ConfigCategories.ITEMS_CRAFTING),
     GROWTH_RING("Growth Ring", ConfigCategories.ITEMS_CRAFTING),
@@ -154,7 +135,6 @@ public enum ConfigCrafting{
     LASER_RELAY_ITEM_WHITELIST("Advanced Item Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
     LASER_WRENCH("Laser Wrench", ConfigCategories.ITEMS_CRAFTING),
     LASER_RELAY_FLUIDS("Fluid Laser Relay", ConfigCategories.BLOCKS_CRAFTING),
-
     CHEST_TO_CRATE_UPGRADE("Chest To Crate Upgrade", ConfigCategories.ITEMS_CRAFTING),
     DISENCHANTING_LENS("Disenchanting Lens", ConfigCategories.ITEMS_CRAFTING),
     CRATE_KEEPER("Crate Keeper", ConfigCategories.ITEMS_CRAFTING),
@@ -168,13 +148,12 @@ public enum ConfigCrafting{
     ITEM_INTERFACE("Item Interface", ConfigCategories.BLOCKS_CRAFTING),
     DISPLAY_STAND("Display Stand", ConfigCategories.BLOCKS_CRAFTING),
     FILTER("Item Filter", ConfigCategories.ITEMS_CRAFTING),
-
     CHARCOAL_BLOCK("Charcoal Block", ConfigCategories.BLOCKS_CRAFTING),
     TINY_COAL("Tiny Coal", ConfigCategories.ITEMS_CRAFTING),
-
     BAG("Bag", ConfigCategories.ITEMS_CRAFTING),
     VOID_BAG("Void Bag", ConfigCategories.ITEMS_CRAFTING),
-    EMPOWERER("Empowerer", ConfigCategories.BLOCKS_CRAFTING);
+    EMPOWERER("Empowerer", ConfigCategories.BLOCKS_CRAFTING),
+    DISTRIBUTOR_ITEM("Item Distributor", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;
     public final String category;

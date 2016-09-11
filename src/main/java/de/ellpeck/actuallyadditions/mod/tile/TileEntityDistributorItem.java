@@ -41,9 +41,9 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
             if(handlerUp != null){
                 for(int i = 0; i < handlerUp.getSlots(); i++){
 
-                    ItemStack pullable = handlerUp.extractItem(i, Integer.MAX_VALUE, true);
+                    ItemStack pullable = handlerUp.extractItem(i, 1, true);
                     if(pullable != null && (this.slots[0] == null || ItemUtil.canBeStacked(this.slots[0], pullable))){
-                        ItemStack pulled = handlerUp.extractItem(i, this.slots[0] != null ? this.slots[0].getMaxStackSize()-this.slots[0].stackSize : Integer.MAX_VALUE, false);
+                        ItemStack pulled = handlerUp.extractItem(i, 1, false);
                         if(pulled != null){
                             if(this.slots[0] == null){
                                 this.slots[0] = pulled.copy();

@@ -227,6 +227,7 @@ tile.actuallyadditions.blockDisplayStand.name=Display Stand
 tile.actuallyadditions.blockShockSuppressor.name=Shock Absorber
 tile.actuallyadditions.blockTinyTorch.name=Tiny Torch
 tile.actuallyadditions.blockEmpowerer.name=Empowerer
+tile.actuallyadditions.blockDistributorItem.name=Item Distributor
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -1017,3 +1018,6 @@ booklet.actuallyadditions.chapter.empowerer.text.4=The <item>Display Stand<r> ca
 
 booklet.actuallyadditions.chapter.fluidLaser.name=Fluid Laser Relays
 booklet.actuallyadditions.chapter.fluidLaser.text.1=The <item>Fluid Laser Relays<r> work much in the same way that normal Laser Relays do, so if you want to know anything about them, visit the <imp>Blocks that use RF<r> section of the manual. <n><n>The thing that makes the <item>Fluid Laser Relay<r> different from the <item>Energy Laser Relay<r>, however, is that it transfers <imp>fluids<r> from internal tanks of blocks into other blocks.
+
+booklet.actuallyadditions.chapter.distributorItem.name=Item Distributor
+booklet.actuallyadditions.chapter.distributorItem.text.1=The <item>Item Distributor<r> is a simple way to split up items and make them go <imp>in different directions<r>. <n><n>The distributor will <imp>pull items into it from the top<r> by itself, and then split them up and <imp>put them<r> out into inventories connected to all of the <imp>other sides<r> of it. <n>It tries to do split the items <imp>equally<r>, however this works best when inputting <imp>one item at a time<r>, which its pulling feature does automatically.

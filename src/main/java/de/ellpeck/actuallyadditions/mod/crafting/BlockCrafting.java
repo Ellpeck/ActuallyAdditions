@@ -96,6 +96,7 @@ public final class BlockCrafting{
     public static IRecipe recipeEmpowerer;
     public static IRecipe[] recipesTinyTorch = new IRecipe[2];
     public static IRecipe recipeFluidLaser;
+    public static IRecipe recipeDistributorItem;
 
     public static void init(){
 
@@ -132,6 +133,16 @@ public final class BlockCrafting{
                     'S', new ItemStack(Items.STICK),
                     'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal())));
             recipeFireworkBox = RecipeUtil.lastIRecipe();
+        }
+
+        //Item Distributor
+        if(ConfigCrafting.DISTRIBUTOR_ITEM.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockDistributorItem),
+                    "WHW", "HCH", "WHW",
+                    'W', "plankWood",
+                    'H', new ItemStack(Blocks.HOPPER),
+                    'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal())));
+            recipeDistributorItem = RecipeUtil.lastIRecipe();
         }
 
         //Shock Suppressor
