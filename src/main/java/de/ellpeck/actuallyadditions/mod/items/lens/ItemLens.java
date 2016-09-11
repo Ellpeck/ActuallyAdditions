@@ -23,7 +23,6 @@ public class ItemLens extends ItemBase implements ILensItem{
     public ItemLens(String name, Lens type){
         super(name);
         this.type = type;
-        this.type.setLensItem(this);
         this.setMaxStackSize(1);
     }
 

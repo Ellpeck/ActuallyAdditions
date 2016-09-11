@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.api.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
@@ -20,11 +19,6 @@ import net.minecraft.util.math.BlockPos;
  * This is the base class for a Reconstructor Lens Type (NOT THE ITEM!)
  */
 public abstract class Lens{
-
-    /**
-     * The item that belongs to this lens type
-     */
-    protected Item lensItem;
 
     /**
      * Invokes the lens type's behavior on a block
@@ -44,13 +38,6 @@ public abstract class Lens{
      * Gets the maximum distance the beam goes with this lens
      */
     public abstract int getDistance();
-
-    /**
-     * Sets the item corresponding to the lens
-     */
-    public void setLensItem(Item item){
-        this.lensItem = item;
-    }
 
     /**
      * @return If the lens can be invoked at the current time
