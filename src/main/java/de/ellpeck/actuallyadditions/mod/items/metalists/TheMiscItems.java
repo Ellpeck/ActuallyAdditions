@@ -38,6 +38,7 @@ public enum TheMiscItems{
     SPAWNER_SHARD("SpawnerShard", EnumRarity.EPIC),
     BIOMASS("Biomass", EnumRarity.UNCOMMON),
     BIOCOAL("Biocoal", EnumRarity.RARE),
+    CRYSTALLIZED_CANOLA_SEED("CrystallizedCanolaSeed", EnumRarity.UNCOMMON),
     YOUTUBE_ICON("YoutubeIcon", Util.FALLBACK_RARITY);
 
     public final String name;

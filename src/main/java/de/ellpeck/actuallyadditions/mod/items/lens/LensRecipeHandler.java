@@ -40,6 +40,7 @@ public final class LensRecipeHandler{
     public static LensConversionRecipe recipeLeather;
     public static LensConversionRecipe recipeNetherWart;
     public static LensConversionRecipe recipePrismarine;
+    public static LensConversionRecipe recipeCrystallizedCanolaSeed;
 
     public static void init(){
         //Crystal Blocks
@@ -99,6 +100,9 @@ public final class LensRecipeHandler{
             recipePrismarine = RecipeUtil.lastReconstructorRecipe();
         }
 
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemCanolaSeed), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal()), 2000);
+        recipeCrystallizedCanolaSeed = RecipeUtil.lastReconstructorRecipe();
+
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.QUARTZ_BLOCK), new ItemStack(InitBlocks.blockTestifiBucksWhiteWall), 10);
         recipeWhiteWall = RecipeUtil.lastReconstructorRecipe();
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.QUARTZ_BLOCK, 1, 1), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10);
@@ -113,7 +117,6 @@ public final class LensRecipeHandler{
         ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Item.getItemFromBlock(Blocks.CARPET), changer);
         ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Item.getItemFromBlock(InitBlocks.blockColoredLamp), changer);
         ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Item.getItemFromBlock(InitBlocks.blockColoredLampOn), changer);
-
     }
 
     public static ArrayList<LensConversionRecipe> getRecipesFor(ItemStack input){

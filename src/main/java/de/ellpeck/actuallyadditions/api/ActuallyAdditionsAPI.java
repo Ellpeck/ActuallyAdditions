@@ -20,7 +20,6 @@ import de.ellpeck.actuallyadditions.api.recipe.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;

@@ -48,7 +48,7 @@ public final class InitFluids{
         FluidRegistry.registerFluid(fluid);
         FluidRegistry.addBucketForFluid(fluid);
 
-        return fluid;
+        return FluidRegistry.getFluid(fluid.getName());
     }
 
     private static Block registerFluidBlock(Fluid fluid, Material material, String name){
