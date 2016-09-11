@@ -124,7 +124,7 @@ public final class PacketHandler{
             UUID id = compound.getUniqueId("UUID");
             PlayerData.getDataFromPlayer(id).theCompound = data;
             if(compound.getBoolean("Log")){
-                ModUtil.LOGGER.info("Receiving Player Data for current player with UUID "+id+" with info "+data+".");
+                ModUtil.LOGGER.info("Receiving Player Data for current player with UUID "+id+".");
             }
         }
     };

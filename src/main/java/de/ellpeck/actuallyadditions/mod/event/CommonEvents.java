@@ -102,7 +102,7 @@ public class CommonEvents{
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if(!data.theCompound.hasNoTags()){
                 PacketHandlerHelper.sendPlayerDataToClientPacket(player, data.theCompound, true);
-                ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+" with info "+data.theCompound+".");
+                ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+".");
             }
             else{
                 ModUtil.LOGGER.info("Not sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+" because he doesn't have any.");
