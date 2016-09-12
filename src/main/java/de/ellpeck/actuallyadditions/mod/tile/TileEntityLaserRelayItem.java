@@ -10,7 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
+import de.ellpeck.actuallyadditions.mod.misc.ConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
@@ -70,8 +71,8 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
         List<BlockPos> alreadyChecked = new ArrayList<BlockPos>();
 
         List<GenericItemHandlerInfo> handlers = new ArrayList<GenericItemHandlerInfo>();
-        for(ConnectionPair pair : network.connections){
-            for(BlockPos relay : pair.positions){
+        for(IConnectionPair pair : network.connections){
+            for(BlockPos relay : pair.getPositions()){
                 if(relay != null && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
                     TileEntity aRelayTile = this.worldObj.getTileEntity(relay);

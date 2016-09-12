@@ -10,13 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -98,8 +95,8 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
         List<TileEntityLaserRelayFluids> relaysThatWork = new ArrayList<TileEntityLaserRelayFluids>();
         int totalReceiverAmount = 0;
 
-        for(ConnectionPair pair : network.connections){
-            for(BlockPos relay : pair.positions){
+        for(IConnectionPair pair : network.connections){
+            for(BlockPos relay : pair.getPositions()){
                 if(relay != null && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
                     TileEntity relayTile = this.worldObj.getTileEntity(relay);

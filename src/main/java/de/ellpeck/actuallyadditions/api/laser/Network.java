@@ -14,7 +14,7 @@ import io.netty.util.internal.ConcurrentSet;
 
 public class Network{
 
-    public final ConcurrentSet<ConnectionPair> connections = new ConcurrentSet<ConnectionPair>();
+    public final ConcurrentSet<IConnectionPair> connections = new ConcurrentSet<IConnectionPair>();
 
     @Override
     public String toString(){

@@ -24,7 +24,7 @@ import net.minecraft.world.World;
  */
 public interface ILaserRelayConnectionHandler{
 
-    ConcurrentSet<ConnectionPair> getConnectionsFor(BlockPos relay, World world);
+    ConcurrentSet<IConnectionPair> getConnectionsFor(BlockPos relay, World world);
 
     void removeRelayFromNetwork(BlockPos relay, World world);
 

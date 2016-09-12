@@ -11,7 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.laser.ConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
+import de.ellpeck.actuallyadditions.mod.misc.ConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
@@ -40,7 +41,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     public final LaserType type;
 
-    private Set<ConnectionPair> tempConnectionStorage;
+    private Set<IConnectionPair> tempConnectionStorage;
 
     public TileEntityLaserRelay(String name, LaserType type){
         super(name);
@@ -57,8 +58,9 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
             NBTTagList list = compound.getTagList("Connections", 10);
             if(!list.hasNoTags()){
                 for(int i = 0; i < list.tagCount(); i++){
-                    ConnectionPair pair = ConnectionPair.readFromNBT(list.getCompoundTagAt(i));
-                    ActuallyAdditionsAPI.connectionHandler.addConnection(pair.positions[0], pair.positions[1], this.type, this.worldObj, pair.suppressConnectionRender);
+                    ConnectionPair pair = new ConnectionPair();
+                    pair.readFromNBT(list.getCompoundTagAt(i));
+                    ActuallyAdditionsAPI.connectionHandler.addConnection(pair.getPositions()[0], pair.getPositions()[1], this.type, this.worldObj, pair.doesSuppressRender());
                 }
             }
         }
@@ -71,10 +73,12 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         if(type == NBTType.SYNC){
             NBTTagList list = new NBTTagList();
 
-            ConcurrentSet<ConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.worldObj);
+            ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.worldObj);
             if(connections != null && !connections.isEmpty()){
-                for(ConnectionPair pair : connections){
-                    list.appendTag(pair.writeToNBT());
+                for(IConnectionPair pair : connections){
+                    NBTTagCompound tag = new NBTTagCompound();
+                    pair.writeToNBT(tag);
+                    list.appendTag(tag);
                 }
             }
 
@@ -102,9 +106,9 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
                     if(mode == WrenchMode.ALWAYS_PARTICLES || (stack != null && stack.getItem() instanceof ItemLaserWrench)){
                         Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);
                         if(network != null){
-                            for(ConnectionPair aPair : network.connections){
-                                if(!aPair.suppressConnectionRender && aPair.contains(this.pos) && this.pos.equals(aPair.positions[0])){
-                                    AssetUtil.renderParticlesFromAToB(aPair.positions[0].getX(), aPair.positions[0].getY(), aPair.positions[0].getZ(), aPair.positions[1].getX(), aPair.positions[1].getY(), aPair.positions[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.type == LaserType.ITEM ? COLOR_ITEM : (this.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR), 1F);
+                            for(IConnectionPair aPair : network.connections){
+                                if(!aPair.doesSuppressRender() && aPair.contains(this.pos) && this.pos.equals(aPair.getPositions()[0])){
+                                    AssetUtil.renderParticlesFromAToB(aPair.getPositions()[0].getX(), aPair.getPositions()[0].getY(), aPair.getPositions()[0].getZ(), aPair.getPositions()[1].getX(), aPair.getPositions()[1].getY(), aPair.getPositions()[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.type == LaserType.ITEM ? COLOR_ITEM : (this.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR), 1F);
                                 }
                             }
                         }
@@ -127,8 +131,8 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     @Override
     public void validate(){
         if(this.tempConnectionStorage != null){
-            for(ConnectionPair pair : this.tempConnectionStorage){
-                ActuallyAdditionsAPI.connectionHandler.addConnection(pair.positions[0], pair.positions[1], pair.type, this.worldObj, pair.suppressConnectionRender);
+            for(IConnectionPair pair : this.tempConnectionStorage){
+                ActuallyAdditionsAPI.connectionHandler.addConnection(pair.getPositions()[0], pair.getPositions()[1], pair.getType(), this.worldObj, pair.doesSuppressRender());
             }
             this.tempConnectionStorage = null;
         }

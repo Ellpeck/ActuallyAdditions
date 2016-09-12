@@ -8,23 +8,29 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.api.laser;
+package de.ellpeck.actuallyadditions.mod.misc;
 
+import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
+import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConnectionPair{
+public class ConnectionPair implements IConnectionPair{
 
     //TODO Remove eventually, just for making the implementation of LaserType work
     //TODO Also remove those deprecated methods in the API
     public static final List<ConnectionPair> PAIRS_FOR_FIXING = new ArrayList<ConnectionPair>();
 
-    public final BlockPos[] positions = new BlockPos[2];
-    public final boolean suppressConnectionRender;
-    public LaserType type;
+    private final BlockPos[] positions = new BlockPos[2];
+    private boolean suppressConnectionRender;
+    private LaserType type;
+
+    public ConnectionPair(){
+
+    }
 
     public ConnectionPair(BlockPos firstRelay, BlockPos secondRelay, LaserType type, boolean suppressConnectionRender){
         this.positions[0] = firstRelay;
@@ -33,28 +39,45 @@ public class ConnectionPair{
         this.type = type;
     }
 
-    public static ConnectionPair readFromNBT(NBTTagCompound compound){
+    @Override
+    public void readFromNBT(NBTTagCompound compound){
         if(compound != null){
-            BlockPos[] pos = new BlockPos[2];
-            for(int i = 0; i < pos.length; i++){
+            for(int i = 0; i < this.positions.length; i++){
                 int anX = compound.getInteger("x"+i);
                 int aY = compound.getInteger("y"+i);
                 int aZ = compound.getInteger("z"+i);
-                pos[i] = new BlockPos(anX, aY, aZ);
+                this.positions[i] = new BlockPos(anX, aY, aZ);
             }
+            this.suppressConnectionRender = compound.getBoolean("SuppressRender");
 
-            LaserType type = null;
             String typeStrg = compound.getString("Type");
             if(typeStrg != null && !typeStrg.isEmpty()){
-                type = LaserType.valueOf(typeStrg);
+                this.type = LaserType.valueOf(typeStrg);
             }
-            ConnectionPair pair = new ConnectionPair(pos[0], pos[1], type, compound.getBoolean("SuppressRender"));
-            if(type == null){
-                PAIRS_FOR_FIXING.add(pair);
+            if(this.type == null){
+                PAIRS_FOR_FIXING.add(this);
             }
-            return pair;
         }
-        return null;
+    }
+
+    @Override
+    public BlockPos[] getPositions(){
+        return this.positions;
+    }
+
+    @Override
+    public boolean doesSuppressRender(){
+        return this.suppressConnectionRender;
+    }
+
+    @Override
+    public LaserType getType(){
+        return this.type;
+    }
+
+    @Override
+    public void setType(LaserType type){
+        this.type = type;
     }
 
     public boolean contains(BlockPos relay){
@@ -71,8 +94,8 @@ public class ConnectionPair{
         return (this.positions[0] == null ? "-" : this.positions[0].toString())+" | "+(this.positions[1] == null ? "-" : this.positions[1].toString());
     }
 
-    public NBTTagCompound writeToNBT(){
-        NBTTagCompound compound = new NBTTagCompound();
+    @Override
+    public void writeToNBT(NBTTagCompound compound){
         for(int i = 0; i < this.positions.length; i++){
             BlockPos relay = this.positions[i];
             compound.setInteger("x"+i, relay.getX());
@@ -83,7 +106,6 @@ public class ConnectionPair{
             compound.setString("Type", this.type.name());
         }
         compound.setBoolean("SuppressRender", this.suppressConnectionRender);
-        return compound;
     }
 
     @Override
