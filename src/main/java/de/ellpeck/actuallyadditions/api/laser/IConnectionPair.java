@@ -27,6 +27,7 @@ public interface IConnectionPair{
 
     boolean contains(BlockPos pos);
 
-    @Deprecated //TODO Remove this once removing the temporary type fixer
+    @Deprecated
+        //TODO Remove this once removing the temporary type fixer
     void setType(LaserType type);
 }

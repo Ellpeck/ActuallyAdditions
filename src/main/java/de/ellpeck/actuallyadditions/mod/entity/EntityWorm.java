@@ -30,6 +30,20 @@ public class EntityWorm extends Entity{
         this.setEntityBoundingBox(null);
     }
 
+    public static boolean canWormify(World world, BlockPos pos, IBlockState state){
+        Block block = state.getBlock();
+        boolean rightBlock = block instanceof BlockFarmland || block == Blocks.GRASS || block == Blocks.GRASS_PATH || (block == Blocks.DIRT && state.getValue(BlockDirt.VARIANT) == BlockDirt.DirtType.DIRT);
+        if(rightBlock){
+            BlockPos posUp = pos.up();
+            IBlockState stateUp = world.getBlockState(posUp);
+            Block blockUp = stateUp.getBlock();
+            return blockUp instanceof IPlantable || blockUp instanceof BlockBush || blockUp.isReplaceable(world, posUp);
+        }
+        else{
+            return false;
+        }
+    }
+
     @Override
     protected void entityInit(){
 
@@ -105,20 +119,6 @@ public class EntityWorm extends Entity{
             if(dieTime > 0 && this.timer >= dieTime){
                 this.setDead();
             }
-        }
-    }
-
-    public static boolean canWormify(World world, BlockPos pos, IBlockState state){
-        Block block = state.getBlock();
-        boolean rightBlock = block instanceof BlockFarmland || block == Blocks.GRASS || block == Blocks.GRASS_PATH || (block == Blocks.DIRT && state.getValue(BlockDirt.VARIANT) == BlockDirt.DirtType.DIRT);
-        if(rightBlock){
-            BlockPos posUp = pos.up();
-            IBlockState stateUp = world.getBlockState(posUp);
-            Block blockUp = stateUp.getBlock();
-            return blockUp instanceof IPlantable || blockUp instanceof BlockBush || blockUp.isReplaceable(world, posUp);
-        }
-        else{
-            return false;
         }
     }
 }

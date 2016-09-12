@@ -35,6 +35,17 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
         super(1, "empowerer");
     }
 
+    public static EmpowererRecipe getRecipeForInput(ItemStack input){
+        if(input != null){
+            for(EmpowererRecipe recipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES){
+                if(recipe.input != null && recipe.input.isItemEqual(input)){
+                    return recipe;
+                }
+            }
+        }
+        return null;
+    }
+
     @Override
     public void updateEntity(){
         super.updateEntity();
@@ -126,17 +137,6 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
         if(type == NBTType.SAVE_TILE){
             this.processTime = compound.getInteger("ProcessTime");
         }
-    }
-
-    public static EmpowererRecipe getRecipeForInput(ItemStack input){
-        if(input != null){
-            for(EmpowererRecipe recipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES){
-                if(recipe.input != null && recipe.input.isItemEqual(input)){
-                    return recipe;
-                }
-            }
-        }
-        return null;
     }
 
     @Override

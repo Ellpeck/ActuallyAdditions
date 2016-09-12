@@ -21,7 +21,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor{
@@ -141,7 +140,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 if(orbs != null && !orbs.isEmpty()){
                     for(EntityXPOrb orb : orbs){
                         if(orb != null && !orb.isDead){
-                            this.singlePointAmount+=orb.getXpValue();
+                            this.singlePointAmount += orb.getXpValue();
                             orb.setDead();
 
                             if(this.singlePointAmount >= ItemSolidifiedExperience.SOLID_XP_AMOUNT){
@@ -152,9 +151,9 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                     }
                 }
             }
-            
+
             if(this.slots[1] != null && this.slots[1].getItem() instanceof ItemSolidifiedExperience){
-                this.amount+=this.slots[1].stackSize;
+                this.amount += this.slots[1].stackSize;
                 this.slots[1] = null;
             }
 

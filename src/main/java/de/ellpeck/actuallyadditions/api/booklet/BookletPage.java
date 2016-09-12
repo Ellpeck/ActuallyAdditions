@@ -20,9 +20,9 @@ import java.util.HashMap;
 
 public abstract class BookletPage{
 
+    protected final HashMap<String, String> textReplacements = new HashMap<String, String>();
     public boolean arePageStacksWildcard;
     protected IBookletChapter chapter;
-    protected final HashMap<String, String> textReplacements = new HashMap<String, String>();
     protected boolean hasNoText;
 
     public void onOpened(IBookletGui gui){

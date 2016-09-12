@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -21,7 +20,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

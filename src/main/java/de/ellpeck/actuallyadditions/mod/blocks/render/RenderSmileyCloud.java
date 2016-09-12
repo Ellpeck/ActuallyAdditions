@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 import de.ellpeck.actuallyadditions.mod.misc.cloud.ISmileyCloudEasterEgg;
 import de.ellpeck.actuallyadditions.mod.misc.cloud.SmileyCloudEasterEggs;
-import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.state.IBlockState;

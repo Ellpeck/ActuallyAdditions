@@ -11,11 +11,6 @@
 package de.ellpeck.actuallyadditions.api.recipe;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class CrusherRecipe{
 

@@ -19,8 +19,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
-import javax.annotation.Nullable;
-
 public class ItemTeslaWrapper implements ITeslaProducer, ITeslaHolder, ITeslaConsumer, ICapabilityProvider{
 
     private final ItemStack stack;

@@ -42,11 +42,10 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
     public int firstCrushTime;
     public int secondCrushTime;
     public boolean isDouble;
+    public boolean isAutoSplit;
     private int lastEnergy;
     private int lastFirstCrush;
     private int lastSecondCrush;
-
-    public boolean isAutoSplit;
     private boolean lastAutoSplit;
 
     public TileEntityGrinder(int slots, String name){

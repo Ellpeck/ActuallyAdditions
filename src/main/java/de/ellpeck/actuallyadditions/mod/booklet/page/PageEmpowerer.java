@@ -12,11 +12,11 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
-import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
-import de.ellpeck.actuallyadditions.mod.util.*;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -24,7 +24,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PageEmpowerer extends BookletPageAA{
 
@@ -76,7 +75,7 @@ public class PageEmpowerer extends BookletPageAA{
                     switch(count){
                         case 0:
                             stack = recipe.input;
-                            x =21;
+                            x = 21;
                             y = 21;
                             break;
                         case 1:

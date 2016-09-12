@@ -82,7 +82,7 @@ public class ActuallyAdditions{
 
         if(Loader.isModLoaded("tesla")){
             ModUtil.LOGGER.info("Tesla loaded... Activating Tesla Power System integration...");
-            ActuallyAdditions.teslaLoaded = true;
+            teslaLoaded = true;
         }
         else{
             ModUtil.LOGGER.info("Tesla not found! Skipping Tesla Power System integration.");

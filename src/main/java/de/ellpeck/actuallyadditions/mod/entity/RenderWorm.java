@@ -26,14 +26,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderWorm extends Render<EntityWorm>{
 
-    private static final ItemStack STACK = new ItemStack(InitItems.itemWorm);
-
     public static final IRenderFactory FACTORY = new IRenderFactory(){
         @Override
         public Render createRenderFor(RenderManager manager){
             return new RenderWorm(manager);
         }
     };
+    private static final ItemStack STACK = new ItemStack(InitItems.itemWorm);
 
     protected RenderWorm(RenderManager renderManager){
         super(renderManager);

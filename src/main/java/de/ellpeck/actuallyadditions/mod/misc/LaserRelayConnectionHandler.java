@@ -47,6 +47,18 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
     }
 
     /**
+     * Merges two laserRelayNetworks together
+     * (Actually puts everything from the second network into the first one and removes the second one)
+     */
+    private static void mergeNetworks(Network firstNetwork, Network secondNetwork, World world){
+        for(IConnectionPair secondPair : secondNetwork.connections){
+            firstNetwork.connections.add(secondPair);
+        }
+        WorldData.getDataForWorld(world).laserRelayNetworks.remove(secondNetwork);
+        //System.out.println("Merged Two Networks!");
+    }
+
+    /**
      * Gets all Connections for a Relay
      */
     @Override
@@ -150,18 +162,6 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
         //System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
         //System.out.println(laserRelayNetworks);
         return true;
-    }
-
-    /**
-     * Merges two laserRelayNetworks together
-     * (Actually puts everything from the second network into the first one and removes the second one)
-     */
-    private static void mergeNetworks(Network firstNetwork, Network secondNetwork, World world){
-        for(IConnectionPair secondPair : secondNetwork.connections){
-            firstNetwork.connections.add(secondPair);
-        }
-        WorldData.getDataForWorld(world).laserRelayNetworks.remove(secondNetwork);
-        //System.out.println("Merged Two Networks!");
     }
 
 }

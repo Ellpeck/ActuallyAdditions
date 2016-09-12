@@ -150,6 +150,7 @@ public final class ActuallyAdditionsAPI{
 
     /**
      * Adds a Recipe to the Oil generator
+     *
      * @param fluidName The name of the fluid to be consumed
      * @param genAmount The amount of energy generated per operation
      */

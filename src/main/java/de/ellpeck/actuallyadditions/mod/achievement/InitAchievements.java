@@ -12,12 +12,7 @@ package de.ellpeck.actuallyadditions.mod.achievement;
 
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.stats.Achievement;
-import net.minecraft.stats.AchievementList;
-import net.minecraft.stats.StatisticsManager;
-import net.minecraft.util.JsonSerializableSet;
 import net.minecraftforge.common.AchievementPage;
 
 import java.util.ArrayList;

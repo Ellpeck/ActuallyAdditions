@@ -29,7 +29,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
@@ -39,8 +38,8 @@ public class GuiBag extends GuiContainer{
     private static final ResourceLocation RES_LOC_VOID = AssetUtil.getGuiLocation("guiVoidBag");
 
     private final ContainerBag container;
-    private FilterSettingsGui filter;
     private final boolean isVoid;
+    private FilterSettingsGui filter;
     private GuiButton buttonAutoInsert;
 
     public GuiBag(InventoryPlayer inventory, boolean isVoid){

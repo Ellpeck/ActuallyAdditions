@@ -23,8 +23,8 @@ import java.util.Map;
 
 public class TileEntityDistributorItem extends TileEntityInventoryBase{
 
-    private int putSide;
     private final Map<EnumFacing, IItemHandler> handlersAround = new HashMap<EnumFacing, IItemHandler>();
+    private int putSide;
 
     public TileEntityDistributorItem(){
         super(1, "distributorItem");

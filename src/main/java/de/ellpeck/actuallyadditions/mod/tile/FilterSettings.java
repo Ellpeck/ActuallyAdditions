@@ -22,23 +22,18 @@ public class FilterSettings{
 
     public final int startSlot;
     public final int endSlot;
-
-    public boolean isWhitelist;
-    private boolean lastWhitelist;
-
-    public boolean respectMeta;
-    private boolean lastRespectMeta;
-
-    public boolean respectNBT;
-    private boolean lastRespectNBT;
-
-    public int respectOredict;
-    private int lastRecpectOredict;
-
     public final int whitelistButtonId;
     public final int metaButtonId;
     public final int nbtButtonId;
     public final int oredictButtonId;
+    public boolean isWhitelist;
+    public boolean respectMeta;
+    public boolean respectNBT;
+    public int respectOredict;
+    private boolean lastWhitelist;
+    private boolean lastRespectMeta;
+    private boolean lastRespectNBT;
+    private int lastRecpectOredict;
 
     public FilterSettings(int startSlot, int endSlot, boolean defaultWhitelist, boolean defaultRespectMeta, boolean defaultRespectNBT, int defaultRespectOredict, int buttonIdStart){
         this.startSlot = startSlot;
@@ -53,58 +48,6 @@ public class FilterSettings{
         this.metaButtonId = buttonIdStart+1;
         this.nbtButtonId = buttonIdStart+2;
         this.oredictButtonId = buttonIdStart+3;
-    }
-
-    public void writeToNBT(NBTTagCompound tag, String name){
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setBoolean("Whitelist", this.isWhitelist);
-        compound.setBoolean("Meta", this.respectMeta);
-        compound.setBoolean("NBT", this.respectNBT);
-        compound.setInteger("Oredict", this.respectOredict);
-        tag.setTag(name, compound);
-    }
-
-    public void readFromNBT(NBTTagCompound tag, String name){
-        NBTTagCompound compound = tag.getCompoundTag(name);
-        this.isWhitelist = compound.getBoolean("Whitelist");
-        this.respectMeta = compound.getBoolean("Meta");
-        this.respectNBT = compound.getBoolean("NBT");
-        this.respectOredict = compound.getInteger("Oredict");
-    }
-
-    public boolean needsUpdateSend(){
-        return this.lastWhitelist != this.isWhitelist || this.lastRespectMeta != this.respectMeta || this.lastRespectNBT != this.respectNBT || this.lastRecpectOredict != this.respectOredict;
-    }
-
-    public void updateLasts(){
-        this.lastWhitelist = this.isWhitelist;
-        this.lastRespectMeta = this.respectMeta;
-        this.lastRespectNBT = this.respectNBT;
-        this.lastRecpectOredict = this.respectOredict;
-    }
-
-    public void onButtonPressed(int id){
-        if(id == this.whitelistButtonId){
-            this.isWhitelist = !this.isWhitelist;
-        }
-        else if(id == this.metaButtonId){
-            this.respectMeta = !this.respectMeta;
-        }
-        else if(id == this.nbtButtonId){
-            this.respectNBT = !this.respectNBT;
-        }
-        else if(id == this.oredictButtonId){
-            if(this.respectOredict+1 > 2){
-                this.respectOredict = 0;
-            }
-            else{
-                this.respectOredict++;
-            }
-        }
-    }
-
-    public boolean check(ItemStack stack, ItemStack[] slots){
-        return check(stack, slots, this.startSlot, this.endSlot, this.isWhitelist, this.respectMeta, this.respectNBT, this.respectOredict);
     }
 
     public static boolean check(ItemStack stack, ItemStack[] slots, int startSlot, int endSlot, boolean whitelist, boolean meta, boolean nbt, int oredict){
@@ -180,5 +123,57 @@ public class FilterSettings{
                 return false;
             }
         }
+    }
+
+    public void writeToNBT(NBTTagCompound tag, String name){
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setBoolean("Whitelist", this.isWhitelist);
+        compound.setBoolean("Meta", this.respectMeta);
+        compound.setBoolean("NBT", this.respectNBT);
+        compound.setInteger("Oredict", this.respectOredict);
+        tag.setTag(name, compound);
+    }
+
+    public void readFromNBT(NBTTagCompound tag, String name){
+        NBTTagCompound compound = tag.getCompoundTag(name);
+        this.isWhitelist = compound.getBoolean("Whitelist");
+        this.respectMeta = compound.getBoolean("Meta");
+        this.respectNBT = compound.getBoolean("NBT");
+        this.respectOredict = compound.getInteger("Oredict");
+    }
+
+    public boolean needsUpdateSend(){
+        return this.lastWhitelist != this.isWhitelist || this.lastRespectMeta != this.respectMeta || this.lastRespectNBT != this.respectNBT || this.lastRecpectOredict != this.respectOredict;
+    }
+
+    public void updateLasts(){
+        this.lastWhitelist = this.isWhitelist;
+        this.lastRespectMeta = this.respectMeta;
+        this.lastRespectNBT = this.respectNBT;
+        this.lastRecpectOredict = this.respectOredict;
+    }
+
+    public void onButtonPressed(int id){
+        if(id == this.whitelistButtonId){
+            this.isWhitelist = !this.isWhitelist;
+        }
+        else if(id == this.metaButtonId){
+            this.respectMeta = !this.respectMeta;
+        }
+        else if(id == this.nbtButtonId){
+            this.respectNBT = !this.respectNBT;
+        }
+        else if(id == this.oredictButtonId){
+            if(this.respectOredict+1 > 2){
+                this.respectOredict = 0;
+            }
+            else{
+                this.respectOredict++;
+            }
+        }
+    }
+
+    public boolean check(ItemStack stack, ItemStack[] slots){
+        return check(stack, slots, this.startSlot, this.endSlot, this.isWhitelist, this.respectMeta, this.respectNBT, this.respectOredict);
     }
 }

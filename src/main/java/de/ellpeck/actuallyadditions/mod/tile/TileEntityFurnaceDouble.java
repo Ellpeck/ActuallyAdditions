@@ -34,15 +34,45 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public final EnergyStorage storage = new EnergyStorage(30000);
     public int firstSmeltTime;
     public int secondSmeltTime;
+    public boolean isAutoSplit;
     private int lastEnergy;
     private int lastFirstSmelt;
     private int lastSecondSmelt;
-
-    public boolean isAutoSplit;
     private boolean lastAutoSplit;
 
     public TileEntityFurnaceDouble(){
         super(4, "furnaceDouble");
+    }
+
+    public static void autoSplit(ItemStack[] slots, int slot1, int slot2){
+        ItemStack first = slots[slot1];
+        ItemStack second = slots[slot2];
+
+        if(first != null || second != null){
+            ItemStack toSplit = null;
+            if(first == null && second != null){
+                toSplit = second;
+            }
+            else if(second == null && first != null){
+                toSplit = first;
+            }
+            else if(ItemUtil.canBeStacked(first, second)){
+                if(first.stackSize < first.getMaxStackSize() || second.stackSize < second.getMaxStackSize()){
+                    if(!((first.stackSize <= second.stackSize+1 && first.stackSize >= second.stackSize-1) || (second.stackSize <= first.stackSize+1 && second.stackSize >= first.stackSize-1))){
+                        toSplit = first;
+                        toSplit.stackSize += second.stackSize;
+                    }
+                }
+            }
+
+            if(toSplit != null && toSplit.stackSize > 1){
+                ItemStack splitFirst = toSplit.copy();
+                ItemStack secondSplit = splitFirst.splitStack(splitFirst.stackSize/2);
+
+                slots[slot1] = splitFirst;
+                slots[slot2] = secondSplit;
+            }
+        }
     }
 
     @Override
@@ -128,37 +158,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 this.lastFirstSmelt = this.firstSmeltTime;
                 this.lastAutoSplit = this.isAutoSplit;
                 this.lastSecondSmelt = this.secondSmeltTime;
-            }
-        }
-    }
-
-    public static void autoSplit(ItemStack[] slots, int slot1, int slot2){
-        ItemStack first = slots[slot1];
-        ItemStack second = slots[slot2];
-
-        if(first != null || second != null){
-            ItemStack toSplit = null;
-            if(first == null && second != null){
-                toSplit = second;
-            }
-            else if(second == null && first != null){
-                toSplit = first;
-            }
-            else if(ItemUtil.canBeStacked(first, second)){
-                if(first.stackSize < first.getMaxStackSize() || second.stackSize < second.getMaxStackSize()){
-                    if(!((first.stackSize <= second.stackSize+1 && first.stackSize >= second.stackSize-1) || (second.stackSize <= first.stackSize+1 && second.stackSize >= first.stackSize-1))){
-                        toSplit = first;
-                        toSplit.stackSize += second.stackSize;
-                    }
-                }
-            }
-
-            if(toSplit != null && toSplit.stackSize > 1){
-                ItemStack splitFirst = toSplit.copy();
-                ItemStack secondSplit = splitFirst.splitStack(splitFirst.stackSize/2);
-
-                slots[slot1] = splitFirst;
-                slots[slot2] = secondSplit;
             }
         }
     }

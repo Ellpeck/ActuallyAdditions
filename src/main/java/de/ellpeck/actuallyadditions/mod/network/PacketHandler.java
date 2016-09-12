@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
-import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
@@ -20,7 +19,6 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBookletStand;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -41,9 +39,7 @@ import java.util.UUID;
 
 public final class PacketHandler{
 
-    public static SimpleNetworkWrapper theNetwork;
     public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<IDataHandler>();
-
     public static final IDataHandler PARTICLE_HANDLER = new IDataHandler(){
         @Override
         @SideOnly(Side.CLIENT)
@@ -128,6 +124,7 @@ public final class PacketHandler{
             }
         }
     };
+    public static SimpleNetworkWrapper theNetwork;
     public static final IDataHandler BOOKLET_STAND_BUTTON_HANDLER = new IDataHandler(){
         @Override
         public void handleData(NBTTagCompound compound){

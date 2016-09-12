@@ -12,8 +12,6 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
-import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;

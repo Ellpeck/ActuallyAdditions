@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
-import de.ellpeck.actuallyadditions.mod.misc.ConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -32,9 +31,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements ICustomEnergyReceiver{
 
-    public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
-
     public static final int CAP = 1000;
+    public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
 
     public TileEntityLaserRelayEnergy(String name){
         super(name, LaserType.ENERGY);

@@ -27,13 +27,11 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-
 
 public class ContainerBag extends Container implements IButtonReactor{
 
-    private final InventoryBag bagInventory;
     public final FilterSettings filter = new FilterSettings(0, 4, false, true, false, 0, -1000);
+    private final InventoryBag bagInventory;
     private final InventoryPlayer inventory;
     private final boolean isVoid;
     public boolean autoInsert;

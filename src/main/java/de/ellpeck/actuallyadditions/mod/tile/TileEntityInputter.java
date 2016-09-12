@@ -39,14 +39,14 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public int slotToPullEnd;
     public TileEntity placeToPull;
     public boolean isAdvanced;
+    public FilterSettings leftFilter = new FilterSettings(PULL_FILTER_START, PULL_FILTER_START+12, true, true, false, 0, -1000);
+    public FilterSettings rightFilter = new FilterSettings(PUT_FILTER_START, PUT_FILTER_START+12, true, true, false, 0, -2000);
     private int lastPutSide;
     private int lastPutStart;
     private int lastPutEnd;
     private int lastPullSide;
     private int lastPullStart;
     private int lastPullEnd;
-    public FilterSettings leftFilter = new FilterSettings(PULL_FILTER_START, PULL_FILTER_START+12, true, true, false, 0, -1000);
-    public FilterSettings rightFilter = new FilterSettings(PUT_FILTER_START, PUT_FILTER_START+12, true, true, false, 0, -2000);
 
     public TileEntityInputter(int slots, String name){
         super(slots, name);

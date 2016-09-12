@@ -18,20 +18,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.IItemHandler;
 
-import java.util.List;
-import java.util.Map;
-
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
 
     public final IInventory filterInventory;
-    private ItemStack[] slots = new ItemStack[24];
     public FilterSettings leftFilter = new FilterSettings(0, 12, true, true, false, 0, -1000);
     public FilterSettings rightFilter = new FilterSettings(12, 24, true, true, false, 0, -2000);
+    private ItemStack[] slots = new ItemStack[24];
 
     public TileEntityLaserRelayItemWhitelist(){
         super("laserRelayItemWhitelist");
