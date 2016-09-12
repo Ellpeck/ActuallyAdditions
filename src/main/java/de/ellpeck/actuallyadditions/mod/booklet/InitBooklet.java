@@ -93,7 +93,8 @@ public final class InitBooklet{
         new BookletChapter("coalStuff", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeTinyCoal).setNoText(), new PageCrafting(3, ItemCrafting.recipeTinyChar).setNoText(), new PageCrafting(4, BlockCrafting.recipeBlockChar).setNoText());
         ArrayList<BookletPage> lampPages = new ArrayList<BookletPage>();
         lampPages.add(new PageTextOnly(lampPages.size()+1));
-        lampPages.add(new PageCrafting(lampPages.size()+1, BlockCrafting.recipePowerer).setNoText());
+        lampPages.add(new PageTextOnly(lampPages.size()+1));
+        lampPages.add(new PageCrafting(lampPages.size()+1, BlockCrafting.recipePowerer).setNoText().setPageStacksWildcard());
         for(IRecipe recipe : BlockCrafting.RECIPES_LAMPS){
             lampPages.add(new PageCrafting(lampPages.size()+1, recipe).setNoText());
         }

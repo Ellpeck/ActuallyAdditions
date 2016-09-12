@@ -22,8 +22,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockLampPowerer extends BlockBase{
 
@@ -59,19 +63,37 @@ public class BlockLampPowerer extends BlockBase{
         if(!world.isRemote){
             IBlockState state = world.getBlockState(pos);
             BlockPos coords = pos.offset(WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state)));
-            IBlockState coordsState = world.getBlockState(coords);
-            if(coordsState.getBlock() instanceof BlockColoredLamp){
-                int meta = coordsState.getBlock().getMetaFromState(coordsState);
-                if(world.isBlockIndirectlyGettingPowered(pos) > 0){
-                    if(!((BlockColoredLamp)coordsState.getBlock()).isOn){
-                        world.setBlockState(coords, InitBlocks.blockColoredLampOn.getStateFromMeta(meta), 2);
-                    }
+            this.updateLampsAtPos(world, coords, world.isBlockIndirectlyGettingPowered(pos) > 0, new ArrayList<BlockPos>());
+        }
+    }
+
+    private void updateLampsAtPos(World world, BlockPos pos, boolean powered, List<BlockPos> updatedAlready){
+        IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
+        if(block instanceof BlockColoredLamp){
+            boolean isOn = ((BlockColoredLamp)block).isOn;
+            int meta = block.getMetaFromState(state);
+            if(powered){
+                if(!isOn){
+                    world.setBlockState(pos, InitBlocks.blockColoredLampOn.getStateFromMeta(meta), 2);
                 }
-                else{
-                    if(((BlockColoredLamp)coordsState.getBlock()).isOn){
-                        world.setBlockState(coords, InitBlocks.blockColoredLamp.getStateFromMeta(meta), 2);
-                    }
+            }
+            else{
+                if(isOn){
+                    world.setBlockState(pos, InitBlocks.blockColoredLamp.getStateFromMeta(meta), 2);
                 }
+            }
+
+            this.updateSurrounding(world, pos, powered, updatedAlready);
+        }
+    }
+
+    private void updateSurrounding(World world, BlockPos pos, boolean powered, List<BlockPos> updatedAlready){
+        for(EnumFacing side : EnumFacing.values()){
+            BlockPos offset = pos.offset(side);
+            if(!updatedAlready.contains(offset)){
+                updatedAlready.add(pos);
+                this.updateLampsAtPos(world, offset, powered, updatedAlready);
             }
         }
     }
