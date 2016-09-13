@@ -505,6 +505,7 @@ item.actuallyadditions.itemWorm.name=Worm
 item.actuallyadditions.itemBag.name=Traveler's Sack
 item.actuallyadditions.itemVoidBag.name=Void Sack
 item.actuallyadditions.itemMiscCrystallizedCanolaSeed.name=Crystallized Canola Seed
+item.actuallyadditions.itemMiscEmpoweredCanolaSeed.name=Empowered Canola Seed
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On

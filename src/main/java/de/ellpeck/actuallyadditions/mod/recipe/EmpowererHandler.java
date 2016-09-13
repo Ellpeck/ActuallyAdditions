@@ -43,6 +43,9 @@ public final class EmpowererHandler{
         for(ItemStack ball : balls){
             addCrystalEmpowering(TheCrystals.EMERALD, new ItemStack(Items.DYE, 1, EnumDyeColor.LIME.getDyeDamage()), new ItemStack(Blocks.TALLGRASS, 1, 1), new ItemStack(Blocks.SAPLING), ball.copy());
         }
+
+        ItemStack seed = new ItemStack(InitItems.itemCanolaSeed);
+        ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal()), seed, seed, seed, seed, 1000, 30, new float[]{1F, 91F/255F, 76F/255F});
     }
 
     private static void addCrystalEmpowering(TheCrystals type, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4){

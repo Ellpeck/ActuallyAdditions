@@ -39,6 +39,7 @@ public enum TheMiscItems{
     BIOMASS("Biomass", EnumRarity.UNCOMMON),
     BIOCOAL("Biocoal", EnumRarity.RARE),
     CRYSTALLIZED_CANOLA_SEED("CrystallizedCanolaSeed", EnumRarity.UNCOMMON),
+    EMPOWERED_CANOLA_SEED("EmpoweredCanolaSeed", EnumRarity.RARE),
     YOUTUBE_ICON("YoutubeIcon", Util.FALLBACK_RARITY);
 
     public final String name;
