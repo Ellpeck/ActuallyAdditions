@@ -11,6 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
+import de.ellpeck.actuallyadditions.mod.blocks.BlockFurnaceSolar;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -76,10 +78,9 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     }
 
     public boolean hasBlockAbove(){
-        for(int y = 1; y <= this.worldObj.getHeight(); y++){
-            BlockPos offset = this.pos.up(y);
-            IBlockState state = this.worldObj.getBlockState(offset);
-            if(!state.getBlock().isAir(state, this.worldObj, offset)){
+        for(int y = 1; y <= this.worldObj.getHeight()-this.pos.getY(); y++){
+            IBlockState state = this.worldObj.getBlockState(this.pos.up(y));
+            if(state.getMaterial().isOpaque()){
                 return true;
             }
         }

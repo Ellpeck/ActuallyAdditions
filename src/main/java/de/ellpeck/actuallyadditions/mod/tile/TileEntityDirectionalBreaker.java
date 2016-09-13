@@ -87,7 +87,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
             for(int i = 0; i < RANGE; i++){
                 BlockPos coordsBlock = this.pos.offset(sideToManipulate, i+1);
                 Block blockToBreak = this.worldObj.getBlockState(coordsBlock).getBlock();
-                if(blockToBreak != null && !(blockToBreak instanceof BlockAir) && blockToBreak.getBlockHardness(this.worldObj.getBlockState(coordsBlock), this.worldObj, this.pos) > -1.0F){
+                if(blockToBreak != null && !this.worldObj.isAirBlock(coordsBlock) && blockToBreak.getBlockHardness(this.worldObj.getBlockState(coordsBlock), this.worldObj, this.pos) > -1.0F){
                     List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0);
                     float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
 

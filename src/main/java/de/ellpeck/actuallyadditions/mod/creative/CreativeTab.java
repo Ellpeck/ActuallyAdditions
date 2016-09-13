@@ -46,11 +46,6 @@ public class CreativeTab extends CreativeTabs{
     }
 
     @Override
-    public ItemStack getIconItemStack(){
-        return new ItemStack(this.getTabIconItem());
-    }
-
-    @Override
     public Item getTabIconItem(){
         return InitItems.itemBooklet;
     }
