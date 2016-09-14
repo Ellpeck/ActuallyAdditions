@@ -100,6 +100,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockCoalGenerator);
         this.add(InitBlocks.blockOilGenerator);
         this.add(InitBlocks.blockLeafGenerator);
+        this.add(InitBlocks.blockBioReactor);
 
         this.add(InitBlocks.blockItemRepairer);
         this.add(InitBlocks.blockFishingNet);

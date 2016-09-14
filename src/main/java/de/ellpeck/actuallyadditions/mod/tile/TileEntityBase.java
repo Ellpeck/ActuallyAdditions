@@ -109,6 +109,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         register(TileEntityEmpowerer.class);
         register(TileEntityLaserRelayFluids.class);
         register(TileEntityDistributorItem.class);
+        register(TileEntityBioReactor.class);
     }
 
     private static void register(Class<? extends TileEntityBase> tileClass, String legacyName){

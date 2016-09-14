@@ -27,7 +27,6 @@ public final class InitBlocks{
     public static Block blockGiantChest;
     public static Block blockGiantChestMedium;
     public static Block blockGiantChestLarge;
-
     public static Block blockGrinder;
     public static Block blockGrinderDouble;
     public static Block blockFurnaceDouble;
@@ -38,22 +37,17 @@ public final class InitBlocks{
     public static Block blockHeatCollector;
     public static Block blockItemRepairer;
     public static Block blockGreenhouseGlass;
-
     public static Block blockBreaker;
     public static Block blockPlacer;
     public static Block blockDropper;
-
     public static Block blockRice;
     public static Block blockCanola;
     public static Block blockFlax;
     public static Block blockCoffee;
-
     public static Block blockCanolaPress;
     public static Block blockFermentingBarrel;
-
     public static Block blockCoalGenerator;
     public static Block blockOilGenerator;
-
     public static Block blockPhantomface;
     public static Block blockPhantomPlacer;
     public static Block blockPhantomBreaker;
@@ -61,18 +55,13 @@ public final class InitBlocks{
     public static Block blockPhantomEnergyface;
     public static Block blockPhantomRedstoneface;
     public static Block blockPlayerInterface;
-
     public static Block blockFluidPlacer;
     public static Block blockFluidCollector;
-
     public static Block blockLavaFactoryController;
     public static Block blockCoffeeMachine;
-
     public static Block blockPhantomBooster;
-
     public static Block blockEnergizer;
     public static Block blockEnervator;
-
     public static Block blockTestifiBucksGreenWall;
     public static Block blockTestifiBucksWhiteWall;
     public static Block blockTestifiBucksGreenStairs;
@@ -81,20 +70,15 @@ public final class InitBlocks{
     public static Block blockTestifiBucksWhiteSlab;
     public static Block blockTestifiBucksGreenFence;
     public static Block blockTestifiBucksWhiteFence;
-
     public static Block blockColoredLamp;
     public static Block blockColoredLampOn;
     public static Block blockLampPowerer;
-
     public static Block blockTreasureChest;
     public static Block blockXPSolidifier;
-
     public static Block blockSmileyCloud;
-
     public static Block blockLeafGenerator;
     public static Block blockDirectionalBreaker;
     public static Block blockRangedCollector;
-
     public static Block blockLaserRelay;
     public static Block blockLaserRelayAdvanced;
     public static Block blockLaserRelayExtreme;
@@ -102,16 +86,12 @@ public final class InitBlocks{
     public static Block blockLaserRelayItem;
     public static Block blockLaserRelayItemWhitelist;
     public static Block blockItemViewer;
-
     public static Block blockBlackLotus;
     public static Block blockCrystal;
     public static Block blockCrystalEmpowered;
     public static Block blockAtomicReconstructor;
-
     public static Block blockMiner;
-
     public static Block blockFireworkBox;
-
     public static Block blockQuartzWall;
     public static Block blockQuartzStair;
     public static Block blockQuartzSlab;
@@ -121,18 +101,18 @@ public final class InitBlocks{
     public static Block blockPillarQuartzWall;
     public static Block blockPillarQuartzStair;
     public static Block blockPillarQuartzSlab;
-
     public static Block blockBookletStand;
     public static Block blockDisplayStand;
     public static Block blockShockSuppressor;
     public static Block blockEmpowerer;
     public static Block blockDistributorItem;
-
+    public static Block blockBioReactor;
     public static Block blockTinyTorch;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockBioReactor = new BlockBioReactor("blockBioReactor");
         blockDistributorItem = new BlockDistributorItem("blockDistributorItem");
         blockEmpowerer = new BlockEmpowerer("blockEmpowerer");
         blockTinyTorch = new BlockTinyTorch("blockTinyTorch");

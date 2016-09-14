@@ -30,156 +30,160 @@ public class GuiHandler implements IGuiHandler{
     }
 
     @Override
-    public Object getServerGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
+    public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z){
         TileEntityBase tile = null;
         if(GuiTypes.values()[id].checkTileEntity){
             tile = (TileEntityBase)world.getTileEntity(new BlockPos(x, y, z));
         }
         switch(GuiTypes.values()[id]){
             case FEEDER:
-                return new ContainerFeeder(entityPlayer.inventory, tile);
+                return new ContainerFeeder(player.inventory, tile);
             case GIANT_CHEST:
-                return new ContainerGiantChest(entityPlayer.inventory, tile, 0);
+                return new ContainerGiantChest(player.inventory, tile, 0);
             case GIANT_CHEST_PAGE_2:
-                return new ContainerGiantChest(entityPlayer.inventory, tile, 1);
+                return new ContainerGiantChest(player.inventory, tile, 1);
             case GIANT_CHEST_PAGE_3:
-                return new ContainerGiantChest(entityPlayer.inventory, tile, 2);
+                return new ContainerGiantChest(player.inventory, tile, 2);
             case CRAFTER:
-                return new ContainerCrafter(entityPlayer);
+                return new ContainerCrafter(player);
             case GRINDER:
-                return new ContainerGrinder(entityPlayer.inventory, tile, false);
+                return new ContainerGrinder(player.inventory, tile, false);
             case GRINDER_DOUBLE:
-                return new ContainerGrinder(entityPlayer.inventory, tile, true);
+                return new ContainerGrinder(player.inventory, tile, true);
             case FURNACE_DOUBLE:
-                return new ContainerFurnaceDouble(entityPlayer.inventory, tile);
+                return new ContainerFurnaceDouble(player.inventory, tile);
             case INPUTTER:
-                return new ContainerInputter(entityPlayer.inventory, tile, false);
+                return new ContainerInputter(player.inventory, tile, false);
             case INPUTTER_ADVANCED:
-                return new ContainerInputter(entityPlayer.inventory, tile, true);
+                return new ContainerInputter(player.inventory, tile, true);
             case REPAIRER:
-                return new ContainerRepairer(entityPlayer.inventory, tile);
+                return new ContainerRepairer(player.inventory, tile);
             case BREAKER:
-                return new ContainerBreaker(entityPlayer.inventory, tile);
+                return new ContainerBreaker(player.inventory, tile);
             case DROPPER:
-                return new ContainerDropper(entityPlayer.inventory, tile);
+                return new ContainerDropper(player.inventory, tile);
             case CANOLA_PRESS:
-                return new ContainerCanolaPress(entityPlayer.inventory, tile);
+                return new ContainerCanolaPress(player.inventory, tile);
             case FERMENTING_BARREL:
-                return new ContainerFermentingBarrel(entityPlayer.inventory, tile);
+                return new ContainerFermentingBarrel(player.inventory, tile);
             case COAL_GENERATOR:
-                return new ContainerCoalGenerator(entityPlayer.inventory, tile);
+                return new ContainerCoalGenerator(player.inventory, tile);
             case OIL_GENERATOR:
-                return new ContainerOilGenerator(entityPlayer.inventory, tile);
+                return new ContainerOilGenerator(player.inventory, tile);
             case PHANTOM_PLACER:
-                return new ContainerPhantomPlacer(entityPlayer.inventory, tile);
+                return new ContainerPhantomPlacer(player.inventory, tile);
             case FLUID_COLLECTOR:
-                return new ContainerFluidCollector(entityPlayer.inventory, tile);
+                return new ContainerFluidCollector(player.inventory, tile);
             case COFFEE_MACHINE:
-                return new ContainerCoffeeMachine(entityPlayer.inventory, tile);
+                return new ContainerCoffeeMachine(player.inventory, tile);
             case DRILL:
-                return new ContainerDrill(entityPlayer.inventory);
+                return new ContainerDrill(player.inventory);
             case FILTER:
-                return new ContainerFilter(entityPlayer.inventory);
+                return new ContainerFilter(player.inventory);
             case ENERGIZER:
-                return new ContainerEnergizer(entityPlayer, tile);
+                return new ContainerEnergizer(player, tile);
             case ENERVATOR:
-                return new ContainerEnervator(entityPlayer, tile);
+                return new ContainerEnervator(player, tile);
             case XP_SOLIDIFIER:
-                return new ContainerXPSolidifier(entityPlayer.inventory, tile);
+                return new ContainerXPSolidifier(player.inventory, tile);
             case CLOUD:
                 return new ContainerSmileyCloud();
             case DIRECTIONAL_BREAKER:
-                return new ContainerDirectionalBreaker(entityPlayer.inventory, tile);
+                return new ContainerDirectionalBreaker(player.inventory, tile);
             case RANGED_COLLECTOR:
-                return new ContainerRangedCollector(entityPlayer.inventory, tile);
+                return new ContainerRangedCollector(player.inventory, tile);
             case MINER:
-                return new ContainerMiner(entityPlayer.inventory, tile);
+                return new ContainerMiner(player.inventory, tile);
             case LASER_RELAY_ITEM_WHITELIST:
-                return new ContainerLaserRelayItemWhitelist(entityPlayer.inventory, tile);
+                return new ContainerLaserRelayItemWhitelist(player.inventory, tile);
             case BAG:
-                return new ContainerBag(entityPlayer.inventory, false);
+                return new ContainerBag(player.inventory, false);
             case VOID_BAG:
-                return new ContainerBag(entityPlayer.inventory, true);
+                return new ContainerBag(player.inventory, true);
+            case BIO_REACTOR:
+                return new ContainerBioReactor(player.inventory, tile);
             default:
                 return null;
         }
     }
 
     @Override
-    public Object getClientGuiElement(int id, EntityPlayer entityPlayer, World world, int x, int y, int z){
+    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z){
         TileEntityBase tile = null;
         if(GuiTypes.values()[id].checkTileEntity){
             tile = (TileEntityBase)world.getTileEntity(new BlockPos(x, y, z));
         }
         switch(GuiTypes.values()[id]){
             case FEEDER:
-                return new GuiFeeder(entityPlayer.inventory, tile);
+                return new GuiFeeder(player.inventory, tile);
             case GIANT_CHEST:
-                return new GuiGiantChest(entityPlayer.inventory, tile, 0);
+                return new GuiGiantChest(player.inventory, tile, 0);
             case GIANT_CHEST_PAGE_2:
-                return new GuiGiantChest(entityPlayer.inventory, tile, 1);
+                return new GuiGiantChest(player.inventory, tile, 1);
             case GIANT_CHEST_PAGE_3:
-                return new GuiGiantChest(entityPlayer.inventory, tile, 2);
+                return new GuiGiantChest(player.inventory, tile, 2);
             case CRAFTER:
-                return new GuiCrafter(entityPlayer);
+                return new GuiCrafter(player);
             case GRINDER:
-                return new GuiGrinder(entityPlayer.inventory, tile);
+                return new GuiGrinder(player.inventory, tile);
             case GRINDER_DOUBLE:
-                return new GuiGrinder.GuiGrinderDouble(entityPlayer.inventory, tile);
+                return new GuiGrinder.GuiGrinderDouble(player.inventory, tile);
             case FURNACE_DOUBLE:
-                return new GuiFurnaceDouble(entityPlayer.inventory, tile);
+                return new GuiFurnaceDouble(player.inventory, tile);
             case INPUTTER:
-                return new GuiInputter(entityPlayer.inventory, tile, x, y, z, world, false);
+                return new GuiInputter(player.inventory, tile, x, y, z, world, false);
             case INPUTTER_ADVANCED:
-                return new GuiInputter(entityPlayer.inventory, tile, x, y, z, world, true);
+                return new GuiInputter(player.inventory, tile, x, y, z, world, true);
             case REPAIRER:
-                return new GuiRepairer(entityPlayer.inventory, tile);
+                return new GuiRepairer(player.inventory, tile);
             case BREAKER:
-                return new GuiBreaker(entityPlayer.inventory, tile);
+                return new GuiBreaker(player.inventory, tile);
             case DROPPER:
-                return new GuiDropper(entityPlayer.inventory, tile);
+                return new GuiDropper(player.inventory, tile);
             case CANOLA_PRESS:
-                return new GuiCanolaPress(entityPlayer.inventory, tile);
+                return new GuiCanolaPress(player.inventory, tile);
             case FERMENTING_BARREL:
-                return new GuiFermentingBarrel(entityPlayer.inventory, tile);
+                return new GuiFermentingBarrel(player.inventory, tile);
             case COAL_GENERATOR:
-                return new GuiCoalGenerator(entityPlayer.inventory, tile);
+                return new GuiCoalGenerator(player.inventory, tile);
             case OIL_GENERATOR:
-                return new GuiOilGenerator(entityPlayer.inventory, tile);
+                return new GuiOilGenerator(player.inventory, tile);
             case PHANTOM_PLACER:
-                return new GuiPhantomPlacer(entityPlayer.inventory, tile);
+                return new GuiPhantomPlacer(player.inventory, tile);
             case FLUID_COLLECTOR:
-                return new GuiFluidCollector(entityPlayer.inventory, tile);
+                return new GuiFluidCollector(player.inventory, tile);
             case COFFEE_MACHINE:
-                return new GuiCoffeeMachine(entityPlayer.inventory, tile, x, y, z, world);
+                return new GuiCoffeeMachine(player.inventory, tile, x, y, z, world);
             case DRILL:
-                return new GuiDrill(entityPlayer.inventory);
+                return new GuiDrill(player.inventory);
             case FILTER:
-                return new GuiFilter(entityPlayer.inventory);
+                return new GuiFilter(player.inventory);
             case ENERGIZER:
-                return new GuiEnergizer(entityPlayer, tile);
+                return new GuiEnergizer(player, tile);
             case ENERVATOR:
-                return new GuiEnervator(entityPlayer, tile);
+                return new GuiEnervator(player, tile);
             case XP_SOLIDIFIER:
-                return new GuiXPSolidifier(entityPlayer.inventory, tile, x, y, z, world);
+                return new GuiXPSolidifier(player.inventory, tile, x, y, z, world);
             case CLOUD:
                 return new GuiSmileyCloud(tile, x, y, z, world);
             case BOOK:
                 return new GuiBooklet(null, true, true);
             case DIRECTIONAL_BREAKER:
-                return new GuiDirectionalBreaker(entityPlayer.inventory, tile);
+                return new GuiDirectionalBreaker(player.inventory, tile);
             case RANGED_COLLECTOR:
-                return new GuiRangedCollector(entityPlayer.inventory, tile, x, y, z, world);
+                return new GuiRangedCollector(player.inventory, tile, x, y, z, world);
             case MINER:
-                return new GuiMiner(entityPlayer.inventory, tile);
+                return new GuiMiner(player.inventory, tile);
             case BOOK_STAND:
                 return new GuiBookletStand(tile);
             case LASER_RELAY_ITEM_WHITELIST:
-                return new GuiLaserRelayItemWhitelist(entityPlayer.inventory, tile);
+                return new GuiLaserRelayItemWhitelist(player.inventory, tile);
             case BAG:
-                return new GuiBag(entityPlayer.inventory, false);
+                return new GuiBag(player.inventory, false);
             case VOID_BAG:
-                return new GuiBag(entityPlayer.inventory, true);
+                return new GuiBag(player.inventory, true);
+            case BIO_REACTOR:
+                return new GuiBioReactor(player.inventory, tile);
             default:
                 return null;
         }
@@ -219,7 +223,8 @@ public class GuiHandler implements IGuiHandler{
         LASER_RELAY_ITEM_WHITELIST,
         FILTER(false),
         BAG(false),
-        VOID_BAG(false);
+        VOID_BAG(false),
+        BIO_REACTOR;
 
         public final boolean checkTileEntity;
 
