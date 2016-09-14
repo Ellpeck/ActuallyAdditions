@@ -11,8 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
+import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -49,7 +51,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
                     ItemStack stack = this.slots[i];
                     if(stack != null){
                         Item item = stack.getItem();
-                        if(isValidItem(item) && (types == null || !types.contains(item))){
+                        if(isValidItem(stack) && (types == null || !types.contains(item))){
                             if(types == null){
                                 types = new ArrayList<Item>();
                             }
@@ -110,8 +112,21 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
         this.producePerTick = compound.getInteger("ProducePerTick");
     }
 
-    public static boolean isValidItem(Item item){
-        return item instanceof IPlantable || item instanceof IGrowable || item instanceof ItemFood;
+    public static boolean isValidItem(ItemStack stack){
+        if(stack != null){
+            Item item = stack.getItem();
+            if(isValid(item)){
+                return true;
+            }
+            else if(item instanceof ItemBlock){
+                return isValid(Block.getBlockFromItem(item));
+            }
+        }
+        return false;
+    }
+
+    private static boolean isValid(Object o){
+        return o instanceof IPlantable || o instanceof IGrowable || o instanceof ItemFood;
     }
 
     @Override
@@ -126,7 +141,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack){
-        return isValidItem(stack.getItem());
+        return isValidItem(stack);
     }
 
     @Override

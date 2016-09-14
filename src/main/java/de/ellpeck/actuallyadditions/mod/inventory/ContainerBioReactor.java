@@ -57,7 +57,7 @@ public class ContainerBioReactor extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(TileEntityBioReactor.isValidItem(newStack.getItem())){
+                if(TileEntityBioReactor.isValidItem(newStack)){
                     if(!this.mergeItemStack(newStack, 0, 8, false)){
                         return null;
                     }
