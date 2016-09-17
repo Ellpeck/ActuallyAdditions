@@ -29,6 +29,7 @@ import java.util.List;
 public final class EmpowererHandler{
 
     public static final ArrayList<EmpowererRecipe> MAIN_PAGE_RECIPES = new ArrayList<EmpowererRecipe>();
+    public static EmpowererRecipe recipeEmpoweredCanolaSeed;
 
     public static void init(){
         addCrystalEmpowering(TheCrystals.REDSTONE, new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()), new ItemStack(Items.NETHERBRICK), new ItemStack(Items.REDSTONE), new ItemStack(Items.BRICK));
@@ -46,6 +47,7 @@ public final class EmpowererHandler{
 
         ItemStack seed = new ItemStack(InitItems.itemCanolaSeed);
         ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal()), seed, seed, seed, seed, 1000, 30, new float[]{1F, 91F/255F, 76F/255F});
+        recipeEmpoweredCanolaSeed = RecipeUtil.lastEmpowererRecipe();
     }
 
     private static void addCrystalEmpowering(TheCrystals type, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4){

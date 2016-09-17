@@ -52,7 +52,7 @@ public final class InitBooklet{
         ActuallyAdditionsAPI.entryItemsNonRF = new BookletEntry("itemsNoRF");
         ActuallyAdditionsAPI.entryItemsRF = new BookletEntry("itemsRF").setSpecial();
         ActuallyAdditionsAPI.entryMisc = new BookletEntry("misc");
-        ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllSearch("allAndSearch").setSpecial();
+        ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllSearch("allAndSearch").setImportant();
     }
 
     public static void postInit(){
@@ -153,7 +153,7 @@ public final class InitBooklet{
         //RF Generating Blocks
         new BookletChapter("solarPanel", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockFurnaceSolar), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityFurnaceSolar.PRODUCE), new PageCrafting(2, BlockCrafting.recipeSolar).setNoText());
         new BookletChapter("heatCollector", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockHeatCollector), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityHeatCollector.ENERGY_PRODUCE).addTextReplacement("<min>", TileEntityHeatCollector.BLOCKS_NEEDED), new PageCrafting(2, BlockCrafting.recipeHeatCollector).setNoText());
-        new BookletChapter("canola", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockFermentingBarrel), new PageTextOnly(1).setStacks(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal())).addTextReplacement("<pressRF>", TileEntityCanolaPress.ENERGY_USE).addTextReplacement("<canola>", TileEntityCanolaPress.PRODUCE), new PageTextOnly(2).setStacks(new ItemStack(InitItems.itemCanolaSeed), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOMASS.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOCOAL.ordinal())), new PageCrafting(3, BlockCrafting.recipeCanolaPress).setNoText(), new PageCrafting(4, BlockCrafting.recipeFermentingBarrel).setNoText(), new PageCrafting(4, BlockCrafting.recipeOilGen).setNoText().setPageStacksWildcard());
+        new BookletChapter("canola", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockFermentingBarrel), new PageTextOnly(1).setStacks(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal()), new ItemStack(InitItems.itemCanolaSeed)), new PageTextOnly(2), new PageCrafting(3, BlockCrafting.recipeCanolaPress).setNoText(), new PageCrafting(4, BlockCrafting.recipeFermentingBarrel).setNoText(), new PageCrafting(5, BlockCrafting.recipeOilGen).setNoText(), new PageReconstructor(6, LensRecipeHandler.recipeCrystallizedCanolaSeed).setNoText(), new PageEmpowerer(7, EmpowererHandler.recipeEmpoweredCanolaSeed).setNoText());
         new BookletChapter("leafGen", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockLeafGenerator), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityLeafGenerator.ENERGY_PRODUCED).addTextReplacement("<range>", TileEntityLeafGenerator.RANGE), new PageCrafting(2, BlockCrafting.recipeLeafGen)).setImportant();
 
         //No RF Using Items
