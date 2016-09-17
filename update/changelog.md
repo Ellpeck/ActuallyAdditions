@@ -1,3 +1,18 @@
+# 1.10.2-r63
+* Added more different kinds of oils that the oil generator can use (Check Oil chapter in booklet for info!)
+* Added Item Distributor that can distribute items evenly around it
+* Added BioReactor that uses food and plants to generate power
+* Increased the performance of TileEntities significantly
+* Added information to the booklet on how to remove a worm
+* Removed console spam about syncing player data
+* Changed the color of page buttons to be more visible
+* Made the Lamp Controller toggle entire areas
+* Make solar panels work through non-solid blocks but become less efficient in the process
+* Fixed Phantom Energyface not working for certain tesla machines
+* Fixed Phantom Liquiface crashing with some machines
+* Fixed the booklet crashing if you had a recipe disabled
+### I just want to take the time to pitch a mod I've been working on. It's called Rarmor and it's about an electrical RF/Tesla-powered armor! If you fancy something like that, look at it by [clicking here](http://minecraft.curseforge.com/projects/rarmor)! :3
+
 # 1.10.2-r62
 * Fixed a MASSIVE derpup breaking basically all of the things that ever existed ever. _Dang, I was hoping I could get a version out without needing a fix a day after for once. Whatevs. ¯\_(ツ)_/¯_
 * Implemented new system of detemining the type of laser relay connection. There might be a bit of lag occuring when you join a world for the first time with this version.
