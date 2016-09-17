@@ -831,7 +831,7 @@ booklet.actuallyadditions.chapter.coalGen.name=Coal Generator
 booklet.actuallyadditions.chapter.coalGen.text.1=The <item>Coal Generator<r> generates <imp><rf> RF/t<r> through the use of everything that can be put into a furnace. <n>Note that it only starts burning something up if there's enough space for the energy generated.
 
 booklet.actuallyadditions.chapter.solarPanel.name=Solar Panel
-booklet.actuallyadditions.chapter.solarPanel.text.1=The <item>Solar Panel<r> <imp>produces <rf> RF/t<r> when it has direct daylight above it and it is daytime. <n><n><i>Panelled walls
+booklet.actuallyadditions.chapter.solarPanel.text.1=The <item>Solar Panel<r> <imp>produces <rf> RF/t<r> when it has direct daylight above it and it is daytime. Any blocks above it that are transparent will <imp>decrease its efficiency<r>, however. <n><n><i>Panelled walls
 
 booklet.actuallyadditions.chapter.heatCollector.name=Heat Collector
 booklet.actuallyadditions.chapter.heatCollector.text.1=The <item>Heat Collector<r> is a block that <imp>produces <rf> RF/t<r>. <n>To do that, it needs to be <imp>surrounded with at least <min> Lava Blocks<r> directly around it on any side except the top one. But watch out, it sometimes <imp>destroys some of these Lava Blocks<r>!

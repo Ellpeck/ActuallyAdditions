@@ -11,8 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import de.ellpeck.actuallyadditions.mod.blocks.BlockFurnaceSolar;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -64,9 +62,10 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(!this.hasBlockAbove() && this.worldObj.isDaytime()){
-                if(PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
-                    this.storage.receiveEnergy(PRODUCE, false);
+            int power = this.getPowerToGenerate(PRODUCE);
+            if(this.worldObj.isDaytime() && power > 0){
+                if(power <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
+                    this.storage.receiveEnergy(power, false);
                     this.markDirty();
                 }
             }
@@ -77,14 +76,25 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
         }
     }
 
-    public boolean hasBlockAbove(){
+    public int getPowerToGenerate(int power){
         for(int y = 1; y <= this.worldObj.getHeight()-this.pos.getY(); y++){
-            IBlockState state = this.worldObj.getBlockState(this.pos.up(y));
-            if(state.getMaterial().isOpaque()){
-                return true;
+            if(power > 0){
+                BlockPos pos = this.pos.up(y);
+                IBlockState state = this.worldObj.getBlockState(pos);
+
+                if(state.getMaterial().isOpaque()){
+                    power = 0;
+                }
+                else if(!state.getBlock().isAir(state, this.worldObj, pos)){
+                    power--;
+                }
+            }
+            else{
+                break;
             }
         }
-        return false;
+
+        return power;
     }
 
     @Override
