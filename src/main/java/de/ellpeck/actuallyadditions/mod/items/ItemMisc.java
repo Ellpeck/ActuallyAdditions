@@ -98,4 +98,9 @@ public class ItemMisc extends ItemBase{
 
         return super.onEntityItemUpdate(entity);
     }
+
+    @Override
+    public boolean hasEffect(ItemStack stack){
+        return stack.getItemDamage() == TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal();
+    }
 }

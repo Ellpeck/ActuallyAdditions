@@ -628,6 +628,7 @@ container.actuallyadditions.laserRelayItemWhitelist.name=Laser Relay
 container.actuallyadditions.filter.name=Item Filter
 container.actuallyadditions.bag.name=Traveler's Sack
 container.actuallyadditions.voidBag.name=Void Sack
+container.actuallyadditions.bioReactor.name=Bio Reactor
 
 #Update Information
 info.actuallyadditions.update.generic=[{"text":"There is an Update for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"available!","color":"none"}]
