@@ -228,6 +228,7 @@ tile.actuallyadditions.blockShockSuppressor.name=Shock Absorber
 tile.actuallyadditions.blockTinyTorch.name=Tiny Torch
 tile.actuallyadditions.blockEmpowerer.name=Empowerer
 tile.actuallyadditions.blockDistributorItem.name=Item Distributor
+tile.actuallyadditions.blockBioReactor.name=Bio Reactor
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -1024,3 +1025,6 @@ booklet.actuallyadditions.chapter.fluidLaser.text.1=The <item>Fluid Laser Relays
 
 booklet.actuallyadditions.chapter.distributorItem.name=Item Distributor
 booklet.actuallyadditions.chapter.distributorItem.text.1=The <item>Item Distributor<r> is a simple way to split up items and make them go <imp>in different directions<r>. <n><n>The distributor will <imp>pull items into it from the top<r> by itself, and then split them up and <imp>put them<r> out into inventories connected to all of the <imp>other sides<r> of it. <n>It tries to do split the items <imp>equally<r>, however this works best when inputting <imp>one item at a time<r>, which its pulling feature does automatically.
+
+booklet.actuallyadditions.chapter.bioReactor.name=Bio Reactor
+booklet.actuallyadditions.chapter.bioReactor.text.1=The <item>Bio Reactor<r> uses all types of <imp>seeds, foodstuffs and plants<r> to <imp>generate RF<r>! <n>To do this, just <imp>place<r> the items <imp>in its GUI<r>. If you try this out, you will notice that it doesn't generate that much power by default. However, the more <imp>different kinds<r> of plants, seeds and foodstuffs it has, the more power it will generate!

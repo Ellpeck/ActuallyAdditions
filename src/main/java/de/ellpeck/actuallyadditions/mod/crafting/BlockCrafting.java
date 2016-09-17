@@ -97,6 +97,7 @@ public final class BlockCrafting{
     public static IRecipe[] recipesTinyTorch = new IRecipe[2];
     public static IRecipe recipeFluidLaser;
     public static IRecipe recipeDistributorItem;
+    public static IRecipe recipeBioReactor;
 
     public static void init(){
 
@@ -566,6 +567,16 @@ public final class BlockCrafting{
                     'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
                     'B', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal())));
             recipeOilGen = RecipeUtil.lastIRecipe();
+        }
+
+        //Bio Reactor
+        if(ConfigCrafting.BIO_REACTOR.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockBioReactor),
+                    "CRC", "CBC", "CRC",
+                    'C', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()),
+                    'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
+                    'B', new ItemStack(Blocks.SAPLING, 1, Util.WILDCARD)));
+            recipeBioReactor = RecipeUtil.lastIRecipe();
         }
 
         //Coal Generator

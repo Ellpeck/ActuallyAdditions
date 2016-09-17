@@ -88,6 +88,7 @@ public enum ConfigCrafting{
     LEAF_GENERATOR("Leaf Generator", ConfigCategories.BLOCKS_CRAFTING),
     OIL_GENERATOR("Oil Generator", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOMFACE("Phantomface", ConfigCategories.BLOCKS_CRAFTING),
+    BIO_REACTOR("Bio Reactor", ConfigCategories.BLOCKS_CRAFTING),
     PHANTOM_CONNECTOR("Phantom Connector", ConfigCategories.ITEMS_CRAFTING),
     PLAYER_INTERFACE("Player Interface", ConfigCategories.BLOCKS_CRAFTING),
     PLAYER_PROBE("Player Probe", ConfigCategories.ITEMS_CRAFTING),
