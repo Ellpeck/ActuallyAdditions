@@ -29,10 +29,12 @@ public class ItemAxeAA extends ItemToolAA{
 
     public ItemAxeAA(Item.ToolMaterial material, String repairItem, String unlocalizedName, EnumRarity rarity){
         super(6.0F, -3.0F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
+        this.setHarvestLevel("axe", material.getHarvestLevel());
     }
 
     public ItemAxeAA(Item.ToolMaterial material, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
         super(6.0F, -3.0F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
+        this.setHarvestLevel("axe", material.getHarvestLevel());
     }
 
     @Override

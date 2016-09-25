@@ -29,10 +29,12 @@ public class ItemPickaxeAA extends ItemToolAA{
 
     public ItemPickaxeAA(Item.ToolMaterial material, String repairItem, String unlocalizedName, EnumRarity rarity){
         super(1.0F, -2.8F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
+        this.setHarvestLevel("pickaxe", material.getHarvestLevel());
     }
 
     public ItemPickaxeAA(Item.ToolMaterial material, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
         super(1.0F, -2.8F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
+        this.setHarvestLevel("pickaxe", material.getHarvestLevel());
     }
 
     @Override

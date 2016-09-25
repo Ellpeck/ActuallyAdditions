@@ -35,10 +35,12 @@ public class ItemShovelAA extends ItemToolAA{
 
     public ItemShovelAA(Item.ToolMaterial material, String repairItem, String unlocalizedName, EnumRarity rarity){
         super(1.5F, -3.0F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
+        this.setHarvestLevel("shovel", material.getHarvestLevel());
     }
 
     public ItemShovelAA(Item.ToolMaterial material, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
         super(1.5F, -3.0F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
+        this.setHarvestLevel("shovel", material.getHarvestLevel());
     }
 
     @Override
