@@ -21,7 +21,7 @@ import java.util.Locale;
 public final class BannerHelper{
 
     public static void init(){
-        addCraftingPattern("Drill", new ItemStack(InitItems.itemDrill));
+        addCraftingPattern("Drill", new ItemStack(InitItems.itemDrill, 1, 3));
         addCraftingPattern("LeafBlo", new ItemStack(InitItems.itemLeafBlower));
         addCraftingPattern("PhanCon", new ItemStack(InitItems.itemPhantomConnector));
         addCraftingPattern("Book", new ItemStack(InitItems.itemBooklet));
