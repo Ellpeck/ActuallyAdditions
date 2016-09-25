@@ -71,7 +71,7 @@ public class OreGen implements IWorldGenerator{
 
         if(ConfigBoolValues.GEN_LUSH_CAVES.isEnabled() && random.nextInt(ConfigIntValues.LUSH_CAVE_CHANCE.getValue()) <= 0){
             BlockPos posAtHeight = world.getTopSolidOrLiquidBlock(new BlockPos(x+random.nextInt(16)+8, 0, z+random.nextInt(16)+8));
-            this.caveGen.generate(world, random, posAtHeight.down(MathHelper.getRandomIntegerInRange(random, 10, posAtHeight.getY()-10)));
+            this.caveGen.generate(world, random, posAtHeight.down(MathHelper.getRandomIntegerInRange(random, 15, posAtHeight.getY()-15)));
         }
     }
 

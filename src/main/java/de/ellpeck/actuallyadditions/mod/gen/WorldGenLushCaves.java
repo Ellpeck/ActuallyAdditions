@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -73,7 +74,10 @@ public class WorldGenLushCaves extends WorldGenerator{
             for(double y = -radius; y < radius; y++){
                 for(double z = -radius; z < radius; z++){
                     if(Math.sqrt((x*x)+(y*y)+(z*z)) < radius){
-                        world.setBlockToAir(center.add(x, y, z));
+                        BlockPos pos = center.add(x, y, z);
+                        if(!this.checkBedrock(world, pos)){
+                            world.setBlockToAir(pos);
+                        }
                     }
                 }
             }
@@ -86,11 +90,24 @@ public class WorldGenLushCaves extends WorldGenerator{
                     IBlockState state = world.getBlockState(pos);
                     BlockPos posUp = pos.up();
                     IBlockState stateUp = world.getBlockState(posUp);
-                    if(!state.getBlock().isAir(state, world, pos) && stateUp.getBlock().isAir(stateUp, world, posUp)){
-                        world.setBlockState(pos, Blocks.GRASS.getDefaultState());
+                    if(!this.checkBedrock(world, pos) && !this.checkBedrock(world, posUp)){
+                        if(!state.getBlock().isAir(state, world, pos) && stateUp.getBlock().isAir(stateUp, world, posUp)){
+                            world.setBlockState(pos, Blocks.GRASS.getDefaultState());
+                        }
                     }
                 }
             }
         }
+    }
+
+    private boolean checkBedrock(World world, BlockPos pos){
+        IBlockState state = world.getBlockState(pos);
+        if(state != null){
+            Block block = state.getBlock();
+            if(block != null && (block.isAir(state, world, pos) || block.getHarvestLevel(state) >= 0F)){
+                return false;
+            }
+        }
+        return true;
     }
 }
