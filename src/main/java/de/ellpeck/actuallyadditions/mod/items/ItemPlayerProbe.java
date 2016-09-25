@@ -50,7 +50,7 @@ public class ItemPlayerProbe extends ItemBase{
                     EntityPlayer player = world.getPlayerEntityByUUID(id);
                     if(player != null){
                         if(player.isSneaking()){
-                            ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
+                            ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
                             entity.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.1"));
                             player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.notice"));
                             TheAchievements.GET_UNPROBED.get(player);
