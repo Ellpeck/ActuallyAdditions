@@ -31,9 +31,13 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         this.slots = new ItemStack[slots];
 
         if(this.hasInvWrapperCapabilities()){
-            for(int i = 0; i < this.invWrappers.length; i++){
-                this.invWrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]);
-            }
+            this.getInvWrappers(this.invWrappers);
+        }
+    }
+
+    protected void getInvWrappers(SidedInvWrapper[] wrappers){
+        for(int i = 0; i < wrappers.length; i++){
+            wrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]);
         }
     }
 

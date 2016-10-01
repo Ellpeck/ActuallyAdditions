@@ -18,6 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +35,35 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
+    }
+
+    @Override
+    protected void getInvWrappers(SidedInvWrapper[] wrappers){
+        for(int i = 0; i < wrappers.length; i++){
+            wrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]){
+                @Override
+                public ItemStack insertItem(int slot, ItemStack stack, boolean simulate){
+                    SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                    if(info != null){
+                        return info.handler.insertItem(info.switchedIndex, stack, simulate);
+                    }
+                    else{
+                        return super.insertItem(slot, stack, simulate);
+                    }
+                }
+
+                @Override
+                public ItemStack extractItem(int slot, int amount, boolean simulate){
+                    SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                    if(info != null){
+                        return info.handler.extractItem(info.switchedIndex, amount, simulate);
+                    }
+                    else{
+                        return super.extractItem(slot, amount, simulate);
+                    }
+                }
+            };
+        }
     }
 
     private List<GenericItemHandlerInfo> getItemHandlerInfos(){
