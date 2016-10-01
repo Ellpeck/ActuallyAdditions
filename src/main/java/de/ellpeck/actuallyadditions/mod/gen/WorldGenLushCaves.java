@@ -113,7 +113,7 @@ public class WorldGenLushCaves extends WorldGenerator{
             //If this isn't checked, the game crashes because it tries to destroy a chest that doesn't have any loot yet :v
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof ILootContainer){
-                return false;
+                return true;
             }
         }
         return true;
