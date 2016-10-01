@@ -13,9 +13,11 @@ package de.ellpeck.actuallyadditions.mod.gen;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.storage.loot.ILootContainer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,7 +77,7 @@ public class WorldGenLushCaves extends WorldGenerator{
                 for(double z = -radius; z < radius; z++){
                     if(Math.sqrt((x*x)+(y*y)+(z*z)) < radius){
                         BlockPos pos = center.add(x, y, z);
-                        if(!this.checkBedrock(world, pos)){
+                        if(!this.checkIndestructable(world, pos)){
                             world.setBlockToAir(pos);
                         }
                     }
@@ -90,7 +92,7 @@ public class WorldGenLushCaves extends WorldGenerator{
                     IBlockState state = world.getBlockState(pos);
                     BlockPos posUp = pos.up();
                     IBlockState stateUp = world.getBlockState(posUp);
-                    if(!this.checkBedrock(world, pos) && !this.checkBedrock(world, posUp)){
+                    if(!this.checkIndestructable(world, pos) && !this.checkIndestructable(world, posUp)){
                         if(!state.getBlock().isAir(state, world, pos) && stateUp.getBlock().isAir(stateUp, world, posUp)){
                             world.setBlockState(pos, Blocks.GRASS.getDefaultState());
                         }
@@ -100,11 +102,17 @@ public class WorldGenLushCaves extends WorldGenerator{
         }
     }
 
-    private boolean checkBedrock(World world, BlockPos pos){
+    private boolean checkIndestructable(World world, BlockPos pos){
         IBlockState state = world.getBlockState(pos);
         if(state != null){
             Block block = state.getBlock();
             if(block != null && (block.isAir(state, world, pos) || block.getHarvestLevel(state) >= 0F)){
+                return false;
+            }
+
+            //If this isn't checked, the game crashes because it tries to destroy a chest that doesn't have any loot yet :v
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof ILootContainer){
                 return false;
             }
         }
