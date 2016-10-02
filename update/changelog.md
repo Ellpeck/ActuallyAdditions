@@ -1,5 +1,4 @@
 # 1.10.2-r64
-### A stack of releases!
 * Fixed player probe spamming the chat when it is being noticed
 * Added tool materials to tools to fix some tool related bugs
 * Added a recipe to clear the oil generator's internal liquid storage out
@@ -8,6 +7,7 @@
 * Corrected some names in the booklet (xbony2)
 * Stop lush caves from destroying chests to fix a crash when generating chunks
 * Use new item handler system for item laser relays to make them work with Storage Drawers properly
+### A stack of releases!
 
 # 1.10.2-r63
 * Added more different kinds of oils that the oil generator can use (Check Oil chapter in booklet for info!)
