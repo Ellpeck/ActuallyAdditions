@@ -103,17 +103,17 @@ public class WorldGenLushCaves extends WorldGenerator{
     }
 
     private boolean checkIndestructable(World world, BlockPos pos){
+        //If this isn't checked, the game crashes because it tries to destroy a chest that doesn't have any loot yet :v
+        TileEntity tile = world.getTileEntity(pos);
+        if(tile instanceof ILootContainer){
+            return true;
+        }
+
         IBlockState state = world.getBlockState(pos);
         if(state != null){
             Block block = state.getBlock();
             if(block != null && (block.isAir(state, world, pos) || block.getHarvestLevel(state) >= 0F)){
                 return false;
-            }
-
-            //If this isn't checked, the game crashes because it tries to destroy a chest that doesn't have any loot yet :v
-            TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof ILootContainer){
-                return true;
             }
         }
         return true;
