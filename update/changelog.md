@@ -1,3 +1,6 @@
+# 1.10.2-r65
+* Fixed a crash that sometimes occured when lush caves tried to generate through loot chests
+
 # 1.10.2-r64
 * Fixed player probe spamming the chat when it is being noticed
 * Added tool materials to tools to fix some tool related bugs
@@ -5,7 +8,6 @@
 * Make sure caves don't generate through bedrock
 * Make the drill banner pattern take the default drill (xbony2)
 * Corrected some names in the booklet (xbony2)
-* Stop lush caves from destroying chests to fix a crash when generating chunks
 * Use new item handler system for item laser relays to make them work with Storage Drawers properly
 ### A stack of releases!
 
