@@ -142,7 +142,7 @@ public final class FoodCrafting{
         //Cheese
         if(ConfigCrafting.CHEESE.isEnabled()){
             GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
-                    new ItemStack(Items.MILK_BUCKET));
+                    new ItemStack(Items.MILK_BUCKET), new ItemStack(Items.EGG)); //I don't know if this makes any actual sense, but whatever
             recipeCheese = RecipeUtil.lastIRecipe();
         }
 
