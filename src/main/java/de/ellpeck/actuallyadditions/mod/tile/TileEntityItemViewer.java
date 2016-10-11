@@ -40,27 +40,31 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     @Override
     protected void getInvWrappers(SidedInvWrapper[] wrappers){
         for(int i = 0; i < wrappers.length; i++){
-            wrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]){
+            final EnumFacing direction = EnumFacing.values()[i];
+            wrappers[i] = new SidedInvWrapper(this, direction){
                 @Override
                 public ItemStack insertItem(int slot, ItemStack stack, boolean simulate){
-                    SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
-                    if(info != null){
-                        return info.handler.insertItem(info.switchedIndex, stack, simulate);
+                    if(TileEntityItemViewer.this.canInsertItem(slot, stack, direction)){
+                        SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                        if(info != null){
+                            return info.handler.insertItem(info.switchedIndex, stack, simulate);
+                        }
                     }
-                    else{
-                        return super.insertItem(slot, stack, simulate);
-                    }
+                    return super.insertItem(slot, stack, simulate);
                 }
 
                 @Override
                 public ItemStack extractItem(int slot, int amount, boolean simulate){
-                    SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
-                    if(info != null){
-                        return info.handler.extractItem(info.switchedIndex, amount, simulate);
+                    ItemStack stackIn = TileEntityItemViewer.this.getStackInSlot(slot);
+                    if(stackIn != null){
+                        if(TileEntityItemViewer.this.canExtractItem(slot, stackIn, direction)){
+                            SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                            if(info != null){
+                                return info.handler.extractItem(info.switchedIndex, amount, simulate);
+                            }
+                        }
                     }
-                    else{
-                        return super.extractItem(slot, amount, simulate);
-                    }
+                    return super.extractItem(slot, amount, simulate);
                 }
             };
         }
