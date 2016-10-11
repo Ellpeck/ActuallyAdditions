@@ -1,3 +1,8 @@
+# 1.10.2-r66
+* Fixed the Advanced Item Laser Relays' whitelist never being recognized with the new Item System
+* Fixed Inbound/Outbound being switched around on Laser Relays connected directly to Item Interfaces (check your setups there, something might have changed)
+* Changed the cheese recipe to stop it clashing with HarvestCraft
+
 # 1.10.2-r65
 * Fixed a crash that sometimes occured when lush caves tried to generate through loot chests
 
