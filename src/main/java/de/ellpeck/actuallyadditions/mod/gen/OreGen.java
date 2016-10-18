@@ -30,6 +30,7 @@ import net.minecraft.world.biome.BiomeOcean;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -59,19 +60,32 @@ public class OreGen implements IWorldGenerator{
         int dimension = world.provider.getDimension();
         if(dimension != -1 && dimension != 1){
             if(world.getWorldType() != WorldType.FLAT && !ArrayUtils.contains(ConfigIntListValues.ORE_GEN_DIMENSION_BLACKLIST.getValue(), world.provider.getDimension())){
-                this.generateDefault(world, random, chunkX*16, chunkZ*16);
+                this.generateDefault(world, random, chunkX, chunkZ);
             }
         }
     }
 
     private void generateDefault(World world, Random random, int x, int z){
         if(ConfigBoolValues.GENERATE_QUARTZ.isEnabled()){
-            this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.STONE, world, random, x, z, MathHelper.getRandomIntegerInRange(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
+            this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.STONE, world, random, x*16, z*16, MathHelper.getRandomIntegerInRange(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
         }
 
-        if(ConfigBoolValues.GEN_LUSH_CAVES.isEnabled() && random.nextInt(ConfigIntValues.LUSH_CAVE_CHANCE.getValue()) <= 0){
-            BlockPos posAtHeight = world.getTopSolidOrLiquidBlock(new BlockPos(x+random.nextInt(16)+8, 0, z+random.nextInt(16)+8));
-            this.caveGen.generate(world, random, posAtHeight.down(MathHelper.getRandomIntegerInRange(random, 15, posAtHeight.getY()-15)));
+        if(ConfigBoolValues.GEN_LUSH_CAVES.isEnabled()){
+            StructureBoundingBox box = new StructureBoundingBox(x*16+8, 0, z*16+8, x*16+8+15, 255, z*16+8+15);
+            int chunkRadius = 1;
+            for(int dx = -chunkRadius; dx <= chunkRadius; dx++) {
+                for(int dz = -chunkRadius; dz <= chunkRadius; dz++) {
+                    int chunkX = x+dx;
+                    int chunkZ = z+dz;
+                    int randConst = 0x969ce69d;//so that it won't generate the same numbers as other mod that does the same thing
+                    Random chunkRand = new Random(randConst ^ world.getSeed() ^ (chunkX*29+chunkZ*31));
+                    if(chunkRand.nextInt(ConfigIntValues.LUSH_CAVE_CHANCE.getValue()) <= 0) {
+                        BlockPos randPos = new BlockPos(chunkX*16+chunkRand.nextInt(16)+8, 64, chunkZ*16+chunkRand.nextInt(16)+8);
+                        BlockPos pos = randPos.down(MathHelper.getRandomIntegerInRange(chunkRand, 15, randPos.getY()-15));
+                        this.caveGen.generate(world, chunkRand, pos, box);
+                    }
+                }
+            }
         }
     }
 
