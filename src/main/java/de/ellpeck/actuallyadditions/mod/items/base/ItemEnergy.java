@@ -63,11 +63,6 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
     }
 
     @Override
-    public void onCreated(ItemStack stack, World world, EntityPlayer player){
-        this.setEnergy(stack, 0);
-    }
-
-    @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
         list.add(this.getEnergyStored(stack)+"/"+this.getMaxEnergyStored(stack)+" RF");
     }
