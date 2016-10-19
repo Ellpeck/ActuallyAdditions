@@ -263,9 +263,9 @@ public final class InitItems{
         itemDrill = new ItemDrill("itemDrill");
         itemBattery = new ItemBattery("itemBattery", 1000000, 5000);
         itemBatteryDouble = new ItemBattery("itemBatteryDouble", 2000000, 10000);
-        itemBatteryTriple = new ItemBattery("itemBatteryTriple", 3000000, 15000);
-        itemBatteryQuadruple = new ItemBattery("itemBatteryQuadruple", 4000000, 20000);
-        itemBatteryQuintuple = new ItemBattery("itemBatteryQuintuple", 5000000, 25000);
+        itemBatteryTriple = new ItemBattery("itemBatteryTriple", 4000000, 15000);
+        itemBatteryQuadruple = new ItemBattery("itemBatteryQuadruple", 8000000, 20000);
+        itemBatteryQuintuple = new ItemBattery("itemBatteryQuintuple", 16000000, 25000);
         itemDrillUpgradeSpeed = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED, "itemDrillUpgradeSpeed");
         itemDrillUpgradeSpeedII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_II, "itemDrillUpgradeSpeedII");
         itemDrillUpgradeSpeedIII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_III, "itemDrillUpgradeSpeedIII");
