@@ -12,6 +12,9 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -73,7 +76,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                             this.currentTimer = 0;
                             if(this.slots[0] != null){
                                 EntityAnimal randomAnimal = animals.get(Util.RANDOM.nextInt(this.currentAnimalAmount));
-                                if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && randomAnimal.isBreedingItem(this.slots[0])){
+                                if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && (randomAnimal.isBreedingItem(this.slots[0]) || this.canHorseBeFed(randomAnimal))){
 
                                     this.feedAnimal(randomAnimal);
 
@@ -106,6 +109,17 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                 this.lastTimer = this.currentTimer;
             }
         }
+    }
+
+    private boolean canHorseBeFed(EntityAnimal animal){
+        if(animal instanceof EntityHorse){
+            EntityHorse horse = (EntityHorse)animal;
+            if(horse.isTame()){
+                Item item = this.slots[0].getItem();
+                return item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT;
+            }
+        }
+        return false;
     }
 
     @Override
