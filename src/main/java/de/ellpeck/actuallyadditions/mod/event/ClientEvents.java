@@ -160,10 +160,14 @@ public class ClientEvents{
                         String strg = "Redstone Mode: "+TextFormatting.DARK_RED+(base.isPulseMode ? "Pulse" : "Deactivation")+TextFormatting.RESET;
                         font.drawStringWithShadow(strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
+                        String expl;
                         if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
-                            String expl = TextFormatting.GREEN+"Right-Click to toggle!";
-                            font.drawStringWithShadow(expl, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
+                            expl = TextFormatting.GREEN+"Right-Click to toggle!";
                         }
+                        else{
+                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Redstone Torch to toggle!";
+                        }
+                        font.drawStringWithShadow(expl, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                 }
 
