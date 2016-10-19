@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -39,8 +40,18 @@ public final class CrusherRecipeRegistry{
                             String output = theCase.resultPreString+ore.substring(theCase.theCase.length());
 
                             if(!hasOreRecipe(ore)){
-                                if(!OreDictionary.getOres(output, false).isEmpty() && !OreDictionary.getOres(ore, false).isEmpty()){
-                                    ActuallyAdditionsAPI.addCrusherRecipe(ore, output, theCase.resultAmount);
+                                List<ItemStack> outputs = OreDictionary.getOres(output, false);
+                                if(!outputs.isEmpty() && !OreDictionary.getOres(ore, false).isEmpty()){
+                                    for(ItemStack stack : outputs){
+                                        if(!hasBlacklistedOutput(stack)){
+                                            ItemStack copy = stack.copy();
+                                            copy.stackSize = theCase.resultAmount;
+                                            ActuallyAdditionsAPI.addCrusherRecipe(ore, copy);
+                                        }
+                                        else if(!oresNoResult.contains(ore)){
+                                            oresNoResult.add(ore);
+                                        }
+                                    }
                                 }
                                 else{
                                     oresNoResult.add(ore);
@@ -57,10 +68,43 @@ public final class CrusherRecipeRegistry{
         ArrayList<String> addedRecipes = new ArrayList<String>();
         for(int i = recipeStartedAt; i < ActuallyAdditionsAPI.CRUSHER_RECIPES.size(); i++){
             CrusherRecipe recipe = ActuallyAdditionsAPI.CRUSHER_RECIPES.get(i);
-            addedRecipes.add(recipe.input+" -> "+recipe.outputOneAmount+"x "+recipe.outputOne);
+            addedRecipes.add(recipe.input+" -> "+recipe.outputOneStack);
         }
         ModUtil.LOGGER.info("Added "+addedRecipes.size()+" Crusher Recipes automatically: "+addedRecipes.toString());
         ModUtil.LOGGER.warn("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically because the inputs were missing outputs: "+oresNoResult.toString());
+    }
+
+    private static boolean hasBlacklistedOutput(ItemStack output){
+        if(output != null){
+            Item item = output.getItem();
+            if(item != null){
+                String reg = item.getRegistryName().toString();
+
+                for(String conf : ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue()){
+                    String confReg = conf;
+                    int meta = 0;
+
+                    if(conf.contains("@")){
+                        try{
+                            String[] split = conf.split("@");
+                            confReg = split[0];
+                            meta = Integer.parseInt(split[1]);
+                        }
+                        catch(Exception e){
+                            ModUtil.LOGGER.warn("A config option appears to be incorrect: The Crusher Output Blacklist entry "+conf+" can't be parsed!");
+                        }
+                    }
+
+                    if(reg.equals(confReg) && output.getItemDamage() == meta){
+                        System.out.println("Blacklisting "+output);
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+        return true;
     }
 
     private static boolean hasException(String ore){

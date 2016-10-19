@@ -149,6 +149,19 @@ public final class ActuallyAdditionsAPI{
     }
 
     /**
+     * Adds a Recipe to the Crusher Recipe Registry
+     * The second output will be nothing
+     *
+     * @param input           The input as an ItemStack
+     * @param outputOne       The first output's OreDictionary name
+     */
+    public static void addCrusherRecipe(String input, ItemStack outputOne){
+        if(!OreDictionary.getOres(input, false).isEmpty()){
+            CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne));
+        }
+    }
+
+    /**
      * Adds a Recipe to the Oil generator
      *
      * @param fluidName The name of the fluid to be consumed

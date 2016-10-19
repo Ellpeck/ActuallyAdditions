@@ -24,6 +24,11 @@ public class CrusherRecipe{
     public ItemStack outputOneStack;
     public ItemStack outputTwoStack;
 
+    public CrusherRecipe(String input, ItemStack outputOne){
+        this.input = input;
+        this.outputOneStack = outputOne;
+    }
+
     public CrusherRecipe(ItemStack input, String outputOne, int outputOneAmount){
         this.inputStack = input;
         this.outputOne = outputOne;
