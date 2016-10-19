@@ -88,6 +88,11 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
         list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+"."+this.getBaseName()+".desc"));
+
+        for(int i = 1; i <= 4; i++){
+            String format = i == 4 ? TextFormatting.GOLD.toString()+TextFormatting.ITALIC : TextFormatting.RESET.toString();
+            list.add(format+StringUtil.localize("tooltip."+ModUtil.MOD_ID+"."+this.getBaseName()+".sub."+i));
+        }
     }
 
 
