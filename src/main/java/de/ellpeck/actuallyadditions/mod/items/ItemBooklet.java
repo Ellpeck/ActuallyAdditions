@@ -122,13 +122,14 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
                         minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.GOLD+strg3, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                     else{
-                        String strg = TextFormatting.DARK_RED+"No Info available! Sorry :(";
-                        minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
+                        String strg1 = TextFormatting.DARK_RED+"No Info available! Sorry :(";
+                        String strg2 = TextFormatting.DARK_GREEN+""+TextFormatting.ITALIC+"Sneak while looking at an Actually Additions";
+                        String strg3 = TextFormatting.DARK_GREEN+""+TextFormatting.ITALIC+"block to see more information about it!";
+
+                        minecraft.fontRendererObj.drawStringWithShadow(strg1, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg1)/2, height+30, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRendererObj.drawStringWithShadow(strg2, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg2)/2, height+50, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRendererObj.drawStringWithShadow(strg3, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                     }
-                }
-                else{
-                    String strg = TextFormatting.DARK_GREEN+""+TextFormatting.ITALIC+"Sneak!";
-                    minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                 }
             }
         }
