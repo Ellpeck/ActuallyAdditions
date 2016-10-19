@@ -11,10 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -22,8 +20,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityFishingNet extends TileEntityBase{
@@ -62,14 +61,9 @@ public class TileEntityFishingNet extends TileEntityBase{
                             LootContext.Builder builder = new LootContext.Builder((WorldServer)this.worldObj);
                             List<ItemStack> fishables = this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(Util.RANDOM, builder.build());
                             for(ItemStack fishable : fishables){
-                                TileEntity tile = this.worldObj.getTileEntity(this.pos.up());
-                                if(tile != null && tile instanceof IInventory){
-                                    ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-                                    list.add(fishable);
-                                    WorldUtil.addToInventory((IInventory)tile, list, EnumFacing.DOWN, true, false);
-                                }
-                                else{
-                                    EntityItem item = new EntityItem(this.worldObj, this.pos.getX()+0.5, this.pos.getY()+0.5, this.pos.getZ()+0.5, fishable);
+                                ItemStack leftover = this.storeInContainer(fishable);
+                                if(leftover != null){
+                                    EntityItem item = new EntityItem(this.worldObj, this.pos.getX()+0.5, this.pos.getY()+0.5, this.pos.getZ()+0.5, leftover.copy());
                                     item.lifespan = 2000;
                                     this.worldObj.spawnEntityInWorld(item);
                                 }
@@ -77,11 +71,37 @@ public class TileEntityFishingNet extends TileEntityBase{
                         }
                     }
                     else{
-                        int time = 15000;
+                        int time = 150;
                         this.timeUntilNextDrop = time+Util.RANDOM.nextInt(time/2);
                     }
                 }
             }
         }
+    }
+
+    private ItemStack storeInContainer(ItemStack stack){
+        for(EnumFacing side : EnumFacing.values()){
+            TileEntity tile = this.tilesAround[side.ordinal()];
+            if(tile != null){
+                if(tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())){
+                    IItemHandler cap = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                    if(cap != null){
+                        for(int i = 0; i < cap.getSlots(); i++){
+                            stack = cap.insertItem(i, stack, false);
+
+                            if(stack == null || stack.stackSize <= 0){
+                                return null;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return stack;
+    }
+
+    @Override
+    public boolean shouldSaveHandlersAround(){
+        return true;
     }
 }
