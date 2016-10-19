@@ -72,6 +72,7 @@ public class ItemSpawnerChanger extends ItemBase{
                         NBTTagCompound compound = new NBTTagCompound();
                         logic.writeToNBT(compound);
                         compound.removeTag("SpawnPotentials");
+                        compound.removeTag("SpawnData");
                         logic.readFromNBT(compound);
 
                         logic.setEntityName(entity);

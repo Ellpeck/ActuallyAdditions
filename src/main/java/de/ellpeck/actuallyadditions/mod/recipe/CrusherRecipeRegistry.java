@@ -96,7 +96,6 @@ public final class CrusherRecipeRegistry{
                     }
 
                     if(reg.equals(confReg) && output.getItemDamage() == meta){
-                        System.out.println("Blacklisting "+output);
                         return true;
                     }
                 }
