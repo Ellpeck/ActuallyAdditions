@@ -17,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.storage.loot.ILootContainer;
 
 import java.util.ArrayList;
@@ -24,30 +25,39 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class WorldGenLushCaves extends WorldGenerator{
+public class WorldGenLushCaves{
 
-    @Override
-    public boolean generate(World world, Random rand, BlockPos position){
-        this.generateCave(world, position, rand);
+    public boolean generate(World world, Random rand, BlockPos position, StructureBoundingBox blockRegion){
+        this.generateCave(world, position, rand, blockRegion);
         return true;
     }
 
-    private void generateCave(World world, BlockPos center, Random rand){
+    private void generateCave(World world, BlockPos center, Random rand, StructureBoundingBox chunkRegion){
         int spheres = rand.nextInt(5)+3;
+        StructureBoundingBox spheresBox = new StructureBoundingBox(chunkRegion);
+        //the region for spheres is larger so that trees can generate in the smaller one
+        spheresBox.minX -= 7;
+        spheresBox.minZ -= 7;
+        spheresBox.maxX += 7;
+        spheresBox.maxZ += 7;
         for(int i = 0; i <= spheres; i++){
-            this.makeSphereWithGrassFloor(world, center.add(rand.nextInt(11)-5, rand.nextInt(7)-3, rand.nextInt(11)-5), rand.nextInt(3)+5);
+            //center already is random value within population area
+            this.makeSphereWithGrassFloor(world, center.add(rand.nextInt(11)-5, rand.nextInt(7)-3, rand.nextInt(11)-5), rand.nextInt(3)+5, spheresBox);
         }
 
-        this.genTreesAndTallGrass(world, center, 10, spheres*3, rand);
+        this.genTreesAndTallGrass(world, center, 11, spheres*3, rand, chunkRegion);
     }
 
-    private void genTreesAndTallGrass(World world, BlockPos center, int radius, int amount, Random rand){
+    private void genTreesAndTallGrass(World world, BlockPos center, int radius, int amount, Random rand, StructureBoundingBox box){
         List<BlockPos> possiblePoses = new ArrayList<BlockPos>();
         for(double x = -radius; x < radius; x++){
             for(double y = -radius; y < radius; y++){
                 for(double z = -radius; z < radius; z++){
                     if(rand.nextDouble() >= 0.5D){
                         BlockPos pos = center.add(x, y, z);
+                        if(!box.isVecInside(pos)) {
+                            continue;
+                        }
                         if(world.getBlockState(pos).getBlock() == Blocks.GRASS){
                             possiblePoses.add(pos);
                         }
@@ -71,13 +81,14 @@ public class WorldGenLushCaves extends WorldGenerator{
         }
     }
 
-    private void makeSphereWithGrassFloor(World world, BlockPos center, int radius){
+    private void makeSphereWithGrassFloor(World world, BlockPos center, int radius, StructureBoundingBox boundingBox){
         for(double x = -radius; x < radius; x++){
             for(double y = -radius; y < radius; y++){
                 for(double z = -radius; z < radius; z++){
                     if(Math.sqrt((x*x)+(y*y)+(z*z)) < radius){
                         BlockPos pos = center.add(x, y, z);
-                        if(!this.checkIndestructable(world, pos)){
+                        //Note: order matters, checkIndestructable will generate chunks if order is reversed
+                        if(boundingBox.isVecInside(pos) && !this.checkIndestructable(world, pos)){
                             world.setBlockToAir(pos);
                         }
                     }
@@ -89,6 +100,9 @@ public class WorldGenLushCaves extends WorldGenerator{
             for(double z = -radius; z < radius; z++){
                 for(double y = -radius; y <= -3; y++){
                     BlockPos pos = center.add(x, y, z);
+                    if(!boundingBox.isVecInside(pos)) {
+                        continue;
+                    }
                     IBlockState state = world.getBlockState(pos);
                     BlockPos posUp = pos.up();
                     IBlockState stateUp = world.getBlockState(posUp);
@@ -112,6 +126,10 @@ public class WorldGenLushCaves extends WorldGenerator{
         IBlockState state = world.getBlockState(pos);
         if(state != null){
             Block block = state.getBlock();
+            //check if it's tree or grass that is generated here
+            if(block == Blocks.LOG || block == Blocks.LEAVES || block == Blocks.TALLGRASS) {
+                return true;
+            }
             if(block != null && (block.isAir(state, world, pos) || block.getHarvestLevel(state) >= 0F)){
                 return false;
             }
