@@ -1,3 +1,16 @@
+# 1.10.2-r67
+* Fixed horses not being able to be fed with the feeder
+* Made energy items not lose their power when used for crafting
+* Made batteries store more power the higher their tiers are
+* Added crusher output blacklist config option
+* Fixed the spawner changer sometimes keeping old mob data
+* Made fishing net accept chests on all sides
+* Added description to the booklet to explain what it is
+* Changed the "sneak!" info to be less confusing
+* Added visual indication of where the reconstructor hits
+* Add info to redstone control machines that they require a torch to be changed
+* Fixed recursive chunk generation with lush caves (Barteks2x)
+
 # 1.10.2-r66
 * Fixed the Advanced Item Laser Relays' whitelist never being recognized with the new Item System
 * Fixed Inbound/Outbound being switched around on Laser Relays connected directly to Item Interfaces (check your setups there, something might have changed)
