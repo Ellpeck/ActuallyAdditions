@@ -34,9 +34,11 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,31 +140,38 @@ public class MethodHandler implements IMethodHandler{
                 for(int reachZ = -range; reachZ < range+1; reachZ++){
                     for(int reachY = -range; reachY < range+1; reachY++){
                         BlockPos pos = new BlockPos(hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
-                        IBlockState state = tile.getWorldObject().getBlockState(pos);
-                        List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
-                        for(LensConversionRecipe recipe : recipes){
-                            if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
-                                List<ItemStack> outputs = RecipeUtil.getConversionLensOutputs(recipe);
-                                if(outputs != null && !outputs.isEmpty()){
-                                    ItemStack output = outputs.get(0);
-                                    if(output != null){
-                                        if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                                            tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
-                                        }
+                        if(!tile.getWorldObject().isAirBlock(pos)){
+                            IBlockState state = tile.getWorldObject().getBlockState(pos);
+                            List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
+                            for(LensConversionRecipe recipe : recipes){
+                                if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
+                                    List<ItemStack> outputs = RecipeUtil.getConversionLensOutputs(recipe);
+                                    if(outputs != null && !outputs.isEmpty()){
+                                        ItemStack output = outputs.get(0);
+                                        if(output != null){
+                                            if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
+                                                tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
+                                            }
 
-                                        if(output.getItem() instanceof ItemBlock){
-                                            tile.getWorldObject().setBlockState(pos, Block.getBlockFromItem(output.getItem()).getStateFromMeta(output.getItemDamage()), 2);
-                                        }
-                                        else{
-                                            EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
-                                            tile.getWorldObject().spawnEntityInWorld(item);
-                                            tile.getWorldObject().setBlockToAir(pos);
-                                        }
+                                            if(output.getItem() instanceof ItemBlock){
+                                                tile.getWorldObject().setBlockState(pos, Block.getBlockFromItem(output.getItem()).getStateFromMeta(output.getItemDamage()), 2);
+                                            }
+                                            else{
+                                                EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
+                                                tile.getWorldObject().spawnEntityInWorld(item);
+                                                tile.getWorldObject().setBlockToAir(pos);
+                                            }
 
-                                        tile.extractEnergy(recipe.energyUse);
-                                        break;
+                                            tile.extractEnergy(recipe.energyUse);
+                                            break;
+                                        }
                                     }
                                 }
+                            }
+                        }
+                        else{
+                            if(tile.getWorldObject() instanceof WorldServer){
+                                ((WorldServer)tile.getWorldObject()).spawnParticle(EnumParticleTypes.END_ROD, false, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, 1, 0, 0, 0, 0D);
                             }
                         }
                     }
