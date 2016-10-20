@@ -99,6 +99,8 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+
         this.storage.writeToNBT(compound);
         if(this.connectedPlayer != null && type != NBTType.SAVE_BLOCK){
             compound.setUniqueId("Player", this.connectedPlayer);
@@ -108,6 +110,8 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+
         this.storage.readFromNBT(compound);
         if(compound.hasKey("PlayerLeast") && type != NBTType.SAVE_BLOCK){
             this.connectedPlayer = compound.getUniqueId("Player");
