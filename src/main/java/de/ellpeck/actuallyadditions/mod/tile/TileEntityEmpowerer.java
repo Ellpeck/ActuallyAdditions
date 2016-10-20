@@ -35,15 +35,16 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
         super(1, "empowerer");
     }
 
-    public static EmpowererRecipe getRecipeForInput(ItemStack input){
+    public static List<EmpowererRecipe> getRecipesForInput(ItemStack input){
+        List<EmpowererRecipe> recipesThatWork = new ArrayList<EmpowererRecipe>();
         if(input != null){
             for(EmpowererRecipe recipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES){
                 if(recipe.input != null && recipe.input.isItemEqual(input)){
-                    return recipe;
+                    recipesThatWork.add(recipe);
                 }
             }
         }
-        return null;
+        return recipesThatWork;
     }
 
     @Override
@@ -51,40 +52,42 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
         super.updateEntity();
 
         if(!this.worldObj.isRemote){
-            EmpowererRecipe recipe = getRecipeForInput(this.slots[0]);
-            if(recipe != null){
-                TileEntityDisplayStand[] modifierStands = this.getFittingModifiers(recipe, recipe.time);
-                if(modifierStands != null){ //Meaning the display stands around match all the criteria
-                    boolean lessParticles = ConfigBoolValues.LESS_PARTICLES.isEnabled();
+            List<EmpowererRecipe> recipes = getRecipesForInput(this.slots[0]);
+            if(!recipes.isEmpty()){
+                for(EmpowererRecipe recipe : recipes){
+                    TileEntityDisplayStand[] modifierStands = this.getFittingModifiers(recipe, recipe.time);
+                    if(modifierStands != null){ //Meaning the display stands around match all the criteria
+                        boolean lessParticles = ConfigBoolValues.LESS_PARTICLES.isEnabled();
 
-                    this.processTime++;
-                    boolean done = this.processTime >= recipe.time;
+                        this.processTime++;
+                        boolean done = this.processTime >= recipe.time;
 
-                    for(TileEntityDisplayStand stand : modifierStands){
-                        stand.storage.extractEnergy(recipe.energyPerStand/recipe.time, false);
+                        for(TileEntityDisplayStand stand : modifierStands){
+                            stand.storage.extractEnergy(recipe.energyPerStand/recipe.time, false);
+
+                            if(done){
+                                stand.decrStackSize(0, 1);
+                            }
+
+                            if(!lessParticles){
+                                AssetUtil.shootParticles(this.worldObj, stand.getPos().getX(), stand.getPos().getY()+0.45F, stand.getPos().getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), recipe.particleColor, 8, 0.5F, 1F);
+                            }
+                        }
+
+                        if(!lessParticles && this.processTime%5 == 0 && this.worldObj instanceof WorldServer){
+                            ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 3, 0, 0, 0, 0.1D);
+                        }
 
                         if(done){
-                            stand.decrStackSize(0, 1);
+                            if(!lessParticles){
+                                ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 300, 0, 0, 0, 0.25D);
+                            }
+
+                            this.slots[0] = recipe.output.copy();
+                            this.markDirty();
+
+                            this.processTime = 0;
                         }
-
-                        if(!lessParticles){
-                            AssetUtil.shootParticles(this.worldObj, stand.getPos().getX(), stand.getPos().getY()+0.45F, stand.getPos().getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), recipe.particleColor, 8, 0.5F, 1F);
-                        }
-                    }
-
-                    if(!lessParticles && this.processTime%5 == 0 && this.worldObj instanceof WorldServer){
-                        ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 3, 0, 0, 0, 0.1D);
-                    }
-
-                    if(done){
-                        if(!lessParticles){
-                            ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 300, 0, 0, 0, 0.25D);
-                        }
-
-                        this.slots[0] = recipe.output.copy();
-                        this.markDirty();
-
-                        this.processTime = 0;
                     }
                 }
             }
@@ -152,7 +155,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack){
-        return getRecipeForInput(stack) != null;
+        return !getRecipesForInput(stack).isEmpty();
     }
 
     @Override
@@ -162,7 +165,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
 
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
-        return getRecipeForInput(stack) == null;
+        return !getRecipesForInput(stack).isEmpty();
     }
 
     @Override
