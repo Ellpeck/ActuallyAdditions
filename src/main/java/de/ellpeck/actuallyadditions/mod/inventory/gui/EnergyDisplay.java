@@ -84,7 +84,9 @@ public class EnergyDisplay extends Gui{
 
             List<String> text = new ArrayList<String>();
             text.add(this.getOverlayText());
+            text.add("");
             text.add(TextFormatting.GRAY+""+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".energy.to"+(this.displayTesla ? "RF" : "T")));
+            text.add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".energy.disclaimer"));
             GuiUtils.drawHoveringText(text, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
     }
