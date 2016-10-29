@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
@@ -60,6 +61,11 @@ public class BookletRecipeCategory implements IRecipeCategory{
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper){
+
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients){
         if(recipeWrapper instanceof BookletRecipeWrapper){
             BookletRecipeWrapper wrapper = (BookletRecipeWrapper)recipeWrapper;
             recipeLayout.getItemStacks().init(0, true, 70, -4);

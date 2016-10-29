@@ -30,12 +30,23 @@ import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeCat
 import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import mezz.jei.api.*;
+import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
 import net.minecraft.item.ItemStack;
 
 @JEIPlugin
 public class JEIActuallyAdditionsPlugin implements IModPlugin{
+
+    @Override
+    public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry){
+
+    }
+
+    @Override
+    public void registerIngredients(IModIngredientRegistration registry){
+
+    }
 
     @Override
     public void register(IModRegistry registry){

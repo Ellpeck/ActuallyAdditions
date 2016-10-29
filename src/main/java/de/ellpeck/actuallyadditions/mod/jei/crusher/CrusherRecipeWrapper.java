@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -31,6 +32,11 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
 
     public CrusherRecipeWrapper(CrusherRecipe recipe){
         this.theRecipe = recipe;
+    }
+
+    @Override
+    public void getIngredients(IIngredients ingredients){
+
     }
 
     @Override

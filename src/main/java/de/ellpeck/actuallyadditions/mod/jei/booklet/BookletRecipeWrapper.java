@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextFormatting;
@@ -31,6 +32,11 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
 
     public BookletRecipeWrapper(BookletPage page){
         this.thePage = page;
+    }
+
+    @Override
+    public void getIngredients(IIngredients ingredients){
+
     }
 
     @Override

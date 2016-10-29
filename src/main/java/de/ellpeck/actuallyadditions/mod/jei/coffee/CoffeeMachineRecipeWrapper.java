@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -41,6 +42,11 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
 
         this.theOutput = new ItemStack(InitItems.itemCoffee);
         ActuallyAdditionsAPI.methodHandler.addEffectToStack(this.theOutput, this.theIngredient);
+    }
+
+    @Override
+    public void getIngredients(IIngredients ingredients){
+
     }
 
     @Override
