@@ -53,6 +53,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
         this.color = color;
 
         this.setMaxDamage(this.getMaxDamage()*4);
+        this.setHarvestLevel("pickaxe", toolMat.getHarvestLevel());
     }
 
     @Override
