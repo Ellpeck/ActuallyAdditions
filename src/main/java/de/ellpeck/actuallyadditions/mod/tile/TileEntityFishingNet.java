@@ -101,7 +101,7 @@ public class TileEntityFishingNet extends TileEntityBase{
     }
 
     @Override
-    public boolean shouldSaveHandlersAround(){
+    public boolean shouldSaveDataOnChangeOrWorldStart(){
         return true;
     }
 }

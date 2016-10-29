@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
@@ -44,12 +45,12 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
     }
 
     @Override
-    public boolean shouldSaveHandlersAround(){
+    public boolean shouldSaveDataOnChangeOrWorldStart(){
         return true;
     }
 
     @Override
-    public void saveAllHandlersAround(){
+    public void saveDataOnChangeOrWorldStart(){
         this.handlersAround.clear();
 
         for(int i = 0; i <= 5; i++){
@@ -63,13 +64,17 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
                 }
             }
         }
+
+        Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
+        if(network != null){
+            network.changeAmount++;
+        }
     }
 
-    public List<GenericItemHandlerInfo> getItemHandlersInNetwork(Network network){
+    public void getItemHandlersInNetwork(Network network, List<GenericItemHandlerInfo> storeList){
         //Keeps track of all the Laser Relays and Item Handlers that have been checked already to make nothing run multiple times
         List<BlockPos> alreadyChecked = new ArrayList<BlockPos>();
 
-        List<GenericItemHandlerInfo> handlers = new ArrayList<GenericItemHandlerInfo>();
         for(IConnectionPair pair : network.connections){
             for(BlockPos relay : pair.getPositions()){
                 if(relay != null && !alreadyChecked.contains(relay)){
@@ -88,11 +93,10 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
                             }
                         }
 
-                        handlers.add(info);
+                        storeList.add(info);
                     }
                 }
             }
         }
-        return handlers;
     }
 }

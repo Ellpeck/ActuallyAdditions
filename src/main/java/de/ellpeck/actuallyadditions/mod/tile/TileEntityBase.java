@@ -43,7 +43,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     protected int ticksElapsed;
 
     protected TileEntity[] tilesAround = new TileEntity[6];
-    protected boolean hasCheckedHandlersAround;
+    protected boolean hasSavedDataOnChangeOrWorldStart;
 
     public TileEntityBase(String name){
         this.name = name;
@@ -274,23 +274,23 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                 }
             }
 
-            if(!this.hasCheckedHandlersAround){
-                if(this.shouldSaveHandlersAround()){
-                    this.saveAllHandlersAround();
+            if(!this.hasSavedDataOnChangeOrWorldStart){
+                if(this.shouldSaveDataOnChangeOrWorldStart()){
+                    this.saveDataOnChangeOrWorldStart();
                 }
 
-                this.hasCheckedHandlersAround = true;
+                this.hasSavedDataOnChangeOrWorldStart = true;
             }
         }
     }
 
-    public void saveAllHandlersAround(){
+    public void saveDataOnChangeOrWorldStart(){
         for(EnumFacing side : EnumFacing.values()){
             this.tilesAround[side.ordinal()] = this.worldObj.getTileEntity(this.pos.offset(side));
         }
     }
 
-    public boolean shouldSaveHandlersAround(){
+    public boolean shouldSaveDataOnChangeOrWorldStart(){
         return this instanceof ISharingEnergyProvider || this instanceof ISharingFluidHandler;
     }
 

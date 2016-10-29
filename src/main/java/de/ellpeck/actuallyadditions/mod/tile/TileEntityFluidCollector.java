@@ -233,7 +233,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
 
     @Override
     public boolean doesShareFluid(){
-        return true;
+        return !this.isPlacer;
     }
 
     @Override

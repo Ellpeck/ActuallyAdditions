@@ -20,13 +20,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     public TileEntityLaserRelayItem connectedRelay;
+
+    private final List<GenericItemHandlerInfo> genericInfos = new ArrayList<GenericItemHandlerInfo>();
+    private final Map<Integer, SpecificItemHandlerInfo> specificInfos = new HashMap<Integer, SpecificItemHandlerInfo>();
+    private int lastNetworkChangeAmount = -1;
 
     public TileEntityItemViewer(){
         super(0, "itemViewer");
@@ -71,45 +73,49 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     }
 
     private List<GenericItemHandlerInfo> getItemHandlerInfos(){
-        TileEntityLaserRelayItem relay = this.connectedRelay;
-        if(relay != null){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(relay.getPos(), this.worldObj);
-            if(network != null){
-                return relay.getItemHandlersInNetwork(network);
-            }
-        }
-        return null;
+        this.queryAndSaveData();
+        return this.genericInfos;
     }
 
-    private SpecificItemHandlerInfo getSwitchedIndexHandler(int i){
-        List<GenericItemHandlerInfo> infos = this.getItemHandlerInfos();
-        if(infos != null && !infos.isEmpty()){
-            Collections.sort(infos);
-            int currentI = 0;
-            if(!infos.isEmpty()){
-                for(GenericItemHandlerInfo info : infos){
-                    for(IItemHandler handler : info.handlers){
-                        int slotAmount = handler.getSlots();
-                        if(currentI+slotAmount > i){
-                            return new SpecificItemHandlerInfo(handler, i-currentI, info.relayInQuestion);
-                        }
-                        else{
-                            currentI += slotAmount;
+    private void queryAndSaveData(){
+        if(this.connectedRelay != null){
+            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.connectedRelay.getPos(), this.worldObj);
+            if(network != null && this.lastNetworkChangeAmount != network.changeAmount){
+                this.genericInfos.clear();
+                this.specificInfos.clear();
+
+                this.connectedRelay.getItemHandlersInNetwork(network, this.genericInfos);
+                if(!this.genericInfos.isEmpty()){
+                    Collections.sort(this.genericInfos);
+
+                    int slotsQueried = 0;
+                    for(GenericItemHandlerInfo info : this.genericInfos){
+                        for(IItemHandler handler : info.handlers){
+                            for(int i = 0; i < handler.getSlots(); i++){
+                                this.specificInfos.put(slotsQueried, new SpecificItemHandlerInfo(handler, i, info.relayInQuestion));
+                                slotsQueried++;
+                            }
                         }
                     }
                 }
+
+                this.lastNetworkChangeAmount = network.changeAmount;
             }
         }
-        return null;
+    }
+
+    private SpecificItemHandlerInfo getSwitchedIndexHandler(int i){
+        this.queryAndSaveData();
+        return this.specificInfos.get(i);
     }
 
     @Override
-    public boolean shouldSaveHandlersAround(){
+    public boolean shouldSaveDataOnChangeOrWorldStart(){
         return true;
     }
 
     @Override
-    public void saveAllHandlersAround(){
+    public void saveDataOnChangeOrWorldStart(){
         TileEntityLaserRelayItem tileFound = null;
         if(this.worldObj != null){ //Why is that even possible..?
             for(int i = 0; i <= 5; i++){

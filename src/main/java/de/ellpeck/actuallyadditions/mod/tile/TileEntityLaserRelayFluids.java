@@ -37,12 +37,12 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
     }
 
     @Override
-    public boolean shouldSaveHandlersAround(){
+    public boolean shouldSaveDataOnChangeOrWorldStart(){
         return true;
     }
 
     @Override
-    public void saveAllHandlersAround(){
+    public void saveDataOnChangeOrWorldStart(){
         this.receiversAround.clear();
 
         for(EnumFacing side : EnumFacing.values()){
@@ -53,6 +53,11 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
                     this.receiversAround.put(side, tile);
                 }
             }
+        }
+
+        Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
+        if(network != null){
+            network.changeAmount++;
         }
     }
 

@@ -91,6 +91,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     }
                 }
             }
+
+            if(this.placeToPull instanceof TileEntityItemViewer){
+                break;
+            }
         }
         return false;
     }
@@ -107,6 +111,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                             }
                         }
                     }
+                }
+
+                if(this.placeToPut instanceof TileEntityItemViewer){
+                    break;
                 }
             }
         }
@@ -312,7 +320,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public boolean shouldSaveHandlersAround(){
+    public boolean shouldSaveDataOnChangeOrWorldStart(){
         return true;
     }
 
@@ -320,7 +328,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * Sets all of the relevant variables
      */
     @Override
-    public void saveAllHandlersAround(){
+    public void saveDataOnChangeOrWorldStart(){
         if(this.sideToPull != -1){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(this.sideToPull);
             this.placeToPull = this.worldObj.getTileEntity(this.pos.offset(side));
@@ -403,7 +411,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         }
 
         this.markDirty();
-        this.saveAllHandlersAround();
+        this.saveDataOnChangeOrWorldStart();
     }
 
     @Override

@@ -160,8 +160,8 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityBase){
             TileEntityBase base = (TileEntityBase)tile;
-            if(base.shouldSaveHandlersAround()){
-                base.saveAllHandlersAround();
+            if(base.shouldSaveDataOnChangeOrWorldStart()){
+                base.saveDataOnChangeOrWorldStart();
             }
         }
     }

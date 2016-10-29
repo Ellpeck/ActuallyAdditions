@@ -116,7 +116,7 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
     }
 
     @Override
-    public void saveAllHandlersAround(){
+    public void saveDataOnChangeOrWorldStart(){
         this.handlersAround.clear();
 
         for(EnumFacing side : EnumFacing.values()){
@@ -152,7 +152,7 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean shouldSaveHandlersAround(){
+    public boolean shouldSaveDataOnChangeOrWorldStart(){
         return true;
     }
 

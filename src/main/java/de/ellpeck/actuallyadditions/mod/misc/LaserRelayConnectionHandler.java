@@ -54,6 +54,8 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
         for(IConnectionPair secondPair : secondNetwork.connections){
             firstNetwork.connections.add(secondPair);
         }
+        firstNetwork.changeAmount++;
+
         WorldData.getDataForWorld(world).laserRelayNetworks.remove(secondNetwork);
         //System.out.println("Merged Two Networks!");
     }
@@ -140,6 +142,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
             firstNetwork = new Network();
             WorldData.getDataForWorld(world).laserRelayNetworks.add(firstNetwork);
             firstNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay, type, suppressConnectionRender));
+            firstNetwork.changeAmount++;
         }
         //The same Network
         else if(firstNetwork == secondNetwork){
@@ -149,14 +152,17 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
         else if(firstNetwork != null && secondNetwork != null){
             mergeNetworks(firstNetwork, secondNetwork, world);
             firstNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay, type, suppressConnectionRender));
+            firstNetwork.changeAmount++;
         }
         //Only first network exists
         else if(firstNetwork != null){
             firstNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay, type, suppressConnectionRender));
+            firstNetwork.changeAmount++;
         }
         //Only second network exists
         else{
             secondNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay, type, suppressConnectionRender));
+            secondNetwork.changeAmount++;
         }
         //System.out.println("Connected "+firstRelay.toString()+" to "+secondRelay.toString());
         //System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
