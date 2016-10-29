@@ -22,6 +22,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,7 +103,8 @@ public class EnergyDisplay extends Gui{
     }
 
     private String getOverlayText(){
-        return this.rfReference.getEnergyStored()+"/"+this.rfReference.getMaxEnergyStored()+(this.displayTesla ? " T" : " RF");
+        NumberFormat format = NumberFormat.getInstance();
+        return format.format(this.rfReference.getEnergyStored())+"/"+format.format(this.rfReference.getMaxEnergyStored())+(this.displayTesla ? " T" : " RF");
     }
 
     private void changeDisplayMode(){

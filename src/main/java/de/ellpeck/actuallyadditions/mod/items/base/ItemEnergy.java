@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 
 import cofh.api.energy.ItemEnergyContainer;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.ItemTeslaWrapper;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,6 +25,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 public abstract class ItemEnergy extends ItemEnergyContainer{
@@ -64,7 +66,9 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
-        list.add(this.getEnergyStored(stack)+"/"+this.getMaxEnergyStored(stack)+" RF");
+        NumberFormat format = NumberFormat.getInstance();
+        boolean tesla = PlayerData.getDataFromPlayer(player).theCompound.getBoolean("DisplayTesla");
+        list.add(format.format(this.getEnergyStored(stack))+"/"+format.format(this.getMaxEnergyStored(stack))+(tesla ? " T" : " RF"));
     }
 
     @Override

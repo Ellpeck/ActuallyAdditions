@@ -21,6 +21,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
+import java.text.NumberFormat;
 import java.util.Collections;
 
 public class FluidDisplay extends Gui{
@@ -103,7 +104,9 @@ public class FluidDisplay extends Gui{
     }
 
     private String getOverlayText(){
+        NumberFormat format = NumberFormat.getInstance();
         FluidStack stack = this.fluidReference.getFluid();
-        return stack == null || stack.getFluid() == null ? "0/"+this.fluidReference.getCapacity()+" mB" : this.fluidReference.getFluidAmount()+"/"+this.fluidReference.getCapacity()+" mB "+stack.getLocalizedName();
+        String cap = format.format(this.fluidReference.getCapacity());
+        return stack == null || stack.getFluid() == null ? "0/"+cap+" mB" : format.format(this.fluidReference.getFluidAmount())+"/"+cap+" mB "+stack.getLocalizedName();
     }
 }
