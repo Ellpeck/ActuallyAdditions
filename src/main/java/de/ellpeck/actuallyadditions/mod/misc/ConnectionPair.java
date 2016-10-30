@@ -15,14 +15,7 @@ import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ConnectionPair implements IConnectionPair{
-
-    //TODO Remove eventually, just for making the implementation of LaserType work
-    //TODO Also remove those deprecated methods in the API
-    public static final List<ConnectionPair> PAIRS_FOR_FIXING = new ArrayList<ConnectionPair>();
 
     private final BlockPos[] positions = new BlockPos[2];
     private boolean suppressConnectionRender;
@@ -54,9 +47,6 @@ public class ConnectionPair implements IConnectionPair{
             if(typeStrg != null && !typeStrg.isEmpty()){
                 this.type = LaserType.valueOf(typeStrg);
             }
-            if(this.type == null){
-                PAIRS_FOR_FIXING.add(this);
-            }
         }
     }
 
@@ -73,11 +63,6 @@ public class ConnectionPair implements IConnectionPair{
     @Override
     public LaserType getType(){
         return this.type;
-    }
-
-    @Override
-    public void setType(LaserType type){
-        this.type = type;
     }
 
     public boolean contains(BlockPos relay){

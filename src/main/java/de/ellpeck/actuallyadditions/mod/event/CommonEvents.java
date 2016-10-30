@@ -145,35 +145,6 @@ public class CommonEvents{
     @SubscribeEvent
     public void onLoad(WorldEvent.Load event){
         WorldData.load(event.getWorld());
-
-        //TODO Remove this eventually (part of the ConnectionPair system change)
-        if(!ConnectionPair.PAIRS_FOR_FIXING.isEmpty()){
-            for(ConnectionPair pair : ConnectionPair.PAIRS_FOR_FIXING){
-                TileEntity first = event.getWorld().getTileEntity(pair.getPositions()[0]);
-                TileEntity second = event.getWorld().getTileEntity(pair.getPositions()[1]);
-
-                boolean fixed = false;
-                if(first instanceof TileEntityLaserRelay && second instanceof TileEntityLaserRelay){
-                    LaserType firstType = ((TileEntityLaserRelay)first).type;
-                    LaserType secondType = ((TileEntityLaserRelay)second).type;
-                    if(firstType == secondType){
-                        pair.setType(firstType);
-                        fixed = true;
-                    }
-                }
-
-                if(!fixed){
-                    for(int i = 0; i < pair.getPositions().length; i++){
-                        if(ActuallyAdditionsAPI.connectionHandler.getNetworkFor(pair.getPositions()[i], event.getWorld()) != null){
-                            ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(pair.getPositions()[i], event.getWorld());
-                        }
-                    }
-                    ModUtil.LOGGER.error("Had to remove a Laser Relay connection between "+pair.getPositions()[0]+" and "+pair.getPositions()[1]+" because it couldn't be adapted to the new system!");
-                }
-            }
-            ModUtil.LOGGER.info("Adapted "+ConnectionPair.PAIRS_FOR_FIXING.size()+" Laser Relay Connections to the new system!");
-            ConnectionPair.PAIRS_FOR_FIXING.clear();
-        }
     }
 
     @SubscribeEvent

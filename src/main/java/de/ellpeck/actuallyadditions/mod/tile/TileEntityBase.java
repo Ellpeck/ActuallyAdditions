@@ -52,86 +52,74 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public static void init(){
         ModUtil.LOGGER.info("Registering TileEntities...");
 
-        //TODO Remove legacy names at some point
-        register(TileEntityCompost.class, "Compost");
-        register(TileEntityFeeder.class, "Feeder");
-        register(TileEntityGiantChest.class, "GiantChest");
-        register(TileEntityGiantChestMedium.class, "GiantChestMedium");
-        register(TileEntityGiantChestLarge.class, "GiantChestLarge");
-        register(TileEntityGrinder.class, "Grinder");
-        register(TileEntityFurnaceDouble.class, "FurnaceDouble");
-        register(TileEntityInputter.class, "Inputter");
-        register(TileEntityFishingNet.class, "FishingNet");
-        register(TileEntityFurnaceSolar.class, "FurnaceSolar");
-        register(TileEntityHeatCollector.class, "HeatCollector");
-        register(TileEntityItemRepairer.class, "Repairer");
-        register(TileEntityGreenhouseGlass.class, "GreenhouseGlass");
-        register(TileEntityBreaker.class, "Breaker");
-        register(TileEntityDropper.class, "Dropper");
-        register(TileEntityInputterAdvanced.class, "InputterAdvanced");
-        register(TileEntityPlacer.class, "Placer");
-        register(TileEntityGrinderDouble.class, "GrinderDouble");
-        register(TileEntityCanolaPress.class, "CanolaPress");
-        register(TileEntityFermentingBarrel.class, "FermentingBarrel");
-        register(TileEntityOilGenerator.class, "OilGenerator");
-        register(TileEntityCoalGenerator.class, "CoalGenerator");
-        register(TileEntityPhantomItemface.class, "PhantomItemface");
-        register(TileEntityPhantomLiquiface.class, "PhantomLiquiface");
-        register(TileEntityPhantomEnergyface.class, "PhantomEnergyface");
-        register(TileEntityPlayerInterface.class, "PlayerInterface");
-        register(TileEntityPhantomPlacer.class, "PhantomPlacer");
-        register(TileEntityPhantomBreaker.class, "PhantomBreaker");
-        register(TileEntityFluidCollector.class, "FluidCollector");
-        register(TileEntityFluidPlacer.class, "FluidPlacer");
-        register(TileEntityLavaFactoryController.class, "LavaFactoryController");
-        register(TileEntityCoffeeMachine.class, "CoffeeMachine");
-        register(TileEntityPhantomBooster.class, "PhantomBooster");
-        register(TileEntityEnergizer.class, "Energizer");
-        register(TileEntityEnervator.class, "Enervator");
-        register(TileEntityXPSolidifier.class, "XPSolidifier");
-        register(TileEntitySmileyCloud.class, "Cloud");
-        register(TileEntityLeafGenerator.class, "LeafGenerator");
-        register(TileEntityDirectionalBreaker.class, "DirectionalBreaker");
-        register(TileEntityRangedCollector.class, "RangedCollector");
-        register(TileEntityAtomicReconstructor.class, "AtomicReconstructor");
-        register(TileEntityMiner.class, "Miner");
-        register(TileEntityFireworkBox.class, "FireworkBox");
-        register(TileEntityPhantomRedstoneface.class, "PhantomRedstoneface");
-        register(TileEntityLaserRelayItem.class, "LaserRelayItem");
-        register(TileEntityLaserRelayEnergy.class, "LaserRelay");
+        register(TileEntityCompost.class);
+        register(TileEntityFeeder.class);
+        register(TileEntityGiantChest.class);
+        register(TileEntityGiantChestMedium.class);
+        register(TileEntityGiantChestLarge.class);
+        register(TileEntityGrinder.class);
+        register(TileEntityFurnaceDouble.class);
+        register(TileEntityInputter.class);
+        register(TileEntityFishingNet.class);
+        register(TileEntityFurnaceSolar.class);
+        register(TileEntityHeatCollector.class);
+        register(TileEntityItemRepairer.class);
+        register(TileEntityGreenhouseGlass.class);
+        register(TileEntityBreaker.class);
+        register(TileEntityDropper.class);
+        register(TileEntityInputterAdvanced.class);
+        register(TileEntityPlacer.class);
+        register(TileEntityGrinderDouble.class);
+        register(TileEntityCanolaPress.class);
+        register(TileEntityFermentingBarrel.class);
+        register(TileEntityOilGenerator.class);
+        register(TileEntityCoalGenerator.class);
+        register(TileEntityPhantomItemface.class);
+        register(TileEntityPhantomLiquiface.class);
+        register(TileEntityPhantomEnergyface.class);
+        register(TileEntityPlayerInterface.class);
+        register(TileEntityPhantomPlacer.class);
+        register(TileEntityPhantomBreaker.class);
+        register(TileEntityFluidCollector.class);
+        register(TileEntityFluidPlacer.class);
+        register(TileEntityLavaFactoryController.class);
+        register(TileEntityCoffeeMachine.class);
+        register(TileEntityPhantomBooster.class);
+        register(TileEntityEnergizer.class);
+        register(TileEntityEnervator.class);
+        register(TileEntityXPSolidifier.class);
+        register(TileEntitySmileyCloud.class);
+        register(TileEntityLeafGenerator.class);
+        register(TileEntityDirectionalBreaker.class);
+        register(TileEntityRangedCollector.class);
+        register(TileEntityAtomicReconstructor.class);
+        register(TileEntityMiner.class);
+        register(TileEntityFireworkBox.class);
+        register(TileEntityPhantomRedstoneface.class);
+        register(TileEntityLaserRelayItem.class);
+        register(TileEntityLaserRelayEnergy.class);
         register(TileEntityLaserRelayEnergyAdvanced.class);
         register(TileEntityLaserRelayEnergyExtreme.class);
-        register(TileEntityLaserRelayItemWhitelist.class, "LaserRelayItemWhitelist");
-        register(TileEntityItemViewer.class, "ItemViewer");
-        register(TileEntityBookletStand.class, "BookletStand");
-        register(TileEntityDisplayStand.class, "DisplayStand");
-        register(TileEntityShockSuppressor.class, "ShockSuppressor");
+        register(TileEntityLaserRelayItemWhitelist.class);
+        register(TileEntityItemViewer.class);
+        register(TileEntityBookletStand.class);
+        register(TileEntityDisplayStand.class);
+        register(TileEntityShockSuppressor.class);
         register(TileEntityEmpowerer.class);
         register(TileEntityLaserRelayFluids.class);
         register(TileEntityDistributorItem.class);
         register(TileEntityBioReactor.class);
     }
 
-    private static void register(Class<? extends TileEntityBase> tileClass, String legacyName){
+    private static void register(Class<? extends TileEntityBase> tileClass){
         try{
             //This is hacky and dirty but it works so whatever
             String name = ModUtil.MOD_ID+":"+tileClass.newInstance().name;
-
-            if(legacyName != null && !legacyName.isEmpty()){
-                String oldName = ModUtil.MOD_ID+":tileEntity"+legacyName;
-                GameRegistry.registerTileEntityWithAlternatives(tileClass, name, oldName);
-            }
-            else{
-                GameRegistry.registerTileEntity(tileClass, name);
-            }
+            GameRegistry.registerTileEntity(tileClass, name);
         }
         catch(Exception e){
             ModUtil.LOGGER.fatal("Registering a TileEntity failed!", e);
         }
-    }
-
-    private static void register(Class<? extends TileEntityBase> tileClass){
-        register(tileClass, null);
     }
 
     @Override
