@@ -1,3 +1,18 @@
+# 1.10.2-r68
+* Fixed the player interface not saving its data
+* Made the empowerer work with all of its recipes
+* make it clear the energy mode doesn't change anything
+* Fixed minor typos in en_US.lang (WesCook)
+* Significantly reduce performance loss when using Item Laser Relays with ESDs
+* Added digit seperators for large numbers
+* Fixed AIOTs having wrong harvest levels
+* Made empowering possible with any dyes, not just vanilla ones
+* Changed the way crusher recipes are registered to make the blacklist work properly
+* Added the loot from 1.7.10 back
+* Added back the jam house loot chest
+* Added lush cave loot chests that generate in the trees
+* Added fluids to booklet pages for searching and JEI handling
+
 # 1.10.2-r67
 * Fixed horses not being able to be fed with the feeder
 * Made energy items not lose their power when used for crafting
