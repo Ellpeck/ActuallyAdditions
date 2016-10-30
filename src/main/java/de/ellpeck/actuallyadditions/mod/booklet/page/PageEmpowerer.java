@@ -37,7 +37,6 @@ public class PageEmpowerer extends BookletPageAA{
     public PageEmpowerer(int id, EmpowererRecipe... recipes){
         super(id);
         this.recipes = recipes;
-        this.addToPagesWithItemStackData();
     }
 
     @Override

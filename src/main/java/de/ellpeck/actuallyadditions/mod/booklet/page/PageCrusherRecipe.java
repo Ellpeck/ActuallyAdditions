@@ -30,7 +30,6 @@ public class PageCrusherRecipe extends BookletPageAA{
     public PageCrusherRecipe(int id, CrusherRecipe recipe){
         super(id);
         this.recipe = recipe;
-        this.addToPagesWithItemStackData();
     }
 
     @Override

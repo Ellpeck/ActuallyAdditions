@@ -32,6 +32,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
@@ -39,6 +40,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.awt.*;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -134,8 +136,9 @@ public final class BookletUtils{
 
         List<TheAchievements> achievements = null;
         for(BookletPage page : booklet.currentEntrySet.getCurrentChapter().getPages()){
-            if(page != null && page.getItemStacksForPage() != null){
-                for(ItemStack stack : page.getItemStacksForPage()){
+            ItemStack[] stacks = page.getItemStacksForPage();
+            if(page != null && stacks != null){
+                for(ItemStack stack : stacks){
                     if(stack != null){
                         for(TheAchievements achievement : TheAchievements.values()){
                             if(ItemUtil.contains(achievement.itemsToBeGotten, stack, true)){
@@ -257,15 +260,32 @@ public final class BookletUtils{
             if(pageStacks != null){
                 for(ItemStack stack : pageStacks){
                     if(stack != null && stack.getItem() != null){
-                        List<String> list = stack.getTooltip(mc.thePlayer, mc.gameSettings.advancedItemTooltips);
-                        for(String s : list){
-                            if(s != null && !s.isEmpty()){
-                                if(s.toLowerCase(Locale.ROOT).contains(text)){
-                                    return true;
-                                }
-                            }
+                        if(doesTooltipContainString(stack.getTooltip(mc.thePlayer, mc.gameSettings.advancedItemTooltips), text)){
+                            return true;
                         }
                     }
+                }
+            }
+            FluidStack[] pageFluids = page.getFluidStacksForPage();
+            if(pageFluids != null){
+                for(FluidStack stack : pageFluids){
+                    if(stack != null && stack.getFluid() != null){
+                        if(doesTooltipContainString(Collections.singletonList(stack.getLocalizedName()), text)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    private static boolean doesTooltipContainString(List<String> tooltip, String text){
+        for(String s : tooltip){
+            if(s != null && !s.isEmpty()){
+                if(s.toLowerCase(Locale.ROOT).contains(text)){
+                    return true;
                 }
             }
         }
@@ -489,11 +509,29 @@ public final class BookletUtils{
         return pages.isEmpty() ? null : pages.get(0);
     }
 
+    public static BookletPage getFirstPageForStack(FluidStack stack){
+        ArrayList<BookletPage> pages = getPagesForStack(stack);
+        return pages.isEmpty() ? null : pages.get(0);
+    }
+
     public static ArrayList<BookletPage> getPagesForStack(ItemStack stack){
         ArrayList<BookletPage> possiblePages = new ArrayList<BookletPage>();
-        for(BookletPage page : ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_DATA){
+        for(BookletPage page : ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA){
             if(ItemUtil.contains(page.getItemStacksForPage(), stack, page.arePageStacksWildcard)){
                 possiblePages.add(page);
+            }
+        }
+        return possiblePages;
+    }
+
+    public static ArrayList<BookletPage> getPagesForStack(FluidStack stack){
+        ArrayList<BookletPage> possiblePages = new ArrayList<BookletPage>();
+        for(BookletPage page : ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA){
+            for(FluidStack pageStack : page.getFluidStacksForPage()){
+                if(pageStack != null && pageStack.isFluidEqual(stack)){
+                    possiblePages.add(page);
+                    break;
+                }
             }
         }
         return possiblePages;

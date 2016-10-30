@@ -38,7 +38,6 @@ public class PageFurnace extends BookletPageAA{
         super(id);
         this.result = result;
         this.input = input;
-        this.addToPagesWithItemStackData();
     }
 
     @Override

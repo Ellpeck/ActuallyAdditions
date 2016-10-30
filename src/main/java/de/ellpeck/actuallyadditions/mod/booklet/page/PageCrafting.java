@@ -44,7 +44,6 @@ public class PageCrafting extends BookletPageAA{
     public PageCrafting(int id, IRecipe... recipes){
         super(id);
         this.recipes = recipes;
-        this.addToPagesWithItemStackData();
     }
 
     @Override

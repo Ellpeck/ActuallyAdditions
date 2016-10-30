@@ -10,18 +10,22 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class BookletPageAA extends BookletPage{
 
+    protected List<FluidStack> fluidsForPage = new ArrayList<FluidStack>();
     protected final int localizationKey;
 
     public BookletPageAA(int localizationKey){
@@ -69,27 +73,17 @@ public class BookletPageAA extends BookletPage{
     }
 
     @Override
-    public ItemStack[] getItemStacksForPage(){
-        return null;
+    public FluidStack[] getFluidStacksForPage(){
+        return this.fluidsForPage.toArray(new FluidStack[this.fluidsForPage.size()]);
+    }
+
+    public BookletPageAA addFluidToPage(Fluid fluid){
+        this.fluidsForPage.add(new FluidStack(fluid, 1));
+        return this;
     }
 
     @Override
     public String getClickToSeeRecipeString(){
         return TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe");
-    }
-
-    public void addToPagesWithItemStackData(){
-        if(!ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_DATA.contains(this)){
-            ItemStack[] stacks = this.getItemStacksForPage();
-            if(stacks != null && stacks.length > 0){
-                //Ensure that there is at least one ItemStack
-                for(ItemStack stack : stacks){
-                    if(stack != null){
-                        ActuallyAdditionsAPI.addPageWithItemStackData(this);
-                        break;
-                    }
-                }
-            }
-        }
     }
 }

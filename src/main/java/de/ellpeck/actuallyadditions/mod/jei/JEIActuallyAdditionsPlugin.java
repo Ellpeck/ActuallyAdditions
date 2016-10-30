@@ -68,7 +68,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
                 new BookletRecipeHandler()
         );
 
-        registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_DATA);
+        registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA);
         registry.addRecipes(ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS);
         registry.addRecipes(ActuallyAdditionsAPI.CRUSHER_RECIPES);
         registry.addRecipes(ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES);

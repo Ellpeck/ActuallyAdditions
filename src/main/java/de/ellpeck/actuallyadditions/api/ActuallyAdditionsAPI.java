@@ -30,7 +30,7 @@ public final class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "24";
+    public static final String API_VERSION = "25";
 
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<CrusherRecipe>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
@@ -42,7 +42,7 @@ public final class ActuallyAdditionsAPI{
     public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<CompostRecipe>();
     public static final Map<String, Integer> OIL_GENERATOR_RECIPES = new HashMap<String, Integer>();
     public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<IBookletEntry>();
-    public static final List<BookletPage> BOOKLET_PAGES_WITH_ITEM_DATA = new ArrayList<BookletPage>();
+    public static final List<BookletPage> BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA = new ArrayList<BookletPage>();
 
     /**
      * Use this to handle things that aren't based in the API itself
@@ -289,7 +289,8 @@ public final class ActuallyAdditionsAPI{
      *
      * @param page The page to add
      */
+    @Deprecated //Search will now be done on all pages that are in the book
     public static void addPageWithItemStackData(BookletPage page){
-        BOOKLET_PAGES_WITH_ITEM_DATA.add(page);
+        BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.add(page);
     }
 }

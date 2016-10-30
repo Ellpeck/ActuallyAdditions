@@ -51,12 +51,12 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
 
     @Override
     public List<FluidStack> getFluidInputs(){
-        return new ArrayList<FluidStack>();
+        return Arrays.asList(this.thePage.getFluidStacksForPage());
     }
 
     @Override
     public List<FluidStack> getFluidOutputs(){
-        return new ArrayList<FluidStack>();
+        return Arrays.asList(this.thePage.getFluidStacksForPage());
     }
 
     @Override

@@ -35,7 +35,6 @@ public class PageReconstructor extends BookletPageAA{
     public PageReconstructor(int id, LensConversionRecipe... recipes){
         super(id);
         this.recipes = recipes;
-        this.addToPagesWithItemStackData();
     }
 
     @Override

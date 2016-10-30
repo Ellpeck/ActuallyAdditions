@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.api.booklet;
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -67,9 +68,18 @@ public abstract class BookletPage{
     public abstract void updateScreen(int ticksElapsed);
 
     /**
-     * Gets the ItemStacks that are part of or displayed on this page (for NEI Handler, right-click function etc.)
+     * Gets the ItemStacks that are part of or displayed on this page (for JEI Handler and search)
      */
-    public abstract ItemStack[] getItemStacksForPage();
+    public ItemStack[] getItemStacksForPage(){
+        return new ItemStack[0];
+    }
+
+    /**
+     * Gets the FluidStacks that are part of or displayed on this page (for JEI Handler and search)
+     */
+    public FluidStack[] getFluidStacksForPage(){
+        return new FluidStack[0];
+    }
 
     /**
      * Gets the text that is displayed when an Item is hovered over that can be clicked on to go to its page

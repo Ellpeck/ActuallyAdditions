@@ -12,6 +12,9 @@ package de.ellpeck.actuallyadditions.mod.booklet;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
@@ -22,6 +25,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllSearch;
 import de.ellpeck.actuallyadditions.mod.booklet.page.*;
 import de.ellpeck.actuallyadditions.mod.crafting.*;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.OreGen;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensDisenchanting;
@@ -30,11 +34,13 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
 import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +63,25 @@ public final class InitBooklet{
 
     public static void postInit(){
         initChapters();
+
+        int count = 0;
+        for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
+            for(IBookletChapter chapter : entry.getChapters()){
+                for(BookletPage page : chapter.getPages()){
+                    ItemStack[] items = page.getItemStacksForPage();
+                    FluidStack[] fluids = page.getFluidStacksForPage();
+
+                    if((items != null && items.length > 0) || (fluids != null && fluids.length > 0)){
+                        if(!ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.contains(page)){
+                            ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.add(page);
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+
+        ModUtil.LOGGER.info("Registered "+count+" booklet pages as containing information about items or fluids!");
     }
 
     private static void initChapters(){
@@ -153,9 +178,10 @@ public final class InitBooklet{
         //RF Generating Blocks
         new BookletChapter("solarPanel", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockFurnaceSolar), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityFurnaceSolar.PRODUCE), new PageCrafting(2, BlockCrafting.recipeSolar).setNoText());
         new BookletChapter("heatCollector", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockHeatCollector), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityHeatCollector.ENERGY_PRODUCE).addTextReplacement("<min>", TileEntityHeatCollector.BLOCKS_NEEDED), new PageCrafting(2, BlockCrafting.recipeHeatCollector).setNoText());
-        new BookletChapter("canola", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockFermentingBarrel), new PageTextOnly(1).setStacks(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal()), new ItemStack(InitItems.itemCanolaSeed)), new PageTextOnly(2), new PageCrafting(3, BlockCrafting.recipeCanolaPress).setNoText(), new PageCrafting(4, BlockCrafting.recipeFermentingBarrel).setNoText(), new PageCrafting(5, BlockCrafting.recipeOilGen), new PageReconstructor(6, LensRecipeHandler.recipeCrystallizedCanolaSeed).setNoText(), new PageEmpowerer(7, EmpowererHandler.recipeEmpoweredCanolaSeed).setNoText());
+        new BookletChapter("canola", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockFermentingBarrel), new PageTextOnly(1).setStacks(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal()), new ItemStack(InitItems.itemCanolaSeed)).addFluidToPage(InitFluids.fluidCanolaOil), new PageTextOnly(2).addFluidToPage(InitFluids.fluidOil).addFluidToPage(InitFluids.fluidCrystalOil).addFluidToPage(InitFluids.fluidEmpoweredOil), new PageCrafting(3, BlockCrafting.recipeCanolaPress).setNoText(), new PageCrafting(4, BlockCrafting.recipeFermentingBarrel).setNoText(), new PageCrafting(5, BlockCrafting.recipeOilGen), new PageReconstructor(6, LensRecipeHandler.recipeCrystallizedCanolaSeed).setNoText(), new PageEmpowerer(7, EmpowererHandler.recipeEmpoweredCanolaSeed).setNoText());
         new BookletChapter("leafGen", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockLeafGenerator), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityLeafGenerator.ENERGY_PRODUCED).addTextReplacement("<range>", TileEntityLeafGenerator.RANGE), new PageCrafting(2, BlockCrafting.recipeLeafGen)).setImportant();
-        new BookletChapter("bioReactor", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockBioReactor), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeBioReactor).setNoText()).setSpecial();;
+        new BookletChapter("bioReactor", ActuallyAdditionsAPI.entryGeneratingRF, new ItemStack(InitBlocks.blockBioReactor), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeBioReactor).setNoText()).setSpecial();
+        ;
 
         //No RF Using Items
         new BookletChapter("bags", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemBag), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeBag), new PageCrafting(3, ItemCrafting.recipeVoidBag).setNoText()).setImportant();

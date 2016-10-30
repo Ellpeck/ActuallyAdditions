@@ -27,7 +27,6 @@ public class PageTextOnly extends BookletPageAA{
 
     public PageTextOnly setStacks(ItemStack... stacks){
         this.stacks = stacks;
-        this.addToPagesWithItemStackData();
         return this;
     }
 
