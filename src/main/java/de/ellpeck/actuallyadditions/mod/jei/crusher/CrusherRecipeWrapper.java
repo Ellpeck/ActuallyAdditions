@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
@@ -41,19 +42,16 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
 
     @Override
     public List getInputs(){
-        return RecipeUtil.getCrusherRecipeInputs(this.theRecipe);
+        return Collections.singletonList(this.theRecipe.inputStack);
     }
 
     @Override
     public List getOutputs(){
         List list = new ArrayList();
-        list.addAll(RecipeUtil.getCrusherRecipeOutputOnes(this.theRecipe));
-
-        List<ItemStack> outputTwos = RecipeUtil.getCrusherRecipeOutputTwos(this.theRecipe);
-        if(outputTwos != null && !outputTwos.isEmpty()){
-            list.addAll(outputTwos);
+        list.add(this.theRecipe.outputOneStack);
+        if(this.theRecipe.outputTwoStack != null){
+            list.add(this.theRecipe.outputTwoStack);
         }
-
         return list;
     }
 
@@ -71,8 +69,7 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton implements IRe
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         this.updateButton(minecraft, mouseX, mouseY);
 
-        List<ItemStack> outputTwos = RecipeUtil.getCrusherRecipeOutputTwos(this.theRecipe);
-        if(outputTwos != null && !outputTwos.isEmpty()){
+        if(this.theRecipe.outputTwoStack != null){
             minecraft.fontRendererObj.drawString(this.theRecipe.outputTwoChance+"%", 60, 60, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
     }

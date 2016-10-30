@@ -73,13 +73,13 @@ public class OreGen implements IWorldGenerator{
         if(ConfigBoolValues.GEN_LUSH_CAVES.isEnabled()){
             StructureBoundingBox box = new StructureBoundingBox(x*16+8, 0, z*16+8, x*16+8+15, 255, z*16+8+15);
             int chunkRadius = 1;
-            for(int dx = -chunkRadius; dx <= chunkRadius; dx++) {
-                for(int dz = -chunkRadius; dz <= chunkRadius; dz++) {
+            for(int dx = -chunkRadius; dx <= chunkRadius; dx++){
+                for(int dz = -chunkRadius; dz <= chunkRadius; dz++){
                     int chunkX = x+dx;
                     int chunkZ = z+dz;
                     int randConst = 0x969ce69d;//so that it won't generate the same numbers as other mod that does the same thing
                     Random chunkRand = new Random(randConst ^ world.getSeed() ^ (chunkX*29+chunkZ*31));
-                    if(chunkRand.nextInt(ConfigIntValues.LUSH_CAVE_CHANCE.getValue()) <= 0) {
+                    if(chunkRand.nextInt(ConfigIntValues.LUSH_CAVE_CHANCE.getValue()) <= 0){
                         BlockPos randPos = new BlockPos(chunkX*16+chunkRand.nextInt(16)+8, 64, chunkZ*16+chunkRand.nextInt(16)+8);
                         BlockPos pos = randPos.down(MathHelper.getRandomIntegerInRange(chunkRand, 15, randPos.getY()-15));
                         this.caveGen.generate(world, chunkRand, pos, box);
@@ -90,17 +90,11 @@ public class OreGen implements IWorldGenerator{
     }
 
     public void addOreSpawn(Block block, int meta, Block blockIn, World world, Random random, int blockXPos, int blockZPos, int maxVeinSize, int chancesToSpawn, int minY, int maxY){
-        if(maxY > minY){
-            int yDiff = maxY-minY;
-            for(int i = 0; i < chancesToSpawn; i++){
-                int posX = blockXPos+random.nextInt(16);
-                int posY = minY+random.nextInt(yDiff);
-                int posZ = blockZPos+random.nextInt(16);
-                new WorldGenMinable(block.getStateFromMeta(meta), maxVeinSize, BlockMatcher.forBlock(blockIn)).generate(world, random, new BlockPos(posX, posY, posZ));
-            }
-        }
-        else{
-            ModUtil.LOGGER.fatal("Couldn't generate '"+block.getUnlocalizedName()+"' into the world because the Min Y coordinate is bigger than the Max! This is definitely a Config Error! Check the Files!");
+        for(int i = 0; i < chancesToSpawn; i++){
+            int posX = blockXPos+random.nextInt(16);
+            int posY = minY+random.nextInt(maxY-minY);
+            int posZ = blockZPos+random.nextInt(16);
+            new WorldGenMinable(block.getStateFromMeta(meta), maxVeinSize, BlockMatcher.forBlock(blockIn)).generate(world, random, new BlockPos(posX, posY, posZ));
         }
     }
 

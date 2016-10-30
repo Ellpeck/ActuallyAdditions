@@ -27,8 +27,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 public class TileEntityGrinder extends TileEntityInventoryBase implements ICustomEnergyReceiver, IButtonReactor{
 
     public static final int SLOT_INPUT_1 = 0;
@@ -188,21 +186,17 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
 
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput){
         if(this.slots[theInput] != null){
-            List<ItemStack> outputOnes = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
-            if(outputOnes != null && !outputOnes.isEmpty()){
-                ItemStack outputOne = outputOnes.get(0);
-                List<ItemStack> outputTwos = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
-                ItemStack outputTwo = outputTwos == null ? null : outputTwos.get(0);
-                if(outputOne != null){
-                    if(outputOne.getItemDamage() == Util.WILDCARD){
-                        outputOne.setItemDamage(0);
-                    }
-                    if(outputTwo != null && outputTwo.getItemDamage() == Util.WILDCARD){
-                        outputTwo.setItemDamage(0);
-                    }
-                    if((this.slots[theFirstOutput] == null || (this.slots[theFirstOutput].isItemEqual(outputOne) && this.slots[theFirstOutput].stackSize <= this.slots[theFirstOutput].getMaxStackSize()-outputOne.stackSize)) && (outputTwo == null || (this.slots[theSecondOutput] == null || (this.slots[theSecondOutput].isItemEqual(outputTwo) && this.slots[theSecondOutput].stackSize <= this.slots[theSecondOutput].getMaxStackSize()-outputTwo.stackSize)))){
-                        return true;
-                    }
+            ItemStack outputOne = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
+            ItemStack outputTwo = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
+            if(outputOne != null){
+                if(outputOne.getItemDamage() == Util.WILDCARD){
+                    outputOne.setItemDamage(0);
+                }
+                if(outputTwo != null && outputTwo.getItemDamage() == Util.WILDCARD){
+                    outputTwo.setItemDamage(0);
+                }
+                if((this.slots[theFirstOutput] == null || (this.slots[theFirstOutput].isItemEqual(outputOne) && this.slots[theFirstOutput].stackSize <= this.slots[theFirstOutput].getMaxStackSize()-outputOne.stackSize)) && (outputTwo == null || (this.slots[theSecondOutput] == null || (this.slots[theSecondOutput].isItemEqual(outputTwo) && this.slots[theSecondOutput].stackSize <= this.slots[theSecondOutput].getMaxStackSize()-outputTwo.stackSize)))){
+                    return true;
                 }
             }
         }
@@ -214,37 +208,31 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput){
-        List<ItemStack> outputOnes = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
-        if(outputOnes != null){
-            ItemStack outputOne = outputOnes.get(0);
-            if(outputOne != null){
-                if(outputOne.getItemDamage() == Util.WILDCARD){
-                    outputOne.setItemDamage(0);
-                }
-                if(this.slots[theFirstOutput] == null){
-                    this.slots[theFirstOutput] = outputOne.copy();
-                }
-                else if(this.slots[theFirstOutput].getItem() == outputOne.getItem()){
-                    this.slots[theFirstOutput].stackSize += outputOne.stackSize;
-                }
+        ItemStack outputOne = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
+        if(outputOne != null){
+            if(outputOne.getItemDamage() == Util.WILDCARD){
+                outputOne.setItemDamage(0);
+            }
+            if(this.slots[theFirstOutput] == null){
+                this.slots[theFirstOutput] = outputOne.copy();
+            }
+            else if(this.slots[theFirstOutput].getItem() == outputOne.getItem()){
+                this.slots[theFirstOutput].stackSize += outputOne.stackSize;
             }
         }
 
-        List<ItemStack> outputTwos = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
-        if(outputTwos != null){
-            ItemStack outputTwo = outputTwos.get(0);
-            if(outputTwo != null){
-                if(outputTwo.getItemDamage() == Util.WILDCARD){
-                    outputTwo.setItemDamage(0);
+        ItemStack outputTwo = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
+        if(outputTwo != null){
+            if(outputTwo.getItemDamage() == Util.WILDCARD){
+                outputTwo.setItemDamage(0);
+            }
+            int rand = Util.RANDOM.nextInt(100)+1;
+            if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots[theInput])){
+                if(this.slots[theSecondOutput] == null){
+                    this.slots[theSecondOutput] = outputTwo.copy();
                 }
-                int rand = Util.RANDOM.nextInt(100)+1;
-                if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots[theInput])){
-                    if(this.slots[theSecondOutput] == null){
-                        this.slots[theSecondOutput] = outputTwo.copy();
-                    }
-                    else if(this.slots[theSecondOutput].getItem() == outputTwo.getItem()){
-                        this.slots[theSecondOutput].stackSize += outputTwo.stackSize;
-                    }
+                else if(this.slots[theSecondOutput].getItem() == outputTwo.getItem()){
+                    this.slots[theSecondOutput].stackSize += outputTwo.stackSize;
                 }
             }
         }

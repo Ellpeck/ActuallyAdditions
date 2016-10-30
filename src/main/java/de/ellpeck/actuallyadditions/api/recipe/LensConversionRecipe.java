@@ -17,8 +17,6 @@ public class LensConversionRecipe{
 
     public final int energyUse;
     public final LensConversion type;
-    public String input;
-    public String output;
     public ItemStack inputStack;
     public ItemStack outputStack;
 
@@ -28,12 +26,4 @@ public class LensConversionRecipe{
         this.energyUse = energyUse;
         this.type = type;
     }
-
-    public LensConversionRecipe(String input, String output, int energyUse, LensConversion type){
-        this.input = input;
-        this.output = output;
-        this.energyUse = energyUse;
-        this.type = type;
-    }
-
 }

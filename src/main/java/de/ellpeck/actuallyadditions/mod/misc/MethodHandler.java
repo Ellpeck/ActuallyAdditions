@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -24,6 +25,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -145,26 +147,23 @@ public class MethodHandler implements IMethodHandler{
                             List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
                             for(LensConversionRecipe recipe : recipes){
                                 if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
-                                    List<ItemStack> outputs = RecipeUtil.getConversionLensOutputs(recipe);
-                                    if(outputs != null && !outputs.isEmpty()){
-                                        ItemStack output = outputs.get(0);
-                                        if(output != null){
-                                            if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                                                tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
-                                            }
-
-                                            if(output.getItem() instanceof ItemBlock){
-                                                tile.getWorldObject().setBlockState(pos, Block.getBlockFromItem(output.getItem()).getStateFromMeta(output.getItemDamage()), 2);
-                                            }
-                                            else{
-                                                EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
-                                                tile.getWorldObject().spawnEntityInWorld(item);
-                                                tile.getWorldObject().setBlockToAir(pos);
-                                            }
-
-                                            tile.extractEnergy(recipe.energyUse);
-                                            break;
+                                    ItemStack output = recipe.outputStack;
+                                    if(output != null){
+                                        if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
+                                            tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
                                         }
+
+                                        if(output.getItem() instanceof ItemBlock){
+                                            tile.getWorldObject().setBlockState(pos, Block.getBlockFromItem(output.getItem()).getStateFromMeta(output.getItemDamage()), 2);
+                                        }
+                                        else{
+                                            EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
+                                            tile.getWorldObject().spawnEntityInWorld(item);
+                                            tile.getWorldObject().setBlockToAir(pos);
+                                        }
+
+                                        tile.extractEnergy(recipe.energyUse);
+                                        break;
                                     }
                                 }
                             }
@@ -186,9 +185,7 @@ public class MethodHandler implements IMethodHandler{
                     List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
                     for(LensConversionRecipe recipe : recipes){
                         if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse*stack.stackSize){
-                            List<ItemStack> outputs = RecipeUtil.getConversionLensOutputs(recipe);
-                            if(outputs != null && !outputs.isEmpty()){
-                                ItemStack outputCopy = outputs.get(0).copy();
+                                ItemStack outputCopy = recipe.outputStack.copy();
                                 outputCopy.stackSize = stack.stackSize;
 
                                 item.setDead();
@@ -198,7 +195,6 @@ public class MethodHandler implements IMethodHandler{
 
                                 tile.extractEnergy(recipe.energyUse*stack.stackSize);
                                 break;
-                            }
                         }
                     }
                 }
@@ -231,5 +227,37 @@ public class MethodHandler implements IMethodHandler{
     @Override
     public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, BookletPage... pages){
         return new BookletChapter(identifier, entry, displayStack, pages);
+    }
+
+    @Override
+    public boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance){
+        boolean hasWorkedOnce = false;
+        for(ItemStack input : inputs){
+            if(input != null && CrusherRecipeRegistry.getRecipeFromInput(input) == null){
+                for(ItemStack outputOne : outputOnes){
+                    if(outputOne != null && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne)){
+                        ItemStack outputOneCopy = outputOne.copy();
+                        outputOneCopy.stackSize = outputOneAmounts;
+
+                        if(outputTwos == null || outputTwos.isEmpty()){
+                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, null, 0);
+                            hasWorkedOnce = true;
+                        }
+                        else{
+                            for(ItemStack outputTwo : outputTwos){
+                                if(outputTwo != null && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo)){
+                                    ItemStack outputTwoCopy = outputTwo.copy();
+                                    outputTwoCopy.stackSize = outputTwoAmounts;
+
+                                    ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, outputTwoCopy, outputTwoChance);
+                                    hasWorkedOnce = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return hasWorkedOnce;
     }
 }

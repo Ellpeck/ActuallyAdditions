@@ -22,7 +22,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PageReconstructor extends BookletPageAA{
 
@@ -69,24 +68,21 @@ public class PageReconstructor extends BookletPageAA{
             AssetUtil.renderStackToGui(new ItemStack(InitBlocks.blockAtomicReconstructor), gui.getGuiLeft()+37+22, gui.getGuiTop()+20+21, 1.0F);
             for(int i = 0; i < 2; i++){
                 for(int x = 0; x < 2; x++){
-                    List<ItemStack> stacks = x == 0 ? RecipeUtil.getConversionLensInputs(recipe) : RecipeUtil.getConversionLensOutputs(recipe);
-                    if(stacks != null && !stacks.isEmpty()){
-                        ItemStack stack = stacks.get(0);
+                    ItemStack stack = x == 0 ? recipe.inputStack : recipe.outputStack;
 
-                        if(stack.getItemDamage() == Util.WILDCARD){
-                            stack.setItemDamage(0);
-                        }
-                        boolean tooltip = i == 1;
+                    if(stack.getItemDamage() == Util.WILDCARD){
+                        stack.setItemDamage(0);
+                    }
+                    boolean tooltip = i == 1;
 
-                        int xShow = gui.getGuiLeft()+37+1+x*42;
-                        int yShow = gui.getGuiTop()+20+21;
-                        if(!tooltip){
-                            AssetUtil.renderStackToGui(stack, xShow, yShow, 1.0F);
-                        }
-                        else{
-                            if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
-                                gui.renderTooltipAndTransferButton(this, stack, mouseX, mouseY, x == 0, mousePressed);
-                            }
+                    int xShow = gui.getGuiLeft()+37+1+x*42;
+                    int yShow = gui.getGuiTop()+20+21;
+                    if(!tooltip){
+                        AssetUtil.renderStackToGui(stack, xShow, yShow, 1.0F);
+                    }
+                    else{
+                        if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
+                            gui.renderTooltipAndTransferButton(this, stack, mouseX, mouseY, x == 0, mousePressed);
                         }
                     }
                 }
@@ -113,7 +109,7 @@ public class PageReconstructor extends BookletPageAA{
             ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
             for(LensConversionRecipe recipe : this.recipes){
                 if(recipe != null){
-                    stacks.addAll(RecipeUtil.getConversionLensOutputs(recipe));
+                    stacks.add(recipe.outputStack);
                 }
             }
             return stacks.toArray(new ItemStack[stacks.size()]);

@@ -72,10 +72,10 @@ public class ReconstructorRecipeCategory implements IRecipeCategory{
             ReconstructorRecipeWrapper wrapper = (ReconstructorRecipeWrapper)recipeWrapper;
 
             recipeLayout.getItemStacks().init(0, true, 4, 18);
-            recipeLayout.getItemStacks().set(0, RecipeUtil.getConversionLensInputs(wrapper.theRecipe));
+            recipeLayout.getItemStacks().set(0, wrapper.theRecipe.inputStack);
 
             recipeLayout.getItemStacks().init(1, false, 66, 18);
-            recipeLayout.getItemStacks().set(1, RecipeUtil.getConversionLensOutputs(wrapper.theRecipe));
+            recipeLayout.getItemStacks().set(1, wrapper.theRecipe.outputStack);
 
         }
     }

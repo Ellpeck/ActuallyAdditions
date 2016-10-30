@@ -15,13 +15,11 @@ import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public final class CrusherRecipeRegistry{
@@ -39,23 +37,8 @@ public final class CrusherRecipeRegistry{
                         if(ore.substring(0, theCase.theCase.length()).equals(theCase.theCase)){
                             String output = theCase.resultPreString+ore.substring(theCase.theCase.length());
 
-                            if(!hasOreRecipe(ore)){
-                                List<ItemStack> outputs = OreDictionary.getOres(output, false);
-                                if(!outputs.isEmpty() && !OreDictionary.getOres(ore, false).isEmpty()){
-                                    for(ItemStack stack : outputs){
-                                        if(!hasBlacklistedOutput(stack)){
-                                            ItemStack copy = stack.copy();
-                                            copy.stackSize = theCase.resultAmount;
-                                            ActuallyAdditionsAPI.addCrusherRecipe(ore, copy);
-                                        }
-                                        else if(!oresNoResult.contains(ore)){
-                                            oresNoResult.add(ore);
-                                        }
-                                    }
-                                }
-                                else{
-                                    oresNoResult.add(ore);
-                                }
+                            if(!ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres(ore, false), OreDictionary.getOres(output, false), theCase.resultAmount, null, 0, 0)){
+                                oresNoResult.add(ore);
                             }
 
                             break;
@@ -68,13 +51,13 @@ public final class CrusherRecipeRegistry{
         ArrayList<String> addedRecipes = new ArrayList<String>();
         for(int i = recipeStartedAt; i < ActuallyAdditionsAPI.CRUSHER_RECIPES.size(); i++){
             CrusherRecipe recipe = ActuallyAdditionsAPI.CRUSHER_RECIPES.get(i);
-            addedRecipes.add(recipe.input+" -> "+recipe.outputOneStack);
+            addedRecipes.add(recipe.inputStack+" -> "+recipe.outputOneStack);
         }
         ModUtil.LOGGER.info("Added "+addedRecipes.size()+" Crusher Recipes automatically: "+addedRecipes.toString());
-        ModUtil.LOGGER.warn("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically because the inputs were missing outputs: "+oresNoResult.toString());
+        ModUtil.LOGGER.warn("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically, either because the inputs were missing outputs, or because they exist already: "+oresNoResult.toString());
     }
 
-    private static boolean hasBlacklistedOutput(ItemStack output){
+    public static boolean hasBlacklistedOutput(ItemStack output){
         if(output != null){
             Item item = output.getItem();
             if(item != null){
@@ -115,32 +98,23 @@ public final class CrusherRecipeRegistry{
         return false;
     }
 
-    public static boolean hasOreRecipe(String input){
-        for(CrusherRecipe recipe : ActuallyAdditionsAPI.CRUSHER_RECIPES){
-            if(recipe.input != null && recipe.input.equals(input)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static List<ItemStack> getOutputOnes(ItemStack input){
+    public static ItemStack getOutputOnes(ItemStack input){
         CrusherRecipe recipe = getRecipeFromInput(input);
-        return recipe == null ? null : RecipeUtil.getCrusherRecipeOutputOnes(recipe);
+        return recipe == null ? null : recipe.outputOneStack;
     }
 
     public static CrusherRecipe getRecipeFromInput(ItemStack input){
         for(CrusherRecipe recipe : ActuallyAdditionsAPI.CRUSHER_RECIPES){
-            if(ItemUtil.contains(RecipeUtil.getCrusherRecipeInputs(recipe), input, true)){
+            if(ItemUtil.areItemsEqual(recipe.inputStack, input, true)){
                 return recipe;
             }
         }
         return null;
     }
 
-    public static List<ItemStack> getOutputTwos(ItemStack input){
+    public static ItemStack getOutputTwos(ItemStack input){
         CrusherRecipe recipe = getRecipeFromInput(input);
-        return recipe == null ? null : RecipeUtil.getCrusherRecipeOutputTwos(recipe);
+        return recipe == null ? null : recipe.outputTwoStack;
     }
 
     public static int getOutputTwoChance(ItemStack input){

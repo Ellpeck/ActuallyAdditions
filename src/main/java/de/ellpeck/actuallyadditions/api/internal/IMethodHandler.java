@@ -21,6 +21,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.List;
+
 /**
  * This is the internal method handler.
  * Use ActuallyAdditionsAPI.methodHandler for calling
@@ -49,4 +51,6 @@ public interface IMethodHandler{
     BookletPage generateFurnacePage(int id, ItemStack input, ItemStack result);
 
     IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, BookletPage... pages);
+
+    boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance);
 }

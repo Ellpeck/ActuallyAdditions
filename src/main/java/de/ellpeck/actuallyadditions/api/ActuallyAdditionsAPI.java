@@ -20,7 +20,6 @@ import de.ellpeck.actuallyadditions.api.recipe.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public final class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "23";
+    public static final String API_VERSION = "24";
 
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<CrusherRecipe>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
@@ -90,8 +89,8 @@ public final class ActuallyAdditionsAPI{
      * @param outputOne       The first output's OreDictionary name
      * @param outputOneAmount The amount of the first output
      */
+    @Deprecated //Use new version below
     public static void addCrusherRecipe(String input, String outputOne, int outputOneAmount){
-        addCrusherRecipe(input, outputOne, outputOneAmount, "", 0, 0);
     }
 
     /**
@@ -104,10 +103,8 @@ public final class ActuallyAdditionsAPI{
      * @param outputTwoAmount The amount of the second output
      * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
      */
+    @Deprecated //Use new version below
     public static void addCrusherRecipe(String input, String outputOne, int outputOneAmount, String outputTwo, int outputTwoAmount, int outputTwoChance){
-        if(!OreDictionary.getOres(input, false).isEmpty() && !OreDictionary.getOres(outputOne, false).isEmpty() && (outputTwo == null || outputTwo.isEmpty() || !OreDictionary.getOres(outputTwo, false).isEmpty())){
-            CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance));
-        }
     }
 
     /**
@@ -117,21 +114,8 @@ public final class ActuallyAdditionsAPI{
      * @param input     The input as an ItemStack
      * @param outputOne The first output as an ItemStack
      */
+    @Deprecated //Use new version below
     public static void addCrusherRecipe(ItemStack input, ItemStack outputOne){
-        addCrusherRecipe(input, outputOne, null, 0);
-    }
-
-    /**
-     * Adds a Recipe to the Crusher Recipe Registry
-     * The second output will be nothing
-     *
-     * @param input           The input as an ItemStack
-     * @param outputOne       The first output as an ItemStack
-     * @param outputTwo       The second output as an ItemStack
-     * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
-     */
-    public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
-        CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputTwo, outputTwoChance));
     }
 
     /**
@@ -142,23 +126,46 @@ public final class ActuallyAdditionsAPI{
      * @param outputOne       The first output's OreDictionary name
      * @param outputOneAmount The amount of the first output
      */
+    @Deprecated //Use new version below
     public static void addCrusherRecipe(ItemStack input, String outputOne, int outputOneAmount){
-        if(!OreDictionary.getOres(outputOne, false).isEmpty()){
-            CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputOneAmount));
-        }
     }
 
     /**
      * Adds a Recipe to the Crusher Recipe Registry
      * The second output will be nothing
      *
-     * @param input           The input as an ItemStack
-     * @param outputOne       The first output's OreDictionary name
+     * @param input     The input as an ItemStack
+     * @param outputOne The first output's OreDictionary name
      */
+    @Deprecated //Use new version below
     public static void addCrusherRecipe(String input, ItemStack outputOne){
-        if(!OreDictionary.getOres(input, false).isEmpty()){
-            CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne));
-        }
+    }
+
+    /**
+     * Adds a Recipe to the Crusher Recipe Registry
+     *
+     * @param input           The input as an ItemStack
+     * @param outputOne       The first output as an ItemStack
+     * @param outputTwo       The second output as an ItemStack (can be null if there should be none)
+     * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
+     */
+    public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
+        CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputTwo, outputTwoChance));
+    }
+
+    /**
+     * Adds multiple Recipes to the Crusher Recipe Registry
+     * Use this if you want to add OreDictionary recipes easier
+     *
+     * @param inputs           The inputs as an ItemStack List, stacksizes are ignored
+     * @param outputOnes       The first outputs as an ItemStack List, stacksizes are ignored
+     * @param outputOneAmounts The amount of the first output, will be equal for all entries in the list
+     * @param outputTwos       The second outputs as an ItemStack List (can be null or empty if there should be none)
+     * @param outputTwoAmounts The amount of the second output, will be equal for all entries in the list
+     * @param outputTwoChance  The chance of the second output (0 won't occur at all, 100 will all the time)
+     */
+    public static boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance){
+        return methodHandler.addCrusherRecipes(inputs, outputOnes, outputOneAmounts, outputTwos, outputTwoAmounts, outputTwoChance);
     }
 
     /**
@@ -237,12 +244,12 @@ public final class ActuallyAdditionsAPI{
      * @param type      The type of lens used for the conversion. To use the default type, use method below
      *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
      */
+    @Deprecated //Use ItemStack recipes
     public static void addReconstructorLensConversionRecipe(String input, String output, int energyUse, LensConversion type){
-        RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
     }
 
+    @Deprecated //Use ItemStack recipes
     public static void addReconstructorLensConversionRecipe(String input, String output, int energyUse){
-        addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
     }
 
     /**

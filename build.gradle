@@ -44,7 +44,7 @@ repositories {
 }
 
 dependencies {
-    compile "net.darkhax.tesla:Tesla:1.10.2-1.2.1.42"
+    compile "net.darkhax.tesla:Tesla:1.10.2-1.2.1.49"
     deobfCompile "mezz.jei:jei_1.10.2:3.13.0.335"
 }
 

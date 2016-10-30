@@ -27,8 +27,6 @@ public class PageCrusherRecipe extends BookletPageAA{
 
     public final CrusherRecipe recipe;
 
-    private int recipePos;
-
     public PageCrusherRecipe(int id, CrusherRecipe recipe){
         super(id);
         this.recipe = recipe;
@@ -65,41 +63,36 @@ public class PageCrusherRecipe extends BookletPageAA{
                 Minecraft.getMinecraft().fontRendererObj.drawString(this.recipe.outputTwoChance+"%", gui.getGuiLeft()+37+62, gui.getGuiTop()+20+33, 0);
             }
 
-            List<ItemStack> outputOnes = RecipeUtil.getCrusherRecipeOutputOnes(this.recipe);
-            if(outputOnes != null){
-                for(int i = 0; i < 2; i++){
-                    for(int j = 0; j < 3; j++){
-                        ItemStack stack;
-                        switch(j){
-                            case 0:
-                                List<ItemStack> inputs = RecipeUtil.getCrusherRecipeInputs(this.recipe);
-                                stack = inputs.get(Math.min(inputs.size()-1, this.recipePos));
-                                break;
-                            case 1:
-                                stack = outputOnes.get(Math.min(outputOnes.size()-1, this.recipePos));
-                                break;
-                            default:
-                                List<ItemStack> outputTwos = RecipeUtil.getCrusherRecipeOutputTwos(this.recipe);
-                                stack = outputTwos == null ? null : outputTwos.get(Math.min(outputTwos.size()-1, this.recipePos));
-                                break;
+            for(int i = 0; i < 2; i++){
+                for(int j = 0; j < 3; j++){
+                    ItemStack stack;
+                    switch(j){
+                        case 0:
+                            stack = this.recipe.inputStack;
+                            break;
+                        case 1:
+                            stack = this.recipe.outputOneStack;
+                            break;
+                        default:
+                            stack = this.recipe.outputTwoStack;
+                            break;
+                    }
+
+                    if(stack != null){
+                        if(stack.getItemDamage() == Util.WILDCARD){
+                            stack.setItemDamage(0);
                         }
 
-                        if(stack != null){
-                            if(stack.getItemDamage() == Util.WILDCARD){
-                                stack.setItemDamage(0);
-                            }
+                        boolean tooltip = i == 1;
 
-                            boolean tooltip = i == 1;
-
-                            int xShow = gui.getGuiLeft()+37+(j == 0 ? 1 : (j == 1 ? 43 : (j == 2 ? 43 : 0)));
-                            int yShow = gui.getGuiTop()+20+(j == 0 ? 21 : (j == 1 ? 11 : (j == 2 ? 29 : 0)));
-                            if(!tooltip){
-                                AssetUtil.renderStackToGui(stack, xShow, yShow, 1.0F);
-                            }
-                            else{
-                                if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
-                                    gui.renderTooltipAndTransferButton(this, stack, mouseX, mouseY, j == 0, mousePressed);
-                                }
+                        int xShow = gui.getGuiLeft()+37+(j == 0 ? 1 : (j == 1 ? 43 : (j == 2 ? 43 : 0)));
+                        int yShow = gui.getGuiTop()+20+(j == 0 ? 21 : (j == 1 ? 11 : (j == 2 ? 29 : 0)));
+                        if(!tooltip){
+                            AssetUtil.renderStackToGui(stack, xShow, yShow, 1.0F);
+                        }
+                        else{
+                            if(mouseX >= xShow && mouseX <= xShow+16 && mouseY >= yShow && mouseY <= yShow+16){
+                                gui.renderTooltipAndTransferButton(this, stack, mouseX, mouseY, j == 0, mousePressed);
                             }
                         }
                     }
@@ -109,22 +102,7 @@ public class PageCrusherRecipe extends BookletPageAA{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void updateScreen(int ticksElapsed){
-        if(ticksElapsed%10 == 0){
-            List<ItemStack> outputTwos = RecipeUtil.getCrusherRecipeOutputTwos(this.recipe);
-            if(this.recipePos+1 >= Math.max(RecipeUtil.getCrusherRecipeInputs(this.recipe).size(), Math.max(RecipeUtil.getCrusherRecipeOutputOnes(this.recipe).size(), outputTwos == null ? 0 : outputTwos.size()))){
-                this.recipePos = 0;
-            }
-            else{
-                this.recipePos++;
-            }
-        }
-    }
-
-    @Override
     public ItemStack[] getItemStacksForPage(){
-        List<ItemStack> outputOnes = RecipeUtil.getCrusherRecipeOutputOnes(this.recipe);
-        return this.recipe == null ? new ItemStack[0] : outputOnes.toArray(new ItemStack[outputOnes.size()]);
+        return this.recipe == null ? new ItemStack[0] : new ItemStack[]{this.recipe.outputOneStack, this.recipe.outputTwoStack};
     }
 }

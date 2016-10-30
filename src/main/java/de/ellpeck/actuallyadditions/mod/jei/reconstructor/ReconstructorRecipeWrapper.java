@@ -23,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
@@ -40,12 +41,12 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implemen
 
     @Override
     public List getInputs(){
-        return RecipeUtil.getConversionLensInputs(this.theRecipe);
+        return Collections.singletonList(this.theRecipe.inputStack);
     }
 
     @Override
     public List getOutputs(){
-        return RecipeUtil.getConversionLensOutputs(this.theRecipe);
+        return Collections.singletonList(this.theRecipe.outputStack);
     }
 
     @Override

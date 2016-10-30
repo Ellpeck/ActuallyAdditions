@@ -14,41 +14,17 @@ import net.minecraft.item.ItemStack;
 
 public class CrusherRecipe{
 
-    public int outputTwoChance;
-    public String input;
-    public String outputOne;
-    public int outputOneAmount;
-    public String outputTwo;
-    public int outputTwoAmount;
     public ItemStack inputStack;
     public ItemStack outputOneStack;
     public ItemStack outputTwoStack;
+    public int outputTwoChance;
 
-    public CrusherRecipe(String input, ItemStack outputOne){
-        this.input = input;
-        this.outputOneStack = outputOne;
-    }
-
-    public CrusherRecipe(ItemStack input, String outputOne, int outputOneAmount){
-        this.inputStack = input;
-        this.outputOne = outputOne;
-        this.outputOneAmount = outputOneAmount;
-    }
-
-    public CrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
-        this.inputStack = input;
-        this.outputOneStack = outputOne;
-        this.outputTwoStack = outputTwo;
+    public CrusherRecipe(ItemStack inputStack, ItemStack outputOneStack, ItemStack outputTwoStack, int outputTwoChance){
+        this.inputStack = inputStack;
+        this.outputOneStack = outputOneStack;
+        this.outputTwoStack = outputTwoStack;
         this.outputTwoChance = outputTwoChance;
     }
 
-    public CrusherRecipe(String input, String outputOne, int outputOneAmount, String outputTwo, int outputTwoAmount, int outputTwoChance){
-        this.input = input;
-        this.outputOne = outputOne;
-        this.outputOneAmount = outputOneAmount;
-        this.outputTwo = outputTwo;
-        this.outputTwoAmount = outputTwoAmount;
-        this.outputTwoChance = outputTwoChance;
-    }
 
 }
