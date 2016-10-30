@@ -10,10 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
+import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
@@ -182,12 +186,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.fillWithBlocks(world, sbb, 3, 1, 4, 4, 1, 6, Blocks.CARPET.getStateFromMeta(10), Blocks.CARPET.getStateFromMeta(10), false);
 
         //Loot Chest
-        this.setBlockState(world, Blocks.CHEST.getDefaultState(), 8, 1, 6, sbb);
-        //TileEntity chest = world.getTileEntity(new BlockPos(this.getXWithOffset(8, 6), this.getYWithOffset(1), this.getZWithOffset(8, 6)));
-        //TODO Chest content
-        /*if(chest != null && chest instanceof TileEntityChest){
-            WeightedRandomChestContent.generateChestContents(rand, ChestGenHooks.getItems(InitVillager.JAM_HOUSE_CHEST_NAME, rand), (TileEntityChest)chest, ChestGenHooks.getCount(InitVillager.JAM_HOUSE_CHEST_NAME, rand));
-        }*/
+        this.generateChest(world, this.boundingBox, rand, 8, 1, 6, DungeonLoot.JAM_HOUSE);
 
         //Torches
         this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.SOUTH), 6, 2, 0, sbb);

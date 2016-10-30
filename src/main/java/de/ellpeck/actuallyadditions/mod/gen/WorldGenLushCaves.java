@@ -10,13 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
+import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenBigTree;
+import net.minecraft.world.gen.feature.WorldGenShrub;
+import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.storage.loot.ILootContainer;
 
@@ -55,10 +63,7 @@ public class WorldGenLushCaves{
                 for(double z = -radius; z < radius; z++){
                     if(rand.nextDouble() >= 0.5D){
                         BlockPos pos = center.add(x, y, z);
-                        if(!box.isVecInside(pos)) {
-                            continue;
-                        }
-                        if(world.getBlockState(pos).getBlock() == Blocks.GRASS){
+                        if(box.isVecInside(pos) && world.getBlockState(pos).getBlock() == Blocks.GRASS){
                             possiblePoses.add(pos);
                         }
                     }
@@ -67,12 +72,44 @@ public class WorldGenLushCaves{
         }
 
         if(!possiblePoses.isEmpty()){
+            boolean chestGenDone = false;
+
             for(int i = 0; i <= amount; i++){
                 Collections.shuffle(possiblePoses);
                 BlockPos pos = possiblePoses.get(0);
                 if(rand.nextBoolean()){
-                    WorldGenAbstractTree trees = rand.nextBoolean() ? (rand.nextBoolean() ? new WorldGenBigTree(false) : new WorldGenShrub(Blocks.LOG.getDefaultState(), Blocks.LEAVES.getDefaultState())) : new WorldGenTrees(false);
+                    boolean genChest = false;
+
+                    WorldGenAbstractTree trees;
+                    if(rand.nextBoolean()){
+                        if(rand.nextBoolean()){
+                            trees = new WorldGenBigTree(false);
+                        }
+                        else{
+                            trees = new WorldGenShrub(Blocks.LOG.getDefaultState(), Blocks.LEAVES.getDefaultState());
+                            genChest = true;
+                        }
+                    }
+                    else{
+                        trees = new WorldGenTrees(false);
+                    }
                     trees.generate(world, rand, pos.up());
+
+                    if(!chestGenDone && genChest){
+                        BlockPos chestPos = pos.add(MathHelper.getRandomIntegerInRange(rand, -2, 2), MathHelper.getRandomIntegerInRange(rand, 3, 8), MathHelper.getRandomIntegerInRange(rand, -2, 2));
+
+                        IBlockState state = world.getBlockState(chestPos);
+                        if(state != null && state.getBlock().isLeaves(state, world, chestPos)){
+                            world.setBlockState(chestPos, Blocks.CHEST.getDefaultState());
+
+                            TileEntity chest = world.getTileEntity(chestPos);
+                            if(chest instanceof TileEntityChest){
+                                ((TileEntityChest)chest).setLootTable(DungeonLoot.LUSH_CAVES, rand.nextLong());
+                            }
+                        }
+
+                        chestGenDone = true;
+                    }
                 }
                 else{
                     Blocks.GRASS.grow(world, rand, pos, world.getBlockState(pos));
@@ -100,15 +137,14 @@ public class WorldGenLushCaves{
             for(double z = -radius; z < radius; z++){
                 for(double y = -radius; y <= -3; y++){
                     BlockPos pos = center.add(x, y, z);
-                    if(!boundingBox.isVecInside(pos)) {
-                        continue;
-                    }
-                    IBlockState state = world.getBlockState(pos);
-                    BlockPos posUp = pos.up();
-                    IBlockState stateUp = world.getBlockState(posUp);
-                    if(!this.checkIndestructable(world, pos) && !this.checkIndestructable(world, posUp)){
-                        if(!state.getBlock().isAir(state, world, pos) && stateUp.getBlock().isAir(stateUp, world, posUp)){
-                            world.setBlockState(pos, Blocks.GRASS.getDefaultState());
+                    if(boundingBox.isVecInside(pos)){
+                        IBlockState state = world.getBlockState(pos);
+                        BlockPos posUp = pos.up();
+                        IBlockState stateUp = world.getBlockState(posUp);
+                        if(!this.checkIndestructable(world, pos) && !this.checkIndestructable(world, posUp)){
+                            if(!state.getBlock().isAir(state, world, pos) && stateUp.getBlock().isAir(stateUp, world, posUp)){
+                                world.setBlockState(pos, Blocks.GRASS.getDefaultState());
+                            }
                         }
                     }
                 }
@@ -127,7 +163,7 @@ public class WorldGenLushCaves{
         if(state != null){
             Block block = state.getBlock();
             //check if it's tree or grass that is generated here
-            if(block == Blocks.LOG || block == Blocks.LEAVES || block == Blocks.TALLGRASS) {
+            if(block == Blocks.LOG || block == Blocks.LEAVES || block == Blocks.TALLGRASS){
                 return true;
             }
             if(block != null && (block.isAir(state, world, pos) || block.getHarvestLevel(state) >= 0F)){
