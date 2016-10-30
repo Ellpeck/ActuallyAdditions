@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.misc.ConnectionPair;
+import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -46,6 +47,7 @@ public class CommonEvents{
 
     public CommonEvents(){
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new DungeonLoot());
     }
 
     public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){

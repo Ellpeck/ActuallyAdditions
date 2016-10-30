@@ -115,7 +115,6 @@ public class ActuallyAdditions{
         TileEntityBase.init();
         new CommonEvents();
         InitCrafting.init();
-        DungeonLoot.init();
         InitEntities.init();
 
         proxy.init(event);
