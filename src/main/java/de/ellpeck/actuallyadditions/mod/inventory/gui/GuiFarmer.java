@@ -21,17 +21,28 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.IOException;
+
 @SideOnly(Side.CLIENT)
 public class GuiFarmer extends GuiContainer{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFarmer");
     private final TileEntityFarmer farmer;
 
+    private EnergyDisplay energy;
+
     public GuiFarmer(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerFarmer(inventory, tile));
         this.farmer = (TileEntityFarmer)tile;
         this.xSize = 176;
         this.ySize = 93+86;
+    }
+
+    @Override
+    public void initGui(){
+        super.initGui();
+
+        this.energy = new EnergyDisplay(this.guiLeft+33, this.guiTop+6, this.farmer.storage);
     }
 
     @Override
@@ -48,5 +59,21 @@ public class GuiFarmer extends GuiContainer{
 
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+
+        this.energy.draw();
+    }
+
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+        this.energy.onMouseClick(mouseX, mouseY, mouseButton);
+    }
+
+
+    @Override
+    public void drawScreen(int x, int y, float f){
+        super.drawScreen(x, y, f);
+        this.energy.drawOverlay(x, y);
     }
 }

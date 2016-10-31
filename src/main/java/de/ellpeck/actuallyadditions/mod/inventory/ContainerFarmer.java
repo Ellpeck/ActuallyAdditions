@@ -30,12 +30,12 @@ public class ContainerFarmer extends Container{
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new Slot(this.farmer, j+i*2, 53+j*18, 21+i*18));
+                this.addSlotToContainer(new Slot(this.farmer, j+i*2, 67+j*18, 21+i*18));
             }
         }
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new Slot(this.farmer, 6+j+i*2, 91+j*18, 21+i*18));
+                this.addSlotToContainer(new Slot(this.farmer, 6+j+i*2, 105+j*18, 21+i*18));
             }
         }
 

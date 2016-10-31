@@ -98,8 +98,19 @@ public final class BlockCrafting{
     public static IRecipe recipeFluidLaser;
     public static IRecipe recipeDistributorItem;
     public static IRecipe recipeBioReactor;
+    public static IRecipe recipeFarmer;
 
     public static void init(){
+
+        //Farmer
+        if(ConfigCrafting.FARMER.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFarmer),
+                    "ISI", "SCS", "ISI",
+                    'I', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal()),
+                    'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
+                    'S', new ItemStack(Items.WHEAT_SEEDS)));
+            recipeFarmer = RecipeUtil.lastIRecipe();
+        }
 
         //Empowerer
         if(ConfigCrafting.EMPOWERER.isEnabled()){

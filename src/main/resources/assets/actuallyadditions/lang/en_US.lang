@@ -1041,3 +1041,6 @@ booklet.actuallyadditions.chapter.distributorItem.text.1=The <item>Item Distribu
 
 booklet.actuallyadditions.chapter.bioReactor.name=Bio Reactor
 booklet.actuallyadditions.chapter.bioReactor.text.1=The <item>Bio Reactor<r> uses all types of <imp>seeds, foodstuffs and plants<r> to <imp>generate RF<r>! <n>To do this, just <imp>place<r> the items <imp>in its GUI<r>. If you try this out, you will notice that it doesn't generate that much power by default. However, the more <imp>different kinds<r> of plants, seeds and foodstuffs it has, the more power it will generate!
+
+booklet.actuallyadditions.chapter.farmer.name=Farmer
+booklet.actuallyadditions.chapter.farmer.text.1=The <item>Farmer<r> is a block that can, once placed in the world, <imp>plant and harvest<r> crops like Wheat, Potatoes, Canola <imp>and more<r>. <n>The <imp>left side<r> of its GUI is reserved for <item>seeds<r>, while the <imp>right side<r> will contain the <imp>harvested goods<r>. <n>It will farm in a <imp>9x9 area<r> in front of it. <n>For every operation, it uses <imp><energy> RF<r>. <n><n><n><i>my fam

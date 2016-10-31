@@ -29,11 +29,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class BlockFarmer extends BlockContainerBase{
 
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
+    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
 
     public BlockFarmer(String name){
         super(Material.ROCK, name);
@@ -68,8 +69,20 @@ public class BlockFarmer extends BlockContainerBase{
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.getFacingFromEntity(pos, player).ordinal();
-        world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
+        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
+
+        if(rotation == 0){
+            world.setBlockState(pos, this.getStateFromMeta(0), 2);
+        }
+        if(rotation == 1){
+            world.setBlockState(pos, this.getStateFromMeta(3), 2);
+        }
+        if(rotation == 2){
+            world.setBlockState(pos, this.getStateFromMeta(1), 2);
+        }
+        if(rotation == 3){
+            world.setBlockState(pos, this.getStateFromMeta(2), 2);
+        }
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
     }
