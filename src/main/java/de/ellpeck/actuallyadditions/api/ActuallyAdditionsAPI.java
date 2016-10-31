@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.*;
+import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,6 +44,8 @@ public final class ActuallyAdditionsAPI{
     public static final Map<String, Integer> OIL_GENERATOR_RECIPES = new HashMap<String, Integer>();
     public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<IBookletEntry>();
     public static final List<BookletPage> BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA = new ArrayList<BookletPage>();
+    public static final List<WeightedOre> STONE_ORES = new ArrayList<WeightedOre>();
+    public static final List<WeightedOre> NETHERRACK_ORES = new ArrayList<WeightedOre>();
 
     /**
      * Use this to handle things that aren't based in the API itself
@@ -140,6 +143,28 @@ public final class ActuallyAdditionsAPI{
      */
     @Deprecated //Use new version below
     public static void addCrusherRecipe(String input, ItemStack outputOne){
+    }
+
+    /**
+     * Adds an ore with a specific weight to the list of ores that the lens of the miner will generate inside of stone.
+     * Higher weight means higher occurence.
+     *
+     * @param oreName The ore's name
+     * @param weight The ore's weight
+     */
+    public static void addMiningLensStoneOre(String oreName, int weight){
+        STONE_ORES.add(new WeightedOre(oreName, weight));
+    }
+
+    /**
+     * Adds an ore with a specific weight to the list of ores that the lens of the miner will generate inside of netherrack.
+     * Higher weight means higher occurence.
+     *
+     * @param oreName The ore's name
+     * @param weight The ore's weight
+     */
+    public static void addMiningLensNetherOre(String oreName, int weight){
+        NETHERRACK_ORES.add(new WeightedOre(oreName, weight));
     }
 
     /**
