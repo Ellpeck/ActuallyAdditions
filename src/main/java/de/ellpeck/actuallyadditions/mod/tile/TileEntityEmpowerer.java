@@ -165,7 +165,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
 
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
-        return !getRecipesForInput(stack).isEmpty();
+        return getRecipesForInput(stack).isEmpty();
     }
 
     @Override
