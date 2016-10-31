@@ -561,6 +561,12 @@ public final class ItemCrafting{
             GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_CHAR.ordinal()),
                     new ItemStack(Items.COAL, 1, 1));
             recipeTinyChar = RecipeUtil.lastIRecipe();
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.COAL),
+                    "CCC", "C C", "CCC",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal())));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.COAL, 1, 1),
+                    "CCC", "C C", "CCC",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_CHAR.ordinal())));
         }
 
         //Rice Seeds
