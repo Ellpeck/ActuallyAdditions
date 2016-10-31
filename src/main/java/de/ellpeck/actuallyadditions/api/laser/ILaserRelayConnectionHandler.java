@@ -37,5 +37,5 @@ public interface ILaserRelayConnectionHandler{
 
     LaserType getTypeFromLaser(TileEntity tile);
 
-    LaserType getTypeFromLsaer(BlockPos pos, World world);
+    LaserType getTypeFromLaser(BlockPos pos, World world);
 }

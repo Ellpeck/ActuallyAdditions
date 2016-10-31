@@ -173,7 +173,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
     }
 
     @Override
-    public LaserType getTypeFromLsaer(BlockPos pos, World world){
+    public LaserType getTypeFromLaser(BlockPos pos, World world){
         return this.getTypeFromLaser(world.getTileEntity(pos));
     }
 

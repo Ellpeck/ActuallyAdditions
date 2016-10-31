@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.*;
-import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,7 +30,7 @@ public final class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "25";
+    public static final String API_VERSION = "26";
 
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<CrusherRecipe>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
