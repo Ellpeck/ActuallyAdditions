@@ -229,6 +229,7 @@ tile.actuallyadditions.blockTinyTorch.name=Tiny Torch
 tile.actuallyadditions.blockEmpowerer.name=Empowerer
 tile.actuallyadditions.blockDistributorItem.name=Item Distributor
 tile.actuallyadditions.blockBioReactor.name=Bio Reactor
+tile.actuallyadditions.blockFarmer.name=Farmer
 
 #ESD
 tile.actuallyadditions.blockInputter.name=ESD
@@ -635,6 +636,7 @@ container.actuallyadditions.filter.name=Item Filter
 container.actuallyadditions.bag.name=Traveler's Sack
 container.actuallyadditions.voidBag.name=Void Sack
 container.actuallyadditions.bioReactor.name=Bio Reactor
+container.actuallyadditions.farmer.name=Farmer
 
 #Update Information
 info.actuallyadditions.update.generic=[{"text":"There is an Update for "},{"text":"Actually Additions ","color":"dark_green"},{"text":"available!","color":"none"}]

@@ -102,6 +102,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerBag(player.inventory, true);
             case BIO_REACTOR:
                 return new ContainerBioReactor(player.inventory, tile);
+            case FARMER:
+                return new ContainerFarmer(player.inventory, tile);
             default:
                 return null;
         }
@@ -184,6 +186,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiBag(player.inventory, true);
             case BIO_REACTOR:
                 return new GuiBioReactor(player.inventory, tile);
+            case FARMER:
+                return new GuiFarmer(player.inventory, tile);
             default:
                 return null;
         }
@@ -224,7 +228,8 @@ public class GuiHandler implements IGuiHandler{
         FILTER(false),
         BAG(false),
         VOID_BAG(false),
-        BIO_REACTOR;
+        BIO_REACTOR,
+        FARMER;
 
         public final boolean checkTileEntity;
 

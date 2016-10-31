@@ -108,10 +108,12 @@ public final class InitBlocks{
     public static Block blockDistributorItem;
     public static Block blockBioReactor;
     public static Block blockTinyTorch;
+    public static Block blockFarmer;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockFarmer = new BlockFarmer("blockFarmer");
         blockBioReactor = new BlockBioReactor("blockBioReactor");
         blockDistributorItem = new BlockDistributorItem("blockDistributorItem");
         blockEmpowerer = new BlockEmpowerer("blockEmpowerer");
