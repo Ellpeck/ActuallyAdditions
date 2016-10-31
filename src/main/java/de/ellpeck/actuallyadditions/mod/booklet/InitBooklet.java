@@ -90,6 +90,7 @@ public final class InitBooklet{
     private static void initChapters(){
         //Getting Started
         chapterIntro = new BookletChapter("intro", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemBooklet), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3));
+        new BookletChapter("reviews", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(Items.BOOK), new PageTextOnly(1));
         new BookletChapter("videoGuide", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.YOUTUBE_ICON.ordinal()), new PageLinkButton(1, "https://www.youtube.com/watch?v=fhjz0Ew56pM")).setImportant();
         new BookletChapter("bookTutorial", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemBooklet), new PageTextOnly(1), new PageTextOnly(2), new PageCrafting(3, ItemCrafting.recipeBook));
         ArrayList<BookletPage> crystalPages = new ArrayList<BookletPage>();
