@@ -28,7 +28,7 @@ import java.util.List;
 
 public class LensMining extends Lens{
 
-    public static final int ENERGY_USE = 30000;
+    public static final int ENERGY_USE = 60000;
 
     private static final List<WeightedOre> STONE_ORES = new ArrayList<WeightedOre>();
     private static final List<WeightedOre> NETHERRACK_ORES = new ArrayList<WeightedOre>();
@@ -102,7 +102,7 @@ public class LensMining extends Lens{
                             if(stacks != null && !stacks.isEmpty()){
                                 for(ItemStack aStack : stacks){
                                     if(aStack != null && aStack.getItem() instanceof ItemBlock){
-                                        adaptedUse += (totalWeight-ore.itemWeight)%10000;
+                                        adaptedUse += (totalWeight-ore.itemWeight)%40000;
 
                                         stack = aStack;
                                         found = true;

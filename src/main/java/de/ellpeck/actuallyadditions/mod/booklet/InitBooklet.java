@@ -29,6 +29,7 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.OreGen;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensDisenchanting;
+import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -64,6 +65,7 @@ public final class InitBooklet{
     public static void postInit(){
         initChapters();
 
+        int totalCount = 0;
         int count = 0;
         for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
             for(IBookletChapter chapter : entry.getChapters()){
@@ -77,11 +79,13 @@ public final class InitBooklet{
                             count++;
                         }
                     }
+
+                    totalCount++;
                 }
             }
         }
 
-        ModUtil.LOGGER.info("Registered "+count+" booklet pages as containing information about items or fluids!");
+        ModUtil.LOGGER.info("Registered "+count+" out of "+totalCount+" booklet pages as containing information about items or fluids!");
     }
 
     private static void initChapters(){
@@ -141,6 +145,7 @@ public final class InitBooklet{
         new BookletChapter("lensDeath", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemDamageLens), new PageTextOnly(1), new PageReconstructor(2, LensRecipeHandler.recipeDamageLens).setNoText());
         new BookletChapter("lensDetonation", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemExplosionLens), new PageTextOnly(1), new PageReconstructor(2, LensRecipeHandler.recipeExplosionLens).setNoText());
         new BookletChapter("lensDisenchanting", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemDisenchantingLens), new PageTextOnly(1).addTextReplacement("<energy>", LensDisenchanting.ENERGY_USE), new PageCrafting(2, ItemCrafting.recipeDisenchantingLens).setNoText()).setSpecial();
+        new BookletChapter("lensMining", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMiningLens), new PageTextOnly(1).addTextReplacement("<energy>", LensMining.ENERGY_USE), new PageCrafting(2, ItemCrafting.recipeMiningLens).setNoText()).setImportant();
 
         //No RF Using Blocks
         new BookletChapter("itemStorage", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(InitBlocks.blockLaserRelayItemWhitelist), new PageTextOnly(1), new PageTextOnly(2), new PagePicture(3, "pageItemLaserRelayBasic", 78), new PagePicture(4, "pageItemLaserRelayFail", 84), new PagePicture(5, "pageItemLaserRelayTransfer", 78), new PagePicture(6, "pageItemLaserRelayWhitelistChest", 76), new PagePicture(7, "pageItemLaserRelayWhitelistInterface", 75), new PagePicture(8, "pageItemLaserRelaySystem", 75), new PageTextOnly(9), new PageCrafting(10, BlockCrafting.recipeLaserRelayItem).setNoText().setPageStacksWildcard(), new PageCrafting(11, BlockCrafting.recipeLaserRelayItemWhitelist).setNoText().setPageStacksWildcard(), new PageCrafting(12, BlockCrafting.recipeItemInterface).setNoText()).setImportant();

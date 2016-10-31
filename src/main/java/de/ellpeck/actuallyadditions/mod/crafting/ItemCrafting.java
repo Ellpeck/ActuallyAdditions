@@ -88,6 +88,7 @@ public final class ItemCrafting{
     public static IRecipe recipeFilter;
     public static IRecipe recipePlayerProbe;
     public static IRecipe recipeDisenchantingLens;
+    public static IRecipe recipeMiningLens;
     public static IRecipe recipeBag;
     public static IRecipe recipeVoidBag;
 
@@ -169,6 +170,22 @@ public final class ItemCrafting{
                     crystal.copy(),
                     new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal())));
             recipeDisenchantingLens = RecipeUtil.lastIRecipe();
+        }
+
+        //Mining Lens
+        if(ConfigCrafting.MINING_LENS.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMiningLens),
+                    "DGI", "CLB", "QPE",
+                    'D', "gemDiamond",
+                    'G', "ingotGold",
+                    'I', "ingotIron",
+                    'C', "coal",
+                    'L', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()),
+                    'B', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
+                    'Q', "gemQuartz",
+                    'P', "gemLapis",
+                    'E', "gemEmerald"));
+            recipeMiningLens = RecipeUtil.lastIRecipe();
         }
 
         //Filter
