@@ -15,9 +15,11 @@ import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -110,16 +112,6 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
     }
 
     @Override
-    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, World world){
-        return this.addConnection(firstRelay, secondRelay, null, world);
-    }
-
-    @Override
-    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, World world, boolean suppressConnectionRender){
-        return this.addConnection(firstRelay, secondRelay, null, world, suppressConnectionRender);
-    }
-
-    @Override
     public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world){
         return this.addConnection(firstRelay, secondRelay, type, world, false);
     }
@@ -168,6 +160,21 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
         //System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
         //System.out.println(laserRelayNetworks);
         return true;
+    }
+
+    @Override
+    public LaserType getTypeFromLaser(TileEntity tile){
+        if(tile instanceof TileEntityLaserRelay){
+            return ((TileEntityLaserRelay)tile).type;
+        }
+        else{
+            return null;
+        }
+    }
+
+    @Override
+    public LaserType getTypeFromLsaer(BlockPos pos, World world){
+        return this.getTypeFromLaser(world.getTileEntity(pos));
     }
 
 }
