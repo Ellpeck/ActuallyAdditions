@@ -1,3 +1,12 @@
+# 1.10.2-r69
+* Added the Mining lens, a lens that will convert stone and netherrack blocks to random ores
+* Added the Farmer, a block that can farm crops like wheat or canola
+* Made some changes to the JEI integration visuals
+* Added a "what people think" page to the manual
+* Made tiny torches less useless by giving them a bit bigger of a range
+* Fixed the empowerer not allowing extractions
+* Added a method to the API to figure out which type a Laser Relay has
+
 # 1.10.2-r68
 * Fixed the player interface not saving its data
 * Made the empowerer work with all of its recipes
