@@ -80,6 +80,7 @@ public final class ActuallyAdditionsAPI{
     public static Lens lensColor;
     public static Lens lensDisruption;
     public static Lens lensDisenchanting;
+    public static Lens lensMining;
 
     /**
      * Adds a Recipe to the Crusher Recipe Registry

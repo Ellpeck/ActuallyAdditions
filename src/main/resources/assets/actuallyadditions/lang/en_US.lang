@@ -507,6 +507,7 @@ item.actuallyadditions.itemBag.name=Traveler's Sack
 item.actuallyadditions.itemVoidBag.name=Void Sack
 item.actuallyadditions.itemMiscCrystallizedCanolaSeed.name=Crystallized Canola Seed
 item.actuallyadditions.itemMiscEmpoweredCanolaSeed.name=Empowered Canola Seed
+item.actuallyadditions.itemMiningLens.name=Lens of the Miner
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On

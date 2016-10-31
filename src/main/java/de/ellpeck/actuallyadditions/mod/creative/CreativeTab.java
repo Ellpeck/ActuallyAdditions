@@ -156,6 +156,8 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemColorLens);
         this.add(InitItems.itemExplosionLens);
         this.add(InitItems.itemDamageLens);
+        this.add(InitItems.itemDisenchantingLens);
+        this.add(InitItems.itemMiningLens);
         this.add(InitItems.itemLaserWrench);
         this.add(InitItems.itemCrateKeeper);
         this.add(InitItems.itemChestToCrateUpgrade);
