@@ -46,7 +46,7 @@ public class BlockTinyTorch extends BlockBase{
         this.setTickRandomly(true);
 
         this.setHardness(0.0F);
-        this.setLightLevel(0.67F);
+        this.setLightLevel(0.8F);
         this.setSoundType(SoundType.WOOD);
     }
 
