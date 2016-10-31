@@ -39,6 +39,23 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
         super(8, "bioReactor");
     }
 
+    public static boolean isValidItem(ItemStack stack){
+        if(stack != null){
+            Item item = stack.getItem();
+            if(isValid(item)){
+                return true;
+            }
+            else if(item instanceof ItemBlock){
+                return isValid(Block.getBlockFromItem(item));
+            }
+        }
+        return false;
+    }
+
+    private static boolean isValid(Object o){
+        return o instanceof IPlantable || o instanceof IGrowable || o instanceof ItemFood;
+    }
+
     @Override
     public void updateEntity(){
         super.updateEntity();
@@ -110,23 +127,6 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
         this.burnTime = compound.getInteger("BurnTime");
         this.maxBurnTime = compound.getInteger("MaxBurnTime");
         this.producePerTick = compound.getInteger("ProducePerTick");
-    }
-
-    public static boolean isValidItem(ItemStack stack){
-        if(stack != null){
-            Item item = stack.getItem();
-            if(isValid(item)){
-                return true;
-            }
-            else if(item instanceof ItemBlock){
-                return isValid(Block.getBlockFromItem(item));
-            }
-        }
-        return false;
-    }
-
-    private static boolean isValid(Object o){
-        return o instanceof IPlantable || o instanceof IGrowable || o instanceof ItemFood;
     }
 
     @Override

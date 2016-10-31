@@ -10,10 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;

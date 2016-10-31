@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+
 import java.util.List;
 
 public final class RecipeUtil{

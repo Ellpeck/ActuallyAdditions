@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
 
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -20,9 +19,6 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-
-import java.util.List;
 
 public class CrusherRecipeCategory implements IRecipeCategory{
 

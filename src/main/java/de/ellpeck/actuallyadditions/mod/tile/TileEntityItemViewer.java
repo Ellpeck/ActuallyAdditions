@@ -24,10 +24,9 @@ import java.util.*;
 
 public class TileEntityItemViewer extends TileEntityInventoryBase{
 
-    public TileEntityLaserRelayItem connectedRelay;
-
     private final List<GenericItemHandlerInfo> genericInfos = new ArrayList<GenericItemHandlerInfo>();
     private final Map<Integer, SpecificItemHandlerInfo> specificInfos = new HashMap<Integer, SpecificItemHandlerInfo>();
+    public TileEntityLaserRelayItem connectedRelay;
     private int lastNetworkChangeAmount = -1;
 
     public TileEntityItemViewer(){

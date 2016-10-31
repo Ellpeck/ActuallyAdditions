@@ -35,12 +35,6 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
     }
 
-    protected void getInvWrappers(SidedInvWrapper[] wrappers){
-        for(int i = 0; i < wrappers.length; i++){
-            wrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]);
-        }
-    }
-
     public static void saveSlots(ItemStack[] slots, NBTTagCompound compound){
         if(slots != null && slots.length > 0){
             NBTTagList tagList = new NBTTagList();
@@ -62,6 +56,12 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
                 slots[i] = tagCompound != null && tagCompound.hasKey("id") ? ItemStack.loadItemStackFromNBT(tagCompound) : null;
             }
+        }
+    }
+
+    protected void getInvWrappers(SidedInvWrapper[] wrappers){
+        for(int i = 0; i < wrappers.length; i++){
+            wrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]);
         }
     }
 

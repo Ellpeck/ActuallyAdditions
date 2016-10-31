@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
-import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;

@@ -13,14 +13,15 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.util.*;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 
 public class PageCrusherRecipe extends BookletPageAA{

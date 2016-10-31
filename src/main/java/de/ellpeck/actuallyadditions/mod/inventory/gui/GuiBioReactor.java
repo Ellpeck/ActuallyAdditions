@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBioReactor;
-import de.ellpeck.actuallyadditions.mod.inventory.ContainerBreaker;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;

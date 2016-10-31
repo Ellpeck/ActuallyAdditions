@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -25,8 +24,8 @@ import java.util.Map;
 
 public class BookletPageAA extends BookletPage{
 
-    protected List<FluidStack> fluidsForPage = new ArrayList<FluidStack>();
     protected final int localizationKey;
+    protected List<FluidStack> fluidsForPage = new ArrayList<FluidStack>();
 
     public BookletPageAA(int localizationKey){
         this.localizationKey = localizationKey;

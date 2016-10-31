@@ -10,18 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.misc.ConnectionPair;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -33,7 +29,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;

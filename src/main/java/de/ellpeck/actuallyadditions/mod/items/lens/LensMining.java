@@ -74,6 +74,10 @@ public class LensMining extends Lens{
         add(NETHERRACK_ORES, "oreArdite", 50);
     }
 
+    private static void add(List<WeightedOre> list, String name, int weight){
+        list.add(new WeightedOre(name, weight));
+    }
+
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitPos, IAtomicReconstructor tile){
         if(!tile.getWorldObject().isAirBlock(hitPos)){
@@ -144,10 +148,6 @@ public class LensMining extends Lens{
     @Override
     public int getDistance(){
         return 10;
-    }
-
-    private static void add(List<WeightedOre> list, String name, int weight){
-        list.add(new WeightedOre(name, weight));
     }
 
     private static class WeightedOre extends WeightedRandom.Item{

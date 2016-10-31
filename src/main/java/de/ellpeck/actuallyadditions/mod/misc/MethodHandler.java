@@ -26,7 +26,6 @@ import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
-import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -185,16 +184,16 @@ public class MethodHandler implements IMethodHandler{
                     List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
                     for(LensConversionRecipe recipe : recipes){
                         if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse*stack.stackSize){
-                                ItemStack outputCopy = recipe.outputStack.copy();
-                                outputCopy.stackSize = stack.stackSize;
+                            ItemStack outputCopy = recipe.outputStack.copy();
+                            outputCopy.stackSize = stack.stackSize;
 
-                                item.setDead();
+                            item.setDead();
 
-                                EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
-                                tile.getWorldObject().spawnEntityInWorld(newItem);
+                            EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
+                            tile.getWorldObject().spawnEntityInWorld(newItem);
 
-                                tile.extractEnergy(recipe.energyUse*stack.stackSize);
-                                break;
+                            tile.extractEnergy(recipe.energyUse*stack.stackSize);
+                            break;
                         }
                     }
                 }
