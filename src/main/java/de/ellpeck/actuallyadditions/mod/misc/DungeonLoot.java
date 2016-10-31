@@ -93,6 +93,7 @@ public class DungeonLoot{
                 addBook = true;
                 addQuartz = true;
                 addBatWings = true;
+                addCrystals = true;
 
                 pool.addEntry(new LootEntryItem(Items.BOOK, 90, 0, new LootFunction[0], noCondition, ModUtil.MOD_ID+":book"));
 
