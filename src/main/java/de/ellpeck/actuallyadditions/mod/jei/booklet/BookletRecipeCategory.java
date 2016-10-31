@@ -28,7 +28,7 @@ public class BookletRecipeCategory implements IRecipeCategory{
     private final IDrawable background;
 
     public BookletRecipeCategory(IGuiHelper helper){
-        this.background = helper.createBlankDrawable(160, 100);
+        this.background = helper.createBlankDrawable(160, 105);
     }
 
 

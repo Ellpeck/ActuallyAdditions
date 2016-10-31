@@ -94,7 +94,7 @@ container.nei.actuallyadditions.reconstructor.name=Atomic Reconstructor
 container.nei.actuallyadditions.empowerer.name=Empowerer
 
 container.nei.actuallyadditions.booklet.name=ActAdd Manual
-container.nei.actuallyadditions.booklet.header=The <item>Actually Additions Manual<r> reads:
+container.nei.actuallyadditions.booklet.header=The <item>Actually Additions Manual<r> says:
 container.nei.actuallyadditions.booklet.noText=Nothing, apparently! But that doesn't matter. Just click the button on the bottom to see the item inside the booklet and look through its pages to find some fancy stuff!
 
 #Damage Sources

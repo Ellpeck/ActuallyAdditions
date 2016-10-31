@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
+public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton{
 
     public final CoffeeIngredient theIngredient;
     public final ItemStack theOutput;
@@ -75,8 +75,6 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
-        this.updateButton(minecraft, mouseX, mouseY);
-
         if(this.theIngredient.getExtraText() != null){
             minecraft.fontRendererObj.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID+".coffee.special")+":", 2, 4, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
             minecraft.fontRendererObj.drawString(this.theIngredient.getExtraText(), 2, 16, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
@@ -85,21 +83,13 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
         if(this.theIngredient.maxAmplifier > 0){
             minecraft.fontRendererObj.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID+".coffee.maxAmount")+": "+this.theIngredient.maxAmplifier, 2, 28, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
+
+        super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);
     }
 
     @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight){
 
-    }
-
-    @Override
-    public List<String> getTooltipStrings(int mouseX, int mouseY){
-        return null;
-    }
-
-    @Override
-    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
-        return this.handleClick(minecraft, mouseX, mouseY);
     }
 
     @Override
@@ -109,7 +99,7 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton implemen
 
     @Override
     public int getButtonY(){
-        return 70;
+        return 68;
     }
 
     @Override

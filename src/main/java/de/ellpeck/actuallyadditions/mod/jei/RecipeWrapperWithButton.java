@@ -17,32 +17,29 @@ import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 
-public abstract class RecipeWrapperWithButton{
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
+
+public abstract class RecipeWrapperWithButton implements IRecipeWrapper{
 
     protected final TexturedButton theButton;
 
     public RecipeWrapperWithButton(){
-        this.theButton = new TexturedButton(23782, this.getButtonX(), this.getButtonY(), 146, 154, 20, 20){
-            @Override
-            public void drawButton(Minecraft minecraft, int x, int y){
-                super.drawButton(minecraft, x, y);
-                if(this.visible && this.hovered){
-                    String text = StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe");
-                    Minecraft.getMinecraft().fontRendererObj.drawString(text, this.xPosition-Minecraft.getMinecraft().fontRendererObj.getStringWidth(text)-1, this.yPosition+this.height/2-Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT/2, StringUtil.DECIMAL_COLOR_WHITE, true);
-                }
-            }
-        };
+        this.theButton = new TexturedButton(23782, this.getButtonX(), this.getButtonY(), 146, 154, 20, 20);
     }
 
     public abstract int getButtonX();
 
     public abstract int getButtonY();
 
-    public boolean handleClick(Minecraft mc, int mouseX, int mouseY){
-        if(this.theButton.mousePressed(mc, mouseX, mouseY)){
-            this.theButton.playPressSound(mc.getSoundHandler());
+    @Override
+    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
+        if(this.theButton.mousePressed(minecraft, mouseX, mouseY)){
+            this.theButton.playPressSound(minecraft.getSoundHandler());
 
             BookletPage page = this.getPage();
             if(page != null){
@@ -58,7 +55,19 @@ public abstract class RecipeWrapperWithButton{
 
     public abstract BookletPage getPage();
 
-    public void updateButton(Minecraft mc, int mouseX, int mouseY){
-        this.theButton.drawButton(mc, mouseX, mouseY);
+    @Override
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
+        this.theButton.drawButton(minecraft, mouseX, mouseY);
+    }
+
+    @Nullable
+    @Override
+    public List<String> getTooltipStrings(int mouseX, int mouseY){
+        if(this.theButton.isMouseOver()){
+            return Collections.singletonList(StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe"));
+        }
+        else{
+            return Collections.emptyList();
+        }
     }
 }

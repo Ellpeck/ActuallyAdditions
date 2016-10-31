@@ -27,7 +27,7 @@ public class CoffeeMachineRecipeCategory implements IRecipeCategory{
     private final IDrawable background;
 
     public CoffeeMachineRecipeCategory(IGuiHelper helper){
-        this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEICoffeeMachine"), 0, 0, 126, 88);
+        this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEICoffeeMachine"), 0, 0, 126, 92);
     }
 
 

@@ -25,7 +25,7 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.Arrays;
 import java.util.List;
 
-public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
+public class BookletRecipeWrapper extends RecipeWrapperWithButton{
 
     public final BookletPage thePage;
 
@@ -75,22 +75,12 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton implements IRe
         minecraft.fontRendererObj.drawString(TextFormatting.ITALIC+chapter.getLocalizedName(), 25, 85, 0, false);
         minecraft.fontRendererObj.drawString(TextFormatting.ITALIC+"Page "+this.thePage.getID(), 25, 95, 0, false);
 
-        this.updateButton(minecraft, mouseX, mouseY);
+        super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);
     }
 
     @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight){
 
-    }
-
-    @Override
-    public List<String> getTooltipStrings(int mouseX, int mouseY){
-        return null;
-    }
-
-    @Override
-    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
-        return this.handleClick(minecraft, mouseX, mouseY);
     }
 
     @Override

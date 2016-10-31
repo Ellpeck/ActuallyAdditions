@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
+public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton{
 
     public final LensConversionRecipe theRecipe;
 
@@ -59,23 +59,8 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton implemen
     }
 
     @Override
-    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
-        this.updateButton(minecraft, mouseX, mouseY);
-    }
-
-    @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight){
 
-    }
-
-    @Override
-    public List<String> getTooltipStrings(int mouseX, int mouseY){
-        return null;
-    }
-
-    @Override
-    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
-        return this.handleClick(minecraft, mouseX, mouseY);
     }
 
     @Override

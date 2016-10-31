@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class EmpowererRecipeWrapper extends RecipeWrapperWithButton implements IRecipeWrapper{
+public class EmpowererRecipeWrapper extends RecipeWrapperWithButton{
 
     public final EmpowererRecipe theRecipe;
 
@@ -60,23 +60,8 @@ public class EmpowererRecipeWrapper extends RecipeWrapperWithButton implements I
     }
 
     @Override
-    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
-        this.updateButton(minecraft, mouseX, mouseY);
-    }
-
-    @Override
     public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight){
 
-    }
-
-    @Override
-    public List<String> getTooltipStrings(int mouseX, int mouseY){
-        return null;
-    }
-
-    @Override
-    public boolean handleClick(Minecraft minecraft, int mouseX, int mouseY, int mouseButton){
-        return this.handleClick(minecraft, mouseX, mouseY);
     }
 
     @Override
