@@ -95,27 +95,44 @@ public final class BookletUtils{
             strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.manualName.2");
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+12+booklet.getFontRenderer().FONT_HEIGHT, 0);
 
-            String version;
+            String versionStrg;
             String playerName = Minecraft.getMinecraft().thePlayer.getName();
-            if(playerName.equalsIgnoreCase("dqmhose")){
-                version = "Pants Edition";
-            }
-            else if(playerName.equalsIgnoreCase("TwoOfEight") || playerName.equalsIgnoreCase("BootyToast")){
-                version = "Illustrator's Edition";
-            }
-            else if(playerName.equalsIgnoreCase("KittyVanCat")){
-                version = "Cat's Edition";
-            }
-            else if(playerName.equalsIgnoreCase("canitzp")){
-                version = "P's Edition";
-            }
-            else if(playerName.equalsIgnoreCase("Ellpeck") || Util.isDevVersion()){
-                version = "Dev's Edition";
+
+            if(Util.isDevVersion()){
+                versionStrg = "Dev's Edition";
             }
             else{
-                version = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.edition")+" "+Util.getMajorModVersion();
+                String modVersion = Util.getMajorModVersion();
+                if(playerName.equalsIgnoreCase("dqmhose")){
+                    versionStrg = "Pants Edition";
+                }
+                else if(playerName.equalsIgnoreCase("TwoOfEight") || playerName.equalsIgnoreCase("BootyToast")){
+                    versionStrg = "Illustrator's Edition";
+                }
+                else if(playerName.equalsIgnoreCase("KittyVanCat")){
+                    versionStrg = "Cat's Edition";
+                }
+                else if(playerName.equalsIgnoreCase("canitzp")){
+                    versionStrg = "P's Edition";
+                }
+                else if(playerName.equalsIgnoreCase("Ellpeck")){
+                    versionStrg = "Dev's Edition";
+                }
+                else if(playerName.equalsIgnoreCase("direwolf20")){
+                    versionStrg = "Edition 20";
+                }
+                else if(playerName.equalsIgnoreCase("dannydjdk") || playerName.equalsIgnoreCase("andrew_period")){
+                    versionStrg = "Derp's Edition";
+                }
+                else if(playerName.equalsIgnoreCase("mezz")){
+                    versionStrg = "Just Enough Edition";
+                }
+                else{
+                    versionStrg = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.edition")+" "+modVersion;
+                }
             }
-            strg = TextFormatting.GOLD+TextFormatting.ITALIC.toString()+"-"+version+"-";
+
+            strg = TextFormatting.GOLD+TextFormatting.ITALIC.toString()+"-"+versionStrg+"-";
             booklet.getFontRenderer().drawString(strg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(strg)/2-3, booklet.guiTop+33, 0);
         }
 
