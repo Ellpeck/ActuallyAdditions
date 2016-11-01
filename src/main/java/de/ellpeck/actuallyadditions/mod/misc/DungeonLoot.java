@@ -46,7 +46,7 @@ public class DungeonLoot{
 
             LootPool pool = event.getTable().getPool("main");
             if(pool == null){
-                pool = new LootPool(new LootEntry[0], noCondition, new RandomValueRange(5, 10), new RandomValueRange(0), "main");
+                pool = new LootPool(new LootEntry[0], noCondition, new RandomValueRange(3, 6), new RandomValueRange(0), "main");
                 event.getTable().addPool(pool);
             }
 
@@ -83,10 +83,10 @@ public class DungeonLoot{
             }
             else if(JAM_HOUSE.equals(event.getName())){
                 LootFunction jamDamage = new SetMetadata(noCondition, new RandomValueRange(0, TheJams.values().length-1));
-                LootFunction jamAmount = new SetCount(noCondition, new RandomValueRange(1, 8));
+                LootFunction jamAmount = new SetCount(noCondition, new RandomValueRange(3, 5));
                 pool.addEntry(new LootEntryItem(InitItems.itemJams, 2, 0, new LootFunction[]{jamDamage, jamAmount}, noCondition, ModUtil.MOD_ID+":jams"));
 
-                LootFunction glassAmount = new SetCount(noCondition, new RandomValueRange(1, 5));
+                LootFunction glassAmount = new SetCount(noCondition, new RandomValueRange(2));
                 pool.addEntry(new LootEntryItem(Items.GLASS_BOTTLE, 1, 0, new LootFunction[]{glassAmount}, noCondition, ModUtil.MOD_ID+":bottles"));
             }
             else if(LUSH_CAVES.equals(event.getName())){
@@ -95,10 +95,10 @@ public class DungeonLoot{
                 addBatWings = true;
                 addCrystals = true;
 
-                pool.addEntry(new LootEntryItem(Items.BOOK, 90, 0, new LootFunction[0], noCondition, ModUtil.MOD_ID+":book"));
+                pool.addEntry(new LootEntryItem(Items.BOOK, 50, 0, new LootFunction[0], noCondition, ModUtil.MOD_ID+":book"));
 
                 LootFunction bonesAmount = new SetCount(noCondition, new RandomValueRange(1, 12));
-                pool.addEntry(new LootEntryItem(Items.BONE, 150, 0, new LootFunction[]{bonesAmount}, noCondition, ModUtil.MOD_ID+":bones"));
+                pool.addEntry(new LootEntryItem(Items.BONE, 100, 0, new LootFunction[]{bonesAmount}, noCondition, ModUtil.MOD_ID+":bones"));
 
                 Item[] aiots = new Item[]{InitItems.woodenPaxel, InitItems.stonePaxel, InitItems.quartzPaxel, InitItems.itemPaxelCrystalBlack, InitItems.itemPaxelCrystalWhite};
                 for(int i = 0; i < aiots.length; i++){
@@ -109,7 +109,7 @@ public class DungeonLoot{
                 Item[] armor = new Item[]{Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS};
                 for(int i = 0; i < armor.length; i++){
                     LootFunction damage = new SetDamage(noCondition, new RandomValueRange(0F, 0.75F));
-                    pool.addEntry(new LootEntryItem(armor[i], 70, 0, new LootFunction[]{damage}, noCondition, ModUtil.MOD_ID+":armor"+i));
+                    pool.addEntry(new LootEntryItem(armor[i], 50, 0, new LootFunction[]{damage}, noCondition, ModUtil.MOD_ID+":armor"+i));
                 }
             }
 

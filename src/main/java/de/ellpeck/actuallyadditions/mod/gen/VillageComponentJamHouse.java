@@ -19,6 +19,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
 import java.util.List;
 import java.util.Random;
@@ -194,5 +196,10 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.EAST), 2, 3, 6, sbb);
         this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.WEST), 8, 3, 2, sbb);
         this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.WEST), 8, 3, 6, sbb);
+    }
+
+    @Override
+    protected VillagerProfession chooseForgeProfession(int count, VillagerProfession prof){
+        return InitVillager.jamProfession;
     }
 }

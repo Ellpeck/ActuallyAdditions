@@ -9,6 +9,9 @@ fluid.actuallyadditions.canolaoil=Canola Oil
 fluid.actuallyadditions.crystaloil=Crystallized Oil
 fluid.actuallyadditions.empoweredoil=Empowered Oil
 
+#Entities
+entity.Villager.actuallyadditions.jammer=Jam Guy
+
 #Banners
 item.banner.actuallyadditionsBook.black=Black Actually Additions Manual Pattern
 item.banner.actuallyadditionsBook.red=Red Actually Additions Manual Pattern

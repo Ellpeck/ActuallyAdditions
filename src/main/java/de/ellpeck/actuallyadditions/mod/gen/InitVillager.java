@@ -11,13 +11,20 @@
 package de.ellpeck.actuallyadditions.mod.gen;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.entity.passive.EntityVillager.PriceInfo;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerCareer;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
 public final class InitVillager{
 
-    public static final String JAM_HOUSE_CHEST_NAME = ModUtil.MOD_ID+".jamHouseChest";
+    public static VillagerProfession jamProfession;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Village Addons...");
@@ -31,19 +38,13 @@ public final class InitVillager{
     }
 
     private static void initJamVillagePart(){
-        //TODO Fix villager
-        /*int jamID = ConfigIntValues.JAM_VILLAGER_ID.getValue();
-        VillagerRegistry.INSTANCE().registerVillagerId(jamID);
-        VillagerRegistry.INSTANCE().registerVillageTradeHandler(jamID, new JamVillagerTradeHandler());
+        jamProfession = new VillagerProfession(ModUtil.MOD_ID+":jamGuy", ModUtil.MOD_ID+":textures/entity/villager/jamVillager.png", ModUtil.MOD_ID+":textures/entity/villager/jamVillagerZombie.png");
+        VillagerRegistry.instance().register(jamProfession);
 
-        ChestGenHooks jamHouseChest = ChestGenHooks.getInfo(JAM_HOUSE_CHEST_NAME);
-        jamHouseChest.setMin(5);
-        jamHouseChest.setMax(10);
-        for(int i = 0; i < TheJams.values().length; i++){
-            ChestGenHooks.addItem(JAM_HOUSE_CHEST_NAME, new WeightedRandomChestContent(new ItemStack(InitItems.itemJams, 1, i), 1, 1, 10));
+        VillagerCareer career = new VillagerCareer(jamProfession, ModUtil.MOD_ID+".jammer");
+        for(int i = 0; i < 3; i++){
+            career.addTrade(i+1, new JamVillagerTradeList());
         }
-        ChestGenHooks.addItem(JAM_HOUSE_CHEST_NAME, new WeightedRandomChestContent(new ItemStack(Items.glass_bottle), 1, 2, 30));
-        ChestGenHooks.addItem(JAM_HOUSE_CHEST_NAME, new WeightedRandomChestContent(new ItemStack(Items.potionitem), 1, 1, 20));*/
 
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageJamHouseHandler());
         MapGenStructureIO.registerStructureComponent(VillageComponentJamHouse.class, ModUtil.MOD_ID+":jamHouseStructure");
