@@ -69,6 +69,25 @@ public class LensMining extends Lens{
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreCertusQuartz", 800);
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreApatite", 700);
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreQuartzBlack", 3000);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("oreRuby", 40);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("orePeridot", 40);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("oreTopaz", 40);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("oreTanzanite", 40);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("oreMalachite", 40);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("oreSapphire", 40);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("oreAmber", 150);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("oreResonating", 50);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("oreSulfur", 3000);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("oreSaltpeter", 250);
+        ActuallyAdditionsAPI.addMiningLensNetherOre("oreFirestone", 30);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("oreSalt", 2900);
+
+        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorIron", 3000);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorGold", 500);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorCopper", 2000);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorTin", 1800);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorLead", 1500);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorSilver", 1000);
 
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreCobalt", 50);
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreArdite", 50);
