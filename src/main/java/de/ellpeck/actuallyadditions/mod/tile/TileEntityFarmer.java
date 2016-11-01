@@ -18,6 +18,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -108,7 +109,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
                                 Block farmlandBlock = farmlandState.getBlock();
 
                                 if(farmlandBlock instanceof BlockFarmland){
-                                    IBlockState toPlant = this.getFirstPlantFromSlots(plant);
+                                    IBlockState toPlant = this.getFirstPlantablePlantFromSlots(plant);
                                     if(toPlant != null){
                                         this.worldObj.setBlockState(plant, toPlant, 2);
                                         didSomething = true;
@@ -148,14 +149,26 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
         }
     }
 
-    private IBlockState getFirstPlantFromSlots(BlockPos pos){
+    private IBlockState getFirstPlantablePlantFromSlots(BlockPos pos){
         for(int i = 0; i < 6; i++){
             ItemStack stack = this.slots[i];
             if(stack != null){
+                IPlantable plantable = null;
+
                 Item item = stack.getItem();
                 if(item instanceof IPlantable){
-                    IBlockState state = ((IPlantable)item).getPlant(this.worldObj, pos);
-                    if(state != null){
+                    plantable = (IPlantable)item;
+                }
+                else if(item instanceof ItemBlock){
+                    Block block = Block.getBlockFromItem(item);
+                    if(block instanceof IPlantable){
+                        plantable = (IPlantable)block;
+                    }
+                }
+
+                if(plantable != null){
+                    IBlockState state = plantable.getPlant(this.worldObj, pos);
+                    if(state != null && state.getBlock() instanceof BlockCrops && state.getBlock().canPlaceBlockAt(this.worldObj, pos)){
                         this.decrStackSize(i, 1);
                         return state;
                     }
