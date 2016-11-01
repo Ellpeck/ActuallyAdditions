@@ -68,6 +68,10 @@ public final class InitBooklet{
         int count = 0;
         for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
             for(IBookletChapter chapter : entry.getChapters()){
+                if(!ActuallyAdditionsAPI.ALL_CHAPTERS.contains(chapter)){
+                    ActuallyAdditionsAPI.ALL_CHAPTERS.add(chapter);
+                }
+
                 for(BookletPage page : chapter.getPages()){
                     ItemStack[] items = page.getItemStacksForPage();
                     FluidStack[] fluids = page.getFluidStacksForPage();

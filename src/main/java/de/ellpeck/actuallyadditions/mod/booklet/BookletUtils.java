@@ -233,22 +233,34 @@ public final class BookletUtils{
      */
     @SideOnly(Side.CLIENT)
     public static void updateSearchBar(GuiBooklet booklet){
-        if(booklet.currentEntrySet.getCurrentEntry() instanceof BookletEntryAllSearch){
-            BookletEntryAllSearch currentEntry = (BookletEntryAllSearch)booklet.currentEntrySet.getCurrentEntry();
-            if(booklet.searchField.getText() != null && !booklet.searchField.getText().isEmpty()){
-                currentEntry.chapters.clear();
+        boolean change = false;
 
-                for(IBookletChapter chapter : currentEntry.allChapters){
-                    String searchFieldText = booklet.searchField.getText().toLowerCase(Locale.ROOT);
-                    if(chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(searchFieldText) || getChapterStacksContainString(searchFieldText, chapter)){
-                        currentEntry.chapters.add(chapter);
-                    }
+        IBookletEntry current = booklet.currentEntrySet.getCurrentEntry();
+        boolean isAllSearch = current instanceof BookletEntryAllSearch;
+
+        if(booklet.searchField.getText() != null && !booklet.searchField.getText().isEmpty()){
+            if(!isAllSearch){
+                openIndexEntry(booklet, ActuallyAdditionsAPI.allAndSearch, 1, false);
+                current = booklet.currentEntrySet.getCurrentEntry();
+            }
+
+            current.getChapters().clear();
+            for(IBookletChapter chapter : ActuallyAdditionsAPI.ALL_CHAPTERS){
+                String searchFieldText = booklet.searchField.getText().toLowerCase(Locale.ROOT);
+                if(chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(searchFieldText) || getChapterStacksContainString(searchFieldText, chapter)){
+                    current.getChapters().add(chapter);
                 }
             }
-            else{
-                currentEntry.setChapters((ArrayList<IBookletChapter>)currentEntry.allChapters.clone());
-            }
-            openIndexEntry(booklet, booklet.currentEntrySet.getCurrentEntry(), booklet.currentEntrySet.getPageInIndex(), false);
+
+            change = true;
+        }
+        else if(isAllSearch){
+            current.setChapters(ActuallyAdditionsAPI.ALL_CHAPTERS);
+            change = true;
+        }
+
+        if(change){
+            openIndexEntry(booklet, current, booklet.currentEntrySet.getPageInIndex(), false);
         }
     }
 
@@ -294,12 +306,10 @@ public final class BookletUtils{
 
     @SideOnly(Side.CLIENT)
     public static void openIndexEntry(GuiBooklet booklet, IBookletEntry entry, int page, boolean resetTextField){
-        booklet.searchField.setVisible(entry instanceof BookletEntryAllSearch);
-        booklet.searchField.setFocused(entry instanceof BookletEntryAllSearch);
         if(resetTextField){
             booklet.searchField.setText("");
             if(entry instanceof BookletEntryAllSearch){
-                entry.setChapters((List<IBookletChapter>)((BookletEntryAllSearch)entry).allChapters.clone());
+                entry.setChapters(ActuallyAdditionsAPI.ALL_CHAPTERS);
             }
         }
 
@@ -380,10 +390,6 @@ public final class BookletUtils{
         if(chapter == null || booklet.currentEntrySet.getCurrentEntry() == null){
             return;
         }
-
-        booklet.searchField.setVisible(false);
-        booklet.searchField.setFocused(false);
-        booklet.searchField.setText("");
 
         booklet.currentEntrySet.setChapter(chapter);
 

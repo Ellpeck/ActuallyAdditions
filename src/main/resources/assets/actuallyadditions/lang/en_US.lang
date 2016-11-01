@@ -729,7 +729,7 @@ booklet.actuallyadditions.indexEntry.gettingStarted.name=Getting Started
 booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
 booklet.actuallyadditions.indexEntry.crossover.name=Mod Crossover
 booklet.actuallyadditions.indexEntry.functionalNoRF.name=Blocks that don't use RF
-booklet.actuallyadditions.indexEntry.allAndSearch.name=All Items and Search
+booklet.actuallyadditions.indexEntry.allAndSearch.name=A list of everything
 booklet.actuallyadditions.indexEntry.functionalRF.name=Blocks that use RF
 booklet.actuallyadditions.indexEntry.generatingRF.name=Blocks that generate RF
 booklet.actuallyadditions.indexEntry.itemsNoRF.name=Items that don't use RF
@@ -921,7 +921,7 @@ booklet.actuallyadditions.chapter.crystals.name=Crystals and Reconstructor
 booklet.actuallyadditions.chapter.crystals.text.1=The <item>Atomic Reconstructor<r> is used to craft <item>Crystals<r>, which are the main crafting ingredient in most items from <imp>Actually Additions<r>. <n>Upon being supplied with power, it shoots out a Laser. <tifisgrin>When the Laser hits a block<r>, it will convert all surrounding items and blocks, provided they can be converted. <n>When shooting a laser, it uses <imp><rf> RF<r>, but additional rates vary depending on the conversion.
 booklet.actuallyadditions.chapter.crystals.text.2=There are various <item>Lenses<r> that can be attached to the Reconstructor that don't all follow the default behavior of the Reconstructor and are able to do some neat things. <n>See the <imp>Reconstruction section<r> in the booklet <imp>for more information<r>. <n><n>When right-clicking the Reconstructor with a <item>Redstone Torch<r> in hand, it will change between a mode where it <imp>gets deactivated by Redstone<r> and a mode where it <imp>responds to pulses<r>.
 booklet.actuallyadditions.chapter.crystals.text.3=It should be noted that any recipes listed without information about Lenses <imp>don't use one<r>. <n><i>I thought that was obvious.
-booklet.actuallyadditions.chapter.crystals.text.5=When you have crafted a couple of items, you might want to find a way to <imp>automate this<r>. <n>There is a very simple way to do accomplish this: <n>Place the <item>Atomic Reconstructor<r> down facing into a <item>Precision Dropper<r> (to find it, look it up in the <imp>All Items and Search<r> Entry!). <n>Next, place a <item>Ranged Collector<r> in the area that has the converted items set as a whitelist. <n>Now you can just chuck your raw materials into the Dropper to convert them!
+booklet.actuallyadditions.chapter.crystals.text.5=When you have crafted a couple of items, you might want to find a way to <imp>automate this<r>. <n>There is a very simple way to do accomplish this: <n>Place the <item>Atomic Reconstructor<r> down facing into a <item>Precision Dropper<r> (to find it, look it up in the <imp>All Items<r> Entry!). <n>Next, place a <item>Ranged Collector<r> in the area that has the converted items set as a whitelist. <n>Now you can just chuck your raw materials into the Dropper to convert them!
 booklet.actuallyadditions.chapter.crystals.text.6=<n><n><n><i>Molecular Transformilator
 
 booklet.actuallyadditions.chapter.bookTutorial.name=Intro to the Manual

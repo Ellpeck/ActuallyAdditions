@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.api.internal.IEntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.IndexButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
-import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllSearch;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.config.GuiConfiguration;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
@@ -131,8 +130,9 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
         //Draws the search bar
-        if(this.currentEntrySet.getCurrentEntry() instanceof BookletEntryAllSearch && this.currentEntrySet.getCurrentChapter() == null){
-            this.drawTexturedModalRect(this.guiLeft+146, this.guiTop+160, 146, 80, 70, 14);
+        this.drawTexturedModalRect(this.guiLeft+146, this.guiTop+160, 146, 80, 70, 14);
+        if(!this.searchField.isFocused() && (this.searchField.getText() == null || this.searchField.getText().isEmpty())){
+            this.drawString(this.fontRendererObj, TextFormatting.ITALIC+"Click to search...", this.guiLeft+148, this.guiTop+162, 0xFFFFFF);
         }
 
         //Draws Achievement Info
@@ -373,10 +373,9 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
             this.buttonList.add(this.bookmarkButtons[i]);
         }
 
-        this.searchField = new GuiTextField(4500, this.fontRendererObj, this.guiLeft+148, this.guiTop+162, 66, 10);
+        this.searchField = new GuiTextField(4500, this.fontRendererObj, this.guiLeft+148, this.guiTop+162, 70, 10);
         this.searchField.setMaxStringLength(30);
         this.searchField.setEnableBackgroundDrawing(false);
-        this.searchField.setCanLoseFocus(false);
 
         this.currentEntrySet.removeEntry();
 

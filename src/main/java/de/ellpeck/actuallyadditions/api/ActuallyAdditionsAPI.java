@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.api;
 
 import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
@@ -42,6 +43,9 @@ public final class ActuallyAdditionsAPI{
     public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<CompostRecipe>();
     public static final Map<String, Integer> OIL_GENERATOR_RECIPES = new HashMap<String, Integer>();
     public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<IBookletEntry>();
+    //This is added to automatically, you don't need to add anything to this list
+    public static final List<IBookletChapter> ALL_CHAPTERS = new ArrayList<IBookletChapter>();
+    //This is added to automatically, you don't need to add anything to this list
     public static final List<BookletPage> BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA = new ArrayList<BookletPage>();
     public static final List<WeightedOre> STONE_ORES = new ArrayList<WeightedOre>();
     public static final List<WeightedOre> NETHERRACK_ORES = new ArrayList<WeightedOre>();

@@ -40,7 +40,8 @@ public class BookletEntry implements IBookletEntry{
 
     @Override
     public void setChapters(List<IBookletChapter> chapters){
-        this.chapters = chapters;
+        this.chapters.clear();
+        this.chapters.addAll(chapters);
     }
 
     @Override
