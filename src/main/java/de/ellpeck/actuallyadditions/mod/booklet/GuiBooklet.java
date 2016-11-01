@@ -140,9 +140,17 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         //Draws Achievement Info
         BookletUtils.drawAchievementInfo(this, true, x, y);
 
-        //Draws the title
         this.fontRendererObj.setUnicodeFlag(false);
+        //Draws the title
         BookletUtils.drawTitle(this);
+
+        if(this.buttonIntroduction.visible){
+            StringUtil.drawSplitString(this.fontRendererObj, TextFormatting.GREEN+"Hi! It looks like you're using this manual! Would you like help? "+TextFormatting.RESET+"\nClick the button below to save a couple of "+TextFormatting.GOLD+"useful chapters as bookmarks"+TextFormatting.RESET+" on the bottom of the GUI! \nIf you don't want this, shift-click the button instead.", this.guiLeft+150, this.guiTop+10, 100, 0xFFFFFF, true);
+
+            this.mc.getTextureManager().bindTexture(RES_LOC_ADDON);
+            this.drawTexturedModalRect(this.guiLeft+240, this.guiTop-10, 226, 0, 30, 55);
+            this.mc.getTextureManager().bindTexture(RES_LOC);
+        }
         this.fontRendererObj.setUnicodeFlag(true);
 
         //Pre-Renders the current page's content etc.
@@ -165,14 +173,9 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         }
 
         this.fontRendererObj.setUnicodeFlag(false);
-        if(this.buttonIntroduction.visible){
-            StringUtil.drawSplitString(this.fontRendererObj, TextFormatting.GREEN+"Hi! It looks like this is the first time you are using this manual! "+TextFormatting.RESET+"\nClick the button below to save a couple of "+TextFormatting.GOLD+"useful chapters as bookmarks"+TextFormatting.RESET+" on the bottom of the GUI! \nIf you don't want this, shift-click the button instead.", this.guiLeft+150, this.guiTop+10, 100, 0xFFFFFF, true);
-        }
-
         //Draws hovering texts for buttons
         BookletUtils.doHoverTexts(this, x, y);
         BookletUtils.drawAchievementInfo(this, false, x, y);
-
         this.fontRendererObj.setUnicodeFlag(unicodeBefore);
 
         //Resets mouse
