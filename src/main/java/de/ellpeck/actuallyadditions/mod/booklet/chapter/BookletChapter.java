@@ -84,11 +84,13 @@ public class BookletChapter implements IBookletChapter{
         return this.identifier;
     }
 
-    public void setImportant(){
+    public BookletChapter setImportant(){
         this.color = TextFormatting.DARK_GREEN;
+        return this;
     }
 
-    public void setSpecial(){
+    public BookletChapter setSpecial(){
         this.color = TextFormatting.DARK_PURPLE;
+        return this;
     }
 }

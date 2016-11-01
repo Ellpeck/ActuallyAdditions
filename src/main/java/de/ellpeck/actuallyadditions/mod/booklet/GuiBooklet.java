@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.api.internal.IEntrySet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.IndexButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
+import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
 import de.ellpeck.actuallyadditions.mod.config.GuiConfiguration;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
@@ -66,7 +67,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public final int ySize;
     public final IEntrySet currentEntrySet = new EntrySet(null);
     public final GuiButton[] chapterButtons = new GuiButton[CHAPTER_BUTTONS_AMOUNT];
-    public final GuiButton[] bookmarkButtons = new GuiButton[8];
+    public final BookmarkButton[] bookmarkButtons = new BookmarkButton[8];
     public final GuiScreen parentScreen;
     private final boolean tryOpenMainPage;
     private final boolean saveOnClose;
@@ -90,6 +91,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     private int ticksElapsed;
     private boolean mousePressed;
     private int hisNameIsAt;
+    public GuiButton buttonIntroduction;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
         this.xSize = 146;
@@ -162,8 +164,12 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
             this.currentEntrySet.getCurrentPage().render(this, x, y, this.ticksElapsed, this.mousePressed);
         }
 
-        //Draws hovering texts for buttons
         this.fontRendererObj.setUnicodeFlag(false);
+        if(this.buttonIntroduction.visible){
+            StringUtil.drawSplitString(this.fontRendererObj, TextFormatting.GREEN+"Hi! It looks like this is the first time you are using this manual! "+TextFormatting.RESET+"\nClick the button below to save a couple of "+TextFormatting.GOLD+"useful chapters as bookmarks"+TextFormatting.RESET+" on the bottom of the GUI! \nIf you don't want this, shift-click the button instead.", this.guiLeft+150, this.guiTop+10, 100, 0xFFFFFF, true);
+        }
+
+        //Draws hovering texts for buttons
         BookletUtils.doHoverTexts(this, x, y);
         BookletUtils.drawAchievementInfo(this, false, x, y);
 
@@ -237,8 +243,24 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
             }
         }
 
+        //Handles introduction
+        if(button == this.buttonIntroduction){
+            this.buttonIntroduction.visible = false;
+
+            if(!isShiftKeyDown()){
+                for(int i = 0; i < InitBooklet.chaptersIntroduction.length; i++){
+                    BookletChapter chap = InitBooklet.chaptersIntroduction[i];
+                    this.bookmarkButtons[i].assignedEntry.setEntry(chap.getPages()[0], chap, chap.getEntry(), ActuallyAdditionsAPI.BOOKLET_ENTRIES.indexOf(chap.getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1);
+                }
+                this.shouldSaveDataNextClose = true;
+            }
+
+            NBTTagCompound extraData = new NBTTagCompound();
+            extraData.setBoolean("IntroductionDone", true);
+            PacketHandlerHelper.sendChangePlayerDataPacket(extraData);
+        }
         //Handles update
-        if(button == this.buttonUpdate){
+        else if(button == this.buttonUpdate){
             if(UpdateChecker.needsUpdateNotify){
                 BookletUtils.openBrowser(UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK);
             }
@@ -379,21 +401,24 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
         this.currentEntrySet.removeEntry();
 
+        PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer);
+
+        this.buttonIntroduction = new TexturedButton(-3531, this.guiLeft+150, this.guiTop+128, 245, 0, 11, 11);
+        this.buttonList.add(this.buttonIntroduction);
+        this.buttonIntroduction.visible = !data.theCompound.getBoolean("IntroductionDone");
+
         if(ItemBooklet.forcedEntry == null){
             //Open last entry or introductory entry
-            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer);
-            if(data != null){
-                if(this.tryOpenMainPage && !data.theCompound.getBoolean("BookAlreadyOpened")){
-                    BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
-                    BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
+            if(this.tryOpenMainPage && !data.theCompound.getBoolean("BookAlreadyOpened")){
+                BookletUtils.openIndexEntry(this, InitBooklet.chapterIntro.entry, 1, true);
+                BookletUtils.openChapter(this, InitBooklet.chapterIntro, null);
 
-                    NBTTagCompound extraData = new NBTTagCompound();
-                    extraData.setBoolean("BookAlreadyOpened", true);
-                    PacketHandlerHelper.sendChangePlayerDataPacket(extraData);
-                }
-                else{
-                    BookletUtils.openLastBookPage(this, data.theCompound.getCompoundTag("BookletData"));
-                }
+                NBTTagCompound extraData = new NBTTagCompound();
+                extraData.setBoolean("BookAlreadyOpened", true);
+                PacketHandlerHelper.sendChangePlayerDataPacket(extraData);
+            }
+            else{
+                BookletUtils.openLastBookPage(this, data.theCompound.getCompoundTag("BookletData"));
             }
             this.shouldSaveDataNextClose = false;
         }

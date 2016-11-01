@@ -571,7 +571,7 @@ public final class BookletUtils{
         //Save Bookmarks
         NBTTagList list = new NBTTagList();
         for(int i = 0; i < gui.bookmarkButtons.length; i++){
-            BookmarkButton button = (BookmarkButton)gui.bookmarkButtons[i];
+            BookmarkButton button = gui.bookmarkButtons[i];
 
             NBTTagCompound buttonTag = new NBTTagCompound();
             button.assignedEntry.writeToNBT(buttonTag);
@@ -607,7 +607,7 @@ public final class BookletUtils{
         NBTTagList list = compound.getTagList("Bookmarks", 10);
         if(list != null){
             for(int i = 0; i < list.tagCount(); i++){
-                BookmarkButton button = (BookmarkButton)gui.bookmarkButtons[i];
+                BookmarkButton button = gui.bookmarkButtons[i];
                 button.assignedEntry.readFromNBT(list.getCompoundTagAt(i));
             }
         }

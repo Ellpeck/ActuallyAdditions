@@ -54,6 +54,7 @@ public class GuiBookletStand extends GuiBooklet{
         super.initGui();
 
         //Remove Bookmark Buttons
+        this.buttonIntroduction.visible = false;
         for(GuiButton bookmarkButton : this.bookmarkButtons){
             bookmarkButton.visible = false;
         }
