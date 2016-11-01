@@ -329,7 +329,7 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
         this.bookletName = "info."+ModUtil.MOD_ID+".booklet.manualName.1."+flavor;
 
         this.guiLeft = (this.width-this.xSize)/2;
-        this.guiTop = (this.height-this.ySize)/2;
+        this.guiTop = (this.height-this.ySize)/2-10;
 
         this.buttonForward = new TexturedButton(0, this.guiLeft+this.xSize-26, this.guiTop+this.ySize+1, 164, 0, 18, 10, Collections.singletonList(TextFormatting.GOLD+"Next Page"));
         this.buttonList.add(this.buttonForward);
