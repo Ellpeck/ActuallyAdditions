@@ -32,14 +32,14 @@ public class ItemMagnetRing extends ItemEnergy{
         int energyUse = 10;
         if(!entity.isSneaking()){
             //Get all the Items in the area
-            int range = 5;
+            int range = 8;
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(entity.posX-range, entity.posY-range, entity.posZ-range, entity.posX+range, entity.posY+range, entity.posZ+range));
             if(!items.isEmpty()){
                 for(EntityItem item : items){
                     if(this.getEnergyStored(stack) >= energyUse){
-                        double x = entity.posX+0.5D-item.posX;
+                        double x = entity.posX-item.posX;
                         double y = entity.posY+1D-item.posY;
-                        double z = entity.posZ+0.5D-item.posZ;
+                        double z = entity.posZ-item.posZ;
 
                         double distance = x*x+y*y+z*z;
                         if(distance <= 1.5){
@@ -48,7 +48,7 @@ public class ItemMagnetRing extends ItemEnergy{
                             }
                         }
                         else{
-                            double speed = 0.035/distance;
+                            double speed = 0.065/distance;
 
                             item.motionX += x*speed;
                             if(y >= 0){
