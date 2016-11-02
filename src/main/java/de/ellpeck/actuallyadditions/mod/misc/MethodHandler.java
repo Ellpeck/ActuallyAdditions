@@ -183,17 +183,29 @@ public class MethodHandler implements IMethodHandler{
                 if(!item.isDead && stack != null){
                     List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
                     for(LensConversionRecipe recipe : recipes){
-                        if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse*stack.stackSize){
-                            ItemStack outputCopy = recipe.outputStack.copy();
-                            outputCopy.stackSize = stack.stackSize;
+                        if(recipe != null && recipe.type == tile.getLens()){
+                            int itemsPossible = Math.min(tile.getEnergy()/recipe.energyUse, stack.stackSize);
 
-                            item.setDead();
+                            if(itemsPossible > 0){
+                                item.setDead();
 
-                            EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
-                            tile.getWorldObject().spawnEntityInWorld(newItem);
+                                if(stack.stackSize > 0){
+                                    ItemStack stackCopy = stack.copy();
+                                    stackCopy.stackSize-=itemsPossible;
 
-                            tile.extractEnergy(recipe.energyUse*stack.stackSize);
-                            break;
+                                    EntityItem inputLeft = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, stackCopy);
+                                    tile.getWorldObject().spawnEntityInWorld(inputLeft);
+                                }
+
+                                ItemStack outputCopy = recipe.outputStack.copy();
+                                outputCopy.stackSize = itemsPossible;
+
+                                EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
+                                tile.getWorldObject().spawnEntityInWorld(newItem);
+
+                                tile.extractEnergy(recipe.energyUse*itemsPossible);
+                                break;
+                            }
                         }
                     }
                 }
