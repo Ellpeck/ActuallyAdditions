@@ -59,6 +59,7 @@ public class PageReconstructor extends BookletPageAA{
         else{
             String strg = "Atomic Reconstructor";
             Minecraft.getMinecraft().fontRendererObj.drawString(strg, gui.getGuiLeft()+gui.getXSize()/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(strg)/2, gui.getGuiTop()+10, 0);
+            Minecraft.getMinecraft().fontRendererObj.drawString(recipe.energyUse+" RF", gui.getGuiLeft()+80, gui.getGuiTop()+30, 0, false);
         }
 
         String text = gui.getCurrentEntrySet().getCurrentPage().getText();
