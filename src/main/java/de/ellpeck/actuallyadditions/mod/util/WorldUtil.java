@@ -54,38 +54,22 @@ import java.util.List;
 
 public final class WorldUtil{
 
-    //This is probably hideous. Just saying.
     public static boolean doItemInteraction(int slotExtract, int slotInsert, TileEntity extract, TileEntity insert, EnumFacing extractSide, EnumFacing insertSide){
-        ItemStack theoreticalExtract = extractItem(slotExtract, extract, extractSide, Integer.MAX_VALUE, true);
-        if(theoreticalExtract != null){
-            ItemStack remaining = insertItem(slotInsert, insert, insertSide, theoreticalExtract, false);
-            if(!ItemStack.areItemStacksEqual(remaining, theoreticalExtract)){
-                int toExtract = remaining == null ? theoreticalExtract.stackSize : theoreticalExtract.stackSize-remaining.stackSize;
-                extractItem(slotExtract, extract, extractSide, toExtract, false);
-                return true;
+        if(extract.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide) && insert.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, insertSide)){
+            IItemHandler extractCap = extract.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide);
+            IItemHandler insertCap = insert.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, insertSide);
+
+            ItemStack theoreticalExtract = extractCap.extractItem(slotExtract, Integer.MAX_VALUE, true);
+            if(theoreticalExtract != null){
+                ItemStack remaining = insertCap.insertItem(slotInsert, theoreticalExtract, false);
+                if(!ItemStack.areItemStacksEqual(remaining, theoreticalExtract)){
+                    int toExtract = remaining == null ? theoreticalExtract.stackSize : theoreticalExtract.stackSize-remaining.stackSize;
+                    extractCap.extractItem(slotExtract, toExtract, false);
+                    return true;
+                }
             }
         }
         return false;
-    }
-
-    public static ItemStack insertItem(int slotInsert, TileEntity insert, EnumFacing insertSide, ItemStack stack, boolean simulate){
-        if(insert.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, insertSide)){
-            IItemHandler insertCap = insert.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, insertSide);
-            if(insertCap != null){
-                return insertCap.insertItem(slotInsert, stack, simulate);
-            }
-        }
-        return stack;
-    }
-
-    public static ItemStack extractItem(int slotExtract, TileEntity extract, EnumFacing extractSide, int amount, boolean simulate){
-        if(extract.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide)){
-            IItemHandler extractCap = extract.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide);
-            if(extractCap != null){
-                return extractCap.extractItem(slotExtract, amount, simulate);
-            }
-        }
-        return null;
     }
 
     public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer){
