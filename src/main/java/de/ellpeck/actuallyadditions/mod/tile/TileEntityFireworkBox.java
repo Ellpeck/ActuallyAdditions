@@ -33,29 +33,29 @@ public class TileEntityFireworkBox extends TileEntityBase implements ICustomEner
         super("fireworkBox");
     }
 
-    public static void spawnFireworks(World world, double x, double y, double z){
+    public void spawnFireworks(World world, double x, double y, double z){
         int range = 4;
-        int amount = Util.RANDOM.nextInt(5)+1;
+        int amount = world.rand.nextInt(5)+1;
         for(int i = 0; i < amount; i++){
-            ItemStack firework = makeFirework();
+            ItemStack firework = this.makeFirework();
 
-            double newX = x+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
-            double newZ = z+MathHelper.getRandomDoubleInRange(Util.RANDOM, 0, range*2)-range;
+            double newX = x+MathHelper.getRandomDoubleInRange(this.worldObj.rand, 0, range*2)-range;
+            double newZ = z+MathHelper.getRandomDoubleInRange(this.worldObj.rand, 0, range*2)-range;
             EntityFireworkRocket rocket = new EntityFireworkRocket(world, newX, y+0.5, newZ, firework);
             world.spawnEntityInWorld(rocket);
         }
     }
 
-    private static ItemStack makeFirework(){
+    private ItemStack makeFirework(){
         NBTTagList list = new NBTTagList();
-        int chargesAmount = Util.RANDOM.nextInt(2)+1;
+        int chargesAmount = this.worldObj.rand.nextInt(2)+1;
         for(int i = 0; i < chargesAmount; i++){
-            list.appendTag(makeFireworkCharge());
+            list.appendTag(this.makeFireworkCharge());
         }
 
         NBTTagCompound compound1 = new NBTTagCompound();
         compound1.setTag("Explosions", list);
-        compound1.setByte("Flight", (byte)(Util.RANDOM.nextInt(3)+1));
+        compound1.setByte("Flight", (byte)(this.worldObj.rand.nextInt(3)+1));
 
         NBTTagCompound compound = new NBTTagCompound();
         compound.setTag("Fireworks", compound1);
@@ -66,11 +66,11 @@ public class TileEntityFireworkBox extends TileEntityBase implements ICustomEner
         return firework;
     }
 
-    private static NBTTagCompound makeFireworkCharge(){
+    private NBTTagCompound makeFireworkCharge(){
         NBTTagCompound compound = new NBTTagCompound();
 
-        if(Util.RANDOM.nextFloat() >= 0.65F){
-            if(Util.RANDOM.nextFloat() >= 0.5F){
+        if(this.worldObj.rand.nextFloat() >= 0.65F){
+            if(this.worldObj.rand.nextFloat() >= 0.5F){
                 compound.setBoolean("Flicker", true);
             }
             else{
@@ -78,13 +78,13 @@ public class TileEntityFireworkBox extends TileEntityBase implements ICustomEner
             }
         }
 
-        int[] colors = new int[MathHelper.getRandomIntegerInRange(Util.RANDOM, 1, 6)];
+        int[] colors = new int[MathHelper.getRandomIntegerInRange(this.worldObj.rand, 1, 6)];
         for(int i = 0; i < colors.length; i++){
-            colors[i] = ItemDye.DYE_COLORS[Util.RANDOM.nextInt(ItemDye.DYE_COLORS.length)];
+            colors[i] = ItemDye.DYE_COLORS[this.worldObj.rand.nextInt(ItemDye.DYE_COLORS.length)];
         }
         compound.setIntArray("Colors", colors);
 
-        compound.setByte("Type", (byte)Util.RANDOM.nextInt(5));
+        compound.setByte("Type", (byte)this.worldObj.rand.nextInt(5));
 
         return compound;
     }
@@ -126,7 +126,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements ICustomEner
 
     private void doWork(){
         if(this.storage.getEnergyStored() >= USE_PER_SHOT){
-            spawnFireworks(this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
+            this.spawnFireworks(this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
 
             this.storage.extractEnergy(USE_PER_SHOT, false);
         }

@@ -75,7 +75,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                         if(this.currentTimer >= TIME){
                             this.currentTimer = 0;
                             if(this.slots[0] != null){
-                                EntityAnimal randomAnimal = animals.get(Util.RANDOM.nextInt(this.currentAnimalAmount));
+                                EntityAnimal randomAnimal = animals.get(this.worldObj.rand.nextInt(this.currentAnimalAmount));
                                 if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && (randomAnimal.isBreedingItem(this.slots[0]) || this.canHorseBeFed(randomAnimal))){
 
                                     this.feedAnimal(randomAnimal);
@@ -130,10 +130,10 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     public void feedAnimal(EntityAnimal animal){
         animal.setInLove(null);
         for(int i = 0; i < 7; i++){
-            double d = Util.RANDOM.nextGaussian()*0.02D;
-            double d1 = Util.RANDOM.nextGaussian()*0.02D;
-            double d2 = Util.RANDOM.nextGaussian()*0.02D;
-            this.worldObj.spawnParticle(EnumParticleTypes.HEART, (animal.posX+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(Util.RANDOM.nextFloat()*animal.height), (animal.posZ+(double)(Util.RANDOM.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
+            double d = animal.worldObj.rand.nextGaussian()*0.02D;
+            double d1 = animal.worldObj.rand.nextGaussian()*0.02D;
+            double d2 = animal.worldObj.rand.nextGaussian()*0.02D;
+            this.worldObj.spawnParticle(EnumParticleTypes.HEART, (animal.posX+(double)(animal.worldObj.rand.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(animal.worldObj.rand.nextFloat()*animal.height), (animal.posZ+(double)(animal.worldObj.rand.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
         }
     }
 

@@ -98,7 +98,7 @@ public class EntityWorm extends Entity{
                                     Block plantBlock = plantState.getBlock();
 
                                     if((plantBlock instanceof IGrowable || plantBlock instanceof IPlantable) && !(plantBlock instanceof BlockGrass)){
-                                        plantBlock.updateTick(this.worldObj, plant, plantState, Util.RANDOM);
+                                        plantBlock.updateTick(this.worldObj, plant, plantState, this.worldObj.rand);
 
                                         IBlockState newState = this.worldObj.getBlockState(plant);
                                         if(newState.getBlock().getMetaFromState(newState) != plantBlock.getMetaFromState(plantState)){

@@ -96,7 +96,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
-        if(Util.RANDOM.nextInt(ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 16 : 8) == 0){
+        if(this.worldObj.rand.nextInt(ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 16 : 8) == 0){
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             if(player != null){
                 PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
@@ -108,7 +108,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
                         if(network != null){
                             for(IConnectionPair aPair : network.connections){
                                 if(!aPair.doesSuppressRender() && aPair.contains(this.pos) && this.pos.equals(aPair.getPositions()[0])){
-                                    AssetUtil.renderParticlesFromAToB(aPair.getPositions()[0].getX(), aPair.getPositions()[0].getY(), aPair.getPositions()[0].getZ(), aPair.getPositions()[1].getX(), aPair.getPositions()[1].getY(), aPair.getPositions()[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : Util.RANDOM.nextInt(3)+1, 0.8F, this.type == LaserType.ITEM ? COLOR_ITEM : (this.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR), 1F);
+                                    AssetUtil.renderParticlesFromAToB(aPair.getPositions()[0].getX(), aPair.getPositions()[0].getY(), aPair.getPositions()[0].getZ(), aPair.getPositions()[1].getX(), aPair.getPositions()[1].getY(), aPair.getPositions()[1].getZ(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 1 : this.worldObj.rand.nextInt(3)+1, 0.8F, this.type == LaserType.ITEM ? COLOR_ITEM : (this.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR), 1F);
                                 }
                             }
                         }

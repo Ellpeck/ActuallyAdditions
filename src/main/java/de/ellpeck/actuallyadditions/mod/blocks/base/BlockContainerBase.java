@@ -99,14 +99,14 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     public void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, BlockPos pos){
         ItemStack stack = tile.getStackInSlot(i);
         if(stack != null && stack.stackSize > 0){
-            float dX = Util.RANDOM.nextFloat()*0.8F+0.1F;
-            float dY = Util.RANDOM.nextFloat()*0.8F+0.1F;
-            float dZ = Util.RANDOM.nextFloat()*0.8F+0.1F;
+            float dX = world.rand.nextFloat()*0.8F+0.1F;
+            float dY = world.rand.nextFloat()*0.8F+0.1F;
+            float dZ = world.rand.nextFloat()*0.8F+0.1F;
             EntityItem entityItem = new EntityItem(world, pos.getX()+dX, pos.getY()+dY, pos.getZ()+dZ, stack.copy());
             float factor = 0.05F;
-            entityItem.motionX = Util.RANDOM.nextGaussian()*factor;
-            entityItem.motionY = Util.RANDOM.nextGaussian()*factor+0.2F;
-            entityItem.motionZ = Util.RANDOM.nextGaussian()*factor;
+            entityItem.motionX = world.rand.nextGaussian()*factor;
+            entityItem.motionY = world.rand.nextGaussian()*factor+0.2F;
+            entityItem.motionZ = world.rand.nextGaussian()*factor;
             world.spawnEntityInWorld(entityItem);
         }
     }
@@ -277,7 +277,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
                 data.removeTag(key);
             }
 
-            ItemStack stack = new ItemStack(this.getItemDropped(state, Util.RANDOM, fortune), 1, this.damageDropped(state));
+            ItemStack stack = new ItemStack(this.getItemDropped(state, tile.getWorld().rand, fortune), 1, this.damageDropped(state));
             if(!data.hasNoTags()){
                 stack.setTagCompound(new NBTTagCompound());
                 stack.getTagCompound().setTag("Data", data);

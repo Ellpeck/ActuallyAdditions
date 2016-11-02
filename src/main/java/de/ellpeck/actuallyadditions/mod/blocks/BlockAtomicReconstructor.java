@@ -180,8 +180,8 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
             if(this.lastSysTime+3000 < sysTime){
                 this.lastSysTime = sysTime;
-                this.toPick1 = Util.RANDOM.nextInt(NAME_FLAVOR_AMOUNTS_1)+1;
-                this.toPick2 = Util.RANDOM.nextInt(NAME_FLAVOR_AMOUNTS_2)+1;
+                this.toPick1 = player.worldObj.rand.nextInt(NAME_FLAVOR_AMOUNTS_1)+1;
+                this.toPick2 = player.worldObj.rand.nextInt(NAME_FLAVOR_AMOUNTS_2)+1;
             }
 
             String base = "tile."+ModUtil.MOD_ID+"."+((BlockAtomicReconstructor)this.block).getBaseName()+".info.";

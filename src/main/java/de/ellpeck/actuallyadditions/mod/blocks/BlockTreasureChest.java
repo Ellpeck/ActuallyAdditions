@@ -68,7 +68,7 @@ public class BlockTreasureChest extends BlockBase{
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
-            world.playSound(null, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.2F, Util.RANDOM.nextFloat()*0.1F+0.9F);
+            world.playSound(null, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.2F, world.rand.nextFloat()*0.1F+0.9F);
             this.dropItems(world, pos);
             world.setBlockToAir(pos);
 
@@ -101,19 +101,19 @@ public class BlockTreasureChest extends BlockBase{
     }
 
     private void dropItems(World world, BlockPos pos){
-        for(int i = 0; i < MathHelper.getRandomIntegerInRange(Util.RANDOM, 3, 6); i++){
-            TreasureChestLoot theReturn = WeightedRandom.getRandomItem(Util.RANDOM, ActuallyAdditionsAPI.TREASURE_CHEST_LOOT);
+        for(int i = 0; i < MathHelper.getRandomIntegerInRange(world.rand, 3, 6); i++){
+            TreasureChestLoot theReturn = WeightedRandom.getRandomItem(world.rand, ActuallyAdditionsAPI.TREASURE_CHEST_LOOT);
             ItemStack itemStack = theReturn.returnItem.copy();
-            itemStack.stackSize = MathHelper.getRandomIntegerInRange(Util.RANDOM, theReturn.minAmount, theReturn.maxAmount);
+            itemStack.stackSize = MathHelper.getRandomIntegerInRange(world.rand, theReturn.minAmount, theReturn.maxAmount);
 
-            float dX = Util.RANDOM.nextFloat()*0.8F+0.1F;
-            float dY = Util.RANDOM.nextFloat()*0.8F+0.1F;
-            float dZ = Util.RANDOM.nextFloat()*0.8F+0.1F;
+            float dX = world.rand.nextFloat()*0.8F+0.1F;
+            float dY = world.rand.nextFloat()*0.8F+0.1F;
+            float dZ = world.rand.nextFloat()*0.8F+0.1F;
             EntityItem entityItem = new EntityItem(world, pos.getX()+dX, pos.getY()+dY, pos.getZ()+dZ, itemStack.copy());
             float factor = 0.05F;
-            entityItem.motionX = Util.RANDOM.nextGaussian()*factor;
-            entityItem.motionY = Util.RANDOM.nextGaussian()*factor+0.2F;
-            entityItem.motionZ = Util.RANDOM.nextGaussian()*factor;
+            entityItem.motionX = world.rand.nextGaussian()*factor;
+            entityItem.motionY = world.rand.nextGaussian()*factor+0.2F;
+            entityItem.motionZ = world.rand.nextGaussian()*factor;
             world.spawnEntityInWorld(entityItem);
             itemStack.stackSize = 0;
         }

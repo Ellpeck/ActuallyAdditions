@@ -34,6 +34,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class BlockInputter extends BlockContainerBase{
 
     public static final int NAME_FLAVOR_AMOUNTS = 15;
@@ -94,6 +96,7 @@ public class BlockInputter extends BlockContainerBase{
 
         private long lastSysTime;
         private int toPick;
+        private final Random rand = new Random();
 
         public TheItemBlock(Block block){
             super(block);
@@ -119,7 +122,7 @@ public class BlockInputter extends BlockContainerBase{
 
             if(this.lastSysTime+5000 < sysTime){
                 this.lastSysTime = sysTime;
-                this.toPick = Util.RANDOM.nextInt(NAME_FLAVOR_AMOUNTS)+1;
+                this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS)+1;
             }
 
             return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID+".blockInputter.add."+this.toPick+".name")+")";

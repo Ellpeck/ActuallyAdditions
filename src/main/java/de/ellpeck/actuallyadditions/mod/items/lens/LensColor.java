@@ -28,9 +28,11 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 
 public class LensColor extends Lens{
 
+    private final Random rand = new Random();
     public static final int ENERGY_USE = 200;
 
     //Thanks to xdjackiexd for this, as I couldn't be bothered
@@ -99,7 +101,7 @@ public class LensColor extends Lens{
 
     @Override
     public float[] getColor(){
-        float[] colors = POSSIBLE_COLORS[Util.RANDOM.nextInt(POSSIBLE_COLORS.length)];
+        float[] colors = POSSIBLE_COLORS[this.rand.nextInt(POSSIBLE_COLORS.length)];
         return new float[]{colors[0]/255F, colors[1]/255F, colors[2]/255F};
     }
 

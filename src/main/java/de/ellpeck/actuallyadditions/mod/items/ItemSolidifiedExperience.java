@@ -42,8 +42,8 @@ public class ItemSolidifiedExperience extends ItemBase{
             if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
                 //Drop Solidified XP
                 if(event.getEntityLiving() instanceof EntityCreature){
-                    if(Util.RANDOM.nextInt(10) <= event.getLootingLevel()*2){
-                        event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemSolidifiedExperience, Util.RANDOM.nextInt(2+event.getLootingLevel())+1), 0);
+                    if(event.getEntityLiving().worldObj.rand.nextInt(10) <= event.getLootingLevel()*2){
+                        event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemSolidifiedExperience, event.getEntityLiving().worldObj.rand.nextInt(2+event.getLootingLevel())+1), 0);
                     }
                 }
             }

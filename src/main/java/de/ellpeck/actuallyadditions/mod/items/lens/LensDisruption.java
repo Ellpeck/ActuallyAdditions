@@ -42,11 +42,11 @@ public class LensDisruption extends Lens{
 
                         ItemStack newStack;
                         do{
-                            if(Util.RANDOM.nextBoolean()){
-                                newStack = new ItemStack(Item.REGISTRY.getRandomObject(Util.RANDOM));
+                            if(tile.getWorldObject().rand.nextBoolean()){
+                                newStack = new ItemStack(Item.REGISTRY.getRandomObject(tile.getWorldObject().rand));
                             }
                             else{
-                                newStack = new ItemStack(Block.REGISTRY.getRandomObject(Util.RANDOM));
+                                newStack = new ItemStack(Block.REGISTRY.getRandomObject(tile.getWorldObject().rand));
                             }
                         }
                         while(newStack == null || newStack.getItem() == null);

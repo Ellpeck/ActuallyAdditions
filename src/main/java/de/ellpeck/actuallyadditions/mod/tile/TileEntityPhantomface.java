@@ -141,15 +141,15 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
-        if(Util.RANDOM.nextInt(2) == 0){
-            double d1 = (double)((float)this.boundPosition.getY()+Util.RANDOM.nextFloat());
-            int i1 = Util.RANDOM.nextInt(2)*2-1;
-            int j1 = Util.RANDOM.nextInt(2)*2-1;
-            double d4 = ((double)Util.RANDOM.nextFloat()-0.5D)*0.125D;
+        if(this.worldObj.rand.nextInt(2) == 0){
+            double d1 = (double)((float)this.boundPosition.getY()+this.worldObj.rand.nextFloat());
+            int i1 = this.worldObj.rand.nextInt(2)*2-1;
+            int j1 = this.worldObj.rand.nextInt(2)*2-1;
+            double d4 = ((double)this.worldObj.rand.nextFloat()-0.5D)*0.125D;
             double d2 = (double)this.boundPosition.getZ()+0.5D+0.25D*(double)j1;
-            double d5 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)j1);
+            double d5 = (double)(this.worldObj.rand.nextFloat()*1.0F*(float)j1);
             double d0 = (double)this.boundPosition.getX()+0.5D+0.25D*(double)i1;
-            double d3 = (double)(Util.RANDOM.nextFloat()*1.0F*(float)i1);
+            double d3 = (double)(this.worldObj.rand.nextFloat()*1.0F*(float)i1);
             this.worldObj.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
 

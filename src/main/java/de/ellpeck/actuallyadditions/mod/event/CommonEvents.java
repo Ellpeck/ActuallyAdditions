@@ -85,8 +85,8 @@ public class CommonEvents{
         if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
             //Drop Cobwebs from Spiders
             if(ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof EntitySpider){
-                if(Util.RANDOM.nextInt(20) <= event.getLootingLevel()*2){
-                    event.getEntityLiving().entityDropItem(new ItemStack(Blocks.WEB, Util.RANDOM.nextInt(2+event.getLootingLevel())+1), 0);
+                if(event.getEntityLiving().worldObj.rand.nextInt(20) <= event.getLootingLevel()*2){
+                    event.getEntityLiving().entityDropItem(new ItemStack(Blocks.WEB, event.getEntityLiving().worldObj.rand.nextInt(2+event.getLootingLevel())+1), 0);
                 }
             }
         }

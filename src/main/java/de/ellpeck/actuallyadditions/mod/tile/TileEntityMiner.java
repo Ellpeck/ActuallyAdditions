@@ -107,7 +107,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
                             List<ItemStack> drops = block.getDrops(this.worldObj, pos, this.worldObj.getBlockState(pos), 0);
                             float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, pos, this.worldObj.getBlockState(pos), 0, 1, false, null);
 
-                            if(Util.RANDOM.nextFloat() <= chance){
+                            if(this.worldObj.rand.nextFloat() <= chance){
                                 if(WorldUtil.addToInventory(this, drops, false, true)){
                                     if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
                                         this.worldObj.playEvent(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));

@@ -226,7 +226,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
             if(outputTwo.getItemDamage() == Util.WILDCARD){
                 outputTwo.setItemDamage(0);
             }
-            int rand = Util.RANDOM.nextInt(100)+1;
+            int rand = this.worldObj.rand.nextInt(100)+1;
             if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots[theInput])){
                 if(this.slots[theSecondOutput] == null){
                     this.slots[theSecondOutput] = outputTwo.copy();

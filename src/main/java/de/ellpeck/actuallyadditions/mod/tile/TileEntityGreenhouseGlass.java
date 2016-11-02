@@ -56,7 +56,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                             IBlockState state = this.worldObj.getBlockState(blockToFert);
                             Block block = state.getBlock();
                             int metaBefore = block.getMetaFromState(state);
-                            block.updateTick(this.worldObj, blockToFert, this.worldObj.getBlockState(blockToFert), Util.RANDOM);
+                            block.updateTick(this.worldObj, blockToFert, this.worldObj.getBlockState(blockToFert), this.worldObj.rand);
 
                             IBlockState newState = this.worldObj.getBlockState(blockToFert);
                             if(newState.getBlock().getMetaFromState(newState) != metaBefore){
@@ -67,7 +67,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                 }
                 else{
                     int time = 100;
-                    this.timeUntilNextFert = time+Util.RANDOM.nextInt(time);
+                    this.timeUntilNextFert = time+this.worldObj.rand.nextInt(time);
                 }
             }
         }

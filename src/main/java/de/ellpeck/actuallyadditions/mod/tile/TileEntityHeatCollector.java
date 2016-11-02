@@ -64,8 +64,8 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                     this.storage.receiveEnergy(ENERGY_PRODUCE, false);
                     this.markDirty();
 
-                    if(Util.RANDOM.nextInt(10000) == 0){
-                        int randomSide = blocksAround.get(Util.RANDOM.nextInt(blocksAround.size()));
+                    if(this.worldObj.rand.nextInt(10000) == 0){
+                        int randomSide = blocksAround.get(this.worldObj.rand.nextInt(blocksAround.size()));
                         this.worldObj.setBlockToAir(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(randomSide)));
                     }
                 }

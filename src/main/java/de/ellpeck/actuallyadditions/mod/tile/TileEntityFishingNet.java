@@ -59,7 +59,7 @@ public class TileEntityFishingNet extends TileEntityBase{
                         this.timeUntilNextDrop--;
                         if(this.timeUntilNextDrop <= 0){
                             LootContext.Builder builder = new LootContext.Builder((WorldServer)this.worldObj);
-                            List<ItemStack> fishables = this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(Util.RANDOM, builder.build());
+                            List<ItemStack> fishables = this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(this.worldObj.rand, builder.build());
                             for(ItemStack fishable : fishables){
                                 ItemStack leftover = this.storeInContainer(fishable);
                                 if(leftover != null){
@@ -72,7 +72,7 @@ public class TileEntityFishingNet extends TileEntityBase{
                     }
                     else{
                         int time = 15000;
-                        this.timeUntilNextDrop = time+Util.RANDOM.nextInt(time/2);
+                        this.timeUntilNextDrop = time+this.worldObj.rand.nextInt(time/2);
                     }
                 }
             }

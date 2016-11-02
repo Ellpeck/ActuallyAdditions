@@ -62,12 +62,12 @@ public class BlockSmileyCloud extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
-        if(Util.RANDOM.nextInt(30) == 0){
+        if(world.rand.nextInt(30) == 0){
             for(int i = 0; i < 2; i++){
-                double d = Util.RANDOM.nextGaussian()*0.02D;
-                double d1 = Util.RANDOM.nextGaussian()*0.02D;
-                double d2 = Util.RANDOM.nextGaussian()*0.02D;
-                world.spawnParticle(EnumParticleTypes.HEART, pos.getX()+Util.RANDOM.nextFloat(), pos.getY()+0.65+Util.RANDOM.nextFloat(), pos.getZ()+Util.RANDOM.nextFloat(), d, d1, d2);
+                double d = world.rand.nextGaussian()*0.02D;
+                double d1 = world.rand.nextGaussian()*0.02D;
+                double d2 = world.rand.nextGaussian()*0.02D;
+                world.spawnParticle(EnumParticleTypes.HEART, pos.getX()+world.rand.nextFloat(), pos.getY()+0.65+world.rand.nextFloat(), pos.getZ()+world.rand.nextFloat(), d, d1, d2);
             }
         }
     }

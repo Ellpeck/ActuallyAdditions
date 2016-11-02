@@ -17,11 +17,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Locale;
-import java.util.Random;
 
 public final class Util{
 
-    public static final Random RANDOM = new Random();
     public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
     public static final int BUCKET = Fluid.BUCKET_VOLUME;
 

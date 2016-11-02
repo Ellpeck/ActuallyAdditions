@@ -110,8 +110,8 @@ public class ItemWingsOfTheBats extends ItemBase{
         if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
             //Drop Wings from Bats
             if(ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntityLiving() instanceof EntityBat){
-                if(Util.RANDOM.nextInt(15) <= event.getLootingLevel()*2){
-                    event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemMisc, Util.RANDOM.nextInt(2+event.getLootingLevel())+1, TheMiscItems.BAT_WING.ordinal()), 0);
+                if(event.getEntityLiving().worldObj.rand.nextInt(15) <= event.getLootingLevel()*2){
+                    event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemMisc, event.getEntityLiving().worldObj.rand.nextInt(2+event.getLootingLevel())+1, TheMiscItems.BAT_WING.ordinal()), 0);
                 }
             }
         }
