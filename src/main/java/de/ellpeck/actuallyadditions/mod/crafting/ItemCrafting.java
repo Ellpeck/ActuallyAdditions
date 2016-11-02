@@ -21,7 +21,9 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.*;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.IGrowable;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -91,6 +93,7 @@ public final class ItemCrafting{
     public static IRecipe recipeMiningLens;
     public static IRecipe recipeBag;
     public static IRecipe recipeVoidBag;
+    public static IRecipe recipeLensMoreDeath;
 
     public static void init(){
 
@@ -186,6 +189,18 @@ public final class ItemCrafting{
                     'P', "gemLapis",
                     'E', "gemEmerald"));
             recipeMiningLens = RecipeUtil.lastIRecipe();
+        }
+
+        //Killer Lens
+        if(ConfigCrafting.MORE_DEATH_LENS.isEnabled()){
+            ItemStack enchBook = new ItemStack(Items.ENCHANTED_BOOK);
+            Items.ENCHANTED_BOOK.addEnchantment(enchBook, new EnchantmentData(Enchantments.SHARPNESS, 5));
+
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMoreDamageLens),
+                    new ItemStack(Items.DIAMOND_SWORD),
+                    new ItemStack(InitItems.itemDamageLens),
+                    enchBook));
+            recipeLensMoreDeath = RecipeUtil.lastIRecipe();
         }
 
         //Filter

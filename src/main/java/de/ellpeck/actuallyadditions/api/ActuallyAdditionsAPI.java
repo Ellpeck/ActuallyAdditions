@@ -83,6 +83,7 @@ public final class ActuallyAdditionsAPI{
     public static LensConversion lensDefaultConversion;
     public static Lens lensDetonation;
     public static Lens lensDeath;
+    public static Lens lensEvenMoarDeath;
     public static Lens lensColor;
     public static Lens lensDisruption;
     public static Lens lensDisenchanting;

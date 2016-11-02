@@ -144,6 +144,7 @@ public final class InitItems{
     public static Item itemColorLens;
     public static Item itemExplosionLens;
     public static Item itemDamageLens;
+    public static Item itemMoreDamageLens;
     public static Item itemDisenchantingLens;
     public static Item itemMiningLens;
 
@@ -236,6 +237,7 @@ public final class InitItems{
         itemColorLens = new ItemLens("itemColorLens", ActuallyAdditionsAPI.lensColor);
         itemExplosionLens = new ItemLens("itemExplosionLens", ActuallyAdditionsAPI.lensDetonation);
         itemDamageLens = new ItemLens("itemDamageLens", ActuallyAdditionsAPI.lensDeath);
+        itemMoreDamageLens = new ItemLens("itemMoreDamageLens", ActuallyAdditionsAPI.lensEvenMoarDeath);
         itemDisenchantingLens = new ItemLens("itemDisenchantingLens", ActuallyAdditionsAPI.lensDisenchanting);
         itemMiningLens = new ItemLens("itemMiningLens", ActuallyAdditionsAPI.lensMining);
         itemCrystal = new ItemCrystal("itemCrystal", false);

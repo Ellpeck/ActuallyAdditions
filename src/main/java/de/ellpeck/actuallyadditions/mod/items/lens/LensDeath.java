@@ -24,17 +24,25 @@ public class LensDeath extends Lens{
 
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        int use = 150; //Per Block (because it doesn't only activate when something is hit like the other lenses!)
-        if(tile.getEnergy() >= use){
-            tile.extractEnergy(use);
+        ArrayList<EntityLivingBase> entities = (ArrayList<EntityLivingBase>)tile.getWorldObject().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
+        for(EntityLivingBase entity : entities){
+            int use = this.getUsePerEntity();
+            if(tile.getEnergy() >= use){
+                tile.extractEnergy(use);
 
-            ArrayList<EntityLivingBase> entities = (ArrayList<EntityLivingBase>)tile.getWorldObject().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
-            for(EntityLivingBase entity : entities){
-                entity.attackEntityFrom(DamageSources.DAMAGE_ATOMIC_RECONSTRUCTOR, 20F);
+                this.onAttacked(entity, tile);
             }
         }
 
         return hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock);
+    }
+
+    protected void onAttacked(EntityLivingBase entity, IAtomicReconstructor tile){
+        entity.attackEntityFrom(DamageSources.DAMAGE_ATOMIC_RECONSTRUCTOR, 20F);
+    }
+
+    protected int getUsePerEntity(){
+        return 350;
     }
 
     @Override

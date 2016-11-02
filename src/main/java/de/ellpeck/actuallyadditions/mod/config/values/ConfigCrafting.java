@@ -139,6 +139,7 @@ public enum ConfigCrafting{
     CHEST_TO_CRATE_UPGRADE("Chest To Crate Upgrade", ConfigCategories.ITEMS_CRAFTING),
     DISENCHANTING_LENS("Disenchanting Lens", ConfigCategories.ITEMS_CRAFTING),
     MINING_LENS("Mining Lens", ConfigCategories.ITEMS_CRAFTING),
+    MORE_DEATH_LENS("Killer Lens", ConfigCategories.ITEMS_CRAFTING),
     CRATE_KEEPER("Crate Keeper", ConfigCategories.ITEMS_CRAFTING),
     DRILL_CORE("Drill Core", ConfigCategories.ITEMS_CRAFTING),
     ATOMIC_RECONSTRUCTOR("Atomic Reconstructor", ConfigCategories.BLOCKS_CRAFTING),
