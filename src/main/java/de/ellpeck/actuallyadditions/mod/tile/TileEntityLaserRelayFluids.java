@@ -24,6 +24,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,21 +44,30 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
 
     @Override
     public void saveDataOnChangeOrWorldStart(){
-        this.receiversAround.clear();
+        Map<EnumFacing,  TileEntity> old = new HashMap<EnumFacing, TileEntity>(this.receiversAround);
+        boolean change = false;
 
+        this.receiversAround.clear();
         for(EnumFacing side : EnumFacing.values()){
             BlockPos pos = this.getPos().offset(side);
             TileEntity tile = this.worldObj.getTileEntity(pos);
             if(tile != null && !(tile instanceof TileEntityLaserRelay)){
                 if(tile instanceof net.minecraftforge.fluids.IFluidHandler || tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())){
                     this.receiversAround.put(side, tile);
+
+                    TileEntity oldTile = old.get(side);
+                    if(oldTile == null || !tile.equals(oldTile)){
+                        change = true;
+                    }
                 }
             }
         }
 
-        Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
-        if(network != null){
-            network.changeAmount++;
+        if(change){
+            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
+            if(network != null){
+                network.changeAmount++;
+            }
         }
     }
 

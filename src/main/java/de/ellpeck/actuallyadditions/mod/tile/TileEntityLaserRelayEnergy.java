@@ -25,6 +25,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -80,21 +81,30 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
 
     @Override
     public void saveDataOnChangeOrWorldStart(){
-        this.receiversAround.clear();
+        Map<EnumFacing, TileEntity> old = new HashMap<EnumFacing, TileEntity>(this.receiversAround);
+        boolean change = false;
 
+        this.receiversAround.clear();
         for(EnumFacing side : EnumFacing.values()){
             BlockPos pos = this.getPos().offset(side);
             TileEntity tile = this.worldObj.getTileEntity(pos);
             if(tile != null && !(tile instanceof TileEntityLaserRelay)){
                 if(tile instanceof IEnergyReceiver || (ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite()))){
                     this.receiversAround.put(side, tile);
+
+                    TileEntity oldTile = old.get(side);
+                    if(oldTile == null || !tile.equals(oldTile)){
+                        change = true;
+                    }
                 }
             }
         }
 
-        Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
-        if(network != null){
-            network.changeAmount++;
+        if(change){
+            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
+            if(network != null){
+                network.changeAmount++;
+            }
         }
     }
 

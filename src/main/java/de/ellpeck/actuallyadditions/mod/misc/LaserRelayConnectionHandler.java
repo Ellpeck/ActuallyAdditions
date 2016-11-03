@@ -56,7 +56,6 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
         for(IConnectionPair secondPair : secondNetwork.connections){
             firstNetwork.connections.add(secondPair);
         }
-        firstNetwork.changeAmount++;
 
         WorldData.getDataForWorld(world).laserRelayNetworks.remove(secondNetwork);
         //System.out.println("Merged Two Networks!");

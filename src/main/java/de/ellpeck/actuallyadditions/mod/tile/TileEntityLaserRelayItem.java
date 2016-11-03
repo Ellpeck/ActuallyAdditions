@@ -24,6 +24,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,8 +52,10 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
     @Override
     public void saveDataOnChangeOrWorldStart(){
-        this.handlersAround.clear();
+        Map<BlockPos,  IItemHandler> old = new HashMap<BlockPos, IItemHandler>(this.handlersAround);
+        boolean change = false;
 
+        this.handlersAround.clear();
         for(int i = 0; i <= 5; i++){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
             BlockPos pos = this.getPos().offset(side);
@@ -60,14 +63,21 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
             if(tile != null && !(tile instanceof TileEntityItemViewer) && !(tile instanceof TileEntityLaserRelay)){
                 IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
                 if(handler != null){
-                    this.handlersAround.put(tile.getPos(), handler);
+                    this.handlersAround.put(pos, handler);
+
+                    IItemHandler oldHandler = old.get(pos);
+                    if(oldHandler == null || !handler.equals(oldHandler)){
+                        change = true;
+                    }
                 }
             }
         }
 
-        Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
-        if(network != null){
-            network.changeAmount++;
+        if(change){
+            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
+            if(network != null){
+                network.changeAmount++;
+            }
         }
     }
 
