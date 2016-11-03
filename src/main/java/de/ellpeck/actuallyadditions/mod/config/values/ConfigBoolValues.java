@@ -22,8 +22,8 @@ public enum ConfigBoolValues{
     DO_UPDATE_CHECK("Do Update Check", ConfigCategories.OTHER, true, "If Actually Additions should check for an Update on joining a World"),
     UPDATE_CHECK_VERSION_SPECIFIC("Version Specific Update Checker", ConfigCategories.OTHER, true, "If Actually Additions' Update Check should only search for updates for the Minecraft Version you currently have"),
 
-    DO_CAT_DROPS("Do Cat Drops", ConfigCategories.OTHER, true, "If Cats drop Hairy Balls on Occasion"),
-    WORMS("Worms", ConfigCategories.OTHER, true, "If worms should drop from tilling the ground"),
+    DO_CAT_DROPS("Do Cat Drops", ConfigCategories.OTHER, true, "If true, Cats drop Hairy Balls Occasionally."),
+    WORMS("Worms", ConfigCategories.OTHER, true, "If true, worms will drop from tilling the soil."),
 
     DO_RICE_GEN("Rice Gen", ConfigCategories.WORLD_GEN, true, "If Rice should generate in the World"),
     DO_CANOLA_GEN("Canola Gen", ConfigCategories.WORLD_GEN, true, "If Canola should generate in the World"),
@@ -49,13 +49,13 @@ public enum ConfigBoolValues{
 
     WATER_BOWL("Water Bowl", ConfigCategories.OTHER, true, "If right-clicking a bowl on water should create a water bowl"),
 
-    LESS_SOUND("Less Sound", ConfigCategories.PERFORMANCE, false, "If blocks in Actually Additions should have less sounds"),
-    LESS_PARTICLES("Less Particles", ConfigCategories.PERFORMANCE, false, "If blocks in Actually Additions should have less particles"),
-    LESS_BLOCK_BREAKING_EFFECTS("Less Block Breaking Effects", ConfigCategories.PERFORMANCE, false, "If there should not be a sound effect and particles when a block is being destroyed by a breaker or similar"),
+    LESS_SOUND("Less Sound", ConfigCategories.PERFORMANCE, false, "If true, There will be lesser sounds from machines from Actually Additions."),
+    LESS_PARTICLES("Less Particles", ConfigCategories.PERFORMANCE, false, "If true, there will be lesser particles displayed from Actually Additions machines and blocks."),
+    LESS_BLOCK_BREAKING_EFFECTS("Less Block Breaking Effects", ConfigCategories.PERFORMANCE, false, "If true, there will be lesser sound effects from blocks breaking via Actually Additions machines."),
 
     LASER_RELAY_LOSS("Laser Relay Energy Loss", ConfigCategories.MACHINE_VALUES, true, "If Energy Laser Relays should have energy loss"),
 
-    SUPER_DUPER_HARD_MODE("Super Duper Hard Recipes", ConfigCategories.OTHER, false, "Turn this on to make recipes for items from the mod really hard. (This is a joke feature making fun of the whole FTB Infinity Expert Mode style of playing. You shouldn't really turn this on as it makes the mod completely unplayable.)");
+    SUPER_DUPER_HARD_MODE("Super Duper Hard Recipes", ConfigCategories.OTHER, false, "Turn this on to make recipes for items from the mod really hard. (This is a joke feature poking fun of the whole FTB Infinity Expert Mode style of playing. You shouldn't really turn this on as it makes the mod completely unplayable.)");
 
     public final String name;
     public final String category;
