@@ -189,7 +189,7 @@ public class MethodHandler implements IMethodHandler{
                             if(itemsPossible > 0){
                                 item.setDead();
 
-                                if(stack.stackSize > 0){
+                                if(stack.stackSize-itemsPossible > 0){
                                     ItemStack stackCopy = stack.copy();
                                     stackCopy.stackSize-=itemsPossible;
 
