@@ -27,6 +27,8 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     private final List<GenericItemHandlerInfo> genericInfos = new ArrayList<GenericItemHandlerInfo>();
     private final Map<Integer, SpecificItemHandlerInfo> specificInfos = new HashMap<Integer, SpecificItemHandlerInfo>();
     public TileEntityLaserRelayItem connectedRelay;
+
+    private Network oldNetwork;
     private int lastNetworkChangeAmount = -1;
 
     public TileEntityItemViewer(){
@@ -79,7 +81,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     private void queryAndSaveData(){
         if(this.connectedRelay != null){
             Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.connectedRelay.getPos(), this.worldObj);
-            if(network != null && this.lastNetworkChangeAmount != network.changeAmount){
+            if(network != null && (this.oldNetwork != network || this.lastNetworkChangeAmount != network.changeAmount)){
                 this.genericInfos.clear();
                 this.specificInfos.clear();
 
@@ -98,6 +100,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
                     }
                 }
 
+                this.oldNetwork = network;
                 this.lastNetworkChangeAmount = network.changeAmount;
             }
         }
