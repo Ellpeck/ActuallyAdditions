@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigCategories;
 
 public enum ConfigStringListValues{
 
-    CRUSHER_RECIPE_EXCEPTIONS("Crusher Recipe Exceptions", ConfigCategories.OTHER, new String[]{"ingotBrick", "ingotBrickNether"}, "The Ingots, Dusts and Ores blacklisted from being auto-registered to be crushed by the Crusher. This list uses OreDictionary Names of the Inputs only."),
+    CRUSHER_RECIPE_EXCEPTIONS("Crusher Recipe Exceptions", ConfigCategories.OTHER, new String[]{"ingotBrick", "ingotBrickNether"}, "Ingots, Dusts and Ores will be blacklisted from being auto-registered to be crushed by the Crusher. This list uses OreDictionary Names of the Inputs only."),
     CRUSHER_OUTPUT_BLACKLIST("Crusher Output Blacklist", ConfigCategories.OTHER, new String[0], "The items that aren't allowed as outputs from OreDict Crusher recipes. Use this in case a mod, for example, adds a dust variant that can't be smelted into an ingot. Use REGISTRY NAMES, and if metadata is needed, add it like so: somemod:some_item@3"),
     MASHED_FOOD_CRAFTING_EXCEPTIONS("Mashed Food Crafting Exceptions", ConfigCategories.ITEMS_CRAFTING, new String[]{"ActuallyAdditions:itemCoffee"}, "The ItemFood, IGrowable and IPlantable Items that can not be used to craft Mashed Food. These are the actual registered Item Names, the ones you use, for example, when using the /give Command."),
     PAXEL_EXTRA_MINING_WHITELIST("AIOT Extra Whitelist", ConfigCategories.TOOL_VALUES, new String[]{"TConstruct:GravelOre"}, "By default, the AIOT can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command."),
