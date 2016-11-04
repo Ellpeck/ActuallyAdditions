@@ -19,7 +19,7 @@ public enum ConfigBoolValues{
 
     GENERATE_QUARTZ("Black Quartz", ConfigCategories.WORLD_GEN, true, "Shold Black Quartz generate in the world?"),
 
-    DO_UPDATE_CHECK("Update Checker", ConfigCategories.OTHER, true, "If true, Actually Additions Checks for updates on World Load."),
+    DO_UPDATE_CHECK("Do update check", ConfigCategories.OTHER, true, "If true, Actually Additions Checks for updates on World Load."),
     UPDATE_CHECK_VERSION_SPECIFIC("Version Specific Update Checker", ConfigCategories.OTHER, true, "If true, Actually Additions' Update Checker searches for updates for the Minecraft Version you currently play on."),
 
     DO_CAT_DROPS("Do Cat Drops", ConfigCategories.OTHER, true, "If true, Cats drop Hairy Balls Occasionally."),
@@ -36,7 +36,7 @@ public enum ConfigBoolValues{
     DO_BAT_DROPS("Bat Wing Drop", ConfigCategories.MOB_DROPS, true, "Should Bat wings drop from Bats?"),
     DO_XP_DROPS("Solidified XP Drop", ConfigCategories.MOB_DROPS, true, "If true, Mobs will randomly drop solidified XP occasionally."),
 
-    CTRL_EXTRA_INFO("Advanced Info", ConfigCategories.OTHER, false, "Show Advanced Item Info when holding Control on every Item(Usually for debug purposes and modpack makers)."),
+    CTRL_EXTRA_INFO("Advanced Info", ConfigCategories.OTHER, true, "Show Advanced Item Info when holding Control on every Item."),
     CTRL_INFO_FOR_EXTRA_INFO("Advanced Info Tooltips", ConfigCategories.OTHER, true, "Show the 'Press Control for more Info'-Text on Item Tooltips"),
 
     SHOW_BOOKLET_INFO("Booklet Quick Opening Info", ConfigCategories.TOOL_VALUES, true, "If true,'Press key for more information' text should show when the item has a page in the booklet"),
