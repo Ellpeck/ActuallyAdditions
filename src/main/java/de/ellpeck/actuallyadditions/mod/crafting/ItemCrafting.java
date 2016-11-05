@@ -94,8 +94,21 @@ public final class ItemCrafting{
     public static IRecipe recipeBag;
     public static IRecipe recipeVoidBag;
     public static IRecipe recipeLensMoreDeath;
+    public static IRecipe recipeFillingWand;
 
     public static void init(){
+
+        //Filling Wand
+        if(ConfigCrafting.FILLING_WAND.isEnabled()){
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFillingWand),
+                    "IPI", "DCD", " B ",
+                    'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()),
+                    'P', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()),
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
+                    'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()),
+                    'B', new ItemStack(InitItems.itemBatteryTriple)));
+            recipeFillingWand = RecipeUtil.lastIRecipe();
+        }
 
         //Bag
         if(ConfigCrafting.BAG.isEnabled()){
