@@ -864,7 +864,7 @@ booklet.actuallyadditions.chapter.leafBlower.name=Leaf Blowers
 booklet.actuallyadditions.chapter.leafBlower.text.1=The <item>Leaf Blower<r> can blow away tall grass, flowers and other stuff around you when you <imp>hold right-click<r>. There is an <item>Advanced Leaf Blower<r>, which works like the basic one, except that it operates <imp>much faster<r> and <imp>also breaks Leaves<r>.
 
 booklet.actuallyadditions.chapter.aiots.name=All-In-One-Tools (AIOTs)
-booklet.actuallyadditions.chapter.aiots.text.1=An <item>All-In-One-Tool<r> is a tool that is <imp>Pickaxe, Axe, Shovel, Sword and Hoe in one<r>. They are available in every common material.
+booklet.actuallyadditions.chapter.aiots.text.1=An <item>All-In-One-Tool<r> is a tool that is <item>Pickaxe<r>, <item>Axe<r>, <item>Shovel<r>, <item>Sword<r> and <item>Hoe<r> in one. They are available in every common material. <n>Additionally to being able to mine stone, wood and softer materials, when <imp>not sneaking<r>, they create <item>Farmland<r> on right-click, whereas when <imp>sneaking<r>, they create <item>Paths<r>.
 
 booklet.actuallyadditions.chapter.jams.name=Jams
 booklet.actuallyadditions.chapter.jams.text.1=Once, there was a <imp>Kitty<r> who really wanted some Jam. <n>So I made some <item>Jam<r>. <n>Seriously, this is Jam. You can find it in Village Houses or buy it from the <imp>Jam Villager<r>. <n>Every Jam gives you two different <imp>potion effects<r>!
