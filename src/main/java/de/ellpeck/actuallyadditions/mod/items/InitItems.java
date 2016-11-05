@@ -36,7 +36,6 @@ import net.minecraft.tileentity.TileEntityChest;
 public final class InitItems{
 
     public static Item itemBooklet;
-
     public static Item itemFertilizer;
     public static Item itemMisc;
     public static Item itemFoods;
@@ -47,57 +46,44 @@ public final class InitItems{
     public static Item itemSolidifiedExperience;
     public static Item itemLeafBlower;
     public static Item itemLeafBlowerAdvanced;
-
     public static Item itemPotionRing;
     public static Item itemPotionRingAdvanced;
-
     public static Item itemPickaxeEmerald;
     public static Item itemAxeEmerald;
     public static Item itemShovelEmerald;
     public static Item itemSwordEmerald;
     public static Item itemHoeEmerald;
-
     public static Item itemHelmEmerald;
     public static Item itemChestEmerald;
     public static Item itemPantsEmerald;
     public static Item itemBootsEmerald;
-
     public static Item itemPickaxeObsidian;
     public static Item itemAxeObsidian;
     public static Item itemShovelObsidian;
     public static Item itemSwordObsidian;
     public static Item itemHoeObsidian;
-
     public static Item itemPickaxeQuartz;
     public static Item itemAxeQuartz;
     public static Item itemShovelQuartz;
     public static Item itemSwordQuartz;
     public static Item itemHoeQuartz;
-
     public static Item itemHelmObsidian;
     public static Item itemChestObsidian;
     public static Item itemPantsObsidian;
     public static Item itemBootsObsidian;
-
     public static Item itemHelmQuartz;
     public static Item itemChestQuartz;
     public static Item itemPantsQuartz;
     public static Item itemBootsQuartz;
-
     public static Item itemHairyBall;
-
     public static Item itemRiceSeed;
     public static Item itemCanolaSeed;
     public static Item itemFlaxSeed;
     public static Item itemCoffeeSeed;
-
     public static Item itemResonantRice;
-
     public static Item itemPhantomConnector;
-
     public static Item itemCoffeeBean;
     public static Item itemCoffee;
-
     public static Item woodenPaxel;
     public static Item stonePaxel;
     public static Item ironPaxel;
@@ -106,7 +92,6 @@ public final class InitItems{
     public static Item emeraldPaxel;
     public static Item obsidianPaxel;
     public static Item quartzPaxel;
-
     public static Item itemDrill;
     public static Item itemDrillUpgradeSpeed;
     public static Item itemDrillUpgradeSpeedII;
@@ -117,27 +102,21 @@ public final class InitItems{
     public static Item itemDrillUpgradeThreeByThree;
     public static Item itemDrillUpgradeFiveByFive;
     public static Item itemDrillUpgradeBlockPlacing;
-
     public static Item itemBattery;
     public static Item itemBatteryDouble;
     public static Item itemBatteryTriple;
     public static Item itemBatteryQuadruple;
     public static Item itemBatteryQuintuple;
-
     public static Item itemTeleStaff;
     public static Item itemWingsOfTheBats;
-
     public static Item itemGrowthRing;
     public static Item itemMagnetRing;
     public static Item itemWaterRemovalRing;
-
     public static Item itemChestToCrateUpgrade;
     public static Item itemSmallToMediumCrateUpgrade;
     public static Item itemMediumToLargeCrateUpgrade;
     public static Item itemCrateKeeper;
-
     public static Item itemSpawnerChanger;
-
     public static Item itemLaserWrench;
     public static Item itemCrystal;
     public static Item itemCrystalEmpowered;
@@ -147,7 +126,6 @@ public final class InitItems{
     public static Item itemMoreDamageLens;
     public static Item itemDisenchantingLens;
     public static Item itemMiningLens;
-
     public static Item itemPickaxeCrystalRed;
     public static Item itemAxeCrystalRed;
     public static Item itemShovelCrystalRed;
@@ -158,7 +136,6 @@ public final class InitItems{
     public static Item itemPantsCrystalRed;
     public static Item itemBootsCrystalRed;
     public static Item itemPaxelCrystalRed;
-
     public static Item itemPickaxeCrystalBlue;
     public static Item itemAxeCrystalBlue;
     public static Item itemShovelCrystalBlue;
@@ -169,7 +146,6 @@ public final class InitItems{
     public static Item itemPantsCrystalBlue;
     public static Item itemBootsCrystalBlue;
     public static Item itemPaxelCrystalBlue;
-
     public static Item itemPickaxeCrystalLightBlue;
     public static Item itemAxeCrystalLightBlue;
     public static Item itemShovelCrystalLightBlue;
@@ -180,7 +156,6 @@ public final class InitItems{
     public static Item itemPantsCrystalLightBlue;
     public static Item itemBootsCrystalLightBlue;
     public static Item itemPaxelCrystalLightBlue;
-
     public static Item itemPickaxeCrystalBlack;
     public static Item itemAxeCrystalBlack;
     public static Item itemShovelCrystalBlack;
@@ -191,7 +166,6 @@ public final class InitItems{
     public static Item itemPantsCrystalBlack;
     public static Item itemBootsCrystalBlack;
     public static Item itemPaxelCrystalBlack;
-
     public static Item itemPickaxeCrystalGreen;
     public static Item itemAxeCrystalGreen;
     public static Item itemShovelCrystalGreen;
@@ -202,7 +176,6 @@ public final class InitItems{
     public static Item itemPantsCrystalGreen;
     public static Item itemBootsCrystalGreen;
     public static Item itemPaxelCrystalGreen;
-
     public static Item itemPickaxeCrystalWhite;
     public static Item itemAxeCrystalWhite;
     public static Item itemShovelCrystalWhite;
@@ -213,18 +186,18 @@ public final class InitItems{
     public static Item itemPantsCrystalWhite;
     public static Item itemBootsCrystalWhite;
     public static Item itemPaxelCrystalWhite;
-
     public static Item itemWaterBowl;
     public static Item itemFilter;
     public static Item itemPlayerProbe;
     public static Item itemWorm;
-
     public static Item itemBag;
     public static Item itemVoidBag;
+    public static Item itemFillingWand;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
+        itemFillingWand = new ItemFillingWand("itemFillingWand");
         itemBag = new ItemBag("itemBag", false);
         itemVoidBag = new ItemBag("itemVoidBag", true);
         itemWorm = new ItemWorm("itemWorm");

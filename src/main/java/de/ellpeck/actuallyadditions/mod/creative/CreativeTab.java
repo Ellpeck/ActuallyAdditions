@@ -184,6 +184,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemBatteryQuadruple);
         this.add(InitItems.itemBatteryQuintuple);
         this.add(InitItems.itemTeleStaff);
+        this.add(InitItems.itemFillingWand);
 
         this.add(InitItems.itemGrowthRing);
         this.add(InitItems.itemMagnetRing);
