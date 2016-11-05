@@ -1,3 +1,23 @@
+# 1.10.2-r70
+* Added the handheld filler, an item that can fill big areas with blocks
+* Added the lens of the killer that will drop XP and player-kill items when killing mobs
+* Re-added the villager that sells jam
+* Made oil stuff generate a *lot* more RF
+* Made the Item Repairer a lot more expensive and slow
+* Made the Reconstructor reconstruct even if it can't reconstruct the entire stack. Reconstruct reconstruct reconstruct reconstruct
+* Made Laser Relays a bit less performance intensive again
+* Made the magnet ring's range a bit bigger
+* Made Reconstructor recipes show how much additional power they need
+* Make Crystals generate in lush caves
+* Made the booklet always show the search bar
+* Add some more checks to the farmer so that it only plants what can be planted
+* Rewrote the book tutorial page and added introductory bookmarks
+* Move the Booklet GUI up a bit to make bookmarks not be off screen
+* Added some more ores to the mining lens list
+* Tweaked some dungeon loot amounts
+* Make the AIOT able to make both farmland and paths
+* Redid config texts (Joshwoo70)
+
 # 1.10.2-r69
 * Added the Mining lens, a lens that will convert stone and netherrack blocks to random ores
 * Added the Farmer, a block that can farm crops like wheat or canola
