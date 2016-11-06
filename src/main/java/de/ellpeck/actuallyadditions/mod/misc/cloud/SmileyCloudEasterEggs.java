@@ -371,6 +371,83 @@ public final class SmileyCloudEasterEggs{
                 renderHeadBlock(InitBlocks.blockCoffeeMachine, 0, 35F);
             }
         });
+        //Etho
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"etho", "ethoslab"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.REDSTONE));
+                renderHeadBlock(Blocks.REDSTONE_BLOCK, 0, 48F);
+            }
+        });
+        //Direwolf20
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"direwolf", "dire", "direwolf20", "dw20"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(Items.BONE));
+                renderHeadBlock(Blocks.field_189880_di, 0, 48F);
+            }
+        });
+        //Jessassin
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"jessassin", "thejessassin"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHeadBlock(InitBlocks.blockLaserRelayItem, 0, 27F);
+                renderHoldingItem(false, new ItemStack(InitItems.itemLaserWrench));
+            }
+        });
+        //Biffa
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"biffa", "biffatech", "biffaplays", "biffa2001"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(InitItems.itemCoffee));
+            }
+        });
+        //Xisuma
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"xisuma", "xisumavoid"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHeadBlock(Blocks.REDSTONE_BLOCK, 0, 93F);
+                renderHoldingItem(false, new ItemStack(Items.ELYTRA));
+            }
+        });
+        //Welsknight
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"welsknight", "wels"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHeadBlock(Blocks.STONE_BRICK_STAIRS, 0, 10F);
+                renderHoldingItem(false, new ItemStack(Items.DIAMOND_PICKAXE));
+            }
+        });
     }
 
     private static void register(ISmileyCloudEasterEgg egg){
