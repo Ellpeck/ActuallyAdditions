@@ -103,7 +103,12 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
 
     @Override
     public float getStrVsBlock(ItemStack stack, IBlockState state){
-        return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state)) ? this.efficiencyOnProperMaterial : 1.0F;
+        if(state.getBlock() == Blocks.WEB){
+            return 15.0F;
+        }
+        else{
+            return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state)) ? this.efficiencyOnProperMaterial : 1.0F;
+        }
     }
 
     @SideOnly(Side.CLIENT)
