@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
@@ -80,7 +81,7 @@ public class OreGen implements IWorldGenerator{
                     int randConst = 0x969ce69d;//so that it won't generate the same numbers as other mod that does the same thing
                     Random chunkRand = new Random(randConst ^ world.getSeed() ^ (chunkX*29+chunkZ*31));
                     if(chunkRand.nextInt(ConfigIntValues.LUSH_CAVE_CHANCE.getValue()) <= 0){
-                        BlockPos randPos = new BlockPos(chunkX*16+chunkRand.nextInt(16)+8, 64, chunkZ*16+chunkRand.nextInt(16)+8);
+                        BlockPos randPos = world.getTopSolidOrLiquidBlock(new BlockPos(chunkX*16+chunkRand.nextInt(16)+8, 0, chunkZ*16+chunkRand.nextInt(16)+8));
                         BlockPos pos = randPos.down(MathHelper.getRandomIntegerInRange(chunkRand, 15, randPos.getY()-15));
                         this.caveGen.generate(world, chunkRand, pos, box);
                     }
