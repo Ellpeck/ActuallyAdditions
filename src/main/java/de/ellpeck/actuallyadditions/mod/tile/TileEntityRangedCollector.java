@@ -17,7 +17,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.WorldServer;
 
 import java.util.ArrayList;
 
@@ -55,16 +57,17 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                 ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.worldObj.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.pos.getX()-RANGE, this.pos.getY()-RANGE, this.pos.getZ()-RANGE, this.pos.getX()+RANGE, this.pos.getY()+RANGE, this.pos.getZ()+RANGE));
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
-                        if(!item.isDead && item.getEntityItem() != null){
+                        if(!item.isDead && !item.cannotPickup() && item.getEntityItem() != null){
                             ItemStack toAdd = item.getEntityItem().copy();
                             if(this.filter.check(toAdd, this.slots)){
                                 ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
                                 checkList.add(toAdd);
                                 if(WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, EnumFacing.UP, false, true)){
                                     WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, EnumFacing.UP, true, true);
+
+                                    ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.CLOUD, false, item.posX, item.posY+0.45F, item.posZ, 5, 0, 0, 0, 0.03D);
+
                                     item.setDead();
-
-
                                 }
                             }
                         }
