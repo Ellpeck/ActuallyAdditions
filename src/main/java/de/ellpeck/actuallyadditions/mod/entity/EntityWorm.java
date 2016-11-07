@@ -32,7 +32,7 @@ public class EntityWorm extends Entity{
 
     public static boolean canWormify(World world, BlockPos pos, IBlockState state){
         Block block = state.getBlock();
-        boolean rightBlock = block instanceof BlockFarmland || block == Blocks.GRASS || block == Blocks.GRASS_PATH || (block == Blocks.DIRT && state.getValue(BlockDirt.VARIANT) == BlockDirt.DirtType.DIRT);
+        boolean rightBlock = block instanceof BlockFarmland || block instanceof BlockDirt || block instanceof BlockGrass;
         if(rightBlock){
             BlockPos posUp = pos.up();
             IBlockState stateUp = world.getBlockState(posUp);
