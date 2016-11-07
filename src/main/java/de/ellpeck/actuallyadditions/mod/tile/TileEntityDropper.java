@@ -81,6 +81,7 @@ public class TileEntityDropper extends TileEntityInventoryBase{
                     if(this.slots[i].stackSize <= 0){
                         this.slots[i] = null;
                     }
+                    this.markDirty();
                 }
                 return slot;
             }
