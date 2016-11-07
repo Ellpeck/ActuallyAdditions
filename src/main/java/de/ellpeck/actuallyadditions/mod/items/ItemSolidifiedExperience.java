@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.Util;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,18 +53,23 @@ public class ItemSolidifiedExperience extends ItemBase{
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote){
+            int amount;
             if(!player.isSneaking()){
-                world.spawnEntityInWorld(new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, SOLID_XP_AMOUNT));
+                amount = SOLID_XP_AMOUNT;
                 if(!player.capabilities.isCreativeMode){
                     stack.stackSize--;
                 }
             }
             else{
-                world.spawnEntityInWorld(new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, SOLID_XP_AMOUNT*stack.stackSize));
+                amount = SOLID_XP_AMOUNT*stack.stackSize;
                 if(!player.capabilities.isCreativeMode){
                     stack.stackSize = 0;
                 }
             }
+
+            EntityXPOrb orb = new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, amount);
+            orb.getEntityData().setBoolean(ModUtil.MOD_ID+"FromSolidified", true);
+            world.spawnEntityInWorld(orb);
         }
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }

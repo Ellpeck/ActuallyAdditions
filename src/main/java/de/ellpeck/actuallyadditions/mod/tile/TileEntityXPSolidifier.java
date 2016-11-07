@@ -14,6 +14,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -139,7 +140,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 List<EntityXPOrb> orbs = this.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+1+range, this.pos.getY()+1+range, this.pos.getZ()+1+range));
                 if(orbs != null && !orbs.isEmpty()){
                     for(EntityXPOrb orb : orbs){
-                        if(orb != null && !orb.isDead){
+                        if(orb != null && !orb.isDead && !orb.getEntityData().getBoolean(ModUtil.MOD_ID+"FromSolidified")){
                             this.singlePointAmount += orb.getXpValue();
                             orb.setDead();
 
