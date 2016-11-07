@@ -11,8 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -92,9 +90,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
 
             if(this.worldObj.rand.nextFloat() <= chance){
                 if(WorldUtil.addToInventory(this, drops, false, true)){
-                    if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                        this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(stateToBreak));
-                    }
+                    this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(stateToBreak));
                     this.worldObj.setBlockToAir(coordsBlock);
                     WorldUtil.addToInventory(this, drops, true, true);
                     this.markDirty();

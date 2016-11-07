@@ -11,12 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -109,9 +107,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
 
                             if(this.worldObj.rand.nextFloat() <= chance){
                                 if(WorldUtil.addToInventory(this, drops, false, true)){
-                                    if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                                        this.worldObj.playEvent(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
-                                    }
+                                    this.worldObj.playEvent(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
                                     this.worldObj.setBlockToAir(pos);
 
                                     WorldUtil.addToInventory(this, drops, true, true);
@@ -167,9 +163,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
     }
 
     private void shootParticles(int endX, int endY, int endZ){
-        if(!ConfigBoolValues.LESS_PARTICLES.isEnabled()){
-            AssetUtil.shootParticles(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F, 1F);
-        }
+        AssetUtil.shootParticles(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F, 1F);
     }
 
     private boolean isBlacklisted(Block block){

@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
@@ -74,17 +73,13 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
                             Collections.shuffle(breakPositions);
                             BlockPos theCoord = breakPositions.get(0);
 
-                            if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                                this.worldObj.playEvent(2001, theCoord, Block.getStateId(this.worldObj.getBlockState(theCoord)));
-                            }
+                            this.worldObj.playEvent(2001, theCoord, Block.getStateId(this.worldObj.getBlockState(theCoord)));
 
                             this.worldObj.setBlockToAir(theCoord);
 
                             this.storage.receiveEnergy(ENERGY_PRODUCED, false);
 
-                            if(!ConfigBoolValues.LESS_PARTICLES.isEnabled()){
-                                AssetUtil.shootParticles(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F, 1F);
-                            }
+                            AssetUtil.shootParticles(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F, 1F);
                         }
                     }
                 }

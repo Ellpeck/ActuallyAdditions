@@ -40,10 +40,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     public static void shootLaser(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens){
-        if(!ConfigBoolValues.LESS_SOUND.isEnabled()){
             world.playSound(null, startX, startY, startZ, SoundHandler.reconstructor, SoundCategory.BLOCKS, 0.35F, 1.0F);
-        }
-        AssetUtil.shootParticles(world, startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), ConfigBoolValues.LESS_PARTICLES.isEnabled() ? 2 : 8, 2F, 1F);
+        AssetUtil.shootParticles(world, startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), 8, 2F, 1F);
     }
 
     @Override

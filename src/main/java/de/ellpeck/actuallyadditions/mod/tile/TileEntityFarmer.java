@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
@@ -95,9 +94,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
                                     if(WorldUtil.addToInventory(this, 6, 12, drops, EnumFacing.UP, false, true)){
                                         WorldUtil.addToInventory(this, 6, 12, drops, EnumFacing.UP, true, true);
 
-                                        if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                                            this.worldObj.playEvent(2001, plant, Block.getStateId(plantState));
-                                        }
+                                        this.worldObj.playEvent(2001, plant, Block.getStateId(plantState));
                                         this.worldObj.setBlockToAir(plant);
                                         didSomething = true;
                                     }

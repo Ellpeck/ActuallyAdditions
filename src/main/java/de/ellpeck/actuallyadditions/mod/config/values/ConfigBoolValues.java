@@ -49,10 +49,6 @@ public enum ConfigBoolValues{
 
     WATER_BOWL("Water Bowl", ConfigCategories.OTHER, true, "Should right-clicking a bowl on water blocks create a water bowl?"),
 
-    LESS_SOUND("Less Sound", ConfigCategories.PERFORMANCE, false, "If true, There will be less sounds from machines from Actually Additions."),
-    LESS_PARTICLES("Less Particles", ConfigCategories.PERFORMANCE, false, "If true, there will be less particles displayed from Actually Additions machines and blocks."),
-    LESS_BLOCK_BREAKING_EFFECTS("Less Block Breaking Effects", ConfigCategories.PERFORMANCE, false, "If true, there will be less sound effects from blocks breaking via Actually Additions machines."),
-
     LASER_RELAY_LOSS("Laser Relay Energy Loss", ConfigCategories.MACHINE_VALUES, true, "If Energy Laser Relays should have energy loss"),
 
     SUPER_DUPER_HARD_MODE("Super Duper Hard Recipes", ConfigCategories.OTHER, false, "Turn this on to make recipes for items from the mod really hard. (This is a joke feature poking fun at the whole FTB Infinity Expert Mode style of playing. You shouldn't really turn this on as it makes the mod completely unplayable.)");

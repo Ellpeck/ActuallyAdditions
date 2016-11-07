@@ -11,11 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -140,9 +138,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
                     drops.addAll(blockToBreak.getDrops(this.worldObj, this.boundPosition, this.worldObj.getBlockState(this.boundPosition), 0));
 
                     if(WorldUtil.addToInventory(this, drops, false, true)){
-                        if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                            this.worldObj.playEvent(2001, this.boundPosition, Block.getStateId(this.worldObj.getBlockState(this.boundPosition)));
-                        }
+                        this.worldObj.playEvent(2001, this.boundPosition, Block.getStateId(this.worldObj.getBlockState(this.boundPosition)));
                         this.worldObj.setBlockToAir(this.boundPosition);
                         WorldUtil.addToInventory(this, drops, true, true);
                         this.markDirty();

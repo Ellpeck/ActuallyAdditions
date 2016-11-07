@@ -63,6 +63,8 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                                 if(WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, EnumFacing.UP, false, true)){
                                     WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, EnumFacing.UP, true, true);
                                     item.setDead();
+
+
                                 }
                             }
                         }

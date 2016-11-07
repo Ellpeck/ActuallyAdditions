@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.BlockStone;
@@ -138,9 +137,7 @@ public class LensMining extends Lens{
                             IBlockState state = block.getStateFromMeta(stack.getItemDamage());
                             tile.getWorldObject().setBlockState(hitPos, state, 2);
 
-                            if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                                tile.getWorldObject().playEvent(2001, hitPos, Block.getStateId(state));
-                            }
+                            tile.getWorldObject().playEvent(2001, hitPos, Block.getStateId(state));
 
                             tile.extractEnergy(adaptedUse);
                         }

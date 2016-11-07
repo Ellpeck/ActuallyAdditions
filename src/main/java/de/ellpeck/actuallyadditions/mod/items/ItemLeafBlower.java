@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
@@ -80,9 +79,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
                 //Breaks the Blocks
                 boolean broke = this.breakStuff(world, x, y, z);
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
-                if(!ConfigBoolValues.LESS_SOUND.isEnabled()){
-                    world.playSound(null, x, y, z, SoundEvents.ENTITY_MINECART_RIDING, SoundCategory.PLAYERS, 0.3F, 0.001F);
-                }
+                world.playSound(null, x, y, z, SoundEvents.ENTITY_MINECART_RIDING, SoundCategory.PLAYERS, 0.3F, 0.001F);
                 return broke;
             }
         }
@@ -126,9 +123,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
             drops.addAll(theBlock.getDrops(world, theCoord, world.getBlockState(theCoord), 0));
 
             //Plays the Breaking Sound
-            if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                world.playEvent(2001, theCoord, Block.getStateId(world.getBlockState(theCoord)));
-            }
+            world.playEvent(2001, theCoord, Block.getStateId(world.getBlockState(theCoord)));
 
             //Deletes the Block
             world.setBlockToAir(theCoord);

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -131,10 +130,8 @@ public class ItemFillingWand extends ItemEnergy{
                                 if(creative || removeFittingItem(replaceState, player)){
                                     world.setBlockState(pos, replaceState, 2);
 
-                                    if(!ConfigBoolValues.LESS_SOUND.isEnabled()){
-                                        SoundType sound = replaceState.getBlock().getSoundType(replaceState, world, pos, player);
-                                        world.playSound(null, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume()+1.0F)/2.0F, sound.getPitch()*0.8F);
-                                    }
+                                    SoundType sound = replaceState.getBlock().getSoundType(replaceState, world, pos, player);
+                                    world.playSound(null, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume()+1.0F)/2.0F, sound.getPitch()*0.8F);
 
                                     if(!creative){
                                         this.extractEnergy(stack, energyUse, false);

@@ -173,7 +173,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
                 this.lastAutoSplit = this.isAutoSplit;
             }
 
-            if(shouldPlaySound && !ConfigBoolValues.LESS_SOUND.isEnabled()){
+            if(shouldPlaySound){
                 this.worldObj.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS, 0.15F, 1.0F);
             }
         }

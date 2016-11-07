@@ -11,8 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -92,9 +90,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
 
                     if(this.worldObj.rand.nextFloat() <= chance){
                         if(WorldUtil.addToInventory(this, drops, false, true)){
-                            if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                                this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
-                            }
+                            this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
                             this.worldObj.setBlockToAir(coordsBlock);
                             WorldUtil.addToInventory(this, drops, true, true);
                             this.storage.extractEnergy(ENERGY_USE, false);

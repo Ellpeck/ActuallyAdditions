@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -55,9 +54,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                     }
 
                     //Set New Block
-                    if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                        world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
-                    }
+                    world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
                     world.setBlockState(pos, this.end, 2);
 
                     //Copy Items into new Chest

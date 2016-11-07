@@ -23,7 +23,6 @@ import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrafting;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageFurnace;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import net.minecraft.block.Block;
@@ -148,9 +147,7 @@ public class MethodHandler implements IMethodHandler{
                                 if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
                                     ItemStack output = recipe.outputStack;
                                     if(output != null){
-                                        if(!ConfigBoolValues.LESS_BLOCK_BREAKING_EFFECTS.isEnabled()){
-                                            tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
-                                        }
+                                        tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
 
                                         if(output.getItem() instanceof ItemBlock){
                                             tile.getWorldObject().setBlockState(pos, Block.getBlockFromItem(output.getItem()).getStateFromMeta(output.getItemDamage()), 2);
@@ -191,7 +188,7 @@ public class MethodHandler implements IMethodHandler{
 
                                 if(stack.stackSize-itemsPossible > 0){
                                     ItemStack stackCopy = stack.copy();
-                                    stackCopy.stackSize-=itemsPossible;
+                                    stackCopy.stackSize -= itemsPossible;
 
                                     EntityItem inputLeft = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, stackCopy);
                                     tile.getWorldObject().spawnEntityInWorld(inputLeft);
