@@ -29,43 +29,26 @@ public class ItemMagnetRing extends ItemEnergy{
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        int energyUse = 10;
-        if(!entity.isSneaking()){
-            //Get all the Items in the area
-            int range = 8;
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(entity.posX-range, entity.posY-range, entity.posZ-range, entity.posX+range, entity.posY+range, entity.posZ+range));
-            if(!items.isEmpty()){
-                for(EntityItem item : items){
-                    if(this.getEnergyStored(stack) >= energyUse){
-                        double x = entity.posX-item.posX;
-                        double y = entity.posY+1D-item.posY;
-                        double z = entity.posZ-item.posZ;
+        if(entity instanceof EntityPlayer && !world.isRemote){
+            EntityPlayer player = (EntityPlayer)entity;
 
-                        double distance = x*x+y*y+z*z;
-                        if(distance <= 1.5){
-                            if(entity instanceof EntityPlayer){
-                                item.onCollideWithPlayer((EntityPlayer)entity);
+            if(!entity.isSneaking()){
+                //Get all the Items in the area
+                int range = 5;
+                ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(entity.posX-range, entity.posY-range, entity.posZ-range, entity.posX+range, entity.posY+range, entity.posZ+range));
+                if(!items.isEmpty()){
+                    for(EntityItem item : items){
+                        if(!item.isDead && !item.cannotPickup()){
+                            int energyForItem = 350*item.getEntityItem().stackSize;
+
+                            if(this.getEnergyStored(stack) >= energyForItem){
+                                item.onCollideWithPlayer(player);
+
+                                if(!player.capabilities.isCreativeMode){
+                                    this.extractEnergy(stack, energyForItem, false);
+                                }
                             }
                         }
-                        else{
-                            double speed = 0.065/distance;
-
-                            item.motionX += x*speed;
-                            if(y >= 0){
-                                item.motionY = 0.125;
-                            }
-                            else{
-                                item.motionY += y*speed;
-                            }
-                            item.motionZ += z*speed;
-                        }
-
-                        if(!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).capabilities.isCreativeMode){
-                            this.extractEnergy(stack, energyUse, false);
-                        }
-                    }
-                    else{
-                        break;
                     }
                 }
             }
