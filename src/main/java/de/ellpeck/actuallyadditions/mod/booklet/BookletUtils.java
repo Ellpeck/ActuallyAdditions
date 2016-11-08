@@ -325,9 +325,7 @@ public final class BookletUtils{
     public static void openIndexEntry(GuiBooklet booklet, IBookletEntry entry, int page, boolean resetTextField){
         if(resetTextField){
             booklet.searchField.setText("");
-            if(entry instanceof BookletEntryAllSearch){
-                entry.setChapters(ActuallyAdditionsAPI.ALL_CHAPTERS);
-            }
+            updateSearchBar(booklet);
         }
 
         if(booklet.currentEntrySet.getCurrentPage() != null){
@@ -385,6 +383,10 @@ public final class BookletUtils{
             if(booklet.currentEntrySet.getCurrentEntry() != null){
                 if(booklet.currentEntrySet.getCurrentChapter() == null){
                     if(place < booklet.currentEntrySet.getCurrentEntry().getChapters().size()){
+                        //Clear the search bar when entering a chapter
+                        booklet.searchField.setText("");
+                        updateSearchBar(booklet);
+
                         IBookletChapter chap = booklet.currentEntrySet.getCurrentEntry().getChapters().get(place+(booklet.chapterButtons.length*booklet.currentEntrySet.getPageInIndex()-booklet.chapterButtons.length));
                         openChapter(booklet, chap, chap.getPages()[0]);
                     }
