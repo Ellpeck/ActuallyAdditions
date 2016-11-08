@@ -32,7 +32,6 @@ public class BookletRecipeHandler implements IRecipeHandler<BookletPage>{
         return BookletRecipeCategory.NAME;
     }
 
-
     @Override
     public IRecipeWrapper getRecipeWrapper(BookletPage recipe){
         return new BookletRecipeWrapper(recipe);

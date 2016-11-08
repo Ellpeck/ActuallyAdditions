@@ -17,12 +17,11 @@ import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
+import mezz.jei.api.recipe.BlankRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-public class ReconstructorRecipeCategory implements IRecipeCategory{
+public class ReconstructorRecipeCategory extends BlankRecipeCategory<ReconstructorRecipeWrapper>{
 
     public static final String NAME = "actuallyadditions.reconstructor";
 
@@ -33,18 +32,15 @@ public class ReconstructorRecipeCategory implements IRecipeCategory{
         this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEIAtomicReconstructor"), 0, 0, 96, 60);
     }
 
-
     @Override
     public String getUid(){
         return NAME;
     }
 
-
     @Override
     public String getTitle(){
         return StringUtil.localize("container.nei."+NAME+".name");
     }
-
 
     @Override
     public IDrawable getBackground(){
@@ -57,25 +53,11 @@ public class ReconstructorRecipeCategory implements IRecipeCategory{
     }
 
     @Override
-    public void drawAnimations(Minecraft minecraft){
+    public void setRecipe(IRecipeLayout recipeLayout, ReconstructorRecipeWrapper wrapper, IIngredients ingredients){
+        recipeLayout.getItemStacks().init(0, true, 4, 18);
+        recipeLayout.getItemStacks().set(0, wrapper.theRecipe.inputStack);
 
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper){
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients){
-        if(recipeWrapper instanceof ReconstructorRecipeWrapper){
-            ReconstructorRecipeWrapper wrapper = (ReconstructorRecipeWrapper)recipeWrapper;
-
-            recipeLayout.getItemStacks().init(0, true, 4, 18);
-            recipeLayout.getItemStacks().set(0, wrapper.theRecipe.inputStack);
-
-            recipeLayout.getItemStacks().init(1, false, 66, 18);
-            recipeLayout.getItemStacks().set(1, wrapper.theRecipe.outputStack);
-
-        }
+        recipeLayout.getItemStacks().init(1, false, 66, 18);
+        recipeLayout.getItemStacks().set(1, wrapper.theRecipe.outputStack);
     }
 }

@@ -16,11 +16,11 @@ import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeCategory;
+import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 
-public class CoffeeMachineRecipeCategory implements IRecipeCategory{
+public class CoffeeMachineRecipeCategory extends BlankRecipeCategory<CoffeeMachineRecipeWrapper>{
 
     public static final String NAME = "actuallyadditions.coffee";
 
@@ -30,18 +30,15 @@ public class CoffeeMachineRecipeCategory implements IRecipeCategory{
         this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEICoffeeMachine"), 0, 0, 126, 92);
     }
 
-
     @Override
     public String getUid(){
         return NAME;
     }
 
-
     @Override
     public String getTitle(){
         return StringUtil.localize("container.nei."+NAME+".name");
     }
-
 
     @Override
     public IDrawable getBackground(){
@@ -49,35 +46,17 @@ public class CoffeeMachineRecipeCategory implements IRecipeCategory{
     }
 
     @Override
-    public void drawExtras(Minecraft minecraft){
+    public void setRecipe(IRecipeLayout recipeLayout, CoffeeMachineRecipeWrapper wrapper, IIngredients ingredients){
+        recipeLayout.getItemStacks().init(0, true, 89, 20);
+        recipeLayout.getItemStacks().set(0, wrapper.theIngredient.ingredient);
 
-    }
+        recipeLayout.getItemStacks().init(1, true, 44, 38);
+        recipeLayout.getItemStacks().set(1, wrapper.cup);
 
-    @Override
-    public void drawAnimations(Minecraft minecraft){
+        recipeLayout.getItemStacks().init(2, true, 1, 38);
+        recipeLayout.getItemStacks().set(2, wrapper.coffeeBeans);
 
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper){
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients){
-        if(recipeWrapper instanceof CoffeeMachineRecipeWrapper){
-            CoffeeMachineRecipeWrapper wrapper = (CoffeeMachineRecipeWrapper)recipeWrapper;
-
-            recipeLayout.getItemStacks().init(0, true, 89, 20);
-            recipeLayout.getItemStacks().set(0, wrapper.theIngredient.ingredient);
-
-            recipeLayout.getItemStacks().init(1, true, 44, 38);
-            recipeLayout.getItemStacks().set(1, wrapper.cup);
-
-            recipeLayout.getItemStacks().init(2, true, 1, 38);
-            recipeLayout.getItemStacks().set(2, wrapper.coffeeBeans);
-
-            recipeLayout.getItemStacks().init(3, false, 44, 69);
-            recipeLayout.getItemStacks().set(3, wrapper.theOutput);
-        }
+        recipeLayout.getItemStacks().init(3, false, 44, 69);
+        recipeLayout.getItemStacks().set(3, wrapper.theOutput);
     }
 }

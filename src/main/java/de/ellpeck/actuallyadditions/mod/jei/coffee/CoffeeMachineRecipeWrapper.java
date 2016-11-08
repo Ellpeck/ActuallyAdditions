@@ -23,10 +23,8 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton{
@@ -45,31 +43,13 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void getIngredients(IIngredients ingredients){
-
-    }
-
-    @Override
-    public List getInputs(){
         List list = new ArrayList();
         list.add(this.theIngredient.ingredient);
         list.add(this.cup);
         list.add(this.coffeeBeans);
-        return list;
-    }
+        ingredients.setInputs(ItemStack.class, list);
 
-    @Override
-    public List getOutputs(){
-        return Collections.singletonList(this.theOutput);
-    }
-
-    @Override
-    public List<FluidStack> getFluidInputs(){
-        return new ArrayList<FluidStack>();
-    }
-
-    @Override
-    public List<FluidStack> getFluidOutputs(){
-        return new ArrayList<FluidStack>();
+        ingredients.setOutput(ItemStack.class, this.theOutput);
     }
 
     @Override

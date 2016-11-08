@@ -35,32 +35,14 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void getIngredients(IIngredients ingredients){
+        ingredients.setInput(ItemStack.class, this.theRecipe.inputStack);
 
-    }
-
-    @Override
-    public List getInputs(){
-        return Collections.singletonList(this.theRecipe.inputStack);
-    }
-
-    @Override
-    public List getOutputs(){
         List list = new ArrayList();
         list.add(this.theRecipe.outputOneStack);
         if(this.theRecipe.outputTwoStack != null){
             list.add(this.theRecipe.outputTwoStack);
         }
-        return list;
-    }
-
-    @Override
-    public List<FluidStack> getFluidInputs(){
-        return new ArrayList<FluidStack>();
-    }
-
-    @Override
-    public List<FluidStack> getFluidOutputs(){
-        return new ArrayList<FluidStack>();
+        ingredients.setOutputs(ItemStack.class, list);
     }
 
     @Override

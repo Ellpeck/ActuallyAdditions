@@ -34,27 +34,8 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void getIngredients(IIngredients ingredients){
-
-    }
-
-    @Override
-    public List getInputs(){
-        return Collections.singletonList(this.theRecipe.inputStack);
-    }
-
-    @Override
-    public List getOutputs(){
-        return Collections.singletonList(this.theRecipe.outputStack);
-    }
-
-    @Override
-    public List<FluidStack> getFluidInputs(){
-        return new ArrayList<FluidStack>();
-    }
-
-    @Override
-    public List<FluidStack> getFluidOutputs(){
-        return new ArrayList<FluidStack>();
+        ingredients.setInput(ItemStack.class, this.theRecipe.inputStack);
+        ingredients.setOutput(ItemStack.class, this.theRecipe.outputStack);
     }
 
     @Override

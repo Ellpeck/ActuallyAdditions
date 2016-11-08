@@ -35,27 +35,8 @@ public class EmpowererRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void getIngredients(IIngredients ingredients){
-
-    }
-
-    @Override
-    public List getInputs(){
-        return Arrays.asList(this.theRecipe.input, this.theRecipe.modifier1, this.theRecipe.modifier2, this.theRecipe.modifier3, this.theRecipe.modifier4);
-    }
-
-    @Override
-    public List getOutputs(){
-        return Collections.singletonList(this.theRecipe.output);
-    }
-
-    @Override
-    public List<FluidStack> getFluidInputs(){
-        return new ArrayList<FluidStack>();
-    }
-
-    @Override
-    public List<FluidStack> getFluidOutputs(){
-        return new ArrayList<FluidStack>();
+        ingredients.setInputs(ItemStack.class, Arrays.asList(this.theRecipe.input, this.theRecipe.modifier1, this.theRecipe.modifier2, this.theRecipe.modifier3, this.theRecipe.modifier4));
+        ingredients.setOutput(ItemStack.class, this.theRecipe.output);
     }
 
     @Override

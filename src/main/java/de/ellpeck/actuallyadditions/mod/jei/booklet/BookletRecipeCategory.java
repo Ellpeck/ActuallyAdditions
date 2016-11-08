@@ -15,13 +15,11 @@ import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
-import net.minecraft.client.Minecraft;
+import mezz.jei.api.recipe.BlankRecipeCategory;
 
 import java.util.Arrays;
 
-public class BookletRecipeCategory implements IRecipeCategory{
+public class BookletRecipeCategory extends BlankRecipeCategory<BookletRecipeWrapper>{
 
     public static final String NAME = "actuallyadditions.booklet";
 
@@ -30,7 +28,6 @@ public class BookletRecipeCategory implements IRecipeCategory{
     public BookletRecipeCategory(IGuiHelper helper){
         this.background = helper.createBlankDrawable(160, 105);
     }
-
 
     @Override
     public String getUid(){
@@ -50,26 +47,8 @@ public class BookletRecipeCategory implements IRecipeCategory{
     }
 
     @Override
-    public void drawExtras(Minecraft minecraft){
-
-    }
-
-    @Override
-    public void drawAnimations(Minecraft minecraft){
-
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper){
-
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients){
-        if(recipeWrapper instanceof BookletRecipeWrapper){
-            BookletRecipeWrapper wrapper = (BookletRecipeWrapper)recipeWrapper;
-            recipeLayout.getItemStacks().init(0, true, 70, -4);
-            recipeLayout.getItemStacks().set(0, Arrays.asList(wrapper.thePage.getItemStacksForPage()));
-        }
+    public void setRecipe(IRecipeLayout recipeLayout, BookletRecipeWrapper wrapper, IIngredients ingredients){
+        recipeLayout.getItemStacks().init(0, true, 70, -4);
+        recipeLayout.getItemStacks().set(0, Arrays.asList(wrapper.thePage.getItemStacksForPage()));
     }
 }

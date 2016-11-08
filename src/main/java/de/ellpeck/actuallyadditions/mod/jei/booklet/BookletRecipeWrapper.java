@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -34,27 +35,11 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void getIngredients(IIngredients ingredients){
+        ingredients.setInputs(ItemStack.class, Arrays.asList(this.thePage.getItemStacksForPage()));
+        ingredients.setInputs(FluidStack.class, Arrays.asList(this.thePage.getFluidStacksForPage()));
 
-    }
-
-    @Override
-    public List getInputs(){
-        return Arrays.asList(this.thePage.getItemStacksForPage());
-    }
-
-    @Override
-    public List getOutputs(){
-        return Arrays.asList(this.thePage.getItemStacksForPage());
-    }
-
-    @Override
-    public List<FluidStack> getFluidInputs(){
-        return Arrays.asList(this.thePage.getFluidStacksForPage());
-    }
-
-    @Override
-    public List<FluidStack> getFluidOutputs(){
-        return Arrays.asList(this.thePage.getFluidStacksForPage());
+        ingredients.setOutputs(ItemStack.class, Arrays.asList(this.thePage.getItemStacksForPage()));
+        ingredients.setOutputs(FluidStack.class, Arrays.asList(this.thePage.getFluidStacksForPage()));
     }
 
     @Override
