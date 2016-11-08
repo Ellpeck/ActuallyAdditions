@@ -201,7 +201,7 @@ public class ItemFillingWand extends ItemEnergy{
 
     private static boolean removeFittingItem(IBlockState state, EntityPlayer player){
         Block block = state.getBlock();
-        ItemStack stack = new ItemStack(block, 1, block.damageDropped(state));
+        ItemStack stack = new ItemStack(block, 1, block.getMetaFromState(state));
 
         if(stack != null && stack.getItem() != null){
             for(int i = 0; i < player.inventory.getSizeInventory(); i++){
