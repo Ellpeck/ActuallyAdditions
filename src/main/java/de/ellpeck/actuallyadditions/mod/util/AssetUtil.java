@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -201,5 +202,120 @@ public final class AssetUtil{
                 }
             }
         }
+    }
+
+    //Thanks to feldim2425 for this.
+    //I can't do rendering code. Ever.
+    @SideOnly(Side.CLIENT)
+    public static void renderLaser(double firstX, double firstY, double firstZ, double secondX, double secondY, double secondZ, int rotationTime, float alpha, double beamWidth, float[] color){
+        Tessellator tessy = Tessellator.getInstance();
+        VertexBuffer render = tessy.getBuffer();
+        World world = Minecraft.getMinecraft().theWorld;
+
+        GlStateManager.disableFog();
+
+        float r = color[0];
+        float g = color[1];
+        float b = color[2];
+
+        Vec3d vec1 = new Vec3d(firstX, firstY, firstZ);
+        Vec3d vec2 = new Vec3d(secondX, secondY, secondZ);
+        Vec3d combinedVec = vec2.subtract(vec1);
+
+        double rot = rotationTime > 0 ? (360F*(((float)world.getTotalWorldTime()%(float)rotationTime)/(float)rotationTime)) : 0;
+        double pitch = Math.atan2(combinedVec.yCoord, Math.sqrt(combinedVec.xCoord*combinedVec.xCoord+combinedVec.zCoord*combinedVec.zCoord));
+        double yaw = Math.atan2(-combinedVec.zCoord, combinedVec.xCoord);
+
+        double length = combinedVec.lengthVector();
+
+        GlStateManager.pushMatrix();
+
+        GlStateManager.disableLighting();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.depthMask(false);
+        GlStateManager.translate(firstX-TileEntityRendererDispatcher.staticPlayerX, firstY-TileEntityRendererDispatcher.staticPlayerY, firstZ-TileEntityRendererDispatcher.staticPlayerZ);
+        GlStateManager.rotate((float)(180*yaw/Math.PI), 0, 1, 0);
+        GlStateManager.rotate((float)(180*pitch/Math.PI), 0, 0, 1);
+        GlStateManager.rotate((float)rot, 1, 0, 0);
+
+        /*if(r != r2 || g != g2 || b != b2){
+            render.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+            Minecraft.getMinecraft().renderEngine.bindTexture(ClientUtil.LIGHT_BEAM_GRADIENT);
+
+            render.pos(length, -beamWidth, beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
+            render.pos(length, beamWidth, beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
+            render.pos(0, beamWidth, beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
+            render.pos(0, -beamWidth, beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
+
+            render.pos(length, -beamWidth, beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
+            render.pos(length, beamWidth, beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
+            render.pos(0, beamWidth, beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
+            render.pos(0, -beamWidth, beamWidth).tex(0, 0).color(r2, g2, b2, alpha).endVertex();
+
+            render.pos(length, beamWidth, -beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
+            render.pos(length, -beamWidth, -beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
+            render.pos(0, -beamWidth, -beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
+            render.pos(0, beamWidth, -beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
+
+            render.pos(length, beamWidth, -beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
+            render.pos(length, -beamWidth, -beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
+            render.pos(0, -beamWidth, -beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
+            render.pos(0, beamWidth, -beamWidth).tex(0, 0).color(r2, g2, b2, alpha).endVertex();
+
+            render.pos(length, beamWidth, beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
+            render.pos(length, beamWidth, -beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
+            render.pos(0, beamWidth, -beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
+            render.pos(0, beamWidth, beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
+
+            render.pos(length, beamWidth, beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
+            render.pos(length, beamWidth, -beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
+            render.pos(0, beamWidth, -beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
+            render.pos(0, beamWidth, beamWidth).tex(0, 0).color(r2, g2, b2, alpha).endVertex();
+
+            render.pos(length, -beamWidth, -beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
+            render.pos(length, -beamWidth, beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
+            render.pos(0, -beamWidth, beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
+            render.pos(0, -beamWidth, -beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
+
+            render.pos(length, -beamWidth, -beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
+            render.pos(length, -beamWidth, beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
+            render.pos(0, -beamWidth, beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
+            render.pos(0, -beamWidth, -beamWidth).tex(0, 0).color(r2, g2, b2, alpha).endVertex();
+            tessy.draw();
+        }
+        else{*/
+            GlStateManager.disableTexture2D();
+            render.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+            render.pos(length, beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(0, beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(0, -beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(length, -beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
+
+            render.pos(length, -beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(0, -beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(0, beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(length, beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
+
+            render.pos(length, beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(0, beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(0, beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(length, beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
+
+            render.pos(length, -beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(0, -beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(0, -beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(length, -beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
+            tessy.draw();
+
+            GlStateManager.enableTexture2D();
+        //}
+
+        GlStateManager.disableBlend();
+        GlStateManager.enableLighting();
+        GlStateManager.depthMask(true);
+        GlStateManager.popMatrix();
+
+        GlStateManager.enableFog();
     }
 }

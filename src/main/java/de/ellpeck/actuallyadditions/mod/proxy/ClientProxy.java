@@ -28,6 +28,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
@@ -152,6 +153,14 @@ public class ClientProxy implements IProxy{
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDisplayStand.class, new RenderDisplayStand());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEmpowerer.class, new RenderEmpowerer());
+
+        TileEntitySpecialRenderer laser = new RenderLaserRelay();
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayEnergy.class, laser);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayEnergyAdvanced.class, laser);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayEnergyExtreme.class, laser);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayItem.class, laser);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayItemWhitelist.class, laser);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayFluids.class, laser);
 
         //VillagerRegistry.INSTANCE().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID, "textures/entity/villager/jamVillager.png"));
 

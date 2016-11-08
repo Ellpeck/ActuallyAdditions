@@ -27,6 +27,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -35,9 +36,6 @@ import java.util.Set;
 public abstract class TileEntityLaserRelay extends TileEntityBase{
 
     public static final int MAX_DISTANCE = 15;
-    private static final float[] COLOR = new float[]{1F, 0F, 0F};
-    private static final float[] COLOR_ITEM = new float[]{43F/255F, 158F/255F, 39/255F};
-    private static final float[] COLOR_FLUIDS = new float[]{139F/255F, 94F/255F, 1F};
 
     public final LaserType type;
 
@@ -86,7 +84,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         }
     }
 
-    @Override
+    /*@Override
     public void updateEntity(){
         super.updateEntity();
         if(this.worldObj.isRemote){
@@ -116,7 +114,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
                 }
             }
         }
-    }
+    }*/
 
     @Override
     public void invalidate(){
@@ -138,5 +136,10 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         }
 
         super.validate();
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox(){
+        return INFINITE_EXTENT_AABB;
     }
 }
