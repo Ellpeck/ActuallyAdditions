@@ -1,7 +1,10 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "actuallyadditions:blockLaserRelayItem",
+    "model": "actuallyadditions:blockLaserRelay",
+    "textures": {
+      "particle": "actuallyadditions:blocks/models/modelLaserRelayItem"
+    },
     "transform": "forge:default-block"
   },
   "variants": {

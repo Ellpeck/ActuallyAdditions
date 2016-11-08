@@ -2,8 +2,7 @@
     "__createdBy": "canitzp",
     "ambientocclusion": true,
     "textures": {
-        "particle": "actuallyadditions:blocks/models/modelLaserRelay",
-        "laserRelay": "actuallyadditions:blocks/models/modelLaserRelay"
+        "laserRelay": "#particle"
     },
     "elements": [
         {

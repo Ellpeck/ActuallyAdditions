@@ -24,8 +24,8 @@ import net.minecraft.util.math.BlockPos;
 public class RenderLaserRelay extends TileEntitySpecialRenderer{
 
     private static final float[] COLOR = new float[]{1F, 0F, 0F};
-    private static final float[] COLOR_ITEM = new float[]{43F/255F, 158F/255F, 39/255F};
-    private static final float[] COLOR_FLUIDS = new float[]{139F/255F, 94F/255F, 1F};
+    private static final float[] COLOR_ITEM = new float[]{0F, 124F/255F, 16F/255F};
+    private static final float[] COLOR_FLUIDS = new float[]{0F, 97F/255F, 198F/255F};
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int par6){

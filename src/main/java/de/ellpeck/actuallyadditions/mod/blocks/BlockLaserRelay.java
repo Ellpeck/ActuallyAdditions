@@ -34,12 +34,12 @@ public class BlockLaserRelay extends BlockContainerBase{
 
     //This took way too much fiddling around. I'm not good with numbers.
     private static final float F = 1/16F;
-    private static final AxisAlignedBB AABB_UP = new AxisAlignedBB(2*F, 0, 2*F, 1-2*F, 1-F, 1-2*F);
-    private static final AxisAlignedBB AABB_DOWN = new AxisAlignedBB(2*F, F, 2*F, 1-2*F, 1, 1-2*F);
-    private static final AxisAlignedBB AABB_NORTH = new AxisAlignedBB(2*F, F, F, 1-2*F, 1-F, 1);
-    private static final AxisAlignedBB AABB_EAST = new AxisAlignedBB(0, F, 2*F, 1-F, 1-F, 1-2*F);
-    private static final AxisAlignedBB AABB_SOUTH = new AxisAlignedBB(2*F, F, 0, 1-2*F, 1-F, 1-F);
-    private static final AxisAlignedBB AABB_WEST = new AxisAlignedBB(F, F, 2*F, 1, 1-F, 1-2*F);
+    private static final AxisAlignedBB AABB_UP = new AxisAlignedBB(2*F, 0, 2*F, 1-2*F, 10*F, 1-2*F);
+    private static final AxisAlignedBB AABB_DOWN = new AxisAlignedBB(2*F, 6*F, 2*F, 1-2*F, 1, 1-2*F);
+    private static final AxisAlignedBB AABB_NORTH = new AxisAlignedBB(2*F, 2*F, 6*F, 1-2*F, 1-2*F, 1);
+    private static final AxisAlignedBB AABB_EAST = new AxisAlignedBB(0, 2*F, 2*F, 1-6*F, 1-2*F, 1-2*F);
+    private static final AxisAlignedBB AABB_SOUTH = new AxisAlignedBB(2*F, 2*F, 0, 1-2*F, 1-2*F, 1-6*F);
+    private static final AxisAlignedBB AABB_WEST = new AxisAlignedBB(6*F, 2*F, 2*F, 1, 1-2*F, 1-2*F);
 
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, 5);
     private final Type type;
