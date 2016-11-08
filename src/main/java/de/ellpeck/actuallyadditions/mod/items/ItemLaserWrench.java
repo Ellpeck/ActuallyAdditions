@@ -79,29 +79,6 @@ public class ItemLaserWrench extends ItemBase{
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
-        if(!world.isRemote && player.isSneaking()){
-            PlayerData.PlayerSave save = PlayerData.getDataFromPlayer(player);
-
-            int currMode = save.theCompound.getInteger("LaserWrenchMode");
-            if(currMode+1 >= WrenchMode.values().length){
-                currMode = 0;
-            }
-            else{
-                currMode++;
-            }
-            save.theCompound.setInteger("LaserWrenchMode", currMode);
-
-            if(player instanceof EntityPlayerMP){
-                PacketHandlerHelper.sendPlayerDataToClientPacket(player, save.theCompound, false);
-            }
-
-            player.addChatComponentMessage(new TextComponentString("Mode changed to "+WrenchMode.values()[currMode].name+"!"));
-        }
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
-    }
-
-    @Override
     public boolean getShareTag(){
         return true;
     }
@@ -122,17 +99,5 @@ public class ItemLaserWrench extends ItemBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
-    }
-
-    public enum WrenchMode{
-        ALWAYS_PARTICLES("always show particles"),
-        NO_PARTICLES("never show particles"),
-        HOLDING_PARTICLES("show particles when holding a Laser Wrench");
-
-        public final String name;
-
-        WrenchMode(String name){
-            this.name = name;
-        }
     }
 }

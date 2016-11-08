@@ -207,7 +207,7 @@ public final class AssetUtil{
     //Thanks to feldim2425 for this.
     //I can't do rendering code. Ever.
     @SideOnly(Side.CLIENT)
-    public static void renderLaser(double firstX, double firstY, double firstZ, double secondX, double secondY, double secondZ, int rotationTime, float alpha, double beamWidth, float[] color){
+    public static void renderLaser(double firstX, double firstY, double firstZ, double secondX, double secondY, double secondZ, double rotationTime, float alpha, double beamWidth, float[] color){
         Tessellator tessy = Tessellator.getInstance();
         VertexBuffer render = tessy.getBuffer();
         World world = Minecraft.getMinecraft().theWorld;
@@ -222,7 +222,7 @@ public final class AssetUtil{
         Vec3d vec2 = new Vec3d(secondX, secondY, secondZ);
         Vec3d combinedVec = vec2.subtract(vec1);
 
-        double rot = rotationTime > 0 ? (360F*(((float)world.getTotalWorldTime()%(float)rotationTime)/(float)rotationTime)) : 0;
+        double rot = rotationTime > 0 ? (360D*((world.getTotalWorldTime()%rotationTime)/rotationTime)) : 0;
         double pitch = Math.atan2(combinedVec.yCoord, Math.sqrt(combinedVec.xCoord*combinedVec.xCoord+combinedVec.zCoord*combinedVec.zCoord));
         double yaw = Math.atan2(-combinedVec.zCoord, combinedVec.xCoord);
 
