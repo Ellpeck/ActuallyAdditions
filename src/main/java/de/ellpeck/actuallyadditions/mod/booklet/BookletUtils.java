@@ -323,11 +323,6 @@ public final class BookletUtils{
 
     @SideOnly(Side.CLIENT)
     public static void openIndexEntry(GuiBooklet booklet, IBookletEntry entry, int page, boolean resetTextField){
-        if(resetTextField){
-            booklet.searchField.setText("");
-            updateSearchBar(booklet);
-        }
-
         if(booklet.currentEntrySet.getCurrentPage() != null){
             booklet.currentEntrySet.getCurrentPage().onClosed(booklet);
         }
@@ -368,6 +363,11 @@ public final class BookletUtils{
                     button.chap = chap;
                 }
             }
+        }
+
+        if(resetTextField){
+            booklet.searchField.setText("");
+            updateSearchBar(booklet);
         }
 
         booklet.shouldSaveDataNextClose = true;
