@@ -154,7 +154,7 @@ public final class ActuallyAdditionsAPI{
      * Higher weight means higher occurence.
      *
      * @param oreName The ore's name
-     * @param weight The ore's weight
+     * @param weight  The ore's weight
      */
     public static void addMiningLensStoneOre(String oreName, int weight){
         STONE_ORES.add(new WeightedOre(oreName, weight));
@@ -165,7 +165,7 @@ public final class ActuallyAdditionsAPI{
      * Higher weight means higher occurence.
      *
      * @param oreName The ore's name
-     * @param weight The ore's weight
+     * @param weight  The ore's weight
      */
     public static void addMiningLensNetherOre(String oreName, int weight){
         NETHERRACK_ORES.add(new WeightedOre(oreName, weight));

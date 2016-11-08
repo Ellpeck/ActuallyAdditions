@@ -20,7 +20,6 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputterAdvanced;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -94,9 +93,9 @@ public class BlockInputter extends BlockContainerBase{
 
     public static class TheItemBlock extends ItemBlockBase{
 
+        private final Random rand = new Random();
         private long lastSysTime;
         private int toPick;
-        private final Random rand = new Random();
 
         public TheItemBlock(Block block){
             super(block);

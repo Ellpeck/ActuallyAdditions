@@ -29,7 +29,6 @@ import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
@@ -88,10 +87,10 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     public GuiTextField searchField;
     public boolean shouldSaveDataNextClose;
     public String bookletName;
+    public GuiButton buttonIntroduction;
     private int ticksElapsed;
     private boolean mousePressed;
     private int hisNameIsAt;
-    public GuiButton buttonIntroduction;
 
     public GuiBooklet(GuiScreen parentScreen, boolean tryOpenMainPage, boolean saveOnClose){
         this.xSize = 146;

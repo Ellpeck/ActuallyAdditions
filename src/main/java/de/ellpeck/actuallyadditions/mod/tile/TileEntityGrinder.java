@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 
 import cofh.api.energy.EnergyStorage;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;

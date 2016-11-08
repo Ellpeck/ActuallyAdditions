@@ -44,7 +44,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
 
     @Override
     public void saveDataOnChangeOrWorldStart(){
-        Map<EnumFacing,  TileEntity> old = new HashMap<EnumFacing, TileEntity>(this.receiversAround);
+        Map<EnumFacing, TileEntity> old = new HashMap<EnumFacing, TileEntity>(this.receiversAround);
         boolean change = false;
 
         this.receiversAround.clear();

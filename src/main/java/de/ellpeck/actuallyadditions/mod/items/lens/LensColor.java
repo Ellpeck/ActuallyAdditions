@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -32,9 +31,7 @@ import java.util.Random;
 
 public class LensColor extends Lens{
 
-    private final Random rand = new Random();
     public static final int ENERGY_USE = 200;
-
     //Thanks to xdjackiexd for this, as I couldn't be bothered
     public static final float[][] POSSIBLE_COLORS = {
             {158F, 43F, 39F}, //Red
@@ -50,6 +47,7 @@ public class LensColor extends Lens{
             {217F, 129F, 153F}, //Pink
             {86F, 51F, 28F}, //Brown
     };
+    private final Random rand = new Random();
 
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){

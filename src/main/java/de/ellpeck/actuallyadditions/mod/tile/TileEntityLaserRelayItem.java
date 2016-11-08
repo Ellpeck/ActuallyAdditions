@@ -52,7 +52,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
     @Override
     public void saveDataOnChangeOrWorldStart(){
-        Map<BlockPos,  IItemHandler> old = new HashMap<BlockPos, IItemHandler>(this.handlersAround);
+        Map<BlockPos, IItemHandler> old = new HashMap<BlockPos, IItemHandler>(this.handlersAround);
         boolean change = false;
 
         this.handlersAround.clear();
