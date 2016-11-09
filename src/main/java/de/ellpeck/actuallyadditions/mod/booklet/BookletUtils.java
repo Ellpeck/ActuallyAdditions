@@ -220,7 +220,7 @@ public final class BookletUtils{
         //Renders the amount of words and chars the book has
         else{
             String countStrg = StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID+".amountOfWordsAndChars", ClientProxy.bookletWordCount, ClientProxy.bookletCharCount);
-            booklet.getFontRenderer().drawString(TextFormatting.ITALIC+countStrg, booklet.guiLeft+5, booklet.guiTop+booklet.ySize+1, 0);
+            booklet.getFontRenderer().drawString(TextFormatting.ITALIC+countStrg, booklet.guiLeft+booklet.xSize/2-booklet.getFontRenderer().getStringWidth(countStrg)/2, booklet.guiTop+booklet.ySize+1, 0);
         }
     }
 
