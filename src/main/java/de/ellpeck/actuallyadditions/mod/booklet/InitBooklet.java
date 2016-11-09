@@ -48,17 +48,18 @@ import java.util.Arrays;
 public final class InitBooklet{
 
     public static BookletChapter chapterIntro;
-    public static BookletChapter[] chaptersIntroduction = new BookletChapter[6];
+    public static BookletChapter[] chaptersIntroduction = new BookletChapter[8];
 
     public static void preInit(){
         ActuallyAdditionsAPI.entryGettingStarted = new BookletEntry("gettingStarted").setImportant();
         ActuallyAdditionsAPI.entryReconstruction = new BookletEntry("reconstruction");
+        ActuallyAdditionsAPI.entryLaserRelays = new BookletEntry("laserRelays").setSpecial();
         ActuallyAdditionsAPI.entryFunctionalNonRF = new BookletEntry("functionalNoRF");
-        ActuallyAdditionsAPI.entryFunctionalRF = new BookletEntry("functionalRF").setSpecial();
-        ActuallyAdditionsAPI.entryGeneratingRF = new BookletEntry("generatingRF").setSpecial();
+        ActuallyAdditionsAPI.entryFunctionalRF = new BookletEntry("functionalRF");
+        ActuallyAdditionsAPI.entryGeneratingRF = new BookletEntry("generatingRF");
         ActuallyAdditionsAPI.entryItemsNonRF = new BookletEntry("itemsNoRF");
-        ActuallyAdditionsAPI.entryItemsRF = new BookletEntry("itemsRF").setSpecial();
-        ActuallyAdditionsAPI.entryMisc = new BookletEntry("misc");
+        ActuallyAdditionsAPI.entryItemsRF = new BookletEntry("itemsRF");
+        ActuallyAdditionsAPI.entryMisc = new BookletEntry("misc").setSpecial();
         ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllSearch("allAndSearch").setImportant();
     }
 
@@ -144,7 +145,7 @@ public final class InitBooklet{
         new BookletChapter("tinyTorch", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitBlocks.blockTinyTorch), new PageCrafting(1, BlockCrafting.recipesTinyTorch).setPageStacksWildcard()).setSpecial();
 
         //Reconstruction
-        new BookletChapter("reconstructorLenses", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), new PageTextOnly(1)).setImportant();
+        chaptersIntroduction[6] = new BookletChapter("reconstructorLenses", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), new PageTextOnly(1)).setImportant();
         new BookletChapter("additionalRecipes", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(Items.LEATHER), new PageReconstructor(1, LensRecipeHandler.recipeSoulSand).setNoText(), new PageReconstructor(2, LensRecipeHandler.recipeLeather).setNoText(), new PageReconstructor(3, LensRecipeHandler.recipeNetherWart).setNoText(), new PageReconstructor(4, LensRecipeHandler.recipePrismarine).setNoText()).setSpecial();
         new BookletChapter("lensColor", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemColorLens), new PageTextOnly(1), new PageReconstructor(2, LensRecipeHandler.recipeColorLens).setNoText());
         new BookletChapter("lensDeath", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemDamageLens), new PageTextOnly(1), new PageReconstructor(2, LensRecipeHandler.recipeDamageLens).setNoText());
@@ -153,9 +154,13 @@ public final class InitBooklet{
         new BookletChapter("lensDisenchanting", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemDisenchantingLens), new PageTextOnly(1).addTextReplacement("<energy>", LensDisenchanting.ENERGY_USE), new PageCrafting(2, ItemCrafting.recipeDisenchantingLens).setNoText()).setSpecial();
         new BookletChapter("lensMining", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMiningLens), new PageTextOnly(1).addTextReplacement("<energy>", LensMining.ENERGY_USE), new PageCrafting(2, ItemCrafting.recipeMiningLens).setNoText()).setImportant();
 
+        //Laser Relays
+        chaptersIntroduction[7] = new BookletChapter("laserIntro", ActuallyAdditionsAPI.entryLaserRelays, new ItemStack(InitItems.itemLaserWrench), new PageTextOnly(1), new PageTextOnly(2).addTextReplacement("<range>", TileEntityLaserRelay.MAX_DISTANCE), new PageCrafting(3, ItemCrafting.recipeLaserWrench).setNoText()).setImportant();
+        new BookletChapter("laserRelays", ActuallyAdditionsAPI.entryLaserRelays, new ItemStack(InitBlocks.blockLaserRelay), new PageTextOnly(1), new PageTextOnly(2).addTextReplacement("<cap1>", TileEntityLaserRelayEnergy.CAP).addTextReplacement("<cap2>", TileEntityLaserRelayEnergyAdvanced.CAP).addTextReplacement("<cap3>", TileEntityLaserRelayEnergyExtreme.CAP), new PagePicture(3, "pageLaserRelay", 0).setNoText(), new PageCrafting(4, BlockCrafting.recipeLaserRelay).setNoText().setPageStacksWildcard(), new PageCrafting(5, BlockCrafting.recipeLaserRelayAdvanced).setNoText().setPageStacksWildcard(), new PageCrafting(6, BlockCrafting.recipeLaserRelayExtreme).setNoText().setPageStacksWildcard());
+        new BookletChapter("itemStorage", ActuallyAdditionsAPI.entryLaserRelays, new ItemStack(InitBlocks.blockLaserRelayItemWhitelist), new PageTextOnly(1), new PageTextOnly(2), new PagePicture(3, "pageItemLaserRelayBasic", 78), new PagePicture(4, "pageItemLaserRelayFail", 84), new PagePicture(5, "pageItemLaserRelayTransfer", 78), new PagePicture(6, "pageItemLaserRelayWhitelistChest", 76), new PagePicture(7, "pageItemLaserRelayWhitelistInterface", 75), new PagePicture(8, "pageItemLaserRelaySystem", 75), new PageTextOnly(9), new PageCrafting(10, BlockCrafting.recipeLaserRelayItem).setNoText().setPageStacksWildcard(), new PageCrafting(11, BlockCrafting.recipeLaserRelayItemWhitelist).setNoText().setPageStacksWildcard(), new PageCrafting(12, BlockCrafting.recipeItemInterface).setNoText());
+        new BookletChapter("fluidLaser", ActuallyAdditionsAPI.entryLaserRelays, new ItemStack(InitBlocks.blockLaserRelayFluids), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeFluidLaser).setNoText());
+
         //No RF Using Blocks
-        new BookletChapter("itemStorage", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(InitBlocks.blockLaserRelayItemWhitelist), new PageTextOnly(1), new PageTextOnly(2), new PagePicture(3, "pageItemLaserRelayBasic", 78), new PagePicture(4, "pageItemLaserRelayFail", 84), new PagePicture(5, "pageItemLaserRelayTransfer", 78), new PagePicture(6, "pageItemLaserRelayWhitelistChest", 76), new PagePicture(7, "pageItemLaserRelayWhitelistInterface", 75), new PagePicture(8, "pageItemLaserRelaySystem", 75), new PageTextOnly(9), new PageCrafting(10, BlockCrafting.recipeLaserRelayItem).setNoText().setPageStacksWildcard(), new PageCrafting(11, BlockCrafting.recipeLaserRelayItemWhitelist).setNoText().setPageStacksWildcard(), new PageCrafting(12, BlockCrafting.recipeItemInterface).setNoText()).setImportant();
-        new BookletChapter("fluidLaser", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(InitBlocks.blockLaserRelayFluids), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeFluidLaser).setNoText()).setSpecial();
         new BookletChapter("breaker", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(InitBlocks.blockBreaker), new PageCrafting(1, BlockCrafting.recipeBreaker).setPageStacksWildcard(), new PageCrafting(2, BlockCrafting.recipePlacer).setPageStacksWildcard(), new PageCrafting(3, BlockCrafting.recipeLiquidPlacer).setPageStacksWildcard(), new PageCrafting(4, BlockCrafting.recipeLiquidCollector).setPageStacksWildcard());
         new BookletChapter("dropper", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(InitBlocks.blockDropper), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeDropper).setNoText());
         new BookletChapter("phantomfaces", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(InitBlocks.blockPhantomLiquiface), new PageTextOnly(1).addTextReplacement("<range>", TileEntityPhantomface.RANGE), new PageTextOnly(2), new PageCrafting(3, BlockCrafting.recipePhantomface), new PageCrafting(4, BlockCrafting.recipeLiquiface), new PageCrafting(5, BlockCrafting.recipeEnergyface), new PageCrafting(6, ItemCrafting.recipePhantomConnector).setNoText(), new PageCrafting(7, BlockCrafting.recipePhantomBooster)).setImportant();
@@ -174,7 +179,6 @@ public final class InitBooklet{
         //RF Using Blocks
         new BookletChapter("farmer", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockFarmer), new PageTextOnly(1).addTextReplacement("<energy>", TileEntityFarmer.USE_PER_OPERATION), new PageCrafting(2, BlockCrafting.recipeFarmer).setNoText().setPageStacksWildcard()).setImportant();
         new BookletChapter("fireworkBox", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockFireworkBox), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityFireworkBox.USE_PER_SHOT), new PageCrafting(2, BlockCrafting.recipeFireworkBox)).setSpecial();
-        new BookletChapter("laserRelays", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockLaserRelay), new PageTextOnly(1).addTextReplacement("<range>", TileEntityLaserRelay.MAX_DISTANCE), new PageTextOnly(2).addTextReplacement("<cap1>", TileEntityLaserRelayEnergy.CAP).addTextReplacement("<cap2>", TileEntityLaserRelayEnergyAdvanced.CAP).addTextReplacement("<cap3>", TileEntityLaserRelayEnergyExtreme.CAP), new PagePicture(3, "pageLaserRelay", 0).setNoText(), new PageCrafting(4, BlockCrafting.recipeLaserRelay).setNoText().setPageStacksWildcard(), new PageCrafting(5, BlockCrafting.recipeLaserRelayAdvanced).setNoText().setPageStacksWildcard(), new PageCrafting(6, BlockCrafting.recipeLaserRelayExtreme).setNoText().setPageStacksWildcard(), new PageCrafting(7, ItemCrafting.recipeLaserWrench).setNoText()).setImportant();
         new BookletChapter("miner", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockMiner), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityMiner.ENERGY_USE_PER_BLOCK).addTextReplacement("<range>", TileEntityMiner.DEFAULT_RANGE), new PageCrafting(2, BlockCrafting.recipeMiner)).setSpecial();
         new BookletChapterCoffee("coffeeMachine", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockCoffeeMachine), new PageTextOnly(1).setStacks(new ItemStack(InitItems.itemCoffeeBean)).addTextReplacement("<rf>", TileEntityCoffeeMachine.ENERGY_USED).addTextReplacement("<coffee>", TileEntityCoffeeMachine.CACHE_USE).addTextReplacement("<water>", TileEntityCoffeeMachine.WATER_USE), new PageTextOnly(2).setStacks(new ItemStack(InitItems.itemCoffee)), new PagePicture(3, "pageCoffeeMachine", 115), new PageCrafting(4, BlockCrafting.recipeCoffeeMachine).setNoText().setPageStacksWildcard(), new PageCrafting(5, ItemCrafting.recipeCup).setNoText()).setImportant();
         new BookletChapterCrusher("crusher", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockGrinderDouble), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityGrinder.ENERGY_USE), new PageCrafting(2, BlockCrafting.recipeCrusher).setNoText().setPageStacksWildcard(), new PageCrafting(3, BlockCrafting.recipeDoubleCrusher).setNoText().setPageStacksWildcard(), new PageCrusherRecipe(4, CrusherCrafting.recipeIronHorseArmor).setNoText(), new PageCrusherRecipe(5, CrusherCrafting.recipeGoldHorseArmor).setNoText(), new PageCrusherRecipe(6, CrusherCrafting.recipeDiamondHorseArmor).setNoText());

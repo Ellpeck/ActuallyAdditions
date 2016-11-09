@@ -70,6 +70,7 @@ public final class ActuallyAdditionsAPI{
     //DO NOT CHANGE/OVERRIDE THESE!!
     public static IBookletEntry entryGettingStarted;
     public static IBookletEntry entryReconstruction;
+    public static IBookletEntry entryLaserRelays;
     public static IBookletEntry entryFunctionalNonRF;
     public static IBookletEntry entryFunctionalRF;
     public static IBookletEntry entryGeneratingRF;
