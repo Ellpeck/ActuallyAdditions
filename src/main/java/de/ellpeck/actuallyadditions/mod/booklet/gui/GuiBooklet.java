@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
-import de.ellpeck.actuallyadditions.api.booklet.internal.IBookletGui;
+import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,21 +24,23 @@ import java.io.IOException;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class GuiBooklet extends GuiScreen implements IBookletGui{
+public class GuiBooklet extends GuiBookletBase{
 
     public static final int BUTTONS_PER_PAGE = 12;
     public static final ResourceLocation RES_LOC_GUI = AssetUtil.getBookletGuiLocation("guiBooklet");
     public static final ResourceLocation RES_LOC_GADGETS = AssetUtil.getBookletGuiLocation("guiBookletGadgets");
 
-    protected GuiScreen parent;
+    protected GuiScreen previousScreen;
+    protected GuiBookletBase parentPage;
 
     protected int xSize;
     protected int ySize;
     protected int guiLeft;
     protected int guiTop;
 
-    public GuiBooklet(GuiScreen parent){
-        this.parent = parent;
+    public GuiBooklet(GuiScreen previousScreen, GuiBookletBase parentPage){
+        this.previousScreen = previousScreen;
+        this.parentPage = parentPage;
 
         this.xSize = 281;
         this.ySize = 180;
@@ -67,8 +69,8 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException{
-        if(this.parent != null && keyCode == Keyboard.KEY_ESCAPE){
-            this.mc.displayGuiScreen(this.parent);
+        if(this.previousScreen != null && keyCode == Keyboard.KEY_ESCAPE){
+            this.mc.displayGuiScreen(this.previousScreen);
         }
         else{
             super.keyTyped(typedChar, keyCode);
@@ -83,5 +85,10 @@ public class GuiBooklet extends GuiScreen implements IBookletGui{
     @Override
     public void renderSplitScaledAsciiString(String text, int x, int y, int color, boolean shadow, float scale, int length){
         StringUtil.renderSplitScaledAsciiString(this.fontRendererObj, text, x, y, color, shadow, scale, length);
+    }
+
+    @Override
+    public List<GuiButton> getButtonList(){
+        return this.buttonList;
     }
 }

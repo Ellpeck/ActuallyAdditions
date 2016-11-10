@@ -10,9 +10,12 @@
 
 package de.ellpeck.actuallyadditions.api.booklet;
 
-import de.ellpeck.actuallyadditions.api.booklet.internal.IPageGui;
+import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IBookletPage{
 
@@ -24,7 +27,26 @@ public interface IBookletPage{
 
     void setChapter(IBookletChapter chapter);
 
-    IPageGui createGui();
-
     String getInfoText();
+
+    @SideOnly(Side.CLIENT)
+    void mouseClicked(GuiBookletBase gui, int mouseX, int mouseY, int mouseButton);
+
+    @SideOnly(Side.CLIENT)
+    void mouseReleased(GuiBookletBase gui, int mouseX, int mouseY, int state);
+
+    @SideOnly(Side.CLIENT)
+    void mouseClickMove(GuiBookletBase gui, int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick);
+
+    @SideOnly(Side.CLIENT)
+    void actionPerformed(GuiBookletBase gui, GuiButton button);
+
+    @SideOnly(Side.CLIENT)
+    void initGui(GuiBookletBase gui);
+
+    @SideOnly(Side.CLIENT)
+    void updateScreen(GuiBookletBase gui);
+
+    @SideOnly(Side.CLIENT)
+    void drawScreen(GuiBookletBase gui, int mouseX, int mouseY, float partialTicks);
 }

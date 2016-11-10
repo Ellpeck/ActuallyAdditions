@@ -47,15 +47,15 @@ public class EntryButton extends GuiButton{
                 textOffsetX = 10;
             }
 
-            float scale = 0.8F;
+            float scale = 0.75F;
 
             if(this.hovered){
                 GlStateManager.pushMatrix();
-                AssetUtil.drawHorizontalGradientRect(this.xPosition+textOffsetX-1, this.yPosition+this.height-2, this.xPosition+(int)(minecraft.fontRendererObj.getStringWidth(this.displayString)*scale)+textOffsetX+1, this.yPosition+this.height-1, 0x80 << 24 | 22271, 22271, this.zLevel);
+                AssetUtil.drawHorizontalGradientRect(this.xPosition+textOffsetX-1, this.yPosition+this.height-1, this.xPosition+(int)(minecraft.fontRendererObj.getStringWidth(this.displayString)*scale)+textOffsetX+1, this.yPosition+this.height, 0x80 << 24 | 22271, 22271, this.zLevel);
                 GlStateManager.popMatrix();
             }
 
-            StringUtil.renderScaledAsciiString(minecraft.fontRendererObj, this.displayString, this.xPosition+textOffsetX, this.yPosition+(this.height-8)/2, 0, false, scale);
+            StringUtil.renderScaledAsciiString(minecraft.fontRendererObj, this.displayString, this.xPosition+textOffsetX, this.yPosition+2+(this.height-8)/2, 0, false, scale);
         }
     }
 }

@@ -11,20 +11,53 @@
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.api.booklet.internal.IPageGui;
+import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
-public class GuiPage extends GuiBooklet implements IPageGui{
+import java.io.IOException;
+
+public class GuiPage extends GuiBooklet{
 
     private final IBookletPage page;
 
-    public GuiPage(GuiScreen parent, IBookletPage page){
-        super(parent);
+    public GuiPage(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletPage page){
+        super(previousScreen, parentPage);
         this.page = page;
     }
 
     @Override
-    public IBookletPage getPage(){
-        return this.page;
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+        this.page.mouseClicked(this, mouseX, mouseY, mouseButton);
+    }
+
+    @Override
+    public void mouseReleased(int mouseX, int mouseY, int state){
+        this.page.mouseReleased(this, mouseX, mouseY, state);
+    }
+
+    @Override
+    public void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick){
+        this.page.mouseClickMove(this, mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
+    }
+
+    @Override
+    public void actionPerformed(GuiButton button) throws IOException{
+        this.page.actionPerformed(this, button);
+    }
+
+    @Override
+    public void initGui(){
+        this.page.initGui(this);
+    }
+
+    @Override
+    public void updateScreen(){
+        this.page.updateScreen(this);
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks){
+        this.page.drawScreen(this, mouseX, mouseY, partialTicks);
     }
 }

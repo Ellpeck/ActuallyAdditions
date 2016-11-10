@@ -10,15 +10,15 @@
 
 package de.ellpeck.actuallyadditions.api.booklet;
 
-import de.ellpeck.actuallyadditions.api.booklet.internal.IEntryGui;
+import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public interface IBookletEntry{
 
     List<IBookletChapter> getAllChapters();
-
-    void setChapters(List<IBookletChapter> chapters);
 
     String getIdentifier();
 
@@ -28,5 +28,6 @@ public interface IBookletEntry{
 
     void addChapter(IBookletChapter chapter);
 
-    IEntryGui createGui();
+    @SideOnly(Side.CLIENT)
+    List<IBookletChapter> getChaptersForGuiDisplaying(GuiBookletBase gui, String searchBarText);
 }

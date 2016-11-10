@@ -11,8 +11,15 @@
 package de.ellpeck.actuallyadditions.mod.booklet.misc;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiEntry;
+import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiMainPage;
+import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiPage;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 
 public final class BookletUtils{
@@ -29,5 +36,14 @@ public final class BookletUtils{
             }
         }
         return null;
+    }
+
+    public static GuiBooklet createBookletGuiFromPage(GuiScreen previousScreen, IBookletPage page){
+        GuiMainPage mainPage = new GuiMainPage(previousScreen);
+
+        IBookletChapter chapter = page.getChapter();
+        GuiEntry entry = new GuiEntry(previousScreen, mainPage, chapter.getEntry(), chapter);
+
+        return new GuiPage(previousScreen, entry, page);
     }
 }

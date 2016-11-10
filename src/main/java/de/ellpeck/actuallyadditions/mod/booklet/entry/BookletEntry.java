@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.entry;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
-import de.ellpeck.actuallyadditions.api.booklet.internal.IEntryGui;
+import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.util.text.TextFormatting;
@@ -40,12 +40,6 @@ public class BookletEntry implements IBookletEntry{
     }
 
     @Override
-    public void setChapters(List<IBookletChapter> chapters){
-        this.chapters.clear();
-        this.chapters.addAll(chapters);
-    }
-
-    @Override
     public String getIdentifier(){
         return this.identifier;
     }
@@ -66,8 +60,8 @@ public class BookletEntry implements IBookletEntry{
     }
 
     @Override
-    public IEntryGui createGui(){
-        return null;
+    public List<IBookletChapter> getChaptersForGuiDisplaying(GuiBookletBase gui, String searchBarText){
+        return this.chapters;
     }
 
     public BookletEntry setImportant(){

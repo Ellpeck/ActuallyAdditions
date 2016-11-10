@@ -12,9 +12,10 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.api.booklet.internal.IPageGui;
+import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
@@ -61,11 +62,6 @@ public class BookletPage implements IBookletPage{
     }
 
     @Override
-    public IPageGui createGui(){
-        return null;
-    }
-
-    @Override
     public String getInfoText(){
         if(this.hasNoText){
             return null;
@@ -85,6 +81,46 @@ public class BookletPage implements IBookletPage{
         return base;
     }
 
+    @Override
+    public void mouseClicked(GuiBookletBase gui, int mouseX, int mouseY, int mouseButton){
+
+    }
+
+    @Override
+    public void mouseReleased(GuiBookletBase gui, int mouseX, int mouseY, int state){
+
+    }
+
+    @Override
+    public void mouseClickMove(GuiBookletBase gui, int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick){
+
+    }
+
+    @Override
+    public void actionPerformed(GuiBookletBase gui, GuiButton button){
+
+    }
+
+    @Override
+    public void initGui(GuiBookletBase gui){
+
+    }
+
+    @Override
+    public void updateScreen(GuiBookletBase gui){
+
+    }
+
+    @Override
+    public void drawScreen(GuiBookletBase gui, int mouseX, int mouseY, float partialTicks){
+
+    }
+
+    public BookletPage setNoText(){
+        this.hasNoText = true;
+        return this;
+    }
+
     public BookletPage addFluidToPage(Fluid fluid){
         this.fluidsForPage.add(new FluidStack(fluid, 1));
         return this;
@@ -93,5 +129,15 @@ public class BookletPage implements IBookletPage{
     public BookletPage addItemToPage(ItemStack stack){
         this.itemsForPage.add(stack);
         return this;
+    }
+
+    public BookletPage addTextReplacement(String key, String value){
+        this.textReplacements.put(key, value);
+        return this;
+    }
+
+
+    public BookletPage addTextReplacement(String key, float value){
+        return this.addTextReplacement(key, Float.toString(value));
     }
 }

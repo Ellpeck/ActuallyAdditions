@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.jei;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -41,11 +42,7 @@ public abstract class RecipeWrapperWithButton extends BlankRecipeWrapper{
 
             IBookletPage page = this.getPage();
             if(page != null){
-                //TODO Fix this
-                /*GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen, false, true);
-                Minecraft.getMinecraft().displayGuiScreen(book);
-                BookletUtils.openIndexEntry(book, page.getChapter().getEntry(), ActuallyAdditionsAPI.BOOKLET_ENTRIES.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
-                BookletUtils.openChapter(book, page.getChapter(), page);*/
+                Minecraft.getMinecraft().displayGuiScreen(BookletUtils.createBookletGuiFromPage(Minecraft.getMinecraft().currentScreen, page));
                 return true;
             }
         }
