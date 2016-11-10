@@ -49,6 +49,6 @@ public class BookletRecipeCategory extends BlankRecipeCategory<BookletRecipeWrap
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, BookletRecipeWrapper wrapper, IIngredients ingredients){
         recipeLayout.getItemStacks().init(0, true, 70, -4);
-        recipeLayout.getItemStacks().set(0, Arrays.asList(wrapper.thePage.getItemStacksForPage()));
+        recipeLayout.getItemStacks().set(0, wrapper.thePage.getItemStacksForPage());
     }
 }

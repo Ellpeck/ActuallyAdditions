@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.button.EntryButton;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -58,5 +59,10 @@ public class GuiMainPage extends GuiBooklet{
         else{
             super.actionPerformed(button);
         }
+    }
+
+    @Override
+    public void addItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer){
+
     }
 }

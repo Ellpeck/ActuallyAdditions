@@ -12,17 +12,22 @@ package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import de.ellpeck.actuallyadditions.mod.booklet.page.ItemDisplay;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiPage extends GuiBooklet{
 
-    private final IBookletPage[] pages = new IBookletPage[2];
+    private final List<ItemDisplay> itemDisplays = new ArrayList<ItemDisplay>();
+    public final IBookletPage[] pages = new IBookletPage[2];
 
     public GuiPage(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletPage page1, IBookletPage page2){
         super(previousScreen, parentPage);
@@ -34,6 +39,10 @@ public class GuiPage extends GuiBooklet{
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
         super.mouseClicked(mouseX, mouseY, mouseButton);
+
+        for(ItemDisplay display : this.itemDisplays){
+            display.onMousePress(mouseButton, mouseX, mouseY);
+        }
 
         for(IBookletPage page : this.pages){
             if(page != null){
@@ -78,10 +87,12 @@ public class GuiPage extends GuiBooklet{
     @Override
     public void initGui(){
         super.initGui();
+        this.itemDisplays.clear();
 
-        for(IBookletPage page : this.pages){
+        for(int i = 0; i < this.pages.length; i++){
+            IBookletPage page = this.pages[i];
             if(page != null){
-                page.initGui(this);
+                page.initGui(this, this.guiLeft+6+i*142, this.guiTop+7);
             }
         }
     }
@@ -90,15 +101,20 @@ public class GuiPage extends GuiBooklet{
     public void updateScreen(){
         super.updateScreen();
 
-        for(IBookletPage page : this.pages){
+        for(int i = 0; i < this.pages.length; i++){
+            IBookletPage page = this.pages[i];
             if(page != null){
-                page.updateScreen(this);
+                page.updateScreen(this, this.guiLeft+6+i*142, this.guiTop+7);
             }
         }
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks){
+        for(ItemDisplay display : this.itemDisplays){
+            display.drawPre();
+        }
+
         for(int i = 0; i < this.pages.length; i++){
             IBookletPage page = this.pages[i];
             if(page != null){
@@ -108,11 +124,20 @@ public class GuiPage extends GuiBooklet{
 
         super.drawScreen(mouseX, mouseY, partialTicks);
 
+        for(ItemDisplay display : this.itemDisplays){
+            display.drawPost(mouseX, mouseY);
+        }
+
         for(int i = 0; i < this.pages.length; i++){
             IBookletPage page = this.pages[i];
             if(page != null){
                 page.drawScreenPost(this, this.guiLeft+6+i*142, this.guiTop+7, mouseX, mouseY, partialTicks);
             }
         }
+    }
+
+    @Override
+    public void addItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer){
+        this.itemDisplays.add(new ItemDisplay(this, x, y, scale, renderedStack, shouldTryTransfer));
     }
 }

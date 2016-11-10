@@ -44,13 +44,13 @@ public class BookletPage implements IBookletPage{
     }
 
     @Override
-    public ItemStack[] getItemStacksForPage(){
-        return this.itemsForPage.toArray(new ItemStack[this.itemsForPage.size()]);
+    public List<ItemStack> getItemStacksForPage(){
+        return this.itemsForPage;
     }
 
     @Override
-    public FluidStack[] getFluidStacksForPage(){
-        return this.fluidsForPage.toArray(new FluidStack[this.fluidsForPage.size()]);
+    public List<FluidStack> getFluidStacksForPage(){
+        return this.fluidsForPage;
     }
 
     @Override
@@ -109,13 +109,13 @@ public class BookletPage implements IBookletPage{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void initGui(GuiBookletBase gui){
+    public void initGui(GuiBookletBase gui, int startX, int startY){
 
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void updateScreen(GuiBookletBase gui){
+    public void updateScreen(GuiBookletBase gui, int startX, int startY){
 
     }
 

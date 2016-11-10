@@ -34,11 +34,11 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void getIngredients(IIngredients ingredients){
-        ingredients.setInputs(ItemStack.class, Arrays.asList(this.thePage.getItemStacksForPage()));
-        ingredients.setInputs(FluidStack.class, Arrays.asList(this.thePage.getFluidStacksForPage()));
+        ingredients.setInputs(ItemStack.class, this.thePage.getItemStacksForPage());
+        ingredients.setInputs(FluidStack.class, this.thePage.getFluidStacksForPage());
 
-        ingredients.setOutputs(ItemStack.class, Arrays.asList(this.thePage.getItemStacksForPage()));
-        ingredients.setOutputs(FluidStack.class, Arrays.asList(this.thePage.getFluidStacksForPage()));
+        ingredients.setOutputs(ItemStack.class, this.thePage.getItemStacksForPage());
+        ingredients.setOutputs(FluidStack.class, this.thePage.getFluidStacksForPage());
     }
 
     @Override

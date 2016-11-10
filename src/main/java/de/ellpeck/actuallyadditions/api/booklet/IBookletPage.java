@@ -17,11 +17,13 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
+
 public interface IBookletPage{
 
-    ItemStack[] getItemStacksForPage();
+    List<ItemStack> getItemStacksForPage();
 
-    FluidStack[] getFluidStacksForPage();
+    List<FluidStack> getFluidStacksForPage();
 
     IBookletChapter getChapter();
 
@@ -42,10 +44,10 @@ public interface IBookletPage{
     void actionPerformed(GuiBookletBase gui, GuiButton button);
 
     @SideOnly(Side.CLIENT)
-    void initGui(GuiBookletBase gui);
+    void initGui(GuiBookletBase gui, int startX, int startY);
 
     @SideOnly(Side.CLIENT)
-    void updateScreen(GuiBookletBase gui);
+    void updateScreen(GuiBookletBase gui, int startX, int startY);
 
     @SideOnly(Side.CLIENT)
     void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks);

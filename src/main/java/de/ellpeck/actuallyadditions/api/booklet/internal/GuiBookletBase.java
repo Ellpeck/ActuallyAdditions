@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.api.booklet.internal;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
@@ -30,4 +31,6 @@ public abstract class GuiBookletBase extends GuiScreen{
     public abstract int getSizeX();
 
     public abstract int getSizeY();
+
+    public abstract void addItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer);
 }

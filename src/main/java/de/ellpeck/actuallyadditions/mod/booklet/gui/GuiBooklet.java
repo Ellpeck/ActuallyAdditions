@@ -24,13 +24,13 @@ import java.io.IOException;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class GuiBooklet extends GuiBookletBase{
+public abstract class GuiBooklet extends GuiBookletBase{
 
     public static final int BUTTONS_PER_PAGE = 12;
     public static final ResourceLocation RES_LOC_GUI = AssetUtil.getBookletGuiLocation("guiBooklet");
     public static final ResourceLocation RES_LOC_GADGETS = AssetUtil.getBookletGuiLocation("guiBookletGadgets");
 
-    protected GuiScreen previousScreen;
+    public GuiScreen previousScreen;
     protected GuiBookletBase parentPage;
 
     protected int xSize;

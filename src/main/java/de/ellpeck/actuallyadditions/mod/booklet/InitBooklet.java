@@ -44,6 +44,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public final class InitBooklet{
 
@@ -77,10 +78,10 @@ public final class InitBooklet{
                 }
 
                 for(IBookletPage page : chapter.getAllPages()){
-                    ItemStack[] items = page.getItemStacksForPage();
-                    FluidStack[] fluids = page.getFluidStacksForPage();
+                    List<ItemStack> items = page.getItemStacksForPage();
+                    List<FluidStack> fluids = page.getFluidStacksForPage();
 
-                    if((items != null && items.length > 0) || (fluids != null && fluids.length > 0)){
+                    if((items != null && !items.isEmpty()) || (fluids != null && !items.isEmpty())){
                         if(!ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.contains(page)){
                             ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.add(page);
                             infoCount++;
