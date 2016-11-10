@@ -12,7 +12,10 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -105,12 +108,10 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
                                 IBlockState farmlandState = this.worldObj.getBlockState(farmland);
                                 Block farmlandBlock = farmlandState.getBlock();
 
-                                if(farmlandBlock instanceof BlockFarmland){
-                                    IBlockState toPlant = this.getFirstPlantablePlantFromSlots(plant);
-                                    if(toPlant != null){
-                                        this.worldObj.setBlockState(plant, toPlant, 2);
-                                        didSomething = true;
-                                    }
+                                IBlockState toPlant = this.getFirstPlantablePlantFromSlots(plant);
+                                if(toPlant != null){
+                                    this.worldObj.setBlockState(plant, toPlant, 3);
+                                    didSomething = true;
                                 }
                                 else if(farmlandBlock instanceof BlockDirt || farmlandBlock instanceof BlockGrass){
                                     this.worldObj.setBlockState(farmland, Blocks.FARMLAND.getDefaultState(), 2);
