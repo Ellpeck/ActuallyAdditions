@@ -15,9 +15,12 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.button.EntryButton;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
 
+@SideOnly(Side.CLIENT)
 public class GuiMainPage extends GuiBooklet{
 
     public GuiMainPage(GuiScreen previousScreen){

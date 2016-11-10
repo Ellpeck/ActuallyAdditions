@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.booklet.misc;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiEntry;
@@ -44,6 +43,20 @@ public final class BookletUtils{
         IBookletChapter chapter = page.getChapter();
         GuiEntry entry = new GuiEntry(previousScreen, mainPage, chapter.getEntry(), chapter);
 
-        return new GuiPage(previousScreen, entry, page);
+        IBookletPage[] allPages = chapter.getAllPages();
+        int pageIndex = chapter.getPageNum(page)-1;
+        IBookletPage page1;
+        IBookletPage page2;
+
+        if(page.shouldBeOnLeftSide()){
+            page1 = page;
+            page2 = pageIndex >= allPages.length-1 ? null : allPages[pageIndex+1];
+        }
+        else{
+            page1 = pageIndex <= 0 ? null : allPages[pageIndex-1];
+            page2 = page;
+        }
+
+        return new GuiPage(previousScreen, entry, page1, page2);
     }
 }

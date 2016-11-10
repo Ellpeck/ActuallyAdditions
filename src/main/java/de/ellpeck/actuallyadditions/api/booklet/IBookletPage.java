@@ -48,5 +48,10 @@ public interface IBookletPage{
     void updateScreen(GuiBookletBase gui);
 
     @SideOnly(Side.CLIENT)
-    void drawScreen(GuiBookletBase gui, int mouseX, int mouseY, float partialTicks);
+    void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks);
+
+    @SideOnly(Side.CLIENT)
+    void drawScreenPost(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks);
+
+    boolean shouldBeOnLeftSide();
 }

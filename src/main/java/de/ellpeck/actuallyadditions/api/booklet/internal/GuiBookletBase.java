@@ -22,4 +22,12 @@ public abstract class GuiBookletBase extends GuiScreen{
     public abstract void renderSplitScaledAsciiString(String text, int x, int y, int color, boolean shadow, float scale, int length);
 
     public abstract List<GuiButton> getButtonList();
+
+    public abstract int getGuiLeft();
+
+    public abstract int getGuiTop();
+
+    public abstract int getSizeX();
+
+    public abstract int getSizeY();
 }

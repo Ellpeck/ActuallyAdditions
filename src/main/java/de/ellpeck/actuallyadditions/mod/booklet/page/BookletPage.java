@@ -20,6 +20,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,38 +84,56 @@ public class BookletPage implements IBookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void mouseClicked(GuiBookletBase gui, int mouseX, int mouseY, int mouseButton){
 
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void mouseReleased(GuiBookletBase gui, int mouseX, int mouseY, int state){
 
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void mouseClickMove(GuiBookletBase gui, int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick){
 
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void actionPerformed(GuiBookletBase gui, GuiButton button){
 
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void initGui(GuiBookletBase gui){
 
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void updateScreen(GuiBookletBase gui){
 
     }
 
     @Override
-    public void drawScreen(GuiBookletBase gui, int mouseX, int mouseY, float partialTicks){
+    @SideOnly(Side.CLIENT)
+    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
 
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void drawScreenPost(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
+
+    }
+
+    @Override
+    public boolean shouldBeOnLeftSide(){
+        return this.chapter.getPageNum(this)%2 != 0;
     }
 
     public BookletPage setNoText(){

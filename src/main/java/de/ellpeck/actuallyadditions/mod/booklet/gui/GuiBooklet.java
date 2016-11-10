@@ -91,4 +91,24 @@ public class GuiBooklet extends GuiBookletBase{
     public List<GuiButton> getButtonList(){
         return this.buttonList;
     }
+
+    @Override
+    public int getGuiLeft(){
+        return this.guiLeft;
+    }
+
+    @Override
+    public int getGuiTop(){
+        return this.guiTop;
+    }
+
+    @Override
+    public int getSizeX(){
+        return this.xSize;
+    }
+
+    @Override
+    public int getSizeY(){
+        return this.ySize;
+    }
 }
