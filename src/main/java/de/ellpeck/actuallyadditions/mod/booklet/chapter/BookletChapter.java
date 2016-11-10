@@ -11,52 +11,40 @@
 package de.ellpeck.actuallyadditions.mod.booklet.chapter;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import org.apache.commons.lang3.ArrayUtils;
 
 public class BookletChapter implements IBookletChapter{
 
-    public final BookletPage[] pages;
+    public final IBookletPage[] pages;
     public final IBookletEntry entry;
     public final ItemStack displayStack;
     private final String identifier;
     public TextFormatting color;
 
-    public BookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, BookletPage... pages){
-        this.pages = pages.clone();
-
+    public BookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages){
+        this.pages = pages;
         this.identifier = identifier;
-        entry.addChapter(this);
-        ActuallyAdditionsAPI.allAndSearch.addChapter(this);
         this.entry = entry;
         this.displayStack = displayStack;
+        this.color = TextFormatting.RESET;
 
-        for(BookletPage page : this.pages){
+        this.entry.addChapter(this);
+        ActuallyAdditionsAPI.allAndSearch.addChapter(this);
+
+        for(IBookletPage page : this.pages){
             page.setChapter(this);
         }
-
-        this.color = TextFormatting.RESET;
     }
 
     @Override
-    public BookletPage[] getPages(){
+    public IBookletPage[] getAllPages(){
         return this.pages;
-    }
-
-    @Override
-    public BookletPage getPageById(int id){
-        return this.getPages()[id-1];
-    }
-
-    @Override
-    public int getPageId(BookletPage page){
-        return ArrayUtils.indexOf(this.getPages(), page)+1;
     }
 
     @Override
@@ -82,6 +70,16 @@ public class BookletChapter implements IBookletChapter{
     @Override
     public String getIdentifier(){
         return this.identifier;
+    }
+
+    @Override
+    public int getPageNum(IBookletPage page){
+        for(int i = 0; i < this.pages.length; i++){
+            if(this.pages[i] == page){
+                return i+1;
+            }
+        }
+        return -1;
     }
 
     public BookletChapter setImportant(){

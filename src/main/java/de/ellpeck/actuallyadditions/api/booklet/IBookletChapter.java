@@ -14,11 +14,7 @@ import net.minecraft.item.ItemStack;
 
 public interface IBookletChapter{
 
-    BookletPage[] getPages();
-
-    BookletPage getPageById(int id);
-
-    int getPageId(BookletPage page);
+    IBookletPage[] getAllPages();
 
     String getLocalizedName();
 
@@ -30,4 +26,5 @@ public interface IBookletChapter{
 
     String getIdentifier();
 
+    int getPageNum(IBookletPage page);
 }

@@ -11,8 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.GuiBookletStand;
+import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiMainPage;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -169,15 +169,13 @@ public class GuiHandler implements IGuiHandler{
             case CLOUD:
                 return new GuiSmileyCloud(tile, x, y, z, world);
             case BOOK:
-                return new GuiBooklet(null, true, true);
+                return new GuiMainPage(null);
             case DIRECTIONAL_BREAKER:
                 return new GuiDirectionalBreaker(player.inventory, tile);
             case RANGED_COLLECTOR:
                 return new GuiRangedCollector(player.inventory, tile, x, y, z, world);
             case MINER:
                 return new GuiMiner(player.inventory, tile);
-            case BOOK_STAND:
-                return new GuiBookletStand(tile);
             case LASER_RELAY_ITEM_WHITELIST:
                 return new GuiLaserRelayItemWhitelist(player.inventory, tile);
             case BAG:
@@ -223,7 +221,6 @@ public class GuiHandler implements IGuiHandler{
         DIRECTIONAL_BREAKER,
         RANGED_COLLECTOR,
         MINER,
-        BOOK_STAND,
         LASER_RELAY_ITEM_WHITELIST,
         FILTER(false),
         BAG(false),

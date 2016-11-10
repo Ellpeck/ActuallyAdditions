@@ -10,11 +10,13 @@
 
 package de.ellpeck.actuallyadditions.api.booklet;
 
+import de.ellpeck.actuallyadditions.api.booklet.internal.IEntryGui;
+
 import java.util.List;
 
 public interface IBookletEntry{
 
-    List<IBookletChapter> getChapters();
+    List<IBookletChapter> getAllChapters();
 
     void setChapters(List<IBookletChapter> chapters);
 
@@ -26,4 +28,5 @@ public interface IBookletEntry{
 
     void addChapter(IBookletChapter chapter);
 
+    IEntryGui createGui();
 }

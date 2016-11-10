@@ -11,17 +11,15 @@
 package de.ellpeck.actuallyadditions.mod.booklet;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
-import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterCoffee;
-import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterCrusher;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntry;
-import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllSearch;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllItems;
 import de.ellpeck.actuallyadditions.mod.booklet.page.*;
 import de.ellpeck.actuallyadditions.mod.crafting.*;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
@@ -60,40 +58,43 @@ public final class InitBooklet{
         ActuallyAdditionsAPI.entryItemsNonRF = new BookletEntry("itemsNoRF");
         ActuallyAdditionsAPI.entryItemsRF = new BookletEntry("itemsRF");
         ActuallyAdditionsAPI.entryMisc = new BookletEntry("misc").setSpecial();
-        ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllSearch("allAndSearch").setImportant();
+        ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllItems("allAndSearch").setImportant();
     }
 
     public static void postInit(){
         initChapters();
 
-        int totalCount = 0;
-        int count = 0;
+        int chapCount = 0;
+        int pageCount = 0;
+        int infoCount = 0;
         for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
-            for(IBookletChapter chapter : entry.getChapters()){
+            for(IBookletChapter chapter : entry.getAllChapters()){
                 if(!ActuallyAdditionsAPI.ALL_CHAPTERS.contains(chapter)){
                     ActuallyAdditionsAPI.ALL_CHAPTERS.add(chapter);
+                    chapCount++;
                 }
 
-                for(BookletPage page : chapter.getPages()){
+                for(IBookletPage page : chapter.getAllPages()){
                     ItemStack[] items = page.getItemStacksForPage();
                     FluidStack[] fluids = page.getFluidStacksForPage();
 
                     if((items != null && items.length > 0) || (fluids != null && fluids.length > 0)){
                         if(!ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.contains(page)){
                             ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.add(page);
-                            count++;
+                            infoCount++;
                         }
                     }
 
-                    totalCount++;
+                    pageCount++;
                 }
             }
         }
 
-        ModUtil.LOGGER.info("Registered "+count+" out of "+totalCount+" booklet pages as containing information about items or fluids!");
+        ModUtil.LOGGER.info("Registered a total of "+chapCount+" booklet chapters, where "+infoCount+" out of "+pageCount+" booklet pages contain information about items or fluids!");
     }
 
     private static void initChapters(){
+        /* TODO Reenable this
         //Getting Started
         chapterIntro = new BookletChapter("intro", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemBooklet), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3));
         new BookletChapter("reviews", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(Items.BOOK), new PageTextOnly(1));
@@ -230,5 +231,5 @@ public final class InitBooklet{
         new BookletChapter("growthRing", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemGrowthRing), new PageCrafting(1, ItemCrafting.recipeGrowthRing));
         new BookletChapter("waterRemovalRing", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemWaterRemovalRing), new PageCrafting(1, ItemCrafting.recipeWaterRing));
         new BookletChapter("batteries", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemBatteryTriple), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeBattery).setNoText(), new PageCrafting(3, ItemCrafting.recipeBatteryDouble).setNoText(), new PageCrafting(4, ItemCrafting.recipeBatteryTriple).setNoText(), new PageCrafting(5, ItemCrafting.recipeBatteryQuadruple).setNoText(), new PageCrafting(6, ItemCrafting.recipeBatteryQuintuple).setNoText());
-    }
+    */}
 }

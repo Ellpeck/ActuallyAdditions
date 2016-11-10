@@ -12,9 +12,9 @@ package de.ellpeck.actuallyadditions.mod.proxy;
 
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.blocks.render.*;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
@@ -70,16 +70,17 @@ public class ClientProxy implements IProxy{
                 bookletCharCount += entry.getLocalizedName().length();
                 bookletText += entry.getLocalizedName()+"\n\n";
 
-                for(IBookletChapter chapter : entry.getChapters()){
+                for(IBookletChapter chapter : entry.getAllChapters()){
                     bookletWordCount += chapter.getLocalizedName().split(" ").length;
                     bookletCharCount += chapter.getLocalizedName().length();
                     bookletText += chapter.getLocalizedName()+"\n";
 
-                    for(BookletPage page : chapter.getPages()){
-                        if(page.getText() != null){
-                            bookletWordCount += page.getText().split(" ").length;
-                            bookletCharCount += page.getText().length();
-                            bookletText += page.getText()+"\n";
+                    for(IBookletPage page : chapter.getAllPages()){
+                        String text = page.getInfoText();
+                        if(text != null){
+                            bookletWordCount += text.split(" ").length;
+                            bookletCharCount += text.length();
+                            bookletText += text+"\n";
                         }
                     }
                     bookletText += "\n";

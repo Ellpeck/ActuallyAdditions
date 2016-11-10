@@ -102,7 +102,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         register(TileEntityLaserRelayEnergyExtreme.class);
         register(TileEntityLaserRelayItemWhitelist.class);
         register(TileEntityItemViewer.class);
-        register(TileEntityBookletStand.class);
         register(TileEntityDisplayStand.class);
         register(TileEntityShockSuppressor.class);
         register(TileEntityEmpowerer.class);

@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.api;
 
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
@@ -31,7 +31,7 @@ public final class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "26";
+    public static final String API_VERSION = "27";
 
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<CrusherRecipe>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
@@ -46,7 +46,7 @@ public final class ActuallyAdditionsAPI{
     //This is added to automatically, you don't need to add anything to this list
     public static final List<IBookletChapter> ALL_CHAPTERS = new ArrayList<IBookletChapter>();
     //This is added to automatically, you don't need to add anything to this list
-    public static final List<BookletPage> BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA = new ArrayList<BookletPage>();
+    public static final List<IBookletPage> BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA = new ArrayList<IBookletPage>();
     public static final List<WeightedOre> STONE_ORES = new ArrayList<WeightedOre>();
     public static final List<WeightedOre> NETHERRACK_ORES = new ArrayList<WeightedOre>();
 
@@ -89,66 +89,6 @@ public final class ActuallyAdditionsAPI{
     public static Lens lensDisruption;
     public static Lens lensDisenchanting;
     public static Lens lensMining;
-
-    /**
-     * Adds a Recipe to the Crusher Recipe Registry
-     * The second output will be nothing
-     *
-     * @param input           The input's OreDictionary name
-     * @param outputOne       The first output's OreDictionary name
-     * @param outputOneAmount The amount of the first output
-     */
-    @Deprecated //Use new version below
-    public static void addCrusherRecipe(String input, String outputOne, int outputOneAmount){
-    }
-
-    /**
-     * Adds a Recipe to the Crusher Recipe Registry
-     *
-     * @param input           The input's OreDictionary name
-     * @param outputOne       The first output's OreDictionary name
-     * @param outputOneAmount The amount of the first output
-     * @param outputTwo       The second output's OreDictionary name
-     * @param outputTwoAmount The amount of the second output
-     * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
-     */
-    @Deprecated //Use new version below
-    public static void addCrusherRecipe(String input, String outputOne, int outputOneAmount, String outputTwo, int outputTwoAmount, int outputTwoChance){
-    }
-
-    /**
-     * Adds a Recipe to the Crusher Recipe Registry
-     * The second output will be nothing
-     *
-     * @param input     The input as an ItemStack
-     * @param outputOne The first output as an ItemStack
-     */
-    @Deprecated //Use new version below
-    public static void addCrusherRecipe(ItemStack input, ItemStack outputOne){
-    }
-
-    /**
-     * Adds a Recipe to the Crusher Recipe Registry
-     * The second output will be nothing
-     *
-     * @param input           The input as an ItemStack
-     * @param outputOne       The first output's OreDictionary name
-     * @param outputOneAmount The amount of the first output
-     */
-    @Deprecated //Use new version below
-    public static void addCrusherRecipe(ItemStack input, String outputOne, int outputOneAmount){
-    }
-
-    /**
-     * Adds a Recipe to the Crusher Recipe Registry
-     * The second output will be nothing
-     *
-     * @param input     The input as an ItemStack
-     * @param outputOne The first output's OreDictionary name
-     */
-    @Deprecated //Use new version below
-    public static void addCrusherRecipe(String input, ItemStack outputOne){
-    }
 
     /**
      * Adds an ore with a specific weight to the list of ores that the lens of the miner will generate inside of stone.
@@ -267,23 +207,6 @@ public final class ActuallyAdditionsAPI{
     }
 
     /**
-     * Adds a recipe to the Atomic Reconstructor conversion lenses
-     *
-     * @param input     The input's OreDictionary name
-     * @param output    The output's OreDictionary name
-     * @param energyUse The amount of RF used per conversion
-     * @param type      The type of lens used for the conversion. To use the default type, use method below
-     *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
-     */
-    @Deprecated //Use ItemStack recipes
-    public static void addReconstructorLensConversionRecipe(String input, String output, int energyUse, LensConversion type){
-    }
-
-    @Deprecated //Use ItemStack recipes
-    public static void addReconstructorLensConversionRecipe(String input, String output, int energyUse){
-    }
-
-    /**
      * Adds an item and the way it is modified to the Atomic Reconstructor's color lens.
      * This also works for blocks, but they have to be in their item form.
      * The way it is modified is an instance of IColorLensChanger. When modifying the item,
@@ -312,16 +235,5 @@ public final class ActuallyAdditionsAPI{
      */
     public static void addBookletEntry(IBookletEntry entry){
         BOOKLET_ENTRIES.add(entry);
-    }
-
-    /**
-     * Adds a page to the pages with ItemStack data
-     * This should be done with every page that uses getItemStacksForPage()
-     *
-     * @param page The page to add
-     */
-    @Deprecated //Search will now be done on all pages that are in the book
-    public static void addPageWithItemStackData(BookletPage page){
-        BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.add(page);
     }
 }

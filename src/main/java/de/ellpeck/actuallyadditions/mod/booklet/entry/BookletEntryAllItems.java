@@ -1,5 +1,5 @@
 /*
- * This file ("BookletEntryAllSearch.java") is part of the Actually Additions mod for Minecraft.
+ * This file ("BookletEntryAllItems.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://ellpeck.de/actaddlicense
@@ -10,10 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.entry;
 
-public class BookletEntryAllSearch extends BookletEntry{
+public class BookletEntryAllItems extends BookletEntry{
 
-    public BookletEntryAllSearch(String unlocalizedName){
-        super(unlocalizedName);
+    public BookletEntryAllItems(String identifier){
+        super(identifier);
     }
-
 }

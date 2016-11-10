@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.jei.coffee;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
+import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
@@ -82,7 +82,7 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton{
     }
 
     @Override
-    public BookletPage getPage(){
-        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockCoffeeMachine));
+    public IBookletPage getPage(){
+        return BookletUtils.findFirstPageForStack(new ItemStack(InitBlocks.blockCoffeeMachine));
     }
 }

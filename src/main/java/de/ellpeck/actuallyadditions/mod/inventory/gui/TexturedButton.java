@@ -8,12 +8,12 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.booklet.button;
+package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -23,18 +23,20 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class TexturedButton extends GuiButton{
 
+    private final ResourceLocation resLoc;
     public final List textList = new ArrayList();
     public int texturePosX;
     public int texturePosY;
 
-    public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height){
-        this(id, x, y, texturePosX, texturePosY, width, height, new ArrayList());
+    public TexturedButton(ResourceLocation resLoc, int id, int x, int y, int texturePosX, int texturePosY, int width, int height){
+        this(resLoc, id, x, y, texturePosX, texturePosY, width, height, new ArrayList());
     }
 
-    public TexturedButton(int id, int x, int y, int texturePosX, int texturePosY, int width, int height, List hoverTextList){
+    public TexturedButton(ResourceLocation resLoc, int id, int x, int y, int texturePosX, int texturePosY, int width, int height, List hoverTextList){
         super(id, x, y, width, height, "");
         this.texturePosX = texturePosX;
         this.texturePosY = texturePosY;
+        this.resLoc = resLoc;
         this.textList.addAll(hoverTextList);
     }
 
@@ -46,7 +48,7 @@ public class TexturedButton extends GuiButton{
     @Override
     public void drawButton(Minecraft minecraft, int x, int y){
         if(this.visible){
-            minecraft.getTextureManager().bindTexture(GuiBooklet.RES_LOC);
+            minecraft.getTextureManager().bindTexture(this.resLoc);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
             int k = this.getHoverState(this.hovered);

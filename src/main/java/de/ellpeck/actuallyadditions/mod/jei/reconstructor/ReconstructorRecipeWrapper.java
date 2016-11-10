@@ -10,19 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
+import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton{
 
@@ -60,7 +55,7 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton{
     }
 
     @Override
-    public BookletPage getPage(){
-        return BookletUtils.getFirstPageForStack(new ItemStack(InitBlocks.blockAtomicReconstructor));
+    public IBookletPage getPage(){
+        return BookletUtils.findFirstPageForStack(new ItemStack(InitBlocks.blockAtomicReconstructor));
     }
 }

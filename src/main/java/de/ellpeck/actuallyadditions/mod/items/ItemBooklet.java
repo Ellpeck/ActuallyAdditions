@@ -10,14 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
-import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.entry.EntrySet;
+import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -38,15 +35,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class ItemBooklet extends ItemBase implements IHudDisplay{
 
-    @SideOnly(Side.CLIENT)
-    public static EntrySet forcedEntry;
+    //TODO Fix this
+    //@SideOnly(Side.CLIENT)
+    //public static EntrySet forcedEntry;
 
     public ItemBooklet(String name){
         super(name);
@@ -61,10 +57,10 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
             ItemStack blockStack = new ItemStack(block, 1, block.getMetaFromState(state));
-            BookletPage page = BookletUtils.getFirstPageForStack(blockStack);
+            IBookletPage page = BookletUtils.findFirstPageForStack(blockStack);
             if(page != null){
                 if(world.isRemote){
-                    forcedEntry = new EntrySet(page, page.getChapter(), page.getChapter().getEntry(), ActuallyAdditionsAPI.BOOKLET_ENTRIES.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1);
+                    //forcedEntry = new EntrySet(page, page.getChapter(), page.getChapter().getEntry(), ActuallyAdditionsAPI.BOOKLET_ENTRIES.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1);
                 }
                 this.onItemRightClick(stack, world, player, hand);
                 return EnumActionResult.SUCCESS;
@@ -110,10 +106,10 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
                 ItemStack blockStack = new ItemStack(block, 1, block.getMetaFromState(state));
                 int height = resolution.getScaledHeight()/5*3;
                 if(player.isSneaking()){
-                    BookletPage page = BookletUtils.getFirstPageForStack(blockStack);
+                    IBookletPage page = BookletUtils.findFirstPageForStack(blockStack);
                     if(page != null){
                         String strg1 = page.getChapter().getLocalizedName();
-                        String strg2 = "Page "+page.getID();
+                        String strg2 = "Page "+page.getChapter().getPageNum(page);
                         String strg3 = "Right-Click to open...";
 
                         AssetUtil.renderStackToGui(page.getChapter().getDisplayItemStack() != null ? page.getChapter().getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, height+41, 1F);

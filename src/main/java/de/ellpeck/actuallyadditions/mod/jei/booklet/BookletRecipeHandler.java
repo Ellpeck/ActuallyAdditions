@@ -10,20 +10,20 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.booklet;
 
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
-public class BookletRecipeHandler implements IRecipeHandler<BookletPage>{
+public class BookletRecipeHandler implements IRecipeHandler<IBookletPage>{
 
 
     @Override
     public Class getRecipeClass(){
-        return BookletPage.class;
+        return IBookletPage.class;
     }
 
     @Override
-    public String getRecipeCategoryUid(BookletPage recipe){
+    public String getRecipeCategoryUid(IBookletPage recipe){
         return this.getRecipeCategoryUid();
     }
 
@@ -33,12 +33,12 @@ public class BookletRecipeHandler implements IRecipeHandler<BookletPage>{
     }
 
     @Override
-    public IRecipeWrapper getRecipeWrapper(BookletPage recipe){
+    public IRecipeWrapper getRecipeWrapper(IBookletPage recipe){
         return new BookletRecipeWrapper(recipe);
     }
 
     @Override
-    public boolean isRecipeValid(BookletPage recipe){
+    public boolean isRecipeValid(IBookletPage recipe){
         return true;
     }
 }

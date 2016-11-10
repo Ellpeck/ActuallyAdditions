@@ -8,7 +8,7 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.booklet;
+package de.ellpeck.actuallyadditions.mod.booklet.misc;
 
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -16,10 +16,13 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.stats.StatisticsManager;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * (Partially excerpted from Botania by Vazkii with permission, thanks!)
  */
+@SideOnly(Side.CLIENT)
 public class GuiAAAchievements extends GuiAchievements{
 
     public GuiAAAchievements(GuiScreen screen, StatisticsManager statistics){

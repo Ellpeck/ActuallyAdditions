@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.IStringReactor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBookletStand;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.Minecraft;
@@ -125,23 +124,6 @@ public final class PacketHandler{
         }
     };
     public static SimpleNetworkWrapper theNetwork;
-    public static final IDataHandler BOOKLET_STAND_BUTTON_HANDLER = new IDataHandler(){
-        @Override
-        public void handleData(NBTTagCompound compound){
-            World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
-            TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
-            EntityPlayer player = (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID"));
-
-            if(player != null && tile instanceof TileEntityBookletStand){
-                TileEntityBookletStand stand = (TileEntityBookletStand)tile;
-                if(player.getName() != null && player.getName().equalsIgnoreCase(stand.assignedPlayer)){
-                    stand.assignedEntry.readFromNBT(compound.getCompoundTag("EntrySet"));
-                    stand.markDirty();
-                    stand.sendUpdate();
-                }
-            }
-        }
-    };
     public static final IDataHandler CHANGE_PLAYER_DATA_HANDLER = new IDataHandler(){
         @Override
         public void handleData(NBTTagCompound compound){
@@ -166,7 +148,6 @@ public final class PacketHandler{
 
         DATA_HANDLERS.add(PARTICLE_HANDLER);
         DATA_HANDLERS.add(TILE_ENTITY_HANDLER);
-        DATA_HANDLERS.add(BOOKLET_STAND_BUTTON_HANDLER);
         DATA_HANDLERS.add(GUI_BUTTON_TO_TILE_HANDLER);
         DATA_HANDLERS.add(GUI_STRING_TO_TILE_HANDLER);
         DATA_HANDLERS.add(GUI_NUMBER_TO_TILE_HANDLER);

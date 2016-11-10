@@ -101,7 +101,6 @@ public final class InitBlocks{
     public static Block blockPillarQuartzWall;
     public static Block blockPillarQuartzStair;
     public static Block blockPillarQuartzSlab;
-    public static Block blockBookletStand;
     public static Block blockDisplayStand;
     public static Block blockShockSuppressor;
     public static Block blockEmpowerer;
@@ -121,7 +120,6 @@ public final class InitBlocks{
         blockShockSuppressor = new BlockShockSuppressor("blockShockSuppressor");
         blockDisplayStand = new BlockDisplayStand("blockDisplayStand");
         blockPlayerInterface = new BlockPlayerInterface("blockPlayerInterface");
-        blockBookletStand = new BlockBookletStand("blockBookletStand");
         blockItemViewer = new BlockItemViewer("blockItemViewer");
         blockFireworkBox = new BlockFireworkBox("blockFireworkBox");
         blockMiner = new BlockMiner("blockMiner");

@@ -10,34 +10,63 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.api.internal.IBookletGui;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.internal.IPageGui;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BookletPageAA extends BookletPage{
+public class BookletPage implements IBookletPage{
 
-    protected final int localizationKey;
+    protected IBookletChapter chapter;
+
     protected List<FluidStack> fluidsForPage = new ArrayList<FluidStack>();
+    protected List<ItemStack> itemsForPage = new ArrayList<ItemStack>();
 
-    public BookletPageAA(int localizationKey){
+    protected boolean hasNoText;
+    protected final HashMap<String, String> textReplacements = new HashMap<String, String>();
+    protected final int localizationKey;
+
+    public BookletPage(int localizationKey){
         this.localizationKey = localizationKey;
     }
 
     @Override
-    public int getID(){
-        return this.chapter.getPageId(this);
+    public ItemStack[] getItemStacksForPage(){
+        return this.itemsForPage.toArray(new ItemStack[this.itemsForPage.size()]);
     }
 
     @Override
-    public String getText(){
+    public FluidStack[] getFluidStacksForPage(){
+        return this.fluidsForPage.toArray(new FluidStack[this.fluidsForPage.size()]);
+    }
+
+    @Override
+    public IBookletChapter getChapter(){
+        return this.chapter;
+    }
+
+    @Override
+    public void setChapter(IBookletChapter chapter){
+        this.chapter = chapter;
+    }
+
+    @Override
+    public IPageGui createGui(){
+        return null;
+    }
+
+    @Override
+    public String getInfoText(){
         if(this.hasNoText){
             return null;
         }
@@ -56,33 +85,13 @@ public class BookletPageAA extends BookletPage{
         return base;
     }
 
-    @Override
-    public void renderPre(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-
-    }
-
-    @Override
-    public void render(IBookletGui gui, int mouseX, int mouseY, int ticksElapsed, boolean mousePressed){
-
-    }
-
-    @Override
-    public void updateScreen(int ticksElapsed){
-
-    }
-
-    @Override
-    public FluidStack[] getFluidStacksForPage(){
-        return this.fluidsForPage.toArray(new FluidStack[this.fluidsForPage.size()]);
-    }
-
-    public BookletPageAA addFluidToPage(Fluid fluid){
+    public BookletPage addFluidToPage(Fluid fluid){
         this.fluidsForPage.add(new FluidStack(fluid, 1));
         return this;
     }
 
-    @Override
-    public String getClickToSeeRecipeString(){
-        return TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe");
+    public BookletPage addItemToPage(ItemStack stack){
+        this.itemsForPage.add(stack);
+        return this;
     }
 }

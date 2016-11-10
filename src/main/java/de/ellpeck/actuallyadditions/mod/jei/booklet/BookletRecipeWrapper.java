@@ -10,9 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.booklet;
 
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -27,9 +26,9 @@ import java.util.List;
 
 public class BookletRecipeWrapper extends RecipeWrapperWithButton{
 
-    public final BookletPage thePage;
+    public final IBookletPage thePage;
 
-    public BookletRecipeWrapper(BookletPage page){
+    public BookletRecipeWrapper(IBookletPage page){
         this.thePage = page;
     }
 
@@ -51,13 +50,13 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton{
 
         int maxLines = 4;
         IBookletChapter chapter = this.thePage.getChapter();
-        String aText = (chapter.getPages()[0] instanceof PagePicture && chapter.getPages().length > 1 ? chapter.getPages()[1] : chapter.getPages()[0]).getText();
+        String aText = chapter.getAllPages()[0].getInfoText();
         List text = minecraft.fontRendererObj.listFormattedStringToWidth(aText != null ? aText : TextFormatting.DARK_RED+StringUtil.localize("container.nei."+ModUtil.MOD_ID+".booklet.noText"), 150);
         for(int i = 0; i < Math.min(maxLines, text.size()); i++){
             minecraft.fontRendererObj.drawString(text.get(i)+(i == maxLines-1 && text.size() > maxLines ? TextFormatting.RESET+""+TextFormatting.BLACK+"..." : ""), 0, 16+25+i*(minecraft.fontRendererObj.FONT_HEIGHT+1), 0, false);
         }
         minecraft.fontRendererObj.drawString(TextFormatting.ITALIC+chapter.getLocalizedName(), 25, 85, 0, false);
-        minecraft.fontRendererObj.drawString(TextFormatting.ITALIC+"Page "+this.thePage.getID(), 25, 95, 0, false);
+        minecraft.fontRendererObj.drawString(TextFormatting.ITALIC+"Page "+chapter.getPageNum(this.thePage), 25, 95, 0, false);
 
         super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);
     }
@@ -78,7 +77,7 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton{
     }
 
     @Override
-    public BookletPage getPage(){
+    public IBookletPage getPage(){
         return this.thePage;
     }
 }

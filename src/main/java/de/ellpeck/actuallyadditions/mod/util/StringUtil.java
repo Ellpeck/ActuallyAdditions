@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
@@ -50,5 +51,27 @@ public final class StringUtil{
 
     public static String getFluidInfo(FluidTank tank){
         return "";
+    }
+
+
+    @SideOnly(Side.CLIENT)
+    public static void renderScaledAsciiString(FontRenderer font, String text, int x, int y, int color, boolean shadow, float scale){
+        GlStateManager.pushMatrix();
+        GlStateManager.scale(scale, scale, scale);
+        boolean oldUnicode = font.getUnicodeFlag();
+        font.setUnicodeFlag(false);
+
+        font.drawString(text, x/scale, y/scale, color, shadow);
+
+        font.setUnicodeFlag(oldUnicode);
+        GlStateManager.popMatrix();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void renderSplitScaledAsciiString(FontRenderer font, String text, int x, int y, int color, boolean shadow, float scale, int length){
+        List<String> lines = font.listFormattedStringToWidth(text, (int)(length*scale));
+        for(int i = 0; i < lines.size(); i++){
+            renderScaledAsciiString(font, lines.get(i), x, y+(i*font.FONT_HEIGHT), color, shadow, scale);
+        }
     }
 }

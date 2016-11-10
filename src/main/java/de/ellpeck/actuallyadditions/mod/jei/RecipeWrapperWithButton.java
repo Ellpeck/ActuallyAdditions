@@ -10,11 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.jei;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.BookletPage;
-import de.ellpeck.actuallyadditions.mod.booklet.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.booklet.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.button.TexturedButton;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
@@ -29,7 +27,7 @@ public abstract class RecipeWrapperWithButton extends BlankRecipeWrapper{
     protected final TexturedButton theButton;
 
     public RecipeWrapperWithButton(){
-        this.theButton = new TexturedButton(23782, this.getButtonX(), this.getButtonY(), 146, 154, 20, 20);
+        this.theButton = new TexturedButton(GuiBooklet.RES_LOC_GADGETS, 23782, this.getButtonX(), this.getButtonY(), 0, 0, 20, 20);
     }
 
     public abstract int getButtonX();
@@ -41,19 +39,20 @@ public abstract class RecipeWrapperWithButton extends BlankRecipeWrapper{
         if(this.theButton.mousePressed(minecraft, mouseX, mouseY)){
             this.theButton.playPressSound(minecraft.getSoundHandler());
 
-            BookletPage page = this.getPage();
+            IBookletPage page = this.getPage();
             if(page != null){
-                GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen, false, true);
+                //TODO Fix this
+                /*GuiBooklet book = new GuiBooklet(Minecraft.getMinecraft().currentScreen, false, true);
                 Minecraft.getMinecraft().displayGuiScreen(book);
                 BookletUtils.openIndexEntry(book, page.getChapter().getEntry(), ActuallyAdditionsAPI.BOOKLET_ENTRIES.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1, true);
-                BookletUtils.openChapter(book, page.getChapter(), page);
+                BookletUtils.openChapter(book, page.getChapter(), page);*/
                 return true;
             }
         }
         return false;
     }
 
-    public abstract BookletPage getPage();
+    public abstract IBookletPage getPage();
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){

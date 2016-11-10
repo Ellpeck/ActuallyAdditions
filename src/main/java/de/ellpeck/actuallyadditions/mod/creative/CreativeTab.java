@@ -147,7 +147,6 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockTreasureChest);
 
         this.add(InitBlocks.blockBlackLotus);
-        this.add(InitBlocks.blockBookletStand);
 
         this.add(InitItems.itemBag);
         this.add(InitItems.itemVoidBag);
