@@ -77,6 +77,7 @@ public final class ActuallyAdditionsAPI{
     public static IBookletEntry entryItemsNonRF;
     public static IBookletEntry entryItemsRF;
     public static IBookletEntry entryMisc;
+    //This is added to automatically, you don't need to add anything to this entry
     public static IBookletEntry allAndSearch;
 
     //These are getting initialized in Actually Additions' PreInit phase

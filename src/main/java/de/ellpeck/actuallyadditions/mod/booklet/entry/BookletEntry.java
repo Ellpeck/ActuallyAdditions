@@ -24,7 +24,7 @@ import java.util.List;
 public class BookletEntry implements IBookletEntry{
 
     private final String identifier;
-    public List<IBookletChapter> chapters = new ArrayList<IBookletChapter>();
+    private final List<IBookletChapter> chapters = new ArrayList<IBookletChapter>();
     private TextFormatting color;
 
     public BookletEntry(String identifier){
@@ -61,7 +61,7 @@ public class BookletEntry implements IBookletEntry{
 
     @Override
     public List<IBookletChapter> getChaptersForGuiDisplaying(GuiBookletBase gui, String searchBarText){
-        return this.chapters;
+        return this.getAllChapters();
     }
 
     public BookletEntry setImportant(){

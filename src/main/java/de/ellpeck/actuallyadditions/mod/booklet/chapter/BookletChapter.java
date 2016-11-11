@@ -35,8 +35,6 @@ public class BookletChapter implements IBookletChapter{
         this.color = TextFormatting.RESET;
 
         this.entry.addChapter(this);
-        ActuallyAdditionsAPI.allAndSearch.addChapter(this);
-
         for(IBookletPage page : this.pages){
             page.setChapter(this);
         }

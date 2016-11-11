@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.blocks.render.*;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllItems;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
@@ -65,7 +66,7 @@ public class ClientProxy implements IProxy{
         String bookletText = "";
 
         for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
-            if(entry != ActuallyAdditionsAPI.allAndSearch){
+            if(!(entry instanceof BookletEntryAllItems)){
                 bookletWordCount += entry.getLocalizedName().split(" ").length;
                 bookletCharCount += entry.getLocalizedName().length();
                 bookletText += entry.getLocalizedName()+"\n\n";

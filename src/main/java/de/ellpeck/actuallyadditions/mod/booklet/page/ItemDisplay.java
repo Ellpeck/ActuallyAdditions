@@ -18,6 +18,8 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -77,6 +79,8 @@ public class ItemDisplay{
     public void onMousePress(int button, int mouseX, int mouseY){
         if(button == 0 && this.isHovered(mouseX, mouseY)){
             if(this.page != null && this.page != this.gui.pages[0] && this.page != this.gui.pages[1]){
+                this.gui.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+
                 GuiBooklet gui = BookletUtils.createPageGui(this.gui.previousScreen, this.gui, this.page);
                 this.gui.mc.displayGuiScreen(gui);
             }
