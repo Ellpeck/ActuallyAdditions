@@ -70,7 +70,7 @@ public final class StringUtil{
     public static void renderSplitScaledAsciiString(FontRenderer font, String text, int x, int y, int color, boolean shadow, float scale, int length){
         List<String> lines = font.listFormattedStringToWidth(text, (int)(length/scale));
         for(int i = 0; i < lines.size(); i++){
-            renderScaledAsciiString(font, lines.get(i), x, y+(i*font.FONT_HEIGHT), color, shadow, scale);
+            renderScaledAsciiString(font, lines.get(i), x, y+(i*(int)(font.FONT_HEIGHT*scale+3)), color, shadow, scale);
         }
     }
 }

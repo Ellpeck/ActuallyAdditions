@@ -35,7 +35,7 @@ public class GuiMainPage extends GuiBooklet{
             for(int i = 0; i < BUTTONS_PER_PAGE; i++){
                 if(ActuallyAdditionsAPI.BOOKLET_ENTRIES.size() > i){
                     IBookletEntry entry = ActuallyAdditionsAPI.BOOKLET_ENTRIES.get(i);
-                    this.buttonList.add(new EntryButton(i, this.guiLeft+156, this.guiTop+11+i*16, 115, 10, entry.getLocalizedNameWithFormatting(), null));
+                    this.buttonList.add(new EntryButton(i, this.guiLeft+156, this.guiTop+11+i*13, 115, 10, "- "+entry.getLocalizedNameWithFormatting(), null));
                 }
                 else{
                     return;

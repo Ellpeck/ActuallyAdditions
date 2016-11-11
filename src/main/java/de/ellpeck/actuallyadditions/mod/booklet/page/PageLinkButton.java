@@ -10,10 +10,51 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-//TODO
+import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.gui.GuiButton;
+
+import java.awt.*;
+import java.net.URI;
+
 public class PageLinkButton extends BookletPage{
+
+    private static final int BUTTON_ID = -12782;
+    private final String link;
 
     public PageLinkButton(int localizationKey, String link){
         super(localizationKey);
+        this.link = link;
+    }
+
+    @Override
+    public void initGui(GuiBookletBase gui, int startX, int startY){
+        super.initGui(gui, startX, startY);
+
+        gui.getButtonList().add(new GuiButton(BUTTON_ID, startX+125/2-50, startY+130, 100, 20, StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getIdentifier()+".button."+this.localizationKey)));
+    }
+
+    @Override
+    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
+        super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
+        PageTextOnly.renderTextToPage(gui, this, startX+6, startY+5);
+    }
+
+    @Override
+    public void actionPerformed(GuiBookletBase gui, GuiButton button){
+        if(button.id == BUTTON_ID){
+            if(Desktop.isDesktopSupported()){
+                try{
+                    Desktop.getDesktop().browse(new URI(this.link));
+                }
+                catch(Exception e){
+                    ModUtil.LOGGER.info("Couldn't open website from Link Button page!", e);
+                }
+            }
+        }
+        else{
+            super.actionPerformed(gui, button);
+        }
     }
 }

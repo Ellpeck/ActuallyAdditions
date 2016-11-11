@@ -190,7 +190,7 @@ public class GuiPage extends GuiBooklet{
             if(chapter != null){
                 int pageIndex = chapter.getPageIndex(page);
                 int pageAmount = chapter.getAllPages().length;
-                return pageIndex+1 < pageAmount-1;
+                return pageIndex+1 < pageAmount;
             }
         }
         return false;

@@ -1017,7 +1017,7 @@ booklet.actuallyadditions.chapter.itemFilter.text.1=The <item>Item Filter<r> can
 
 booklet.actuallyadditions.chapter.videoGuide.name=A Video Guide
 booklet.actuallyadditions.chapter.videoGuide.text.1=If you want to have a <imp>visual introduction<r> to see what <item>Actually Additions<r> has to offer, you can watch this really awesome video by a friend of mine, <imp>Booty Toast<r> (yes, weird name, I know). <n>His video covers most of the main stuff the mod has to offer, however it is <imp>a bit outdated<r> and doesn't cover everything. It's still a <imp>great introduction to the mod<r> though.
-booklet.actuallyadditions.chapter.videoGuide.page.1.button=Watch Video
+booklet.actuallyadditions.chapter.videoGuide.button.1=Watch Video
 
 booklet.actuallyadditions.chapter.shockSuppressor.name=Shock Absorber
 booklet.actuallyadditions.chapter.shockSuppressor.text.1=The <item>Shock Absorber<r> is a block that, when supplied with <imp>RF<r>, it will protect an area of <imp>up to <range> blocks around it<r> from any type of <imp>Explosion<r>, be it ghasts, TNT or creepers. <n>Every block that is protected will result in a loss of <imp><rf> RF<r>.

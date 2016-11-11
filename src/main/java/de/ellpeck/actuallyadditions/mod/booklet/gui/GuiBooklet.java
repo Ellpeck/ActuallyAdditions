@@ -70,7 +70,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
         }
 
         if(this.hasBackButton()){
-            this.buttonBack = new TexturedButton(RES_LOC_GADGETS, -2002, this.guiLeft-12, this.guiTop-2, 36, 54, 18, 10);
+            this.buttonBack = new TexturedButton(RES_LOC_GADGETS, -2002, this.guiLeft-15, this.guiTop-3, 36, 54, 18, 10);
             this.buttonList.add(this.buttonBack);
         }
     }

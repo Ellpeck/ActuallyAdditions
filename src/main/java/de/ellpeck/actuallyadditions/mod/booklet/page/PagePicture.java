@@ -10,10 +10,29 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-//TODO
+import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.config.GuiUtils;
+
 public class PagePicture extends BookletPage{
+
+    private final ResourceLocation resLoc;
+    private final int yTextOffset;
 
     public PagePicture(int localizationKey, String pictureLocation, int yTextOffset){
         super(localizationKey);
+        this.yTextOffset  = yTextOffset;
+        this.resLoc = AssetUtil.getBookletGuiLocation(pictureLocation);
+    }
+
+    @Override
+    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
+        super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
+
+        gui.mc.getTextureManager().bindTexture(this.resLoc);
+        GuiUtils.drawTexturedModalRect(startX-6, startY-7, 0, 0, 256, 256, 0);
+
+        PageTextOnly.renderTextToPage(gui, this, startX+6, startY-7+this.yTextOffset);
     }
 }

@@ -10,12 +10,41 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
+import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
+import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import net.minecraftforge.fml.client.config.GuiUtils;
 
-//TODO
 public class PageCrusherRecipe extends BookletPage{
+
+    private final CrusherRecipe recipe;
 
     public PageCrusherRecipe(int localizationKey, CrusherRecipe recipe){
         super(localizationKey);
+        this.recipe = recipe;
+    }
+
+    @Override
+    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
+        super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
+
+        gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
+        GuiUtils.drawTexturedModalRect(startX+38, startY+6, 136, 0, 52, 74, 0);
+
+        gui.renderScaledAsciiString("(Crusher Recipe)", startX+36, startY+85, 0, false, 0.65F);
+
+        PageTextOnly.renderTextToPage(gui, this, startX+6, startY+100);
+    }
+
+    @Override
+    public void initGui(GuiBookletBase gui, int startX, int startY){
+        super.initGui(gui, startX, startY);
+
+        gui.addOrModifyItemRenderer(this.recipe.inputStack, startX+38+18, startY+6+2, 1F, true);
+        gui.addOrModifyItemRenderer(this.recipe.outputOneStack, startX+38+4, startY+6+53, 1F, false);
+
+        if(this.recipe.outputTwoStack != null){
+            gui.addOrModifyItemRenderer(this.recipe.outputTwoStack, startX+38+30, startY+6+53, 1F, false);
+        }
     }
 }
