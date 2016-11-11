@@ -75,20 +75,20 @@ public final class InitBooklet{
                 if(!ActuallyAdditionsAPI.ALL_CHAPTERS.contains(chapter)){
                     ActuallyAdditionsAPI.ALL_CHAPTERS.add(chapter);
                     chapCount++;
-                }
 
-                for(IBookletPage page : chapter.getAllPages()){
-                    List<ItemStack> items = page.getItemStacksForPage();
-                    List<FluidStack> fluids = page.getFluidStacksForPage();
+                    for(IBookletPage page : chapter.getAllPages()){
+                        pageCount++;
 
-                    if((items != null && !items.isEmpty()) || (fluids != null && !items.isEmpty())){
-                        if(!ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.contains(page)){
-                            ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.add(page);
-                            infoCount++;
+                        List<ItemStack> items = page.getItemStacksForPage();
+                        List<FluidStack> fluids = page.getFluidStacksForPage();
+
+                        if((items != null && !items.isEmpty()) || (fluids != null && !items.isEmpty())){
+                            if(!ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.contains(page)){
+                                ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.add(page);
+                                infoCount++;
+                            }
                         }
                     }
-
-                    pageCount++;
                 }
             }
         }

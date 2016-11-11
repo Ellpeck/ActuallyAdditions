@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -22,12 +23,16 @@ public class PageTextOnly extends BookletPage{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void drawScreenPost(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
-        super.drawScreenPost(gui, startX, startY, mouseX, mouseY, partialTicks);
+    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
+        super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
+        renderTextToPage(gui, this, startX+6, startY+5);
+    }
 
-        String text = this.getInfoText();
+    @SideOnly(Side.CLIENT)
+    public static void renderTextToPage(GuiBookletBase gui, BookletPage page, int x, int y){
+        String text = page.getInfoText();
         if(text != null && !text.isEmpty()){
-            gui.renderSplitScaledAsciiString(text, startX+6, startY+5, 0, false, 0.75F, 120);
+            gui.renderSplitScaledAsciiString(text, x, y, 0, false, 0.75F, 120);
         }
     }
 }

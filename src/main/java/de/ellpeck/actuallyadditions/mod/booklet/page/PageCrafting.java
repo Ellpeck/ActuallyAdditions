@@ -11,13 +11,19 @@
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -26,6 +32,7 @@ import java.util.List;
 
 public class PageCrafting extends BookletPage{
 
+    private String recipeTypeLocKey;
     private boolean isWildcard;
     private final List<IRecipe> recipes;
 
@@ -41,6 +48,19 @@ public class PageCrafting extends BookletPage{
     public BookletPage setWildcard(){
         this.isWildcard = true;
         return this;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
+        super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
+
+        gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
+        GuiUtils.drawTexturedModalRect(startX+5, startY+6, 20, 0, 116, 54, 0);
+
+        gui.renderScaledAsciiString("("+StringUtil.localize(this.recipeTypeLocKey)+")", startX+6, startY+65, 0, false, 0.65F);
+
+        PageTextOnly.renderTextToPage(gui, this, startX+6, startY+80);
     }
 
     @Override
@@ -87,12 +107,14 @@ public class PageCrafting extends BookletPage{
             width = shaped.recipeWidth;
             height = shaped.recipeHeight;
             stacks = shaped.recipeItems;
+            this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapedRecipe";
         }
         else if(recipe instanceof ShapelessRecipes){
             ShapelessRecipes shapeless = (ShapelessRecipes)recipe;
             for(int i = 0; i < shapeless.recipeItems.size(); i++){
                 stacks[i] = shapeless.recipeItems.get(i);
             }
+            this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapelessRecipe";
         }
         else if(recipe instanceof ShapedOreRecipe){
             ShapedOreRecipe shaped = (ShapedOreRecipe)recipe;
@@ -109,6 +131,7 @@ public class PageCrafting extends BookletPage{
                     stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? null : ((List<ItemStack>)input).get(0));
                 }
             }
+            this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapedOreRecipe";
         }
         else if(recipe instanceof ShapelessOreRecipe){
             ShapelessOreRecipe shapeless = (ShapelessOreRecipe)recipe;
@@ -116,6 +139,7 @@ public class PageCrafting extends BookletPage{
                 Object input = shapeless.getInput().get(i);
                 stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? null : ((List<ItemStack>)input).get(0));
             }
+            this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapelessOreRecipe";
         }
 
         for(int x = 0; x < width; x++){
@@ -128,11 +152,11 @@ public class PageCrafting extends BookletPage{
                         copy.setItemDamage(0);
                     }
 
-                    gui.addItemRenderer(stack, startX+10+x*18, startY+10+y*18, 1F, true);
+                    gui.addItemRenderer(copy, startX+6+x*18, startY+7+y*18, 1F, true);
                 }
             }
         }
 
-        gui.addItemRenderer(recipe.getRecipeOutput(), startX+50, startY+50, 1F, false);
+        gui.addItemRenderer(recipe.getRecipeOutput(), startX+100, startY+25, 1F, false);
     }
 }

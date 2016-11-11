@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.page.ItemDisplay;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -111,6 +112,15 @@ public class GuiPage extends GuiBooklet{
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks){
+        super.drawScreen(mouseX, mouseY, partialTicks);
+
+        for(int i = 0; i < this.pages.length; i++){
+            IBookletPage page = this.pages[i];
+            if(page != null){
+                GlStateManager.color(1F, 1F, 1F);
+                page.drawScreenPre(this, this.guiLeft+6+i*142, this.guiTop+7, mouseX, mouseY, partialTicks);
+            }
+        }
         for(ItemDisplay display : this.itemDisplays){
             display.drawPre();
         }
@@ -118,21 +128,12 @@ public class GuiPage extends GuiBooklet{
         for(int i = 0; i < this.pages.length; i++){
             IBookletPage page = this.pages[i];
             if(page != null){
-                page.drawScreenPre(this, this.guiLeft+6+i*142, this.guiTop+7, mouseX, mouseY, partialTicks);
-            }
-        }
-
-        super.drawScreen(mouseX, mouseY, partialTicks);
-
-        for(ItemDisplay display : this.itemDisplays){
-            display.drawPost(mouseX, mouseY);
-        }
-
-        for(int i = 0; i < this.pages.length; i++){
-            IBookletPage page = this.pages[i];
-            if(page != null){
+                GlStateManager.color(1F, 1F, 1F);
                 page.drawScreenPost(this, this.guiLeft+6+i*142, this.guiTop+7, mouseX, mouseY, partialTicks);
             }
+        }
+        for(ItemDisplay display : this.itemDisplays){
+            display.drawPost(mouseX, mouseY);
         }
     }
 

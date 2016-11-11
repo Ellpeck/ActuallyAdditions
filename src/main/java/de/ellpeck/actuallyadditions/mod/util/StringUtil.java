@@ -53,7 +53,6 @@ public final class StringUtil{
         return "";
     }
 
-
     @SideOnly(Side.CLIENT)
     public static void renderScaledAsciiString(FontRenderer font, String text, int x, int y, int color, boolean shadow, float scale){
         GlStateManager.pushMatrix();

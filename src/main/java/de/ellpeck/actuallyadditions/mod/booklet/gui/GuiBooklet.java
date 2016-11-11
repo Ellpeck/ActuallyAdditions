@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -56,6 +57,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks){
+        GlStateManager.color(1F, 1F, 1F);
         this.mc.getTextureManager().bindTexture(RES_LOC_GUI);
         drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 
