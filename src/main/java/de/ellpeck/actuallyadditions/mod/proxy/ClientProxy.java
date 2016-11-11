@@ -43,10 +43,6 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,55 +52,6 @@ public class ClientProxy implements IProxy{
 
     private static final List<Item> COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING = new ArrayList<Item>();
     private static final Map<ItemStack, ModelResourceLocation> MODEL_LOCATIONS_FOR_REGISTERING = new HashMap<ItemStack, ModelResourceLocation>();
-
-    public static int bookletWordCount;
-    public static int bookletCharCount;
-
-    private static void countBookletWords(){
-        bookletWordCount = 0;
-        bookletCharCount = 0;
-        String bookletText = "";
-
-        for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
-            if(!(entry instanceof BookletEntryAllItems)){
-                bookletWordCount += entry.getLocalizedName().split(" ").length;
-                bookletCharCount += entry.getLocalizedName().length();
-                bookletText += entry.getLocalizedName()+"\n\n";
-
-                for(IBookletChapter chapter : entry.getAllChapters()){
-                    bookletWordCount += chapter.getLocalizedName().split(" ").length;
-                    bookletCharCount += chapter.getLocalizedName().length();
-                    bookletText += chapter.getLocalizedName()+"\n";
-
-                    for(IBookletPage page : chapter.getAllPages()){
-                        String text = page.getInfoText();
-                        if(text != null){
-                            bookletWordCount += text.split(" ").length;
-                            bookletCharCount += text.length();
-                            bookletText += text+"\n";
-                        }
-                    }
-                    bookletText += "\n";
-
-                }
-                bookletText += "\n";
-            }
-        }
-
-        if(ConfigBoolValues.BOOKLET_TEXT_TO_FILE.isEnabled()){
-            File file = new File(Minecraft.getMinecraft().mcDataDir, ModUtil.MOD_ID+"booklettext.txt");
-            try{
-                file.createNewFile();
-                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-                writer.write(TextFormatting.getTextWithoutFormattingCodes(bookletText));
-                writer.close();
-                ModUtil.LOGGER.info("Wrote booklet text to file!");
-            }
-            catch(Exception e){
-                ModUtil.LOGGER.error("Couldn't write booklet text to file!", e);
-            }
-        }
-    }
 
     @Override
     public void preInit(FMLPreInitializationEvent event){
@@ -118,16 +65,6 @@ public class ClientProxy implements IProxy{
         this.registerCustomFluidBlockRenderer(InitFluids.fluidOil);
         this.registerCustomFluidBlockRenderer(InitFluids.fluidCrystalOil);
         this.registerCustomFluidBlockRenderer(InitFluids.fluidEmpoweredOil);
-
-        IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
-        if(manager instanceof IReloadableResourceManager){
-            ((IReloadableResourceManager)manager).registerReloadListener(new IResourceManagerReloadListener(){
-                @Override
-                public void onResourceManagerReload(IResourceManager resourceManager){
-                    countBookletWords();
-                }
-            });
-        }
 
         InitEntities.initClient();
     }

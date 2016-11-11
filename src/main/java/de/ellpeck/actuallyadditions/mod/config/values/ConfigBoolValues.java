@@ -45,8 +45,6 @@ public enum ConfigBoolValues{
     DUNGEON_LOOT("Dungeon Loot", ConfigCategories.OTHER, true, "Should Actually Additions Loot generate in dungeons??"),
     GEN_LUSH_CAVES("Generate Lush Caves", ConfigCategories.WORLD_GEN, true, "Should caves with trees and grass randomly generate underground?"),
 
-    BOOKLET_TEXT_TO_FILE("Booklet Text to File", ConfigCategories.OTHER, false, "The entire text of the booklet will be put into a new file in the Minecraft Folder on resource load/Reload. (Use this for Debugging)"),
-
     WATER_BOWL("Water Bowl", ConfigCategories.OTHER, true, "Should right-clicking a bowl on water blocks create a water bowl?"),
 
     LASER_RELAY_LOSS("Laser Relay Energy Loss", ConfigCategories.MACHINE_VALUES, true, "If Energy Laser Relays should have energy loss"),
