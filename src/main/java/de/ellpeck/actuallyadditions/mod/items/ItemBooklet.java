@@ -109,7 +109,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
                     IBookletPage page = BookletUtils.findFirstPageForStack(blockStack);
                     if(page != null){
                         String strg1 = page.getChapter().getLocalizedName();
-                        String strg2 = "Page "+page.getChapter().getPageNum(page);
+                        String strg2 = "Page "+(page.getChapter().getPageIndex(page)+1);
                         String strg3 = "Right-Click to open...";
 
                         AssetUtil.renderStackToGui(page.getChapter().getDisplayItemStack() != null ? page.getChapter().getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, height+41, 1F);

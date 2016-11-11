@@ -89,7 +89,17 @@ public class GuiEntry extends GuiBooklet{
     }
 
     @Override
-    public void addItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer){
+    public void addOrModifyItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer){
 
+    }
+
+    @Override
+    public boolean hasBackButton(){
+        return true;
+    }
+
+    @Override
+    public void onBackButtonPressed(){
+        this.mc.displayGuiScreen(this.parentPage);
     }
 }

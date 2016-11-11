@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookletRecipeWrapper extends RecipeWrapperWithButton{
@@ -34,11 +34,15 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void getIngredients(IIngredients ingredients){
-        ingredients.setInputs(ItemStack.class, this.thePage.getItemStacksForPage());
-        ingredients.setInputs(FluidStack.class, this.thePage.getFluidStacksForPage());
+        List<ItemStack> itemList = new ArrayList<ItemStack>();
+        this.thePage.getItemStacksForPage(itemList);
+        ingredients.setInputs(ItemStack.class, itemList);
+        ingredients.setOutputs(ItemStack.class, itemList);
 
-        ingredients.setOutputs(ItemStack.class, this.thePage.getItemStacksForPage());
-        ingredients.setOutputs(FluidStack.class, this.thePage.getFluidStacksForPage());
+        List<FluidStack> fluidList = new ArrayList<FluidStack>();
+        this.thePage.getFluidStacksForPage(fluidList);
+        ingredients.setInputs(FluidStack.class, fluidList);
+        ingredients.setOutputs(FluidStack.class, fluidList);
     }
 
     @Override
@@ -56,7 +60,7 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton{
             minecraft.fontRendererObj.drawString(text.get(i)+(i == maxLines-1 && text.size() > maxLines ? TextFormatting.RESET+""+TextFormatting.BLACK+"..." : ""), 0, 16+25+i*(minecraft.fontRendererObj.FONT_HEIGHT+1), 0, false);
         }
         minecraft.fontRendererObj.drawString(TextFormatting.ITALIC+chapter.getLocalizedName(), 25, 85, 0, false);
-        minecraft.fontRendererObj.drawString(TextFormatting.ITALIC+"Page "+chapter.getPageNum(this.thePage), 25, 95, 0, false);
+        minecraft.fontRendererObj.drawString(TextFormatting.ITALIC+"Page "+(chapter.getPageIndex(this.thePage)+1), 25, 95, 0, false);
 
         super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);
     }

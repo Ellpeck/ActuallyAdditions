@@ -79,10 +79,12 @@ public final class InitBooklet{
                     for(IBookletPage page : chapter.getAllPages()){
                         pageCount++;
 
-                        List<ItemStack> items = page.getItemStacksForPage();
-                        List<FluidStack> fluids = page.getFluidStacksForPage();
+                        List<ItemStack> items = new ArrayList<ItemStack>();
+                        page.getItemStacksForPage(items);
+                        List<FluidStack> fluids = new ArrayList<FluidStack>();
+                        page.getFluidStacksForPage(fluids);
 
-                        if((items != null && !items.isEmpty()) || (fluids != null && !items.isEmpty())){
+                        if((items != null && !items.isEmpty()) || (fluids != null && !fluids.isEmpty())){
                             if(!ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.contains(page)){
                                 ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.add(page);
                                 infoCount++;

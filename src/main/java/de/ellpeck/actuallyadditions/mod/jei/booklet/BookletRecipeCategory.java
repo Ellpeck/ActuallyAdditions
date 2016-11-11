@@ -16,8 +16,11 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
+import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class BookletRecipeCategory extends BlankRecipeCategory<BookletRecipeWrapper>{
 
@@ -49,6 +52,9 @@ public class BookletRecipeCategory extends BlankRecipeCategory<BookletRecipeWrap
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, BookletRecipeWrapper wrapper, IIngredients ingredients){
         recipeLayout.getItemStacks().init(0, true, 70, -4);
-        recipeLayout.getItemStacks().set(0, wrapper.thePage.getItemStacksForPage());
+
+        List<ItemStack> list = new ArrayList<ItemStack>();
+        wrapper.thePage.getItemStacksForPage(list);
+        recipeLayout.getItemStacks().set(0, list);
     }
 }

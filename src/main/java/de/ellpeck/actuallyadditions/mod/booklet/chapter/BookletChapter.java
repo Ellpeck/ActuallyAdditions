@@ -71,10 +71,10 @@ public class BookletChapter implements IBookletChapter{
     }
 
     @Override
-    public int getPageNum(IBookletPage page){
+    public int getPageIndex(IBookletPage page){
         for(int i = 0; i < this.pages.length; i++){
             if(this.pages[i] == page){
-                return i+1;
+                return i;
             }
         }
         return -1;

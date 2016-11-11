@@ -26,5 +26,5 @@ public interface IBookletChapter{
 
     String getIdentifier();
 
-    int getPageNum(IBookletPage page);
+    int getPageIndex(IBookletPage page);
 }

@@ -21,9 +21,9 @@ import java.util.List;
 
 public interface IBookletPage{
 
-    List<ItemStack> getItemStacksForPage();
+    void getItemStacksForPage(List<ItemStack> list);
 
-    List<FluidStack> getFluidStacksForPage();
+    void getFluidStacksForPage(List<FluidStack> list);
 
     IBookletChapter getChapter();
 
@@ -47,7 +47,7 @@ public interface IBookletPage{
     void initGui(GuiBookletBase gui, int startX, int startY);
 
     @SideOnly(Side.CLIENT)
-    void updateScreen(GuiBookletBase gui, int startX, int startY);
+    void updateScreen(GuiBookletBase gui, int startX, int startY, int pageTimer);
 
     @SideOnly(Side.CLIENT)
     void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks);

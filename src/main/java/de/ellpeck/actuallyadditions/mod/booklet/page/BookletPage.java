@@ -32,8 +32,8 @@ public class BookletPage implements IBookletPage{
 
     protected IBookletChapter chapter;
 
-    protected List<FluidStack> fluidsForPage = new ArrayList<FluidStack>();
-    protected List<ItemStack> itemsForPage = new ArrayList<ItemStack>();
+    private final List<ItemStack> itemsForPage = new ArrayList<ItemStack>();
+    private final List<FluidStack> fluidsForPage = new ArrayList<FluidStack>();
 
     protected boolean hasNoText;
     protected final HashMap<String, String> textReplacements = new HashMap<String, String>();
@@ -44,13 +44,13 @@ public class BookletPage implements IBookletPage{
     }
 
     @Override
-    public List<ItemStack> getItemStacksForPage(){
-        return this.itemsForPage;
+    public void getItemStacksForPage(List<ItemStack> list){
+        list.addAll(this.itemsForPage);
     }
 
     @Override
-    public List<FluidStack> getFluidStacksForPage(){
-        return this.fluidsForPage;
+    public void getFluidStacksForPage(List<FluidStack> list){
+        list.addAll(this.fluidsForPage);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class BookletPage implements IBookletPage{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void updateScreen(GuiBookletBase gui, int startX, int startY){
+    public void updateScreen(GuiBookletBase gui, int startX, int startY, int pageTimer){
 
     }
 
@@ -133,7 +133,7 @@ public class BookletPage implements IBookletPage{
 
     @Override
     public boolean shouldBeOnLeftSide(){
-        return this.chapter.getPageNum(this)%2 != 0;
+        return (this.chapter.getPageIndex(this)+1)%2 != 0;
     }
 
     public BookletPage setNoText(){

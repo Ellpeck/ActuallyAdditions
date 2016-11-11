@@ -24,17 +24,19 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class ItemDisplay{
 
     private final GuiPage gui;
-    private final int x;
-    private final int y;
-    private final float scale;
+    public final int x;
+    public final int y;
+    public final float scale;
 
-    private final ItemStack stack;
+    public ItemStack stack;
     private final IBookletPage page;
 
     public ItemDisplay(GuiPage gui, int x, int y, float scale, ItemStack stack, boolean shouldTryTransfer){
@@ -46,10 +48,12 @@ public class ItemDisplay{
         this.page = shouldTryTransfer ? BookletUtils.findFirstPageForStack(stack) : null;
     }
 
+    @SideOnly(Side.CLIENT)
     public void drawPre(){
         AssetUtil.renderStackToGui(this.stack, this.x, this.y, this.scale);
     }
 
+    @SideOnly(Side.CLIENT)
     public void drawPost(int mouseX, int mouseY){
         if(this.isHovered(mouseX, mouseY)){
             Minecraft mc = this.gui.mc;

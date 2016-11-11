@@ -32,6 +32,7 @@ import java.util.List;
 
 public class PageCrafting extends BookletPage{
 
+    private int recipeAt;
     private String recipeTypeLocKey;
     private boolean isWildcard;
     private final List<IRecipe> recipes;
@@ -64,20 +65,38 @@ public class PageCrafting extends BookletPage{
     }
 
     @Override
-    public void initGui(GuiBookletBase gui, int startX, int startY){
-        super.initGui(gui, startX, startY);
+    @SideOnly(Side.CLIENT)
+    public void updateScreen(GuiBookletBase gui, int startX, int startY, int pageTimer){
+        super.updateScreen(gui, startX, startY, pageTimer);
 
+        if(pageTimer%20 == 0){
+            this.findRecipe(gui, startX, startY);
+        }
+    }
+
+    private void findRecipe(GuiBookletBase gui, int startX, int startY){
         if(!this.recipes.isEmpty()){
-            IRecipe recipe = this.recipes.get(0);
+            IRecipe recipe = this.recipes.get(this.recipeAt);
             if(recipe != null){
                 this.setupRecipe(gui, recipe, startX, startY);
+            }
+
+            this.recipeAt++;
+            if(this.recipeAt >= this.recipes.size()){
+                this.recipeAt = 0;
             }
         }
     }
 
     @Override
-    public List<ItemStack> getItemStacksForPage(){
-        List<ItemStack> stacks = super.getItemStacksForPage();
+    public void initGui(GuiBookletBase gui, int startX, int startY){
+        super.initGui(gui, startX, startY);
+        this.findRecipe(gui, startX, startY);
+    }
+
+    @Override
+    public void getItemStacksForPage(List<ItemStack> list){
+        super.getItemStacksForPage(list);
 
         if(!this.recipes.isEmpty()){
             for(IRecipe recipe : this.recipes){
@@ -88,13 +107,11 @@ public class PageCrafting extends BookletPage{
                         if(this.isWildcard){
                             copy.setItemDamage(Util.WILDCARD);
                         }
-                        stacks.add(copy);
+                        list.add(copy);
                     }
                 }
             }
         }
-
-        return stacks;
     }
 
     private void setupRecipe(GuiBookletBase gui, IRecipe recipe, int startX, int startY){
@@ -152,11 +169,11 @@ public class PageCrafting extends BookletPage{
                         copy.setItemDamage(0);
                     }
 
-                    gui.addItemRenderer(copy, startX+6+x*18, startY+7+y*18, 1F, true);
+                    gui.addOrModifyItemRenderer(copy, startX+6+x*18, startY+7+y*18, 1F, true);
                 }
             }
         }
 
-        gui.addItemRenderer(recipe.getRecipeOutput(), startX+100, startY+25, 1F, false);
+        gui.addOrModifyItemRenderer(recipe.getRecipeOutput(), startX+100, startY+25, 1F, false);
     }
 }

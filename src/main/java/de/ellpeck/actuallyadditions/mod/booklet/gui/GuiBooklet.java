@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
@@ -34,6 +35,10 @@ public abstract class GuiBooklet extends GuiBookletBase{
     public GuiScreen previousScreen;
     protected GuiBookletBase parentPage;
 
+    private GuiButton buttonLeft;
+    private GuiButton buttonRight;
+    private GuiButton buttonBack;
+
     protected int xSize;
     protected int ySize;
     protected int guiLeft;
@@ -53,6 +58,21 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
         this.guiLeft = (this.width-this.xSize)/2;
         this.guiTop = (this.height-this.ySize)/2;
+
+        if(this.hasPageLeftButton()){
+            this.buttonLeft = new TexturedButton(RES_LOC_GADGETS, -2000, this.guiLeft-12, this.guiTop+this.ySize-8, 18, 54, 18, 10);
+            this.buttonList.add(this.buttonLeft);
+        }
+
+        if(this.hasPageRightButton()){
+            this.buttonRight = new TexturedButton(RES_LOC_GADGETS, -2001, this.guiLeft+this.xSize-6, this.guiTop+this.ySize-8, 0, 54, 18, 10);
+            this.buttonList.add(this.buttonRight);
+        }
+
+        if(this.hasBackButton()){
+            this.buttonBack = new TexturedButton(RES_LOC_GADGETS, -2002, this.guiLeft-12, this.guiTop-2, 36, 54, 18, 10);
+            this.buttonList.add(this.buttonBack);
+        }
     }
 
     @Override
@@ -67,6 +87,46 @@ public abstract class GuiBooklet extends GuiBookletBase{
     @Override
     public boolean doesGuiPauseGame(){
         return false;
+    }
+
+    public boolean hasPageLeftButton(){
+        return false;
+    }
+
+    public void onPageLeftButtonPressed(){
+
+    }
+
+    public boolean hasPageRightButton(){
+        return false;
+    }
+
+    public void onPageRightButtonPressed(){
+
+    }
+
+    public boolean hasBackButton(){
+        return false;
+    }
+
+    public void onBackButtonPressed(){
+
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) throws IOException{
+        if(this.hasPageLeftButton() && button == this.buttonLeft){
+            this.onPageLeftButtonPressed();
+        }
+        else if(this.hasPageRightButton() && button == this.buttonRight){
+            this.onPageRightButtonPressed();
+        }
+        else if(this.hasBackButton() && button == this.buttonBack){
+            this.onBackButtonPressed();
+        }
+        else{
+            super.actionPerformed(button);
+        }
     }
 
     @Override

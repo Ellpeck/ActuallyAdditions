@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.misc;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiMainPage;
@@ -21,13 +22,15 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class BookletUtils{
 
     public static IBookletPage findFirstPageForStack(ItemStack stack){
         for(IBookletPage page : ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA){
-            List<ItemStack> stacks = page.getItemStacksForPage();
+            List<ItemStack> stacks = new ArrayList<ItemStack>();
+            page.getItemStacksForPage(stacks);
             if(stacks != null && !stacks.isEmpty()){
                 for(ItemStack pageStack : stacks){
                     if(ItemUtil.areItemsEqual(pageStack, stack, true)){
@@ -48,11 +51,11 @@ public final class BookletUtils{
         return createPageGui(previousScreen, entry, page);
     }
 
-    public static GuiPage createPageGui(GuiScreen previousScreen, GuiBooklet parentPage, IBookletPage page){
+    public static GuiPage createPageGui(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletPage page){
         IBookletChapter chapter = page.getChapter();
 
         IBookletPage[] allPages = chapter.getAllPages();
-        int pageIndex = chapter.getPageNum(page)-1;
+        int pageIndex = chapter.getPageIndex(page);
         IBookletPage page1;
         IBookletPage page2;
 

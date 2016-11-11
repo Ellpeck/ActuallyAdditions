@@ -32,5 +32,5 @@ public abstract class GuiBookletBase extends GuiScreen{
 
     public abstract int getSizeY();
 
-    public abstract void addItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer);
+    public abstract void addOrModifyItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer);
 }

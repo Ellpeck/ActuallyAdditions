@@ -62,7 +62,7 @@ public class GuiMainPage extends GuiBooklet{
     }
 
     @Override
-    public void addItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer){
+    public void addOrModifyItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer){
 
     }
 }
