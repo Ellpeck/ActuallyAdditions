@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WorldData{
@@ -141,8 +142,14 @@ public class WorldData{
         this.playerSaveData.clear();
         NBTTagList playerList = compound.getTagList("PlayerData", 10);
         for(int i = 0; i < playerList.tagCount(); i++){
-            PlayerSave aSave = PlayerSave.fromNBT(playerList.getCompoundTagAt(i));
-            this.playerSaveData.add(aSave);
+            NBTTagCompound player = playerList.getCompoundTagAt(i);
+
+            UUID id = player.getUniqueId("UUID");
+            NBTTagCompound data = player.getCompoundTag("Data");
+
+            PlayerSave save = new PlayerSave(id);
+            save.readFromNBT(data);
+            this.playerSaveData.add(save);
         }
     }
 
@@ -156,8 +163,15 @@ public class WorldData{
 
         //Player Data
         NBTTagList playerList = new NBTTagList();
-        for(PlayerSave theSave : this.playerSaveData){
-            playerList.appendTag(theSave.toNBT());
+        for(PlayerSave save : this.playerSaveData){
+            NBTTagCompound player = new NBTTagCompound();
+            player.setUniqueId("UUID", save.id);
+
+            NBTTagCompound data = new NBTTagCompound();
+            save.writeToNBT(data);
+            player.setTag("Data", data);
+
+            playerList.appendTag(player);
         }
         compound.setTag("PlayerData", playerList);
     }

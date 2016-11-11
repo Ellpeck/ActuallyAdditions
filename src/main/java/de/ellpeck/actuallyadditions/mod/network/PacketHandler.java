@@ -38,7 +38,10 @@ import java.util.UUID;
 
 public final class PacketHandler{
 
+    public static SimpleNetworkWrapper theNetwork;
+
     public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<IDataHandler>();
+
     public static final IDataHandler PARTICLE_HANDLER = new IDataHandler(){
         @Override
         @SideOnly(Side.CLIENT)
@@ -111,35 +114,19 @@ public final class PacketHandler{
             }
         }
     };
-    public static final IDataHandler PLAYER_DATA_TO_CLIENT_HANDLER = new IDataHandler(){
+    public static final IDataHandler CHANGE_PLAYER_DATA_HANDLER = new IDataHandler(){
         @Override
         @SideOnly(Side.CLIENT)
         public void handleData(NBTTagCompound compound){
             NBTTagCompound data = compound.getCompoundTag("Data");
             UUID id = compound.getUniqueId("UUID");
-            PlayerData.getDataFromPlayer(id).theCompound = data;
+            PlayerData.getDataFromPlayer(id).readFromNBT(data);
             if(compound.getBoolean("Log")){
-                ModUtil.LOGGER.info("Receiving Player Data for current player with UUID "+id+".");
+                ModUtil.LOGGER.info("Receiving (new or changed) Player Data for current player with UUID "+id+".");
             }
         }
     };
-    public static SimpleNetworkWrapper theNetwork;
-    public static final IDataHandler CHANGE_PLAYER_DATA_HANDLER = new IDataHandler(){
-        @Override
-        public void handleData(NBTTagCompound compound){
-            NBTTagCompound data = compound.getCompoundTag("Data");
-            World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
-            EntityPlayer player = (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID"));
 
-            if(player != null){
-                PlayerData.PlayerSave playerData = PlayerData.getDataFromPlayer(player);
-                playerData.theCompound.merge(data);
-                if(player instanceof EntityPlayerMP){
-                    PacketHandlerHelper.sendPlayerDataToClientPacket(player, playerData.theCompound, false);
-                }
-            }
-        }
-    };
 
     public static void init(){
         theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(ModUtil.MOD_ID);
@@ -152,7 +139,6 @@ public final class PacketHandler{
         DATA_HANDLERS.add(GUI_STRING_TO_TILE_HANDLER);
         DATA_HANDLERS.add(GUI_NUMBER_TO_TILE_HANDLER);
         DATA_HANDLERS.add(CHANGE_PLAYER_DATA_HANDLER);
-        DATA_HANDLERS.add(PLAYER_DATA_TO_CLIENT_HANDLER);
         DATA_HANDLERS.add(GUI_BUTTON_TO_CONTAINER_HANDLER);
     }
 }

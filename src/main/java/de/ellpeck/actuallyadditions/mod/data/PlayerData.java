@@ -22,13 +22,13 @@ public final class PlayerData{
         List<PlayerSave> data = WorldData.getWorldUnspecificData().playerSaveData;
         //Get Data from existing data
         for(PlayerSave save : data){
-            if(save.theId != null && save.theId.equals(id)){
+            if(save.id != null && save.id.equals(id)){
                 return save;
             }
         }
 
         //Add Data if none is existant
-        PlayerSave aSave = new PlayerSave(id, new NBTTagCompound());
+        PlayerSave aSave = new PlayerSave(id);
         data.add(aSave);
         return aSave;
     }
@@ -39,29 +39,25 @@ public final class PlayerData{
 
     public static class PlayerSave{
 
-        public final UUID theId;
-        public NBTTagCompound theCompound;
+        public UUID id;
 
-        public PlayerSave(UUID theId, NBTTagCompound theCompound){
-            this.theId = theId;
-            this.theCompound = theCompound;
+        public boolean displayTesla;
+        public boolean bookGottenAlready;
+
+        public PlayerSave(UUID id){
+            this.id = id;
         }
 
-        public static PlayerSave fromNBT(NBTTagCompound compound){
-            UUID theID = new UUID(compound.getLong("MostSignificant"), compound.getLong("LeastSignificant"));
-            NBTTagCompound theCompound = compound.getCompoundTag("Tag");
-            return new PlayerSave(theID, theCompound);
+        public void readFromNBT(NBTTagCompound compound){
+            this.displayTesla = compound.getBoolean("DisplayTesla");
+            this.bookGottenAlready = compound.getBoolean("BookGotten");
         }
 
-        public NBTTagCompound toNBT(){
-            NBTTagCompound compound = new NBTTagCompound();
-            compound.setLong("LeastSignificant", this.theId.getLeastSignificantBits());
-            compound.setLong("MostSignificant", this.theId.getMostSignificantBits());
-
-            compound.setTag("Tag", this.theCompound);
-
-            return compound;
+        public void writeToNBT(NBTTagCompound compound){
+            compound.setBoolean("DisplayTesla", this.displayTesla);
+            compound.setBoolean("BookGotten", this.bookGottenAlready);
         }
+
     }
 
 

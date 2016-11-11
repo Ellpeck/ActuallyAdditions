@@ -26,10 +26,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -57,29 +54,6 @@ public class CommonEvents{
     }
 
     @SubscribeEvent
-    public void livingDeathEvent(LivingDeathEvent event){
-        if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getEntityLiving() instanceof EntityPlayer){
-            EntityPlayer player = (EntityPlayer)event.getEntityLiving();
-            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
-
-            NBTTagList deaths = data.theCompound.getTagList("Deaths", 10);
-            while(deaths.tagCount() >= 5){
-                deaths.removeTag(0);
-            }
-
-            NBTTagCompound death = new NBTTagCompound();
-            death.setDouble("X", player.posX);
-            death.setDouble("Y", player.posY);
-            death.setDouble("Z", player.posZ);
-            deaths.appendTag(death);
-
-            data.theCompound.setTag("Deaths", deaths);
-
-            //player.addChatComponentMessage(new TextComponentTranslation("info."+ModUtil.MOD_ID+".deathRecorded"));
-        }
-    }
-
-    @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
         if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
             //Drop Cobwebs from Spiders
@@ -95,14 +69,8 @@ public class CommonEvents{
     public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event){
         if(!event.player.worldObj.isRemote && event.player instanceof EntityPlayerMP){
             EntityPlayerMP player = (EntityPlayerMP)event.player;
-            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
-            if(!data.theCompound.hasNoTags()){
-                PacketHandlerHelper.sendPlayerDataToClientPacket(player, data.theCompound, true);
-                ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+".");
-            }
-            else{
-                ModUtil.LOGGER.info("Not sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+" because he doesn't have any.");
-            }
+            PacketHandlerHelper.sendPlayerDataPacket(player, true, true);
+            ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+".");
         }
     }
 
@@ -115,9 +83,9 @@ public class CommonEvents{
 
                 String name = event.crafting.getItem().getRegistryName().toString();
                 if(name != null && name.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){
-                    PlayerData.PlayerSave compound = PlayerData.getDataFromPlayer(event.player);
-                    if(compound != null && !compound.theCompound.getBoolean("BookGottenAlready")){
-                        compound.theCompound.setBoolean("BookGottenAlready", true);
+                    PlayerData.PlayerSave save = PlayerData.getDataFromPlayer(event.player);
+                    if(save != null && !save.bookGottenAlready){
+                        save.bookGottenAlready = true;
 
                         EntityItem entityItem = new EntityItem(event.player.worldObj, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemBooklet));
                         entityItem.setPickupDelay(0);

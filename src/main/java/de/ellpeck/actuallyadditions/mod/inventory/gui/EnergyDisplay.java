@@ -18,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
@@ -50,7 +50,7 @@ public class EnergyDisplay extends Gui{
         this.outline = outline;
         this.drawTextNextTo = drawTextNextTo;
 
-        this.displayTesla = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer).theCompound.getBoolean("DisplayTesla");
+        this.displayTesla = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer).displayTesla;
     }
 
     public void draw(){
@@ -108,11 +108,10 @@ public class EnergyDisplay extends Gui{
     }
 
     private void changeDisplayMode(){
-        NBTTagCompound data = new NBTTagCompound();
-
         this.displayTesla = !this.displayTesla;
-        data.setBoolean("DisplayTesla", this.displayTesla);
 
-        PacketHandlerHelper.sendChangePlayerDataPacket(data);
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        PlayerData.getDataFromPlayer(player).displayTesla = this.displayTesla;
+        PacketHandlerHelper.sendPlayerDataPacket(player, true, false);
     }
 }

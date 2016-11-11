@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -31,22 +32,22 @@ public final class PacketHandlerHelper{
         PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }
 
-    public static void sendChangePlayerDataPacket(NBTTagCompound data){
+    public static void sendPlayerDataPacket(EntityPlayer player, boolean log, boolean toClient){
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setTag("Data", data);
-        Minecraft mc = Minecraft.getMinecraft();
-        compound.setInteger("WorldID", mc.theWorld.provider.getDimension());
-        compound.setInteger("PlayerID", mc.thePlayer.getEntityId());
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
-    }
+        compound.setUniqueId("UUID", player.getUniqueID());
+        compound.setBoolean("Log", log);
 
-    public static void sendPlayerDataToClientPacket(EntityPlayer player, NBTTagCompound data, boolean log){
-        if(player instanceof EntityPlayerMP){
-            NBTTagCompound compound = new NBTTagCompound();
-            compound.setUniqueId("UUID", player.getUniqueID());
-            compound.setTag("Data", data);
-            compound.setBoolean("Log", log);
-            PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.PLAYER_DATA_TO_CLIENT_HANDLER), (EntityPlayerMP)player);
+        NBTTagCompound data = new NBTTagCompound();
+        PlayerData.getDataFromPlayer(player).writeToNBT(data);
+        compound.setTag("Data", data);
+
+        if(toClient){
+            if(player instanceof EntityPlayerMP){
+                PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.CHANGE_PLAYER_DATA_HANDLER), (EntityPlayerMP)player);
+            }
+        }
+        else{
+            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
         }
     }
 }
