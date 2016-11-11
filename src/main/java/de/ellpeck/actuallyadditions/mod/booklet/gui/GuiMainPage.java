@@ -32,18 +32,15 @@ public class GuiMainPage extends GuiBooklet{
     public void initGui(){
         super.initGui();
 
-        for(int x = 0; x < 2; x++){
-            for(int y = 0; y < BUTTONS_PER_PAGE; y++){
-                int id = y+x*BUTTONS_PER_PAGE;
-                if(ActuallyAdditionsAPI.BOOKLET_ENTRIES.size() > id){
-                    IBookletEntry entry = ActuallyAdditionsAPI.BOOKLET_ENTRIES.get(id);
-                    this.buttonList.add(new EntryButton(id, this.guiLeft+14+x*142, this.guiTop+11+y*16, 115, 10, entry.getLocalizedNameWithFormatting(), null));
+            for(int i = 0; i < BUTTONS_PER_PAGE; i++){
+                if(ActuallyAdditionsAPI.BOOKLET_ENTRIES.size() > i){
+                    IBookletEntry entry = ActuallyAdditionsAPI.BOOKLET_ENTRIES.get(i);
+                    this.buttonList.add(new EntryButton(i, this.guiLeft+156, this.guiTop+11+i*16, 115, 10, entry.getLocalizedNameWithFormatting(), null));
                 }
                 else{
                     return;
                 }
             }
-        }
     }
 
     @Override

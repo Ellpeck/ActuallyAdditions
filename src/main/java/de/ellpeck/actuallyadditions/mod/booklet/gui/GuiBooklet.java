@@ -33,7 +33,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
     public static final ResourceLocation RES_LOC_GADGETS = AssetUtil.getBookletGuiLocation("guiBookletGadgets");
 
     public GuiScreen previousScreen;
-    protected GuiBookletBase parentPage;
+    public GuiBookletBase parentPage;
 
     private GuiButton buttonLeft;
     private GuiButton buttonRight;

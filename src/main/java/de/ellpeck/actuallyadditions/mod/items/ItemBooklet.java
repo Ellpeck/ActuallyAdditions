@@ -35,14 +35,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class ItemBooklet extends ItemBase implements IHudDisplay{
 
-    //TODO Fix this
-    //@SideOnly(Side.CLIENT)
-    //public static EntrySet forcedEntry;
+    @SideOnly(Side.CLIENT)
+    public static IBookletPage forcedPage;
 
     public ItemBooklet(String name){
         super(name);
@@ -56,11 +57,11 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
         if(player.isSneaking()){
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
-            ItemStack blockStack = new ItemStack(block, 1, block.getMetaFromState(state));
+            ItemStack blockStack = new ItemStack(block, 1, block.damageDropped(state));
             IBookletPage page = BookletUtils.findFirstPageForStack(blockStack);
             if(page != null){
                 if(world.isRemote){
-                    //forcedEntry = new EntrySet(page, page.getChapter(), page.getChapter().getEntry(), ActuallyAdditionsAPI.BOOKLET_ENTRIES.indexOf(page.getChapter().getEntry())/GuiBooklet.CHAPTER_BUTTONS_AMOUNT+1);
+                    forcedPage = page;
                 }
                 this.onItemRightClick(stack, world, player, hand);
                 return EnumActionResult.SUCCESS;

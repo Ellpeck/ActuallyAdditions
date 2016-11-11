@@ -13,7 +13,9 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiMainPage;
+import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
+import de.ellpeck.actuallyadditions.mod.items.ItemBooklet;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -169,7 +171,14 @@ public class GuiHandler implements IGuiHandler{
             case CLOUD:
                 return new GuiSmileyCloud(tile, x, y, z, world);
             case BOOK:
-                return new GuiMainPage(null);
+                if(ItemBooklet.forcedPage != null){
+                    GuiBooklet gui = BookletUtils.createBookletGuiFromPage(null, ItemBooklet.forcedPage);
+                    ItemBooklet.forcedPage = null;
+                    return gui;
+                }
+                else{
+                    return new GuiMainPage(null);
+                }
             case DIRECTIONAL_BREAKER:
                 return new GuiDirectionalBreaker(player.inventory, tile);
             case RANGED_COLLECTOR:

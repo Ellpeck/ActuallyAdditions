@@ -94,6 +94,33 @@ public class GuiEntry extends GuiBooklet{
     }
 
     @Override
+    public boolean hasPageLeftButton(){
+        return this.entryPage > 0;
+    }
+
+    @Override
+    public void onPageLeftButtonPressed(){
+        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this.parentPage, this.entry, this.entryPage-1));
+    }
+
+    @Override
+    public boolean hasPageRightButton(){
+        if(!this.chapters.isEmpty()){
+            IBookletChapter lastChap = this.chapters.get(this.chapters.size()-1);
+            if(lastChap != null){
+                int lastPage = calcEntryPage(this.entry, lastChap);
+                return this.entryPage < lastPage;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onPageRightButtonPressed(){
+        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this.parentPage, this.entry, this.entryPage+1));
+    }
+
+    @Override
     public boolean hasBackButton(){
         return true;
     }
