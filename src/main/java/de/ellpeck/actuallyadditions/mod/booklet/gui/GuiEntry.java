@@ -44,8 +44,13 @@ public class GuiEntry extends GuiBooklet{
         this.focusSearch = focusSearch;
         this.chapters = entry.getChaptersForDisplay(search);
 
-        IBookletChapter lastChap = this.chapters.get(this.chapters.size()-1);
-        this.pageAmount = lastChap == null ? 1 : calcEntryPage(this.entry, lastChap, this.searchText)+1;
+        if(!this.chapters.isEmpty()){
+            IBookletChapter lastChap = this.chapters.get(this.chapters.size()-1);
+            this.pageAmount = lastChap == null ? 1 : calcEntryPage(this.entry, lastChap, this.searchText)+1;
+        }
+        else{
+            this.pageAmount = 1;
+        }
     }
 
     public GuiEntry(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletEntry entry, IBookletChapter chapterForPageCalc, String search, boolean focusSearch){
