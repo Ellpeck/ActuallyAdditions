@@ -120,6 +120,7 @@ public class ActuallyAdditions{
         InitCrafting.init();
         InitEntities.init();
 
+        InitBooklet.init();
         proxy.init(event);
 
         ModUtil.LOGGER.info("Initialization Finished.");
