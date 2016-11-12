@@ -45,7 +45,7 @@ public class BookmarkButton extends GuiButton{
             if(GuiScreen.isShiftKeyDown()){
                 this.assignedPage = null;
             }
-            else{
+            else if(!(this.booklet instanceof GuiPage) || ((GuiPage)this.booklet).pages[0] != this.assignedPage){
                 GuiPage gui = BookletUtils.createPageGui(this.booklet.previousScreen, this.booklet, this.assignedPage);
                 Minecraft.getMinecraft().displayGuiScreen(gui);
             }
