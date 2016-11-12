@@ -46,7 +46,7 @@ public final class BookletUtils{
         GuiMainPage mainPage = new GuiMainPage(previousScreen);
 
         IBookletChapter chapter = page.getChapter();
-        GuiEntry entry = new GuiEntry(previousScreen, mainPage, chapter.getEntry(), chapter);
+        GuiEntry entry = new GuiEntry(previousScreen, mainPage, chapter.getEntry(), chapter, "", false);
 
         return createPageGui(previousScreen, entry, page);
     }

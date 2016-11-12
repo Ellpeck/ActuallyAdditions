@@ -10,14 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
@@ -38,6 +41,8 @@ public abstract class GuiBooklet extends GuiBookletBase{
     private GuiButton buttonLeft;
     private GuiButton buttonRight;
     private GuiButton buttonBack;
+
+    public GuiTextField searchField;
 
     protected int xSize;
     protected int ySize;
@@ -73,6 +78,12 @@ public abstract class GuiBooklet extends GuiBookletBase{
             this.buttonBack = new TexturedButton(RES_LOC_GADGETS, -2002, this.guiLeft-15, this.guiTop-3, 36, 54, 18, 10);
             this.buttonList.add(this.buttonBack);
         }
+
+        if(this.hasSearchBar()){
+            this.searchField = new GuiTextField(-420, this.fontRendererObj, this.guiLeft+this.xSize+2, this.guiTop+this.ySize-40+2, 64, 12);
+            this.searchField.setMaxStringLength(50);
+            this.searchField.setEnableBackgroundDrawing(false);
+        }
     }
 
     @Override
@@ -81,7 +92,41 @@ public abstract class GuiBooklet extends GuiBookletBase{
         this.mc.getTextureManager().bindTexture(RES_LOC_GUI);
         drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 
+        if(this.hasSearchBar()){
+            this.mc.getTextureManager().bindTexture(RES_LOC_GADGETS);
+            this.drawTexturedModalRect(this.guiLeft+this.xSize, this.guiTop+this.ySize-40, 188, 0, 68, 14);
+
+            boolean unicodeBefore = this.fontRendererObj.getUnicodeFlag();
+            this.fontRendererObj.setUnicodeFlag(true);
+
+            if(!this.searchField.isFocused() && (this.searchField.getText() == null || this.searchField.getText().isEmpty())){
+                this.fontRendererObj.drawString(TextFormatting.ITALIC+"Click to search...", this.guiLeft+this.xSize+2, this.guiTop+this.ySize-40+2, 0xFFFFFF, false);
+            }
+
+            this.searchField.drawTextBox();
+
+            this.fontRendererObj.setUnicodeFlag(unicodeBefore);
+        }
+
         super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+
+        if(this.hasSearchBar()){
+            this.searchField.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+    }
+
+    @Override
+    public void updateScreen(){
+        super.updateScreen();
+
+        if(this.hasSearchBar()){
+            this.searchField.updateCursorCounter();
+        }
     }
 
     @Override
@@ -113,6 +158,15 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
     }
 
+    public boolean hasSearchBar(){
+        return true;
+    }
+
+    public void onSearchBarChanged(String searchBarText){
+        GuiBookletBase parent = !(this instanceof GuiEntry) ? this : this.parentPage;
+        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, parent, ActuallyAdditionsAPI.allAndSearch, 0, searchBarText, true));
+    }
+
     @Override
     protected void actionPerformed(GuiButton button) throws IOException{
         if(this.hasPageLeftButton() && button == this.buttonLeft){
@@ -130,12 +184,16 @@ public abstract class GuiBooklet extends GuiBookletBase{
     }
 
     @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException{
-        if(this.previousScreen != null && keyCode == Keyboard.KEY_ESCAPE){
+    protected void keyTyped(char typedChar, int key) throws IOException{
+        if(key == Keyboard.KEY_ESCAPE || (key == this.mc.gameSettings.keyBindInventory.getKeyCode() && (!this.hasSearchBar() || !this.searchField.isFocused()))){
             this.mc.displayGuiScreen(this.previousScreen);
         }
+        else if(this.hasSearchBar() & this.searchField.isFocused()){
+            this.searchField.textboxKeyTyped(typedChar, key);
+            this.onSearchBarChanged(this.searchField.getText());
+        }
         else{
-            super.keyTyped(typedChar, keyCode);
+            super.keyTyped(typedChar, key);
         }
     }
 

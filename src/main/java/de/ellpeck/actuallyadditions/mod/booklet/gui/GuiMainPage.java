@@ -49,7 +49,7 @@ public class GuiMainPage extends GuiBooklet{
             if(ActuallyAdditionsAPI.BOOKLET_ENTRIES.size() > button.id){
                 IBookletEntry entry = ActuallyAdditionsAPI.BOOKLET_ENTRIES.get(button.id);
                 if(entry != null){
-                    this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this, entry, 0));
+                    this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this, entry, 0, "", false));
                 }
             }
         }

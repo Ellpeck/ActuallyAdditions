@@ -32,26 +32,37 @@ public class GuiEntry extends GuiBooklet{
     private final int entryPage;
     private final IBookletEntry entry;
     private final List<IBookletChapter> chapters;
+    private final String searchText;
+    private final boolean focusSearch;
 
-    public GuiEntry(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletEntry entry, int entryPage){
+    public GuiEntry(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletEntry entry, int entryPage, String search, boolean focusSearch){
         super(previousScreen, parentPage);
         this.entryPage = entryPage;
         this.entry = entry;
-        this.chapters = entry.getChaptersForGuiDisplaying(this, null /*TODO Insert search bar text here*/);
+        this.searchText = search;
+        this.focusSearch = focusSearch;
+        this.chapters = entry.getChaptersForDisplay(search);
     }
 
-    public GuiEntry(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletEntry entry, IBookletChapter chapterForPageCalc){
-        this(previousScreen, parentPage, entry, calcEntryPage(entry, chapterForPageCalc));
+    public GuiEntry(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletEntry entry, IBookletChapter chapterForPageCalc, String search, boolean focusSearch){
+        this(previousScreen, parentPage, entry, calcEntryPage(entry, chapterForPageCalc, search), search, focusSearch);
     }
 
-    private static int calcEntryPage(IBookletEntry entry, IBookletChapter chapterForPageCalc){
-        int index = entry.getAllChapters().indexOf(chapterForPageCalc);
+    private static int calcEntryPage(IBookletEntry entry, IBookletChapter chapterForPageCalc, String search){
+        int index = entry.getChaptersForDisplay(search).indexOf(chapterForPageCalc);
         return index/(BUTTONS_PER_PAGE*2);
     }
 
     @Override
     public void initGui(){
         super.initGui();
+
+        if(this.hasSearchBar() && this.searchText != null){
+            this.searchField.setText(this.searchText);
+            if(this.focusSearch){
+                this.searchField.setFocused(true);
+            }
+        }
 
         int idOffset = this.entryPage*(BUTTONS_PER_PAGE*2);
         for(int x = 0; x < 2; x++){
@@ -100,7 +111,7 @@ public class GuiEntry extends GuiBooklet{
 
     @Override
     public void onPageLeftButtonPressed(){
-        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this.parentPage, this.entry, this.entryPage-1));
+        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this.parentPage, this.entry, this.entryPage-1, this.searchText, this.searchField.isFocused()));
     }
 
     @Override
@@ -108,7 +119,7 @@ public class GuiEntry extends GuiBooklet{
         if(!this.chapters.isEmpty()){
             IBookletChapter lastChap = this.chapters.get(this.chapters.size()-1);
             if(lastChap != null){
-                int lastPage = calcEntryPage(this.entry, lastChap);
+                int lastPage = calcEntryPage(this.entry, lastChap, this.searchText);
                 return this.entryPage < lastPage;
             }
         }
@@ -117,7 +128,7 @@ public class GuiEntry extends GuiBooklet{
 
     @Override
     public void onPageRightButtonPressed(){
-        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this.parentPage, this.entry, this.entryPage+1));
+        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this.parentPage, this.entry, this.entryPage+1, this.searchText, this.searchField.isFocused()));
     }
 
     @Override
