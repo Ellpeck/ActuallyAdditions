@@ -58,4 +58,8 @@ public interface IBookletPage{
     boolean shouldBeOnLeftSide();
 
     String getIdentifier();
+
+    IBookletPage addTextReplacement(String key, String value);
+
+    IBookletPage addTextReplacement(String key, float value);
 }
