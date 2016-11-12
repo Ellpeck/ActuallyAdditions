@@ -166,4 +166,9 @@ public class BookletPage implements IBookletPage{
     public BookletPage addTextReplacement(String key, float value){
         return this.addTextReplacement(key, Float.toString(value));
     }
+
+    @Override
+    public BookletPage addTextReplacement(String key, int value){
+        return this.addTextReplacement(key, Integer.toString(value));
+    }
 }
