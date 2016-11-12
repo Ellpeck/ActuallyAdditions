@@ -116,7 +116,6 @@ public final class PacketHandler{
     };
     public static final IDataHandler CHANGE_PLAYER_DATA_HANDLER = new IDataHandler(){
         @Override
-        @SideOnly(Side.CLIENT)
         public void handleData(NBTTagCompound compound){
             NBTTagCompound data = compound.getCompoundTag("Data");
             UUID id = compound.getUniqueId("UUID");
@@ -126,7 +125,6 @@ public final class PacketHandler{
             }
         }
     };
-
 
     public static void init(){
         theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(ModUtil.MOD_ID);

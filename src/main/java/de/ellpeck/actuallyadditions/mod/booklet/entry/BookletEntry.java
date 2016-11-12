@@ -21,6 +21,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,7 @@ public class BookletEntry implements IBookletEntry{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public List<IBookletChapter> getChaptersForDisplay(String searchBarText){
         if(searchBarText != null && !searchBarText.isEmpty()){
             String search = searchBarText.toLowerCase(Locale.ROOT);
@@ -91,6 +94,7 @@ public class BookletEntry implements IBookletEntry{
         }
     }
 
+    @SideOnly(Side.CLIENT)
     private static boolean fitsFilter(IBookletPage page, String searchBarText){
         Minecraft mc = Minecraft.getMinecraft();
 

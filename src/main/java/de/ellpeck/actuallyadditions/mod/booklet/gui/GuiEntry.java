@@ -30,6 +30,7 @@ public class GuiEntry extends GuiBooklet{
 
     //The page in the entry. Say you have 2 more chapters than fit on one double page, then those 2 would be displayed on entryPage 1 instead.
     private final int entryPage;
+    private final int pageAmount;
     private final IBookletEntry entry;
     private final List<IBookletChapter> chapters;
     private final String searchText;
@@ -42,6 +43,9 @@ public class GuiEntry extends GuiBooklet{
         this.searchText = search;
         this.focusSearch = focusSearch;
         this.chapters = entry.getChaptersForDisplay(search);
+
+        IBookletChapter lastChap = this.chapters.get(this.chapters.size()-1);
+        this.pageAmount = lastChap == null ? 1 : calcEntryPage(this.entry, lastChap, this.searchText)+1;
     }
 
     public GuiEntry(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletEntry entry, IBookletChapter chapterForPageCalc, String search, boolean focusSearch){
@@ -51,6 +55,19 @@ public class GuiEntry extends GuiBooklet{
     private static int calcEntryPage(IBookletEntry entry, IBookletChapter chapterForPageCalc, String search){
         int index = entry.getChaptersForDisplay(search).indexOf(chapterForPageCalc);
         return index/(BUTTONS_PER_PAGE*2);
+    }
+
+    @Override
+    public void drawScreenPre(int mouseX, int mouseY, float partialTicks){
+        super.drawScreenPre(mouseX, mouseY, partialTicks);
+
+        String name = this.entry.getLocalizedName();
+        this.fontRendererObj.drawString(name, this.guiLeft+this.xSize/2-this.fontRendererObj.getStringWidth(name)/2, this.guiTop-1, 0xFFFFFF, true);
+
+        for(int i = 0; i < 2; i++){
+            String pageStrg = "Page "+(this.entryPage*2+i+1)+"/"+this.pageAmount*2;
+            this.renderScaledAsciiString(pageStrg, this.guiLeft+25+i*136, this.guiTop+this.ySize-7, 0xFFFFFF, false, 0.8F);
+        }
     }
 
     @Override
@@ -116,14 +133,7 @@ public class GuiEntry extends GuiBooklet{
 
     @Override
     public boolean hasPageRightButton(){
-        if(!this.chapters.isEmpty()){
-            IBookletChapter lastChap = this.chapters.get(this.chapters.size()-1);
-            if(lastChap != null){
-                int lastPage = calcEntryPage(this.entry, lastChap, this.searchText);
-                return this.entryPage < lastPage;
-            }
-        }
-        return false;
+        return !this.chapters.isEmpty() && this.entryPage < this.pageAmount-1;
     }
 
     @Override
