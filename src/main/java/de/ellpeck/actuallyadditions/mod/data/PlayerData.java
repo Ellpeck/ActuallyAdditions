@@ -50,6 +50,7 @@ public final class PlayerData{
 
         public boolean displayTesla;
         public boolean bookGottenAlready;
+        public boolean didBookTutorial;
 
         public IBookletPage[] bookmarks = new IBookletPage[12];
 
@@ -63,6 +64,7 @@ public final class PlayerData{
         public void readFromNBT(NBTTagCompound compound){
             this.displayTesla = compound.getBoolean("DisplayTesla");
             this.bookGottenAlready = compound.getBoolean("BookGotten");
+            this.didBookTutorial = compound.getBoolean("DidTutorial");
 
             NBTTagList bookmarks = compound.getTagList("Bookmarks", 8);
             for(int i = 0; i < bookmarks.tagCount(); i++){
@@ -77,6 +79,7 @@ public final class PlayerData{
         public void writeToNBT(NBTTagCompound compound){
             compound.setBoolean("DisplayTesla", this.displayTesla);
             compound.setBoolean("BookGotten", this.bookGottenAlready);
+            compound.setBoolean("DidTutorial", this.didBookTutorial);
 
             NBTTagList bookmarks = new NBTTagList();
             for(IBookletPage bookmark : this.bookmarks){

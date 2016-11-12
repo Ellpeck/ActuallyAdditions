@@ -138,6 +138,11 @@ public class GuiEntry extends GuiBooklet{
 
     @Override
     public void onBackButtonPressed(){
-        this.mc.displayGuiScreen(this.parentPage);
+        if(!isShiftKeyDown()){
+            this.mc.displayGuiScreen(this.parentPage);
+        }
+        else{
+            super.onBackButtonPressed();
+        }
     }
 }

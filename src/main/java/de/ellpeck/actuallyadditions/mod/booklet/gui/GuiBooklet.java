@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
@@ -28,8 +29,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
@@ -45,7 +48,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
     private GuiButton buttonLeft;
     private GuiButton buttonRight;
     private GuiButton buttonBack;
-    private final BookmarkButton[] bookmarkButtons = new BookmarkButton[12];
+    protected final BookmarkButton[] bookmarkButtons = new BookmarkButton[12];
 
     public GuiTextField searchField;
 
@@ -70,17 +73,20 @@ public abstract class GuiBooklet extends GuiBookletBase{
         this.guiTop = (this.height-this.ySize)/2;
 
         if(this.hasPageLeftButton()){
-            this.buttonLeft = new TexturedButton(RES_LOC_GADGETS, -2000, this.guiLeft-12, this.guiTop+this.ySize-8, 18, 54, 18, 10);
+            List<String> hoverText = Arrays.asList(TextFormatting.GOLD+"Previous Page", TextFormatting.ITALIC+"Or scroll up");
+            this.buttonLeft = new TexturedButton(RES_LOC_GADGETS, -2000, this.guiLeft-12, this.guiTop+this.ySize-8, 18, 54, 18, 10, hoverText);
             this.buttonList.add(this.buttonLeft);
         }
 
         if(this.hasPageRightButton()){
-            this.buttonRight = new TexturedButton(RES_LOC_GADGETS, -2001, this.guiLeft+this.xSize-6, this.guiTop+this.ySize-8, 0, 54, 18, 10);
+            List<String> hoverText = Arrays.asList(TextFormatting.GOLD+"Next Page", TextFormatting.ITALIC+"Or scroll down");
+            this.buttonRight = new TexturedButton(RES_LOC_GADGETS, -2001, this.guiLeft+this.xSize-6, this.guiTop+this.ySize-8, 0, 54, 18, 10, hoverText);
             this.buttonList.add(this.buttonRight);
         }
 
         if(this.hasBackButton()){
-            this.buttonBack = new TexturedButton(RES_LOC_GADGETS, -2002, this.guiLeft-15, this.guiTop-3, 36, 54, 18, 10);
+            List<String> hoverText = Arrays.asList(TextFormatting.GOLD+"Go Back", TextFormatting.ITALIC+"Or right-click", TextFormatting.ITALIC.toString()+TextFormatting.GRAY+"Hold Shift for Main Page");
+            this.buttonBack = new TexturedButton(RES_LOC_GADGETS, -2002, this.guiLeft-15, this.guiTop-3, 36, 54, 18, 10, hoverText);
             this.buttonList.add(this.buttonBack);
         }
 
@@ -92,8 +98,10 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
         if(this.hasBookmarkButtons()){
             PlayerSave data = PlayerData.getDataFromPlayer(this.mc.thePlayer);
+
+            int xStart = this.guiLeft+this.xSize/2-16*this.bookmarkButtons.length/2;
             for(int i = 0; i < this.bookmarkButtons.length; i++){
-                this.bookmarkButtons[i] = new BookmarkButton(1337+i, this.guiLeft+12+i*16, this.guiTop+this.ySize, this);
+                this.bookmarkButtons[i] = new BookmarkButton(1337+i, xStart+i*16, this.guiTop+this.ySize, this);
                 this.buttonList.add(this.bookmarkButtons[i]);
 
                 if(data.bookmarks[i] != null){
@@ -109,11 +117,18 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
         PlayerSave data = PlayerData.getDataFromPlayer(this.mc.thePlayer);
 
+        boolean change = false;
         for(int i = 0; i < this.bookmarkButtons.length; i++){
-            data.bookmarks[i] = this.bookmarkButtons[i].assignedPage;
+            if(data.bookmarks[i] != this.bookmarkButtons[i].assignedPage){
+                data.bookmarks[i] = this.bookmarkButtons[i].assignedPage;
+                change = true;
+            }
         }
-
         data.lastOpenBooklet = this;
+
+        if(change){
+            PacketHandlerHelper.sendPlayerDataPacket(this.mc.thePlayer, true, false);
+        }
     }
 
     @Override
@@ -146,9 +161,12 @@ public abstract class GuiBooklet extends GuiBookletBase{
     }
 
     public void drawScreenPost(int mouseX, int mouseY, float partialTicks){
-        if(this.hasBookmarkButtons()){
-            for(BookmarkButton button : this.bookmarkButtons){
-                button.drawHover(mouseX, mouseY);
+        for(GuiButton button : this.buttonList){
+            if(button instanceof BookmarkButton){
+                ((BookmarkButton)button).drawHover(mouseX, mouseY);
+            }
+            else if(button instanceof TexturedButton){
+                ((TexturedButton)button).drawHover(mouseX, mouseY);
             }
         }
     }
@@ -160,6 +178,28 @@ public abstract class GuiBooklet extends GuiBookletBase{
         if(this.hasSearchBar()){
             this.searchField.mouseClicked(mouseX, mouseY, mouseButton);
         }
+
+        if(mouseButton == 1 && this.hasBackButton()){
+            this.onBackButtonPressed();
+        }
+    }
+
+    @Override
+    public void handleMouseInput() throws IOException{
+        int wheel = Mouse.getEventDWheel();
+        if(wheel != 0){
+            if(wheel < 0){
+                if(this.hasPageRightButton()){
+                    this.onPageRightButtonPressed();
+                }
+            }
+            else if(wheel > 0){
+                if(this.hasPageLeftButton()){
+                    this.onPageLeftButtonPressed();
+                }
+            }
+        }
+        super.handleMouseInput();
     }
 
     @Override
@@ -197,7 +237,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
     }
 
     public void onBackButtonPressed(){
-
+        this.mc.displayGuiScreen(new GuiMainPage(this.previousScreen));
     }
 
     public boolean hasSearchBar(){
@@ -241,8 +281,13 @@ public abstract class GuiBooklet extends GuiBookletBase{
             this.mc.displayGuiScreen(this.previousScreen);
         }
         else if(this.hasSearchBar() & this.searchField.isFocused()){
+            String lastText = this.searchField.getText();
+
             this.searchField.textboxKeyTyped(typedChar, key);
-            this.onSearchBarChanged(this.searchField.getText());
+
+            if(!lastText.equals(this.searchField.getText())){
+                this.onSearchBarChanged(this.searchField.getText());
+            }
         }
         else{
             super.keyTyped(typedChar, key);

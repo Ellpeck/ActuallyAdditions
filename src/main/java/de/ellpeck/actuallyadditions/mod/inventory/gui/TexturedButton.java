@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -40,11 +41,6 @@ public class TexturedButton extends GuiButton{
         this.textList.addAll(hoverTextList);
     }
 
-    public void setTexturePos(int x, int y){
-        this.texturePosX = x;
-        this.texturePosY = y;
-    }
-
     @Override
     public void drawButton(Minecraft minecraft, int x, int y){
         if(this.visible){
@@ -61,6 +57,13 @@ public class TexturedButton extends GuiButton{
             GlStateManager.blendFunc(770, 771);
             this.drawTexturedModalRect(this.xPosition, this.yPosition, this.texturePosX, this.texturePosY-this.height+k*this.height, this.width, this.height);
             this.mouseDragged(minecraft, x, y);
+        }
+    }
+
+    public void drawHover(int x, int y){
+        if(this.isMouseOver()){
+            Minecraft mc = Minecraft.getMinecraft();
+            GuiUtils.drawHoveringText(this.textList, x, y, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
     }
 }

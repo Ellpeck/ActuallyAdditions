@@ -122,7 +122,7 @@ public final class PacketHandler{
             UUID id = compound.getUniqueId("UUID");
             PlayerData.getDataFromPlayer(id).readFromNBT(data);
             if(compound.getBoolean("Log")){
-                ModUtil.LOGGER.info("Receiving (new or changed) Player Data for current player with UUID "+id+".");
+                ModUtil.LOGGER.info("Receiving (new or changed) Player Data for player with UUID "+id+".");
             }
         }
     };

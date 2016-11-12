@@ -19,7 +19,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -225,6 +224,11 @@ public class GuiPage extends GuiBooklet{
 
     @Override
     public void onBackButtonPressed(){
-        this.mc.displayGuiScreen(this.parentPage);
+        if(!isShiftKeyDown()){
+            this.mc.displayGuiScreen(this.parentPage);
+        }
+        else{
+            super.onBackButtonPressed();
+        }
     }
 }

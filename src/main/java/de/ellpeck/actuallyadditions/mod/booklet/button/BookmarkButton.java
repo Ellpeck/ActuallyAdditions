@@ -98,10 +98,13 @@ public class BookmarkButton extends GuiButton{
                 list.add(TextFormatting.ITALIC+"Shift-Click to remove");
             }
             else{
-                list.add(TextFormatting.GOLD+"None");
+                list.add(TextFormatting.GOLD+"No Bookmark");
 
                 if(this.booklet instanceof GuiPage){
-                    list.add("Click to save current page");
+                    list.add("Click to bookmark current page");
+                }
+                else{
+                    list.add("Open a page to bookmark it");
                 }
             }
 
