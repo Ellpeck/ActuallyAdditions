@@ -1,3 +1,22 @@
+# 1.10.2-r71
+* Totally reworked how the Actually Additions Manual looks. It now has two pages open instead of one and looks a lot fancier in general.
+* Added a new Laser Rendering system that is much fancier
+* Added a new Laser Relay model (canitzp)
+* Added a dedicated chapter for Laser Relays into the booklet
+* Removed Laser Wrench display options
+* Allow plants to be planted on blocks other than farmland in the farmer
+* Make the Handheld Filler work with blocks that only have meta when placed (garantiertnicht)
+* Made the AIOT work on Spider Webs
+* Made lush caves generate higher up too again
+* Added some more easter egg names to the smiley cloud
+* Made XP created by Solidified XP not be picked up by the solidifier
+* Made the magnet ring even more useful by making it pick up items directly
+* Make clear that the Spawner Changer is one time use only
+* Removed Performance config options
+* Made the ranged collector show a little poof particle when picking items up
+* Made the precision dropper correctly respond to comparators
+* Made works work with other grass and dirt types
+
 # 1.10.2-r70
 * Added the handheld filler, an item that can fill big areas with blocks
 * Added the lens of the killer that will drop XP and player-kill items when killing mobs
