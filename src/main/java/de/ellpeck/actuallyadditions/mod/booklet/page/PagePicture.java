@@ -20,10 +20,14 @@ public class PagePicture extends BookletPage{
     private final ResourceLocation resLoc;
     private final int yTextOffset;
 
-    public PagePicture(int localizationKey, String pictureLocation, int yTextOffset){
+    public PagePicture(int localizationKey, ResourceLocation resLoc, int yTextOffset){
         super(localizationKey);
-        this.yTextOffset  = yTextOffset;
-        this.resLoc = AssetUtil.getBookletGuiLocation(pictureLocation);
+        this.yTextOffset = yTextOffset;
+        this.resLoc = resLoc;
+    }
+
+    public PagePicture(int localizationKey, String pictureLocation, int yTextOffset){
+        this(localizationKey, AssetUtil.getBookletGuiLocation(pictureLocation), yTextOffset);
     }
 
     @Override

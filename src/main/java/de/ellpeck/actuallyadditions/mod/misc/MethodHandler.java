@@ -11,10 +11,18 @@
 package de.ellpeck.actuallyadditions.mod.misc;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrafting;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageFurnace;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import net.minecraft.block.Block;
@@ -234,5 +242,30 @@ public class MethodHandler implements IMethodHandler{
             }
         }
         return hasWorkedOnce;
+    }
+
+    @Override
+    public IBookletPage generateTextPage(int id){
+        return new PageTextOnly(id);
+    }
+
+    @Override
+    public IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY){
+        return new PagePicture(id, resLoc, textStartY);
+    }
+
+    @Override
+    public IBookletPage generateCraftingPage(int id, IRecipe... recipes){
+        return new PageCrafting(id, recipes);
+    }
+
+    @Override
+    public IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result){
+        return new PageFurnace(id, result);
+    }
+
+    @Override
+    public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages){
+        return new BookletChapter(identifier, entry, displayStack, pages);
     }
 }
