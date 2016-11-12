@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiMainPage;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
 import de.ellpeck.actuallyadditions.mod.items.ItemBooklet;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
@@ -177,7 +178,13 @@ public class GuiHandler implements IGuiHandler{
                     return gui;
                 }
                 else{
-                    return new GuiMainPage(null);
+                    PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
+                    if(data.lastOpenBooklet != null){
+                        return data.lastOpenBooklet;
+                    }
+                    else{
+                        return new GuiMainPage(null);
+                    }
                 }
             case DIRECTIONAL_BREAKER:
                 return new GuiDirectionalBreaker(player.inventory, tile);

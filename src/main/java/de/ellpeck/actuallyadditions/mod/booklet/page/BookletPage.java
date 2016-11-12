@@ -136,6 +136,11 @@ public class BookletPage implements IBookletPage{
         return (this.chapter.getPageIndex(this)+1)%2 != 0;
     }
 
+    @Override
+    public String getIdentifier(){
+        return this.chapter.getIdentifier()+"."+this.chapter.getPageIndex(this);
+    }
+
     public BookletPage setNoText(){
         this.hasNoText = true;
         return this;

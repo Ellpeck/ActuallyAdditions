@@ -12,6 +12,9 @@ package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -23,6 +26,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
@@ -41,6 +45,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
     private GuiButton buttonLeft;
     private GuiButton buttonRight;
     private GuiButton buttonBack;
+    private final BookmarkButton[] bookmarkButtons = new BookmarkButton[12];
 
     public GuiTextField searchField;
 
@@ -84,10 +89,41 @@ public abstract class GuiBooklet extends GuiBookletBase{
             this.searchField.setMaxStringLength(50);
             this.searchField.setEnableBackgroundDrawing(false);
         }
+
+        if(this.hasBookmarkButtons()){
+            PlayerSave data = PlayerData.getDataFromPlayer(this.mc.thePlayer);
+            for(int i = 0; i < this.bookmarkButtons.length; i++){
+                this.bookmarkButtons[i] = new BookmarkButton(1337+i, this.guiLeft+12+i*16, this.guiTop+this.ySize, this);
+                this.buttonList.add(this.bookmarkButtons[i]);
+
+                if(data.bookmarks[i] != null){
+                    this.bookmarkButtons[i].assignedPage = data.bookmarks[i];
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onGuiClosed(){
+        super.onGuiClosed();
+
+        PlayerSave data = PlayerData.getDataFromPlayer(this.mc.thePlayer);
+
+        for(int i = 0; i < this.bookmarkButtons.length; i++){
+            data.bookmarks[i] = this.bookmarkButtons[i].assignedPage;
+        }
+
+        data.lastOpenBooklet = this;
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks){
+        this.drawScreenPre(mouseX, mouseY, partialTicks);
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.drawScreenPost(mouseX, mouseY, partialTicks);
+    }
+
+    public void drawScreenPre(int mouseX, int mouseY, float partialTicks){
         GlStateManager.color(1F, 1F, 1F);
         this.mc.getTextureManager().bindTexture(RES_LOC_GUI);
         drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
@@ -107,8 +143,14 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
             this.fontRendererObj.setUnicodeFlag(unicodeBefore);
         }
+    }
 
-        super.drawScreen(mouseX, mouseY, partialTicks);
+    public void drawScreenPost(int mouseX, int mouseY, float partialTicks){
+        if(this.hasBookmarkButtons()){
+            for(BookmarkButton button : this.bookmarkButtons){
+                button.drawHover(mouseX, mouseY);
+            }
+        }
     }
 
     @Override
@@ -162,6 +204,10 @@ public abstract class GuiBooklet extends GuiBookletBase{
         return true;
     }
 
+    public boolean hasBookmarkButtons(){
+        return true;
+    }
+
     public void onSearchBarChanged(String searchBarText){
         GuiBookletBase parent = !(this instanceof GuiEntry) ? this : this.parentPage;
         this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, parent, ActuallyAdditionsAPI.allAndSearch, 0, searchBarText, true));
@@ -177,6 +223,12 @@ public abstract class GuiBooklet extends GuiBookletBase{
         }
         else if(this.hasBackButton() && button == this.buttonBack){
             this.onBackButtonPressed();
+        }
+        else if(this.hasBookmarkButtons() && button instanceof BookmarkButton){
+            int index = ArrayUtils.indexOf(this.bookmarkButtons, button);
+            if(index >= 0){
+                this.bookmarkButtons[index].onPressed();
+            }
         }
         else{
             super.actionPerformed(button);

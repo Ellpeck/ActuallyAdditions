@@ -10,8 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.data;
 
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.UUID;
@@ -44,6 +51,11 @@ public final class PlayerData{
         public boolean displayTesla;
         public boolean bookGottenAlready;
 
+        public IBookletPage[] bookmarks = new IBookletPage[12];
+
+        @SideOnly(Side.CLIENT)
+        public GuiBooklet lastOpenBooklet;
+
         public PlayerSave(UUID id){
             this.id = id;
         }
@@ -51,11 +63,26 @@ public final class PlayerData{
         public void readFromNBT(NBTTagCompound compound){
             this.displayTesla = compound.getBoolean("DisplayTesla");
             this.bookGottenAlready = compound.getBoolean("BookGotten");
+
+            NBTTagList bookmarks = compound.getTagList("Bookmarks", 8);
+            for(int i = 0; i < bookmarks.tagCount(); i++){
+                String strg = bookmarks.getStringTagAt(i);
+                if(strg != null && !strg.isEmpty()){
+                    IBookletPage page = BookletUtils.getBookletPageById(strg);
+                    this.bookmarks[i] = page;
+                }
+            }
         }
 
         public void writeToNBT(NBTTagCompound compound){
             compound.setBoolean("DisplayTesla", this.displayTesla);
             compound.setBoolean("BookGotten", this.bookGottenAlready);
+
+            NBTTagList bookmarks = new NBTTagList();
+            for(IBookletPage bookmark : this.bookmarks){
+                bookmarks.appendTag(new NBTTagString(bookmark == null ? "" : bookmark.getIdentifier()));
+            }
+            compound.setTag("Bookmarks", bookmarks);
         }
 
     }

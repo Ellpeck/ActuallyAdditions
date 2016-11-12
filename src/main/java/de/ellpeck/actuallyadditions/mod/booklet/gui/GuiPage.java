@@ -19,6 +19,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -116,8 +117,8 @@ public class GuiPage extends GuiBooklet{
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks){
-        super.drawScreen(mouseX, mouseY, partialTicks);
+    public void drawScreenPre(int mouseX, int mouseY, float partialTicks){
+        super.drawScreenPre(mouseX, mouseY, partialTicks);
 
         for(int i = 0; i < this.pages.length; i++){
             IBookletPage page = this.pages[i];
@@ -129,6 +130,11 @@ public class GuiPage extends GuiBooklet{
         for(ItemDisplay display : this.itemDisplays){
             display.drawPre();
         }
+    }
+
+    @Override
+    public void drawScreenPost(int mouseX, int mouseY, float partialTicks){
+        super.drawScreenPost(mouseX, mouseY, partialTicks);
 
         for(int i = 0; i < this.pages.length; i++){
             IBookletPage page = this.pages[i];

@@ -56,4 +56,6 @@ public interface IBookletPage{
     void drawScreenPost(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks);
 
     boolean shouldBeOnLeftSide();
+
+    String getIdentifier();
 }
