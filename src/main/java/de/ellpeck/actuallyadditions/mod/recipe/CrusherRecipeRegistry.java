@@ -40,8 +40,6 @@ public final class CrusherRecipeRegistry{
                             if(!ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres(ore, false), OreDictionary.getOres(output, false), theCase.resultAmount, null, 0, 0)){
                                 oresNoResult.add(ore);
                             }
-
-                            break;
                         }
                     }
                 }
