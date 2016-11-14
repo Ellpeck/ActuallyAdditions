@@ -233,7 +233,6 @@ public final class AssetUtil{
         GlStateManager.disableLighting();
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.depthMask(false);
         GlStateManager.translate(firstX-TileEntityRendererDispatcher.staticPlayerX, firstY-TileEntityRendererDispatcher.staticPlayerY, firstZ-TileEntityRendererDispatcher.staticPlayerZ);
         GlStateManager.rotate((float)(180*yaw/Math.PI), 0, 1, 0);
         GlStateManager.rotate((float)(180*pitch/Math.PI), 0, 0, 1);
@@ -313,7 +312,6 @@ public final class AssetUtil{
 
         GlStateManager.disableBlend();
         GlStateManager.enableLighting();
-        GlStateManager.depthMask(true);
         GlStateManager.popMatrix();
 
         GlStateManager.enableFog();

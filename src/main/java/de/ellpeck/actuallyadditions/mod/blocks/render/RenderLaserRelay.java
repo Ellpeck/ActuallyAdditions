@@ -39,10 +39,15 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer{
                         BlockPos second = pair.getPositions()[1];
                         float[] color = relay.type == LaserType.ITEM ? COLOR_ITEM : (relay.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR);
 
-                        AssetUtil.renderLaser(first.getX()+0.5, first.getY()+0.5, first.getZ()+0.5, second.getX()+0.5, second.getY()+0.5, second.getZ()+0.5, 120, 0.5F, 0.05, color);
+                        AssetUtil.renderLaser(first.getX()+0.5, first.getY()+0.5, first.getZ()+0.5, second.getX()+0.5, second.getY()+0.5, second.getZ()+0.5, 120, 0.35F, 0.05, color);
                     }
                 }
             }
         }
+    }
+
+    @Override
+    public boolean isGlobalRenderer(TileEntity tile){
+        return true;
     }
 }
