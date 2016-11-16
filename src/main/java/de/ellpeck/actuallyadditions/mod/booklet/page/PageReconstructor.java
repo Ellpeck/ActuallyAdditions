@@ -10,15 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
-import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
+
+import java.util.List;
 
 public class PageReconstructor extends BookletPage{
 
@@ -45,7 +43,18 @@ public class PageReconstructor extends BookletPage{
     public void initGui(GuiBookletBase gui, int startX, int startY){
         super.initGui(gui, startX, startY);
 
-        gui.addOrModifyItemRenderer(this.recipe.inputStack, startX+30+1, startY+10+13, 1F, true);
-        gui.addOrModifyItemRenderer(this.recipe.outputStack, startX+30+47, startY+10+13, 1F, false);
+        if(this.recipe != null){
+            gui.addOrModifyItemRenderer(this.recipe.inputStack, startX+30+1, startY+10+13, 1F, true);
+            gui.addOrModifyItemRenderer(this.recipe.outputStack, startX+30+47, startY+10+13, 1F, false);
+        }
+    }
+
+    @Override
+    public void getItemStacksForPage(List<ItemStack> list){
+        super.getItemStacksForPage(list);
+
+        if(this.recipe != null){
+            list.add(this.recipe.outputStack);
+        }
     }
 }

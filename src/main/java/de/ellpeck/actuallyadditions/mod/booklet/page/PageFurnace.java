@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
+import java.util.List;
 import java.util.Map;
 
 public class PageFurnace extends BookletPage{
@@ -56,5 +57,12 @@ public class PageFurnace extends BookletPage{
             }
         }
         return null;
+    }
+
+    @Override
+    public void getItemStacksForPage(List<ItemStack> list){
+        super.getItemStacksForPage(list);
+
+        list.add(this.output);
     }
 }

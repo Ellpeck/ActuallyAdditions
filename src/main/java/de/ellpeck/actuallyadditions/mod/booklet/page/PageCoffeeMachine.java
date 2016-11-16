@@ -19,13 +19,19 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
+import java.util.List;
+
 public class PageCoffeeMachine extends BookletPage{
 
     private final CoffeeIngredient ingredient;
+    private final ItemStack outcome;
 
     public PageCoffeeMachine(int localizationKey, CoffeeIngredient ingredient){
         super(localizationKey);
         this.ingredient = ingredient;
+
+        this.outcome = new ItemStack(InitItems.itemCoffee);
+        ActuallyAdditionsAPI.methodHandler.addEffectToStack(this.outcome, this.ingredient);
     }
 
     @Override
@@ -46,12 +52,16 @@ public class PageCoffeeMachine extends BookletPage{
         super.initGui(gui, startX, startY);
 
         gui.addOrModifyItemRenderer(this.ingredient.ingredient, startX+5+82, startY+10+1, 1F, true);
-
-        ItemStack coffee = new ItemStack(InitItems.itemCoffee);
-        ActuallyAdditionsAPI.methodHandler.addEffectToStack(coffee, this.ingredient);
-        gui.addOrModifyItemRenderer(coffee, startX+5+36, startY+10+42, 1F, false);
+        gui.addOrModifyItemRenderer(this.outcome, startX+5+36, startY+10+42, 1F, false);
 
         gui.addOrModifyItemRenderer(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), startX+5+37, startY+10+1, 1F, true);
         gui.addOrModifyItemRenderer(new ItemStack(InitItems.itemCoffee), startX+5+1, startY+10+1, 1F, true);
+    }
+
+    @Override
+    public void getItemStacksForPage(List<ItemStack> list){
+        super.getItemStacksForPage(list);
+
+        list.add(this.outcome);
     }
 }

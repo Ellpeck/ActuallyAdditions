@@ -13,7 +13,11 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
+
+import java.util.List;
 
 public class PageCrusherRecipe extends BookletPage{
 
@@ -40,11 +44,26 @@ public class PageCrusherRecipe extends BookletPage{
     public void initGui(GuiBookletBase gui, int startX, int startY){
         super.initGui(gui, startX, startY);
 
-        gui.addOrModifyItemRenderer(this.recipe.inputStack, startX+38+18, startY+6+2, 1F, true);
-        gui.addOrModifyItemRenderer(this.recipe.outputOneStack, startX+38+4, startY+6+53, 1F, false);
+        if(this.recipe != null){
+            gui.addOrModifyItemRenderer(this.recipe.inputStack, startX+38+18, startY+6+2, 1F, true);
+            gui.addOrModifyItemRenderer(this.recipe.outputOneStack, startX+38+4, startY+6+53, 1F, false);
 
-        if(this.recipe.outputTwoStack != null){
-            gui.addOrModifyItemRenderer(this.recipe.outputTwoStack, startX+38+30, startY+6+53, 1F, false);
+            if(StackUtil.isValid(this.recipe.outputTwoStack)){
+                gui.addOrModifyItemRenderer(this.recipe.outputTwoStack, startX+38+30, startY+6+53, 1F, false);
+            }
+        }
+    }
+
+    @Override
+    public void getItemStacksForPage(List<ItemStack> list){
+        super.getItemStacksForPage(list);
+
+        if(this.recipe != null){
+            list.add(this.recipe.outputOneStack);
+
+            if(StackUtil.isValid(this.recipe.outputTwoStack)){
+                list.add(this.recipe.outputTwoStack);
+            }
         }
     }
 }

@@ -13,7 +13,10 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
+
+import java.util.List;
 
 public class PageEmpowerer extends BookletPage{
 
@@ -40,12 +43,23 @@ public class PageEmpowerer extends BookletPage{
     public void initGui(GuiBookletBase gui, int startX, int startY){
         super.initGui(gui, startX, startY);
 
-        gui.addOrModifyItemRenderer(this.recipe.modifier1, startX+5+26, startY+10+1, 1F, true);
-        gui.addOrModifyItemRenderer(this.recipe.modifier2, startX+5+1, startY+10+26, 1F, true);
-        gui.addOrModifyItemRenderer(this.recipe.modifier3, startX+5+51, startY+10+26, 1F, true);
-        gui.addOrModifyItemRenderer(this.recipe.modifier4, startX+5+26, startY+10+51, 1F, true);
+        if(this.recipe != null){
+            gui.addOrModifyItemRenderer(this.recipe.modifier1, startX+5+26, startY+10+1, 1F, true);
+            gui.addOrModifyItemRenderer(this.recipe.modifier2, startX+5+1, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(this.recipe.modifier3, startX+5+51, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(this.recipe.modifier4, startX+5+26, startY+10+51, 1F, true);
 
-        gui.addOrModifyItemRenderer(this.recipe.input, startX+5+26, startY+10+26, 1F, true);
-        gui.addOrModifyItemRenderer(this.recipe.output, startX+5+96, startY+10+26, 1F, false);
+            gui.addOrModifyItemRenderer(this.recipe.input, startX+5+26, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(this.recipe.output, startX+5+96, startY+10+26, 1F, false);
+        }
+    }
+
+    @Override
+    public void getItemStacksForPage(List<ItemStack> list){
+        super.getItemStacksForPage(list);
+
+        if(this.recipe != null){
+            list.add(this.recipe.output);
+        }
     }
 }
