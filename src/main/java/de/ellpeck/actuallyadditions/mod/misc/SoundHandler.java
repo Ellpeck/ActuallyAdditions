@@ -14,6 +14,8 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
+import java.util.Locale;
+
 public final class SoundHandler{
 
     public static SoundEvent duhDuhDuhDuuuh;
@@ -33,7 +35,7 @@ public final class SoundHandler{
     }
 
     private static SoundEvent registerSound(String name){
-        ResourceLocation resLoc = new ResourceLocation(ModUtil.MOD_ID, name);
+        ResourceLocation resLoc = new ResourceLocation(ModUtil.MOD_ID, name.toLowerCase(Locale.ROOT));
 
         SoundEvent event = new SoundEvent(resLoc);
         SoundEvent.REGISTRY.register(size, resLoc, event);

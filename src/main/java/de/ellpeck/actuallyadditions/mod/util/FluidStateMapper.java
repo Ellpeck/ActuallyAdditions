@@ -35,7 +35,6 @@ public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinit
         this.location = new ModelResourceLocation(new ResourceLocation(ModUtil.MOD_ID, "fluids"), fluid.getName());
     }
 
-
     @Override
     protected ModelResourceLocation getModelResourceLocation(IBlockState state){
         return this.location;

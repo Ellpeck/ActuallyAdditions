@@ -34,10 +34,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ClientProxy implements IProxy{
 
@@ -110,7 +107,8 @@ public class ClientProxy implements IProxy{
 
     @Override
     public void addRenderRegister(ItemStack stack, ResourceLocation location, String variant){
-        MODEL_LOCATIONS_FOR_REGISTERING.put(stack, new ModelResourceLocation(location, variant));
+        ResourceLocation lowerLocation = new ResourceLocation(location.toString().toLowerCase(Locale.ROOT));
+        MODEL_LOCATIONS_FOR_REGISTERING.put(stack, new ModelResourceLocation(lowerLocation, variant));
     }
 
     @Override

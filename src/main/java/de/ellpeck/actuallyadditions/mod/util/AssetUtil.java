@@ -34,16 +34,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Locale;
+
 public final class AssetUtil{
 
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
 
     public static ResourceLocation getGuiLocation(String file){
-        return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/"+file+".png");
+        return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/"+file.toLowerCase(Locale.ROOT)+".png");
     }
 
     public static ResourceLocation getBookletGuiLocation(String file){
-        return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/booklet/"+file+".png");
+        return getGuiLocation("booklet/"+file);
     }
 
     @SideOnly(Side.CLIENT)

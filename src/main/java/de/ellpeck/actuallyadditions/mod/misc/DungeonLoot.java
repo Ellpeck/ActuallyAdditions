@@ -31,8 +31,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DungeonLoot{
 
-    public static final ResourceLocation JAM_HOUSE = new ResourceLocation(ModUtil.MOD_ID, "jamHouse");
-    public static final ResourceLocation LUSH_CAVES = new ResourceLocation(ModUtil.MOD_ID, "lushCaves");
+    public static final ResourceLocation JAM_HOUSE = new ResourceLocation(ModUtil.MOD_ID, "jamhouse");
+    public static final ResourceLocation LUSH_CAVES = new ResourceLocation(ModUtil.MOD_ID, "lushcaves");
 
     public DungeonLoot(){
         LootTableList.register(JAM_HOUSE);

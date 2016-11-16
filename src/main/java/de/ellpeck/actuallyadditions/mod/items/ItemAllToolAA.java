@@ -58,7 +58,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
 
     @Override
     protected void registerRendering(){
-        ResourceLocation resLoc = new ResourceLocation(ModUtil.MOD_ID, "itemPaxel");
+        ResourceLocation resLoc = new ResourceLocation(ModUtil.MOD_ID, "itempaxel");
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), resLoc, "inventory");
     }
 

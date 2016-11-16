@@ -44,7 +44,7 @@ public final class InitFluids{
     }
 
     private static Fluid registerFluid(String fluidName, String fluidTextureName, EnumRarity rarity){
-        Fluid fluid = new FluidAA(fluidName.toLowerCase(Locale.ROOT), fluidTextureName).setRarity(rarity);
+        Fluid fluid = new FluidAA(fluidName.toLowerCase(Locale.ROOT), fluidTextureName.toLowerCase(Locale.ROOT)).setRarity(rarity);
         FluidRegistry.registerFluid(fluid);
         FluidRegistry.addBucketForFluid(fluid);
 
