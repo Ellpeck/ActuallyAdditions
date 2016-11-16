@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -90,11 +91,11 @@ public class ItemWingsOfTheBats extends ItemBase{
      */
     public static ItemStack getWingItem(EntityPlayer player){
         for(int i = 0; i < player.inventory.getSizeInventory(); i++){
-            if(player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i).getItem() instanceof ItemWingsOfTheBats){
+            if(StackUtil.isValid(player.inventory.getStackInSlot(i)) && player.inventory.getStackInSlot(i).getItem() instanceof ItemWingsOfTheBats){
                 return player.inventory.getStackInSlot(i);
             }
         }
-        return null;
+        return StackUtil.getNull();
     }
 
     @SubscribeEvent
@@ -120,7 +121,7 @@ public class ItemWingsOfTheBats extends ItemBase{
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event){
         if(event.getEntityLiving() instanceof EntityPlayer){
             EntityPlayer player = (EntityPlayer)event.getEntityLiving();
-            boolean wingsEquipped = ItemWingsOfTheBats.getWingItem(player) != null;
+            boolean wingsEquipped = StackUtil.isValid(ItemWingsOfTheBats.getWingItem(player));
 
             //If Player isn't (really) winged
             if(!ItemWingsOfTheBats.isPlayerWinged(player)){

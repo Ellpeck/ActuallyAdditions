@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.render;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -29,7 +30,7 @@ public class RenderDisplayStand extends TileEntitySpecialRenderer{
         }
 
         ItemStack stack = ((TileEntityDisplayStand)tile).getStackInSlot(0);
-        if(stack != null){
+        if(StackUtil.isValid(stack)){
             GlStateManager.pushMatrix();
             GlStateManager.translate((float)x+0.5F, (float)y+1F, (float)z+0.5F);
 

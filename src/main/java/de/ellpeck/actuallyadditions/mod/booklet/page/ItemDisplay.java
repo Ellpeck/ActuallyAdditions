@@ -19,7 +19,6 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -31,13 +30,12 @@ import java.util.List;
 
 public class ItemDisplay{
 
-    private final GuiPage gui;
     public final int x;
     public final int y;
     public final float scale;
-
-    public ItemStack stack;
+    private final GuiPage gui;
     private final IBookletPage page;
+    public ItemStack stack;
 
     public ItemDisplay(GuiPage gui, int x, int y, float scale, ItemStack stack, boolean shouldTryTransfer){
         this.gui = gui;

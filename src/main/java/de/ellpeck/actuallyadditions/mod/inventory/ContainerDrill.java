@@ -64,7 +64,7 @@ public class ContainerDrill extends Container{
         }
 
         ItemStack stack = inventory.getCurrentItem();
-        if(stack != null && stack.getItem() instanceof ItemDrill){
+        if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemDrill){
             ItemDrill.loadSlotsFromNBT(this.drillInventory.slots, inventory.getCurrentItem());
         }
     }
@@ -135,7 +135,7 @@ public class ContainerDrill extends Container{
     @Override
     public void onContainerClosed(EntityPlayer player){
         ItemStack stack = this.inventory.getCurrentItem();
-        if(stack != null && stack.getItem() instanceof ItemDrill){
+        if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemDrill){
             ItemDrill.writeSlotsToNBT(this.drillInventory.slots, this.inventory.getCurrentItem());
         }
         super.onContainerClosed(player);

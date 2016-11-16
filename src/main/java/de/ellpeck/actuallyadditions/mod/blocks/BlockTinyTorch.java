@@ -182,8 +182,8 @@ public class BlockTinyTorch extends BlockBase{
 
             if(enumfacing.getAxis().isHorizontal()){
                 EnumFacing enumfacing1 = enumfacing.getOpposite();
-                worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+0.35D*(double)enumfacing1.getFrontOffsetX(), d1+0.22D, d2+0.35D*(double)enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
-                worldIn.spawnParticle(EnumParticleTypes.FLAME, d0+0.35D*(double)enumfacing1.getFrontOffsetX(), d1+0.22D, d2+0.35D*(double)enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
+                worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+0.35D*(double)enumfacing1.getFrontOffsetX(), d1+0.22D, d2+0.35D*(double)enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle(EnumParticleTypes.FLAME, d0+0.35D*(double)enumfacing1.getFrontOffsetX(), d1+0.22D, d2+0.35D*(double)enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
             }
             else{
                 worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D);

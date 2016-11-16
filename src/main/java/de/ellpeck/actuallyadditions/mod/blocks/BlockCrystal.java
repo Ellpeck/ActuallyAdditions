@@ -33,7 +33,7 @@ public class BlockCrystal extends BlockBase{
     public static final TheCrystals[] ALL_CRYSTALS = TheCrystals.values();
     private static final PropertyInteger META = PropertyInteger.create("meta", 0, ALL_CRYSTALS.length-1);
 
-    private boolean isEmpowered;
+    private final boolean isEmpowered;
 
     public BlockCrystal(String name, boolean isEmpowered){
         super(Material.ROCK, name);

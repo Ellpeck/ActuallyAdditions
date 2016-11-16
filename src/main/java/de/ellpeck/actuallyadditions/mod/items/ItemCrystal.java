@@ -26,7 +26,7 @@ import java.util.List;
 
 public class ItemCrystal extends ItemBase{
 
-    private boolean isEmpowered;
+    private final boolean isEmpowered;
 
     public ItemCrystal(String name, boolean isEmpowered){
         super(name);

@@ -48,9 +48,9 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                     ItemStack[] stacks = new ItemStack[chest.getSizeInventory()];
                     for(int i = 0; i < stacks.length; i++){
                         ItemStack aStack = chest.getStackInSlot(i);
-                        if(aStack != null){
+                        if(StackUtil.isValid(aStack)){
                             stacks[i] = aStack.copy();
-                            chest.setInventorySlotContents(i, null);
+                            chest.setInventorySlotContents(i, StackUtil.getNull());
                         }
                     }
 
@@ -63,7 +63,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                     if(newTileHit instanceof IInventory){
                         IInventory newChest = (IInventory)newTileHit;
                         for(int i = 0; i < stacks.length; i++){
-                            if(stacks[i] != null){
+                            if(StackUtil.isValid(stacks[i])){
                                 if(newChest.getSizeInventory() > i){
                                     newChest.setInventorySlotContents(i, stacks[i].copy());
                                 }

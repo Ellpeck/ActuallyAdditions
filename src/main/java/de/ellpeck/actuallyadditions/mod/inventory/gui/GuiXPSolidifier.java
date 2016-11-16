@@ -22,7 +22,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -31,20 +30,12 @@ public class GuiXPSolidifier extends GuiContainer{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiXPSolidifier");
     private final TileEntityXPSolidifier solidifier;
-    private final int x;
-    private final int y;
-    private final int z;
-    private final World world;
 
-    public GuiXPSolidifier(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world){
+    public GuiXPSolidifier(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerXPSolidifier(inventory, tile));
         this.solidifier = (TileEntityXPSolidifier)tile;
         this.xSize = 176;
         this.ySize = 93+86;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.world = world;
     }
 
     @Override

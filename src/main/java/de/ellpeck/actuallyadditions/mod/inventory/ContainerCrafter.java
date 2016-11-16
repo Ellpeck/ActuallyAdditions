@@ -109,7 +109,7 @@ public class ContainerCrafter extends Container{
         if(!this.world.isRemote){
             for(int i = 0; i < 9; ++i){
                 ItemStack stack = this.craftMatrix.removeStackFromSlot(i);
-                if(stack != null){
+                if(StackUtil.isValid(stack)){
                     player.dropItem(stack, false);
                 }
             }

@@ -38,6 +38,52 @@ public class ItemFillingWand extends ItemEnergy{
         super(800000, 2000, name);
     }
 
+    private static boolean removeFittingItem(IBlockState state, EntityPlayer player){
+        Block block = state.getBlock();
+        ItemStack stack = new ItemStack(block, 1, block.damageDropped(state));
+
+        if(StackUtil.isValid(stack)){
+            for(int i = 0; i < player.inventory.getSizeInventory(); i++){
+                ItemStack slot = player.inventory.getStackInSlot(i);
+                if(StackUtil.isValid(slot) && slot.isItemEqual(stack)){
+                    slot = StackUtil.addStackSize(slot, -1);
+                    if(!StackUtil.isValid(slot)){
+                        player.inventory.setInventorySlotContents(i, StackUtil.getNull());
+                    }
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private static void saveBlock(IBlockState state, ItemStack stack){
+        if(!stack.hasTagCompound()){
+            stack.setTagCompound(new NBTTagCompound());
+        }
+        NBTTagCompound compound = stack.getTagCompound();
+
+        Block block = state.getBlock();
+        compound.setString("Block", block.getRegistryName().toString());
+        compound.setInteger("Meta", block.getMetaFromState(state));
+    }
+
+    private static IBlockState loadBlock(ItemStack stack){
+        if(stack.hasTagCompound()){
+            NBTTagCompound compound = stack.getTagCompound();
+            String blockName = compound.getString("Block");
+            int meta = compound.getInteger("Meta");
+
+            Block block = Block.getBlockFromName(blockName);
+            if(block != null){
+                return block.getStateFromMeta(meta);
+            }
+        }
+        return null;
+    }
+
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
         if(!world.isRemote && player.getItemInUseCount() <= 0){
@@ -198,52 +244,6 @@ public class ItemFillingWand extends ItemEnergy{
         }
 
         list.add("Selected Block: "+display);
-    }
-
-    private static boolean removeFittingItem(IBlockState state, EntityPlayer player){
-        Block block = state.getBlock();
-        ItemStack stack = new ItemStack(block, 1, block.damageDropped(state));
-
-        if(StackUtil.isValid(stack)){
-            for(int i = 0; i < player.inventory.getSizeInventory(); i++){
-                ItemStack slot = player.inventory.getStackInSlot(i);
-                if(StackUtil.isValid(slot) && slot.isItemEqual(stack)){
-                    slot = StackUtil.addStackSize(slot, -1);
-                    if(!StackUtil.isValid(slot)){
-                        player.inventory.setInventorySlotContents(i, StackUtil.getNull());
-                    }
-
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private static void saveBlock(IBlockState state, ItemStack stack){
-        if(!stack.hasTagCompound()){
-            stack.setTagCompound(new NBTTagCompound());
-        }
-        NBTTagCompound compound = stack.getTagCompound();
-
-        Block block = state.getBlock();
-        compound.setString("Block", block.getRegistryName().toString());
-        compound.setInteger("Meta", block.getMetaFromState(state));
-    }
-
-    private static IBlockState loadBlock(ItemStack stack){
-        if(stack.hasTagCompound()){
-            NBTTagCompound compound = stack.getTagCompound();
-            String blockName = compound.getString("Block");
-            int meta = compound.getInteger("Meta");
-
-            Block block = Block.getBlockFromName(blockName);
-            if(block != null){
-                return block.getStateFromMeta(meta);
-            }
-        }
-        return null;
     }
 
     @Override

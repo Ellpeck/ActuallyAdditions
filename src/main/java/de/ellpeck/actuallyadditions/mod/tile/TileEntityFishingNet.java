@@ -62,7 +62,7 @@ public class TileEntityFishingNet extends TileEntityBase{
                             List<ItemStack> fishables = this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(this.worldObj.rand, builder.build());
                             for(ItemStack fishable : fishables){
                                 ItemStack leftover = this.storeInContainer(fishable);
-                                if(leftover != null){
+                                if(StackUtil.isValid(leftover)){
                                     EntityItem item = new EntityItem(this.worldObj, this.pos.getX()+0.5, this.pos.getY()+0.5, this.pos.getZ()+0.5, leftover.copy());
                                     item.lifespan = 2000;
                                     this.worldObj.spawnEntityInWorld(item);

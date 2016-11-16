@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.BlockStone;
@@ -119,7 +120,7 @@ public class LensMining extends Lens{
                             List<ItemStack> stacks = OreDictionary.getOres(ore.name, false);
                             if(stacks != null && !stacks.isEmpty()){
                                 for(ItemStack aStack : stacks){
-                                    if(aStack != null && aStack.getItem() instanceof ItemBlock){
+                                    if(StackUtil.isValid(aStack) && aStack.getItem() instanceof ItemBlock){
                                         adaptedUse += (totalWeight-ore.itemWeight)%40000;
 
                                         stack = aStack;

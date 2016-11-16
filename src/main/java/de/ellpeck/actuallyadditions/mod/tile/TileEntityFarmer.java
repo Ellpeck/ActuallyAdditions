@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
@@ -150,7 +151,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
     private IBlockState getFirstPlantablePlantFromSlots(BlockPos pos){
         for(int i = 0; i < 6; i++){
             ItemStack stack = this.slots[i];
-            if(stack != null){
+            if(StackUtil.isValid(stack)){
                 IPlantable plantable = null;
 
                 Item item = stack.getItem();
@@ -178,7 +179,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i < 6 && stack != null && stack.getItem() instanceof IPlantable;
+        return i < 6 && StackUtil.isValid(stack) && stack.getItem() instanceof IPlantable;
     }
 
     @Override

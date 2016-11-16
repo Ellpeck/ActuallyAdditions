@@ -37,11 +37,6 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     }
 
     @Override
-    public void updateEntity(){
-        super.updateEntity();
-    }
-
-    @Override
     protected void getInvWrappers(SidedInvWrapper[] wrappers){
         for(int i = 0; i < wrappers.length; i++){
             final EnumFacing direction = EnumFacing.values()[i];
@@ -191,7 +186,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     @Override
     public void setInventorySlotContents(int i, ItemStack stack){
-        if(stack != null){
+        if(StackUtil.isValid(stack)){
             SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(i);
             if(handler != null){
                 ItemStack toInsert = stack.copy();

@@ -32,8 +32,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
-    public int priority;
     public final Map<BlockPos, IItemHandler> handlersAround = new ConcurrentHashMap<BlockPos, IItemHandler>();
+    public int priority;
 
     public TileEntityLaserRelayItem(String name){
         super(name, LaserType.ITEM);

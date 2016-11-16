@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+
 import java.util.Arrays;
 
 public class EmpowererRecipeWrapper extends RecipeWrapperWithButton{

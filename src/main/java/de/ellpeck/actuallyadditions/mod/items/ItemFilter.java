@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -50,7 +51,7 @@ public class ItemFilter extends ItemBase{
         ItemDrill.loadSlotsFromNBT(slots, stack);
         if(slots != null && slots.length > 0){
             for(ItemStack slot : slots){
-                if(slot != null && slot.getItem() != null){
+                if(StackUtil.isValid(slot)){
                     tooltip.add(slot.getItem().getItemStackDisplayName(slot));
                 }
             }

@@ -85,7 +85,7 @@ public class ContainerBag extends Container implements IButtonReactor{
         }
 
         ItemStack stack = inventory.getCurrentItem();
-        if(stack != null && stack.getItem() instanceof ItemBag){
+        if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemBag){
             ItemDrill.loadSlotsFromNBT(this.bagInventory.slots, inventory.getCurrentItem());
             if(stack.hasTagCompound()){
                 NBTTagCompound compound = stack.getTagCompound();
@@ -203,7 +203,7 @@ public class ContainerBag extends Container implements IButtonReactor{
     @Override
     public void onContainerClosed(EntityPlayer player){
         ItemStack stack = this.inventory.getCurrentItem();
-        if(stack != null && stack.getItem() instanceof ItemBag){
+        if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemBag){
             ItemDrill.writeSlotsToNBT(this.bagInventory.slots, this.inventory.getCurrentItem());
             NBTTagCompound compound = stack.getTagCompound();
             this.filter.writeToNBT(compound, "Filter");

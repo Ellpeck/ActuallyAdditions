@@ -26,7 +26,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     public static CompostRecipe getRecipeForInput(ItemStack input){
-        if(input != null){
+        if(StackUtil.isValid(input)){
             for(CompostRecipe recipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
                 if(input.isItemEqual(recipe.input)){
                     return recipe;
@@ -97,7 +97,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
 
     @Override
     public int getInventoryStackLimit(){
-        if(this.slots[0] != null){
+        if(StackUtil.isValid(this.slots[0])){
             CompostRecipe recipe = getRecipeForInput(this.slots[0]);
             if(recipe != null && StackUtil.isValid(recipe.input)){
                 return StackUtil.getStackSize(recipe.input);

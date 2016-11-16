@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.util;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -47,10 +46,6 @@ public final class StringUtil{
             String s1 = (String)list.get(i);
             renderer.drawString(s1, x, y+(i*renderer.FONT_HEIGHT), color, shadow);
         }
-    }
-
-    public static String getFluidInfo(FluidTank tank){
-        return "";
     }
 
     @SideOnly(Side.CLIENT)

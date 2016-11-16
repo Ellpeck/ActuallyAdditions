@@ -65,12 +65,12 @@ public class ItemBag extends ItemBase{
         EntityItem item = event.getItem();
         if(item != null && !item.isDead){
             ItemStack stack = item.getEntityItem();
-            if(stack != null && stack.getItem() != null){
+            if(StackUtil.isValid(stack)){
                 for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                     if(i != player.inventory.currentItem){
 
                         ItemStack invStack = player.inventory.getStackInSlot(i);
-                        if(invStack != null && invStack.getItem() instanceof ItemBag && invStack.hasTagCompound()){
+                        if(StackUtil.isValid(invStack) && invStack.getItem() instanceof ItemBag && invStack.hasTagCompound()){
                             if(invStack.getTagCompound().getBoolean("AutoInsert")){
                                 boolean changed = false;
 
@@ -88,7 +88,7 @@ public class ItemBag extends ItemBase{
                                     else{
                                         for(int j = 4; j < inventory.length; j++){
                                             ItemStack bagStack = inventory[j];
-                                            if(bagStack != null){
+                                            if(StackUtil.isValid(bagStack)){
                                                 if(ItemUtil.canBeStacked(bagStack, stack)){
                                                     int maxTransfer = Math.min(StackUtil.getStackSize(stack), stack.getMaxStackSize()-StackUtil.getStackSize(bagStack));
                                                     if(maxTransfer > 0){
@@ -145,14 +145,14 @@ public class ItemBag extends ItemBase{
 
                         for(int j = 4; j < inventory.length; j++){
                             ItemStack invStack = inventory[j];
-                            if(invStack != null){
+                            if(StackUtil.isValid(invStack)){
                                 for(int i = 0; i < handler.getSlots(); i++){
                                     ItemStack remain = handler.insertItem(i, invStack, false);
                                     if(!ItemStack.areItemStacksEqual(remain, invStack)){
-                                        inventory[j] = remain == null ? null : remain.copy();
+                                        inventory[j] = StackUtil.validateCopy(remain);
                                         changed = true;
 
-                                        if(remain == null){
+                                        if(!StackUtil.isValid(remain)){
                                             break;
                                         }
                                     }

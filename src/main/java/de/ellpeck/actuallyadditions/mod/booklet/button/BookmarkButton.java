@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiPage;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -77,7 +78,7 @@ public class BookmarkButton extends GuiButton{
 
             if(this.assignedPage != null){
                 ItemStack display = this.assignedPage.getChapter().getDisplayItemStack();
-                if(display != null){
+                if(StackUtil.isValid(display)){
                     GlStateManager.pushMatrix();
                     AssetUtil.renderStackToGui(display, this.xPosition+2, this.yPosition+1, 0.725F);
                     GlStateManager.popMatrix();

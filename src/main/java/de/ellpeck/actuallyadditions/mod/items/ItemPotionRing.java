@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.ThePotionRings;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
@@ -67,7 +68,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
             if(player instanceof EntityPlayer){
                 EntityPlayer thePlayer = (EntityPlayer)player;
                 ItemStack equippedStack = thePlayer.getHeldItemMainhand();
-                this.effectEntity(thePlayer, stack, equippedStack != null && stack == equippedStack);
+                this.effectEntity(thePlayer, stack, StackUtil.isValid(equippedStack) && stack == equippedStack);
             }
         }
     }

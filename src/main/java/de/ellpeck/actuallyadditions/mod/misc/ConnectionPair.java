@@ -65,6 +65,7 @@ public class ConnectionPair implements IConnectionPair{
         return this.type;
     }
 
+    @Override
     public boolean contains(BlockPos relay){
         for(BlockPos position : this.positions){
             if(position != null && position.equals(relay)){

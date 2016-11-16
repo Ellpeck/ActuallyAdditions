@@ -58,7 +58,7 @@ public class ContainerEnervator extends Container{
 
                 @Override
                 public boolean isItemValid(ItemStack stack){
-                    return stack != null && stack.getItem().isValidArmor(stack, slot, player);
+                    return StackUtil.isValid(stack) && stack.getItem().isValidArmor(stack, slot, player);
                 }
 
                 @Override

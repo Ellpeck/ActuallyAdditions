@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -129,16 +128,6 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
                 }
             }
         }
-    }
-
-    @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
-        super.writeSyncableNBT(compound, type);
-    }
-
-    @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
-        super.readSyncableNBT(compound, type);
     }
 
     @Override

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -40,7 +41,7 @@ public class EntryButton extends GuiButton{
             this.mouseDragged(minecraft, mouseX, mouseY);
 
             int textOffsetX = 0;
-            if(this.stackToRender != null){
+            if(StackUtil.isValid(this.stackToRender)){
                 GlStateManager.pushMatrix();
                 AssetUtil.renderStackToGui(this.stackToRender, this.xPosition-4, this.yPosition, 0.725F);
                 GlStateManager.popMatrix();

@@ -147,7 +147,7 @@ public class MethodHandler implements IMethodHandler{
                             for(LensConversionRecipe recipe : recipes){
                                 if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
                                     ItemStack output = recipe.outputStack;
-                                    if(output != null){
+                                    if(StackUtil.isValid(output)){
                                         tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
 
                                         if(output.getItem() instanceof ItemBlock){

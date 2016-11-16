@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -72,7 +73,7 @@ public class BlockColoredLamp extends BlockBase{
             return true;
         }
 
-        if(stack != null){
+        if(StackUtil.isValid(stack)){
             //Changing Colors
             int[] oreIDs = OreDictionary.getOreIDs(stack);
             if(oreIDs.length > 0){

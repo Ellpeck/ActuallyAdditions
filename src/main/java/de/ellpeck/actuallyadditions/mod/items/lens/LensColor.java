@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -66,9 +67,9 @@ public class LensColor extends Lens{
 
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             for(EntityItem item : items){
-                if(!item.isDead && item.getEntityItem() != null && tile.getEnergy() >= ENERGY_USE){
+                if(!item.isDead && StackUtil.isValid(item.getEntityItem()) && tile.getEnergy() >= ENERGY_USE){
                     ItemStack newStack = this.tryConvert(item.getEntityItem(), hitState, hitBlock, tile);
-                    if(newStack != null){
+                    if(StackUtil.isValid(newStack)){
                         item.setDead();
 
                         EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, newStack);
@@ -83,7 +84,7 @@ public class LensColor extends Lens{
     }
 
     private ItemStack tryConvert(ItemStack stack, IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        if(stack != null){
+        if(StackUtil.isValid(stack)){
             Item item = stack.getItem();
             if(item != null){
                 for(Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_COLOR_CHANGERS.entrySet()){

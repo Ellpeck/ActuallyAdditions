@@ -201,7 +201,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     }
 
     protected boolean checkFailUseItemOnTank(EntityPlayer player, ItemStack heldItem, FluidTank tank){
-        return heldItem == null || !FluidUtil.interactWithFluidHandler(heldItem, tank, player);
+        return !StackUtil.isValid(heldItem) || !FluidUtil.interactWithFluidHandler(heldItem, tank, player);
     }
 
     @Override

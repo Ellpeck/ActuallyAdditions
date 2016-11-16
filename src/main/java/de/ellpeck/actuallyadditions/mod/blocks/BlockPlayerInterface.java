@@ -53,7 +53,7 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
         TileEntity tile = world.getTileEntity(pos);
-        if(tile != null && tile instanceof TileEntityPlayerInterface){
+        if(tile instanceof TileEntityPlayerInterface){
             TileEntityPlayerInterface face = (TileEntityPlayerInterface)tile;
             if(face.connectedPlayer == null){
                 face.connectedPlayer = player.getUniqueID();

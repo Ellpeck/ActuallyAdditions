@@ -30,6 +30,15 @@ public class PageFurnace extends BookletPage{
         this.input = getInputForOutput(output);
     }
 
+    private static ItemStack getInputForOutput(ItemStack output){
+        for(Map.Entry<ItemStack, ItemStack> entry : FurnaceRecipes.instance().getSmeltingList().entrySet()){
+            if(entry.getValue().isItemEqual(output)){
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
     @Override
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
@@ -48,15 +57,6 @@ public class PageFurnace extends BookletPage{
 
         gui.addOrModifyItemRenderer(this.input, startX+23+1, startY+10+5, 1F, true);
         gui.addOrModifyItemRenderer(this.output, startX+23+59, startY+10+5, 1F, false);
-    }
-
-    private static ItemStack getInputForOutput(ItemStack output){
-        for(Map.Entry<ItemStack, ItemStack> entry : FurnaceRecipes.instance().getSmeltingList().entrySet()){
-            if(entry.getValue().isItemEqual(output)){
-                return entry.getKey();
-            }
-        }
-        return null;
     }
 
     @Override

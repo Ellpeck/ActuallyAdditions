@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -92,7 +93,7 @@ public class ItemPlayerProbe extends ItemBase{
     public boolean itemInteractionForEntity(ItemStack aStack, EntityPlayer player, EntityLivingBase entity, EnumHand hand){
         if(!player.worldObj.isRemote){
             ItemStack stack = player.getHeldItemMainhand();
-            if(stack != null && stack.getItem() == this){
+            if(StackUtil.isValid(stack) && stack.getItem() == this){
                 if(entity instanceof EntityPlayer){
                     EntityPlayer playerHit = (EntityPlayer)entity;
 

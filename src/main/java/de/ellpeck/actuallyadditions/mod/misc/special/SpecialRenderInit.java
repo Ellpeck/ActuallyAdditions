@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.special;
 
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -46,7 +47,7 @@ public class SpecialRenderInit{
                     meta = 0;
                 }
 
-                ItemStack stack = null;
+                ItemStack stack = StackUtil.getNull();
                 //Get the Item from the String
                 ResourceLocation resLoc = new ResourceLocation(itemName);
                 if(Item.REGISTRY.containsKey(resLoc)){
@@ -59,7 +60,7 @@ public class SpecialRenderInit{
                 }
 
                 //Add a new Special Renderer to the list
-                if(stack != null){
+                if(StackUtil.isValid(stack)){
                     SPECIAL_LIST.put(key, new RenderSpecial(stack));
                 }
             }

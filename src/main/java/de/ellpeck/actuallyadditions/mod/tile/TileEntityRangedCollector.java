@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,7 +58,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                 ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.worldObj.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.pos.getX()-RANGE, this.pos.getY()-RANGE, this.pos.getZ()-RANGE, this.pos.getX()+RANGE, this.pos.getY()+RANGE, this.pos.getZ()+RANGE));
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
-                        if(!item.isDead && !item.cannotPickup() && item.getEntityItem() != null){
+                        if(!item.isDead && !item.cannotPickup() && StackUtil.isValid(item.getEntityItem())){
                             ItemStack toAdd = item.getEntityItem().copy();
                             if(this.filter.check(toAdd, this.slots)){
                                 ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();

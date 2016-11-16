@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
@@ -79,7 +80,7 @@ public class CommonEvents{
         checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
-            if(!event.player.worldObj.isRemote && event.crafting != null && event.crafting.getItem() != null && event.crafting.getItem() != InitItems.itemBooklet){
+            if(!event.player.worldObj.isRemote && StackUtil.isValid(event.crafting) && event.crafting.getItem() != InitItems.itemBooklet){
 
                 String name = event.crafting.getItem().getRegistryName().toString();
                 if(name != null && name.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){

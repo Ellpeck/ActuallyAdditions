@@ -11,13 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.proxy;
 
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.blocks.render.*;
-import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllItems;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
@@ -30,19 +24,16 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.resources.IReloadableResourceManager;
-import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

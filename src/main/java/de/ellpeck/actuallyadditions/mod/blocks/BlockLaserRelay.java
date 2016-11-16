@@ -195,7 +195,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                 minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
                 String expl;
-                if(stack != null && stack.getItem() instanceof ItemCompass){
+                if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemCompass){
                     expl = TextFormatting.GREEN+"Right-Click to increase! \nSneak-Right-Click to decrease!";
                 }
                 else{

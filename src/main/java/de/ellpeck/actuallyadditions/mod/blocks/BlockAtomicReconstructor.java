@@ -116,7 +116,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         if(tile instanceof TileEntityAtomicReconstructor){
             ItemStack slot = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);
             String strg;
-            if(slot == null){
+            if(!StackUtil.isValid(slot)){
                 strg = StringUtil.localize("info."+ModUtil.MOD_ID+".noLens");
             }
             else{

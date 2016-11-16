@@ -14,8 +14,8 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -39,6 +39,41 @@ public class BookletEntry implements IBookletEntry{
         ActuallyAdditionsAPI.addBookletEntry(this);
 
         this.color = TextFormatting.RESET;
+    }
+
+    @SideOnly(Side.CLIENT)
+    private static boolean fitsFilter(IBookletPage page, String searchBarText){
+        Minecraft mc = Minecraft.getMinecraft();
+
+        List<ItemStack> items = new ArrayList<ItemStack>();
+        page.getItemStacksForPage(items);
+        if(!items.isEmpty()){
+            for(ItemStack stack : items){
+                if(StackUtil.isValid(stack)){
+                    List<String> tooltip = stack.getTooltip(mc.thePlayer, mc.gameSettings.advancedItemTooltips);
+                    for(String strg : tooltip){
+                        if(strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        List<FluidStack> fluids = new ArrayList<FluidStack>();
+        page.getFluidStacksForPage(fluids);
+        if(!fluids.isEmpty()){
+            for(FluidStack stack : fluids){
+                if(stack != null){
+                    String strg = stack.getLocalizedName();
+                    if(strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)){
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -92,41 +127,6 @@ public class BookletEntry implements IBookletEntry{
         else{
             return this.getAllChapters();
         }
-    }
-
-    @SideOnly(Side.CLIENT)
-    private static boolean fitsFilter(IBookletPage page, String searchBarText){
-        Minecraft mc = Minecraft.getMinecraft();
-
-        List<ItemStack> items = new ArrayList<ItemStack>();
-        page.getItemStacksForPage(items);
-        if(!items.isEmpty()){
-            for(ItemStack stack : items){
-                if(stack != null){
-                    List<String> tooltip = stack.getTooltip(mc.thePlayer, mc.gameSettings.advancedItemTooltips);
-                    for(String strg : tooltip){
-                        if(strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)){
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        List<FluidStack> fluids = new ArrayList<FluidStack>();
-        page.getFluidStacksForPage(fluids);
-        if(!fluids.isEmpty()){
-            for(FluidStack stack : fluids){
-                if(stack != null){
-                    String strg = stack.getLocalizedName();
-                    if(strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)){
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 
     public BookletEntry setImportant(){

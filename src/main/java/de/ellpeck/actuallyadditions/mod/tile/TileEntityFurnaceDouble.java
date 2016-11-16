@@ -164,7 +164,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && FurnaceRecipes.instance().getSmeltingResult(stack) != null;
+        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(stack));
     }
 
     public boolean canSmeltOn(int theInput, int theOutput){

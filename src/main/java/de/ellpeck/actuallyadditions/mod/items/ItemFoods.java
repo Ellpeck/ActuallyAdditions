@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -44,7 +45,7 @@ public class ItemFoods extends ItemFoodBase{
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
         ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
         ItemStack returnItem = stack.getItemDamage() >= ALL_FOODS.length ? null : ALL_FOODS[stack.getItemDamage()].returnItem;
-        if(returnItem != null && player instanceof EntityPlayer){
+        if(StackUtil.isValid(returnItem) && player instanceof EntityPlayer){
             if(!((EntityPlayer)player).inventory.addItemStackToInventory(returnItem.copy())){
                 if(!world.isRemote){
                     EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem.copy());

@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -113,7 +114,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
                         String strg2 = "Page "+(page.getChapter().getPageIndex(page)+1);
                         String strg3 = "Right-Click to open...";
 
-                        AssetUtil.renderStackToGui(page.getChapter().getDisplayItemStack() != null ? page.getChapter().getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, height+41, 1F);
+                        AssetUtil.renderStackToGui(StackUtil.isValid(page.getChapter().getDisplayItemStack()) ? page.getChapter().getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, height+41, 1F);
                         minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg1, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg1)/2, height+20, StringUtil.DECIMAL_COLOR_WHITE);
                         minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg2, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg2)/2, height+30, StringUtil.DECIMAL_COLOR_WHITE);
                         minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.GOLD+strg3, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);

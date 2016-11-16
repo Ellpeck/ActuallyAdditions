@@ -67,7 +67,7 @@ public class ContainerFurnaceDouble extends Container{
             //Other Slots in Inventory excluded
             else if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(FurnaceRecipes.instance().getSmeltingResult(newStack) != null){
+                if(StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(newStack))){
                     if(!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1+1, false)){
                         if(!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2+1, false)){
                             return StackUtil.getNull();

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -45,7 +46,7 @@ public enum TheFoods{
     public final boolean getsDrunken;
     public final int useDuration;
     public final EnumRarity rarity;
-    public ItemStack returnItem;
+    public ItemStack returnItem = StackUtil.getNull();
 
     TheFoods(String name, int healAmount, float saturation, boolean getsDrunken, int useDuration, EnumRarity rarity){
         this.name = name;

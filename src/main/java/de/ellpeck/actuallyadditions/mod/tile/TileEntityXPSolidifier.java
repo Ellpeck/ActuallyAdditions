@@ -156,7 +156,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
             if(StackUtil.isValid(this.slots[1]) && this.slots[1].getItem() instanceof ItemSolidifiedExperience){
                 this.amount += StackUtil.getStackSize(this.slots[1]);
-                this.slots[1] = null;
+                this.slots[1] = StackUtil.getNull();
             }
 
             if(this.lastAmount != this.amount && this.sendUpdateWithInterval()){

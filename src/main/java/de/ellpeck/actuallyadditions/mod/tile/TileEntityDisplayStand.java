@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -33,7 +34,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
         super.updateEntity();
 
         if(!this.worldObj.isRemote){
-            if(this.slots[0] != null && !this.isRedstonePowered){
+            if(StackUtil.isValid(this.slots[0]) && !this.isRedstonePowered){
                 IDisplayStandItem item = this.convertToDisplayStandItem(this.slots[0].getItem());
                 if(item != null){
                     int energy = item.getUsePerTick(this.slots[0], this, this.ticksElapsed);

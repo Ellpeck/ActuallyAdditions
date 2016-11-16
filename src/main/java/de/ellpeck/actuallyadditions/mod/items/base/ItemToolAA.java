@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -68,7 +69,7 @@ public class ItemToolAA extends ItemTool{
 
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
-        if(this.repairItem != null){
+        if(StackUtil.isValid(this.repairItem)){
             return ItemUtil.areItemsEqual(this.repairItem, stack, false);
         }
         else if(this.repairOredict != null){

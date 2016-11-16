@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDistributorItem;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -59,7 +60,7 @@ public class BlockDistributorItem extends BlockContainerBase implements IHudDisp
             ItemStack slot = distributor.getStackInSlot(0);
 
             String strg;
-            if(slot == null){
+            if(!StackUtil.isValid(slot)){
                 strg = StringUtil.localize("info."+ModUtil.MOD_ID+".noItem");
             }
             else{

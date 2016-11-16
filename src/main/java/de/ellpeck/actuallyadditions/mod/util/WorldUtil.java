@@ -60,10 +60,10 @@ public final class WorldUtil{
             IItemHandler insertCap = insert.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, insertSide);
 
             ItemStack theoreticalExtract = extractCap.extractItem(slotExtract, Integer.MAX_VALUE, true);
-            if(theoreticalExtract != null){
+            if(StackUtil.isValid(theoreticalExtract)){
                 ItemStack remaining = insertCap.insertItem(slotInsert, theoreticalExtract, false);
                 if(!ItemStack.areItemStacksEqual(remaining, theoreticalExtract)){
-                    int toExtract = remaining == null ? StackUtil.getStackSize(theoreticalExtract) : StackUtil.getStackSize(theoreticalExtract)-StackUtil.getStackSize(remaining);
+                    int toExtract = !StackUtil.isValid(remaining) ? StackUtil.getStackSize(theoreticalExtract) : StackUtil.getStackSize(theoreticalExtract)-StackUtil.getStackSize(remaining);
                     extractCap.extractItem(slotExtract, toExtract, false);
                     return true;
                 }
@@ -265,7 +265,7 @@ public final class WorldUtil{
             backupSlots = new ItemStack[inventory.getSizeInventory()];
             for(int i = 0; i < backupSlots.length; i++){
                 ItemStack stack = inventory.getStackInSlot(i);
-                if(stack != null){
+                if(StackUtil.isValid(stack)){
                     backupSlots[i] = stack.copy();
                 }
             }
@@ -303,7 +303,7 @@ public final class WorldUtil{
 
     public static int findFirstFilledSlot(ItemStack[] slots){
         for(int i = 0; i < slots.length; i++){
-            if(slots[i] != null){
+            if(StackUtil.isValid(slots[i])){
                 return i;
             }
         }

@@ -41,21 +41,17 @@ public abstract class GuiBooklet extends GuiBookletBase{
     public static final int BUTTONS_PER_PAGE = 12;
     public static final ResourceLocation RES_LOC_GUI = AssetUtil.getBookletGuiLocation("guiBooklet");
     public static final ResourceLocation RES_LOC_GADGETS = AssetUtil.getBookletGuiLocation("guiBookletGadgets");
-
+    protected final BookmarkButton[] bookmarkButtons = new BookmarkButton[12];
     public GuiScreen previousScreen;
     public GuiBookletBase parentPage;
-
-    private GuiButton buttonLeft;
-    private GuiButton buttonRight;
-    private GuiButton buttonBack;
-    protected final BookmarkButton[] bookmarkButtons = new BookmarkButton[12];
-
     public GuiTextField searchField;
-
     protected int xSize;
     protected int ySize;
     protected int guiLeft;
     protected int guiTop;
+    private GuiButton buttonLeft;
+    private GuiButton buttonRight;
+    private GuiButton buttonBack;
 
     public GuiBooklet(GuiScreen previousScreen, GuiBookletBase parentPage){
         this.previousScreen = previousScreen;

@@ -20,7 +20,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,22 +28,14 @@ public class GuiRangedCollector extends GuiContainer{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiRangedCollector");
     private final TileEntityRangedCollector collector;
-    private final int x;
-    private final int y;
-    private final int z;
-    private final World world;
 
     private FilterSettingsGui filter;
 
-    public GuiRangedCollector(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world){
+    public GuiRangedCollector(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerRangedCollector(inventory, tile));
         this.collector = (TileEntityRangedCollector)tile;
         this.xSize = 176;
         this.ySize = 86+86;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.world = world;
     }
 
     @Override

@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -53,12 +54,12 @@ public final class CrusherRecipeRegistry{
             CrusherRecipe recipe = ActuallyAdditionsAPI.CRUSHER_RECIPES.get(i);
             addedRecipes.add(recipe.inputStack+" -> "+recipe.outputOneStack);
         }
-        ModUtil.LOGGER.info("Added "+addedRecipes.size()+" Crusher Recipes automatically: "+addedRecipes.toString());
-        ModUtil.LOGGER.warn("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically, either because the inputs were missing outputs, or because they exist already: "+oresNoResult.toString());
+        ModUtil.LOGGER.info("Added "+addedRecipes.size()+" Crusher Recipes automatically: "+addedRecipes);
+        ModUtil.LOGGER.warn("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically, either because the inputs were missing outputs, or because they exist already: "+oresNoResult);
     }
 
     public static boolean hasBlacklistedOutput(ItemStack output){
-        if(output != null){
+        if(StackUtil.isValid(output)){
             Item item = output.getItem();
             if(item != null){
                 String reg = item.getRegistryName().toString();

@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.EnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneTorch;
@@ -54,7 +55,7 @@ public class ClientEvents{
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){
         //Advanced Item Info
-        if(event.getItemStack() != null && event.getItemStack().getItem() != null){
+        if(StackUtil.isValid(event.getItemStack())){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
                 if(GuiScreen.isCtrlKeyDown()){
                     event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".extraInfo.desc")+":");
@@ -140,7 +141,7 @@ public class ClientEvents{
             FontRenderer font = minecraft.fontRendererObj;
             ItemStack stack = player.getHeldItemMainhand();
 
-            if(stack != null){
+            if(StackUtil.isValid(stack)){
                 if(stack.getItem() instanceof IHudDisplay){
                     ((IHudDisplay)stack.getItem()).displayHud(minecraft, player, stack, posHit, event.getResolution());
                 }
@@ -161,7 +162,7 @@ public class ClientEvents{
                         font.drawStringWithShadow(strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
                         String expl;
-                        if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
+                        if(StackUtil.isValid(stack) && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
                             expl = TextFormatting.GREEN+"Right-Click to toggle!";
                         }
                         else{

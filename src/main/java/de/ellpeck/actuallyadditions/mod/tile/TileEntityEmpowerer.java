@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -36,9 +37,9 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
 
     public static List<EmpowererRecipe> getRecipesForInput(ItemStack input){
         List<EmpowererRecipe> recipesThatWork = new ArrayList<EmpowererRecipe>();
-        if(input != null){
+        if(StackUtil.isValid(input)){
             for(EmpowererRecipe recipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES){
-                if(recipe.input != null && recipe.input.isItemEqual(input)){
+                if(StackUtil.isValid(recipe.input) && recipe.input.isItemEqual(input)){
                     recipesThatWork.add(recipe);
                 }
             }
@@ -100,7 +101,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
             BlockPos offset = this.pos.offset(facing, 3);
             TileEntity tile = this.worldObj.getTileEntity(offset);
 
-            if(tile != null && tile instanceof TileEntityDisplayStand){
+            if(tile instanceof TileEntityDisplayStand){
                 TileEntityDisplayStand stand = (TileEntityDisplayStand)tile;
                 ItemStack standItem = stand.getStackInSlot(0);
                 int containPlace = ItemUtil.getPlaceAt(itemsStillNeeded, standItem, true);

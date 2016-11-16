@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -61,7 +62,7 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
                 for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                     if(this.storage.getEnergyStored() > 0){
                         ItemStack slot = player.inventory.getStackInSlot(i);
-                        if(slot != null){
+                        if(StackUtil.isValid(slot)){
                             Item item = slot.getItem();
 
                             int received = 0;
@@ -199,10 +200,7 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
     public ItemStack decrStackSize(int i, int j){
         EntityPlayer player = this.getPlayer();
         if(player != null){
-            ItemStack stack = player.inventory.decrStackSize(i, j);
-            if(stack != null){
-                return stack;
-            }
+            return player.inventory.decrStackSize(i, j);
         }
         return null;
     }
@@ -211,10 +209,7 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
     public ItemStack removeStackFromSlot(int index){
         EntityPlayer player = this.getPlayer();
         if(player != null){
-            ItemStack stack = player.inventory.removeStackFromSlot(index);
-            if(stack != null){
-                return stack;
-            }
+            return player.inventory.removeStackFromSlot(index);
         }
         return null;
     }

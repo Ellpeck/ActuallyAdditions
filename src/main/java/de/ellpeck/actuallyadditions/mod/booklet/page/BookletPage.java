@@ -30,14 +30,12 @@ import java.util.Map;
 
 public class BookletPage implements IBookletPage{
 
-    protected IBookletChapter chapter;
-
-    private final List<ItemStack> itemsForPage = new ArrayList<ItemStack>();
-    private final List<FluidStack> fluidsForPage = new ArrayList<FluidStack>();
-
-    protected boolean hasNoText;
     protected final HashMap<String, String> textReplacements = new HashMap<String, String>();
     protected final int localizationKey;
+    private final List<ItemStack> itemsForPage = new ArrayList<ItemStack>();
+    private final List<FluidStack> fluidsForPage = new ArrayList<FluidStack>();
+    protected IBookletChapter chapter;
+    protected boolean hasNoText;
 
     public BookletPage(int localizationKey){
         this.localizationKey = localizationKey;

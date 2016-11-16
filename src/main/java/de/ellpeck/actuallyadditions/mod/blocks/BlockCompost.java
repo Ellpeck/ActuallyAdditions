@@ -89,13 +89,13 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                 TileEntityCompost compost = (TileEntityCompost)tile;
                 ItemStack slot = compost.getStackInSlot(0);
                 CompostRecipe recipeIn = TileEntityCompost.getRecipeForInput(slot);
-                if(slot == null || recipeIn != null){
-                    if(stackPlayer != null){
+                if(!StackUtil.isValid(slot) || recipeIn != null){
+                    if(StackUtil.isValid(stackPlayer)){
                         CompostRecipe recipeHand = TileEntityCompost.getRecipeForInput(stackPlayer);
                         if(recipeHand != null && (recipeIn == null || recipeIn == recipeHand)){
                             int maxAdd = Math.min(StackUtil.getStackSize(recipeHand.input), StackUtil.getStackSize(stackPlayer));
 
-                            if(slot == null){
+                            if(!StackUtil.isValid(slot)){
                                 ItemStack stackToAdd = stackPlayer.copy();
                                 stackToAdd = StackUtil.setStackSize(stackToAdd, maxAdd);
                                 compost.setInventorySlotContents(0, stackToAdd);
@@ -116,7 +116,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                     }
                 }
                 else{
-                    if(stackPlayer == null){
+                    if(!StackUtil.isValid(stackPlayer)){
                         player.inventory.setInventorySlotContents(player.inventory.currentItem, slot.copy());
                         compost.setInventorySlotContents(0, null);
                         return true;
@@ -163,7 +163,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
         if(tile instanceof TileEntityCompost){
             ItemStack slot = ((TileEntityCompost)tile).getStackInSlot(0);
             String strg;
-            if(slot == null){
+            if(!StackUtil.isValid(slot)){
                 strg = "Empty";
             }
             else{

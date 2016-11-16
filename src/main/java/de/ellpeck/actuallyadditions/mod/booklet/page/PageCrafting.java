@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -33,10 +32,10 @@ import java.util.List;
 
 public class PageCrafting extends BookletPage{
 
+    private final List<IRecipe> recipes;
     private int recipeAt;
     private String recipeTypeLocKey;
     private boolean isWildcard;
-    private final List<IRecipe> recipes;
 
     public PageCrafting(int localizationKey, List<IRecipe> recipes){
         super(localizationKey);
@@ -103,7 +102,7 @@ public class PageCrafting extends BookletPage{
             for(IRecipe recipe : this.recipes){
                 if(recipe != null){
                     ItemStack output = recipe.getRecipeOutput();
-                    if(output != null){
+                    if(StackUtil.isValid(output)){
                         ItemStack copy = output.copy();
                         if(this.isWildcard){
                             copy.setItemDamage(Util.WILDCARD);
@@ -146,7 +145,7 @@ public class PageCrafting extends BookletPage{
             for(int i = 0; i < shaped.getInput().length; i++){
                 Object input = shaped.getInput()[i];
                 if(input != null){
-                    stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? null : ((List<ItemStack>)input).get(0));
+                    stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? StackUtil.getNull() : ((List<ItemStack>)input).get(0));
                 }
             }
             this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapedOreRecipe";
@@ -155,7 +154,7 @@ public class PageCrafting extends BookletPage{
             ShapelessOreRecipe shapeless = (ShapelessOreRecipe)recipe;
             for(int i = 0; i < shapeless.getInput().size(); i++){
                 Object input = shapeless.getInput().get(i);
-                stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? null : ((List<ItemStack>)input).get(0));
+                stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? StackUtil.getNull() : ((List<ItemStack>)input).get(0));
             }
             this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapelessOreRecipe";
         }

@@ -14,6 +14,7 @@ import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
@@ -53,7 +54,7 @@ public class ItemBattery extends ItemEnergy{
             EntityPlayer player = (EntityPlayer)entity;
             for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                 ItemStack slot = player.inventory.getStackInSlot(i);
-                if(slot != null){
+                if(StackUtil.isValid(slot)){
                     int received = 0;
 
                     Item item = slot.getItem();

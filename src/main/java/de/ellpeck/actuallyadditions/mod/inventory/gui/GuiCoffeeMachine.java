@@ -22,7 +22,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -34,23 +33,15 @@ public class GuiCoffeeMachine extends GuiContainer{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiCoffeeMachine");
     private final TileEntityCoffeeMachine machine;
-    private final int x;
-    private final int y;
-    private final int z;
-    private final World world;
 
     private EnergyDisplay energy;
     private FluidDisplay fluid;
 
-    public GuiCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world){
+    public GuiCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile){
         super(new ContainerCoffeeMachine(inventory, tile));
         this.machine = (TileEntityCoffeeMachine)tile;
         this.xSize = 176;
         this.ySize = 93+86;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.world = world;
     }
 
     @Override
@@ -78,10 +69,6 @@ public class GuiCoffeeMachine extends GuiContainer{
         String text1 = this.machine.storage.getEnergyStored()+"/"+this.machine.storage.getMaxEnergyStored()+" RF";
         if(x >= this.guiLeft+16 && y >= this.guiTop+5 && x <= this.guiLeft+23 && y <= this.guiTop+89){
             this.drawHoveringText(Collections.singletonList(text1), x, y);
-        }
-        String text3 = StringUtil.getFluidInfo(this.machine.tank);
-        if(x >= this.guiLeft+27 && y >= this.guiTop+5 && x <= this.guiLeft+33 && y <= this.guiTop+70){
-            this.drawHoveringText(Collections.singletonList(text3), x, y);
         }
 
         String text2 = this.machine.coffeeCacheAmount+"/"+TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.coffee");

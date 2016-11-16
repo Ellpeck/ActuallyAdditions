@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestLarge;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestMedium;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -129,7 +130,7 @@ public class BlockGiantChest extends BlockContainerBase{
                     //Destroy the keeper
                     if(i != place){
                         NBTTagCompound compound = new NBTTagCompound();
-                        if(slots[i] != null){
+                        if(StackUtil.isValid(slots[i])){
                             slots[i].writeToNBT(compound);
                         }
                         list.appendTag(compound);
@@ -138,7 +139,7 @@ public class BlockGiantChest extends BlockContainerBase{
 
                 if(list.tagCount() > 0){
                     ItemStack stackInQuestion = drops.get(0);
-                    if(stackInQuestion != null){
+                    if(StackUtil.isValid(stackInQuestion)){
                         if(stackInQuestion.getTagCompound() == null){
                             stackInQuestion.setTagCompound(new NBTTagCompound());
                         }

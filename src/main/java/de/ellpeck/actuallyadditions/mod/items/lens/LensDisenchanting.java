@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -42,7 +43,7 @@ public class LensDisenchanting extends Lens{
                 for(EntityItem item : items){
                     if(item != null && !item.isDead){
                         ItemStack stack = item.getEntityItem();
-                        if(stack != null){
+                        if(StackUtil.isValid(stack)){
                             Item stackItem = stack.getItem();
                             if(stackItem == Items.BOOK || stackItem == Items.ENCHANTED_BOOK){
                                 if(book == null){

@@ -130,7 +130,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     public void storeCoffee(){
-        if(this.slots[SLOT_COFFEE_BEANS] != null && this.slots[SLOT_COFFEE_BEANS].getItem() == InitItems.itemCoffeeBean){
+        if(StackUtil.isValid(this.slots[SLOT_COFFEE_BEANS]) && this.slots[SLOT_COFFEE_BEANS].getItem() == InitItems.itemCoffeeBean){
             int toAdd = 2;
             if(toAdd <= COFFEE_CACHE_MAX_AMOUNT-this.coffeeCacheAmount){
                 this.slots[SLOT_COFFEE_BEANS] = StackUtil.addStackSize(this.slots[SLOT_COFFEE_BEANS], -1);

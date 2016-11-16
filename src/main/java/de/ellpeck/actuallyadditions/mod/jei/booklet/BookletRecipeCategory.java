@@ -19,7 +19,6 @@ import mezz.jei.api.recipe.BlankRecipeCategory;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BookletRecipeCategory extends BlankRecipeCategory<BookletRecipeWrapper>{

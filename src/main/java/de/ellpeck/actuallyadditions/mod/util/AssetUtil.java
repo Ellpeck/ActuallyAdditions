@@ -63,7 +63,7 @@ public final class AssetUtil{
 
     @SideOnly(Side.CLIENT)
     public static void renderItemInWorld(ItemStack stack){
-        if(stack != null && stack.getItem() != null){
+        if(StackUtil.isValid(stack)){
             GlStateManager.pushMatrix();
             GlStateManager.disableLighting();
             GlStateManager.pushAttrib();

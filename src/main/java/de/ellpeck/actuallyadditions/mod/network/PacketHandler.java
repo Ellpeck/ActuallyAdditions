@@ -20,7 +20,6 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -38,10 +37,7 @@ import java.util.UUID;
 
 public final class PacketHandler{
 
-    public static SimpleNetworkWrapper theNetwork;
-
     public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<IDataHandler>();
-
     public static final IDataHandler PARTICLE_HANDLER = new IDataHandler(){
         @Override
         @SideOnly(Side.CLIENT)
@@ -56,7 +52,7 @@ public final class PacketHandler{
             World world = Minecraft.getMinecraft().theWorld;
             if(world != null){
                 TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
-                if(tile != null && tile instanceof TileEntityBase){
+                if(tile instanceof TileEntityBase){
                     ((TileEntityBase)tile).readSyncableNBT(compound.getCompoundTag("Data"), TileEntityBase.NBTType.SYNC);
                 }
             }
@@ -71,7 +67,7 @@ public final class PacketHandler{
             if(tile instanceof IButtonReactor){
                 IButtonReactor reactor = (IButtonReactor)tile;
                 Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
-                if(entity != null && entity instanceof EntityPlayer){
+                if(entity instanceof EntityPlayer){
                     reactor.onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)entity);
                 }
             }
@@ -82,9 +78,9 @@ public final class PacketHandler{
         public void handleData(NBTTagCompound compound){
             World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
             Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
-            if(entity != null && entity instanceof EntityPlayer){
+            if(entity instanceof EntityPlayer){
                 Container container = ((EntityPlayer)entity).openContainer;
-                if(container != null && container instanceof IButtonReactor){
+                if(container instanceof IButtonReactor){
                     ((IButtonReactor)container).onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)entity);
                 }
             }
@@ -125,6 +121,7 @@ public final class PacketHandler{
             }
         }
     };
+    public static SimpleNetworkWrapper theNetwork;
 
     public static void init(){
         theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(ModUtil.MOD_ID);

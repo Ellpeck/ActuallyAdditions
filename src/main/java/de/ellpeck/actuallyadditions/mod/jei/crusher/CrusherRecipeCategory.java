@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
 
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -51,7 +52,7 @@ public class CrusherRecipeCategory extends BlankRecipeCategory<CrusherRecipeWrap
         recipeLayout.getItemStacks().init(1, false, 7, 55);
         recipeLayout.getItemStacks().set(1, wrapper.theRecipe.outputOneStack);
 
-        if(wrapper.theRecipe.outputTwoStack != null){
+        if(StackUtil.isValid(wrapper.theRecipe.outputTwoStack)){
             recipeLayout.getItemStacks().init(2, false, 31, 55);
             recipeLayout.getItemStacks().set(2, wrapper.theRecipe.outputTwoStack);
         }

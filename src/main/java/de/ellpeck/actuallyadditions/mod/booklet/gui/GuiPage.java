@@ -29,9 +29,9 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class GuiPage extends GuiBooklet{
 
-    private int pageTimer;
-    private final List<ItemDisplay> itemDisplays = new ArrayList<ItemDisplay>();
     public final IBookletPage[] pages = new IBookletPage[2];
+    private final List<ItemDisplay> itemDisplays = new ArrayList<ItemDisplay>();
+    private int pageTimer;
 
     public GuiPage(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletPage page1, IBookletPage page2){
         super(previousScreen, parentPage);

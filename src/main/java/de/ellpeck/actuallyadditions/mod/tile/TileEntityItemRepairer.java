@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,7 +34,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     }
 
     public static boolean canBeRepaired(ItemStack stack){
-        if(stack != null){
+        if(StackUtil.isValid(stack)){
             Item item = stack.getItem();
             if(item != null){
                 if(item.isRepairable()){
@@ -77,10 +78,10 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
         super.updateEntity();
         if(!this.worldObj.isRemote){
             ItemStack input = this.slots[SLOT_INPUT];
-            if(this.slots[SLOT_OUTPUT] == null && canBeRepaired(input)){
+            if(!StackUtil.isValid(this.slots[SLOT_OUTPUT]) && canBeRepaired(input)){
                 if(input.getItemDamage() <= 0){
                     this.slots[SLOT_OUTPUT] = input.copy();
-                    this.slots[SLOT_INPUT] = null;
+                    this.slots[SLOT_INPUT] = StackUtil.getNull();
                     this.nextRepairTick = 0;
                 }
                 else{
@@ -124,7 +125,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
 
     @SideOnly(Side.CLIENT)
     public int getItemDamageToScale(int i){
-        if(this.slots[SLOT_INPUT] != null){
+        if(StackUtil.isValid(this.slots[SLOT_INPUT])){
             return (this.slots[SLOT_INPUT].getMaxDamage()-this.slots[SLOT_INPUT].getItemDamage())*i/this.slots[SLOT_INPUT].getMaxDamage();
         }
         return 0;

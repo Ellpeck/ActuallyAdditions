@@ -158,7 +158,7 @@ public class GuiHandler implements IGuiHandler{
             case FLUID_COLLECTOR:
                 return new GuiFluidCollector(player.inventory, tile);
             case COFFEE_MACHINE:
-                return new GuiCoffeeMachine(player.inventory, tile, x, y, z, world);
+                return new GuiCoffeeMachine(player.inventory, tile);
             case DRILL:
                 return new GuiDrill(player.inventory);
             case FILTER:
@@ -168,7 +168,7 @@ public class GuiHandler implements IGuiHandler{
             case ENERVATOR:
                 return new GuiEnervator(player, tile);
             case XP_SOLIDIFIER:
-                return new GuiXPSolidifier(player.inventory, tile, x, y, z, world);
+                return new GuiXPSolidifier(player.inventory, tile);
             case CLOUD:
                 return new GuiSmileyCloud(tile, x, y, z, world);
             case BOOK:
@@ -189,7 +189,7 @@ public class GuiHandler implements IGuiHandler{
             case DIRECTIONAL_BREAKER:
                 return new GuiDirectionalBreaker(player.inventory, tile);
             case RANGED_COLLECTOR:
-                return new GuiRangedCollector(player.inventory, tile, x, y, z, world);
+                return new GuiRangedCollector(player.inventory, tile);
             case MINER:
                 return new GuiMiner(player.inventory, tile);
             case LASER_RELAY_ITEM_WHITELIST:

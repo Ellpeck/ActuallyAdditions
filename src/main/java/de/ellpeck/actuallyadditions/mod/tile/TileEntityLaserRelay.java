@@ -89,7 +89,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
                 WrenchMode mode = WrenchMode.values()[data.theCompound.getInteger("LaserWrenchMode")];
                 if(mode != WrenchMode.NO_PARTICLES){
                     ItemStack stack = player.getHeldItemMainhand();
-                    if(mode == WrenchMode.ALWAYS_PARTICLES || (stack != null && stack.getItem() instanceof ItemLaserWrench)){
+                    if(mode == WrenchMode.ALWAYS_PARTICLES || (StackUtil.isValid(stack) && stack.getItem() instanceof ItemLaserWrench)){
                         Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);
                         if(network != null){
                             for(IConnectionPair aPair : network.connections){

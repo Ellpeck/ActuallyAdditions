@@ -33,12 +33,12 @@ public class SlotFilter extends Slot{
         ItemStack heldStack = player.inventory.getItemStack();
 
         //Delete the stack in the inventory
-        if(this.getStack() != null && heldStack == null){
-            this.putStack(null);
+        if(StackUtil.isValid(this.getStack()) && !StackUtil.isValid(heldStack)){
+            this.putStack(StackUtil.getNull());
         }
         //Put the current Item as a filter
         else{
-            if(heldStack != null){
+            if(StackUtil.isValid(heldStack)){
                 ItemStack stack = heldStack.copy();
                 stack = StackUtil.setStackSize(stack, 1);
                 this.putStack(stack);
@@ -55,8 +55,7 @@ public class SlotFilter extends Slot{
 
     @Override
     public void putStack(ItemStack stack){
-        ItemStack theStack = (stack != null ? stack.copy() : null);
-        super.putStack(theStack);
+        super.putStack(StackUtil.validateCopy(stack));
     }
 
     @Override

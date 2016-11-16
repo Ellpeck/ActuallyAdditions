@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -116,7 +117,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public Lens getLens(){
-        if(this.slots[0] != null){
+        if(StackUtil.isValid(this.slots[0])){
             if(this.slots[0].getItem() instanceof ILensItem){
                 return ((ILensItem)this.slots[0].getItem()).getLens();
             }
@@ -151,7 +152,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return stack != null && stack.getItem() instanceof ILensItem;
+        return StackUtil.isValid(stack) && stack.getItem() instanceof ILensItem;
     }
 
     @Override

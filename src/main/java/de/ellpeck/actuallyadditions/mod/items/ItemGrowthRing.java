@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
@@ -43,7 +44,7 @@ public class ItemGrowthRing extends ItemEnergy{
         ItemStack equipped = player.getHeldItemMainhand();
 
         int energyUse = 300;
-        if(equipped != null && equipped == stack && this.getEnergyStored(stack) >= energyUse){
+        if(StackUtil.isValid(equipped) && equipped == stack && this.getEnergyStored(stack) >= energyUse){
             List<BlockPos> blocks = new ArrayList<BlockPos>();
 
             //Adding all possible Blocks

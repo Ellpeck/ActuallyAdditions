@@ -24,8 +24,8 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class TexturedButton extends GuiButton{
 
-    private final ResourceLocation resLoc;
     public final List textList = new ArrayList();
+    private final ResourceLocation resLoc;
     public int texturePosX;
     public int texturePosY;
 

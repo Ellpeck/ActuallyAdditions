@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -49,7 +50,7 @@ public class FuelHandler implements IFuelHandler{
 
     @Override
     public int getBurnTime(ItemStack stack){
-        if(stack != null){
+        if(StackUtil.isValid(stack)){
             for(Fuel fuel : FUEL_LIST){
                 if(stack.isItemEqual(fuel.fuel)){
                     return fuel.burnTime;
