@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -88,8 +89,8 @@ public class TileEntityFishingNet extends TileEntityBase{
                         for(int i = 0; i < cap.getSlots(); i++){
                             stack = cap.insertItem(i, stack, false);
 
-                            if(stack == null || stack.stackSize <= 0){
-                                return null;
+                            if(!StackUtil.isValid(stack)){
+                                return StackUtil.getNull();
                             }
                         }
                     }

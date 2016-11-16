@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -54,7 +55,6 @@ public class ItemKnife extends ItemBase{
     public ItemStack getContainerItem(ItemStack stack){
         ItemStack theStack = stack.copy();
         theStack.setItemDamage(theStack.getItemDamage()+1);
-        theStack.stackSize = 1;
-        return theStack;
+        return StackUtil.setStackSize(theStack, 1);
     }
 }

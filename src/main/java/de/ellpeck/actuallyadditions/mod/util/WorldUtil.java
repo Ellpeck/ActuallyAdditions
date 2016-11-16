@@ -63,7 +63,7 @@ public final class WorldUtil{
             if(theoreticalExtract != null){
                 ItemStack remaining = insertCap.insertItem(slotInsert, theoreticalExtract, false);
                 if(!ItemStack.areItemStacksEqual(remaining, theoreticalExtract)){
-                    int toExtract = remaining == null ? theoreticalExtract.stackSize : theoreticalExtract.stackSize-remaining.stackSize;
+                    int toExtract = remaining == null ? StackUtil.getStackSize(theoreticalExtract) : StackUtil.getStackSize(theoreticalExtract)-StackUtil.getStackSize(remaining);
                     extractCap.extractItem(slotExtract, toExtract, false);
                     return true;
                 }
@@ -141,7 +141,7 @@ public final class WorldUtil{
     }
 
     public static ItemStack useItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
-        if(world instanceof WorldServer && stack != null && stack.getItem() != null && pos != null){
+        if(world instanceof WorldServer && StackUtil.isValid(stack) && pos != null){
             BlockPos offsetPos = pos.offset(side);
             IBlockState state = world.getBlockState(offsetPos);
             Block block = state.getBlock();
@@ -173,16 +173,14 @@ public final class WorldUtil{
             //Redstone
             if(replaceable && stack.getItem() == Items.REDSTONE){
                 world.setBlockState(offsetPos, Blocks.REDSTONE_WIRE.getDefaultState(), 2);
-                stack.stackSize--;
-                return stack;
+                return StackUtil.addStackSize(stack, -1);
             }
 
             //Plants
             if(replaceable && stack.getItem() instanceof IPlantable){
                 if(((IPlantable)stack.getItem()).getPlant(world, offsetPos).getBlock().canPlaceBlockAt(world, offsetPos)){
                     if(world.setBlockState(offsetPos, ((IPlantable)stack.getItem()).getPlant(world, offsetPos), 2)){
-                        stack.stackSize--;
-                        return stack;
+                        return StackUtil.addStackSize(stack, -1);
                     }
                 }
             }
@@ -278,12 +276,12 @@ public final class WorldUtil{
             for(int i = start; i < end; i++){
                 if(shouldAlwaysWork || ((!(inventory instanceof ISidedInventory) || ((ISidedInventory)inventory).canInsertItem(i, stackToPutIn, side)) && inventory.isItemValidForSlot(i, stackToPutIn))){
                     ItemStack stackInQuestion = inventory.getStackInSlot(i);
-                    if(stackToPutIn != null && (stackInQuestion == null || (ItemUtil.canBeStacked(stackInQuestion, stackToPutIn) && stackInQuestion.getMaxStackSize() >= stackInQuestion.stackSize+stackToPutIn.stackSize))){
-                        if(stackInQuestion == null){
+                    if(StackUtil.isValid(stackToPutIn) && (!StackUtil.isValid(stackInQuestion) || (ItemUtil.canBeStacked(stackInQuestion, stackToPutIn) && stackInQuestion.getMaxStackSize() >= StackUtil.getStackSize(stackInQuestion)+StackUtil.getStackSize(stackToPutIn)))){
+                        if(!StackUtil.isValid(stackInQuestion)){
                             inventory.setInventorySlotContents(i, stackToPutIn.copy());
                         }
                         else{
-                            stackInQuestion.stackSize += stackToPutIn.stackSize;
+                            inventory.setInventorySlotContents(i, StackUtil.addStackSize(stackInQuestion, StackUtil.getStackSize(stackToPutIn)));
                         }
                         working++;
 
@@ -402,7 +400,7 @@ public final class WorldUtil{
                 block.onBlockDestroyedByPlayer(world, pos, state);
             }
 
-            if(stack.stackSize <= 0 && stack == player.getHeldItemMainhand()){
+            if(StackUtil.getStackSize(stack) <= 0 && stack == player.getHeldItemMainhand()){
                 ForgeEventFactory.onPlayerDestroyItem(player, stack, EnumHand.MAIN_HAND);
                 player.setHeldItem(EnumHand.MAIN_HAND, null);
             }

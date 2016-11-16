@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -51,7 +52,7 @@ public class ContainerCrafter extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int index){
-        ItemStack itemstack = null;
+        ItemStack itemstack = StackUtil.getNull();
         Slot slot = this.inventorySlots.get(index);
 
         if(slot != null && slot.getHasStack()){
@@ -60,34 +61,34 @@ public class ContainerCrafter extends Container{
 
             if(index == 0){
                 if(!this.mergeItemStack(itemstack1, 10, 46, true)){
-                    return null;
+                    return StackUtil.getNull();
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
             }
             else if(index >= 10 && index < 37){
                 if(!this.mergeItemStack(itemstack1, 37, 46, false)){
-                    return null;
+                    return StackUtil.getNull();
                 }
             }
             else if(index >= 37 && index < 46){
                 if(!this.mergeItemStack(itemstack1, 10, 37, false)){
-                    return null;
+                    return StackUtil.getNull();
                 }
             }
             else if(!this.mergeItemStack(itemstack1, 10, 46, false)){
-                return null;
+                return StackUtil.getNull();
             }
 
-            if(itemstack1.stackSize <= 0){
-                slot.putStack(null);
+            if(!StackUtil.isValid(itemstack1)){
+                slot.putStack(StackUtil.getNull());
             }
             else{
                 slot.onSlotChanged();
             }
 
-            if(itemstack1.stackSize == itemstack.stackSize){
-                return null;
+            if(StackUtil.getStackSize(itemstack1) == StackUtil.getStackSize(itemstack)){
+                return StackUtil.getNull();
             }
 
             slot.onPickupFromSlot(player, itemstack1);

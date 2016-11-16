@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -48,27 +49,26 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         ItemStack first = slots[slot1];
         ItemStack second = slots[slot2];
 
-        if(first != null || second != null){
-            ItemStack toSplit = null;
-            if(first == null && second != null){
+        if(StackUtil.isValid(first) || StackUtil.isValid(second)){
+            ItemStack toSplit = StackUtil.getNull();
+            if(!StackUtil.isValid(first) && StackUtil.isValid(second)){
                 toSplit = second;
             }
-            else if(second == null && first != null){
+            else if(!StackUtil.isValid(second) && StackUtil.isValid(first)){
                 toSplit = first;
             }
             else if(ItemUtil.canBeStacked(first, second)){
-                if(first.stackSize < first.getMaxStackSize() || second.stackSize < second.getMaxStackSize()){
-                    if(!((first.stackSize <= second.stackSize+1 && first.stackSize >= second.stackSize-1) || (second.stackSize <= first.stackSize+1 && second.stackSize >= first.stackSize-1))){
+                if(StackUtil.getStackSize(first) < first.getMaxStackSize() || StackUtil.getStackSize(second) < second.getMaxStackSize()){
+                    if(!((StackUtil.getStackSize(first) <= StackUtil.getStackSize(second)+1 && StackUtil.getStackSize(first) >= StackUtil.getStackSize(second)-1) || (StackUtil.getStackSize(second) <= StackUtil.getStackSize(first)+1 && StackUtil.getStackSize(second) >= StackUtil.getStackSize(first)-1))){
                         toSplit = first;
-                        toSplit.stackSize += second.stackSize;
+                        toSplit = StackUtil.addStackSize(toSplit, StackUtil.getStackSize(second));
                     }
                 }
             }
 
-            if(toSplit != null && toSplit.stackSize > 1){
+            if(StackUtil.isValid(toSplit)){
                 ItemStack splitFirst = toSplit.copy();
-                ItemStack secondSplit = splitFirst.splitStack(splitFirst.stackSize/2);
-
+                ItemStack secondSplit = splitFirst.splitStack(StackUtil.getStackSize(splitFirst)/2);
                 slots[slot1] = splitFirst;
                 slots[slot2] = secondSplit;
             }
@@ -168,32 +168,28 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     public boolean canSmeltOn(int theInput, int theOutput){
-        if(this.slots[theInput] != null){
+        if(StackUtil.isValid(this.slots[theInput])){
             ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.slots[theInput]);
-            if(this.slots[theInput] != null){
-                if(output != null){
-                    if(this.slots[theOutput] == null || (this.slots[theOutput].isItemEqual(output) && this.slots[theOutput].stackSize <= this.slots[theOutput].getMaxStackSize()-output.stackSize)){
-                        return true;
-                    }
+            if(StackUtil.isValid(output)){
+                if(!StackUtil.isValid(this.slots[theOutput]) || (this.slots[theOutput].isItemEqual(output) && StackUtil.getStackSize(this.slots[theOutput]) <= this.slots[theOutput].getMaxStackSize()-StackUtil.getStackSize(output))){
+                    return true;
                 }
             }
+
         }
         return false;
     }
 
     public void finishBurning(int theInput, int theOutput){
         ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.slots[theInput]);
-        if(this.slots[theOutput] == null){
+        if(!StackUtil.isValid(this.slots[theOutput])){
             this.slots[theOutput] = output.copy();
         }
         else if(this.slots[theOutput].getItem() == output.getItem()){
-            this.slots[theOutput].stackSize += output.stackSize;
+            this.slots[theOutput] = StackUtil.addStackSize(this.slots[theOutput], StackUtil.getStackSize(output));
         }
 
-        this.slots[theInput].stackSize--;
-        if(this.slots[theInput].stackSize <= 0){
-            this.slots[theInput] = null;
-        }
+        this.slots[theInput] = StackUtil.addStackSize(this.slots[theInput], -1);
     }
 
     @SideOnly(Side.CLIENT)

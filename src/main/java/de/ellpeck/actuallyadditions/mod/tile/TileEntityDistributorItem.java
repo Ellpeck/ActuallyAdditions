@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -42,26 +43,26 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
                 for(int i = 0; i < handlerUp.getSlots(); i++){
 
                     ItemStack pullable = handlerUp.extractItem(i, 1, true);
-                    if(pullable != null && (this.slots[0] == null || ItemUtil.canBeStacked(this.slots[0], pullable))){
+                    if(StackUtil.isValid(pullable) && (!StackUtil.isValid(this.slots[0]) || ItemUtil.canBeStacked(this.slots[0], pullable))){
                         ItemStack pulled = handlerUp.extractItem(i, 1, false);
-                        if(pulled != null){
-                            if(this.slots[0] == null){
+                        if(StackUtil.isValid(pulled)){
+                            if(!StackUtil.isValid(this.slots[0])){
                                 this.slots[0] = pulled.copy();
                             }
                             else{
-                                this.slots[0].stackSize += pulled.stackSize;
+                                this.slots[0] = StackUtil.addStackSize(this.slots[0], StackUtil.getStackSize(pulled));
                             }
                             shouldMarkDirty = true;
                         }
                     }
 
-                    if(this.slots[0] != null && this.slots[0].stackSize >= this.slots[0].getMaxStackSize()){
+                    if(StackUtil.isValid(this.slots[0]) && StackUtil.getStackSize(this.slots[0]) >= this.slots[0].getMaxStackSize()){
                         break;
                     }
                 }
             }
 
-            if(!this.handlersAround.isEmpty() && (!this.handlersAround.containsKey(EnumFacing.UP) || this.handlersAround.size() >= 2) && this.slots[0] != null){
+            if(!this.handlersAround.isEmpty() && (!this.handlersAround.containsKey(EnumFacing.UP) || this.handlersAround.size() >= 2) && StackUtil.isValid(this.slots[0])){
                 EnumFacing[] allFacings = EnumFacing.values();
                 do{
                     this.putSide++;
@@ -76,33 +77,33 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
                 IItemHandler handler = this.handlersAround.get(putFacing);
                 if(handler != null){
                     int aroundAmount = this.handlersAround.containsKey(EnumFacing.UP) ? this.handlersAround.size()-1 : this.handlersAround.size();
-                    int amount = this.slots[0].stackSize/aroundAmount;
+                    int amount = StackUtil.getStackSize(this.slots[0])/aroundAmount;
                     if(amount <= 0){
-                        amount = this.slots[0].stackSize;
+                        amount = StackUtil.getStackSize(this.slots[0]);
                     }
 
                     if(amount > 0){
                         ItemStack toInsert = this.slots[0].copy();
-                        toInsert.stackSize = amount;
+                        toInsert = StackUtil.setStackSize(toInsert, amount);
 
                         for(int i = 0; i < handler.getSlots(); i++){
                             ItemStack notInserted = handler.insertItem(i, toInsert.copy(), false);
-                            if(notInserted == null){
-                                this.slots[0].stackSize -= amount;
+                            if(!StackUtil.isValid(notInserted)){
+                                this.slots[0] = StackUtil.addStackSize(this.slots[0], -amount);
 
                                 shouldMarkDirty = true;
                                 break;
                             }
-                            else if(notInserted.stackSize != this.slots[0].stackSize){
-                                this.slots[0].stackSize -= notInserted.stackSize;
+                            else if(StackUtil.getStackSize(notInserted) != StackUtil.getStackSize(this.slots[0])){
+                                this.slots[0] = StackUtil.addStackSize(this.slots[0], -StackUtil.getStackSize(notInserted));
                                 toInsert = notInserted;
 
                                 shouldMarkDirty = true;
                             }
                         }
 
-                        if(this.slots[0].stackSize <= 0){
-                            this.slots[0] = null;
+                        if(!StackUtil.isValid(this.slots[0])){
+                            this.slots[0] = StackUtil.getNull();
                             shouldMarkDirty = true;
                         }
                     }

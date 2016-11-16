@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
@@ -47,7 +48,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(this.slots[0] != null && this.slots[1] == null){
+            if(StackUtil.isValid(this.slots[0]) && !StackUtil.isValid(this.slots[1])){
                 if(this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
                     int extracted = 0;
                     boolean canTakeUp = false;
@@ -78,10 +79,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
 
                     if(canTakeUp){
                         this.slots[1] = this.slots[0].copy();
-                        this.slots[0].stackSize--;
-                        if(this.slots[0].stackSize <= 0){
-                            this.slots[0] = null;
-                        }
+                        this.slots[0] = StackUtil.addStackSize(this.slots[0], -1);
                     }
                 }
             }

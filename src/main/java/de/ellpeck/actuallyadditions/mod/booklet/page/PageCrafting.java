@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.renderer.GlStateManager;
@@ -162,9 +163,9 @@ public class PageCrafting extends BookletPage{
         for(int x = 0; x < width; x++){
             for(int y = 0; y < height; y++){
                 ItemStack stack = stacks[y*width+x];
-                if(stack != null){
+                if(StackUtil.isValid(stack)){
                     ItemStack copy = stack.copy();
-                    copy.stackSize = 1;
+                    copy = StackUtil.setStackSize(copy, 1);
                     if(copy.getItemDamage() == Util.WILDCARD){
                         copy.setItemDamage(0);
                     }

@@ -25,6 +25,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -177,25 +178,25 @@ public class MethodHandler implements IMethodHandler{
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
             for(EntityItem item : items){
                 ItemStack stack = item.getEntityItem();
-                if(!item.isDead && stack != null){
+                if(!item.isDead && StackUtil.isValid(stack)){
                     List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
                     for(LensConversionRecipe recipe : recipes){
                         if(recipe != null && recipe.type == tile.getLens()){
-                            int itemsPossible = Math.min(tile.getEnergy()/recipe.energyUse, stack.stackSize);
+                            int itemsPossible = Math.min(tile.getEnergy()/recipe.energyUse, StackUtil.getStackSize(stack));
 
                             if(itemsPossible > 0){
                                 item.setDead();
 
-                                if(stack.stackSize-itemsPossible > 0){
+                                if(StackUtil.getStackSize(stack)-itemsPossible > 0){
                                     ItemStack stackCopy = stack.copy();
-                                    stackCopy.stackSize -= itemsPossible;
+                                    stackCopy = StackUtil.addStackSize(stackCopy, -itemsPossible);
 
                                     EntityItem inputLeft = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, stackCopy);
                                     tile.getWorldObject().spawnEntityInWorld(inputLeft);
                                 }
 
                                 ItemStack outputCopy = recipe.outputStack.copy();
-                                outputCopy.stackSize = itemsPossible;
+                                outputCopy = StackUtil.setStackSize(outputCopy, itemsPossible);
 
                                 EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
                                 tile.getWorldObject().spawnEntityInWorld(newItem);
@@ -216,21 +217,21 @@ public class MethodHandler implements IMethodHandler{
     public boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance){
         boolean hasWorkedOnce = false;
         for(ItemStack input : inputs){
-            if(input != null && CrusherRecipeRegistry.getRecipeFromInput(input) == null){
+            if(StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null){
                 for(ItemStack outputOne : outputOnes){
-                    if(outputOne != null && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne)){
+                    if(StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne)){
                         ItemStack outputOneCopy = outputOne.copy();
-                        outputOneCopy.stackSize = outputOneAmounts;
+                        outputOneCopy = StackUtil.setStackSize(outputOneCopy, outputOneAmounts);
 
                         if(outputTwos == null || outputTwos.isEmpty()){
-                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, null, 0);
+                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getNull(), 0);
                             hasWorkedOnce = true;
                         }
                         else{
                             for(ItemStack outputTwo : outputTwos){
-                                if(outputTwo != null && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo)){
+                                if(StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo)){
                                     ItemStack outputTwoCopy = outputTwo.copy();
-                                    outputTwoCopy.stackSize = outputTwoAmounts;
+                                    outputTwoCopy = StackUtil.setStackSize(outputTwoCopy, outputTwoAmounts);
 
                                     ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, outputTwoCopy, outputTwoChance);
                                     hasWorkedOnce = true;

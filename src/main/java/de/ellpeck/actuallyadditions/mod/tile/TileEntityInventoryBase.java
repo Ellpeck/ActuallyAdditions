@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
+import java.util.Arrays;
+
 public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
 
     private final SidedInvWrapper[] invWrappers = new SidedInvWrapper[6];
@@ -29,6 +32,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         super(name);
 
         this.slots = new ItemStack[slots];
+        Arrays.fill(this.slots, StackUtil.getNull());
 
         if(this.hasInvWrapperCapabilities()){
             this.getInvWrappers(this.invWrappers);
@@ -40,7 +44,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
             NBTTagList tagList = new NBTTagList();
             for(ItemStack slot : slots){
                 NBTTagCompound tagCompound = new NBTTagCompound();
-                if(slot != null){
+                if(StackUtil.isValid(slot)){
                     slot.writeToNBT(tagCompound);
                 }
                 tagList.appendTag(tagCompound);
@@ -54,7 +58,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
             NBTTagList tagList = compound.getTagList("Items", 10);
             for(int i = 0; i < slots.length; i++){
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                slots[i] = tagCompound != null && tagCompound.hasKey("id") ? ItemStack.loadItemStackFromNBT(tagCompound) : null;
+                slots[i] = tagCompound != null && tagCompound.hasKey("id") ? ItemStack.loadItemStackFromNBT(tagCompound) : StackUtil.getNull();
             }
         }
     }
@@ -159,35 +163,35 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         if(i < this.getSizeInventory()){
             return this.slots[i];
         }
-        return null;
+        return StackUtil.getNull();
     }
 
     @Override
     public ItemStack decrStackSize(int i, int j){
-        if(this.slots[i] != null){
+        if(StackUtil.isValid(this.slots[i])){
             ItemStack stackAt;
-            if(this.slots[i].stackSize <= j){
+            if(StackUtil.getStackSize(this.slots[i]) <= j){
                 stackAt = this.slots[i];
-                this.slots[i] = null;
+                this.slots[i] = StackUtil.getNull();
                 this.markDirty();
                 return stackAt;
             }
             else{
                 stackAt = this.slots[i].splitStack(j);
-                if(this.slots[i].stackSize <= 0){
-                    this.slots[i] = null;
+                if(StackUtil.getStackSize(this.slots[i]) <= 0){
+                    this.slots[i] = StackUtil.getNull();
                 }
                 this.markDirty();
                 return stackAt;
             }
         }
-        return null;
+        return StackUtil.getNull();
     }
 
     @Override
     public ItemStack removeStackFromSlot(int index){
         ItemStack stack = this.slots[index];
-        this.slots[index] = null;
+        this.slots[index] = StackUtil.getNull();
         return stack;
     }
 

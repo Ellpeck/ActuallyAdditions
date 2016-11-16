@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -21,6 +22,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.Arrays;
 
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
 
@@ -32,6 +35,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     public TileEntityLaserRelayItemWhitelist(){
         super("laserRelayItemWhitelist");
 
+        Arrays.fill(this.slots, StackUtil.getNull());
         this.filterInventory = new IInventory(){
 
             private TileEntityLaserRelayItemWhitelist tile;
@@ -91,6 +95,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
             public void clear(){
                 int length = this.tile.slots.length;
                 this.tile.slots = new ItemStack[length];
+                Arrays.fill(this.tile.slots, StackUtil.getNull());
             }
 
             @Override
@@ -109,35 +114,35 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                 if(i < this.getSizeInventory()){
                     return this.tile.slots[i];
                 }
-                return null;
+                return StackUtil.getNull();
             }
 
             @Override
             public ItemStack decrStackSize(int i, int j){
-                if(this.tile.slots[i] != null){
+                if(StackUtil.isValid(this.tile.slots[i])){
                     ItemStack stackAt;
-                    if(this.tile.slots[i].stackSize <= j){
+                    if(StackUtil.getStackSize(this.tile.slots[i]) <= j){
                         stackAt = this.tile.slots[i];
-                        this.tile.slots[i] = null;
+                        this.tile.slots[i] = StackUtil.getNull();
                         this.markDirty();
                         return stackAt;
                     }
                     else{
                         stackAt = this.tile.slots[i].splitStack(j);
-                        if(this.tile.slots[i].stackSize <= 0){
-                            this.tile.slots[i] = null;
+                        if(StackUtil.getStackSize(this.tile.slots[i]) <= 0){
+                            this.tile.slots[i] = StackUtil.getNull();
                         }
                         this.markDirty();
                         return stackAt;
                     }
                 }
-                return null;
+                return StackUtil.getNull();
             }
 
             @Override
             public ItemStack removeStackFromSlot(int index){
                 ItemStack stack = this.tile.slots[index];
-                this.tile.slots[index] = null;
+                this.tile.slots[index] = StackUtil.getNull();
                 return stack;
             }
 
@@ -205,13 +210,13 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         for(IItemHandler handler : this.handlersAround.values()){
             for(int i = 0; i < handler.getSlots(); i++){
                 ItemStack stack = handler.getStackInSlot(i);
-                if(stack != null){
+                if(StackUtil.isValid(stack)){
                     ItemStack copy = stack.copy();
-                    copy.stackSize = 1;
+                    copy = StackUtil.setStackSize(copy, 1);
 
                     if(!FilterSettings.check(copy, this.slots, usedSettings.startSlot, usedSettings.endSlot, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectOredict)){
                         for(int k = usedSettings.startSlot; k < usedSettings.endSlot; k++){
-                            if(this.slots[k] != null){
+                            if(StackUtil.isValid(this.slots[k])){
                                 if(this.slots[k].getItem() instanceof ItemFilter){
                                     ItemStack[] filterSlots = new ItemStack[ContainerFilter.SLOT_AMOUNT];
                                     ItemDrill.loadSlotsFromNBT(filterSlots, this.slots[k]);
@@ -219,7 +224,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                                     boolean did = false;
                                     if(filterSlots != null && filterSlots.length > 0){
                                         for(int j = 0; j < filterSlots.length; j++){
-                                            if(filterSlots[j] == null || filterSlots[j].stackSize <= 0){
+                                            if(!StackUtil.isValid(filterSlots[j])){
                                                 filterSlots[j] = copy;
                                                 did = true;
                                                 break;

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -103,18 +104,17 @@ public class BlockTreasureChest extends BlockBase{
         for(int i = 0; i < MathHelper.getRandomIntegerInRange(world.rand, 3, 6); i++){
             TreasureChestLoot theReturn = WeightedRandom.getRandomItem(world.rand, ActuallyAdditionsAPI.TREASURE_CHEST_LOOT);
             ItemStack itemStack = theReturn.returnItem.copy();
-            itemStack.stackSize = MathHelper.getRandomIntegerInRange(world.rand, theReturn.minAmount, theReturn.maxAmount);
+            itemStack = StackUtil.setStackSize(itemStack, MathHelper.getRandomIntegerInRange(world.rand, theReturn.minAmount, theReturn.maxAmount));
 
             float dX = world.rand.nextFloat()*0.8F+0.1F;
             float dY = world.rand.nextFloat()*0.8F+0.1F;
             float dZ = world.rand.nextFloat()*0.8F+0.1F;
-            EntityItem entityItem = new EntityItem(world, pos.getX()+dX, pos.getY()+dY, pos.getZ()+dZ, itemStack.copy());
+            EntityItem entityItem = new EntityItem(world, pos.getX()+dX, pos.getY()+dY, pos.getZ()+dZ, itemStack);
             float factor = 0.05F;
             entityItem.motionX = world.rand.nextGaussian()*factor;
             entityItem.motionY = world.rand.nextGaussian()*factor+0.2F;
             entityItem.motionZ = world.rand.nextGaussian()*factor;
             world.spawnEntityInWorld(entityItem);
-            itemStack.stackSize = 0;
         }
     }
 

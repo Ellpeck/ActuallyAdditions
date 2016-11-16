@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyInteger;
@@ -118,7 +119,7 @@ public class BlockSlabs extends BlockBase{
 
         @Override
         public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
-            if(stack.stackSize != 0 && playerIn.canPlayerEdit(pos.offset(facing), facing, stack)){
+            if(StackUtil.isValid(stack) && playerIn.canPlayerEdit(pos.offset(facing), facing, stack)){
                 IBlockState state = worldIn.getBlockState(pos);
 
                 if(state.getBlock() == this.block){
@@ -130,14 +131,14 @@ public class BlockSlabs extends BlockBase{
                         if(bound != Block.NULL_AABB && worldIn.checkNoEntityCollision(bound.offset(pos)) && worldIn.setBlockState(pos, newState, 11)){
                             SoundType soundtype = theBlock.fullBlock.getSoundType();
                             worldIn.playSound(playerIn, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume()+1.0F)/2.0F, soundtype.getPitch()*0.8F);
-                            --stack.stackSize;
+                            playerIn.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
                         }
 
                         return EnumActionResult.SUCCESS;
                     }
                 }
 
-                return this.tryPlace(playerIn, stack, worldIn, pos.offset(facing)) ? EnumActionResult.SUCCESS : super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+                return this.tryPlace(playerIn, stack, hand, worldIn, pos.offset(facing)) ? EnumActionResult.SUCCESS : super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
             }
             else{
                 return EnumActionResult.FAIL;
@@ -158,7 +159,7 @@ public class BlockSlabs extends BlockBase{
             return worldIn.getBlockState(pos.offset(side)).getBlock() == this.block || super.canPlaceBlockOnSide(worldIn, pos, side, player, stack);
         }
 
-        private boolean tryPlace(EntityPlayer player, ItemStack stack, World worldIn, BlockPos pos){
+        private boolean tryPlace(EntityPlayer player, ItemStack stack, EnumHand hand, World worldIn, BlockPos pos){
             IBlockState iblockstate = worldIn.getBlockState(pos);
 
             if(iblockstate.getBlock() == this.block){
@@ -169,7 +170,8 @@ public class BlockSlabs extends BlockBase{
                 if(bound != Block.NULL_AABB && worldIn.checkNoEntityCollision(bound.offset(pos)) && worldIn.setBlockState(pos, newState, 11)){
                     SoundType soundtype = theBlock.fullBlock.getSoundType();
                     worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume()+1.0F)/2.0F, soundtype.getPitch()*0.8F);
-                    --stack.stackSize;
+
+                    player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
                 }
 
                 return true;

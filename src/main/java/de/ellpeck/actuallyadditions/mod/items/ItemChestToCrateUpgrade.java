@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -71,7 +72,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                     }
 
                     if(!player.capabilities.isCreativeMode){
-                        heldStack.stackSize--;
+                        player.setHeldItem(hand, StackUtil.addStackSize(heldStack, -1));
                     }
                 }
                 return EnumActionResult.SUCCESS;

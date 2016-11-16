@@ -14,6 +14,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -119,194 +120,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             }
         }
         return false;
-    }
-
-    /**
-     * Pulls Items from the specified Slots on the specified Side
-     */
-    private void pull(){
-        if(this.newPulling() || !(this.placeToPull instanceof IInventory)){
-            return;
-        }
-
-        //The Inventory to pull from
-        IInventory theInventory = (IInventory)this.placeToPull;
-        //Does the Inventory even have Slots!?
-        if(theInventory.getSizeInventory() > 0){
-            //The slot currently pulling from (for later)
-            int theSlotToPull = this.slotToPullStart;
-            //The amount of Items that can fit into one slot of the inventory
-            int maxSize = theInventory.getInventoryStackLimit();
-            //If the Inventory is ISided, deal with that
-            ISidedInventory theSided = null;
-            if(theInventory instanceof ISidedInventory){
-                theSided = (ISidedInventory)theInventory;
-            }
-            //If can be pulled (for later)
-            boolean can = false;
-
-            //The Stack that is pulled (for later)
-            ItemStack theStack = null;
-            //Go through all of the specified Slots
-            for(int i = Math.max(theSlotToPull, 0); i < Math.min(this.slotToPullEnd, theInventory.getSizeInventory()); i++){
-                //Temporary Stack for storage
-                ItemStack tempStack = theInventory.getStackInSlot(i);
-                if(tempStack != null){
-                    //Set maxSize to the max Size of the temporary stack if it's smaller than the Inventory's Max Size
-                    if(tempStack.getMaxStackSize() < this.getInventoryStackLimit()){
-                        maxSize = tempStack.getMaxStackSize();
-                    }
-                    else{
-                        maxSize = this.getInventoryStackLimit();
-                    }
-                }
-                //If ESD has enough Space & Item in question is on whitelist
-                if(tempStack != null && (this.slots[0] == null || (ItemUtil.canBeStacked(tempStack, this.slots[0]) && this.slots[0].stackSize < maxSize)) && this.checkBothFilters(tempStack, false)){
-                    //Deal with ISided
-                    if(theSided != null){
-                        //Check if Item can be inserted from any Side (Because Sidedness gets ignored!)
-                        for(int j = 0; j <= 5; j++){
-                            if(theSided.canExtractItem(i, tempStack, EnumFacing.values()[j])){
-                                theStack = tempStack;
-                                theSlotToPull = i;
-                                can = true;
-                                break;
-                            }
-                        }
-                    }
-                    //Deal with IInventory
-                    else{
-                        theStack = tempStack;
-                        theSlotToPull = i;
-                        can = true;
-                    }
-                }
-                //Stop if it can already pull
-                if(can){
-                    break;
-                }
-            }
-            //If pull can be done
-            if(can){
-                //If ESD already has Items
-                if(this.slots[0] != null){
-                    if(ItemUtil.canBeStacked(theStack, this.slots[0])){
-                        //If the StackSize is smaller than the space the ESD has left
-                        if(theStack.stackSize <= maxSize-this.slots[0].stackSize){
-                            this.slots[0].stackSize += theStack.stackSize;
-                            theInventory.setInventorySlotContents(theSlotToPull, null);
-                        }
-                        //If the StackSize is bigger than what fits into the Inventory
-                        else if(theStack.stackSize > maxSize-this.slots[0].stackSize){
-                            theInventory.decrStackSize(theSlotToPull, maxSize-this.slots[0].stackSize);
-                            this.slots[0].stackSize = maxSize;
-                        }
-                    }
-                }
-                //If ESD is empty
-                else{
-                    ItemStack toBePut = theStack.copy();
-                    if(maxSize < toBePut.stackSize){
-                        toBePut.stackSize = maxSize;
-                    }
-                    //Actually puts the Item
-                    this.setInventorySlotContents(0, toBePut);
-                    //Removes the Item from the inventory getting pulled from
-                    if(theStack.stackSize == toBePut.stackSize){
-                        theInventory.setInventorySlotContents(theSlotToPull, null);
-                    }
-                    else{
-                        theInventory.decrStackSize(theSlotToPull, toBePut.stackSize);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Puts Items into the specified Slots at the specified Side
-     * (Check pull() for Description, similar to this)
-     */
-    private void put(){
-        if(this.newPutting() || !(this.placeToPut instanceof IInventory)){
-            return;
-        }
-
-        IInventory theInventory = (IInventory)this.placeToPut;
-        if(theInventory.getSizeInventory() > 0){
-            int theSlotToPut = this.slotToPutStart;
-            int maxSize = theInventory.getInventoryStackLimit();
-            ISidedInventory theSided = null;
-            if(theInventory instanceof ISidedInventory){
-                theSided = (ISidedInventory)theInventory;
-            }
-            boolean can = false;
-
-            if(this.slots[0] != null){
-                ItemStack theStack = null;
-                for(int i = Math.max(theSlotToPut, 0); i < Math.min(this.slotToPutEnd, theInventory.getSizeInventory()); i++){
-                    ItemStack tempStack = theInventory.getStackInSlot(i);
-                    if(tempStack != null){
-                        if(tempStack.getMaxStackSize() < theInventory.getInventoryStackLimit()){
-                            maxSize = tempStack.getMaxStackSize();
-                        }
-                        else{
-                            maxSize = theInventory.getInventoryStackLimit();
-                        }
-                    }
-                    if(theInventory.isItemValidForSlot(i, this.slots[0]) && (tempStack == null || (ItemUtil.canBeStacked(tempStack, this.slots[0]) && tempStack.stackSize < maxSize)) && this.checkBothFilters(this.slots[0], true)){
-                        if(theSided != null){
-                            for(int j = 0; j <= 5; j++){
-                                if(theSided.canInsertItem(i, this.slots[0], EnumFacing.values()[j])){
-                                    theStack = tempStack;
-                                    theSlotToPut = i;
-                                    can = true;
-                                    break;
-                                }
-                            }
-                        }
-                        else{
-                            theStack = tempStack;
-                            theSlotToPut = i;
-                            can = true;
-                        }
-                    }
-                    if(can){
-                        break;
-                    }
-                }
-                if(can){
-                    if(theStack != null){
-                        ItemStack copiedStack = theStack.copy();
-                        if(ItemUtil.canBeStacked(copiedStack, this.slots[0])){
-                            if(this.slots[0].stackSize <= maxSize-copiedStack.stackSize){
-                                copiedStack.stackSize += this.slots[0].stackSize;
-                                this.slots[0] = null;
-                                theInventory.setInventorySlotContents(theSlotToPut, copiedStack);
-                            }
-                            else if(this.slots[0].stackSize > maxSize-copiedStack.stackSize){
-                                this.decrStackSize(0, maxSize-copiedStack.stackSize);
-                                copiedStack.stackSize = maxSize;
-                                theInventory.setInventorySlotContents(theSlotToPut, copiedStack);
-                            }
-                        }
-                    }
-                    else{
-                        ItemStack toBePut = this.slots[0].copy();
-                        if(maxSize < toBePut.stackSize){
-                            toBePut.stackSize = maxSize;
-                        }
-                        theInventory.setInventorySlotContents(theSlotToPut, toBePut);
-                        if(this.slots[0].stackSize == toBePut.stackSize){
-                            this.slots[0] = null;
-                        }
-                        else{
-                            this.decrStackSize(0, toBePut.stackSize);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -455,10 +268,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             if(!this.isRedstonePowered){
                 if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
                     if(this.sideToPull != -1 && this.placeToPull != null){
-                        this.pull();
+                        this.newPulling();
                     }
-                    if(this.slots[0] != null && this.sideToPut != -1 && this.placeToPut != null){
-                        this.put();
+                    if(StackUtil.isValid(this.slots[0]) && this.sideToPut != -1 && this.placeToPut != null){
+                        this.newPutting();
                     }
                 }
             }

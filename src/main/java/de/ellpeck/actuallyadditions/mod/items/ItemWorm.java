@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -50,7 +51,7 @@ public class ItemWorm extends ItemBase{
                     worm.setPosition(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
                     world.spawnEntityInWorld(worm);
 
-                    stack.stackSize--;
+                    player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
                 }
                 return EnumActionResult.SUCCESS;
             }

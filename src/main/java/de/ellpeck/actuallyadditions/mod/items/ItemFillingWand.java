@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -191,7 +192,7 @@ public class ItemFillingWand extends ItemEnergy{
         if(state != null){
             Block block = state.getBlock();
             ItemStack blockStack = new ItemStack(block, 1, block.getMetaFromState(state));
-            if(blockStack.getItem() != null){
+            if(StackUtil.isValid(blockStack)){
                 display = blockStack.getDisplayName();
             }
         }
@@ -203,13 +204,13 @@ public class ItemFillingWand extends ItemEnergy{
         Block block = state.getBlock();
         ItemStack stack = new ItemStack(block, 1, block.damageDropped(state));
 
-        if(stack != null && stack.getItem() != null){
+        if(StackUtil.isValid(stack)){
             for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                 ItemStack slot = player.inventory.getStackInSlot(i);
-                if(slot != null && slot.isItemEqual(stack) && slot.stackSize > 0){
-                    slot.stackSize--;
-                    if(slot.stackSize <= 0){
-                        player.inventory.setInventorySlotContents(i, null);
+                if(StackUtil.isValid(slot) && slot.isItemEqual(stack)){
+                    slot = StackUtil.addStackSize(slot, -1);
+                    if(!StackUtil.isValid(slot)){
+                        player.inventory.setInventorySlotContents(i, StackUtil.getNull());
                     }
 
                     return true;

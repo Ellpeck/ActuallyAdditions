@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.gen;
 
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -30,15 +31,11 @@ public class JamVillagerTradeList implements ITradeList{
 
             if(random.nextFloat() >= 0.65F){
                 //Jam as input
-                jam.stackSize = random.nextInt(3)+1;
-                emerald.stackSize = random.nextInt(2)+1;
-                recipeList.add(new MerchantRecipe(jam, emerald));
+                recipeList.add(new MerchantRecipe(StackUtil.setStackSize(jam, random.nextInt(3)+1), StackUtil.setStackSize(emerald, random.nextInt(2)+1)));
             }
             else{
                 //Emeralds as input
-                jam.stackSize = random.nextInt(4)+2;
-                emerald.stackSize = random.nextInt(6)+2;
-                recipeList.add(new MerchantRecipe(emerald, jam));
+                recipeList.add(new MerchantRecipe(StackUtil.setStackSize(emerald, random.nextInt(6)+2), StackUtil.setStackSize(jam, random.nextInt(4)+2)));
             }
         }
     }

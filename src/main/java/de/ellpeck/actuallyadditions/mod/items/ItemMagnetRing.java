@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,7 +40,7 @@ public class ItemMagnetRing extends ItemEnergy{
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
                         if(!item.isDead && !item.cannotPickup()){
-                            int energyForItem = 350*item.getEntityItem().stackSize;
+                            int energyForItem = 350*StackUtil.getStackSize(item.getEntityItem());
 
                             if(this.getEnergyStored(stack) >= energyForItem){
                                 item.onCollideWithPlayer(player);

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityList;
@@ -85,7 +86,7 @@ public class ItemSpawnerChanger extends ItemBase{
                         ItemPhantomConnector.clearStorage(stack, "Entity");
 
                         if(!player.capabilities.isCreativeMode){
-                            stack.stackSize--;
+                            player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
                         }
 
                         return EnumActionResult.SUCCESS;

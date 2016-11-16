@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -39,7 +40,7 @@ public class SlotFilter extends Slot{
         else{
             if(heldStack != null){
                 ItemStack stack = heldStack.copy();
-                stack.stackSize = 1;
+                stack = StackUtil.setStackSize(stack, 1);
                 this.putStack(stack);
             }
         }

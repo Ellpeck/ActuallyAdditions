@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -85,7 +86,7 @@ public class ContainerEnervator extends Container{
             //Slots in Inventory to shift from
             if(slot == 1){
                 if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, true)){
-                    return null;
+                    return StackUtil.getNull();
                 }
                 theSlot.onSlotChange(newStack, currentStack);
             }
@@ -94,39 +95,39 @@ public class ContainerEnervator extends Container{
                 //Shift from Inventory
                 if(newStack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && newStack.hasCapability(TeslaUtil.teslaProducer, null))){
                     if(!this.mergeItemStack(newStack, 0, 1, false)){
-                        return null;
+                        return StackUtil.getNull();
                     }
                 }
                 //
 
                 else if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
-                        return null;
+                        return StackUtil.getNull();
                     }
                 }
                 else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
-                    return null;
+                    return StackUtil.getNull();
                 }
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)){
-                return null;
+                return StackUtil.getNull();
             }
 
-            if(newStack.stackSize <= 0){
-                theSlot.putStack(null);
+            if(!StackUtil.isValid(newStack)){
+                theSlot.putStack(StackUtil.getNull());
             }
             else{
                 theSlot.onSlotChanged();
             }
 
-            if(newStack.stackSize == currentStack.stackSize){
-                return null;
+            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+                return StackUtil.getNull();
             }
             theSlot.onPickupFromSlot(player, newStack);
 
             return currentStack;
         }
-        return null;
+        return StackUtil.getNull();
     }
 
     @Override

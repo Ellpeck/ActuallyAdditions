@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -59,39 +60,39 @@ public class ContainerBioReactor extends Container{
                 //Shift from Inventory
                 if(TileEntityBioReactor.isValidItem(newStack)){
                     if(!this.mergeItemStack(newStack, 0, 8, false)){
-                        return null;
+                        return StackUtil.getNull();
                     }
                 }
                 //
 
                 else if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
-                        return null;
+                        return StackUtil.getNull();
                     }
                 }
                 else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
-                    return null;
+                    return StackUtil.getNull();
                 }
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)){
-                return null;
+                return StackUtil.getNull();
             }
 
-            if(newStack.stackSize <= 0){
-                theSlot.putStack(null);
+            if(!StackUtil.isValid(newStack)){
+                theSlot.putStack(StackUtil.getNull());
             }
             else{
                 theSlot.onSlotChanged();
             }
 
-            if(newStack.stackSize == currentStack.stackSize){
-                return null;
+            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+                return StackUtil.getNull();
             }
             theSlot.onPickupFromSlot(player, newStack);
 
             return currentStack;
         }
-        return null;
+        return StackUtil.getNull();
     }
 
     @Override

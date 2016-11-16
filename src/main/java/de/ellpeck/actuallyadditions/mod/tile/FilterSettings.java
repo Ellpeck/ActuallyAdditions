@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
@@ -51,9 +52,9 @@ public class FilterSettings{
     }
 
     public static boolean check(ItemStack stack, ItemStack[] slots, int startSlot, int endSlot, boolean whitelist, boolean meta, boolean nbt, int oredict){
-        if(stack != null){
+        if(StackUtil.isValid(stack)){
             for(int i = startSlot; i < endSlot; i++){
-                if(slots[i] != null){
+                if(StackUtil.isValid(slots[i])){
                     if(areEqualEnough(slots[i], stack, meta, nbt, oredict)){
                         return whitelist;
                     }
@@ -62,7 +63,7 @@ public class FilterSettings{
                         ItemDrill.loadSlotsFromNBT(filterSlots, slots[i]);
                         if(filterSlots != null && filterSlots.length > 0){
                             for(ItemStack filterSlot : filterSlots){
-                                if(filterSlot != null && areEqualEnough(filterSlot, stack, meta, nbt, oredict)){
+                                if(StackUtil.isValid(filterSlot) && areEqualEnough(filterSlot, stack, meta, nbt, oredict)){
                                     return whitelist;
                                 }
                             }

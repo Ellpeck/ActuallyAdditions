@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -54,29 +55,29 @@ public class BlockEmpowerer extends BlockContainerBase{
             TileEntityEmpowerer empowerer = (TileEntityEmpowerer)world.getTileEntity(pos);
             if(empowerer != null){
                 ItemStack stackThere = empowerer.getStackInSlot(0);
-                if(heldItem != null){
-                    if(stackThere == null && !TileEntityEmpowerer.getRecipesForInput(heldItem).isEmpty()){
+                if(StackUtil.isValid(heldItem)){
+                    if(!StackUtil.isValid(stackThere) && !TileEntityEmpowerer.getRecipesForInput(heldItem).isEmpty()){
                         ItemStack toPut = heldItem.copy();
-                        toPut.stackSize = 1;
+                        toPut = StackUtil.setStackSize(toPut, 1);
                         empowerer.setInventorySlotContents(0, toPut);
-                        player.inventory.decrStackSize(player.inventory.currentItem, 1);
+                        player.setHeldItem(hand, StackUtil.addStackSize(heldItem, -1));
                         return true;
                     }
                     else if(ItemUtil.canBeStacked(heldItem, stackThere)){
-                        int maxTransfer = Math.min(stackThere.stackSize, heldItem.getMaxStackSize()-heldItem.stackSize);
+                        int maxTransfer = Math.min(StackUtil.getStackSize(stackThere), heldItem.getMaxStackSize()-StackUtil.getStackSize(heldItem));
                         if(maxTransfer > 0){
-                            heldItem.stackSize += maxTransfer;
+                            player.setHeldItem(hand, StackUtil.addStackSize(heldItem, maxTransfer));
                             ItemStack newStackThere = stackThere.copy();
-                            newStackThere.stackSize -= maxTransfer;
-                            empowerer.setInventorySlotContents(0, newStackThere.stackSize <= 0 ? null : newStackThere);
+                            StackUtil.addStackSize(newStackThere, -maxTransfer);
+                            empowerer.setInventorySlotContents(0, StackUtil.validateCheck(newStackThere));
                             return true;
                         }
                     }
                 }
                 else{
-                    if(stackThere != null){
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, stackThere.copy());
-                        empowerer.setInventorySlotContents(0, null);
+                    if(StackUtil.isValid(stackThere)){
+                        player.setHeldItem(hand, stackThere.copy());
+                        empowerer.setInventorySlotContents(0, StackUtil.getNull());
                         return true;
                     }
                 }

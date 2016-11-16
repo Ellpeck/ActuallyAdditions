@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
@@ -23,6 +24,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+
+import java.util.Arrays;
 
 
 public class ContainerFilter extends Container{
@@ -80,32 +83,32 @@ public class ContainerFilter extends Container{
                 //
                 if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
-                        return null;
+                        return StackUtil.getNull();
                     }
                 }
                 else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
-                    return null;
+                    return StackUtil.getNull();
                 }
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)){
-                return null;
+                return StackUtil.getNull();
             }
 
-            if(newStack.stackSize == 0){
-                theSlot.putStack(null);
+            if(!StackUtil.isValid(newStack)){
+                theSlot.putStack(StackUtil.getNull());
             }
             else{
                 theSlot.onSlotChanged();
             }
 
-            if(newStack.stackSize == currentStack.stackSize){
-                return null;
+            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+                return StackUtil.getNull();
             }
             theSlot.onPickupFromSlot(player, newStack);
 
             return currentStack;
         }
-        return null;
+        return StackUtil.getNull();
     }
 
     @Override
@@ -139,6 +142,10 @@ public class ContainerFilter extends Container{
     public static class InventoryFilter implements IInventory{
 
         public ItemStack[] slots = new ItemStack[SLOT_AMOUNT];
+
+        public InventoryFilter(){
+            Arrays.fill(this.slots, StackUtil.getNull());
+        }
 
         @Override
         public String getName(){
@@ -194,6 +201,7 @@ public class ContainerFilter extends Container{
         public void clear(){
             int length = this.slots.length;
             this.slots = new ItemStack[length];
+            Arrays.fill(this.slots, StackUtil.getNull());
         }
 
         @Override
@@ -212,35 +220,35 @@ public class ContainerFilter extends Container{
             if(i < this.getSizeInventory()){
                 return this.slots[i];
             }
-            return null;
+            return StackUtil.getNull();
         }
 
         @Override
         public ItemStack decrStackSize(int i, int j){
-            if(this.slots[i] != null){
+            if(StackUtil.isValid(this.slots[i])){
                 ItemStack stackAt;
-                if(this.slots[i].stackSize <= j){
+                if(StackUtil.getStackSize(this.slots[i]) <= j){
                     stackAt = this.slots[i];
-                    this.slots[i] = null;
+                    this.slots[i] = StackUtil.getNull();
                     this.markDirty();
                     return stackAt;
                 }
                 else{
                     stackAt = this.slots[i].splitStack(j);
-                    if(this.slots[i].stackSize <= 0){
-                        this.slots[i] = null;
+                    if(StackUtil.getStackSize(this.slots[i]) <= 0){
+                        this.slots[i] = StackUtil.getNull();
                     }
                     this.markDirty();
                     return stackAt;
                 }
             }
-            return null;
+            return StackUtil.getNull();
         }
 
         @Override
         public ItemStack removeStackFromSlot(int index){
             ItemStack stack = this.slots[index];
-            this.slots[index] = null;
+            this.slots[index] = StackUtil.getNull();
             return stack;
         }
 

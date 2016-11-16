@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.Network;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -59,7 +60,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
                 @Override
                 public ItemStack extractItem(int slot, int amount, boolean simulate){
                     ItemStack stackIn = TileEntityItemViewer.this.getStackInSlot(slot);
-                    if(stackIn != null){
+                    if(StackUtil.isValid(stackIn)){
                         if(TileEntityItemViewer.this.canExtractItem(slot, stackIn, direction)){
                             SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
                             if(info != null){
@@ -150,8 +151,8 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         if(handler != null){
             if(this.isWhitelisted(handler, stack, true)){
                 if(ItemStack.areItemsEqual(handler.handler.getStackInSlot(handler.switchedIndex), stack)){
-                    ItemStack gaveBack = handler.handler.extractItem(handler.switchedIndex, stack.stackSize, true);
-                    return gaveBack != null;
+                    ItemStack gaveBack = handler.handler.extractItem(handler.switchedIndex, StackUtil.getStackSize(stack), true);
+                    return StackUtil.isValid(gaveBack);
                 }
             }
         }
@@ -195,8 +196,8 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
             if(handler != null){
                 ItemStack toInsert = stack.copy();
                 ItemStack inSlot = handler.handler.getStackInSlot(handler.switchedIndex);
-                if(inSlot != null){
-                    toInsert.stackSize -= inSlot.stackSize;
+                if(StackUtil.isValid(inSlot)){
+                    toInsert = StackUtil.addStackSize(toInsert, -StackUtil.getStackSize(inSlot));
                 }
                 handler.handler.insertItem(handler.switchedIndex, toInsert, false);
             }
@@ -243,8 +244,8 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
         if(handler != null){
             ItemStack stackInSlot = handler.handler.getStackInSlot(handler.switchedIndex);
-            if(stackInSlot != null){
-                handler.handler.extractItem(handler.switchedIndex, stackInSlot.stackSize, false);
+            if(StackUtil.isValid(stackInSlot)){
+                handler.handler.extractItem(handler.switchedIndex, StackUtil.getStackSize(stackInSlot), false);
             }
             return stackInSlot;
         }

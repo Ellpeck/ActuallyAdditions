@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -64,9 +65,9 @@ public class TileEntityDropper extends TileEntityInventoryBase{
     }
 
     private void doWork(){
-        if(this.removeFromInventory(false) != null){
+        if(StackUtil.isValid(this.removeFromInventory(false))){
             ItemStack stack = this.removeFromInventory(true);
-            stack.stackSize = 1;
+            stack = StackUtil.setStackSize(stack, 1);
             IBlockState state = this.worldObj.getBlockState(this.pos);
             WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state)), this.worldObj, this.pos, stack);
         }
@@ -74,19 +75,16 @@ public class TileEntityDropper extends TileEntityInventoryBase{
 
     public ItemStack removeFromInventory(boolean actuallyDo){
         for(int i = 0; i < this.slots.length; i++){
-            if(this.slots[i] != null){
+            if(StackUtil.isValid(this.slots[i])){
                 ItemStack slot = this.slots[i].copy();
                 if(actuallyDo){
-                    this.slots[i].stackSize--;
-                    if(this.slots[i].stackSize <= 0){
-                        this.slots[i] = null;
-                    }
+                    this.slots[i] = StackUtil.addStackSize(this.slots[i], -1);
                     this.markDirty();
                 }
                 return slot;
             }
         }
-        return null;
+        return StackUtil.getNull();
     }
 
     @Override

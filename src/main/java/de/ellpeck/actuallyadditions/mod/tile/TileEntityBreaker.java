@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -100,8 +101,8 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
         else if(this.isPlacer){
             int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
             this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(sideToManipulate, this.worldObj, this.pos, this.slots[theSlot]));
-            if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
-                this.slots[theSlot] = null;
+            if(!StackUtil.isValid(this.slots[theSlot])){
+                this.slots[theSlot] = StackUtil.getNull();
             }
         }
     }

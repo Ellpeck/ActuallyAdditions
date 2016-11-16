@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -36,7 +37,7 @@ public class LensDisruption extends Lens{
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
             for(EntityItem item : items){
                 ItemStack stack = item.getEntityItem();
-                if(!item.isDead && stack != null){
+                if(!item.isDead && StackUtil.isValid(stack)){
                     if(!stack.hasTagCompound() || !stack.getTagCompound().getBoolean(ModUtil.MOD_ID+"DisruptedAlready")){
 
                         ItemStack newStack;
@@ -48,9 +49,9 @@ public class LensDisruption extends Lens{
                                 newStack = new ItemStack(Block.REGISTRY.getRandomObject(tile.getWorldObject().rand));
                             }
                         }
-                        while(newStack == null || newStack.getItem() == null);
+                        while(!StackUtil.isValid(newStack));
 
-                        newStack.stackSize = stack.stackSize;
+                        newStack = StackUtil.setStackSize(newStack, StackUtil.getStackSize(stack));
 
                         if(!newStack.hasTagCompound()){
                             newStack.setTagCompound(new NBTTagCompound());

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -29,23 +30,23 @@ public class RenderCompost extends TileEntitySpecialRenderer{
             TileEntityCompost compost = (TileEntityCompost)te;
             ItemStack slot = compost.getStackInSlot(0);
 
-            if(slot != null){
+            if(StackUtil.isValid(slot)){
                 Block display = null;
                 int maxAmount = 0;
                 for(CompostRecipe aRecipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
                     if(slot.isItemEqual(aRecipe.input)){
                         display = aRecipe.inputDisplay;
-                        maxAmount = aRecipe.input.stackSize;
+                        maxAmount = StackUtil.getStackSize(aRecipe.input);
                         break;
                     }
                     else if(slot.isItemEqual(aRecipe.output)){
                         display = aRecipe.outputDisplay;
-                        maxAmount = aRecipe.output.stackSize;
+                        maxAmount = StackUtil.getStackSize(aRecipe.output);
                         break;
                     }
                 }
                 if(display != null){
-                    float i = (float)slot.stackSize/(float)maxAmount;
+                    float i = (float)StackUtil.getStackSize(slot)/(float)maxAmount;
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((float)x+0.5F, (float)y+(i/3F)+0.01F, (float)z+0.5F);
                     //Hehe

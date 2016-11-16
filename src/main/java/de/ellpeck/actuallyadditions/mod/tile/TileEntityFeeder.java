@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Items;
@@ -73,16 +74,13 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                     if(this.currentAnimalAmount < THRESHOLD){
                         if(this.currentTimer >= TIME){
                             this.currentTimer = 0;
-                            if(this.slots[0] != null){
+                            if(StackUtil.isValid(this.slots[0])){
                                 EntityAnimal randomAnimal = animals.get(this.worldObj.rand.nextInt(this.currentAnimalAmount));
                                 if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && (randomAnimal.isBreedingItem(this.slots[0]) || this.canHorseBeFed(randomAnimal))){
 
                                     this.feedAnimal(randomAnimal);
 
-                                    this.slots[0].stackSize--;
-                                    if(this.slots[0].stackSize == 0){
-                                        this.slots[0] = this.slots[0].getItem().getContainerItem(this.slots[0]);
-                                    }
+                                    this.slots[0] = StackUtil.addStackSize(this.slots[0], -1);
                                 }
                             }
                         }

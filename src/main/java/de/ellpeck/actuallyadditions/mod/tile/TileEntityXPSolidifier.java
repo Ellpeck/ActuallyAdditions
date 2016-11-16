@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -122,15 +123,15 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         super.updateEntity();
         if(!this.worldObj.isRemote){
             if(this.amount > 0){
-                if(this.slots[0] == null){
+                if(!StackUtil.isValid(this.slots[0])){
                     int toSet = this.amount > 64 ? 64 : this.amount;
                     this.slots[0] = new ItemStack(InitItems.itemSolidifiedExperience, toSet);
                     this.amount -= toSet;
                 }
-                else if(this.slots[0].stackSize < 64){
-                    int needed = 64-this.slots[0].stackSize;
+                else if(StackUtil.getStackSize(this.slots[0]) < 64){
+                    int needed = 64-StackUtil.getStackSize(this.slots[0]);
                     int toAdd = this.amount > needed ? needed : this.amount;
-                    this.slots[0].stackSize += toAdd;
+                    this.slots[0] = StackUtil.addStackSize(this.slots[0], toAdd);
                     this.amount -= toAdd;
                 }
             }
@@ -153,8 +154,8 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 }
             }
 
-            if(this.slots[1] != null && this.slots[1].getItem() instanceof ItemSolidifiedExperience){
-                this.amount += this.slots[1].stackSize;
+            if(StackUtil.isValid(this.slots[1]) && this.slots[1].getItem() instanceof ItemSolidifiedExperience){
+                this.amount += StackUtil.getStackSize(this.slots[1]);
                 this.slots[1] = null;
             }
 

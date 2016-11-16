@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -44,7 +45,7 @@ public class ItemWaterBowl extends ItemBase{
     public void onPlayerInteractEvent(PlayerInteractEvent.RightClickItem event){
         if(event.getWorld() != null){
             if(ConfigBoolValues.WATER_BOWL.isEnabled()){
-                if(event.getItemStack() != null && event.getItemStack().getItem() == Items.BOWL){
+                if(StackUtil.isValid(event.getItemStack()) && event.getItemStack().getItem() == Items.BOWL){
                     RayTraceResult trace = WorldUtil.getNearestBlockWithDefaultReachDistance(event.getWorld(), event.getEntityPlayer(), true, false, false);
                     ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(event.getEntityPlayer(), event.getWorld(), event.getItemStack(), trace);
                     if(result == null && trace != null && trace.getBlockPos() != null){
@@ -57,10 +58,10 @@ public class ItemWaterBowl extends ItemBase{
 
                                 if(!event.getWorld().isRemote){
                                     event.getWorld().setBlockState(trace.getBlockPos(), Blocks.AIR.getDefaultState(), 11);
-                                    event.getItemStack().stackSize--;
+                                    ItemStack reduced = StackUtil.addStackSize(event.getItemStack(), -1);
 
                                     ItemStack bowl = new ItemStack(InitItems.itemWaterBowl);
-                                    if(event.getItemStack().stackSize <= 0){
+                                    if(!StackUtil.isValid(reduced)){
                                         event.getEntityPlayer().setHeldItem(event.getHand(), bowl);
                                     }
                                     else if(!event.getEntityPlayer().inventory.addItemStackToInventory(bowl.copy())){

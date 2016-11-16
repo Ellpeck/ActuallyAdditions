@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -96,13 +97,13 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
                 List<ItemStack> drops = this.getDrops(world, pos, state, 0);
                 boolean deductedSeedSize = false;
                 for(ItemStack drop : drops){
-                    if(drop != null){
+                    if(StackUtil.isValid(drop)){
                         if(drop.getItem() == this.seedItem && !deductedSeedSize){
-                            drop.stackSize--;
+                            StackUtil.addStackSize(drop, -1);
                             deductedSeedSize = true;
                         }
 
-                        if(drop.stackSize > 0){
+                        if(StackUtil.isValid(drop)){
                             EntityItem entity = new EntityItem(world, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, drop);
                             world.spawnEntityInWorld(entity);
                         }

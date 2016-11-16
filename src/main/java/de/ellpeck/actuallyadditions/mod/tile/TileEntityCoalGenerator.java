@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -73,15 +74,12 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.storage.receiveEnergy(PRODUCE, false);
             }
 
-            if(this.currentBurnTime <= 0 && this.slots[0] != null && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
+            if(this.currentBurnTime <= 0 && StackUtil.isValid(this.slots[0]) && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
                 int burnTime = TileEntityFurnace.getItemBurnTime(this.slots[0]);
                 this.maxBurnTime = burnTime;
                 this.currentBurnTime = burnTime;
 
-                this.slots[0].stackSize--;
-                if(this.slots[0].stackSize == 0){
-                    this.slots[0] = this.slots[0].getItem().getContainerItem(this.slots[0]);
-                }
+                this.slots[0] = StackUtil.addStackSize(this.slots[0], -1);
             }
 
             if(flag != this.currentBurnTime > 0){

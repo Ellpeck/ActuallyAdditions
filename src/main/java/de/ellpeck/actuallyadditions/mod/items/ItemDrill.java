@@ -21,6 +21,7 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaProducer;
@@ -105,11 +106,11 @@ public class ItemDrill extends ItemEnergy{
     //Places Blocks if the Placing Upgrade is installed
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
         ItemStack upgrade = this.getHasUpgradeAsStack(stack, ItemDrillUpgrade.UpgradeType.PLACER);
-        if(upgrade != null){
+        if(StackUtil.isValid(upgrade)){
             int slot = ItemDrillUpgrade.getSlotToPlaceFrom(upgrade);
             if(slot >= 0 && slot < InventoryPlayer.getHotbarSize()){
                 ItemStack anEquip = player.inventory.getStackInSlot(slot);
-                if(anEquip != null && anEquip != stack){
+                if(StackUtil.isValid(anEquip) && anEquip != stack){
                     ItemStack equip = anEquip.copy();
                     if(!world.isRemote){
                         //tryPlaceItemIntoWorld could throw an Exception
@@ -117,7 +118,7 @@ public class ItemDrill extends ItemEnergy{
                             //Places the Block into the World
                             if(equip.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ) != EnumActionResult.FAIL){
                                 if(!player.capabilities.isCreativeMode){
-                                    player.inventory.setInventorySlotContents(slot, equip.stackSize <= 0 ? null : equip.copy());
+                                    player.inventory.setInventorySlotContents(slot, StackUtil.validateCopy(equip));
                                 }
                                 //Synchronizes the Client
                                 player.inventoryContainer.detectAndSendChanges();
@@ -149,21 +150,21 @@ public class ItemDrill extends ItemEnergy{
     public ItemStack getHasUpgradeAsStack(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade){
         NBTTagCompound compound = stack.getTagCompound();
         if(compound == null){
-            return null;
+            return StackUtil.getNull();
         }
 
         ItemStack[] slots = new ItemStack[ContainerDrill.SLOT_AMOUNT];
         loadSlotsFromNBT(slots, stack);
         if(slots != null && slots.length > 0){
             for(ItemStack slotStack : slots){
-                if(slotStack != null && slotStack.getItem() instanceof ItemDrillUpgrade){
+                if(StackUtil.isValid(slotStack) && slotStack.getItem() instanceof ItemDrillUpgrade){
                     if(((ItemDrillUpgrade)slotStack.getItem()).type == upgrade){
                         return slotStack;
                     }
                 }
             }
         }
-        return null;
+        return StackUtil.getNull();
     }
 
     @Override
@@ -195,7 +196,7 @@ public class ItemDrill extends ItemEnergy{
         loadSlotsFromNBT(slots, stack);
         if(slots != null && slots.length > 0){
             for(ItemStack slotStack : slots){
-                if(slotStack != null){
+                if(StackUtil.isValid(slotStack)){
                     Item item = slotStack.getItem();
 
                     int extracted = 0;
@@ -352,7 +353,7 @@ public class ItemDrill extends ItemEnergy{
      * @return Is the Upgrade applied?
      */
     public boolean getHasUpgrade(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade){
-        return this.getHasUpgradeAsStack(stack, upgrade) != null;
+        return StackUtil.isValid(this.getHasUpgradeAsStack(stack, upgrade));
     }
 
     @Override

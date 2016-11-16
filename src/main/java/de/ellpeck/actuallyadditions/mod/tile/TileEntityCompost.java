@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -62,9 +63,9 @@ public class TileEntityCompost extends TileEntityInventoryBase{
         if(!this.worldObj.isRemote){
             boolean theFlag = this.conversionTime > 0;
 
-            if(this.slots[0] != null){
+            if(StackUtil.isValid(this.slots[0])){
                 CompostRecipe recipe = getRecipeForInput(this.slots[0]);
-                if(recipe != null && this.slots[0].isItemEqual(recipe.input) && this.slots[0].stackSize >= recipe.input.stackSize){
+                if(recipe != null && this.slots[0].isItemEqual(recipe.input) && StackUtil.getStackSize(this.slots[0]) >= StackUtil.getStackSize(recipe.input)){
                     this.conversionTime++;
                     if(this.conversionTime >= 3000){
                         this.slots[0] = recipe.output.copy();
@@ -98,8 +99,8 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     public int getInventoryStackLimit(){
         if(this.slots[0] != null){
             CompostRecipe recipe = getRecipeForInput(this.slots[0]);
-            if(recipe != null && recipe.input != null){
-                return recipe.input.stackSize;
+            if(recipe != null && StackUtil.isValid(recipe.input)){
+                return StackUtil.getStackSize(recipe.input);
             }
         }
         return super.getInventoryStackLimit();

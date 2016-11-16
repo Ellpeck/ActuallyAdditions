@@ -14,6 +14,7 @@ import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -91,10 +92,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IC
                     if(this.currentProcessTime >= TIME){
                         this.currentProcessTime = 0;
 
-                        this.slots[0].stackSize--;
-                        if(this.slots[0].stackSize == 0){
-                            this.slots[0] = null;
-                        }
+                        this.slots[0] = StackUtil.addStackSize(this.slots[0], -1);
 
                         this.tank.fillInternal(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
                         this.markDirty();
@@ -119,7 +117,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IC
     }
 
     public boolean isCanola(int slot){
-        return this.slots[slot] != null && this.slots[slot].getItem() == InitItems.itemMisc && this.slots[slot].getItemDamage() == TheMiscItems.CANOLA.ordinal();
+        return StackUtil.isValid(this.slots[slot]) && this.slots[slot].getItem() == InitItems.itemMisc && this.slots[slot].getItemDamage() == TheMiscItems.CANOLA.ordinal();
     }
 
     @Override

@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,13 +58,13 @@ public class ItemSolidifiedExperience extends ItemBase{
             if(!player.isSneaking()){
                 amount = SOLID_XP_AMOUNT;
                 if(!player.capabilities.isCreativeMode){
-                    stack.stackSize--;
+                    stack = StackUtil.addStackSize(stack, -1);
                 }
             }
             else{
-                amount = SOLID_XP_AMOUNT*stack.stackSize;
+                amount = SOLID_XP_AMOUNT*StackUtil.getStackSize(stack);
                 if(!player.capabilities.isCreativeMode){
-                    stack.stackSize = 0;
+                    stack = StackUtil.setStackSize(stack, 0);
                 }
             }
 

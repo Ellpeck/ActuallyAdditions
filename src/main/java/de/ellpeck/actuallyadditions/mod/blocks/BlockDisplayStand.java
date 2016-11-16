@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -54,29 +55,29 @@ public class BlockDisplayStand extends BlockContainerBase{
             TileEntityDisplayStand stand = (TileEntityDisplayStand)world.getTileEntity(pos);
             if(stand != null){
                 ItemStack display = stand.getStackInSlot(0);
-                if(heldItem != null){
-                    if(display == null){
+                if(StackUtil.isValid(heldItem)){
+                    if(!StackUtil.isValid(display)){
                         ItemStack toPut = heldItem.copy();
-                        toPut.stackSize = 1;
+                        toPut = StackUtil.setStackSize(toPut, 1);
                         stand.setInventorySlotContents(0, toPut);
-                        player.inventory.decrStackSize(player.inventory.currentItem, 1);
+                        player.setHeldItem(hand, StackUtil.addStackSize(heldItem, -1));
                         return true;
                     }
                     else if(ItemUtil.canBeStacked(heldItem, display)){
-                        int maxTransfer = Math.min(display.stackSize, heldItem.getMaxStackSize()-heldItem.stackSize);
+                        int maxTransfer = Math.min(StackUtil.getStackSize(display), heldItem.getMaxStackSize()-StackUtil.getStackSize(heldItem));
                         if(maxTransfer > 0){
-                            heldItem.stackSize += maxTransfer;
+                            player.setHeldItem(hand, StackUtil.addStackSize(heldItem, maxTransfer));
                             ItemStack newDisplay = display.copy();
-                            newDisplay.stackSize -= maxTransfer;
-                            stand.setInventorySlotContents(0, newDisplay.stackSize <= 0 ? null : newDisplay);
+                            newDisplay = StackUtil.addStackSize(newDisplay, -maxTransfer);
+                            stand.setInventorySlotContents(0, StackUtil.validateCheck(newDisplay));
                             return true;
                         }
                     }
                 }
                 else{
-                    if(display != null){
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, display.copy());
-                        stand.setInventorySlotContents(0, null);
+                    if(StackUtil.isValid(display)){
+                        player.setHeldItem(hand, display.copy());
+                        stand.setInventorySlotContents(0, StackUtil.getNull());
                         return true;
                     }
                 }

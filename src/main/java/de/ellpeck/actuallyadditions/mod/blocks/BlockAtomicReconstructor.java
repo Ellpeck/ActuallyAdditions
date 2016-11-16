@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
@@ -70,11 +71,11 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         if(!world.isRemote){
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor)world.getTileEntity(pos);
             if(reconstructor != null){
-                if(heldItem != null){
+                if(StackUtil.isValid(heldItem)){
                     Item item = heldItem.getItem();
-                    if(item instanceof ILensItem && reconstructor.getStackInSlot(0) == null){
+                    if(item instanceof ILensItem && !StackUtil.isValid(reconstructor.getStackInSlot(0))){
                         ItemStack toPut = heldItem.copy();
-                        toPut.stackSize = 1;
+                        toPut = StackUtil.setStackSize(toPut, 1);
                         reconstructor.setInventorySlotContents(0, toPut);
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
                     }
@@ -86,9 +87,9 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                 }
                 else{
                     ItemStack slot = reconstructor.getStackInSlot(0);
-                    if(slot != null){
+                    if(StackUtil.isValid(slot)){
                         player.inventory.setInventorySlotContents(player.inventory.currentItem, slot.copy());
-                        reconstructor.setInventorySlotContents(0, null);
+                        reconstructor.setInventorySlotContents(0, StackUtil.getNull());
                     }
                 }
             }

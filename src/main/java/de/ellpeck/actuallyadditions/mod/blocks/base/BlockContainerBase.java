@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockRedstoneTorch;
@@ -97,7 +98,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
 
     public void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, BlockPos pos){
         ItemStack stack = tile.getStackInSlot(i);
-        if(stack != null && stack.stackSize > 0){
+        if(StackUtil.isValid(stack)){
             float dX = world.rand.nextFloat()*0.8F+0.1F;
             float dY = world.rand.nextFloat()*0.8F+0.1F;
             float dZ = world.rand.nextFloat()*0.8F+0.1F;
@@ -112,7 +113,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
 
     public boolean tryToggleRedstone(World world, BlockPos pos, EntityPlayer player){
         ItemStack stack = player.getHeldItemMainhand();
-        if(stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
+        if(StackUtil.isValid(stack) && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityBase){
                 TileEntityBase base = (TileEntityBase)tile;

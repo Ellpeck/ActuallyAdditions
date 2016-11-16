@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -148,8 +149,8 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             else{
                 int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
                 this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.worldObj, this.boundPosition, this.slots[theSlot]));
-                if(this.slots[theSlot] != null && this.slots[theSlot].stackSize <= 0){
-                    this.slots[theSlot] = null;
+                if(!StackUtil.isValid(this.slots[theSlot])){
+                    this.slots[theSlot] = StackUtil.getNull();
                 }
             }
         }

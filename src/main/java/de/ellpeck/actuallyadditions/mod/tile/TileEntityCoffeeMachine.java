@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -132,10 +133,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         if(this.slots[SLOT_COFFEE_BEANS] != null && this.slots[SLOT_COFFEE_BEANS].getItem() == InitItems.itemCoffeeBean){
             int toAdd = 2;
             if(toAdd <= COFFEE_CACHE_MAX_AMOUNT-this.coffeeCacheAmount){
-                this.slots[SLOT_COFFEE_BEANS].stackSize--;
-                if(this.slots[SLOT_COFFEE_BEANS].stackSize <= 0){
-                    this.slots[SLOT_COFFEE_BEANS] = null;
-                }
+                this.slots[SLOT_COFFEE_BEANS] = StackUtil.addStackSize(this.slots[SLOT_COFFEE_BEANS], -1);
                 this.coffeeCacheAmount += toAdd;
             }
         }
@@ -143,7 +141,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     public void brew(){
         if(!this.worldObj.isRemote){
-            if(this.slots[SLOT_INPUT] != null && this.slots[SLOT_INPUT].getItem() == InitItems.itemMisc && this.slots[SLOT_INPUT].getItemDamage() == TheMiscItems.CUP.ordinal() && this.slots[SLOT_OUTPUT] == null && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= WATER_USE){
+            if(StackUtil.isValid(this.slots[SLOT_INPUT]) && this.slots[SLOT_INPUT].getItem() == InitItems.itemMisc && this.slots[SLOT_INPUT].getItemDamage() == TheMiscItems.CUP.ordinal() && !StackUtil.isValid(this.slots[SLOT_OUTPUT]) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= WATER_USE){
                 if(this.storage.getEnergyStored() >= ENERGY_USED){
                     if(this.brewTime%30 == 0){
                         this.worldObj.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.35F, 1.0F);
@@ -155,23 +153,17 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                         this.brewTime = 0;
                         ItemStack output = new ItemStack(InitItems.itemCoffee);
                         for(int i = 3; i < this.slots.length; i++){
-                            if(this.slots[i] != null){
+                            if(StackUtil.isValid(this.slots[i])){
                                 CoffeeIngredient ingredient = ItemCoffee.getIngredientFromStack(this.slots[i]);
                                 if(ingredient != null){
                                     if(ingredient.effect(output)){
-                                        this.slots[i].stackSize--;
-                                        if(this.slots[i].stackSize <= 0){
-                                            this.slots[i] = this.slots[i].getItem().getContainerItem(this.slots[i]);
-                                        }
+                                        this.slots[i] = StackUtil.addStackSize(this.slots[i], 1);
                                     }
                                 }
                             }
                         }
                         this.slots[SLOT_OUTPUT] = output.copy();
-                        this.slots[SLOT_INPUT].stackSize--;
-                        if(this.slots[SLOT_INPUT].stackSize <= 0){
-                            this.slots[SLOT_INPUT] = null;
-                        }
+                        this.slots[SLOT_INPUT] = StackUtil.addStackSize(this.slots[SLOT_INPUT], -1);
                         this.coffeeCacheAmount -= CACHE_USE;
                         this.tank.drainInternal(WATER_USE, true);
                     }

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.EnergyStorage;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.item.Item;
@@ -40,7 +41,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     }
 
     public static boolean isValidItem(ItemStack stack){
-        if(stack != null){
+        if(StackUtil.isValid(stack)){
             Item item = stack.getItem();
             if(isValid(item)){
                 return true;
@@ -66,7 +67,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
             if(this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
                 for(int i = 0; i < this.slots.length; i++){
                     ItemStack stack = this.slots[i];
-                    if(stack != null){
+                    if(StackUtil.isValid(stack)){
                         Item item = stack.getItem();
                         if(isValidItem(stack) && (types == null || !types.contains(item))){
                             if(types == null){
@@ -74,10 +75,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
                             }
                             types.add(item);
 
-                            stack.stackSize--;
-                            if(stack.stackSize <= 0){
-                                this.slots[i] = null;
-                            }
+                            this.slots[i] = StackUtil.addStackSize(stack, -1);
                         }
                     }
                 }
