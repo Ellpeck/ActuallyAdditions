@@ -51,10 +51,10 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
         if(StackUtil.isValid(first) || StackUtil.isValid(second)){
             ItemStack toSplit = StackUtil.getNull();
-            if(!StackUtil.isValid(first) && StackUtil.isValid(second)){
+            if(!StackUtil.isValid(first) && StackUtil.isValid(second) && StackUtil.getStackSize(second) > 1){
                 toSplit = second;
             }
-            else if(!StackUtil.isValid(second) && StackUtil.isValid(first)){
+            else if(!StackUtil.isValid(second) && StackUtil.isValid(first) && StackUtil.getStackSize(first) > 1){
                 toSplit = first;
             }
             else if(ItemUtil.canBeStacked(first, second)){
@@ -69,8 +69,8 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             if(StackUtil.isValid(toSplit)){
                 ItemStack splitFirst = toSplit.copy();
                 ItemStack secondSplit = splitFirst.splitStack(StackUtil.getStackSize(splitFirst)/2);
-                slots[slot1] = splitFirst;
-                slots[slot2] = secondSplit;
+                slots[slot1] = StackUtil.validateCheck(splitFirst);
+                slots[slot2] = StackUtil.validateCheck(secondSplit);
             }
         }
     }
