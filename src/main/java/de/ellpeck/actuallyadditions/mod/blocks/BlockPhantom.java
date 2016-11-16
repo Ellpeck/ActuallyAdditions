@@ -137,7 +137,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
                     IBlockState state = minecraft.theWorld.getBlockState(phantom.getBoundPosition());
                     Block block = state.getBlock();
                     Item item = Item.getItemFromBlock(block);
-                    String name = item == null ? "Absolutely Nothing" : item.getItemStackDisplayName(new ItemStack(block, 1, block.getMetaFromState(state)));
+                    String name = item == null ? "Something Unrecognizable" : item.getItemStackDisplayName(new ItemStack(block, 1, block.getMetaFromState(state)));
                     StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID+".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-30, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
 
                     if(phantom.isBoundThingInRange()){
