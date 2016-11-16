@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "actuallyadditions:blockgiantchestlarge",
+    "textures": {
+      "particle": "actuallyadditions:blocks/blockgiantchest"
+    },
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

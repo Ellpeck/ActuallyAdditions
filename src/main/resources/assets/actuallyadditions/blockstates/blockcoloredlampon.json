@@ -1,0 +1,29 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponwhite" } },
+      "1": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponorange" } },
+      "2": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponmagenta" } },
+      "3": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponlightblue" } },
+      "4": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponyellow" } },
+      "5": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponlime" } },
+      "6": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponpink" } },
+      "7": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlampongray" } },
+      "8": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponlightgray" } },
+      "9": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponcyan" } },
+      "10": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponpurple" } },
+      "11": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponblue" } },
+      "12": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponbrown" } },
+      "13": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlampongreen" } },
+      "14": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponred" } },
+      "15": { "textures" : { "all" : "actuallyadditions:blocks/blockcoloredlamponblack" } }
+    }
+  }
+}

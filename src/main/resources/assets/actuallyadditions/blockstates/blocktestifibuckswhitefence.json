@@ -1,0 +1,19 @@
+{
+  "multipart": [
+    {   "when": { "up": "true" },
+      "apply": { "model": "actuallyadditions:blocktestifibuckswhitefencepost" }
+    },
+    {   "when": { "north": "true" },
+      "apply": { "model": "actuallyadditions:blocktestifibuckswhitefenceside", "uvlock": true }
+    },
+    {   "when": { "east": "true" },
+      "apply": { "model": "actuallyadditions:blocktestifibuckswhitefenceside", "y": 90, "uvlock": true }
+    },
+    {   "when": { "south": "true" },
+      "apply": { "model": "actuallyadditions:blocktestifibuckswhitefenceside", "y": 180, "uvlock": true }
+    },
+    {   "when": { "west": "true" },
+      "apply": { "model": "actuallyadditions:blocktestifibuckswhitefenceside", "y": 270, "uvlock": true }
+    }
+  ]
+}

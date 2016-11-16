@@ -1,7 +1,0 @@
-{
-  "parent": "actuallyadditions:item/handheldItem",
-  "textures": {
-    "layer0": "actuallyadditions:items/itemPaxel",
-    "layer1": "actuallyadditions:items/itemPaxelOverlay"
-  }
-}

@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cross",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": { "textures" : { "cross" : "actuallyadditions:blocks/blockcanolastage4" } },
+      "1": { "textures" : { "cross" : "actuallyadditions:blocks/blockflaxstage6" } },
+      "2": { "textures" : { "cross" : "actuallyadditions:blocks/blockricestage6" } },
+      "3": { "textures" : { "cross" : "actuallyadditions:blocks/blockcoffeestage6" } }
+    }
+  }
+}

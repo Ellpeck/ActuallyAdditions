@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "actuallyadditions:blockcanolapress",
+    "textures": {
+      "particle": "actuallyadditions:blocks/blockcanolapress"
+    },
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}
