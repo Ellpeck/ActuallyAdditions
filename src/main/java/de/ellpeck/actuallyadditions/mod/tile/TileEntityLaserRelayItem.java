@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -31,6 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
+    public int priority;
     public final Map<BlockPos, IItemHandler> handlersAround = new ConcurrentHashMap<BlockPos, IItemHandler>();
 
     public TileEntityLaserRelayItem(String name){
@@ -39,6 +41,10 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
     public TileEntityLaserRelayItem(){
         this("laserRelayItem");
+    }
+
+    public int getPriority(){
+        return this.priority;
     }
 
     public boolean isWhitelisted(ItemStack stack, boolean output){
@@ -107,6 +113,22 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setInteger("Priority", this.priority);
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+        if(type != NBTType.SAVE_BLOCK){
+            this.priority = compound.getInteger("Priority");
         }
     }
 }

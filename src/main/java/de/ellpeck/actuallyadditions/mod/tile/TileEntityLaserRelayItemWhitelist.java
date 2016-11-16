@@ -165,6 +165,11 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     }
 
     @Override
+    public int getPriority(){
+        return super.getPriority()+10;
+    }
+
+    @Override
     public boolean isWhitelisted(ItemStack stack, boolean output){
         return output ? this.rightFilter.check(stack, this.slots) : this.leftFilter.check(stack, this.slots);
     }

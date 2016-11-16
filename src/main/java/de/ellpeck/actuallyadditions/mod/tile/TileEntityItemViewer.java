@@ -276,17 +276,17 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
         @Override
         public int compareTo(GenericItemHandlerInfo other){
-            boolean thisWhitelist = this.relayInQuestion instanceof TileEntityLaserRelayItemWhitelist;
-            boolean otherWhitelist = other.relayInQuestion instanceof TileEntityLaserRelayItemWhitelist;
+            int thisPrio = this.relayInQuestion.getPriority();
+            int otherPrio = other.relayInQuestion.getPriority();
 
-            if(!thisWhitelist && otherWhitelist){
-                return 1;
+            if(thisPrio == otherPrio){
+                return 0;
             }
-            else if(thisWhitelist && !otherWhitelist){
+            else if(thisPrio > otherPrio){
                 return -1;
             }
             else{
-                return 0;
+                return 1;
             }
         }
     }

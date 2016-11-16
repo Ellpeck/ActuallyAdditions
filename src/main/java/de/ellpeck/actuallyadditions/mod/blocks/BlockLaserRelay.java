@@ -10,27 +10,40 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemCompass;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class BlockLaserRelay extends BlockContainerBase{
+public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
 
     //This took way too much fiddling around. I'm not good with numbers.
     private static final float F = 1/16F;
@@ -52,6 +65,27 @@ public class BlockLaserRelay extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
 
         this.type = type;
+
+        if(this.type.ordinal() == 0){
+            MinecraftForge.EVENT_BUS.register(this);
+        }
+    }
+
+    @SubscribeEvent
+    public void onBlockRightClick(PlayerInteractEvent.RightClickBlock event){
+        EntityPlayer player = event.getEntityPlayer();
+        World world = event.getWorld();
+        ItemStack stack = event.getItemStack();
+        BlockPos pos = event.getPos();
+
+        if(player != null && world != null && StackUtil.isValid(stack) && pos != null){
+            IBlockState state = event.getWorld().getBlockState(pos);
+            if(state != null && state.getBlock() instanceof BlockLaserRelay){
+                if(stack.getItem() instanceof ItemCompass && player.isSneaking()){
+                    event.setUseBlock(Event.Result.ALLOW);
+                }
+            }
+        }
     }
 
     @Override
@@ -100,9 +134,29 @@ public class BlockLaserRelay extends BlockContainerBase{
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing par6, float par7, float par8, float par9){
-        if(player.isSneaking()){
-            TileEntityLaserRelay relay = (TileEntityLaserRelay)world.getTileEntity(pos);
-            if(relay instanceof TileEntityLaserRelayItemWhitelist){
+        TileEntityLaserRelay tile = (TileEntityLaserRelay)world.getTileEntity(pos);
+        if(tile instanceof TileEntityLaserRelayItem){
+            TileEntityLaserRelayItem relay = (TileEntityLaserRelayItem)tile;
+
+            if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemCompass){
+                if(player.isSneaking()){
+                    relay.priority--;
+                }
+                else{
+                    relay.priority++;
+                }
+
+                Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(relay.getPos(), relay.getWorld());
+                if(network != null){
+                    network.changeAmount++;
+                }
+
+                relay.markDirty();
+                relay.sendUpdate();
+
+                return true;
+            }
+            else if(relay instanceof TileEntityLaserRelayItemWhitelist && player.isSneaking()){
                 if(!world.isRemote){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.LASER_RELAY_ITEM_WHITELIST.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
@@ -127,6 +181,29 @@ public class BlockLaserRelay extends BlockContainerBase{
                 return new TileEntityLaserRelayFluids();
             default:
                 return new TileEntityLaserRelayEnergy();
+        }
+    }
+
+    @Override
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
+        if(posHit != null && posHit.getBlockPos() != null && minecraft.theWorld != null){
+            TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
+            if(tile instanceof TileEntityLaserRelayItem){
+                TileEntityLaserRelayItem relay = (TileEntityLaserRelayItem)tile;
+
+                String strg = "Priority: "+TextFormatting.DARK_RED+relay.getPriority()+TextFormatting.RESET;
+                minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
+
+                String expl;
+                if(stack != null && stack.getItem() instanceof ItemCompass){
+                    expl = TextFormatting.GREEN+"Right-Click to increase! \nSneak-Right-Click to decrease!";
+                }
+                else{
+                    expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Compass to modify!";
+                }
+
+                StringUtil.drawSplitString(minecraft.fontRendererObj, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);
+            }
         }
     }
 
