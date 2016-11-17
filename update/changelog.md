@@ -1,10 +1,14 @@
+# 1.10.2-r73
+* Made textures and lang work again. I apparently forgot how Minecraft loads its resources outside of a dev environment. Yup, I'm smart.
+* Made the book tutorial button not get overlayed by config and achievements buttons
+* I changed a lot of the way ItemStacks are handled in preparation for 1.11. Some stuff might be broken, so if you have the time, it'd be very nice and lovely of you if you could go through all of the items and blocks and see if they're broken. If so, please report that on the Github issue tracker. All help is appreciated <3
+
 # 1.10.2-r72
 * Added Laser Relay priority system
 * Added mod filter to filtered machines
 * Added back config, achievements and view online button to the booklet
 * Added quotes to the booklet
 * Added updates and infos section to the booklet (contains some useful links and stuff)
-* I changed a lot of the way ItemStacks are handled in preparation for 1.11. Some stuff might be broken, so if you have the time, it'd be very nice and lovely of you if you could go through all of the items and blocks and see if they're broken. If so, please report that on the Github issue tracker. All help is appreciated <3
 * Fixed picture pages sometimes having completely black borders instead of faded ones
 * Fix a bug with the compost sometimes deleting held items
 * Change the description text of Phantomfaces to be less confusing
