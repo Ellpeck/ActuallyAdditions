@@ -1,0 +1,6 @@
+{
+  "parent": "actuallyadditions:item/handheldItem",
+  "textures": {
+    "layer0": "actuallyadditions:items/itemAxeCrystalGreen"
+  }
+}

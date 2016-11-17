@@ -107,8 +107,7 @@ public class ClientProxy implements IProxy{
 
     @Override
     public void addRenderRegister(ItemStack stack, ResourceLocation location, String variant){
-        ResourceLocation lowerLocation = new ResourceLocation(location.toString().toLowerCase(Locale.ROOT));
-        MODEL_LOCATIONS_FOR_REGISTERING.put(stack, new ModelResourceLocation(lowerLocation, variant));
+        MODEL_LOCATIONS_FOR_REGISTERING.put(stack, new ModelResourceLocation(location, variant));
     }
 
     @Override

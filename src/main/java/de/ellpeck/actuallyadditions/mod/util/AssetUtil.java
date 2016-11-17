@@ -41,7 +41,7 @@ public final class AssetUtil{
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
 
     public static ResourceLocation getGuiLocation(String file){
-        return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/"+file.toLowerCase(Locale.ROOT)+".png");
+        return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/"+file+".png");
     }
 
     public static ResourceLocation getBookletGuiLocation(String file){

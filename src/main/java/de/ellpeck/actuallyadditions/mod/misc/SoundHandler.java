@@ -35,7 +35,7 @@ public final class SoundHandler{
     }
 
     private static SoundEvent registerSound(String name){
-        ResourceLocation resLoc = new ResourceLocation(ModUtil.MOD_ID, name.toLowerCase(Locale.ROOT));
+        ResourceLocation resLoc = new ResourceLocation(ModUtil.MOD_ID, name);
 
         SoundEvent event = new SoundEvent(resLoc);
         SoundEvent.REGISTRY.register(size, resLoc, event);

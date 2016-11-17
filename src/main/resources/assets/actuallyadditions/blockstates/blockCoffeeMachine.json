@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "actuallyadditions:blockCoffeeMachine",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": { "y" : 180 },
+      "1": { "y" : 0 },
+      "2": { "y" : 90 },
+      "3": { "y" : 270 }
+    }
+  }
+}

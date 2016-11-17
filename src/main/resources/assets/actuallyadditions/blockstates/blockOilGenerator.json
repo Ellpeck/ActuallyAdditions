@@ -1,0 +1,20 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "actuallyadditions:blockOilGenerator",
+    "textures": {
+      "particle": "actuallyadditions:blocks/blockOilGenerator"
+    },
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": { "y" : 0 },
+      "1": { "y" : 180 },
+      "2": { "y" : 270 },
+      "3": { "y" : 90 }
+    }
+  }
+}

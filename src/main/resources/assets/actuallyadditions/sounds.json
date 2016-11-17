@@ -1,0 +1,6 @@
+{
+  "duhDuhDuhDuuuh": { "category": "record", "sounds":["actuallyadditions:duhDuhDuhDuuuh"] },
+  "coffeeMachine": { "category": "block", "sounds":["actuallyadditions:coffeeMachine"] },
+  "reconstructor": { "category": "block", "sounds":["actuallyadditions:reconstructor"] },
+  "crusher": { "category": "block", "sounds":["actuallyadditions:crusher"] }
+}

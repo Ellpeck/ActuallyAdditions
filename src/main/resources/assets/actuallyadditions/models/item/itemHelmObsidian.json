@@ -1,0 +1,6 @@
+{
+  "parent": "actuallyadditions:item/standardItem",
+  "textures": {
+    "layer0": "actuallyadditions:items/itemHelmObsidian"
+  }
+}

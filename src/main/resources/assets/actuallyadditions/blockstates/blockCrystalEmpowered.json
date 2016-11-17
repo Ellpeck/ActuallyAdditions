@@ -1,0 +1,19 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": { "textures" : { "all" : "actuallyadditions:blocks/blockCrystalEmpoweredRed" } },
+      "1": { "textures" : { "all" : "actuallyadditions:blocks/blockCrystalEmpoweredBlue" } },
+      "2": { "textures" : { "all" : "actuallyadditions:blocks/blockCrystalEmpoweredLightBlue" } },
+      "3": { "textures" : { "all" : "actuallyadditions:blocks/blockCrystalEmpoweredBlack" } },
+      "4": { "textures" : { "all" : "actuallyadditions:blocks/blockCrystalEmpoweredGreen" } },
+      "5": { "textures" : { "all" : "actuallyadditions:blocks/blockCrystalEmpoweredWhite" } }
+    }
+  }
+}
