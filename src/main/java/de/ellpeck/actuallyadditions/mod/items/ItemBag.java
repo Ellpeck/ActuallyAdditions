@@ -78,7 +78,7 @@ public class ItemBag extends ItemBase{
                                 ItemStack[] inventory = new ItemStack[ContainerBag.getSlotAmount(isVoid)];
                                 ItemDrill.loadSlotsFromNBT(inventory, invStack);
 
-                                FilterSettings filter = new FilterSettings(0, 4, false, false, false, 0, 0);
+                                FilterSettings filter = new FilterSettings(0, 4, false, false, false, false, 0, 0);
                                 filter.readFromNBT(invStack.getTagCompound(), "Filter");
                                 if(filter.check(stack, inventory)){
                                     if(isVoid){

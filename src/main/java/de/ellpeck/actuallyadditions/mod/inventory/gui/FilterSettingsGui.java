@@ -34,31 +34,36 @@ public class FilterSettingsGui extends Gui{
     public SmallerButton whitelistButton;
     public SmallerButton metaButton;
     public SmallerButton nbtButton;
+    public SmallerButton modButton;
     public SmallerButton oredictButton;
 
     public FilterSettingsGui(FilterSettings settings, int x, int y, List<GuiButton> buttonList){
         this.theSettings = settings;
 
-        this.whitelistButton = new SmallerButton(this.theSettings.whitelistButtonId, x, y, "");
+        this.whitelistButton = new SmallerButton(this.theSettings.whitelistButtonId, x, y, "", true);
         buttonList.add(this.whitelistButton);
-
-        this.metaButton = new SmallerButton(this.theSettings.metaButtonId, x, y+18, "");
+        y+=14;
+        this.metaButton = new SmallerButton(this.theSettings.metaButtonId, x, y, "", true);
         buttonList.add(this.metaButton);
-
-        this.nbtButton = new SmallerButton(this.theSettings.nbtButtonId, x, y+36, "");
+        y+=14;
+        this.nbtButton = new SmallerButton(this.theSettings.nbtButtonId, x, y, "", true);
         buttonList.add(this.nbtButton);
-
-        this.oredictButton = new SmallerButton(this.theSettings.oredictButtonId, x, y+54, "");
+        y+=14;
+        this.oredictButton = new SmallerButton(this.theSettings.oredictButtonId, x, y, "", true);
         buttonList.add(this.oredictButton);
+        y+=15;
+        this.modButton = new SmallerButton(this.theSettings.modButtonId, x, y, "", true);
+        buttonList.add(this.modButton);
 
         this.update();
     }
 
     public void update(){
-        this.whitelistButton.displayString = (this.theSettings.isWhitelist ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"W";
-        this.metaButton.displayString = (this.theSettings.respectMeta ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"M";
-        this.nbtButton.displayString = (this.theSettings.respectNBT ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"N";
-        this.oredictButton.displayString = (this.theSettings.respectOredict == 0 ? TextFormatting.RED : (this.theSettings.respectOredict == 1 ? TextFormatting.GREEN : TextFormatting.DARK_GREEN))+"O";
+        this.whitelistButton.displayString = (this.theSettings.isWhitelist ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"WH";
+        this.metaButton.displayString = (this.theSettings.respectMeta ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"ME";
+        this.nbtButton.displayString = (this.theSettings.respectNBT ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"NB";
+        this.modButton.displayString = (this.theSettings.respectMod ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"MO";
+        this.oredictButton.displayString = (this.theSettings.respectOredict == 0 ? TextFormatting.RED : (this.theSettings.respectOredict == 1 ? TextFormatting.GREEN : TextFormatting.DARK_GREEN))+"OR";
     }
 
     public void drawHover(int mouseX, int mouseY){
@@ -75,6 +80,12 @@ public class FilterSettingsGui extends Gui{
         }
         else if(this.nbtButton.isMouseOver()){
             GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.theSettings.respectNBT ? "Respecting" : "Ignoring")+" NBT"), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
+        }
+        else if(this.modButton.isMouseOver()){
+            List<String> list = new ArrayList<String>();
+            list.add(TextFormatting.BOLD+"Mod Mode "+(this.theSettings.respectMod ? "On" : "Off"));
+            list.addAll(mc.fontRendererObj.listFormattedStringToWidth("If this is enabled, the filter will compare the mods items come from "+TextFormatting.RED+"instead of comparing the items themselves"+TextFormatting.RESET+". This can be useful for storage systems with mod-based chests. \nCan also be combined with the other options, but that normally isn't very useful.", 200));
+            GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
         else if(this.oredictButton.isMouseOver()){
             List<String> list = new ArrayList<String>();

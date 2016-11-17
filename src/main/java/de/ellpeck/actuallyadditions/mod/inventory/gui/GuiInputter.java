@@ -265,9 +265,15 @@ public class GuiInputter extends GuiContainer{
     public static class SmallerButton extends GuiButton{
 
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
+        private final boolean smaller;
 
         public SmallerButton(int id, int x, int y, String display){
-            super(id, x, y, 16, 16, display);
+            this(id, x, y, display, false);
+        }
+
+        public SmallerButton(int id, int x, int y, String display, boolean smaller){
+            super(id, x, y, 16, smaller ? 12 : 16, display);
+            this.smaller = smaller;
         }
 
         @Override
@@ -280,7 +286,7 @@ public class GuiInputter extends GuiContainer{
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 GlStateManager.blendFunc(770, 771);
-                this.drawTexturedModalRect(this.xPosition, this.yPosition, 176, k*16, 16, 16);
+                this.drawTexturedModalRect(this.xPosition, this.yPosition, this.smaller ? 200 : 176, k*this.height, this.width, this.height);
                 this.mouseDragged(mc, x, y);
 
                 int color = 14737632;

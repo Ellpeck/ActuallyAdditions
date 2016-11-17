@@ -28,7 +28,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
 
     public static final int WHITELIST_START = 6;
     public static final int RANGE = 6;
-    public FilterSettings filter = new FilterSettings(WHITELIST_START, WHITELIST_START+12, true, true, false, 0, -1000);
+    public FilterSettings filter = new FilterSettings(WHITELIST_START, WHITELIST_START+12, true, true, false, false, 0, -1000);
 
     public TileEntityRangedCollector(){
         super(18, "rangedCollector");

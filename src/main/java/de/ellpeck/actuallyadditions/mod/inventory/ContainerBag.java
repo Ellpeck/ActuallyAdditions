@@ -33,7 +33,7 @@ import java.util.Arrays;
 
 public class ContainerBag extends Container implements IButtonReactor{
 
-    public final FilterSettings filter = new FilterSettings(0, 4, false, true, false, 0, -1000);
+    public final FilterSettings filter = new FilterSettings(0, 4, false, true, false, false, 0, -1000);
     private final InventoryBag bagInventory;
     private final InventoryPlayer inventory;
     private final boolean isVoid;
@@ -110,6 +110,7 @@ public class ContainerBag extends Container implements IButtonReactor{
                 listener.sendProgressBarUpdate(this, 2, this.filter.respectNBT ? 1 : 0);
                 listener.sendProgressBarUpdate(this, 3, this.filter.respectOredict);
                 listener.sendProgressBarUpdate(this, 4, this.autoInsert ? 1 : 0);
+                listener.sendProgressBarUpdate(this, 5, this.filter.respectMod ? 1 : 0);
             }
             this.filter.updateLasts();
             this.oldAutoInsert = this.autoInsert;
@@ -133,6 +134,9 @@ public class ContainerBag extends Container implements IButtonReactor{
         }
         else if(id == 4){
             this.autoInsert = data == 1;
+        }
+        else if(id == 5){
+            this.filter.respectMod = data == 1;
         }
     }
 

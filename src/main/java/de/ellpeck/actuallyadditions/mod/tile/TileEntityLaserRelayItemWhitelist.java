@@ -28,8 +28,8 @@ import java.util.Arrays;
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
 
     public final IInventory filterInventory;
-    public FilterSettings leftFilter = new FilterSettings(0, 12, true, true, false, 0, -1000);
-    public FilterSettings rightFilter = new FilterSettings(12, 24, true, true, false, 0, -2000);
+    public FilterSettings leftFilter = new FilterSettings(0, 12, true, true, false, false, 0, -1000);
+    public FilterSettings rightFilter = new FilterSettings(12, 24, true, true, false, false, 0, -2000);
     private ItemStack[] slots = new ItemStack[24];
 
     public TileEntityLaserRelayItemWhitelist(){
@@ -219,7 +219,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                     ItemStack copy = stack.copy();
                     copy = StackUtil.setStackSize(copy, 1);
 
-                    if(!FilterSettings.check(copy, this.slots, usedSettings.startSlot, usedSettings.endSlot, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectOredict)){
+                    if(!FilterSettings.check(copy, this.slots, usedSettings.startSlot, usedSettings.endSlot, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectMod, usedSettings.respectOredict)){
                         for(int k = usedSettings.startSlot; k < usedSettings.endSlot; k++){
                             if(StackUtil.isValid(this.slots[k])){
                                 if(this.slots[k].getItem() instanceof ItemFilter){
