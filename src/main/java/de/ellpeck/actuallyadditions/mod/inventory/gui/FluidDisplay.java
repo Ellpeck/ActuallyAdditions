@@ -82,6 +82,7 @@ public class FluidDisplay extends Gui{
         if(stack != null && fluid != null && this.resLoc != null){
             mc.getTextureManager().bindTexture(this.resLoc);
 
+            GlStateManager.pushMatrix();
             GlStateManager.enableBlend();
             GlStateManager.disableAlpha();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -89,6 +90,7 @@ public class FluidDisplay extends Gui{
             GuiInputter.drawModalRectWithCustomSizedTexture(barX+1, barY+84-i, 36, 172, 16, i, 16, 512);
             GlStateManager.disableBlend();
             GlStateManager.enableAlpha();
+            GlStateManager.popMatrix();
         }
 
         if(this.drawTextNextTo){

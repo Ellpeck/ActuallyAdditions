@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
@@ -35,7 +36,14 @@ public class PagePicture extends BookletPage{
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
         gui.mc.getTextureManager().bindTexture(this.resLoc);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.disableAlpha();
         GuiUtils.drawTexturedModalRect(startX-6, startY-7, 0, 0, 256, 256, 0);
+        GlStateManager.disableBlend();
+        GlStateManager.enableAlpha();
+        GlStateManager.popMatrix();
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY-7+this.yTextOffset);
     }
