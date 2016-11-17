@@ -117,7 +117,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                 }
                 else{
                     if(!StackUtil.isValid(stackPlayer)){
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, slot.copy());
+                        player.setHeldItem(hand, slot.copy());
                         compost.setInventorySlotContents(0, null);
                         return true;
                     }
@@ -125,7 +125,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                         int addedStackSize = Math.min(StackUtil.getStackSize(slot), stackPlayer.getMaxStackSize()-StackUtil.getStackSize(stackPlayer));
                         ItemStack stackToAdd = stackPlayer.copy();
                         stackToAdd = StackUtil.addStackSize(stackToAdd, addedStackSize);
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, stackToAdd);
+                        player.setHeldItem(hand, stackToAdd);
                         compost.decrStackSize(0, addedStackSize);
                         return true;
 

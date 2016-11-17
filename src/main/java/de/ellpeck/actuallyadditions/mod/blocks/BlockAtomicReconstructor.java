@@ -88,7 +88,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                 else{
                     ItemStack slot = reconstructor.getStackInSlot(0);
                     if(StackUtil.isValid(slot)){
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, slot.copy());
+                        player.setHeldItem(hand, slot.copy());
                         reconstructor.setInventorySlotContents(0, StackUtil.getNull());
                     }
                 }
