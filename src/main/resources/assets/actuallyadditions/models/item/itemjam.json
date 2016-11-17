@@ -1,7 +1,0 @@
-{
-  "parent": "actuallyadditions:item/standarditem",
-  "textures": {
-    "layer0": "actuallyadditions:items/itemjam",
-    "layer1": "actuallyadditions:items/itemjamoverlay"
-  }
-}

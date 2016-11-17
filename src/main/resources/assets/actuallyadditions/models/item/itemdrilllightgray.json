@@ -1,6 +1,0 @@
-{
-  "parent": "actuallyadditions:item/handhelditem",
-  "textures": {
-    "layer0": "actuallyadditions:items/itemdrilllightgray"
-  }
-}

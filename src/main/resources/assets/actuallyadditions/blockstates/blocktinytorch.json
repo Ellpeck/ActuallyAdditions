@@ -1,9 +1,0 @@
-{
-    "variants": {
-        "facing=up": { "model": "actuallyadditions:blocktinytorch" },
-        "facing=east": { "model": "actuallyadditions:blocktinytorchwall" },
-        "facing=south": { "model": "actuallyadditions:blocktinytorchwall", "y": 90 },
-        "facing=west": { "model": "actuallyadditions:blocktinytorchwall", "y": 180 },
-        "facing=north": { "model": "actuallyadditions:blocktinytorchwall", "y": 270 }
-    }
-}
