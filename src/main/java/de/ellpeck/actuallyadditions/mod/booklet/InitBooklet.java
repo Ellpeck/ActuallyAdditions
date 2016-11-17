@@ -30,10 +30,12 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensDisenchanting;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
 import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Blocks;
@@ -59,7 +61,8 @@ public final class InitBooklet{
         ActuallyAdditionsAPI.entryGeneratingRF = new BookletEntry("generatingRF");
         ActuallyAdditionsAPI.entryItemsNonRF = new BookletEntry("itemsNoRF");
         ActuallyAdditionsAPI.entryItemsRF = new BookletEntry("itemsRF");
-        ActuallyAdditionsAPI.entryMisc = new BookletEntry("misc").setSpecial();
+        ActuallyAdditionsAPI.entryMisc = new BookletEntry("misc");
+        ActuallyAdditionsAPI.entryUpdatesAndInfos = new BookletEntry("updatesAndInfos").setSpecial();
         ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllItems("allAndSearch").setImportant();
     }
 
@@ -235,5 +238,11 @@ public final class InitBooklet{
         new BookletChapter("growthRing", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemGrowthRing), new PageCrafting(1, ItemCrafting.recipeGrowthRing));
         new BookletChapter("waterRemovalRing", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemWaterRemovalRing), new PageCrafting(1, ItemCrafting.recipeWaterRing));
         new BookletChapter("batteries", ActuallyAdditionsAPI.entryItemsRF, new ItemStack(InitItems.itemBatteryTriple), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeBattery).setNoText(), new PageCrafting(3, ItemCrafting.recipeBatteryDouble).setNoText(), new PageCrafting(4, ItemCrafting.recipeBatteryTriple).setNoText(), new PageCrafting(5, ItemCrafting.recipeBatteryQuadruple).setNoText(), new PageCrafting(6, ItemCrafting.recipeBatteryQuintuple).setNoText());
+
+        //Updates and infos
+        new BookletChapter("changelog", ActuallyAdditionsAPI.entryUpdatesAndInfos, new ItemStack(Items.CLOCK), new PageLinkButton(1, UpdateChecker.CHANGELOG_LINK));
+        new BookletChapter("curse", ActuallyAdditionsAPI.entryUpdatesAndInfos, new ItemStack(Items.FLINT_AND_STEEL), new PageLinkButton(1, "http://ellpeck.de/actadd"));
+        new BookletChapter("patreon", ActuallyAdditionsAPI.entryUpdatesAndInfos, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), new PageLinkButton(1, "http://patreon.com/Ellpeck"), new PagePicture(2, "pagePatreon", 153)).setImportant();
+        new BookletChapter("website", ActuallyAdditionsAPI.entryUpdatesAndInfos, new ItemStack(InitItems.itemBooklet), new PageLinkButton(1, "http://ellpeck.de"));
     }
 }

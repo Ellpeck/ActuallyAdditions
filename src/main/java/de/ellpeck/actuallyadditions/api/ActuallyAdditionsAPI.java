@@ -31,7 +31,7 @@ public final class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "28";
+    public static final String API_VERSION = "29";
 
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<CrusherRecipe>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
@@ -77,6 +77,7 @@ public final class ActuallyAdditionsAPI{
     public static IBookletEntry entryItemsNonRF;
     public static IBookletEntry entryItemsRF;
     public static IBookletEntry entryMisc;
+    public static IBookletEntry entryUpdatesAndInfos;
     //This is added to automatically, you don't need to add anything to this entry
     public static IBookletEntry allAndSearch;
 

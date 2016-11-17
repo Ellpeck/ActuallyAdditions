@@ -54,7 +54,8 @@ public class GuiMainPage extends GuiBooklet{
             "TINY TORCHES!! BABY TORCHES!! Somebody actually finally did it!!@Soaryn",
             "Balanced mod wich makes things different - in a good way.@garantiertnicht",
             "The mod everyone needs, but not everyone knows@Brewpl",
-            "The in-game documentation is the best I’ve seen. I especially love the JEI integration. Even a derp like me can figure it out.@dannydjdk"
+            "The in-game documentation is the best I’ve seen. I especially love the JEI integration. Even a derp like me can figure it out.@dannydjdk",
+            "The second best mod I've ever used.@mmaas44"
     };
 
     private TexturedButton achievementButton;
