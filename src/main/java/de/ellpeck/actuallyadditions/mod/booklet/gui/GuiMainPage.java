@@ -97,18 +97,19 @@ public class GuiMainPage extends GuiBooklet{
             this.tutorialButton = new GuiButton(666666, this.guiLeft+140/2-50, this.guiTop+146, 100, 20, "Please click me <3");
             this.buttonList.add(this.tutorialButton);
         }
+        else{
+            List<String> configText = new ArrayList<String>();
+            configText.add(TextFormatting.GOLD+"Open Config GUI");
+            configText.addAll(this.fontRendererObj.listFormattedStringToWidth("Press this to configure "+ModUtil.NAME+" in-game. \nSome changes will require a game restart!", 200));
+            this.configButton = new TexturedButton(RES_LOC_GADGETS, -388, this.guiLeft+16, this.guiTop+this.ySize-30, 188, 14, 16, 16, configText);
+            this.buttonList.add(this.configButton);
 
-        List<String> configText = new ArrayList<String>();
-        configText.add(TextFormatting.GOLD+"Open Config GUI");
-        configText.addAll(this.fontRendererObj.listFormattedStringToWidth("Press this to configure "+ModUtil.NAME+" in-game. \nSome changes will require a game restart!", 200));
-        this.configButton = new TexturedButton(RES_LOC_GADGETS, -388, this.guiLeft+16, this.guiTop+this.ySize-30, 188, 14, 16, 16, configText);
-        this.buttonList.add(this.configButton);
-
-        List<String> achievementText = new ArrayList<String>();
-        achievementText.add(TextFormatting.GOLD+"Open Achievements");
-        achievementText.addAll(this.fontRendererObj.listFormattedStringToWidth("Press this to open the "+ModUtil.NAME+" Achievements.", 200));
-        this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
-        this.buttonList.add(this.achievementButton);
+            List<String> achievementText = new ArrayList<String>();
+            achievementText.add(TextFormatting.GOLD+"Open Achievements");
+            achievementText.addAll(this.fontRendererObj.listFormattedStringToWidth("Press this to open the "+ModUtil.NAME+" Achievements.", 200));
+            this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
+            this.buttonList.add(this.achievementButton);
+        }
 
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
             if(ActuallyAdditionsAPI.BOOKLET_ENTRIES.size() > i){
