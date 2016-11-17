@@ -1,3 +1,22 @@
+# 1.10.2-r72
+* Added Laser Relay priority system
+* Added mod filter to filtered machines
+* Added back config, achievements and view online button to the booklet
+* Added quotes to the booklet
+* Added updates and infos section to the booklet (contains some useful links and stuff)
+* I changed a lot of the way ItemStacks are handled in preparation for 1.11. Some stuff might be broken, so if you have the time, it'd be very nice and lovely of you if you could go through all of the items and blocks and see if they're broken. If so, please report that on the Github issue tracker. All help is appreciated <3
+* Fixed picture pages sometimes having completely black borders instead of faded ones
+* Fix a bug with the compost sometimes deleting held items
+* Change the description text of Phantomfaces to be less confusing
+* Made the Empowerer particles respond to the less particles video setting
+* Rename all the assets from capital to lowercase in preparation for 1.11, so custom textures will break
+* Made the booklet JEI handler show all recipes, not just vanilla crafting ones
+* Stop cashing the parent screen of the manual to avoid infinite JEI loops
+* Tweaked the Laser Relay renderer to work with lighting
+* Added ore to gem crushing if ore to dust crushing cannot be found
+* Make the Teleport staff use vanilla cooldown (garantiertnicht)
+* Added back addTextReplacement to the API
+
 # 1.10.2-r71
 * Totally reworked how the Actually Additions Manual looks. It now has two pages open instead of one and looks a lot fancier in general.
 * Added a new Laser Rendering system that is much fancier
