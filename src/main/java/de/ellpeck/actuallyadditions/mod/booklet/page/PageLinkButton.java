@@ -49,7 +49,7 @@ public class PageLinkButton extends BookletPage{
                     Desktop.getDesktop().browse(new URI(this.link));
                 }
                 catch(Exception e){
-                    ModUtil.LOGGER.info("Couldn't open website from Link Button page!", e);
+                    ModUtil.LOGGER.error("Couldn't open website from Link Button page!", e);
                 }
             }
         }

@@ -18,6 +18,9 @@ import net.minecraft.stats.StatisticsManager;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Keyboard;
+
+import java.io.IOException;
 
 /**
  * (Partially excerpted from Botania by Vazkii with permission, thanks!)
@@ -38,6 +41,20 @@ public class GuiAAAchievements extends GuiAchievements{
     @Override
     public void initGui(){
         super.initGui();
-        this.buttonList.get(1).displayString = InitAchievements.theAchievementPage.getName();
+
+        try{
+            this.buttonList.remove(1);
+        }
+        catch(Exception e){
+            ModUtil.LOGGER.error("Something went wrong trying to initialize the Achievements GUI!", e);
+        }
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int key) throws IOException{
+        if(key == Keyboard.KEY_ESCAPE || key == this.mc.gameSettings.keyBindInventory.getKeyCode()){
+            this.mc.displayGuiScreen(this.parentScreen);
+        }
+        else super.keyTyped(typedChar, key);
     }
 }

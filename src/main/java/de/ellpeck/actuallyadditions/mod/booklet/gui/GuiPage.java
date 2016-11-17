@@ -15,15 +15,21 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.page.ItemDisplay;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
@@ -32,6 +38,8 @@ public class GuiPage extends GuiBooklet{
     public final IBookletPage[] pages = new IBookletPage[2];
     private final List<ItemDisplay> itemDisplays = new ArrayList<ItemDisplay>();
     private int pageTimer;
+
+    private GuiButton buttonViewOnline;
 
     public GuiPage(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletPage page1, IBookletPage page2){
         super(previousScreen, parentPage);
@@ -79,11 +87,26 @@ public class GuiPage extends GuiBooklet{
 
     @Override
     public void actionPerformed(GuiButton button) throws IOException{
-        super.actionPerformed(button);
+        if(button == this.buttonViewOnline){
+            List<String> links = this.getWebLinks();
+            if(Desktop.isDesktopSupported()){
+                for(String link : links){
+                    try{
+                        Desktop.getDesktop().browse(new URI(link));
+                    }
+                    catch(Exception e){
+                        ModUtil.LOGGER.error("Couldn't open website from Booklet page!", e);
+                    }
+                }
+            }
+        }
+        else{
+            super.actionPerformed(button);
 
-        for(IBookletPage page : this.pages){
-            if(page != null){
-                page.actionPerformed(this, button);
+            for(IBookletPage page : this.pages){
+                if(page != null){
+                    page.actionPerformed(this, button);
+                }
             }
         }
     }
@@ -93,12 +116,33 @@ public class GuiPage extends GuiBooklet{
         this.itemDisplays.clear();
         super.initGui();
 
+        List<String> links = this.getWebLinks();
+        if(links != null && !links.isEmpty()){
+            this.buttonViewOnline = new TexturedButton(RES_LOC_GADGETS, -782822, this.guiLeft+this.xSize-24, this.guiTop+this.ySize-25, 0, 172, 16, 16, Collections.singletonList(TextFormatting.GOLD+"View Online"));
+            this.buttonList.add(this.buttonViewOnline);
+        }
+
         for(int i = 0; i < this.pages.length; i++){
             IBookletPage page = this.pages[i];
             if(page != null){
                 page.initGui(this, this.guiLeft+6+i*142, this.guiTop+7);
             }
         }
+    }
+
+    private List<String> getWebLinks(){
+        List<String> links = new ArrayList<String>();
+
+        for(IBookletPage page : this.pages){
+            if(page != null){
+                String link = page.getWebLink();
+                if(link != null && !links.contains(link)){
+                    links.add(link);
+                }
+            }
+        }
+
+        return links;
     }
 
     @Override

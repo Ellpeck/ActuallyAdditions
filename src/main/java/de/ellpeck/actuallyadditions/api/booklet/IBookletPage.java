@@ -59,6 +59,8 @@ public interface IBookletPage{
 
     String getIdentifier();
 
+    String getWebLink();
+
     IBookletPage addTextReplacement(String key, String value);
 
     IBookletPage addTextReplacement(String key, float value);

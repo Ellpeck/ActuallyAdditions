@@ -139,6 +139,11 @@ public class BookletPage implements IBookletPage{
         return this.chapter.getIdentifier()+"."+this.chapter.getPageIndex(this);
     }
 
+    @Override
+    public String getWebLink(){
+        return "http://ellpeck.de/actaddmanual#"+this.chapter.getIdentifier();
+    }
+
     public BookletPage setNoText(){
         this.hasNoText = true;
         return this;

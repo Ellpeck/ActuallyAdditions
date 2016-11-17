@@ -14,8 +14,11 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.EntryButton;
+import de.ellpeck.actuallyadditions.mod.booklet.misc.GuiAAAchievements;
+import de.ellpeck.actuallyadditions.mod.config.GuiConfiguration;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -30,6 +33,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
@@ -46,8 +51,14 @@ public class GuiMainPage extends GuiBooklet{
             "It's got some stuff I guess.@Ellpeck",
             "Actually Additions should be included in every new modpack that includes any form of tech.@KarillEndusa",
             "A mod that basically lets you do what ever the heck you want.@Joshwoo70",
-            "TINY TORCHES!! BABY TORCHES!! Somebody actually finally did it!!@Soaryn"
+            "TINY TORCHES!! BABY TORCHES!! Somebody actually finally did it!!@Soaryn",
+            "Balanced mod wich makes things different - in a good way.@garantiertnicht",
+            "The mod everyone needs, but not everyone knows@Brewpl",
+            "The in-game documentation is the best I’ve seen. I especially love the JEI integration. Even a derp like me can figure it out.@dannydjdk"
     };
+
+    private TexturedButton achievementButton;
+    private TexturedButton configButton;
 
     private GuiButton tutorialButton;
     private boolean showTutorial;
@@ -86,6 +97,18 @@ public class GuiMainPage extends GuiBooklet{
             this.buttonList.add(this.tutorialButton);
         }
 
+        List<String> configText = new ArrayList<String>();
+        configText.add(TextFormatting.GOLD+"Open Config GUI");
+        configText.addAll(this.fontRendererObj.listFormattedStringToWidth("Press this to configure "+ModUtil.NAME+" in-game. \nSome changes will require a game restart!", 200));
+        this.configButton = new TexturedButton(RES_LOC_GADGETS, -388, this.guiLeft+16, this.guiTop+this.ySize-30, 188, 14, 16, 16, configText);
+        this.buttonList.add(this.configButton);
+
+        List<String> achievementText = new ArrayList<String>();
+        achievementText.add(TextFormatting.GOLD+"Open Achievements");
+        achievementText.addAll(this.fontRendererObj.listFormattedStringToWidth("Press this to open the "+ModUtil.NAME+" Achievements.", 200));
+        this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
+        this.buttonList.add(this.achievementButton);
+
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
             if(ActuallyAdditionsAPI.BOOKLET_ENTRIES.size() > i){
                 IBookletEntry entry = ActuallyAdditionsAPI.BOOKLET_ENTRIES.get(i);
@@ -106,6 +129,14 @@ public class GuiMainPage extends GuiBooklet{
                     this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this, entry, 0, "", false));
                 }
             }
+        }
+        else if(button == this.achievementButton){
+            GuiScreen achievements = new GuiAAAchievements(this, this.mc.thePlayer.getStatFileWriter());
+            this.mc.displayGuiScreen(achievements);
+        }
+        else if(button == this.configButton){
+            GuiScreen config = new GuiConfiguration(this);
+            this.mc.displayGuiScreen(config);
         }
         else if(this.showTutorial && button == this.tutorialButton){
             if(this.hasBookmarkButtons()){
