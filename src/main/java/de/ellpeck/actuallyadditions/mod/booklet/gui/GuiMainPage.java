@@ -30,13 +30,32 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiMainPage extends GuiBooklet{
 
+    private static final String[] QUOTES = new String[]{
+            "Actually Additions, to me, is quite magical in a way.@Saphrym",
+            "Actually quite cool. Lots of nice little additions.@Direwolf20",
+            "Mod Dev quite rude and arrogant@Bubb1e0seven",
+            "A whimsical breath of fresh air in a stuffy tech-mod world.@mezz",
+            "User-friendly :3@TheMeeep",
+            "A lot of stuff, some of it really good.@Narubion",
+            "I like the bookmarks.@Vazkii",
+            "It's got some stuff I guess.@Ellpeck",
+            "Actually Additions should be included in every new modpack that includes any form of tech.@KarillEndusa",
+            "A mod that basically lets you do what ever the heck you want.@Joshwoo70",
+            "TINY TORCHES!! BABY TORCHES!! Somebody actually finally did it!!@Soaryn"
+    };
+
     private GuiButton tutorialButton;
-    private String bookletName;
     private boolean showTutorial;
+
+    private String bookletName;
+
+    private List<String> quote;
+    private String quoteGuy;
 
     public GuiMainPage(GuiScreen previousScreen){
         super(previousScreen, null);
@@ -51,6 +70,13 @@ public class GuiMainPage extends GuiBooklet{
             flavor = MathHelper.getRandomIntegerInRange(this.mc.theWorld.rand, 2, 7);
         }
         this.bookletName = "info."+ModUtil.MOD_ID+".booklet.manualName.1."+flavor;
+
+        String usedQuote = QUOTES[this.mc.theWorld.rand.nextInt(QUOTES.length)];
+        String[] quoteSplit = usedQuote.split("@");
+        if(quoteSplit.length == 2){
+            this.quote = this.fontRendererObj.listFormattedStringToWidth(quoteSplit[0], 120);
+            this.quoteGuy = quoteSplit[1];
+        }
 
         PlayerSave data = PlayerData.getDataFromPlayer(this.mc.thePlayer);
         if(!data.didBookTutorial){
@@ -152,6 +178,14 @@ public class GuiMainPage extends GuiBooklet{
         if(this.showTutorial){
             String text = TextFormatting.BLUE+"It looks like this is the first time you are using this manual. \nIf you click the button below, some useful bookmarks will be stored at the bottom of the GUI. You should definitely check them out to get started with "+ModUtil.NAME+"! \nIf you don't want this, shift-click the button.";
             this.renderSplitScaledAsciiString(text, this.guiLeft+11, this.guiTop+55, 0, false, 0.75F, 120);
+        }
+        else if(this.quote != null && !this.quote.isEmpty() && this.quoteGuy != null){
+            int quoteSize = this.quote.size();
+
+            for(int i = 0; i < quoteSize; i++){
+                this.renderScaledAsciiString(TextFormatting.ITALIC+this.quote.get(i), this.guiLeft+25, this.guiTop+90+(i*8), 0, false, 0.75F);
+            }
+            this.renderScaledAsciiString("- "+this.quoteGuy, this.guiLeft+60, this.guiTop+93+quoteSize*8, 0, false, 0.8F);
         }
     }
 
