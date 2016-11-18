@@ -42,6 +42,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
 
@@ -185,6 +187,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         if(posHit != null && posHit.getBlockPos() != null && minecraft.theWorld != null){
             TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
