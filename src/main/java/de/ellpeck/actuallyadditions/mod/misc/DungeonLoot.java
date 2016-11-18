@@ -81,6 +81,18 @@ public class DungeonLoot{
                 addDrillCore = true;
                 addBatWings = true;
             }
+            else if(LootTableList.CHESTS_NETHER_BRIDGE.equals(event.getName())){
+                addBatWings = true;
+                addCrystals = true;
+                addDrillCore = true;
+                addBook = true;
+            }
+            else if(LootTableList.CHESTS_END_CITY_TREASURE.equals(event.getName())){
+                addBatWings = true;
+                addCrystals = true;
+                addDrillCore = true;
+                addQuartz = true;
+            }
             else if(JAM_HOUSE.equals(event.getName())){
                 LootFunction jamDamage = new SetMetadata(noCondition, new RandomValueRange(0, TheJams.values().length-1));
                 LootFunction jamAmount = new SetCount(noCondition, new RandomValueRange(3, 5));
