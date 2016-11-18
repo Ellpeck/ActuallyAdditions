@@ -68,7 +68,7 @@ public class BlockEmpowerer extends BlockContainerBase{
                         if(maxTransfer > 0){
                             player.setHeldItem(hand, StackUtil.addStackSize(heldItem, maxTransfer));
                             ItemStack newStackThere = stackThere.copy();
-                            StackUtil.addStackSize(newStackThere, -maxTransfer);
+                            newStackThere = StackUtil.addStackSize(newStackThere, -maxTransfer);
                             empowerer.setInventorySlotContents(0, StackUtil.validateCheck(newStackThere));
                             return true;
                         }
