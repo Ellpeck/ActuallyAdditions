@@ -1,3 +1,7 @@
+# 1.10.2-r74
+* Fix Laser Relays crashing servers
+* Fix the coffee machine creating rather than using items
+
 # 1.10.2-r73
 * Made textures and lang work again. I apparently forgot how Minecraft loads its resources outside of a dev environment. Yup, I'm smart.
 * Made the book tutorial button not get overlayed by config and achievements buttons
