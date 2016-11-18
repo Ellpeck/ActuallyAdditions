@@ -126,7 +126,13 @@ public class ItemBag extends ItemBase{
                     }
                 }
             }
-            item.setEntityItemStack(stack);
+
+            if(!StackUtil.isValid(stack)){
+                item.setDead();
+            }
+            else{
+                item.setEntityItemStack(stack);
+            }
         }
     }
 
