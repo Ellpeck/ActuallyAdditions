@@ -1,5 +1,6 @@
 # 1.10.2-r75
 * To people new to this mod: No, this isn't my regular updating schedule. Things have just been a bit rough this week I guess. In my hastily preparation for 1.11 some things that should've been accounted for sort of got lost - at least this teaches me to be more careful in the future. Sorry to people that don't like frequent updates, but updates are better than staying bugs - especially with the possibility of modpacks having bugged mod versions!
+* Fixed a bug with energy loss from Laser Relays
 * Added loot to nether fortress and end city dungeons
 * Fixed the bag "leaking" stone
 * Rebalanced food items a bit
