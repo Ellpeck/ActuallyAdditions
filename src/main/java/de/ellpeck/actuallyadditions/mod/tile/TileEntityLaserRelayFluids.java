@@ -22,7 +22,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +35,37 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
 
     public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
 
+    private final IFluidHandler[] fluidHandlers = new IFluidHandler[6];
+
     public TileEntityLaserRelayFluids(){
         super("laserRelayFluids", LaserType.FLUID);
+
+        for(int i = 0; i < this.fluidHandlers.length; i++){
+            final EnumFacing facing = EnumFacing.values()[i];
+            this.fluidHandlers[i] = new IFluidHandler(){
+                @Override
+                public IFluidTankProperties[] getTankProperties(){
+                    return new IFluidTankProperties[0];
+                }
+
+                @Override
+                public int fill(FluidStack resource, boolean doFill){
+                    return TileEntityLaserRelayFluids.this.transmitFluid(facing, resource, doFill);
+                }
+
+                @Nullable
+                @Override
+                public FluidStack drain(FluidStack resource, boolean doDrain){
+                    return null;
+                }
+
+                @Nullable
+                @Override
+                public FluidStack drain(int maxDrain, boolean doDrain){
+                    return null;
+                }
+            };
+        }
     }
 
     @Override
@@ -52,7 +83,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
             BlockPos pos = this.getPos().offset(side);
             TileEntity tile = this.worldObj.getTileEntity(pos);
             if(tile != null && !(tile instanceof TileEntityLaserRelay)){
-                if(tile instanceof net.minecraftforge.fluids.IFluidHandler || tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())){
+                if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())){
                     this.receiversAround.put(side, tile);
 
                     TileEntity oldTile = old.get(side);
@@ -72,7 +103,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
     }
 
     @Override
-    public int getFluidAmountToSplitShare(){
+    public int getMaxFluidAmountToSplitShare(){
         return 0;
     }
 
@@ -87,22 +118,22 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
     }
 
     @Override
-    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
-        return this.transmitEnergy(from, resource, doFill);
+    public IFluidHandler getFluidHandler(EnumFacing facing){
+        return this.fluidHandlers[facing == null ? 0 : facing.ordinal()];
     }
 
-    private int transmitEnergy(EnumFacing from, FluidStack stack, boolean doFill){
+    private int transmitFluid(EnumFacing from, FluidStack stack, boolean doFill){
         int transmitted = 0;
         if(stack != null){
             Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);
             if(network != null){
-                transmitted = this.transferEnergyToReceiverInNeed(from, network, stack, doFill);
+                transmitted = this.transferFluidToReceiverInNeed(from, network, stack, doFill);
             }
         }
         return transmitted;
     }
 
-    private int transferEnergyToReceiverInNeed(EnumFacing from, Network network, FluidStack stack, boolean doFill){
+    private int transferFluidToReceiverInNeed(EnumFacing from, Network network, FluidStack stack, boolean doFill){
         int transmitted = 0;
         //Keeps track of all the Laser Relays and Energy Acceptors that have been checked already to make nothing run multiple times
         List<BlockPos> alreadyChecked = new ArrayList<BlockPos>();
@@ -142,15 +173,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
                         if(!alreadyChecked.contains(tile.getPos())){
                             alreadyChecked.add(tile.getPos());
                             if(theRelay != this || side != from){
-                                if(tile instanceof net.minecraftforge.fluids.IFluidHandler){
-                                    net.minecraftforge.fluids.IFluidHandler iHandler = (net.minecraftforge.fluids.IFluidHandler)tile;
-                                    if(iHandler.canFill(opp, stack.getFluid())){
-                                        FluidStack copy = stack.copy();
-                                        copy.amount = amountPer;
-                                        transmitted += iHandler.fill(opp, copy, doFill);
-                                    }
-                                }
-                                else if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp)){
+                                if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp)){
                                     IFluidHandler cap = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp);
                                     if(cap != null){
                                         FluidStack copy = stack.copy();
@@ -171,30 +194,5 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
         }
 
         return transmitted;
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
-        return null;
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
-        return null;
-    }
-
-    @Override
-    public boolean canFill(EnumFacing from, Fluid fluid){
-        return true;
-    }
-
-    @Override
-    public boolean canDrain(EnumFacing from, Fluid fluid){
-        return false;
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from){
-        return new FluidTankInfo[0];
     }
 }

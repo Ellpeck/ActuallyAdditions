@@ -43,9 +43,12 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -94,28 +97,13 @@ public final class WorldUtil{
 
     public static void doFluidInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer){
         if(maxTransfer > 0){
-            //Push and pull with old fluid system
-            if(tileFrom instanceof net.minecraftforge.fluids.IFluidHandler && tileTo instanceof net.minecraftforge.fluids.IFluidHandler){
-                net.minecraftforge.fluids.IFluidHandler handlerTo = (net.minecraftforge.fluids.IFluidHandler)tileTo;
-                net.minecraftforge.fluids.IFluidHandler handlerFrom = (net.minecraftforge.fluids.IFluidHandler)tileFrom;
-                FluidStack drain = handlerFrom.drain(sideTo, maxTransfer, false);
+            if(tileFrom.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo) && tileTo.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite())){
+                IFluidHandler handlerFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo);
+                IFluidHandler handlerTo = tileTo.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite());
+                FluidStack drain = handlerFrom.drain(maxTransfer, false);
                 if(drain != null){
-                    if(handlerTo.canFill(sideTo.getOpposite(), drain.getFluid())){
-                        int filled = handlerTo.fill(sideTo.getOpposite(), drain.copy(), true);
-                        handlerFrom.drain(sideTo, filled, true);
-                    }
-                }
-            }
-            //Push and pull with new fluid system
-            else{
-                if(tileFrom.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo) && tileTo.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite())){
-                    IFluidHandler handlerFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo);
-                    IFluidHandler handlerTo = tileTo.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite());
-                    FluidStack drain = handlerFrom.drain(maxTransfer, false);
-                    if(drain != null){
-                        int filled = handlerTo.fill(drain.copy(), true);
-                        handlerFrom.drain(filled, true);
-                    }
+                    int filled = handlerTo.fill(drain.copy(), true);
+                    handlerFrom.drain(filled, true);
                 }
             }
         }
@@ -146,29 +134,6 @@ public final class WorldUtil{
             IBlockState state = world.getBlockState(offsetPos);
             Block block = state.getBlock();
             boolean replaceable = block.isReplaceable(world, offsetPos);
-
-            //Fluids
-            if(replaceable && !(block instanceof IFluidBlock) && !(block instanceof BlockLiquid)){
-                FluidStack fluid = null;
-                if(FluidContainerRegistry.isFilledContainer(stack)){
-                    fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
-                }
-                else if(stack.getItem() instanceof IFluidContainerItem){
-                    fluid = ((IFluidContainerItem)stack.getItem()).getFluid(stack);
-                }
-
-                if(fluid != null && fluid.amount >= Util.BUCKET){
-                    Fluid theFluid = fluid.getFluid();
-                    if(theFluid != null){
-                        Block fluidBlock = theFluid.getBlock();
-                        if(fluidBlock != null && fluidBlock.canPlaceBlockAt(world, offsetPos)){
-                            if(world.setBlockState(offsetPos, fluidBlock.getDefaultState(), 2)){
-                                return stack.getItem().getContainerItem(stack);
-                            }
-                        }
-                    }
-                }
-            }
 
             //Redstone
             if(replaceable && stack.getItem() == Items.REDSTONE){

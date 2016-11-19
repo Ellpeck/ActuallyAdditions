@@ -11,11 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.IFluidHandler;
 
-public interface ISharingFluidHandler extends IFluidHandler{
+public interface ISharingFluidHandler{
 
-    int getFluidAmountToSplitShare();
+    int getMaxFluidAmountToSplitShare();
 
     boolean doesShareFluid();
 

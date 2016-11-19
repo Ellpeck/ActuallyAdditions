@@ -118,7 +118,8 @@ public class BlockSlabs extends BlockBase{
         }
 
         @Override
-        public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+        public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+            ItemStack stack = playerIn.getHeldItem(hand);
             if(StackUtil.isValid(stack) && playerIn.canPlayerEdit(pos.offset(facing), facing, stack)){
                 IBlockState state = worldIn.getBlockState(pos);
 
@@ -138,7 +139,7 @@ public class BlockSlabs extends BlockBase{
                     }
                 }
 
-                return this.tryPlace(playerIn, stack, hand, worldIn, pos.offset(facing)) ? EnumActionResult.SUCCESS : super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+                return this.tryPlace(playerIn, stack, hand, worldIn, pos.offset(facing)) ? EnumActionResult.SUCCESS : super.onItemUse(playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
             }
             else{
                 return EnumActionResult.FAIL;

@@ -34,11 +34,6 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton{
     }
 
     @Override
-    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight){
-
-    }
-
-    @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         minecraft.fontRendererObj.drawString(this.theRecipe.energyUse+" RF", 55, 0, 0xFFFFFF, true);
         super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);

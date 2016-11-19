@@ -90,7 +90,7 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing facing, float hitX, float hitY, float hitZ){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
         if(this.getMetaFromState(state) >= 7){
             if(!world.isRemote){
 

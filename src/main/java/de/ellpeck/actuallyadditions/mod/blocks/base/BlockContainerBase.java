@@ -37,6 +37,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 
@@ -167,8 +168,8 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn){
-        super.neighborChanged(state, worldIn, pos, blockIn);
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos otherPos){
+        super.neighborChanged(state, worldIn, pos, blockIn, otherPos);
         this.neighborsChangedCustom(worldIn, pos);
     }
 
@@ -201,7 +202,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     }
 
     protected boolean checkFailUseItemOnTank(EntityPlayer player, ItemStack heldItem, FluidTank tank){
-        return !StackUtil.isValid(heldItem) || !FluidUtil.interactWithFluidHandler(heldItem, tank, player);
+        return !StackUtil.isValid(heldItem) || !FluidUtil.interactWithFluidHandler(heldItem, tank, player).isSuccess();
     }
 
     @Override

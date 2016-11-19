@@ -32,7 +32,8 @@ public class ItemTeleStaff extends ItemEnergy{
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
+        ItemStack stack = player.getHeldItem(hand);
         if(!world.isRemote){
             RayTraceResult pos = WorldUtil.getNearestPositionWithAir(world, player, 100);
             if(pos != null && (pos.typeOfHit == RayTraceResult.Type.BLOCK || player.rotationPitch >= -5)){

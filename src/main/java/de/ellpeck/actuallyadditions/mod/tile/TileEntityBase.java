@@ -243,7 +243,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
             if(this instanceof ISharingFluidHandler){
                 ISharingFluidHandler handler = (ISharingFluidHandler)this;
                 if(handler.doesShareFluid()){
-                    int total = handler.getFluidAmountToSplitShare();
+                    int total = handler.getMaxFluidAmountToSplitShare();
                     if(total > 0){
                         EnumFacing[] sides = handler.getFluidShareSides();
 

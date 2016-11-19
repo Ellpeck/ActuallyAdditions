@@ -61,11 +61,11 @@ public class BlockCoffeeMachine extends BlockContainerBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing f6, float f7, float f8, float f9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing f6, float f7, float f8, float f9){
         if(!world.isRemote){
             TileEntityCoffeeMachine machine = (TileEntityCoffeeMachine)world.getTileEntity(pos);
             if(machine != null){
-                if(this.checkFailUseItemOnTank(player, stack, machine.tank)){
+                if(this.checkFailUseItemOnTank(player, player.getHeldItem(hand), machine.tank)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COFFEE_MACHINE.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }

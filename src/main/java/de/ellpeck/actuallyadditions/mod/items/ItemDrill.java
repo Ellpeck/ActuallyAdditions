@@ -104,7 +104,8 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     //Places Blocks if the Placing Upgrade is installed
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+        ItemStack stack = player.getHeldItem(hand);
         ItemStack upgrade = this.getHasUpgradeAsStack(stack, ItemDrillUpgrade.UpgradeType.PLACER);
         if(StackUtil.isValid(upgrade)){
             int slot = ItemDrillUpgrade.getSlotToPlaceFrom(upgrade);
@@ -127,7 +128,7 @@ public class ItemDrill extends ItemEnergy{
                         }
                         //Notify the Player and log the Exception
                         catch(Exception e){
-                            player.addChatComponentMessage(new TextComponentString("Ouch! That really hurt! You must have done something wrong, don't do that again please!"));
+                            player.addChatMessage(new TextComponentString("Ouch! That really hurt! You must have done something wrong, don't do that again please!"));
                             ModUtil.LOGGER.error("Player "+player.getName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.getDimension()+" threw an Exception! Don't let that happen again!");
                         }
                     }
@@ -168,11 +169,11 @@ public class ItemDrill extends ItemEnergy{
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote && player.isSneaking()){
             player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @Override
@@ -366,7 +367,7 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, List list){
+    public void getSubItems(Item item, CreativeTabs tabs, NonNullList list){
         for(int i = 0; i < 16; i++){
             this.addDrillStack(list, i);
         }

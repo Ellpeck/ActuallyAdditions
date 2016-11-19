@@ -22,13 +22,8 @@ public class EmpowererRecipeHandler implements IRecipeHandler<EmpowererRecipe>{
     }
 
     @Override
-    public String getRecipeCategoryUid(){
-        return EmpowererRecipeCategory.NAME;
-    }
-
-    @Override
     public String getRecipeCategoryUid(EmpowererRecipe recipe){
-        return this.getRecipeCategoryUid();
+        return EmpowererRecipeCategory.NAME;
     }
 
     @Override

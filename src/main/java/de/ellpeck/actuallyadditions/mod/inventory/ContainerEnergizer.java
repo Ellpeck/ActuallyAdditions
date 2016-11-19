@@ -124,7 +124,7 @@ public class ContainerEnergizer extends Container{
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
                 return StackUtil.getNull();
             }
-            theSlot.onPickupFromSlot(player, newStack);
+            theSlot.func_190901_a(player, newStack);
 
             return currentStack;
         }

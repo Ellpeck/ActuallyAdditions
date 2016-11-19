@@ -115,7 +115,7 @@ public class OreGen implements IWorldGenerator{
                     BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
                     randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
 
-                    if(event.getWorld().getBiomeGenForCoords(randomPos) instanceof BiomeOcean){
+                    if(event.getWorld().getBiome(randomPos) instanceof BiomeOcean){
                         if(randomPos.getY() >= 25 && randomPos.getY() <= 45){
                             if(event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER){
                                 if(event.getWorld().getBlockState(randomPos.down()).getMaterial().isSolid()){

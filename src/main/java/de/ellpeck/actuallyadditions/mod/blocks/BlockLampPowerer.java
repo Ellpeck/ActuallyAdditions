@@ -42,7 +42,7 @@ public class BlockLampPowerer extends BlockBase{
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn){
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos otherPos){
         this.updateLamp(worldIn, pos);
     }
 
@@ -53,7 +53,7 @@ public class BlockLampPowerer extends BlockBase{
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.getFacingFromEntity(pos, player).ordinal();
+        int rotation = EnumFacing.func_190914_a(pos, player).ordinal();
         world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);

@@ -86,7 +86,8 @@ public class ItemPhantomConnector extends ItemBase{
 
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing par7, float par8, float par9, float par10){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing par7, float par8, float par9, float par10){
+        ItemStack stack = player.getHeldItem(hand);
         if(!world.isRemote){
             //Passing Data to Phantoms
             TileEntity tile = world.getTileEntity(pos);
@@ -99,7 +100,7 @@ public class ItemPhantomConnector extends ItemBase{
                             ((TileEntityBase)tile).sendUpdate();
                         }
                         clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
-                        player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.connected.desc"));
+                        player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.connected.desc"));
                         return EnumActionResult.SUCCESS;
                     }
                     return EnumActionResult.FAIL;
@@ -107,7 +108,7 @@ public class ItemPhantomConnector extends ItemBase{
             }
             //Storing Connections
             storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-            player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.stored.desc"));
+            player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.stored.desc"));
         }
         return EnumActionResult.SUCCESS;
     }
@@ -120,7 +121,7 @@ public class ItemPhantomConnector extends ItemBase{
             if(tile instanceof IPhantomTile){
                 ((IPhantomTile)tile).setBoundPosition(null);
             }
-            player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.unbound.desc"));
+            player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.unbound.desc"));
             return false;
         }
     }

@@ -64,12 +64,12 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
 
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
         if(!playerIn.isSneaking()){
-            return Items.IRON_HOE.onItemUse(stack, playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
+            return Items.IRON_HOE.onItemUse(playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
         }
         else{
-            return Items.IRON_SHOVEL.onItemUse(stack, playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
+            return Items.IRON_SHOVEL.onItemUse(playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
         }
     }
 

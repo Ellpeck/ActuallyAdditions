@@ -24,6 +24,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -96,7 +97,7 @@ public class ItemFoods extends ItemFoodBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List list){
+    public void getSubItems(Item item, CreativeTabs tab, NonNullList list){
         for(int j = 0; j < ALL_FOODS.length; j++){
             list.add(new ItemStack(this, 1, j));
         }

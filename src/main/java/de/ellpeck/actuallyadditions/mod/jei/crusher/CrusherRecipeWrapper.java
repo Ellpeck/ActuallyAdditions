@@ -54,11 +54,6 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton{
     }
 
     @Override
-    public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight){
-
-    }
-
-    @Override
     public int getButtonX(){
         return -5;
     }

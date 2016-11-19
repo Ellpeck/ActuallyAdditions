@@ -22,13 +22,8 @@ public class ReconstructorRecipeHandler implements IRecipeHandler<LensConversion
     }
 
     @Override
-    public String getRecipeCategoryUid(){
-        return ReconstructorRecipeCategory.NAME;
-    }
-
-    @Override
     public String getRecipeCategoryUid(LensConversionRecipe recipe){
-        return this.getRecipeCategoryUid();
+        return ReconstructorRecipeCategory.NAME;
     }
 
     @Override

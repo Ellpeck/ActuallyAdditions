@@ -39,13 +39,14 @@ public class ItemLaserWrench extends ItemBase{
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing par7, float par8, float par9, float par10){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing par7, float par8, float par9, float par10){
+        ItemStack stack = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityLaserRelay){
             if(!world.isRemote){
                 if(ItemPhantomConnector.getStoredPosition(stack) == null){
                     ItemPhantomConnector.storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-                    player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.stored.desc"));
+                    player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.stored.desc"));
                 }
                 else{
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
@@ -59,10 +60,10 @@ public class ItemLaserWrench extends ItemBase{
                             ((TileEntityLaserRelay)savedTile).sendUpdate();
                             relay.sendUpdate();
 
-                            player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.connected.desc"));
+                            player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.connected.desc"));
                         }
                         else{
-                            player.addChatComponentMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.cantConnect.desc"));
+                            player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.cantConnect.desc"));
                             ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
                         }
                     }

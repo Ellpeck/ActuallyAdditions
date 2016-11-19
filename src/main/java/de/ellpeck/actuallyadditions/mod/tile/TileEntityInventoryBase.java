@@ -58,7 +58,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
             NBTTagList tagList = compound.getTagList("Items", 10);
             for(int i = 0; i < slots.length; i++){
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                slots[i] = tagCompound != null && tagCompound.hasKey("id") ? ItemStack.loadItemStackFromNBT(tagCompound) : StackUtil.getNull();
+                slots[i] = tagCompound != null && tagCompound.hasKey("id") ? new ItemStack(tagCompound) : StackUtil.getNull();
             }
         }
     }
@@ -217,5 +217,10 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     public boolean hasInvWrapperCapabilities(){
         return true;
+    }
+
+    @Override
+    public boolean func_191420_l(){
+        return StackUtil.isIInvEmpty(this.slots);
     }
 }

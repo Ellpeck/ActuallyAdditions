@@ -394,7 +394,7 @@ public final class SmileyCloudEasterEggs{
             @Override
             public void renderExtra(float f){
                 renderHoldingItem(false, new ItemStack(Items.BONE));
-                renderHeadBlock(Blocks.field_189880_di, 0, 48F);
+                renderHeadBlock(Blocks.BONE_BLOCK, 0, 48F);
             }
         });
         //Jessassin

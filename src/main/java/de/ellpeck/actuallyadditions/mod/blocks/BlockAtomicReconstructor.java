@@ -64,7 +64,8 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
+        ItemStack heldItem = player.getHeldItem(hand);
         if(this.tryToggleRedstone(world, pos, player)){
             return true;
         }
@@ -140,7 +141,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
-        int rotation = BlockPistonBase.getFacingFromEntity(pos, player).ordinal();
+        int rotation = EnumFacing.func_190914_a(pos, player).ordinal();
         world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);

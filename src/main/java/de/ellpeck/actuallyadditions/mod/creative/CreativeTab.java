@@ -18,6 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
@@ -28,7 +29,7 @@ import java.util.List;
 public class CreativeTab extends CreativeTabs{
 
     public static final CreativeTab INSTANCE = new CreativeTab();
-    private List<ItemStack> list;
+    private NonNullList<ItemStack> list;
 
     public CreativeTab(){
         super(ModUtil.MOD_ID);
@@ -46,13 +47,13 @@ public class CreativeTab extends CreativeTabs{
     }
 
     @Override
-    public Item getTabIconItem(){
-        return InitItems.itemBooklet;
+    public ItemStack getTabIconItem(){
+        return new ItemStack(InitItems.itemBooklet);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayAllRelevantItems(List<ItemStack> list){
+    public void displayAllRelevantItems(NonNullList<ItemStack> list){
         this.list = list;
 
         this.add(InitItems.itemBooklet);

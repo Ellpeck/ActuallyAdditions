@@ -123,62 +123,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     }
 
     @Override
-    public int fill(EnumFacing from, FluidStack resource, boolean doFill){
-        IFluidHandler handler = this.getFluidHandler(from);
-        return handler == null ? 0 : handler.fill(resource, doFill);
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain){
-        IFluidHandler handler = this.getFluidHandler(from);
-        return handler == null ? null : handler.drain(resource, doDrain);
-    }
-
-    @Override
-    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain){
-        IFluidHandler handler = this.getFluidHandler(from);
-        return handler == null ? null : handler.drain(maxDrain, doDrain);
-    }
-
-    @Override
-    public boolean canFill(EnumFacing from, Fluid fluid){
-        IFluidHandler handler = this.getFluidHandler(from);
-        if(handler != null){
-            for(IFluidTankProperties prop : handler.getTankProperties()){
-                if(prop != null && prop.canFillFluidType(new FluidStack(fluid, Integer.MAX_VALUE))){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean canDrain(EnumFacing from, Fluid fluid){
-        IFluidHandler handler = this.getFluidHandler(from);
-        if(handler != null){
-            for(IFluidTankProperties prop : handler.getTankProperties()){
-                if(prop != null && prop.canDrainFluidType(new FluidStack(fluid, Integer.MAX_VALUE))){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from){
-        IFluidHandler handler = this.getFluidHandler(from);
-        if(handler instanceof IFluidTank){
-            return new FluidTankInfo[]{((IFluidTank)handler).getInfo()};
-        }
-        else{
-            return null;
-        }
-    }
-
-    @Override
-    public int getFluidAmountToSplitShare(){
+    public int getMaxFluidAmountToSplitShare(){
         return this.oilTank.getFluidAmount();
     }
 

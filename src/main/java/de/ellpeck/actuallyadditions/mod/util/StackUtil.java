@@ -33,11 +33,11 @@ public final class StackUtil{
     }
 
     public static boolean isValid(ItemStack stack){
-        return stack != null && !ItemStack.areItemStacksEqual(stack, getNull()) && stack.stackSize > 0 && stack.getItem() != null;
+        return stack != null && !stack.func_190926_b();
     }
 
     public static ItemStack getNull(){
-        return null;
+        return ItemStack.field_190927_a;
     }
 
     public static int getStackSize(ItemStack stack){
@@ -45,7 +45,7 @@ public final class StackUtil{
             return 0;
         }
         else{
-            return stack.stackSize;
+            return stack.func_190916_E();
         }
     }
 
@@ -58,11 +58,21 @@ public final class StackUtil{
                 return getNull();
             }
         }
-        stack.stackSize = size;
+        stack.func_190920_e(size);
         return stack;
     }
 
     public static ItemStack addStackSize(ItemStack stack, int size){
         return setStackSize(stack, getStackSize(stack)+size);
+    }
+
+    public static boolean isIInvEmpty(ItemStack[] slots){
+        for(ItemStack stack : slots){
+            if(StackUtil.isValid(stack)){
+                return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -29,6 +29,7 @@ import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -58,7 +59,7 @@ public class ItemSpawnerChanger extends ItemBase{
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack aStack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
         if(!world.isRemote){
             ItemStack stack = player.getHeldItemMainhand();
             if(player.canPlayerEdit(pos.offset(facing), facing, stack)){
@@ -76,7 +77,7 @@ public class ItemSpawnerChanger extends ItemBase{
                         compound.removeTag("SpawnData");
                         logic.readFromNBT(compound);
 
-                        logic.setEntityName(entity);
+                        logic.func_190894_a(new ResourceLocation(entity));
 
                         tile.markDirty();
 

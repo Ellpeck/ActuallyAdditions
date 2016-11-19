@@ -77,14 +77,15 @@ public class ItemBattery extends ItemEnergy{
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World worldIn, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand){
+        ItemStack stack = player.getHeldItem(hand);
         if(!worldIn.isRemote && player.isSneaking()){
             boolean isDischarge = this.isDischargeMode(stack);
             this.setDischargeMode(stack, !isDischarge);
 
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
-        return super.onItemRightClick(stack, worldIn, player, hand);
+        return super.onItemRightClick(worldIn, player, hand);
     }
 
     private boolean isDischargeMode(ItemStack stack){

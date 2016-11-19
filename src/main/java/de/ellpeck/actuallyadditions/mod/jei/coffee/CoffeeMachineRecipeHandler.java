@@ -24,14 +24,8 @@ public class CoffeeMachineRecipeHandler implements IRecipeHandler<CoffeeIngredie
 
     @Override
     public String getRecipeCategoryUid(CoffeeIngredient recipe){
-        return this.getRecipeCategoryUid();
-    }
-
-    @Override
-    public String getRecipeCategoryUid(){
         return CoffeeMachineRecipeCategory.NAME;
     }
-
 
     @Override
     public IRecipeWrapper getRecipeWrapper(CoffeeIngredient recipe){

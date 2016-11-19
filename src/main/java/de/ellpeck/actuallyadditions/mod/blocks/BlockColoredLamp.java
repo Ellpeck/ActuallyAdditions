@@ -29,6 +29,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -64,7 +65,8 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+        ItemStack stack = player.getHeldItem(hand);
         //Turning On
         if(player.isSneaking()){
             if(!world.isRemote){
@@ -105,7 +107,7 @@ public class BlockColoredLamp extends BlockBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, List list){
+    public void getSubBlocks(Item item, CreativeTabs tab, NonNullList list){
         for(int j = 0; j < ALL_LAMP_TYPES.length; j++){
             list.add(new ItemStack(item, 1, j));
         }

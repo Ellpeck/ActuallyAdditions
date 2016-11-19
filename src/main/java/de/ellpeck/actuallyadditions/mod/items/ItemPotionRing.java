@@ -28,6 +28,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -91,7 +92,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List list){
+    public void getSubItems(Item item, CreativeTabs tab, NonNullList list){
         for(int j = 0; j < ALL_RINGS.length; j++){
             list.add(new ItemStack(this, 1, j));
         }

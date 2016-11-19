@@ -96,7 +96,7 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityFurnaceDouble furnace = (TileEntityFurnaceDouble)world.getTileEntity(pos);
             if(furnace != null){

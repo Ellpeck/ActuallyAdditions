@@ -41,7 +41,8 @@ public class ItemWorm extends ItemBase{
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float par8, float par9, float par10){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float par8, float par9, float par10){
+        ItemStack stack = player.getHeldItem(hand);
         IBlockState state = world.getBlockState(pos);
         if(EntityWorm.canWormify(world, pos, state)){
             List<EntityWorm> worms = world.getEntitiesWithinAABB(EntityWorm.class, new AxisAlignedBB(pos.getX()-1, pos.getY(), pos.getZ()-1, pos.getX()+2, pos.getY()+1, pos.getZ()+2));
@@ -56,7 +57,7 @@ public class ItemWorm extends ItemBase{
                 return EnumActionResult.SUCCESS;
             }
         }
-        return super.onItemUse(stack, player, world, pos, hand, side, par8, par9, par10);
+        return super.onItemUse(player, world, pos, hand, side, par8, par9, par10);
     }
 
     @SubscribeEvent

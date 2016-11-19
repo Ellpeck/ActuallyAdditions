@@ -52,11 +52,11 @@ public class BlockCanolaPress extends BlockContainerBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityCanolaPress press = (TileEntityCanolaPress)world.getTileEntity(pos);
             if(press != null){
-                if(this.checkFailUseItemOnTank(player, stack, press.tank)){
+                if(this.checkFailUseItemOnTank(player, player.getHeldItem(hand), press.tank)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CANOLA_PRESS.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }

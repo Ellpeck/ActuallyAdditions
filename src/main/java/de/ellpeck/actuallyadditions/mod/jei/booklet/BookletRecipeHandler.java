@@ -24,11 +24,6 @@ public class BookletRecipeHandler implements IRecipeHandler<IBookletPage>{
 
     @Override
     public String getRecipeCategoryUid(IBookletPage recipe){
-        return this.getRecipeCategoryUid();
-    }
-
-    @Override
-    public String getRecipeCategoryUid(){
         return BookletRecipeCategory.NAME;
     }
 

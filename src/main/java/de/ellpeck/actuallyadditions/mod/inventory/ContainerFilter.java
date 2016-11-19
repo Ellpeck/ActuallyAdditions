@@ -104,7 +104,7 @@ public class ContainerFilter extends Container{
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
                 return StackUtil.getNull();
             }
-            theSlot.onPickupFromSlot(player, newStack);
+            theSlot.func_190901_a(player, newStack);
 
             return currentStack;
         }
@@ -213,6 +213,11 @@ public class ContainerFilter extends Container{
         @Override
         public int getSizeInventory(){
             return this.slots.length;
+        }
+
+        @Override
+        public boolean func_191420_l(){
+            return StackUtil.isIInvEmpty(this.slots);
         }
 
         @Override

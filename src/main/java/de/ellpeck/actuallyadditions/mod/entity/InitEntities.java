@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.entity;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -22,7 +23,7 @@ public final class InitEntities{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Entities...");
 
-        EntityRegistry.registerModEntity(EntityWorm.class, ModUtil.MOD_ID+".worm", 0, ActuallyAdditions.instance, 64, 1, false);
+        EntityRegistry.registerModEntity(new ResourceLocation(ModUtil.MOD_ID, "worm"), EntityWorm.class, ModUtil.MOD_ID+".worm", 0, ActuallyAdditions.instance, 64, 1, false);
     }
 
     @SideOnly(Side.CLIENT)

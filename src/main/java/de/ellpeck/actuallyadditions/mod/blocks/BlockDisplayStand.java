@@ -50,7 +50,8 @@ public class BlockDisplayStand extends BlockContainerBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,EnumFacing par6, float par7, float par8, float par9){
+        ItemStack heldItem = player.getHeldItem(hand);
         if(!world.isRemote){
             TileEntityDisplayStand stand = (TileEntityDisplayStand)world.getTileEntity(pos);
             if(stand != null){

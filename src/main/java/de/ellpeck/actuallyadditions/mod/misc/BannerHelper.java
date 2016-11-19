@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.misc;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityBanner.EnumBannerPattern;
+import net.minecraft.tileentity.BannerPattern;
 import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.Locale;
@@ -47,7 +47,7 @@ public final class BannerHelper{
     public static void addCraftingPattern(String name, ItemStack craftingStack){
         Class[] paramTypes = {String.class, String.class, ItemStack.class};
         Object[] paramValues = {ModUtil.MOD_ID+name, ModUtil.MOD_ID+name, craftingStack};
-        EnumHelper.addEnum(EnumBannerPattern.class, (ModUtil.MOD_ID+"_"+name).toUpperCase(Locale.ROOT), paramTypes, paramValues);
+        EnumHelper.addEnum(BannerPattern.class, (ModUtil.MOD_ID+"_"+name).toUpperCase(Locale.ROOT), paramTypes, paramValues);
     }
 
 }

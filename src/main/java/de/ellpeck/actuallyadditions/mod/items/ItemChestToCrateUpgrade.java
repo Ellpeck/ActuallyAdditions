@@ -37,7 +37,8 @@ public class ItemChestToCrateUpgrade extends ItemBase{
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack heldStack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float par8, float par9, float par10){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float par8, float par9, float par10){
+        ItemStack heldStack = player.getHeldItem(hand);
         if(player.isSneaking()){
             TileEntity tileHit = world.getTileEntity(pos);
             if(tileHit.getClass() == this.start){
@@ -79,7 +80,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
             }
         }
 
-        return super.onItemUse(heldStack, player, world, pos, hand, facing, par8, par9, par10);
+        return super.onItemUse(player, world, pos, hand, facing, par8, par9, par10);
     }
 
 

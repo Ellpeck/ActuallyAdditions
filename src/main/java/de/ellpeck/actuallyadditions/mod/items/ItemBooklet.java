@@ -54,7 +54,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
 
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing face, float hitX, float hitY, float hitZ){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing face, float hitX, float hitY, float hitZ){
         if(player.isSneaking()){
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
@@ -64,7 +64,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
                 if(world.isRemote){
                     forcedPage = page;
                 }
-                this.onItemRightClick(stack, world, player, hand);
+                this.onItemRightClick(world, player, hand);
                 return EnumActionResult.SUCCESS;
             }
         }
@@ -73,14 +73,14 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
 
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
         player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
 
         if(!world.isRemote){
             TheAchievements.OPEN_BOOKLET.get(player);
             TheAchievements.OPEN_BOOKLET_MILESTONE.get(player);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
     @Override

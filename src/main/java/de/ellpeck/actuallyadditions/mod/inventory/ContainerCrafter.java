@@ -91,7 +91,7 @@ public class ContainerCrafter extends Container{
                 return StackUtil.getNull();
             }
 
-            slot.onPickupFromSlot(player, itemstack1);
+            slot.func_190901_a(player, itemstack1);
         }
 
         return itemstack;

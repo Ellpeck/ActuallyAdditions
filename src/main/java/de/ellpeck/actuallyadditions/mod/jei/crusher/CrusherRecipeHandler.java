@@ -22,15 +22,9 @@ public class CrusherRecipeHandler implements IRecipeHandler<CrusherRecipe>{
         return CrusherRecipe.class;
     }
 
-
-    @Override
-    public String getRecipeCategoryUid(){
-        return CrusherRecipeCategory.NAME;
-    }
-
     @Override
     public String getRecipeCategoryUid(CrusherRecipe recipe){
-        return this.getRecipeCategoryUid();
+        return CrusherRecipeCategory.NAME;
     }
 
 

@@ -137,7 +137,8 @@ public class ItemBag extends ItemBase{
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+        ItemStack stack = playerIn.getHeldItem(hand);
         if(!this.isVoid){
             TileEntity tile = worldIn.getTileEntity(pos);
             if(tile != null && tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)){
@@ -178,11 +179,11 @@ public class ItemBag extends ItemBase{
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote){
             player.openGui(ActuallyAdditions.instance, (this.isVoid ? GuiTypes.VOID_BAG : GuiTypes.BAG).ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @Override

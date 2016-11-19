@@ -20,6 +20,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -78,7 +80,7 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, List list){
+    public void getSubItems(Item item, CreativeTabs tabs, NonNullList list){
         ItemStack stackFull = new ItemStack(this);
         this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
         list.add(stackFull);
@@ -98,6 +100,13 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
         double maxAmount = this.getMaxEnergyStored(stack);
         double energyDif = maxAmount-this.getEnergyStored(stack);
         return energyDif/maxAmount;
+    }
+
+    @Override
+    public int getRGBDurabilityForDisplay(ItemStack stack){
+        int currEnergy = this.getEnergyStored(stack);
+        int maxEnergy = this.getMaxEnergyStored(stack);
+        return MathHelper.hsvToRGB(Math.max(0.0F, (float)currEnergy/maxEnergy)/3.0F, 1.0F, 1.0F);
     }
 
     public void setEnergy(ItemStack stack, int energy){

@@ -110,6 +110,11 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
             }
 
             @Override
+            public boolean func_191420_l(){
+                return StackUtil.isIInvEmpty(this.tile.slots);
+            }
+
+            @Override
             public ItemStack getStackInSlot(int i){
                 if(i < this.getSizeInventory()){
                     return this.tile.slots[i];

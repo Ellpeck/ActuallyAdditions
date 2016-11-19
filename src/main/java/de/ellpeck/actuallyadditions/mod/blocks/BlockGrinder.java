@@ -71,7 +71,7 @@ public class BlockGrinder extends BlockContainerBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
             TileEntityGrinder grinder = (TileEntityGrinder)world.getTileEntity(pos);
             if(grinder != null){

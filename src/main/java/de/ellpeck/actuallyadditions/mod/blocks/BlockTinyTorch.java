@@ -26,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 //Copied from BlockTorch.
@@ -66,8 +67,9 @@ public class BlockTinyTorch extends BlockBase{
         }
     }
 
+    @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos){
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos){
         return NULL_AABB;
     }
 
@@ -125,7 +127,7 @@ public class BlockTinyTorch extends BlockBase{
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn){
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos otherPos){
         this.onNeighborChangeInternal(worldIn, pos, state);
     }
 

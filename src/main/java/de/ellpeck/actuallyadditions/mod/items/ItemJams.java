@@ -26,6 +26,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -62,7 +63,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List list){
+    public void getSubItems(Item item, CreativeTabs tab, NonNullList list){
         for(int j = 0; j < ALL_JAMS.length; j++){
             list.add(new ItemStack(this, 1, j));
         }
