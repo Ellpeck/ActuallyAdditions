@@ -30,7 +30,7 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class GuiGiantChest extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiGiantChest");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_giant_chest");
 
     private final TileEntityGiantChest chest;
     private final int page;

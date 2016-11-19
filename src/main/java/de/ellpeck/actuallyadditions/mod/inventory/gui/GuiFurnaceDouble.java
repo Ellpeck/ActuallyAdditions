@@ -30,7 +30,7 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiFurnaceDouble extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFurnaceDouble");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_furnace_double");
     private final TileEntityFurnaceDouble tileFurnace;
     private EnergyDisplay energy;
 

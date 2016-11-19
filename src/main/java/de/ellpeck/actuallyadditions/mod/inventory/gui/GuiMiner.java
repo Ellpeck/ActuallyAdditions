@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiMiner extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiBreaker");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityMiner miner;
 
     public GuiMiner(InventoryPlayer inventory, TileEntityBase tile){

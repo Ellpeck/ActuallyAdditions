@@ -25,7 +25,7 @@ public class EmpowererRecipeCategory extends BlankRecipeCategory<EmpowererRecipe
     private final IDrawable background;
 
     public EmpowererRecipeCategory(IGuiHelper helper){
-        this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEIEmpowerer"), 0, 0, 135, 80);
+        this.background = helper.createDrawable(AssetUtil.getGuiLocation("gui_nei_empowerer"), 0, 0, 135, 80);
     }
 
     @Override

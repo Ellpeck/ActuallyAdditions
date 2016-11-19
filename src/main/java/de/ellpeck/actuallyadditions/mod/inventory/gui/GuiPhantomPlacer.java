@@ -33,7 +33,7 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class GuiPhantomPlacer extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiBreaker");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityPhantomPlacer placer;
 
     public GuiPhantomPlacer(InventoryPlayer inventory, TileEntityBase tile){

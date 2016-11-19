@@ -26,7 +26,7 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class GuiEnervator extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiEnergizer");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_energizer");
     private final TileEntityEnervator enervator;
     private EnergyDisplay energy;
 

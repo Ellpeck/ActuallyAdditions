@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiDrill extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiDrill");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_drill");
 
     public GuiDrill(InventoryPlayer inventory){
         super(new ContainerDrill(inventory));

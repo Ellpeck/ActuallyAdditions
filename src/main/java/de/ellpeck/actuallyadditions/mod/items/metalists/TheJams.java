@@ -14,13 +14,13 @@ import net.minecraft.item.EnumRarity;
 
 public enum TheJams{
 
-    CU_BA_RA("CuBaRa", 6, 0.1F, EnumRarity.RARE, 5, 12, 12595273),
-    GRA_KI_BA("GraKiBa", 6, 0.1F, EnumRarity.RARE, 16, 13, 5492820),
-    PL_AP_LE("PlApLe", 6, 0.1F, EnumRarity.RARE, 15, 3, 13226009),
-    CH_AP_CI("ChApCi", 6, 0.1F, EnumRarity.RARE, 10, 1, 13189222),
-    HO_ME_KI("HoMeKi", 6, 0.1F, EnumRarity.RARE, 10, 14, 2031360),
-    PI_CO("PiCo", 6, 0.1F, EnumRarity.RARE, 9, 1, 16056203),
-    HO_ME_CO("HoMeCo", 6, 0.1F, EnumRarity.RARE, 10, 13, 10462208);
+    CU_BA_RA("cu_ba_ra", 6, 0.1F, EnumRarity.RARE, 5, 12, 12595273),
+    GRA_KI_BA("gra_ki_ba", 6, 0.1F, EnumRarity.RARE, 16, 13, 5492820),
+    PL_AP_LE("pl_ap_le", 6, 0.1F, EnumRarity.RARE, 15, 3, 13226009),
+    CH_AP_CI("ch_ap_ci", 6, 0.1F, EnumRarity.RARE, 10, 1, 13189222),
+    HO_ME_KI("ho_me_ki", 6, 0.1F, EnumRarity.RARE, 10, 14, 2031360),
+    PI_CO("pi_co", 6, 0.1F, EnumRarity.RARE, 9, 1, 16056203),
+    HO_ME_CO("ho_me_co", 6, 0.1F, EnumRarity.RARE, 10, 13, 10462208);
 
     public final String name;
     public final int healAmount;

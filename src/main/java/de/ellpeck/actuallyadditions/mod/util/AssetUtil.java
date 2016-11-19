@@ -38,7 +38,7 @@ import java.util.Locale;
 
 public final class AssetUtil{
 
-    public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
+    public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("gui_inventory");
 
     public static ResourceLocation getGuiLocation(String file){
         return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/"+file+".png");

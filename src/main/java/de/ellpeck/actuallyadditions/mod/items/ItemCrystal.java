@@ -48,7 +48,7 @@ public class ItemCrystal extends ItemBase{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+"_"+BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].name;
     }
 
 
@@ -68,7 +68,7 @@ public class ItemCrystal extends ItemBase{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < BlockCrystal.ALL_CRYSTALS.length; i++){
-            String name = this.getRegistryName()+BlockCrystal.ALL_CRYSTALS[i].name;
+            String name = this.getRegistryName()+"_"+BlockCrystal.ALL_CRYSTALS[i].name;
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
     }

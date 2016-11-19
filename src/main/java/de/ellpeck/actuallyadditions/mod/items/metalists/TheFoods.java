@@ -18,27 +18,27 @@ import net.minecraft.item.ItemStack;
 
 public enum TheFoods{
 
-    CHEESE("Cheese", 1, 0.05F, false, 3, EnumRarity.COMMON),
-    PUMPKIN_STEW("PumpkinStew", 6, 0.3F, true, 30, EnumRarity.COMMON),
-    CARROT_JUICE("CarrotJuice", 4, 0.2F, true, 20, EnumRarity.COMMON),
-    FISH_N_CHIPS("FishNChips", 14, 0.65F, false, 40, EnumRarity.UNCOMMON),
-    FRENCH_FRIES("FrenchFries", 10, 0.6F, false, 32, EnumRarity.COMMON),
-    FRENCH_FRY("FrenchFry", 2, 0.025F, false, 3, EnumRarity.COMMON),
-    SPAGHETTI("Spaghetti", 7, 0.4F, false, 38, EnumRarity.COMMON),
-    NOODLE("Noodle", 1, 0.01F, false, 3, EnumRarity.COMMON),
-    CHOCOLATE_CAKE("ChocolateCake", 16, 0.8F, false, 45, EnumRarity.UNCOMMON),
-    CHOCOLATE("Chocolate", 3, 0.3F, false, 15, EnumRarity.COMMON),
-    TOAST("Toast", 3, 0.08F, false, 25, EnumRarity.COMMON),
-    SUBMARINE_SANDWICH("SubmarineSandwich", 9, 0.4F, false, 40, EnumRarity.UNCOMMON),
-    BIG_COOKIE("BigCookie", 4, 0.25F, false, 20, EnumRarity.UNCOMMON),
-    HAMBURGER("Hamburger", 13, 0.65F, false, 40, EnumRarity.COMMON),
-    PIZZA("Pizza", 16, 0.8F, false, 45, EnumRarity.UNCOMMON),
-    BAGUETTE("Baguette", 6, 0.5F, false, 25, EnumRarity.COMMON),
-    RICE("Rice", 2, 0.05F, false, 10, EnumRarity.UNCOMMON),
-    RICE_BREAD("RiceBread", 6, 0.5F, false, 25, EnumRarity.UNCOMMON),
-    DOUGHNUT("Doughnut", 2, 0.1F, false, 10, EnumRarity.EPIC),
-    CHOCOLATE_TOAST("ChocolateToast", 5, 0.2F, false, 40, EnumRarity.RARE),
-    BACON("Bacon", 4, 0.1F, false, 30, EnumRarity.COMMON);
+    CHEESE("cheese", 1, 0.05F, false, 3, EnumRarity.COMMON),
+    PUMPKIN_STEW("pumpkin_stew", 6, 0.3F, true, 30, EnumRarity.COMMON),
+    CARROT_JUICE("carrot_juice", 4, 0.2F, true, 20, EnumRarity.COMMON),
+    FISH_N_CHIPS("fish_n_chips", 14, 0.65F, false, 40, EnumRarity.UNCOMMON),
+    FRENCH_FRIES("french_fries", 10, 0.6F, false, 32, EnumRarity.COMMON),
+    FRENCH_FRY("french_fry", 2, 0.025F, false, 3, EnumRarity.COMMON),
+    SPAGHETTI("spaghetti", 7, 0.4F, false, 38, EnumRarity.COMMON),
+    NOODLE("noodle", 1, 0.01F, false, 3, EnumRarity.COMMON),
+    CHOCOLATE_CAKE("chocolate_cake", 16, 0.8F, false, 45, EnumRarity.UNCOMMON),
+    CHOCOLATE("chocolate", 3, 0.3F, false, 15, EnumRarity.COMMON),
+    TOAST("toast", 3, 0.08F, false, 25, EnumRarity.COMMON),
+    SUBMARINE_SANDWICH("submarine_sandwich", 9, 0.4F, false, 40, EnumRarity.UNCOMMON),
+    BIG_COOKIE("big_cookie", 4, 0.25F, false, 20, EnumRarity.UNCOMMON),
+    HAMBURGER("hamburger", 13, 0.65F, false, 40, EnumRarity.COMMON),
+    PIZZA("pizza", 16, 0.8F, false, 45, EnumRarity.UNCOMMON),
+    BAGUETTE("baguette", 6, 0.5F, false, 25, EnumRarity.COMMON),
+    RICE("rice", 2, 0.05F, false, 10, EnumRarity.UNCOMMON),
+    RICE_BREAD("rice_bread", 6, 0.5F, false, 25, EnumRarity.UNCOMMON),
+    DOUGHNUT("doughnut", 2, 0.1F, false, 10, EnumRarity.EPIC),
+    CHOCOLATE_TOAST("chocolate_toast", 5, 0.2F, false, 40, EnumRarity.RARE),
+    BACON("bacon", 4, 0.1F, false, 30, EnumRarity.COMMON);
 
     public final String name;
     public final int healAmount;

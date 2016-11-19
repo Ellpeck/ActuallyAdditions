@@ -30,8 +30,8 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiGrinder extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiGrinder");
-    private static final ResourceLocation RES_LOC_DOUBLE = AssetUtil.getGuiLocation("guiGrinderDouble");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_grinder");
+    private static final ResourceLocation RES_LOC_DOUBLE = AssetUtil.getGuiLocation("gui_grinder_double");
     private final TileEntityGrinder tileGrinder;
     private final boolean isDouble;
     private EnergyDisplay energy;

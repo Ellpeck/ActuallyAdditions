@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiXPSolidifier extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiXPSolidifier");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_xp_solidifier");
     private final TileEntityXPSolidifier solidifier;
 
     public GuiXPSolidifier(InventoryPlayer inventory, TileEntityBase tile){

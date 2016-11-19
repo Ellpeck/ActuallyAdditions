@@ -293,7 +293,7 @@ public final class ItemCrafting{
 
             for(int i = 0; i < 16; i++){
                 if(i != TheColoredLampColors.LIGHT_BLUE.ordinal()){
-                    GameRegistry.addRecipe(new RecipeKeepDataShapeless(new ItemStack(InitItems.itemDrill, 1, i), new ItemStack(InitItems.itemDrill, 1, Util.WILDCARD), lightBlueDrill.copy(), "dye"+TheColoredLampColors.values()[i].name));
+                    GameRegistry.addRecipe(new RecipeKeepDataShapeless(new ItemStack(InitItems.itemDrill, 1, i), new ItemStack(InitItems.itemDrill, 1, Util.WILDCARD), lightBlueDrill.copy(), "dye"+TheColoredLampColors.values()[i].oreName));
                     RECIPES_DRILL_COLORING.add(RecipeUtil.lastIRecipe());
                 }
             }

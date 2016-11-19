@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiRangedCollector extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiRangedCollector");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_ranged_collector");
     private final TileEntityRangedCollector collector;
 
     private FilterSettingsGui filter;

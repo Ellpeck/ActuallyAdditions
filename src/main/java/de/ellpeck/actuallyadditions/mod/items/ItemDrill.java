@@ -360,7 +360,7 @@ public class ItemDrill extends ItemEnergy{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < 16; i++){
-            String name = this.getRegistryName()+TheColoredLampColors.values()[i].name;
+            String name = this.getRegistryName()+"_"+TheColoredLampColors.values()[i].regName;
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
     }

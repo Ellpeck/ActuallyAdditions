@@ -39,8 +39,8 @@ import java.util.List;
 public abstract class GuiBooklet extends GuiBookletBase{
 
     public static final int BUTTONS_PER_PAGE = 12;
-    public static final ResourceLocation RES_LOC_GUI = AssetUtil.getBookletGuiLocation("guiBooklet");
-    public static final ResourceLocation RES_LOC_GADGETS = AssetUtil.getBookletGuiLocation("guiBookletGadgets");
+    public static final ResourceLocation RES_LOC_GUI = AssetUtil.getBookletGuiLocation("gui_booklet");
+    public static final ResourceLocation RES_LOC_GADGETS = AssetUtil.getBookletGuiLocation("gui_booklet_gadgets");
     protected final BookmarkButton[] bookmarkButtons = new BookmarkButton[12];
     public GuiScreen previousScreen;
     public GuiBookletBase parentPage;

@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiFermentingBarrel extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFermentingBarrel");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_fermenting_barrel");
     private final TileEntityFermentingBarrel press;
     private FluidDisplay input;
     private FluidDisplay output;

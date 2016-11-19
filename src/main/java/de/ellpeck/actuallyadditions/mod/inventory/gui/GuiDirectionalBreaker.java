@@ -26,7 +26,7 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class GuiDirectionalBreaker extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiDirectionalBreaker");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_directional_breaker");
     private final TileEntityDirectionalBreaker breaker;
     private EnergyDisplay energy;
 

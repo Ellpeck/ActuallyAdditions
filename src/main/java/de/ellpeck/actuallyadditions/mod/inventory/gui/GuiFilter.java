@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiFilter extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFilter");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_filter");
 
     public GuiFilter(InventoryPlayer inventory){
         super(new ContainerFilter(inventory));

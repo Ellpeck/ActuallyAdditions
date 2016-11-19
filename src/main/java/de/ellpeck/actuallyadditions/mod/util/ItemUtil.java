@@ -49,7 +49,7 @@ public final class ItemUtil{
 
         block.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
 
-        addUnderscoreNameToMapUnderscorelessName(name);
+        addUnderscoreNameToMapUnderscorelessName(block.getRegistryName());
     }
 
     public static void registerItem(Item item, String name, boolean addTab){
@@ -64,14 +64,12 @@ public final class ItemUtil{
             ActuallyAdditions.proxy.addColoredItem(item);
         }
 
-        addUnderscoreNameToMapUnderscorelessName(name);
+        addUnderscoreNameToMapUnderscorelessName(item.getRegistryName());
     }
 
-    private static void addUnderscoreNameToMapUnderscorelessName(String name){
-        String nameId = ModUtil.MOD_ID+":"+name;
-
-        String underscoreless = nameId.replaceAll("_", "");
-        UNDERSCORELESS_TO_UNDERSCORED_NAMES.put(underscoreless, nameId);
+    private static void addUnderscoreNameToMapUnderscorelessName(ResourceLocation name){
+        String underscoreless = name.toString().replaceAll("_", "");
+        UNDERSCORELESS_TO_UNDERSCORED_NAMES.put(underscoreless, name.toString());
     }
 
     public static boolean remapName(FMLMissingMappingsEvent.MissingMapping mapping){
@@ -80,11 +78,11 @@ public final class ItemUtil{
                 String newName = UNDERSCORELESS_TO_UNDERSCORED_NAMES.get(mapping.name);
                 ResourceLocation newResLoc = new ResourceLocation(newName);
 
-                if(Block.REGISTRY.containsKey(newResLoc)){
+                if(Block.REGISTRY.containsKey(newResLoc) && mapping.type == GameRegistry.Type.BLOCK){
                     mapping.remap(Block.REGISTRY.getObject(newResLoc));
                     return true;
                 }
-                else if(Item.REGISTRY.containsKey(newResLoc)){
+                else if(Item.REGISTRY.containsKey(newResLoc) && mapping.type == GameRegistry.Type.ITEM){
                     mapping.remap(Item.REGISTRY.getObject(newResLoc));
                     return true;
                 }

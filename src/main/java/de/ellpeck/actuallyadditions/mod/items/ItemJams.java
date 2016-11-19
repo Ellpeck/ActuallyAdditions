@@ -52,7 +52,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= ALL_JAMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_JAMS[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_JAMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+"_"+ALL_JAMS[stack.getItemDamage()].name;
     }
 
 

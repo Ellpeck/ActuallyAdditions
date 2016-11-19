@@ -46,8 +46,8 @@ public class GuiInputter extends GuiContainer{
             StringUtil.localize("info."+ModUtil.MOD_ID+".gui.east"),
             StringUtil.localize("info."+ModUtil.MOD_ID+".gui.south"),
             StringUtil.localize("info."+ModUtil.MOD_ID+".gui.west")};
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiInputter");
-    private static final ResourceLocation RES_LOC_ADVANCED = AssetUtil.getGuiLocation("guiInputterAdvanced");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_inputter");
+    private static final ResourceLocation RES_LOC_ADVANCED = AssetUtil.getGuiLocation("gui_inputter_advanced");
     public final TileEntityInputter tileInputter;
     private final int x;
     private final int y;
@@ -264,7 +264,7 @@ public class GuiInputter extends GuiContainer{
     @SideOnly(Side.CLIENT)
     public static class SmallerButton extends GuiButton{
 
-        public final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
+        public final ResourceLocation resLoc = AssetUtil.getGuiLocation("gui_inputter");
         private final boolean smaller;
 
         public SmallerButton(int id, int x, int y, String display){
@@ -308,7 +308,7 @@ public class GuiInputter extends GuiContainer{
     @SideOnly(Side.CLIENT)
     public static class TinyButton extends GuiButton{
 
-        public final ResourceLocation resLoc = AssetUtil.getGuiLocation("guiInputter");
+        public final ResourceLocation resLoc = AssetUtil.getGuiLocation("gui_inputter");
 
         public TinyButton(int id, int x, int y){
             super(id, x, y, 8, 8, "");

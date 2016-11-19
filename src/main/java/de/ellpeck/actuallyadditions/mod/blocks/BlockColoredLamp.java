@@ -160,7 +160,7 @@ public class BlockColoredLamp extends BlockBase{
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return InitBlocks.blockColoredLamp.getUnlocalizedName()+ALL_LAMP_TYPES[stack.getItemDamage()].name;
+            return InitBlocks.blockColoredLamp.getUnlocalizedName()+"_"+ALL_LAMP_TYPES[stack.getItemDamage()].regName;
         }
     }
 }

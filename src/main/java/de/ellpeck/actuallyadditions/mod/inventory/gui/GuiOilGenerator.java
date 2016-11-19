@@ -26,7 +26,7 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class GuiOilGenerator extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiOilGenerator");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_oil_generator");
     private final TileEntityOilGenerator generator;
 
     private EnergyDisplay energy;

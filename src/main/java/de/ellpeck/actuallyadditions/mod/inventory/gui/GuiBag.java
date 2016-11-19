@@ -34,8 +34,8 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class GuiBag extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiBag");
-    private static final ResourceLocation RES_LOC_VOID = AssetUtil.getGuiLocation("guiVoidBag");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_bag");
+    private static final ResourceLocation RES_LOC_VOID = AssetUtil.getGuiLocation("gui_void_bag");
 
     private final ContainerBag container;
     private final boolean isVoid;

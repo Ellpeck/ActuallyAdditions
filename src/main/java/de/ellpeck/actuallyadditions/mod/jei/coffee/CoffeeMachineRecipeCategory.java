@@ -25,7 +25,7 @@ public class CoffeeMachineRecipeCategory extends BlankRecipeCategory<CoffeeMachi
     private final IDrawable background;
 
     public CoffeeMachineRecipeCategory(IGuiHelper helper){
-        this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEICoffeeMachine"), 0, 0, 126, 92);
+        this.background = helper.createDrawable(AssetUtil.getGuiLocation("gui_nei_coffee_machine"), 0, 0, 126, 92);
     }
 
     @Override

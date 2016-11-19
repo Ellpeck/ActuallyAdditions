@@ -821,7 +821,7 @@ public final class BlockCrafting{
                         "GCG", "DQD", "GCG",
                         'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()),
                         'G', "glowstone",
-                        'D', "dye"+BlockColoredLamp.ALL_LAMP_TYPES[i].name,
+                        'D', "dye"+BlockColoredLamp.ALL_LAMP_TYPES[i].oreName,
                         'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal())));
                 RECIPES_LAMPS[i] = RecipeUtil.lastIRecipe();
             }

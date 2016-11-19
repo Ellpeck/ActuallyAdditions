@@ -28,8 +28,8 @@ public final class SoundHandler{
     public static void init(){
         size = SoundEvent.REGISTRY.getKeys().size();
 
-        duhDuhDuhDuuuh = registerSound("duhDuhDuhDuuuh");
-        coffeeMachine = registerSound("coffeeMachine");
+        duhDuhDuhDuuuh = registerSound("duh_duh_duh_duuuh");
+        coffeeMachine = registerSound("coffee_machine");
         reconstructor = registerSound("reconstructor");
         crusher = registerSound("crusher");
     }

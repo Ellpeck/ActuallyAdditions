@@ -33,7 +33,7 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class GuiLaserRelayItemWhitelist extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiLaserRelayItemWhitelist");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_laser_relay_item_whitelist");
     private final TileEntityLaserRelayItemWhitelist tile;
 
     private FilterSettingsGui leftFilter;

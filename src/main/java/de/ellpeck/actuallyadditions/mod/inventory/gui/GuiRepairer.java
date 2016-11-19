@@ -26,7 +26,7 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class GuiRepairer extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiRepairer");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_repairer");
     private final TileEntityItemRepairer tileRepairer;
     private EnergyDisplay energy;
 

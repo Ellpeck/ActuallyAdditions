@@ -48,7 +48,7 @@ public class ItemMisc extends ItemBase{
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_MISC_ITEMS[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+"_"+ALL_MISC_ITEMS[stack.getItemDamage()].name;
     }
 
 
@@ -70,7 +70,7 @@ public class ItemMisc extends ItemBase{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < ALL_MISC_ITEMS.length; i++){
-            String name = this.getRegistryName()+ALL_MISC_ITEMS[i].name;
+            String name = this.getRegistryName()+"_"+ALL_MISC_ITEMS[i].name;
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
     }

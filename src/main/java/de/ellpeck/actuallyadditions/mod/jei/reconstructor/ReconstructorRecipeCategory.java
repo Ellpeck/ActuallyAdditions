@@ -29,7 +29,7 @@ public class ReconstructorRecipeCategory extends BlankRecipeCategory<Reconstruct
     private final IDrawable background;
 
     public ReconstructorRecipeCategory(IGuiHelper helper){
-        this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiNEIAtomicReconstructor"), 0, 0, 96, 60);
+        this.background = helper.createDrawable(AssetUtil.getGuiLocation("gui_nei_atomic_reconstructor"), 0, 0, 96, 60);
     }
 
     @Override

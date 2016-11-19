@@ -26,7 +26,7 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class GuiCoalGenerator extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiCoalGenerator");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_coal_generator");
     private final TileEntityCoalGenerator generator;
     private EnergyDisplay energy;
 

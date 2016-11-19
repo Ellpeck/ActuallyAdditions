@@ -124,7 +124,7 @@ public class BlockInputter extends BlockContainerBase{
                 this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS)+1;
             }
 
-            return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID+".blockInputter.add."+this.toPick+".name")+")";
+            return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID+".block_inputter.add."+this.toPick+".name")+")";
         }
     }
 }

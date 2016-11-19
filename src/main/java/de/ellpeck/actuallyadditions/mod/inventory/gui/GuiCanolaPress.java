@@ -26,7 +26,7 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class GuiCanolaPress extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiCanolaPress");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_canola_press");
     private final TileEntityCanolaPress press;
     private EnergyDisplay energy;
     private FluidDisplay fluid;

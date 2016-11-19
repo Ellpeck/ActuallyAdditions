@@ -23,7 +23,7 @@ import java.io.IOException;
 
 public class GuiBioReactor extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiBioReactor");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_bio_reactor");
     private final TileEntityBioReactor tile;
     private EnergyDisplay energy;
 

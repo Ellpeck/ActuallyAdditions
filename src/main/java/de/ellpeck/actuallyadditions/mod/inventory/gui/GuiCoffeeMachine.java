@@ -31,7 +31,7 @@ import java.util.Collections;
 @SideOnly(Side.CLIENT)
 public class GuiCoffeeMachine extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiCoffeeMachine");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_coffee_machine");
     private final TileEntityCoffeeMachine machine;
 
     private EnergyDisplay energy;

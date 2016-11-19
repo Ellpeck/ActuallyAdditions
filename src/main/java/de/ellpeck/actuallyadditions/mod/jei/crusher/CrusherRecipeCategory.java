@@ -26,7 +26,7 @@ public class CrusherRecipeCategory extends BlankRecipeCategory<CrusherRecipeWrap
     private final IDrawable background;
 
     public CrusherRecipeCategory(IGuiHelper helper){
-        this.background = helper.createDrawable(AssetUtil.getGuiLocation("guiGrinder"), 60, 13, 56, 79);
+        this.background = helper.createDrawable(AssetUtil.getGuiLocation("gui_grinder"), 60, 13, 56, 79);
     }
 
     @Override

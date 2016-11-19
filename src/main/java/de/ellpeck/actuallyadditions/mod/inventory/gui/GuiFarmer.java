@@ -26,7 +26,7 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class GuiFarmer extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFarmer");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_farmer");
     private final TileEntityFarmer farmer;
 
     private EnergyDisplay energy;

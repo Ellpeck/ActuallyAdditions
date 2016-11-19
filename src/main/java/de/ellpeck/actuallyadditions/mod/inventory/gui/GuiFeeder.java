@@ -28,7 +28,7 @@ import java.util.Arrays;
 @SideOnly(Side.CLIENT)
 public class GuiFeeder extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFeeder");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_feeder");
     public final TileEntityFeeder tileFeeder;
 
     public GuiFeeder(InventoryPlayer inventory, TileEntityBase tile){

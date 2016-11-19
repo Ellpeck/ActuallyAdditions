@@ -35,7 +35,7 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class GuiSmileyCloud extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiSmileyCloud");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_smiley_cloud");
 
     private final int x;
     private final int y;

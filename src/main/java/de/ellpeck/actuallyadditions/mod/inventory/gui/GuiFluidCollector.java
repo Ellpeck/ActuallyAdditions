@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiFluidCollector extends GuiContainer{
 
-    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("guiFluidCollector");
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_fluid_collector");
     private final TileEntityFluidCollector collector;
     private FluidDisplay fluid;
 
