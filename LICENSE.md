@@ -22,7 +22,7 @@ Everything that is not listed below applies to the above.
 
 ### NOTES
 
-* There is no warranty of any kind given. The creator is not to be held liable.
+* There is no warranty of any kind given. The creator is not to be held liable for bugs, problems or issues.
 * The Actually Additions API can be used in other projects, however it should not be modified. It can be redistributed with other mods (if necessary), however it should still be visible that it is a part of Actually Additions. Do not remove the copyright header from any of the API's files.
 * The above License only applies for code that is part of the mod itself, any APIs used (such as the CoFH API) are licensed by their respective publishers.
 * Excerpts from other code used (such as the OpenBlocks XP system) are explicitly declared as such and the above point applies for them.
