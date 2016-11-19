@@ -43,6 +43,7 @@ import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.TreasureChestHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
@@ -54,8 +55,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
-import java.util.Locale;
 
 //                                                                           So that BuildCraft Oil always gets used
 @Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", guiFactory = "de.ellpeck.actuallyadditions.mod.config.GuiFactory")
@@ -147,16 +146,19 @@ public class ActuallyAdditions{
 
     @EventHandler
     public void missingMapping(FMLMissingMappingsEvent event){
+        int totalRemaps = 0;
+        int workedRemaps = 0;
+
         for(FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()){
-            if(mapping.name != null){
-                String name = mapping.name.toLowerCase(Locale.ROOT);
-                if(name.startsWith(ModUtil.MOD_ID+":")){
-                    if(name.contains("paxel") || name.contains("itemspecial") || name.contains("blockbookstand") || name.contains("rarmor") || name.contains("bucket") || name.contains("modulereconstructor") || name.contains("stand")){
-                        mapping.ignore();
-                        ModUtil.LOGGER.info("Missing Mapping "+mapping.name+" is getting ignored. This is intentional.");
-                    }
-                }
+            totalRemaps++;
+
+            if(ItemUtil.remapName(mapping)){
+                workedRemaps++;
             }
+        }
+
+        if(totalRemaps > 0){
+            ModUtil.LOGGER.info("Successfully remapped "+workedRemaps+" out of "+totalRemaps+" blocks and items to match the 1.11 naming conventions.");
         }
     }
 }

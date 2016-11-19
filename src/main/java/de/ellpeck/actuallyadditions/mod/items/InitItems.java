@@ -197,11 +197,11 @@ public final class InitItems{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
-        itemFillingWand = new ItemFillingWand("itemFillingWand");
-        itemBag = new ItemBag("itemBag", false);
-        itemVoidBag = new ItemBag("itemVoidBag", true);
-        itemWorm = new ItemWorm("itemWorm");
-        itemPlayerProbe = new ItemPlayerProbe("itemPlayerProbe");
+        itemFillingWand = new ItemFillingWand("item_filling_wand");
+        itemBag = new ItemBag("item_bag", false);
+        itemVoidBag = new ItemBag("item_void_bag", true);
+        itemWorm = new ItemWorm("item_worm");
+        itemPlayerProbe = new ItemPlayerProbe("item_player_probe");
         itemFilter = new ItemFilter("itemFilter");
         itemWaterBowl = new ItemWaterBowl("itemWaterBowl");
         itemSpawnerChanger = new ItemSpawnerChanger("itemSpawnerChanger");

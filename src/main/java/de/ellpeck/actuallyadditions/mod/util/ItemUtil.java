@@ -19,13 +19,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 
+//TODO Remove the whole registry name mapping thing once the 1.11 fading phase is over
 public final class ItemUtil{
+
+    private static final Map<String, String> UNDERSCORELESS_TO_UNDERSCORED_NAMES = new HashMap<String, String>();
 
     public static Item getItemFromName(String name){
         ResourceLocation resLoc = new ResourceLocation(name);
@@ -45,6 +48,8 @@ public final class ItemUtil{
         GameRegistry.register(itemBlock);
 
         block.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
+
+        addUnderscoreNameToMapUnderscorelessName(name);
     }
 
     public static void registerItem(Item item, String name, boolean addTab){
@@ -58,6 +63,34 @@ public final class ItemUtil{
         if(item instanceof IColorProvidingItem){
             ActuallyAdditions.proxy.addColoredItem(item);
         }
+
+        addUnderscoreNameToMapUnderscorelessName(name);
+    }
+
+    private static void addUnderscoreNameToMapUnderscorelessName(String name){
+        String nameId = ModUtil.MOD_ID+":"+name;
+
+        String underscoreless = nameId.replaceAll("_", "");
+        UNDERSCORELESS_TO_UNDERSCORED_NAMES.put(underscoreless, nameId);
+    }
+
+    public static boolean remapName(FMLMissingMappingsEvent.MissingMapping mapping){
+        if(mapping != null && mapping.name != null){
+            if(UNDERSCORELESS_TO_UNDERSCORED_NAMES.containsKey(mapping.name)){
+                String newName = UNDERSCORELESS_TO_UNDERSCORED_NAMES.get(mapping.name);
+                ResourceLocation newResLoc = new ResourceLocation(newName);
+
+                if(Block.REGISTRY.containsKey(newResLoc)){
+                    mapping.remap(Block.REGISTRY.getObject(newResLoc));
+                    return true;
+                }
+                else if(Item.REGISTRY.containsKey(newResLoc)){
+                    mapping.remap(Item.REGISTRY.getObject(newResLoc));
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
