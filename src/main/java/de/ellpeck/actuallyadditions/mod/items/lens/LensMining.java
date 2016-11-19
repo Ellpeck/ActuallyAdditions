@@ -81,6 +81,7 @@ public class LensMining extends Lens{
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreSaltpeter", 250);
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreFirestone", 30);
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreSalt", 2900);
+        ActuallyAdditionsAPI.addMiningLensStoneOre("oreDraconium", 5);
 
         ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorIron", 3000);
         ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorGold", 500);
