@@ -154,18 +154,30 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                                     IEnergyReceiver iReceiver = (IEnergyReceiver)tile;
                                     if(iReceiver.canConnectEnergy(opp)){
                                         int theoreticalReceived = iReceiver.receiveEnergy(opp, Math.min(amountPer, lowestCap), true);
-                                        int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
-                                        transmitted += iReceiver.receiveEnergy(opp, theoreticalReceived-deduct, simulate);
-                                        transmitted += deduct;
+                                        if(theoreticalReceived > 0){
+                                            int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
+                                            if(deduct >= theoreticalReceived){ //Happens with small numbers
+                                                deduct = 0;
+                                            }
+
+                                            transmitted += iReceiver.receiveEnergy(opp, theoreticalReceived-deduct, simulate);
+                                            transmitted += deduct;
+                                        }
                                     }
                                 }
                                 else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
                                     ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
                                     if(cap != null){
                                         int theoreticalReceived = (int)cap.givePower(Math.min(amountPer, lowestCap), true);
-                                        int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
-                                        transmitted += cap.givePower(theoreticalReceived-deduct, simulate);
-                                        transmitted += deduct;
+                                        if(theoreticalReceived > 0){
+                                            int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
+                                            if(deduct >= theoreticalReceived){ //Happens with small numbers
+                                                deduct = 0;
+                                            }
+
+                                            transmitted += cap.givePower(theoreticalReceived-deduct, simulate);
+                                            transmitted += deduct;
+                                        }
                                     }
                                 }
 
