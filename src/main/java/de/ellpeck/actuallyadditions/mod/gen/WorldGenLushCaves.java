@@ -10,7 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
+import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -70,13 +72,13 @@ public class WorldGenLushCaves{
         }
 
         if(!possiblePoses.isEmpty()){
-            boolean chestGenDone = false;
+            boolean crateGenDone = false;
 
             for(int i = 0; i <= amount; i++){
                 Collections.shuffle(possiblePoses);
                 BlockPos pos = possiblePoses.get(0);
                 if(rand.nextBoolean()){
-                    boolean genChest = false;
+                    boolean genCrate = false;
 
                     WorldGenAbstractTree trees;
                     if(rand.nextBoolean()){
@@ -85,7 +87,7 @@ public class WorldGenLushCaves{
                         }
                         else{
                             trees = new WorldGenShrub(Blocks.LOG.getDefaultState(), Blocks.LEAVES.getDefaultState());
-                            genChest = true;
+                            genCrate = true;
                         }
                     }
                     else{
@@ -93,20 +95,20 @@ public class WorldGenLushCaves{
                     }
                     trees.generate(world, rand, pos.up());
 
-                    if(!chestGenDone && genChest){
-                        BlockPos chestPos = pos.add(MathHelper.getRandomIntegerInRange(rand, -2, 2), MathHelper.getRandomIntegerInRange(rand, 3, 8), MathHelper.getRandomIntegerInRange(rand, -2, 2));
+                    if(!crateGenDone && genCrate){
+                        BlockPos cratePos = pos.add(MathHelper.getRandomIntegerInRange(rand, -2, 2), MathHelper.getRandomIntegerInRange(rand, 3, 8), MathHelper.getRandomIntegerInRange(rand, -2, 2));
 
-                        IBlockState state = world.getBlockState(chestPos);
-                        if(state != null && state.getBlock().isLeaves(state, world, chestPos)){
-                            world.setBlockState(chestPos, Blocks.CHEST.getDefaultState());
+                        IBlockState state = world.getBlockState(cratePos);
+                        if(state != null && state.getBlock().isLeaves(state, world, cratePos)){
+                            world.setBlockState(cratePos, InitBlocks.blockGiantChest.getDefaultState());
 
-                            TileEntity chest = world.getTileEntity(chestPos);
-                            if(chest instanceof TileEntityChest){
-                                ((TileEntityChest)chest).setLootTable(DungeonLoot.LUSH_CAVES, rand.nextLong());
+                            TileEntity tile = world.getTileEntity(cratePos);
+                            if(tile instanceof TileEntityGiantChest){
+                                ((TileEntityGiantChest)tile).lootTable = DungeonLoot.LUSH_CAVES;
                             }
                         }
 
-                        chestGenDone = true;
+                        crateGenDone = true;
                     }
                 }
                 else{

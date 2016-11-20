@@ -10,11 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
+import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
@@ -184,7 +189,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.fillWithBlocks(world, sbb, 3, 1, 4, 4, 1, 6, Blocks.CARPET.getStateFromMeta(10), Blocks.CARPET.getStateFromMeta(10), false);
 
         //Loot Chest
-        this.generateChest(world, this.boundingBox, rand, 8, 1, 6, DungeonLoot.JAM_HOUSE);
+        this.generateCrate(world, this.boundingBox, 8, 1, 6, DungeonLoot.JAM_HOUSE);
 
         //Torches
         this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.SOUTH), 6, 2, 0, sbb);
@@ -200,5 +205,23 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
     @Override
     protected VillagerProfession chooseForgeProfession(int count, VillagerProfession prof){
         return InitVillager.jamProfession;
+    }
+
+    protected boolean generateCrate(World world, StructureBoundingBox box, int x, int y, int z, ResourceLocation loot){
+        BlockPos pos = new BlockPos(this.getXWithOffset(x, z), this.getYWithOffset(y), this.getZWithOffset(x, z));
+
+        if(box.isVecInside(pos) && (world.getBlockState(pos).getBlock() != InitBlocks.blockGiantChest)){
+            world.setBlockState(pos, InitBlocks.blockGiantChest.getDefaultState(), 2);
+
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TileEntityGiantChest){
+                ((TileEntityGiantChest)tile).lootTable = loot;
+            }
+
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

@@ -83,6 +83,7 @@ public class BlockGiantChest extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityGiantChest chest = (TileEntityGiantChest)world.getTileEntity(pos);
             if(chest != null){
+                chest.fillWithLoot(player);
                 player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.GIANT_CHEST.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;

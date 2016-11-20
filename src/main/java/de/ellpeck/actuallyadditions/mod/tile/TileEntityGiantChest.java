@@ -16,9 +16,19 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.ILootContainer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 
-public class TileEntityGiantChest extends TileEntityInventoryBase implements IButtonReactor{
+import java.util.Random;
+
+public class TileEntityGiantChest extends TileEntityInventoryBase implements IButtonReactor, ILootContainer{
+
+    public ResourceLocation lootTable;
 
     public TileEntityGiantChest(int slotAmount, String name){
         super(slotAmount, name);
@@ -26,6 +36,24 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
 
     public TileEntityGiantChest(){
         this(9*13, "giantChest");
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+
+        if(this.lootTable != null){
+            compound.setString("LootTable", this.lootTable.toString());
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+
+        if(compound.hasKey("LootTable")){
+            this.lootTable = new ResourceLocation(compound.getString("LootTable"));
+        }
     }
 
     @Override
@@ -59,6 +87,24 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
             }
 
             player.openGui(ActuallyAdditions.instance, type.ordinal(), this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
+        }
+    }
+
+    @Override
+    public ResourceLocation getLootTable(){
+        return this.lootTable;
+    }
+
+    public void fillWithLoot(EntityPlayer player){
+        if(this.lootTable != null && !this.worldObj.isRemote && this.worldObj instanceof WorldServer){
+            LootTable table = this.worldObj.getLootTableManager().getLootTableFromLocation(this.lootTable);
+            this.lootTable = null;
+
+            LootContext.Builder builder = new LootContext.Builder((WorldServer)this.worldObj);
+            if(player != null){
+                builder.withLuck(player.getLuck());
+            }
+            table.fillInventory(this, new Random(), builder.build());
         }
     }
 }
