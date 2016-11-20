@@ -1,3 +1,13 @@
+# 1.11-r77
+* Made the Farmer add seeds back into the seed input slots
+* Made the XP solidifier save and update correctly
+* Made the lens of death disablable
+* Made the achievements and config button appear right away after starting the tutorial
+* Named all containers properly
+* Made the amount of loot generated in chests a little higher
+* Replace chests in village houses and lush caves with storage crates
+* Fixed the villager texture being missing
+
 # 1.11-r76
 * This is the first release of Actually Additions for Minecraft 1.11. It hasn't been tested much, so issues might occur. Use at your own risk, but remember: I can use all the help in testing I can get! So if you find a bug, please report it on the issue tracker!
 * Updated to Minecraft 1.11. Old worlds should be compatible.
