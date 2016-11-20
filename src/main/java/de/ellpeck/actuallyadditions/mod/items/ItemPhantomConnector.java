@@ -94,8 +94,9 @@ public class ItemPhantomConnector extends ItemBase{
             if(tile != null){
                 //Passing to Phantom
                 if(tile instanceof IPhantomTile){
-                    if(this.checkHasConnection(stack, player, tile) && getStoredWorld(stack) == world){
-                        ((IPhantomTile)tile).setBoundPosition(getStoredPosition(stack));
+                    BlockPos stored = getStoredPosition(stack);
+                    if(stored != null && getStoredWorld(stack) == world){
+                        ((IPhantomTile)tile).setBoundPosition(stored);
                         if(tile instanceof TileEntityBase){
                             ((TileEntityBase)tile).sendUpdate();
                         }
@@ -111,19 +112,6 @@ public class ItemPhantomConnector extends ItemBase{
             player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.stored.desc"));
         }
         return EnumActionResult.SUCCESS;
-    }
-
-    public boolean checkHasConnection(ItemStack stack, EntityPlayer player, TileEntity tile){
-        if(getStoredPosition(stack) != null){
-            return true;
-        }
-        else{
-            if(tile instanceof IPhantomTile){
-                ((IPhantomTile)tile).setBoundPosition(null);
-            }
-            player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.unbound.desc"));
-            return false;
-        }
     }
 
     @Override
