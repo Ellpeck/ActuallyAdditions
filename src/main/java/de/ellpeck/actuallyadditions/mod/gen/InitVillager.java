@@ -30,6 +30,14 @@ public final class InitVillager{
         if(ConfigBoolValues.CROP_FIELD_EXISTS.isEnabled()){
             initCustomCropFieldPart();
         }
+        if(ConfigBoolValues.ENGINEER_VILLAGER_EXISTS.isEnabled()){
+            initEngineerVillagePart();
+        }
+    }
+
+    private static void initEngineerVillagePart(){
+        VillagerRegistry.instance().registerVillageCreationHandler(new VillageEngineerHouseHandler());
+        MapGenStructureIO.registerStructureComponent(VillageComponentEngineerHouse.class, ModUtil.MOD_ID+":engineerHouseStructure");
     }
 
     private static void initJamVillagePart(){

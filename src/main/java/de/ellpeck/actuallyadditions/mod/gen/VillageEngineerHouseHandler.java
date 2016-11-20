@@ -1,5 +1,5 @@
 /*
- * This file ("VillageJamHouseHandler.java") is part of the Actually Additions mod for Minecraft.
+ * This file ("VillageEngineerHouseHandler.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://ellpeck.de/actaddlicense
@@ -18,20 +18,20 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import java.util.List;
 import java.util.Random;
 
-public class VillageJamHouseHandler implements VillagerRegistry.IVillageCreationHandler{
+public class VillageEngineerHouseHandler implements VillagerRegistry.IVillageCreationHandler{
 
     @Override
     public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int i){
-        return new StructureVillagePieces.PieceWeight(VillageComponentJamHouse.class, 3, 1);
+        return new StructureVillagePieces.PieceWeight(VillageComponentEngineerHouse.class, 5, 1);
     }
 
     @Override
     public Class<?> getComponentClass(){
-        return VillageComponentJamHouse.class;
+        return VillageComponentEngineerHouse.class;
     }
 
     @Override
     public StructureVillagePieces.Village buildComponent(StructureVillagePieces.PieceWeight villagePiece, StructureVillagePieces.Start startPiece, List<StructureComponent> pieces, Random random, int p1, int p2, int p3, EnumFacing facing, int p5){
-        return VillageComponentJamHouse.buildComponent(pieces, p1, p2, p3, facing);
+        return VillageComponentEngineerHouse.buildComponent(pieces, p1, p2, p3, facing);
     }
 }
