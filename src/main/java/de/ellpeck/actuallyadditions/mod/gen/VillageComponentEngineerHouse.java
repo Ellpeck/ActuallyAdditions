@@ -32,7 +32,7 @@ import java.util.Random;
 
 public class VillageComponentEngineerHouse extends StructureVillagePieces.House1{
 
-    private static final ResourceLocation STRUCTURE_RES_LOC = new ResourceLocation(ModUtil.MOD_ID, "andrew_house");
+    private static final ResourceLocation STRUCTURE_RES_LOC = new ResourceLocation(ModUtil.MOD_ID, "andrew_period_house");
 
     private static final int X_SIZE = 13;
     private static final int Y_SIZE = 11;

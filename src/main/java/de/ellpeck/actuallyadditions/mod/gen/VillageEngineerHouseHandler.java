@@ -22,7 +22,7 @@ public class VillageEngineerHouseHandler implements VillagerRegistry.IVillageCre
 
     @Override
     public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int i){
-        return new StructureVillagePieces.PieceWeight(VillageComponentEngineerHouse.class, 5, 1);
+        return new StructureVillagePieces.PieceWeight(VillageComponentEngineerHouse.class, 10, 1);
     }
 
     @Override
