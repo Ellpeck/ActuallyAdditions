@@ -24,10 +24,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -75,7 +72,7 @@ public class ItemBag extends ItemBase{
                                 boolean changed = false;
 
                                 boolean isVoid = ((ItemBag)invStack.getItem()).isVoid;
-                                ItemStack[] inventory = new ItemStack[ContainerBag.getSlotAmount(isVoid)];
+                                NonNullList<ItemStack> inventory = StackUtil.createSlots(ContainerBag.getSlotAmount(isVoid));
                                 ItemDrill.loadSlotsFromNBT(inventory, invStack);
 
                                 FilterSettings filter = new FilterSettings(0, 4, false, false, false, false, 0, 0);
@@ -86,20 +83,20 @@ public class ItemBag extends ItemBase{
                                         changed = true;
                                     }
                                     else{
-                                        for(int j = 4; j < inventory.length; j++){
-                                            ItemStack bagStack = inventory[j];
+                                        for(int j = 4; j < inventory.size(); j++){
+                                            ItemStack bagStack = inventory.get(j);
                                             if(StackUtil.isValid(bagStack)){
                                                 if(ItemUtil.canBeStacked(bagStack, stack)){
                                                     int maxTransfer = Math.min(StackUtil.getStackSize(stack), stack.getMaxStackSize()-StackUtil.getStackSize(bagStack));
                                                     if(maxTransfer > 0){
-                                                        inventory[j] = StackUtil.addStackSize(bagStack, maxTransfer);
+                                                        inventory.set(j, StackUtil.addStackSize(bagStack, maxTransfer));
                                                         stack = StackUtil.addStackSize(stack, -maxTransfer);
                                                         changed = true;
                                                     }
                                                 }
                                             }
                                             else{
-                                                inventory[j] = stack.copy();
+                                                inventory.set(j, stack.copy());
                                                 stack = StackUtil.setStackSize(stack, 0);
                                                 changed = true;
                                             }
@@ -147,16 +144,16 @@ public class ItemBag extends ItemBase{
                     if(handler != null){
                         boolean changed = false;
 
-                        ItemStack[] inventory = new ItemStack[ContainerBag.getSlotAmount(this.isVoid)];
+                        NonNullList<ItemStack> inventory = StackUtil.createSlots(ContainerBag.getSlotAmount(this.isVoid));
                         ItemDrill.loadSlotsFromNBT(inventory, stack);
 
-                        for(int j = 4; j < inventory.length; j++){
-                            ItemStack invStack = inventory[j];
+                        for(int j = 4; j < inventory.size(); j++){
+                            ItemStack invStack = inventory.get(j);
                             if(StackUtil.isValid(invStack)){
                                 for(int i = 0; i < handler.getSlots(); i++){
                                     ItemStack remain = handler.insertItem(i, invStack, false);
                                     if(!ItemStack.areItemStacksEqual(remain, invStack)){
-                                        inventory[j] = StackUtil.validateCopy(remain);
+                                        inventory.set(j, StackUtil.validateCopy(remain));
                                         changed = true;
 
                                         if(!StackUtil.isValid(remain)){

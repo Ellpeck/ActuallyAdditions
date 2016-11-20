@@ -65,8 +65,8 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
             List<Item> types = null;
 
             if(this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
-                for(int i = 0; i < this.slots.length; i++){
-                    ItemStack stack = this.slots[i];
+                for(int i = 0; i < this.slots.size(); i++){
+                    ItemStack stack = this.slots.get(i);
                     if(StackUtil.isValid(stack)){
                         Item item = stack.getItem();
                         if(isValidItem(stack) && (types == null || !types.contains(item))){
@@ -75,7 +75,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
                             }
                             types.add(item);
 
-                            this.slots[i] = StackUtil.addStackSize(stack, -1);
+                            this.slots.set(i, StackUtil.addStackSize(stack, -1));
                         }
                     }
                 }

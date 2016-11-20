@@ -148,9 +148,9 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             }
             else{
                 int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.worldObj, this.boundPosition, this.slots[theSlot]));
-                if(!StackUtil.isValid(this.slots[theSlot])){
-                    this.slots[theSlot] = StackUtil.getNull();
+                this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.worldObj, this.boundPosition, this.slots.get(theSlot)));
+                if(!StackUtil.isValid(this.slots.get(theSlot))){
+                    this.slots.set(theSlot, StackUtil.getNull());
                 }
             }
         }

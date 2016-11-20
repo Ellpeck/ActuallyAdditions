@@ -24,6 +24,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
@@ -148,11 +149,7 @@ public class ContainerDrill extends Container{
 
     public static class InventoryDrill implements IInventory{
 
-        public ItemStack[] slots = new ItemStack[SLOT_AMOUNT];
-
-        public InventoryDrill(){
-            Arrays.fill(this.slots, StackUtil.getNull());
-        }
+        public NonNullList<ItemStack> slots = StackUtil.createSlots(SLOT_AMOUNT);
 
         @Override
         public String getName(){
@@ -206,20 +203,18 @@ public class ContainerDrill extends Container{
 
         @Override
         public void clear(){
-            int length = this.slots.length;
-            this.slots = new ItemStack[length];
-            Arrays.fill(this.slots, StackUtil.getNull());
+            this.slots.clear();
         }
 
         @Override
         public void setInventorySlotContents(int i, ItemStack stack){
-            this.slots[i] = stack;
+            this.slots.set(i, stack);
             this.markDirty();
         }
 
         @Override
         public int getSizeInventory(){
-            return this.slots.length;
+            return this.slots.size();
         }
 
         @Override
@@ -230,25 +225,25 @@ public class ContainerDrill extends Container{
         @Override
         public ItemStack getStackInSlot(int i){
             if(i < this.getSizeInventory()){
-                return this.slots[i];
+                return this.slots.get(i);
             }
             return StackUtil.getNull();
         }
 
         @Override
         public ItemStack decrStackSize(int i, int j){
-            if(StackUtil.isValid(this.slots[i])){
+            if(StackUtil.isValid(this.slots.get(i))){
                 ItemStack stackAt;
-                if(StackUtil.getStackSize(this.slots[i]) <= j){
-                    stackAt = this.slots[i];
-                    this.slots[i] = StackUtil.getNull();
+                if(StackUtil.getStackSize(this.slots.get(i)) <= j){
+                    stackAt = this.slots.get(i);
+                    this.slots.set(i, StackUtil.getNull());
                     this.markDirty();
                     return stackAt;
                 }
                 else{
-                    stackAt = this.slots[i].splitStack(j);
-                    if(StackUtil.getStackSize(this.slots[i]) <= 0){
-                        this.slots[i] = StackUtil.getNull();
+                    stackAt = this.slots.get(i).splitStack(j);
+                    if(StackUtil.getStackSize(this.slots.get(i)) <= 0){
+                        this.slots.set(i, StackUtil.getNull());
                     }
                     this.markDirty();
                     return stackAt;
@@ -259,8 +254,8 @@ public class ContainerDrill extends Container{
 
         @Override
         public ItemStack removeStackFromSlot(int index){
-            ItemStack stack = this.slots[index];
-            this.slots[index] = StackUtil.getNull();
+            ItemStack stack = this.slots.get(index);
+            this.slots.set(index, StackUtil.getNull());
             return stack;
         }
 

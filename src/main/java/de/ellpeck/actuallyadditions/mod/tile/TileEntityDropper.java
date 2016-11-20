@@ -74,11 +74,11 @@ public class TileEntityDropper extends TileEntityInventoryBase{
     }
 
     public ItemStack removeFromInventory(boolean actuallyDo){
-        for(int i = 0; i < this.slots.length; i++){
-            if(StackUtil.isValid(this.slots[i])){
-                ItemStack slot = this.slots[i].copy();
+        for(int i = 0; i < this.slots.size(); i++){
+            if(StackUtil.isValid(this.slots.get(i))){
+                ItemStack slot = this.slots.get(i).copy();
                 if(actuallyDo){
-                    this.slots[i] = StackUtil.addStackSize(this.slots[i], -1);
+                    this.slots.set(i, StackUtil.addStackSize(this.slots.get(i), -1));
                     this.markDirty();
                 }
                 return slot;

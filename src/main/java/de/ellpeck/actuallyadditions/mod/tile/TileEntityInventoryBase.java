@@ -17,30 +17,29 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
-
-import java.util.Arrays;
+import java.util.List;
 
 public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
 
     private final SidedInvWrapper[] invWrappers = new SidedInvWrapper[6];
-    public ItemStack slots[];
+    public NonNullList<ItemStack> slots;
 
     public TileEntityInventoryBase(int slots, String name){
         super(name);
 
-        this.slots = new ItemStack[slots];
-        Arrays.fill(this.slots, StackUtil.getNull());
+        this.slots = StackUtil.createSlots(slots);
 
         if(this.hasInvWrapperCapabilities()){
             this.getInvWrappers(this.invWrappers);
         }
     }
 
-    public static void saveSlots(ItemStack[] slots, NBTTagCompound compound){
-        if(slots != null && slots.length > 0){
+    public static void saveSlots(NonNullList<ItemStack> slots, NBTTagCompound compound){
+        if(slots != null && slots.size() > 0){
             NBTTagList tagList = new NBTTagList();
             for(ItemStack slot : slots){
                 NBTTagCompound tagCompound = new NBTTagCompound();
@@ -53,12 +52,12 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
     }
 
-    public static void loadSlots(ItemStack[] slots, NBTTagCompound compound){
-        if(slots != null && slots.length > 0){
+    public static void loadSlots(NonNullList<ItemStack> slots, NBTTagCompound compound){
+        if(slots != null && slots.size() > 0){
             NBTTagList tagList = compound.getTagList("Items", 10);
-            for(int i = 0; i < slots.length; i++){
+            for(int i = 0; i < slots.size(); i++){
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                slots[i] = tagCompound != null && tagCompound.hasKey("id") ? new ItemStack(tagCompound) : StackUtil.getNull();
+                slots.set(i, tagCompound != null && tagCompound.hasKey("id") ? new ItemStack(tagCompound) : StackUtil.getNull());
             }
         }
     }
@@ -142,44 +141,42 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public void clear(){
-        for(int i = 0; i < this.slots.length; i++){
-            this.removeStackFromSlot(i);
-        }
+        this.slots.clear();
     }
 
     @Override
     public void setInventorySlotContents(int i, ItemStack stack){
-        this.slots[i] = stack;
+        this.slots.set(i, stack);
         this.markDirty();
     }
 
     @Override
     public int getSizeInventory(){
-        return this.slots.length;
+        return this.slots.size();
     }
 
     @Override
     public ItemStack getStackInSlot(int i){
         if(i < this.getSizeInventory()){
-            return this.slots[i];
+            return this.slots.get(i);
         }
         return StackUtil.getNull();
     }
 
     @Override
     public ItemStack decrStackSize(int i, int j){
-        if(StackUtil.isValid(this.slots[i])){
+        if(StackUtil.isValid(this.slots.get(i))){
             ItemStack stackAt;
-            if(StackUtil.getStackSize(this.slots[i]) <= j){
-                stackAt = this.slots[i];
-                this.slots[i] = StackUtil.getNull();
+            if(StackUtil.getStackSize(this.slots.get(i)) <= j){
+                stackAt = this.slots.get(i);
+                this.slots.set(i, StackUtil.getNull());
                 this.markDirty();
                 return stackAt;
             }
             else{
-                stackAt = this.slots[i].splitStack(j);
-                if(StackUtil.getStackSize(this.slots[i]) <= 0){
-                    this.slots[i] = StackUtil.getNull();
+                stackAt = this.slots.get(i).splitStack(j);
+                if(StackUtil.getStackSize(this.slots.get(i)) <= 0){
+                    this.slots.set(i, StackUtil.getNull());
                 }
                 this.markDirty();
                 return stackAt;
@@ -190,8 +187,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public ItemStack removeStackFromSlot(int index){
-        ItemStack stack = this.slots[index];
-        this.slots[index] = StackUtil.getNull();
+        ItemStack stack = this.slots.get(index);
+        this.slots.set(index, StackUtil.getNull());
         return stack;
     }
 

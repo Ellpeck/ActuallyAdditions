@@ -150,7 +150,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
 
     private IBlockState getFirstPlantablePlantFromSlots(BlockPos pos){
         for(int i = 0; i < 6; i++){
-            ItemStack stack = this.slots[i];
+            ItemStack stack = this.slots.get(i);
             if(StackUtil.isValid(stack)){
                 IPlantable plantable = null;
 

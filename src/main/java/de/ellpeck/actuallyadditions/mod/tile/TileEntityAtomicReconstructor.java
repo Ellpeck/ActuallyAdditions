@@ -117,9 +117,9 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public Lens getLens(){
-        if(StackUtil.isValid(this.slots[0])){
-            if(this.slots[0].getItem() instanceof ILensItem){
-                return ((ILensItem)this.slots[0].getItem()).getLens();
+        if(StackUtil.isValid(this.slots.get(0))){
+            if(this.slots.get(0).getItem() instanceof ILensItem){
+                return ((ILensItem)this.slots.get(0).getItem()).getLens();
             }
         }
         return this.counter >= 500 ? ActuallyAdditionsAPI.lensDisruption : ActuallyAdditionsAPI.lensDefaultConversion;

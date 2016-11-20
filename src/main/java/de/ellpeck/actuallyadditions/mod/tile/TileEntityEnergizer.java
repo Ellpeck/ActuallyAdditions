@@ -48,25 +48,25 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements ICus
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            if(StackUtil.isValid(this.slots[0]) && !StackUtil.isValid(this.slots[1])){
+            if(StackUtil.isValid(this.slots.get(0)) && !StackUtil.isValid(this.slots.get(1))){
                 if(this.storage.getEnergyStored() > 0){
                     int received = 0;
                     boolean canTakeUp = false;
 
-                    if(this.slots[0].getItem() instanceof IEnergyContainerItem){
-                        IEnergyContainerItem item = (IEnergyContainerItem)this.slots[0].getItem();
-                        received = (item.receiveEnergy(this.slots[0], this.storage.getEnergyStored(), false));
-                        canTakeUp = item.getEnergyStored(this.slots[0]) >= item.getMaxEnergyStored(this.slots[0]);
+                    if(this.slots.get(0).getItem() instanceof IEnergyContainerItem){
+                        IEnergyContainerItem item = (IEnergyContainerItem)this.slots.get(0).getItem();
+                        received = (item.receiveEnergy(this.slots.get(0), this.storage.getEnergyStored(), false));
+                        canTakeUp = item.getEnergyStored(this.slots.get(0)) >= item.getMaxEnergyStored(this.slots.get(0));
                     }
                     else if(ActuallyAdditions.teslaLoaded){
-                        if(this.slots[0].hasCapability(TeslaUtil.teslaConsumer, null)){
-                            ITeslaConsumer cap = this.slots[0].getCapability(TeslaUtil.teslaConsumer, null);
+                        if(this.slots.get(0).hasCapability(TeslaUtil.teslaConsumer, null)){
+                            ITeslaConsumer cap = this.slots.get(0).getCapability(TeslaUtil.teslaConsumer, null);
                             if(cap != null){
                                 received = (int)cap.givePower(this.storage.getEnergyStored(), false);
                             }
                         }
-                        if(this.slots[0].hasCapability(TeslaUtil.teslaHolder, null)){
-                            ITeslaHolder cap = this.slots[0].getCapability(TeslaUtil.teslaHolder, null);
+                        if(this.slots.get(0).hasCapability(TeslaUtil.teslaHolder, null)){
+                            ITeslaHolder cap = this.slots.get(0).getCapability(TeslaUtil.teslaHolder, null);
                             if(cap != null){
                                 canTakeUp = cap.getStoredPower() >= cap.getCapacity();
                             }
@@ -77,8 +77,8 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements ICus
                     }
 
                     if(canTakeUp){
-                        this.slots[1] = this.slots[0].copy();
-                        this.slots[0] = StackUtil.addStackSize(this.slots[0], -1);
+                        this.slots.set(1, this.slots.get(0).copy());
+                        this.slots.set(0, StackUtil.addStackSize(this.slots.get(0), -1));
                     }
                 }
             }

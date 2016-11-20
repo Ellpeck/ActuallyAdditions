@@ -74,13 +74,13 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                     if(this.currentAnimalAmount < THRESHOLD){
                         if(this.currentTimer >= TIME){
                             this.currentTimer = 0;
-                            if(StackUtil.isValid(this.slots[0])){
+                            if(StackUtil.isValid(this.slots.get(0))){
                                 EntityAnimal randomAnimal = animals.get(this.worldObj.rand.nextInt(this.currentAnimalAmount));
-                                if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && (randomAnimal.isBreedingItem(this.slots[0]) || this.canHorseBeFed(randomAnimal))){
+                                if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && (randomAnimal.isBreedingItem(this.slots.get(0)) || this.canHorseBeFed(randomAnimal))){
 
                                     this.feedAnimal(randomAnimal);
 
-                                    this.slots[0] = StackUtil.addStackSize(this.slots[0], -1);
+                                    this.slots.set(0, StackUtil.addStackSize(this.slots.get(0), -1));
                                 }
                             }
                         }
@@ -112,7 +112,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         if(animal instanceof EntityHorse){
             EntityHorse horse = (EntityHorse)animal;
             if(horse.isTame()){
-                Item item = this.slots[0].getItem();
+                Item item = this.slots.get(0).getItem();
                 return item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT;
             }
         }

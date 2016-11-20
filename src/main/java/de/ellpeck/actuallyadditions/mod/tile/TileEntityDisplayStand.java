@@ -34,12 +34,12 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
         super.updateEntity();
 
         if(!this.worldObj.isRemote){
-            if(StackUtil.isValid(this.slots[0]) && !this.isRedstonePowered){
-                IDisplayStandItem item = this.convertToDisplayStandItem(this.slots[0].getItem());
+            if(StackUtil.isValid(this.slots.get(0)) && !this.isRedstonePowered){
+                IDisplayStandItem item = this.convertToDisplayStandItem(this.slots.get(0).getItem());
                 if(item != null){
-                    int energy = item.getUsePerTick(this.slots[0], this, this.ticksElapsed);
+                    int energy = item.getUsePerTick(this.slots.get(0), this, this.ticksElapsed);
                     if(this.storage.getEnergyStored() >= energy){
-                        if(item.update(this.slots[0], this, this.ticksElapsed)){
+                        if(item.update(this.slots.get(0), this, this.ticksElapsed)){
                             this.storage.extractEnergy(energy, false);
                         }
                     }

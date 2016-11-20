@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.ArrayUtils;
@@ -61,17 +62,17 @@ public class FilterSettings{
         this.modButtonId = buttonIdStart+4;
     }
 
-    public static boolean check(ItemStack stack, ItemStack[] slots, int startSlot, int endSlot, boolean whitelist, boolean meta, boolean nbt, boolean mod, int oredict){
+    public static boolean check(ItemStack stack, NonNullList<ItemStack> slots, int startSlot, int endSlot, boolean whitelist, boolean meta, boolean nbt, boolean mod, int oredict){
         if(StackUtil.isValid(stack)){
             for(int i = startSlot; i < endSlot; i++){
-                if(StackUtil.isValid(slots[i])){
-                    if(areEqualEnough(slots[i], stack, meta, nbt, mod, oredict)){
+                if(StackUtil.isValid(slots.get(i))){
+                    if(areEqualEnough(slots.get(i), stack, meta, nbt, mod, oredict)){
                         return whitelist;
                     }
-                    else if(slots[i].getItem() instanceof ItemFilter){
-                        ItemStack[] filterSlots = new ItemStack[ContainerFilter.SLOT_AMOUNT];
-                        ItemDrill.loadSlotsFromNBT(filterSlots, slots[i]);
-                        if(filterSlots != null && filterSlots.length > 0){
+                    else if(slots.get(i).getItem() instanceof ItemFilter){
+                        NonNullList<ItemStack> filterSlots = StackUtil.createSlots(ContainerFilter.SLOT_AMOUNT);
+                        ItemDrill.loadSlotsFromNBT(filterSlots, slots.get(i));
+                        if(filterSlots != null && filterSlots.size() > 0){
                             for(ItemStack filterSlot : filterSlots){
                                 if(StackUtil.isValid(filterSlot) && areEqualEnough(filterSlot, stack, meta, nbt, mod, oredict)){
                                     return whitelist;
@@ -204,7 +205,7 @@ public class FilterSettings{
         }
     }
 
-    public boolean check(ItemStack stack, ItemStack[] slots){
+    public boolean check(ItemStack stack, NonNullList<ItemStack> slots){
         return check(stack, slots, this.startSlot, this.endSlot, this.isWhitelist, this.respectMeta, this.respectNBT, this.respectMod, this.respectOredict);
     }
 }

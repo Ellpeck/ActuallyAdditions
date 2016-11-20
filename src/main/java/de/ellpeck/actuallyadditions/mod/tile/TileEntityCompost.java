@@ -63,12 +63,12 @@ public class TileEntityCompost extends TileEntityInventoryBase{
         if(!this.worldObj.isRemote){
             boolean theFlag = this.conversionTime > 0;
 
-            if(StackUtil.isValid(this.slots[0])){
-                CompostRecipe recipe = getRecipeForInput(this.slots[0]);
-                if(recipe != null && this.slots[0].isItemEqual(recipe.input) && StackUtil.getStackSize(this.slots[0]) >= StackUtil.getStackSize(recipe.input)){
+            if(StackUtil.isValid(this.slots.get(0))){
+                CompostRecipe recipe = getRecipeForInput(this.slots.get(0));
+                if(recipe != null && this.slots.get(0).isItemEqual(recipe.input) && StackUtil.getStackSize(this.slots.get(0)) >= StackUtil.getStackSize(recipe.input)){
                     this.conversionTime++;
                     if(this.conversionTime >= 3000){
-                        this.slots[0] = recipe.output.copy();
+                        this.slots.set(0, recipe.output.copy());
                         this.conversionTime = 0;
                         this.markDirty();
                     }
@@ -97,8 +97,8 @@ public class TileEntityCompost extends TileEntityInventoryBase{
 
     @Override
     public int getInventoryStackLimit(){
-        if(StackUtil.isValid(this.slots[0])){
-            CompostRecipe recipe = getRecipeForInput(this.slots[0]);
+        if(StackUtil.isValid(this.slots.get(0))){
+            CompostRecipe recipe = getRecipeForInput(this.slots.get(0));
             if(recipe != null && StackUtil.isValid(recipe.input)){
                 return StackUtil.getStackSize(recipe.input);
             }

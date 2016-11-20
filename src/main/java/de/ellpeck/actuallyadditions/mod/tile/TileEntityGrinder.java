@@ -185,9 +185,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
     }
 
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput){
-        if(StackUtil.isValid(this.slots[theInput])){
-            ItemStack outputOne = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
-            ItemStack outputTwo = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
+        if(StackUtil.isValid(this.slots.get(theInput))){
+            ItemStack outputOne = CrusherRecipeRegistry.getOutputOnes(this.slots.get(theInput));
+            ItemStack outputTwo = CrusherRecipeRegistry.getOutputTwos(this.slots.get(theInput));
             if(StackUtil.isValid(outputOne)){
                 if(outputOne.getItemDamage() == Util.WILDCARD){
                     outputOne.setItemDamage(0);
@@ -195,7 +195,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
                 if(StackUtil.isValid(outputTwo) && outputTwo.getItemDamage() == Util.WILDCARD){
                     outputTwo.setItemDamage(0);
                 }
-                if((!StackUtil.isValid(this.slots[theFirstOutput]) || (this.slots[theFirstOutput].isItemEqual(outputOne) && StackUtil.getStackSize(this.slots[theFirstOutput]) <= this.slots[theFirstOutput].getMaxStackSize()-StackUtil.getStackSize(outputOne))) && (!StackUtil.isValid(outputTwo) || (!StackUtil.isValid(this.slots[theSecondOutput]) || (this.slots[theSecondOutput].isItemEqual(outputTwo) && StackUtil.getStackSize(this.slots[theSecondOutput]) <= this.slots[theSecondOutput].getMaxStackSize()-StackUtil.getStackSize(outputTwo))))){
+                if((!StackUtil.isValid(this.slots.get(theFirstOutput)) || (this.slots.get(theFirstOutput).isItemEqual(outputOne) && StackUtil.getStackSize(this.slots.get(theFirstOutput)) <= this.slots.get(theFirstOutput).getMaxStackSize()-StackUtil.getStackSize(outputOne))) && (!StackUtil.isValid(outputTwo) || (!StackUtil.isValid(this.slots.get(theSecondOutput)) || (this.slots.get(theSecondOutput).isItemEqual(outputTwo) && StackUtil.getStackSize(this.slots.get(theSecondOutput)) <= this.slots.get(theSecondOutput).getMaxStackSize()-StackUtil.getStackSize(outputTwo))))){
                     return true;
                 }
             }
@@ -208,36 +208,36 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput){
-        ItemStack outputOne = CrusherRecipeRegistry.getOutputOnes(this.slots[theInput]);
+        ItemStack outputOne = CrusherRecipeRegistry.getOutputOnes(this.slots.get(theInput));
         if(StackUtil.isValid(outputOne)){
             if(outputOne.getItemDamage() == Util.WILDCARD){
                 outputOne.setItemDamage(0);
             }
-            if(!StackUtil.isValid(this.slots[theFirstOutput])){
-                this.slots[theFirstOutput] = outputOne.copy();
+            if(!StackUtil.isValid(this.slots.get(theFirstOutput))){
+                this.slots.set(theFirstOutput, outputOne.copy());
             }
-            else if(this.slots[theFirstOutput].getItem() == outputOne.getItem()){
-                this.slots[theFirstOutput] = StackUtil.addStackSize(this.slots[theFirstOutput], StackUtil.getStackSize(outputOne));
+            else if(this.slots.get(theFirstOutput).getItem() == outputOne.getItem()){
+                this.slots.set(theFirstOutput, StackUtil.addStackSize(this.slots.get(theFirstOutput), StackUtil.getStackSize(outputOne)));
             }
         }
 
-        ItemStack outputTwo = CrusherRecipeRegistry.getOutputTwos(this.slots[theInput]);
+        ItemStack outputTwo = CrusherRecipeRegistry.getOutputTwos(this.slots.get(theInput));
         if(StackUtil.isValid(outputTwo)){
             if(outputTwo.getItemDamage() == Util.WILDCARD){
                 outputTwo.setItemDamage(0);
             }
             int rand = this.worldObj.rand.nextInt(100)+1;
-            if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots[theInput])){
-                if(!StackUtil.isValid(this.slots[theSecondOutput])){
-                    this.slots[theSecondOutput] = outputTwo.copy();
+            if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots.get(theInput))){
+                if(!StackUtil.isValid(this.slots.get(theSecondOutput))){
+                    this.slots.set(theSecondOutput, outputTwo.copy());
                 }
-                else if(this.slots[theSecondOutput].getItem() == outputTwo.getItem()){
-                    this.slots[theSecondOutput] = StackUtil.addStackSize(this.slots[theSecondOutput], StackUtil.getStackSize(outputTwo));
+                else if(this.slots.get(theSecondOutput).getItem() == outputTwo.getItem()){
+                    this.slots.set(theSecondOutput, StackUtil.addStackSize(this.slots.get(theSecondOutput), StackUtil.getStackSize(outputTwo)));
                 }
             }
         }
 
-        this.slots[theInput] = StackUtil.addStackSize(this.slots[theInput], -1);
+        this.slots.set(theInput, StackUtil.addStackSize(this.slots.get(theInput), -1));
     }
 
     @SideOnly(Side.CLIENT)

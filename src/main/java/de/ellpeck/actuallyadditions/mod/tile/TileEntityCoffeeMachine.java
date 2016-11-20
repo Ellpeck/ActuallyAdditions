@@ -130,10 +130,10 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     public void storeCoffee(){
-        if(StackUtil.isValid(this.slots[SLOT_COFFEE_BEANS]) && this.slots[SLOT_COFFEE_BEANS].getItem() == InitItems.itemCoffeeBean){
+        if(StackUtil.isValid(this.slots.get(SLOT_COFFEE_BEANS)) && this.slots.get(SLOT_COFFEE_BEANS).getItem() == InitItems.itemCoffeeBean){
             int toAdd = 2;
             if(toAdd <= COFFEE_CACHE_MAX_AMOUNT-this.coffeeCacheAmount){
-                this.slots[SLOT_COFFEE_BEANS] = StackUtil.addStackSize(this.slots[SLOT_COFFEE_BEANS], -1);
+                this.slots.set(SLOT_COFFEE_BEANS, StackUtil.addStackSize(this.slots.get(SLOT_COFFEE_BEANS), -1));
                 this.coffeeCacheAmount += toAdd;
             }
         }
@@ -141,7 +141,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     public void brew(){
         if(!this.worldObj.isRemote){
-            if(StackUtil.isValid(this.slots[SLOT_INPUT]) && this.slots[SLOT_INPUT].getItem() == InitItems.itemMisc && this.slots[SLOT_INPUT].getItemDamage() == TheMiscItems.CUP.ordinal() && !StackUtil.isValid(this.slots[SLOT_OUTPUT]) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= WATER_USE){
+            if(StackUtil.isValid(this.slots.get(SLOT_INPUT)) && this.slots.get(SLOT_INPUT).getItem() == InitItems.itemMisc && this.slots.get(SLOT_INPUT).getItemDamage() == TheMiscItems.CUP.ordinal() && !StackUtil.isValid(this.slots.get(SLOT_OUTPUT)) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= WATER_USE){
                 if(this.storage.getEnergyStored() >= ENERGY_USED){
                     if(this.brewTime%30 == 0){
                         this.worldObj.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.35F, 1.0F);
@@ -152,18 +152,18 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                     if(this.brewTime >= TIME_USED){
                         this.brewTime = 0;
                         ItemStack output = new ItemStack(InitItems.itemCoffee);
-                        for(int i = 3; i < this.slots.length; i++){
-                            if(StackUtil.isValid(this.slots[i])){
-                                CoffeeIngredient ingredient = ItemCoffee.getIngredientFromStack(this.slots[i]);
+                        for(int i = 3; i < this.slots.size(); i++){
+                            if(StackUtil.isValid(this.slots.get(i))){
+                                CoffeeIngredient ingredient = ItemCoffee.getIngredientFromStack(this.slots.get(i));
                                 if(ingredient != null){
                                     if(ingredient.effect(output)){
-                                        this.slots[i] = StackUtil.addStackSize(this.slots[i], -1);
+                                        this.slots.set(i, StackUtil.addStackSize(this.slots.get(i), -1));
                                     }
                                 }
                             }
                         }
-                        this.slots[SLOT_OUTPUT] = output.copy();
-                        this.slots[SLOT_INPUT] = StackUtil.addStackSize(this.slots[SLOT_INPUT], -1);
+                        this.slots.set(SLOT_OUTPUT, output.copy());
+                        this.slots.set(SLOT_INPUT, StackUtil.addStackSize(this.slots.get(SLOT_INPUT), -1));
                         this.coffeeCacheAmount -= CACHE_USE;
                         this.tank.drainInternal(WATER_USE, true);
                     }
@@ -182,7 +182,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return slot == SLOT_OUTPUT || (slot >= 3 && slot < this.slots.length && ItemCoffee.getIngredientFromStack(stack) == null);
+        return slot == SLOT_OUTPUT || (slot >= 3 && slot < this.slots.size() && ItemCoffee.getIngredientFromStack(stack) == null);
     }
 
     @Override

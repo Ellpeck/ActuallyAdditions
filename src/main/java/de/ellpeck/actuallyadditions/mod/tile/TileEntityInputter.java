@@ -99,7 +99,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     private boolean newPutting(){
-        if(this.checkBothFilters(this.slots[0], true)){
+        if(this.checkBothFilters(this.slots.get(0), true)){
             for(EnumFacing side : EnumFacing.values()){
                 if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side)){
                     IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
@@ -268,7 +268,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     if(this.sideToPull != -1 && this.placeToPull != null){
                         this.newPulling();
                     }
-                    if(StackUtil.isValid(this.slots[0]) && this.sideToPut != -1 && this.placeToPut != null){
+                    if(StackUtil.isValid(this.slots.get(0)) && this.sideToPut != -1 && this.placeToPut != null){
                         this.newPutting();
                     }
                 }

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 public final class StackUtil{
 
@@ -66,7 +67,7 @@ public final class StackUtil{
         return setStackSize(stack, getStackSize(stack)+size);
     }
 
-    public static boolean isIInvEmpty(ItemStack[] slots){
+    public static boolean isIInvEmpty(NonNullList<ItemStack> slots){
         for(ItemStack stack : slots){
             if(StackUtil.isValid(stack)){
                 return false;
@@ -74,5 +75,9 @@ public final class StackUtil{
         }
 
         return true;
+    }
+
+    public static NonNullList<ItemStack> createSlots(int size){
+        return NonNullList.func_191197_a(size, getNull());
     }
 }

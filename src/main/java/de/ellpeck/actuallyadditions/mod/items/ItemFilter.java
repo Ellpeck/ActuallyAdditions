@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -47,9 +48,9 @@ public class ItemFilter extends ItemBase{
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
-        ItemStack[] slots = new ItemStack[ContainerFilter.SLOT_AMOUNT];
+        NonNullList<ItemStack> slots = StackUtil.createSlots(ContainerFilter.SLOT_AMOUNT);
         ItemDrill.loadSlotsFromNBT(slots, stack);
-        if(slots != null && slots.length > 0){
+        if(slots != null && slots.size() > 0){
             for(ItemStack slot : slots){
                 if(StackUtil.isValid(slot)){
                     tooltip.add(slot.getItem().getItemStackDisplayName(slot));

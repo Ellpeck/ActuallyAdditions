@@ -23,6 +23,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -142,7 +143,7 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        int inventoryStart = this.bagInventory.slots.length;
+        int inventoryStart = this.bagInventory.slots.size();
         int inventoryEnd = inventoryStart+26;
         int hotbarStart = inventoryEnd+1;
         int hotbarEnd = hotbarStart+8;
@@ -233,11 +234,10 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     public static class InventoryBag implements IInventory{
 
-        public ItemStack[] slots;
+        public NonNullList<ItemStack> slots;
 
         public InventoryBag(boolean isVoid){
-            this.slots = new ItemStack[getSlotAmount(isVoid)];
-            Arrays.fill(this.slots, StackUtil.getNull());
+            this.slots = StackUtil.createSlots(getSlotAmount(isVoid));
         }
 
         @Override
@@ -292,20 +292,18 @@ public class ContainerBag extends Container implements IButtonReactor{
 
         @Override
         public void clear(){
-            int length = this.slots.length;
-            this.slots = new ItemStack[length];
-            Arrays.fill(this.slots, StackUtil.getNull());
+            this.slots.clear();
         }
 
         @Override
         public void setInventorySlotContents(int i, ItemStack stack){
-            this.slots[i] = stack;
+            this.slots.set(i, stack);
             this.markDirty();
         }
 
         @Override
         public int getSizeInventory(){
-            return this.slots.length;
+            return this.slots.size();
         }
 
         @Override
@@ -316,25 +314,25 @@ public class ContainerBag extends Container implements IButtonReactor{
         @Override
         public ItemStack getStackInSlot(int i){
             if(i < this.getSizeInventory()){
-                return this.slots[i];
+                return this.slots.get(i);
             }
             return StackUtil.getNull();
         }
 
         @Override
         public ItemStack decrStackSize(int i, int j){
-            if(StackUtil.isValid(this.slots[i])){
+            if(StackUtil.isValid(this.slots.get(i))){
                 ItemStack stackAt;
-                if(StackUtil.getStackSize(this.slots[i]) <= j){
-                    stackAt = this.slots[i];
-                    this.slots[i] = StackUtil.getNull();
+                if(StackUtil.getStackSize(this.slots.get(i)) <= j){
+                    stackAt = this.slots.get(i);
+                    this.slots.set(i, StackUtil.getNull());
                     this.markDirty();
                     return stackAt;
                 }
                 else{
-                    stackAt = this.slots[i].splitStack(j);
-                    if(StackUtil.getStackSize(this.slots[i]) <= 0){
-                        this.slots[i] = StackUtil.getNull();
+                    stackAt = this.slots.get(i).splitStack(j);
+                    if(StackUtil.getStackSize(this.slots.get(i)) <= 0){
+                        this.slots.set(i, StackUtil.getNull());
                     }
                     this.markDirty();
                     return stackAt;
@@ -345,8 +343,8 @@ public class ContainerBag extends Container implements IButtonReactor{
 
         @Override
         public ItemStack removeStackFromSlot(int index){
-            ItemStack stack = this.slots[index];
-            this.slots[index] = StackUtil.getNull();
+            ItemStack stack = this.slots.get(index);
+            this.slots.set(index, StackUtil.getNull());
             return stack;
         }
 

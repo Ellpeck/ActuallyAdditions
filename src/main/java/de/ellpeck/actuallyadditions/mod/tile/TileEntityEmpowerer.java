@@ -52,7 +52,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
         super.updateEntity();
 
         if(!this.worldObj.isRemote){
-            List<EmpowererRecipe> recipes = getRecipesForInput(this.slots[0]);
+            List<EmpowererRecipe> recipes = getRecipesForInput(this.slots.get(0));
             if(!recipes.isEmpty()){
                 for(EmpowererRecipe recipe : recipes){
                     TileEntityDisplayStand[] modifierStands = this.getFittingModifiers(recipe, recipe.time);
@@ -78,7 +78,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
                         if(done){
                             ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 300, 0, 0, 0, 0.25D);
 
-                            this.slots[0] = recipe.output.copy();
+                            this.slots.set(0, recipe.output.copy());
                             this.markDirty();
 
                             this.processTime = 0;

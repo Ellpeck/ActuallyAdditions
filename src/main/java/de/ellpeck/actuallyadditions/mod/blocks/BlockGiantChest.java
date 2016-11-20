@@ -33,6 +33,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
@@ -102,12 +103,12 @@ public class BlockGiantChest extends BlockContainerBase{
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityGiantChest){
                 NBTTagList list = stack.getTagCompound().getTagList("Items", 10);
-                ItemStack[] slots = ((TileEntityGiantChest)tile).slots;
+                NonNullList<ItemStack> slots = ((TileEntityGiantChest)tile).slots;
 
                 for(int i = 0; i < list.tagCount(); i++){
                     NBTTagCompound compound = list.getCompoundTagAt(i);
                     if(compound != null && compound.hasKey("id")){
-                        slots[i] = new ItemStack(list.getCompoundTagAt(i));
+                        slots.set(i, new ItemStack(list.getCompoundTagAt(i)));
                     }
                 }
             }
@@ -123,16 +124,16 @@ public class BlockGiantChest extends BlockContainerBase{
 
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityGiantChest){
-            ItemStack[] slots = ((TileEntityGiantChest)tile).slots;
+            List<ItemStack> slots = ((TileEntityGiantChest)tile).slots;
             int place = ItemUtil.getPlaceAt(slots, new ItemStack(InitItems.itemCrateKeeper), false);
             if(place >= 0){
                 NBTTagList list = new NBTTagList();
-                for(int i = 0; i < slots.length; i++){
+                for(int i = 0; i < slots.size(); i++){
                     //Destroy the keeper
                     if(i != place){
                         NBTTagCompound compound = new NBTTagCompound();
-                        if(StackUtil.isValid(slots[i])){
-                            slots[i].writeToNBT(compound);
+                        if(StackUtil.isValid(slots.get(i))){
+                            slots.get(i).writeToNBT(compound);
                         }
                         list.appendTag(compound);
                     }

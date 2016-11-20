@@ -92,7 +92,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IC
                     if(this.currentProcessTime >= TIME){
                         this.currentProcessTime = 0;
 
-                        this.slots[0] = StackUtil.addStackSize(this.slots[0], -1);
+                        this.slots.set(0, StackUtil.addStackSize(this.slots.get(0), -1));
 
                         this.tank.fillInternal(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
                         this.markDirty();
@@ -117,7 +117,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IC
     }
 
     public boolean isCanola(int slot){
-        return StackUtil.isValid(this.slots[slot]) && this.slots[slot].getItem() == InitItems.itemMisc && this.slots[slot].getItemDamage() == TheMiscItems.CANOLA.ordinal();
+        return StackUtil.isValid(this.slots.get(slot)) && this.slots.get(slot).getItem() == InitItems.itemMisc && this.slots.get(slot).getItemDamage() == TheMiscItems.CANOLA.ordinal();
     }
 
     @Override

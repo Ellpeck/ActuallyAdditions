@@ -77,11 +77,11 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     public void updateEntity(){
         super.updateEntity();
         if(!this.worldObj.isRemote){
-            ItemStack input = this.slots[SLOT_INPUT];
-            if(!StackUtil.isValid(this.slots[SLOT_OUTPUT]) && canBeRepaired(input)){
+            ItemStack input = this.slots.get(SLOT_INPUT);
+            if(!StackUtil.isValid(this.slots.get(SLOT_OUTPUT)) && canBeRepaired(input)){
                 if(input.getItemDamage() <= 0){
-                    this.slots[SLOT_OUTPUT] = input.copy();
-                    this.slots[SLOT_INPUT] = StackUtil.getNull();
+                    this.slots.set(SLOT_OUTPUT, input.copy());
+                    this.slots.set(SLOT_INPUT, StackUtil.getNull());
                     this.nextRepairTick = 0;
                 }
                 else{
@@ -125,8 +125,8 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
 
     @SideOnly(Side.CLIENT)
     public int getItemDamageToScale(int i){
-        if(StackUtil.isValid(this.slots[SLOT_INPUT])){
-            return (this.slots[SLOT_INPUT].getMaxDamage()-this.slots[SLOT_INPUT].getItemDamage())*i/this.slots[SLOT_INPUT].getMaxDamage();
+        if(StackUtil.isValid(this.slots.get(SLOT_INPUT))){
+            return (this.slots.get(SLOT_INPUT).getMaxDamage()-this.slots.get(SLOT_INPUT).getItemDamage())*i/this.slots.get(SLOT_INPUT).getMaxDamage();
         }
         return 0;
     }

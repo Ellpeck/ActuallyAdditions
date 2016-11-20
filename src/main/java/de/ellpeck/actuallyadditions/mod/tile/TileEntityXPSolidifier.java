@@ -123,16 +123,16 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         super.updateEntity();
         if(!this.worldObj.isRemote){
             if(this.amount > 0){
-                if(!StackUtil.isValid(this.slots[0])){
+                if(!StackUtil.isValid(this.slots.get(0))){
                     int toSet = this.amount > 64 ? 64 : this.amount;
-                    this.slots[0] = new ItemStack(InitItems.itemSolidifiedExperience, toSet);
+                    this.slots.set(0, new ItemStack(InitItems.itemSolidifiedExperience, toSet));
                     this.amount -= toSet;
                     this.markDirty();
                 }
-                else if(StackUtil.getStackSize(this.slots[0]) < 64){
-                    int needed = 64-StackUtil.getStackSize(this.slots[0]);
+                else if(StackUtil.getStackSize(this.slots.get(0)) < 64){
+                    int needed = 64-StackUtil.getStackSize(this.slots.get(0));
                     int toAdd = this.amount > needed ? needed : this.amount;
-                    this.slots[0] = StackUtil.addStackSize(this.slots[0], toAdd);
+                    this.slots.set(0, StackUtil.addStackSize(this.slots.get(0), toAdd));
                     this.amount -= toAdd;
                     this.markDirty();
                 }
@@ -157,9 +157,9 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 }
             }
 
-            if(StackUtil.isValid(this.slots[1]) && this.slots[1].getItem() instanceof ItemSolidifiedExperience){
-                this.amount += StackUtil.getStackSize(this.slots[1]);
-                this.slots[1] = StackUtil.getNull();
+            if(StackUtil.isValid(this.slots.get(1)) && this.slots.get(1).getItem() instanceof ItemSolidifiedExperience){
+                this.amount += StackUtil.getStackSize(this.slots.get(1));
+                this.slots.set(1, StackUtil.getNull());
                 this.markDirty();
             }
 

@@ -80,7 +80,7 @@ public class ItemDrill extends ItemEnergy{
      *
      * @param stack The Drill
      */
-    public static void loadSlotsFromNBT(ItemStack[] slots, ItemStack stack){
+    public static void loadSlotsFromNBT(NonNullList<ItemStack> slots, ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
         if(compound != null){
             TileEntityInventoryBase.loadSlots(slots, compound);
@@ -93,7 +93,7 @@ public class ItemDrill extends ItemEnergy{
      * @param slots The Slots
      * @param stack The Drill
      */
-    public static void writeSlotsToNBT(ItemStack[] slots, ItemStack stack){
+    public static void writeSlotsToNBT(NonNullList<ItemStack> slots, ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
         if(compound == null){
             compound = new NBTTagCompound();
@@ -153,9 +153,9 @@ public class ItemDrill extends ItemEnergy{
             return StackUtil.getNull();
         }
 
-        ItemStack[] slots = new ItemStack[ContainerDrill.SLOT_AMOUNT];
+        NonNullList<ItemStack> slots = StackUtil.createSlots(ContainerDrill.SLOT_AMOUNT);
         loadSlotsFromNBT(slots, stack);
-        if(slots != null && slots.length > 0){
+        if(slots != null && slots.size() > 0){
             for(ItemStack slotStack : slots){
                 if(StackUtil.isValid(slotStack) && slotStack.getItem() instanceof ItemDrillUpgrade){
                     if(((ItemDrillUpgrade)slotStack.getItem()).type == upgrade){
@@ -192,9 +192,9 @@ public class ItemDrill extends ItemEnergy{
     //Checks for Energy Containers in the Upgrade Slots and charges the Drill from them
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        ItemStack[] slots = new ItemStack[ContainerDrill.SLOT_AMOUNT];
+        NonNullList<ItemStack> slots = StackUtil.createSlots(ContainerDrill.SLOT_AMOUNT);
         loadSlotsFromNBT(slots, stack);
-        if(slots != null && slots.length > 0){
+        if(slots != null && slots.size() > 0){
             for(ItemStack slotStack : slots){
                 if(StackUtil.isValid(slotStack)){
                     Item item = slotStack.getItem();

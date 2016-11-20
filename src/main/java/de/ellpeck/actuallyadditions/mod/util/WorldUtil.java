@@ -15,7 +15,6 @@ import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -32,6 +31,7 @@ import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -43,12 +43,9 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -230,9 +227,7 @@ public final class WorldUtil{
             backupSlots = new ItemStack[inventory.getSizeInventory()];
             for(int i = 0; i < backupSlots.length; i++){
                 ItemStack stack = inventory.getStackInSlot(i);
-                if(StackUtil.isValid(stack)){
-                    backupSlots[i] = stack.copy();
-                }
+                backupSlots[i] = StackUtil.validateCopy(stack);
             }
         }
 
@@ -266,9 +261,9 @@ public final class WorldUtil{
         return working >= stacks.size();
     }
 
-    public static int findFirstFilledSlot(ItemStack[] slots){
-        for(int i = 0; i < slots.length; i++){
-            if(StackUtil.isValid(slots[i])){
+    public static int findFirstFilledSlot(NonNullList<ItemStack> slots){
+        for(int i = 0; i < slots.size(); i++){
+            if(StackUtil.isValid(slots.get(i))){
                 return i;
             }
         }
