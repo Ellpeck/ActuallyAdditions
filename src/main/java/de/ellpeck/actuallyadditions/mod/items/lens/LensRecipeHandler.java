@@ -78,14 +78,28 @@ public final class LensRecipeHandler{
         if(ConfigCrafting.RECONSTRUCTOR_EXPLOSION_LENS.isEnabled()){
             ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemColorLens), new ItemStack(InitItems.itemExplosionLens), 5000);
             recipeExplosionLens = RecipeUtil.lastReconstructorRecipe();
-            ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemExplosionLens), new ItemStack(InitItems.itemDamageLens), 5000);
+
+            if(ConfigCrafting.RECONSTRUCTOR_DEATH_LENS.isEnabled()){
+                ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemExplosionLens), new ItemStack(InitItems.itemDamageLens), 5000);
+                recipeDamageLens = RecipeUtil.lastReconstructorRecipe();
+
+                ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemDamageLens), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 5000);
+            }
+            else{
+                ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemExplosionLens), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 5000);
+            }
         }
         else{
-            ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemColorLens), new ItemStack(InitItems.itemDamageLens), 5000);
-        }
-        recipeDamageLens = RecipeUtil.lastReconstructorRecipe();
+            if(ConfigCrafting.RECONSTRUCTOR_DEATH_LENS.isEnabled()){
+                ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemColorLens), new ItemStack(InitItems.itemDamageLens), 5000);
+                recipeDamageLens = RecipeUtil.lastReconstructorRecipe();
 
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemDamageLens), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 5000);
+                ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemDamageLens), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 5000);
+            }
+            else{
+                ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemColorLens), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 5000);
+            }
+        }
 
         //Misc
         if(ConfigCrafting.RECONSTRUCTOR_MISC.isEnabled()){
