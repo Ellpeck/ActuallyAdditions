@@ -127,12 +127,14 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                     int toSet = this.amount > 64 ? 64 : this.amount;
                     this.slots[0] = new ItemStack(InitItems.itemSolidifiedExperience, toSet);
                     this.amount -= toSet;
+                    this.markDirty();
                 }
                 else if(StackUtil.getStackSize(this.slots[0]) < 64){
                     int needed = 64-StackUtil.getStackSize(this.slots[0]);
                     int toAdd = this.amount > needed ? needed : this.amount;
                     this.slots[0] = StackUtil.addStackSize(this.slots[0], toAdd);
                     this.amount -= toAdd;
+                    this.markDirty();
                 }
             }
 
@@ -148,6 +150,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                             if(this.singlePointAmount >= ItemSolidifiedExperience.SOLID_XP_AMOUNT){
                                 this.amount += this.singlePointAmount/ItemSolidifiedExperience.SOLID_XP_AMOUNT;
                                 this.singlePointAmount = 0;
+                                this.markDirty();
                             }
                         }
                     }
@@ -157,6 +160,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
             if(StackUtil.isValid(this.slots[1]) && this.slots[1].getItem() instanceof ItemSolidifiedExperience){
                 this.amount += StackUtil.getStackSize(this.slots[1]);
                 this.slots[1] = StackUtil.getNull();
+                this.markDirty();
             }
 
             if(this.lastAmount != this.amount && this.sendUpdateWithInterval()){
