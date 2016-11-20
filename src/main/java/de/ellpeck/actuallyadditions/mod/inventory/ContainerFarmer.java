@@ -65,7 +65,7 @@ public class ContainerFarmer extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(newStack.getItem() instanceof IPlantable){
+                if(TileEntityFarmer.getPlantableFromStack(newStack) != null){
                     if(!this.mergeItemStack(newStack, 0, 6, false)){
                         return StackUtil.getNull();
                     }
