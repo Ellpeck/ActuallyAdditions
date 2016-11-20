@@ -33,7 +33,7 @@ public final class InitVillager{
     }
 
     private static void initJamVillagePart(){
-        jamProfession = new VillagerProfession(ModUtil.MOD_ID+":jamGuy", ModUtil.MOD_ID+":textures/entity/villager/jamVillager.png", ModUtil.MOD_ID+":textures/entity/villager/jamVillagerZombie.png");
+        jamProfession = new VillagerProfession(ModUtil.MOD_ID+":jamGuy", ModUtil.MOD_ID+":textures/entity/villager/jam_villager.png", ModUtil.MOD_ID+":textures/entity/villager/jam_villager_zombie.png");
         VillagerRegistry.instance().register(jamProfession);
 
         VillagerCareer career = new VillagerCareer(jamProfession, ModUtil.MOD_ID+".jammer");
