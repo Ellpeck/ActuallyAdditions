@@ -46,7 +46,7 @@ public class DungeonLoot{
 
             LootPool pool = event.getTable().getPool("main");
             if(pool == null){
-                pool = new LootPool(new LootEntry[0], noCondition, new RandomValueRange(3, 6), new RandomValueRange(0), "main");
+                pool = new LootPool(new LootEntry[0], noCondition, new RandomValueRange(5, 10), new RandomValueRange(0), "main");
                 event.getTable().addPool(pool);
             }
 
