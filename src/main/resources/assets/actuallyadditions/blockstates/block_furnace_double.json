@@ -1,0 +1,30 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube",
+    "textures": {
+      "particle": "actuallyadditions:blocks/block_furnace_double",
+      "down": "#particle",
+      "up": "actuallyadditions:blocks/block_furnace_double_top",
+      "south": "#particle",
+      "north": "actuallyadditions:blocks/block_furnace_double_front",
+      "east": "#particle",
+      "west": "#particle"
+    },
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": { "y" : 0 },
+      "1": { "y" : 180 },
+      "2": { "y" : 270 },
+      "3": { "y" : 90 },
+      "4": { "y" : 0, "textures": { "north": "actuallyadditions:blocks/block_furnace_double_on" } },
+      "5": { "y" : 180, "textures": { "north": "actuallyadditions:blocks/block_furnace_double_on" } },
+      "6": { "y" : 270, "textures": { "north": "actuallyadditions:blocks/block_furnace_double_on" } },
+      "7": { "y" : 90, "textures": { "north": "actuallyadditions:blocks/block_furnace_double_on" } }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "actuallyadditions:block_smiley_cloud",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "meta": {
+      "0": { "y" : 0},
+      "1": { "y" : 180 },
+      "2": { "y" : 270 },
+      "3": { "y" : 90 },
+      "4": { "y" : 0, "model": "actuallyadditions:block_smiley_cloud_fluffy" },
+      "5": { "y" : 180, "model": "actuallyadditions:block_smiley_cloud_fluffy" },
+      "6": { "y" : 270, "model": "actuallyadditions:block_smiley_cloud_fluffy" },
+      "7": { "y" : 90, "model": "actuallyadditions:block_smiley_cloud_fluffy" }
+    }
+  }
+}

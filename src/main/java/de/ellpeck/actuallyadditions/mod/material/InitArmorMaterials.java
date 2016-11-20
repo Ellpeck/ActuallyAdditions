@@ -34,16 +34,16 @@ public final class InitArmorMaterials{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Armor Materials...");
 
-        armorMaterialEmerald = addArmorMaterial("armorMaterialEmerald", ModUtil.MOD_ID+":armorEmerald", 50, new int[]{5, 8, 9, 4}, 15, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
-        armorMaterialObsidian = addArmorMaterial("armorMaterialObsidian", ModUtil.MOD_ID+":armorObsidian", 120, new int[]{1, 3, 4, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
-        armorMaterialQuartz = addArmorMaterial("armorMaterialQuartz", ModUtil.MOD_ID+":armorQuartz", 20, new int[]{3, 5, 6, 3}, 8, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialEmerald = addArmorMaterial("armorMaterialEmerald", ModUtil.MOD_ID+":armor_emerald", 50, new int[]{5, 8, 9, 4}, 15, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialObsidian = addArmorMaterial("armorMaterialObsidian", ModUtil.MOD_ID+":armor_obsidian", 120, new int[]{1, 3, 4, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialQuartz = addArmorMaterial("armorMaterialQuartz", ModUtil.MOD_ID+":armor_quartz", 20, new int[]{3, 5, 6, 3}, 8, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
 
-        armorMaterialCrystalRed = addArmorMaterial("armorMaterialCrystalRed", ModUtil.MOD_ID+":armorCrystalRed", 18, new int[]{3, 6, 7, 3}, 9, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
-        armorMaterialCrystalBlue = addArmorMaterial("armorMaterialCrystalBlue", ModUtil.MOD_ID+":armorCrystalBlue", 18, new int[]{3, 6, 7, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
-        armorMaterialCrystalLightBlue = addArmorMaterial("armorMaterialCrystalLightBlue", ModUtil.MOD_ID+":armorCrystalLightBlue", 35, new int[]{4, 7, 8, 4}, 12, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
-        armorMaterialCrystalBlack = addArmorMaterial("armorMaterialCrystalBlack", ModUtil.MOD_ID+":armorCrystalBlack", 12, new int[]{1, 3, 4, 1}, 13, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
-        armorMaterialCrystalGreen = addArmorMaterial("armorMaterialCrystalGreen", ModUtil.MOD_ID+":armorCrystalGreen", 60, new int[]{6, 9, 9, 4}, 18, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
-        armorMaterialCrystalWhite = addArmorMaterial("armorMaterialCrystalWhite", ModUtil.MOD_ID+":armorCrystalWhite", 18, new int[]{3, 6, 6, 3}, 11, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialCrystalRed = addArmorMaterial("armorMaterialCrystalRed", ModUtil.MOD_ID+":armor_crystal_red", 18, new int[]{3, 6, 7, 3}, 9, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialCrystalBlue = addArmorMaterial("armorMaterialCrystalBlue", ModUtil.MOD_ID+":armor_crystal_blue", 18, new int[]{3, 6, 7, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialCrystalLightBlue = addArmorMaterial("armorMaterialCrystalLightBlue", ModUtil.MOD_ID+":armor_crystal_light_blue", 35, new int[]{4, 7, 8, 4}, 12, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialCrystalBlack = addArmorMaterial("armorMaterialCrystalBlack", ModUtil.MOD_ID+":armor_crystal_black", 12, new int[]{1, 3, 4, 1}, 13, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialCrystalGreen = addArmorMaterial("armorMaterialCrystalGreen", ModUtil.MOD_ID+":armor_crystal_green", 60, new int[]{6, 9, 9, 4}, 18, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+        armorMaterialCrystalWhite = addArmorMaterial("armorMaterialCrystalWhite", ModUtil.MOD_ID+":armor_crystal_white", 18, new int[]{3, 6, 6, 3}, 11, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
     }
 
     private static ArmorMaterial addArmorMaterial(String name, String textureName, int durability, int[] reductionAmounts, int enchantability, SoundEvent soundOnEquip){

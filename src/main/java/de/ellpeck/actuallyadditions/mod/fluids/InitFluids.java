@@ -32,15 +32,15 @@ public final class InitFluids{
     public static Block blockEmpoweredOil;
 
     public static void init(){
-        fluidCanolaOil = registerFluid("canolaoil", "blockCanolaOil", EnumRarity.UNCOMMON);
-        fluidOil = registerFluid("oil", "blockOil", EnumRarity.UNCOMMON);
-        fluidCrystalOil = registerFluid("crystaloil", "blockCrystalOil", EnumRarity.RARE);
-        fluidEmpoweredOil = registerFluid("empoweredoil", "blockEmpoweredOil", EnumRarity.EPIC);
+        fluidCanolaOil = registerFluid("canolaoil", "block_canola_oil", EnumRarity.UNCOMMON);
+        fluidOil = registerFluid("oil", "block_oil", EnumRarity.UNCOMMON);
+        fluidCrystalOil = registerFluid("crystaloil", "block_crystal_oil", EnumRarity.RARE);
+        fluidEmpoweredOil = registerFluid("empoweredoil", "block_empowered_oil", EnumRarity.EPIC);
 
-        blockCanolaOil = registerFluidBlock(fluidCanolaOil, Material.WATER, "blockCanolaOil");
-        blockOil = registerFluidBlock(fluidOil, Material.WATER, "blockOil");
-        blockCrystalOil = registerFluidBlock(fluidCrystalOil, Material.WATER, "blockCrystalOil");
-        blockEmpoweredOil = registerFluidBlock(fluidEmpoweredOil, Material.WATER, "blockEmpoweredOil");
+        blockCanolaOil = registerFluidBlock(fluidCanolaOil, Material.WATER, "block_canola_oil");
+        blockOil = registerFluidBlock(fluidOil, Material.WATER, "block_oil");
+        blockCrystalOil = registerFluidBlock(fluidCrystalOil, Material.WATER, "block_crystal_oil");
+        blockEmpoweredOil = registerFluidBlock(fluidEmpoweredOil, Material.WATER, "block_empowered_oil");
     }
 
     private static Fluid registerFluid(String fluidName, String fluidTextureName, EnumRarity rarity){

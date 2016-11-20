@@ -21,10 +21,10 @@ import java.util.Locale;
 public final class BannerHelper{
 
     public static void init(){
-        addCraftingPattern("Drill", new ItemStack(InitItems.itemDrill, 1, 3));
-        addCraftingPattern("LeafBlo", new ItemStack(InitItems.itemLeafBlower));
-        addCraftingPattern("PhanCon", new ItemStack(InitItems.itemPhantomConnector));
-        addCraftingPattern("Book", new ItemStack(InitItems.itemBooklet));
+        addCraftingPattern("drill", new ItemStack(InitItems.itemDrill, 1, 3));
+        addCraftingPattern("leaf_blo", new ItemStack(InitItems.itemLeafBlower));
+        addCraftingPattern("phan_con", new ItemStack(InitItems.itemPhantomConnector));
+        addCraftingPattern("book", new ItemStack(InitItems.itemBooklet));
     }
 
     /**
