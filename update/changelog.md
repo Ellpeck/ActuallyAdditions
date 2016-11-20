@@ -1,3 +1,10 @@
+# 1.11-r76
+* This is the first release of Actually Additions for Minecraft 1.11. It hasn't been tested much, so issues might occur. Use at your own risk, but remember: I can use all the help in testing I can get! So if you find a bug, please report it on the issue tracker!
+* Updated to Minecraft 1.11. Old worlds should be compatible.
+* Snake_cased all items and their names. All custom textures will be broken.
+* Added draconium ore to the mining lens list
+* Added dungeon loot to woodland mansions
+
 # 1.10.2-r75
 * To people new to this mod: No, this isn't my regular updating schedule. Things have just been a bit rough this week I guess. In my hastily preparation for 1.11 some things that should've been accounted for sort of got lost - at least this teaches me to be more careful in the future. Sorry to people that don't like frequent updates, but updates are better than staying bugs - especially with the possibility of modpacks having bugged mod versions!
 * Fixed a bug with energy loss from Laser Relays
