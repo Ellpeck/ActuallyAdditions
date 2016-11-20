@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 import de.ellpeck.actuallyadditions.mod.misc.ParticleColored;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -54,8 +55,8 @@ public final class AssetUtil{
     }
 
     @SideOnly(Side.CLIENT)
-    public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, TileEntity tile){
-        displayNameString(font, xSize, yPositionOfMachineText, tile.getDisplayName().getFormattedText());
+    public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, TileEntityBase tile){
+        displayNameString(font, xSize, yPositionOfMachineText, tile.getDisplayedName());
     }
 
     @SideOnly(Side.CLIENT)

@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.block.state.IBlockState;
@@ -27,6 +28,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -204,9 +206,13 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
     }
 
+    public String getDisplayedName(){
+        return StringUtil.localize("container."+ModUtil.MOD_ID+"."+this.name+".name");
+    }
+
     @Override
     public ITextComponent getDisplayName(){
-        return new TextComponentTranslation("container."+ModUtil.MOD_ID+"."+this.name+".name");
+        return new TextComponentString(this.getDisplayedName());
     }
 
     @Override

@@ -197,7 +197,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public String getName(){
-        return this.name;
+        return this.getDisplayedName();
     }
 
     @Override
