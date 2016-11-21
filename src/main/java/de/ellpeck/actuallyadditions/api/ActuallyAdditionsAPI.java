@@ -31,7 +31,7 @@ public final class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "29";
+    public static final String API_VERSION = "30";
 
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<CrusherRecipe>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
@@ -41,7 +41,7 @@ public final class ActuallyAdditionsAPI{
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<Item, IColorLensChanger>();
     public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<CoffeeIngredient>();
     public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<CompostRecipe>();
-    public static final Map<String, Integer> OIL_GENERATOR_RECIPES = new HashMap<String, Integer>();
+    public static final List<OilGenRecipe> OIL_GENERATOR_RECIPES = new ArrayList<OilGenRecipe>();
     public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<IBookletEntry>();
     //This is added to automatically, you don't need to add anything to this list
     public static final List<IBookletChapter> ALL_CHAPTERS = new ArrayList<IBookletChapter>();
@@ -148,7 +148,17 @@ public final class ActuallyAdditionsAPI{
      * @param genAmount The amount of energy generated per operation
      */
     public static void addOilGenRecipe(String fluidName, int genAmount){
-        OIL_GENERATOR_RECIPES.put(fluidName, genAmount);
+        addOilGenRecipe(fluidName, genAmount, 100);
+    }
+
+    /**
+     * Adds a Recipe to the Oil generator
+     *
+     * @param fluidName The name of the fluid to be consumed
+     * @param genAmount The amount of energy generated per operation
+     */
+    public static void addOilGenRecipe(String fluidName, int genAmount, int genTime){
+        OIL_GENERATOR_RECIPES.add(new OilGenRecipe(fluidName, genAmount, genTime));
     }
 
     /**

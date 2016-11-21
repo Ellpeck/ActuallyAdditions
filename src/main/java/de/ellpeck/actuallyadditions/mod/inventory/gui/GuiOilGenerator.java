@@ -75,13 +75,14 @@ public class GuiOilGenerator extends GuiContainer{
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.generator.currentBurnTime > 0){
+        if(this.generator.currentBurnTime > 0 && this.generator.maxBurnTime > 0){
             int i = this.generator.getBurningScaled(13);
             this.drawTexturedModalRect(this.guiLeft+72, this.guiTop+44+12-i, 176, 96-i, 14, i);
         }
 
-        if(this.generator.currentEnergyProduce > 0){
-            this.drawCenteredString(this.fontRendererObj, this.generator.currentEnergyProduce+" RF/t", this.guiLeft+87, this.guiTop+75, 0xFFFFFF);
+        if(this.generator.maxBurnTime > 0 && this.generator.currentEnergyProduce > 0){
+            this.drawCenteredString(this.fontRendererObj, this.generator.currentEnergyProduce+" RF/t", this.guiLeft+87, this.guiTop+65, 0xFFFFFF);
+            this.drawCenteredString(this.fontRendererObj, "for "+this.generator.maxBurnTime+" t", this.guiLeft+87, this.guiTop+75, 0xFFFFFF);
         }
 
         this.energy.draw();
