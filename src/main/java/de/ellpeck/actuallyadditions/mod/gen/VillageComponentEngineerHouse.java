@@ -10,10 +10,24 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.laser.LaserType;
+import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
+import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.mod.data.WorldData;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
+import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
@@ -26,6 +40,8 @@ import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
 import java.util.Random;
@@ -65,7 +81,8 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
         }
 
         this.fillWithBlocks(world, sbb, 0, 0, 0, X_SIZE-1, Y_SIZE-1, Z_SIZE-1, Blocks.AIR);
-        this.spawnActualHouse(world, rand, sbb);
+        this.spawnActualHouse(world, sbb);
+        this.fillHouse(world);
 
         for(int i = 0; i < X_SIZE; i++){
             for(int j = 0; j < Z_SIZE; j++){
@@ -79,11 +96,65 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
         return true;
     }
 
-    public void fillWithBlocks(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block block){
+    private void fillWithBlocks(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block block){
         this.fillWithBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, block.getDefaultState(), block.getDefaultState(), false);
     }
 
-    public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb){
+    private void fillHouse(World world){
+        if(world.rand.nextBoolean()){
+            TileEntity compost = this.getTileAtPos(world, 6, 1, 2);
+            if(compost instanceof TileEntityCompost){
+                ((TileEntityCompost)compost).setInventorySlotContents(0, new ItemStack(InitItems.itemFertilizer, 10));
+            }
+        }
+
+        TileEntity ferment = this.getTileAtPos(world, 11, 1, 0);
+        if(ferment instanceof TileEntityFermentingBarrel){
+            TileEntityFermentingBarrel tile = (TileEntityFermentingBarrel)ferment;
+            tile.canolaTank.setFluid(new FluidStack(InitFluids.fluidCanolaOil, world.rand.nextInt(1500)+200));
+        }
+
+        TileEntity coffee = this.getTileAtPos(world, 4, 2, 6);
+        if(coffee instanceof TileEntityCoffeeMachine){
+            TileEntityCoffeeMachine tile = (TileEntityCoffeeMachine)coffee;
+            tile.tank.setFluid(new FluidStack(FluidRegistry.WATER, world.rand.nextInt(3000)+500));
+            tile.coffeeCacheAmount = world.rand.nextInt(150);
+            tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/2));
+        }
+
+        TileEntity press = this.getTileAtPos(world, 2, 1, 5);
+        if(press instanceof TileEntityCanolaPress){
+            TileEntityCanolaPress tile = (TileEntityCanolaPress)press;
+            tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/3));
+            tile.setInventorySlotContents(0, new ItemStack(InitItems.itemMisc, world.rand.nextInt(60)+1, TheMiscItems.CANOLA.ordinal()));
+        }
+
+        TileEntity crusher = this.getTileAtPos(world, 2, 1, 6);
+        if(crusher instanceof TileEntityGrinder){
+            TileEntityGrinder tile = (TileEntityGrinder)crusher;
+            tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/2));
+            if(world.rand.nextBoolean()){
+                tile.setInventorySlotContents(TileEntityGrinder.SLOT_INPUT_1, new ItemStack(InitBlocks.blockMisc, world.rand.nextInt(10)+1, TheMiscBlocks.ORE_QUARTZ.ordinal()));
+            }
+        }
+
+        TileEntity coal = this.getTileAtPos(world, 5, 5, 6);
+        if(coal instanceof TileEntityCoalGenerator){
+            ((TileEntityCoalGenerator)coal).setInventorySlotContents(0, new ItemStack(Items.COAL, world.rand.nextInt(25)+3, 1));
+        }
+
+        TileEntity firstRelay = this.getTileAtPos(world, 6, 5, 6);
+        TileEntity secondRelay = this.getTileAtPos(world, 8, 5, 3);
+        if(firstRelay instanceof TileEntityLaserRelayEnergy && secondRelay instanceof TileEntityLaserRelayEnergy){
+            ActuallyAdditionsAPI.connectionHandler.addConnection(firstRelay.getPos(), secondRelay.getPos(), LaserType.ENERGY, world);
+        }
+
+        BlockPos lamp = new BlockPos(this.getXWithOffset(8, 6), this.getYWithOffset(1), this.getZWithOffset(8, 6));
+        int meta = world.rand.nextInt(TheColoredLampColors.values().length);
+        world.setBlockState(lamp, InitBlocks.blockColoredLamp.getStateFromMeta(meta));
+    }
+
+    private void spawnActualHouse(World world, StructureBoundingBox sbb){
         TemplateManager manager = world.getSaveHandler().getStructureTemplateManager();
         MinecraftServer server = world.getMinecraftServer();
 
@@ -116,6 +187,11 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
                 template.addBlocksToWorld(world, new BlockPos(this.getXWithOffset(0, 0), this.getYWithOffset(0), this.getZWithOffset(0, 0)), placement);
             }
         }
+    }
+
+    private TileEntity getTileAtPos(World world, int x, int y, int z){
+        BlockPos pos = new BlockPos(this.getXWithOffset(x, z), this.getYWithOffset(y), this.getZWithOffset(x, z));
+        return world.getTileEntity(pos);
     }
 
     /*@Override
