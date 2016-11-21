@@ -755,13 +755,13 @@ public final class BlockCrafting{
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockGiantChest),
                     "CWC", "WDW", "CWC",
                     'C', "chestWood",
-                    'D', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
-                    'W', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal())));
+                    'D', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()),
+                    'W', "plankWood"));
             recipeCrate = RecipeUtil.lastIRecipe();
 
             GameRegistry.addRecipe(new RecipeKeepDataShaped(new ItemStack(InitBlocks.blockGiantChestMedium), new ItemStack(InitBlocks.blockGiantChest),
                     "CWC", "WDW", "CWC",
-                    'C', new ItemStack(InitBlocks.blockCrystalEmpowered, 1, TheCrystals.COAL.ordinal()),
+                    'C', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal()),
                     'D', new ItemStack(InitBlocks.blockGiantChest),
                     'W', "plankWood"));
             recipeCrateMedium = RecipeUtil.lastIRecipe();
@@ -770,7 +770,7 @@ public final class BlockCrafting{
                     "CWC", "WDW", "CWC",
                     'C', new ItemStack(InitBlocks.blockCrystalEmpowered, 1, TheCrystals.COAL.ordinal()),
                     'D', new ItemStack(InitBlocks.blockGiantChestMedium),
-                    'W', "chestWood"));
+                    'W', "plankWood"));
             recipeCrateLarge = RecipeUtil.lastIRecipe();
         }
 
