@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -102,46 +103,50 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
     }
 
     private void fillHouse(World world, StructureBoundingBox sbb){
-        if(world.rand.nextBoolean()){
-            TileEntity compost = this.getTileAtPos(world, 6, 1, 2, sbb);
-            if(compost instanceof TileEntityCompost){
-                ((TileEntityCompost)compost).setInventorySlotContents(0, new ItemStack(InitItems.itemFertilizer, 10));
+        if(ConfigBoolValues.DUNGEON_LOOT.isEnabled()){
+            if(world.rand.nextBoolean()){
+                TileEntity compost = this.getTileAtPos(world, 6, 1, 2, sbb);
+                if(compost instanceof TileEntityCompost){
+                    ((TileEntityCompost)compost).setInventorySlotContents(0, new ItemStack(InitItems.itemFertilizer, 10));
+                }
             }
-        }
 
-        TileEntity ferment = this.getTileAtPos(world, 11, 1, 0, sbb);
-        if(ferment instanceof TileEntityFermentingBarrel){
-            TileEntityFermentingBarrel tile = (TileEntityFermentingBarrel)ferment;
-            tile.canolaTank.setFluid(new FluidStack(InitFluids.fluidCanolaOil, world.rand.nextInt(1500)+200));
-        }
-
-        TileEntity coffee = this.getTileAtPos(world, 4, 2, 6, sbb);
-        if(coffee instanceof TileEntityCoffeeMachine){
-            TileEntityCoffeeMachine tile = (TileEntityCoffeeMachine)coffee;
-            tile.tank.setFluid(new FluidStack(FluidRegistry.WATER, world.rand.nextInt(3000)+500));
-            tile.coffeeCacheAmount = world.rand.nextInt(150);
-            tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/2));
-        }
-
-        TileEntity press = this.getTileAtPos(world, 2, 1, 5, sbb);
-        if(press instanceof TileEntityCanolaPress){
-            TileEntityCanolaPress tile = (TileEntityCanolaPress)press;
-            tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/3));
-            tile.setInventorySlotContents(0, new ItemStack(InitItems.itemMisc, world.rand.nextInt(60)+1, TheMiscItems.CANOLA.ordinal()));
-        }
-
-        TileEntity crusher = this.getTileAtPos(world, 2, 1, 6, sbb);
-        if(crusher instanceof TileEntityGrinder){
-            TileEntityGrinder tile = (TileEntityGrinder)crusher;
-            tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/2));
-            if(world.rand.nextFloat() >= 0.25F){
-                tile.setInventorySlotContents(TileEntityGrinder.SLOT_INPUT_1, new ItemStack(InitBlocks.blockMisc, world.rand.nextInt(10)+1, TheMiscBlocks.ORE_QUARTZ.ordinal()));
+            TileEntity ferment = this.getTileAtPos(world, 11, 1, 0, sbb);
+            if(ferment instanceof TileEntityFermentingBarrel){
+                TileEntityFermentingBarrel tile = (TileEntityFermentingBarrel)ferment;
+                tile.canolaTank.setFluid(new FluidStack(InitFluids.fluidCanolaOil, world.rand.nextInt(1500)+200));
             }
-        }
 
-        TileEntity coal = this.getTileAtPos(world, 5, 5, 6, sbb);
-        if(coal instanceof TileEntityCoalGenerator){
-            ((TileEntityCoalGenerator)coal).setInventorySlotContents(0, new ItemStack(Items.COAL, world.rand.nextInt(25)+3, 1));
+            TileEntity coffee = this.getTileAtPos(world, 4, 2, 6, sbb);
+            if(coffee instanceof TileEntityCoffeeMachine){
+                TileEntityCoffeeMachine tile = (TileEntityCoffeeMachine)coffee;
+                tile.tank.setFluid(new FluidStack(FluidRegistry.WATER, world.rand.nextInt(3000)+500));
+                tile.coffeeCacheAmount = world.rand.nextInt(150);
+                tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/2));
+            }
+
+            TileEntity press = this.getTileAtPos(world, 2, 1, 5, sbb);
+            if(press instanceof TileEntityCanolaPress){
+                TileEntityCanolaPress tile = (TileEntityCanolaPress)press;
+                tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/3));
+                tile.setInventorySlotContents(0, new ItemStack(InitItems.itemMisc, world.rand.nextInt(60)+1, TheMiscItems.CANOLA.ordinal()));
+            }
+
+            TileEntity crusher = this.getTileAtPos(world, 2, 1, 6, sbb);
+            if(crusher instanceof TileEntityGrinder){
+                TileEntityGrinder tile = (TileEntityGrinder)crusher;
+                tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/2));
+                if(world.rand.nextFloat() >= 0.25F){
+                    tile.setInventorySlotContents(TileEntityGrinder.SLOT_INPUT_1, new ItemStack(InitBlocks.blockMisc, world.rand.nextInt(10)+1, TheMiscBlocks.ORE_QUARTZ.ordinal()));
+                }
+            }
+
+            TileEntity coal = this.getTileAtPos(world, 5, 5, 6, sbb);
+            if(coal instanceof TileEntityCoalGenerator){
+                ((TileEntityCoalGenerator)coal).setInventorySlotContents(0, new ItemStack(Items.COAL, world.rand.nextInt(25)+3, 1));
+            }
+
+            VillageComponentJamHouse.generateCrate(world, sbb, this.getXWithOffset(6, 4), this.getYWithOffset(4), this.getZWithOffset(6, 4), DungeonLoot.ENGINEER_HOUSE);
         }
 
         TileEntity firstRelay = this.getTileAtPos(world, 6, 5, 6, sbb);
@@ -152,8 +157,6 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
 
         int meta = world.rand.nextInt(TheColoredLampColors.values().length);
         this.setBlockState(world, InitBlocks.blockColoredLampOn.getStateFromMeta(meta), 8, 1, 6, sbb);
-
-        VillageComponentJamHouse.generateCrate(world, sbb, this.getXWithOffset(6, 4), this.getYWithOffset(4), this.getZWithOffset(6, 4), DungeonLoot.ENGINEER_HOUSE);
     }
 
     private void spawnActualHouse(World world, StructureBoundingBox sbb){

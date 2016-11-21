@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
@@ -190,7 +191,9 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.fillWithBlocks(world, sbb, 3, 1, 4, 4, 1, 6, Blocks.CARPET.getStateFromMeta(10), Blocks.CARPET.getStateFromMeta(10), false);
 
         //Loot Chest
-        generateCrate(world, this.boundingBox, this.getXWithOffset(8, 6), this.getYWithOffset(1), this.getZWithOffset(8, 6), DungeonLoot.JAM_HOUSE);
+        if(ConfigBoolValues.DUNGEON_LOOT.isEnabled()){
+            generateCrate(world, this.boundingBox, this.getXWithOffset(8, 6), this.getYWithOffset(1), this.getZWithOffset(8, 6), DungeonLoot.JAM_HOUSE);
+        }
 
         //Torches
         this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.SOUTH), 6, 2, 0, sbb);

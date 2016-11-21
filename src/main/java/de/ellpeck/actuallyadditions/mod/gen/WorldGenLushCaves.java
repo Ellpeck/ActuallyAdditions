@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.gen;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import net.minecraft.block.Block;
@@ -95,7 +96,7 @@ public class WorldGenLushCaves{
                     }
                     trees.generate(world, rand, pos.up());
 
-                    if(!crateGenDone && genCrate){
+                    if(ConfigBoolValues.DUNGEON_LOOT.isEnabled() && !crateGenDone && genCrate){
                         BlockPos cratePos = pos.add(MathHelper.getRandomIntegerInRange(rand, -2, 2), MathHelper.getRandomIntegerInRange(rand, 3, 8), MathHelper.getRandomIntegerInRange(rand, -2, 2));
 
                         IBlockState state = world.getBlockState(cratePos);

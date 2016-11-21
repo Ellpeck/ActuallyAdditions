@@ -43,7 +43,7 @@ public enum ConfigBoolValues{
     SHOW_BOOKLET_INFO("Booklet Quick Opening Info", ConfigCategories.TOOL_VALUES, true, "If true,'Press key for more information' text should show when the item has a page in the booklet"),
     GIVE_BOOKLET_ON_FIRST_CRAFT("Give Booklet on First Craft", ConfigCategories.OTHER, true, "If true, the booklet should be given to the player when he first crafts something from the Mod"),
 
-    DUNGEON_LOOT("Dungeon Loot", ConfigCategories.OTHER, true, "Should Actually Additions Loot generate in dungeons??"),
+    DUNGEON_LOOT("Village and Dungeon Loot", ConfigCategories.OTHER, true, "Should Actually Additions Loot generate in dungeons? (This also disables loot in lush caves and village houses!)"),
     GEN_LUSH_CAVES("Generate Lush Caves", ConfigCategories.WORLD_GEN, true, "Should caves with trees and grass randomly generate underground?"),
 
     WATER_BOWL("Water Bowl", ConfigCategories.OTHER, true, "Should right-clicking a bowl on water blocks create a water bowl?"),
