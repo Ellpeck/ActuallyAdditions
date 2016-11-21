@@ -16,14 +16,20 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Mirror;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.Rotation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -32,7 +38,7 @@ import java.util.List;
 public class BlockCrystal extends BlockBase{
 
     public static final TheCrystals[] ALL_CRYSTALS = TheCrystals.values();
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, ALL_CRYSTALS.length-1);
+    private static final PropertyEnum<TheCrystals> TYPE = PropertyEnum.create("type", TheCrystals.class);
 
     private final boolean isEmpowered;
 
@@ -65,18 +71,28 @@ public class BlockCrystal extends BlockBase{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < ALL_CRYSTALS.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), META.getName()+"="+i);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_CRYSTALS[i].name);
         }
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta){
+        return this.getDefaultState().withProperty(TYPE, TheCrystals.values()[meta]);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return state.getValue(TYPE).ordinal();
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState(){
+        return new BlockStateContainer(this, TYPE);
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= ALL_CRYSTALS.length ? EnumRarity.COMMON : ALL_CRYSTALS[stack.getItemDamage()].rarity;
-    }
-
-    @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
     }
 
     public static class TheItemBlock extends ItemBlockBase{

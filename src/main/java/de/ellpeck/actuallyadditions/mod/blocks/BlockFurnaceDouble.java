@@ -18,20 +18,18 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -42,8 +40,6 @@ import java.util.List;
 import java.util.Random;
 
 public class BlockFurnaceDouble extends BlockContainerBase{
-
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 7);
 
     public BlockFurnaceDouble(String name){
         super(Material.ROCK, name);
@@ -63,34 +59,13 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
-        int meta = this.getMetaFromState(state);
-
-        if(meta > 3){
-            float f = (float)pos.getX()+0.5F;
-            float f1 = (float)pos.getY()+0.0F+rand.nextFloat()*6.0F/16.0F;
-            float f2 = (float)pos.getZ()+0.5F;
-            float f3 = 0.52F;
-            float f4 = rand.nextFloat()*0.6F-0.3F;
-
-            if(meta == 6){
-                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)(f-f3), (double)f1, (double)(f2+f4), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle(EnumParticleTypes.FLAME, (double)(f-f3), (double)f1, (double)(f2+f4), 0.0D, 0.0D, 0.0D);
-            }
-            if(meta == 7){
-                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)(f+f3), (double)f1, (double)(f2+f4), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle(EnumParticleTypes.FLAME, (double)(f+f3), (double)f1, (double)(f2+f4), 0.0D, 0.0D, 0.0D);
-            }
-            if(meta == 4){
-                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)(f+f4), (double)f1, (double)(f2-f3), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle(EnumParticleTypes.FLAME, (double)(f+f4), (double)f1, (double)(f2-f3), 0.0D, 0.0D, 0.0D);
-            }
-            if(meta == 5){
-                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)(f+f4), (double)f1, (double)(f2+f3), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle(EnumParticleTypes.FLAME, (double)(f+f4), (double)f1, (double)(f2+f3), 0.0D, 0.0D, 0.0D);
-            }
-
-            for(int i = 0; i < 5; i++){
-                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
+        TileEntity tile = world.getTileEntity(pos);
+        if(tile instanceof TileEntityFurnaceDouble){
+            TileEntityFurnaceDouble furnace = (TileEntityFurnaceDouble)tile;
+            if(furnace.firstSmeltTime > 0 || furnace.secondSmeltTime > 0){
+                for(int i = 0; i < 5; i++){
+                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
+                }
             }
         }
     }
@@ -119,27 +94,34 @@ public class BlockFurnaceDouble extends BlockContainerBase{
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
-        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
-
-        if(rotation == 0){
-            world.setBlockState(pos, this.getStateFromMeta(0), 2);
-        }
-        if(rotation == 1){
-            world.setBlockState(pos, this.getStateFromMeta(3), 2);
-        }
-        if(rotation == 2){
-            world.setBlockState(pos, this.getStateFromMeta(1), 2);
-        }
-        if(rotation == 3){
-            world.setBlockState(pos, this.getStateFromMeta(2), 2);
-        }
+        world.setBlockState(pos, state.withProperty(BlockHorizontal.FACING, player.getHorizontalFacing().getOpposite()), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
+    public IBlockState getStateFromMeta(int meta){
+        return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta));
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState(){
+        return new BlockStateContainer(this, BlockHorizontal.FACING);
+    }
+
+    @Override
+    public IBlockState withRotation(IBlockState state, Rotation rot){
+        return state.withProperty(BlockHorizontal.FACING, rot.rotate(state.getValue(BlockHorizontal.FACING)));
+    }
+
+    @Override
+    public IBlockState withMirror(IBlockState state, Mirror mirror){
+        return this.withRotation(state, mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
     }
 
     @Override

@@ -133,16 +133,6 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta){
-        return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state){
-        return this.getMetaProperty() == null ? super.getMetaFromState(state) : state.getValue(this.getMetaProperty());
-    }
-
-    @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random random){
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(pos);
@@ -245,13 +235,6 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         return 0;
     }
 
-
-    @Override
-    protected BlockStateContainer createBlockState(){
-        return this.getMetaProperty() == null ? super.createBlockState() : new BlockStateContainer(this, this.getMetaProperty());
-    }
-
-
     @Override
     public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
@@ -289,11 +272,6 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
 
         return drops;
     }
-
-    protected PropertyInteger getMetaProperty(){
-        return null;
-    }
-
 
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state){

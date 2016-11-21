@@ -14,17 +14,17 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -37,7 +37,6 @@ public class BlockSlabs extends BlockBase{
     public static final AxisAlignedBB AABB_BOTTOM_HALF = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
     private static final AxisAlignedBB AABB_TOP_HALF = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 1.0D, 1.0D, 1.0D);
 
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
     private final Block fullBlock;
     private final int meta;
 
@@ -91,7 +90,7 @@ public class BlockSlabs extends BlockBase{
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
-        return state.getValue(META) == 1 ? AABB_TOP_HALF : AABB_BOTTOM_HALF;
+        return state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP ? AABB_TOP_HALF : AABB_BOTTOM_HALF;
     }
 
     @Override
@@ -105,8 +104,18 @@ public class BlockSlabs extends BlockBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
+    public IBlockState getStateFromMeta(int meta){
+        return this.getDefaultState().withProperty(BlockSlab.HALF, meta == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM ? 0 : 1;
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState(){
+        return new BlockStateContainer(this, BlockSlab.HALF);
     }
 
     public static class TheItemBlock extends ItemBlockBase{
@@ -125,7 +134,7 @@ public class BlockSlabs extends BlockBase{
 
                 if(state.getBlock() == this.block){
                     BlockSlabs theBlock = (BlockSlabs)this.block;
-                    if((facing == EnumFacing.UP && state.getValue(META) == 0 || facing == EnumFacing.DOWN && state.getValue(META) == 1)){
+                    if((facing == EnumFacing.UP && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM) || (facing == EnumFacing.DOWN && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP)){
                         IBlockState newState = theBlock.fullBlock.getStateFromMeta(theBlock.meta);
                         AxisAlignedBB bound = newState.getCollisionBoundingBox(worldIn, pos);
 
@@ -152,7 +161,7 @@ public class BlockSlabs extends BlockBase{
             IBlockState state = worldIn.getBlockState(pos);
 
             if(state.getBlock() == this.block){
-                if((side == EnumFacing.UP && state.getValue(META) == 0 || side == EnumFacing.DOWN && state.getValue(META) == 1)){
+                if((side == EnumFacing.UP && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM) || (side == EnumFacing.DOWN && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP)){
                     return true;
                 }
             }

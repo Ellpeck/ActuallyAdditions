@@ -15,12 +15,15 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
+import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,7 +46,7 @@ import java.util.Random;
 public class BlockColoredLamp extends BlockBase{
 
     public static final TheColoredLampColors[] ALL_LAMP_TYPES = TheColoredLampColors.values();
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, ALL_LAMP_TYPES.length-1);
+    private static final PropertyEnum<TheColoredLampColors> TYPE = PropertyEnum.create("type", TheColoredLampColors.class);
     public final boolean isOn;
 
     public BlockColoredLamp(boolean isOn, String name){
@@ -126,7 +129,7 @@ public class BlockColoredLamp extends BlockBase{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < ALL_LAMP_TYPES.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), META.getName()+"="+i);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_LAMP_TYPES[i].regName);
         }
     }
 
@@ -136,8 +139,18 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
+    public IBlockState getStateFromMeta(int meta){
+        return this.getDefaultState().withProperty(TYPE, TheColoredLampColors.values()[meta]);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return state.getValue(TYPE).ordinal();
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState(){
+        return new BlockStateContainer(this, TYPE);
     }
 
     public static class TheItemBlock extends ItemBlockBase{

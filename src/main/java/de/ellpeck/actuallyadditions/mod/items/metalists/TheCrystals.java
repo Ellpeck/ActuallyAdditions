@@ -12,8 +12,9 @@ package de.ellpeck.actuallyadditions.mod.items.metalists;
 
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.util.IStringSerializable;
 
-public enum TheCrystals{
+public enum TheCrystals implements IStringSerializable{
 
     REDSTONE("red", Util.CRYSTAL_RED_RARITY, 158F/255F, 43F/255F, 39F/255F),
     LAPIS("blue", Util.CRYSTAL_BLUE_RARITY, 37F/255F, 49F/255F, 147F/255F),
@@ -30,5 +31,10 @@ public enum TheCrystals{
         this.name = name;
         this.rarity = rarity;
         this.conversionColorParticles = conversionColorParticles;
+    }
+
+    @Override
+    public String getName(){
+        return this.name;
     }
 }

@@ -117,7 +117,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
 
             if(canCrushOnFirst){
                 if(this.storage.getEnergyStored() >= ENERGY_USE){
-                    if(this.firstCrushTime%30 == 0){
+                    if(this.firstCrushTime%20 == 0){
                         shouldPlaySound = true;
                     }
                     this.firstCrushTime++;
@@ -135,7 +135,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
             if(this.isDouble){
                 if(canCrushOnSecond){
                     if(this.storage.getEnergyStored() >= ENERGY_USE){
-                        if(this.secondCrushTime%30 == 0){
+                        if(this.secondCrushTime%20 == 0){
                             shouldPlaySound = true;
                         }
                         this.secondCrushTime++;
@@ -148,21 +148,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
                 }
                 else{
                     this.secondCrushTime = 0;
-                }
-            }
-
-            if(flag != (this.firstCrushTime > 0 || this.secondCrushTime > 0)){
-                this.markDirty();
-                IBlockState state = this.worldObj.getBlockState(this.pos);
-                Block block = state.getBlock();
-                int meta = block.getMetaFromState(state);
-                if(meta == 1){
-                    if(!this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2) && (!this.isDouble || !this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2))){
-                        this.worldObj.setBlockState(this.pos, block.getStateFromMeta(0), 2);
-                    }
-                }
-                else{
-                    this.worldObj.setBlockState(this.pos, block.getStateFromMeta(1), 2);
                 }
             }
 

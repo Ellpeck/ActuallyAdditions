@@ -11,8 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 
 import net.minecraft.item.EnumRarity;
+import net.minecraft.util.IStringSerializable;
 
-public enum TheMiscBlocks{
+public enum TheMiscBlocks implements IStringSerializable{
 
     QUARTZ_PILLAR("black_quartz_pillar", EnumRarity.RARE),
     QUARTZ_CHISELED("black_quartz_chiseled", EnumRarity.RARE),
@@ -31,5 +32,10 @@ public enum TheMiscBlocks{
     TheMiscBlocks(String name, EnumRarity rarity){
         this.name = name;
         this.rarity = rarity;
+    }
+
+    @Override
+    public String getName(){
+        return this.name;
     }
 }

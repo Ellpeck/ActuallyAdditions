@@ -13,13 +13,14 @@ package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.util.IStringSerializable;
 
-public enum TheWildPlants{
+public enum TheWildPlants implements IStringSerializable{
 
-    CANOLA("Canola", EnumRarity.RARE, InitBlocks.blockCanola),
-    FLAX("Flax", EnumRarity.RARE, InitBlocks.blockFlax),
-    RICE("Rice", EnumRarity.RARE, InitBlocks.blockRice),
-    COFFEE("Coffee", EnumRarity.RARE, InitBlocks.blockCoffee);
+    CANOLA("canola", EnumRarity.RARE, InitBlocks.blockCanola),
+    FLAX("flax", EnumRarity.RARE, InitBlocks.blockFlax),
+    RICE("rice", EnumRarity.RARE, InitBlocks.blockRice),
+    COFFEE("coffee", EnumRarity.RARE, InitBlocks.blockCoffee);
 
     public final String name;
     public final EnumRarity rarity;
@@ -29,5 +30,10 @@ public enum TheWildPlants{
         this.name = name;
         this.rarity = rarity;
         this.wildVersionOf = wildVersionOf;
+    }
+
+    @Override
+    public String getName(){
+        return this.name;
     }
 }

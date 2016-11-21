@@ -57,24 +57,4 @@ public class BlockBase extends Block implements ItemBlockBase.ICustomRarity{
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.COMMON;
     }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta){
-        return this.getMetaProperty() == null ? super.getStateFromMeta(meta) : this.getDefaultState().withProperty(this.getMetaProperty(), meta);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state){
-        return this.getMetaProperty() == null ? super.getMetaFromState(state) : state.getValue(this.getMetaProperty());
-    }
-
-
-    @Override
-    protected BlockStateContainer createBlockState(){
-        return this.getMetaProperty() == null ? super.createBlockState() : new BlockStateContainer(this, this.getMetaProperty());
-    }
-
-    protected PropertyInteger getMetaProperty(){
-        return null;
-    }
 }

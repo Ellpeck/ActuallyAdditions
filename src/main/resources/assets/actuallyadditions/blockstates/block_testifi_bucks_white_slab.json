@@ -12,9 +12,9 @@
   "variants": {
     "normal": [{}],
     "inventory": [{}],
-    "meta": {
-      "0": {},
-      "1": { "model": "minecraft:upper_slab" }
+    "half": {
+      "bottom": {},
+      "top": { "model": "minecraft:upper_slab" }
     }
   }
 }

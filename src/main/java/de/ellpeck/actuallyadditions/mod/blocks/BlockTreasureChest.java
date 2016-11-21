@@ -15,9 +15,11 @@ import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -36,8 +38,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 
 public class BlockTreasureChest extends BlockBase{
-
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 3);
 
     public BlockTreasureChest(String name){
         super(Material.WOOD, name);
@@ -79,20 +79,9 @@ public class BlockTreasureChest extends BlockBase{
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
-        int rotation = MathHelper.floor_double((double)(player.rotationYaw*4.0F/360.0F)+0.5D) & 3;
+        world.setBlockState(pos, state.withProperty(BlockHorizontal.FACING, player.getHorizontalFacing().getOpposite()), 2);
 
-        if(rotation == 0){
-            world.setBlockState(pos, this.getStateFromMeta(0), 2);
-        }
-        if(rotation == 1){
-            world.setBlockState(pos, this.getStateFromMeta(3), 2);
-        }
-        if(rotation == 2){
-            world.setBlockState(pos, this.getStateFromMeta(1), 2);
-        }
-        if(rotation == 3){
-            world.setBlockState(pos, this.getStateFromMeta(2), 2);
-        }
+        super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
     @Override
@@ -124,7 +113,27 @@ public class BlockTreasureChest extends BlockBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
+    public IBlockState getStateFromMeta(int meta){
+        return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta));
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState(){
+        return new BlockStateContainer(this, BlockHorizontal.FACING);
+    }
+
+    @Override
+    public IBlockState withRotation(IBlockState state, Rotation rot){
+        return state.withProperty(BlockHorizontal.FACING, rot.rotate(state.getValue(BlockHorizontal.FACING)));
+    }
+
+    @Override
+    public IBlockState withMirror(IBlockState state, Mirror mirror){
+        return this.withRotation(state, mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
     }
 }

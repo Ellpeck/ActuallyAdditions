@@ -16,11 +16,14 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBushBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
+import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,7 +44,7 @@ import java.util.List;
 public class BlockWildPlant extends BlockBushBase{
 
     public static final TheWildPlants[] ALL_WILD_PLANTS = TheWildPlants.values();
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, ALL_WILD_PLANTS.length-1);
+    private static final PropertyEnum<TheWildPlants> TYPE = PropertyEnum.create("type", TheWildPlants.class);
 
     public BlockWildPlant(String name){
         super(name);
@@ -96,18 +99,28 @@ public class BlockWildPlant extends BlockBushBase{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < ALL_WILD_PLANTS.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), META.getName()+"="+i);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_WILD_PLANTS[i].name);
         }
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta){
+        return this.getDefaultState().withProperty(TYPE, TheWildPlants.values()[meta]);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return state.getValue(TYPE).ordinal();
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState(){
+        return new BlockStateContainer(this, TYPE);
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? EnumRarity.COMMON : ALL_WILD_PLANTS[stack.getItemDamage()].rarity;
-    }
-
-    @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
     }
 
     public static class TheItemBlock extends ItemBlockBase{
@@ -121,7 +134,7 @@ public class BlockWildPlant extends BlockBushBase{
 
         @Override
         public String getUnlocalizedName(ItemStack stack){
-            return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_WILD_PLANTS[stack.getItemDamage()].name;
+            return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+"_"+ALL_WILD_PLANTS[stack.getItemDamage()].name;
         }
     }
 }

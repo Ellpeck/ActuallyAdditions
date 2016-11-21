@@ -57,20 +57,4 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
     public void onTextReceived(String text, int textID, EntityPlayer player){
         this.name = text;
     }
-
-    public void setStatus(boolean pinkAndFluffy){
-        IBlockState state = this.worldObj.getBlockState(this.pos);
-        Block block = state.getBlock();
-        int meta = block.getMetaFromState(state);
-        if(pinkAndFluffy){
-            if(meta <= 3){
-                this.worldObj.setBlockState(this.pos, block.getStateFromMeta(meta+4), 2);
-            }
-        }
-        else{
-            if(meta >= 4){
-                this.worldObj.setBlockState(this.pos, block.getStateFromMeta(meta-4), 2);
-            }
-        }
-    }
 }

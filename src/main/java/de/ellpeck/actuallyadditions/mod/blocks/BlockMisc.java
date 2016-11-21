@@ -14,10 +14,13 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
@@ -32,7 +35,7 @@ import java.util.List;
 public class BlockMisc extends BlockBase{
 
     public static final TheMiscBlocks[] ALL_MISC_BLOCKS = TheMiscBlocks.values();
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, ALL_MISC_BLOCKS.length-1);
+    private static final PropertyEnum<TheMiscBlocks> TYPE = PropertyEnum.create("type", TheMiscBlocks.class);
 
     public BlockMisc(String name){
         super(Material.ROCK, name);
@@ -62,7 +65,7 @@ public class BlockMisc extends BlockBase{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < ALL_MISC_BLOCKS.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), META.getName()+"="+i);
+            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_MISC_BLOCKS[i].name);
         }
     }
 
@@ -72,8 +75,18 @@ public class BlockMisc extends BlockBase{
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
+    public IBlockState getStateFromMeta(int meta){
+        return this.getDefaultState().withProperty(TYPE, TheMiscBlocks.values()[meta]);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return state.getValue(TYPE).ordinal();
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState(){
+        return new BlockStateContainer(this, TYPE);
     }
 
     public static class TheItemBlock extends ItemBlockBase{

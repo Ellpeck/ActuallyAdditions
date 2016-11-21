@@ -7,13 +7,13 @@
   "variants": {
     "normal": [{}],
     "inventory": [{}],
-    "meta": {
-      "0": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_red" } },
-      "1": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_blue" } },
-      "2": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_light_blue" } },
-      "3": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_black" } },
-      "4": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_green" } },
-      "5": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_white" } }
+    "type": {
+      "red": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_red" } },
+      "blue": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_blue" } },
+      "light_blue": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_light_blue" } },
+      "black": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_black" } },
+      "green": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_green" } },
+      "white": { "textures" : { "all" : "actuallyadditions:blocks/block_crystal_empowered_white" } }
     }
   }
 }

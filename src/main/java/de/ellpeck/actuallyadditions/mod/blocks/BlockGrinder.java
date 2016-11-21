@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinderDouble;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -36,7 +35,6 @@ import java.util.Random;
 
 public class BlockGrinder extends BlockContainerBase{
 
-    private static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
     private final boolean isDouble;
 
     public BlockGrinder(boolean isDouble, String name){
@@ -49,7 +47,6 @@ public class BlockGrinder extends BlockContainerBase{
         this.setTickRandomly(true);
     }
 
-
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return this.isDouble ? new TileEntityGrinderDouble() : new TileEntityGrinder();
@@ -58,16 +55,19 @@ public class BlockGrinder extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
-        int meta = this.getMetaFromState(state);
-
-        if(meta == 1){
-            for(int i = 0; i < 5; i++){
-                double xRand = rand.nextDouble()/0.75D-0.5D;
-                double zRand = rand.nextDouble()/0.75D-0.5D;
-                world.spawnParticle(EnumParticleTypes.CRIT, (double)pos.getX()+0.4F, (double)pos.getY()+0.8F, (double)pos.getZ()+0.4F, xRand, 0.5D, zRand);
+        TileEntity tile = world.getTileEntity(pos);
+        if(tile instanceof TileEntityGrinder){
+            TileEntityGrinder crusher = (TileEntityGrinder)tile;
+            if(crusher.firstCrushTime > 0 || crusher.secondCrushTime > 0){
+                for(int i = 0; i < 5; i++){
+                    double xRand = rand.nextDouble()/0.75D-0.5D;
+                    double zRand = rand.nextDouble()/0.75D-0.5D;
+                    world.spawnParticle(EnumParticleTypes.CRIT, (double)pos.getX()+0.4F, (double)pos.getY()+0.8F, (double)pos.getZ()+0.4F, xRand, 0.5D, zRand);
+                }
+                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
             }
-            world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
         }
+
     }
 
     @Override
@@ -88,13 +88,13 @@ public class BlockGrinder extends BlockContainerBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
-        return EnumRarity.EPIC;
+    public int damageDropped(IBlockState state){
+        return 0;
     }
 
     @Override
-    protected PropertyInteger getMetaProperty(){
-        return META;
+    public EnumRarity getRarity(ItemStack stack){
+        return EnumRarity.EPIC;
     }
 
     @Override

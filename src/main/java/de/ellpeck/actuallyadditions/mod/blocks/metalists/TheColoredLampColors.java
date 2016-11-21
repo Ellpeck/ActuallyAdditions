@@ -10,7 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 
-public enum TheColoredLampColors{
+import net.minecraft.util.IStringSerializable;
+
+public enum TheColoredLampColors implements IStringSerializable{
 
     WHITE("White", "white"),
     ORANGE("Orange", "orange"),
@@ -35,6 +37,11 @@ public enum TheColoredLampColors{
     TheColoredLampColors(String oreName, String regName){
         this.oreName = oreName;
         this.regName = regName;
+    }
+
+    @Override
+    public String getName(){
+        return this.regName;
     }
 
     public static TheColoredLampColors getColorFromDyeName(String color){

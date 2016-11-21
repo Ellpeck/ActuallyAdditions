@@ -139,21 +139,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 this.secondSmeltTime = 0;
             }
 
-            if(flag != (this.firstSmeltTime > 0 || this.secondSmeltTime > 0)){
-                this.markDirty();
-                IBlockState state = this.worldObj.getBlockState(this.pos);
-                Block block = state.getBlock();
-                int meta = block.getMetaFromState(state);
-                if(meta > 3){
-                    if(!this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1) && !this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2)){
-                        this.worldObj.setBlockState(this.pos, block.getStateFromMeta(meta-4), 2);
-                    }
-                }
-                else{
-                    this.worldObj.setBlockState(this.pos, block.getStateFromMeta(meta+4), 2);
-                }
-            }
-
             if((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime || this.isAutoSplit != this.lastAutoSplit) && this.sendUpdateWithInterval()){
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastFirstSmelt = this.firstSmeltTime;
