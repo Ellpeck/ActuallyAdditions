@@ -34,7 +34,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
 
     public static final int ENERGY_USE_PER_BLOCK = 1500;
     public static final int DEFAULT_RANGE = 2;
-    public final EnergyStorage storage = new EnergyStorage(200000);
+    public final EnergyStorage storage = new EnergyStorage(200000, 2000);
     public int layerAt = -1;
     public boolean onlyMineOres;
     private int oldLayerAt;

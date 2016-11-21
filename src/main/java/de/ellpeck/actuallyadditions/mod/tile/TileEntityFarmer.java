@@ -35,7 +35,7 @@ import java.util.List;
 public class TileEntityFarmer extends TileEntityInventoryBase implements ICustomEnergyReceiver{
 
     public static final int USE_PER_OPERATION = 1500;
-    public final EnergyStorage storage = new EnergyStorage(100000);
+    public final EnergyStorage storage = new EnergyStorage(100000, 1000);
 
     private int waitTime;
     private int checkX;

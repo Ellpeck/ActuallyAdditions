@@ -27,7 +27,7 @@ import java.util.List;
 
 public class TileEntityBioReactor extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
-    public final EnergyStorage storage = new EnergyStorage(200000);
+    public final EnergyStorage storage = new EnergyStorage(200000, 800);
 
     public int burnTime;
     public int maxBurnTime;

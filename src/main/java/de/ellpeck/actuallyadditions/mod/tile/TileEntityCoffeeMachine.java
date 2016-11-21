@@ -35,12 +35,12 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public static final int SLOT_COFFEE_BEANS = 0;
     public static final int SLOT_INPUT = 1;
     public static final int SLOT_OUTPUT = 2;
-    public static final int CACHE_USE = 15;
+    public static final int CACHE_USE = 35;
     public static final int ENERGY_USED = 150;
     public static final int WATER_USE = 500;
     public static final int COFFEE_CACHE_MAX_AMOUNT = 300;
     private static final int TIME_USED = 500;
-    public final EnergyStorage storage = new EnergyStorage(300000);
+    public final EnergyStorage storage = new EnergyStorage(300000, 250);
     public final FluidTank tank = new FluidTank(4*Util.BUCKET){
         @Override
         public boolean canDrain(){

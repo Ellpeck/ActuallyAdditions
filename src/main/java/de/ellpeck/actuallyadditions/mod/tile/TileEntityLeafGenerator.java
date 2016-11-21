@@ -25,7 +25,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
 
     public static final int RANGE = 7;
     public static final int ENERGY_PRODUCED = 300;
-    public final EnergyStorage storage = new EnergyStorage(35000);
+    public final EnergyStorage storage = new EnergyStorage(35000, 450);
     private int nextUseCounter;
     private int oldEnergy;
 

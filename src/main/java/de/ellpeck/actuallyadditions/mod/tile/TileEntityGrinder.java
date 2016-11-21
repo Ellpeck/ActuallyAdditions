@@ -36,7 +36,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
     public static final int SLOT_OUTPUT_2_1 = 4;
     public static final int SLOT_OUTPUT_2_2 = 5;
     public static final int ENERGY_USE = 40;
-    public final EnergyStorage storage = new EnergyStorage(60000);
+    public final EnergyStorage storage = new EnergyStorage(60000, 100);
     public int firstCrushTime;
     public int secondCrushTime;
     public boolean isDouble;

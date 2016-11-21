@@ -30,7 +30,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IC
     public static final int PRODUCE = 80;
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
-    public final EnergyStorage storage = new EnergyStorage(40000);
+    public final EnergyStorage storage = new EnergyStorage(40000, 100);
     public final FluidTank tank = new FluidTank(2*Util.BUCKET){
         @Override
         public boolean canFill(){

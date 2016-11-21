@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler{
 
-    public final EnergyStorage storage = new EnergyStorage(50000);
+    public final EnergyStorage storage = new EnergyStorage(50000, 150);
     public final FluidTank tank = new FluidTank(2*Util.BUCKET){
         @Override
         public boolean canDrain(){

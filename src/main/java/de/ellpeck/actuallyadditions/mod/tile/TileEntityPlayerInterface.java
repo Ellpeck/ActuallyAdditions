@@ -27,7 +27,7 @@ import java.util.UUID;
 public class TileEntityPlayerInterface extends TileEntityInventoryBase implements ICustomEnergyReceiver, IEnergyDisplay{
 
     public static final int DEFAULT_RANGE = 32;
-    private final EnergyStorage storage = new EnergyStorage(30000);
+    private final EnergyStorage storage = new EnergyStorage(30000, 50);
     public UUID connectedPlayer;
     public String playerName;
     private int oldEnergy;

@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay{
 
     public static final int PRODUCE = 8;
-    public final EnergyStorage storage = new EnergyStorage(30000);
+    public final EnergyStorage storage = new EnergyStorage(30000, 100);
     private int oldEnergy;
 
     public TileEntityFurnaceSolar(){

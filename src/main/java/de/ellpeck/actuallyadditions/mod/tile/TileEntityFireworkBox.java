@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 public class TileEntityFireworkBox extends TileEntityBase implements ICustomEnergyReceiver, IEnergyDisplay{
 
     public static final int USE_PER_SHOT = 300;
-    public final EnergyStorage storage = new EnergyStorage(20000);
+    public final EnergyStorage storage = new EnergyStorage(20000, 200);
     private int timeUntilNextFirework;
     private int oldEnergy;
 

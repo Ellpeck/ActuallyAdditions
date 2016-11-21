@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
-    public final EnergyStorage storage = new EnergyStorage(500000);
+    public final EnergyStorage storage = new EnergyStorage(50000, 1000);
     private int lastEnergy;
 
     public TileEntityEnervator(){

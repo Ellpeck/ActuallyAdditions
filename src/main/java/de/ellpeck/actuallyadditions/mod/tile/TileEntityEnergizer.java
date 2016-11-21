@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityEnergizer extends TileEntityInventoryBase implements ICustomEnergyReceiver{
 
-    public final EnergyStorage storage = new EnergyStorage(500000);
+    public final EnergyStorage storage = new EnergyStorage(50000, 1000);
     private int lastEnergy;
 
     public TileEntityEnergizer(){

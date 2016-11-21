@@ -28,7 +28,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
-    public final EnergyStorage storage = new EnergyStorage(10000);
+    public final EnergyStorage storage = new EnergyStorage(10000, 20);
     private int lastEnergy;
     private int currentTime;
 

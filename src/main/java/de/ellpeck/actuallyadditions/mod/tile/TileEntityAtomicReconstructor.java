@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements ICustomEnergyReceiver, IEnergyDisplay, IAtomicReconstructor{
 
     public static final int ENERGY_USE = 1000;
-    public final EnergyStorage storage = new EnergyStorage(300000);
+    public final EnergyStorage storage = new EnergyStorage(300000, 5000);
     public int counter;
     private int currentTime;
     private int oldEnergy;
