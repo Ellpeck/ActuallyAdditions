@@ -25,10 +25,13 @@ import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.potion.PotionHelper;
+import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -669,8 +672,12 @@ public final class ItemCrafting{
     }
 
     public static void addRingRecipeWithStack(ItemStack mainStack, int meta){
-        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, meta), mainStack, mainStack, mainStack, mainStack, new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), new ItemStack(Items.NETHER_WART), new ItemStack(Items.POTIONITEM), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
+        ItemStack potion = new ItemStack(Items.POTIONITEM);
+        PotionUtils.addPotionToItemStack(potion, PotionTypes.AWKWARD);
+
+        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRing, 1, meta), mainStack, mainStack, mainStack, mainStack, new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), new ItemStack(Items.NETHER_WART), potion, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
         RECIPES_POTION_RINGS.add(RecipeUtil.lastIRecipe());
+
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()));
         RECIPES_POTION_RINGS.add(RecipeUtil.lastIRecipe());
     }

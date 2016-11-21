@@ -25,11 +25,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -41,6 +43,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     public static final ThePotionRings[] ALL_RINGS = ThePotionRings.values();
 
+    public static final int MAX_BLAZE = 800;
     private final boolean isAdvanced;
 
     public ItemPotionRing(boolean isAdvanced, String name){
@@ -55,10 +58,26 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         return damage;
     }
 
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack){
+        double diff = MAX_BLAZE-this.getStoredBlaze(stack);
+        return diff/MAX_BLAZE;
+    }
+
+    @Override
+    public int getRGBDurabilityForDisplay(ItemStack stack){
+        int curr = this.getStoredBlaze(stack);
+        return MathHelper.hsvToRGB(Math.max(0.0F, (float)curr/MAX_BLAZE)/3.0F, 1.0F, 1.0F);
+    }
 
     @Override
     public String getUnlocalizedName(ItemStack stack){
         return stack.getItemDamage() >= ALL_RINGS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_RINGS[stack.getItemDamage()].name;
+    }
+
+    @Override
+    public boolean showDurabilityBar(ItemStack itemStack){
+        return true;
     }
 
     @Override
@@ -68,10 +87,25 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         if(!world.isRemote && stack.getItemDamage() < ALL_RINGS.length){
             if(player instanceof EntityPlayer){
                 EntityPlayer thePlayer = (EntityPlayer)player;
-                ItemStack equippedStack = thePlayer.getHeldItemMainhand();
-                this.effectEntity(thePlayer, stack, StackUtil.isValid(equippedStack) && stack == equippedStack);
+
+                int storedBlaze = getStoredBlaze(stack);
+                if(storedBlaze > 0){
+                    ItemStack equippedStack = thePlayer.getHeldItemMainhand();
+                    ItemStack offhandStack = thePlayer.getHeldItemOffhand();
+
+                    if(this.effectEntity(thePlayer, stack, (StackUtil.isValid(equippedStack) && stack == equippedStack) || (StackUtil.isValid(offhandStack) && stack == offhandStack))){
+                        if(world.getTotalWorldTime()%10 == 0){
+                            setStoredBlaze(stack, storedBlaze-1);
+                        }
+                    }
+                }
             }
         }
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged){
+        return slotChanged || !ItemStack.areItemsEqual(oldStack, newStack);
     }
 
     @Override
@@ -95,6 +129,10 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     public void getSubItems(Item item, CreativeTabs tab, NonNullList list){
         for(int j = 0; j < ALL_RINGS.length; j++){
             list.add(new ItemStack(this, 1, j));
+
+            ItemStack full = new ItemStack(this, 1, j);
+            setStoredBlaze(full, MAX_BLAZE);
+            list.add(full);
         }
     }
 
@@ -116,10 +154,28 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         };
     }
 
+    public static int getStoredBlaze(ItemStack stack){
+        if(!StackUtil.isValid(stack) || !stack.hasTagCompound()){
+            return 0;
+        }
+        else{
+            return stack.getTagCompound().getInteger("Blaze");
+        }
+    }
+
+    public static void setStoredBlaze(ItemStack stack, int amount){
+        if(StackUtil.isValid(stack)){
+            if(!stack.hasTagCompound()){
+                stack.setTagCompound(new NBTTagCompound());
+            }
+            stack.getTagCompound().setInteger("Blaze", amount);
+        }
+    }
+
     @Override
     public boolean update(ItemStack stack, TileEntity tile, int elapsedTicks){
         boolean advanced = ((ItemPotionRing)stack.getItem()).isAdvanced;
-        int range = advanced ? 96 : 16;
+        int range = advanced ? 48 : 16;
         List<EntityLivingBase> entities = tile.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(tile.getPos().getX()-range, tile.getPos().getY()-range, tile.getPos().getZ()-range, tile.getPos().getX()+range, tile.getPos().getY()+range, tile.getPos().getZ()+range));
         if(entities != null && !entities.isEmpty()){
             if(advanced){
@@ -161,7 +217,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         return 325;
     }
 
-    private void effectEntity(EntityLivingBase thePlayer, ItemStack stack, boolean canUseBasic){
+    private boolean effectEntity(EntityLivingBase thePlayer, ItemStack stack, boolean canUseBasic){
         ThePotionRings effect = ThePotionRings.values()[stack.getItemDamage()];
         Potion potion = Potion.getPotionById(effect.effectID);
         PotionEffect activeEffect = thePlayer.getActivePotionEffect(potion);
@@ -169,11 +225,21 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
             if(!((ItemPotionRing)stack.getItem()).isAdvanced){
                 if(canUseBasic){
                     thePlayer.addPotionEffect(new PotionEffect(potion, effect.activeTime, effect.normalAmplifier, true, false));
+                    return true;
                 }
             }
             else{
                 thePlayer.addPotionEffect(new PotionEffect(potion, effect.activeTime, effect.advancedAmplifier, true, false));
+                return true;
             }
         }
+        return false;
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
+        super.addInformation(stack, playerIn, tooltip, advanced);
+
+        tooltip.add(this.getStoredBlaze(stack)+"/"+MAX_BLAZE+" Blaze stored");
     }
 }
