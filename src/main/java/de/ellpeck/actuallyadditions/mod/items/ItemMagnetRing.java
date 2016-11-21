@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class ItemMagnetRing extends ItemEnergy{
 
     public ItemMagnetRing(String name){
-        super(3000000, 5000, name);
+        super(200000, 1000, name);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ItemMagnetRing extends ItemEnergy{
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
                         if(!item.isDead && !item.cannotPickup()){
-                            int energyForItem = 350*StackUtil.getStackSize(item.getEntityItem());
+                            int energyForItem = 50*StackUtil.getStackSize(item.getEntityItem());
 
                             if(this.getEnergyStored(stack) >= energyForItem){
                                 item.onCollideWithPlayer(player);

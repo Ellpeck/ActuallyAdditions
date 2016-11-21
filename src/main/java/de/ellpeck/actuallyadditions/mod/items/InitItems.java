@@ -238,11 +238,11 @@ public final class InitItems{
         itemTeleStaff = new ItemTeleStaff("item_tele_staff");
         itemWingsOfTheBats = new ItemWingsOfTheBats("item_wings_of_the_bats");
         itemDrill = new ItemDrill("item_drill");
-        itemBattery = new ItemBattery("item_battery", 1000000, 5000);
-        itemBatteryDouble = new ItemBattery("item_battery_double", 2000000, 10000);
-        itemBatteryTriple = new ItemBattery("item_battery_triple", 4000000, 15000);
-        itemBatteryQuadruple = new ItemBattery("item_battery_quadruple", 8000000, 20000);
-        itemBatteryQuintuple = new ItemBattery("item_battery_quintuple", 16000000, 25000);
+        itemBattery = new ItemBattery("item_battery", 200000, 500);
+        itemBatteryDouble = new ItemBattery("item_battery_double", 350000, 1000);
+        itemBatteryTriple = new ItemBattery("item_battery_triple", 600000, 2000);
+        itemBatteryQuadruple = new ItemBattery("item_battery_quadruple", 1000000, 4000);
+        itemBatteryQuintuple = new ItemBattery("item_battery_quintuple", 2000000, 8000);
         itemDrillUpgradeSpeed = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED, "item_drill_upgrade_speed");
         itemDrillUpgradeSpeedII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_II, "item_drill_upgrade_speed_ii");
         itemDrillUpgradeSpeedIII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_III, "item_drill_upgrade_speed_iii");

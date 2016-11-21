@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 public class ItemWaterRemovalRing extends ItemEnergy{
 
     public ItemWaterRemovalRing(String name){
-        super(1000000, 5000, name);
+        super(800000, 1000, name);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getHeldItemMainhand();
 
-        int energyUse = 350;
+        int energyUse = 150;
         if(StackUtil.isValid(equipped) && equipped == stack && this.getEnergyStored(stack) >= energyUse){
 
             //Setting everything to air

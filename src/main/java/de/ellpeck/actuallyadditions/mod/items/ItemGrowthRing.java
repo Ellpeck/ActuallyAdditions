@@ -31,7 +31,7 @@ import java.util.List;
 public class ItemGrowthRing extends ItemEnergy{
 
     public ItemGrowthRing(String name){
-        super(1000000, 5000, name);
+        super(1000000, 2000, name);
     }
 
     @Override

@@ -35,7 +35,7 @@ import java.util.List;
 public class ItemFillingWand extends ItemEnergy{
 
     public ItemFillingWand(String name){
-        super(800000, 2000, name);
+        super(500000, 1000, name);
     }
 
     private static boolean removeFittingItem(IBlockState state, EntityPlayer player){
