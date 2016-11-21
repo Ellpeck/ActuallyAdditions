@@ -8,18 +8,17 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.gen;
+package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
-import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
+import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
@@ -42,6 +41,8 @@ import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
 import java.util.List;
 import java.util.Random;
@@ -91,7 +92,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
             }
         }
 
-        this.spawnVillagers(world, sbb, 3, 1, 3, 1);
+        this.spawnVillagers(world, sbb, 7, 4, 6, 1);
 
         return true;
     }
@@ -194,8 +195,8 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
         return world.getTileEntity(pos);
     }
 
-    /*@Override
+    @Override
     protected VillagerProfession chooseForgeProfession(int count, VillagerProfession prof){
-        return InitVillager.jamProfession;
-    }*/
+        return InitVillager.engineerProfession;
+    }
 }

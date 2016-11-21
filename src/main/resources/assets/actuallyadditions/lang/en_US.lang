@@ -11,6 +11,8 @@ fluid.actuallyadditions.empoweredoil=Empowered Oil
 
 #Entities
 entity.Villager.actuallyadditions.jammer=Jam Guy
+entity.Villager.actuallyadditions.crystallizer=Crystallizer
+entity.Villager.actuallyadditions.engineer=Engineer
 
 #Banners
 item.banner.actuallyadditionsBook.black=Black Actually Additions Manual Pattern

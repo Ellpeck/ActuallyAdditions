@@ -8,7 +8,7 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.gen;
+package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import net.minecraft.block.Block;

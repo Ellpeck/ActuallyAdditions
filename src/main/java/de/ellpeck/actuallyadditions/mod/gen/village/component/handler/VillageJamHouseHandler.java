@@ -8,8 +8,9 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.gen;
+package de.ellpeck.actuallyadditions.mod.gen.village.component.handler;
 
+import de.ellpeck.actuallyadditions.mod.gen.village.component.VillageComponentJamHouse;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;

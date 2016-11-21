@@ -1,5 +1,5 @@
 /*
- * This file ("GenericTrade.java") is part of the Actually Additions mod for Minecraft.
+ * This file ("JamVillagerTradeList.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://ellpeck.de/actaddlicense
@@ -8,7 +8,7 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.gen;
+package de.ellpeck.actuallyadditions.mod.gen.village;
 
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;

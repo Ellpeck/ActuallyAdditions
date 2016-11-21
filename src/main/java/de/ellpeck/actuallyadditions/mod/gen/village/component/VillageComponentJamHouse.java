@@ -8,9 +8,10 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.gen;
+package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import net.minecraft.block.*;
