@@ -112,7 +112,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
                 this.currentBurnTime--;
                 this.storage.receiveEnergy(this.currentEnergyProduce, false);
             }
-            else{
+            else if(!this.isRedstonePowered){
                 int fuelUsed = 50;
 
                 OilGenRecipe recipe = this.getRecipeForCurrentFluid();
