@@ -32,7 +32,7 @@ import java.util.List;
 
 public class TileEntityMiner extends TileEntityInventoryBase implements ICustomEnergyReceiver, IButtonReactor, IEnergyDisplay{
 
-    public static final int ENERGY_USE_PER_BLOCK = 1500;
+    public static final int ENERGY_USE_PER_BLOCK = 650;
     public static final int DEFAULT_RANGE = 2;
     public final EnergyStorage storage = new EnergyStorage(200000, 2000);
     public int layerAt = -1;
@@ -93,7 +93,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
     private boolean mine(int range){
         for(int anX = -range; anX <= range; anX++){
             for(int aZ = -range; aZ <= range; aZ++){
-                int actualUse = ENERGY_USE_PER_BLOCK*(this.onlyMineOres ? 5 : 1);
+                int actualUse = ENERGY_USE_PER_BLOCK*(this.onlyMineOres ? 3 : 1);
                 if(this.storage.getEnergyStored() >= actualUse){
                     BlockPos pos = new BlockPos(this.pos.getX()+anX, this.layerAt, this.pos.getZ()+aZ);
 
