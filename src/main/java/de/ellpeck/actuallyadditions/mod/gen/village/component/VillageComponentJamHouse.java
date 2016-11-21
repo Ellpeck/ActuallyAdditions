@@ -190,7 +190,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.fillWithBlocks(world, sbb, 3, 1, 4, 4, 1, 6, Blocks.CARPET.getStateFromMeta(10), Blocks.CARPET.getStateFromMeta(10), false);
 
         //Loot Chest
-        this.generateCrate(world, this.boundingBox, 8, 1, 6, DungeonLoot.JAM_HOUSE);
+        generateCrate(world, this.boundingBox, this.getXWithOffset(8, 6), this.getYWithOffset(1), this.getZWithOffset(8, 6), DungeonLoot.JAM_HOUSE);
 
         //Torches
         this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.SOUTH), 6, 2, 0, sbb);
@@ -208,10 +208,10 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         return InitVillager.jamProfession;
     }
 
-    protected boolean generateCrate(World world, StructureBoundingBox box, int x, int y, int z, ResourceLocation loot){
-        BlockPos pos = new BlockPos(this.getXWithOffset(x, z), this.getYWithOffset(y), this.getZWithOffset(x, z));
+    public static boolean generateCrate(World world, StructureBoundingBox box, int x, int y, int z, ResourceLocation loot){
+        BlockPos pos = new BlockPos(x, y, z);
 
-        if(box.isVecInside(pos) && (world.getBlockState(pos).getBlock() != InitBlocks.blockGiantChest)){
+        if(box.isVecInside(pos)){
             world.setBlockState(pos, InitBlocks.blockGiantChest.getDefaultState(), 2);
 
             TileEntity tile = world.getTileEntity(pos);

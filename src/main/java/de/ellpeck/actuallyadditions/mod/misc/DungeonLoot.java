@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.misc;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
@@ -33,10 +34,12 @@ public class DungeonLoot{
 
     public static final ResourceLocation JAM_HOUSE = new ResourceLocation(ModUtil.MOD_ID, "jam_house");
     public static final ResourceLocation LUSH_CAVES = new ResourceLocation(ModUtil.MOD_ID, "lush_caves");
+    public static final ResourceLocation ENGINEER_HOUSE = new ResourceLocation(ModUtil.MOD_ID, "engineer_house");
 
     public DungeonLoot(){
         LootTableList.register(JAM_HOUSE);
         LootTableList.register(LUSH_CAVES);
+        LootTableList.register(ENGINEER_HOUSE);
     }
 
     @SubscribeEvent
@@ -130,6 +133,21 @@ public class DungeonLoot{
                     LootFunction damage = new SetDamage(noCondition, new RandomValueRange(0F, 0.75F));
                     pool.addEntry(new LootEntryItem(armor[i], 50, 0, new LootFunction[]{damage}, noCondition, ModUtil.MOD_ID+":armor"+i));
                 }
+            }
+            else if(ENGINEER_HOUSE.equals(event.getName())){
+                addBook = true;
+                addQuartz = true;
+                addBatWings = true;
+                addCrystals = true;
+                addDrillCore = true;
+
+                LootFunction woodCaseAmount = new SetCount(noCondition, new RandomValueRange(3, 10));
+                LootFunction woodCaseDamage = new SetMetadata(noCondition, new RandomValueRange(TheMiscBlocks.WOOD_CASING.ordinal()));
+                pool.addEntry(new LootEntryItem(Item.getItemFromBlock(InitBlocks.blockMisc), 60, 0, new LootFunction[]{woodCaseAmount, woodCaseDamage}, noCondition, ModUtil.MOD_ID+":woodenCase"));
+
+                LootFunction ironCaseAmount = new SetCount(noCondition, new RandomValueRange(1, 3));
+                LootFunction ironCaseDamage = new SetMetadata(noCondition, new RandomValueRange(TheMiscBlocks.IRON_CASING.ordinal()));
+                pool.addEntry(new LootEntryItem(Item.getItemFromBlock(InitBlocks.blockMisc), 40, 0, new LootFunction[]{ironCaseAmount, ironCaseDamage}, noCondition, ModUtil.MOD_ID+":ironCase"));
             }
 
             if(addCrystals){

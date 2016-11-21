@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
@@ -41,7 +42,6 @@ import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
 import java.util.List;
@@ -83,7 +83,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
 
         this.fillWithBlocks(world, sbb, 0, 0, 0, X_SIZE-1, Y_SIZE-1, Z_SIZE-1, Blocks.AIR);
         this.spawnActualHouse(world, sbb);
-        this.fillHouse(world);
+        this.fillHouse(world, sbb);
 
         for(int i = 0; i < X_SIZE; i++){
             for(int j = 0; j < Z_SIZE; j++){
@@ -101,21 +101,21 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
         this.fillWithBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, block.getDefaultState(), block.getDefaultState(), false);
     }
 
-    private void fillHouse(World world){
+    private void fillHouse(World world, StructureBoundingBox sbb){
         if(world.rand.nextBoolean()){
-            TileEntity compost = this.getTileAtPos(world, 6, 1, 2);
+            TileEntity compost = this.getTileAtPos(world, 6, 1, 2, sbb);
             if(compost instanceof TileEntityCompost){
                 ((TileEntityCompost)compost).setInventorySlotContents(0, new ItemStack(InitItems.itemFertilizer, 10));
             }
         }
 
-        TileEntity ferment = this.getTileAtPos(world, 11, 1, 0);
+        TileEntity ferment = this.getTileAtPos(world, 11, 1, 0, sbb);
         if(ferment instanceof TileEntityFermentingBarrel){
             TileEntityFermentingBarrel tile = (TileEntityFermentingBarrel)ferment;
             tile.canolaTank.setFluid(new FluidStack(InitFluids.fluidCanolaOil, world.rand.nextInt(1500)+200));
         }
 
-        TileEntity coffee = this.getTileAtPos(world, 4, 2, 6);
+        TileEntity coffee = this.getTileAtPos(world, 4, 2, 6, sbb);
         if(coffee instanceof TileEntityCoffeeMachine){
             TileEntityCoffeeMachine tile = (TileEntityCoffeeMachine)coffee;
             tile.tank.setFluid(new FluidStack(FluidRegistry.WATER, world.rand.nextInt(3000)+500));
@@ -123,36 +123,37 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
             tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/2));
         }
 
-        TileEntity press = this.getTileAtPos(world, 2, 1, 5);
+        TileEntity press = this.getTileAtPos(world, 2, 1, 5, sbb);
         if(press instanceof TileEntityCanolaPress){
             TileEntityCanolaPress tile = (TileEntityCanolaPress)press;
             tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/3));
             tile.setInventorySlotContents(0, new ItemStack(InitItems.itemMisc, world.rand.nextInt(60)+1, TheMiscItems.CANOLA.ordinal()));
         }
 
-        TileEntity crusher = this.getTileAtPos(world, 2, 1, 6);
+        TileEntity crusher = this.getTileAtPos(world, 2, 1, 6, sbb);
         if(crusher instanceof TileEntityGrinder){
             TileEntityGrinder tile = (TileEntityGrinder)crusher;
             tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/2));
-            if(world.rand.nextBoolean()){
+            if(world.rand.nextFloat() >= 0.25F){
                 tile.setInventorySlotContents(TileEntityGrinder.SLOT_INPUT_1, new ItemStack(InitBlocks.blockMisc, world.rand.nextInt(10)+1, TheMiscBlocks.ORE_QUARTZ.ordinal()));
             }
         }
 
-        TileEntity coal = this.getTileAtPos(world, 5, 5, 6);
+        TileEntity coal = this.getTileAtPos(world, 5, 5, 6, sbb);
         if(coal instanceof TileEntityCoalGenerator){
             ((TileEntityCoalGenerator)coal).setInventorySlotContents(0, new ItemStack(Items.COAL, world.rand.nextInt(25)+3, 1));
         }
 
-        TileEntity firstRelay = this.getTileAtPos(world, 6, 5, 6);
-        TileEntity secondRelay = this.getTileAtPos(world, 8, 5, 3);
+        TileEntity firstRelay = this.getTileAtPos(world, 6, 5, 6, sbb);
+        TileEntity secondRelay = this.getTileAtPos(world, 8, 5, 3, sbb);
         if(firstRelay instanceof TileEntityLaserRelayEnergy && secondRelay instanceof TileEntityLaserRelayEnergy){
             ActuallyAdditionsAPI.connectionHandler.addConnection(firstRelay.getPos(), secondRelay.getPos(), LaserType.ENERGY, world);
         }
 
-        BlockPos lamp = new BlockPos(this.getXWithOffset(8, 6), this.getYWithOffset(1), this.getZWithOffset(8, 6));
         int meta = world.rand.nextInt(TheColoredLampColors.values().length);
-        world.setBlockState(lamp, InitBlocks.blockColoredLamp.getStateFromMeta(meta));
+        this.setBlockState(world, InitBlocks.blockColoredLampOn.getStateFromMeta(meta), 8, 1, 6, sbb);
+
+        VillageComponentJamHouse.generateCrate(world, sbb, this.getXWithOffset(6, 4), this.getYWithOffset(4), this.getZWithOffset(6, 4), DungeonLoot.ENGINEER_HOUSE);
     }
 
     private void spawnActualHouse(World world, StructureBoundingBox sbb){
@@ -190,9 +191,14 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
         }
     }
 
-    private TileEntity getTileAtPos(World world, int x, int y, int z){
+    private TileEntity getTileAtPos(World world, int x, int y, int z, StructureBoundingBox sbb){
         BlockPos pos = new BlockPos(this.getXWithOffset(x, z), this.getYWithOffset(y), this.getZWithOffset(x, z));
-        return world.getTileEntity(pos);
+        if(sbb.isVecInside(pos)){
+            return world.getTileEntity(pos);
+        }
+        else{
+            return null;
+        }
     }
 
     @Override
