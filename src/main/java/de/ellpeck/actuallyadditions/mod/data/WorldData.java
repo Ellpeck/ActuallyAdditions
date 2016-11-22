@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.misc.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import io.netty.util.internal.ConcurrentSet;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -36,7 +37,7 @@ public class WorldData{
     public static final String DATA_TAG = ModUtil.MOD_ID+"data";
     private static final ConcurrentHashMap<Integer, WorldData> WORLD_DATA = new ConcurrentHashMap<Integer, WorldData>();
     public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<Network>();
-    public final ArrayList<PlayerSave> playerSaveData = new ArrayList<PlayerSave>();
+    public final ConcurrentHashMap<UUID, PlayerSave> playerSaveData = new ConcurrentHashMap<UUID, PlayerSave>();
     private final ISaveHandler handler;
     private final int dimension;
 
@@ -149,7 +150,7 @@ public class WorldData{
 
             PlayerSave save = new PlayerSave(id);
             save.readFromNBT(data);
-            this.playerSaveData.add(save);
+            this.playerSaveData.put(id, save);
         }
     }
 
@@ -163,7 +164,7 @@ public class WorldData{
 
         //Player Data
         NBTTagList playerList = new NBTTagList();
-        for(PlayerSave save : this.playerSaveData){
+        for(PlayerSave save : this.playerSaveData.values()){
             NBTTagCompound player = new NBTTagCompound();
             player.setUniqueId("UUID", save.id);
 

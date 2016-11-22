@@ -60,13 +60,13 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack){
-        double diff = MAX_BLAZE-this.getStoredBlaze(stack);
+        double diff = MAX_BLAZE-getStoredBlaze(stack);
         return diff/MAX_BLAZE;
     }
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack){
-        int curr = this.getStoredBlaze(stack);
+        int curr = getStoredBlaze(stack);
         return MathHelper.hsvToRGB(Math.max(0.0F, (float)curr/MAX_BLAZE)/3.0F, 1.0F, 1.0F);
     }
 

@@ -20,24 +20,24 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class PlayerData{
 
     public static PlayerSave getDataFromPlayer(UUID id){
-        List<PlayerSave> data = WorldData.getWorldUnspecificData().playerSaveData;
-        //Get Data from existing data
-        for(PlayerSave save : data){
-            if(save.id != null && save.id.equals(id)){
+        ConcurrentHashMap<UUID, PlayerSave> data = WorldData.getWorldUnspecificData().playerSaveData;
+        if(data.containsKey(id)){
+            PlayerSave save = data.get(id);
+            if(save != null && save.id != null && save.id.equals(id)){
                 return save;
             }
         }
 
         //Add Data if none is existant
-        PlayerSave aSave = new PlayerSave(id);
-        data.add(aSave);
-        return aSave;
+        PlayerSave save = new PlayerSave(id);
+        data.put(id, save);
+        return save;
     }
 
     public static PlayerSave getDataFromPlayer(EntityPlayer player){
@@ -51,6 +51,8 @@ public final class PlayerData{
         public boolean displayTesla;
         public boolean bookGottenAlready;
         public boolean didBookTutorial;
+        public boolean hasBatWings;
+        public int batWingsFlyTime;
 
         public IBookletPage[] bookmarks = new IBookletPage[12];
 
@@ -65,6 +67,8 @@ public final class PlayerData{
             this.displayTesla = compound.getBoolean("DisplayTesla");
             this.bookGottenAlready = compound.getBoolean("BookGotten");
             this.didBookTutorial = compound.getBoolean("DidTutorial");
+            this.hasBatWings = compound.getBoolean("HasBatWings");
+            this.batWingsFlyTime = compound.getInteger("BatWingsFlyTime");
 
             NBTTagList bookmarks = compound.getTagList("Bookmarks", 8);
             for(int i = 0; i < bookmarks.tagCount(); i++){
@@ -80,6 +84,8 @@ public final class PlayerData{
             compound.setBoolean("DisplayTesla", this.displayTesla);
             compound.setBoolean("BookGotten", this.bookGottenAlready);
             compound.setBoolean("DidTutorial", this.didBookTutorial);
+            compound.setBoolean("HasBatWings", this.hasBatWings);
+            compound.setInteger("BatWingsFlyTime", this.batWingsFlyTime);
 
             NBTTagList bookmarks = new NBTTagList();
             for(IBookletPage bookmark : this.bookmarks){

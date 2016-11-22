@@ -11,34 +11,27 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-
-import java.util.ArrayList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemWingsOfTheBats extends ItemBase{
 
-    /**
-     * A List containing all of the Players that can currently fly
-     * Used so that Flight from other Mods' Items doesn't get broken when
-     * these Wings aren't worn
-     * <p>
-     * Saves Remote Players separately to make de-synced Event Calling
-     * not bug out Capabilities when taking off the Wings
-     * <p>
-     * (Partially excerpted from Botania's Wing System by Vazkii (as I had fiddled around with the system and couldn't make it work) with permission, thanks!)
-     */
-    public static final ArrayList<String> WINGED_PLAYERS = new ArrayList<String>();
+    private static final int MAX_FLY_TIME = 800;
 
     public ItemWingsOfTheBats(String name){
         super(name);
@@ -47,40 +40,35 @@ public class ItemWingsOfTheBats extends ItemBase{
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    /**
-     * Checks if the Player is winged
-     *
-     * @param player The Player
-     * @return Winged?
-     */
-    public static boolean isPlayerWinged(EntityPlayer player){
-        return WINGED_PLAYERS.contains(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
+    @Override
+    public boolean showDurabilityBar(ItemStack stack){
+        return true;
     }
 
-    /**
-     * Same as above, but Remote Checking is done automatically
-     */
-    public static void removeWingsFromPlayer(EntityPlayer player){
-        removeWingsFromPlayer(player, player.worldObj.isRemote);
+    @Override
+    @SideOnly(Side.CLIENT)
+    public double getDurabilityForDisplay(ItemStack stack){
+        PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer);
+        if(data != null){
+            double diff = MAX_FLY_TIME-data.batWingsFlyTime;
+            return 1-(diff/MAX_FLY_TIME);
+        }
+        else{
+            return super.getDurabilityForDisplay(stack);
+        }
     }
 
-    /**
-     * Removes the Player from the List of Players that have Wings
-     *
-     * @param player      The Player
-     * @param worldRemote If the World the Player is in is remote
-     */
-    public static void removeWingsFromPlayer(EntityPlayer player, boolean worldRemote){
-        WINGED_PLAYERS.remove(player.getUniqueID()+(worldRemote ? "-Remote" : ""));
-    }
-
-    /**
-     * Adds the Player to the List of Players that have Wings
-     *
-     * @param player The Player
-     */
-    public static void addWingsToPlayer(EntityPlayer player){
-        WINGED_PLAYERS.add(player.getUniqueID()+(player.worldObj.isRemote ? "-Remote" : ""));
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getRGBDurabilityForDisplay(ItemStack stack){
+        PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer);
+        if(data != null){
+            int curr = data.batWingsFlyTime;
+            return MathHelper.hsvToRGB(Math.max(0.0F, 1-(float)curr/MAX_FLY_TIME)/3.0F, 1.0F, 1.0F);
+        }
+        else{
+            return super.getRGBDurabilityForDisplay(stack);
+        }
     }
 
     /**
@@ -99,13 +87,6 @@ public class ItemWingsOfTheBats extends ItemBase{
     }
 
     @SubscribeEvent
-    public void onLogOutEvent(PlayerEvent.PlayerLoggedOutEvent event){
-        //Remove Player from Wings' Fly Permission List
-        ItemWingsOfTheBats.removeWingsFromPlayer(event.player, true);
-        ItemWingsOfTheBats.removeWingsFromPlayer(event.player, false);
-    }
-
-    @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
         if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
             //Drop Wings from Bats
@@ -121,29 +102,72 @@ public class ItemWingsOfTheBats extends ItemBase{
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event){
         if(event.getEntityLiving() instanceof EntityPlayer){
             EntityPlayer player = (EntityPlayer)event.getEntityLiving();
-            boolean wingsEquipped = StackUtil.isValid(ItemWingsOfTheBats.getWingItem(player));
 
-            //If Player isn't (really) winged
-            if(!ItemWingsOfTheBats.isPlayerWinged(player)){
-                if(wingsEquipped){
-                    //Make the Player actually winged
-                    ItemWingsOfTheBats.addWingsToPlayer(player);
-                }
-            }
-            //If Player is (or should be) winged
-            else{
-                if(wingsEquipped){
-                    //Allow the Player to fly when he has Wings equipped
-                    player.capabilities.allowFlying = true;
+            if(!player.capabilities.isCreativeMode){
+                PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
+
+                if(!player.worldObj.isRemote){
+                    boolean shouldDeduct = false;
+                    boolean shouldSend = false;
+
+                    boolean wingsEquipped = StackUtil.isValid(ItemWingsOfTheBats.getWingItem(player));
+                    if(!data.hasBatWings){
+                        if(data.batWingsFlyTime <= 0){
+                            if(wingsEquipped){
+                                data.hasBatWings = true;
+                                shouldSend = true;
+                            }
+                        }
+                        else{
+                            shouldDeduct = true;
+                        }
+                    }
+                    else{
+                        if(wingsEquipped && data.batWingsFlyTime < MAX_FLY_TIME){
+                            player.capabilities.allowFlying = true;
+
+                            if(player.capabilities.isFlying){
+                                data.batWingsFlyTime++;
+
+                                if(player.worldObj.getTotalWorldTime()%10 == 0){
+                                    shouldSend = true;
+                                }
+                            }
+                            else{
+                                shouldDeduct = true;
+                            }
+                        }
+                        else{
+                            data.hasBatWings = false;
+                            shouldSend = true;
+
+                            player.capabilities.allowFlying = false;
+                            player.capabilities.isFlying = false;
+                            player.capabilities.disableDamage = false;
+                        }
+                    }
+
+                    if(shouldDeduct){
+                        if(data.batWingsFlyTime >= 0){
+                            data.batWingsFlyTime = Math.max(0, data.batWingsFlyTime-5);
+                        }
+
+                        if(player.worldObj.getTotalWorldTime()%10 == 0){
+                            shouldSend = true;
+                        }
+                    }
+
+                    if(shouldSend){
+                        PacketHandlerHelper.sendPlayerDataPacket(player, false, true);
+                    }
                 }
                 else{
-                    //Make the Player not winged
-                    ItemWingsOfTheBats.removeWingsFromPlayer(player);
-                    //Reset Player's Values
-                    if(!player.capabilities.isCreativeMode){
+                    if(data.hasBatWings){
+                        player.capabilities.allowFlying = true;
+                    }
+                    else{
                         player.capabilities.allowFlying = false;
                         player.capabilities.isFlying = false;
-                        //Enables Fall Damage again (Automatically gets disabled for some reason)
                         player.capabilities.disableDamage = false;
                     }
                 }
