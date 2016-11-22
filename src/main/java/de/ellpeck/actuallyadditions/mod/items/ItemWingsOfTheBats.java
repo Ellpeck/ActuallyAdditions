@@ -16,11 +16,15 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -31,7 +35,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemWingsOfTheBats extends ItemBase{
 
-    private static final int MAX_FLY_TIME = 800;
+    public static final int MAX_FLY_TIME = 800;
 
     public ItemWingsOfTheBats(String name){
         super(name);
@@ -107,7 +111,7 @@ public class ItemWingsOfTheBats extends ItemBase{
                 PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
 
                 if(!player.worldObj.isRemote){
-                    boolean shouldDeduct = false;
+                    boolean tryDeduct = false;
                     boolean shouldSend = false;
 
                     boolean wingsEquipped = StackUtil.isValid(ItemWingsOfTheBats.getWingItem(player));
@@ -119,7 +123,7 @@ public class ItemWingsOfTheBats extends ItemBase{
                             }
                         }
                         else{
-                            shouldDeduct = true;
+                            tryDeduct = true;
                         }
                     }
                     else{
@@ -133,12 +137,12 @@ public class ItemWingsOfTheBats extends ItemBase{
                                     shouldSend = true;
                                 }
                             }
-                            else{
-                                shouldDeduct = true;
-                            }
+
+                            tryDeduct = true;
                         }
                         else{
                             data.hasBatWings = false;
+                            data.shouldDisableBatWings = true;
                             shouldSend = true;
 
                             player.capabilities.allowFlying = false;
@@ -147,25 +151,41 @@ public class ItemWingsOfTheBats extends ItemBase{
                         }
                     }
 
-                    if(shouldDeduct){
-                        if(data.batWingsFlyTime >= 0){
-                            data.batWingsFlyTime = Math.max(0, data.batWingsFlyTime-5);
+                    if(tryDeduct && data.batWingsFlyTime > 0){
+                        int deductTime = 0;
+
+                        if(!player.capabilities.isFlying){
+                            deductTime = 2;
+                        }
+                        else{
+                            BlockPos pos = new BlockPos(player.posX, player.posY+player.height, player.posZ);
+                            IBlockState state = player.worldObj.getBlockState(pos);
+                            if(state != null && state.isSideSolid(player.worldObj, pos, EnumFacing.DOWN)){
+                                deductTime = 10;
+                            }
                         }
 
-                        if(player.worldObj.getTotalWorldTime()%10 == 0){
-                            shouldSend = true;
+                        if(deductTime > 0){
+                            data.batWingsFlyTime = Math.max(0, data.batWingsFlyTime-deductTime);
+
+                            if(player.worldObj.getTotalWorldTime()%10 == 0){
+                                shouldSend = true;
+                            }
                         }
                     }
 
                     if(shouldSend){
                         PacketHandlerHelper.sendPlayerDataPacket(player, false, true);
+                        data.shouldDisableBatWings = false; //was set only temporarily to send it
                     }
                 }
                 else{
                     if(data.hasBatWings){
                         player.capabilities.allowFlying = true;
                     }
-                    else{
+                    else if(data.shouldDisableBatWings){ //so that other modded flying won't be disabled
+                        data.shouldDisableBatWings = false;
+
                         player.capabilities.allowFlying = false;
                         player.capabilities.isFlying = false;
                         player.capabilities.disableDamage = false;

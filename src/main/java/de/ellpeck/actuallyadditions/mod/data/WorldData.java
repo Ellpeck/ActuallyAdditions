@@ -149,7 +149,7 @@ public class WorldData{
             NBTTagCompound data = player.getCompoundTag("Data");
 
             PlayerSave save = new PlayerSave(id);
-            save.readFromNBT(data);
+            save.readFromNBT(data, true);
             this.playerSaveData.put(id, save);
         }
     }
@@ -169,7 +169,7 @@ public class WorldData{
             player.setUniqueId("UUID", save.id);
 
             NBTTagCompound data = new NBTTagCompound();
-            save.writeToNBT(data);
+            save.writeToNBT(data, true);
             player.setTag("Data", data);
 
             playerList.appendTag(player);

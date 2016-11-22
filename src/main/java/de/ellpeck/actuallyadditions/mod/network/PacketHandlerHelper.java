@@ -38,7 +38,7 @@ public final class PacketHandlerHelper{
         compound.setBoolean("Log", log);
 
         NBTTagCompound data = new NBTTagCompound();
-        PlayerData.getDataFromPlayer(player).writeToNBT(data);
+        PlayerData.getDataFromPlayer(player).writeToNBT(data, false);
         compound.setTag("Data", data);
 
         if(toClient){

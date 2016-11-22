@@ -115,7 +115,7 @@ public final class PacketHandler{
         public void handleData(NBTTagCompound compound){
             NBTTagCompound data = compound.getCompoundTag("Data");
             UUID id = compound.getUniqueId("UUID");
-            PlayerData.getDataFromPlayer(id).readFromNBT(data);
+            PlayerData.getDataFromPlayer(id).readFromNBT(data, false);
             if(compound.getBoolean("Log")){
                 ModUtil.LOGGER.info("Receiving (new or changed) Player Data for player with UUID "+id+".");
             }

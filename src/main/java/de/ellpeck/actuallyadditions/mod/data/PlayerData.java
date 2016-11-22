@@ -52,6 +52,7 @@ public final class PlayerData{
         public boolean bookGottenAlready;
         public boolean didBookTutorial;
         public boolean hasBatWings;
+        public boolean shouldDisableBatWings;
         public int batWingsFlyTime;
 
         public IBookletPage[] bookmarks = new IBookletPage[12];
@@ -63,10 +64,11 @@ public final class PlayerData{
             this.id = id;
         }
 
-        public void readFromNBT(NBTTagCompound compound){
+        public void readFromNBT(NBTTagCompound compound, boolean savingToFile){
             this.displayTesla = compound.getBoolean("DisplayTesla");
             this.bookGottenAlready = compound.getBoolean("BookGotten");
             this.didBookTutorial = compound.getBoolean("DidTutorial");
+
             this.hasBatWings = compound.getBoolean("HasBatWings");
             this.batWingsFlyTime = compound.getInteger("BatWingsFlyTime");
 
@@ -78,12 +80,17 @@ public final class PlayerData{
                     this.bookmarks[i] = page;
                 }
             }
+
+            if(!savingToFile){
+                this.shouldDisableBatWings = compound.getBoolean("ShouldDisableWings");
+            }
         }
 
-        public void writeToNBT(NBTTagCompound compound){
+        public void writeToNBT(NBTTagCompound compound, boolean savingToFile){
             compound.setBoolean("DisplayTesla", this.displayTesla);
             compound.setBoolean("BookGotten", this.bookGottenAlready);
             compound.setBoolean("DidTutorial", this.didBookTutorial);
+
             compound.setBoolean("HasBatWings", this.hasBatWings);
             compound.setInteger("BatWingsFlyTime", this.batWingsFlyTime);
 
@@ -92,6 +99,10 @@ public final class PlayerData{
                 bookmarks.appendTag(new NBTTagString(bookmark == null ? "" : bookmark.getIdentifier()));
             }
             compound.setTag("Bookmarks", bookmarks);
+
+            if(!savingToFile){
+                compound.setBoolean("ShouldDisableWings", this.shouldDisableBatWings);
+            }
         }
 
     }

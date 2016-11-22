@@ -887,7 +887,7 @@ booklet.actuallyadditions.chapter.canola.text.2=For starters, you can use a <ite
 booklet.actuallyadditions.chapter.canola.text.5=If you break the <item>Oil Generator<r>, it will keep the liquid inside. <n>If you want to empty it out, just <imp>place it in the crafting grid<r> and all of the fluid will be drained.
 
 booklet.actuallyadditions.chapter.wings.name=Wings Of The Bats
-booklet.actuallyadditions.chapter.wings.text.1=Sometimes, bats will drop <item>Wings<r>. These wings can't really be used to fly, but that's just because they're not powerful enough. <n>To make them more powerful, you can craft <item>Wings Of The Bats<r>. When you have these in your inventory, they will allow you to <imp>fly like in creative mode<r>.
+booklet.actuallyadditions.chapter.wings.text.1=Sometimes, bats will drop <item>Wings<r>. These wings can be used to make <item>Wings Of The Bats<r>, which allow you to <imp>fly<r> in a <imp>creative way<r>. <n>However, after about <secs> seconds, your weight won't be <imp>supported anymore<r> and you will <imp>drop to the ground<r>. <n>To remove exhaustion from your wings, either <imp>stand on the ground<r> to remove exhaustion <imp>slowly<r>, or hang on to the ceiling by <imp>flying up below a solid block<r> like a bat while the wings aren't fully exhausted to remove exhaustion <imp>fast<r>.
 
 booklet.actuallyadditions.chapter.foods.name=Foodstuffs
 
