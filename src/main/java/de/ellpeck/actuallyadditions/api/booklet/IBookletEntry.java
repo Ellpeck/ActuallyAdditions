@@ -29,4 +29,6 @@ public interface IBookletEntry{
 
     @SideOnly(Side.CLIENT)
     List<IBookletChapter> getChaptersForDisplay(String searchBarText);
+
+    int getSortingPriority();
 }

@@ -137,7 +137,7 @@ public class ActuallyAdditions{
         LensRecipeHandler.init();
         EmpowererHandler.init();
 
-        InitBooklet.init();
+        InitBooklet.postInit();
         proxy.postInit(event);
 
         ModUtil.LOGGER.info("PostInitialization Finished.");

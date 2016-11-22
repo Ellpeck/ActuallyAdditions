@@ -66,4 +66,6 @@ public interface IBookletPage{
     IBookletPage addTextReplacement(String key, float value);
 
     IBookletPage addTextReplacement(String key, int value);
+
+    int getSortingPriority();
 }

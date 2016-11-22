@@ -18,7 +18,7 @@ import java.util.List;
 public class BookletEntryAllItems extends BookletEntry{
 
     public BookletEntryAllItems(String identifier){
-        super(identifier);
+        super(identifier, -Integer.MAX_VALUE);
     }
 
     @Override

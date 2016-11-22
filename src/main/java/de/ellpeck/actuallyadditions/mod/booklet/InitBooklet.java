@@ -45,15 +45,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public final class InitBooklet{
 
     public static BookletChapter[] chaptersIntroduction = new BookletChapter[9];
 
     public static void preInit(){
+        ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllItems("allAndSearch").setImportant();
+
         ActuallyAdditionsAPI.entryGettingStarted = new BookletEntry("gettingStarted").setImportant();
         ActuallyAdditionsAPI.entryReconstruction = new BookletEntry("reconstruction");
         ActuallyAdditionsAPI.entryLaserRelays = new BookletEntry("laserRelays").setSpecial();
@@ -64,10 +64,9 @@ public final class InitBooklet{
         ActuallyAdditionsAPI.entryItemsRF = new BookletEntry("itemsRF");
         ActuallyAdditionsAPI.entryMisc = new BookletEntry("misc");
         ActuallyAdditionsAPI.entryUpdatesAndInfos = new BookletEntry("updatesAndInfos").setSpecial();
-        ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllItems("allAndSearch").setImportant();
     }
 
-    public static void init(){
+    public static void postInit(){
         initChapters();
 
         int chapCount = 0;
@@ -97,6 +96,31 @@ public final class InitBooklet{
                 }
             }
         }
+
+        Collections.sort(ActuallyAdditionsAPI.BOOKLET_ENTRIES, new Comparator<IBookletEntry>(){
+            @Override
+            public int compare(IBookletEntry entry1, IBookletEntry entry2){
+                Integer prio1 = entry1.getSortingPriority();
+                Integer prio2 = entry2.getSortingPriority();
+                return prio2.compareTo(prio1);
+            }
+        });
+        Collections.sort(ActuallyAdditionsAPI.ALL_CHAPTERS, new Comparator<IBookletChapter>(){
+            @Override
+            public int compare(IBookletChapter chapter1, IBookletChapter chapter2){
+                Integer prio1 = chapter1.getSortingPriority();
+                Integer prio2 = chapter2.getSortingPriority();
+                return prio2.compareTo(prio1);
+            }
+        });
+        Collections.sort(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA, new Comparator<IBookletPage>(){
+            @Override
+            public int compare(IBookletPage page1, IBookletPage page2){
+                Integer prio1 = page1.getSortingPriority();
+                Integer prio2 = page2.getSortingPriority();
+                return prio2.compareTo(prio1);
+            }
+        });
 
         ModUtil.LOGGER.info("Registered a total of "+chapCount+" booklet chapters, where "+infoCount+" out of "+pageCount+" booklet pages contain information about items or fluids!");
     }

@@ -24,13 +24,19 @@ public class BookletChapter implements IBookletChapter{
     public final IBookletEntry entry;
     public final ItemStack displayStack;
     private final String identifier;
+    private final int priority;
     public TextFormatting color;
 
     public BookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages){
+        this(identifier, entry, displayStack, 0, pages);
+    }
+
+    public BookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages){
         this.pages = pages;
         this.identifier = identifier;
         this.entry = entry;
         this.displayStack = displayStack;
+        this.priority = priority;
         this.color = TextFormatting.RESET;
 
         this.entry.addChapter(this);
@@ -77,6 +83,11 @@ public class BookletChapter implements IBookletChapter{
             }
         }
         return -1;
+    }
+
+    @Override
+    public int getSortingPriority(){
+        return this.priority;
     }
 
     public BookletChapter setImportant(){

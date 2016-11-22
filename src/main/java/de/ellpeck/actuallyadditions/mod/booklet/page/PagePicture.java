@@ -21,6 +21,12 @@ public class PagePicture extends BookletPage{
     private final ResourceLocation resLoc;
     private final int yTextOffset;
 
+    public PagePicture(int localizationKey, ResourceLocation resLoc, int yTextOffset, int priority){
+        super(localizationKey, priority);
+        this.resLoc = resLoc;
+        this.yTextOffset = yTextOffset;
+    }
+
     public PagePicture(int localizationKey, ResourceLocation resLoc, int yTextOffset){
         super(localizationKey);
         this.yTextOffset = yTextOffset;

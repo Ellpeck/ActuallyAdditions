@@ -53,4 +53,14 @@ public interface IMethodHandler{
     IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result);
 
     IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages);
+
+    IBookletPage generateTextPage(int id, int priority);
+
+    IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY, int priority);
+
+    IBookletPage generateCraftingPage(int id, int priority, IRecipe... recipes);
+
+    IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result, int priority);
+
+    IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages);
 }

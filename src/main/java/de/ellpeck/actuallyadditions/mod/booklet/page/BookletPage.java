@@ -32,13 +32,19 @@ public class BookletPage implements IBookletPage{
 
     protected final HashMap<String, String> textReplacements = new HashMap<String, String>();
     protected final int localizationKey;
+    private final int priority;
     private final List<ItemStack> itemsForPage = new ArrayList<ItemStack>();
     private final List<FluidStack> fluidsForPage = new ArrayList<FluidStack>();
     protected IBookletChapter chapter;
     protected boolean hasNoText;
 
     public BookletPage(int localizationKey){
+        this(localizationKey, 0);
+    }
+
+    public BookletPage(int localizationKey, int priority){
         this.localizationKey = localizationKey;
+        this.priority = priority;
     }
 
     @Override
@@ -173,5 +179,10 @@ public class BookletPage implements IBookletPage{
     @Override
     public BookletPage addTextReplacement(String key, int value){
         return this.addTextReplacement(key, Integer.toString(value));
+    }
+
+    @Override
+    public int getSortingPriority(){
+        return this.priority;
     }
 }

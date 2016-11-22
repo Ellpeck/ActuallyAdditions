@@ -62,4 +62,9 @@ public class PageEmpowerer extends BookletPage{
             list.add(this.recipe.output);
         }
     }
+
+    @Override
+    public int getSortingPriority(){
+        return 20;
+    }
 }

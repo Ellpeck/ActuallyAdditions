@@ -25,7 +25,11 @@ public class PageFurnace extends BookletPage{
     private final ItemStack output;
 
     public PageFurnace(int localizationKey, ItemStack output){
-        super(localizationKey);
+        this(localizationKey, output, 0);
+    }
+
+    public PageFurnace(int localizationKey, ItemStack output, int priority){
+        super(localizationKey, priority);
         this.output = output;
         this.input = getInputForOutput(output);
     }

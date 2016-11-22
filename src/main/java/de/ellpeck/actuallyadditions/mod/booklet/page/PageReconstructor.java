@@ -57,4 +57,9 @@ public class PageReconstructor extends BookletPage{
             list.add(this.recipe.outputStack);
         }
     }
+
+    @Override
+    public int getSortingPriority(){
+        return 20;
+    }
 }

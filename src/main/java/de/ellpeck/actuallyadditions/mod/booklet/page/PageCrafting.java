@@ -37,13 +37,22 @@ public class PageCrafting extends BookletPage{
     private String recipeTypeLocKey;
     private boolean isWildcard;
 
-    public PageCrafting(int localizationKey, List<IRecipe> recipes){
-        super(localizationKey);
+    public PageCrafting(int localizationKey, int priority, List<IRecipe> recipes){
+        super(localizationKey, priority);
         this.recipes = recipes;
     }
 
+    public PageCrafting(int localizationKey, List<IRecipe> recipes){
+        this(localizationKey, 0, recipes);
+    }
+
     public PageCrafting(int localizationKey, IRecipe... recipes){
-        this(localizationKey, Arrays.asList(recipes));
+        this(localizationKey, 0, recipes);
+    }
+
+
+    public PageCrafting(int localizationKey, int priority, IRecipe... recipes){
+        this(localizationKey, priority, Arrays.asList(recipes));
     }
 
     public BookletPage setWildcard(){

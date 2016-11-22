@@ -27,4 +27,6 @@ public interface IBookletChapter{
     String getIdentifier();
 
     int getPageIndex(IBookletPage page);
+
+    int getSortingPriority();
 }

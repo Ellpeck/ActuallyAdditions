@@ -247,26 +247,51 @@ public class MethodHandler implements IMethodHandler{
 
     @Override
     public IBookletPage generateTextPage(int id){
-        return new PageTextOnly(id);
+        return this.generateTextPage(id, 0);
     }
 
     @Override
     public IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY){
-        return new PagePicture(id, resLoc, textStartY);
+        return this.generatePicturePage(id, resLoc, textStartY, 0);
     }
 
     @Override
     public IBookletPage generateCraftingPage(int id, IRecipe... recipes){
-        return new PageCrafting(id, recipes);
+        return this.generateCraftingPage(id, 0, recipes);
     }
 
     @Override
     public IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result){
-        return new PageFurnace(id, result);
+        return this.generateFurnacePage(id, input, result, 0);
     }
 
     @Override
     public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages){
-        return new BookletChapter(identifier, entry, displayStack, pages);
+        return this.generateBookletChapter(identifier, entry, displayStack, 0, pages);
+    }
+
+    @Override
+    public IBookletPage generateTextPage(int id, int priority){
+        return new PageTextOnly(id, priority);
+    }
+
+    @Override
+    public IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY, int priority){
+        return new PagePicture(id, resLoc, textStartY, priority);
+    }
+
+    @Override
+    public IBookletPage generateCraftingPage(int id, int priority, IRecipe... recipes){
+        return new PageCrafting(id, priority, recipes);
+    }
+
+    @Override
+    public IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result, int priority){
+        return new PageFurnace(id, result, priority);
+    }
+
+    @Override
+    public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages){
+        return new BookletChapter(identifier, entry, displayStack, priority, pages);
     }
 }

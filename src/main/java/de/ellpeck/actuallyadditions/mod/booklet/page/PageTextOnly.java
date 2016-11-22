@@ -16,6 +16,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PageTextOnly extends BookletPage{
 
+    public PageTextOnly(int localizationKey, int priority){
+        super(localizationKey, priority);
+    }
+
     public PageTextOnly(int localizationKey){
         super(localizationKey);
     }

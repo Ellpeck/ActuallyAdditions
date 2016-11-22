@@ -31,11 +31,17 @@ import java.util.Locale;
 public class BookletEntry implements IBookletEntry{
 
     private final String identifier;
+    private final int priority;
     private final List<IBookletChapter> chapters = new ArrayList<IBookletChapter>();
     private TextFormatting color;
 
     public BookletEntry(String identifier){
+        this(identifier, 0);
+    }
+
+    public BookletEntry(String identifier, int prio){
         this.identifier = identifier;
+        this.priority = prio;
         ActuallyAdditionsAPI.addBookletEntry(this);
 
         this.color = TextFormatting.RESET;
@@ -127,6 +133,11 @@ public class BookletEntry implements IBookletEntry{
         else{
             return this.getAllChapters();
         }
+    }
+
+    @Override
+    public int getSortingPriority(){
+        return this.priority;
     }
 
     public BookletEntry setImportant(){
