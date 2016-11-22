@@ -69,9 +69,7 @@ public final class InitBooklet{
 
     public static void init(){
         initChapters();
-    }
 
-    public static void postInit(){
         int chapCount = 0;
         int pageCount = 0;
         int infoCount = 0;
