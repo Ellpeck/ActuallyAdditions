@@ -45,7 +45,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
@@ -110,30 +109,30 @@ public class ItemDrill extends ItemEnergy{
         if(StackUtil.isValid(upgrade)){
             int slot = ItemDrillUpgrade.getSlotToPlaceFrom(upgrade);
             if(slot >= 0 && slot < InventoryPlayer.getHotbarSize()){
-                ItemStack anEquip = player.inventory.getStackInSlot(slot);
-                if(StackUtil.isValid(anEquip) && anEquip != stack){
-                    ItemStack equip = anEquip.copy();
-                    if(!world.isRemote){
-                        //tryPlaceItemIntoWorld could throw an Exception
-                        try{
-                            //Places the Block into the World
-                            if(equip.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ) != EnumActionResult.FAIL){
-                                if(!player.capabilities.isCreativeMode){
-                                    player.inventory.setInventorySlotContents(slot, StackUtil.validateCopy(equip));
-                                }
-                                //Synchronizes the Client
-                                player.inventoryContainer.detectAndSendChanges();
-                                return EnumActionResult.SUCCESS;
+                ItemStack equip = player.inventory.getStackInSlot(slot);
+                if(StackUtil.isValid(equip) && equip != stack){
+                    ItemStack toPlaceStack = equip.copy();
+
+                    player.setHeldItem(hand, toPlaceStack);
+
+                    //tryPlaceItemIntoWorld could throw an Exception
+                    try{
+                        //Places the Block into the World
+                        if(toPlaceStack.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ) != EnumActionResult.FAIL){
+                            if(!player.capabilities.isCreativeMode){
+                                player.setHeldItem(hand, StackUtil.validateCopy(toPlaceStack));
                             }
                         }
-                        //Notify the Player and log the Exception
-                        catch(Exception e){
-                            ModUtil.LOGGER.error("Player "+player.getName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.getDimension()+" threw an Exception! Don't let that happen again!");
-                        }
                     }
-                    else{
-                        return EnumActionResult.SUCCESS;
+                    //Notify the Player and log the Exception
+                    catch(Exception e){
+                        ModUtil.LOGGER.error("Player "+player.getName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.getDimension()+" threw an Exception! Don't let that happen again!");
                     }
+
+                    player.inventory.setInventorySlotContents(slot, player.getHeldItem(hand));
+                    player.setHeldItem(hand, stack);
+
+                    return EnumActionResult.SUCCESS;
                 }
             }
         }
