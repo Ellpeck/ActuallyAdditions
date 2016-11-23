@@ -59,12 +59,12 @@ public class ItemBattery extends ItemEnergy{
 
                     Item item = slot.getItem();
                     if(item instanceof IEnergyContainerItem){
-                        received = ((IEnergyContainerItem)item).receiveEnergy(slot, this.getEnergyStored(stack), false);
+                        received = ((IEnergyContainerItem)item).receiveEnergy(slot, this.extractEnergy(stack, Integer.MAX_VALUE, true), false);
                     }
                     else if(ActuallyAdditions.teslaLoaded && slot.hasCapability(TeslaUtil.teslaConsumer, null)){
                         ITeslaConsumer cap = slot.getCapability(TeslaUtil.teslaConsumer, null);
                         if(cap != null){
-                            received = (int)cap.givePower(this.getEnergyStored(stack), false);
+                            received = (int)cap.givePower(this.extractEnergy(stack, Integer.MAX_VALUE, true), false);
                         }
                     }
 
