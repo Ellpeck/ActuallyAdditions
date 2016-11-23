@@ -14,6 +14,9 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
@@ -31,8 +34,7 @@ public class LensMining extends Lens{
 
     public static final int ENERGY_USE = 60000;
 
-
-    static{
+    public static void init(){
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreCoal", 5000);
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherCoal", 5000);
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreIron", 3000);
@@ -92,6 +94,28 @@ public class LensMining extends Lens{
 
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreCobalt", 50);
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreArdite", 50);
+
+        for(String conf : ConfigStringListValues.MINING_LENS_EXTRA_WHITELIST.getValue()){
+            if(conf.contains("@")){
+                try{
+                    String[] split = conf.split("@");
+
+                    String ore = split[0];
+                    int weight = Integer.parseInt(split[1]);
+                    String dim = split[2];
+
+                    if("n".equals(dim)){
+                        ActuallyAdditionsAPI.addMiningLensNetherOre(ore, weight);
+                    }
+                    else if("s".equals(dim)){
+                        ActuallyAdditionsAPI.addMiningLensStoneOre(ore, weight);
+                    }
+                }
+                catch(Exception e){
+                    ModUtil.LOGGER.warn("A config option appears to be incorrect: The entry "+conf+" can't be parsed!");
+                }
+            }
+        }
     }
 
     @Override
@@ -121,7 +145,7 @@ public class LensMining extends Lens{
                             List<ItemStack> stacks = OreDictionary.getOres(ore.name, false);
                             if(stacks != null && !stacks.isEmpty()){
                                 for(ItemStack aStack : stacks){
-                                    if(StackUtil.isValid(aStack) && aStack.getItem() instanceof ItemBlock){
+                                    if(StackUtil.isValid(aStack) && !CrusherRecipeRegistry.hasBlacklistedOutput(aStack, ConfigStringListValues.MINING_LENS_BLACKLIST.getValue()) && aStack.getItem() instanceof ItemBlock){
                                         adaptedUse += (totalWeight-ore.itemWeight)%40000;
 
                                         stack = aStack;
@@ -163,5 +187,4 @@ public class LensMining extends Lens{
     public int getDistance(){
         return 10;
     }
-
 }

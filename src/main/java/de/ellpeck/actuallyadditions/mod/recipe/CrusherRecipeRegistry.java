@@ -58,13 +58,13 @@ public final class CrusherRecipeRegistry{
         ModUtil.LOGGER.warn("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically, either because the inputs were missing outputs, or because they exist already: "+oresNoResult);
     }
 
-    public static boolean hasBlacklistedOutput(ItemStack output){
+    public static boolean hasBlacklistedOutput(ItemStack output, String[] config){
         if(StackUtil.isValid(output)){
             Item item = output.getItem();
             if(item != null){
                 String reg = item.getRegistryName().toString();
 
-                for(String conf : ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue()){
+                for(String conf : config){
                     String confReg = conf;
                     int meta = 0;
 
@@ -75,7 +75,7 @@ public final class CrusherRecipeRegistry{
                             meta = Integer.parseInt(split[1]);
                         }
                         catch(Exception e){
-                            ModUtil.LOGGER.warn("A config option appears to be incorrect: The Crusher Output Blacklist entry "+conf+" can't be parsed!");
+                            ModUtil.LOGGER.warn("A config option appears to be incorrect: The entry "+conf+" can't be parsed!");
                         }
                     }
 

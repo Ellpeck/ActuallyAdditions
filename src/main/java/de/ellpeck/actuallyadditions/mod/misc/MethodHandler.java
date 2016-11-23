@@ -23,6 +23,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrafting;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageFurnace;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -219,7 +220,7 @@ public class MethodHandler implements IMethodHandler{
         for(ItemStack input : inputs){
             if(StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null){
                 for(ItemStack outputOne : outputOnes){
-                    if(StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne)){
+                    if(StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
                         ItemStack outputOneCopy = outputOne.copy();
                         outputOneCopy = StackUtil.setStackSize(outputOneCopy, outputOneAmounts);
 
@@ -229,7 +230,7 @@ public class MethodHandler implements IMethodHandler{
                         }
                         else{
                             for(ItemStack outputTwo : outputTwos){
-                                if(StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo)){
+                                if(StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
                                     ItemStack outputTwoCopy = outputTwo.copy();
                                     outputTwoCopy = StackUtil.setStackSize(outputTwoCopy, outputTwoAmounts);
 
