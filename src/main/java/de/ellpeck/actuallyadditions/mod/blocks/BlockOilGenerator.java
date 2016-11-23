@@ -77,12 +77,11 @@ public class BlockOilGenerator extends BlockContainerBase{
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        ItemStack stack = player.getHeldItem(hand);
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){ItemStack stack = player.getHeldItem(hand);
         if(!world.isRemote){
             TileEntityOilGenerator generator = (TileEntityOilGenerator)world.getTileEntity(pos);
             if(generator != null){
-                if(this.checkFailUseItemOnTank(player, stack, generator.tank)){
+                if(!this.tryUseItemOnTank(player, hand, generator.tank)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.OIL_GENERATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }

@@ -34,6 +34,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -191,8 +193,18 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         }
     }
 
-    protected boolean checkFailUseItemOnTank(EntityPlayer player, ItemStack heldItem, FluidTank tank){
-        return !StackUtil.isValid(heldItem) || !FluidUtil.interactWithFluidHandler(heldItem, tank, player).isSuccess();
+    protected boolean tryUseItemOnTank(EntityPlayer player, EnumHand hand, FluidTank tank){
+        ItemStack heldItem = player.getHeldItem(hand);
+
+        if(StackUtil.isValid(heldItem)){
+            FluidActionResult result = FluidUtil.interactWithFluidHandler(heldItem, tank, player);
+            if(result.isSuccess()){
+                player.setHeldItem(hand, result.getResult());
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override

@@ -56,14 +56,13 @@ public class BlockFluidCollector extends BlockContainerBase{
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        ItemStack stack = player.getHeldItem(hand);
         if(this.tryToggleRedstone(world, pos, player)){
             return true;
         }
         if(!world.isRemote){
             TileEntityFluidCollector collector = (TileEntityFluidCollector)world.getTileEntity(pos);
             if(collector != null){
-                if(this.checkFailUseItemOnTank(player, stack, collector.tank)){
+                if(!this.tryUseItemOnTank(player, hand, collector.tank)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FLUID_COLLECTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }

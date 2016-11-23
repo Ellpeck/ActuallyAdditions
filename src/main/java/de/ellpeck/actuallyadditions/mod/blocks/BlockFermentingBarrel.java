@@ -59,11 +59,10 @@ public class BlockFermentingBarrel extends BlockContainerBase{
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        ItemStack heldItem = player.getHeldItem(hand);
         if(!world.isRemote){
             TileEntityFermentingBarrel press = (TileEntityFermentingBarrel)world.getTileEntity(pos);
             if(press != null){
-                if(this.checkFailUseItemOnTank(player, heldItem, press.canolaTank) && this.checkFailUseItemOnTank(player, heldItem, press.oilTank)){
+                if(!this.tryUseItemOnTank(player, hand, press.canolaTank) && !this.tryUseItemOnTank(player, hand, press.oilTank)){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FERMENTING_BARREL.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
