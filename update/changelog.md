@@ -1,3 +1,12 @@
+# 1.11-r80
+* This versioning system is all over the place now. But it works.
+* Made some Crusher and Empowerer recipes work again that weren't working because of registry order
+* Made Advanced Item Laser relays be viewable by just right-clicking
+* Fix Fluid Containers emptying giving you back nothing
+* Added Mining Lens white- and blacklist
+* Made machines use proper amounts of power again
+* Fix Batteries duping energy infinitely if two are on discharge mode in one inventory
+
 # 1.10.2-r79
 * Fixed Batteries duping energy infinitely if two are on discharge mode in one inventory
 * Fixed the Lens of the Killer not actually dropping player-only drops
