@@ -183,7 +183,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
 
                 return true;
             }
-            else if(relay instanceof TileEntityLaserRelayItemWhitelist && player.isSneaking()){
+            else if(relay instanceof TileEntityLaserRelayItemWhitelist){
                 if(!world.isRemote){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.LASER_RELAY_ITEM_WHITELIST.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
