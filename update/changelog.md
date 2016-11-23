@@ -1,3 +1,8 @@
+# 1.10.2-r79
+* Fixed Batteries duping energy infinitely if two are on discharge mode in one inventory
+* Fixed the Lens of the Killer not actually dropping player-only drops
+* Added confusing versioning that doesn't really work when maintaining multiple versions at once :v
+
 # 1.11-r78
 * Added Engineers' House to villages. You should definitely give it a look.
 * Added Engineer and Crystallizer villager
