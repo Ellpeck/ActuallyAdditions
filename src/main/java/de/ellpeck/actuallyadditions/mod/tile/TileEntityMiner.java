@@ -34,7 +34,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
 
     public static final int ENERGY_USE_PER_BLOCK = 650;
     public static final int DEFAULT_RANGE = 2;
-    public final EnergyStorage storage = new EnergyStorage(200000, 2000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 2000);
     public int layerAt = -1;
     public boolean onlyMineOres;
     private int oldLayerAt;
@@ -113,7 +113,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
                                     WorldUtil.addToInventory(this, drops, true, true);
                                     this.markDirty();
 
-                                    this.storage.extractEnergy(actualUse, false);
+                                    this.storage.extractEnergyInternal(actualUse, false);
                                     this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
                                 }
                             }
@@ -225,7 +225,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage(){
         return this.storage;
     }
 

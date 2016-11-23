@@ -73,7 +73,7 @@ public class BlockShockSuppressor extends BlockContainerBase{
 
                     for(BlockPos pos : posesToRemove){
                         if(suppressor.storage.getEnergyStored() >= use){
-                            suppressor.storage.extractEnergy(use, false);
+                            suppressor.storage.extractEnergyInternal(use, false);
                             affectedBlocks.remove(pos);
                         }
                         else{
@@ -82,7 +82,7 @@ public class BlockShockSuppressor extends BlockContainerBase{
                     }
                     for(Entity entity : entitiesToRemove){
                         if(suppressor.storage.getEnergyStored() >= use){
-                            suppressor.storage.extractEnergy(use, false);
+                            suppressor.storage.extractEnergyInternal(use, false);
                             affectedEntities.remove(entity);
                         }
                         else{

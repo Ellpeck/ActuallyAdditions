@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 public class TileEntityFireworkBox extends TileEntityBase implements ICustomEnergyReceiver, IEnergyDisplay{
 
     public static final int USE_PER_SHOT = 300;
-    public final EnergyStorage storage = new EnergyStorage(20000, 200);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(20000, 200);
     private int timeUntilNextFirework;
     private int oldEnergy;
 
@@ -127,7 +127,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements ICustomEner
         if(this.storage.getEnergyStored() >= USE_PER_SHOT){
             this.spawnFireworks(this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
 
-            this.storage.extractEnergy(USE_PER_SHOT, false);
+            this.storage.extractEnergyInternal(USE_PER_SHOT, false);
         }
     }
 
@@ -162,7 +162,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements ICustomEner
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage(){
         return this.storage;
     }
 

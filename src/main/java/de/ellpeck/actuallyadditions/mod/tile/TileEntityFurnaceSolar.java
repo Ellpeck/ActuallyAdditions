@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay{
 
     public static final int PRODUCE = 8;
-    public final EnergyStorage storage = new EnergyStorage(30000, 100);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 100);
     private int oldEnergy;
 
     public TileEntityFurnaceSolar(){
@@ -65,7 +65,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
             int power = this.getPowerToGenerate(PRODUCE);
             if(this.worldObj.isDaytime() && power > 0){
                 if(power <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
-                    this.storage.receiveEnergy(power, false);
+                    this.storage.receiveEnergyInternal(power, false);
                     this.markDirty();
                 }
             }
@@ -98,7 +98,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage(){
         return this.storage;
     }
 

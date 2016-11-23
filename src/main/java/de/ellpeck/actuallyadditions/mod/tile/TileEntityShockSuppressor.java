@@ -24,7 +24,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements ICustom
     public static final int USE_PER = 300;
     public static final int RANGE = 5;
 
-    public EnergyStorage storage = new EnergyStorage(300000, 400);
+    public CustomEnergyStorage storage = new CustomEnergyStorage(300000, 400);
     private int oldEnergy;
 
     public TileEntityShockSuppressor(){
@@ -97,7 +97,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements ICustom
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage(){
         return this.storage;
     }
 

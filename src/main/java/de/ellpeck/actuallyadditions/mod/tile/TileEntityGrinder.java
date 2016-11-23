@@ -36,7 +36,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
     public static final int SLOT_OUTPUT_2_1 = 4;
     public static final int SLOT_OUTPUT_2_2 = 5;
     public static final int ENERGY_USE = 40;
-    public final EnergyStorage storage = new EnergyStorage(60000, 100);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 100);
     public int firstCrushTime;
     public int secondCrushTime;
     public boolean isDouble;
@@ -125,7 +125,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
                         this.finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
                         this.firstCrushTime = 0;
                     }
-                    this.storage.extractEnergy(ENERGY_USE, false);
+                    this.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
             }
             else{
@@ -143,7 +143,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
                             this.finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
                             this.secondCrushTime = 0;
                         }
-                        this.storage.extractEnergy(ENERGY_USE, false);
+                        this.storage.extractEnergyInternal(ENERGY_USE, false);
                     }
                 }
                 else{

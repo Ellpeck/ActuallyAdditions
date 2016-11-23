@@ -28,7 +28,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
-    public final EnergyStorage storage = new EnergyStorage(10000, 20);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(10000, 20);
     private int lastEnergy;
     private int currentTime;
 
@@ -93,7 +93,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
                             this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
                             this.worldObj.setBlockToAir(coordsBlock);
                             WorldUtil.addToInventory(this, drops, true, true);
-                            this.storage.extractEnergy(ENERGY_USE, false);
+                            this.storage.extractEnergyInternal(ENERGY_USE, false);
                             this.markDirty();
                         }
                     }

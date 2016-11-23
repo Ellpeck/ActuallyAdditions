@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -28,22 +29,22 @@ import java.util.List;
 
 public class EnergyDisplay extends Gui{
 
-    private EnergyStorage rfReference;
+    private CustomEnergyStorage rfReference;
     private int x;
     private int y;
     private boolean outline;
     private boolean drawTextNextTo;
     private boolean displayTesla;
 
-    public EnergyDisplay(int x, int y, EnergyStorage rfReference, boolean outline, boolean drawTextNextTo){
+    public EnergyDisplay(int x, int y, CustomEnergyStorage rfReference, boolean outline, boolean drawTextNextTo){
         this.setData(x, y, rfReference, outline, drawTextNextTo);
     }
 
-    public EnergyDisplay(int x, int y, EnergyStorage rfReference){
+    public EnergyDisplay(int x, int y, CustomEnergyStorage rfReference){
         this(x, y, rfReference, false, false);
     }
 
-    public void setData(int x, int y, EnergyStorage rfReference, boolean outline, boolean drawTextNextTo){
+    public void setData(int x, int y, CustomEnergyStorage rfReference, boolean outline, boolean drawTextNextTo){
         this.x = x;
         this.y = y;
         this.rfReference = rfReference;

@@ -30,7 +30,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IC
     public static final int PRODUCE = 80;
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
-    public final EnergyStorage storage = new EnergyStorage(40000, 100);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(40000, 100);
     public final FluidTank tank = new FluidTank(2*Util.BUCKET){
         @Override
         public boolean canFill(){
@@ -88,7 +88,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IC
             if(this.isCanola(0) && PRODUCE <= this.tank.getCapacity()-this.tank.getFluidAmount()){
                 if(this.storage.getEnergyStored() >= ENERGY_USE){
                     this.currentProcessTime++;
-                    this.storage.extractEnergy(ENERGY_USE, false);
+                    this.storage.extractEnergyInternal(ENERGY_USE, false);
                     if(this.currentProcessTime >= TIME){
                         this.currentProcessTime = 0;
 

@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler{
 
-    public final EnergyStorage storage = new EnergyStorage(50000, 150);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 150);
     public final FluidTank tank = new FluidTank(2*Util.BUCKET){
         @Override
         public boolean canDrain(){
@@ -110,7 +110,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
 
             if(this.currentBurnTime > 0 && this.currentEnergyProduce > 0){
                 this.currentBurnTime--;
-                this.storage.receiveEnergy(this.currentEnergyProduce, false);
+                this.storage.receiveEnergyInternal(this.currentEnergyProduce, false);
             }
             else if(!this.isRedstonePowered){
                 int fuelUsed = 50;

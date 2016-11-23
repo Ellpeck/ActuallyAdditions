@@ -40,7 +40,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public static final int WATER_USE = 500;
     public static final int COFFEE_CACHE_MAX_AMOUNT = 300;
     private static final int TIME_USED = 500;
-    public final EnergyStorage storage = new EnergyStorage(300000, 250);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 250);
     public final FluidTank tank = new FluidTank(4*Util.BUCKET){
         @Override
         public boolean canDrain(){
@@ -148,7 +148,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                     }
 
                     this.brewTime++;
-                    this.storage.extractEnergy(ENERGY_USED, false);
+                    this.storage.extractEnergyInternal(ENERGY_USED, false);
                     if(this.brewTime >= TIME_USED){
                         this.brewTime = 0;
                         ItemStack output = new ItemStack(InitItems.itemCoffee);

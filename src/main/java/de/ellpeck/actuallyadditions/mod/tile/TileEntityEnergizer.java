@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityEnergizer extends TileEntityInventoryBase implements ICustomEnergyReceiver{
 
-    public final EnergyStorage storage = new EnergyStorage(50000, 1000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 1000);
     private int lastEnergy;
 
     public TileEntityEnergizer(){
@@ -73,7 +73,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements ICus
                         }
                     }
                     if(received > 0){
-                        this.storage.extractEnergy(received, false);
+                        this.storage.extractEnergyInternal(received, false);
                     }
 
                     if(canTakeUp){

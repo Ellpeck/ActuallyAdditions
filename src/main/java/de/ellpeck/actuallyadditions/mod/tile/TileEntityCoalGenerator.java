@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
     public static final int PRODUCE = 30;
-    public final EnergyStorage storage = new EnergyStorage(60000, 80);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 80);
     public int maxBurnTime;
     public int currentBurnTime;
     private int lastEnergy;
@@ -71,7 +71,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
             if(this.currentBurnTime > 0){
                 this.currentBurnTime--;
-                this.storage.receiveEnergy(PRODUCE, false);
+                this.storage.receiveEnergyInternal(PRODUCE, false);
             }
 
             if(this.currentBurnTime <= 0 && StackUtil.isValid(this.slots.get(0)) && TileEntityFurnace.getItemBurnTime(this.slots.get(0)) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){

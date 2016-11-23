@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public interface IEnergyDisplay{
 
     @SideOnly(Side.CLIENT)
-    EnergyStorage getEnergyStorage();
+    CustomEnergyStorage getEnergyStorage();
 
     @SideOnly(Side.CLIENT)
     boolean needsHoldShift();

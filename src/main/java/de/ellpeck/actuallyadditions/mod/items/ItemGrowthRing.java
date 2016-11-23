@@ -83,7 +83,7 @@ public class ItemGrowthRing extends ItemEnergy{
                             }
 
                             if(!player.capabilities.isCreativeMode){
-                                this.extractEnergy(stack, energyUse, false);
+                                this.extractEnergyInternal(stack, energyUse, false);
                             }
                         }
                         else{

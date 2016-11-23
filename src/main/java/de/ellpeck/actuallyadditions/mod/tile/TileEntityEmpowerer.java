@@ -62,7 +62,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
                         boolean done = this.processTime >= recipe.time;
 
                         for(TileEntityDisplayStand stand : modifierStands){
-                            stand.storage.extractEnergy(recipe.energyPerStand/recipe.time, false);
+                            stand.storage.extractEnergyInternal(recipe.energyPerStand/recipe.time, false);
 
                             if(done){
                                 stand.decrStackSize(0, 1);

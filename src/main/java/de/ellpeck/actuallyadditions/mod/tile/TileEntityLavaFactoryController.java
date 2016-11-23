@@ -27,7 +27,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public static final int HAS_LAVA = 1;
     public static final int HAS_AIR = 2;
     public static final int ENERGY_USE = 150000;
-    public final EnergyStorage storage = new EnergyStorage(300000, 2000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 2000);
     private int currentWorkTime;
     private int oldEnergy;
 
@@ -62,7 +62,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
                 if(this.currentWorkTime >= 200){
                     this.currentWorkTime = 0;
                     this.worldObj.setBlockState(this.pos.up(), Blocks.LAVA.getDefaultState(), 2);
-                    this.storage.extractEnergy(ENERGY_USE, false);
+                    this.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
             }
             else{
@@ -119,7 +119,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage(){
         return this.storage;
     }
 

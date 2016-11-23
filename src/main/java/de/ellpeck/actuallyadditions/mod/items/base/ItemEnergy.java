@@ -122,4 +122,24 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
     public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt){
         return ActuallyAdditions.teslaLoaded ? new ItemTeslaWrapper(stack, this) : null;
     }
+
+    public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate){
+        int before = this.maxExtract;
+        this.setMaxExtract(Integer.MAX_VALUE);
+
+        int toReturn = this.extractEnergy(stack, maxExtract, simulate);
+
+        this.setMaxExtract(before);
+        return toReturn;
+    }
+
+    public int receiveEnergyInternal(ItemStack stack, int maxReceive, boolean simulate){
+        int before = this.maxReceive;
+        this.setMaxReceive(Integer.MAX_VALUE);
+
+        int toReturn = this.receiveEnergy(stack, maxReceive, simulate);
+
+        this.setMaxReceive(before);
+        return toReturn;
+    }
 }

@@ -25,7 +25,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
 
     public static final int RANGE = 7;
     public static final int ENERGY_PRODUCED = 300;
-    public final EnergyStorage storage = new EnergyStorage(35000, 450);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(35000, 450);
     private int nextUseCounter;
     private int oldEnergy;
 
@@ -77,7 +77,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
 
                             this.worldObj.setBlockToAir(theCoord);
 
-                            this.storage.receiveEnergy(ENERGY_PRODUCED, false);
+                            this.storage.receiveEnergyInternal(ENERGY_PRODUCED, false);
 
                             AssetUtil.shootParticles(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F, 1F);
                         }
@@ -115,7 +115,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage(){
         return this.storage;
     }
 

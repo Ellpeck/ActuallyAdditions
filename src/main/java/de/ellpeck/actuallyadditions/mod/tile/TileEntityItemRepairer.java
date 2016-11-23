@@ -25,7 +25,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
     public static final int ENERGY_USE = 2500;
-    public final EnergyStorage storage = new EnergyStorage(300000, 6000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 6000);
     public int nextRepairTick;
     private int lastEnergy;
 
@@ -87,7 +87,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase implements I
                 else{
                     if(this.storage.getEnergyStored() >= ENERGY_USE){
                         this.nextRepairTick++;
-                        this.storage.extractEnergy(ENERGY_USE, false);
+                        this.storage.extractEnergyInternal(ENERGY_USE, false);
                         if(this.nextRepairTick >= 4){
                             this.nextRepairTick = 0;
                             input.setItemDamage(input.getItemDamage()-1);

@@ -22,7 +22,7 @@ import net.minecraft.util.EnumFacing;
 
 public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay, ICustomEnergyReceiver{
 
-    public final EnergyStorage storage = new EnergyStorage(80000, 1000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(80000, 1000);
     private int oldEnergy;
 
     public TileEntityDisplayStand(){
@@ -40,7 +40,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
                     int energy = item.getUsePerTick(this.slots.get(0), this, this.ticksElapsed);
                     if(this.storage.getEnergyStored() >= energy){
                         if(item.update(this.slots.get(0), this, this.ticksElapsed)){
-                            this.storage.extractEnergy(energy, false);
+                            this.storage.extractEnergyInternal(energy, false);
                         }
                     }
                 }
@@ -104,7 +104,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage(){
         return this.storage;
     }
 

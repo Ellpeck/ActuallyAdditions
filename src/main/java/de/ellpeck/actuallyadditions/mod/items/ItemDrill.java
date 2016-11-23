@@ -183,7 +183,7 @@ public class ItemDrill extends ItemEnergy{
     public boolean hitEntity(ItemStack stack, EntityLivingBase entity1, EntityLivingBase entity2){
         int use = this.getEnergyUsePerBlock(stack);
         if(this.getEnergyStored(stack) >= use){
-            this.extractEnergy(stack, use, false);
+            this.extractEnergyInternal(stack, use, false);
         }
         return true;
     }
@@ -492,7 +492,7 @@ public class ItemDrill extends ItemEnergy{
         float hardness = block.getBlockHardness(state, world, pos);
         boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(state, stack)) && (!isExtra || this.getStrVsBlock(stack, world.getBlockState(pos)) > 1.0F);
         if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(world.getBlockState(pos))))){
-            this.extractEnergy(stack, use, false);
+            this.extractEnergyInternal(stack, use, false);
             //Break the Block
             return WorldUtil.playerHarvestBlock(stack, world, player, pos);
         }

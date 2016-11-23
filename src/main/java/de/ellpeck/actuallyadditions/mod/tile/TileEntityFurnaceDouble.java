@@ -33,7 +33,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public static final int SLOT_OUTPUT_2 = 3;
     public static final int ENERGY_USE = 25;
     private static final int SMELT_TIME = 80;
-    public final EnergyStorage storage = new EnergyStorage(30000, 80);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 80);
     public int firstSmeltTime;
     public int secondSmeltTime;
     public boolean isAutoSplit;
@@ -118,7 +118,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                         this.finishBurning(SLOT_INPUT_1, SLOT_OUTPUT_1);
                         this.firstSmeltTime = 0;
                     }
-                    this.storage.extractEnergy(ENERGY_USE, false);
+                    this.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
             }
             else{
@@ -132,7 +132,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                         this.finishBurning(SLOT_INPUT_2, SLOT_OUTPUT_2);
                         this.secondSmeltTime = 0;
                     }
-                    this.storage.extractEnergy(ENERGY_USE, false);
+                    this.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
             }
             else{

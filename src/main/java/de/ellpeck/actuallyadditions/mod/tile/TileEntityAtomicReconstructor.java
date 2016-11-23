@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements ICustomEnergyReceiver, IEnergyDisplay, IAtomicReconstructor{
 
     public static final int ENERGY_USE = 1000;
-    public final EnergyStorage storage = new EnergyStorage(300000, 5000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 5000);
     public int counter;
     private int currentTime;
     private int oldEnergy;
@@ -100,7 +100,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             Lens currentLens = this.getLens();
             if(currentLens.canInvoke(this, sideToManipulate, ENERGY_USE)){
                 //Extract energy for shooting the laser itself too!
-                this.storage.extractEnergy(ENERGY_USE, false);
+                this.storage.extractEnergyInternal(ENERGY_USE, false);
 
                 int distance = currentLens.getDistance();
                 for(int i = 0; i < distance; i++){
@@ -147,7 +147,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public void extractEnergy(int amount){
-        this.storage.extractEnergy(amount, false);
+        this.storage.extractEnergyInternal(amount, false);
     }
 
     @Override
@@ -197,7 +197,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage(){
         return this.storage;
     }
 

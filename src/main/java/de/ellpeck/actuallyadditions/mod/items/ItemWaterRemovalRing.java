@@ -57,7 +57,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
                             world.setBlockToAir(pos);
 
                             if(!player.capabilities.isCreativeMode){
-                                this.extractEnergy(stack, energyUse, false);
+                                this.extractEnergyInternal(stack, energyUse, false);
                             }
                         }
                         //Remove Lava
@@ -65,7 +65,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
                             world.setBlockToAir(pos);
 
                             if(!player.capabilities.isCreativeMode){
-                                this.extractEnergy(stack, energyUse*2, false);
+                                this.extractEnergyInternal(stack, energyUse*2, false);
                             }
                         }
                     }

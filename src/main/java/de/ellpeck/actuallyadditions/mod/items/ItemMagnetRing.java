@@ -46,7 +46,7 @@ public class ItemMagnetRing extends ItemEnergy{
                                 item.onCollideWithPlayer(player);
 
                                 if(!player.capabilities.isCreativeMode){
-                                    this.extractEnergy(stack, energyForItem, false);
+                                    this.extractEnergyInternal(stack, energyForItem, false);
                                 }
                             }
                         }

@@ -182,7 +182,7 @@ public class ItemFillingWand extends ItemEnergy{
                                     world.playSound(null, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume()+1.0F)/2.0F, sound.getPitch()*0.8F);
 
                                     if(!creative){
-                                        this.extractEnergy(stack, energyUse, false);
+                                        this.extractEnergyInternal(stack, energyUse, false);
                                     }
                                 }
                                 else{

@@ -27,7 +27,7 @@ import java.util.List;
 
 public class TileEntityBioReactor extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
-    public final EnergyStorage storage = new EnergyStorage(200000, 800);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 800);
 
     public int burnTime;
     public int maxBurnTime;
@@ -98,7 +98,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
         }
         else{
             this.burnTime--;
-            this.storage.receiveEnergy(this.producePerTick, false);
+            this.storage.receiveEnergyInternal(this.producePerTick, false);
         }
 
         if((this.lastBurnTime != this.burnTime || this.lastProducePerTick != this.producePerTick) && this.sendUpdateWithInterval()){

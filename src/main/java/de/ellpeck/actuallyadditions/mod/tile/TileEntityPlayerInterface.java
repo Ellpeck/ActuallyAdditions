@@ -27,7 +27,7 @@ import java.util.UUID;
 public class TileEntityPlayerInterface extends TileEntityInventoryBase implements ICustomEnergyReceiver, IEnergyDisplay{
 
     public static final int DEFAULT_RANGE = 32;
-    private final EnergyStorage storage = new EnergyStorage(30000, 50);
+    private final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 50);
     public UUID connectedPlayer;
     public String playerName;
     private int oldEnergy;
@@ -77,7 +77,7 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
                             }
 
                             if(received > 0){
-                                this.storage.extractEnergy(received, false);
+                                this.storage.extractEnergyInternal(received, false);
                             }
                         }
                     }
@@ -231,7 +231,7 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage(){
         return this.storage;
     }
 

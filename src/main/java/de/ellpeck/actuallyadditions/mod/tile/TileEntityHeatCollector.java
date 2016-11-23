@@ -25,7 +25,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
 
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
-    public final EnergyStorage storage = new EnergyStorage(30000, 80);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 80);
     private int oldEnergy;
 
     public TileEntityHeatCollector(){
@@ -60,7 +60,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                 }
 
                 if(blocksAround.size() >= BLOCKS_NEEDED){
-                    this.storage.receiveEnergy(ENERGY_PRODUCE, false);
+                    this.storage.receiveEnergyInternal(ENERGY_PRODUCE, false);
                     this.markDirty();
 
                     if(this.worldObj.rand.nextInt(10000) == 0){
@@ -97,7 +97,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage(){
         return this.storage;
     }
 
