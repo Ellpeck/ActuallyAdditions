@@ -1,3 +1,7 @@
+# 1.10.2-r81
+* Fixed phantom connections left behind when breaking an Item Laser Relay connected to an Item Interface
+* Fixed some ores not working in the Crusher even though they should
+
 # 1.11-r80
 * This versioning system is all over the place now. But it works.
 * Made some Crusher and Empowerer recipes work again that weren't working because of registry order
