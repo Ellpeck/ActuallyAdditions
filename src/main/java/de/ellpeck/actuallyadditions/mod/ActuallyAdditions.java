@@ -120,6 +120,15 @@ public class ActuallyAdditions{
         InitCrafting.init();
         InitEntities.init();
 
+        proxy.init(event);
+
+        ModUtil.LOGGER.info("Initialization Finished.");
+    }
+
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event){
+        ModUtil.LOGGER.info("Starting PostInitialization Phase...");
+
         InitVillager.init();
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
@@ -130,16 +139,6 @@ public class ActuallyAdditions{
         EmpowererHandler.init();
 
         InitBooklet.init();
-        proxy.init(event);
-
-        ModUtil.LOGGER.info("Initialization Finished.");
-    }
-
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event){
-        ModUtil.LOGGER.info("Starting PostInitialization Phase...");
-
-        InitBooklet.postInit();
         proxy.postInit(event);
 
         ModUtil.LOGGER.info("PostInitialization Finished.");
