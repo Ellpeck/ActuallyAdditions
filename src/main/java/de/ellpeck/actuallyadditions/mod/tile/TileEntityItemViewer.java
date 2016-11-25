@@ -75,11 +75,12 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     }
 
     private void queryAndSaveData(){
+        this.genericInfos.clear();
+        this.specificInfos.clear();
+
         if(this.connectedRelay != null){
             Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.connectedRelay.getPos(), this.worldObj);
             if(network != null && (this.oldNetwork != network || this.lastNetworkChangeAmount != network.changeAmount)){
-                this.genericInfos.clear();
-                this.specificInfos.clear();
 
                 this.connectedRelay.getItemHandlersInNetwork(network, this.genericInfos);
                 if(!this.genericInfos.isEmpty()){
