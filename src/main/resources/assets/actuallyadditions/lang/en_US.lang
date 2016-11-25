@@ -873,7 +873,7 @@ booklet.actuallyadditions.chapter.repairer.name=Item Repairer
 booklet.actuallyadditions.chapter.repairer.text.1=The <item>Item Repairer<r> uses <imp><rf> RF/t<r> to repair items that can be repaired in an Anvil <imp>without needing any materials<r>!
 
 booklet.actuallyadditions.chapter.coalGen.name=Coal Generator
-booklet.actuallyadditions.chapter.coalGen.text.1=The <item>Coal Generator<r> generates <imp><rf> RF/t<r> through the use of everything that can be put into a furnace. <n>Note that it only starts burning something up if there's enough space for the energy generated.
+booklet.actuallyadditions.chapter.coalGen.text.1=The <item>Coal Generator<r> generates <imp><rf> RF/t<r> through the use of everything that can be put into a furnace. <n>Note that it only starts burning something up if the buffer isn't already full of power.
 
 booklet.actuallyadditions.chapter.solarPanel.name=Solar Panel
 booklet.actuallyadditions.chapter.solarPanel.text.1=The <item>Solar Panel<r> <imp>produces <rf> RF/t<r> when it has direct daylight above it and it is daytime. Any blocks above it that are transparent will <imp>decrease its efficiency<r>, however. <n><n><i>Panelled walls
