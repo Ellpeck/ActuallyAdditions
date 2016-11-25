@@ -75,31 +75,45 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     }
 
     private void queryAndSaveData(){
-        this.genericInfos.clear();
-        this.specificInfos.clear();
-
         if(this.connectedRelay != null){
             Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.connectedRelay.getPos(), this.worldObj);
-            if(network != null && (this.oldNetwork != network || this.lastNetworkChangeAmount != network.changeAmount)){
+            if(network != null){
+                if(this.oldNetwork != network || this.lastNetworkChangeAmount != network.changeAmount){
+                    this.clearInfos();
 
-                this.connectedRelay.getItemHandlersInNetwork(network, this.genericInfos);
-                if(!this.genericInfos.isEmpty()){
-                    Collections.sort(this.genericInfos);
+                    this.connectedRelay.getItemHandlersInNetwork(network, this.genericInfos);
+                    if(!this.genericInfos.isEmpty()){
+                        Collections.sort(this.genericInfos);
 
-                    int slotsQueried = 0;
-                    for(GenericItemHandlerInfo info : this.genericInfos){
-                        for(IItemHandler handler : info.handlers){
-                            for(int i = 0; i < handler.getSlots(); i++){
-                                this.specificInfos.put(slotsQueried, new SpecificItemHandlerInfo(handler, i, info.relayInQuestion));
-                                slotsQueried++;
+                        int slotsQueried = 0;
+                        for(GenericItemHandlerInfo info : this.genericInfos){
+                            for(IItemHandler handler : info.handlers){
+                                for(int i = 0; i < handler.getSlots(); i++){
+                                    this.specificInfos.put(slotsQueried, new SpecificItemHandlerInfo(handler, i, info.relayInQuestion));
+                                    slotsQueried++;
+                                }
                             }
                         }
                     }
+
+                    this.oldNetwork = network;
+                    this.lastNetworkChangeAmount = network.changeAmount;
                 }
 
-                this.oldNetwork = network;
-                this.lastNetworkChangeAmount = network.changeAmount;
+                return;
             }
+        }
+
+        this.clearInfos();
+    }
+
+    private void clearInfos(){
+        if(!this.genericInfos.isEmpty()){
+            this.genericInfos.clear();
+        }
+
+        if(!this.specificInfos.isEmpty()){
+            this.specificInfos.clear();
         }
     }
 
