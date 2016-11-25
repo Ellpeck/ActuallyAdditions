@@ -45,7 +45,7 @@ public class SlotFilter extends Slot{
             }
         }
 
-        return null;
+        return StackUtil.getNull();
     }
 
     @Override
