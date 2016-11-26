@@ -25,7 +25,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     @Override
     public boolean isBoundThingInRange(){
         if(super.isBoundThingInRange()){
-            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            TileEntity tile = this.world.getTileEntity(this.boundPosition);
             if(tile != null){
                 for(EnumFacing facing : EnumFacing.values()){
                     if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)){

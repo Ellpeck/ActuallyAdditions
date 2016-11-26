@@ -69,7 +69,7 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
-        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
+        TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if(tile != null){
             if(tile instanceof TileEntityPlayerInterface){
                 TileEntityPlayerInterface face = (TileEntityPlayerInterface)tile;

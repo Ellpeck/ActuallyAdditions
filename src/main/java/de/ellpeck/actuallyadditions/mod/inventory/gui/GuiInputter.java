@@ -233,7 +233,7 @@ public class GuiInputter extends GuiContainer{
         compound.setInteger("Y", this.y);
         compound.setInteger("Z", this.z);
         compound.setInteger("WorldID", this.world.provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+        compound.setInteger("PlayerID", Minecraft.getMinecraft().player.getEntityId());
         compound.setInteger("NumberID", textID);
         compound.setInteger("Number", text);
         PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));

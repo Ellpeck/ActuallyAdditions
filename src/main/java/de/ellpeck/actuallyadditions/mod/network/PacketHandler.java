@@ -49,7 +49,7 @@ public final class PacketHandler{
         @Override
         @SideOnly(Side.CLIENT)
         public void handleData(NBTTagCompound compound){
-            World world = Minecraft.getMinecraft().theWorld;
+            World world = Minecraft.getMinecraft().world;
             if(world != null){
                 TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
                 if(tile instanceof TileEntityBase){

@@ -18,9 +18,10 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -113,7 +114,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
-        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
+        TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityAtomicReconstructor){
             ItemStack slot = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);
             String strg;
@@ -141,7 +142,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
-        int rotation = EnumFacing.func_190914_a(pos, player).ordinal();
+        int rotation = EnumFacing.getDirectionFromEntityLiving(pos, player).ordinal();
         world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
@@ -201,8 +202,8 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
             if(this.lastSysTime+3000 < sysTime){
                 this.lastSysTime = sysTime;
-                this.toPick1 = player.worldObj.rand.nextInt(NAME_FLAVOR_AMOUNTS_1)+1;
-                this.toPick2 = player.worldObj.rand.nextInt(NAME_FLAVOR_AMOUNTS_2)+1;
+                this.toPick1 = player.world.rand.nextInt(NAME_FLAVOR_AMOUNTS_1)+1;
+                this.toPick2 = player.world.rand.nextInt(NAME_FLAVOR_AMOUNTS_2)+1;
             }
 
             String base = "tile."+ModUtil.MOD_ID+"."+((BlockAtomicReconstructor)this.block).getBaseName()+".info.";

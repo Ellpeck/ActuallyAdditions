@@ -24,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,7 +85,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
     private int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate){
         int transmitted = 0;
         if(maxTransmit > 0){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);
+            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.world);
             if(network != null){
                 transmitted = this.transferEnergyToReceiverInNeed(from, network, maxTransmit, simulate);
             }
@@ -110,7 +111,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
         this.receiversAround.clear();
         for(EnumFacing side : EnumFacing.values()){
             BlockPos pos = this.getPos().offset(side);
-            TileEntity tile = this.worldObj.getTileEntity(pos);
+            TileEntity tile = this.world.getTileEntity(pos);
             if(tile != null && !(tile instanceof TileEntityLaserRelay)){
                 if((ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite())) || tile.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())){
                     this.receiversAround.put(side, tile);
@@ -143,7 +144,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
             for(BlockPos relay : pair.getPositions()){
                 if(relay != null && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
-                    TileEntity relayTile = this.worldObj.getTileEntity(relay);
+                    TileEntity relayTile = this.world.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayEnergy){
                         TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy)relayTile;
                         int amount = theRelay.receiversAround.size();
@@ -219,7 +220,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
     }
 
     private int calcDeduction(int theoreticalReceived, double highestLoss){
-        return ConfigBoolValues.LASER_RELAY_LOSS.isEnabled() ? MathHelper.ceiling_double_int(theoreticalReceived*(highestLoss/100)) : 0;
+        return ConfigBoolValues.LASER_RELAY_LOSS.isEnabled() ? MathHelper.ceil(theoreticalReceived*(highestLoss/100)) : 0;
     }
 
     public int getEnergyCap(){

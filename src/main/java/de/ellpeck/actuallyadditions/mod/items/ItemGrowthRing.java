@@ -48,14 +48,14 @@ public class ItemGrowthRing extends ItemEnergy{
             List<BlockPos> blocks = new ArrayList<BlockPos>();
 
             //Adding all possible Blocks
-            if(player.worldObj.getTotalWorldTime()%30 == 0){
+            if(player.world.getTotalWorldTime()%30 == 0){
                 int range = 3;
                 for(int x = -range; x < range+1; x++){
                     for(int z = -range; z < range+1; z++){
                         for(int y = -range; y < range+1; y++){
-                            int theX = MathHelper.floor_double(player.posX+x);
-                            int theY = MathHelper.floor_double(player.posY+y);
-                            int theZ = MathHelper.floor_double(player.posZ+z);
+                            int theX = MathHelper.floor(player.posX+x);
+                            int theY = MathHelper.floor(player.posY+y);
+                            int theZ = MathHelper.floor(player.posZ+z);
                             BlockPos posInQuestion = new BlockPos(theX, theY, theZ);
                             Block theBlock = world.getBlockState(posInQuestion).getBlock();
                             if((theBlock instanceof IGrowable || theBlock instanceof IPlantable) && !(theBlock instanceof BlockGrass)){

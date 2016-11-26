@@ -51,7 +51,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
     public void updateEntity(){
         super.updateEntity();
 
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             List<EmpowererRecipe> recipes = getRecipesForInput(this.slots.get(0));
             if(!recipes.isEmpty()){
                 for(EmpowererRecipe recipe : recipes){
@@ -68,15 +68,15 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
                                 stand.decrStackSize(0, 1);
                             }
 
-                            AssetUtil.shootParticles(this.worldObj, stand.getPos().getX(), stand.getPos().getY()+0.45F, stand.getPos().getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), recipe.particleColor, 8, 0.5F, 1F);
+                            AssetUtil.shootParticles(this.world, stand.getPos().getX(), stand.getPos().getY()+0.45F, stand.getPos().getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), recipe.particleColor, 8, 0.5F, 1F);
                         }
 
-                        if(this.processTime%5 == 0 && this.worldObj instanceof WorldServer){
-                            ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 3, 0, 0, 0, 0.1D);
+                        if(this.processTime%5 == 0 && this.world instanceof WorldServer){
+                            ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 3, 0, 0, 0, 0.1D);
                         }
 
                         if(done){
-                            ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 300, 0, 0, 0, 0.25D);
+                            ((WorldServer)this.world).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 300, 0, 0, 0, 0.25D);
 
                             this.slots.set(0, recipe.output.copy());
                             this.markDirty();
@@ -99,7 +99,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
         for(int i = 0; i < EnumFacing.HORIZONTALS.length; i++){
             EnumFacing facing = EnumFacing.HORIZONTALS[i];
             BlockPos offset = this.pos.offset(facing, 3);
-            TileEntity tile = this.worldObj.getTileEntity(offset);
+            TileEntity tile = this.world.getTileEntity(offset);
 
             if(tile instanceof TileEntityDisplayStand){
                 TileEntityDisplayStand stand = (TileEntityDisplayStand)tile;

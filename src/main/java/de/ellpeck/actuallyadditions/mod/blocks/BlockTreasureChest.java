@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -90,10 +89,10 @@ public class BlockTreasureChest extends BlockBase{
     }
 
     private void dropItems(World world, BlockPos pos){
-        for(int i = 0; i < MathHelper.getRandomIntegerInRange(world.rand, 3, 6); i++){
+        for(int i = 0; i < MathHelper.getInt(world.rand, 3, 6); i++){
             TreasureChestLoot theReturn = WeightedRandom.getRandomItem(world.rand, ActuallyAdditionsAPI.TREASURE_CHEST_LOOT);
             ItemStack itemStack = theReturn.returnItem.copy();
-            itemStack = StackUtil.setStackSize(itemStack, MathHelper.getRandomIntegerInRange(world.rand, theReturn.minAmount, theReturn.maxAmount));
+            itemStack = StackUtil.setStackSize(itemStack, MathHelper.getInt(world.rand, theReturn.minAmount, theReturn.maxAmount));
 
             float dX = world.rand.nextFloat()*0.8F+0.1F;
             float dY = world.rand.nextFloat()*0.8F+0.1F;
@@ -103,7 +102,7 @@ public class BlockTreasureChest extends BlockBase{
             entityItem.motionX = world.rand.nextGaussian()*factor;
             entityItem.motionY = world.rand.nextGaussian()*factor+0.2F;
             entityItem.motionZ = world.rand.nextGaussian()*factor;
-            world.spawnEntityInWorld(entityItem);
+            world.spawnEntity(entityItem);
         }
     }
 

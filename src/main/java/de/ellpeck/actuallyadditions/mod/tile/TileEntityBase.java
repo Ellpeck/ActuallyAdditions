@@ -164,7 +164,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public final void sendUpdate(){
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             NBTTagCompound compound = new NBTTagCompound();
             this.writeSyncableNBT(compound, NBTType.SYNC);
 
@@ -173,7 +173,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
             data.setInteger("X", this.pos.getX());
             data.setInteger("Y", this.pos.getY());
             data.setInteger("Z", this.pos.getZ());
-            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER), new NetworkRegistry.TargetPoint(this.worldObj.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 128));
+            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER), new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 128));
         }
     }
 
@@ -227,7 +227,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public void updateEntity(){
         this.ticksElapsed++;
 
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(this instanceof ISharingEnergyProvider){
                 ISharingEnergyProvider provider = (ISharingEnergyProvider)this;
                 if(provider.doesShareEnergy()){
@@ -284,7 +284,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     public void saveDataOnChangeOrWorldStart(){
         for(EnumFacing side : EnumFacing.values()){
-            this.tilesAround[side.ordinal()] = this.worldObj.getTileEntity(this.pos.offset(side));
+            this.tilesAround[side.ordinal()] = this.world.getTileEntity(this.pos.offset(side));
         }
     }
 
@@ -298,7 +298,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public boolean canPlayerUse(EntityPlayer player){
-        return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64 && !this.isInvalid() && this.worldObj.getTileEntity(this.pos) == this;
+        return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64 && !this.isInvalid() && this.world.getTileEntity(this.pos) == this;
     }
 
     protected boolean sendUpdateWithInterval(){

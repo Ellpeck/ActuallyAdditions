@@ -156,7 +156,7 @@ public class MethodHandler implements IMethodHandler{
                                         }
                                         else{
                                             EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
-                                            tile.getWorldObject().spawnEntityInWorld(item);
+                                            tile.getWorldObject().spawnEntity(item);
                                             tile.getWorldObject().setBlockToAir(pos);
                                         }
 
@@ -193,14 +193,14 @@ public class MethodHandler implements IMethodHandler{
                                     stackCopy = StackUtil.addStackSize(stackCopy, -itemsPossible);
 
                                     EntityItem inputLeft = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, stackCopy);
-                                    tile.getWorldObject().spawnEntityInWorld(inputLeft);
+                                    tile.getWorldObject().spawnEntity(inputLeft);
                                 }
 
                                 ItemStack outputCopy = recipe.outputStack.copy();
                                 outputCopy = StackUtil.setStackSize(outputCopy, itemsPossible);
 
                                 EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
-                                tile.getWorldObject().spawnEntityInWorld(newItem);
+                                tile.getWorldObject().spawnEntity(newItem);
 
                                 tile.extractEnergy(recipe.energyUse*itemsPossible);
                                 break;

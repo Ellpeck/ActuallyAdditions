@@ -114,7 +114,7 @@ public class ContainerCoffeeMachine extends Container{
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
                 return StackUtil.getNull();
             }
-            theSlot.func_190901_a(player, newStack);
+            theSlot.onTake(player, newStack);
 
             return currentStack;
         }
@@ -123,6 +123,6 @@ public class ContainerCoffeeMachine extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.machine.isUseableByPlayer(player);
+        return this.machine.isUsableByPlayer(player);
     }
 }

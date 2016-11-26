@@ -160,7 +160,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
-        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
+        TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityCompost){
             ItemStack slot = ((TileEntityCompost)tile).getStackInSlot(0);
             String strg;

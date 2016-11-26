@@ -24,9 +24,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.*;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -108,7 +108,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             this.storeCoffee();
 
             if(this.brewTime > 0 || this.isRedstonePowered){
@@ -140,11 +140,11 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     public void brew(){
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(StackUtil.isValid(this.slots.get(SLOT_INPUT)) && this.slots.get(SLOT_INPUT).getItem() == InitItems.itemMisc && this.slots.get(SLOT_INPUT).getItemDamage() == TheMiscItems.CUP.ordinal() && !StackUtil.isValid(this.slots.get(SLOT_OUTPUT)) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= WATER_USE){
                 if(this.storage.getEnergyStored() >= ENERGY_USED){
                     if(this.brewTime%30 == 0){
-                        this.worldObj.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.35F, 1.0F);
+                        this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.35F, 1.0F);
                     }
 
                     this.brewTime++;

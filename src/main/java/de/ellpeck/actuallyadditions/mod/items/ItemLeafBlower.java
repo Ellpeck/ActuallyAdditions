@@ -70,7 +70,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
 
     @Override
     public void onUsingTick(ItemStack stack, EntityLivingBase player, int time){
-        this.doUpdate(player.worldObj, MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY), MathHelper.floor_double(player.posZ), time, stack);
+        this.doUpdate(player.world, MathHelper.floor(player.posX), MathHelper.floor(player.posY), MathHelper.floor(player.posZ), time, stack);
     }
 
     private boolean doUpdate(World world, int x, int y, int z, int time, ItemStack stack){
@@ -130,7 +130,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
 
             for(ItemStack theDrop : drops){
                 //Drops the Items into the World
-                world.spawnEntityInWorld(new EntityItem(world, theCoord.getX()+0.5, theCoord.getY()+0.5, theCoord.getZ()+0.5, theDrop));
+                world.spawnEntity(new EntityItem(world, theCoord.getX()+0.5, theCoord.getY()+0.5, theCoord.getZ()+0.5, theDrop));
             }
             return true;
         }

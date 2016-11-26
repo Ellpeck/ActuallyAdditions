@@ -56,12 +56,12 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(this.storage.getEnergyStored() >= ENERGY_USE && this.isMultiblock() == HAS_AIR){
                 this.currentWorkTime++;
                 if(this.currentWorkTime >= 200){
                     this.currentWorkTime = 0;
-                    this.worldObj.setBlockState(this.pos.up(), Blocks.LAVA.getDefaultState(), 2);
+                    this.world.setBlockState(this.pos.up(), Blocks.LAVA.getDefaultState(), 2);
                     this.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
             }
@@ -84,14 +84,14 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
                 thisPos.add(0, 1, -1)
         };
 
-        if(WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), this.worldObj)){
+        if(WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), this.world)){
             BlockPos pos = thisPos.up();
-            IBlockState state = this.worldObj.getBlockState(pos);
+            IBlockState state = this.world.getBlockState(pos);
             Block block = state.getBlock();
             if(block == Blocks.LAVA || block == Blocks.FLOWING_LAVA){
                 return HAS_LAVA;
             }
-            if(block == null || this.worldObj.isAirBlock(pos)){
+            if(block == null || this.world.isAirBlock(pos)){
                 return HAS_AIR;
             }
         }

@@ -39,11 +39,6 @@ public enum TheColoredLampColors implements IStringSerializable{
         this.regName = regName;
     }
 
-    @Override
-    public String getName(){
-        return this.regName;
-    }
-
     public static TheColoredLampColors getColorFromDyeName(String color){
         if(color.substring(0, 3).equals("dye")){
             String actualName = color.substring(3);
@@ -57,5 +52,10 @@ public enum TheColoredLampColors implements IStringSerializable{
             }
         }
         return null;
+    }
+
+    @Override
+    public String getName(){
+        return this.regName;
     }
 }

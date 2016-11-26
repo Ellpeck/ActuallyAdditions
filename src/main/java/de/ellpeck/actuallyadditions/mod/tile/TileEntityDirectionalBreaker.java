@@ -57,7 +57,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.currentTime > 0){
                     this.currentTime--;
@@ -78,20 +78,20 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
 
     private void doWork(){
         if(this.storage.getEnergyStored() >= ENERGY_USE*RANGE){
-            IBlockState state = this.worldObj.getBlockState(this.pos);
+            IBlockState state = this.world.getBlockState(this.pos);
             EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
 
             for(int i = 0; i < RANGE; i++){
                 BlockPos coordsBlock = this.pos.offset(sideToManipulate, i+1);
-                Block blockToBreak = this.worldObj.getBlockState(coordsBlock).getBlock();
-                if(blockToBreak != null && !this.worldObj.isAirBlock(coordsBlock) && blockToBreak.getBlockHardness(this.worldObj.getBlockState(coordsBlock), this.worldObj, this.pos) > -1.0F){
-                    List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0);
-                    float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
+                Block blockToBreak = this.world.getBlockState(coordsBlock).getBlock();
+                if(blockToBreak != null && !this.world.isAirBlock(coordsBlock) && blockToBreak.getBlockHardness(this.world.getBlockState(coordsBlock), this.world, this.pos) > -1.0F){
+                    List<ItemStack> drops = blockToBreak.getDrops(this.world, coordsBlock, this.world.getBlockState(coordsBlock), 0);
+                    float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.world, coordsBlock, this.world.getBlockState(coordsBlock), 0, 1, false, null);
 
-                    if(this.worldObj.rand.nextFloat() <= chance){
+                    if(this.world.rand.nextFloat() <= chance){
                         if(WorldUtil.addToInventory(this, drops, false, true)){
-                            this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(this.worldObj.getBlockState(coordsBlock)));
-                            this.worldObj.setBlockToAir(coordsBlock);
+                            this.world.playEvent(2001, coordsBlock, Block.getStateId(this.world.getBlockState(coordsBlock)));
+                            this.world.setBlockToAir(coordsBlock);
                             WorldUtil.addToInventory(this, drops, true, true);
                             this.storage.extractEnergyInternal(ENERGY_USE, false);
                             this.markDirty();

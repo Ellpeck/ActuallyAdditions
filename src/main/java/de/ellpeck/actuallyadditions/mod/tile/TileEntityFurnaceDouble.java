@@ -13,8 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -101,7 +99,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(this.isAutoSplit){
                 autoSplit(this.slots, SLOT_INPUT_1, SLOT_INPUT_2);
             }

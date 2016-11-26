@@ -47,14 +47,14 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
             if(ENERGY_PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                 for(int i = 1; i <= 5; i++){
                     BlockPos coords = this.pos.offset(WorldUtil.getDirectionBySidesInOrder(i));
-                    IBlockState state = this.worldObj.getBlockState(coords);
+                    IBlockState state = this.world.getBlockState(coords);
                     Block block = state.getBlock();
-                    if(block != null && block.getMaterial(this.worldObj.getBlockState(coords)) == Material.LAVA && block.getMetaFromState(state) == 0){
+                    if(block != null && block.getMaterial(this.world.getBlockState(coords)) == Material.LAVA && block.getMetaFromState(state) == 0){
                         blocksAround.add(i);
                     }
                 }
@@ -63,9 +63,9 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                     this.storage.receiveEnergyInternal(ENERGY_PRODUCE, false);
                     this.markDirty();
 
-                    if(this.worldObj.rand.nextInt(10000) == 0){
-                        int randomSide = blocksAround.get(this.worldObj.rand.nextInt(blocksAround.size()));
-                        this.worldObj.setBlockToAir(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(randomSide)));
+                    if(this.world.rand.nextInt(10000) == 0){
+                        int randomSide = blocksAround.get(this.world.rand.nextInt(blocksAround.size()));
+                        this.world.setBlockToAir(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(randomSide)));
                     }
                 }
             }

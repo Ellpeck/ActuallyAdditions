@@ -102,9 +102,9 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
     @Override
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         if(posHit != null && posHit.getBlockPos() != null){
-            IBlockState state = minecraft.theWorld.getBlockState(posHit.getBlockPos());
+            IBlockState state = minecraft.world.getBlockState(posHit.getBlockPos());
             Block block = state.getBlock();
-            if(block != null && !block.isAir(minecraft.theWorld.getBlockState(posHit.getBlockPos()), minecraft.theWorld, posHit.getBlockPos())){
+            if(block != null && !block.isAir(minecraft.world.getBlockState(posHit.getBlockPos()), minecraft.world, posHit.getBlockPos())){
                 ItemStack blockStack = new ItemStack(block, 1, block.getMetaFromState(state));
                 int height = resolution.getScaledHeight()/5*3;
                 if(player.isSneaking()){

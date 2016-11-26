@@ -183,7 +183,7 @@ public final class WorldUtil{
         item.motionX = 0;
         item.motionY = 0;
         item.motionZ = 0;
-        world.spawnEntityInWorld(item);
+        world.spawnEntity(item);
     }
 
     public static EnumFacing getDirectionBySidesInOrder(int side){

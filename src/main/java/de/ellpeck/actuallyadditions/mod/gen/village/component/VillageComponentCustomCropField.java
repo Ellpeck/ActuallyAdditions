@@ -99,7 +99,7 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
     }
 
     private IBlockState getRandomCropType(Random rand){
-        int randomMeta = MathHelper.getRandomIntegerInRange(rand, 1, 7);
+        int randomMeta = MathHelper.getInt(rand, 1, 7);
         switch(rand.nextInt(4)){
             case 0:
                 return InitBlocks.blockFlax.getStateFromMeta(randomMeta);

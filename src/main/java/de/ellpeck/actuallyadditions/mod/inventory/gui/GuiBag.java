@@ -68,8 +68,8 @@ public class GuiBag extends GuiContainer{
     protected void actionPerformed(GuiButton button) throws IOException{
         NBTTagCompound data = new NBTTagCompound();
         data.setInteger("ButtonID", button.id);
-        data.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
-        data.setInteger("WorldID", Minecraft.getMinecraft().theWorld.provider.getDimension());
+        data.setInteger("PlayerID", Minecraft.getMinecraft().player.getEntityId());
+        data.setInteger("WorldID", Minecraft.getMinecraft().world.provider.getDimension());
         PacketHandler.theNetwork.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
     }
 

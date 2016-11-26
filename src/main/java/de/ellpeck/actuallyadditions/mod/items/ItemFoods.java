@@ -29,8 +29,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 public class ItemFoods extends ItemFoodBase{
 
     public static final TheFoods[] ALL_FOODS = TheFoods.values();
@@ -49,9 +47,9 @@ public class ItemFoods extends ItemFoodBase{
         if(StackUtil.isValid(returnItem) && player instanceof EntityPlayer){
             if(!((EntityPlayer)player).inventory.addItemStackToInventory(returnItem.copy())){
                 if(!world.isRemote){
-                    EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem.copy());
+                    EntityItem entityItem = new EntityItem(player.world, player.posX, player.posY, player.posZ, returnItem.copy());
                     entityItem.setPickupDelay(0);
-                    player.worldObj.spawnEntityInWorld(entityItem);
+                    player.world.spawnEntity(entityItem);
                 }
             }
         }

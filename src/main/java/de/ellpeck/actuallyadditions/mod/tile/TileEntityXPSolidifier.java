@@ -121,7 +121,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(this.amount > 0){
                 if(!StackUtil.isValid(this.slots.get(0))){
                     int toSet = this.amount > 64 ? 64 : this.amount;
@@ -140,7 +140,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
             if(!this.isRedstonePowered){
                 int range = 5;
-                List<EntityXPOrb> orbs = this.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+1+range, this.pos.getY()+1+range, this.pos.getZ()+1+range));
+                List<EntityXPOrb> orbs = this.world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+1+range, this.pos.getY()+1+range, this.pos.getZ()+1+range));
                 if(orbs != null && !orbs.isEmpty()){
                     for(EntityXPOrb orb : orbs){
                         if(orb != null && !orb.isDead && !orb.getEntityData().getBoolean(ModUtil.MOD_ID+"FromSolidified")){
@@ -192,7 +192,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 int xp = this.buttonAmounts[buttonID] == -999 ? playerXP/ItemSolidifiedExperience.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
                 if(this.amount < Integer.MAX_VALUE-xp && playerXP >= ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp){
                     addPlayerXP(player, -(ItemSolidifiedExperience.SOLID_XP_AMOUNT*xp));
-                    if(!this.worldObj.isRemote){
+                    if(!this.world.isRemote){
                         this.amount += xp;
                     }
                 }

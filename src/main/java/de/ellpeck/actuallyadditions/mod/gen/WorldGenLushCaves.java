@@ -18,7 +18,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -97,7 +96,7 @@ public class WorldGenLushCaves{
                     trees.generate(world, rand, pos.up());
 
                     if(ConfigBoolValues.DUNGEON_LOOT.isEnabled() && !crateGenDone && genCrate){
-                        BlockPos cratePos = pos.add(MathHelper.getRandomIntegerInRange(rand, -2, 2), MathHelper.getRandomIntegerInRange(rand, 3, 8), MathHelper.getRandomIntegerInRange(rand, -2, 2));
+                        BlockPos cratePos = pos.add(MathHelper.getInt(rand, -2, 2), MathHelper.getInt(rand, 3, 8), MathHelper.getInt(rand, -2, 2));
 
                         IBlockState state = world.getBlockState(cratePos);
                         if(state != null && state.getBlock().isLeaves(state, world, cratePos)){

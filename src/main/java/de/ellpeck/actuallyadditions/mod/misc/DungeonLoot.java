@@ -96,7 +96,7 @@ public class DungeonLoot{
                 addDrillCore = true;
                 addQuartz = true;
             }
-            else if(LootTableList.field_191192_o.equals(event.getName())){ //Woodland Mansion
+            else if(LootTableList.CHESTS_WOODLAND_MANSION.equals(event.getName())){
                 addBatWings = true;
                 addCrystals = true;
                 addDrillCore = true;

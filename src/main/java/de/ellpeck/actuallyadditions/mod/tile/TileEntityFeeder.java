@@ -64,10 +64,10 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             boolean theFlag = this.currentTimer > 0;
             int range = 5;
-            List<EntityAnimal> animals = this.worldObj.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
+            List<EntityAnimal> animals = this.world.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
             if(animals != null){
                 this.currentAnimalAmount = animals.size();
                 if(this.currentAnimalAmount >= 2){
@@ -75,7 +75,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                         if(this.currentTimer >= TIME){
                             this.currentTimer = 0;
                             if(StackUtil.isValid(this.slots.get(0))){
-                                EntityAnimal randomAnimal = animals.get(this.worldObj.rand.nextInt(this.currentAnimalAmount));
+                                EntityAnimal randomAnimal = animals.get(this.world.rand.nextInt(this.currentAnimalAmount));
                                 if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && (randomAnimal.isBreedingItem(this.slots.get(0)) || this.canHorseBeFed(randomAnimal))){
 
                                     this.feedAnimal(randomAnimal);
@@ -127,10 +127,10 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     public void feedAnimal(EntityAnimal animal){
         animal.setInLove(null);
         for(int i = 0; i < 7; i++){
-            double d = animal.worldObj.rand.nextGaussian()*0.02D;
-            double d1 = animal.worldObj.rand.nextGaussian()*0.02D;
-            double d2 = animal.worldObj.rand.nextGaussian()*0.02D;
-            this.worldObj.spawnParticle(EnumParticleTypes.HEART, (animal.posX+(double)(animal.worldObj.rand.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(animal.worldObj.rand.nextFloat()*animal.height), (animal.posZ+(double)(animal.worldObj.rand.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
+            double d = animal.world.rand.nextGaussian()*0.02D;
+            double d1 = animal.world.rand.nextGaussian()*0.02D;
+            double d2 = animal.world.rand.nextGaussian()*0.02D;
+            this.world.spawnParticle(EnumParticleTypes.HEART, (animal.posX+(double)(animal.world.rand.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(animal.world.rand.nextFloat()*animal.height), (animal.posZ+(double)(animal.world.rand.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
         }
     }
 

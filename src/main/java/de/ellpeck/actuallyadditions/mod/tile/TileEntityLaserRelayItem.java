@@ -65,7 +65,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
         for(int i = 0; i <= 5; i++){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
             BlockPos pos = this.getPos().offset(side);
-            TileEntity tile = this.worldObj.getTileEntity(pos);
+            TileEntity tile = this.world.getTileEntity(pos);
             if(tile != null && !(tile instanceof TileEntityItemViewer) && !(tile instanceof TileEntityLaserRelay)){
                 IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
                 if(handler != null){
@@ -95,7 +95,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
             for(BlockPos relay : pair.getPositions()){
                 if(relay != null && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
-                    TileEntity aRelayTile = this.worldObj.getTileEntity(relay);
+                    TileEntity aRelayTile = this.world.getTileEntity(relay);
                     if(aRelayTile instanceof TileEntityLaserRelayItem){
                         TileEntityLaserRelayItem relayTile = (TileEntityLaserRelayItem)aRelayTile;
                         GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);

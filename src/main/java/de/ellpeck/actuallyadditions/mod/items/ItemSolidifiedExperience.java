@@ -40,11 +40,11 @@ public class ItemSolidifiedExperience extends ItemBase{
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
         if(ConfigBoolValues.DO_XP_DROPS.isEnabled()){
-            if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
+            if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
                 //Drop Solidified XP
                 if(event.getEntityLiving() instanceof EntityCreature){
-                    if(event.getEntityLiving().worldObj.rand.nextInt(10) <= event.getLootingLevel()*2){
-                        event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemSolidifiedExperience, event.getEntityLiving().worldObj.rand.nextInt(2+event.getLootingLevel())+1), 0);
+                    if(event.getEntityLiving().world.rand.nextInt(10) <= event.getLootingLevel()*2){
+                        event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemSolidifiedExperience, event.getEntityLiving().world.rand.nextInt(2+event.getLootingLevel())+1), 0);
                     }
                 }
             }
@@ -71,7 +71,7 @@ public class ItemSolidifiedExperience extends ItemBase{
 
             EntityXPOrb orb = new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, amount);
             orb.getEntityData().setBoolean(ModUtil.MOD_ID+"FromSolidified", true);
-            world.spawnEntityInWorld(orb);
+            world.spawnEntity(orb);
         }
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }

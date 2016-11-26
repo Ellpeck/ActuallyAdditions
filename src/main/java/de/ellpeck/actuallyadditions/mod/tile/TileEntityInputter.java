@@ -142,7 +142,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public void saveDataOnChangeOrWorldStart(){
         if(this.sideToPull != -1){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(this.sideToPull);
-            this.placeToPull = this.worldObj.getTileEntity(this.pos.offset(side));
+            this.placeToPull = this.world.getTileEntity(this.pos.offset(side));
 
             if(this.slotToPullEnd <= 0 && this.placeToPull != null){
                 if(this.placeToPull instanceof IInventory){
@@ -161,7 +161,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
         if(this.sideToPut != -1){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(this.sideToPut);
-            this.placeToPut = this.worldObj.getTileEntity(this.pos.offset(side));
+            this.placeToPut = this.world.getTileEntity(this.pos.offset(side));
 
             if(this.slotToPutEnd <= 0 && this.placeToPut != null){
                 if(this.placeToPut instanceof IInventory){
@@ -260,7 +260,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
 
             //Is Block not powered by Redstone?
             if(!this.isRedstonePowered){

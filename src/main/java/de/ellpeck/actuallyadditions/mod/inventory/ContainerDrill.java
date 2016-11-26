@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
@@ -25,8 +24,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-
-import java.util.Arrays;
 
 
 public class ContainerDrill extends Container{
@@ -114,7 +111,7 @@ public class ContainerDrill extends Container{
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
                 return StackUtil.getNull();
             }
-            theSlot.func_190901_a(player, newStack);
+            theSlot.onTake(player, newStack);
 
             return currentStack;
         }
@@ -142,7 +139,7 @@ public class ContainerDrill extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.drillInventory.isUseableByPlayer(player);
+        return this.drillInventory.isUsableByPlayer(player);
     }
 
     public static class InventoryDrill implements IInventory{
@@ -165,7 +162,7 @@ public class ContainerDrill extends Container{
         }
 
         @Override
-        public boolean isUseableByPlayer(EntityPlayer player){
+        public boolean isUsableByPlayer(EntityPlayer player){
             return true;
         }
 
@@ -216,7 +213,7 @@ public class ContainerDrill extends Container{
         }
 
         @Override
-        public boolean func_191420_l(){
+        public boolean isEmpty(){
             return StackUtil.isIInvEmpty(this.slots);
         }
 

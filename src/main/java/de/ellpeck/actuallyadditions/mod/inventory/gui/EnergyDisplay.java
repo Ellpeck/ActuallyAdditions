@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -68,7 +67,7 @@ public class EnergyDisplay extends Gui{
         if(this.rfReference.getEnergyStored() > 0){
             int i = this.rfReference.getEnergyStored()*83/this.rfReference.getMaxEnergyStored();
 
-            float[] color = AssetUtil.getWheelColor(mc.theWorld.getTotalWorldTime()%256);
+            float[] color = AssetUtil.getWheelColor(mc.world.getTotalWorldTime()%256);
             GlStateManager.color(color[0]/255F, color[1]/255F, color[2]/255F);
             this.drawTexturedModalRect(barX+1, barY+84-i, 36, 172, 16, i);
             GlStateManager.color(1F, 1F, 1F);

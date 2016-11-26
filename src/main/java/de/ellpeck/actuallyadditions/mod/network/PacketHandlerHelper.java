@@ -27,7 +27,7 @@ public final class PacketHandlerHelper{
         compound.setInteger("Y", pos.getY());
         compound.setInteger("Z", pos.getZ());
         compound.setInteger("WorldID", tile.getWorld().provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getMinecraft().thePlayer.getEntityId());
+        compound.setInteger("PlayerID", Minecraft.getMinecraft().player.getEntityId());
         compound.setInteger("ButtonID", buttonId);
         PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }

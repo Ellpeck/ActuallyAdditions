@@ -51,6 +51,17 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
         super("oilGenerator");
     }
 
+    private static OilGenRecipe getRecipeForFluid(String fluidName){
+        if(fluidName != null){
+            for(OilGenRecipe recipe : ActuallyAdditionsAPI.OIL_GENERATOR_RECIPES){
+                if(recipe != null && fluidName.equals(recipe.fluidName)){
+                    return recipe;
+                }
+            }
+        }
+        return null;
+    }
+
     @SideOnly(Side.CLIENT)
     public int getBurningScaled(int i){
         return this.currentBurnTime*i/this.maxBurnTime;
@@ -62,17 +73,6 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
             Fluid fluid = stack.getFluid();
             if(fluid != null){
                 return getRecipeForFluid(fluid.getName());
-            }
-        }
-        return null;
-    }
-
-    private static OilGenRecipe getRecipeForFluid(String fluidName){
-        if(fluidName != null){
-            for(OilGenRecipe recipe : ActuallyAdditionsAPI.OIL_GENERATOR_RECIPES){
-                if(recipe != null && fluidName.equals(recipe.fluidName)){
-                    return recipe;
-                }
             }
         }
         return null;
@@ -105,7 +105,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             boolean flag = this.currentBurnTime > 0;
 
             if(this.currentBurnTime > 0 && this.currentEnergyProduce > 0){

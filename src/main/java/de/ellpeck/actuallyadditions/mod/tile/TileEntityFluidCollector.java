@@ -23,11 +23,11 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityFluidCollector extends TileEntityBase implements ISharingFluidHandler{
 
@@ -66,54 +66,54 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     }
 
     private void doWork(){
-        IBlockState state = this.worldObj.getBlockState(this.pos);
+        IBlockState state = this.world.getBlockState(this.pos);
         Block block = state.getBlock();
         EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(block.getMetaFromState(state));
         BlockPos coordsBlock = this.pos.offset(sideToManipulate);
 
-        IBlockState stateToBreak = this.worldObj.getBlockState(coordsBlock);
+        IBlockState stateToBreak = this.world.getBlockState(coordsBlock);
         Block blockToBreak = stateToBreak.getBlock();
         if(!this.isPlacer && blockToBreak != null && blockToBreak.getMetaFromState(stateToBreak) == 0 && Util.BUCKET <= this.tank.getCapacity()-this.tank.getFluidAmount()){
             if(blockToBreak instanceof IFluidBlock && ((IFluidBlock)blockToBreak).getFluid() != null){
                 if(this.tank.fillInternal(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), Util.BUCKET), false) >= Util.BUCKET){
                     this.tank.fillInternal(new FluidStack(((IFluidBlock)blockToBreak).getFluid(), Util.BUCKET), true);
-                    this.worldObj.setBlockToAir(coordsBlock);
+                    this.world.setBlockToAir(coordsBlock);
                 }
             }
             else if(blockToBreak == Blocks.LAVA || blockToBreak == Blocks.FLOWING_LAVA){
                 if(this.tank.fillInternal(new FluidStack(FluidRegistry.LAVA, Util.BUCKET), false) >= Util.BUCKET){
                     this.tank.fillInternal(new FluidStack(FluidRegistry.LAVA, Util.BUCKET), true);
-                    this.worldObj.setBlockToAir(coordsBlock);
+                    this.world.setBlockToAir(coordsBlock);
                 }
             }
             else if(blockToBreak == Blocks.WATER || blockToBreak == Blocks.FLOWING_WATER){
                 if(this.tank.fillInternal(new FluidStack(FluidRegistry.WATER, Util.BUCKET), false) >= Util.BUCKET){
                     this.tank.fillInternal(new FluidStack(FluidRegistry.WATER, Util.BUCKET), true);
-                    this.worldObj.setBlockToAir(coordsBlock);
+                    this.world.setBlockToAir(coordsBlock);
                 }
             }
         }
-        else if(this.isPlacer && blockToBreak.isReplaceable(this.worldObj, coordsBlock)){
+        else if(this.isPlacer && blockToBreak.isReplaceable(this.world, coordsBlock)){
             if(this.tank.getFluidAmount() >= Util.BUCKET){
                 FluidStack stack = this.tank.getFluid();
                 Block fluid = stack.getFluid().getBlock();
                 if(fluid != null){
                     BlockPos offsetPos = this.pos.offset(sideToManipulate);
-                    boolean placeable = !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && blockToBreak.isReplaceable(this.worldObj, offsetPos);
+                    boolean placeable = !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && blockToBreak.isReplaceable(this.world, offsetPos);
                     if(placeable){
                         this.tank.drainInternal(Util.BUCKET, true);
 
-                        if(this.worldObj.provider.doesWaterVaporize() && stack.getFluid().doesVaporize(stack)){
-                            this.worldObj.playSound(null, offsetPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F+(this.worldObj.rand.nextFloat()-this.worldObj.rand.nextFloat())*0.8F);
+                        if(this.world.provider.doesWaterVaporize() && stack.getFluid().doesVaporize(stack)){
+                            this.world.playSound(null, offsetPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F+(this.world.rand.nextFloat()-this.world.rand.nextFloat())*0.8F);
 
-                            if(this.worldObj instanceof WorldServer){
+                            if(this.world instanceof WorldServer){
                                 for(int l = 0; l < 8; ++l){
-                                    ((WorldServer)this.worldObj).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, (double)offsetPos.getX()+Math.random(), (double)offsetPos.getY()+Math.random(), (double)offsetPos.getZ()+Math.random(), 1, 0.0D, 0.0D, 0.0D, 0);
+                                    ((WorldServer)this.world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, (double)offsetPos.getX()+Math.random(), (double)offsetPos.getY()+Math.random(), (double)offsetPos.getZ()+Math.random(), 1, 0.0D, 0.0D, 0.0D, 0);
                                 }
                             }
                         }
                         else{
-                            this.worldObj.setBlockState(offsetPos, fluid.getDefaultState(), 3);
+                            this.world.setBlockState(offsetPos, fluid.getDefaultState(), 3);
                         }
                     }
                 }
@@ -147,7 +147,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.currentTime > 0){
                     this.currentTime--;

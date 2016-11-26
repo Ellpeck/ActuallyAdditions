@@ -26,8 +26,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
-import java.util.Arrays;
-
 
 public class ContainerFilter extends Container{
 
@@ -105,7 +103,7 @@ public class ContainerFilter extends Container{
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
                 return StackUtil.getNull();
             }
-            theSlot.func_190901_a(player, newStack);
+            theSlot.onTake(player, newStack);
 
             return currentStack;
         }
@@ -137,7 +135,7 @@ public class ContainerFilter extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.filterInventory.isUseableByPlayer(player);
+        return this.filterInventory.isUsableByPlayer(player);
     }
 
     public static class InventoryFilter implements IInventory{
@@ -160,7 +158,7 @@ public class ContainerFilter extends Container{
         }
 
         @Override
-        public boolean isUseableByPlayer(EntityPlayer player){
+        public boolean isUsableByPlayer(EntityPlayer player){
             return true;
         }
 
@@ -211,7 +209,7 @@ public class ContainerFilter extends Container{
         }
 
         @Override
-        public boolean func_191420_l(){
+        public boolean isEmpty(){
             return StackUtil.isIInvEmpty(this.slots);
         }
 

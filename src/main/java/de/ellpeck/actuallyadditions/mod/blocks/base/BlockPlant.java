@@ -105,7 +105,7 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
 
                         if(StackUtil.isValid(drop)){
                             EntityItem entity = new EntityItem(world, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, drop);
-                            world.spawnEntityInWorld(entity);
+                            world.spawnEntity(entity);
                         }
                     }
                 }

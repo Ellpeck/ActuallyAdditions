@@ -86,7 +86,7 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
                 type = GuiHandler.GuiTypes.GIANT_CHEST_PAGE_3;
             }
 
-            player.openGui(ActuallyAdditions.instance, type.ordinal(), this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
+            player.openGui(ActuallyAdditions.instance, type.ordinal(), this.world, this.pos.getX(), this.pos.getY(), this.pos.getZ());
         }
     }
 
@@ -96,11 +96,11 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
     }
 
     public void fillWithLoot(EntityPlayer player){
-        if(this.lootTable != null && !this.worldObj.isRemote && this.worldObj instanceof WorldServer){
-            LootTable table = this.worldObj.getLootTableManager().getLootTableFromLocation(this.lootTable);
+        if(this.lootTable != null && !this.world.isRemote && this.world instanceof WorldServer){
+            LootTable table = this.world.getLootTableManager().getLootTableFromLocation(this.lootTable);
             this.lootTable = null;
 
-            LootContext.Builder builder = new LootContext.Builder((WorldServer)this.worldObj);
+            LootContext.Builder builder = new LootContext.Builder((WorldServer)this.world);
             if(player != null){
                 builder.withLuck(player.getLuck());
             }

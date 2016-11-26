@@ -72,7 +72,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.currentTime > 0){
                     this.currentTime--;
@@ -94,7 +94,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     private void doWork(){
         if(this.storage.getEnergyStored() >= ENERGY_USE){
-            IBlockState state = this.worldObj.getBlockState(this.pos);
+            IBlockState state = this.world.getBlockState(this.pos);
             EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
             //The Lens the Reconstructor currently has installed
             Lens currentLens = this.getLens();
@@ -106,8 +106,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                 for(int i = 0; i < distance; i++){
                     BlockPos hitBlock = this.pos.offset(sideToManipulate, i+1);
 
-                    if(currentLens.invoke(this.worldObj.getBlockState(hitBlock), hitBlock, this) || i >= distance-1){
-                        shootLaser(this.worldObj, this.getX(), this.getY(), this.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                    if(currentLens.invoke(this.world.getBlockState(hitBlock), hitBlock, this) || i >= distance-1){
+                        shootLaser(this.world, this.getX(), this.getY(), this.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
                         break;
                     }
                 }

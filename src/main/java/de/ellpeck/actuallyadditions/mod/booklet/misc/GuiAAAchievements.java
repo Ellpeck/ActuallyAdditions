@@ -55,6 +55,8 @@ public class GuiAAAchievements extends GuiAchievements{
         if(key == Keyboard.KEY_ESCAPE || key == this.mc.gameSettings.keyBindInventory.getKeyCode()){
             this.mc.displayGuiScreen(this.parentScreen);
         }
-        else super.keyTyped(typedChar, key);
+        else{
+            super.keyTyped(typedChar, key);
+        }
     }
 }

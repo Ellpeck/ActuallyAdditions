@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.EntityBat;
@@ -44,37 +43,6 @@ public class ItemWingsOfTheBats extends ItemBase{
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    @Override
-    public boolean showDurabilityBar(ItemStack stack){
-        return true;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public double getDurabilityForDisplay(ItemStack stack){
-        PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer);
-        if(data != null){
-            double diff = MAX_FLY_TIME-data.batWingsFlyTime;
-            return 1-(diff/MAX_FLY_TIME);
-        }
-        else{
-            return super.getDurabilityForDisplay(stack);
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getRGBDurabilityForDisplay(ItemStack stack){
-        PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer);
-        if(data != null){
-            int curr = data.batWingsFlyTime;
-            return MathHelper.hsvToRGB(Math.max(0.0F, 1-(float)curr/MAX_FLY_TIME)/3.0F, 1.0F, 1.0F);
-        }
-        else{
-            return super.getRGBDurabilityForDisplay(stack);
-        }
-    }
-
     /**
      * Checks if the Player has Wings in its Inventory
      *
@@ -90,13 +58,44 @@ public class ItemWingsOfTheBats extends ItemBase{
         return StackUtil.getNull();
     }
 
+    @Override
+    public boolean showDurabilityBar(ItemStack stack){
+        return true;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public double getDurabilityForDisplay(ItemStack stack){
+        PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().player);
+        if(data != null){
+            double diff = MAX_FLY_TIME-data.batWingsFlyTime;
+            return 1-(diff/MAX_FLY_TIME);
+        }
+        else{
+            return super.getDurabilityForDisplay(stack);
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getRGBDurabilityForDisplay(ItemStack stack){
+        PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().player);
+        if(data != null){
+            int curr = data.batWingsFlyTime;
+            return MathHelper.hsvToRGB(Math.max(0.0F, 1-(float)curr/MAX_FLY_TIME)/3.0F, 1.0F, 1.0F);
+        }
+        else{
+            return super.getRGBDurabilityForDisplay(stack);
+        }
+    }
+
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
-        if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
+        if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
             //Drop Wings from Bats
             if(ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntityLiving() instanceof EntityBat){
-                if(event.getEntityLiving().worldObj.rand.nextInt(15) <= event.getLootingLevel()*2){
-                    event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemMisc, event.getEntityLiving().worldObj.rand.nextInt(2+event.getLootingLevel())+1, TheMiscItems.BAT_WING.ordinal()), 0);
+                if(event.getEntityLiving().world.rand.nextInt(15) <= event.getLootingLevel()*2){
+                    event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemMisc, event.getEntityLiving().world.rand.nextInt(2+event.getLootingLevel())+1, TheMiscItems.BAT_WING.ordinal()), 0);
                 }
             }
         }
@@ -110,7 +109,7 @@ public class ItemWingsOfTheBats extends ItemBase{
             if(!player.capabilities.isCreativeMode){
                 PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
 
-                if(!player.worldObj.isRemote){
+                if(!player.world.isRemote){
                     boolean tryDeduct = false;
                     boolean shouldSend = false;
 
@@ -133,7 +132,7 @@ public class ItemWingsOfTheBats extends ItemBase{
                             if(player.capabilities.isFlying){
                                 data.batWingsFlyTime++;
 
-                                if(player.worldObj.getTotalWorldTime()%10 == 0){
+                                if(player.world.getTotalWorldTime()%10 == 0){
                                     shouldSend = true;
                                 }
                             }
@@ -159,8 +158,8 @@ public class ItemWingsOfTheBats extends ItemBase{
                         }
                         else{
                             BlockPos pos = new BlockPos(player.posX, player.posY+player.height, player.posZ);
-                            IBlockState state = player.worldObj.getBlockState(pos);
-                            if(state != null && state.isSideSolid(player.worldObj, pos, EnumFacing.DOWN)){
+                            IBlockState state = player.world.getBlockState(pos);
+                            if(state != null && state.isSideSolid(player.world, pos, EnumFacing.DOWN)){
                                 deductTime = 10;
                             }
                         }
@@ -168,7 +167,7 @@ public class ItemWingsOfTheBats extends ItemBase{
                         if(deductTime > 0){
                             data.batWingsFlyTime = Math.max(0, data.batWingsFlyTime-deductTime);
 
-                            if(player.worldObj.getTotalWorldTime()%10 == 0){
+                            if(player.world.getTotalWorldTime()%10 == 0){
                                 shouldSend = true;
                             }
                         }

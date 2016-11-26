@@ -99,7 +99,7 @@ public class ContainerFurnaceDouble extends Container{
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
                 return StackUtil.getNull();
             }
-            theSlot.func_190901_a(player, newStack);
+            theSlot.onTake(player, newStack);
 
             return currentStack;
         }
@@ -108,6 +108,6 @@ public class ContainerFurnaceDouble extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.tileFurnace.isUseableByPlayer(player);
+        return this.tileFurnace.isUsableByPlayer(player);
     }
 }

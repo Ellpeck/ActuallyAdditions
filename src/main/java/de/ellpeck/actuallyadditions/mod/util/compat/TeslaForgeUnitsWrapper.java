@@ -10,11 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.util.compat;
 
-import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TeslaForgeUnitsWrapper implements ITeslaProducer, ITeslaHolder, ITeslaConsumer{

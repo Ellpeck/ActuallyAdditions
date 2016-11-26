@@ -54,7 +54,7 @@ public class BlockDistributorItem extends BlockContainerBase implements IHudDisp
 
     @Override
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
-        TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
+        TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityDistributorItem){
             TileEntityDistributorItem distributor = (TileEntityDistributorItem)tile;
             ItemStack slot = distributor.getStackInSlot(0);

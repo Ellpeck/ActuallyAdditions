@@ -58,7 +58,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.currentTime > 0){
                     this.currentTime--;
@@ -79,20 +79,20 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
     }
 
     private void doWork(){
-        IBlockState state = this.worldObj.getBlockState(this.pos);
+        IBlockState state = this.world.getBlockState(this.pos);
         EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
 
         BlockPos coordsBlock = this.pos.offset(sideToManipulate);
-        IBlockState stateToBreak = this.worldObj.getBlockState(coordsBlock);
+        IBlockState stateToBreak = this.world.getBlockState(coordsBlock);
         Block blockToBreak = stateToBreak.getBlock();
-        if(!this.isPlacer && blockToBreak != null && !this.worldObj.isAirBlock(coordsBlock) && !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && blockToBreak.getBlockHardness(stateToBreak, this.worldObj, coordsBlock) >= 0.0F){
-            List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, stateToBreak, 0);
-            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
+        if(!this.isPlacer && blockToBreak != null && !this.world.isAirBlock(coordsBlock) && !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && blockToBreak.getBlockHardness(stateToBreak, this.world, coordsBlock) >= 0.0F){
+            List<ItemStack> drops = blockToBreak.getDrops(this.world, coordsBlock, stateToBreak, 0);
+            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.world, coordsBlock, this.world.getBlockState(coordsBlock), 0, 1, false, null);
 
-            if(this.worldObj.rand.nextFloat() <= chance){
+            if(this.world.rand.nextFloat() <= chance){
                 if(WorldUtil.addToInventory(this, drops, false, true)){
-                    this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(stateToBreak));
-                    this.worldObj.setBlockToAir(coordsBlock);
+                    this.world.playEvent(2001, coordsBlock, Block.getStateId(stateToBreak));
+                    this.world.setBlockToAir(coordsBlock);
                     WorldUtil.addToInventory(this, drops, true, true);
                     this.markDirty();
                 }
@@ -100,7 +100,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
         }
         else if(this.isPlacer){
             int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-            this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(sideToManipulate, this.worldObj, this.pos, this.slots.get(theSlot)));
+            this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(sideToManipulate, this.world, this.pos, this.slots.get(theSlot)));
             if(!StackUtil.isValid(this.slots.get(theSlot))){
                 this.slots.set(theSlot, StackUtil.getNull());
             }

@@ -44,7 +44,7 @@ public class BasicTradeList implements ITradeList{
     }
 
     @Override
-    public void func_190888_a(IMerchant merchant, MerchantRecipeList recipeList, Random random){
+    public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random){
         ItemStack in = this.input.copy();
         in = StackUtil.setStackSize(in, this.inputAmount.getPrice(random));
         ItemStack out = this.output.copy();

@@ -76,7 +76,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             ItemStack input = this.slots.get(SLOT_INPUT);
             if(!StackUtil.isValid(this.slots.get(SLOT_OUTPUT)) && canBeRepaired(input)){
                 if(input.getItemDamage() <= 0){

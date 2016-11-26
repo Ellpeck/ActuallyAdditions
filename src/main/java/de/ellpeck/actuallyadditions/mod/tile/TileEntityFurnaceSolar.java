@@ -41,9 +41,9 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             int power = this.getPowerToGenerate(PRODUCE);
-            if(this.worldObj.isDaytime() && power > 0){
+            if(this.world.isDaytime() && power > 0){
                 if(power <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                     this.storage.receiveEnergyInternal(power, false);
                     this.markDirty();
@@ -57,15 +57,15 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     }
 
     public int getPowerToGenerate(int power){
-        for(int y = 1; y <= this.worldObj.getHeight()-this.pos.getY(); y++){
+        for(int y = 1; y <= this.world.getHeight()-this.pos.getY(); y++){
             if(power > 0){
                 BlockPos pos = this.pos.up(y);
-                IBlockState state = this.worldObj.getBlockState(pos);
+                IBlockState state = this.world.getBlockState(pos);
 
                 if(state.getMaterial().isOpaque()){
                     power = 0;
                 }
-                else if(!state.getBlock().isAir(state, this.worldObj, pos)){
+                else if(!state.getBlock().isAir(state, this.world, pos)){
                     power--;
                 }
             }

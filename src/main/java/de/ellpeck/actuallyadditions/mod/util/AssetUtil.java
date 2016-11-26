@@ -190,7 +190,7 @@ public final class AssetUtil{
         Minecraft mc = Minecraft.getMinecraft();
         int particleSetting = mc.gameSettings.particleSetting;
 
-        if(mc.thePlayer.getDistance(startX, startY, startZ) <= 64 || mc.thePlayer.getDistance(endX, endY, endZ) <= 64){
+        if(mc.player.getDistance(startX, startY, startZ) <= 64 || mc.player.getDistance(endX, endY, endZ) <= 64){
             double difX = startX-endX;
             double difY = startY-endY;
             double difZ = startZ-endZ;
@@ -198,8 +198,8 @@ public final class AssetUtil{
 
             for(int times = 0; times < Math.max(particleAmount/2, 1); times++){
                 for(double i = 0; i <= 1; i += 1/(distance*particleAmount)){
-                    if(particleSetting == 0 || (particleSetting == 1 && mc.theWorld.rand.nextFloat() >= 0.8F) || (particleSetting > 1 && mc.theWorld.rand.nextFloat() >= 0.98F)){
-                        ParticleColored fx = new ParticleColored(mc.theWorld, (difX*i)+endX+0.5, (difY*i)+endY+0.5, (difZ*i)+endZ+0.5, particleSize, color[0], color[1], color[2], ageMultiplier);
+                    if(particleSetting == 0 || (particleSetting == 1 && mc.world.rand.nextFloat() >= 0.8F) || (particleSetting > 1 && mc.world.rand.nextFloat() >= 0.98F)){
+                        ParticleColored fx = new ParticleColored(mc.world, (difX*i)+endX+0.5, (difY*i)+endY+0.5, (difZ*i)+endZ+0.5, particleSize, color[0], color[1], color[2], ageMultiplier);
                         mc.effectRenderer.addEffect(fx);
                     }
                 }
@@ -213,7 +213,7 @@ public final class AssetUtil{
     public static void renderLaser(double firstX, double firstY, double firstZ, double secondX, double secondY, double secondZ, double rotationTime, float alpha, double beamWidth, float[] color){
         Tessellator tessy = Tessellator.getInstance();
         VertexBuffer render = tessy.getBuffer();
-        World world = Minecraft.getMinecraft().theWorld;
+        World world = Minecraft.getMinecraft().world;
 
         GlStateManager.disableFog();
 

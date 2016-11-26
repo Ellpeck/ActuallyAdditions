@@ -34,7 +34,7 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
     public void updateEntity(){
         super.updateEntity();
 
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             boolean shouldMarkDirty = false;
 
             IItemHandler handlerUp = this.handlersAround.get(EnumFacing.UP);
@@ -120,7 +120,7 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
         this.handlersAround.clear();
 
         for(EnumFacing side : EnumFacing.values()){
-            TileEntity tile = this.worldObj.getTileEntity(this.pos.offset(side));
+            TileEntity tile = this.world.getTileEntity(this.pos.offset(side));
             if(tile != null && tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())){
                 IItemHandler cap = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
                 if(cap != null){

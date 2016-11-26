@@ -47,6 +47,20 @@ public class TileEntityFarmer extends TileEntityInventoryBase{
         super(12, "farmer");
     }
 
+    public static IPlantable getPlantableFromStack(ItemStack stack){
+        Item item = stack.getItem();
+        if(item instanceof IPlantable){
+            return (IPlantable)item;
+        }
+        else if(item instanceof ItemBlock){
+            Block block = Block.getBlockFromItem(item);
+            if(block instanceof IPlantable){
+                return (IPlantable)block;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
@@ -72,7 +86,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(!this.isRedstonePowered){
                 if(this.waitTime > 0){
                     this.waitTime--;
@@ -83,13 +97,13 @@ public class TileEntityFarmer extends TileEntityInventoryBase{
 
                             int radiusAroundCenter = 4;
 
-                            IBlockState state = this.worldObj.getBlockState(this.pos);
+                            IBlockState state = this.world.getBlockState(this.pos);
                             int meta = state.getBlock().getMetaFromState(state);
                             EnumFacing side = meta == 0 ? EnumFacing.NORTH : (meta == 1 ? EnumFacing.SOUTH : (meta == 2 ? EnumFacing.WEST : EnumFacing.EAST));
                             BlockPos center = this.pos.offset(side, radiusAroundCenter+1);
 
                             BlockPos plant = center.add(this.checkX, 0, this.checkY);
-                            IBlockState plantState = this.worldObj.getBlockState(plant);
+                            IBlockState plantState = this.world.getBlockState(plant);
                             Block plantBlock = plantState.getBlock();
 
                             if(plantBlock instanceof BlockCrops){
@@ -97,7 +111,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase{
                                     List<ItemStack> seeds = new ArrayList<ItemStack>();
                                     List<ItemStack> other = new ArrayList<ItemStack>();
 
-                                    List<ItemStack> drops = plantBlock.getDrops(this.worldObj, plant, plantState, 0);
+                                    List<ItemStack> drops = plantBlock.getDrops(this.world, plant, plantState, 0);
                                     for(ItemStack stack : drops){
                                         if(getPlantableFromStack(stack) != null){
                                             seeds.add(stack);
@@ -120,26 +134,26 @@ public class TileEntityFarmer extends TileEntityInventoryBase{
                                             WorldUtil.addToInventory(this, 0, 6, seeds, EnumFacing.UP, true, true);
                                         }
 
-                                        this.worldObj.playEvent(2001, plant, Block.getStateId(plantState));
-                                        this.worldObj.setBlockToAir(plant);
+                                        this.world.playEvent(2001, plant, Block.getStateId(plantState));
+                                        this.world.setBlockToAir(plant);
                                         didSomething = true;
                                     }
                                 }
                             }
-                            else if(plantBlock.isReplaceable(this.worldObj, plant)){
+                            else if(plantBlock.isReplaceable(this.world, plant)){
                                 BlockPos farmland = plant.down();
-                                IBlockState farmlandState = this.worldObj.getBlockState(farmland);
+                                IBlockState farmlandState = this.world.getBlockState(farmland);
                                 Block farmlandBlock = farmlandState.getBlock();
 
                                 IBlockState toPlant = this.getFirstPlantablePlantFromSlots(plant);
                                 if(toPlant != null){
-                                    this.worldObj.setBlockState(plant, toPlant, 3);
+                                    this.world.setBlockState(plant, toPlant, 3);
                                     didSomething = true;
                                 }
                                 else if(farmlandBlock instanceof BlockDirt || farmlandBlock instanceof BlockGrass){
-                                    this.worldObj.setBlockState(farmland, Blocks.FARMLAND.getDefaultState(), 2);
-                                    this.worldObj.setBlockToAir(plant);
-                                    this.worldObj.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                                    this.world.setBlockState(farmland, Blocks.FARMLAND.getDefaultState(), 2);
+                                    this.world.setBlockToAir(plant);
+                                    this.world.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
                                     didSomething = true;
                                 }
                             }
@@ -176,26 +190,12 @@ public class TileEntityFarmer extends TileEntityInventoryBase{
             if(StackUtil.isValid(stack)){
                 IPlantable plantable = getPlantableFromStack(stack);
                 if(plantable != null){
-                    IBlockState state = plantable.getPlant(this.worldObj, pos);
-                    if(state != null && state.getBlock() instanceof BlockCrops && state.getBlock().canPlaceBlockAt(this.worldObj, pos)){
+                    IBlockState state = plantable.getPlant(this.world, pos);
+                    if(state != null && state.getBlock() instanceof BlockCrops && state.getBlock().canPlaceBlockAt(this.world, pos)){
                         this.decrStackSize(i, 1);
                         return state;
                     }
                 }
-            }
-        }
-        return null;
-    }
-
-    public static IPlantable getPlantableFromStack(ItemStack stack){
-        Item item = stack.getItem();
-        if(item instanceof IPlantable){
-            return (IPlantable)item;
-        }
-        else if(item instanceof ItemBlock){
-            Block block = Block.getBlockFromItem(item);
-            if(block instanceof IPlantable){
-                return (IPlantable)block;
             }
         }
         return null;

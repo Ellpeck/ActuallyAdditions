@@ -19,10 +19,8 @@ import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.BlockDirectional;
-import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -122,9 +120,8 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
         return false;
     }
 
-
     @Override
-    public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base){
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base){
         return this.getStateFromMeta(side.ordinal());
     }
 
@@ -214,8 +211,8 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
-        if(posHit != null && posHit.getBlockPos() != null && minecraft.theWorld != null){
-            TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
+        if(posHit != null && posHit.getBlockPos() != null && minecraft.world != null){
+            TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
             if(tile instanceof TileEntityLaserRelayItem){
                 TileEntityLaserRelayItem relay = (TileEntityLaserRelayItem)tile;
 

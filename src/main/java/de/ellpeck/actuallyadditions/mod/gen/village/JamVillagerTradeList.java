@@ -25,7 +25,7 @@ import java.util.Random;
 public class JamVillagerTradeList implements ITradeList{
 
     @Override
-    public void func_190888_a(IMerchant merchant, MerchantRecipeList recipeList, Random random){
+    public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random){
         for(int i = 0; i < random.nextInt(3)+3; i++){
             ItemStack jam = new ItemStack(InitItems.itemJams, 1, random.nextInt(TheJams.values().length));
             ItemStack emerald = new ItemStack(Items.EMERALD);

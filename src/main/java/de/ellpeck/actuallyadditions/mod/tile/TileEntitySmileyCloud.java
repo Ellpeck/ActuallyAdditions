@@ -11,8 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.network.gui.IStringReactor;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -44,7 +42,7 @@ public class TileEntitySmileyCloud extends TileEntityBase implements IStringReac
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             boolean nameChanged = this.name != null ? !this.name.equals(this.nameBefore) : this.nameBefore != null;
             if(nameChanged && this.sendUpdateWithInterval()){
                 this.nameBefore = this.name;

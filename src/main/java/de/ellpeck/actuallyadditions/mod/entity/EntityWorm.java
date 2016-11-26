@@ -65,43 +65,43 @@ public class EntityWorm extends Entity{
 
     @Override
     public void onEntityUpdate(){
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             this.timer++;
 
             if(this.timer%50 == 0){
                 for(int x = -1; x <= 1; x++){
                     for(int z = -1; z <= 1; z++){
                         BlockPos pos = new BlockPos(this.posX+x, this.posY, this.posZ+z);
-                        IBlockState state = this.worldObj.getBlockState(pos);
+                        IBlockState state = this.world.getBlockState(pos);
                         Block block = state.getBlock();
                         boolean isMiddlePose = x == 0 && z == 0;
 
-                        if(canWormify(this.worldObj, pos, state)){
+                        if(canWormify(this.world, pos, state)){
                             boolean isFarmland = block instanceof BlockFarmland;
 
                             if(!isFarmland || state.getValue(BlockFarmland.MOISTURE) < 7){
-                                if(isMiddlePose || this.worldObj.rand.nextFloat() >= 0.45F){
+                                if(isMiddlePose || this.world.rand.nextFloat() >= 0.45F){
                                     IBlockState stateToModify = isFarmland ? state : Blocks.FARMLAND.getDefaultState();
-                                    this.worldObj.setBlockState(pos, stateToModify.withProperty(BlockFarmland.MOISTURE, 7), 2);
+                                    this.world.setBlockState(pos, stateToModify.withProperty(BlockFarmland.MOISTURE, 7), 2);
 
                                     if(!isFarmland){
-                                        this.worldObj.setBlockToAir(pos.up());
+                                        this.world.setBlockToAir(pos.up());
                                     }
                                 }
                             }
 
-                            if(isFarmland && this.worldObj.rand.nextFloat() >= 0.95F){
+                            if(isFarmland && this.world.rand.nextFloat() >= 0.95F){
                                 BlockPos plant = pos.up();
-                                if(!this.worldObj.isAirBlock(plant)){
-                                    IBlockState plantState = this.worldObj.getBlockState(plant);
+                                if(!this.world.isAirBlock(plant)){
+                                    IBlockState plantState = this.world.getBlockState(plant);
                                     Block plantBlock = plantState.getBlock();
 
                                     if((plantBlock instanceof IGrowable || plantBlock instanceof IPlantable) && !(plantBlock instanceof BlockGrass)){
-                                        plantBlock.updateTick(this.worldObj, plant, plantState, this.worldObj.rand);
+                                        plantBlock.updateTick(this.world, plant, plantState, this.world.rand);
 
-                                        IBlockState newState = this.worldObj.getBlockState(plant);
+                                        IBlockState newState = this.world.getBlockState(plant);
                                         if(newState.getBlock().getMetaFromState(newState) != plantBlock.getMetaFromState(plantState)){
-                                            this.worldObj.playEvent(2005, plant, 0);
+                                            this.world.playEvent(2005, plant, 0);
                                         }
                                     }
                                 }

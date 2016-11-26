@@ -73,7 +73,7 @@ public class LensColor extends Lens{
                         item.setDead();
 
                         EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, newStack);
-                        tile.getWorldObject().spawnEntityInWorld(newItem);
+                        tile.getWorldObject().spawnEntity(newItem);
 
                         tile.extractEnergy(ENERGY_USE);
                     }

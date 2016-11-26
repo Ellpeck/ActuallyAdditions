@@ -50,7 +50,7 @@ public class RenderCompost extends TileEntitySpecialRenderer{
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((float)x+0.5F, (float)y+(i/3F)+0.01F, (float)z+0.5F);
                     //Hehe
-                    if("ShadowfactsDev".equals(Minecraft.getMinecraft().thePlayer.getName())){
+                    if("ShadowfactsDev".equals(Minecraft.getMinecraft().player.getName())){
                         GlStateManager.translate(0F, 1F, 0F);
                     }
                     GlStateManager.scale(1.5F, i, 1.5F);

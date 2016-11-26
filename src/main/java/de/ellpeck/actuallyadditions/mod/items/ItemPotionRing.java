@@ -53,6 +53,24 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         this.isAdvanced = isAdvanced;
     }
 
+    public static int getStoredBlaze(ItemStack stack){
+        if(!StackUtil.isValid(stack) || !stack.hasTagCompound()){
+            return 0;
+        }
+        else{
+            return stack.getTagCompound().getInteger("Blaze");
+        }
+    }
+
+    public static void setStoredBlaze(ItemStack stack, int amount){
+        if(StackUtil.isValid(stack)){
+            if(!stack.hasTagCompound()){
+                stack.setTagCompound(new NBTTagCompound());
+            }
+            stack.getTagCompound().setInteger("Blaze", amount);
+        }
+    }
+
     @Override
     public int getMetadata(int damage){
         return damage;
@@ -118,7 +136,6 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         return standardName;
     }
 
-
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return stack.getItemDamage() >= ALL_RINGS.length ? EnumRarity.COMMON : ALL_RINGS[stack.getItemDamage()].rarity;
@@ -152,24 +169,6 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
                 return stack.getItemDamage() >= ALL_RINGS.length ? 0xFFFFFF : ALL_RINGS[stack.getItemDamage()].color;
             }
         };
-    }
-
-    public static int getStoredBlaze(ItemStack stack){
-        if(!StackUtil.isValid(stack) || !stack.hasTagCompound()){
-            return 0;
-        }
-        else{
-            return stack.getTagCompound().getInteger("Blaze");
-        }
-    }
-
-    public static void setStoredBlaze(ItemStack stack, int amount){
-        if(StackUtil.isValid(stack)){
-            if(!stack.hasTagCompound()){
-                stack.setTagCompound(new NBTTagCompound());
-            }
-            stack.getTagCompound().setInteger("Blaze", amount);
-        }
     }
 
     @Override

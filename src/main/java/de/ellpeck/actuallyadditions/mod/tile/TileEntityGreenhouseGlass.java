@@ -45,28 +45,28 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
-            if(this.worldObj.canBlockSeeSky(this.getPos()) && this.worldObj.isDaytime()){
+        if(!this.world.isRemote){
+            if(this.world.canBlockSeeSky(this.getPos()) && this.world.isDaytime()){
                 if(this.timeUntilNextFert > 0){
                     this.timeUntilNextFert--;
                     if(this.timeUntilNextFert <= 0){
                         BlockPos blockToFert = this.blockToFertilize();
                         if(blockToFert != null){
-                            IBlockState state = this.worldObj.getBlockState(blockToFert);
+                            IBlockState state = this.world.getBlockState(blockToFert);
                             Block block = state.getBlock();
                             int metaBefore = block.getMetaFromState(state);
-                            block.updateTick(this.worldObj, blockToFert, this.worldObj.getBlockState(blockToFert), this.worldObj.rand);
+                            block.updateTick(this.world, blockToFert, this.world.getBlockState(blockToFert), this.world.rand);
 
-                            IBlockState newState = this.worldObj.getBlockState(blockToFert);
+                            IBlockState newState = this.world.getBlockState(blockToFert);
                             if(newState.getBlock().getMetaFromState(newState) != metaBefore){
-                                this.worldObj.playEvent(2005, blockToFert, 0);
+                                this.world.playEvent(2005, blockToFert, 0);
                             }
                         }
                     }
                 }
                 else{
                     int time = 100;
-                    this.timeUntilNextFert = time+this.worldObj.rand.nextInt(time);
+                    this.timeUntilNextFert = time+this.world.rand.nextInt(time);
                 }
             }
         }
@@ -75,8 +75,8 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
     public BlockPos blockToFertilize(){
         for(int i = this.pos.getY()-1; i > 0; i--){
             BlockPos offset = new BlockPos(this.pos.getX(), i, this.pos.getZ());
-            Block block = this.worldObj.getBlockState(offset).getBlock();
-            if(block != null && !this.worldObj.isAirBlock(offset)){
+            Block block = this.world.getBlockState(offset).getBlock();
+            if(block != null && !this.world.isAirBlock(offset)){
                 if((block instanceof IGrowable || block instanceof IPlantable) && !(block instanceof BlockGrass)){
                     return offset;
                 }

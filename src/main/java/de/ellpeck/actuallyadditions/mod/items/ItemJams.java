@@ -31,8 +31,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
 
     public static final TheJams[] ALL_JAMS = TheJams.values();
@@ -82,9 +80,9 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
 
             ItemStack returnItem = new ItemStack(Items.GLASS_BOTTLE);
             if(!((EntityPlayer)player).inventory.addItemStackToInventory(returnItem.copy())){
-                EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem.copy());
+                EntityItem entityItem = new EntityItem(player.world, player.posX, player.posY, player.posZ, returnItem.copy());
                 entityItem.setPickupDelay(0);
-                player.worldObj.spawnEntityInWorld(entityItem);
+                player.world.spawnEntity(entityItem);
             }
         }
         return stackToReturn;

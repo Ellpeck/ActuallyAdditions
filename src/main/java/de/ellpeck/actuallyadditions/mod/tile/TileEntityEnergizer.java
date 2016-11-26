@@ -47,7 +47,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(StackUtil.isValid(this.slots.get(0)) && !StackUtil.isValid(this.slots.get(1))){
                 if(this.storage.getEnergyStored() > 0){
                     int received = 0;

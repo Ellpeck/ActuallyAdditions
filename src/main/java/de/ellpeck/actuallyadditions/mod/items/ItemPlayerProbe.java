@@ -52,14 +52,14 @@ public class ItemPlayerProbe extends ItemBase{
                     if(player != null){
                         if(player.isSneaking()){
                             ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
-                            entity.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.1"));
-                            player.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.notice"));
+                            entity.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.1"));
+                            player.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.notice"));
                             TheAchievements.GET_UNPROBED.get(player);
                         }
                     }
                     else{
                         ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
-                        entity.addChatMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.2"));
+                        entity.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.2"));
                     }
                 }
             }
@@ -92,7 +92,7 @@ public class ItemPlayerProbe extends ItemBase{
 
     @Override
     public boolean itemInteractionForEntity(ItemStack aStack, EntityPlayer player, EntityLivingBase entity, EnumHand hand){
-        if(!player.worldObj.isRemote){
+        if(!player.world.isRemote){
             ItemStack stack = player.getHeldItemMainhand();
             if(StackUtil.isValid(stack) && stack.getItem() == this){
                 if(entity instanceof EntityPlayer){

@@ -38,23 +38,23 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         for(int i = 0; i < amount; i++){
             ItemStack firework = this.makeFirework();
 
-            double newX = x+MathHelper.getRandomDoubleInRange(this.worldObj.rand, 0, range*2)-range;
-            double newZ = z+MathHelper.getRandomDoubleInRange(this.worldObj.rand, 0, range*2)-range;
+            double newX = x+MathHelper.nextDouble(this.world.rand, 0, range*2)-range;
+            double newZ = z+MathHelper.nextDouble(this.world.rand, 0, range*2)-range;
             EntityFireworkRocket rocket = new EntityFireworkRocket(world, newX, y+0.5, newZ, firework);
-            world.spawnEntityInWorld(rocket);
+            world.spawnEntity(rocket);
         }
     }
 
     private ItemStack makeFirework(){
         NBTTagList list = new NBTTagList();
-        int chargesAmount = this.worldObj.rand.nextInt(2)+1;
+        int chargesAmount = this.world.rand.nextInt(2)+1;
         for(int i = 0; i < chargesAmount; i++){
             list.appendTag(this.makeFireworkCharge());
         }
 
         NBTTagCompound compound1 = new NBTTagCompound();
         compound1.setTag("Explosions", list);
-        compound1.setByte("Flight", (byte)(this.worldObj.rand.nextInt(3)+1));
+        compound1.setByte("Flight", (byte)(this.world.rand.nextInt(3)+1));
 
         NBTTagCompound compound = new NBTTagCompound();
         compound.setTag("Fireworks", compound1);
@@ -68,8 +68,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     private NBTTagCompound makeFireworkCharge(){
         NBTTagCompound compound = new NBTTagCompound();
 
-        if(this.worldObj.rand.nextFloat() >= 0.65F){
-            if(this.worldObj.rand.nextFloat() >= 0.5F){
+        if(this.world.rand.nextFloat() >= 0.65F){
+            if(this.world.rand.nextFloat() >= 0.5F){
                 compound.setBoolean("Flicker", true);
             }
             else{
@@ -77,13 +77,13 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
             }
         }
 
-        int[] colors = new int[MathHelper.getRandomIntegerInRange(this.worldObj.rand, 1, 6)];
+        int[] colors = new int[MathHelper.getInt(this.world.rand, 1, 6)];
         for(int i = 0; i < colors.length; i++){
-            colors[i] = ItemDye.DYE_COLORS[this.worldObj.rand.nextInt(ItemDye.DYE_COLORS.length)];
+            colors[i] = ItemDye.DYE_COLORS[this.world.rand.nextInt(ItemDye.DYE_COLORS.length)];
         }
         compound.setIntArray("Colors", colors);
 
-        compound.setByte("Type", (byte)this.worldObj.rand.nextInt(5));
+        compound.setByte("Type", (byte)this.world.rand.nextInt(5));
 
         return compound;
     }
@@ -104,7 +104,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     public void updateEntity(){
         super.updateEntity();
 
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.timeUntilNextFirework > 0){
                     this.timeUntilNextFirework--;
@@ -125,7 +125,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
 
     private void doWork(){
         if(this.storage.getEnergyStored() >= USE_PER_SHOT){
-            this.spawnFireworks(this.worldObj, this.pos.getX(), this.pos.getY(), this.pos.getZ());
+            this.spawnFireworks(this.world, this.pos.getX(), this.pos.getY(), this.pos.getZ());
 
             this.storage.extractEnergyInternal(USE_PER_SHOT, false);
         }

@@ -77,7 +77,7 @@ public class ItemSpawnerChanger extends ItemBase{
                         compound.removeTag("SpawnData");
                         logic.readFromNBT(compound);
 
-                        logic.func_190894_a(new ResourceLocation(entity));
+                        logic.setEntityId(new ResourceLocation(entity));
 
                         tile.markDirty();
 
@@ -100,7 +100,7 @@ public class ItemSpawnerChanger extends ItemBase{
 
     @Override
     public boolean itemInteractionForEntity(ItemStack aStack, EntityPlayer player, EntityLivingBase entity, EnumHand hand){
-        if(!player.worldObj.isRemote){
+        if(!player.world.isRemote){
             ItemStack stack = player.getHeldItemMainhand();
             if(this.getStoredEntity(stack) == null){
                 if(this.storeClickedEntity(stack, entity)){

@@ -47,7 +47,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(StackUtil.isValid(this.slots.get(0)) && !StackUtil.isValid(this.slots.get(1))){
                 if(this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
                     int extracted = 0;

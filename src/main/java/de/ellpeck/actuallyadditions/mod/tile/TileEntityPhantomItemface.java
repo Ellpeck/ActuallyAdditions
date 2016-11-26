@@ -92,7 +92,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
     public IInventory getInventory(){
         if(this.boundPosition != null){
-            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
+            TileEntity tile = this.world.getTileEntity(this.boundPosition);
             if(tile instanceof IInventory){
                 return (IInventory)tile;
             }
@@ -112,7 +112,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
                 return true;
             }
             else{
-                TileEntity tile = this.worldObj.getTileEntity(this.getBoundPosition());
+                TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
                 if(tile != null){
                     for(EnumFacing facing : EnumFacing.values()){
                         if(tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)){

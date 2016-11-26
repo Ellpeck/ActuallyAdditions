@@ -136,7 +136,7 @@ public class ClientEvents{
     public void onGameOverlay(RenderGameOverlayEvent.Post event){
         if(event.getType() == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getMinecraft().currentScreen == null){
             Minecraft minecraft = Minecraft.getMinecraft();
-            EntityPlayer player = minecraft.thePlayer;
+            EntityPlayer player = minecraft.player;
             RayTraceResult posHit = minecraft.objectMouseOver;
             FontRenderer font = minecraft.fontRendererObj;
             ItemStack stack = player.getHeldItemMainhand();
@@ -148,8 +148,8 @@ public class ClientEvents{
             }
 
             if(posHit != null && posHit.getBlockPos() != null){
-                Block blockHit = minecraft.theWorld.getBlockState(posHit.getBlockPos()).getBlock();
-                TileEntity tileHit = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
+                Block blockHit = minecraft.world.getBlockState(posHit.getBlockPos()).getBlock();
+                TileEntity tileHit = minecraft.world.getTileEntity(posHit.getBlockPos());
 
                 if(blockHit instanceof IHudDisplay){
                     ((IHudDisplay)blockHit).displayHud(minecraft, player, stack, posHit, event.getResolution());

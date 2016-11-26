@@ -23,8 +23,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 public class ItemCrystal extends ItemBase{
 
     private final boolean isEmpowered;

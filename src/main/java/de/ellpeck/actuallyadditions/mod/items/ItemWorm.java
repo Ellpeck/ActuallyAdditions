@@ -50,7 +50,7 @@ public class ItemWorm extends ItemBase{
                 if(!world.isRemote){
                     EntityWorm worm = new EntityWorm(world);
                     worm.setPosition(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
-                    world.spawnEntityInWorld(worm);
+                    world.spawnEntity(worm);
 
                     player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
                 }
@@ -71,7 +71,7 @@ public class ItemWorm extends ItemBase{
                     if(state.getBlock() instanceof BlockGrass && world.rand.nextFloat() >= 0.95F){
                         ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2)+1);
                         EntityItem item = new EntityItem(event.getWorld(), pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5, stack);
-                        world.spawnEntityInWorld(item);
+                        world.spawnEntity(item);
                     }
                 }
             }

@@ -52,27 +52,27 @@ public class TileEntityFishingNet extends TileEntityBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(!this.isRedstonePowered){
-                if(this.worldObj.getBlockState(this.pos.down()).getMaterial() == Material.WATER){
+                if(this.world.getBlockState(this.pos.down()).getMaterial() == Material.WATER){
                     if(this.timeUntilNextDrop > 0){
                         this.timeUntilNextDrop--;
                         if(this.timeUntilNextDrop <= 0){
-                            LootContext.Builder builder = new LootContext.Builder((WorldServer)this.worldObj);
-                            List<ItemStack> fishables = this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(this.worldObj.rand, builder.build());
+                            LootContext.Builder builder = new LootContext.Builder((WorldServer)this.world);
+                            List<ItemStack> fishables = this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(this.world.rand, builder.build());
                             for(ItemStack fishable : fishables){
                                 ItemStack leftover = this.storeInContainer(fishable);
                                 if(StackUtil.isValid(leftover)){
-                                    EntityItem item = new EntityItem(this.worldObj, this.pos.getX()+0.5, this.pos.getY()+0.5, this.pos.getZ()+0.5, leftover.copy());
+                                    EntityItem item = new EntityItem(this.world, this.pos.getX()+0.5, this.pos.getY()+0.5, this.pos.getZ()+0.5, leftover.copy());
                                     item.lifespan = 2000;
-                                    this.worldObj.spawnEntityInWorld(item);
+                                    this.world.spawnEntity(item);
                                 }
                             }
                         }
                     }
                     else{
                         int time = 15000;
-                        this.timeUntilNextDrop = time+this.worldObj.rand.nextInt(time/2);
+                        this.timeUntilNextDrop = time+this.world.rand.nextInt(time/2);
                     }
                 }
             }

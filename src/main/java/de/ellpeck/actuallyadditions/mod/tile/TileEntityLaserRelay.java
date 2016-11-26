@@ -39,14 +39,14 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         super.readSyncableNBT(compound, type);
 
         if(type == NBTType.SYNC){
-            ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
+            ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.world);
 
             NBTTagList list = compound.getTagList("Connections", 10);
             if(!list.hasNoTags()){
                 for(int i = 0; i < list.tagCount(); i++){
                     ConnectionPair pair = new ConnectionPair();
                     pair.readFromNBT(list.getCompoundTagAt(i));
-                    ActuallyAdditionsAPI.connectionHandler.addConnection(pair.getPositions()[0], pair.getPositions()[1], this.type, this.worldObj, pair.doesSuppressRender());
+                    ActuallyAdditionsAPI.connectionHandler.addConnection(pair.getPositions()[0], pair.getPositions()[1], this.type, this.world, pair.doesSuppressRender());
                 }
             }
         }
@@ -59,7 +59,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         if(type == NBTType.SYNC){
             NBTTagList list = new NBTTagList();
 
-            ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.worldObj);
+            ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.world);
             if(connections != null && !connections.isEmpty()){
                 for(IConnectionPair pair : connections){
                     NBTTagCompound tag = new NBTTagCompound();
@@ -75,26 +75,26 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     /*@Override
     public void updateEntity(){
         super.updateEntity();
-        if(this.worldObj.isRemote){
+        if(this.world.isRemote){
             this.renderParticles();
         }
     }
 
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
-        if(this.worldObj.rand.nextInt(8) == 0){
-            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        if(this.world.rand.nextInt(8) == 0){
+            EntityPlayer player = Minecraft.getMinecraft().player;
             if(player != null){
                 PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
                 WrenchMode mode = WrenchMode.values()[data.theCompound.getInteger("LaserWrenchMode")];
                 if(mode != WrenchMode.NO_PARTICLES){
                     ItemStack stack = player.getHeldItemMainhand();
                     if(mode == WrenchMode.ALWAYS_PARTICLES || (StackUtil.isValid(stack) && stack.getItem() instanceof ItemLaserWrench)){
-                        Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);
+                        Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.world);
                         if(network != null){
                             for(IConnectionPair aPair : network.connections){
                                 if(!aPair.doesSuppressRender() && aPair.contains(this.pos) && this.pos.equals(aPair.getPositions()[0])){
-                                    AssetUtil.renderParticlesFromAToB(aPair.getPositions()[0].getX(), aPair.getPositions()[0].getY(), aPair.getPositions()[0].getZ(), aPair.getPositions()[1].getX(), aPair.getPositions()[1].getY(), aPair.getPositions()[1].getZ(), this.worldObj.rand.nextInt(3)+1, 0.8F, this.type == LaserType.ITEM ? COLOR_ITEM : (this.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR), 1F);
+                                    AssetUtil.renderParticlesFromAToB(aPair.getPositions()[0].getX(), aPair.getPositions()[0].getY(), aPair.getPositions()[0].getZ(), aPair.getPositions()[1].getX(), aPair.getPositions()[1].getY(), aPair.getPositions()[1].getZ(), this.world.rand.nextInt(3)+1, 0.8F, this.type == LaserType.ITEM ? COLOR_ITEM : (this.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR), 1F);
                                 }
                             }
                         }
@@ -109,16 +109,16 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
         super.invalidate();
         //This is because Minecraft randomly invalidates tiles on world join and then validates them again
         //We need to compensate for this so that connections don't get broken randomly
-        this.tempConnectionStorage = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.worldObj);
+        this.tempConnectionStorage = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.world);
 
-        ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.worldObj);
+        ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.world);
     }
 
     @Override
     public void validate(){
         if(this.tempConnectionStorage != null){
             for(IConnectionPair pair : this.tempConnectionStorage){
-                ActuallyAdditionsAPI.connectionHandler.addConnection(pair.getPositions()[0], pair.getPositions()[1], pair.getType(), this.worldObj, pair.doesSuppressRender());
+                ActuallyAdditionsAPI.connectionHandler.addConnection(pair.getPositions()[0], pair.getPositions()[1], pair.getType(), this.world, pair.doesSuppressRender());
             }
             this.tempConnectionStorage = null;
         }

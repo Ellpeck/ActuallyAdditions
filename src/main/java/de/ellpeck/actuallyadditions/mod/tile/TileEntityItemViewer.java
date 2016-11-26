@@ -84,7 +84,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     private void queryAndSaveData(){
         if(this.connectedRelay != null){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.connectedRelay.getPos(), this.worldObj);
+            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.connectedRelay.getPos(), this.world);
             if(network != null){
                 if(this.oldNetwork != network || this.lastNetworkChangeAmount != network.changeAmount){
                     this.clearInfos();
@@ -139,11 +139,11 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     @Override
     public void saveDataOnChangeOrWorldStart(){
         TileEntityLaserRelayItem tileFound = null;
-        if(this.worldObj != null){ //Why is that even possible..?
+        if(this.world != null){ //Why is that even possible..?
             for(int i = 0; i <= 5; i++){
                 EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
                 BlockPos pos = this.getPos().offset(side);
-                TileEntity tile = this.worldObj.getTileEntity(pos);
+                TileEntity tile = this.world.getTileEntity(pos);
 
                 if(tile instanceof TileEntityLaserRelayItem){
                     if(tileFound != null){

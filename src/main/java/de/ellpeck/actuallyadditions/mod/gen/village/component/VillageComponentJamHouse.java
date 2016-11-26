@@ -53,6 +53,24 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentJamHouse(boundingBox, p4) : null;
     }
 
+    public static boolean generateCrate(World world, StructureBoundingBox box, int x, int y, int z, ResourceLocation loot){
+        BlockPos pos = new BlockPos(x, y, z);
+
+        if(box.isVecInside(pos)){
+            world.setBlockState(pos, InitBlocks.blockGiantChest.getDefaultState(), 2);
+
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TileEntityGiantChest){
+                ((TileEntityGiantChest)tile).lootTable = loot;
+            }
+
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     @Override
     public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb){
         if(this.averageGroundLevel < 0){
@@ -209,23 +227,5 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
     @Override
     protected VillagerProfession chooseForgeProfession(int count, VillagerProfession prof){
         return InitVillager.jamProfession;
-    }
-
-    public static boolean generateCrate(World world, StructureBoundingBox box, int x, int y, int z, ResourceLocation loot){
-        BlockPos pos = new BlockPos(x, y, z);
-
-        if(box.isVecInside(pos)){
-            world.setBlockState(pos, InitBlocks.blockGiantChest.getDefaultState(), 2);
-
-            TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof TileEntityGiantChest){
-                ((TileEntityGiantChest)tile).lootTable = loot;
-            }
-
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 }

@@ -35,7 +35,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     public void onChunkUnload(){
         super.onChunkUnload();
 
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             SUPPRESSORS.remove(this);
         }
     }
@@ -44,7 +44,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     public void invalidate(){
         super.invalidate();
 
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             SUPPRESSORS.remove(this);
         }
     }
@@ -53,7 +53,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     public void updateEntity(){
         super.updateEntity();
 
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(!this.isInvalid() && !SUPPRESSORS.contains(this)){
                 SUPPRESSORS.add(this);
             }

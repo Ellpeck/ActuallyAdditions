@@ -77,12 +77,12 @@ public class GuiMainPage extends GuiBooklet{
         super.initGui();
 
         int flavor = 1;
-        if(this.mc.theWorld.rand.nextFloat() <= 0.1){
-            flavor = MathHelper.getRandomIntegerInRange(this.mc.theWorld.rand, 2, 7);
+        if(this.mc.world.rand.nextFloat() <= 0.1){
+            flavor = MathHelper.getInt(this.mc.world.rand, 2, 7);
         }
         this.bookletName = "info."+ModUtil.MOD_ID+".booklet.manualName.1."+flavor;
 
-        String usedQuote = QUOTES[this.mc.theWorld.rand.nextInt(QUOTES.length)];
+        String usedQuote = QUOTES[this.mc.world.rand.nextInt(QUOTES.length)];
         String[] quoteSplit = usedQuote.split("@");
         if(quoteSplit.length == 2){
             this.quote = this.fontRendererObj.listFormattedStringToWidth(quoteSplit[0], 120);
@@ -101,7 +101,7 @@ public class GuiMainPage extends GuiBooklet{
         this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
         this.buttonList.add(this.achievementButton);
 
-        PlayerSave data = PlayerData.getDataFromPlayer(this.mc.thePlayer);
+        PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
         if(!data.didBookTutorial){
             this.showTutorial = true;
 
@@ -134,7 +134,7 @@ public class GuiMainPage extends GuiBooklet{
             }
         }
         else if(button == this.achievementButton){
-            GuiScreen achievements = new GuiAAAchievements(this, this.mc.thePlayer.getStatFileWriter());
+            GuiScreen achievements = new GuiAAAchievements(this, this.mc.player.getStatFileWriter());
             this.mc.displayGuiScreen(achievements);
         }
         else if(button == this.configButton){
@@ -154,9 +154,9 @@ public class GuiMainPage extends GuiBooklet{
                 this.configButton.visible = true;
                 this.achievementButton.visible = true;
 
-                PlayerSave data = PlayerData.getDataFromPlayer(this.mc.thePlayer);
+                PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
                 data.didBookTutorial = true;
-                PacketHandlerHelper.sendPlayerDataPacket(this.mc.thePlayer, true, false);
+                PacketHandlerHelper.sendPlayerDataPacket(this.mc.player, true, false);
             }
         }
         else{
@@ -174,7 +174,7 @@ public class GuiMainPage extends GuiBooklet{
         this.fontRendererObj.drawString(strg, this.guiLeft+72-this.fontRendererObj.getStringWidth(strg)/2-3, this.guiTop+19+this.fontRendererObj.FONT_HEIGHT, 0);
 
         String versionStrg;
-        String playerName = Minecraft.getMinecraft().thePlayer.getName();
+        String playerName = Minecraft.getMinecraft().player.getName();
 
         if(Util.isDevVersion()){
             versionStrg = "Dev's Edition";

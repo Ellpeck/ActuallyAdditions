@@ -34,11 +34,11 @@ public final class StackUtil{
     }
 
     public static boolean isValid(ItemStack stack){
-        return stack != null && !stack.func_190926_b();
+        return stack != null && !stack.isEmpty();
     }
 
     public static ItemStack getNull(){
-        return ItemStack.field_190927_a;
+        return ItemStack.EMPTY;
     }
 
     public static int getStackSize(ItemStack stack){
@@ -46,7 +46,7 @@ public final class StackUtil{
             return 0;
         }
         else{
-            return stack.func_190916_E();
+            return stack.getCount();
         }
     }
 
@@ -59,7 +59,7 @@ public final class StackUtil{
                 return getNull();
             }
         }
-        stack.func_190920_e(size);
+        stack.setCount(size);
         return stack;
     }
 
@@ -78,7 +78,7 @@ public final class StackUtil{
     }
 
     public static NonNullList<ItemStack> createSlots(int size){
-        return NonNullList.func_191197_a(size, getNull());
+        return NonNullList.withSize(size, getNull());
     }
 
 

@@ -30,8 +30,6 @@ import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 public class ItemMisc extends ItemBase{
 
     public static final TheMiscItems[] ALL_MISC_ITEMS = TheMiscItems.values();
@@ -77,20 +75,20 @@ public class ItemMisc extends ItemBase{
 
     @Override
     public boolean onEntityItemUpdate(EntityItem entity){
-        if(!entity.worldObj.isRemote){
+        if(!entity.world.isRemote){
             ItemStack stack = entity.getEntityItem();
             if(stack != null){
                 boolean isEmpowered = stack.getItemDamage() == TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal();
                 if(stack.getItemDamage() == TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal() || isEmpowered){
                     BlockPos pos = entity.getPosition();
-                    IBlockState state = entity.worldObj.getBlockState(pos);
+                    IBlockState state = entity.world.getBlockState(pos);
                     Block block = state.getBlock();
 
                     if(block instanceof IFluidBlock && block.getMetaFromState(state) == 0){
                         Fluid fluid = ((IFluidBlock)block).getFluid();
                         if(fluid != null && fluid == (isEmpowered ? InitFluids.fluidCrystalOil : InitFluids.fluidOil)){
                             entity.setDead();
-                            entity.worldObj.setBlockState(pos, (isEmpowered ? InitFluids.blockEmpoweredOil : InitFluids.blockCrystalOil).getDefaultState());
+                            entity.world.setBlockState(pos, (isEmpowered ? InitFluids.blockEmpoweredOil : InitFluids.blockCrystalOil).getDefaultState());
                         }
                     }
                 }

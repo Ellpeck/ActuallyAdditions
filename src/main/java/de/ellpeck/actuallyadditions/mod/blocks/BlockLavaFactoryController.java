@@ -51,7 +51,7 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IH
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
-        TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController)minecraft.theWorld.getTileEntity(posHit.getBlockPos());
+        TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController)minecraft.world.getTileEntity(posHit.getBlockPos());
         if(factory != null){
             int state = factory.isMultiblock();
             if(state == TileEntityLavaFactoryController.NOT_MULTI){

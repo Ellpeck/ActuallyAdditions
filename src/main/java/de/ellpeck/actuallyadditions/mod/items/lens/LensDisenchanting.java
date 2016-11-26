@@ -93,8 +93,8 @@ public class LensDisenchanting extends Lens{
                         EntityItem newBook = new EntityItem(book.getEntityWorld(), book.posX, book.posY, book.posZ, newBookStack);
                         toDisenchant.setDead();
                         book.setDead();
-                        tile.getWorldObject().spawnEntityInWorld(newBook);
-                        tile.getWorldObject().spawnEntityInWorld(disenchanted);
+                        tile.getWorldObject().spawnEntity(newBook);
+                        tile.getWorldObject().spawnEntity(disenchanted);
 
                         tile.extractEnergy(ENERGY_USE);
 

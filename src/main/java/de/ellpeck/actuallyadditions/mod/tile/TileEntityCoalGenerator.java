@@ -66,7 +66,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             boolean flag = this.currentBurnTime > 0;
 
             if(this.currentBurnTime > 0){

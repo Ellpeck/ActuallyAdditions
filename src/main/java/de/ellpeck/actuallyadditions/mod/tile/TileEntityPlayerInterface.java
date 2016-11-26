@@ -38,7 +38,7 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
 
     private EntityPlayer getPlayer(){
         if(this.connectedPlayer != null){
-            EntityPlayer player = this.worldObj.getPlayerEntityByUUID(this.connectedPlayer);
+            EntityPlayer player = this.world.getPlayerEntityByUUID(this.connectedPlayer);
             if(player != null){
                 if(player.getDistance(this.pos.getX(), this.pos.getY(), this.pos.getZ()) <= this.range){
                     return player;
@@ -51,10 +51,10 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             boolean changed = false;
 
-            this.range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.worldObj, this.pos);
+            this.range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.world, this.pos);
 
             EntityPlayer player = this.getPlayer();
             if(player != null){

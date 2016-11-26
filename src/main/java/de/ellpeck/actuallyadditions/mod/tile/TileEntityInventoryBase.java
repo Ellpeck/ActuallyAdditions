@@ -21,7 +21,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import java.util.List;
 
 public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
 
@@ -110,7 +109,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player){
+    public boolean isUsableByPlayer(EntityPlayer player){
         return this.canPlayerUse(player);
     }
 
@@ -217,7 +216,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     }
 
     @Override
-    public boolean func_191420_l(){
+    public boolean isEmpty(){
         return StackUtil.isIInvEmpty(this.slots);
     }
 }

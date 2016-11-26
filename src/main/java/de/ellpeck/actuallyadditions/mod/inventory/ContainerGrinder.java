@@ -110,7 +110,7 @@ public class ContainerGrinder extends Container{
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
                 return StackUtil.getNull();
             }
-            theSlot.func_190901_a(player, newStack);
+            theSlot.onTake(player, newStack);
 
             return currentStack;
         }
@@ -119,6 +119,6 @@ public class ContainerGrinder extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.tileGrinder.isUseableByPlayer(player);
+        return this.tileGrinder.isUsableByPlayer(player);
     }
 }

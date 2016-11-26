@@ -106,7 +106,7 @@ public class BlockTinyTorch extends BlockBase{
     }
 
     @Override
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
         if(this.canPlaceAt(worldIn, pos, facing)){
             return this.getDefaultState().withProperty(BlockTorch.FACING, facing);
         }

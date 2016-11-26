@@ -46,9 +46,9 @@ public class ItemWaterRemovalRing extends ItemEnergy{
             for(int x = -range; x < range+1; x++){
                 for(int z = -range; z < range+1; z++){
                     for(int y = -range; y < range+1; y++){
-                        int theX = MathHelper.floor_double(player.posX+x);
-                        int theY = MathHelper.floor_double(player.posY+y);
-                        int theZ = MathHelper.floor_double(player.posZ+z);
+                        int theX = MathHelper.floor(player.posX+x);
+                        int theY = MathHelper.floor(player.posY+y);
+                        int theZ = MathHelper.floor(player.posZ+z);
 
                         //Remove Water
                         BlockPos pos = new BlockPos(theX, theY, theZ);

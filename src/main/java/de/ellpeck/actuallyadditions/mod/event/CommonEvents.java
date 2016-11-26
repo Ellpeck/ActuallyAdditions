@@ -56,11 +56,11 @@ public class CommonEvents{
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
-        if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
+        if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
             //Drop Cobwebs from Spiders
             if(ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof EntitySpider){
-                if(event.getEntityLiving().worldObj.rand.nextInt(20) <= event.getLootingLevel()*2){
-                    event.getEntityLiving().entityDropItem(new ItemStack(Blocks.WEB, event.getEntityLiving().worldObj.rand.nextInt(2+event.getLootingLevel())+1), 0);
+                if(event.getEntityLiving().world.rand.nextInt(20) <= event.getLootingLevel()*2){
+                    event.getEntityLiving().entityDropItem(new ItemStack(Blocks.WEB, event.getEntityLiving().world.rand.nextInt(2+event.getLootingLevel())+1), 0);
                 }
             }
         }
@@ -68,7 +68,7 @@ public class CommonEvents{
 
     @SubscribeEvent
     public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event){
-        if(!event.player.worldObj.isRemote && event.player instanceof EntityPlayerMP){
+        if(!event.player.world.isRemote && event.player instanceof EntityPlayerMP){
             EntityPlayerMP player = (EntityPlayerMP)event.player;
             PacketHandlerHelper.sendPlayerDataPacket(player, true, true);
             ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+".");
@@ -80,7 +80,7 @@ public class CommonEvents{
         checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
-            if(!event.player.worldObj.isRemote && StackUtil.isValid(event.crafting) && event.crafting.getItem() != InitItems.itemBooklet){
+            if(!event.player.world.isRemote && StackUtil.isValid(event.crafting) && event.crafting.getItem() != InitItems.itemBooklet){
 
                 String name = event.crafting.getItem().getRegistryName().toString();
                 if(name != null && name.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){
@@ -88,9 +88,9 @@ public class CommonEvents{
                     if(save != null && !save.bookGottenAlready){
                         save.bookGottenAlready = true;
 
-                        EntityItem entityItem = new EntityItem(event.player.worldObj, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemBooklet));
+                        EntityItem entityItem = new EntityItem(event.player.world, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemBooklet));
                         entityItem.setPickupDelay(0);
-                        event.player.worldObj.spawnEntityInWorld(entityItem);
+                        event.player.world.spawnEntity(entityItem);
                     }
                 }
             }

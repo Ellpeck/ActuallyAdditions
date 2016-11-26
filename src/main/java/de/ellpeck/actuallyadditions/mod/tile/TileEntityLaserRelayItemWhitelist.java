@@ -24,8 +24,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.IItemHandler;
 
-import java.util.Arrays;
-
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
 
     public final IInventory filterInventory;
@@ -62,7 +60,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
             }
 
             @Override
-            public boolean isUseableByPlayer(EntityPlayer player){
+            public boolean isUsableByPlayer(EntityPlayer player){
                 return this.tile.canPlayerUse(player);
             }
 
@@ -108,7 +106,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
             }
 
             @Override
-            public boolean func_191420_l(){
+            public boolean isEmpty(){
                 return StackUtil.isIInvEmpty(this.tile.slots);
             }
 
@@ -261,7 +259,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     public void updateEntity(){
         super.updateEntity();
 
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if((this.leftFilter.needsUpdateSend() || this.rightFilter.needsUpdateSend()) && this.sendUpdateWithInterval()){
                 this.leftFilter.updateLasts();
                 this.rightFilter.updateLasts();

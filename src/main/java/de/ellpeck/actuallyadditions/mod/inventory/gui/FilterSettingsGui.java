@@ -42,16 +42,16 @@ public class FilterSettingsGui extends Gui{
 
         this.whitelistButton = new SmallerButton(this.theSettings.whitelistButtonId, x, y, "", true);
         buttonList.add(this.whitelistButton);
-        y+=14;
+        y += 14;
         this.metaButton = new SmallerButton(this.theSettings.metaButtonId, x, y, "", true);
         buttonList.add(this.metaButton);
-        y+=14;
+        y += 14;
         this.nbtButton = new SmallerButton(this.theSettings.nbtButtonId, x, y, "", true);
         buttonList.add(this.nbtButton);
-        y+=14;
+        y += 14;
         this.oredictButton = new SmallerButton(this.theSettings.oredictButtonId, x, y, "", true);
         buttonList.add(this.oredictButton);
-        y+=15;
+        y += 15;
         this.modButton = new SmallerButton(this.theSettings.modButtonId, x, y, "", true);
         buttonList.add(this.modButton);
 

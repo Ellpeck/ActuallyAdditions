@@ -29,8 +29,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Arrays;
-
 
 public class ContainerBag extends Container implements IButtonReactor{
 
@@ -184,7 +182,7 @@ public class ContainerBag extends Container implements IButtonReactor{
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
                 return StackUtil.getNull();
             }
-            theSlot.func_190901_a(player, newStack);
+            theSlot.onTake(player, newStack);
 
             return currentStack;
         }
@@ -219,7 +217,7 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.bagInventory.isUseableByPlayer(player);
+        return this.bagInventory.isUsableByPlayer(player);
     }
 
     @Override
@@ -256,7 +254,7 @@ public class ContainerBag extends Container implements IButtonReactor{
         }
 
         @Override
-        public boolean isUseableByPlayer(EntityPlayer player){
+        public boolean isUsableByPlayer(EntityPlayer player){
             return true;
         }
 
@@ -307,7 +305,7 @@ public class ContainerBag extends Container implements IButtonReactor{
         }
 
         @Override
-        public boolean func_191420_l(){
+        public boolean isEmpty(){
             return StackUtil.isIInvEmpty(this.slots);
         }
 

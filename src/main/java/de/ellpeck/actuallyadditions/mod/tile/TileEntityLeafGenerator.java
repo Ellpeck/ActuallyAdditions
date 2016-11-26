@@ -48,7 +48,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(!this.isRedstonePowered){
 
                 if(this.nextUseCounter >= 5){
@@ -61,8 +61,8 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
                             for(int reachZ = -RANGE; reachZ < RANGE+1; reachZ++){
                                 for(int reachY = -RANGE; reachY < RANGE+1; reachY++){
                                     BlockPos pos = this.pos.add(reachX, reachY, reachZ);
-                                    Block block = this.worldObj.getBlockState(pos).getBlock();
-                                    if(block != null && block.isLeaves(this.worldObj.getBlockState(pos), this.worldObj, pos)){
+                                    Block block = this.world.getBlockState(pos).getBlock();
+                                    if(block != null && block.isLeaves(this.world.getBlockState(pos), this.world, pos)){
                                         breakPositions.add(pos);
                                     }
                                 }
@@ -73,13 +73,13 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
                             Collections.shuffle(breakPositions);
                             BlockPos theCoord = breakPositions.get(0);
 
-                            this.worldObj.playEvent(2001, theCoord, Block.getStateId(this.worldObj.getBlockState(theCoord)));
+                            this.world.playEvent(2001, theCoord, Block.getStateId(this.world.getBlockState(theCoord)));
 
-                            this.worldObj.setBlockToAir(theCoord);
+                            this.world.setBlockToAir(theCoord);
 
                             this.storage.receiveEnergyInternal(ENERGY_PRODUCED, false);
 
-                            AssetUtil.shootParticles(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F, 1F);
+                            AssetUtil.shootParticles(this.world, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F, 1F);
                         }
                     }
                 }

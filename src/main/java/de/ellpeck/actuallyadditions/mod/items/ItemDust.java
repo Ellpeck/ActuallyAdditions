@@ -24,8 +24,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 public class ItemDust extends ItemBase implements IColorProvidingItem{
 
     public static final TheDusts[] ALL_DUSTS = TheDusts.values();

@@ -41,12 +41,12 @@ public class ItemHairyBall extends ItemBase{
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event){
         //Ocelots dropping Hair Balls
         if(event.getEntityLiving() != null){
-            if(event.getEntityLiving().worldObj != null && !event.getEntityLiving().worldObj.isRemote){
+            if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote){
                 if((event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot)event.getEntityLiving()).isTamed()) || (event.getEntityLiving() instanceof EntityPlayer && event.getEntityLiving().getUniqueID().equals(/*KittyVanCat*/ UUID.fromString("681d4e20-10ef-40c9-a0a5-ba2f1995ef44")))){
                     if(ConfigBoolValues.DO_CAT_DROPS.isEnabled()){
-                        if(event.getEntityLiving().worldObj.rand.nextInt(5000)+1 == 1){
-                            EntityItem item = new EntityItem(event.getEntityLiving().worldObj, event.getEntityLiving().posX+0.5, event.getEntityLiving().posY+0.5, event.getEntityLiving().posZ+0.5, new ItemStack(InitItems.itemHairyBall));
-                            event.getEntityLiving().worldObj.spawnEntityInWorld(item);
+                        if(event.getEntityLiving().world.rand.nextInt(5000)+1 == 1){
+                            EntityItem item = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX+0.5, event.getEntityLiving().posY+0.5, event.getEntityLiving().posZ+0.5, new ItemStack(InitItems.itemHairyBall));
+                            event.getEntityLiving().world.spawnEntity(item);
                         }
                     }
                 }
@@ -60,9 +60,9 @@ public class ItemHairyBall extends ItemBase{
         if(!world.isRemote){
             ItemStack returnItem = this.getRandomReturnItem(world.rand);
             if(!player.inventory.addItemStackToInventory(returnItem)){
-                EntityItem entityItem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, returnItem);
+                EntityItem entityItem = new EntityItem(player.world, player.posX, player.posY, player.posZ, returnItem);
                 entityItem.setPickupDelay(0);
-                player.worldObj.spawnEntityInWorld(entityItem);
+                player.world.spawnEntity(entityItem);
             }
             stack = StackUtil.addStackSize(stack, -1);
 

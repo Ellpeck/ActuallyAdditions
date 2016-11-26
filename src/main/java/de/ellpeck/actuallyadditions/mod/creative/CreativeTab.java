@@ -24,8 +24,6 @@ import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 public class CreativeTab extends CreativeTabs{
 
     public static final CreativeTab INSTANCE = new CreativeTab();

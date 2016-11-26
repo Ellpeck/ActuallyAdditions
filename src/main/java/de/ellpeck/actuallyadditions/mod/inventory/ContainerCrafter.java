@@ -29,7 +29,7 @@ public class ContainerCrafter extends Container{
     public ContainerCrafter(EntityPlayer player){
         InventoryPlayer inventory = player.inventory;
 
-        this.world = player.worldObj;
+        this.world = player.world;
 
         this.addSlotToContainer(new SlotCrafting(inventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
         for(int i = 0; i < 3; i++){
@@ -91,7 +91,7 @@ public class ContainerCrafter extends Container{
                 return StackUtil.getNull();
             }
 
-            slot.func_190901_a(player, itemstack1);
+            slot.onTake(player, itemstack1);
         }
 
         return itemstack;

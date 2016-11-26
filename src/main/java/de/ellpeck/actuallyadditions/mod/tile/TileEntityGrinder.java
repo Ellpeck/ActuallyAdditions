@@ -16,8 +16,6 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -80,7 +78,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(this.isDouble && this.isAutoSplit){
                 TileEntityFurnaceDouble.autoSplit(this.slots, SLOT_INPUT_1, SLOT_INPUT_2);
             }
@@ -139,7 +137,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
             }
 
             if(shouldPlaySound){
-                this.worldObj.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS, 0.15F, 1.0F);
+                this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS, 0.15F, 1.0F);
             }
         }
     }
@@ -191,7 +189,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
             if(outputTwo.getItemDamage() == Util.WILDCARD){
                 outputTwo.setItemDamage(0);
             }
-            int rand = this.worldObj.rand.nextInt(100)+1;
+            int rand = this.world.rand.nextInt(100)+1;
             if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots.get(theInput))){
                 if(!StackUtil.isValid(this.slots.get(theSecondOutput))){
                     this.slots.set(theSecondOutput, outputTwo.copy());

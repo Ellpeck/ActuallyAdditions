@@ -48,18 +48,18 @@ public class UpdateChecker{
     @SubscribeEvent(receiveCanceled = true)
     public void onTick(TickEvent.ClientTickEvent event){
         //Don't notify directly to prevent the Message getting lost in Spam on World Joining
-        if(!notified && Minecraft.getMinecraft().thePlayer != null){
+        if(!notified && Minecraft.getMinecraft().player != null){
             ticksElapsedBeforeInfo++;
             if(ticksElapsedBeforeInfo >= 800){
-                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+                EntityPlayer player = Minecraft.getMinecraft().player;
                 if(UpdateChecker.checkFailed){
-                    player.addChatMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.failed")));
+                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.failed")));
                     notified = true;
                 }
                 else if(UpdateChecker.needsUpdateNotify){
-                    player.addChatMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.generic")));
-                    player.addChatMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)));
-                    player.addChatMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
+                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.generic")));
+                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)));
+                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
                     notified = true;
                 }
                 ticksElapsedBeforeInfo = 0;

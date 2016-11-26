@@ -93,7 +93,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
         }
 
         if(this.hasBookmarkButtons()){
-            PlayerSave data = PlayerData.getDataFromPlayer(this.mc.thePlayer);
+            PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
 
             int xStart = this.guiLeft+this.xSize/2-16*this.bookmarkButtons.length/2;
             for(int i = 0; i < this.bookmarkButtons.length; i++){
@@ -114,7 +114,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
         //Don't cache the parent GUI, otherwise it opens again when you close the cached book!
         this.previousScreen = null;
 
-        PlayerSave data = PlayerData.getDataFromPlayer(this.mc.thePlayer);
+        PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
 
         boolean change = false;
         for(int i = 0; i < this.bookmarkButtons.length; i++){
@@ -126,7 +126,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
         data.lastOpenBooklet = this;
 
         if(change){
-            PacketHandlerHelper.sendPlayerDataPacket(this.mc.thePlayer, true, false);
+            PacketHandlerHelper.sendPlayerDataPacket(this.mc.player, true, false);
         }
     }
 

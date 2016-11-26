@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.api.recipe;
 
-import net.minecraftforge.fluids.FluidStack;
-
 public class OilGenRecipe{
 
     public final String fluidName;

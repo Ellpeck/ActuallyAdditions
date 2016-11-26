@@ -18,7 +18,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.IPlantable;
 
 
 public class ContainerFarmer extends Container{
@@ -95,7 +94,7 @@ public class ContainerFarmer extends Container{
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
                 return StackUtil.getNull();
             }
-            theSlot.func_190901_a(player, newStack);
+            theSlot.onTake(player, newStack);
 
             return currentStack;
         }
@@ -104,6 +103,6 @@ public class ContainerFarmer extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.farmer.isUseableByPlayer(player);
+        return this.farmer.isUsableByPlayer(player);
     }
 }

@@ -22,13 +22,10 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
-import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -49,6 +46,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -197,8 +195,8 @@ public class ItemDrill extends ItemEnergy{
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
 
         if(slot == EntityEquipmentSlot.MAINHAND){
-            map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Drill Modifier", this.getEnergyStored(stack) >= ENERGY_USE ? 8.0F : 0.1F, 0));
-            map.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool Modifier", -2.5F, 0));
+            map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Drill Modifier", this.getEnergyStored(stack) >= ENERGY_USE ? 8.0F : 0.1F, 0));
+            map.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool Modifier", -2.5F, 0));
         }
 
         return map;
@@ -225,21 +223,21 @@ public class ItemDrill extends ItemEnergy{
             }
 
             //Block hit
-            RayTraceResult ray = WorldUtil.getNearestBlockWithDefaultReachDistance(player.worldObj, player);
+            RayTraceResult ray = WorldUtil.getNearestBlockWithDefaultReachDistance(player.world, player);
             if(ray != null){
                 int side = ray.sideHit.ordinal();
 
                 //Breaks the Blocks
                 if(!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
                     if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                        toReturn = this.breakBlocks(stack, 2, player.worldObj, side != 0 && side != 1 ? pos.up() : pos, side, player);
+                        toReturn = this.breakBlocks(stack, 2, player.world, side != 0 && side != 1 ? pos.up() : pos, side, player);
                     }
                     else{
-                        toReturn = this.breakBlocks(stack, 1, player.worldObj, pos, side, player);
+                        toReturn = this.breakBlocks(stack, 1, player.world, pos, side, player);
                     }
                 }
                 else{
-                    toReturn = this.breakBlocks(stack, 0, player.worldObj, pos, side, player);
+                    toReturn = this.breakBlocks(stack, 0, player.world, pos, side, player);
                 }
 
                 //Removes Enchantments added above
@@ -265,7 +263,7 @@ public class ItemDrill extends ItemEnergy{
     }
 
     @Override
-    public int getHarvestLevel(ItemStack stack, String toolClass){
+    public int getHarvestLevel(ItemStack stack, String toolClass, EntityPlayer player, IBlockState blockState){
         return HARVEST_LEVEL;
     }
 

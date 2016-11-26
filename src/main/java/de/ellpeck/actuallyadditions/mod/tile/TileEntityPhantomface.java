@@ -86,8 +86,8 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
-            this.range = upgradeRange(RANGE, this.worldObj, this.getPos());
+        if(!this.world.isRemote){
+            this.range = upgradeRange(RANGE, this.world, this.getPos());
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;
@@ -105,16 +105,16 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     protected boolean doesNeedUpdateSend(){
-        return this.boundPosition != this.boundPosBefore || (this.boundPosition != null && this.worldObj.getBlockState(this.boundPosition).getBlock() != this.boundBlockBefore) || this.rangeBefore != this.range;
+        return this.boundPosition != this.boundPosBefore || (this.boundPosition != null && this.world.getBlockState(this.boundPosition).getBlock() != this.boundBlockBefore) || this.rangeBefore != this.range;
     }
 
     protected void onUpdateSent(){
         this.rangeBefore = this.range;
         this.boundPosBefore = this.boundPosition;
-        this.boundBlockBefore = this.boundPosition == null ? null : this.worldObj.getBlockState(this.boundPosition).getBlock();
+        this.boundBlockBefore = this.boundPosition == null ? null : this.world.getBlockState(this.boundPosition).getBlock();
 
         if(this.boundPosition != null){
-            this.worldObj.notifyNeighborsOfStateChange(this.pos, this.worldObj.getBlockState(this.boundPosition).getBlock(), false);
+            this.world.notifyNeighborsOfStateChange(this.pos, this.world.getBlockState(this.boundPosition).getBlock(), false);
         }
 
         this.sendUpdate();
@@ -129,7 +129,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public boolean hasBoundPosition(){
         if(this.boundPosition != null){
-            if(this.worldObj.getTileEntity(this.boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ())){
+            if(this.world.getTileEntity(this.boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ())){
                 this.boundPosition = null;
                 return false;
             }
@@ -140,16 +140,16 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
-        if(this.worldObj.rand.nextInt(2) == 0){
-            double d1 = (double)((float)this.boundPosition.getY()+this.worldObj.rand.nextFloat());
-            int i1 = this.worldObj.rand.nextInt(2)*2-1;
-            int j1 = this.worldObj.rand.nextInt(2)*2-1;
-            double d4 = ((double)this.worldObj.rand.nextFloat()-0.5D)*0.125D;
+        if(this.world.rand.nextInt(2) == 0){
+            double d1 = (double)((float)this.boundPosition.getY()+this.world.rand.nextFloat());
+            int i1 = this.world.rand.nextInt(2)*2-1;
+            int j1 = this.world.rand.nextInt(2)*2-1;
+            double d4 = ((double)this.world.rand.nextFloat()-0.5D)*0.125D;
             double d2 = (double)this.boundPosition.getZ()+0.5D+0.25D*(double)j1;
-            double d5 = (double)(this.worldObj.rand.nextFloat()*1.0F*(float)j1);
+            double d5 = (double)(this.world.rand.nextFloat()*1.0F*(float)j1);
             double d0 = (double)this.boundPosition.getX()+0.5D+0.25D*(double)i1;
-            double d3 = (double)(this.worldObj.rand.nextFloat()*1.0F*(float)i1);
-            this.worldObj.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
+            double d3 = (double)(this.world.rand.nextFloat()*1.0F*(float)i1);
+            this.world.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
 
         if(this.ticksElapsed%80 == 0){
@@ -200,7 +200,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing){
         if(this.isBoundThingInRange()){
-            TileEntity tile = this.worldObj.getTileEntity(this.getBoundPosition());
+            TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
             if(tile != null){
                 return tile.hasCapability(capability, facing);
             }
@@ -211,7 +211,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
         if(this.isBoundThingInRange()){
-            TileEntity tile = this.worldObj.getTileEntity(this.getBoundPosition());
+            TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
             if(tile != null){
                 return tile.getCapability(capability, facing);
             }

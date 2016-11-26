@@ -44,7 +44,7 @@ public class TileEntityDropper extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(!this.isRedstonePowered && !this.isPulseMode){
                 if(this.currentTime > 0){
                     this.currentTime--;
@@ -68,8 +68,8 @@ public class TileEntityDropper extends TileEntityInventoryBase{
         if(StackUtil.isValid(this.removeFromInventory(false))){
             ItemStack stack = this.removeFromInventory(true);
             stack = StackUtil.setStackSize(stack, 1);
-            IBlockState state = this.worldObj.getBlockState(this.pos);
-            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state)), this.worldObj, this.pos, stack);
+            IBlockState state = this.world.getBlockState(this.pos);
+            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state)), this.world, this.pos, stack);
         }
     }
 

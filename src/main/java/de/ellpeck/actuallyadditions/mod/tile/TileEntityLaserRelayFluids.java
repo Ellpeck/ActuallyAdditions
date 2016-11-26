@@ -17,14 +17,11 @@ import de.ellpeck.actuallyadditions.api.laser.Network;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,7 +76,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
         this.receiversAround.clear();
         for(EnumFacing side : EnumFacing.values()){
             BlockPos pos = this.getPos().offset(side);
-            TileEntity tile = this.worldObj.getTileEntity(pos);
+            TileEntity tile = this.world.getTileEntity(pos);
             if(tile != null && !(tile instanceof TileEntityLaserRelay)){
                 if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())){
                     this.receiversAround.put(side, tile);
@@ -123,7 +120,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
     private int transmitFluid(EnumFacing from, FluidStack stack, boolean doFill){
         int transmitted = 0;
         if(stack != null){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);
+            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.world);
             if(network != null){
                 transmitted = this.transferFluidToReceiverInNeed(from, network, stack, doFill);
             }
@@ -143,7 +140,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
             for(BlockPos relay : pair.getPositions()){
                 if(relay != null && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
-                    TileEntity relayTile = this.worldObj.getTileEntity(relay);
+                    TileEntity relayTile = this.world.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayFluids){
                         TileEntityLaserRelayFluids theRelay = (TileEntityLaserRelayFluids)relayTile;
                         int amount = theRelay.receiversAround.size();

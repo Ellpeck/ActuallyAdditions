@@ -67,7 +67,7 @@ public class OreGen implements IWorldGenerator{
 
     private void generateDefault(World world, Random random, int x, int z){
         if(ConfigBoolValues.GENERATE_QUARTZ.isEnabled()){
-            this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.STONE, world, random, x*16, z*16, MathHelper.getRandomIntegerInRange(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
+            this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.STONE, world, random, x*16, z*16, MathHelper.getInt(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
         }
 
         if(ConfigBoolValues.GEN_LUSH_CAVES.isEnabled()){
@@ -81,7 +81,7 @@ public class OreGen implements IWorldGenerator{
                     Random chunkRand = new Random(randConst ^ world.getSeed() ^ (chunkX*29+chunkZ*31));
                     if(chunkRand.nextInt(ConfigIntValues.LUSH_CAVE_CHANCE.getValue()) <= 0){
                         BlockPos randPos = world.getTopSolidOrLiquidBlock(new BlockPos(chunkX*16+chunkRand.nextInt(16)+8, 0, chunkZ*16+chunkRand.nextInt(16)+8));
-                        BlockPos pos = randPos.down(MathHelper.getRandomIntegerInRange(chunkRand, 15, randPos.getY()-15));
+                        BlockPos pos = randPos.down(MathHelper.getInt(chunkRand, 15, randPos.getY()-15));
                         this.caveGen.generate(world, chunkRand, pos, box);
                     }
                 }

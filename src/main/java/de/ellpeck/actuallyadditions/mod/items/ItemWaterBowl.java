@@ -67,7 +67,7 @@ public class ItemWaterBowl extends ItemBase{
                                     else if(!event.getEntityPlayer().inventory.addItemStackToInventory(bowl.copy())){
                                         EntityItem entityItem = new EntityItem(event.getWorld(), event.getEntityPlayer().posX, event.getEntityPlayer().posY, event.getEntityPlayer().posZ, bowl.copy());
                                         entityItem.setPickupDelay(0);
-                                        event.getWorld().spawnEntityInWorld(entityItem);
+                                        event.getWorld().spawnEntity(entityItem);
                                     }
                                 }
                             }

@@ -69,7 +69,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.worldObj.isRemote){
+        if(!this.world.isRemote){
             if(this.layerAt == -1){
                 this.layerAt = this.getPos().getY()-1;
             }
@@ -77,7 +77,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
             if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
 
                 if(this.layerAt > 0){
-                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.worldObj, this.pos))){
+                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.world, this.pos))){
                         this.layerAt--;
                     }
                 }
@@ -97,18 +97,18 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
                 if(this.storage.getEnergyStored() >= actualUse){
                     BlockPos pos = new BlockPos(this.pos.getX()+anX, this.layerAt, this.pos.getZ()+aZ);
 
-                    IBlockState state = this.worldObj.getBlockState(pos);
+                    IBlockState state = this.world.getBlockState(pos);
                     Block block = state.getBlock();
                     int meta = block.getMetaFromState(state);
-                    if(!block.isAir(this.worldObj.getBlockState(pos), this.worldObj, pos)){
-                        if(block.getHarvestLevel(this.worldObj.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
-                            List<ItemStack> drops = block.getDrops(this.worldObj, pos, this.worldObj.getBlockState(pos), 0);
-                            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, pos, this.worldObj.getBlockState(pos), 0, 1, false, null);
+                    if(!block.isAir(this.world.getBlockState(pos), this.world, pos)){
+                        if(block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
+                            List<ItemStack> drops = block.getDrops(this.world, pos, this.world.getBlockState(pos), 0);
+                            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.world, pos, this.world.getBlockState(pos), 0, 1, false, null);
 
-                            if(this.worldObj.rand.nextFloat() <= chance){
+                            if(this.world.rand.nextFloat() <= chance){
                                 if(WorldUtil.addToInventory(this, drops, false, true)){
-                                    this.worldObj.playEvent(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
-                                    this.worldObj.setBlockToAir(pos);
+                                    this.world.playEvent(2001, pos, Block.getStateId(this.world.getBlockState(pos)));
+                                    this.world.setBlockToAir(pos);
 
                                     WorldUtil.addToInventory(this, drops, true, true);
                                     this.markDirty();
@@ -163,7 +163,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     }
 
     private void shootParticles(int endX, int endY, int endZ){
-        AssetUtil.shootParticles(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F, 1F);
+        AssetUtil.shootParticles(this.world, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F, 1F);
     }
 
     private boolean isBlacklisted(Block block){

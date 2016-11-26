@@ -56,7 +56,7 @@ public class BookletEntry implements IBookletEntry{
         if(!items.isEmpty()){
             for(ItemStack stack : items){
                 if(StackUtil.isValid(stack)){
-                    List<String> tooltip = stack.getTooltip(mc.thePlayer, mc.gameSettings.advancedItemTooltips);
+                    List<String> tooltip = stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips);
                     for(String strg : tooltip){
                         if(strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)){
                             return true;
