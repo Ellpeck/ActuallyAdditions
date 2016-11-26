@@ -46,7 +46,11 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
                     if(TileEntityItemViewer.this.canInsertItem(slot, stack, direction)){
                         SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
                         if(info != null){
-                            return info.handler.insertItem(info.switchedIndex, stack, simulate);
+                            ItemStack inserted = info.handler.insertItem(info.switchedIndex, stack, simulate);
+                            if(!ItemStack.areItemStacksEqual(inserted, stack)){
+                                TileEntityItemViewer.this.markDirty();
+                            }
+                            return inserted;
                         }
                     }
                     return super.insertItem(slot, stack, simulate);
@@ -59,7 +63,11 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
                         if(TileEntityItemViewer.this.canExtractItem(slot, stackIn, direction)){
                             SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
                             if(info != null){
-                                return info.handler.extractItem(info.switchedIndex, amount, simulate);
+                                ItemStack extracted = info.handler.extractItem(info.switchedIndex, amount, simulate);
+                                if(extracted != null){
+                                    TileEntityItemViewer.this.markDirty();
+                                }
+                                return extracted;
                             }
                         }
                     }
@@ -95,6 +103,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
                             }
                         }
                     }
+                    this.markDirty();
 
                     this.oldNetwork = network;
                     this.lastNetworkChangeAmount = network.changeAmount;
@@ -210,6 +219,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
                     toInsert = StackUtil.addStackSize(toInsert, -StackUtil.getStackSize(inSlot));
                 }
                 handler.handler.insertItem(handler.switchedIndex, toInsert, false);
+                this.markDirty();
             }
         }
         else{
@@ -244,7 +254,11 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     public ItemStack decrStackSize(int i, int j){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(i);
         if(handler != null){
-            return handler.handler.extractItem(handler.switchedIndex, j, false);
+            ItemStack extract = handler.handler.extractItem(handler.switchedIndex, j, false);
+            if(extract != null){
+                this.markDirty();
+            }
+            return extract;
         }
         return null;
     }
@@ -255,9 +269,12 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         if(handler != null){
             ItemStack stackInSlot = handler.handler.getStackInSlot(handler.switchedIndex);
             if(StackUtil.isValid(stackInSlot)){
-                handler.handler.extractItem(handler.switchedIndex, StackUtil.getStackSize(stackInSlot), false);
+                ItemStack extracted = handler.handler.extractItem(handler.switchedIndex, StackUtil.getStackSize(stackInSlot), false);
+                if(extracted != null){
+                    this.markDirty();
+                }
+                return extracted;
             }
-            return stackInSlot;
         }
         return null;
     }
