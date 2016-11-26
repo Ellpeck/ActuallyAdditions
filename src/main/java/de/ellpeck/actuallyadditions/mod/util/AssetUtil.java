@@ -26,7 +26,6 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -34,8 +33,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
-
-import java.util.Locale;
 
 public final class AssetUtil{
 
@@ -321,5 +318,16 @@ public final class AssetUtil{
         GlStateManager.popMatrix();
 
         GlStateManager.enableFog();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static float[] getWheelColor(float pos){
+        if(pos < 85.0f){
+            return new float[]{pos*3.0F, 255.0f-pos*3.0f, 0.0f};
+        }
+        if(pos < 170.0f){
+            return new float[]{255.0f-(pos -= 85.0f)*3.0f, 0.0f, pos*3.0f};
+        }
+        return new float[]{0.0f, (pos -= 170.0f)*3.0f, 255.0f-pos*3.0f};
     }
 }

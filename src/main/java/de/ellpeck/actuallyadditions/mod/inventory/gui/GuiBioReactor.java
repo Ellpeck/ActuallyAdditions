@@ -41,13 +41,6 @@ public class GuiBioReactor extends GuiContainer{
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
-        super.mouseClicked(mouseX, mouseY, mouseButton);
-        this.energy.onMouseClick(mouseX, mouseY, mouseButton);
-    }
-
-
-    @Override
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         this.energy.drawOverlay(x, y);

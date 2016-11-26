@@ -68,8 +68,7 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
         NumberFormat format = NumberFormat.getInstance();
-        int display = PlayerData.getDataFromPlayer(player).energyDisplayMode;
-        list.add(format.format(this.getEnergyStored(stack))+"/"+format.format(this.getMaxEnergyStored(stack))+(display == 1 ? "FU" : (display == 0 ? "RF" : "T")));
+        list.add(format.format(this.getEnergyStored(stack))+"/"+format.format(this.getMaxEnergyStored(stack))+" Crystal Flux");
     }
 
     @Override

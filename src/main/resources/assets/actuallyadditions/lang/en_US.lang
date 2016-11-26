@@ -602,7 +602,7 @@ info.actuallyadditions.booklet.edition=Edition
 info.actuallyadditions.deathRecorded=Your death has been recorded. Use a Death Tracker to find the death location!
 info.actuallyadditions.placer.sides.1=Placement Sides
 info.actuallyadditions.placer.sides.2=Usually when placing down blocks, they are placed towards the side of another block that you are looking at. Because the Phantom Placer can place blocks in mid-air, it doesn't know that. Usually you should just set it to a solid side.
-info.actuallyadditions.energy.toRF=Click for Redstone Flux display mode!
+info.actuallyadditions.energy.toCF=Click for Redstone Flux display mode!
 info.actuallyadditions.energy.toT=Click for Tesla display mode!
 info.actuallyadditions.energy.toFU=Click for Forge Units display mode!
 info.actuallyadditions.energy.disclaimer.1=Changing this is just visual.
@@ -696,7 +696,7 @@ achievement.actuallyadditions.openTreasureChest.desc=Open a Treasure Chest
 achievement.actuallyadditions.craftLiquiface=Zoom, Zoom, Fluids!
 achievement.actuallyadditions.craftLiquiface.desc=Craft a Phantom Liquiface
 
-achievement.actuallyadditions.craftEnergyface=Zoom, Zoom, RF!
+achievement.actuallyadditions.craftEnergyface=Zoom, Zoom, CF!
 achievement.actuallyadditions.craftEnergyface.desc=Craft a Phantom Energyface
 
 achievement.actuallyadditions.craftCoalGen=Cool Generator
@@ -763,12 +763,12 @@ booklet.actuallyadditions.shapedOreRecipe=Shaped OreDictionary Recipe
 booklet.actuallyadditions.indexEntry.gettingStarted.name=Getting Started
 booklet.actuallyadditions.indexEntry.misc.name=Miscellaneous
 booklet.actuallyadditions.indexEntry.crossover.name=Mod Crossover
-booklet.actuallyadditions.indexEntry.functionalNoRF.name=Blocks that don't use RF
+booklet.actuallyadditions.indexEntry.functionalNoRF.name=Blocks that don't use CF
 booklet.actuallyadditions.indexEntry.allAndSearch.name=A list of everything
-booklet.actuallyadditions.indexEntry.functionalRF.name=Blocks that use RF
-booklet.actuallyadditions.indexEntry.generatingRF.name=Blocks that generate RF
-booklet.actuallyadditions.indexEntry.itemsNoRF.name=Items that don't use RF
-booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use RF
+booklet.actuallyadditions.indexEntry.functionalRF.name=Blocks that use CF
+booklet.actuallyadditions.indexEntry.generatingRF.name=Blocks that generate CF
+booklet.actuallyadditions.indexEntry.itemsNoRF.name=Items that don't use CF
+booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use CF
 booklet.actuallyadditions.indexEntry.reconstruction.name=Reconstruction
 booklet.actuallyadditions.indexEntry.laserRelays.name=Laser Transport
 booklet.actuallyadditions.indexEntry.updatesAndInfos.name=Updates and Infos
@@ -818,7 +818,7 @@ booklet.actuallyadditions.chapter.phantomfaces.text.1=<item>Phantomfaces<r> are 
 booklet.actuallyadditions.chapter.phantomfaces.text.2=<imp>Important Information:<r><n>It should be noted that the Phantomface is <imp>not<r> supposed to be <imp>used as a wireless transport<r> system. <n>The Phantomface should be used when, for example, wanting to input items into a machine that doesn't have enough space for the amount of cables you need around it, or when you want it to look nice in a room without needing any cables or other blocks around it. <n><n><i>It's not a short-range Tesseract.
 booklet.actuallyadditions.chapter.phantomfaces.text.3=The default <item>Phantomface<r> works for items, like described on the first page.
 booklet.actuallyadditions.chapter.phantomfaces.text.4=The <item>Phantom Liquiface<r> acts exactly like the normal <item>Phantomface<r>, but it <imp>works for liquid containing blocks<r>. When given a <imp>Redstone Signal<r>, it can be set to <imp>Auto-Output<r>. Be careful with this though, as it <imp>could cause infinte loops and lag<r> under certain conditions!
-booklet.actuallyadditions.chapter.phantomfaces.text.5=The <item>Phantom Energyface<r> acts exactly like the normal <item>Phantomface<r>, but it <imp>works for RF<r>, meaning you can connect it to things like Generators and Crushers.
+booklet.actuallyadditions.chapter.phantomfaces.text.5=The <item>Phantom Energyface<r> acts exactly like the normal <item>Phantomface<r>, but it <imp>works for CF<r>, meaning you can connect it to things like Generators and Crushers.
 booklet.actuallyadditions.chapter.phantomfaces.text.7=The <item>Phantom Booster<r>, as explained on the first page, ups the range of <item>Phantomface<r>s by being placed <imp>on top of them<r>. The maximum amount above one <item>Phantomface<r> is <imp>3<r>.
 
 booklet.actuallyadditions.chapter.phantomBreaker.name=Phantom Breakers & Placers
@@ -852,36 +852,36 @@ booklet.actuallyadditions.chapter.crate.text.6=Similar to the <item>Chest To Sto
 booklet.actuallyadditions.chapter.crate.text.7=Similar to the <item>Chest To Storage Crate Upgrade<r>, the <item>Medium To Large Storage Crate Upgrade<r> will convert any <imp>Medium Storage Crate<r> into a <imp>Large Storage Crate<r> by simply shift-right-clicking it. It will retain its items.
 
 booklet.actuallyadditions.chapter.coffeeMachine.name=Coffee Maker
-booklet.actuallyadditions.chapter.coffeeMachine.text.1=The <item>Coffee Maker<r> is a block used to make <item>Coffee<r>, a <imp>potion-like<r> item that gives the user several buffs. <n>To use the coffee maker, you need a <item>Empty Cup<r>, <coffee> <item>Coffee Beans<r>, which can be found in the wild, harvested and <imp>planted on farmland<r> again, <rf> RF/t and <water>mB of Water per cup brewed. <n>On the coffee maker recipe pages at the back, to see what the item does, just hover over the Cup of Coffee.
+booklet.actuallyadditions.chapter.coffeeMachine.text.1=The <item>Coffee Maker<r> is a block used to make <item>Coffee<r>, a <imp>potion-like<r> item that gives the user several buffs. <n>To use the coffee maker, you need a <item>Empty Cup<r>, <coffee> <item>Coffee Beans<r>, which can be found in the wild, harvested and <imp>planted on farmland<r> again, <rf> CF/t and <water>mB of Water per cup brewed. <n>On the coffee maker recipe pages at the back, to see what the item does, just hover over the Cup of Coffee.
 booklet.actuallyadditions.chapter.coffeeMachine.text.2=To actually give your coffee some buffs, <imp>put some of the items shown on the later pages into the slots on the right<r>. <n>The more slots are filled up with one item, the higher the <imp>Amplifier<r> of the effect will be. The <imp>Maximum Amplifier<r> is the max amount of items to be put into one coffee. <n>Order matters: When using, for example, <item>Milk<r> (to see what it does exactly, go to a later page), you are going to have to plan the items out inside the <imp>numbered slots<r> in such a way that it brews the coffee you want.
 booklet.actuallyadditions.chapter.coffeeMachine.text.3=This is an example of a recipe making a coffee containing <imp>Fire Resistance 1 for 0:20<r> and <imp>Speed 1 for 2:30<r>.
 booklet.actuallyadditions.chapter.coffeeMachine.text.6=<item>Milk<r> is an important item when brewing coffee: It <imp>adds 2 minutes<r> to all effects of items in slots with lower numbers while <imp>removing 1 amplifier<r>. When the amplifier of an effect is 1, however, it will remove the effect.
 booklet.actuallyadditions.chapter.coffeeMachine.text.7=<i>The fact that you're reading this means that you either have <imp>HarvestCraft<r><i> installed, or that you're looking at the lang file. <r><n>This does the same thing as <item>Milk<r>, but for veggie guys.
 
 booklet.actuallyadditions.chapter.crusher.name=Crusher and Double Crusher
-booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns every ore, ingot and gem into its corresponding <imp>dust<r> using <rf> RF/t. <n>When you put in <imp>Ores<r> however, they will yield <imp>2 pieces of dust<r>. <n>The <item>Double Crusher<r> basically does the same, however it can crush two ores at a time. <n>On the following pages, you can see some additional useful recipes for inside the crusher. <n><n><i>He's my crush
+booklet.actuallyadditions.chapter.crusher.text.1=The <item>Crusher<r> turns every ore, ingot and gem into its corresponding <imp>dust<r> using <rf> CF/t. <n>When you put in <imp>Ores<r> however, they will yield <imp>2 pieces of dust<r>. <n>The <item>Double Crusher<r> basically does the same, however it can crush two ores at a time. <n>On the following pages, you can see some additional useful recipes for inside the crusher. <n><n><i>He's my crush
 
 booklet.actuallyadditions.chapter.furnaceDouble.name=Powered Furnace
-booklet.actuallyadditions.chapter.furnaceDouble.text.1=The <item>Powered Furnace<r> works like a furnace, however, it uses <rf> RF/t and can smelt <imp>two items at a time<r>.
+booklet.actuallyadditions.chapter.furnaceDouble.text.1=The <item>Powered Furnace<r> works like a furnace, however, it uses <rf> CF/t and can smelt <imp>two items at a time<r>.
 
 booklet.actuallyadditions.chapter.lavaFactory.name=Lava Factory
-booklet.actuallyadditions.chapter.lavaFactory.text.1=The <item>Lava Factory<r> can produce blocks of lava given <imp><rf> RF/block<r>. <n>The Block above it has to be surrounded with 4 Casing Blocks, otherwise it won't be able to produce Lava. <n>Right-Clicking on the <item>Lava Factory<r> will show you if it's able to produce Lava in its current setup. <n><n><i>Lava, for a fact. <n>                ory
+booklet.actuallyadditions.chapter.lavaFactory.text.1=The <item>Lava Factory<r> can produce blocks of lava given <imp><rf> CF/block<r>. <n>The Block above it has to be surrounded with 4 Casing Blocks, otherwise it won't be able to produce Lava. <n>Right-Clicking on the <item>Lava Factory<r> will show you if it's able to produce Lava in its current setup. <n><n><i>Lava, for a fact. <n>                ory
 
 booklet.actuallyadditions.chapter.energizer.name=Energizer and Enervator
-booklet.actuallyadditions.chapter.energizer.text.1=The <item>Energizer<r> <imp>charges items that hold RF<r> using its energy supply.
-booklet.actuallyadditions.chapter.energizer.text.2=The <item>Enervator<r> <imp>discharges items that hold RF<r> and stores the energy in its energy supply.
+booklet.actuallyadditions.chapter.energizer.text.1=The <item>Energizer<r> <imp>charges items that hold CF<r> using its energy supply.
+booklet.actuallyadditions.chapter.energizer.text.2=The <item>Enervator<r> <imp>discharges items that hold CF<r> and stores the energy in its energy supply.
 
 booklet.actuallyadditions.chapter.repairer.name=Item Repairer
-booklet.actuallyadditions.chapter.repairer.text.1=The <item>Item Repairer<r> uses <imp><rf> RF/t<r> to repair items that can be repaired in an Anvil <imp>without needing any materials<r>!
+booklet.actuallyadditions.chapter.repairer.text.1=The <item>Item Repairer<r> uses <imp><rf> CF/t<r> to repair items that can be repaired in an Anvil <imp>without needing any materials<r>!
 
 booklet.actuallyadditions.chapter.coalGen.name=Coal Generator
-booklet.actuallyadditions.chapter.coalGen.text.1=The <item>Coal Generator<r> generates <imp><rf> RF/t<r> through the use of everything that can be put into a furnace. <n>Note that it only starts burning something up if the buffer isn't already full of power.
+booklet.actuallyadditions.chapter.coalGen.text.1=The <item>Coal Generator<r> generates <imp><rf> CF/t<r> through the use of everything that can be put into a furnace. <n>Note that it only starts burning something up if the buffer isn't already full of power.
 
 booklet.actuallyadditions.chapter.solarPanel.name=Solar Panel
-booklet.actuallyadditions.chapter.solarPanel.text.1=The <item>Solar Panel<r> <imp>produces <rf> RF/t<r> when it has direct daylight above it and it is daytime. Any blocks above it that are transparent will <imp>decrease its efficiency<r>, however. <n><n><i>Panelled walls
+booklet.actuallyadditions.chapter.solarPanel.text.1=The <item>Solar Panel<r> <imp>produces <rf> CF/t<r> when it has direct daylight above it and it is daytime. Any blocks above it that are transparent will <imp>decrease its efficiency<r>, however. <n><n><i>Panelled walls
 
 booklet.actuallyadditions.chapter.heatCollector.name=Heat Collector
-booklet.actuallyadditions.chapter.heatCollector.text.1=The <item>Heat Collector<r> is a block that <imp>produces <rf> RF/t<r>. <n>To do that, it needs to be <imp>surrounded with at least <min> Lava Blocks<r> directly around it on any side except the top one. But watch out, it sometimes <imp>destroys some of these Lava Blocks<r>!
+booklet.actuallyadditions.chapter.heatCollector.text.1=The <item>Heat Collector<r> is a block that <imp>produces <rf> CF/t<r>. <n>To do that, it needs to be <imp>surrounded with at least <min> Lava Blocks<r> directly around it on any side except the top one. But watch out, it sometimes <imp>destroys some of these Lava Blocks<r>!
 
 booklet.actuallyadditions.chapter.canola.name=Canola and Oil
 booklet.actuallyadditions.chapter.canola.text.1=Using <item>Canola<r>, you can make a simple, yet effective power generation system from <imp>natural resources<r>. <n>To do this, first find some <item>Canola Plants<r> in the wild and plant them on your farm. <n><n>The <item>Canola<r> you get out of them can be used in a <item>Canola Press<r> to make <item>Canola Oil<r>. <n><n>This can be <imp>used in an<r> <item>Oil Generator<r>. It displays the amount of power it generates in its GUI, however, it can be <imp>upgraded further<r> to yield <imp>more power<r> than that!
@@ -908,7 +908,7 @@ booklet.actuallyadditions.chapter.potionRings.name=Potion Rings
 booklet.actuallyadditions.chapter.potionRings.text.1=<item>Potion Rings<r> can permanenty grant a set of potion effects. <n>A <item>Potion Ring<r> has <imp>two tiers<r>. The first tier needs to be <imp>held in any hand<r> and gives an effect of <imp>level one<r> while the second tier can be <imp>anywhere inside the inventory<r> and grants an effect of <imp>level two<r>. <n>To be able to use <item>Potion Rings<r> they first have to be <imp>filled up<r> with <item>Blaze Powder<r>. To do this, put the ring into a <imp>Crafting Grid<r> with <imp>one or more<r> Blaze Powder. <n>Over time, the powder inside the ring will be <imp>used up<r> to grant you the effect.
 
 booklet.actuallyadditions.chapter.drill.name=Drills
-booklet.actuallyadditions.chapter.drill.text.1=The <item>Drill<r> works like a Pickaxe and a Shovel. It uses <imp>RF<r> per block. It can be <imp>charged in an Energizer<r> and upgraded by <imp>sneak-right-clicking<r> with it in your hand. There is <imp>a lot of upgrades<r>, but here is an explanation of some of them: <n>The <item>Mining Uprgades<r> enlarge the hole which the Drill digs. <n>The <item>Placement Upgrade<r>, after you right-click it in any slot of your hotbar, will make the Drill able to <imp>place a block from that slot by right-clicking<r>. You can also put a <item>Battery<r> inside the Drill to give it more charge.
+booklet.actuallyadditions.chapter.drill.text.1=The <item>Drill<r> works like a Pickaxe and a Shovel. It uses <imp>CF<r> per block. It can be <imp>charged in an Energizer<r> and upgraded by <imp>sneak-right-clicking<r> with it in your hand. There is <imp>a lot of upgrades<r>, but here is an explanation of some of them: <n>The <item>Mining Uprgades<r> enlarge the hole which the Drill digs. <n>The <item>Placement Upgrade<r>, after you right-click it in any slot of your hotbar, will make the Drill able to <imp>place a block from that slot by right-clicking<r>. You can also put a <item>Battery<r> inside the Drill to give it more charge.
 booklet.actuallyadditions.chapter.drill.text.2=It should be noted that, in fact, the <item>Speed<r>, <item>Mining<r> and <item>Fortune Upgrades<r> <imp>need their previous tiers to be installed<r> for them to work. <n>This means that, if you want Speed III in the Drill, it needs Speed II and Speed I inside it as well.
 booklet.actuallyadditions.chapter.drill.text.4=The <item>Drill<r> can also be <imp>dyed<r> in Minecraft's 16 colors. <n>It's only cosmetic and won't have any effect other than it looking different, however.
 
@@ -916,23 +916,23 @@ booklet.actuallyadditions.chapter.staff.name=Staff
 booklet.actuallyadditions.chapter.staff.text.1=The <item>Teleport Staff<r>, when charged in an Energizer, can be <imp>right-clicked<r> to <imp>teleport you to where you're looking<r>. When you are looking at a block, it will teleport you there, however, when you aren't looking at a block, you can only be looking upwards up to <imp>5 degrees<r>, otherwise the teleport will fail.
 
 booklet.actuallyadditions.chapter.magnetRing.name=Ring Of Magnetism
-booklet.actuallyadditions.chapter.magnetRing.text.1=The <item>Ring Of Magnetism<r>, when it is charged in an Energizer and inside your inventory, uses <imp>RF<r> to suck up items that are farther away than you can pick up by yourself.
+booklet.actuallyadditions.chapter.magnetRing.text.1=The <item>Ring Of Magnetism<r>, when it is charged in an Energizer and inside your inventory, uses <imp>CF<r> to suck up items that are farther away than you can pick up by yourself.
 
 booklet.actuallyadditions.chapter.growthRing.name=Ring Of Growth
-booklet.actuallyadditions.chapter.growthRing.text.1=The <item>Ring Of Growth<r>, when it is charged in an Energizer and in your hand, uses <imp>RF<r> to make plants around you grow much faster.
+booklet.actuallyadditions.chapter.growthRing.text.1=The <item>Ring Of Growth<r>, when it is charged in an Energizer and in your hand, uses <imp>CF<r> to make plants around you grow much faster.
 
 booklet.actuallyadditions.chapter.waterRemovalRing.name=Ring Of Liquid Banning
-booklet.actuallyadditions.chapter.waterRemovalRing.text.1=The <item>Ring Of Liquid Banning<r>, when it is charged in an Energizer and in your hand, uses <imp>RF<r> to remove <imp>Lava<r> and <imp>Water<r>.
+booklet.actuallyadditions.chapter.waterRemovalRing.text.1=The <item>Ring Of Liquid Banning<r>, when it is charged in an Energizer and in your hand, uses <imp>CF<r> to remove <imp>Lava<r> and <imp>Water<r>.
 
 booklet.actuallyadditions.chapter.batteries.name=Batteries
-booklet.actuallyadditions.chapter.batteries.text.1=<item>Batteries<r> are a good way to store RF to move around. They can be <imp>charged in an Energizer<r> and <imp>discharged in an Enervator<r>. <n><n>When holding them in hand, they can be <imp>sneak-right-clicked<r> to put them into <imp>discharge mode<r>. This means that they will <imp>charge<r> any <imp>other items in your inventory<r>.
+booklet.actuallyadditions.chapter.batteries.text.1=<item>Batteries<r> are a good way to store CF to move around. They can be <imp>charged in an Energizer<r> and <imp>discharged in an Enervator<r>. <n><n>When holding them in hand, they can be <imp>sneak-right-clicked<r> to put them into <imp>discharge mode<r>. This means that they will <imp>charge<r> any <imp>other items in your inventory<r>.
 
 booklet.actuallyadditions.chapter.leafGen.name=Leaf-Eating Generator
-booklet.actuallyadditions.chapter.leafGen.text.1=The <item>Leaf Generator<r> can generate <imp>RF<r> just by being placed alongside some <item>Leaves<r>. <n>It will destroy the leaves, generating <imp><rf> RF per leaf broken<r> in the process. <n>By right-clicking the generator, you can see how much RF it has stored. <n>It has a <imp>range of <range><r> blocks.
+booklet.actuallyadditions.chapter.leafGen.text.1=The <item>Leaf Generator<r> can generate <imp>CF<r> just by being placed alongside some <item>Leaves<r>. <n>It will destroy the leaves, generating <imp><rf> CF per leaf broken<r> in the process. <n>By right-clicking the generator, you can see how much CF it has stored. <n>It has a <imp>range of <range><r> blocks.
 booklet.actuallyadditions.chapter.leafGen.text.2=<i>Munchy
 
 booklet.actuallyadditions.chapter.longRangeBreaker.name=Long-Range Breaker
-booklet.actuallyadditions.chapter.longRangeBreaker.text.1=The <item>Long-Range Breaker<r> works like a normal <item>Breaker<r>, but it can break <imp>up to <range> blocks in front of it<r>. <n>Per block broken, it uses <imp><rf> RF<r>. <n>When right-clicking it with a <item>Redstone Torch<r> in hand, it will change between a mode where it <imp>gets deactivated by Redstone<r> and a mode where it <imp>responds to pulses<r>. <n><n><i>Breaking the <range>th wall
+booklet.actuallyadditions.chapter.longRangeBreaker.text.1=The <item>Long-Range Breaker<r> works like a normal <item>Breaker<r>, but it can break <imp>up to <range> blocks in front of it<r>. <n>Per block broken, it uses <imp><rf> CF<r>. <n>When right-clicking it with a <item>Redstone Torch<r> in hand, it will change between a mode where it <imp>gets deactivated by Redstone<r> and a mode where it <imp>responds to pulses<r>. <n><n><i>Breaking the <range>th wall
 booklet.actuallyadditions.chapter.longRangeBreaker.text.2=<i>Sequence Breaking
 
 booklet.actuallyadditions.chapter.dropper.name=Automatic Precision Dropper
@@ -950,7 +950,7 @@ booklet.actuallyadditions.chapter.laserIntro.text.1=<item>Laser Relays<r> exist 
 booklet.actuallyadditions.chapter.laserIntro.text.2=every <item>Laser Relay<r> has <imp>access to interact with all of the other ones<r> in different ways. <n>Connecting two <item>Laser Relays<r> has some restrictions, however. First of all, two connected <item>Laser Relays<r> must be <imp>at most <range> blocks apart<r> from each other. <n>Additionally, two <item>Laser Relays<r> of a <imp>different type<r> cannot be connected to one another. <n><n><i>View the other items in this chapter to find out more about different types of Laser Relays!
 
 booklet.actuallyadditions.chapter.laserRelays.name=Energy Laser Relays
-booklet.actuallyadditions.chapter.laserRelays.text.1=The <item>Energy Laser Relay<r> is a block that can <imp>wirelessly transfer RF (or Tesla)<r>. <n>When placing a Power Generator or Receiver next to the relay, it can receive Power <imp>from any other relay<r> in the network and send power <imp>to any other relay<r> as well. <n>During an energy transfer, they have a slight <imp>Energy Loss<r>, but nothing to worry about, especially because it's <imp>per transfer<r>, so it doesn't matter how many Lasers are inbetween two machines, the loss will <imp>always be the same amount<r>.
+booklet.actuallyadditions.chapter.laserRelays.text.1=The <item>Energy Laser Relay<r> is a block that can <imp>wirelessly transfer CF (or Tesla)<r>. <n>When placing a Power Generator or Receiver next to the relay, it can receive Power <imp>from any other relay<r> in the network and send power <imp>to any other relay<r> as well. <n>During an energy transfer, they have a slight <imp>Energy Loss<r>, but nothing to worry about, especially because it's <imp>per transfer<r>, so it doesn't matter how many Lasers are inbetween two machines, the loss will <imp>always be the same amount<r>.
 booklet.actuallyadditions.chapter.laserRelays.text.2=There are <imp>three tiers<r> of Energy Laser Relay. They have different maximum amounts of energy to be transferred through them in one tick. The <imp>energy caps<r> are, in order, <cap1>, <cap2>, and <cap3>. <n>Additionally, the energy loss is a bit higher every tier. <n><n><imp>Interconnecting<r> different tiers is possible, however the <imp>lowest cap<r> and <imp>highest loss<r> of the two relays connected to the blocks involved in the transfer is considered.
 
 booklet.actuallyadditions.chapter.blackLotus.name=Black Lotus
@@ -958,7 +958,7 @@ booklet.actuallyadditions.chapter.blackLotus.text.1=Think of this: <n>You need t
 booklet.actuallyadditions.chapter.blackLotus.text.2=<i>Do the lotus pose
 
 booklet.actuallyadditions.chapter.crystals.name=Crystals and Reconstructor
-booklet.actuallyadditions.chapter.crystals.text.1=The <item>Atomic Reconstructor<r> is used to craft <item>Crystals<r>, which are the main crafting ingredient in most items from <imp>Actually Additions<r>. <n>Upon being supplied with power, it shoots out a Laser. <tifisgrin>When the Laser hits a block<r>, it will convert all surrounding items and blocks, provided they can be converted. <n>When shooting a laser, it uses <imp><rf> RF<r>, but additional rates vary depending on the conversion.
+booklet.actuallyadditions.chapter.crystals.text.1=The <item>Atomic Reconstructor<r> is used to craft <item>Crystals<r>, which are the main crafting ingredient in most items from <imp>Actually Additions<r>. <n>Upon being supplied with power, it shoots out a Laser. <tifisgrin>When the Laser hits a block<r>, it will convert all surrounding items and blocks, provided they can be converted. <n>When shooting a laser, it uses <imp><rf> CF<r>, but additional rates vary depending on the conversion.
 booklet.actuallyadditions.chapter.crystals.text.2=There are various <item>Lenses<r> that can be attached to the Reconstructor that don't all follow the default behavior of the Reconstructor and are able to do some neat things. <n>See the <imp>Reconstruction section<r> in the booklet <imp>for more information<r>. <n><n>When right-clicking the Reconstructor with a <item>Redstone Torch<r> in hand, it will change between a mode where it <imp>gets deactivated by Redstone<r> and a mode where it <imp>responds to pulses<r>.
 booklet.actuallyadditions.chapter.crystals.text.3=It should be noted that any recipes listed without information about Lenses <imp>don't use one<r>. <n><i>I thought that was obvious.
 booklet.actuallyadditions.chapter.crystals.text.5=When you have crafted a couple of items, you might want to find a way to <imp>automate this<r>. <n>There is a very simple way to do accomplish this: <n>Place the <item>Atomic Reconstructor<r> down facing into a <item>Precision Dropper<r> (to find it, look it up in the <imp>All Items<r> Entry!). <n>Next, place a <item>Ranged Collector<r> in the area that has the converted items set as a whitelist. <n>Now you can just chuck your raw materials into the Dropper to convert them!
@@ -984,24 +984,24 @@ booklet.actuallyadditions.chapter.lensDetonation.name=Lens of Detonation
 booklet.actuallyadditions.chapter.lensDetonation.text.1=The <item>Lens of Detonation<r> will create a firey explosion <imp>around the block the laser hits<r>. <n>Be careful with this. Seriously. <n>(With this lens, the laser also goes 3 times as far!)
 
 booklet.actuallyadditions.chapter.lensDisenchanting.name=Lens of Disenchanting
-booklet.actuallyadditions.chapter.lensDisenchanting.text.1=The <item>Lens of Disenchanting<r> can be used to <imp>tranfer<r> a single <imp>enchantment<r> from an enchanted item to either a <item>Book<r> or an already <item>Enchanted Book<r>. <n>This can be achieved by <imp>throwing the two items in front of the laser<r>, but they have to be together <imp>in one blockspace<r>. <n>When they are hit by the laser, the <imp>topmost enchantment<r> from the non-book item is <imp>removed<r> and <imp>added onto the book<r>. <n><n>However, this uses <imp><energy> RF<r>.
+booklet.actuallyadditions.chapter.lensDisenchanting.text.1=The <item>Lens of Disenchanting<r> can be used to <imp>tranfer<r> a single <imp>enchantment<r> from an enchanted item to either a <item>Book<r> or an already <item>Enchanted Book<r>. <n>This can be achieved by <imp>throwing the two items in front of the laser<r>, but they have to be together <imp>in one blockspace<r>. <n>When they are hit by the laser, the <imp>topmost enchantment<r> from the non-book item is <imp>removed<r> and <imp>added onto the book<r>. <n><n>However, this uses <imp><energy> CF<r>.
 
 booklet.actuallyadditions.chapter.lensMining.name=Lens of the Miner
-booklet.actuallyadditions.chapter.lensMining.text.1=The <item>Lens of the Miner<r> can <imp>create ores<r> out of blocks in its sight. <n>When the laser hits a <item>block of stone<r>, it will convert it into <imp>different overworld ores<r>, whereas a <item>block of netherrack<r> will be converted into <imp>nether ores<r>. <n>Each operation uses <imp><energy> RF<r>, however each operation requires <imp>additional power<r> depending on the rarity of the ore that is generated.
+booklet.actuallyadditions.chapter.lensMining.text.1=The <item>Lens of the Miner<r> can <imp>create ores<r> out of blocks in its sight. <n>When the laser hits a <item>block of stone<r>, it will convert it into <imp>different overworld ores<r>, whereas a <item>block of netherrack<r> will be converted into <imp>nether ores<r>. <n>Each operation uses <imp><energy> CF<r>, however each operation requires <imp>additional power<r> depending on the rarity of the ore that is generated.
 
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.name=Some Decor
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.text.1=Sometimes, when you build, you notice there is just <imp>not enough decor blocks<r>. Well, we present to you: <item>Ethetic Blocks<r>! <n>These are some quartz-like decor blocks with lovely patterns that can also be <imp>converted<r> into <imp>Stairs<r>, <imp>Slabs<r> and <imp>Walls<r> using the usual, well-known recipe patterns.
 
 booklet.actuallyadditions.chapter.miner.name=Vertical Digger
-booklet.actuallyadditions.chapter.miner.text.1=The <item>Vertical Digger<r> can be used to automatically <imp>mine blocks<r> from the world. <n>It has two modes: It can either <imp>only mine ores<r> or <imp>mine everything<r>. When mining a block, it uses about <rf> RF. <n>Mined items get stored in an internal buffer that can be accessed through right-clicking. <n><n>Its default radius is <range>, but much like Phantomfaces, the Digger's range can be upgraded by placing 3 or less <item>Phantom Boosters<r> above it.
+booklet.actuallyadditions.chapter.miner.text.1=The <item>Vertical Digger<r> can be used to automatically <imp>mine blocks<r> from the world. <n>It has two modes: It can either <imp>only mine ores<r> or <imp>mine everything<r>. When mining a block, it uses about <rf> CF. <n>Mined items get stored in an internal buffer that can be accessed through right-clicking. <n><n>Its default radius is <range>, but much like Phantomfaces, the Digger's range can be upgraded by placing 3 or less <item>Phantom Boosters<r> above it.
 booklet.actuallyadditions.chapter.miner.text.2=(Works with any colored Drill) <n><n><n><n><n><i>I dig it
 
 booklet.actuallyadditions.chapter.fireworkBox.name=Firework Box
-booklet.actuallyadditions.chapter.fireworkBox.text.1=The <item>Firework Box<r> is a perfect thing for New Year's! When placed down and supplied with some <imp>RF<r>, it will shoot out some <imp>randomly generated<r> <item>Fireworks<r> around it. <n>For each shot, it uses <rf> RF. <n><n><i>You know, Vanilla Fireworks are just too bloody annoying to craft, but too awesome not to use. So here's the solution.
+booklet.actuallyadditions.chapter.fireworkBox.text.1=The <item>Firework Box<r> is a perfect thing for New Year's! When placed down and supplied with some <imp>CF<r>, it will shoot out some <imp>randomly generated<r> <item>Fireworks<r> around it. <n>For each shot, it uses <rf> CF. <n><n><i>You know, Vanilla Fireworks are just too bloody annoying to craft, but too awesome not to use. So here's the solution.
 booklet.actuallyadditions.chapter.fireworkBox.text.2=When right-clicking it with a <item>Redstone Torch<r> in hand, it will change between a mode where it <imp>gets deactivated by Redstone<r> and a mode where it <imp>responds to pulses<r>.
 
-booklet.actuallyadditions.chapter.rf.name=RF? Tesla?
-booklet.actuallyadditions.chapter.rf.text.1=For anyone who hasn't used much of a mod that uses <item>RF<r> yet, here's a quick explanation. <n><imp>Redstone Flux<r> is a power system used by many mods. <n>The basic concept is is that machines generate or use it <imp>every game tick<r>. That's what <imp>RF/t<r> means. <n>To connect machines, just <imp>place them next to each other<r>. <n>Also, if you fancy that sort of thing, all machines also work with <item>Tesla<r> in the same way they do with RF.
+booklet.actuallyadditions.chapter.rf.name=CF - Crystal Flux
+booklet.actuallyadditions.chapter.rf.text.1=Since the recent diminishment of what is known as RF, a new way of storing power has arisen: <item>Crystal Flux<r>. <n>This stuff is generated by <imp>all<r> Actually Additions <imp>machines<r>, however, it is <imp>compatible<r> with <item>Tesla<r>, <item>Redstone Flux<r> and <item>Forge Units<r>, so it works with most other machines. <n>To <imp>transfer<r> <item>Crystal Flux<r>, just place a thing that <imp>generates<r> or transfers it <imp>next to<r> one that <imp>uses<r> or stores it (or any one of the systems mentioned above). You can use an <item>Energizer<r> to <imp>charge up items<r>.
 
 booklet.actuallyadditions.chapter.enderStar.name=Ender Star
 booklet.actuallyadditions.chapter.enderStar.text.1=The <item>Ender Star<r> can be obtained by both killing a wither and going to the end to collect Dragon's Breath. The latter is obtained by using a bottle on the purple particles that the dragon spits out. <n>The <item>Ender Star<r> is used for <imp>multiple crafting recipes<r>.
@@ -1036,11 +1036,11 @@ booklet.actuallyadditions.chapter.waterBowl.name=Bowl of Water
 booklet.actuallyadditions.chapter.waterBowl.text.1=The <item>Bowl of Water<r> can be obtained by <imp>right-cliking a bowl on water<r> anywhere in the world. When the <item>Bowl of Water<r> is then right-clicked onto a block, the water will be placed, much like a <item>Bucket<r>. <n><n>This can be used, for example, for early game farms.
 
 booklet.actuallyadditions.chapter.playerInterface.name=Player Interface
-booklet.actuallyadditions.chapter.playerInterface.text.1=The <item>Player Interface<r> works in a similar way to the <item>Phantomface<r>, except it is <imp>connected to a player<r> instead of a block, and the connection is established by <imp>placing it down<r>. <n>When <imp>inputting items<r>, they will <imp>move to the player's inventory<r>. Also, when <imp>inputting RF<r>, it will <imp>charge the items<r> in the player's inventory. <n>It has a default range of <range> blocks, however, it can be expanded by placing up to 3 <item>Phantom Boosters<r> on top of it.
+booklet.actuallyadditions.chapter.playerInterface.text.1=The <item>Player Interface<r> works in a similar way to the <item>Phantomface<r>, except it is <imp>connected to a player<r> instead of a block, and the connection is established by <imp>placing it down<r>. <n>When <imp>inputting items<r>, they will <imp>move to the player's inventory<r>. Also, when <imp>inputting CF<r>, it will <imp>charge the items<r> in the player's inventory. <n>It has a default range of <range> blocks, however, it can be expanded by placing up to 3 <item>Phantom Boosters<r> on top of it.
 
 booklet.actuallyadditions.chapter.displayStand.name=Display Stand
-booklet.actuallyadditions.chapter.displayStand.text.1=The <item>Display Stand<r> is a block that can, for one, <imp>display any item or block<r> by right-clicking with it onto the display stand. It will then be floating around on top. <n>To take it out of there again, just right-click with an empty hand. <n><n>The other feature, however, is that some items can be put onto it, <imp>having special effects<r>. This, however, will require the stand to <imp>get RF<r>. Read more on the next page.
-booklet.actuallyadditions.chapter.displayStand.text.2=The <item>Leaf Blower<r> and <item>Advanced Leaf Blower<r> can be placed onto the display stand, resulting in the grass and leaves around it to be blown away. <n><n><item>Potion Rings<r> can be placed onto the display stand. The normal version will give the specified potion effect to <imp>only one<r> living entity in a small area, while the advanced version will <imp>give a potion effect to all living entities<r> in a <imp>big area<r> while using up a significant amount of <imp>RF<r>.
+booklet.actuallyadditions.chapter.displayStand.text.1=The <item>Display Stand<r> is a block that can, for one, <imp>display any item or block<r> by right-clicking with it onto the display stand. It will then be floating around on top. <n>To take it out of there again, just right-click with an empty hand. <n><n>The other feature, however, is that some items can be put onto it, <imp>having special effects<r>. This, however, will require the stand to <imp>get CF<r>. Read more on the next page.
+booklet.actuallyadditions.chapter.displayStand.text.2=The <item>Leaf Blower<r> and <item>Advanced Leaf Blower<r> can be placed onto the display stand, resulting in the grass and leaves around it to be blown away. <n><n><item>Potion Rings<r> can be placed onto the display stand. The normal version will give the specified potion effect to <imp>only one<r> living entity in a small area, while the advanced version will <imp>give a potion effect to all living entities<r> in a <imp>big area<r> while using up a significant amount of <imp>CF<r>.
 
 booklet.actuallyadditions.chapter.itemFilter.name=Item Filter
 booklet.actuallyadditions.chapter.itemFilter.text.1=The <item>Item Filter<r> can be used in <item>Advanced Item Laser Relays<r>, <item>ESDs<r> and <item>Ranged Collectors<r> to <imp>enlargen the size of their whitelist<r>. This can be done by right-clicking with the filter in hand and placing items to be filtered inside of it. The filter can then be placed into any whitelist slot in the desired machine. <n>For more information on this, <imp>hover over the whitelist buttons in the GUIs of whitelistable machines<r>!
@@ -1050,7 +1050,7 @@ booklet.actuallyadditions.chapter.videoGuide.text.1=If you want to have a <imp>v
 booklet.actuallyadditions.chapter.videoGuide.button.1=Watch Video
 
 booklet.actuallyadditions.chapter.shockSuppressor.name=Shock Absorber
-booklet.actuallyadditions.chapter.shockSuppressor.text.1=The <item>Shock Absorber<r> is a block that, when supplied with <imp>RF<r>, it will protect an area of <imp>up to <range> blocks around it<r> from any type of <imp>Explosion<r>, be it ghasts, TNT or creepers. <n>Every block that is protected will result in a loss of <imp><rf> RF<r>.
+booklet.actuallyadditions.chapter.shockSuppressor.text.1=The <item>Shock Absorber<r> is a block that, when supplied with <imp>CF<r>, it will protect an area of <imp>up to <range> blocks around it<r> from any type of <imp>Explosion<r>, be it ghasts, TNT or creepers. <n>Every block that is protected will result in a loss of <imp><rf> CF<r>.
 booklet.actuallyadditions.chapter.shockSuppressor.text.2=<i>Credit where credit is due: <r><n><n>Or something like that. <n>Anyways, this thing was thought up and suggested to me by <imp>praetoras<r>. Thanks for that brilliant idea! <n><n><i>What's a fourth wall..?
 
 booklet.actuallyadditions.chapter.tinyTorch.name=Tiny Torch
@@ -1068,10 +1068,10 @@ booklet.actuallyadditions.chapter.bags.text.1=<item>Sacks<r> are an easy way to 
 booklet.actuallyadditions.chapter.bags.text.2=Additionally, <item>Sacks<r> can be, when filled up with a lot of items, <imp>right-clicked on a container<r> like a Chest or a <item>Storage Crate<r> to quickly <imp>move all of the items<r> in the sack into the chest.
 
 booklet.actuallyadditions.chapter.empowerer.name=Empowerer
-booklet.actuallyadditions.chapter.empowerer.text.1=The <item>Empowerer<r> is a mid-tier block that can be used to <imp>empower<r> crystals and other items. <n>To use it, items that should be empowered can be <imp>right-clicked onto the Empowerer<r>, and empowering items need to be placed on <item>Display Stands<r> that are <imp>two blocks away<r>, like seen in the <imp>picture on the next page<r>. <n>To then activate the process, <imp>every Display Stand needs to be powered with a lot of RF<r> that is then drained to empower the item on the Empowerer.
+booklet.actuallyadditions.chapter.empowerer.text.1=The <item>Empowerer<r> is a mid-tier block that can be used to <imp>empower<r> crystals and other items. <n>To use it, items that should be empowered can be <imp>right-clicked onto the Empowerer<r>, and empowering items need to be placed on <item>Display Stands<r> that are <imp>two blocks away<r>, like seen in the <imp>picture on the next page<r>. <n>To then activate the process, <imp>every Display Stand needs to be powered with a lot of CF<r> that is then drained to empower the item on the Empowerer.
 booklet.actuallyadditions.chapter.empowerer.text.2=<i>The placement of the <item>Display Stands<r>
 booklet.actuallyadditions.chapter.empowerer.text.3=<n><n><n><i>Because every mod needs an Infusion Altar
-booklet.actuallyadditions.chapter.empowerer.text.4=The <item>Display Stand<r> can also be used for other things! See the <imp>Blocks that use RF<r> section for more info about it!
+booklet.actuallyadditions.chapter.empowerer.text.4=The <item>Display Stand<r> can also be used for other things! See the <imp>Blocks that use CF<r> section for more info about it!
 
 booklet.actuallyadditions.chapter.fluidLaser.name=Fluid Laser Relays
 booklet.actuallyadditions.chapter.fluidLaser.text.1=The <item>Fluid Laser Relays<r> work much in the same way that normal <item>Laser Relays<r> do, however the thing that makes the <item>Fluid Laser Relay<r> different from the <item>Energy Laser Relay<r>, however, is that it transfers <imp>fluids<r> from internal tanks of blocks into other blocks.
@@ -1080,16 +1080,16 @@ booklet.actuallyadditions.chapter.distributorItem.name=Item Distributor
 booklet.actuallyadditions.chapter.distributorItem.text.1=The <item>Item Distributor<r> is a simple way to split up items and make them go <imp>in different directions<r>. <n><n>The distributor will <imp>pull items into it from the top<r> by itself, and then split them up and <imp>put them<r> out into inventories connected to all of the <imp>other sides<r> of it. <n>It tries to do split the items <imp>equally<r>, however this works best when inputting <imp>one item at a time<r>, which its pulling feature does automatically.
 
 booklet.actuallyadditions.chapter.bioReactor.name=Bio Reactor
-booklet.actuallyadditions.chapter.bioReactor.text.1=The <item>Bio Reactor<r> uses all types of <imp>seeds, foodstuffs and plants<r> to <imp>generate RF<r>! <n>To do this, just <imp>place<r> the items <imp>in its GUI<r>. If you try this out, you will notice that it doesn't generate that much power by default. However, the more <imp>different kinds<r> of plants, seeds and foodstuffs it has, the more power it will generate!
+booklet.actuallyadditions.chapter.bioReactor.text.1=The <item>Bio Reactor<r> uses all types of <imp>seeds, foodstuffs and plants<r> to <imp>generate CF<r>! <n>To do this, just <imp>place<r> the items <imp>in its GUI<r>. If you try this out, you will notice that it doesn't generate that much power by default. However, the more <imp>different kinds<r> of plants, seeds and foodstuffs it has, the more power it will generate!
 
 booklet.actuallyadditions.chapter.farmer.name=Farmer
-booklet.actuallyadditions.chapter.farmer.text.1=The <item>Farmer<r> is a block that can, once placed in the world, <imp>plant and harvest<r> crops like Wheat, Potatoes, Canola <imp>and more<r>. <n>The <imp>left side<r> of its GUI is reserved for <item>seeds<r>, while the <imp>right side<r> will contain the <imp>harvested goods<r>. <n>It will farm in a <imp>9x9 area<r> in front of it. <n>For every operation, it uses <imp><energy> RF<r>. <n><n><n><i>my fam
+booklet.actuallyadditions.chapter.farmer.text.1=The <item>Farmer<r> is a block that can, once placed in the world, <imp>plant and harvest<r> crops like Wheat, Potatoes, Canola <imp>and more<r>. <n>The <imp>left side<r> of its GUI is reserved for <item>seeds<r>, while the <imp>right side<r> will contain the <imp>harvested goods<r>. <n>It will farm in a <imp>9x9 area<r> in front of it. <n>For every operation, it uses <imp><energy> CF<r>. <n><n><n><i>my fam
 
 booklet.actuallyadditions.chapter.lensMoreDeath.name=Lens of the Killer
 booklet.actuallyadditions.chapter.lensMoreDeath.text.1=The <item>Lens of the Killer<r> works much like the <item>Lens of Certain Death<r>, however it will also <imp>drop experience<r> and <imp>player-kill loot<r>. <n>This means, however, that it will use <imp>a lot more power<r>. <n><n>To pick up the experience it drops, you might want to try an <item>Experience Solidifier<r>.
 
 booklet.actuallyadditions.chapter.fillingWand.name=Handheld Filler
-booklet.actuallyadditions.chapter.fillingWand.text.1=The <item>Handheld Filler<r> is a great way to <imp>fill any area<r> with blocks. <n>To do this, first <imp>sneak-right-click<r> a block in the world that you want to <imp>fill an area with<r>. <n><n>To actually fill an area, look at the <imp>first corner<r> and <imp>hold right-click<r>. Let go of right-click at the <imp>second corner<r>. The area you mark can be a flat plane or a cube. <n>This process requires <imp>some RF<r> for placing the blocks and you need to <imp>have the blocks<r> in your inventory.
+booklet.actuallyadditions.chapter.fillingWand.text.1=The <item>Handheld Filler<r> is a great way to <imp>fill any area<r> with blocks. <n>To do this, first <imp>sneak-right-click<r> a block in the world that you want to <imp>fill an area with<r>. <n><n>To actually fill an area, look at the <imp>first corner<r> and <imp>hold right-click<r>. Let go of right-click at the <imp>second corner<r>. The area you mark can be a flat plane or a cube. <n>This process requires <imp>some CF<r> for placing the blocks and you need to <imp>have the blocks<r> in your inventory.
 
 booklet.actuallyadditions.chapter.patreon.name=Patreon Support
 booklet.actuallyadditions.chapter.patreon.text.1=Do you <imp>really like<r> <item>Actually Additions<r>? If you do, you can <imp>support me<r>, Ellpeck, the author of the mod! <n>Do you think that's a thing for you? Well, then check out my <item>Patreon<r> page by clicking the button below! <n>As you can see on the next page, you can get things like <imp>floaty items above your head<r> as a reward! <n><n>Thanks a bunch <3

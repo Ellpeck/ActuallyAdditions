@@ -48,7 +48,6 @@ public final class PlayerData{
 
         public UUID id;
 
-        public int energyDisplayMode;
         public boolean bookGottenAlready;
         public boolean didBookTutorial;
         public boolean hasBatWings;
@@ -65,7 +64,6 @@ public final class PlayerData{
         }
 
         public void readFromNBT(NBTTagCompound compound, boolean savingToFile){
-            this.energyDisplayMode = compound.getInteger("EnergyDisplayMode");
             this.bookGottenAlready = compound.getBoolean("BookGotten");
             this.didBookTutorial = compound.getBoolean("DidTutorial");
 
@@ -87,7 +85,6 @@ public final class PlayerData{
         }
 
         public void writeToNBT(NBTTagCompound compound, boolean savingToFile){
-            compound.setInteger("EnergyDisplayMode", this.energyDisplayMode);
             compound.setBoolean("BookGotten", this.bookGottenAlready);
             compound.setBoolean("DidTutorial", this.didBookTutorial);
 

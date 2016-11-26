@@ -62,12 +62,6 @@ public class GuiGrinder extends GuiContainer{
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
-        super.mouseClicked(mouseX, mouseY, mouseButton);
-        this.energy.onMouseClick(mouseX, mouseY, mouseButton);
-    }
-
-    @Override
     protected void actionPerformed(GuiButton button) throws IOException{
         if(this.isDouble && button.id == 0){
             PacketHandlerHelper.sendButtonPacket(this.tileGrinder, button.id);

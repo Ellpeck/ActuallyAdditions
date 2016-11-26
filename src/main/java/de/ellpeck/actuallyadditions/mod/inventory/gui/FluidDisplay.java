@@ -20,10 +20,13 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.text.NumberFormat;
 import java.util.Collections;
 
+@SideOnly(Side.CLIENT)
 public class FluidDisplay extends Gui{
 
     private FluidTank fluidReference;
