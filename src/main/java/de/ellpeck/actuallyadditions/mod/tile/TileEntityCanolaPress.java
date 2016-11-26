@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
@@ -168,5 +169,10 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IC
     @Override
     public EnumFacing[] getFluidShareSides(){
         return EnumFacing.values();
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

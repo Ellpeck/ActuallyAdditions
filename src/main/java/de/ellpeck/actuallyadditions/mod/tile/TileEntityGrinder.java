@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -256,5 +257,10 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
             this.isAutoSplit = !this.isAutoSplit;
             this.markDirty();
         }
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

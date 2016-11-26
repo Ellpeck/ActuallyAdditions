@@ -47,17 +47,21 @@ public final class TeslaUtil{
         }
     }
 
-    public static void doWrappedTeslaRFInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing side, int maxTransfer){
+    public static boolean doWrappedTeslaRFInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing side, int maxTransfer){
         if(tileTo.hasCapability(teslaConsumer, side.getOpposite()) && tileFrom.hasCapability(teslaProducer, side)){
             ITeslaConsumer handlerTo = tileTo.getCapability(teslaConsumer, side.getOpposite());
             ITeslaProducer handlerFrom = tileFrom.getCapability(teslaProducer, side);
 
-            long drain = handlerFrom.takePower(maxTransfer, true);
-            if(drain > 0){
-                long filled = handlerTo.givePower(drain, false);
-                handlerFrom.takePower(filled, false);
+            if(handlerTo != null && handlerFrom != null){
+                long drain = handlerFrom.takePower(maxTransfer, true);
+                if(drain > 0){
+                    long filled = handlerTo.givePower(drain, false);
+                    handlerFrom.takePower(filled, false);
+                    return true;
+                }
             }
         }
+        return false;
     }
 
     private static TileTeslaWrapper getHandler(TileEntityBase tile, EnumFacing facing){

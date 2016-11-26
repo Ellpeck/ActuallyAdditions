@@ -19,6 +19,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay, ICustomEnergyReceiver{
 
@@ -136,5 +137,10 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     @Override
     public int getInventoryStackLimit(){
         return 1;
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

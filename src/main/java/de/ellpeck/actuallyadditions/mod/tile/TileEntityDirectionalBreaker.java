@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -151,5 +152,10 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     @Override
     public void activateOnPulse(){
         this.doWork();
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

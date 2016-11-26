@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import cofh.api.energy.EnergyStorage;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,5 +105,10 @@ public class TileEntityShockSuppressor extends TileEntityBase implements ICustom
     @Override
     public boolean needsHoldShift(){
         return false;
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

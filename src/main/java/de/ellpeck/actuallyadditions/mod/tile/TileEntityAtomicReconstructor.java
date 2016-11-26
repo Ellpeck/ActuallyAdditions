@@ -26,6 +26,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements ICustomEnergyReceiver, IEnergyDisplay, IAtomicReconstructor{
 
@@ -214,5 +215,10 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     @Override
     public void activateOnPulse(){
         this.doWork();
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

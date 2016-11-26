@@ -43,6 +43,8 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -84,11 +86,28 @@ public final class WorldUtil{
                     if(handlerTo.canConnectEnergy(sideTo.getOpposite())){
                         int filled = handlerTo.receiveEnergy(sideTo.getOpposite(), drain, false);
                         handlerFrom.extractEnergy(sideTo, filled, false);
+                        return;
                     }
                 }
             }
-            else if(ActuallyAdditions.teslaLoaded){
-                TeslaUtil.doWrappedTeslaRFInteraction(tileFrom, tileTo, sideTo, maxTransfer);
+
+            if(ActuallyAdditions.teslaLoaded){
+                if(TeslaUtil.doWrappedTeslaRFInteraction(tileFrom, tileTo, sideTo, maxTransfer)){
+                    return;
+                }
+            }
+
+            if(tileFrom.hasCapability(CapabilityEnergy.ENERGY, sideTo) && tileTo.hasCapability(CapabilityEnergy.ENERGY, sideTo.getOpposite())){
+                IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
+                IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, sideTo.getOpposite());
+
+                if(handlerFrom != null && handlerTo != null){
+                    int drain = handlerFrom.extractEnergy(maxTransfer, true);
+                    if(drain > 0){
+                        int filled = handlerTo.receiveEnergy(drain, false);
+                        handlerFrom.extractEnergy(filled, false);
+                    }
+                }
             }
         }
     }

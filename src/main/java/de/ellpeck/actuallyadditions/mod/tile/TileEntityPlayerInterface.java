@@ -21,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.UUID;
 
@@ -238,5 +239,10 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
     @Override
     public boolean needsHoldShift(){
         return false;
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

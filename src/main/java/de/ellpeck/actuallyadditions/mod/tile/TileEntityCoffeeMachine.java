@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
@@ -230,5 +231,10 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     @Override
     public EnumFacing[] getFluidShareSides(){
         return null;
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

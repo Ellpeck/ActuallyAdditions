@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -175,5 +176,10 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     @Override
     public EnumFacing[] getEnergyShareSides(){
         return EnumFacing.values();
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

@@ -20,6 +20,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityFireworkBox extends TileEntityBase implements ICustomEnergyReceiver, IEnergyDisplay{
 
@@ -169,5 +170,10 @@ public class TileEntityFireworkBox extends TileEntityBase implements ICustomEner
     @Override
     public boolean needsHoldShift(){
         return false;
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

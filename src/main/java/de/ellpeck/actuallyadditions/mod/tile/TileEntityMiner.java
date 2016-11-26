@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.oredict.OreDictionary;
@@ -232,5 +233,10 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
     @Override
     public boolean needsHoldShift(){
         return false;
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

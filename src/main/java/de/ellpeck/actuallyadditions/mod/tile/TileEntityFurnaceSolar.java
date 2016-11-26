@@ -15,6 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay{
 
@@ -120,5 +121,10 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     @Override
     public EnumFacing[] getEnergyShareSides(){
         return EnumFacing.values();
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

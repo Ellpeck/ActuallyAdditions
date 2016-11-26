@@ -32,6 +32,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -320,6 +322,12 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                 return (T)tank;
             }
         }
+        else if(capability == CapabilityEnergy.ENERGY){
+            IEnergyStorage storage = this.getEnergyStorage(facing);
+            if(storage != null){
+                return (T)storage;
+            }
+        }
         else if(ActuallyAdditions.teslaLoaded){
             T cap = TeslaUtil.wrapTeslaToRF(this, capability, facing);
             if(cap != null){
@@ -330,6 +338,10 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public IFluidHandler getFluidHandler(EnumFacing facing){
+        return null;
+    }
+
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
         return null;
     }
 

@@ -28,6 +28,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -234,5 +235,10 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

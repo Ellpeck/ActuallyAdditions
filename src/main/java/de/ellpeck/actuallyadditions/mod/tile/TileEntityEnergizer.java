@@ -20,6 +20,7 @@ import net.darkhax.tesla.api.ITeslaHolder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -127,5 +128,10 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements ICus
     @Override
     public boolean canConnectEnergy(EnumFacing from){
         return true;
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

@@ -20,6 +20,7 @@ import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -143,5 +144,10 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     @Override
     public EnumFacing[] getEnergyShareSides(){
         return EnumFacing.values();
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

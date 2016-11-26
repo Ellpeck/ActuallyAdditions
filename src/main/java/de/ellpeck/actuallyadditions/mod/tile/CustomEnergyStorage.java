@@ -10,7 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.energy.EnergyStorage;
 
 public class CustomEnergyStorage extends EnergyStorage{
 
@@ -28,21 +29,33 @@ public class CustomEnergyStorage extends EnergyStorage{
 
     public int extractEnergyInternal(int maxExtract, boolean simulate){
         int before = this.maxExtract;
-        this.setMaxExtract(Integer.MAX_VALUE);
+        this.maxExtract = Integer.MAX_VALUE;
 
         int toReturn = this.extractEnergy(maxExtract, simulate);
 
-        this.setMaxExtract(before);
+        this.maxExtract = before;
         return toReturn;
     }
 
     public int receiveEnergyInternal(int maxReceive, boolean simulate){
         int before = this.maxReceive;
-        this.setMaxReceive(Integer.MAX_VALUE);
+        this.maxReceive = Integer.MAX_VALUE;
 
         int toReturn = this.receiveEnergy(maxReceive, simulate);
 
-        this.setMaxReceive(before);
+        this.maxReceive = before;
         return toReturn;
+    }
+
+    public void readFromNBT(NBTTagCompound compound){
+        this.energy = compound.getInteger("Energy");
+    }
+
+    public void writeToNBT(NBTTagCompound compound){
+        compound.setInteger("Energy", this.energy);
+    }
+
+    public void setEnergyStored(int energy){
+        this.energy = energy;
     }
 }

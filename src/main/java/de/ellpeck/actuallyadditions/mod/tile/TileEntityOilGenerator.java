@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.api.recipe.OilGenRecipe;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -197,5 +198,10 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     @Override
     public EnumFacing[] getEnergyShareSides(){
         return EnumFacing.values();
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }

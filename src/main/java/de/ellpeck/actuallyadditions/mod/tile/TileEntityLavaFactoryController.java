@@ -20,6 +20,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityLavaFactoryController extends TileEntityBase implements ICustomEnergyReceiver, IEnergyDisplay{
 
@@ -126,5 +127,10 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     @Override
     public boolean needsHoldShift(){
         return false;
+    }
+
+    @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.storage;
     }
 }
