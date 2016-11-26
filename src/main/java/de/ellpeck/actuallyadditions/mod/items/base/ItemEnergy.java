@@ -10,13 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import cofh.api.energy.IEnergyContainerItem;
-import cofh.api.energy.IEnergyStorage;
-import cofh.api.energy.ItemEnergyContainer;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.data.PlayerData;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.ItemTeslaWrapper;
+import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaForgeUnitsWrapper;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,43 +25,26 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.text.NumberFormat;
 import java.util.List;
 
-public abstract class ItemEnergy extends ItemEnergyContainer{
+public abstract class ItemEnergy extends ItemBase{
 
-    private final String name;
+    private final int maxPower;
+    private final int transfer;
 
     public ItemEnergy(int maxPower, int transfer, String name){
-        super(maxPower, transfer);
+        super(name);
+        this.maxPower = maxPower;
+        this.transfer = transfer;
+
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);
-        this.name = name;
-
-        this.register();
-    }
-
-    private void register(){
-        ItemUtil.registerItem(this, this.getBaseName(), this.shouldAddCreative());
-
-        this.registerRendering();
-    }
-
-    protected String getBaseName(){
-        return this.name;
-    }
-
-    public boolean shouldAddCreative(){
-        return true;
-    }
-
-    protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
     @Override
@@ -75,8 +54,13 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
-        NumberFormat format = NumberFormat.getInstance();
-        list.add(format.format(this.getEnergyStored(stack))+"/"+format.format(this.getMaxEnergyStored(stack))+" Crystal Flux");
+        if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
+            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+            if(storage != null){
+                NumberFormat format = NumberFormat.getInstance();
+                list.add(format.format(storage.getEnergyStored())+"/"+format.format(storage.getMaxEnergyStored())+" Crystal Flux");
+            }
+        }
     }
 
     @Override
@@ -89,8 +73,13 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, NonNullList list){
         ItemStack stackFull = new ItemStack(this);
-        this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
-        list.add(stackFull);
+        if(stackFull.hasCapability(CapabilityEnergy.ENERGY, null)){
+            IEnergyStorage storage = stackFull.getCapability(CapabilityEnergy.ENERGY, null);
+            if(storage != null){
+                this.setEnergy(stackFull, storage.getMaxEnergyStored());
+                list.add(stackFull);
+            }
+        }
 
         ItemStack stackEmpty = new ItemStack(this);
         this.setEnergy(stackEmpty, 0);
@@ -104,25 +93,97 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack){
-        double maxAmount = this.getMaxEnergyStored(stack);
-        double energyDif = maxAmount-this.getEnergyStored(stack);
-        return energyDif/maxAmount;
+        if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
+            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+            if(storage != null){
+                double maxAmount = storage.getMaxEnergyStored();
+                double energyDif = maxAmount-storage.getEnergyStored();
+                return energyDif/maxAmount;
+            }
+        }
+        return super.getDurabilityForDisplay(stack);
     }
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack){
-        int currEnergy = this.getEnergyStored(stack);
-        int maxEnergy = this.getMaxEnergyStored(stack);
-        return MathHelper.hsvToRGB(Math.max(0.0F, (float)currEnergy/maxEnergy)/3.0F, 1.0F, 1.0F);
+        if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
+            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+            if(storage != null){
+                int currEnergy = storage.getEnergyStored();
+                int maxEnergy = storage.getMaxEnergyStored();
+                return MathHelper.hsvToRGB(Math.max(0.0F, (float)currEnergy/maxEnergy)/3.0F, 1.0F, 1.0F);
+            }
+        }
+        return super.getRGBDurabilityForDisplay(stack);
     }
 
     public void setEnergy(ItemStack stack, int energy){
-        NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null){
-            compound = new NBTTagCompound();
+        if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
+            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+            if(storage instanceof CustomEnergyStorage){
+                ((CustomEnergyStorage)storage).setEnergyStored(energy);
+            }
         }
-        compound.setInteger("Energy", energy);
-        stack.setTagCompound(compound);
+    }
+
+    public int receiveEnergyInternal(ItemStack stack, int maxReceive, boolean simulate){
+        if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
+            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+            if(storage instanceof CustomEnergyStorage){
+                ((CustomEnergyStorage)storage).receiveEnergyInternal(maxReceive, simulate);
+            }
+        }
+        return 0;
+    }
+
+    public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate){
+        if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
+            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+            if(storage instanceof CustomEnergyStorage){
+                ((CustomEnergyStorage)storage).extractEnergyInternal(maxExtract, simulate);
+            }
+        }
+        return 0;
+    }
+
+    public int receiveEnergy(ItemStack stack, int maxReceive, boolean simulate){
+        if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
+            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+            if(storage != null){
+                return storage.receiveEnergy(maxReceive, simulate);
+            }
+        }
+        return 0;
+    }
+
+    public int extractEnergy(ItemStack stack, int maxExtract, boolean simulate){
+        if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
+            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+            if(storage != null){
+                return storage.extractEnergy(maxExtract, simulate);
+            }
+        }
+        return 0;
+    }
+
+    public int getEnergyStored(ItemStack stack){
+        if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
+            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+            if(storage != null){
+                return storage.getEnergyStored();
+            }
+        }
+        return 0;
+    }
+
+    public int getMaxEnergyStored(ItemStack stack){
+        if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
+            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+            if(storage != null){
+                return storage.getMaxEnergyStored();
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -130,57 +191,30 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
         return new EnergyCapabilityProvider(stack, this);
     }
 
-    public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate){
-        int before = this.maxExtract;
-        this.setMaxExtract(Integer.MAX_VALUE);
-
-        int toReturn = this.extractEnergy(stack, maxExtract, simulate);
-
-        this.setMaxExtract(before);
-        return toReturn;
-    }
-
-    public int receiveEnergyInternal(ItemStack stack, int maxReceive, boolean simulate){
-        int before = this.maxReceive;
-        this.setMaxReceive(Integer.MAX_VALUE);
-
-        int toReturn = this.receiveEnergy(stack, maxReceive, simulate);
-
-        this.setMaxReceive(before);
-        return toReturn;
-    }
-
     private static class EnergyCapabilityProvider implements ICapabilityProvider{
 
-        private final Object forgeUnitsWrapper;
+        private final CustomEnergyStorage storage;
         private Object teslaWrapper;
 
-        private final IEnergyContainerItem item;
-        private final ItemStack stack;
-
-        public EnergyCapabilityProvider(final ItemStack stack, final IEnergyContainerItem item){
-            this.stack = stack;
-            this.item = item;
-
-            this.forgeUnitsWrapper = new IEnergyStorage(){
-                @Override
-                public int receiveEnergy(int maxReceive, boolean simulate){
-                    return item.receiveEnergy(stack, maxReceive, simulate);
-                }
-
-                @Override
-                public int extractEnergy(int maxExtract, boolean simulate){
-                    return item.extractEnergy(stack, maxExtract, simulate);
-                }
-
+        public EnergyCapabilityProvider(final ItemStack stack, ItemEnergy item){
+            this.storage = new CustomEnergyStorage(item.maxPower, item.transfer, item.transfer){
                 @Override
                 public int getEnergyStored(){
-                    return item.getEnergyStored(stack);
+                    if(stack.hasTagCompound()){
+                        return stack.getTagCompound().getInteger("Energy");
+                    }
+                    else{
+                        return 0;
+                    }
                 }
 
                 @Override
-                public int getMaxEnergyStored(){
-                    return item.getMaxEnergyStored(stack);
+                public void setEnergyStored(int energy){
+                    if(!stack.hasTagCompound()){
+                        stack.setTagCompound(new NBTTagCompound());
+                    }
+
+                    stack.getTagCompound().setInteger("Energy", energy);
                 }
             };
         }
@@ -194,12 +228,12 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
         @Override
         public <T> T getCapability(Capability<T> capability, EnumFacing facing){
             if(capability == CapabilityEnergy.ENERGY){
-                return (T)this.forgeUnitsWrapper;
+                return (T)this.storage;
             }
             else if(ActuallyAdditions.teslaLoaded){
                 if(capability == TeslaUtil.teslaConsumer || capability == TeslaUtil.teslaProducer || capability == TeslaUtil.teslaHolder){
                     if(this.teslaWrapper == null){
-                        this.teslaWrapper = new ItemTeslaWrapper(this.stack, this.item);
+                        this.teslaWrapper = new TeslaForgeUnitsWrapper(this.storage);
                     }
                     return (T)this.teslaWrapper;
                 }

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
@@ -25,39 +24,61 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements ICustomEnergyReceiver{
+public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
 
     public static final int CAP = 1000;
     public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
 
+    private final IEnergyStorage[] energyStorages = new IEnergyStorage[6];
+
     public TileEntityLaserRelayEnergy(String name){
         super(name, LaserType.ENERGY);
+
+        for(int i = 0; i < this.energyStorages.length; i++){
+            final EnumFacing facing = EnumFacing.values()[i];
+            this.energyStorages[i] = new IEnergyStorage(){
+
+                @Override
+                public int receiveEnergy(int amount, boolean simulate){
+                    return TileEntityLaserRelayEnergy.this.transmitEnergy(facing, amount, simulate);
+                }
+
+                @Override
+                public int extractEnergy(int maxExtract, boolean simulate){
+                    return 0;
+                }
+
+                @Override
+                public int getEnergyStored(){
+                    return 0;
+                }
+
+                @Override
+                public int getMaxEnergyStored(){
+                    return TileEntityLaserRelayEnergy.this.getEnergyCap();
+                }
+
+                @Override
+                public boolean canExtract(){
+                    return false;
+                }
+
+                @Override
+                public boolean canReceive(){
+                    return true;
+                }
+            };
+        }
     }
 
     public TileEntityLaserRelayEnergy(){
         this("laserRelay");
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.transmitEnergy(from, maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return 0;
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.getEnergyCap();
     }
 
     private int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate){
@@ -72,8 +93,8 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
     }
 
     @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
+    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return this.energyStorages[facing == null ? 0 : facing.ordinal()];
     }
 
     @Override
@@ -91,7 +112,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
             BlockPos pos = this.getPos().offset(side);
             TileEntity tile = this.worldObj.getTileEntity(pos);
             if(tile != null && !(tile instanceof TileEntityLaserRelay)){
-                if(tile instanceof IEnergyReceiver || (ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite())) || tile.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())){
+                if((ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite())) || tile.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())){
                     this.receiversAround.put(side, tile);
 
                     TileEntity oldTile = old.get(side);
@@ -152,22 +173,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                         if(!alreadyChecked.contains(tile.getPos())){
                             alreadyChecked.add(tile.getPos());
                             if(theRelay != this || side != from){
-                                if(tile instanceof IEnergyReceiver){
-                                    IEnergyReceiver iReceiver = (IEnergyReceiver)tile;
-                                    if(iReceiver.canConnectEnergy(opp)){
-                                        int theoreticalReceived = iReceiver.receiveEnergy(opp, Math.min(amountPer, lowestCap), true);
-                                        if(theoreticalReceived > 0){
-                                            int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
-                                            if(deduct >= theoreticalReceived){ //Happens with small numbers
-                                                deduct = 0;
-                                            }
-
-                                            transmitted += iReceiver.receiveEnergy(opp, theoreticalReceived-deduct, simulate);
-                                            transmitted += deduct;
-                                        }
-                                    }
-                                }
-                                else if(tile.hasCapability(CapabilityEnergy.ENERGY, opp)){
+                                if(tile.hasCapability(CapabilityEnergy.ENERGY, opp)){
                                     IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, opp);
                                     if(cap != null){
                                         int theoreticalReceived = cap.receiveEnergy(Math.min(amountPer, lowestCap), true);

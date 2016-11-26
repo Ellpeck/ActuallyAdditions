@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -25,11 +24,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements ICustomEnergyReceiver{
+public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(10000, 20);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(10000, 20, 0);
     private int lastEnergy;
     private int currentTime;
 
@@ -122,27 +121,6 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return true;
     }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.receiveEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
-    }
-
 
     @Override
     public boolean isRedstoneToggle(){

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
@@ -26,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 1000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, 1000);
     private int lastEnergy;
 
     public TileEntityEnervator(){
@@ -55,12 +54,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
                     boolean canTakeUp = false;
 
                     int maxExtract = this.storage.getMaxEnergyStored()-this.storage.getEnergyStored();
-                    if(this.slots.get(0).getItem() instanceof IEnergyContainerItem){
-                        IEnergyContainerItem item = (IEnergyContainerItem)this.slots.get(0).getItem();
-                        extracted = item.extractEnergy(this.slots.get(0), maxExtract, false);
-                        canTakeUp = item.getEnergyStored(this.slots.get(0)) <= 0;
-                    }
-                    else if(this.slots.get(0).hasCapability(CapabilityEnergy.ENERGY, null)){
+                    if(this.slots.get(0).hasCapability(CapabilityEnergy.ENERGY, null)){
                         IEnergyStorage cap = this.slots.get(0).getCapability(CapabilityEnergy.ENERGY, null);
                         if(cap != null){
                             extracted = cap.extractEnergy(maxExtract, false);
@@ -100,27 +94,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0 && (stack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaProducer, null)) || stack.hasCapability(CapabilityEnergy.ENERGY, null));
-    }
-
-    @Override
-    public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
-        return this.storage.extractEnergy(maxExtract, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
+        return i == 0 && ((ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaProducer, null)) || stack.hasCapability(CapabilityEnergy.ENERGY, null));
     }
 
     @SideOnly(Side.CLIENT)

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -26,7 +25,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements ICustomEnergyReceiver, IButtonReactor{
+public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IButtonReactor{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1 = 1;
@@ -34,7 +33,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public static final int SLOT_OUTPUT_2 = 3;
     public static final int ENERGY_USE = 25;
     private static final int SMELT_TIME = 80;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 80);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 80, 0);
     public int firstSmeltTime;
     public int secondSmeltTime;
     public boolean isAutoSplit;
@@ -197,26 +196,6 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2;
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.receiveEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override

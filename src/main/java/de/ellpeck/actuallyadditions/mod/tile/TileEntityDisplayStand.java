@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
@@ -21,9 +20,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay, ICustomEnergyReceiver{
+public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay{
 
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(80000, 1000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(80000, 1000, 0);
     private int oldEnergy;
 
     public TileEntityDisplayStand(){
@@ -112,26 +111,6 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     @Override
     public boolean needsHoldShift(){
         return false;
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return from != EnumFacing.UP ? this.storage.receiveEnergy(maxReceive, simulate) : 0;
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return from != EnumFacing.UP ? this.storage.getEnergyStored() : 0;
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return from != EnumFacing.UP ? this.storage.getMaxEnergyStored() : 0;
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return from != EnumFacing.UP;
     }
 
     @Override

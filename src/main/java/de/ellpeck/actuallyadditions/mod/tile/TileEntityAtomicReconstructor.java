@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
@@ -28,10 +27,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements ICustomEnergyReceiver, IEnergyDisplay, IAtomicReconstructor{
+public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyDisplay, IAtomicReconstructor{
 
     public static final int ENERGY_USE = 1000;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 5000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 5000, 0);
     public int counter;
     private int currentTime;
     private int oldEnergy;
@@ -160,26 +159,6 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public void markDirty(){
         super.markDirty();
         this.sendUpdate();
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.receiveEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override

@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
@@ -28,7 +27,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityGrinder extends TileEntityInventoryBase implements ICustomEnergyReceiver, IButtonReactor{
+public class TileEntityGrinder extends TileEntityInventoryBase implements IButtonReactor{
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1_1 = 1;
@@ -37,7 +36,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
     public static final int SLOT_OUTPUT_2_1 = 4;
     public static final int SLOT_OUTPUT_2_2 = 5;
     public static final int ENERGY_USE = 40;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 100);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 100, 0);
     public int firstCrushTime;
     public int secondCrushTime;
     public boolean isDouble;
@@ -54,26 +53,6 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements ICusto
     public TileEntityGrinder(){
         super(3, "grinder");
         this.isDouble = false;
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.receiveEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override

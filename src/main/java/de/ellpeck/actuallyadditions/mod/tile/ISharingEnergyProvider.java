@@ -10,10 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.IEnergyProvider;
 import net.minecraft.util.EnumFacing;
 
-public interface ISharingEnergyProvider extends IEnergyProvider{
+public interface ISharingEnergyProvider{
 
     int getEnergyToSplitShare();
 

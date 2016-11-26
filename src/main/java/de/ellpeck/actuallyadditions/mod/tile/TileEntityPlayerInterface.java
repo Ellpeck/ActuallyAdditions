@@ -10,14 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -26,10 +23,10 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.UUID;
 
-public class TileEntityPlayerInterface extends TileEntityInventoryBase implements ICustomEnergyReceiver, IEnergyDisplay{
+public class TileEntityPlayerInterface extends TileEntityInventoryBase implements IEnergyDisplay{
 
     public static final int DEFAULT_RANGE = 32;
-    private final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 50);
+    private final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 50, 0);
     public UUID connectedPlayer;
     public String playerName;
     private int oldEnergy;
@@ -65,13 +62,9 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
                     if(this.storage.getEnergyStored() > 0){
                         ItemStack slot = player.inventory.getStackInSlot(i);
                         if(StackUtil.isValid(slot)){
-                            Item item = slot.getItem();
 
                             int received = 0;
-                            if(item instanceof IEnergyContainerItem){
-                                received = ((IEnergyContainerItem)item).receiveEnergy(slot, this.storage.getEnergyStored(), false);
-                            }
-                            else if(slot.hasCapability(CapabilityEnergy.ENERGY, null)){
+                            if(slot.hasCapability(CapabilityEnergy.ENERGY, null)){
                                 IEnergyStorage cap = slot.getCapability(CapabilityEnergy.ENERGY, null);
                                 if(cap != null){
                                     received = cap.receiveEnergy(this.storage.getEnergyStored(), false);
@@ -126,26 +119,6 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
             this.connectedPlayer = compound.getUniqueId("Player");
             this.playerName = compound.getString("PlayerName");
         }
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.receiveEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override

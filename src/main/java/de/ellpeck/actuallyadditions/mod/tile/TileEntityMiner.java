@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -31,11 +30,11 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
-public class TileEntityMiner extends TileEntityInventoryBase implements ICustomEnergyReceiver, IButtonReactor, IEnergyDisplay{
+public class TileEntityMiner extends TileEntityInventoryBase implements IButtonReactor, IEnergyDisplay{
 
     public static final int ENERGY_USE_PER_BLOCK = 650;
     public static final int DEFAULT_RANGE = 2;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 2000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 2000, 0);
     public int layerAt = -1;
     public boolean onlyMineOres;
     private int oldLayerAt;
@@ -182,26 +181,6 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack){
         return false;
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.receiveEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override

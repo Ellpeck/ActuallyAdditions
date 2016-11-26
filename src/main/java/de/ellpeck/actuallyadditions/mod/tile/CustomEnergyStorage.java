@@ -15,14 +15,6 @@ import net.minecraftforge.energy.EnergyStorage;
 
 public class CustomEnergyStorage extends EnergyStorage{
 
-    public CustomEnergyStorage(int capacity){
-        super(capacity);
-    }
-
-    public CustomEnergyStorage(int capacity, int maxTransfer){
-        super(capacity, maxTransfer);
-    }
-
     public CustomEnergyStorage(int capacity, int maxReceive, int maxExtract){
         super(capacity, maxReceive, maxExtract);
     }
@@ -47,12 +39,41 @@ public class CustomEnergyStorage extends EnergyStorage{
         return toReturn;
     }
 
+    @Override
+    public int receiveEnergy(int maxReceive, boolean simulate){
+        if(!this.canReceive()){
+            return 0;
+        }
+        int energy = this.getEnergyStored();
+
+        int energyReceived = Math.min(this.capacity-energy, Math.min(this.maxReceive, maxReceive));
+        if(!simulate){
+            this.setEnergyStored(energy+energyReceived);
+        }
+
+        return energyReceived;
+    }
+
+    @Override
+    public int extractEnergy(int maxExtract, boolean simulate){
+        if(!this.canExtract()){
+            return 0;
+        }
+        int energy = this.getEnergyStored();
+
+        int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
+        if(!simulate){
+            this.setEnergyStored(energy-energyExtracted);
+        }
+        return energyExtracted;
+    }
+
     public void readFromNBT(NBTTagCompound compound){
-        this.energy = compound.getInteger("Energy");
+        this.setEnergyStored(compound.getInteger("Energy"));
     }
 
     public void writeToNBT(NBTTagCompound compound){
-        compound.setInteger("Energy", this.energy);
+        compound.setInteger("Energy", this.getEnergyStored());
     }
 
     public void setEnergyStored(int energy){

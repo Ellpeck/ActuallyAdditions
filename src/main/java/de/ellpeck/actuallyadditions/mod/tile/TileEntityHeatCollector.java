@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -26,7 +25,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
 
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 80);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 0, 80);
     private int oldEnergy;
 
     public TileEntityHeatCollector(){
@@ -75,26 +74,6 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                 this.oldEnergy = this.storage.getEnergyStored();
             }
         }
-    }
-
-    @Override
-    public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
-        return this.storage.extractEnergy(maxExtract, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return from == EnumFacing.UP;
     }
 
     @Override

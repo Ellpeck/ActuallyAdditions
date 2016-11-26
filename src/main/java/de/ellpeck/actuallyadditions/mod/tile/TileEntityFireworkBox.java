@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemDye;
@@ -22,10 +21,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityFireworkBox extends TileEntityBase implements ICustomEnergyReceiver, IEnergyDisplay{
+public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisplay{
 
     public static final int USE_PER_SHOT = 300;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(20000, 200);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(20000, 200, 0);
     private int timeUntilNextFirework;
     private int oldEnergy;
 
@@ -130,26 +129,6 @@ public class TileEntityFireworkBox extends TileEntityBase implements ICustomEner
 
             this.storage.extractEnergyInternal(USE_PER_SHOT, false);
         }
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.receiveEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override

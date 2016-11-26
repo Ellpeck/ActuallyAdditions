@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -33,10 +32,10 @@ import net.minecraftforge.energy.IEnergyStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityFarmer extends TileEntityInventoryBase implements ICustomEnergyReceiver{
+public class TileEntityFarmer extends TileEntityInventoryBase{
 
     public static final int USE_PER_OPERATION = 1500;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(100000, 1000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(100000, 1000, 0);
 
     private int waitTime;
     private int checkX;
@@ -215,26 +214,6 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return slot >= 6;
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.receiveEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override

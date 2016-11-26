@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -60,10 +59,7 @@ public class ItemBattery extends ItemEnergy{
                     int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
                     int received = 0;
 
-                    if(slot.getItem() instanceof IEnergyContainerItem){
-                        received = ((IEnergyContainerItem)slot.getItem()).receiveEnergy(slot, extractable, false);
-                    }
-                    else if(slot.hasCapability(CapabilityEnergy.ENERGY, null)){
+                    if(slot.hasCapability(CapabilityEnergy.ENERGY, null)){
                         IEnergyStorage cap = slot.getCapability(CapabilityEnergy.ENERGY, null);
                         if(cap != null){
                             received = cap.receiveEnergy(extractable, false);

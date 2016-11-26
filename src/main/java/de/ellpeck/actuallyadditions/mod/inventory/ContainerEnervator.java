@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
@@ -94,7 +93,7 @@ public class ContainerEnervator extends Container{
             //Other Slots in Inventory excluded
             else if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(newStack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && newStack.hasCapability(TeslaUtil.teslaProducer, null)) || newStack.hasCapability(CapabilityEnergy.ENERGY, null)){
+                if((ActuallyAdditions.teslaLoaded && newStack.hasCapability(TeslaUtil.teslaProducer, null)) || newStack.hasCapability(CapabilityEnergy.ENERGY, null)){
                     if(!this.mergeItemStack(newStack, 0, 1, false)){
                         return StackUtil.getNull();
                     }

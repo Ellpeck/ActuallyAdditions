@@ -10,11 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
+import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -77,20 +76,6 @@ public final class WorldUtil{
 
     public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer){
         if(maxTransfer > 0){
-            if(tileFrom instanceof IEnergyProvider && tileTo instanceof IEnergyReceiver){
-                IEnergyReceiver handlerTo = (IEnergyReceiver)tileTo;
-                IEnergyProvider handlerFrom = (IEnergyProvider)tileFrom;
-
-                int drain = handlerFrom.extractEnergy(sideTo, maxTransfer, true);
-                if(drain > 0){
-                    if(handlerTo.canConnectEnergy(sideTo.getOpposite())){
-                        int filled = handlerTo.receiveEnergy(sideTo.getOpposite(), drain, false);
-                        handlerFrom.extractEnergy(sideTo, filled, false);
-                        return;
-                    }
-                }
-            }
-
             if(tileFrom.hasCapability(CapabilityEnergy.ENERGY, sideTo) && tileTo.hasCapability(CapabilityEnergy.ENERGY, sideTo.getOpposite())){
                 IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
                 IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, sideTo.getOpposite());
@@ -106,7 +91,18 @@ public final class WorldUtil{
             }
 
             if(ActuallyAdditions.teslaLoaded){
-                TeslaUtil.doWrappedTeslaRFInteraction(tileFrom, tileTo, sideTo, maxTransfer);
+                if(tileTo.hasCapability(TeslaUtil.teslaConsumer, sideTo.getOpposite()) && tileFrom.hasCapability(TeslaUtil.teslaProducer, sideTo)){
+                    ITeslaConsumer handlerTo = tileTo.getCapability(TeslaUtil.teslaConsumer, sideTo.getOpposite());
+                    ITeslaProducer handlerFrom = tileFrom.getCapability(TeslaUtil.teslaProducer, sideTo);
+
+                    if(handlerTo != null && handlerFrom != null){
+                        long drain = handlerFrom.takePower(maxTransfer, true);
+                        if(drain > 0){
+                            long filled = handlerTo.givePower(drain, false);
+                            handlerFrom.takePower(filled, false);
+                        }
+                    }
+                }
             }
         }
     }

@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaForgeUnitsWrapper;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,7 +30,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -48,6 +48,8 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     protected TileEntity[] tilesAround = new TileEntity[6];
     protected boolean hasSavedDataOnChangeOrWorldStart;
+
+    private Object teslaWrapper;
 
     public TileEntityBase(String name){
         this.name = name;
@@ -329,9 +331,11 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
             }
         }
         else if(ActuallyAdditions.teslaLoaded){
-            T cap = TeslaUtil.wrapTeslaToRF(this, capability, facing);
-            if(cap != null){
-                return cap;
+            if(capability == TeslaUtil.teslaConsumer || capability == TeslaUtil.teslaProducer || capability == TeslaUtil.teslaHolder){
+                if(this.teslaWrapper == null){
+                    this.teslaWrapper = new TeslaForgeUnitsWrapper(this.getEnergyStorage(facing));
+                }
+                return (T)this.teslaWrapper;
             }
         }
         return super.getCapability(capability, facing);
@@ -351,15 +355,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     public void activateOnPulse(){
 
-    }
-
-    @Override
-    public void invalidate(){
-        super.invalidate();
-
-        if(ActuallyAdditions.teslaLoaded){
-            TeslaUtil.removeTile(this);
-        }
     }
 
     public enum NBTType{

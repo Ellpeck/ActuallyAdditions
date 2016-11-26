@@ -53,13 +53,11 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
                     return TileEntityLaserRelayFluids.this.transmitFluid(facing, resource, doFill);
                 }
 
-                @Nullable
                 @Override
                 public FluidStack drain(FluidStack resource, boolean doDrain){
                     return null;
                 }
 
-                @Nullable
                 @Override
                 public FluidStack drain(int maxDrain, boolean doDrain){
                     return null;

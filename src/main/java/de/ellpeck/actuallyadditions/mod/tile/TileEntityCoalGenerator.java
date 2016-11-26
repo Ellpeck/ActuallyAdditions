@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
     public static final int PRODUCE = 30;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 80);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 0, 80);
     public int maxBurnTime;
     public int currentBurnTime;
     private int lastEnergy;
@@ -108,26 +107,6 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
         return TileEntityFurnace.getItemBurnTime(this.slots.get(0)) <= 0;
-    }
-
-    @Override
-    public int extractEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.extractEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override

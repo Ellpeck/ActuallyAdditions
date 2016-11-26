@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -22,13 +21,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityLavaFactoryController extends TileEntityBase implements ICustomEnergyReceiver, IEnergyDisplay{
+public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyDisplay{
 
     public static final int NOT_MULTI = 0;
     public static final int HAS_LAVA = 1;
     public static final int HAS_AIR = 2;
     public static final int ENERGY_USE = 150000;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 2000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 2000, 0);
     private int currentWorkTime;
     private int oldEnergy;
 
@@ -97,26 +96,6 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
             }
         }
         return NOT_MULTI;
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxExtract, boolean simulate){
-        return from != EnumFacing.UP ? this.storage.receiveEnergy(maxExtract, simulate) : 0;
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return from != EnumFacing.UP ? this.storage.getEnergyStored() : 0;
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return from != EnumFacing.UP ? this.storage.getMaxEnergyStored() : 0;
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return from != EnumFacing.UP;
     }
 
     @Override

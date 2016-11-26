@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -20,31 +19,11 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay{
 
     public static final int PRODUCE = 8;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 100);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 0, 100);
     private int oldEnergy;
 
     public TileEntityFurnaceSolar(){
         super("solarPanel");
-    }
-
-    @Override
-    public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
-        return this.storage.extractEnergy(maxExtract, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return from != EnumFacing.UP;
     }
 
     @Override

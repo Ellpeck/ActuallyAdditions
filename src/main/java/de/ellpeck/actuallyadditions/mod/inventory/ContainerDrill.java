@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import cofh.api.energy.IEnergyContainerItem;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;

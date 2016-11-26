@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,7 +25,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
 
     public static final int RANGE = 7;
     public static final int ENERGY_PRODUCED = 300;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(35000, 450);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(35000, 0, 450);
     private int nextUseCounter;
     private int oldEnergy;
 
@@ -93,26 +92,6 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
                 this.oldEnergy = this.storage.getEnergyStored();
             }
         }
-    }
-
-    @Override
-    public int extractEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.extractEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override

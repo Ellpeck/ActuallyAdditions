@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -28,7 +27,7 @@ import java.util.List;
 
 public class TileEntityBioReactor extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 800);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 0, 800);
 
     public int burnTime;
     public int maxBurnTime;
@@ -141,26 +140,6 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack){
         return isValidItem(stack);
-    }
-
-    @Override
-    public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate){
-        return this.storage.extractEnergy(maxExtract, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override

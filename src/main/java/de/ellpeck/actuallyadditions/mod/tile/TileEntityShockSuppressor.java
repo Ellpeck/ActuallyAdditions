@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -18,14 +17,14 @@ import net.minecraftforge.energy.IEnergyStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityShockSuppressor extends TileEntityBase implements ICustomEnergyReceiver, IEnergyDisplay{
+public class TileEntityShockSuppressor extends TileEntityBase implements IEnergyDisplay{
 
     public static final List<TileEntityShockSuppressor> SUPPRESSORS = new ArrayList<TileEntityShockSuppressor>();
 
     public static final int USE_PER = 300;
     public static final int RANGE = 5;
 
-    public CustomEnergyStorage storage = new CustomEnergyStorage(300000, 400);
+    public CustomEnergyStorage storage = new CustomEnergyStorage(300000, 400, 0);
     private int oldEnergy;
 
     public TileEntityShockSuppressor(){
@@ -75,26 +74,6 @@ public class TileEntityShockSuppressor extends TileEntityBase implements ICustom
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.receiveEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override

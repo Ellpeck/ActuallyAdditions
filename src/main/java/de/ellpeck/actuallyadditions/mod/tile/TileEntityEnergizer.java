@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
@@ -25,9 +23,9 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityEnergizer extends TileEntityInventoryBase implements ICustomEnergyReceiver{
+public class TileEntityEnergizer extends TileEntityInventoryBase{
 
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 1000);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 1000, 0);
     private int lastEnergy;
 
     public TileEntityEnergizer(){
@@ -55,12 +53,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements ICus
                     int received = 0;
                     boolean canTakeUp = false;
 
-                    if(this.slots.get(0).getItem() instanceof IEnergyContainerItem){
-                        IEnergyContainerItem item = (IEnergyContainerItem)this.slots.get(0).getItem();
-                        received = (item.receiveEnergy(this.slots.get(0), this.storage.getEnergyStored(), false));
-                        canTakeUp = item.getEnergyStored(this.slots.get(0)) >= item.getMaxEnergyStored(this.slots.get(0));
-                    }
-                    else if(this.slots.get(0).hasCapability(CapabilityEnergy.ENERGY, null)){
+                    if(this.slots.get(0).hasCapability(CapabilityEnergy.ENERGY, null)){
                         IEnergyStorage cap = this.slots.get(0).getCapability(CapabilityEnergy.ENERGY, null);
                         if(cap != null){
                             received = cap.receiveEnergy(this.storage.getEnergyStored(), false);
@@ -100,7 +93,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements ICus
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0 && (stack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaConsumer, null)) || stack.hasCapability(CapabilityEnergy.ENERGY, null));
+        return i == 0 && ((ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaConsumer, null)) || stack.hasCapability(CapabilityEnergy.ENERGY, null));
     }
 
     @Override
@@ -116,26 +109,6 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements ICus
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
         return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
-        return this.storage.receiveEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getEnergyStored(EnumFacing from){
-        return this.storage.getEnergyStored();
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from){
-        return this.storage.getMaxEnergyStored();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from){
-        return true;
     }
 
     @Override
