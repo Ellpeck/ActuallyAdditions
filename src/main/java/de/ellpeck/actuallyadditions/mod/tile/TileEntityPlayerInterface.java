@@ -21,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.UUID;
@@ -69,6 +70,12 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
                             int received = 0;
                             if(item instanceof IEnergyContainerItem){
                                 received = ((IEnergyContainerItem)item).receiveEnergy(slot, this.storage.getEnergyStored(), false);
+                            }
+                            else if(slot.hasCapability(CapabilityEnergy.ENERGY, null)){
+                                IEnergyStorage cap = slot.getCapability(CapabilityEnergy.ENERGY, null);
+                                if(cap != null){
+                                    received = cap.receiveEnergy(this.storage.getEnergyStored(), false);
+                                }
                             }
                             else if(ActuallyAdditions.teslaLoaded && slot.hasCapability(TeslaUtil.teslaConsumer, null)){
                                 ITeslaConsumer cap = slot.getCapability(TeslaUtil.teslaConsumer, null);

@@ -15,11 +15,8 @@ import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
-public class ItemTeslaWrapper implements ITeslaProducer, ITeslaHolder, ITeslaConsumer, ICapabilityProvider{
+public class ItemTeslaWrapper implements ITeslaProducer, ITeslaHolder, ITeslaConsumer{
 
     private final ItemStack stack;
     private final IEnergyContainerItem item;
@@ -47,15 +44,5 @@ public class ItemTeslaWrapper implements ITeslaProducer, ITeslaHolder, ITeslaCon
     @Override
     public long takePower(long power, boolean simulated){
         return this.item.extractEnergy(this.stack, (int)power, simulated);
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing){
-        return capability == TeslaUtil.teslaProducer || capability == TeslaUtil.teslaHolder || capability == TeslaUtil.teslaConsumer;
-    }
-
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        return this.hasCapability(capability, facing) ? (T)this : null;
     }
 }

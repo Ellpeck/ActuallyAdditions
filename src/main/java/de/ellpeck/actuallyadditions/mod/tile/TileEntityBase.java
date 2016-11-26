@@ -353,6 +353,15 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     }
 
+    @Override
+    public void invalidate(){
+        super.invalidate();
+
+        if(ActuallyAdditions.teslaLoaded){
+            TeslaUtil.removeTile(this);
+        }
+    }
+
     public enum NBTType{
         SAVE_TILE,
         SYNC,

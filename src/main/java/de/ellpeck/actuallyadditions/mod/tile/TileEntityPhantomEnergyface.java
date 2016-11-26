@@ -22,6 +22,8 @@ import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements ICustomEnergyReceiver, ISharingEnergyProvider{
 
@@ -37,6 +39,12 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
             if(tile != null){
                 if(tile instanceof IEnergyReceiver){
                     return ((IEnergyReceiver)tile).receiveEnergy(from, maxReceive, simulate);
+                }
+                else if(tile.hasCapability(CapabilityEnergy.ENERGY, from)){
+                    IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, from);
+                    if(cap != null){
+                        return cap.receiveEnergy(maxReceive, simulate);
+                    }
                 }
                 else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, from)){
                     ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, from);
@@ -57,6 +65,12 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
                 if(tile instanceof IEnergyProvider){
                     return ((IEnergyProvider)tile).extractEnergy(from, maxExtract, simulate);
                 }
+                else if(tile.hasCapability(CapabilityEnergy.ENERGY, from)){
+                    IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, from);
+                    if(cap != null){
+                        return cap.extractEnergy(maxExtract, simulate);
+                    }
+                }
                 else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaProducer, from)){
                     ITeslaProducer cap = tile.getCapability(TeslaUtil.teslaProducer, from);
                     if(cap != null){
@@ -75,6 +89,12 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
             if(tile != null){
                 if(tile instanceof IEnergyHandler){
                     return ((IEnergyHandler)tile).getEnergyStored(from);
+                }
+                else if(tile.hasCapability(CapabilityEnergy.ENERGY, from)){
+                    IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, from);
+                    if(cap != null){
+                        return cap.getEnergyStored();
+                    }
                 }
                 else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from)){
                     ITeslaHolder cap = tile.getCapability(TeslaUtil.teslaHolder, from);
@@ -95,6 +115,12 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
                 if(tile instanceof IEnergyHandler){
                     return ((IEnergyHandler)tile).getMaxEnergyStored(from);
                 }
+                else if(tile.hasCapability(CapabilityEnergy.ENERGY, from)){
+                    IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, from);
+                    if(cap != null){
+                        return cap.getMaxEnergyStored();
+                    }
+                }
                 else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from)){
                     ITeslaHolder cap = tile.getCapability(TeslaUtil.teslaHolder, from);
                     if(cap != null){
@@ -114,10 +140,15 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
                 if(tile instanceof IEnergyHandler){
                     return true;
                 }
-                else if(ActuallyAdditions.teslaLoaded){
+                else{
                     for(EnumFacing facing : EnumFacing.values()){
-                        if(tile.hasCapability(TeslaUtil.teslaHolder, facing)){
+                        if(tile.hasCapability(CapabilityEnergy.ENERGY, facing)){
                             return true;
+                        }
+                        else if(ActuallyAdditions.teslaLoaded){
+                            if(tile.hasCapability(TeslaUtil.teslaHolder, facing)){
+                                return true;
+                            }
                         }
                     }
                 }
@@ -135,7 +166,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
                     return ((IEnergyConnection)tile).canConnectEnergy(from);
                 }
                 else{
-                    return ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from);
+                    return tile.hasCapability(CapabilityEnergy.ENERGY, from) || (ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaHolder, from));
                 }
             }
         }

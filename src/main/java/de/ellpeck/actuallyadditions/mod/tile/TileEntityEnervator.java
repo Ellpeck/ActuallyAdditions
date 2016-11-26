@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyContainerItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -20,6 +19,7 @@ import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -60,6 +60,13 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
                         extracted = item.extractEnergy(this.slots.get(0), maxExtract, false);
                         canTakeUp = item.getEnergyStored(this.slots.get(0)) <= 0;
                     }
+                    else if(this.slots.get(0).hasCapability(CapabilityEnergy.ENERGY, null)){
+                        IEnergyStorage cap = this.slots.get(0).getCapability(CapabilityEnergy.ENERGY, null);
+                        if(cap != null){
+                            extracted = cap.extractEnergy(maxExtract, false);
+                            canTakeUp = cap.getEnergyStored() <= 0;
+                        }
+                    }
                     else if(ActuallyAdditions.teslaLoaded){
                         if(this.slots.get(0).hasCapability(TeslaUtil.teslaProducer, null)){
                             ITeslaProducer cap = this.slots.get(0).getCapability(TeslaUtil.teslaProducer, null);
@@ -93,7 +100,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0 && (stack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaProducer, null)));
+        return i == 0 && (stack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaProducer, null)) || stack.hasCapability(CapabilityEnergy.ENERGY, null));
     }
 
     @Override

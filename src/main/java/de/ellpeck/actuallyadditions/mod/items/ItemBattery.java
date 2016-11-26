@@ -28,6 +28,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.List;
 
@@ -55,16 +57,22 @@ public class ItemBattery extends ItemEnergy{
             for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                 ItemStack slot = player.inventory.getStackInSlot(i);
                 if(StackUtil.isValid(slot)){
+                    int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
                     int received = 0;
 
-                    Item item = slot.getItem();
-                    if(item instanceof IEnergyContainerItem){
-                        received = ((IEnergyContainerItem)item).receiveEnergy(slot, this.extractEnergy(stack, Integer.MAX_VALUE, true), false);
+                    if(slot.getItem() instanceof IEnergyContainerItem){
+                        received = ((IEnergyContainerItem)slot.getItem()).receiveEnergy(slot, extractable, false);
+                    }
+                    else if(slot.hasCapability(CapabilityEnergy.ENERGY, null)){
+                        IEnergyStorage cap = slot.getCapability(CapabilityEnergy.ENERGY, null);
+                        if(cap != null){
+                            received = cap.receiveEnergy(extractable, false);
+                        }
                     }
                     else if(ActuallyAdditions.teslaLoaded && slot.hasCapability(TeslaUtil.teslaConsumer, null)){
                         ITeslaConsumer cap = slot.getCapability(TeslaUtil.teslaConsumer, null);
                         if(cap != null){
-                            received = (int)cap.givePower(this.extractEnergy(stack, Integer.MAX_VALUE, true), false);
+                            received = (int)cap.givePower(extractable, false);
                         }
                     }
 

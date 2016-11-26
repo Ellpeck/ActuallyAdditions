@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
+import cofh.api.energy.IEnergyContainerItem;
+import cofh.api.energy.IEnergyStorage;
 import cofh.api.energy.ItemEnergyContainer;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
@@ -20,12 +22,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.text.NumberFormat;
 import java.util.List;
 
@@ -119,7 +126,7 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
 
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt){
-        return ActuallyAdditions.teslaLoaded ? new ItemTeslaWrapper(stack, this) : null;
+        return new EnergyCapabilityProvider(stack, this);
     }
 
     public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate){
@@ -140,5 +147,61 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
 
         this.setMaxReceive(before);
         return toReturn;
+    }
+
+    private static class EnergyCapabilityProvider implements ICapabilityProvider{
+
+        private final Object forgeUnitsWrapper;
+        private Object teslaWrapper;
+
+        private final IEnergyContainerItem item;
+        private final ItemStack stack;
+
+        public EnergyCapabilityProvider(final ItemStack stack, final IEnergyContainerItem item){
+            this.stack = stack;
+            this.item = item;
+
+            this.forgeUnitsWrapper = new IEnergyStorage(){
+                @Override
+                public int receiveEnergy(int maxReceive, boolean simulate){
+                    return item.receiveEnergy(stack, maxReceive, simulate);
+                }
+
+                @Override
+                public int extractEnergy(int maxExtract, boolean simulate){
+                    return item.extractEnergy(stack, maxExtract, simulate);
+                }
+
+                @Override
+                public int getEnergyStored(){
+                    return item.getEnergyStored(stack);
+                }
+
+                @Override
+                public int getMaxEnergyStored(){
+                    return item.getMaxEnergyStored(stack);
+                }
+            };
+        }
+
+        @Override
+        public boolean hasCapability(Capability<?> capability, EnumFacing facing){
+            return this.getCapability(capability, facing) != null;
+        }
+
+        @Nullable
+        @Override
+        public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+            if(capability == CapabilityEnergy.ENERGY){
+                return (T)this.forgeUnitsWrapper;
+            }
+            else if(ActuallyAdditions.teslaLoaded){
+                if(this.teslaWrapper == null){
+                    this.teslaWrapper = new ItemTeslaWrapper(this.stack, this.item);
+                }
+                return (T)this.teslaWrapper;
+            }
+            return null;
+        }
     }
 }

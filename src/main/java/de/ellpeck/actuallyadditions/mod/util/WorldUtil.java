@@ -91,12 +91,6 @@ public final class WorldUtil{
                 }
             }
 
-            if(ActuallyAdditions.teslaLoaded){
-                if(TeslaUtil.doWrappedTeslaRFInteraction(tileFrom, tileTo, sideTo, maxTransfer)){
-                    return;
-                }
-            }
-
             if(tileFrom.hasCapability(CapabilityEnergy.ENERGY, sideTo) && tileTo.hasCapability(CapabilityEnergy.ENERGY, sideTo.getOpposite())){
                 IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
                 IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, sideTo.getOpposite());
@@ -106,8 +100,13 @@ public final class WorldUtil{
                     if(drain > 0){
                         int filled = handlerTo.receiveEnergy(drain, false);
                         handlerFrom.extractEnergy(filled, false);
+                        return;
                     }
                 }
+            }
+
+            if(ActuallyAdditions.teslaLoaded){
+                TeslaUtil.doWrappedTeslaRFInteraction(tileFrom, tileTo, sideTo, maxTransfer);
             }
         }
     }

@@ -47,6 +47,10 @@ public final class TeslaUtil{
         }
     }
 
+    public static void removeTile(TileEntityBase tile){
+        TESLA_MAP.remove(tile);
+    }
+
     public static boolean doWrappedTeslaRFInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing side, int maxTransfer){
         if(tileTo.hasCapability(teslaConsumer, side.getOpposite()) && tileFrom.hasCapability(teslaProducer, side)){
             ITeslaConsumer handlerTo = tileTo.getCapability(teslaConsumer, side.getOpposite());
@@ -77,5 +81,4 @@ public final class TeslaUtil{
         }
         return handlers[side];
     }
-
 }

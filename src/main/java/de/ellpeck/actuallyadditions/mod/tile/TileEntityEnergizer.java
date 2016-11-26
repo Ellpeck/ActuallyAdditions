@@ -20,6 +20,7 @@ import net.darkhax.tesla.api.ITeslaHolder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -59,6 +60,13 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements ICus
                         received = (item.receiveEnergy(this.slots.get(0), this.storage.getEnergyStored(), false));
                         canTakeUp = item.getEnergyStored(this.slots.get(0)) >= item.getMaxEnergyStored(this.slots.get(0));
                     }
+                    else if(this.slots.get(0).hasCapability(CapabilityEnergy.ENERGY, null)){
+                        IEnergyStorage cap = this.slots.get(0).getCapability(CapabilityEnergy.ENERGY, null);
+                        if(cap != null){
+                            received = cap.receiveEnergy(this.storage.getEnergyStored(), false);
+                            canTakeUp = cap.getEnergyStored() >= cap.getMaxEnergyStored();
+                        }
+                    }
                     else if(ActuallyAdditions.teslaLoaded){
                         if(this.slots.get(0).hasCapability(TeslaUtil.teslaConsumer, null)){
                             ITeslaConsumer cap = this.slots.get(0).getCapability(TeslaUtil.teslaConsumer, null);
@@ -92,7 +100,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements ICus
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0 && (stack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaConsumer, null)));
+        return i == 0 && (stack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaConsumer, null)) || stack.hasCapability(CapabilityEnergy.ENERGY, null));
     }
 
     @Override

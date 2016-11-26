@@ -23,6 +23,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,7 +91,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
             BlockPos pos = this.getPos().offset(side);
             TileEntity tile = this.worldObj.getTileEntity(pos);
             if(tile != null && !(tile instanceof TileEntityLaserRelay)){
-                if(tile instanceof IEnergyReceiver || (ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite()))){
+                if(tile instanceof IEnergyReceiver || (ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite())) || tile.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())){
                     this.receiversAround.put(side, tile);
 
                     TileEntity oldTile = old.get(side);
@@ -161,6 +163,21 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                                             }
 
                                             transmitted += iReceiver.receiveEnergy(opp, theoreticalReceived-deduct, simulate);
+                                            transmitted += deduct;
+                                        }
+                                    }
+                                }
+                                else if(tile.hasCapability(CapabilityEnergy.ENERGY, opp)){
+                                    IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, opp);
+                                    if(cap != null){
+                                        int theoreticalReceived = cap.receiveEnergy(Math.min(amountPer, lowestCap), true);
+                                        if(theoreticalReceived > 0){
+                                            int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
+                                            if(deduct >= theoreticalReceived){ //Happens with small numbers
+                                                deduct = 0;
+                                            }
+
+                                            transmitted += cap.receiveEnergy(theoreticalReceived-deduct, simulate);
                                             transmitted += deduct;
                                         }
                                     }
