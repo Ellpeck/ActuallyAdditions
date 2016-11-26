@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.ItemTeslaWrapper;
+import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -196,10 +197,12 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
                 return (T)this.forgeUnitsWrapper;
             }
             else if(ActuallyAdditions.teslaLoaded){
-                if(this.teslaWrapper == null){
-                    this.teslaWrapper = new ItemTeslaWrapper(this.stack, this.item);
+                if(capability == TeslaUtil.teslaConsumer || capability == TeslaUtil.teslaProducer || capability == TeslaUtil.teslaHolder){
+                    if(this.teslaWrapper == null){
+                        this.teslaWrapper = new ItemTeslaWrapper(this.stack, this.item);
+                    }
+                    return (T)this.teslaWrapper;
                 }
-                return (T)this.teslaWrapper;
             }
             return null;
         }
