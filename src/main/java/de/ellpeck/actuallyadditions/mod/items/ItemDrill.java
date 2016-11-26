@@ -188,36 +188,6 @@ public class ItemDrill extends ItemEnergy{
         return true;
     }
 
-    //Checks for Energy Containers in the Upgrade Slots and charges the Drill from them
-    @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        NonNullList<ItemStack> slots = StackUtil.createSlots(ContainerDrill.SLOT_AMOUNT);
-        loadSlotsFromNBT(slots, stack);
-        if(slots != null && slots.size() > 0){
-            for(ItemStack slotStack : slots){
-                if(StackUtil.isValid(slotStack)){
-                    Item item = slotStack.getItem();
-
-                    int extracted = 0;
-                    int maxExtract = this.getMaxEnergyStored(stack)-this.getEnergyStored(stack);
-                    if(item instanceof IEnergyContainerItem){
-                        extracted = ((IEnergyContainerItem)item).extractEnergy(slotStack, maxExtract, false);
-                    }
-                    else if(ActuallyAdditions.teslaLoaded && slotStack.hasCapability(TeslaUtil.teslaProducer, null)){
-                        ITeslaProducer cap = slotStack.getCapability(TeslaUtil.teslaProducer, null);
-                        if(cap != null){
-                            extracted = (int)cap.takePower(maxExtract, false);
-                        }
-                    }
-
-                    if(extracted > 0){
-                        this.receiveEnergy(stack, extracted, false);
-                    }
-                }
-            }
-        }
-    }
-
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;

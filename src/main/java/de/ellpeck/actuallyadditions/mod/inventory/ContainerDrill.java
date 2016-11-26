@@ -45,7 +45,7 @@ public class ContainerDrill extends Container{
             this.addSlotToContainer(new Slot(this.drillInventory, i, 44+i*18, 19){
                 @Override
                 public boolean isItemValid(ItemStack stack){
-                    return stack.getItem() instanceof ItemDrillUpgrade || stack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaProducer, null));
+                    return stack.getItem() instanceof ItemDrillUpgrade;
                 }
             });
         }
@@ -86,7 +86,7 @@ public class ContainerDrill extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(newStack.getItem() instanceof ItemDrillUpgrade || newStack.getItem() instanceof IEnergyContainerItem || (ActuallyAdditions.teslaLoaded && newStack.hasCapability(TeslaUtil.teslaProducer, null))){
+                if(newStack.getItem() instanceof ItemDrillUpgrade){
                     if(!this.mergeItemStack(newStack, 0, 5, false)){
                         return StackUtil.getNull();
                     }
