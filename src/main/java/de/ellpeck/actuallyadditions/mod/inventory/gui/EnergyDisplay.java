@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import cofh.api.energy.EnergyStorage;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
@@ -34,7 +33,7 @@ public class EnergyDisplay extends Gui{
     private int y;
     private boolean outline;
     private boolean drawTextNextTo;
-    private boolean displayTesla;
+    private int displayMode; //0: RF, 1: FU, 2: T
 
     public EnergyDisplay(int x, int y, CustomEnergyStorage rfReference, boolean outline, boolean drawTextNextTo){
         this.setData(x, y, rfReference, outline, drawTextNextTo);
@@ -51,7 +50,7 @@ public class EnergyDisplay extends Gui{
         this.outline = outline;
         this.drawTextNextTo = drawTextNextTo;
 
-        this.displayTesla = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer).displayTesla;
+        this.displayMode = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().thePlayer).energyDisplayMode;
     }
 
     public void draw(){
@@ -60,7 +59,8 @@ public class EnergyDisplay extends Gui{
 
         int barX = this.x;
         int barY = this.y;
-        int vOffset = this.displayTesla ? 85 : 0;
+        int uOffset = this.displayMode == 1 ? 60 : 0;
+        int vOffset = this.displayMode == 0 ? 0 : 85;
 
         if(this.outline){
             this.drawTexturedModalRect(this.x, this.y, 52, 163, 26, 93);
@@ -68,11 +68,11 @@ public class EnergyDisplay extends Gui{
             barX += 4;
             barY += 4;
         }
-        this.drawTexturedModalRect(barX, barY, 18, 171-vOffset, 18, 85);
+        this.drawTexturedModalRect(barX, barY, 18+uOffset, 171-vOffset, 18, 85);
 
         if(this.rfReference.getEnergyStored() > 0){
             int i = this.rfReference.getEnergyStored()*83/this.rfReference.getMaxEnergyStored();
-            this.drawTexturedModalRect(barX+1, barY+84-i, 36, 172-vOffset, 16, i);
+            this.drawTexturedModalRect(barX+1, barY+84-i, 36+uOffset, 172-vOffset, 16, i);
         }
 
         if(this.drawTextNextTo){
@@ -87,8 +87,10 @@ public class EnergyDisplay extends Gui{
             List<String> text = new ArrayList<String>();
             text.add(this.getOverlayText());
             text.add("");
-            text.add(TextFormatting.GRAY+""+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".energy.to"+(this.displayTesla ? "RF" : "T")));
-            text.add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".energy.disclaimer"));
+            text.add(TextFormatting.GRAY+""+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".energy.to"+(this.displayMode == 1 ? "T" : (this.displayMode == 0 ? "FU" : "RF"))));
+            for(int i = 1; i <= 2; i++){
+                text.add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".energy.disclaimer."+i));
+            }
             GuiUtils.drawHoveringText(text, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
     }
@@ -105,14 +107,17 @@ public class EnergyDisplay extends Gui{
 
     private String getOverlayText(){
         NumberFormat format = NumberFormat.getInstance();
-        return format.format(this.rfReference.getEnergyStored())+"/"+format.format(this.rfReference.getMaxEnergyStored())+(this.displayTesla ? " T" : " RF");
+        return format.format(this.rfReference.getEnergyStored())+"/"+format.format(this.rfReference.getMaxEnergyStored())+(this.displayMode == 0 ? " RF" :  (this.displayMode == 2 ? " T" : " FU"));
     }
 
     private void changeDisplayMode(){
-        this.displayTesla = !this.displayTesla;
+        this.displayMode++;
+        if(this.displayMode >= 3){
+            this.displayMode = 0;
+        }
 
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-        PlayerData.getDataFromPlayer(player).displayTesla = this.displayTesla;
-        PacketHandlerHelper.sendPlayerDataPacket(player, true, false);
+        PlayerData.getDataFromPlayer(player).energyDisplayMode = this.displayMode;
+        PacketHandlerHelper.sendPlayerDataPacket(player, false, false);
     }
 }

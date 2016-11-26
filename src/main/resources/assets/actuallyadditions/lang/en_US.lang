@@ -604,7 +604,9 @@ info.actuallyadditions.placer.sides.1=Placement Sides
 info.actuallyadditions.placer.sides.2=Usually when placing down blocks, they are placed towards the side of another block that you are looking at. Because the Phantom Placer can place blocks in mid-air, it doesn't know that. Usually you should just set it to a solid side.
 info.actuallyadditions.energy.toRF=Click for Redstone Flux display mode!
 info.actuallyadditions.energy.toT=Click for Tesla display mode!
-info.actuallyadditions.energy.disclaimer=Note that this is just for looks.
+info.actuallyadditions.energy.toFU=Click for Forge Units display mode!
+info.actuallyadditions.energy.disclaimer.1=Changing this is just visual.
+info.actuallyadditions.energy.disclaimer.2=All systems are always supported.
 
 #Container Names
 container.actuallyadditions.inputter.name=ESD

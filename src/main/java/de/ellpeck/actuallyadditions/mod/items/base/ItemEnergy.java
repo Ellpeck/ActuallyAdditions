@@ -68,8 +68,8 @@ public abstract class ItemEnergy extends ItemEnergyContainer{
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
         NumberFormat format = NumberFormat.getInstance();
-        boolean tesla = PlayerData.getDataFromPlayer(player).displayTesla;
-        list.add(format.format(this.getEnergyStored(stack))+"/"+format.format(this.getMaxEnergyStored(stack))+(tesla ? " T" : " RF"));
+        int display = PlayerData.getDataFromPlayer(player).energyDisplayMode;
+        list.add(format.format(this.getEnergyStored(stack))+"/"+format.format(this.getMaxEnergyStored(stack))+(display == 1 ? "FU" : (display == 0 ? "RF" : "T")));
     }
 
     @Override
