@@ -21,12 +21,12 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Locale;
 import java.util.Properties;
 
 public class SpecialRenderInit{
 
-    public static final HashMap<String, RenderSpecial> SPECIAL_LIST = new HashMap<String, RenderSpecial>();
+    private static final HashMap<String, RenderSpecial> SPECIAL_LIST = new HashMap<String, RenderSpecial>();
 
     public SpecialRenderInit(){
         new ThreadSpecialFetcher();
@@ -61,7 +61,7 @@ public class SpecialRenderInit{
 
                 //Add a new Special Renderer to the list
                 if(StackUtil.isValid(stack)){
-                    SPECIAL_LIST.put(key, new RenderSpecial(stack));
+                    SPECIAL_LIST.put(key.toLowerCase(Locale.ROOT), new RenderSpecial(stack));
                 }
             }
         }
@@ -69,15 +69,14 @@ public class SpecialRenderInit{
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerRender(RenderPlayerEvent.Pre event){
-        if(!SPECIAL_LIST.isEmpty()){
-            for(Map.Entry<String, RenderSpecial> entry : SPECIAL_LIST.entrySet()){
-                //Does the player have one of the names from the list?
-                String playerName = event.getEntityPlayer().getName();
-                if(entry.getKey() != null && playerName != null){
-                    if(entry.getKey().equalsIgnoreCase(playerName)){
-                        //Render the special Item/Block
-                        entry.getValue().render(event.getEntityPlayer(), event.getPartialRenderTick());
-                        break;
+        if(event.getEntityPlayer() != null){
+            String name = event.getEntityPlayer().getName();
+            if(name != null){
+                String lower = name.toLowerCase(Locale.ROOT);
+                if(SPECIAL_LIST.containsKey(lower)){
+                    RenderSpecial render = SPECIAL_LIST.get(lower);
+                    if(render != null){
+                        render.render(event.getEntityPlayer(), event.getPartialRenderTick());
                     }
                 }
             }
