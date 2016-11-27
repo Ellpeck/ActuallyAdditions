@@ -1,3 +1,7 @@
+# 1.11-r83
+* Fix an exception during loading some tileentities causing them to lose their data
+* Improve performance of Patreon display code
+
 # 1.11-r82
 * Made Filter Slots be ignored by Comparators (all filter settings that currently exist will be lost, so check your filters!)
 * Buffed oil a little
