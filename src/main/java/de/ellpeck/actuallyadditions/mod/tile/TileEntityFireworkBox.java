@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -40,8 +41,11 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
 
             double newX = x+MathHelper.nextDouble(this.world.rand, 0, range*2)-range;
             double newZ = z+MathHelper.nextDouble(this.world.rand, 0, range*2)-range;
-            EntityFireworkRocket rocket = new EntityFireworkRocket(world, newX, y+0.5, newZ, firework);
-            world.spawnEntity(rocket);
+
+            if(world.isBlockLoaded(new BlockPos(newX, y, newZ))){
+                EntityFireworkRocket rocket = new EntityFireworkRocket(world, newX, y+0.5, newZ, firework);
+                world.spawnEntity(rocket);
+            }
         }
     }
 
