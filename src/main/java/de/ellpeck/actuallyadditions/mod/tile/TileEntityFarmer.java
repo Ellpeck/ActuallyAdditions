@@ -99,8 +99,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase{
 
                             IBlockState state = this.world.getBlockState(this.pos);
                             int meta = state.getBlock().getMetaFromState(state);
-                            EnumFacing side = meta == 0 ? EnumFacing.NORTH : (meta == 1 ? EnumFacing.SOUTH : (meta == 2 ? EnumFacing.WEST : EnumFacing.EAST));
-                            BlockPos center = this.pos.offset(side, radiusAroundCenter+1);
+                            BlockPos center = this.pos.offset(EnumFacing.getHorizontal(meta), radiusAroundCenter+1);
 
                             BlockPos plant = center.add(this.checkX, 0, this.checkY);
                             IBlockState plantState = this.world.getBlockState(plant);

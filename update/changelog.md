@@ -2,6 +2,7 @@
 * Fix an exception during loading some tileentities causing them to lose their data
 * Fix a crash with Energy Phantomfaces and Tesla
 * Improve performance of Patreon display code
+* Fix the farmer rotations being wrong
 
 # 1.11-r82
 * Made Filter Slots be ignored by Comparators (all filter settings that currently exist will be lost, so check your filters!)
