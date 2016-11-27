@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -45,12 +46,12 @@ public class ItemBattery extends ItemEnergy{
 
     @Override
     public boolean hasEffect(ItemStack stack){
-        return this.isDischargeMode(stack);
+        return ItemUtil.isEnabled(stack);
     }
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
-        if(!world.isRemote && entity instanceof EntityPlayer && this.isDischargeMode(stack)){
+        if(!world.isRemote && entity instanceof EntityPlayer && ItemUtil.isEnabled(stack)){
             EntityPlayer player = (EntityPlayer)entity;
             for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                 ItemStack slot = player.inventory.getStackInSlot(i);
@@ -81,32 +82,17 @@ public class ItemBattery extends ItemEnergy{
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand){
-        ItemStack stack = player.getHeldItem(hand);
         if(!worldIn.isRemote && player.isSneaking()){
-            boolean isDischarge = this.isDischargeMode(stack);
-            this.setDischargeMode(stack, !isDischarge);
-
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+            ItemUtil.changeEnabled(player, hand);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
         }
         return super.onItemRightClick(worldIn, player, hand);
-    }
-
-    private boolean isDischargeMode(ItemStack stack){
-        return stack.hasTagCompound() && stack.getTagCompound().getBoolean("DischargeMode");
-    }
-
-    private void setDischargeMode(ItemStack stack, boolean mode){
-        if(!stack.hasTagCompound()){
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
-        stack.getTagCompound().setBoolean("DischargeMode", mode);
     }
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
         super.addInformation(stack, player, list, bool);
-        list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".battery."+(this.isDischargeMode(stack) ? "discharge" : "noDischarge")));
+        list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".battery."+(ItemUtil.isEnabled(stack) ? "discharge" : "noDischarge")));
         list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".battery.changeMode"));
     }
 }

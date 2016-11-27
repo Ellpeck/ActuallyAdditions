@@ -11,12 +11,16 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
@@ -29,8 +33,13 @@ public class ItemMagnetRing extends ItemEnergy{
     }
 
     @Override
+    public boolean hasEffect(ItemStack stack){
+        return !ItemUtil.isEnabled(stack);
+    }
+
+    @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
-        if(entity instanceof EntityPlayer && !world.isRemote){
+        if(entity instanceof EntityPlayer && !world.isRemote && !ItemUtil.isEnabled(stack)){
             EntityPlayer player = (EntityPlayer)entity;
 
             if(!entity.isSneaking()){
@@ -56,6 +65,14 @@ public class ItemMagnetRing extends ItemEnergy{
         }
     }
 
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand){
+        if(!worldIn.isRemote && player.isSneaking()){
+            ItemUtil.changeEnabled(player, hand);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        }
+        return super.onItemRightClick(worldIn, player, hand);
+    }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){

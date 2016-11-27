@@ -15,9 +15,12 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -166,5 +169,20 @@ public final class ItemUtil{
 
     public static boolean canBeStacked(ItemStack stack1, ItemStack stack2){
         return ItemStack.areItemsEqual(stack1, stack2) && ItemStack.areItemStackTagsEqual(stack1, stack2);
+    }
+
+    public static boolean isEnabled(ItemStack stack){
+        return stack.hasTagCompound() && stack.getTagCompound().getBoolean("IsEnabled");
+    }
+
+    public static void changeEnabled(EntityPlayer player, EnumHand hand){
+        ItemStack stack = player.getHeldItem(hand);
+
+        if(!stack.hasTagCompound()){
+            stack.setTagCompound(new NBTTagCompound());
+        }
+
+        boolean isEnabled = isEnabled(stack);
+        stack.getTagCompound().setBoolean("IsEnabled", !isEnabled);
     }
 }
