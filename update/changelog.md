@@ -1,5 +1,6 @@
 # 1.11-r83
 * Fix an exception during loading some tileentities causing them to lose their data
+* Fix a crash with Energy Phantomfaces and Tesla
 * Improve performance of Patreon display code
 
 # 1.11-r82

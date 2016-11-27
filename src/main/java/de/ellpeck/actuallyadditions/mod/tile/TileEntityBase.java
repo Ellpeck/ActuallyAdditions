@@ -332,10 +332,13 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         }
         else if(ActuallyAdditions.teslaLoaded){
             if(capability == TeslaUtil.teslaConsumer || capability == TeslaUtil.teslaProducer || capability == TeslaUtil.teslaHolder){
-                if(this.teslaWrapper == null){
-                    this.teslaWrapper = new TeslaForgeUnitsWrapper(this.getEnergyStorage(facing));
+                IEnergyStorage storage = this.getEnergyStorage(facing);
+                if(storage != null){
+                    if(this.teslaWrapper == null){
+                        this.teslaWrapper = new TeslaForgeUnitsWrapper(storage);
+                    }
+                    return (T)this.teslaWrapper;
                 }
-                return (T)this.teslaWrapper;
             }
         }
         return super.getCapability(capability, facing);
