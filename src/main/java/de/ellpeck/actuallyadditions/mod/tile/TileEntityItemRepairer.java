@@ -37,7 +37,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
         if(StackUtil.isValid(stack)){
             Item item = stack.getItem();
             if(item != null){
-                if(item.isRepairable()){
+                if(item.isRepairable() && item.getMaxDamage(stack) > 0){
                     return true;
                 }
                 else{
