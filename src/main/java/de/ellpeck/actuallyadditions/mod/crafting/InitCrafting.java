@@ -35,9 +35,9 @@ public final class InitCrafting{
         ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(InitItems.itemCanolaSeed, 20), Blocks.DIRT, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOMASS.ordinal()), Blocks.SOUL_SAND);
 
         ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCanolaOil.getName(), 40, 100);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidOil.getName(), 60, 100);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCrystalOil.getName(), 80, 200);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidEmpoweredOil.getName(), 80, 350);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidOil.getName(), 60, 150);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCrystalOil.getName(), 80, 350);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidEmpoweredOil.getName(), 80, 600);
 
         RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShaped", RecipeKeepDataShaped.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
         RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShapeless", RecipeKeepDataShapeless.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
