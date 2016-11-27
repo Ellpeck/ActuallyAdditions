@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
@@ -29,8 +30,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemWingsOfTheBats extends ItemBase{
 
@@ -64,29 +63,29 @@ public class ItemWingsOfTheBats extends ItemBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public double getDurabilityForDisplay(ItemStack stack){
-        PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().player);
-        if(data != null){
-            double diff = MAX_FLY_TIME-data.batWingsFlyTime;
-            return 1-(diff/MAX_FLY_TIME);
+        EntityPlayer player = ActuallyAdditions.proxy.getCurrentPlayer();
+        if(player != null){
+            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
+            if(data != null){
+                double diff = MAX_FLY_TIME-data.batWingsFlyTime;
+                return 1-(diff/MAX_FLY_TIME);
+            }
         }
-        else{
-            return super.getDurabilityForDisplay(stack);
-        }
+        return super.getDurabilityForDisplay(stack);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public int getRGBDurabilityForDisplay(ItemStack stack){
-        PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(Minecraft.getMinecraft().player);
-        if(data != null){
-            int curr = data.batWingsFlyTime;
-            return MathHelper.hsvToRGB(Math.max(0.0F, 1-(float)curr/MAX_FLY_TIME)/3.0F, 1.0F, 1.0F);
+        EntityPlayer player = ActuallyAdditions.proxy.getCurrentPlayer();
+        if(player != null){
+            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
+            if(data != null){
+                int curr = data.batWingsFlyTime;
+                return MathHelper.hsvToRGB(Math.max(0.0F, 1-(float)curr/MAX_FLY_TIME)/3.0F, 1.0F, 1.0F);
+            }
         }
-        else{
-            return super.getRGBDurabilityForDisplay(stack);
-        }
+        return super.getRGBDurabilityForDisplay(stack);
     }
 
     @SubscribeEvent

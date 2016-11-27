@@ -320,7 +320,6 @@ public final class AssetUtil{
         GlStateManager.enableFog();
     }
 
-    @SideOnly(Side.CLIENT)
     public static float[] getWheelColor(float pos){
         if(pos < 85.0f){
             return new float[]{pos*3.0F, 255.0f-pos*3.0f, 0.0f};

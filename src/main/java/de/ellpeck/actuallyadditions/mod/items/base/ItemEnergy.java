@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaForgeUnitsWrapper;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.creativetab.CreativeTabs;
@@ -106,13 +107,10 @@ public abstract class ItemEnergy extends ItemBase{
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack){
-        if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
-            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-            if(storage != null){
-                int currEnergy = storage.getEnergyStored();
-                int maxEnergy = storage.getMaxEnergyStored();
-                return MathHelper.hsvToRGB(Math.max(0.0F, (float)currEnergy/maxEnergy)/3.0F, 1.0F, 1.0F);
-            }
+        EntityPlayer player = ActuallyAdditions.proxy.getCurrentPlayer();
+        if(player != null && player.world != null){
+            float[] color = AssetUtil.getWheelColor(player.world.getTotalWorldTime()%256);
+            return MathHelper.rgb(color[0]/255F, color[1]/255F, color[2]/255F);
         }
         return super.getRGBDurabilityForDisplay(stack);
     }

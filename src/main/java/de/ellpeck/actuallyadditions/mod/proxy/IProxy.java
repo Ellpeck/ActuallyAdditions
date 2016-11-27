@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.proxy;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -28,4 +29,6 @@ public interface IProxy{
     void addRenderRegister(ItemStack stack, ResourceLocation location, String variant);
 
     void addColoredItem(Item item);
+
+    EntityPlayer getCurrentPlayer();
 }

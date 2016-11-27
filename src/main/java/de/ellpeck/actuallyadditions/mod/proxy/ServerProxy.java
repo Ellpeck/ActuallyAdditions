@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.proxy;
 
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -43,5 +44,10 @@ public class ServerProxy implements IProxy{
     @Override
     public void addColoredItem(Item item){
 
+    }
+
+    @Override
+    public EntityPlayer getCurrentPlayer(){
+        return null;
     }
 }
