@@ -251,32 +251,34 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityBase){
             TileEntityBase base = (TileEntityBase)tile;
-            NBTTagCompound data = new NBTTagCompound();
-            base.writeSyncableNBT(data, TileEntityBase.NBTType.SAVE_BLOCK);
+            if(!base.stopFromDropping){
+                NBTTagCompound data = new NBTTagCompound();
+                base.writeSyncableNBT(data, TileEntityBase.NBTType.SAVE_BLOCK);
 
-            //Remove unnecessarily saved default values to avoid unstackability
-            List<String> keysToRemove = new ArrayList<String>();
-            for(String key : data.getKeySet()){
-                NBTBase tag = data.getTag(key);
-                //Remove only ints because they are the most common ones
-                //Add else if below here to remove more types
-                if(tag instanceof NBTTagInt){
-                    if(((NBTTagInt)tag).getInt() == 0){
-                        keysToRemove.add(key);
+                //Remove unnecessarily saved default values to avoid unstackability
+                List<String> keysToRemove = new ArrayList<String>();
+                for(String key : data.getKeySet()){
+                    NBTBase tag = data.getTag(key);
+                    //Remove only ints because they are the most common ones
+                    //Add else if below here to remove more types
+                    if(tag instanceof NBTTagInt){
+                        if(((NBTTagInt)tag).getInt() == 0){
+                            keysToRemove.add(key);
+                        }
                     }
                 }
-            }
-            for(String key : keysToRemove){
-                data.removeTag(key);
-            }
+                for(String key : keysToRemove){
+                    data.removeTag(key);
+                }
 
-            ItemStack stack = new ItemStack(this.getItemDropped(state, tile.getWorld().rand, fortune), 1, this.damageDropped(state));
-            if(!data.hasNoTags()){
-                stack.setTagCompound(new NBTTagCompound());
-                stack.getTagCompound().setTag("Data", data);
-            }
+                ItemStack stack = new ItemStack(this.getItemDropped(state, tile.getWorld().rand, fortune), 1, this.damageDropped(state));
+                if(!data.hasNoTags()){
+                    stack.setTagCompound(new NBTTagCompound());
+                    stack.getTagCompound().setTag("Data", data);
+                }
 
-            drops.add(stack);
+                drops.add(stack);
+            }
         }
 
         return drops;

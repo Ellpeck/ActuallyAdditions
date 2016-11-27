@@ -107,19 +107,23 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
             if(world.rand.nextBoolean()){
                 TileEntity compost = this.getTileAtPos(world, 6, 1, 2, sbb);
                 if(compost instanceof TileEntityCompost){
-                    ((TileEntityCompost)compost).setInventorySlotContents(0, new ItemStack(InitItems.itemFertilizer, 10));
+                    TileEntityCompost tile = (TileEntityCompost)compost;
+                    tile.stopFromDropping = true;
+                    tile.setInventorySlotContents(0, new ItemStack(InitItems.itemFertilizer, 10));
                 }
             }
 
             TileEntity ferment = this.getTileAtPos(world, 11, 1, 0, sbb);
             if(ferment instanceof TileEntityFermentingBarrel){
                 TileEntityFermentingBarrel tile = (TileEntityFermentingBarrel)ferment;
+                tile.stopFromDropping = true;
                 tile.canolaTank.setFluid(new FluidStack(InitFluids.fluidCanolaOil, world.rand.nextInt(1500)+200));
             }
 
             TileEntity coffee = this.getTileAtPos(world, 4, 2, 6, sbb);
             if(coffee instanceof TileEntityCoffeeMachine){
                 TileEntityCoffeeMachine tile = (TileEntityCoffeeMachine)coffee;
+                tile.stopFromDropping = true;
                 tile.tank.setFluid(new FluidStack(FluidRegistry.WATER, world.rand.nextInt(3000)+500));
                 tile.coffeeCacheAmount = world.rand.nextInt(150);
                 tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/2));
@@ -128,6 +132,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
             TileEntity press = this.getTileAtPos(world, 2, 1, 5, sbb);
             if(press instanceof TileEntityCanolaPress){
                 TileEntityCanolaPress tile = (TileEntityCanolaPress)press;
+                tile.stopFromDropping = true;
                 tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/3));
                 tile.setInventorySlotContents(0, new ItemStack(InitItems.itemMisc, world.rand.nextInt(60)+1, TheMiscItems.CANOLA.ordinal()));
             }
@@ -135,6 +140,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
             TileEntity crusher = this.getTileAtPos(world, 2, 1, 6, sbb);
             if(crusher instanceof TileEntityGrinder){
                 TileEntityGrinder tile = (TileEntityGrinder)crusher;
+                tile.stopFromDropping = true;
                 tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/2));
                 if(world.rand.nextFloat() >= 0.25F){
                     tile.setInventorySlotContents(TileEntityGrinder.SLOT_INPUT_1, new ItemStack(InitBlocks.blockMisc, world.rand.nextInt(10)+1, TheMiscBlocks.ORE_QUARTZ.ordinal()));
@@ -143,7 +149,14 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
 
             TileEntity coal = this.getTileAtPos(world, 5, 5, 6, sbb);
             if(coal instanceof TileEntityCoalGenerator){
-                ((TileEntityCoalGenerator)coal).setInventorySlotContents(0, new ItemStack(Items.COAL, world.rand.nextInt(25)+3, 1));
+                TileEntityCoalGenerator tile = (TileEntityCoalGenerator)coal;
+                tile.stopFromDropping = true;
+                tile.setInventorySlotContents(0, new ItemStack(Items.COAL, world.rand.nextInt(25)+3, 1));
+            }
+
+            TileEntity reconstructor = this.getTileAtPos(world, 8, 4, 3, sbb);
+            if(reconstructor instanceof TileEntityAtomicReconstructor){
+                ((TileEntityAtomicReconstructor)reconstructor).stopFromDropping = true;
             }
 
             VillageComponentJamHouse.generateCrate(world, sbb, this.getXWithOffset(6, 4), this.getYWithOffset(4), this.getZWithOffset(6, 4), DungeonLoot.ENGINEER_HOUSE);
@@ -152,6 +165,8 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
         TileEntity firstRelay = this.getTileAtPos(world, 6, 5, 6, sbb);
         TileEntity secondRelay = this.getTileAtPos(world, 8, 5, 3, sbb);
         if(firstRelay instanceof TileEntityLaserRelayEnergy && secondRelay instanceof TileEntityLaserRelayEnergy){
+            ((TileEntityLaserRelayEnergy)firstRelay).stopFromDropping = true;
+            ((TileEntityLaserRelayEnergy)secondRelay).stopFromDropping = true;
             ActuallyAdditionsAPI.connectionHandler.addConnection(firstRelay.getPos(), secondRelay.getPos(), LaserType.ENERGY, world);
         }
 

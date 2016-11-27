@@ -41,10 +41,12 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public abstract class TileEntityBase extends TileEntity implements ITickable{
 
+    protected int ticksElapsed;
+
     public final String name;
     public boolean isRedstonePowered;
     public boolean isPulseMode;
-    protected int ticksElapsed;
+    public boolean stopFromDropping;
 
     protected TileEntity[] tilesAround = new TileEntity[6];
     protected boolean hasSavedDataOnChangeOrWorldStart;
@@ -185,6 +187,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         if(type == NBTType.SAVE_TILE){
             compound.setBoolean("Redstone", this.isRedstonePowered);
             compound.setInteger("TicksElapsed", this.ticksElapsed);
+            compound.setBoolean("StopDrop", this.stopFromDropping);
         }
         if(this.isRedstoneToggle() && (type != NBTType.SAVE_BLOCK || this.isPulseMode)){
             compound.setBoolean("IsPulseMode", this.isPulseMode);
@@ -199,6 +202,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         if(type == NBTType.SAVE_TILE){
             this.isRedstonePowered = compound.getBoolean("Redstone");
             this.ticksElapsed = compound.getInteger("TicksElapsed");
+            this.stopFromDropping = compound.getBoolean("StopDrop");
         }
         if(this.isRedstoneToggle()){
             this.isPulseMode = compound.getBoolean("IsPulseMode");
