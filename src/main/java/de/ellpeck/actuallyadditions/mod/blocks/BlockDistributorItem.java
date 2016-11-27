@@ -47,12 +47,6 @@ public class BlockDistributorItem extends BlockContainerBase implements IHudDisp
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, pos);
-        super.breakBlock(world, pos, state);
-    }
-
-    @Override
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityDistributorItem){

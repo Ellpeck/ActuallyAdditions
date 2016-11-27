@@ -59,7 +59,7 @@ public class ContainerFilter extends Container{
 
         ItemStack stack = inventory.getCurrentItem();
         if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemFilter){
-            ItemDrill.loadSlotsFromNBT(this.filterInventory.slots, inventory.getCurrentItem());
+            ItemDrill.loadSlotsFromNBT(this.filterInventory, inventory.getCurrentItem());
         }
     }
 
@@ -128,7 +128,7 @@ public class ContainerFilter extends Container{
     public void onContainerClosed(EntityPlayer player){
         ItemStack stack = this.inventory.getCurrentItem();
         if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemFilter){
-            ItemDrill.writeSlotsToNBT(this.filterInventory.slots, this.inventory.getCurrentItem());
+            ItemDrill.writeSlotsToNBT(this.filterInventory, this.inventory.getCurrentItem());
         }
         super.onContainerClosed(player);
     }

@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -37,10 +38,11 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
     }
 
-    public static void saveSlots(NonNullList<ItemStack> slots, NBTTagCompound compound){
-        if(slots != null && slots.size() > 0){
+    public static void saveSlots(IInventory slots, NBTTagCompound compound){
+        if(slots != null && slots.getSizeInventory() > 0){
             NBTTagList tagList = new NBTTagList();
-            for(ItemStack slot : slots){
+            for(int i = 0; i < slots.getSizeInventory(); i++){
+                ItemStack slot = slots.getStackInSlot(i);
                 NBTTagCompound tagCompound = new NBTTagCompound();
                 if(StackUtil.isValid(slot)){
                     slot.writeToNBT(tagCompound);
@@ -51,12 +53,12 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
     }
 
-    public static void loadSlots(NonNullList<ItemStack> slots, NBTTagCompound compound){
-        if(slots != null && slots.size() > 0){
+    public static void loadSlots(IInventory slots, NBTTagCompound compound){
+        if(slots != null && slots.getSizeInventory() > 0){
             NBTTagList tagList = compound.getTagList("Items", 10);
-            for(int i = 0; i < slots.size(); i++){
+            for(int i = 0; i < slots.getSizeInventory(); i++){
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                slots.set(i, tagCompound != null && tagCompound.hasKey("id") ? new ItemStack(tagCompound) : StackUtil.getNull());
+                slots.setInventorySlotContents(i, tagCompound != null && tagCompound.hasKey("id") ? new ItemStack(tagCompound) : StackUtil.getNull());
             }
         }
     }
@@ -71,7 +73,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
         if(type == NBTType.SAVE_TILE || (type == NBTType.SYNC && this.shouldSyncSlots())){
-            saveSlots(this.slots, compound);
+            saveSlots(this, compound);
         }
     }
 
@@ -83,7 +85,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
         if(type == NBTType.SAVE_TILE || (type == NBTType.SYNC && this.shouldSyncSlots())){
-            loadSlots(this.slots, compound);
+            loadSlots(this, compound);
         }
     }
 

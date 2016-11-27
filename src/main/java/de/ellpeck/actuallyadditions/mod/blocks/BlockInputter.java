@@ -70,18 +70,6 @@ public class BlockInputter extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
-        if(!world.isRemote){
-            TileEntity aTile = world.getTileEntity(pos);
-            if(aTile instanceof TileEntityInventoryBase){
-                TileEntityInventoryBase tile = (TileEntityInventoryBase)aTile;
-                this.dropSlotFromInventory(0, tile, world, pos);
-            }
-        }
-        super.breakBlock(world, pos, state);
-    }
-
-    @Override
     protected ItemBlockBase getItemBlock(){
         return new TheItemBlock(this);
     }

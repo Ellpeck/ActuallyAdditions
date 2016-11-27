@@ -14,10 +14,11 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.ArrayUtils;
@@ -29,9 +30,6 @@ public class FilterSettings{
     public final int nbtButtonId;
     public final int oredictButtonId;
     public final int modButtonId;
-
-    public final int startSlot;
-    public final int endSlot;
 
     public boolean isWhitelist;
     public boolean respectMeta;
@@ -45,9 +43,10 @@ public class FilterSettings{
     private boolean lastRespectMod;
     private int lastRecpectOredict;
 
-    public FilterSettings(int startSlot, int endSlot, boolean defaultWhitelist, boolean defaultRespectMeta, boolean defaultRespectNBT, boolean defaultRespectMod, int defaultRespectOredict, int buttonIdStart){
-        this.startSlot = startSlot;
-        this.endSlot = endSlot;
+    public final IInventory filterInventory;
+
+    public FilterSettings(int slots, boolean defaultWhitelist, boolean defaultRespectMeta, boolean defaultRespectNBT, boolean defaultRespectMod, int defaultRespectOredict, int buttonIdStart){
+        this.filterInventory = new InventoryBasic("Filter", false, slots);
 
         this.isWhitelist = defaultWhitelist;
         this.respectMeta = defaultRespectMeta;
@@ -62,21 +61,22 @@ public class FilterSettings{
         this.modButtonId = buttonIdStart+4;
     }
 
-    public static boolean check(ItemStack stack, NonNullList<ItemStack> slots, int startSlot, int endSlot, boolean whitelist, boolean meta, boolean nbt, boolean mod, int oredict){
+    public static boolean check(ItemStack stack, IInventory filter, boolean whitelist, boolean meta, boolean nbt, boolean mod, int oredict){
         if(StackUtil.isValid(stack)){
-            for(int i = startSlot; i < endSlot; i++){
-                if(StackUtil.isValid(slots.get(i))){
-                    if(areEqualEnough(slots.get(i), stack, meta, nbt, mod, oredict)){
+            for(int i = 0; i < filter.getSizeInventory(); i++){
+                ItemStack slot = filter.getStackInSlot(i);
+
+                if(StackUtil.isValid(slot)){
+                    if(areEqualEnough(slot, stack, meta, nbt, mod, oredict)){
                         return whitelist;
                     }
-                    else if(slots.get(i).getItem() instanceof ItemFilter){
-                        NonNullList<ItemStack> filterSlots = StackUtil.createSlots(ContainerFilter.SLOT_AMOUNT);
-                        ItemDrill.loadSlotsFromNBT(filterSlots, slots.get(i));
-                        if(filterSlots != null && filterSlots.size() > 0){
-                            for(ItemStack filterSlot : filterSlots){
-                                if(StackUtil.isValid(filterSlot) && areEqualEnough(filterSlot, stack, meta, nbt, mod, oredict)){
-                                    return whitelist;
-                                }
+                    else if(slot.getItem() instanceof ItemFilter){
+                        IInventory inv = new InventoryBasic("Filter", false, ContainerFilter.SLOT_AMOUNT);
+                        ItemDrill.loadSlotsFromNBT(inv, slot);
+                        for(int k = 0; k < inv.getSizeInventory(); k++){
+                            ItemStack filterSlot = inv.getStackInSlot(k);
+                            if(StackUtil.isValid(filterSlot) && areEqualEnough(filterSlot, stack, meta, nbt, mod, oredict)){
+                                return whitelist;
                             }
                         }
                     }
@@ -158,6 +158,7 @@ public class FilterSettings{
         compound.setBoolean("NBT", this.respectNBT);
         compound.setBoolean("Mod", this.respectMod);
         compound.setInteger("Oredict", this.respectOredict);
+        TileEntityInventoryBase.saveSlots(this.filterInventory, compound);
         tag.setTag(name, compound);
     }
 
@@ -168,6 +169,7 @@ public class FilterSettings{
         this.respectNBT = compound.getBoolean("NBT");
         this.respectMod = compound.getBoolean("Mod");
         this.respectOredict = compound.getInteger("Oredict");
+        TileEntityInventoryBase.loadSlots(this.filterInventory, compound);
     }
 
     public boolean needsUpdateSend(){
@@ -205,7 +207,7 @@ public class FilterSettings{
         }
     }
 
-    public boolean check(ItemStack stack, NonNullList<ItemStack> slots){
-        return check(stack, slots, this.startSlot, this.endSlot, this.isWhitelist, this.respectMeta, this.respectNBT, this.respectMod, this.respectOredict);
+    public boolean check(ItemStack stack){
+        return check(stack, this.filterInventory, this.isWhitelist, this.respectMeta, this.respectNBT, this.respectMod, this.respectOredict);
     }
 }

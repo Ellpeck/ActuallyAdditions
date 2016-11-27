@@ -155,15 +155,14 @@ public class BlockGiantChest extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
+    public boolean shouldDropInventory(World world, BlockPos pos){
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityGiantChest){
-            if(!ItemUtil.contains(((TileEntityGiantChest)tile).slots, new ItemStack(InitItems.itemCrateKeeper), false)){
-                this.dropInventory(world, pos);
+            if(ItemUtil.contains(((TileEntityGiantChest)tile).slots, new ItemStack(InitItems.itemCrateKeeper), false)){
+                return false;
             }
         }
-
-        super.breakBlock(world, pos, state);
+        return true;
     }
 
     @Override

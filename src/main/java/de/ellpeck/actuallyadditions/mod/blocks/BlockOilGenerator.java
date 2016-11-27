@@ -103,12 +103,6 @@ public class BlockOilGenerator extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, pos);
-        super.breakBlock(world, pos, state);
-    }
-
-    @Override
     public IBlockState getStateFromMeta(int meta){
         return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta));
     }

@@ -96,12 +96,6 @@ public class BlockEmpowerer extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state){
-        this.dropInventory(worldIn, pos);
-        super.breakBlock(worldIn, pos, state);
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
     }

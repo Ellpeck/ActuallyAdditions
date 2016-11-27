@@ -19,6 +19,8 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -51,14 +53,14 @@ public class ItemBag extends ItemBase{
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
-        NonNullList<ItemStack> slots = StackUtil.createSlots(ContainerBag.getSlotAmount(this.isVoid));
-        ItemDrill.loadSlotsFromNBT(slots, stack);
+        IInventory inv = new InventoryBasic("Bag", false, ContainerBag.getSlotAmount(this.isVoid));
+        ItemDrill.loadSlotsFromNBT(inv, stack);
 
-        int slotsTotal = slots.size();
+        int slotsTotal = inv.getSizeInventory();
         int slotsFilled = 0;
 
-        for(ItemStack slotStack : slots){
-            if(StackUtil.isValid(slotStack)){
+        for(int i = 0; i < inv.getSizeInventory(); i++){
+            if(StackUtil.isValid(inv.getStackInSlot(i))){
                 slotsFilled++;
             }
         }
@@ -82,31 +84,31 @@ public class ItemBag extends ItemBase{
                                 boolean changed = false;
 
                                 boolean isVoid = ((ItemBag)invStack.getItem()).isVoid;
-                                NonNullList<ItemStack> inventory = StackUtil.createSlots(ContainerBag.getSlotAmount(isVoid));
-                                ItemDrill.loadSlotsFromNBT(inventory, invStack);
+                                IInventory inv = new InventoryBasic("Bag", false, ContainerBag.getSlotAmount(isVoid));
+                                ItemDrill.loadSlotsFromNBT(inv, invStack);
 
-                                FilterSettings filter = new FilterSettings(0, 4, false, false, false, false, 0, 0);
+                                FilterSettings filter = new FilterSettings(4, false, false, false, false, 0, 0);
                                 filter.readFromNBT(invStack.getTagCompound(), "Filter");
-                                if(filter.check(stack, inventory)){
+                                if(filter.check(stack)){
                                     if(isVoid){
                                         stack = StackUtil.setStackSize(stack, 0);
                                         changed = true;
                                     }
                                     else{
-                                        for(int j = 4; j < inventory.size(); j++){
-                                            ItemStack bagStack = inventory.get(j);
+                                        for(int j = 0; j < inv.getSizeInventory(); j++){
+                                            ItemStack bagStack = inv.getStackInSlot(j);
                                             if(StackUtil.isValid(bagStack)){
                                                 if(ItemUtil.canBeStacked(bagStack, stack)){
                                                     int maxTransfer = Math.min(StackUtil.getStackSize(stack), stack.getMaxStackSize()-StackUtil.getStackSize(bagStack));
                                                     if(maxTransfer > 0){
-                                                        inventory.set(j, StackUtil.addStackSize(bagStack, maxTransfer));
+                                                        inv.setInventorySlotContents(j, StackUtil.addStackSize(bagStack, maxTransfer));
                                                         stack = StackUtil.addStackSize(stack, -maxTransfer);
                                                         changed = true;
                                                     }
                                                 }
                                             }
                                             else{
-                                                inventory.set(j, stack.copy());
+                                                inv.setInventorySlotContents(j, stack.copy());
                                                 stack = StackUtil.setStackSize(stack, 0);
                                                 changed = true;
                                             }
@@ -120,7 +122,7 @@ public class ItemBag extends ItemBase{
 
                                 if(changed){
                                     if(!isVoid){
-                                        ItemDrill.writeSlotsToNBT(inventory, invStack);
+                                        ItemDrill.writeSlotsToNBT(inv, invStack);
                                     }
                                     event.setResult(Event.Result.ALLOW);
                                 }
@@ -149,16 +151,16 @@ public class ItemBag extends ItemBase{
                     if(handler != null){
                         boolean changed = false;
 
-                        NonNullList<ItemStack> inventory = StackUtil.createSlots(ContainerBag.getSlotAmount(this.isVoid));
-                        ItemDrill.loadSlotsFromNBT(inventory, stack);
+                        IInventory inv = new InventoryBasic("Bag", false, ContainerBag.getSlotAmount(this.isVoid));
+                        ItemDrill.loadSlotsFromNBT(inv, stack);
 
-                        for(int j = 4; j < inventory.size(); j++){
-                            ItemStack invStack = inventory.get(j);
+                        for(int j = 4; j < inv.getSizeInventory(); j++){
+                            ItemStack invStack = inv.getStackInSlot(j);
                             if(StackUtil.isValid(invStack)){
                                 for(int i = 0; i < handler.getSlots(); i++){
                                     ItemStack remain = handler.insertItem(i, invStack, false);
                                     if(!ItemStack.areItemStacksEqual(remain, invStack)){
-                                        inventory.set(j, StackUtil.validateCopy(remain));
+                                        inv.setInventorySlotContents(j, StackUtil.validateCopy(remain));
                                         changed = true;
 
                                         if(!StackUtil.isValid(remain)){
@@ -170,7 +172,7 @@ public class ItemBag extends ItemBase{
                         }
 
                         if(changed){
-                            ItemDrill.writeSlotsToNBT(inventory, stack);
+                            ItemDrill.writeSlotsToNBT(inv, stack);
                         }
                     }
                 }

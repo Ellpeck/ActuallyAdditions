@@ -58,18 +58,4 @@ public class BlockRangedCollector extends BlockContainerBase{
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
     }
-
-    @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
-        if(!world.isRemote){
-            TileEntity aTile = world.getTileEntity(pos);
-            if(aTile instanceof TileEntityRangedCollector){
-                TileEntityRangedCollector tile = (TileEntityRangedCollector)aTile;
-                for(int i = 0; i < TileEntityRangedCollector.WHITELIST_START; i++){
-                    this.dropSlotFromInventory(i, tile, world, pos);
-                }
-            }
-        }
-        super.breakBlock(world, pos, state);
-    }
 }

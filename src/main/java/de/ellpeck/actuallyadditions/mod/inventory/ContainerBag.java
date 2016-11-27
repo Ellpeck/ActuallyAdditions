@@ -32,7 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerBag extends Container implements IButtonReactor{
 
-    public final FilterSettings filter = new FilterSettings(0, 4, false, true, false, false, 0, -1000);
+    public final FilterSettings filter = new FilterSettings(4, false, true, false, false, 0, -1000);
     private final InventoryBag bagInventory;
     private final InventoryPlayer inventory;
     private final boolean isVoid;
@@ -45,24 +45,24 @@ public class ContainerBag extends Container implements IButtonReactor{
         this.isVoid = isVoid;
 
         for(int i = 0; i < 4; i++){
-            this.addSlotToContainer(new SlotFilter(this.bagInventory, i, 155, 10+i*18));
+            this.addSlotToContainer(new SlotFilter(this.filter, i, 155, 10+i*18));
         }
 
         if(this.isVoid){
-            this.addSlotToContainer(new SlotDeletion(this.bagInventory, 4, 64, 65){
+            this.addSlotToContainer(new SlotDeletion(this.bagInventory, 0, 64, 65){
                 @Override
                 public boolean isItemValid(ItemStack stack){
-                    return ContainerBag.this.filter.check(stack, ContainerBag.this.bagInventory.slots);
+                    return ContainerBag.this.filter.check(stack);
                 }
             });
         }
         else{
             for(int i = 0; i < 4; i++){
                 for(int j = 0; j < 7; j++){
-                    this.addSlotToContainer(new Slot(this.bagInventory, j+i*7+4, 10+j*18, 10+i*18){
+                    this.addSlotToContainer(new Slot(this.bagInventory, j+i*7, 10+j*18, 10+i*18){
                         @Override
                         public boolean isItemValid(ItemStack stack){
-                            return ContainerBag.this.filter.check(stack, ContainerBag.this.bagInventory.slots);
+                            return ContainerBag.this.filter.check(stack);
                         }
                     });
                 }
@@ -85,7 +85,7 @@ public class ContainerBag extends Container implements IButtonReactor{
 
         ItemStack stack = inventory.getCurrentItem();
         if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemBag){
-            ItemDrill.loadSlotsFromNBT(this.bagInventory.slots, inventory.getCurrentItem());
+            ItemDrill.loadSlotsFromNBT(this.bagInventory, inventory.getCurrentItem());
             if(stack.hasTagCompound()){
                 NBTTagCompound compound = stack.getTagCompound();
                 this.filter.readFromNBT(compound, "Filter");
@@ -95,7 +95,7 @@ public class ContainerBag extends Container implements IButtonReactor{
     }
 
     public static int getSlotAmount(boolean isVoid){
-        return isVoid ? 5 : 32;
+        return isVoid ? 1 : 28;
     }
 
     @Override
@@ -141,7 +141,7 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        int inventoryStart = this.bagInventory.slots.size();
+        int inventoryStart = this.bagInventory.slots.size()+4;
         int inventoryEnd = inventoryStart+26;
         int hotbarStart = inventoryEnd+1;
         int hotbarEnd = hotbarStart+8;
@@ -155,7 +155,7 @@ public class ContainerBag extends Container implements IButtonReactor{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(this.isVoid || !this.filter.check(newStack, this.bagInventory.slots) || !this.mergeItemStack(newStack, 4, 32, false)){
+                if(this.isVoid || !this.filter.check(newStack) || !this.mergeItemStack(newStack, 4, 32, false)){
                     if(slot >= inventoryStart && slot <= inventoryEnd){
                         if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
                             return StackUtil.getNull();
@@ -207,7 +207,7 @@ public class ContainerBag extends Container implements IButtonReactor{
     public void onContainerClosed(EntityPlayer player){
         ItemStack stack = this.inventory.getCurrentItem();
         if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemBag){
-            ItemDrill.writeSlotsToNBT(this.bagInventory.slots, this.inventory.getCurrentItem());
+            ItemDrill.writeSlotsToNBT(this.bagInventory, this.inventory.getCurrentItem());
             NBTTagCompound compound = stack.getTagCompound();
             this.filter.writeToNBT(compound, "Filter");
             compound.setBoolean("AutoInsert", this.autoInsert);

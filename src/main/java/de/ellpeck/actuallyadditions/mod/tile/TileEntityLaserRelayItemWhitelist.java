@@ -17,152 +17,18 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
 
-    public final IInventory filterInventory;
-    public FilterSettings leftFilter = new FilterSettings(0, 12, true, true, false, false, 0, -1000);
-    public FilterSettings rightFilter = new FilterSettings(12, 24, true, true, false, false, 0, -2000);
-    private NonNullList<ItemStack> slots = StackUtil.createSlots(24);
+    public FilterSettings leftFilter = new FilterSettings(12, true, true, false, false, 0, -1000);
+    public FilterSettings rightFilter = new FilterSettings(12, true, true, false, false, 0, -2000);
 
     public TileEntityLaserRelayItemWhitelist(){
         super("laserRelayItemWhitelist");
-
-        this.filterInventory = new IInventory(){
-
-            private TileEntityLaserRelayItemWhitelist tile;
-
-            private IInventory setTile(TileEntityLaserRelayItemWhitelist tile){
-                this.tile = tile;
-                return this;
-            }
-
-
-            @Override
-            public String getName(){
-                return this.tile.name;
-            }
-
-            @Override
-            public int getInventoryStackLimit(){
-                return 64;
-            }
-
-            @Override
-            public void markDirty(){
-
-            }
-
-            @Override
-            public boolean isUsableByPlayer(EntityPlayer player){
-                return this.tile.canPlayerUse(player);
-            }
-
-            @Override
-            public void openInventory(EntityPlayer player){
-
-            }
-
-            @Override
-            public void closeInventory(EntityPlayer player){
-
-            }
-
-            @Override
-            public int getField(int id){
-                return 0;
-            }
-
-            @Override
-            public void setField(int id, int value){
-
-            }
-
-            @Override
-            public int getFieldCount(){
-                return 0;
-            }
-
-            @Override
-            public void clear(){
-                this.tile.slots.clear();
-            }
-
-            @Override
-            public void setInventorySlotContents(int i, ItemStack stack){
-                this.tile.slots.set(i, stack);
-                this.markDirty();
-            }
-
-            @Override
-            public int getSizeInventory(){
-                return this.tile.slots.size();
-            }
-
-            @Override
-            public boolean isEmpty(){
-                return StackUtil.isIInvEmpty(this.tile.slots);
-            }
-
-            @Override
-            public ItemStack getStackInSlot(int i){
-                if(i < this.getSizeInventory()){
-                    return this.tile.slots.get(i);
-                }
-                return StackUtil.getNull();
-            }
-
-            @Override
-            public ItemStack decrStackSize(int i, int j){
-                if(StackUtil.isValid(this.tile.slots.get(i))){
-                    ItemStack stackAt;
-                    if(StackUtil.getStackSize(this.tile.slots.get(i)) <= j){
-                        stackAt = this.tile.slots.get(i);
-                        this.tile.slots.set(i, StackUtil.getNull());
-                        this.markDirty();
-                        return stackAt;
-                    }
-                    else{
-                        stackAt = this.tile.slots.get(i).splitStack(j);
-                        if(StackUtil.getStackSize(this.tile.slots.get(i)) <= 0){
-                            this.tile.slots.set(i, StackUtil.getNull());
-                        }
-                        this.markDirty();
-                        return stackAt;
-                    }
-                }
-                return StackUtil.getNull();
-            }
-
-            @Override
-            public ItemStack removeStackFromSlot(int index){
-                ItemStack stack = this.tile.slots.get(index);
-                this.tile.slots.set(index, StackUtil.getNull());
-                return stack;
-            }
-
-            @Override
-            public boolean hasCustomName(){
-                return false;
-            }
-
-
-            @Override
-            public ITextComponent getDisplayName(){
-                return new TextComponentTranslation(this.getName());
-            }
-
-            @Override
-            public boolean isItemValidForSlot(int index, ItemStack stack){
-                return false;
-            }
-        }.setTile(this);
     }
 
     @Override
@@ -172,15 +38,12 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
 
     @Override
     public boolean isWhitelisted(ItemStack stack, boolean output){
-        return output ? this.rightFilter.check(stack, this.slots) : this.leftFilter.check(stack, this.slots);
+        return output ? this.rightFilter.check(stack) : this.leftFilter.check(stack);
     }
 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
-        if(type == NBTType.SAVE_TILE){
-            TileEntityInventoryBase.saveSlots(this.slots, compound);
-        }
         if(type != NBTType.SAVE_BLOCK){
             this.leftFilter.writeToNBT(compound, "LeftFilter");
             this.rightFilter.writeToNBT(compound, "RightFilter");
@@ -190,9 +53,6 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
-        if(type == NBTType.SAVE_TILE){
-            TileEntityInventoryBase.loadSlots(this.slots, compound);
-        }
         if(type != NBTType.SAVE_BLOCK){
             this.leftFilter.readFromNBT(compound, "LeftFilter");
             this.rightFilter.readFromNBT(compound, "RightFilter");
@@ -220,32 +80,31 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                     ItemStack copy = stack.copy();
                     copy = StackUtil.setStackSize(copy, 1);
 
-                    if(!FilterSettings.check(copy, this.slots, usedSettings.startSlot, usedSettings.endSlot, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectMod, usedSettings.respectOredict)){
-                        for(int k = usedSettings.startSlot; k < usedSettings.endSlot; k++){
-                            if(StackUtil.isValid(this.slots.get(k))){
-                                if(this.slots.get(k).getItem() instanceof ItemFilter){
-                                    NonNullList<ItemStack> filterSlots = StackUtil.createSlots(ContainerFilter.SLOT_AMOUNT);
-                                    ItemDrill.loadSlotsFromNBT(filterSlots, this.slots.get(k));
+                    if(!FilterSettings.check(copy, usedSettings.filterInventory, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectMod, usedSettings.respectOredict)){
+                        for(int k = 0; k < usedSettings.filterInventory.getSizeInventory(); k++){
+                            ItemStack slot = usedSettings.filterInventory.getStackInSlot(k);
+                            if(StackUtil.isValid(slot)){
+                                if(slot.getItem() instanceof ItemFilter){
+                                    IInventory inv = new InventoryBasic("Filter", false, ContainerFilter.SLOT_AMOUNT);
+                                    ItemDrill.loadSlotsFromNBT(inv, slot);
 
                                     boolean did = false;
-                                    if(filterSlots != null && filterSlots.size() > 0){
-                                        for(int j = 0; j < filterSlots.size(); j++){
-                                            if(!StackUtil.isValid(filterSlots.get(j))){
-                                                filterSlots.set(j, copy);
-                                                did = true;
-                                                break;
-                                            }
+                                    for(int j = 0; j < inv.getSizeInventory(); j++){
+                                        if(!StackUtil.isValid(inv.getStackInSlot(j))){
+                                            inv.setInventorySlotContents(j, copy);
+                                            did = true;
+                                            break;
                                         }
                                     }
 
                                     if(did){
-                                        ItemDrill.writeSlotsToNBT(filterSlots, this.slots.get(k));
+                                        ItemDrill.writeSlotsToNBT(inv, slot);
                                         break;
                                     }
                                 }
                             }
                             else{
-                                this.slots.set(k, copy);
+                                usedSettings.filterInventory.setInventorySlotContents(k, copy);
                                 break;
                             }
                         }

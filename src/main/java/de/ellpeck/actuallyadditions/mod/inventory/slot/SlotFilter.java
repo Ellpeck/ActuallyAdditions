@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
+import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -20,6 +21,10 @@ public class SlotFilter extends Slot{
 
     public SlotFilter(IInventory inv, int slot, int x, int y){
         super(inv, slot, x, y);
+    }
+
+    public SlotFilter(FilterSettings inv, int slot, int x, int y){
+        this(inv.filterInventory, slot, x, y);
     }
 
     /**

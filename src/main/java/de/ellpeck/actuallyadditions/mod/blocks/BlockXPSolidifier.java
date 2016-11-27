@@ -96,10 +96,4 @@ public class BlockXPSolidifier extends BlockContainerBase{
     public IBlockState withMirror(IBlockState state, Mirror mirror){
         return this.withRotation(state, mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
     }
-
-    @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, pos);
-        super.breakBlock(world, pos, state);
-    }
 }

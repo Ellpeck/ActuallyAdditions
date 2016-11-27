@@ -82,7 +82,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         return EnumRarity.COMMON;
     }
 
-    public void dropInventory(World world, BlockPos position){
+    private void dropInventory(World world, BlockPos position){
         if(!world.isRemote){
             TileEntity aTile = world.getTileEntity(position);
             if(aTile instanceof TileEntityInventoryBase){
@@ -96,7 +96,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         }
     }
 
-    public void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, BlockPos pos){
+    private void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, BlockPos pos){
         ItemStack stack = tile.getStackInSlot(i);
         if(StackUtil.isValid(stack)){
             float dX = world.rand.nextFloat()*0.8F+0.1F;
@@ -285,5 +285,18 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state){
         return EnumBlockRenderType.MODEL;
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        if(this.shouldDropInventory(world, pos)){
+            this.dropInventory(world, pos);
+        }
+
+        super.breakBlock(world, pos, state);
+    }
+
+    public boolean shouldDropInventory(World world, BlockPos pos){
+        return true;
     }
 }

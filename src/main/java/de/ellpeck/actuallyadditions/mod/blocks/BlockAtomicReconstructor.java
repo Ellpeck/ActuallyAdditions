@@ -106,12 +106,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, pos);
-        super.breakBlock(world, pos, state);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());

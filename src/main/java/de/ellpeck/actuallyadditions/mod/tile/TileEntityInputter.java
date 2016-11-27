@@ -21,13 +21,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor{
 
-    public static final int PUT_FILTER_START = 13;
-    public static final int PULL_FILTER_START = 1;
     public static final int OKAY_BUTTON_ID = 133;
     public int sideToPut = -1;
     public int slotToPutStart;
@@ -38,8 +37,8 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public int slotToPullEnd;
     public TileEntity placeToPull;
     public boolean isAdvanced;
-    public FilterSettings leftFilter = new FilterSettings(PULL_FILTER_START, PULL_FILTER_START+12, true, true, false, false, 0, -1000);
-    public FilterSettings rightFilter = new FilterSettings(PUT_FILTER_START, PUT_FILTER_START+12, true, true, false, false, 0, -2000);
+    public FilterSettings leftFilter = new FilterSettings(12, true, true, false, false, 0, -1000);
+    public FilterSettings rightFilter = new FilterSettings(12, true, true, false, false, 0, -2000);
     private int lastPutSide;
     private int lastPutStart;
     private int lastPutEnd;
@@ -127,7 +126,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      * @return If the Item is filtered correctly
      */
     private boolean checkBothFilters(ItemStack stack, boolean output){
-        return !this.isAdvanced || (output ? this.rightFilter : this.leftFilter).check(stack, this.slots);
+        return !this.isAdvanced || (output ? this.rightFilter : this.leftFilter).check(stack);
     }
 
     @Override

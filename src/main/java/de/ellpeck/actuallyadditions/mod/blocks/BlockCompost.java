@@ -147,12 +147,6 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, pos);
-        super.breakBlock(world, pos, state);
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.UNCOMMON;
     }

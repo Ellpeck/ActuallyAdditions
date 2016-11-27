@@ -87,12 +87,6 @@ public class BlockSmileyCloud extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, pos);
-        super.breakBlock(world, pos, state);
-    }
-
-    @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
     }

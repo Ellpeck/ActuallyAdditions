@@ -41,10 +41,4 @@ public class BlockLeafGenerator extends BlockContainerBase{
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
     }
-
-    @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, pos);
-        super.breakBlock(world, pos, state);
-    }
 }

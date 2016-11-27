@@ -125,12 +125,6 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
-        this.dropInventory(world, pos);
-        super.breakBlock(world, pos, state);
-    }
-
-    @Override
     protected ItemBlockBase getItemBlock(){
         return new TheItemBlock(this);
     }

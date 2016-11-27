@@ -61,7 +61,7 @@ public class ContainerDrill extends Container{
 
         ItemStack stack = inventory.getCurrentItem();
         if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemDrill){
-            ItemDrill.loadSlotsFromNBT(this.drillInventory.slots, inventory.getCurrentItem());
+            ItemDrill.loadSlotsFromNBT(this.drillInventory, inventory.getCurrentItem());
         }
     }
 
@@ -132,7 +132,7 @@ public class ContainerDrill extends Container{
     public void onContainerClosed(EntityPlayer player){
         ItemStack stack = this.inventory.getCurrentItem();
         if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemDrill){
-            ItemDrill.writeSlotsToNBT(this.drillInventory.slots, this.inventory.getCurrentItem());
+            ItemDrill.writeSlotsToNBT(this.drillInventory, this.inventory.getCurrentItem());
         }
         super.onContainerClosed(player);
     }

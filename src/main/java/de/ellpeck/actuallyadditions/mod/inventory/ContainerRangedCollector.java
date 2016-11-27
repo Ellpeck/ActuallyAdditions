@@ -36,7 +36,7 @@ public class ContainerRangedCollector extends Container{
         }
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 3; j++){
-                this.addSlotToContainer(new SlotFilter(this.collector, 6+j+i*3, 20+j*18, 6+i*18));
+                this.addSlotToContainer(new SlotFilter(this.collector.filter, j+i*3, 20+j*18, 6+i*18));
             }
         }
 
@@ -52,7 +52,7 @@ public class ContainerRangedCollector extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        int inventoryStart = 18;
+        int inventoryStart = 6;
         int inventoryEnd = inventoryStart+26;
         int hotbarStart = inventoryEnd+1;
         int hotbarEnd = hotbarStart+8;
@@ -66,7 +66,7 @@ public class ContainerRangedCollector extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(!this.mergeItemStack(newStack, 0, TileEntityRangedCollector.WHITELIST_START, false)){
+                if(!this.mergeItemStack(newStack, 0, 6, false)){
                     //
                     if(slot >= inventoryStart && slot <= inventoryEnd){
                         if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){

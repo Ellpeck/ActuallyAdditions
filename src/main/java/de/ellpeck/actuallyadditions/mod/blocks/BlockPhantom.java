@@ -79,13 +79,9 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state){
-        if(this.type == Type.PLACER || this.type == Type.BREAKER){
-            this.dropInventory(world, pos);
-        }
-        super.breakBlock(world, pos, state);
+    public boolean shouldDropInventory(World world, BlockPos pos){
+        return this.type == Type.PLACER || this.type == Type.BREAKER;
     }
-
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){

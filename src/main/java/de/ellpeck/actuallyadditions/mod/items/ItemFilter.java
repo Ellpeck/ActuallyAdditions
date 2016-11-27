@@ -16,12 +16,13 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -48,13 +49,12 @@ public class ItemFilter extends ItemBase{
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
-        NonNullList<ItemStack> slots = StackUtil.createSlots(ContainerFilter.SLOT_AMOUNT);
-        ItemDrill.loadSlotsFromNBT(slots, stack);
-        if(slots != null && slots.size() > 0){
-            for(ItemStack slot : slots){
-                if(StackUtil.isValid(slot)){
-                    tooltip.add(slot.getItem().getItemStackDisplayName(slot));
-                }
+        IInventory inv = new InventoryBasic("Filter", false, ContainerFilter.SLOT_AMOUNT);
+        ItemDrill.loadSlotsFromNBT(inv, stack);
+        for(int i = 0; i < inv.getSizeInventory(); i++){
+            ItemStack slot = inv.getStackInSlot(i);
+            if(StackUtil.isValid(slot)){
+                tooltip.add(slot.getItem().getItemStackDisplayName(slot));
             }
         }
     }

@@ -26,12 +26,11 @@ import java.util.ArrayList;
 
 public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor{
 
-    public static final int WHITELIST_START = 6;
     public static final int RANGE = 6;
-    public FilterSettings filter = new FilterSettings(WHITELIST_START, WHITELIST_START+12, true, true, false, false, 0, -1000);
+    public FilterSettings filter = new FilterSettings(12, true, true, false, false, 0, -1000);
 
     public TileEntityRangedCollector(){
-        super(18, "rangedCollector");
+        super(6, "rangedCollector");
     }
 
     @Override
@@ -60,11 +59,11 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                     for(EntityItem item : items){
                         if(!item.isDead && !item.cannotPickup() && StackUtil.isValid(item.getEntityItem())){
                             ItemStack toAdd = item.getEntityItem().copy();
-                            if(this.filter.check(toAdd, this.slots)){
+                            if(this.filter.check(toAdd)){
                                 ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
                                 checkList.add(toAdd);
-                                if(WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, EnumFacing.UP, false, true)){
-                                    WorldUtil.addToInventory(this, 0, WHITELIST_START, checkList, EnumFacing.UP, true, true);
+                                if(WorldUtil.addToInventory(this, checkList, EnumFacing.UP, false, true)){
+                                    WorldUtil.addToInventory(this, checkList, EnumFacing.UP, true, true);
 
                                     ((WorldServer)this.world).spawnParticle(EnumParticleTypes.CLOUD, false, item.posX, item.posY+0.45F, item.posZ, 5, 0, 0, 0, 0.03D);
 
@@ -94,7 +93,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return slot < WHITELIST_START;
+        return true;
     }
 
     @Override
