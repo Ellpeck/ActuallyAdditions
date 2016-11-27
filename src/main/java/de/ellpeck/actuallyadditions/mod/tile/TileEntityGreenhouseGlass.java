@@ -65,7 +65,7 @@ public class TileEntityGreenhouseGlass extends TileEntityBase{
                     }
                 }
                 else{
-                    int time = 100;
+                    int time = 50;
                     this.timeUntilNextFert = time+this.world.rand.nextInt(time);
                 }
             }
