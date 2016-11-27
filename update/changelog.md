@@ -1,4 +1,4 @@
-# 1.10.2-r82
+# 1.11-r82
 * Made Filter Slots be ignored by Comparators (all filter settings that currently exist will be lost, so check your filters!)
 * Buffed oil a little
 * Added enabling/disabling the magnet ring
