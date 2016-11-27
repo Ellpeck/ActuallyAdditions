@@ -1,3 +1,19 @@
+# 1.10.2-r82
+* Made Filter Slots be ignored by Comparators (all filter settings that currently exist will be lost, so check your filters!)
+* Buffed oil a little
+* Added enabling/disabling the magnet ring
+* Made Greenhouse glass twice as fast
+* Fixed a crash with the Firework box in unloaded chunks
+* Fixed the Item Repairer crashing with certain items
+* Removed the ability to put batteries inside of drills because of them being able to be put into discharge mode
+* Dropped Redstone Flux Support
+* Added Crystal Flux. Works the same as Tesla and Forge Units and is compatible with all of them. Just a different name. Also a nice looking energy bar.
+* Support Forge Units
+* Fix a crash with trying to input items into filter slots
+* Added slot fill amount tool tips to bags
+* Fix Phantom Laser Relay connections when breaking Relays connected to Item Interfaces
+* Stated in the booklet that energy loss for Laser Relays is per transfer
+
 # 1.10.2-r81
 * Fixed phantom connections left behind when breaking an Item Laser Relay connected to an Item Interface
 * Fixed some ores not working in the Crusher even though they should
