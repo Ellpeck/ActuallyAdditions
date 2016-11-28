@@ -47,24 +47,45 @@ public class SpecialRenderInit{
                     meta = 0;
                 }
 
-                ItemStack stack = StackUtil.getNull();
-                //Get the Item from the String
                 ResourceLocation resLoc = new ResourceLocation(itemName);
-                if(Item.REGISTRY.containsKey(resLoc)){
-                    stack = new ItemStack(Item.REGISTRY.getObject(resLoc), 1, meta);
-                }
-                else{
-                    if(Block.REGISTRY.containsKey(resLoc)){
-                        stack = new ItemStack(Block.REGISTRY.getObject(resLoc), 1, meta);
+                ItemStack stack = findItem(resLoc, meta);
+
+                //TODO Remove this block once the transition to 1.11 is done and the special people stuff file has been converted to snake_case
+                if(!StackUtil.isValid(stack)){
+                    String convertedItemName = "";
+                    for(char c : itemName.toCharArray()){
+                        if(Character.isUpperCase(c)){
+                            convertedItemName += "_";
+                            convertedItemName += Character.toLowerCase(c);
+                        }
+                        else{
+                            convertedItemName += c;
+                        }
                     }
+                    stack = findItem(new ResourceLocation(convertedItemName), meta);
                 }
 
-                //Add a new Special Renderer to the list
                 if(StackUtil.isValid(stack)){
                     SPECIAL_LIST.put(key.toLowerCase(Locale.ROOT), new RenderSpecial(stack));
                 }
             }
         }
+    }
+
+    private static ItemStack findItem(ResourceLocation resLoc, int meta){
+        if(Item.REGISTRY.containsKey(resLoc)){
+            Item item = Item.REGISTRY.getObject(resLoc);
+            if(item != null){
+                return new ItemStack(item, 1, meta);
+            }
+        }
+        else if(Block.REGISTRY.containsKey(resLoc)){
+            Block block = Block.REGISTRY.getObject(resLoc);
+            if(block != null){
+                return new ItemStack(block, 1, meta);
+            }
+        }
+        return StackUtil.getNull();
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
