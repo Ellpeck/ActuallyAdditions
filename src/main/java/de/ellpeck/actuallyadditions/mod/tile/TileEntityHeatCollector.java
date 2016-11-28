@@ -27,6 +27,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     public static final int BLOCKS_NEEDED = 4;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 0, 80);
     private int oldEnergy;
+    private int disappearTime;
 
     public TileEntityHeatCollector(){
         super("heatCollector");
@@ -35,13 +36,21 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
+
         this.storage.writeToNBT(compound);
+        if(type == NBTType.SAVE_TILE){
+            compound.setInteger("DisappearTime", this.disappearTime);
+        }
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
+
         this.storage.readFromNBT(compound);
+        if(type == NBTType.SAVE_TILE){
+            this.disappearTime = compound.getInteger("DisappearTime");
+        }
     }
 
     @Override
@@ -63,9 +72,14 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                     this.storage.receiveEnergyInternal(ENERGY_PRODUCE, false);
                     this.markDirty();
 
-                    if(this.world.rand.nextInt(10000) == 0){
-                        int randomSide = blocksAround.get(this.world.rand.nextInt(blocksAround.size()));
-                        this.world.setBlockToAir(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(randomSide)));
+                    this.disappearTime++;
+                    if(this.disappearTime >= 1000){
+                        this.disappearTime = 0;
+
+                        if(this.world.rand.nextInt(200) == 0){
+                            int randomSide = blocksAround.get(this.world.rand.nextInt(blocksAround.size()));
+                            this.world.setBlockToAir(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(randomSide)));
+                        }
                     }
                 }
             }
