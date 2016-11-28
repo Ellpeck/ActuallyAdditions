@@ -238,8 +238,8 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     @Override
     public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos){
         TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof IInventory){
-            return Container.calcRedstoneFromInventory((IInventory)tile);
+        if(tile instanceof TileEntityBase){
+            return ((TileEntityBase)tile).getComparatorStrength();
         }
         return 0;
     }

@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.recipe.OilGenRecipe;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -106,10 +107,12 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
+            int lastCompare = this.getComparatorStrength();
             boolean flag = this.currentBurnTime > 0;
 
             if(this.currentBurnTime > 0 && this.currentEnergyProduce > 0){
                 this.currentBurnTime--;
+
                 this.storage.receiveEnergyInternal(this.currentEnergyProduce, false);
             }
             else if(!this.isRedstonePowered){
@@ -130,7 +133,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
                 }
             }
 
-            if(flag != this.currentBurnTime > 0){
+            if(flag != this.currentBurnTime > 0 || lastCompare != this.getComparatorStrength()){
                 this.markDirty();
             }
 
@@ -142,6 +145,12 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
                 this.lastMaxBurnTime = this.maxBurnTime;
             }
         }
+    }
+
+    @Override
+    public int getComparatorStrength(){
+        float calc = ((float)this.storage.getEnergyStored()/(float)this.storage.getMaxEnergyStored())*15F;
+        return (int)calc;
     }
 
     @Override

@@ -228,6 +228,10 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         this.updateEntity();
     }
 
+    public int getComparatorStrength(){
+        return 0;
+    }
+
     public void updateEntity(){
         this.ticksElapsed++;
 

@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -79,6 +80,11 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     public boolean shouldSyncSlots(){
         return false;
+    }
+
+    @Override
+    public int getComparatorStrength(){
+        return Container.calcRedstoneFromInventory(this);
     }
 
     @Override
