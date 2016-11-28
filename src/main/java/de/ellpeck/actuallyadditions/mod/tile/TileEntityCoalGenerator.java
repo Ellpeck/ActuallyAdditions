@@ -28,6 +28,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     private int lastEnergy;
     private int lastBurnTime;
     private int lastCurrentBurnTime;
+    private int lastCompare;
 
     public TileEntityCoalGenerator(){
         super(1, "coalGenerator");
@@ -82,7 +83,9 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.slots.set(0, StackUtil.addStackSize(this.slots.get(0), -1));
             }
 
-            if(flag != this.currentBurnTime > 0){
+            if(flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()){
+                this.lastCompare = this.getComparatorStrength();
+
                 this.markDirty();
             }
 
@@ -92,6 +95,12 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.lastBurnTime = this.currentBurnTime;
             }
         }
+    }
+
+    @Override
+    public int getComparatorStrength(){
+        float calc = ((float)this.storage.getEnergyStored()/(float)this.storage.getMaxEnergyStored())*15F;
+        return (int)calc;
     }
 
     @Override

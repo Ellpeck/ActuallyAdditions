@@ -47,6 +47,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     private int lastBurnTime;
     private int lastMaxBurnTime;
     private int lastEnergyProduce;
+    private int lastCompare;
 
     public TileEntityOilGenerator(){
         super("oilGenerator");
@@ -107,7 +108,6 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            int lastCompare = this.getComparatorStrength();
             boolean flag = this.currentBurnTime > 0;
 
             if(this.currentBurnTime > 0 && this.currentEnergyProduce > 0){
@@ -133,7 +133,9 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
                 }
             }
 
-            if(flag != this.currentBurnTime > 0 || lastCompare != this.getComparatorStrength()){
+            if(flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()){
+                this.lastCompare = this.getComparatorStrength();
+
                 this.markDirty();
             }
 
