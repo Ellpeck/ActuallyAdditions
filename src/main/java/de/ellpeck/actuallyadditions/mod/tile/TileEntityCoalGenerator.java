@@ -74,7 +74,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.storage.receiveEnergyInternal(PRODUCE, false);
             }
 
-            if(this.currentBurnTime <= 0 && StackUtil.isValid(this.slots.get(0)) && TileEntityFurnace.getItemBurnTime(this.slots.get(0)) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
+            if(!this.isRedstonePowered && this.currentBurnTime <= 0 && StackUtil.isValid(this.slots.get(0)) && TileEntityFurnace.getItemBurnTime(this.slots.get(0)) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
                 int burnTime = TileEntityFurnace.getItemBurnTime(this.slots.get(0));
                 this.maxBurnTime = burnTime;
                 this.currentBurnTime = burnTime;
