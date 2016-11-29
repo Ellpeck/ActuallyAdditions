@@ -70,6 +70,10 @@ public class ItemBag extends ItemBase{
 
     @SubscribeEvent
     public void onItemPickup(EntityItemPickupEvent event){
+        if(event.isCanceled() || event.getResult() == Event.Result.ALLOW){
+            return;
+        }
+
         EntityPlayer player = event.getEntityPlayer();
         EntityItem item = event.getItem();
         if(item != null && !item.isDead){
