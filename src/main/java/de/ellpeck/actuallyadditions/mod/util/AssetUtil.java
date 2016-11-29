@@ -215,8 +215,6 @@ public final class AssetUtil{
         VertexBuffer render = tessy.getBuffer();
         World world = Minecraft.getMinecraft().world;
 
-        GlStateManager.disableFog();
-
         float r = color[0];
         float g = color[1];
         float b = color[2];
@@ -316,8 +314,6 @@ public final class AssetUtil{
         GlStateManager.disableBlend();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
-
-        GlStateManager.enableFog();
     }
 
     public static float[] getWheelColor(float pos){
