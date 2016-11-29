@@ -1,3 +1,8 @@
+# 1.10.2-r84
+* Fix a bug with EnderIO side config going blank when having a Laser Relay attached
+* Fixed item pickup happening multiple times with other mods installed
+* Made the farmer put seeds back into the seeds slot (backport from 1.11)
+
 # 1.11-r83
 * Fix an exception during loading some tileentities causing them to lose their data
 * Fix a crash with Energy Phantomfaces and Tesla
