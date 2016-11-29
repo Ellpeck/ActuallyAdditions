@@ -202,7 +202,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase{
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i < 6 && StackUtil.isValid(stack) && stack.getItem() instanceof IPlantable;
+        return i < 6 && StackUtil.isValid(stack) && getPlantableFromStack(stack) != null;
     }
 
     @Override
