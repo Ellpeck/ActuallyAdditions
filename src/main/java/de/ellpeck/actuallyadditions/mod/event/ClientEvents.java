@@ -55,7 +55,7 @@ public class ClientEvents{
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){
         //Advanced Item Info
-        if(StackUtil.isValid(event.getItemStack())){
+        if(event.isShowAdvancedItemTooltips() && StackUtil.isValid(event.getItemStack())){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
                 if(GuiScreen.isCtrlKeyDown()){
                     event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".extraInfo.desc")+":");
