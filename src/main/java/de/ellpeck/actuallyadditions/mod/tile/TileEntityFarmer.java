@@ -29,6 +29,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.IPlantable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityFarmer extends TileEntityInventoryBase implements ICustomEnergyReceiver{
@@ -93,10 +94,31 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
 
                             if(plantBlock instanceof BlockCrops){
                                 if(((BlockCrops)plantBlock).isMaxAge(plantState)){
-                                    List<ItemStack> drops = plantBlock.getDrops(this.worldObj, plant, plantState, 0);
+                                    List<ItemStack> seeds = new ArrayList<ItemStack>();
+                                    List<ItemStack> other = new ArrayList<ItemStack>();
 
-                                    if(WorldUtil.addToInventory(this, 6, 12, drops, EnumFacing.UP, false, true)){
-                                        WorldUtil.addToInventory(this, 6, 12, drops, EnumFacing.UP, true, true);
+                                    List<ItemStack> drops = plantBlock.getDrops(this.worldObj, plant, plantState, 0);
+                                    for(ItemStack stack : drops){
+                                        if(getPlantableFromStack(stack) != null){
+                                            seeds.add(stack);
+                                        }
+                                        else{
+                                            other.add(stack);
+                                        }
+                                    }
+
+                                    boolean putSeeds = true;
+                                    if(!WorldUtil.addToInventory(this, 0, 6, seeds, EnumFacing.UP, false, true)){
+                                        other.addAll(seeds);
+                                        putSeeds = false;
+                                    }
+
+                                    if(WorldUtil.addToInventory(this, 6, 12, other, EnumFacing.UP, false, true)){
+                                        WorldUtil.addToInventory(this, 6, 12, other, EnumFacing.UP, true, true);
+
+                                        if(putSeeds){
+                                            WorldUtil.addToInventory(this, 0, 6, seeds, EnumFacing.UP, true, true);
+                                        }
 
                                         this.worldObj.playEvent(2001, plant, Block.getStateId(plantState));
                                         this.worldObj.setBlockToAir(plant);
@@ -152,19 +174,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
         for(int i = 0; i < 6; i++){
             ItemStack stack = this.slots[i];
             if(StackUtil.isValid(stack)){
-                IPlantable plantable = null;
-
-                Item item = stack.getItem();
-                if(item instanceof IPlantable){
-                    plantable = (IPlantable)item;
-                }
-                else if(item instanceof ItemBlock){
-                    Block block = Block.getBlockFromItem(item);
-                    if(block instanceof IPlantable){
-                        plantable = (IPlantable)block;
-                    }
-                }
-
+                IPlantable plantable = getPlantableFromStack(stack);
                 if(plantable != null){
                     IBlockState state = plantable.getPlant(this.worldObj, pos);
                     if(state != null && state.getBlock() instanceof BlockCrops && state.getBlock().canPlaceBlockAt(this.worldObj, pos)){
@@ -177,9 +187,23 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements ICustom
         return null;
     }
 
+    public static IPlantable getPlantableFromStack(ItemStack stack){
+        Item item = stack.getItem();
+        if(item instanceof IPlantable){
+            return (IPlantable)item;
+        }
+        else if(item instanceof ItemBlock){
+            Block block = Block.getBlockFromItem(item);
+            if(block instanceof IPlantable){
+                return (IPlantable)block;
+            }
+        }
+        return null;
+    }
+
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i < 6 && StackUtil.isValid(stack) && stack.getItem() instanceof IPlantable;
+        return i < 6 && StackUtil.isValid(stack) && getPlantableFromStack(stack) != null;
     }
 
     @Override
