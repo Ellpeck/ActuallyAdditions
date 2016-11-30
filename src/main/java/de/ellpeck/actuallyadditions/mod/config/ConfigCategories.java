@@ -15,14 +15,10 @@ import java.util.Locale;
 public enum ConfigCategories{
 
     PERFORMANCE("Performance", "Performance Settings"),
-    FOOD_CRAFTING("Food Crafting", "Crafting Recipes for Food Items"),
-    BLOCKS_CRAFTING("Block Crafting", "Crafting Recipes for Blocks"),
-    ITEMS_CRAFTING("Item Crafting", "Crafting Recipes for Items"),
     TOOL_VALUES("Tool Values", "Values for Tools"),
     MACHINE_VALUES("Machine Values", "Values for Machines"),
     MOB_DROPS("Mob Drops", "Everything regarding Item drops from mobs"),
     WORLD_GEN("World Gen", "Everything regarding World Generation"),
-    POTION_RING_CRAFTING("Ring Crafting", "Crafting Recipes for Rings"),
     OTHER("Other", "Everything else");
 
     public final String name;

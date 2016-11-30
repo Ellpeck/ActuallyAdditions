@@ -16,11 +16,6 @@ import net.minecraftforge.common.config.Configuration;
 public final class ConfigValues{
 
     public static void defineConfigValues(Configuration config){
-
-        for(ConfigCrafting currConf : ConfigCrafting.values()){
-            currConf.currentValue = config.get(currConf.category, currConf.name, currConf.defaultValue, "If the Recipe for the "+currConf.name+" is Enabled").getBoolean();
-        }
-
         for(ConfigIntValues currConf : ConfigIntValues.values()){
             currConf.currentValue = config.get(currConf.category, currConf.name, currConf.defaultValue, currConf.desc, currConf.min, currConf.max).getInt();
         }

@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigCrafting;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
@@ -89,16 +88,14 @@ public final class CrusherCrafting{
         ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreNickel", false), OreDictionary.getOres("dustNickel", false), 2, OreDictionary.getOres("dustPlatinum", false), 1, 15);
         ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreIron", false), OreDictionary.getOres("dustIron", false), 2, OreDictionary.getOres("dustGold", false), 1, 20);
 
-        if(ConfigCrafting.HORSE_ARMORS.isEnabled()){
-            ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.IRON_HORSE_ARMOR)), OreDictionary.getOres("dustIron", false), 8, null, 0, 0);
-            recipeIronHorseArmor = RecipeUtil.lastCrusherRecipe();
+        ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.IRON_HORSE_ARMOR)), OreDictionary.getOres("dustIron", false), 8, null, 0, 0);
+        recipeIronHorseArmor = RecipeUtil.lastCrusherRecipe();
 
-            ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.GOLDEN_HORSE_ARMOR)), OreDictionary.getOres("dustGold"), 8, null, 0, 0);
-            recipeGoldHorseArmor = RecipeUtil.lastCrusherRecipe();
+        ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.GOLDEN_HORSE_ARMOR)), OreDictionary.getOres("dustGold"), 8, null, 0, 0);
+        recipeGoldHorseArmor = RecipeUtil.lastCrusherRecipe();
 
-            ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.DIAMOND_HORSE_ARMOR)), OreDictionary.getOres("dustDiamond"), 8, null, 0, 0);
-            recipeDiamondHorseArmor = RecipeUtil.lastCrusherRecipe();
-        }
+        ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.DIAMOND_HORSE_ARMOR)), OreDictionary.getOres("dustDiamond"), 8, null, 0, 0);
+        recipeDiamondHorseArmor = RecipeUtil.lastCrusherRecipe();
 
         CrusherRecipeRegistry.SEARCH_CASES.add(new CrusherRecipeRegistry.SearchCase("oreNether", 6));
         CrusherRecipeRegistry.SEARCH_CASES.add(new CrusherRecipeRegistry.SearchCase("orePoor", 4, "nugget"));
