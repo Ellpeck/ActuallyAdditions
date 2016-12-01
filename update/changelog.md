@@ -1,3 +1,8 @@
+# 1.10.2-r85
+* Make only coffee machine and coal generator return container items on empty slot (Fixes dupe bug with RFTools)
+* Made Laser Relays not try to input back into the place they got energy from (Should fix energy distribution inconsistency)
+* Made advanced tooltips only show with the F3+H mode enabled
+
 # 1.10.2-r84
 * Fix a bug with EnderIO side config going blank when having a Laser Relay attached
 * Fixed item pickup happening multiple times with other mods installed
