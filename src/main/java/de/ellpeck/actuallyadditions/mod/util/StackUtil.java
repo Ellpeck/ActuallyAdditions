@@ -51,8 +51,12 @@ public final class StackUtil{
     }
 
     public static ItemStack setStackSize(ItemStack stack, int size){
+        return setStackSize(stack, size, false);
+    }
+
+    public static ItemStack setStackSize(ItemStack stack, int size, boolean containerOnEmpty){
         if(size <= 0){
-            if(isValid(stack)){
+            if(isValid(stack) && containerOnEmpty){
                 return stack.getItem().getContainerItem(stack);
             }
             else{
@@ -64,7 +68,11 @@ public final class StackUtil{
     }
 
     public static ItemStack addStackSize(ItemStack stack, int size){
-        return setStackSize(stack, getStackSize(stack)+size);
+        return addStackSize(stack, size, false);
+    }
+
+    public static ItemStack addStackSize(ItemStack stack, int size, boolean containerOnEmpty){
+        return setStackSize(stack, getStackSize(stack)+size, containerOnEmpty);
     }
 
     public static boolean isIInvEmpty(NonNullList<ItemStack> slots){

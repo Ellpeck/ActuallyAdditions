@@ -157,7 +157,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                                 CoffeeIngredient ingredient = ItemCoffee.getIngredientFromStack(this.slots.get(i));
                                 if(ingredient != null){
                                     if(ingredient.effect(output)){
-                                        this.slots.set(i, StackUtil.addStackSize(this.slots.get(i), -1));
+                                        this.slots.set(i, StackUtil.addStackSize(this.slots.get(i), -1, true));
                                     }
                                 }
                             }
