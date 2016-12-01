@@ -79,7 +79,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.maxBurnTime = burnTime;
                 this.currentBurnTime = burnTime;
 
-                this.slots[0] = StackUtil.addStackSize(this.slots[0], -1);
+                this.slots[0] = StackUtil.addStackSize(this.slots[0], -1, true);
             }
 
             if(flag != this.currentBurnTime > 0){
