@@ -123,7 +123,13 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                     TileEntity relayTile = this.worldObj.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayEnergy){
                         TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy)relayTile;
+
                         int amount = theRelay.receiversAround.size();
+                        if(theRelay == this && theRelay.receiversAround.containsKey(from)){
+                            //So that the tile energy was gotten from isn't factored into the amount
+                            amount--;
+                        }
+
                         if(amount > 0){
                             relaysThatWork.add(theRelay);
                             totalReceiverAmount += amount;
