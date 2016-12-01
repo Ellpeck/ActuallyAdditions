@@ -31,7 +31,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public static final int SLOT_OUTPUT_2 = 3;
     public static final int ENERGY_USE = 25;
     private static final int SMELT_TIME = 80;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 80, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 150, 0);
     public int firstSmeltTime;
     public int secondSmeltTime;
     public boolean isAutoSplit;
