@@ -1,3 +1,23 @@
+# 1.11-r86
+* Fix a crash with Energy Phantomfaces and Tesla
+* Fix the farmer rotations being wrong
+* Made the power bar on items colorful too
+* Make machines in villager houses disappear once you break them
+* Made the coal generator turnoffable with redstone
+* Oil Generators respond to comparators
+* Coal Generators respond to comparators
+* Fermenting Barrels respond to comparators
+* Make the heat collector more rare to pick up lava
+* Re-added Patreon support renderer for 1.11
+* Fixed a bug with Laser Relays breaking some renderers
+* Fix bags duping with other mods sometimes
+* Made item Intertion on the farmer work with all types of seeds
+* Made advanced tooltips only show with F3+H modde enabled
+* Removed crafting configs (just use MineTweaker)
+* Fix a dupe bug with some energy items in the Energizer
+* Made Laser Relays not try to input back into the place they got energy from
+* Made the double furnace accept more energy per tick so that it doesn't run out when smelting two items
+
 # 1.10.2-r85
 * Make only coffee machine and coal generator return container items on empty slot (Fixes dupe bug with RFTools)
 * Made Laser Relays not try to input back into the place they got energy from (Should fix energy distribution inconsistency)
@@ -10,9 +30,7 @@
 
 # 1.11-r83
 * Fix an exception during loading some tileentities causing them to lose their data
-* Fix a crash with Energy Phantomfaces and Tesla
 * Improve performance of Patreon display code
-* Fix the farmer rotations being wrong
 
 # 1.11-r82
 * Made Filter Slots be ignored by Comparators (all filter settings that currently exist will be lost, so check your filters!)
