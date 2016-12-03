@@ -137,7 +137,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
             }
 
             if(shouldPlaySound){
-                this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS, 0.15F, 1.0F);
+                this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS, 0.025F, 1.0F);
             }
         }
     }
