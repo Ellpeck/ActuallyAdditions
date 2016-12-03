@@ -58,7 +58,7 @@ public class ContainerFilter extends Container{
         }
 
         ItemStack stack = inventory.getCurrentItem();
-        if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemFilter){
+        if(SlotFilter.isFilter(stack)){
             ItemDrill.loadSlotsFromNBT(this.filterInventory, inventory.getCurrentItem());
         }
     }
@@ -112,9 +112,8 @@ public class ContainerFilter extends Container{
 
     @Override
     public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player){
-        if(slotId >= 0 && slotId < this.inventorySlots.size() && this.getSlot(slotId) instanceof SlotFilter){
-            //Calls the Filter's SlotClick function
-            return ((SlotFilter)this.getSlot(slotId)).slotClick(player);
+        if(SlotFilter.checkFilter(this, slotId, player)){
+            return StackUtil.getNull();
         }
         else if(clickTypeIn == ClickType.SWAP && dragType == this.inventory.currentItem){
             return null;
@@ -127,7 +126,7 @@ public class ContainerFilter extends Container{
     @Override
     public void onContainerClosed(EntityPlayer player){
         ItemStack stack = this.inventory.getCurrentItem();
-        if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemFilter){
+        if(SlotFilter.isFilter(stack)){
             ItemDrill.writeSlotsToNBT(this.filterInventory, this.inventory.getCurrentItem());
         }
         super.onContainerClosed(player);

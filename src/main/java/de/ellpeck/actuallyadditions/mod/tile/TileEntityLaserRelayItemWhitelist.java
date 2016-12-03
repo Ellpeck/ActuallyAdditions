@@ -11,8 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
+import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
-import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,19 +44,17 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
-        if(type != NBTType.SAVE_BLOCK){
-            this.leftFilter.writeToNBT(compound, "LeftFilter");
-            this.rightFilter.writeToNBT(compound, "RightFilter");
-        }
+
+        this.leftFilter.writeToNBT(compound, "LeftFilter");
+        this.rightFilter.writeToNBT(compound, "RightFilter");
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
-        if(type != NBTType.SAVE_BLOCK){
-            this.leftFilter.readFromNBT(compound, "LeftFilter");
-            this.rightFilter.readFromNBT(compound, "RightFilter");
-        }
+
+        this.leftFilter.readFromNBT(compound, "LeftFilter");
+        this.rightFilter.readFromNBT(compound, "RightFilter");
     }
 
     @Override
@@ -84,7 +82,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                         for(int k = 0; k < usedSettings.filterInventory.getSizeInventory(); k++){
                             ItemStack slot = usedSettings.filterInventory.getStackInSlot(k);
                             if(StackUtil.isValid(slot)){
-                                if(slot.getItem() instanceof ItemFilter){
+                                if(SlotFilter.isFilter(slot)){
                                     IInventory inv = new InventoryBasic("Filter", false, ContainerFilter.SLOT_AMOUNT);
                                     ItemDrill.loadSlotsFromNBT(inv, slot);
 

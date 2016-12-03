@@ -21,7 +21,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -234,10 +233,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             compound.setInteger("SideToPull", this.sideToPull);
             compound.setInteger("SlotToPull", this.slotToPullStart);
             compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
-
-            this.leftFilter.writeToNBT(compound, "LeftFilter");
-            this.rightFilter.writeToNBT(compound, "RightFilter");
         }
+
+        this.leftFilter.writeToNBT(compound, "LeftFilter");
+        this.rightFilter.writeToNBT(compound, "RightFilter");
     }
 
     @Override
@@ -249,10 +248,11 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             this.sideToPull = compound.getInteger("SideToPull");
             this.slotToPullStart = compound.getInteger("SlotToPull");
             this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
-
-            this.leftFilter.readFromNBT(compound, "LeftFilter");
-            this.rightFilter.readFromNBT(compound, "RightFilter");
         }
+
+        this.leftFilter.readFromNBT(compound, "LeftFilter");
+        this.rightFilter.readFromNBT(compound, "RightFilter");
+
         super.readSyncableNBT(compound, type);
     }
 

@@ -10,9 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
+import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -27,30 +30,41 @@ public class SlotFilter extends Slot{
         this(inv.filterInventory, slot, x, y);
     }
 
-    /**
-     * Gets called when the Filter Slot is clicked
-     * Needs to be called in slotClick() in the Container!
-     *
-     * @param player The player
-     * @return Nothing, as the Item didn't really get "transferred"
-     */
-    public ItemStack slotClick(EntityPlayer player){
-        ItemStack heldStack = player.inventory.getItemStack();
-
-        //Delete the stack in the inventory
-        if(StackUtil.isValid(this.getStack()) && !StackUtil.isValid(heldStack)){
-            this.putStack(StackUtil.getNull());
-        }
-        //Put the current Item as a filter
-        else{
-            if(StackUtil.isValid(heldStack)){
-                ItemStack stack = heldStack.copy();
-                stack = StackUtil.setStackSize(stack, 1);
-                this.putStack(stack);
+    public static boolean checkFilter(Container container, int slotId, EntityPlayer player){
+        if(slotId >= 0 && slotId < container.inventorySlots.size()){
+            Slot slot = container.getSlot(slotId);
+            if(slot instanceof SlotFilter){
+                ((SlotFilter)slot).slotClick(player);
+                return true;
             }
         }
+        return false;
+    }
 
-        return StackUtil.getNull();
+    private void slotClick(EntityPlayer player){
+        ItemStack heldStack = player.inventory.getItemStack();
+        ItemStack stackInSlot = this.getStack();
+
+        if(StackUtil.isValid(stackInSlot) && !StackUtil.isValid(heldStack)){
+            if(isFilter(stackInSlot)){
+                player.inventory.setItemStack(stackInSlot);
+            }
+
+            this.putStack(StackUtil.getNull());
+        }
+        else if(StackUtil.isValid(heldStack)){
+            if(!isFilter(stackInSlot)){
+                this.putStack(StackUtil.setStackSize(heldStack.copy(), 1));
+
+                if(isFilter(heldStack)){
+                    player.inventory.setItemStack(StackUtil.addStackSize(heldStack, -1));
+                }
+            }
+        }
+    }
+
+    public static boolean isFilter(ItemStack stack){
+        return StackUtil.isValid(stack) && stack.getItem() instanceof ItemFilter;
     }
 
     @Override

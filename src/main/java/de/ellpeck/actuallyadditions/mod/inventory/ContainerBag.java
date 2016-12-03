@@ -191,9 +191,8 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     @Override
     public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player){
-        if(slotId >= 0 && slotId < this.inventorySlots.size() && this.getSlot(slotId) instanceof SlotFilter){
-            //Calls the Filter's SlotClick function
-            return ((SlotFilter)this.getSlot(slotId)).slotClick(player);
+        if(SlotFilter.checkFilter(this, slotId, player)){
+            return StackUtil.getNull();
         }
         else if(clickTypeIn == ClickType.SWAP && dragType == this.inventory.currentItem){
             return null;
