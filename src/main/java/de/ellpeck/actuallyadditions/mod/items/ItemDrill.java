@@ -18,10 +18,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import de.ellpeck.actuallyadditions.mod.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -47,6 +44,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.HashSet;
 import java.util.List;
@@ -77,7 +77,7 @@ public class ItemDrill extends ItemEnergy{
      *
      * @param stack The Drill
      */
-    public static void loadSlotsFromNBT(IInventory slots, ItemStack stack){
+    public static void loadSlotsFromNBT(ItemStackHandlerCustom slots, ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
         if(compound != null){
             TileEntityInventoryBase.loadSlots(slots, compound);
@@ -90,7 +90,7 @@ public class ItemDrill extends ItemEnergy{
      * @param slots The Slots
      * @param stack The Drill
      */
-    public static void writeSlotsToNBT(IInventory slots, ItemStack stack){
+    public static void writeSlotsToNBT(ItemStackHandlerCustom slots, ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
         if(compound == null){
             compound = new NBTTagCompound();
@@ -150,9 +150,9 @@ public class ItemDrill extends ItemEnergy{
             return StackUtil.getNull();
         }
 
-        InventoryBasic inv = new InventoryBasic("Drill", false, ContainerDrill.SLOT_AMOUNT);
+        ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerDrill.SLOT_AMOUNT);
         loadSlotsFromNBT(inv, stack);
-        for(int i = 0; i < inv.getSizeInventory(); i++){
+        for(int i = 0; i < inv.getSlots(); i++){
             ItemStack slotStack = inv.getStackInSlot(i);
             if(StackUtil.isValid(slotStack) && slotStack.getItem() instanceof ItemDrillUpgrade){
                 if(((ItemDrillUpgrade)slotStack.getItem()).type == upgrade){

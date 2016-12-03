@@ -10,39 +10,52 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
 
-public abstract class TileEntityInventoryBase extends TileEntityBase implements ISidedInventory{
+public abstract class TileEntityInventoryBase extends TileEntityBase{
 
-    private final SidedInvWrapper[] invWrappers = new SidedInvWrapper[6];
-    public NonNullList<ItemStack> slots;
+    public final ItemStackHandlerCustom slots;
 
     public TileEntityInventoryBase(int slots, String name){
         super(name);
 
-        this.slots = StackUtil.createSlots(slots);
+        this.slots = new ItemStackHandlerCustom(slots){
+            @Override
+            public boolean canInsert(ItemStack stack, int slot){
+                return TileEntityInventoryBase.this.isItemValidForSlot(slot, stack);
+            }
 
-        if(this.hasInvWrapperCapabilities()){
-            this.getInvWrappers(this.invWrappers);
-        }
+            @Override
+            public boolean canExtract(ItemStack stack, int slot){
+                return TileEntityInventoryBase.this.canExtractItem(slot, stack);
+            }
+
+            @Override
+            protected int getStackLimit(int slot, ItemStack stack){
+                return TileEntityInventoryBase.this.getMaxStackSizePerSlot(slot, stack);
+            }
+
+            @Override
+            protected void onContentsChanged(int slot){
+                super.onContentsChanged(slot);
+                TileEntityInventoryBase.this.markDirty();
+            }
+        };
     }
 
-    public static void saveSlots(IInventory slots, NBTTagCompound compound){
-        if(slots != null && slots.getSizeInventory() > 0){
+    public static void saveSlots(IItemHandler slots, NBTTagCompound compound){
+        if(slots != null && slots.getSlots() > 0){
             NBTTagList tagList = new NBTTagList();
-            for(int i = 0; i < slots.getSizeInventory(); i++){
+            for(int i = 0; i < slots.getSlots(); i++){
                 ItemStack slot = slots.getStackInSlot(i);
                 NBTTagCompound tagCompound = new NBTTagCompound();
                 if(StackUtil.isValid(slot)){
@@ -54,19 +67,13 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         }
     }
 
-    public static void loadSlots(IInventory slots, NBTTagCompound compound){
-        if(slots != null && slots.getSizeInventory() > 0){
+    public static void loadSlots(IItemHandlerModifiable slots, NBTTagCompound compound){
+        if(slots != null && slots.getSlots() > 0){
             NBTTagList tagList = compound.getTagList("Items", 10);
-            for(int i = 0; i < slots.getSizeInventory(); i++){
+            for(int i = 0; i < slots.getSlots(); i++){
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                slots.setInventorySlotContents(i, tagCompound != null && tagCompound.hasKey("id") ? new ItemStack(tagCompound) : StackUtil.getNull());
+                slots.setStackInSlot(i, tagCompound != null && tagCompound.hasKey("id") ? new ItemStack(tagCompound) : StackUtil.getNull());
             }
-        }
-    }
-
-    protected void getInvWrappers(SidedInvWrapper[] wrappers){
-        for(int i = 0; i < wrappers.length; i++){
-            wrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]);
         }
     }
 
@@ -74,8 +81,25 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
         if(type == NBTType.SAVE_TILE || (type == NBTType.SYNC && this.shouldSyncSlots())){
-            saveSlots(this, compound);
+            saveSlots(this.slots, compound);
         }
+    }
+
+    @Override
+    public IItemHandler getItemHandler(EnumFacing facing){
+        return this.slots;
+    }
+
+    public boolean isItemValidForSlot(int slot, ItemStack stack){
+        return true;
+    }
+
+    public boolean canExtractItem(int slot, ItemStack stack){
+        return true;
+    }
+
+    public int getMaxStackSizePerSlot(int slot, ItemStack stack){
+        return stack.getMaxStackSize();
     }
 
     public boolean shouldSyncSlots(){
@@ -84,147 +108,27 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
 
     @Override
     public int getComparatorStrength(){
-        return Container.calcRedstoneFromInventory(this);
+        int i = 0;
+        float f = 0;
+
+        for(int j = 0; j < this.slots.getSlots(); ++j){
+            ItemStack stack = this.slots.getStackInSlot(j);
+
+            if(StackUtil.isValid(stack)){
+                f += (float)StackUtil.getStackSize(stack)/(float)Math.min(this.getMaxStackSizePerSlot(j, stack), stack.getMaxStackSize());
+                i++;
+            }
+        }
+
+        f = f/(float)this.slots.getSlots();
+        return MathHelper.floor(f*14.0F)+(i > 0 ? 1 : 0);
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
         if(type == NBTType.SAVE_TILE || (type == NBTType.SYNC && this.shouldSyncSlots())){
-            loadSlots(this, compound);
+            loadSlots(this.slots, compound);
         }
-    }
-
-
-    @Override
-    public int[] getSlotsForFace(EnumFacing side){
-        int invSize = this.getSizeInventory();
-        if(invSize > 0){
-            int[] theInt = new int[invSize];
-            for(int i = 0; i < theInt.length; i++){
-                theInt[i] = i;
-            }
-            return theInt;
-        }
-        else{
-            return new int[0];
-        }
-    }
-
-    @Override
-    public int getInventoryStackLimit(){
-        return 64;
-    }
-
-    @Override
-    public boolean isUsableByPlayer(EntityPlayer player){
-        return this.canPlayerUse(player);
-    }
-
-    @Override
-    public void openInventory(EntityPlayer player){
-
-    }
-
-    @Override
-    public void closeInventory(EntityPlayer player){
-
-    }
-
-    @Override
-    public int getField(int id){
-        return 0;
-    }
-
-    @Override
-    public void setField(int id, int value){
-
-    }
-
-    @Override
-    public int getFieldCount(){
-        return 0;
-    }
-
-    @Override
-    public void clear(){
-        this.slots.clear();
-    }
-
-    @Override
-    public void setInventorySlotContents(int i, ItemStack stack){
-        this.slots.set(i, stack);
-        this.markDirty();
-    }
-
-    @Override
-    public int getSizeInventory(){
-        return this.slots.size();
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int i){
-        if(i < this.getSizeInventory()){
-            return this.slots.get(i);
-        }
-        return StackUtil.getNull();
-    }
-
-    @Override
-    public ItemStack decrStackSize(int i, int j){
-        if(StackUtil.isValid(this.slots.get(i))){
-            ItemStack stackAt;
-            if(StackUtil.getStackSize(this.slots.get(i)) <= j){
-                stackAt = this.slots.get(i);
-                this.slots.set(i, StackUtil.getNull());
-                this.markDirty();
-                return stackAt;
-            }
-            else{
-                stackAt = this.slots.get(i).splitStack(j);
-                if(StackUtil.getStackSize(this.slots.get(i)) <= 0){
-                    this.slots.set(i, StackUtil.getNull());
-                }
-                this.markDirty();
-                return stackAt;
-            }
-        }
-        return StackUtil.getNull();
-    }
-
-    @Override
-    public ItemStack removeStackFromSlot(int index){
-        ItemStack stack = this.slots.get(index);
-        this.slots.set(index, StackUtil.getNull());
-        return stack;
-    }
-
-    @Override
-    public String getName(){
-        return this.getDisplayedName();
-    }
-
-    @Override
-    public boolean hasCustomName(){
-        return false;
-    }
-
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        if(this.hasInvWrapperCapabilities() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
-            return (T)this.invWrappers[facing == null ? 0 : facing.ordinal()];
-        }
-        else{
-            return super.getCapability(capability, facing);
-        }
-    }
-
-    public boolean hasInvWrapperCapabilities(){
-        return true;
-    }
-
-    @Override
-    public boolean isEmpty(){
-        return StackUtil.isIInvEmpty(this.slots);
     }
 }

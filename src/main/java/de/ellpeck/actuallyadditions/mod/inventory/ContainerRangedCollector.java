@@ -20,6 +20,7 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerRangedCollector extends Container{
@@ -31,7 +32,7 @@ public class ContainerRangedCollector extends Container{
 
         for(int i = 0; i < 2; i++){
             for(int j = 0; j < 3; j++){
-                this.addSlotToContainer(new Slot(this.collector, j+i*3, 96+j*18, 24+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.collector.slots, j+i*3, 96+j*18, 24+i*18));
             }
         }
         for(int i = 0; i < 4; i++){
@@ -111,6 +112,6 @@ public class ContainerRangedCollector extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.collector.isUsableByPlayer(player);
+        return this.collector.canPlayerUse(player);
     }
 }

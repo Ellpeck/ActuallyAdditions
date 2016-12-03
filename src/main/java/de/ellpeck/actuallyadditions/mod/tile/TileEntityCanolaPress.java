@@ -91,7 +91,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
                     if(this.currentProcessTime >= TIME){
                         this.currentProcessTime = 0;
 
-                        this.slots.set(0, StackUtil.addStackSize(this.slots.get(0), -1));
+                        this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -1));
 
                         this.tank.fillInternal(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
                         this.markDirty();
@@ -116,16 +116,11 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     }
 
     public boolean isCanola(int slot){
-        return StackUtil.isValid(this.slots.get(slot)) && this.slots.get(slot).getItem() == InitItems.itemMisc && this.slots.get(slot).getItemDamage() == TheMiscItems.CANOLA.ordinal();
+        return StackUtil.isValid(this.slots.getStackInSlot(slot)) && this.slots.getStackInSlot(slot).getItem() == InitItems.itemMisc && this.slots.getStackInSlot(slot).getItemDamage() == TheMiscItems.CANOLA.ordinal();
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return false;
     }
 

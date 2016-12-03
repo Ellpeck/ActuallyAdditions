@@ -20,6 +20,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerXPSolidifier extends Container{
@@ -29,8 +30,8 @@ public class ContainerXPSolidifier extends Container{
     public ContainerXPSolidifier(InventoryPlayer inventory, TileEntityBase tile){
         this.solidifier = (TileEntityXPSolidifier)tile;
 
-        this.addSlotToContainer(new SlotOutput(this.solidifier, 0, 95, 8));
-        this.addSlotToContainer(new Slot(this.solidifier, 1, 65, 8));
+        this.addSlotToContainer(new SlotOutput(this.solidifier.slots, 0, 95, 8));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.solidifier.slots, 1, 65, 8));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -94,6 +95,6 @@ public class ContainerXPSolidifier extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.solidifier.isUsableByPlayer(player);
+        return this.solidifier.canPlayerUse(player);
     }
 }

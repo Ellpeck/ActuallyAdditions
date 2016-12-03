@@ -22,6 +22,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerCoffeeMachine extends Container{
@@ -31,13 +32,13 @@ public class ContainerCoffeeMachine extends Container{
     public ContainerCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile){
         this.machine = (TileEntityCoffeeMachine)tile;
 
-        this.addSlotToContainer(new Slot(this.machine, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, 37, 6));
-        this.addSlotToContainer(new Slot(this.machine, TileEntityCoffeeMachine.SLOT_INPUT, 80, 42));
-        this.addSlotToContainer(new SlotOutput(this.machine, TileEntityCoffeeMachine.SLOT_OUTPUT, 80, 73));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.slots, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, 37, 6));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.slots, TileEntityCoffeeMachine.SLOT_INPUT, 80, 42));
+        this.addSlotToContainer(new SlotOutput(this.machine.slots, TileEntityCoffeeMachine.SLOT_OUTPUT, 80, 73));
 
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new Slot(this.machine, j+i*2+3, 125+j*18, 6+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.slots, j+i*2+3, 125+j*18, 6+i*18));
             }
         }
 
@@ -123,6 +124,6 @@ public class ContainerCoffeeMachine extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.machine.isUsableByPlayer(player);
+        return this.machine.canPlayerUse(player);
     }
 }

@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler.GuiTypes;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.item.EntityItem;
@@ -53,13 +54,13 @@ public class ItemBag extends ItemBase{
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
-        IInventory inv = new InventoryBasic("Bag", false, ContainerBag.getSlotAmount(this.isVoid));
+        ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerBag.getSlotAmount(this.isVoid));
         ItemDrill.loadSlotsFromNBT(inv, stack);
 
-        int slotsTotal = inv.getSizeInventory();
+        int slotsTotal = inv.getSlots();
         int slotsFilled = 0;
 
-        for(int i = 0; i < inv.getSizeInventory(); i++){
+        for(int i = 0; i < inv.getSlots(); i++){
             if(StackUtil.isValid(inv.getStackInSlot(i))){
                 slotsFilled++;
             }
@@ -88,7 +89,7 @@ public class ItemBag extends ItemBase{
                                 boolean changed = false;
 
                                 boolean isVoid = ((ItemBag)invStack.getItem()).isVoid;
-                                IInventory inv = new InventoryBasic("Bag", false, ContainerBag.getSlotAmount(isVoid));
+                                ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerBag.getSlotAmount(isVoid));
                                 ItemDrill.loadSlotsFromNBT(inv, invStack);
 
                                 FilterSettings filter = new FilterSettings(4, false, false, false, false, 0, 0);
@@ -99,20 +100,20 @@ public class ItemBag extends ItemBase{
                                         changed = true;
                                     }
                                     else{
-                                        for(int j = 0; j < inv.getSizeInventory(); j++){
+                                        for(int j = 0; j < inv.getSlots(); j++){
                                             ItemStack bagStack = inv.getStackInSlot(j);
                                             if(StackUtil.isValid(bagStack)){
                                                 if(ItemUtil.canBeStacked(bagStack, stack)){
                                                     int maxTransfer = Math.min(StackUtil.getStackSize(stack), stack.getMaxStackSize()-StackUtil.getStackSize(bagStack));
                                                     if(maxTransfer > 0){
-                                                        inv.setInventorySlotContents(j, StackUtil.addStackSize(bagStack, maxTransfer));
+                                                        inv.setStackInSlot(j, StackUtil.addStackSize(bagStack, maxTransfer));
                                                         stack = StackUtil.addStackSize(stack, -maxTransfer);
                                                         changed = true;
                                                     }
                                                 }
                                             }
                                             else{
-                                                inv.setInventorySlotContents(j, stack.copy());
+                                                inv.setStackInSlot(j, stack.copy());
                                                 stack = StackUtil.setStackSize(stack, 0);
                                                 changed = true;
                                             }
@@ -155,16 +156,16 @@ public class ItemBag extends ItemBase{
                     if(handler != null){
                         boolean changed = false;
 
-                        IInventory inv = new InventoryBasic("Bag", false, ContainerBag.getSlotAmount(this.isVoid));
+                        ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerBag.getSlotAmount(this.isVoid));
                         ItemDrill.loadSlotsFromNBT(inv, stack);
 
-                        for(int j = 4; j < inv.getSizeInventory(); j++){
+                        for(int j = 4; j < inv.getSlots(); j++){
                             ItemStack invStack = inv.getStackInSlot(j);
                             if(StackUtil.isValid(invStack)){
                                 for(int i = 0; i < handler.getSlots(); i++){
                                     ItemStack remain = handler.insertItem(i, invStack, false);
                                     if(!ItemStack.areItemStacksEqual(remain, invStack)){
-                                        inv.setInventorySlotContents(j, StackUtil.validateCopy(remain));
+                                        inv.setStackInSlot(j, StackUtil.validateCopy(remain));
                                         changed = true;
 
                                         if(!StackUtil.isValid(remain)){

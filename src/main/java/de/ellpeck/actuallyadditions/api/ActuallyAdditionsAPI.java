@@ -163,7 +163,6 @@ public final class ActuallyAdditionsAPI{
 
     /**
      * Adds a new conversion recipe to the compost.
-     * StackSize is regarded on both input and output and they can be different.
      *
      * @param input         The itemstack to be input into the compost
      * @param inputDisplay  The block to display when there is input in the compost

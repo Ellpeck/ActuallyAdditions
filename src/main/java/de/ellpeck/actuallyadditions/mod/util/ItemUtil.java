@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -97,9 +98,6 @@ public final class ItemUtil{
         return false;
     }
 
-    /**
-     * Returns true if array contains stack or if both contain null
-     */
     public static boolean contains(ItemStack[] array, ItemStack stack, boolean checkWildcard){
         return getPlaceAt(array, stack, checkWildcard) != -1;
     }
@@ -108,9 +106,6 @@ public final class ItemUtil{
         return getPlaceAt(Arrays.asList(array), stack, checkWildcard);
     }
 
-    /**
-     * Returns the place of stack in array, -1 if not present
-     */
     public static int getPlaceAt(List<ItemStack> list, ItemStack stack, boolean checkWildcard){
         if(list != null && list.size() > 0){
             for(int i = 0; i < list.size(); i++){

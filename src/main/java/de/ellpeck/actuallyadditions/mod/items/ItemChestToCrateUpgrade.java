@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -24,13 +25,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ItemChestToCrateUpgrade extends ItemBase{
 
-    private final Class<? extends IInventory> start;
+    private final Class start;
     private final IBlockState end;
 
-    public ItemChestToCrateUpgrade(String name, Class<? extends IInventory> start, IBlockState end){
+    public ItemChestToCrateUpgrade(String name, Class start, IBlockState end){
         super(name);
         this.start = start;
         this.end = end;
@@ -45,35 +48,45 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                 if(!world.isRemote){
 
                     //Copy Slots
-                    IInventory chest = (IInventory)tileHit;
-                    ItemStack[] stacks = new ItemStack[chest.getSizeInventory()];
-                    for(int i = 0; i < stacks.length; i++){
-                        ItemStack aStack = chest.getStackInSlot(i);
-                        if(StackUtil.isValid(aStack)){
-                            stacks[i] = aStack.copy();
-                            chest.setInventorySlotContents(i, StackUtil.getNull());
-                        }
+                    IItemHandlerModifiable chest = null;
+                    if(tileHit instanceof IInventory){
+                        chest = new InvWrapper((IInventory)tileHit);
+                    }
+                    else if(tileHit instanceof TileEntityInventoryBase){
+                        chest = ((TileEntityInventoryBase)tileHit).slots;
                     }
 
-                    //Set New Block
-                    world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
-                    world.setBlockState(pos, this.end, 2);
-
-                    //Copy Items into new Chest
-                    TileEntity newTileHit = world.getTileEntity(pos);
-                    if(newTileHit instanceof IInventory){
-                        IInventory newChest = (IInventory)newTileHit;
+                    if(chest != null){
+                        ItemStack[] stacks = new ItemStack[chest.getSlots()];
                         for(int i = 0; i < stacks.length; i++){
-                            if(StackUtil.isValid(stacks[i])){
-                                if(newChest.getSizeInventory() > i){
-                                    newChest.setInventorySlotContents(i, stacks[i].copy());
+                            ItemStack aStack = chest.getStackInSlot(i);
+                            if(StackUtil.isValid(aStack)){
+                                stacks[i] = aStack.copy();
+                                chest.setStackInSlot(i, StackUtil.getNull());
+                            }
+                        }
+
+                        //Set New Block
+                        world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
+                        world.setBlockState(pos, this.end, 2);
+
+                        //Copy Items into new Chest
+                        TileEntity newTileHit = world.getTileEntity(pos);
+                        if(newTileHit instanceof TileEntityInventoryBase){
+                            IItemHandlerModifiable newChest = ((TileEntityInventoryBase)newTileHit).slots;
+
+                            for(int i = 0; i < stacks.length; i++){
+                                if(StackUtil.isValid(stacks[i])){
+                                    if(newChest.getSlots() > i){
+                                        newChest.setStackInSlot(i, stacks[i].copy());
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if(!player.capabilities.isCreativeMode){
-                        player.setHeldItem(hand, StackUtil.addStackSize(heldStack, -1));
+                        if(!player.capabilities.isCreativeMode){
+                            player.setHeldItem(hand, StackUtil.addStackSize(heldStack, -1));
+                        }
                     }
                 }
                 return EnumActionResult.SUCCESS;

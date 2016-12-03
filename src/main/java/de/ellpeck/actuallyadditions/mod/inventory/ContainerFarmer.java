@@ -18,6 +18,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerFarmer extends Container{
@@ -29,12 +30,12 @@ public class ContainerFarmer extends Container{
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new Slot(this.farmer, j+i*2, 67+j*18, 21+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.farmer.slots, j+i*2, 67+j*18, 21+i*18));
             }
         }
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new Slot(this.farmer, 6+j+i*2, 105+j*18, 21+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.farmer.slots, 6+j+i*2, 105+j*18, 21+i*18));
             }
         }
 
@@ -103,6 +104,6 @@ public class ContainerFarmer extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.farmer.isUsableByPlayer(player);
+        return this.farmer.canPlayerUse(player);
     }
 }

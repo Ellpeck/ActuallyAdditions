@@ -60,8 +60,8 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                             if(this.filter.check(toAdd)){
                                 ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
                                 checkList.add(toAdd);
-                                if(WorldUtil.addToInventory(this, checkList, EnumFacing.UP, false, true)){
-                                    WorldUtil.addToInventory(this, checkList, EnumFacing.UP, true, true);
+                                if(WorldUtil.addToInventory(this.slots, checkList, false)){
+                                    WorldUtil.addToInventory(this.slots, checkList, true);
 
                                     ((WorldServer)this.world).spawnParticle(EnumParticleTypes.CLOUD, false, item.posX, item.posY+0.45F, item.posZ, 5, 0, 0, 0, 0.03D);
 
@@ -85,12 +85,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return true;
     }
 

@@ -11,9 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -44,9 +46,9 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         super(4, "furnaceDouble");
     }
 
-    public static void autoSplit(NonNullList<ItemStack> slots, int slot1, int slot2){
-        ItemStack first = slots.get(slot1);
-        ItemStack second = slots.get(slot2);
+    public static void autoSplit(ItemStackHandlerCustom slots, int slot1, int slot2){
+        ItemStack first = slots.getStackInSlot(slot1);
+        ItemStack second = slots.getStackInSlot(slot2);
 
         if(StackUtil.isValid(first) || StackUtil.isValid(second)){
             ItemStack toSplit = StackUtil.getNull();
@@ -68,8 +70,8 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             if(StackUtil.isValid(toSplit)){
                 ItemStack splitFirst = toSplit.copy();
                 ItemStack secondSplit = splitFirst.splitStack(StackUtil.getStackSize(splitFirst)/2);
-                slots.set(slot1, StackUtil.validateCheck(splitFirst));
-                slots.set(slot2, StackUtil.validateCheck(secondSplit));
+                slots.setStackInSlot(slot1, StackUtil.validateCheck(splitFirst));
+                slots.setStackInSlot(slot2, StackUtil.validateCheck(secondSplit));
             }
         }
     }
@@ -152,10 +154,10 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     public boolean canSmeltOn(int theInput, int theOutput){
-        if(StackUtil.isValid(this.slots.get(theInput))){
-            ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.slots.get(theInput));
+        if(StackUtil.isValid(this.slots.getStackInSlot(theInput))){
+            ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.slots.getStackInSlot(theInput));
             if(StackUtil.isValid(output)){
-                if(!StackUtil.isValid(this.slots.get(theOutput)) || (this.slots.get(theOutput).isItemEqual(output) && StackUtil.getStackSize(this.slots.get(theOutput)) <= this.slots.get(theOutput).getMaxStackSize()-StackUtil.getStackSize(output))){
+                if(!StackUtil.isValid(this.slots.getStackInSlot(theOutput)) || (this.slots.getStackInSlot(theOutput).isItemEqual(output) && StackUtil.getStackSize(this.slots.getStackInSlot(theOutput)) <= this.slots.getStackInSlot(theOutput).getMaxStackSize()-StackUtil.getStackSize(output))){
                     return true;
                 }
             }
@@ -165,15 +167,15 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     public void finishBurning(int theInput, int theOutput){
-        ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.slots.get(theInput));
-        if(!StackUtil.isValid(this.slots.get(theOutput))){
-            this.slots.set(theOutput, output.copy());
+        ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.slots.getStackInSlot(theInput));
+        if(!StackUtil.isValid(this.slots.getStackInSlot(theOutput))){
+            this.slots.setStackInSlot(theOutput, output.copy());
         }
-        else if(this.slots.get(theOutput).getItem() == output.getItem()){
-            this.slots.set(theOutput, StackUtil.addStackSize(this.slots.get(theOutput), StackUtil.getStackSize(output)));
+        else if(this.slots.getStackInSlot(theOutput).getItem() == output.getItem()){
+            this.slots.setStackInSlot(theOutput, StackUtil.addStackSize(this.slots.getStackInSlot(theOutput), StackUtil.getStackSize(output)));
         }
 
-        this.slots.set(theInput, StackUtil.addStackSize(this.slots.get(theInput), -1));
+        this.slots.setStackInSlot(theInput, StackUtil.addStackSize(this.slots.getStackInSlot(theInput), -1));
     }
 
     @SideOnly(Side.CLIENT)
@@ -187,12 +189,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2;
     }
 

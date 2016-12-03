@@ -55,12 +55,12 @@ public class BlockEmpowerer extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityEmpowerer empowerer = (TileEntityEmpowerer)world.getTileEntity(pos);
             if(empowerer != null){
-                ItemStack stackThere = empowerer.getStackInSlot(0);
+                ItemStack stackThere = empowerer.slots.getStackInSlot(0);
                 if(StackUtil.isValid(heldItem)){
                     if(!StackUtil.isValid(stackThere) && !TileEntityEmpowerer.getRecipesForInput(heldItem).isEmpty()){
                         ItemStack toPut = heldItem.copy();
                         toPut = StackUtil.setStackSize(toPut, 1);
-                        empowerer.setInventorySlotContents(0, toPut);
+                        empowerer.slots.setStackInSlot(0, toPut);
                         player.setHeldItem(hand, StackUtil.addStackSize(heldItem, -1));
                         return true;
                     }
@@ -70,7 +70,7 @@ public class BlockEmpowerer extends BlockContainerBase{
                             player.setHeldItem(hand, StackUtil.addStackSize(heldItem, maxTransfer));
                             ItemStack newStackThere = stackThere.copy();
                             newStackThere = StackUtil.addStackSize(newStackThere, -maxTransfer);
-                            empowerer.setInventorySlotContents(0, StackUtil.validateCheck(newStackThere));
+                            empowerer.slots.setStackInSlot(0, StackUtil.validateCheck(newStackThere));
                             return true;
                         }
                     }
@@ -78,7 +78,7 @@ public class BlockEmpowerer extends BlockContainerBase{
                 else{
                     if(StackUtil.isValid(stackThere)){
                         player.setHeldItem(hand, stackThere.copy());
-                        empowerer.setInventorySlotContents(0, StackUtil.getNull());
+                        empowerer.slots.setStackInSlot(0, StackUtil.getNull());
                         return true;
                     }
                 }

@@ -48,27 +48,27 @@ public class TileEntityEnergizer extends TileEntityInventoryBase{
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            if(StackUtil.isValid(this.slots.get(0)) && !StackUtil.isValid(this.slots.get(1))){
+            if(StackUtil.isValid(this.slots.getStackInSlot(0)) && !StackUtil.isValid(this.slots.getStackInSlot(1))){
                 if(this.storage.getEnergyStored() > 0){
                     int received = 0;
                     boolean canTakeUp = false;
 
-                    if(this.slots.get(0).hasCapability(CapabilityEnergy.ENERGY, null)){
-                        IEnergyStorage cap = this.slots.get(0).getCapability(CapabilityEnergy.ENERGY, null);
+                    if(this.slots.getStackInSlot(0).hasCapability(CapabilityEnergy.ENERGY, null)){
+                        IEnergyStorage cap = this.slots.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null);
                         if(cap != null){
                             received = cap.receiveEnergy(this.storage.getEnergyStored(), false);
                             canTakeUp = cap.getEnergyStored() >= cap.getMaxEnergyStored();
                         }
                     }
                     else if(ActuallyAdditions.teslaLoaded){
-                        if(this.slots.get(0).hasCapability(TeslaUtil.teslaConsumer, null)){
-                            ITeslaConsumer cap = this.slots.get(0).getCapability(TeslaUtil.teslaConsumer, null);
+                        if(this.slots.getStackInSlot(0).hasCapability(TeslaUtil.teslaConsumer, null)){
+                            ITeslaConsumer cap = this.slots.getStackInSlot(0).getCapability(TeslaUtil.teslaConsumer, null);
                             if(cap != null){
                                 received = (int)cap.givePower(this.storage.getEnergyStored(), false);
                             }
                         }
-                        if(this.slots.get(0).hasCapability(TeslaUtil.teslaHolder, null)){
-                            ITeslaHolder cap = this.slots.get(0).getCapability(TeslaUtil.teslaHolder, null);
+                        if(this.slots.getStackInSlot(0).hasCapability(TeslaUtil.teslaHolder, null)){
+                            ITeslaHolder cap = this.slots.getStackInSlot(0).getCapability(TeslaUtil.teslaHolder, null);
                             if(cap != null){
                                 canTakeUp = cap.getStoredPower() >= cap.getCapacity();
                             }
@@ -79,8 +79,8 @@ public class TileEntityEnergizer extends TileEntityInventoryBase{
                     }
 
                     if(canTakeUp){
-                        this.slots.set(1, this.slots.get(0).copy());
-                        this.slots.set(0, StackUtil.addStackSize(this.slots.get(0), -1));
+                        this.slots.setStackInSlot(1, this.slots.getStackInSlot(0).copy());
+                        this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -1));
                     }
                 }
             }
@@ -97,12 +97,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return slot == 1;
     }
 

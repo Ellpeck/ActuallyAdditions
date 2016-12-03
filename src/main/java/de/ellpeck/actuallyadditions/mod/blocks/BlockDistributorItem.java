@@ -51,7 +51,7 @@ public class BlockDistributorItem extends BlockContainerBase implements IHudDisp
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityDistributorItem){
             TileEntityDistributorItem distributor = (TileEntityDistributorItem)tile;
-            ItemStack slot = distributor.getStackInSlot(0);
+            ItemStack slot = distributor.slots.getStackInSlot(0);
 
             String strg;
             if(!StackUtil.isValid(slot)){

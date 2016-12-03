@@ -26,6 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerEnervator extends Container{
@@ -36,8 +37,8 @@ public class ContainerEnervator extends Container{
         this.enervator = (TileEntityEnervator)tile;
         InventoryPlayer inventory = player.inventory;
 
-        this.addSlotToContainer(new Slot(this.enervator, 0, 76, 73));
-        this.addSlotToContainer(new SlotOutput(this.enervator, 1, 76, 42));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.enervator.slots, 0, 76, 73));
+        this.addSlotToContainer(new SlotOutput(this.enervator.slots, 1, 76, 42));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -132,6 +133,6 @@ public class ContainerEnervator extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.enervator.isUsableByPlayer(player);
+        return this.enervator.canPlayerUse(player);
     }
 }

@@ -13,27 +13,25 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotDeletion;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
+import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.items.ItemBag;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 
 public class ContainerBag extends Container implements IButtonReactor{
 
     public final FilterSettings filter = new FilterSettings(4, false, true, false, false, 0, -1000);
-    private final InventoryBag bagInventory;
+    private final ItemStackHandlerCustom bagInventory;
     private final InventoryPlayer inventory;
     private final boolean isVoid;
     public boolean autoInsert;
@@ -41,7 +39,7 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     public ContainerBag(InventoryPlayer inventory, boolean isVoid){
         this.inventory = inventory;
-        this.bagInventory = new InventoryBag(isVoid);
+        this.bagInventory = new ItemStackHandlerCustom(getSlotAmount(isVoid));
         this.isVoid = isVoid;
 
         for(int i = 0; i < 4; i++){
@@ -59,7 +57,7 @@ public class ContainerBag extends Container implements IButtonReactor{
         else{
             for(int i = 0; i < 4; i++){
                 for(int j = 0; j < 7; j++){
-                    this.addSlotToContainer(new Slot(this.bagInventory, j+i*7, 10+j*18, 10+i*18){
+                    this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.bagInventory, j+i*7, 10+j*18, 10+i*18){
                         @Override
                         public boolean isItemValid(ItemStack stack){
                             return ContainerBag.this.filter.check(stack);
@@ -141,7 +139,7 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        int inventoryStart = this.bagInventory.slots.size()+4;
+        int inventoryStart = this.bagInventory.getSlots()+4;
         int inventoryEnd = inventoryStart+26;
         int hotbarStart = inventoryEnd+1;
         int hotbarEnd = hotbarStart+8;
@@ -216,7 +214,7 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.bagInventory.isUsableByPlayer(player);
+        return true;
     }
 
     @Override
@@ -226,134 +224,6 @@ public class ContainerBag extends Container implements IButtonReactor{
         }
         else{
             this.filter.onButtonPressed(buttonID);
-        }
-    }
-
-    public static class InventoryBag implements IInventory{
-
-        public NonNullList<ItemStack> slots;
-
-        public InventoryBag(boolean isVoid){
-            this.slots = StackUtil.createSlots(getSlotAmount(isVoid));
-        }
-
-        @Override
-        public String getName(){
-            return "bag";
-        }
-
-        @Override
-        public int getInventoryStackLimit(){
-            return 64;
-        }
-
-        @Override
-        public void markDirty(){
-
-        }
-
-        @Override
-        public boolean isUsableByPlayer(EntityPlayer player){
-            return true;
-        }
-
-        @Override
-        public void openInventory(EntityPlayer player){
-
-        }
-
-        @Override
-        public void closeInventory(EntityPlayer player){
-
-        }
-
-        @Override
-        public boolean isItemValidForSlot(int index, ItemStack stack){
-            return true;
-        }
-
-        @Override
-        public int getField(int id){
-            return 0;
-        }
-
-        @Override
-        public void setField(int id, int value){
-
-        }
-
-        @Override
-        public int getFieldCount(){
-            return 0;
-        }
-
-        @Override
-        public void clear(){
-            this.slots.clear();
-        }
-
-        @Override
-        public void setInventorySlotContents(int i, ItemStack stack){
-            this.slots.set(i, stack);
-            this.markDirty();
-        }
-
-        @Override
-        public int getSizeInventory(){
-            return this.slots.size();
-        }
-
-        @Override
-        public boolean isEmpty(){
-            return StackUtil.isIInvEmpty(this.slots);
-        }
-
-        @Override
-        public ItemStack getStackInSlot(int i){
-            if(i < this.getSizeInventory()){
-                return this.slots.get(i);
-            }
-            return StackUtil.getNull();
-        }
-
-        @Override
-        public ItemStack decrStackSize(int i, int j){
-            if(StackUtil.isValid(this.slots.get(i))){
-                ItemStack stackAt;
-                if(StackUtil.getStackSize(this.slots.get(i)) <= j){
-                    stackAt = this.slots.get(i);
-                    this.slots.set(i, StackUtil.getNull());
-                    this.markDirty();
-                    return stackAt;
-                }
-                else{
-                    stackAt = this.slots.get(i).splitStack(j);
-                    if(StackUtil.getStackSize(this.slots.get(i)) <= 0){
-                        this.slots.set(i, StackUtil.getNull());
-                    }
-                    this.markDirty();
-                    return stackAt;
-                }
-            }
-            return StackUtil.getNull();
-        }
-
-        @Override
-        public ItemStack removeStackFromSlot(int index){
-            ItemStack stack = this.slots.get(index);
-            this.slots.set(index, StackUtil.getNull());
-            return stack;
-        }
-
-        @Override
-        public boolean hasCustomName(){
-            return false;
-        }
-
-
-        @Override
-        public ITextComponent getDisplayName(){
-            return new TextComponentTranslation(this.getName());
         }
     }
 }

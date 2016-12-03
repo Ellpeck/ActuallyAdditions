@@ -88,27 +88,27 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityCompost){
                 TileEntityCompost compost = (TileEntityCompost)tile;
-                ItemStack slot = compost.getStackInSlot(0);
+                ItemStack slot = compost.slots.getStackInSlot(0);
                 CompostRecipe recipeIn = TileEntityCompost.getRecipeForInput(slot);
                 if(!StackUtil.isValid(slot) || recipeIn != null){
                     if(StackUtil.isValid(stackPlayer)){
                         CompostRecipe recipeHand = TileEntityCompost.getRecipeForInput(stackPlayer);
                         if(recipeHand != null && (recipeIn == null || recipeIn == recipeHand)){
-                            int maxAdd = Math.min(StackUtil.getStackSize(recipeHand.input), StackUtil.getStackSize(stackPlayer));
+                            int maxAdd = StackUtil.getStackSize(stackPlayer);
 
                             if(!StackUtil.isValid(slot)){
                                 ItemStack stackToAdd = stackPlayer.copy();
                                 stackToAdd = StackUtil.setStackSize(stackToAdd, maxAdd);
-                                compost.setInventorySlotContents(0, stackToAdd);
+                                compost.slots.setStackInSlot(0, stackToAdd);
                                 player.inventory.decrStackSize(player.inventory.currentItem, maxAdd);
                                 return true;
                             }
                             else{
                                 ItemStack stackIn = slot.copy();
-                                if(StackUtil.getStackSize(stackIn) < StackUtil.getStackSize(recipeHand.input)){
-                                    int sizeAdded = Math.min(maxAdd, StackUtil.getStackSize(recipeHand.input)-StackUtil.getStackSize(stackIn));
+                                if(StackUtil.getStackSize(stackIn) < recipeHand.input.getMaxStackSize()){
+                                    int sizeAdded = Math.min(maxAdd, recipeHand.input.getMaxStackSize()-StackUtil.getStackSize(stackIn));
                                     stackIn = StackUtil.addStackSize(stackIn, sizeAdded);
-                                    compost.setInventorySlotContents(0, stackIn);
+                                    compost.slots.setStackInSlot(0, stackIn);
                                     player.inventory.decrStackSize(player.inventory.currentItem, sizeAdded);
                                     return true;
                                 }
@@ -119,7 +119,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                 else{
                     if(!StackUtil.isValid(stackPlayer)){
                         player.setHeldItem(hand, slot.copy());
-                        compost.setInventorySlotContents(0, StackUtil.getNull());
+                        compost.slots.setStackInSlot(0, StackUtil.getNull());
                         return true;
                     }
                     else if(ItemUtil.canBeStacked(stackPlayer, slot)){
@@ -127,7 +127,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                         ItemStack stackToAdd = stackPlayer.copy();
                         stackToAdd = StackUtil.addStackSize(stackToAdd, addedStackSize);
                         player.setHeldItem(hand, stackToAdd);
-                        compost.decrStackSize(0, addedStackSize);
+                        compost.slots.decrStackSize(0, addedStackSize);
                         return true;
 
                     }
@@ -156,7 +156,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityCompost){
-            ItemStack slot = ((TileEntityCompost)tile).getStackInSlot(0);
+            ItemStack slot = ((TileEntityCompost)tile).slots.getStackInSlot(0);
             String strg;
             if(!StackUtil.isValid(slot)){
                 strg = "Empty";

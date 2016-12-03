@@ -74,13 +74,13 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
                     if(this.currentAnimalAmount < THRESHOLD){
                         if(this.currentTimer >= TIME){
                             this.currentTimer = 0;
-                            if(StackUtil.isValid(this.slots.get(0))){
+                            if(StackUtil.isValid(this.slots.getStackInSlot(0))){
                                 EntityAnimal randomAnimal = animals.get(this.world.rand.nextInt(this.currentAnimalAmount));
-                                if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && (randomAnimal.isBreedingItem(this.slots.get(0)) || this.canHorseBeFed(randomAnimal))){
+                                if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && (randomAnimal.isBreedingItem(this.slots.getStackInSlot(0)) || this.canHorseBeFed(randomAnimal))){
 
                                     this.feedAnimal(randomAnimal);
 
-                                    this.slots.set(0, StackUtil.addStackSize(this.slots.get(0), -1));
+                                    this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -1));
                                 }
                             }
                         }
@@ -112,7 +112,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         if(animal instanceof EntityHorse){
             EntityHorse horse = (EntityHorse)animal;
             if(horse.isTame()){
-                Item item = this.slots.get(0).getItem();
+                Item item = this.slots.getStackInSlot(0).getItem();
                 return item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT;
             }
         }
@@ -135,12 +135,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return false;
     }
 }

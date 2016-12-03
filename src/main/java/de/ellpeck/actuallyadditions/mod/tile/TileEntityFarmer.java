@@ -121,16 +121,16 @@ public class TileEntityFarmer extends TileEntityInventoryBase{
                                     }
 
                                     boolean putSeeds = true;
-                                    if(!WorldUtil.addToInventory(this, 0, 6, seeds, EnumFacing.UP, false, true)){
+                                    if(!WorldUtil.addToInventory(this.slots, 0, 6, seeds, false)){
                                         other.addAll(seeds);
                                         putSeeds = false;
                                     }
 
-                                    if(WorldUtil.addToInventory(this, 6, 12, other, EnumFacing.UP, false, true)){
-                                        WorldUtil.addToInventory(this, 6, 12, other, EnumFacing.UP, true, true);
+                                    if(WorldUtil.addToInventory(this.slots, 6, 12, other, false)){
+                                        WorldUtil.addToInventory(this.slots, 6, 12, other, true);
 
                                         if(putSeeds){
-                                            WorldUtil.addToInventory(this, 0, 6, seeds, EnumFacing.UP, true, true);
+                                            WorldUtil.addToInventory(this.slots, 0, 6, seeds, true);
                                         }
 
                                         this.world.playEvent(2001, plant, Block.getStateId(plantState));
@@ -185,13 +185,13 @@ public class TileEntityFarmer extends TileEntityInventoryBase{
 
     private IBlockState getFirstPlantablePlantFromSlots(BlockPos pos){
         for(int i = 0; i < 6; i++){
-            ItemStack stack = this.slots.get(i);
+            ItemStack stack = this.slots.getStackInSlot(i);
             if(StackUtil.isValid(stack)){
                 IPlantable plantable = getPlantableFromStack(stack);
                 if(plantable != null){
                     IBlockState state = plantable.getPlant(this.world, pos);
                     if(state != null && state.getBlock() instanceof BlockCrops && state.getBlock().canPlaceBlockAt(this.world, pos)){
-                        this.decrStackSize(i, 1);
+                        this.slots.decrStackSize(i, 1);
                         return state;
                     }
                 }
@@ -206,12 +206,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return slot >= 6;
     }
 

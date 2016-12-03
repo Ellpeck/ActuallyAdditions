@@ -49,7 +49,7 @@ public class ContainerLaserRelayItemWhitelist extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        int inventoryStart = 0;
+        int inventoryStart = 24;
         int inventoryEnd = inventoryStart+26;
         int hotbarStart = inventoryEnd+1;
         int hotbarEnd = hotbarStart+8;

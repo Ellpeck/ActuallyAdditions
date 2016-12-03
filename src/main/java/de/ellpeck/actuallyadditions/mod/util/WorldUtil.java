@@ -23,15 +23,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -216,30 +213,15 @@ public final class WorldUtil{
         return blocks;
     }
 
-    public static boolean addToInventory(IInventory inventory, List<ItemStack> stacks, boolean actuallyDo, boolean shouldAlwaysWork){
-        return addToInventory(inventory, stacks, EnumFacing.UP, actuallyDo, shouldAlwaysWork);
+    public static boolean addToInventory(ItemStackHandlerCustom inventory, List<ItemStack> stacks, boolean actuallyDo){
+        return addToInventory(inventory, 0, inventory.getSlots(), stacks, actuallyDo);
     }
 
-    public static boolean addToInventory(IInventory inventory, List<ItemStack> stacks, EnumFacing side, boolean actuallyDo, boolean shouldAlwaysWork){
-        return addToInventory(inventory, 0, inventory.getSizeInventory(), stacks, side, actuallyDo, shouldAlwaysWork);
-    }
-
-    //TODO This is disgusting and has to be updated to the capability system
-
-    /**
-     * Add an ArrayList of ItemStacks to an Array of slots
-     *
-     * @param inventory  The inventory to try to put the items into
-     * @param stacks     The stacks to be put into the slots (Items don't actually get removed from there!)
-     * @param side       The side to input from
-     * @param actuallyDo Do it or just test if it works?
-     * @return Does it work?
-     */
-    public static boolean addToInventory(IInventory inventory, int start, int end, List<ItemStack> stacks, EnumFacing side, boolean actuallyDo, boolean shouldAlwaysWork){
+    public static boolean addToInventory(ItemStackHandlerCustom inventory, int start, int end, List<ItemStack> stacks, boolean actuallyDo){
         //Copy the slots if just testing to later load them again
         ItemStack[] backupSlots = null;
         if(!actuallyDo){
-            backupSlots = new ItemStack[inventory.getSizeInventory()];
+            backupSlots = new ItemStack[inventory.getSlots()];
             for(int i = 0; i < backupSlots.length; i++){
                 ItemStack stack = inventory.getStackInSlot(i);
                 backupSlots[i] = StackUtil.validateCopy(stack);
@@ -247,21 +229,13 @@ public final class WorldUtil{
         }
 
         int working = 0;
-        for(ItemStack stackToPutIn : stacks){
+        for(ItemStack stack : stacks){
             for(int i = start; i < end; i++){
-                if(shouldAlwaysWork || ((!(inventory instanceof ISidedInventory) || ((ISidedInventory)inventory).canInsertItem(i, stackToPutIn, side)) && inventory.isItemValidForSlot(i, stackToPutIn))){
-                    ItemStack stackInQuestion = inventory.getStackInSlot(i);
-                    if(StackUtil.isValid(stackToPutIn) && (!StackUtil.isValid(stackInQuestion) || (ItemUtil.canBeStacked(stackInQuestion, stackToPutIn) && stackInQuestion.getMaxStackSize() >= StackUtil.getStackSize(stackInQuestion)+StackUtil.getStackSize(stackToPutIn)))){
-                        if(!StackUtil.isValid(stackInQuestion)){
-                            inventory.setInventorySlotContents(i, stackToPutIn.copy());
-                        }
-                        else{
-                            inventory.setInventorySlotContents(i, StackUtil.addStackSize(stackInQuestion, StackUtil.getStackSize(stackToPutIn)));
-                        }
-                        working++;
+                stack = inventory.insertItemInternal(i, stack, false);
 
-                        break;
-                    }
+                if(!StackUtil.isValid(stack)){
+                    working++;
+                    break;
                 }
             }
         }
@@ -269,16 +243,16 @@ public final class WorldUtil{
         //Load the slots again
         if(!actuallyDo){
             for(int i = 0; i < backupSlots.length; i++){
-                inventory.setInventorySlotContents(i, backupSlots[i]);
+                inventory.setStackInSlot(i, backupSlots[i]);
             }
         }
 
         return working >= stacks.size();
     }
 
-    public static int findFirstFilledSlot(NonNullList<ItemStack> slots){
-        for(int i = 0; i < slots.size(); i++){
-            if(StackUtil.isValid(slots.get(i))){
+    public static int findFirstFilledSlot(ItemStackHandlerCustom slots){
+        for(int i = 0; i < slots.getSlots(); i++){
+            if(StackUtil.isValid(slots.getStackInSlot(i))){
                 return i;
             }
         }

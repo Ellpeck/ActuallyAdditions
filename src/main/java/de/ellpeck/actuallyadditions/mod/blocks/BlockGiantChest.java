@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestLarge;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestMedium;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
@@ -26,6 +27,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -103,12 +105,12 @@ public class BlockGiantChest extends BlockContainerBase{
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityGiantChest){
                 NBTTagList list = stack.getTagCompound().getTagList("Items", 10);
-                NonNullList<ItemStack> slots = ((TileEntityGiantChest)tile).slots;
+                ItemStackHandlerCustom slots = ((TileEntityGiantChest)tile).slots;
 
                 for(int i = 0; i < list.tagCount(); i++){
                     NBTTagCompound compound = list.getCompoundTagAt(i);
                     if(compound != null && compound.hasKey("id")){
-                        slots.set(i, new ItemStack(list.getCompoundTagAt(i)));
+                        slots.setStackInSlot(i, new ItemStack(list.getCompoundTagAt(i)));
                     }
                 }
             }
@@ -124,16 +126,16 @@ public class BlockGiantChest extends BlockContainerBase{
 
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityGiantChest){
-            List<ItemStack> slots = ((TileEntityGiantChest)tile).slots;
-            int place = ItemUtil.getPlaceAt(slots, new ItemStack(InitItems.itemCrateKeeper), false);
+            ItemStackHandlerCustom slots = ((TileEntityGiantChest)tile).slots;
+            int place = ItemUtil.getPlaceAt(slots.getItems(), new ItemStack(InitItems.itemCrateKeeper), false);
             if(place >= 0){
                 NBTTagList list = new NBTTagList();
-                for(int i = 0; i < slots.size(); i++){
+                for(int i = 0; i < slots.getSlots(); i++){
                     //Destroy the keeper
                     if(i != place){
                         NBTTagCompound compound = new NBTTagCompound();
-                        if(StackUtil.isValid(slots.get(i))){
-                            slots.get(i).writeToNBT(compound);
+                        if(StackUtil.isValid(slots.getStackInSlot(i))){
+                            slots.getStackInSlot(i).writeToNBT(compound);
                         }
                         list.appendTag(compound);
                     }
@@ -158,7 +160,7 @@ public class BlockGiantChest extends BlockContainerBase{
     public boolean shouldDropInventory(World world, BlockPos pos){
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityGiantChest){
-            if(ItemUtil.contains(((TileEntityGiantChest)tile).slots, new ItemStack(InitItems.itemCrateKeeper), false)){
+            if(ItemUtil.contains(((TileEntityGiantChest)tile).slots.getItems(), new ItemStack(InitItems.itemCrateKeeper), false)){
                 return false;
             }
         }

@@ -14,24 +14,23 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerFilter extends Container{
 
     public static final int SLOT_AMOUNT = 24;
 
-    private final InventoryFilter filterInventory = new InventoryFilter();
+    private final ItemStackHandlerCustom filterInventory = new ItemStackHandlerCustom(SLOT_AMOUNT);
     private final InventoryPlayer inventory;
 
     public ContainerFilter(InventoryPlayer inventory){
@@ -134,130 +133,6 @@ public class ContainerFilter extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.filterInventory.isUsableByPlayer(player);
-    }
-
-    public static class InventoryFilter implements IInventory{
-
-        public NonNullList<ItemStack> slots = StackUtil.createSlots(SLOT_AMOUNT);
-
-        @Override
-        public String getName(){
-            return "filter";
-        }
-
-        @Override
-        public int getInventoryStackLimit(){
-            return 64;
-        }
-
-        @Override
-        public void markDirty(){
-
-        }
-
-        @Override
-        public boolean isUsableByPlayer(EntityPlayer player){
-            return true;
-        }
-
-        @Override
-        public void openInventory(EntityPlayer player){
-
-        }
-
-        @Override
-        public void closeInventory(EntityPlayer player){
-
-        }
-
-        @Override
-        public boolean isItemValidForSlot(int index, ItemStack stack){
-            return true;
-        }
-
-        @Override
-        public int getField(int id){
-            return 0;
-        }
-
-        @Override
-        public void setField(int id, int value){
-
-        }
-
-        @Override
-        public int getFieldCount(){
-            return 0;
-        }
-
-        @Override
-        public void clear(){
-            this.slots.clear();
-        }
-
-        @Override
-        public void setInventorySlotContents(int i, ItemStack stack){
-            this.slots.set(i, stack);
-            this.markDirty();
-        }
-
-        @Override
-        public int getSizeInventory(){
-            return this.slots.size();
-        }
-
-        @Override
-        public boolean isEmpty(){
-            return StackUtil.isIInvEmpty(this.slots);
-        }
-
-        @Override
-        public ItemStack getStackInSlot(int i){
-            if(i < this.getSizeInventory()){
-                return this.slots.get(i);
-            }
-            return StackUtil.getNull();
-        }
-
-        @Override
-        public ItemStack decrStackSize(int i, int j){
-            if(StackUtil.isValid(this.slots.get(i))){
-                ItemStack stackAt;
-                if(StackUtil.getStackSize(this.slots.get(i)) <= j){
-                    stackAt = this.slots.get(i);
-                    this.slots.set(i, StackUtil.getNull());
-                    this.markDirty();
-                    return stackAt;
-                }
-                else{
-                    stackAt = this.slots.get(i).splitStack(j);
-                    if(StackUtil.getStackSize(this.slots.get(i)) <= 0){
-                        this.slots.set(i, StackUtil.getNull());
-                    }
-                    this.markDirty();
-                    return stackAt;
-                }
-            }
-            return StackUtil.getNull();
-        }
-
-        @Override
-        public ItemStack removeStackFromSlot(int index){
-            ItemStack stack = this.slots.get(index);
-            this.slots.set(index, StackUtil.getNull());
-            return stack;
-        }
-
-        @Override
-        public boolean hasCustomName(){
-            return false;
-        }
-
-
-        @Override
-        public ITextComponent getDisplayName(){
-            return new TextComponentTranslation(this.getName());
-        }
+        return true;
     }
 }

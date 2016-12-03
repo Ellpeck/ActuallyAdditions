@@ -89,10 +89,10 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
                     float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.world, coordsBlock, this.world.getBlockState(coordsBlock), 0, 1, false, null);
 
                     if(this.world.rand.nextFloat() <= chance){
-                        if(WorldUtil.addToInventory(this, drops, false, true)){
+                        if(WorldUtil.addToInventory(this.slots, drops, false)){
                             this.world.playEvent(2001, coordsBlock, Block.getStateId(this.world.getBlockState(coordsBlock)));
                             this.world.setBlockToAir(coordsBlock);
-                            WorldUtil.addToInventory(this, drops, true, true);
+                            WorldUtil.addToInventory(this.slots, drops, true);
                             this.storage.extractEnergyInternal(ENERGY_USE, false);
                             this.markDirty();
                         }
@@ -113,12 +113,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return true;
     }
 

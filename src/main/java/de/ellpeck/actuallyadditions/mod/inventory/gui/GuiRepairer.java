@@ -62,7 +62,7 @@ public class GuiRepairer extends GuiContainer{
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(TileEntityItemRepairer.canBeRepaired(this.tileRepairer.slots.get(TileEntityItemRepairer.SLOT_INPUT))){
+        if(TileEntityItemRepairer.canBeRepaired(this.tileRepairer.slots.getStackInSlot(TileEntityItemRepairer.SLOT_INPUT))){
             int i = this.tileRepairer.getItemDamageToScale(22);
             this.drawTexturedModalRect(this.guiLeft+73, this.guiTop+52, 176, 28, i, 16);
         }

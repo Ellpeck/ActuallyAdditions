@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -20,6 +21,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerFurnaceDouble extends Container{
@@ -29,10 +31,10 @@ public class ContainerFurnaceDouble extends Container{
     public ContainerFurnaceDouble(InventoryPlayer inventory, TileEntityBase tile){
         this.tileFurnace = (TileEntityFurnaceDouble)tile;
 
-        this.addSlotToContainer(new Slot(this.tileFurnace, TileEntityFurnaceDouble.SLOT_INPUT_1, 51, 21));
-        this.addSlotToContainer(new SlotFurnaceOutput(inventory.player, this.tileFurnace, TileEntityFurnaceDouble.SLOT_OUTPUT_1, 51, 69));
-        this.addSlotToContainer(new Slot(this.tileFurnace, TileEntityFurnaceDouble.SLOT_INPUT_2, 109, 21));
-        this.addSlotToContainer(new SlotFurnaceOutput(inventory.player, this.tileFurnace, TileEntityFurnaceDouble.SLOT_OUTPUT_2, 108, 69));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileFurnace.slots, TileEntityFurnaceDouble.SLOT_INPUT_1, 51, 21));
+        this.addSlotToContainer(new SlotOutput(this.tileFurnace.slots, TileEntityFurnaceDouble.SLOT_OUTPUT_1, 51, 69));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileFurnace.slots, TileEntityFurnaceDouble.SLOT_INPUT_2, 109, 21));
+        this.addSlotToContainer(new SlotOutput(this.tileFurnace.slots, TileEntityFurnaceDouble.SLOT_OUTPUT_2, 108, 69));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -108,6 +110,6 @@ public class ContainerFurnaceDouble extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.tileFurnace.isUsableByPlayer(player);
+        return this.tileFurnace.canPlayerUse(player);
     }
 }

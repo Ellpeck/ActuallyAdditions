@@ -74,11 +74,11 @@ public class TileEntityDropper extends TileEntityInventoryBase{
     }
 
     public ItemStack removeFromInventory(boolean actuallyDo){
-        for(int i = 0; i < this.slots.size(); i++){
-            if(StackUtil.isValid(this.slots.get(i))){
-                ItemStack slot = this.slots.get(i).copy();
+        for(int i = 0; i < this.slots.getSlots(); i++){
+            if(StackUtil.isValid(this.slots.getStackInSlot(i))){
+                ItemStack slot = this.slots.getStackInSlot(i).copy();
                 if(actuallyDo){
-                    this.slots.set(i, StackUtil.addStackSize(this.slots.get(i), -1));
+                    this.slots.setStackInSlot(i, StackUtil.addStackSize(this.slots.getStackInSlot(i), -1));
                     this.markDirty();
                 }
                 return slot;
@@ -88,12 +88,7 @@ public class TileEntityDropper extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return true;
     }
 

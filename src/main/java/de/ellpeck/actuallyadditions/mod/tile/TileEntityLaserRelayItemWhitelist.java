@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -21,6 +22,7 @@ import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor{
 
@@ -79,17 +81,17 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                     copy = StackUtil.setStackSize(copy, 1);
 
                     if(!FilterSettings.check(copy, usedSettings.filterInventory, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectMod, usedSettings.respectOredict)){
-                        for(int k = 0; k < usedSettings.filterInventory.getSizeInventory(); k++){
+                        for(int k = 0; k < usedSettings.filterInventory.getSlots(); k++){
                             ItemStack slot = usedSettings.filterInventory.getStackInSlot(k);
                             if(StackUtil.isValid(slot)){
                                 if(SlotFilter.isFilter(slot)){
-                                    IInventory inv = new InventoryBasic("Filter", false, ContainerFilter.SLOT_AMOUNT);
+                                    ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerFilter.SLOT_AMOUNT);
                                     ItemDrill.loadSlotsFromNBT(inv, slot);
 
                                     boolean did = false;
-                                    for(int j = 0; j < inv.getSizeInventory(); j++){
+                                    for(int j = 0; j < inv.getSlots(); j++){
                                         if(!StackUtil.isValid(inv.getStackInSlot(j))){
-                                            inv.setInventorySlotContents(j, copy);
+                                            inv.setStackInSlot(j, copy);
                                             did = true;
                                             break;
                                         }
@@ -102,7 +104,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                                 }
                             }
                             else{
-                                usedSettings.filterInventory.setInventorySlotContents(k, copy);
+                                usedSettings.filterInventory.setStackInSlot(k, copy);
                                 break;
                             }
                         }

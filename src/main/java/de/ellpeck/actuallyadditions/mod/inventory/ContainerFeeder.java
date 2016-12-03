@@ -18,6 +18,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerFeeder extends Container{
@@ -26,7 +27,7 @@ public class ContainerFeeder extends Container{
 
     public ContainerFeeder(InventoryPlayer inventory, TileEntityBase tile){
         this.tileFeeder = (TileEntityFeeder)tile;
-        this.addSlotToContainer(new Slot(this.tileFeeder, 0, 80, 45));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileFeeder.slots, 0, 80, 45));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -89,6 +90,6 @@ public class ContainerFeeder extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.tileFeeder.isUsableByPlayer(player);
+        return this.tileFeeder.canPlayerUse(player);
     }
 }

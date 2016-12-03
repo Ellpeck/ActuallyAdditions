@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
 import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
@@ -19,10 +20,11 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
-public class SlotFilter extends Slot{
+public class SlotFilter extends SlotItemHandlerUnconditioned{
 
-    public SlotFilter(IInventory inv, int slot, int x, int y){
+    public SlotFilter(ItemStackHandlerCustom inv, int slot, int x, int y){
         super(inv, slot, x, y);
     }
 

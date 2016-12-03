@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -97,7 +96,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     private boolean newPutting(){
-        if(this.checkBothFilters(this.slots.get(0), true)){
+        if(this.checkBothFilters(this.slots.getStackInSlot(0), true)){
             for(EnumFacing side : EnumFacing.values()){
                 if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side)){
                     IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
@@ -143,15 +142,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             this.placeToPull = this.world.getTileEntity(this.pos.offset(side));
 
             if(this.slotToPullEnd <= 0 && this.placeToPull != null){
-                if(this.placeToPull instanceof IInventory){
-                    this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
-                }
-                else{
-                    if(this.placeToPull.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
-                        IItemHandler cap = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                        if(cap != null){
-                            this.slotToPullEnd = cap.getSlots();
-                        }
+                if(this.placeToPull.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
+                    IItemHandler cap = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                    if(cap != null){
+                        this.slotToPullEnd = cap.getSlots();
                     }
                 }
             }
@@ -162,15 +156,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             this.placeToPut = this.world.getTileEntity(this.pos.offset(side));
 
             if(this.slotToPutEnd <= 0 && this.placeToPut != null){
-                if(this.placeToPut instanceof IInventory){
-                    this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
-                }
-                else{
-                    if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
-                        IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                        if(cap != null){
-                            this.slotToPutEnd = cap.getSlots();
-                        }
+                if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
+                    IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                    if(cap != null){
+                        this.slotToPutEnd = cap.getSlots();
                     }
                 }
             }
@@ -267,7 +256,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     if(this.sideToPull != -1 && this.placeToPull != null){
                         this.newPulling();
                     }
-                    if(StackUtil.isValid(this.slots.get(0)) && this.sideToPut != -1 && this.placeToPut != null){
+                    if(StackUtil.isValid(this.slots.getStackInSlot(0)) && this.sideToPut != -1 && this.placeToPut != null){
                         this.newPutting();
                     }
                 }
@@ -293,12 +282,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return slot == 0;
     }
 }

@@ -37,7 +37,7 @@ public class FuelHandler implements IFuelHandler{
         addFuel(InitItems.itemMisc, TheMiscItems.TINY_CHAR.ordinal(), 200);
         addFuel(InitItems.itemMisc, TheMiscItems.TINY_COAL.ordinal(), 200);
         addFuel(InitBlocks.blockMisc, TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), 16000);
-        addFuel(InitItems.itemMisc, TheMiscItems.BIOCOAL.ordinal(), 1450);
+        addFuel(InitItems.itemMisc, TheMiscItems.BIOCOAL.ordinal(), 80);
     }
 
     private static void addFuel(Item item, int meta, int value){

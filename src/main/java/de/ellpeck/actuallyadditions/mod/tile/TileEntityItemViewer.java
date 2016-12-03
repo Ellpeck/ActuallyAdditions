@@ -19,11 +19,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
-public class TileEntityItemViewer extends TileEntityInventoryBase{
+public class TileEntityItemViewer extends TileEntityBase{
 
     private final List<GenericItemHandlerInfo> genericInfos = new ArrayList<GenericItemHandlerInfo>();
     private final Map<Integer, SpecificItemHandlerInfo> specificInfos = new HashMap<Integer, SpecificItemHandlerInfo>();
@@ -32,49 +32,69 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     private Network oldNetwork;
     private int lastNetworkChangeAmount = -1;
 
+    private final IItemHandler itemHandler;
+
     public TileEntityItemViewer(){
-        super(0, "itemViewer");
+        super("itemViewer");
+
+        this.itemHandler = new IItemHandler(){
+            @Override
+            public int getSlots(){
+                int size = 0;
+                List<GenericItemHandlerInfo> infos = TileEntityItemViewer.this.getItemHandlerInfos();
+                if(infos != null){
+                    for(GenericItemHandlerInfo info : infos){
+                        for(IItemHandler handler : info.handlers){
+                            size += handler.getSlots();
+                        }
+                    }
+                }
+                return size;
+            }
+
+            @Override
+            public ItemStack getStackInSlot(int slot){
+                SpecificItemHandlerInfo handler = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                if(handler != null){
+                    return handler.handler.getStackInSlot(handler.switchedIndex);
+                }
+                return StackUtil.getNull();
+            }
+
+            @Override
+            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate){
+                SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                if(info != null && TileEntityItemViewer.this.isWhitelisted(info, stack, false)){
+                    ItemStack inserted = info.handler.insertItem(info.switchedIndex, stack, simulate);
+                    if(!ItemStack.areItemStacksEqual(inserted, stack)){
+                        TileEntityItemViewer.this.markDirty();
+                    }
+                    return inserted;
+                }
+                return stack;
+            }
+
+            @Override
+            public ItemStack extractItem(int slot, int amount, boolean simulate){
+                ItemStack stackIn = this.getStackInSlot(slot);
+                if(StackUtil.isValid(stackIn)){
+                    SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                    if(info != null && TileEntityItemViewer.this.isWhitelisted(info, stackIn, true)){
+                        ItemStack extracted = info.handler.extractItem(info.switchedIndex, amount, simulate);
+                        if(extracted != null){
+                            TileEntityItemViewer.this.markDirty();
+                        }
+                        return extracted;
+                    }
+                }
+                return StackUtil.getNull();
+            }
+        };
     }
 
     @Override
-    protected void getInvWrappers(SidedInvWrapper[] wrappers){
-        for(int i = 0; i < wrappers.length; i++){
-            final EnumFacing direction = EnumFacing.values()[i];
-            wrappers[i] = new SidedInvWrapper(this, direction){
-                @Override
-                public ItemStack insertItem(int slot, ItemStack stack, boolean simulate){
-                    if(TileEntityItemViewer.this.canInsertItem(slot, stack, direction)){
-                        SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
-                        if(info != null){
-                            ItemStack inserted = info.handler.insertItem(info.switchedIndex, stack, simulate);
-                            if(!ItemStack.areItemStacksEqual(inserted, stack)){
-                                TileEntityItemViewer.this.markDirty();
-                            }
-                            return inserted;
-                        }
-                    }
-                    return super.insertItem(slot, stack, simulate);
-                }
-
-                @Override
-                public ItemStack extractItem(int slot, int amount, boolean simulate){
-                    ItemStack stackIn = TileEntityItemViewer.this.getStackInSlot(slot);
-                    if(StackUtil.isValid(stackIn)){
-                        if(TileEntityItemViewer.this.canExtractItem(slot, stackIn, direction)){
-                            SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
-                            if(info != null){
-                                ItemStack extracted = info.handler.extractItem(info.switchedIndex, amount, simulate);
-                                if(extracted != null){
-                                    TileEntityItemViewer.this.markDirty();
-                                }
-                                return extracted;
-                            }
-                        }
-                    }
-                    return super.extractItem(slot, amount, simulate);
-                }
-            };
-        }
+    public IItemHandler getItemHandler(EnumFacing facing){
+        return this.itemHandler;
     }
 
     private List<GenericItemHandlerInfo> getItemHandlerInfos(){
@@ -159,25 +179,6 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         this.connectedRelay = tileFound;
     }
 
-    @Override
-    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction){
-        return this.isItemValidForSlot(index, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
-        SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
-        if(handler != null){
-            if(this.isWhitelisted(handler, stack, true)){
-                if(ItemStack.areItemsEqual(handler.handler.getStackInSlot(handler.switchedIndex), stack)){
-                    ItemStack gaveBack = handler.handler.extractItem(handler.switchedIndex, StackUtil.getStackSize(stack), true);
-                    return StackUtil.isValid(gaveBack);
-                }
-            }
-        }
-        return false;
-    }
-
     private boolean isWhitelisted(SpecificItemHandlerInfo handler, ItemStack stack, boolean output){
         boolean whitelisted = handler.relayInQuestion.isWhitelisted(stack, output);
         TileEntityLaserRelayItem connected = this.connectedRelay;
@@ -187,96 +188,6 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         else{
             return whitelisted;
         }
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack){
-        SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
-        if(handler != null){
-            if(this.isWhitelisted(handler, stack, false)){
-                ItemStack gaveBack = handler.handler.insertItem(handler.switchedIndex, stack, true);
-                return !ItemStack.areItemStacksEqual(gaveBack, stack);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void clear(){
-        for(int i = 0; i < this.getSizeInventory(); i++){
-            this.removeStackFromSlot(i);
-        }
-    }
-
-    @Override
-    public void setInventorySlotContents(int i, ItemStack stack){
-        if(StackUtil.isValid(stack)){
-            SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(i);
-            if(handler != null){
-                ItemStack toInsert = stack.copy();
-                ItemStack inSlot = handler.handler.getStackInSlot(handler.switchedIndex);
-                if(StackUtil.isValid(inSlot)){
-                    toInsert = StackUtil.addStackSize(toInsert, -StackUtil.getStackSize(inSlot));
-                }
-                handler.handler.insertItem(handler.switchedIndex, toInsert, false);
-                this.markDirty();
-            }
-        }
-        else{
-            this.removeStackFromSlot(i);
-        }
-    }
-
-    @Override
-    public int getSizeInventory(){
-        int size = 0;
-        List<GenericItemHandlerInfo> infos = this.getItemHandlerInfos();
-        if(infos != null){
-            for(GenericItemHandlerInfo info : infos){
-                for(IItemHandler handler : info.handlers){
-                    size += handler.getSlots();
-                }
-            }
-        }
-        return size;
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int i){
-        SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(i);
-        if(handler != null){
-            return handler.handler.getStackInSlot(handler.switchedIndex);
-        }
-        return null;
-    }
-
-    @Override
-    public ItemStack decrStackSize(int i, int j){
-        SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(i);
-        if(handler != null){
-            ItemStack extract = handler.handler.extractItem(handler.switchedIndex, j, false);
-            if(extract != null){
-                this.markDirty();
-            }
-            return extract;
-        }
-        return null;
-    }
-
-    @Override
-    public ItemStack removeStackFromSlot(int index){
-        SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
-        if(handler != null){
-            ItemStack stackInSlot = handler.handler.getStackInSlot(handler.switchedIndex);
-            if(StackUtil.isValid(stackInSlot)){
-                ItemStack extracted = handler.handler.extractItem(handler.switchedIndex, StackUtil.getStackSize(stackInSlot), false);
-                if(extracted != null){
-                    this.markDirty();
-                }
-                return extracted;
-            }
-        }
-        return null;
     }
 
     private static class SpecificItemHandlerInfo{

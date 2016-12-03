@@ -52,7 +52,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
         super.updateEntity();
 
         if(!this.world.isRemote){
-            List<EmpowererRecipe> recipes = getRecipesForInput(this.slots.get(0));
+            List<EmpowererRecipe> recipes = getRecipesForInput(this.slots.getStackInSlot(0));
             if(!recipes.isEmpty()){
                 for(EmpowererRecipe recipe : recipes){
                     TileEntityDisplayStand[] modifierStands = this.getFittingModifiers(recipe, recipe.time);
@@ -65,7 +65,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
                             stand.storage.extractEnergyInternal(recipe.energyPerStand/recipe.time, false);
 
                             if(done){
-                                stand.decrStackSize(0, 1);
+                                stand.slots.decrStackSize(0, 1);
                             }
 
                             AssetUtil.shootParticles(this.world, stand.getPos().getX(), stand.getPos().getY()+0.45F, stand.getPos().getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), recipe.particleColor, 8, 0.5F, 1F);
@@ -78,7 +78,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
                         if(done){
                             ((WorldServer)this.world).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 300, 0, 0, 0, 0.25D);
 
-                            this.slots.set(0, recipe.output.copy());
+                            this.slots.setStackInSlot(0, recipe.output.copy());
                             this.markDirty();
 
                             this.processTime = 0;
@@ -103,7 +103,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
 
             if(tile instanceof TileEntityDisplayStand){
                 TileEntityDisplayStand stand = (TileEntityDisplayStand)tile;
-                ItemStack standItem = stand.getStackInSlot(0);
+                ItemStack standItem = stand.slots.getStackInSlot(0);
                 int containPlace = ItemUtil.getPlaceAt(itemsStillNeeded, standItem, true);
                 if(stand.storage.getEnergyStored() >= recipe.energyPerStand/powerDivider && containPlace != -1){
                     modifierStands[i] = stand;
@@ -154,17 +154,12 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction){
-        return this.isItemValidForSlot(index, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
+    public boolean canExtractItem(int index, ItemStack stack){
         return getRecipesForInput(stack).isEmpty();
     }
 
     @Override
-    public int getInventoryStackLimit(){
+    public int getMaxStackSizePerSlot(int slot, ItemStack stack){
         return 1;
     }
 }

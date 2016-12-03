@@ -148,9 +148,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     }
 
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput){
-        if(StackUtil.isValid(this.slots.get(theInput))){
-            ItemStack outputOne = CrusherRecipeRegistry.getOutputOnes(this.slots.get(theInput));
-            ItemStack outputTwo = CrusherRecipeRegistry.getOutputTwos(this.slots.get(theInput));
+        if(StackUtil.isValid(this.slots.getStackInSlot(theInput))){
+            ItemStack outputOne = CrusherRecipeRegistry.getOutputOnes(this.slots.getStackInSlot(theInput));
+            ItemStack outputTwo = CrusherRecipeRegistry.getOutputTwos(this.slots.getStackInSlot(theInput));
             if(StackUtil.isValid(outputOne)){
                 if(outputOne.getItemDamage() == Util.WILDCARD){
                     outputOne.setItemDamage(0);
@@ -158,7 +158,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                 if(StackUtil.isValid(outputTwo) && outputTwo.getItemDamage() == Util.WILDCARD){
                     outputTwo.setItemDamage(0);
                 }
-                if((!StackUtil.isValid(this.slots.get(theFirstOutput)) || (this.slots.get(theFirstOutput).isItemEqual(outputOne) && StackUtil.getStackSize(this.slots.get(theFirstOutput)) <= this.slots.get(theFirstOutput).getMaxStackSize()-StackUtil.getStackSize(outputOne))) && (!StackUtil.isValid(outputTwo) || (!StackUtil.isValid(this.slots.get(theSecondOutput)) || (this.slots.get(theSecondOutput).isItemEqual(outputTwo) && StackUtil.getStackSize(this.slots.get(theSecondOutput)) <= this.slots.get(theSecondOutput).getMaxStackSize()-StackUtil.getStackSize(outputTwo))))){
+                if((!StackUtil.isValid(this.slots.getStackInSlot(theFirstOutput)) || (this.slots.getStackInSlot(theFirstOutput).isItemEqual(outputOne) && StackUtil.getStackSize(this.slots.getStackInSlot(theFirstOutput)) <= this.slots.getStackInSlot(theFirstOutput).getMaxStackSize()-StackUtil.getStackSize(outputOne))) && (!StackUtil.isValid(outputTwo) || (!StackUtil.isValid(this.slots.getStackInSlot(theSecondOutput)) || (this.slots.getStackInSlot(theSecondOutput).isItemEqual(outputTwo) && StackUtil.getStackSize(this.slots.getStackInSlot(theSecondOutput)) <= this.slots.getStackInSlot(theSecondOutput).getMaxStackSize()-StackUtil.getStackSize(outputTwo))))){
                     return true;
                 }
             }
@@ -171,36 +171,36 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput){
-        ItemStack outputOne = CrusherRecipeRegistry.getOutputOnes(this.slots.get(theInput));
+        ItemStack outputOne = CrusherRecipeRegistry.getOutputOnes(this.slots.getStackInSlot(theInput));
         if(StackUtil.isValid(outputOne)){
             if(outputOne.getItemDamage() == Util.WILDCARD){
                 outputOne.setItemDamage(0);
             }
-            if(!StackUtil.isValid(this.slots.get(theFirstOutput))){
-                this.slots.set(theFirstOutput, outputOne.copy());
+            if(!StackUtil.isValid(this.slots.getStackInSlot(theFirstOutput))){
+                this.slots.setStackInSlot(theFirstOutput, outputOne.copy());
             }
-            else if(this.slots.get(theFirstOutput).getItem() == outputOne.getItem()){
-                this.slots.set(theFirstOutput, StackUtil.addStackSize(this.slots.get(theFirstOutput), StackUtil.getStackSize(outputOne)));
+            else if(this.slots.getStackInSlot(theFirstOutput).getItem() == outputOne.getItem()){
+                this.slots.setStackInSlot(theFirstOutput, StackUtil.addStackSize(this.slots.getStackInSlot(theFirstOutput), StackUtil.getStackSize(outputOne)));
             }
         }
 
-        ItemStack outputTwo = CrusherRecipeRegistry.getOutputTwos(this.slots.get(theInput));
+        ItemStack outputTwo = CrusherRecipeRegistry.getOutputTwos(this.slots.getStackInSlot(theInput));
         if(StackUtil.isValid(outputTwo)){
             if(outputTwo.getItemDamage() == Util.WILDCARD){
                 outputTwo.setItemDamage(0);
             }
             int rand = this.world.rand.nextInt(100)+1;
-            if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots.get(theInput))){
-                if(!StackUtil.isValid(this.slots.get(theSecondOutput))){
-                    this.slots.set(theSecondOutput, outputTwo.copy());
+            if(rand <= CrusherRecipeRegistry.getOutputTwoChance(this.slots.getStackInSlot(theInput))){
+                if(!StackUtil.isValid(this.slots.getStackInSlot(theSecondOutput))){
+                    this.slots.setStackInSlot(theSecondOutput, outputTwo.copy());
                 }
-                else if(this.slots.get(theSecondOutput).getItem() == outputTwo.getItem()){
-                    this.slots.set(theSecondOutput, StackUtil.addStackSize(this.slots.get(theSecondOutput), StackUtil.getStackSize(outputTwo)));
+                else if(this.slots.getStackInSlot(theSecondOutput).getItem() == outputTwo.getItem()){
+                    this.slots.setStackInSlot(theSecondOutput, StackUtil.addStackSize(this.slots.getStackInSlot(theSecondOutput), StackUtil.getStackSize(outputTwo)));
                 }
             }
         }
 
-        this.slots.set(theInput, StackUtil.addStackSize(this.slots.get(theInput), -1));
+        this.slots.setStackInSlot(theInput, StackUtil.addStackSize(this.slots.getStackInSlot(theInput), -1));
     }
 
     @SideOnly(Side.CLIENT)
@@ -219,12 +219,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
     }
 

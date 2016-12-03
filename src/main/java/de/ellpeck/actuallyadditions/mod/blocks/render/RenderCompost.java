@@ -28,7 +28,7 @@ public class RenderCompost extends TileEntitySpecialRenderer{
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage){
         if(te instanceof TileEntityCompost){
             TileEntityCompost compost = (TileEntityCompost)te;
-            ItemStack slot = compost.getStackInSlot(0);
+            ItemStack slot = compost.slots.getStackInSlot(0);
 
             if(StackUtil.isValid(slot)){
                 Block display = null;
@@ -36,12 +36,12 @@ public class RenderCompost extends TileEntitySpecialRenderer{
                 for(CompostRecipe aRecipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
                     if(slot.isItemEqual(aRecipe.input)){
                         display = aRecipe.inputDisplay;
-                        maxAmount = StackUtil.getStackSize(aRecipe.input);
+                        maxAmount = aRecipe.input.getMaxStackSize();
                         break;
                     }
                     else if(slot.isItemEqual(aRecipe.output)){
                         display = aRecipe.outputDisplay;
-                        maxAmount = StackUtil.getStackSize(aRecipe.output);
+                        maxAmount = aRecipe.output.getMaxStackSize();
                         break;
                     }
                 }

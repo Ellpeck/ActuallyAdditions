@@ -19,6 +19,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerRepairer extends Container{
@@ -28,8 +29,8 @@ public class ContainerRepairer extends Container{
     public ContainerRepairer(InventoryPlayer inventory, TileEntityBase tile){
         this.tileRepairer = (TileEntityItemRepairer)tile;
 
-        this.addSlotToContainer(new Slot(this.tileRepairer, TileEntityItemRepairer.SLOT_INPUT, 47, 53));
-        this.addSlotToContainer(new SlotOutput(this.tileRepairer, TileEntityItemRepairer.SLOT_OUTPUT, 109, 53));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileRepairer.slots, TileEntityItemRepairer.SLOT_INPUT, 47, 53));
+        this.addSlotToContainer(new SlotOutput(this.tileRepairer.slots, TileEntityItemRepairer.SLOT_OUTPUT, 109, 53));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -96,6 +97,6 @@ public class ContainerRepairer extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.tileRepairer.isUsableByPlayer(player);
+        return this.tileRepairer.canPlayerUse(player);
     }
 }

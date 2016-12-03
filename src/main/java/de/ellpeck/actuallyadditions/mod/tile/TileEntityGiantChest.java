@@ -14,6 +14,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.AwfulUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -57,17 +58,12 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
         return true;
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return true;
     }
 
@@ -104,7 +100,7 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
             if(player != null){
                 builder.withLuck(player.getLuck());
             }
-            table.fillInventory(this, new Random(), builder.build());
+            AwfulUtil.fillInventory(table, this.slots, new Random(), builder.build());
         }
     }
 }

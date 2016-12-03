@@ -75,10 +75,10 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
             if(reconstructor != null){
                 if(StackUtil.isValid(heldItem)){
                     Item item = heldItem.getItem();
-                    if(item instanceof ILensItem && !StackUtil.isValid(reconstructor.getStackInSlot(0))){
+                    if(item instanceof ILensItem && !StackUtil.isValid(reconstructor.slots.getStackInSlot(0))){
                         ItemStack toPut = heldItem.copy();
                         toPut = StackUtil.setStackSize(toPut, 1);
-                        reconstructor.setInventorySlotContents(0, toPut);
+                        reconstructor.slots.setStackInSlot(0, toPut);
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
                     }
                     //Shush, don't tell anyone!
@@ -88,10 +88,10 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                     }
                 }
                 else{
-                    ItemStack slot = reconstructor.getStackInSlot(0);
+                    ItemStack slot = reconstructor.slots.getStackInSlot(0);
                     if(StackUtil.isValid(slot)){
                         player.setHeldItem(hand, slot.copy());
-                        reconstructor.setInventorySlotContents(0, StackUtil.getNull());
+                        reconstructor.slots.setStackInSlot(0, StackUtil.getNull());
                     }
                 }
             }
@@ -110,7 +110,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityAtomicReconstructor){
-            ItemStack slot = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);
+            ItemStack slot = ((TileEntityAtomicReconstructor)tile).slots.getStackInSlot(0);
             String strg;
             if(!StackUtil.isValid(slot)){
                 strg = StringUtil.localize("info."+ModUtil.MOD_ID+".noLens");

@@ -28,7 +28,7 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer{
         if(!(tile instanceof TileEntityAtomicReconstructor)){
             return;
         }
-        ItemStack stack = ((TileEntityAtomicReconstructor)tile).getStackInSlot(0);
+        ItemStack stack = ((TileEntityAtomicReconstructor)tile).slots.getStackInSlot(0);
 
         if(StackUtil.isValid(stack) && stack.getItem() instanceof ILensItem){
             GlStateManager.pushMatrix();

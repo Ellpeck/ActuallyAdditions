@@ -19,6 +19,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerCoalGenerator extends Container{
@@ -28,7 +29,7 @@ public class ContainerCoalGenerator extends Container{
     public ContainerCoalGenerator(InventoryPlayer inventory, TileEntityBase tile){
         this.generator = (TileEntityCoalGenerator)tile;
 
-        this.addSlotToContainer(new Slot(this.generator, 0, 87, 43));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.generator.slots, 0, 87, 43));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -95,6 +96,6 @@ public class ContainerCoalGenerator extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.generator.isUsableByPlayer(player);
+        return this.generator.canPlayerUse(player);
     }
 }

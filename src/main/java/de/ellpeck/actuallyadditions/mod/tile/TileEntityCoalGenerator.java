@@ -75,12 +75,12 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.storage.receiveEnergyInternal(PRODUCE, false);
             }
 
-            if(!this.isRedstonePowered && this.currentBurnTime <= 0 && StackUtil.isValid(this.slots.get(0)) && TileEntityFurnace.getItemBurnTime(this.slots.get(0)) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
-                int burnTime = TileEntityFurnace.getItemBurnTime(this.slots.get(0));
+            if(!this.isRedstonePowered && this.currentBurnTime <= 0 && StackUtil.isValid(this.slots.getStackInSlot(0)) && TileEntityFurnace.getItemBurnTime(this.slots.getStackInSlot(0)) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
+                int burnTime = TileEntityFurnace.getItemBurnTime(this.slots.getStackInSlot(0));
                 this.maxBurnTime = burnTime;
                 this.currentBurnTime = burnTime;
 
-                this.slots.set(0, StackUtil.addStackSize(this.slots.get(0), -1, true));
+                this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -1, true));
             }
 
             if(flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()){
@@ -109,13 +109,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return TileEntityFurnace.getItemBurnTime(this.slots.get(0)) <= 0;
+    public boolean canExtractItem(int slot, ItemStack stack){
+        return TileEntityFurnace.getItemBurnTime(this.slots.getStackInSlot(0)) <= 0;
     }
 
     @Override

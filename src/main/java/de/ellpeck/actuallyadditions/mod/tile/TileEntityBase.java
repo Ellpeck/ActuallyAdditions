@@ -38,6 +38,8 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public abstract class TileEntityBase extends TileEntity implements ITickable{
 
@@ -175,7 +177,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
             data.setInteger("X", this.pos.getX());
             data.setInteger("Y", this.pos.getY());
             data.setInteger("Z", this.pos.getZ());
-            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER), new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 128));
+            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER), new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
         }
     }
 
@@ -326,6 +328,12 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
+        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
+            IItemHandler handler = this.getItemHandler(facing);
+            if(handler != null){
+                return (T)handler;
+            }
+        }
         if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
             IFluidHandler tank = this.getFluidHandler(facing);
             if(tank != null){
@@ -357,6 +365,10 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public IEnergyStorage getEnergyStorage(EnumFacing facing){
+        return null;
+    }
+
+    public IItemHandler getItemHandler(EnumFacing facing){
         return null;
     }
 

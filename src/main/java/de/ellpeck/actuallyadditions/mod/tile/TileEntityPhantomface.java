@@ -122,11 +122,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     }
 
     @Override
-    public boolean isItemValidForSlot(int slot, ItemStack stack){
-        return false;
-    }
-
-    @Override
     public boolean hasBoundPosition(){
         if(this.boundPosition != null){
             if(this.world.getTileEntity(this.boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ())){
@@ -180,21 +175,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
     @Override
     public int getRange(){
         return this.range;
-    }
-
-    @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return false;
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return false;
-    }
-
-    @Override
-    public boolean hasInvWrapperCapabilities(){
-        return false;
     }
 
     @Override

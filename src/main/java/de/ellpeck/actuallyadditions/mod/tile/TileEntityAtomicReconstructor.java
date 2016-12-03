@@ -117,9 +117,9 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public Lens getLens(){
-        if(StackUtil.isValid(this.slots.get(0))){
-            if(this.slots.get(0).getItem() instanceof ILensItem){
-                return ((ILensItem)this.slots.get(0).getItem()).getLens();
+        if(StackUtil.isValid(this.slots.getStackInSlot(0))){
+            if(this.slots.getStackInSlot(0).getItem() instanceof ILensItem){
+                return ((ILensItem)this.slots.getStackInSlot(0).getItem()).getLens();
             }
         }
         return this.counter >= 500 ? ActuallyAdditionsAPI.lensDisruption : ActuallyAdditionsAPI.lensDefaultConversion;
@@ -168,12 +168,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return true;
     }
 

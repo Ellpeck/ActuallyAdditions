@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -28,7 +29,7 @@ public class ContainerBioReactor extends Container{
 
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new Slot(this.tile, j+i*2, 50+j*18, 13+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tile.slots, j+i*2, 50+j*18, 13+i*18));
             }
         }
 
@@ -97,6 +98,6 @@ public class ContainerBioReactor extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.tile.isUsableByPlayer(player);
+        return this.tile.canPlayerUse(player);
     }
 }

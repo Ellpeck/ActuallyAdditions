@@ -19,6 +19,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 @ChestContainer(rowSize = 13, isLargeChest = true)
 public class ContainerGiantChest extends Container{
@@ -30,7 +31,7 @@ public class ContainerGiantChest extends Container{
 
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 13; j++){
-                this.addSlotToContainer(new Slot(this.tileChest, (9*13*page)+j+(i*13), 5+j*18, 5+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileChest.slots, (9*13*page)+j+(i*13), 5+j*18, 5+i*18));
             }
         }
 
@@ -95,6 +96,6 @@ public class ContainerGiantChest extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.tileChest.isUsableByPlayer(player);
+        return this.tileChest.canPlayerUse(player);
     }
 }

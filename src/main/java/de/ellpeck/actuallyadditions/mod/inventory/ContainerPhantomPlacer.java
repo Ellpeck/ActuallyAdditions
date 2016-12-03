@@ -18,6 +18,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerPhantomPlacer extends Container{
@@ -29,7 +30,7 @@ public class ContainerPhantomPlacer extends Container{
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){
-                this.addSlotToContainer(new Slot(this.placer, j+i*3, 62+j*18, 21+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.placer.slots, j+i*3, 62+j*18, 21+i*18));
             }
         }
 
@@ -94,6 +95,6 @@ public class ContainerPhantomPlacer extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.placer.isUsableByPlayer(player);
+        return this.placer.canPlayerUse(player);
     }
 }

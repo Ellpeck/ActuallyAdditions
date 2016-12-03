@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -49,9 +50,9 @@ public class ItemFilter extends ItemBase{
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
-        IInventory inv = new InventoryBasic("Filter", false, ContainerFilter.SLOT_AMOUNT);
+        ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerFilter.SLOT_AMOUNT);
         ItemDrill.loadSlotsFromNBT(inv, stack);
-        for(int i = 0; i < inv.getSizeInventory(); i++){
+        for(int i = 0; i < inv.getSlots(); i++){
             ItemStack slot = inv.getStackInSlot(i);
             if(StackUtil.isValid(slot)){
                 tooltip.add(slot.getItem().getItemStackDisplayName(slot));

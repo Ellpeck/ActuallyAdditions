@@ -16,6 +16,10 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityCompost extends TileEntityInventoryBase{
 
@@ -63,12 +67,13 @@ public class TileEntityCompost extends TileEntityInventoryBase{
         if(!this.world.isRemote){
             boolean theFlag = this.conversionTime > 0;
 
-            if(StackUtil.isValid(this.slots.get(0))){
-                CompostRecipe recipe = getRecipeForInput(this.slots.get(0));
-                if(recipe != null && this.slots.get(0).isItemEqual(recipe.input) && StackUtil.getStackSize(this.slots.get(0)) >= StackUtil.getStackSize(recipe.input)){
+            if(StackUtil.isValid(this.slots.getStackInSlot(0))){
+                CompostRecipe recipe = getRecipeForInput(this.slots.getStackInSlot(0));
+                if(recipe != null){
                     this.conversionTime++;
                     if(this.conversionTime >= 3000){
-                        this.slots.set(0, recipe.output.copy());
+                        ItemStack output = recipe.output.copy();
+                        this.slots.setStackInSlot(0, StackUtil.setStackSize(output, StackUtil.getStackSize(this.slots.getStackInSlot(0))));
                         this.conversionTime = 0;
                         this.markDirty();
                     }
@@ -96,23 +101,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public int getInventoryStackLimit(){
-        if(StackUtil.isValid(this.slots.get(0))){
-            CompostRecipe recipe = getRecipeForInput(this.slots.get(0));
-            if(recipe != null && StackUtil.isValid(recipe.input)){
-                return StackUtil.getStackSize(recipe.input);
-            }
-        }
-        return super.getInventoryStackLimit();
-    }
-
-    @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return getRecipeForInput(stack) == null;
     }
 }

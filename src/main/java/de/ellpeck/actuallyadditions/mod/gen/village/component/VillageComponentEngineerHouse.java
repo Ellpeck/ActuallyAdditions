@@ -109,7 +109,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
                 if(compost instanceof TileEntityCompost){
                     TileEntityCompost tile = (TileEntityCompost)compost;
                     tile.stopFromDropping = true;
-                    tile.setInventorySlotContents(0, new ItemStack(InitItems.itemFertilizer, 10));
+                    tile.slots.setStackInSlot(0, new ItemStack(InitItems.itemFertilizer, 10));
                 }
             }
 
@@ -134,7 +134,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
                 TileEntityCanolaPress tile = (TileEntityCanolaPress)press;
                 tile.stopFromDropping = true;
                 tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/3));
-                tile.setInventorySlotContents(0, new ItemStack(InitItems.itemMisc, world.rand.nextInt(60)+1, TheMiscItems.CANOLA.ordinal()));
+                tile.slots.setStackInSlot(0, new ItemStack(InitItems.itemMisc, world.rand.nextInt(60)+1, TheMiscItems.CANOLA.ordinal()));
             }
 
             TileEntity crusher = this.getTileAtPos(world, 2, 1, 6, sbb);
@@ -143,7 +143,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
                 tile.stopFromDropping = true;
                 tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored()/2));
                 if(world.rand.nextFloat() >= 0.25F){
-                    tile.setInventorySlotContents(TileEntityGrinder.SLOT_INPUT_1, new ItemStack(InitBlocks.blockMisc, world.rand.nextInt(10)+1, TheMiscBlocks.ORE_QUARTZ.ordinal()));
+                    tile.slots.setStackInSlot(TileEntityGrinder.SLOT_INPUT_1, new ItemStack(InitBlocks.blockMisc, world.rand.nextInt(10)+1, TheMiscBlocks.ORE_QUARTZ.ordinal()));
                 }
             }
 
@@ -151,7 +151,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
             if(coal instanceof TileEntityCoalGenerator){
                 TileEntityCoalGenerator tile = (TileEntityCoalGenerator)coal;
                 tile.stopFromDropping = true;
-                tile.setInventorySlotContents(0, new ItemStack(Items.COAL, world.rand.nextInt(25)+3, 1));
+                tile.slots.setStackInSlot(0, new ItemStack(Items.COAL, world.rand.nextInt(25)+3, 1));
             }
 
             TileEntity reconstructor = this.getTileAtPos(world, 8, 4, 3, sbb);

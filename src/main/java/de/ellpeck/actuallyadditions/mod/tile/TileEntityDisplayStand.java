@@ -34,12 +34,12 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
         super.updateEntity();
 
         if(!this.world.isRemote){
-            if(StackUtil.isValid(this.slots.get(0)) && !this.isRedstonePowered){
-                IDisplayStandItem item = this.convertToDisplayStandItem(this.slots.get(0).getItem());
+            if(StackUtil.isValid(this.slots.getStackInSlot(0)) && !this.isRedstonePowered){
+                IDisplayStandItem item = this.convertToDisplayStandItem(this.slots.getStackInSlot(0).getItem());
                 if(item != null){
-                    int energy = item.getUsePerTick(this.slots.get(0), this, this.ticksElapsed);
+                    int energy = item.getUsePerTick(this.slots.getStackInSlot(0), this, this.ticksElapsed);
                     if(this.storage.getEnergyStored() >= energy){
-                        if(item.update(this.slots.get(0), this, this.ticksElapsed)){
+                        if(item.update(this.slots.getStackInSlot(0), this, this.ticksElapsed)){
                             this.storage.extractEnergyInternal(energy, false);
                         }
                     }
@@ -69,11 +69,6 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction){
-        return this.isItemValidForSlot(index, stack);
-    }
-
-    @Override
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
@@ -99,7 +94,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
+    public boolean canExtractItem(int index, ItemStack stack){
         return true;
     }
 
@@ -114,7 +109,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public int getInventoryStackLimit(){
+    public int getMaxStackSizePerSlot(int slot, ItemStack stack){
         return 1;
     }
 

@@ -123,16 +123,16 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         super.updateEntity();
         if(!this.world.isRemote){
             if(this.amount > 0){
-                if(!StackUtil.isValid(this.slots.get(0))){
+                if(!StackUtil.isValid(this.slots.getStackInSlot(0))){
                     int toSet = this.amount > 64 ? 64 : this.amount;
-                    this.slots.set(0, new ItemStack(InitItems.itemSolidifiedExperience, toSet));
+                    this.slots.setStackInSlot(0, new ItemStack(InitItems.itemSolidifiedExperience, toSet));
                     this.amount -= toSet;
                     this.markDirty();
                 }
-                else if(StackUtil.getStackSize(this.slots.get(0)) < 64){
-                    int needed = 64-StackUtil.getStackSize(this.slots.get(0));
+                else if(StackUtil.getStackSize(this.slots.getStackInSlot(0)) < 64){
+                    int needed = 64-StackUtil.getStackSize(this.slots.getStackInSlot(0));
                     int toAdd = this.amount > needed ? needed : this.amount;
-                    this.slots.set(0, StackUtil.addStackSize(this.slots.get(0), toAdd));
+                    this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), toAdd));
                     this.amount -= toAdd;
                     this.markDirty();
                 }
@@ -157,9 +157,9 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 }
             }
 
-            if(StackUtil.isValid(this.slots.get(1)) && this.slots.get(1).getItem() instanceof ItemSolidifiedExperience){
-                this.amount += StackUtil.getStackSize(this.slots.get(1));
-                this.slots.set(1, StackUtil.getNull());
+            if(StackUtil.isValid(this.slots.getStackInSlot(1)) && this.slots.getStackInSlot(1).getItem() instanceof ItemSolidifiedExperience){
+                this.amount += StackUtil.getStackSize(this.slots.getStackInSlot(1));
+                this.slots.setStackInSlot(1, StackUtil.getNull());
                 this.markDirty();
             }
 
@@ -175,12 +175,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return true;
     }
 

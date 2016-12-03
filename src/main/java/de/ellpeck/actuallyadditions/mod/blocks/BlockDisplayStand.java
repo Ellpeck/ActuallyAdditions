@@ -55,12 +55,12 @@ public class BlockDisplayStand extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityDisplayStand stand = (TileEntityDisplayStand)world.getTileEntity(pos);
             if(stand != null){
-                ItemStack display = stand.getStackInSlot(0);
+                ItemStack display = stand.slots.getStackInSlot(0);
                 if(StackUtil.isValid(heldItem)){
                     if(!StackUtil.isValid(display)){
                         ItemStack toPut = heldItem.copy();
                         toPut = StackUtil.setStackSize(toPut, 1);
-                        stand.setInventorySlotContents(0, toPut);
+                        stand.slots.setStackInSlot(0, toPut);
                         player.setHeldItem(hand, StackUtil.addStackSize(heldItem, -1));
                         return true;
                     }
@@ -70,7 +70,7 @@ public class BlockDisplayStand extends BlockContainerBase{
                             player.setHeldItem(hand, StackUtil.addStackSize(heldItem, maxTransfer));
                             ItemStack newDisplay = display.copy();
                             newDisplay = StackUtil.addStackSize(newDisplay, -maxTransfer);
-                            stand.setInventorySlotContents(0, StackUtil.validateCheck(newDisplay));
+                            stand.slots.setStackInSlot(0, StackUtil.validateCheck(newDisplay));
                             return true;
                         }
                     }
@@ -78,7 +78,7 @@ public class BlockDisplayStand extends BlockContainerBase{
                 else{
                     if(StackUtil.isValid(display)){
                         player.setHeldItem(hand, display.copy());
-                        stand.setInventorySlotContents(0, StackUtil.getNull());
+                        stand.slots.setStackInSlot(0, StackUtil.getNull());
                         return true;
                     }
                 }

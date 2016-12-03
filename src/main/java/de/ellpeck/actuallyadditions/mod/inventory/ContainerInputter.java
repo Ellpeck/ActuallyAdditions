@@ -21,6 +21,7 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerInputter extends Container{
@@ -33,7 +34,7 @@ public class ContainerInputter extends Container{
         this.tileInputter = (TileEntityInputter)tile;
         this.isAdvanced = isAdvanced;
 
-        this.addSlotToContainer(new Slot(this.tileInputter, 0, 80, 21+(isAdvanced ? 12 : 0)));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileInputter.slots, 0, 80, 21+(isAdvanced ? 12 : 0)));
 
         if(isAdvanced){
             for(int i = 0; i < 2; i++){
@@ -116,6 +117,6 @@ public class ContainerInputter extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.tileInputter.isUsableByPlayer(player);
+        return this.tileInputter.canPlayerUse(player);
     }
 }

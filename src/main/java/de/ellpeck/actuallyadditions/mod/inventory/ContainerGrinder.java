@@ -20,6 +20,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerGrinder extends Container{
@@ -31,13 +32,13 @@ public class ContainerGrinder extends Container{
         this.tileGrinder = (TileEntityGrinder)tile;
         this.isDouble = isDouble;
 
-        this.addSlotToContainer(new Slot(this.tileGrinder, TileEntityGrinder.SLOT_INPUT_1, this.isDouble ? 51 : 80, 21));
-        this.addSlotToContainer(new SlotOutput(this.tileGrinder, TileEntityGrinder.SLOT_OUTPUT_1_1, this.isDouble ? 37 : 66, 69));
-        this.addSlotToContainer(new SlotOutput(this.tileGrinder, TileEntityGrinder.SLOT_OUTPUT_1_2, this.isDouble ? 64 : 92, 69));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileGrinder.slots, TileEntityGrinder.SLOT_INPUT_1, this.isDouble ? 51 : 80, 21));
+        this.addSlotToContainer(new SlotOutput(this.tileGrinder.slots, TileEntityGrinder.SLOT_OUTPUT_1_1, this.isDouble ? 37 : 66, 69));
+        this.addSlotToContainer(new SlotOutput(this.tileGrinder.slots, TileEntityGrinder.SLOT_OUTPUT_1_2, this.isDouble ? 64 : 92, 69));
         if(this.isDouble){
-            this.addSlotToContainer(new Slot(this.tileGrinder, TileEntityGrinder.SLOT_INPUT_2, 109, 21));
-            this.addSlotToContainer(new SlotOutput(this.tileGrinder, TileEntityGrinder.SLOT_OUTPUT_2_1, 96, 69));
-            this.addSlotToContainer(new SlotOutput(this.tileGrinder, TileEntityGrinder.SLOT_OUTPUT_2_2, 121, 69));
+            this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileGrinder.slots, TileEntityGrinder.SLOT_INPUT_2, 109, 21));
+            this.addSlotToContainer(new SlotOutput(this.tileGrinder.slots, TileEntityGrinder.SLOT_OUTPUT_2_1, 96, 69));
+            this.addSlotToContainer(new SlotOutput(this.tileGrinder.slots, TileEntityGrinder.SLOT_OUTPUT_2_2, 121, 69));
         }
 
         for(int i = 0; i < 3; i++){
@@ -119,6 +120,6 @@ public class ContainerGrinder extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.tileGrinder.isUsableByPlayer(player);
+        return this.tileGrinder.canPlayerUse(player);
     }
 }

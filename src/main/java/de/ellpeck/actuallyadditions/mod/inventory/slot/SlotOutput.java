@@ -10,13 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import net.minecraft.item.ItemStack;
 
-public class SlotOutput extends Slot{
+public class SlotOutput extends SlotItemHandlerUnconditioned{
 
-    public SlotOutput(IInventory inventory, int id, int x, int y){
+    public SlotOutput(ItemStackHandlerCustom inventory, int id, int x, int y){
         super(inventory, id, x, y);
     }
 

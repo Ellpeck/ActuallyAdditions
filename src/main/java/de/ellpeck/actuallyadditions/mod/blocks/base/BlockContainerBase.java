@@ -85,8 +85,8 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
             TileEntity aTile = world.getTileEntity(position);
             if(aTile instanceof TileEntityInventoryBase){
                 TileEntityInventoryBase tile = (TileEntityInventoryBase)aTile;
-                if(tile.getSizeInventory() > 0){
-                    for(int i = 0; i < tile.getSizeInventory(); i++){
+                if(tile.slots.getSlots() > 0){
+                    for(int i = 0; i < tile.slots.getSlots(); i++){
                         this.dropSlotFromInventory(i, tile, world, position);
                     }
                 }
@@ -95,7 +95,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     }
 
     private void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, BlockPos pos){
-        ItemStack stack = tile.getStackInSlot(i);
+        ItemStack stack = tile.slots.getStackInSlot(i);
         if(StackUtil.isValid(stack)){
             float dX = world.rand.nextFloat()*0.8F+0.1F;
             float dY = world.rand.nextFloat()*0.8F+0.1F;

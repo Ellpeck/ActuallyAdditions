@@ -20,6 +20,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerCanolaPress extends Container{
@@ -29,7 +30,7 @@ public class ContainerCanolaPress extends Container{
     public ContainerCanolaPress(InventoryPlayer inventory, TileEntityBase tile){
         this.press = (TileEntityCanolaPress)tile;
 
-        this.addSlotToContainer(new Slot(this.press, 0, 81, 10));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.press.slots, 0, 81, 10));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -96,6 +97,6 @@ public class ContainerCanolaPress extends Container{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return this.press.isUsableByPlayer(player);
+        return this.press.canPlayerUse(player);
     }
 }

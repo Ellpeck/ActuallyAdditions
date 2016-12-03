@@ -138,19 +138,19 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
                     ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
                     drops.addAll(blockToBreak.getDrops(this.world, this.boundPosition, this.world.getBlockState(this.boundPosition), 0));
 
-                    if(WorldUtil.addToInventory(this, drops, false, true)){
+                    if(WorldUtil.addToInventory(this.slots, drops, false)){
                         this.world.playEvent(2001, this.boundPosition, Block.getStateId(this.world.getBlockState(this.boundPosition)));
                         this.world.setBlockToAir(this.boundPosition);
-                        WorldUtil.addToInventory(this, drops, true, true);
+                        WorldUtil.addToInventory(this.slots, drops, true);
                         this.markDirty();
                     }
                 }
             }
             else{
                 int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.setInventorySlotContents(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.world, this.boundPosition, this.slots.get(theSlot)));
-                if(!StackUtil.isValid(this.slots.get(theSlot))){
-                    this.slots.set(theSlot, StackUtil.getNull());
+                this.slots.setStackInSlot(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.world, this.boundPosition, this.slots.getStackInSlot(theSlot)));
+                if(!StackUtil.isValid(this.slots.getStackInSlot(theSlot))){
+                    this.slots.setStackInSlot(theSlot, StackUtil.getNull());
                 }
             }
         }
@@ -206,12 +206,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
+    public boolean canExtractItem(int slot, ItemStack stack){
         return this.isBreaker;
     }
 

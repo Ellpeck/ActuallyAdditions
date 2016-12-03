@@ -20,20 +20,24 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
 import java.util.UUID;
 
-public class TileEntityPlayerInterface extends TileEntityInventoryBase implements IEnergyDisplay{
+public class TileEntityPlayerInterface extends TileEntityBase implements IEnergyDisplay{
 
     public static final int DEFAULT_RANGE = 32;
     private final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 50, 0);
     public UUID connectedPlayer;
+    private IItemHandler playerHandler;
+    private EntityPlayer oldPlayer;
     public String playerName;
     private int oldEnergy;
     private int range;
 
     public TileEntityPlayerInterface(){
-        super(0, "playerInterface");
+        super("playerInterface");
     }
 
     private EntityPlayer getPlayer(){
@@ -46,6 +50,19 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
             }
         }
         return null;
+    }
+
+    @Override
+    public IItemHandler getItemHandler(EnumFacing facing){
+        EntityPlayer player = this.getPlayer();
+
+        if(this.oldPlayer != player){
+            this.oldPlayer = player;
+
+            this.playerHandler = player == null ? null : new PlayerInvWrapper(player.inventory);
+        }
+
+        return this.playerHandler;
     }
 
     @Override
@@ -119,96 +136,6 @@ public class TileEntityPlayerInterface extends TileEntityInventoryBase implement
             this.connectedPlayer = compound.getUniqueId("Player");
             this.playerName = compound.getString("PlayerName");
         }
-    }
-
-    @Override
-    public int[] getSlotsForFace(EnumFacing side){
-        if(this.getPlayer() != null){
-            int[] theInt = new int[this.getSizeInventory()];
-            for(int i = 0; i < theInt.length; i++){
-                theInt[i] = i;
-            }
-            return theInt;
-        }
-        return new int[0];
-    }
-
-    @Override
-    public int getInventoryStackLimit(){
-        EntityPlayer player = this.getPlayer();
-        return player != null ? player.inventory.getInventoryStackLimit() : 0;
-    }
-
-    @Override
-    public void clear(){
-        EntityPlayer player = this.getPlayer();
-        if(player != null){
-            player.inventory.clear();
-        }
-    }
-
-    @Override
-    public void setInventorySlotContents(int i, ItemStack stack){
-        EntityPlayer player = this.getPlayer();
-        if(player != null){
-            player.inventory.setInventorySlotContents(i, stack);
-        }
-    }
-
-    @Override
-    public int getSizeInventory(){
-        EntityPlayer player = this.getPlayer();
-        if(player != null){
-            return player.inventory.getSizeInventory();
-        }
-        else{
-            return 0;
-        }
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int i){
-        EntityPlayer player = this.getPlayer();
-        if(player != null){
-            return player.inventory.getStackInSlot(i);
-        }
-        else{
-            return null;
-        }
-    }
-
-    @Override
-    public ItemStack decrStackSize(int i, int j){
-        EntityPlayer player = this.getPlayer();
-        if(player != null){
-            return player.inventory.decrStackSize(i, j);
-        }
-        return null;
-    }
-
-    @Override
-    public ItemStack removeStackFromSlot(int index){
-        EntityPlayer player = this.getPlayer();
-        if(player != null){
-            return player.inventory.removeStackFromSlot(index);
-        }
-        return null;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        EntityPlayer player = this.getPlayer();
-        return player != null && player.inventory.isItemValidForSlot(i, stack);
-    }
-
-    @Override
-    public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isItemValidForSlot(slot, stack);
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return true;
     }
 
     @Override

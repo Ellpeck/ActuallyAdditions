@@ -124,7 +124,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
             }
         }
 
-        if(change){
+        if(change || old.size() != this.receiversAround.size()){
             Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
             if(network != null){
                 network.changeAmount++;
