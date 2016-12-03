@@ -814,7 +814,7 @@ booklet.actuallyadditions.chapter.feeder.name=Feeder
 booklet.actuallyadditions.chapter.feeder.text.1=The <item>Feeder<r> is a good alternative to a manual animal farm. Place it in the middle of an animal pen and supply it with some wheat, seeds or carrots, depending on the animal you want to feed, and just wait. It will <imp>automatically feed the animals<r> and if there is enough animals near it, it will <imp>shut off on its own<r> to prevent lag or animal overflow. <n><n><i>Greenpeace approves
 
 booklet.actuallyadditions.chapter.compost.name=Compost and Fertilizer
-booklet.actuallyadditions.chapter.compost.text.1=The <item>Compost<r> is used to make <item>Fertilizer<r> from <item>Bio-Mash<r>. <item>Fertilizer<r> acts just like Bone Meal, but can be crafted in a much simpler manner just by crafting <item>Bio-Mash<r> and then putting 10 of those inside of a <item>Compost<r> and waiting for a bit. When the mash is composted, just take it out by right-clicking again. <n><n>This, however, also works for some other items, which will be explained when needed.
+booklet.actuallyadditions.chapter.compost.text.1=The <item>Compost<r> is used to make <item>Fertilizer<r> from <item>Bio-Mash<r>. <item>Fertilizer<r> acts just like Bone Meal, but can be crafted in a much simpler manner just by crafting <item>Bio-Mash<r> and then putting those inside of a <item>Compost<r> and waiting for a bit. When the mash is composted, just take it out by right-clicking again. <n><n>This, however, also works for some other items, which will be explained when needed.
 booklet.actuallyadditions.chapter.compost.text.3=<item>Bio-Mash<r> can be crafted from <imp>any type of food or plantable item<r>.
 
 booklet.actuallyadditions.chapter.crate.name=Storage Crates

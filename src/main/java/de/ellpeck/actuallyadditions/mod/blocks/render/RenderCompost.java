@@ -36,12 +36,12 @@ public class RenderCompost extends TileEntitySpecialRenderer{
                 for(CompostRecipe aRecipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
                     if(slot.isItemEqual(aRecipe.input)){
                         display = aRecipe.inputDisplay;
-                        maxAmount = StackUtil.getStackSize(aRecipe.input);
+                        maxAmount = aRecipe.input.getMaxStackSize();
                         break;
                     }
                     else if(slot.isItemEqual(aRecipe.output)){
                         display = aRecipe.outputDisplay;
-                        maxAmount = StackUtil.getStackSize(aRecipe.output);
+                        maxAmount = aRecipe.output.getMaxStackSize();
                         break;
                     }
                 }

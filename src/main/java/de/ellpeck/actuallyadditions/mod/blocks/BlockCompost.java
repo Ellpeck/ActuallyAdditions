@@ -93,7 +93,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                     if(StackUtil.isValid(stackPlayer)){
                         CompostRecipe recipeHand = TileEntityCompost.getRecipeForInput(stackPlayer);
                         if(recipeHand != null && (recipeIn == null || recipeIn == recipeHand)){
-                            int maxAdd = Math.min(StackUtil.getStackSize(recipeHand.input), StackUtil.getStackSize(stackPlayer));
+                            int maxAdd = StackUtil.getStackSize(stackPlayer);
 
                             if(!StackUtil.isValid(slot)){
                                 ItemStack stackToAdd = stackPlayer.copy();
@@ -104,8 +104,8 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                             }
                             else{
                                 ItemStack stackIn = slot.copy();
-                                if(StackUtil.getStackSize(stackIn) < StackUtil.getStackSize(recipeHand.input)){
-                                    int sizeAdded = Math.min(maxAdd, StackUtil.getStackSize(recipeHand.input)-StackUtil.getStackSize(stackIn));
+                                if(StackUtil.getStackSize(stackIn) < recipeHand.input.getMaxStackSize()){
+                                    int sizeAdded = Math.min(maxAdd, recipeHand.input.getMaxStackSize()-StackUtil.getStackSize(stackIn));
                                     stackIn = StackUtil.addStackSize(stackIn, sizeAdded);
                                     compost.setInventorySlotContents(0, stackIn);
                                     player.inventory.decrStackSize(player.inventory.currentItem, sizeAdded);
