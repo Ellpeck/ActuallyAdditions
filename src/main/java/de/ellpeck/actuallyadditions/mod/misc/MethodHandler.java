@@ -36,11 +36,10 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,13 +133,32 @@ public class MethodHandler implements IMethodHandler{
 
     @Override
     public boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        if(hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)){
-            int range = 2;
+        if(hitBlock != null){
+            int range = 1;
+            int rangeX = 0;
+            int rangeY = 0;
+            int rangeZ = 0;
+
+            EnumFacing facing = tile.getOrientation();
+            if(facing != EnumFacing.UP && facing != EnumFacing.DOWN){
+                rangeY = range;
+
+                if(facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH){
+                    rangeX = range;
+                }
+                else{
+                    rangeZ = range;
+                }
+            }
+            else{
+                rangeX = range;
+                rangeZ = range;
+            }
 
             //Converting the Blocks
-            for(int reachX = -range; reachX < range+1; reachX++){
-                for(int reachZ = -range; reachZ < range+1; reachZ++){
-                    for(int reachY = -range; reachY < range+1; reachY++){
+            for(int reachX = -rangeX; reachX <= rangeX; reachX++){
+                for(int reachZ = -rangeZ; reachZ <= rangeZ; reachZ++){
+                    for(int reachY = -rangeY; reachY <= rangeY; reachY++){
                         BlockPos pos = new BlockPos(hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
                         if(!tile.getWorldObject().isAirBlock(pos)){
                             IBlockState state = tile.getWorldObject().getBlockState(pos);
@@ -166,17 +184,12 @@ public class MethodHandler implements IMethodHandler{
                                 }
                             }
                         }
-                        else{
-                            if(tile.getWorldObject() instanceof WorldServer){
-                                ((WorldServer)tile.getWorldObject()).spawnParticle(EnumParticleTypes.END_ROD, false, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, 1, 0, 0, 0, 0D);
-                            }
-                        }
                     }
                 }
             }
 
             //Converting the Items
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
+            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-rangeX, hitBlock.getY()-rangeY, hitBlock.getZ()-rangeZ, hitBlock.getX()+1+rangeX, hitBlock.getY()+1+rangeY, hitBlock.getZ()+1+rangeZ));
             for(EntityItem item : items){
                 ItemStack stack = item.getEntityItem();
                 if(!item.isDead && StackUtil.isValid(stack)){
@@ -209,7 +222,7 @@ public class MethodHandler implements IMethodHandler{
                     }
                 }
             }
-            return true;
+            return !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock);
         }
         return false;
     }
