@@ -216,7 +216,9 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
             if(tile instanceof TileEntityBase){
                 TileEntityBase base = (TileEntityBase)tile;
                 NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Data");
-                base.readSyncableNBT(compound, TileEntityBase.NBTType.SAVE_BLOCK);
+                if(compound != null){
+                    base.readSyncableNBT(compound, TileEntityBase.NBTType.SAVE_BLOCK);
+                }
             }
         }
     }
