@@ -65,7 +65,10 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         this.currentProcessTime = compound.getInteger("ProcessTime");
         this.canolaTank.readFromNBT(compound);
-        this.oilTank.readFromNBT((NBTTagCompound)compound.getTag("OilTank"));
+        NBTTagCompound tag = compound.getCompoundTag("OilTank");
+        if(tag != null){
+            this.oilTank.readFromNBT(tag);
+        }
         super.readSyncableNBT(compound, type);
     }
 
