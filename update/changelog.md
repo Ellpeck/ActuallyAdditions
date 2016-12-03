@@ -1,3 +1,8 @@
+# 1.10.2-r87
+* Fix Laser Relays sometimes not updating their caches causing in possible loss of things
+* Fixed the compost sometimes accepting too many items (It will now accept full stacks at all time)
+* Fixed corrupt NBT Tags on Items causing TileEntities to crash in certain situations
+
 # 1.11-r86
 * Fix a crash with Energy Phantomfaces and Tesla
 * Fix the farmer rotations being wrong
