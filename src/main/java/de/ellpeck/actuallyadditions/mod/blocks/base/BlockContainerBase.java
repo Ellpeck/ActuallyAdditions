@@ -23,8 +23,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -216,7 +214,9 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
             if(tile instanceof TileEntityBase){
                 TileEntityBase base = (TileEntityBase)tile;
                 NBTTagCompound compound = stack.getTagCompound().getCompoundTag("Data");
-                base.readSyncableNBT(compound, TileEntityBase.NBTType.SAVE_BLOCK);
+                if(compound != null){
+                    base.readSyncableNBT(compound, TileEntityBase.NBTType.SAVE_BLOCK);
+                }
             }
         }
     }
