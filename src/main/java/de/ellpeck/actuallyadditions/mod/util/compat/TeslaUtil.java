@@ -67,9 +67,10 @@ public final class TeslaUtil{
             TESLA_MAP.put(tile, handlers);
         }
 
-        int side = facing == null ? 0 : facing.ordinal();
+        EnumFacing properFacing = facing == null ? EnumFacing.DOWN : facing;
+        int side = properFacing.ordinal();
         if(handlers[side] == null){
-            handlers[side] = new TileTeslaWrapper(tile, facing);
+            handlers[side] = new TileTeslaWrapper(tile, properFacing);
         }
         return handlers[side];
     }
