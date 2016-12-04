@@ -1,4 +1,5 @@
 # 1.10.2-r88
+* Fix a crash with the Phantomface on blocks that don't support IInventory
 * Fix Laser Relay crash with Tesla integration and some machines from other mods
 
 # 1.10.2-r87
