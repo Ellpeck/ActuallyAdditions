@@ -1,3 +1,6 @@
+# 1.10.2-r88
+* Fix Laser Relay crash with Tesla integration and some machines from other mods
+
 # 1.10.2-r87
 * Fix Laser Relays sometimes not updating their caches causing in possible loss of things
 * Fixed the compost sometimes accepting too many items (It will now accept full stacks at all time)
