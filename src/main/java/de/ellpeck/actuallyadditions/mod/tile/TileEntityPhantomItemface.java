@@ -11,8 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -25,99 +23,19 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
         this.type = BlockPhantom.Type.FACE;
     }
 
-
-    @Override
-    public int[] getSlotsForFace(EnumFacing side){
-        if(this.isBoundThingInRange()){
-            if(this.getSided() != null){
-                return this.getSided().getSlotsForFace(side);
-            }
-            else{
-                int[] theInt = new int[this.getSizeInventory()];
-                for(int i = 0; i < theInt.length; i++){
-                    theInt[i] = i;
-                }
-                return theInt;
-            }
-        }
-        return new int[0];
-    }
-
-    @Override
-    public int getInventoryStackLimit(){
-        return this.isBoundThingInRange() ? this.getInventory().getInventoryStackLimit() : 0;
-    }
-
-    @Override
-    public void clear(){
-        if(this.isBoundThingInRange()){
-            this.getInventory().clear();
-        }
-    }
-
-    @Override
-    public void setInventorySlotContents(int i, ItemStack stack){
-        if(this.isBoundThingInRange()){
-            this.getInventory().setInventorySlotContents(i, stack);
-        }
-        this.markDirty();
-    }
-
-    @Override
-    public int getSizeInventory(){
-        return this.isBoundThingInRange() ? this.getInventory().getSizeInventory() : 0;
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int i){
-        return this.isBoundThingInRange() ? this.getInventory().getStackInSlot(i) : null;
-    }
-
-    @Override
-    public ItemStack decrStackSize(int i, int j){
-        return this.isBoundThingInRange() ? this.getInventory().decrStackSize(i, j) : null;
-    }
-
-    @Override
-    public ItemStack removeStackFromSlot(int index){
-        if(this.isBoundThingInRange()){
-            return this.getInventory().removeStackFromSlot(index);
-        }
-        return null;
-    }
-
-    public ISidedInventory getSided(){
-        return this.getInventory() instanceof ISidedInventory ? (ISidedInventory)this.getInventory() : null;
-    }
-
-    public IInventory getInventory(){
-        if(this.boundPosition != null){
-            TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
-            if(tile instanceof IInventory){
-                return (IInventory)tile;
-            }
-        }
-        return null;
-    }
-
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return this.isBoundThingInRange() && this.getInventory().isItemValidForSlot(i, stack);
+        return this.isBoundThingInRange();
     }
 
     @Override
     public boolean isBoundThingInRange(){
         if(super.isBoundThingInRange()){
-            if(this.getInventory() != null){
-                return true;
-            }
-            else{
-                TileEntity tile = this.worldObj.getTileEntity(this.getBoundPosition());
-                if(tile != null){
-                    for(EnumFacing facing : EnumFacing.values()){
-                        if(tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)){
-                            return true;
-                        }
+            TileEntity tile = this.worldObj.getTileEntity(this.getBoundPosition());
+            if(tile != null){
+                for(EnumFacing facing : EnumFacing.values()){
+                    if(tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)){
+                        return true;
                     }
                 }
             }
@@ -127,11 +45,11 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canInsertItem(slot, stack, side));
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side){
-        return this.isBoundThingInRange() && (this.getSided() == null || this.getSided().canExtractItem(slot, stack, side));
+        return this.isBoundThingInRange();
     }
 }
