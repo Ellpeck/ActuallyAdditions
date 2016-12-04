@@ -54,7 +54,17 @@ public class GuiMainPage extends GuiBooklet{
             "Balanced mod wich makes things different - in a good way.@garantiertnicht",
             "The mod everyone needs, but not everyone knows@Brewpl",
             "The in-game documentation is the best I’ve seen. I especially love the JEI integration. Even a derp like me can figure it out.@dannydjdk",
-            "The second best mod I've ever used.@mmaas44"
+            "The second best mod I've ever used.@mmaas44",
+            "The Fermenting Barrel is one of my favorite textures.@amadornes",
+            "Smiley Clouds is the reason for fascism in 2016.@raoulvdberge",
+            "The worms are an awesome idea!@greenking",
+            "Can I use that mod in my pack?@Ibraheem",
+            "Hello, love the mod.@SuntannedDuck2",
+            "Quick! Have all the fun before they nerf it!@JuddMan03",
+            "I have a feeling Actually Additions is also like Extra Utilities with Random things smashed together why is it...@lesslighter",
+            "Leaf eater... munchdew... hummm@EiOs",
+            "There is no such thing as canola seeds.@AlBoVa",
+            "This mod is cancer, BRUTAL EXPENSIVE POWER usage..Just, cancer.@KoJo"
     };
 
     private TexturedButton achievementButton;
@@ -204,6 +214,12 @@ public class GuiMainPage extends GuiBooklet{
             }
             else if(playerName.equalsIgnoreCase("mezz")){
                 versionStrg = "Just Enough Editions";
+            }
+            else if(playerName.equalsIgnoreCase("amadornes")){
+                versionStrg = "Beard's Edition";
+            }
+            else if(playerName.equalsIgnoreCase("raoulvdberge")){
+                versionStrg = "Giraffe's Edition";
             }
             else{
                 versionStrg = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.edition")+" "+modVersion;
