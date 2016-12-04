@@ -218,7 +218,7 @@ public class GuiMainPage extends GuiBooklet{
             else if(playerName.equalsIgnoreCase("amadornes")){
                 versionStrg = "Beard's Edition";
             }
-            else if(playerName.equalsIgnoreCase("raoulvdberge")){
+            else if(playerName.equalsIgnoreCase("raoul")){
                 versionStrg = "Giraffe's Edition";
             }
             else{
