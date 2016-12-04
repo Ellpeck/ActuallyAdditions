@@ -21,6 +21,7 @@ import de.ellpeck.actuallyadditions.mod.gen.village.component.handler.VillageEng
 import de.ellpeck.actuallyadditions.mod.gen.village.component.handler.VillageJamHouseHandler;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
+import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
@@ -96,9 +97,16 @@ public final class InitVillager{
         VillagerRegistry.instance().register(jamProfession);
 
         VillagerCareer career = new VillagerCareer(jamProfession, ModUtil.MOD_ID+".jammer");
-        for(int i = 0; i < 3; i++){
-            career.addTrade(i+1, new JamVillagerTradeList());
-        }
+        career.addTrade(1,
+                new BasicTradeList(new PriceInfo(1, 4), new ItemStack(InitItems.itemJams, 1, TheJams.CU_BA_RA.ordinal()), new PriceInfo(1, 3)),
+                new BasicTradeList(new PriceInfo(1, 4), new ItemStack(InitItems.itemJams, 1, TheJams.GRA_KI_BA.ordinal()), new PriceInfo(1, 3)));
+        career.addTrade(2,
+                new BasicTradeList(new PriceInfo(1, 4), new ItemStack(InitItems.itemJams, 1, TheJams.PL_AP_LE.ordinal()), new PriceInfo(1, 3)),
+                new BasicTradeList(new PriceInfo(1, 4), new ItemStack(InitItems.itemJams, 1, TheJams.CH_AP_CI.ordinal()), new PriceInfo(1, 3)),
+                new BasicTradeList(new PriceInfo(1, 4), new ItemStack(InitItems.itemJams, 1, TheJams.HO_ME_KI.ordinal()), new PriceInfo(1, 3)));
+        career.addTrade(3,
+                new BasicTradeList(new PriceInfo(1, 4), new ItemStack(InitItems.itemJams, 1, TheJams.HO_ME_CO.ordinal()), new PriceInfo(1, 3)),
+                new BasicTradeList(new PriceInfo(1, 4), new ItemStack(InitItems.itemJams, 1, TheJams.PI_CO.ordinal()), new PriceInfo(1, 3)));
 
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageJamHouseHandler());
         MapGenStructureIO.registerStructureComponent(VillageComponentJamHouse.class, ModUtil.MOD_ID+":jamHouseStructure");
