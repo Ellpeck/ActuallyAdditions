@@ -1,5 +1,5 @@
 /*
- * This file ("IAtomicReconstructor.java") is part of the Actually Additions mod for Minecraft.
+ * This file ("IEnergyTile.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://ellpeck.de/actaddlicense
@@ -10,18 +10,23 @@
 
 package de.ellpeck.actuallyadditions.api.internal;
 
-import de.ellpeck.actuallyadditions.api.lens.Lens;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 
 /**
- * This is a helper interface for Lens' invoke() method.
- * <p>
  * This is not supposed to be implemented.
  * Can be cast to TileEntity.
  */
-public interface IAtomicReconstructor extends IEnergyTile{
+public interface IEnergyTile{
 
-    Lens getLens();
+    int getX();
 
-    EnumFacing getOrientation();
+    int getY();
+
+    int getZ();
+
+    World getWorldObject();
+
+    void extractEnergy(int amount);
+
+    int getEnergy();
 }

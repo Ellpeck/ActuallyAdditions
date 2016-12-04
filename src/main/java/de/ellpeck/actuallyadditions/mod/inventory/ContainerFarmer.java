@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -18,7 +19,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
- import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerFarmer extends Container{
@@ -65,20 +65,16 @@ public class ContainerFarmer extends Container{
             //Other Slots in Inventory excluded
             if(slot >= inventoryStart){
                 //Shift from Inventory
-                if(TileEntityFarmer.getPlantableFromStack(newStack) != null){
-                    if(!this.mergeItemStack(newStack, 0, 6, false)){
+                if(!this.mergeItemStack(newStack, 0, 6, false)){
+                    //
+                    if(slot >= inventoryStart && slot <= inventoryEnd){
+                        if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
+                            return StackUtil.getNull();
+                        }
+                    }
+                    else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
                         return StackUtil.getNull();
                     }
-                }
-                //
-
-                else if(slot >= inventoryStart && slot <= inventoryEnd){
-                    if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
-                        return StackUtil.getNull();
-                    }
-                }
-                else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
-                    return StackUtil.getNull();
                 }
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)){

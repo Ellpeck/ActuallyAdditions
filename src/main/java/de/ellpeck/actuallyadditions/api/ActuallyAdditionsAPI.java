@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.api;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
@@ -31,7 +32,7 @@ public final class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "31";
+    public static final String API_VERSION = "32";
 
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<CrusherRecipe>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
@@ -39,6 +40,7 @@ public final class ActuallyAdditionsAPI{
     public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<LensConversionRecipe>();
     public static final List<EmpowererRecipe> EMPOWERER_RECIPES = new ArrayList<EmpowererRecipe>();
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<Item, IColorLensChanger>();
+    public static final List<IFarmerBehavior> FARMER_BEHAVIORS = new ArrayList<IFarmerBehavior>();
     public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<CoffeeIngredient>();
     public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<CompostRecipe>();
     public static final List<OilGenRecipe> OIL_GENERATOR_RECIPES = new ArrayList<OilGenRecipe>();
@@ -246,5 +248,14 @@ public final class ActuallyAdditionsAPI{
      */
     public static void addBookletEntry(IBookletEntry entry){
         BOOKLET_ENTRIES.add(entry);
+    }
+
+    /**
+     * Adds a new farmer behavior to the Farmer
+     *
+     * @param behavior The behavior to add
+     */
+    public static void addFarmerBehavior(IFarmerBehavior behavior){
+        FARMER_BEHAVIORS.add(behavior);
     }
 }
