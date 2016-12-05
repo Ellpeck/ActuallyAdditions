@@ -1,3 +1,23 @@
+# 1.11-r89
+* Made Filters be consumed when placing them into filter slots
+* Added Laser Relay in/out config. Hold a Laser Wrench for more info.
+* Fix a crash with the miner
+* Fix the XP Solidifier texture
+* Fix the reconstructor never using more than 1000 RF
+* Fix a crash that sometimes happens when placing down container blocks
+* Fix the Fermenting Barrel crashing with a missing compound
+* Made the crusher quieter
+* Made the reconstructor convert without needing blocks in front
+* Added more booklet quotes ~O_O~
+* Fix Diamatine armor not having a texture
+* Fix Jam Villager sometimes producing infinite emeralds
+* Added the ability to farm cactus in the Farmer
+* Added the ability to farm Nether Wart in the Farmer
+* Fix the placer not working
+* Make fluid handling blocks side independent
+* Added the ability to add custom farmer behaviors to the API
+* Dropped IInventory Support
+
 # 1.10.2-r88
 * Fix a crash with the Phantomface on blocks that don't support IInventory
 * Fix Laser Relay crash with Tesla integration and some machines from other mods
