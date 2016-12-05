@@ -19,6 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 public abstract class TileEntityInventoryBase extends TileEntityBase{
@@ -108,20 +109,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase{
 
     @Override
     public int getComparatorStrength(){
-        int i = 0;
-        float f = 0;
-
-        for(int j = 0; j < this.slots.getSlots(); ++j){
-            ItemStack stack = this.slots.getStackInSlot(j);
-
-            if(StackUtil.isValid(stack)){
-                f += (float)StackUtil.getStackSize(stack)/(float)Math.min(this.getMaxStackSizePerSlot(j, stack), stack.getMaxStackSize());
-                i++;
-            }
-        }
-
-        f = f/(float)this.slots.getSlots();
-        return MathHelper.floor(f*14.0F)+(i > 0 ? 1 : 0);
+        return ItemHandlerHelper.calcRedstoneFromInventory(this.slots);
     }
 
     @Override

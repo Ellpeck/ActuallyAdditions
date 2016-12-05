@@ -20,7 +20,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 
 public class TileEntityItemViewer extends TileEntityBase{
@@ -88,6 +87,17 @@ public class TileEntityItemViewer extends TileEntityBase{
                     }
                 }
                 return StackUtil.getNull();
+            }
+
+            @Override
+            public int getSlotLimit(int slot){
+                SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                if(info != null){
+                    return info.handler.getSlotLimit(info.switchedIndex);
+                }
+                else{
+                    return 0;
+                }
             }
         };
     }
