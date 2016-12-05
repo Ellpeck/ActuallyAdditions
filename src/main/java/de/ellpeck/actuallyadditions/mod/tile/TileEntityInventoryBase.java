@@ -41,8 +41,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase{
             }
 
             @Override
-            protected int getStackLimit(int slot, ItemStack stack){
-                return TileEntityInventoryBase.this.getMaxStackSizePerSlot(slot, stack);
+            public int getSlotLimit(int slot){
+                return TileEntityInventoryBase.this.getMaxStackSizePerSlot(slot);
             }
 
             @Override
@@ -99,8 +99,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase{
         return true;
     }
 
-    public int getMaxStackSizePerSlot(int slot, ItemStack stack){
-        return stack.getMaxStackSize();
+    public int getMaxStackSizePerSlot(int slot){
+        return 64;
     }
 
     public boolean shouldSyncSlots(){

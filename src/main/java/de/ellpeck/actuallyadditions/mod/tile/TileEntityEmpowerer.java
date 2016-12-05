@@ -159,7 +159,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
     }
 
     @Override
-    public int getMaxStackSizePerSlot(int slot, ItemStack stack){
+    public int getMaxStackSizePerSlot(int slot){
         return 1;
     }
 }

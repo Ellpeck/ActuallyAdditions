@@ -109,7 +109,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public int getMaxStackSizePerSlot(int slot, ItemStack stack){
+    public int getMaxStackSizePerSlot(int slot){
         return 1;
     }
 
