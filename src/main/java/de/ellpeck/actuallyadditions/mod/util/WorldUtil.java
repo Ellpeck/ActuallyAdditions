@@ -27,6 +27,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -163,8 +164,14 @@ public final class WorldUtil{
             try{
                 if(world instanceof WorldServer){
                     FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer)world);
-                    stack.onItemUse(fake, world, offsetPos, fake.getActiveHand(), side.getOpposite(), 0.5F, 0.5F, 0.5F);
-                    return stack;
+                    ItemStack heldBefore = fake.getHeldItemMainhand();
+                    fake.setHeldItem(EnumHand.MAIN_HAND, stack.copy());
+
+                    fake.getHeldItemMainhand().onItemUse(fake, world, offsetPos, fake.getActiveHand(), side.getOpposite(), 0.5F, 0.5F, 0.5F);
+
+                    ItemStack result = fake.getHeldItem(EnumHand.MAIN_HAND);
+                    fake.setHeldItem(EnumHand.MAIN_HAND, heldBefore);
+                    return result;
                 }
             }
             catch(Exception e){
