@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
+import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -158,25 +159,22 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
         ItemStack stack = player.getHeldItem(hand);
-        TileEntityLaserRelay tile = (TileEntityLaserRelay)world.getTileEntity(pos);
-        if(tile instanceof TileEntityLaserRelayItem){
-            TileEntityLaserRelayItem relay = (TileEntityLaserRelayItem)tile;
+        TileEntity tile = world.getTileEntity(pos);
+        if(tile instanceof TileEntityLaserRelay){
+            TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
 
             if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemCompass){
-                if(player.isSneaking()){
-                    relay.priority--;
-                }
-                else{
-                    relay.priority++;
-                }
+                if(!world.isRemote){
+                    relay.onCompassAction(player);
 
-                Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(relay.getPos(), relay.getWorld());
-                if(network != null){
-                    network.changeAmount++;
-                }
+                    Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(relay.getPos(), relay.getWorld());
+                    if(network != null){
+                        network.changeAmount++;
+                    }
 
-                relay.markDirty();
-                relay.sendUpdate();
+                    relay.markDirty();
+                    relay.sendUpdate();
+                }
 
                 return true;
             }
@@ -211,23 +209,26 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
-        if(posHit != null && posHit.getBlockPos() != null && minecraft.world != null){
-            TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
-            if(tile instanceof TileEntityLaserRelayItem){
-                TileEntityLaserRelayItem relay = (TileEntityLaserRelayItem)tile;
+        if(posHit != null && posHit.getBlockPos() != null && minecraft.world != null && StackUtil.isValid(stack)){
+            boolean compass = stack.getItem() instanceof ItemCompass;
+            if(compass || stack.getItem() instanceof ItemLaserWrench){
+                TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
+                if(tile instanceof TileEntityLaserRelay){
+                    TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
 
-                String strg = "Priority: "+TextFormatting.DARK_RED+relay.getPriority()+TextFormatting.RESET;
-                minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
+                    String strg = relay.getExtraDisplayString();
+                    minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
-                String expl;
-                if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemCompass){
-                    expl = TextFormatting.GREEN+"Right-Click to increase! \nSneak-Right-Click to decrease!";
+                    String expl;
+                    if(compass){
+                        expl = relay.getCompassDisplayString();
+                    }
+                    else{
+                        expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Compass to modify!";
+                    }
+
+                    StringUtil.drawSplitString(minecraft.fontRendererObj, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);
                 }
-                else{
-                    expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Compass to modify!";
-                }
-
-                StringUtil.drawSplitString(minecraft.fontRendererObj, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);
             }
         }
     }

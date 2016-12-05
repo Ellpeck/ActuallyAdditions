@@ -14,13 +14,19 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy.Mode;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements ISharingFluidHandler{
 
     public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
+    private Mode mode = Mode.BOTH;
 
     private final IFluidHandler[] fluidHandlers = new IFluidHandler[6];
 
@@ -119,7 +126,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
 
     private int transmitFluid(EnumFacing from, FluidStack stack, boolean doFill){
         int transmitted = 0;
-        if(stack != null){
+        if(stack != null && this.mode != Mode.OUTPUT_ONLY){
             Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.world);
             if(network != null){
                 transmitted = this.transferFluidToReceiverInNeed(from, network, stack, doFill);
@@ -143,16 +150,17 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
                     TileEntity relayTile = this.world.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayFluids){
                         TileEntityLaserRelayFluids theRelay = (TileEntityLaserRelayFluids)relayTile;
+                        if(theRelay.mode != Mode.INPUT_ONLY){
+                            int amount = theRelay.receiversAround.size();
+                            if(theRelay == this && theRelay.receiversAround.containsKey(from)){
+                                //So that the tile energy was gotten from isn't factored into the amount
+                                amount--;
+                            }
 
-                        int amount = theRelay.receiversAround.size();
-                        if(theRelay == this && theRelay.receiversAround.containsKey(from)){
-                            //So that the tile energy was gotten from isn't factored into the amount
-                            amount--;
-                        }
-
-                        if(amount > 0){
-                            relaysThatWork.add(theRelay);
-                            totalReceiverAmount += amount;
+                            if(amount > 0){
+                                relaysThatWork.add(theRelay);
+                                totalReceiverAmount += amount;
+                            }
                         }
                     }
                 }
@@ -195,5 +203,43 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
         }
 
         return transmitted;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getExtraDisplayString(){
+        return "Fluid Flow: "+TextFormatting.DARK_RED+this.mode.name+TextFormatting.RESET;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getCompassDisplayString(){
+        return TextFormatting.GREEN+"Right-Click to change!";
+    }
+
+    @Override
+    public void onCompassAction(EntityPlayer player){
+        this.mode = this.mode.getNext();
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setString("Mode", this.mode.toString());
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+
+        if(type != NBTType.SAVE_BLOCK){
+            String modeStrg = compound.getString("Mode");
+            if(modeStrg != null && !modeStrg.isEmpty()){
+                this.mode = Mode.valueOf(modeStrg);
+            }
+        }
     }
 }

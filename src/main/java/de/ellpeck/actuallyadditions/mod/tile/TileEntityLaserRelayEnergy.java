@@ -18,12 +18,17 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +40,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
 
     public static final int CAP = 1000;
     public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
+    private Mode mode = Mode.BOTH;
 
     private final IEnergyStorage[] energyStorages = new IEnergyStorage[6];
 
@@ -84,7 +90,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
 
     private int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate){
         int transmitted = 0;
-        if(maxTransmit > 0){
+        if(maxTransmit > 0 && this.mode != Mode.OUTPUT_ONLY){
             Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.world);
             if(network != null){
                 transmitted = this.transferEnergyToReceiverInNeed(from, network, maxTransmit, simulate);
@@ -147,16 +153,17 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
                     TileEntity relayTile = this.world.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayEnergy){
                         TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy)relayTile;
+                        if(theRelay.mode != Mode.INPUT_ONLY){
+                            int amount = theRelay.receiversAround.size();
+                            if(theRelay == this && theRelay.receiversAround.containsKey(from)){
+                                //So that the tile energy was gotten from isn't factored into the amount
+                                amount--;
+                            }
 
-                        int amount = theRelay.receiversAround.size();
-                        if(theRelay == this && theRelay.receiversAround.containsKey(from)){
-                            //So that the tile energy was gotten from isn't factored into the amount
-                            amount--;
-                        }
-
-                        if(amount > 0){
-                            relaysThatWork.add(theRelay);
-                            totalReceiverAmount += amount;
+                            if(amount > 0){
+                                relaysThatWork.add(theRelay);
+                                totalReceiverAmount += amount;
+                            }
                         }
                     }
                 }
@@ -235,5 +242,65 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
 
     public double getLossPercentage(){
         return 5;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getExtraDisplayString(){
+        return "Energy Flow: "+TextFormatting.DARK_RED+this.mode.name+TextFormatting.RESET;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getCompassDisplayString(){
+        return TextFormatting.GREEN+"Right-Click to change!";
+    }
+
+    @Override
+    public void onCompassAction(EntityPlayer player){
+        this.mode = this.mode.getNext();
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setString("Mode", this.mode.toString());
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+
+        if(type != NBTType.SAVE_BLOCK){
+            String modeStrg = compound.getString("Mode");
+            if(modeStrg != null && !modeStrg.isEmpty()){
+                this.mode = Mode.valueOf(modeStrg);
+            }
+        }
+    }
+
+    public enum Mode{
+        BOTH("Both Directions"),
+        OUTPUT_ONLY("Only into adjacent Blocks"),
+        INPUT_ONLY("Only out of adjacent Blocks");
+
+        public final String name;
+
+        Mode(String name){
+            this.name = name;
+        }
+
+        public Mode getNext(){
+            int ordinal = this.ordinal()+1;
+
+            if(ordinal >= values().length){
+                ordinal = 0;
+            }
+
+            return values()[ordinal];
+        }
     }
 }
