@@ -20,19 +20,24 @@ import java.net.URI;
 
 public class PageLinkButton extends BookletPage{
 
-    private static final int BUTTON_ID = -12782;
+    private static int nextButtonId = 23782;
+    private final int buttonId;
+
     private final String link;
 
     public PageLinkButton(int localizationKey, String link){
         super(localizationKey);
         this.link = link;
+
+        this.buttonId = nextButtonId;
+        nextButtonId++;
     }
 
     @Override
     public void initGui(GuiBookletBase gui, int startX, int startY){
         super.initGui(gui, startX, startY);
 
-        gui.getButtonList().add(new GuiButton(BUTTON_ID, startX+125/2-50, startY+130, 100, 20, StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getIdentifier()+".button."+this.localizationKey)));
+        gui.getButtonList().add(new GuiButton(this.buttonId, startX+125/2-50, startY+130, 100, 20, StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getIdentifier()+".button."+this.localizationKey)));
     }
 
     @Override
@@ -43,7 +48,7 @@ public class PageLinkButton extends BookletPage{
 
     @Override
     public void actionPerformed(GuiBookletBase gui, GuiButton button){
-        if(button.id == BUTTON_ID){
+        if(button.id == this.buttonId){
             if(Desktop.isDesktopSupported()){
                 try{
                     Desktop.getDesktop().browse(new URI(this.link));
