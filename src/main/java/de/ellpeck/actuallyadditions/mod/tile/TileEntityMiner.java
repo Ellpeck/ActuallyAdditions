@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -137,7 +138,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
                 }
                 else{
                     ItemStack stack = new ItemStack(block, 1, meta);
-                    if(stack.getItem() != null){
+                    if(StackUtil.isValid(stack)){
                         int[] ids = OreDictionary.getOreIDs(stack);
                         for(int id : ids){
                             String name = OreDictionary.getOreName(id);
