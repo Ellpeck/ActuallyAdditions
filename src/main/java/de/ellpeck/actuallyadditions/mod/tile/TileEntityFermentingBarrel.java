@@ -41,6 +41,8 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
             return false;
         }
     };
+    private final FluidHandlerFluidMap handlerMap;
+
     public int currentProcessTime;
     private int lastCanola;
     private int lastOil;
@@ -49,6 +51,10 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     public TileEntityFermentingBarrel(){
         super("fermentingBarrel");
+
+        this.handlerMap = new FluidHandlerFluidMap();
+        this.handlerMap.addHandler(InitFluids.fluidCanolaOil, this.canolaTank);
+        this.handlerMap.addHandler(InitFluids.fluidOil, this.oilTank);
     }
 
     @Override
@@ -128,14 +134,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     @Override
     public IFluidHandler getFluidHandler(EnumFacing facing){
-        FluidHandlerFluidMap map = new FluidHandlerFluidMap();
-        if(facing != EnumFacing.DOWN){
-            map.addHandler(InitFluids.fluidCanolaOil, this.canolaTank);
-        }
-        if(facing != EnumFacing.UP){
-            map.addHandler(InitFluids.fluidOil, this.oilTank);
-        }
-        return map;
+        return this.handlerMap;
     }
 
     @Override

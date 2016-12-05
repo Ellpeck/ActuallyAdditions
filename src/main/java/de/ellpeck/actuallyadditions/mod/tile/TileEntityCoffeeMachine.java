@@ -189,7 +189,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public FluidTank getFluidHandler(EnumFacing facing){
-        return facing != EnumFacing.DOWN ? this.tank : null;
+        return this.tank;
     }
 
     @Override

@@ -126,7 +126,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
 
     @Override
     public FluidTank getFluidHandler(EnumFacing facing){
-        return facing != EnumFacing.UP ? this.tank : null;
+        return this.tank;
     }
 
     @Override

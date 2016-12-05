@@ -157,7 +157,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
 
     @Override
     public IFluidHandler getFluidHandler(EnumFacing facing){
-        return facing != EnumFacing.DOWN ? this.tank : null;
+        return this.tank;
     }
 
     @Override
