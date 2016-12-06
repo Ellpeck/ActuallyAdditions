@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.network;
 
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
-import de.ellpeck.actuallyadditions.mod.misc.sound.MovingPlayerSound;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.IStringReactor;
@@ -22,13 +21,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemRecord;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -127,31 +121,6 @@ public final class PacketHandler{
             }
         }
     };
-    public static final IDataHandler SEND_PORTABLE_JUKEBOX_SOUND_HANDLER = new IDataHandler(){
-        @Override
-        @SideOnly(Side.CLIENT)
-        public void handleData(NBTTagCompound compound){
-            String disc = compound.getString("Disc");
-            UUID playerId = compound.getUniqueId("PlayerId");
-            int slot = compound.getInteger("Slot");
-
-            Minecraft mc = Minecraft.getMinecraft();
-            EntityPlayer player = mc.world.getPlayerEntityByUUID(playerId);
-            if(player != null){
-                Item item = Item.REGISTRY.getObject(new ResourceLocation(disc));
-                if(item instanceof ItemRecord){
-                    ItemRecord record = (ItemRecord)item;
-
-                    SoundEvent sound = record.getSound();
-                    if(sound != null){
-                        mc.getSoundHandler().playSound(new MovingPlayerSound(sound, SoundCategory.RECORDS, player, slot));
-                        mc.ingameGUI.setRecordPlayingMessage(record.getRecordNameLocal());
-                    }
-                }
-            }
-        }
-    };
-
     public static SimpleNetworkWrapper theNetwork;
 
     public static void init(){
@@ -166,6 +135,5 @@ public final class PacketHandler{
         DATA_HANDLERS.add(GUI_NUMBER_TO_TILE_HANDLER);
         DATA_HANDLERS.add(CHANGE_PLAYER_DATA_HANDLER);
         DATA_HANDLERS.add(GUI_BUTTON_TO_CONTAINER_HANDLER);
-        DATA_HANDLERS.add(SEND_PORTABLE_JUKEBOX_SOUND_HANDLER);
     }
 }
