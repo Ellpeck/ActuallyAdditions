@@ -44,6 +44,8 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
         super.writeSyncableNBT(compound, type);
         if(type != NBTType.SAVE_BLOCK){
             compound.setInteger("WaitTime", this.waitTime);
+        }
+        if(type == NBTType.SAVE_TILE){
             compound.setInteger("CheckX", this.checkX);
             compound.setInteger("CheckY", this.checkY);
         }
@@ -55,6 +57,8 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
         super.readSyncableNBT(compound, type);
         if(type != NBTType.SAVE_BLOCK){
             this.waitTime = compound.getInteger("WaitTime");
+        }
+        if(type == NBTType.SAVE_TILE){
             this.checkX = compound.getInteger("CheckX");
             this.checkY = compound.getInteger("CheckY");
         }

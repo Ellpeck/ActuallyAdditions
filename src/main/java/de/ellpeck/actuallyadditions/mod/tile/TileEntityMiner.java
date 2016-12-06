@@ -36,10 +36,16 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     public static final int ENERGY_USE_PER_BLOCK = 650;
     public static final int DEFAULT_RANGE = 2;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 2000, 0);
-    public int layerAt = -1;
+
     public boolean onlyMineOres;
-    private int oldLayerAt;
     private int oldEnergy;
+
+    public int checkX;
+    public int checkY = -1;
+    public int checkZ;
+    private int oldCheckX;
+    private int oldCheckY;
+    private int oldCheckZ;
 
     public TileEntityMiner(){
         super(9, "miner");
@@ -50,7 +56,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         if(type != NBTType.SAVE_BLOCK){
-            compound.setInteger("Layer", this.layerAt);
+            compound.setInteger("CheckX", this.checkX);
+            compound.setInteger("CheckY", this.checkY);
+            compound.setInteger("CheckZ", this.checkZ);
         }
         if(type != NBTType.SAVE_BLOCK || this.onlyMineOres){
             compound.setBoolean("OnlyOres", this.onlyMineOres);
@@ -62,7 +70,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         if(type != NBTType.SAVE_BLOCK){
-            this.layerAt = compound.getInteger("Layer");
+            this.checkX = compound.getInteger("CheckX");
+            this.checkY = compound.getInteger("CheckY");
+            this.checkZ = compound.getInteger("CheckZ");
         }
         this.onlyMineOres = compound.getBoolean("OnlyOres");
     }
@@ -71,63 +81,74 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            if(this.layerAt == -1){
-                this.layerAt = this.getPos().getY()-1;
-            }
 
             if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
+                if(this.checkY != 0){
+                    int range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.world, this.pos);
+                    if(this.checkY < 0){
+                        this.checkY = this.pos.getY()-1;
+                        this.checkX = -range;
+                        this.checkZ = -range;
+                    }
 
-                if(this.layerAt > 0){
-                    if(this.mine(TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.world, this.pos))){
-                        this.layerAt--;
+                    if(this.checkY > 0){
+                        if(this.mine()){
+                            this.checkX++;
+                            if(this.checkX > range){
+                                this.checkX = -range;
+                                this.checkZ++;
+                                if(this.checkZ > range){
+                                    this.checkZ = -range;
+                                    this.checkY--;
+                                }
+                            }
+                        }
                     }
                 }
             }
 
-            if((this.oldEnergy != this.storage.getEnergyStored() || this.oldLayerAt != this.layerAt) && this.sendUpdateWithInterval()){
+            if((this.oldEnergy != this.storage.getEnergyStored() || this.oldCheckX != this.checkX || this.oldCheckY != this.checkY || this.oldCheckZ != this.checkZ) && this.sendUpdateWithInterval()){
                 this.oldEnergy = this.storage.getEnergyStored();
-                this.oldLayerAt = this.layerAt;
+                this.oldCheckX = this.checkX;
+                this.oldCheckY = this.checkY;
+                this.oldCheckZ = this.checkZ;
             }
         }
     }
 
-    private boolean mine(int range){
-        for(int anX = -range; anX <= range; anX++){
-            for(int aZ = -range; aZ <= range; aZ++){
-                int actualUse = ENERGY_USE_PER_BLOCK*(this.onlyMineOres ? 3 : 1);
-                if(this.storage.getEnergyStored() >= actualUse){
-                    BlockPos pos = new BlockPos(this.pos.getX()+anX, this.layerAt, this.pos.getZ()+aZ);
+    private boolean mine(){
+        int actualUse = ENERGY_USE_PER_BLOCK*(this.onlyMineOres ? 3 : 1);
+        if(this.storage.getEnergyStored() >= actualUse){
+            BlockPos pos = new BlockPos(this.pos.getX()+this.checkX, this.checkY, this.pos.getZ()+this.checkZ);
 
-                    IBlockState state = this.world.getBlockState(pos);
-                    Block block = state.getBlock();
-                    int meta = block.getMetaFromState(state);
-                    if(!block.isAir(this.world.getBlockState(pos), this.world, pos)){
-                        if(block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
-                            List<ItemStack> drops = block.getDrops(this.world, pos, this.world.getBlockState(pos), 0);
-                            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.world, pos, this.world.getBlockState(pos), 0, 1, false, null);
+            IBlockState state = this.world.getBlockState(pos);
+            Block block = state.getBlock();
+            int meta = block.getMetaFromState(state);
+            if(!block.isAir(this.world.getBlockState(pos), this.world, pos)){
+                if(block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
+                    List<ItemStack> drops = block.getDrops(this.world, pos, this.world.getBlockState(pos), 0);
+                    float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.world, pos, this.world.getBlockState(pos), 0, 1, false, null);
 
-                            if(this.world.rand.nextFloat() <= chance){
-                                if(WorldUtil.addToInventory(this.slots, drops, false)){
-                                    this.world.playEvent(2001, pos, Block.getStateId(this.world.getBlockState(pos)));
-                                    this.world.setBlockToAir(pos);
+                    if(this.world.rand.nextFloat() <= chance){
+                        if(WorldUtil.addToInventory(this.slots, drops, false)){
+                            this.world.playEvent(2001, pos, Block.getStateId(this.world.getBlockState(pos)));
+                            this.world.setBlockToAir(pos);
 
-                                    WorldUtil.addToInventory(this.slots, drops, true);
-                                    this.markDirty();
+                            WorldUtil.addToInventory(this.slots, drops, true);
+                            this.markDirty();
 
-                                    this.storage.extractEnergyInternal(actualUse, false);
-                                    this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
-                                }
-                            }
+                            this.storage.extractEnergyInternal(actualUse, false);
+                            this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
+                        }
+                        else{
                             return false;
                         }
                     }
                 }
-                else{
-                    return false;
-                }
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
     private boolean isMinable(Block block, int meta){
@@ -196,7 +217,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
             this.sendUpdate();
         }
         else if(buttonID == 1){
-            this.layerAt = -1;
+            this.checkX = 0;
+            this.checkY = -1;
+            this.checkZ = 0;
         }
     }
 

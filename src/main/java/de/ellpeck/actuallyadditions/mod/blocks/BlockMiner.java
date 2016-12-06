@@ -75,7 +75,8 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay{
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityMiner){
-            String info = ((TileEntityMiner)tile).layerAt <= 0 ? "Done Mining!" : "Mining at Y = "+((TileEntityMiner)tile).layerAt+".";
+            TileEntityMiner miner = (TileEntityMiner)tile;
+            String info = miner.checkY == 0 ? "Done Mining!" : (miner.checkY == -1 ? "Calculating positions..." : "Mining at "+(miner.getPos().getX()+miner.checkX)+", "+miner.checkY+", "+(miner.getPos().getZ()+miner.checkZ)+".");
             minecraft.fontRendererObj.drawStringWithShadow(info, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-20, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
