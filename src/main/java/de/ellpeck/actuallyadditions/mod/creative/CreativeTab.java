@@ -166,6 +166,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemSpawnerChanger);
         this.add(InitItems.itemWaterBowl);
 
+        this.add(InitItems.itemPortableJukebox);
         this.add(InitItems.itemDrill);
         this.add(InitItems.itemDrillUpgradeSpeed);
         this.add(InitItems.itemDrillUpgradeSpeedII);

@@ -8,7 +8,7 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.misc;
+package de.ellpeck.actuallyadditions.mod.misc.sound;
 
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.util.ResourceLocation;

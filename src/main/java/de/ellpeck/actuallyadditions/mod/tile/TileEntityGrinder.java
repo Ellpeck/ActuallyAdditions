@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
-import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
+import de.ellpeck.actuallyadditions.mod.misc.sound.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;

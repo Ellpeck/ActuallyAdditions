@@ -8,7 +8,7 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.crafting;
+package de.ellpeck.actuallyadditions.mod.crafting.recipe;
 
 import de.ellpeck.actuallyadditions.mod.items.ItemPotionRing;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -78,7 +78,7 @@ public class RecipePotionRingCharging implements IRecipe{
 
     @Override
     public int getRecipeSize(){
-        return 0;
+        return 5;
     }
 
     @Override

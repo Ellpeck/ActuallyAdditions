@@ -11,6 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.mod.crafting.recipe.RecipeKeepDataShaped;
+import de.ellpeck.actuallyadditions.mod.crafting.recipe.RecipeKeepDataShapeless;
+import de.ellpeck.actuallyadditions.mod.crafting.recipe.RecipePotionRingCharging;
+import de.ellpeck.actuallyadditions.mod.crafting.recipe.RecipeSwitchJukeboxDisc;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -48,9 +52,11 @@ public final class InitCrafting{
 
         RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShaped", RecipeKeepDataShaped.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
         RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShapeless", RecipeKeepDataShapeless.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
+        RecipeSorter.register(ModUtil.MOD_ID+":recipePotionRingCharging", RecipePotionRingCharging.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
+        RecipeSorter.register(ModUtil.MOD_ID+":recipeSwitchJukeboxDisc", RecipeSwitchJukeboxDisc.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 
         GameRegistry.addRecipe(new RecipePotionRingCharging());
-        RecipeSorter.register(ModUtil.MOD_ID+":recipePotionRingCharging", RecipePotionRingCharging.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
+        GameRegistry.addRecipe(new RecipeSwitchJukeboxDisc());
     }
 
 }

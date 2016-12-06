@@ -15,6 +15,8 @@ import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.crafting.recipe.RecipeKeepDataShaped;
+import de.ellpeck.actuallyadditions.mod.crafting.recipe.RecipeKeepDataShapeless;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.*;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
