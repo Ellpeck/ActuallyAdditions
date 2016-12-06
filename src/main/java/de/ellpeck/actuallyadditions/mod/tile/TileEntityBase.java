@@ -334,7 +334,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                 return (T)handler;
             }
         }
-        if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+        else if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
             IFluidHandler tank = this.getFluidHandler(facing);
             if(tank != null){
                 return (T)tank;
