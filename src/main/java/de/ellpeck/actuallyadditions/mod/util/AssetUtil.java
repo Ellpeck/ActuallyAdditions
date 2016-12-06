@@ -198,7 +198,7 @@ public final class AssetUtil{
 
             for(int times = 0; times < Math.max(particleAmount/2, 1); times++){
                 for(double i = 0; i <= 1; i += 1/(distance*particleAmount)){
-                    if(particleSetting == 0 || (particleSetting == 1 && mc.world.rand.nextFloat() >= 0.8F) || (particleSetting > 1 && mc.world.rand.nextFloat() >= 0.98F)){
+                    if(particleSetting == 0 || (particleSetting == 1 && mc.world.rand.nextFloat() >= 0.8F) || (particleSetting > 1 && mc.world.rand.nextFloat() >= 0.99F)){
                         ParticleColored fx = new ParticleColored(mc.world, (difX*i)+endX+0.5, (difY*i)+endY+0.5, (difZ*i)+endZ+0.5, particleSize, color[0], color[1], color[2], ageMultiplier);
                         mc.effectRenderer.addEffect(fx);
                     }

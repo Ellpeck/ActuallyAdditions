@@ -68,7 +68,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
                                 stand.slots.decrStackSize(0, 1);
                             }
 
-                            AssetUtil.shootParticles(this.world, stand.getPos().getX(), stand.getPos().getY()+0.45F, stand.getPos().getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), recipe.particleColor, 8, 0.5F, 1F);
+                            AssetUtil.shootParticles(this.world, stand.getPos().getX(), stand.getPos().getY()+0.45F, stand.getPos().getZ(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), recipe.particleColor, 8, 0.5F, 0.45F);
                         }
 
                         if(this.processTime%5 == 0 && this.world instanceof WorldServer){
