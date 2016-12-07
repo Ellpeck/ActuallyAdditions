@@ -41,8 +41,8 @@ public class PageCoffeeMachine extends BookletPage{
         gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX+5, startY+10, 0, 74, 117, 72, 0);
 
-        gui.renderScaledAsciiString("(Coffee Maker Recipe)", startX+6, startY+78, 0, false, 0.65F);
-        gui.renderSplitScaledAsciiString("Hover over this to see the effect!", startX+5, startY+51, 0, false, 0.5F, 35);
+        gui.renderScaledAsciiString("(Coffee Maker Recipe)", startX+6, startY+78, 0, false, gui.getMediumFontSize());
+        gui.renderSplitScaledAsciiString("Hover over this to see the effect!", startX+5, startY+51, 0, false, gui.getSmallFontSize(), 35);
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+90);
     }

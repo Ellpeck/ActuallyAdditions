@@ -33,4 +33,10 @@ public abstract class GuiBookletBase extends GuiScreen{
     public abstract int getSizeY();
 
     public abstract void addOrModifyItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer);
+
+    public abstract float getSmallFontSize();
+
+    public abstract float getMediumFontSize();
+
+    public abstract float getLargeFontSize();
 }

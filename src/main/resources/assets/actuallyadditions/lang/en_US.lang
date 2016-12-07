@@ -751,8 +751,8 @@ achievement.actuallyadditions.getUnProbed.desc=Be probed by someone but sneak an
 #Booklet Recipe Names
 booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe
 booklet.actuallyadditions.shapedRecipe=Shaped Recipe
-booklet.actuallyadditions.shapelessOreRecipe=Shapeless OreDictionary Recipe
-booklet.actuallyadditions.shapedOreRecipe=Shaped OreDictionary Recipe
+booklet.actuallyadditions.shapelessOreRecipe=Shapeless OreDict Recipe
+booklet.actuallyadditions.shapedOreRecipe=Shaped OreDict Recipe
 
 #Booklet Entries
 booklet.actuallyadditions.indexEntry.gettingStarted.name=Getting Started
@@ -767,6 +767,11 @@ booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use CF
 booklet.actuallyadditions.indexEntry.reconstruction.name=Reconstruction
 booklet.actuallyadditions.indexEntry.laserRelays.name=Laser Transport
 booklet.actuallyadditions.indexEntry.updatesAndInfos.name=Updates and Infos
+
+#Booklet Font Size
+booklet.actuallyadditions.fontSize.small=0.5
+booklet.actuallyadditions.fontSize.medium=0.75
+booklet.actuallyadditions.fontSize.large=0.8
 
 #Booklet Info
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!

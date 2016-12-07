@@ -71,7 +71,7 @@ public class GuiEntry extends GuiBooklet{
 
         for(int i = 0; i < 2; i++){
             String pageStrg = "Page "+(this.entryPage*2+i+1)+"/"+this.pageAmount*2;
-            this.renderScaledAsciiString(pageStrg, this.guiLeft+25+i*136, this.guiTop+this.ySize-7, 0xFFFFFF, false, 0.8F);
+            this.renderScaledAsciiString(pageStrg, this.guiLeft+25+i*136, this.guiTop+this.ySize-7, 0xFFFFFF, false, this.getLargeFontSize());
         }
     }
 
@@ -92,7 +92,7 @@ public class GuiEntry extends GuiBooklet{
                 int id = y+x*BUTTONS_PER_PAGE;
                 if(this.chapters.size() > id+idOffset){
                     IBookletChapter chapter = this.chapters.get(id+idOffset);
-                    this.buttonList.add(new EntryButton(id, this.guiLeft+14+x*142, this.guiTop+11+y*13, 115, 10, chapter.getLocalizedNameWithFormatting(), chapter.getDisplayItemStack()));
+                    this.buttonList.add(new EntryButton(this, id, this.guiLeft+14+x*142, this.guiTop+11+y*13, 115, 10, chapter.getLocalizedNameWithFormatting(), chapter.getDisplayItemStack()));
                 }
                 else{
                     return;

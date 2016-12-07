@@ -125,7 +125,7 @@ public class GuiMainPage extends GuiBooklet{
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
             if(ActuallyAdditionsAPI.BOOKLET_ENTRIES.size() > i){
                 IBookletEntry entry = ActuallyAdditionsAPI.BOOKLET_ENTRIES.get(i);
-                this.buttonList.add(new EntryButton(i, this.guiLeft+156, this.guiTop+11+i*13, 115, 10, "- "+entry.getLocalizedNameWithFormatting(), null));
+                this.buttonList.add(new EntryButton(this, i, this.guiLeft+156, this.guiTop+11+i*13, 115, 10, "- "+entry.getLocalizedNameWithFormatting(), null));
             }
             else{
                 return;
@@ -230,15 +230,15 @@ public class GuiMainPage extends GuiBooklet{
 
         if(this.showTutorial){
             String text = TextFormatting.BLUE+"It looks like this is the first time you are using this manual. \nIf you click the button below, some useful bookmarks will be stored at the bottom of the GUI. You should definitely check them out to get started with "+ModUtil.NAME+"! \nIf you don't want this, shift-click the button.";
-            this.renderSplitScaledAsciiString(text, this.guiLeft+11, this.guiTop+55, 0, false, 0.75F, 120);
+            this.renderSplitScaledAsciiString(text, this.guiLeft+11, this.guiTop+55, 0, false, this.getMediumFontSize(), 120);
         }
         else if(this.quote != null && !this.quote.isEmpty() && this.quoteGuy != null){
             int quoteSize = this.quote.size();
 
             for(int i = 0; i < quoteSize; i++){
-                this.renderScaledAsciiString(TextFormatting.ITALIC+this.quote.get(i), this.guiLeft+25, this.guiTop+90+(i*8), 0, false, 0.75F);
+                this.renderScaledAsciiString(TextFormatting.ITALIC+this.quote.get(i), this.guiLeft+25, this.guiTop+90+(i*8), 0, false, this.getMediumFontSize());
             }
-            this.renderScaledAsciiString("- "+this.quoteGuy, this.guiLeft+60, this.guiTop+93+quoteSize*8, 0, false, 0.8F);
+            this.renderScaledAsciiString("- "+this.quoteGuy, this.guiLeft+60, this.guiTop+93+quoteSize*8, 0, false, this.getLargeFontSize());
         }
     }
 

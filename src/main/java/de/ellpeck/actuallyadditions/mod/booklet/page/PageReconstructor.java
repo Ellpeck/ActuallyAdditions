@@ -34,7 +34,7 @@ public class PageReconstructor extends BookletPage{
         gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX+30, startY+10, 80, 146, 68, 48, 0);
 
-        gui.renderScaledAsciiString("(Atomic Reconstructor Recipe)", startX+12, startY+63, 0, false, 0.65F);
+        gui.renderScaledAsciiString("(Atomic Reconstructor Recipe)", startX+12, startY+63, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+88);
     }

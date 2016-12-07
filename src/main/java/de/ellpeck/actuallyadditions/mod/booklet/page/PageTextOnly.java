@@ -28,7 +28,7 @@ public class PageTextOnly extends BookletPage{
     public static void renderTextToPage(GuiBookletBase gui, BookletPage page, int x, int y){
         String text = page.getInfoText();
         if(text != null && !text.isEmpty()){
-            gui.renderSplitScaledAsciiString(text, x, y, 0, false, 0.75F, 120);
+            gui.renderSplitScaledAsciiString(text, x, y, 0, false, gui.getMediumFontSize(), 120);
         }
     }
 

@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -53,6 +54,10 @@ public abstract class GuiBooklet extends GuiBookletBase{
     private GuiButton buttonRight;
     private GuiButton buttonBack;
 
+    private float smallFontSize;
+    private float mediumFontSize;
+    private float largeFontSize;
+
     public GuiBooklet(GuiScreen previousScreen, GuiBookletBase parentPage){
         this.previousScreen = previousScreen;
         this.parentPage = parentPage;
@@ -67,6 +72,19 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
         this.guiLeft = (this.width-this.xSize)/2;
         this.guiTop = (this.height-this.ySize)/2;
+
+        try{
+            this.smallFontSize = Float.parseFloat(StringUtil.localize("booklet."+ModUtil.MOD_ID+".fontSize.small"));
+            this.mediumFontSize = Float.parseFloat(StringUtil.localize("booklet."+ModUtil.MOD_ID+".fontSize.medium"));
+            this.largeFontSize = Float.parseFloat(StringUtil.localize("booklet."+ModUtil.MOD_ID+".fontSize.large"));
+        }
+        catch(Exception e){
+            ModUtil.LOGGER.error("Getting the booklet font size from the lang file failed!", e);
+
+            this.smallFontSize = 0.5F;
+            this.mediumFontSize = 0.75F;
+            this.largeFontSize = 0.8F;
+        }
 
         if(this.hasPageLeftButton()){
             List<String> hoverText = Arrays.asList(TextFormatting.GOLD+"Previous Page", TextFormatting.ITALIC+"Or scroll up");
@@ -245,6 +263,21 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
     public boolean hasBookmarkButtons(){
         return true;
+    }
+
+    @Override
+    public float getSmallFontSize(){
+        return this.smallFontSize;
+    }
+
+    @Override
+    public float getMediumFontSize(){
+        return this.mediumFontSize;
+    }
+
+    @Override
+    public float getLargeFontSize(){
+        return this.largeFontSize;
     }
 
     public void onSearchBarChanged(String searchBarText){

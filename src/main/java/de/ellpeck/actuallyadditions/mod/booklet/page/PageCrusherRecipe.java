@@ -35,7 +35,7 @@ public class PageCrusherRecipe extends BookletPage{
         gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX+38, startY+6, 136, 0, 52, 74, 0);
 
-        gui.renderScaledAsciiString("(Crusher Recipe)", startX+36, startY+85, 0, false, 0.65F);
+        gui.renderScaledAsciiString("(Crusher Recipe)", startX+36, startY+85, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+100);
     }

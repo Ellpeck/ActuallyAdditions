@@ -50,7 +50,7 @@ public class PageFurnace extends BookletPage{
         gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX+23, startY+10, 0, 146, 80, 26, 0);
 
-        gui.renderScaledAsciiString("(Furnace Recipe)", startX+32, startY+42, 0, false, 0.65F);
+        gui.renderScaledAsciiString("(Furnace Recipe)", startX+32, startY+42, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+57);
     }

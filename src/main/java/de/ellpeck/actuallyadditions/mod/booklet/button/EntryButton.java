@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
+import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -23,10 +25,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class EntryButton extends GuiButton{
 
-    public ItemStack stackToRender;
+    private final GuiBookletBase gui;
+    private final ItemStack stackToRender;
 
-    public EntryButton(int id, int x, int y, int width, int height, String text, ItemStack stackToRender){
+    public EntryButton(GuiBookletBase gui, int id, int x, int y, int width, int height, String text, ItemStack stackToRender){
         super(id, x, y, width, height, text);
+        this.gui = gui;
         this.stackToRender = stackToRender;
     }
 
@@ -48,7 +52,7 @@ public class EntryButton extends GuiButton{
                 textOffsetX = 10;
             }
 
-            float scale = 0.75F;
+            float scale = this.gui.getMediumFontSize();
 
             if(this.hovered){
                 GlStateManager.pushMatrix();
