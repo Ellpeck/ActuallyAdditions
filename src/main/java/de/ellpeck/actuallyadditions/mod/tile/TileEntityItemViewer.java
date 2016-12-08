@@ -133,8 +133,6 @@ public class TileEntityItemViewer extends TileEntityBase{
                             }
                         }
                     }
-                    this.markDirty();
-
                     this.oldNetwork = network;
                     this.lastNetworkChangeAmount = network.changeAmount;
                 }
