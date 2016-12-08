@@ -1,3 +1,20 @@
+# 1.11-r91
+* Added Direwolf20's spotlight to the video introduction page of the book
+* Fixed Item Laser Relay page pictures being broken
+* Make the Leaf Blower work with all shearable things (Including BoP grass!)
+* Turn down Empowerer particles a bit more
+* Made the Vertical Digger lighter on server resources
+* Laser Rendering Improvements (Elucent)
+* Canola Seed Texture Improvements (Elucent)
+* You can now change the booklet's font size in the manual
+* Fixed the dropper dropping into unloaded chunks
+* Fix the item distributor sometimes either voiding or duping items
+* Fix a crash with the Item Interface and ESD on the latest forge version
+
+# 1.10.2-r90
+* Fixed the Item Distributor sometimes either voiding or duping items
+* Make the ESD automatically assign to things like chests again
+
 # 1.11-r89
 * Made Filters be consumed when placing them into filter slots
 * Added Laser Relay in/out config. Hold a Laser Wrench for more info.
