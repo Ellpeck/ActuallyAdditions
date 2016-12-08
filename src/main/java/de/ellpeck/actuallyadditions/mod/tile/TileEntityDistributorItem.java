@@ -52,6 +52,7 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
                                 this.slots[0] = StackUtil.addStackSize(this.slots[0], StackUtil.getStackSize(pulled));
                             }
                             shouldMarkDirty = true;
+                            break;
                         }
                     }
 
