@@ -145,16 +145,14 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             this.placeToPull = this.worldObj.getTileEntity(this.pos.offset(side));
 
             if(this.slotToPullEnd <= 0 && this.placeToPull != null){
-                if(this.placeToPull instanceof IInventory){
-                    this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
-                }
-                else{
-                    if(this.placeToPull.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
-                        IItemHandler cap = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                        if(cap != null){
-                            this.slotToPullEnd = cap.getSlots();
-                        }
+                if(this.placeToPull.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
+                    IItemHandler cap = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                    if(cap != null){
+                        this.slotToPullEnd = cap.getSlots();
                     }
+                }
+                else if(this.placeToPull instanceof IInventory){
+                    this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
                 }
             }
         }
@@ -164,16 +162,14 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             this.placeToPut = this.worldObj.getTileEntity(this.pos.offset(side));
 
             if(this.slotToPutEnd <= 0 && this.placeToPut != null){
-                if(this.placeToPut instanceof IInventory){
-                    this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
-                }
-                else{
-                    if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
-                        IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                        if(cap != null){
-                            this.slotToPutEnd = cap.getSlots();
-                        }
+                if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
+                    IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                    if(cap != null){
+                        this.slotToPutEnd = cap.getSlots();
                     }
+                }
+                else if(this.placeToPut instanceof IInventory){
+                    this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
                 }
             }
         }
