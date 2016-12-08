@@ -181,13 +181,17 @@ public final class WorldUtil{
         return stack;
     }
 
-    public static void dropItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
+    public static boolean dropItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack){
         BlockPos coords = pos.offset(side);
-        EntityItem item = new EntityItem(world, coords.getX()+0.5, coords.getY()+0.5, coords.getZ()+0.5, stack);
-        item.motionX = 0;
-        item.motionY = 0;
-        item.motionZ = 0;
-        world.spawnEntity(item);
+        if(world.isBlockLoaded(coords)){
+            EntityItem item = new EntityItem(world, coords.getX()+0.5, coords.getY()+0.5, coords.getZ()+0.5, stack);
+            item.motionX = 0;
+            item.motionY = 0;
+            item.motionZ = 0;
+
+            return world.spawnEntity(item);
+        }
+        return false;
     }
 
     public static EnumFacing getDirectionBySidesInOrder(int side){
