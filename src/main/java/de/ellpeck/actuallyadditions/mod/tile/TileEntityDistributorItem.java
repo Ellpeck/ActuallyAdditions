@@ -42,7 +42,7 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
                 for(int i = 0; i < handlerUp.getSlots(); i++){
 
                     ItemStack pullable = handlerUp.extractItem(i, 1, true);
-                    if(StackUtil.isValid(pullable) && (!StackUtil.isValid(this.slots.getStackInSlot(0)) || ItemUtil.canBeStacked(this.slots.getStackInSlot(0), pullable))){
+                    if(StackUtil.isValid(pullable) && (!StackUtil.isValid(this.slots.getStackInSlot(0)) || (ItemUtil.canBeStacked(this.slots.getStackInSlot(0), pullable) && StackUtil.getStackSize(this.slots.getStackInSlot(0)) < this.slots.getStackInSlot(0).getMaxStackSize()))){
                         ItemStack pulled = handlerUp.extractItem(i, 1, false);
                         if(StackUtil.isValid(pulled)){
                             if(!StackUtil.isValid(this.slots.getStackInSlot(0))){
@@ -86,24 +86,14 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
                         toInsert = StackUtil.setStackSize(toInsert, amount);
 
                         for(int i = 0; i < handler.getSlots(); i++){
-                            ItemStack notInserted = handler.insertItem(i, toInsert.copy(), false);
-                            if(!StackUtil.isValid(notInserted)){
-                                this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -amount));
+                            toInsert = handler.insertItem(i, toInsert.copy(), false);
 
+                            if(!StackUtil.isValid(toInsert)){
+                                this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -amount));
                                 shouldMarkDirty = true;
+
                                 break;
                             }
-                            else if(StackUtil.getStackSize(notInserted) != StackUtil.getStackSize(this.slots.getStackInSlot(0))){
-                                this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -StackUtil.getStackSize(notInserted)));
-                                toInsert = notInserted;
-
-                                shouldMarkDirty = true;
-                            }
-                        }
-
-                        if(!StackUtil.isValid(this.slots.getStackInSlot(0))){
-                            this.slots.setStackInSlot(0, StackUtil.getNull());
-                            shouldMarkDirty = true;
                         }
                     }
                 }
