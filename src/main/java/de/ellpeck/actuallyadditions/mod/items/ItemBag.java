@@ -56,7 +56,22 @@ public class ItemBag extends ItemBase{
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
-        tooltip.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".previously"+(this.isVoid ? "VoidBag" : "Bag")));
+        ItemStack[] slots = new ItemStack[ContainerBag.getSlotAmount(this.isVoid)];
+        ItemDrill.loadSlotsFromNBT(slots, stack);
+
+        int slotsTotal = slots.length;
+        int slotsFilled = 0;
+
+        for(ItemStack slotStack : slots){
+            if(StackUtil.isValid(slotStack)){
+                slotsFilled++;
+            }
+        }
+        
+        // don't count the filter 4 slots 
+        slotsTotal = slotsTotal - 4;
+
+        tooltip.add(TextFormatting.ITALIC.toString()+slotsFilled+"/"+slotsTotal+" filled slots");
     }
 
     @SubscribeEvent
