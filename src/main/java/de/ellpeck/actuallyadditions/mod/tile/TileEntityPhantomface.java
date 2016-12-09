@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -29,7 +28,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile{
 
     public static final int RANGE = 16;
-    public static final float[] COLORS = new float[]{93F/255F, 43F/255F, 181F/255F};
     public BlockPos boundPosition;
     public BlockPhantom.Type type;
     public int range;
@@ -145,10 +143,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
             double d0 = (double)this.boundPosition.getX()+0.5D+0.25D*(double)i1;
             double d3 = (double)(this.world.rand.nextFloat()*1.0F*(float)i1);
             this.world.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
-        }
-
-        if(this.ticksElapsed%80 == 0){
-            AssetUtil.renderParticlesFromAToB(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), this.boundPosition.getX(), this.boundPosition.getY(), this.boundPosition.getZ(), 2, 0.35F, COLORS, 3);
         }
     }
 

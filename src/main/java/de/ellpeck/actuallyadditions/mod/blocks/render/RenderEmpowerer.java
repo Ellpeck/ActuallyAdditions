@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -20,6 +22,8 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
 public class RenderEmpowerer extends TileEntitySpecialRenderer{
 
@@ -48,6 +52,19 @@ public class RenderEmpowerer extends TileEntitySpecialRenderer{
             }
 
             GlStateManager.popMatrix();
+        }
+
+        int index = ((TileEntityEmpowerer)tile).recipeForRenderIndex;
+        if(index >= 0 && ActuallyAdditionsAPI.EMPOWERER_RECIPES.size() > index){
+            EmpowererRecipe recipe = ActuallyAdditionsAPI.EMPOWERER_RECIPES.get(index);
+            if(recipe != null){
+                for(int i = 0; i < EnumFacing.HORIZONTALS.length; i++){
+                    EnumFacing facing = EnumFacing.HORIZONTALS[i];
+                    BlockPos offset = tile.getPos().offset(facing, 3);
+
+                    AssetUtil.renderLaser(tile.getPos().getX()+0.5, tile.getPos().getY()+0.5, tile.getPos().getZ()+0.5, offset.getX()+0.5, offset.getY()+0.95, offset.getZ()+0.5, 80, 1F, 0.1F, recipe.particleColor);
+                }
+            }
         }
     }
 }

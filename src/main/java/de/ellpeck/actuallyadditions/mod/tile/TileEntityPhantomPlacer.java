@@ -169,10 +169,6 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             double d3 = (double)(this.world.rand.nextFloat()*1.0F*(float)i1);
             this.world.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
-
-        if(this.ticksElapsed%80 == 0){
-            AssetUtil.renderParticlesFromAToB(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), this.boundPosition.getX(), this.boundPosition.getY(), this.boundPosition.getZ(), 2, 0.35F, TileEntityPhantomface.COLORS, 3);
-        }
     }
 
     @Override
