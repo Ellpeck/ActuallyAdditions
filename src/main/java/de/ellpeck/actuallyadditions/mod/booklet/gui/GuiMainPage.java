@@ -48,7 +48,7 @@ public class GuiMainPage extends GuiBooklet{
             "A lot of stuff, some of it really good.@Narubion",
             "I like the bookmarks.@Vazkii",
             "It's got some stuff I guess.@Ellpeck",
-            "Actually Additions should be included in every new modpack that includes any form of tech.@KarillEndusa",
+            "Actually Additions should be included in every new modpack that includes any form of tech.@YasminEndusa",
             "A mod that basically lets you do what ever the heck you want.@Joshwoo70",
             "TINY TORCHES!! BABY TORCHES!! Somebody actually finally did it!!@Soaryn",
             "Balanced mod wich makes things different - in a good way.@garantiertnicht",
