@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -94,7 +95,7 @@ public class ItemWingsOfTheBats extends ItemBase{
             //Drop Wings from Bats
             if(ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntityLiving() instanceof EntityBat){
                 if(event.getEntityLiving().world.rand.nextInt(15) <= event.getLootingLevel()*2){
-                    event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemMisc, event.getEntityLiving().world.rand.nextInt(2+event.getLootingLevel())+1, TheMiscItems.BAT_WING.ordinal()), 0);
+                    event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(InitItems.itemMisc, event.getEntityLiving().world.rand.nextInt(2+event.getLootingLevel())+1, TheMiscItems.BAT_WING.ordinal())));
                 }
             }
         }

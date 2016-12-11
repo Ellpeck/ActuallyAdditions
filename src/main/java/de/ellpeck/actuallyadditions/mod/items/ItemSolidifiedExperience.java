@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -44,7 +45,7 @@ public class ItemSolidifiedExperience extends ItemBase{
                 //Drop Solidified XP
                 if(event.getEntityLiving() instanceof EntityCreature){
                     if(event.getEntityLiving().world.rand.nextInt(10) <= event.getLootingLevel()*2){
-                        event.getEntityLiving().entityDropItem(new ItemStack(InitItems.itemSolidifiedExperience, event.getEntityLiving().world.rand.nextInt(2+event.getLootingLevel())+1), 0);
+                        event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(InitItems.itemSolidifiedExperience, event.getEntityLiving().world.rand.nextInt(2+event.getLootingLevel())+1)));
                     }
                 }
             }
