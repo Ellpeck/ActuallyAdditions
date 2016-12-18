@@ -45,6 +45,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     };
     private int lastTankAmount;
     private int currentTime;
+    private int lastCompare;
 
     public TileEntityFluidCollector(String name){
         super(name);
@@ -122,6 +123,12 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     }
 
     @Override
+    public int getComparatorStrength(){
+        float calc = ((float)this.tank.getFluidAmount()/(float)this.tank.getCapacity())*15F;
+        return (int)calc;
+    }
+
+    @Override
     public IFluidHandler getFluidHandler(EnumFacing facing){
         return this.tank;
     }
@@ -158,6 +165,12 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
                 else{
                     this.currentTime = 15;
                 }
+            }
+
+            if(this.lastCompare != this.getComparatorStrength()){
+                this.lastCompare = this.getComparatorStrength();
+
+                this.markDirty();
             }
 
             if(this.lastTankAmount != this.tank.getFluidAmount() && this.sendUpdateWithInterval()){
