@@ -119,6 +119,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         register(TileEntityDistributorItem.class);
         register(TileEntityBioReactor.class);
         register(TileEntityFarmer.class);
+        register(TileEntityItemViewerHopping.class);
     }
 
     private static void register(Class<? extends TileEntityBase> tileClass){

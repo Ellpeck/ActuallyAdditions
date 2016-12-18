@@ -27,7 +27,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -46,7 +45,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
@@ -54,19 +52,14 @@ import java.util.List;
 
 public final class WorldUtil{
 
-    public static boolean doItemInteraction(int slotExtract, int slotInsert, TileEntity extract, TileEntity insert, EnumFacing extractSide, EnumFacing insertSide){
-        if(extract.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide) && insert.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, insertSide)){
-            IItemHandler extractCap = extract.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide);
-            IItemHandler insertCap = insert.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, insertSide);
-
-            ItemStack theoreticalExtract = extractCap.extractItem(slotExtract, Integer.MAX_VALUE, true);
-            if(StackUtil.isValid(theoreticalExtract)){
-                ItemStack remaining = insertCap.insertItem(slotInsert, theoreticalExtract, false);
-                if(!ItemStack.areItemStacksEqual(remaining, theoreticalExtract)){
-                    int toExtract = !StackUtil.isValid(remaining) ? StackUtil.getStackSize(theoreticalExtract) : StackUtil.getStackSize(theoreticalExtract)-StackUtil.getStackSize(remaining);
-                    extractCap.extractItem(slotExtract, toExtract, false);
-                    return true;
-                }
+    public static boolean doItemInteraction(int slotExtract, int slotInsert, IItemHandler extract, IItemHandler insert, int maxExtract){
+        ItemStack theoreticalExtract = extract.extractItem(slotExtract, maxExtract, true);
+        if(StackUtil.isValid(theoreticalExtract)){
+            ItemStack remaining = insert.insertItem(slotInsert, theoreticalExtract, false);
+            if(!ItemStack.areItemStacksEqual(remaining, theoreticalExtract)){
+                int toExtract = !StackUtil.isValid(remaining) ? StackUtil.getStackSize(theoreticalExtract) : StackUtil.getStackSize(theoreticalExtract)-StackUtil.getStackSize(remaining);
+                extract.extractItem(slotExtract, toExtract, false);
+                return true;
             }
         }
         return false;

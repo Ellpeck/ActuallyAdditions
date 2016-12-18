@@ -80,7 +80,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 if(cap != null){
                     for(int i = Math.max(this.slotToPullStart, 0); i < Math.min(this.slotToPullEnd, cap.getSlots()); i++){
                         if(this.checkBothFilters(cap.getStackInSlot(i), false)){
-                            if(WorldUtil.doItemInteraction(i, 0, this.placeToPull, this, side, null)){
+                            if(WorldUtil.doItemInteraction(i, 0, cap, this.slots, Integer.MAX_VALUE)){
                                 return true;
                             }
                         }
@@ -102,7 +102,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                     IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
                     if(cap != null){
                         for(int i = Math.max(this.slotToPutStart, 0); i < Math.min(this.slotToPutEnd, cap.getSlots()); i++){
-                            if(WorldUtil.doItemInteraction(0, i, this, this.placeToPut, null, side)){
+                            if(WorldUtil.doItemInteraction(0, i, this.slots, cap, Integer.MAX_VALUE)){
                                 return true;
                             }
                         }

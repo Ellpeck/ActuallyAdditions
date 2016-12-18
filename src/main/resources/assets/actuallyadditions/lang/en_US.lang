@@ -228,6 +228,7 @@ tile.actuallyadditions.block_pillar_quartz_slab.name=Black Quartz Pillar Slab
 tile.actuallyadditions.block_laser_relay_item.name=Item Laser Relay
 tile.actuallyadditions.block_laser_relay_item_whitelist.name=Advanced Item Laser Relay
 tile.actuallyadditions.block_item_viewer.name=Item Interface
+tile.actuallyadditions.block_item_viewer_hopping.name=Hopping Item Interface
 tile.actuallyadditions.block_impure_iron.name=Impure Iron
 tile.actuallyadditions.block_booklet_stand.name=Wall-Mount Manual
 tile.actuallyadditions.block_display_stand.name=Display Stand

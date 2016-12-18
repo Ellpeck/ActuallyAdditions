@@ -86,6 +86,7 @@ public final class InitBlocks{
     public static Block blockLaserRelayItem;
     public static Block blockLaserRelayItemWhitelist;
     public static Block blockItemViewer;
+    public static Block blockItemViewerHopping;
     public static Block blockBlackLotus;
     public static Block blockCrystal;
     public static Block blockCrystalEmpowered;
@@ -112,6 +113,7 @@ public final class InitBlocks{
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockItemViewerHopping = new BlockItemViewerHopping("block_item_viewer_hopping");
         blockFarmer = new BlockFarmer("block_farmer");
         blockBioReactor = new BlockBioReactor("block_bio_reactor");
         blockDistributorItem = new BlockDistributorItem("block_distributor_item");

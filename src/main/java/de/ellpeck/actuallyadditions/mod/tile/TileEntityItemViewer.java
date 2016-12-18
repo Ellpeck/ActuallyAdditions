@@ -31,10 +31,10 @@ public class TileEntityItemViewer extends TileEntityBase{
     private Network oldNetwork;
     private int lastNetworkChangeAmount = -1;
 
-    private final IItemHandler itemHandler;
+    protected final IItemHandler itemHandler;
 
-    public TileEntityItemViewer(){
-        super("itemViewer");
+    public TileEntityItemViewer(String name){
+        super(name);
 
         this.itemHandler = new IItemHandler(){
             @Override
@@ -100,6 +100,10 @@ public class TileEntityItemViewer extends TileEntityBase{
                 }
             }
         };
+    }
+
+    public TileEntityItemViewer(){
+        this("itemViewer");
     }
 
     @Override
