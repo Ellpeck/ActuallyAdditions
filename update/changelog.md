@@ -1,3 +1,17 @@
+# 1.11-r92
+* Added Battery Box to store power
+* Replace particles on Empowerer, Leaf Generator, Atomic Reconstructor and Miner with Laser Renderer
+* Added Hopping Item Interface (Item Interface + Hopper as one)
+* Rewrote Item Laser Relay documentation a bit
+* Fluid Placer/Collector how has comparator output
+* Changed Laser Relay recipes to use the Reconstructor
+* Tone down dungeon loot a bit
+* Add mob drops to events' lists instead of dropping them directly
+* Minor grammar corrections in the book (xbony2)
+* Fix a crash with the chest to crate upgrade
+* Fix the Disenchanting lens deleting books if using more than one
+* Made Laser Relays ignore full containers for inputting
+
 # 1.11-r91
 * Added Direwolf20's spotlight to the video introduction page of the book
 * Fixed Item Laser Relay page pictures being broken
