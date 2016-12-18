@@ -151,15 +151,25 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
                     if(relayTile instanceof TileEntityLaserRelayFluids){
                         TileEntityLaserRelayFluids theRelay = (TileEntityLaserRelayFluids)relayTile;
                         if(theRelay.mode != Mode.INPUT_ONLY){
-                            int amount = theRelay.receiversAround.size();
-                            if(theRelay == this && theRelay.receiversAround.containsKey(from)){
-                                //So that the tile energy was gotten from isn't factored into the amount
-                                amount--;
+                            boolean workedOnce = false;
+
+                            for(EnumFacing facing : theRelay.receiversAround.keySet()){
+                                if(theRelay != this || facing != from){
+                                    TileEntity tile = theRelay.receiversAround.get(facing);
+
+                                    EnumFacing opp = facing.getOpposite();
+                                    if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp)){
+                                        IFluidHandler cap = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp);
+                                        if(cap != null && cap.fill(stack, false) > 0){
+                                            totalReceiverAmount++;
+                                            workedOnce = true;
+                                        }
+                                    }
+                                }
                             }
 
-                            if(amount > 0){
+                            if(workedOnce){
                                 relaysThatWork.add(theRelay);
-                                totalReceiverAmount += amount;
                             }
                         }
                     }
