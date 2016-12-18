@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.BlockHopper;
@@ -40,7 +39,8 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer{
 
         if(!this.world.isRemote && this.world.getTotalWorldTime()%10 == 0){
             if(this.handlerToPullFrom != null){
-                outer : for(int i = 0; i < this.handlerToPullFrom.getSlots(); i++){
+                outer:
+                for(int i = 0; i < this.handlerToPullFrom.getSlots(); i++){
                     if(StackUtil.isValid(this.handlerToPullFrom.getStackInSlot(i))){
                         for(int j = 0; j < this.itemHandler.getSlots(); j++){
                             if(WorldUtil.doItemInteraction(i, j, this.handlerToPullFrom, this.itemHandler, 4)){
@@ -72,7 +72,8 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer{
             }
 
             if(this.handlerToPushTo != null){
-                outer : for(int i = 0; i < this.itemHandler.getSlots(); i++){
+                outer:
+                for(int i = 0; i < this.itemHandler.getSlots(); i++){
                     if(StackUtil.isValid(this.itemHandler.getStackInSlot(i))){
                         for(int j = 0; j < this.handlerToPushTo.getSlots(); j++){
                             if(WorldUtil.doItemInteraction(i, j, this.itemHandler, this.handlerToPushTo, 4)){
@@ -93,6 +94,9 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer{
         if(from != null && !(from instanceof TileEntityItemViewer) && from.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)){
             this.handlerToPullFrom = from.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
         }
+        else{
+            this.handlerToPullFrom = null;
+        }
 
         IBlockState state = this.world.getBlockState(this.pos);
         EnumFacing facing = state.getValue(BlockHopper.FACING);
@@ -100,6 +104,9 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer{
         TileEntity to = this.world.getTileEntity(this.pos.offset(facing));
         if(to != null && !(to instanceof TileEntityItemViewer) && to.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite())){
             this.handlerToPushTo = to.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
+        }
+        else{
+            this.handlerToPushTo = null;
         }
     }
 }
