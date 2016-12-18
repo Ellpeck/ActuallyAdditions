@@ -88,6 +88,7 @@ public final class BlockCrafting{
     public static IRecipe recipePhantomRedstoneface;
     public static IRecipe recipeLaserRelayItemWhitelist;
     public static IRecipe recipeItemInterface;
+    public static IRecipe recipeItemInterfaceHopping;
     public static IRecipe recipePlayerInterface;
     public static IRecipe recipeDisplayStand;
     public static IRecipe recipeShockSuppressor;
@@ -273,6 +274,12 @@ public final class BlockCrafting{
                 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
                 'C', "chestWood"));
         recipeItemInterface = RecipeUtil.lastIRecipe();
+
+        //Hopping Item Interface
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockItemViewerHopping),
+                new ItemStack(InitBlocks.blockItemViewer),
+                new ItemStack(Blocks.HOPPER)));
+        recipeItemInterfaceHopping = RecipeUtil.lastIRecipe();
 
         //Ranged Collector
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockRangedCollector),
