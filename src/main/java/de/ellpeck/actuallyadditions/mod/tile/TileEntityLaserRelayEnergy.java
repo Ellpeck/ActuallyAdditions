@@ -40,9 +40,8 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
 
     public static final int CAP = 1000;
     public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
-    private Mode mode = Mode.BOTH;
-
     private final IEnergyStorage[] energyStorages = new IEnergyStorage[6];
+    private Mode mode = Mode.BOTH;
 
     public TileEntityLaserRelayEnergy(String name){
         super(name, LaserType.ENERGY);

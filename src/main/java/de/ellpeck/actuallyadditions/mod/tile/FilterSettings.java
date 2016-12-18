@@ -13,16 +13,12 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
-import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -33,20 +29,17 @@ public class FilterSettings{
     public final int nbtButtonId;
     public final int oredictButtonId;
     public final int modButtonId;
-
+    public final ItemStackHandlerCustom filterInventory;
     public boolean isWhitelist;
     public boolean respectMeta;
     public boolean respectNBT;
     public boolean respectMod;
     public int respectOredict;
-
     private boolean lastWhitelist;
     private boolean lastRespectMeta;
     private boolean lastRespectNBT;
     private boolean lastRespectMod;
     private int lastRecpectOredict;
-
-    public final ItemStackHandlerCustom filterInventory;
 
     public FilterSettings(int slots, boolean defaultWhitelist, boolean defaultRespectMeta, boolean defaultRespectNBT, boolean defaultRespectMod, int defaultRespectOredict, int buttonIdStart){
         this.filterInventory = new ItemStackHandlerCustom(slots);

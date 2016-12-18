@@ -30,9 +30,9 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     public static final int DEFAULT_RANGE = 32;
     private final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 50, 0);
     public UUID connectedPlayer;
+    public String playerName;
     private IItemHandler playerHandler;
     private EntityPlayer oldPlayer;
-    public String playerName;
     private int oldEnergy;
     private int range;
 

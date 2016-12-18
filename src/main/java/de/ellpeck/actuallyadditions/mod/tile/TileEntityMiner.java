@@ -38,11 +38,10 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 2000, 0);
 
     public boolean onlyMineOres;
-    private int oldEnergy;
-
     public int checkX;
     public int checkY = -1;
     public int checkZ;
+    private int oldEnergy;
     private int oldCheckX;
     private int oldCheckY;
     private int oldCheckZ;

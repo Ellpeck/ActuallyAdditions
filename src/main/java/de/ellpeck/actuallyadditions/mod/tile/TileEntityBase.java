@@ -43,13 +43,11 @@ import net.minecraftforge.items.IItemHandler;
 
 public abstract class TileEntityBase extends TileEntity implements ITickable{
 
-    protected int ticksElapsed;
-
     public final String name;
     public boolean isRedstonePowered;
     public boolean isPulseMode;
     public boolean stopFromDropping;
-
+    protected int ticksElapsed;
     protected TileEntity[] tilesAround = new TileEntity[6];
     protected boolean hasSavedDataOnChangeOrWorldStart;
 

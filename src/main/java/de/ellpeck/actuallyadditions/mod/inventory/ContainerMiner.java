@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -18,7 +19,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
- import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 
 public class ContainerMiner extends Container{

@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
-import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;

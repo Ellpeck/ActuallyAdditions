@@ -44,7 +44,7 @@ public class ClientProxy implements IProxy{
 
     private static final List<Item> COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING = new ArrayList<Item>();
     private static final Map<ItemStack, ModelResourceLocation> MODEL_LOCATIONS_FOR_REGISTERING = new HashMap<ItemStack, ModelResourceLocation>();
-    
+
     @Override
     public void preInit(FMLPreInitializationEvent event){
         ModUtil.LOGGER.info("PreInitializing ClientProxy...");

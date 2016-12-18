@@ -24,14 +24,12 @@ import java.util.*;
 
 public class TileEntityItemViewer extends TileEntityBase{
 
+    protected final IItemHandler itemHandler;
     private final List<GenericItemHandlerInfo> genericInfos = new ArrayList<GenericItemHandlerInfo>();
     private final Map<Integer, SpecificItemHandlerInfo> specificInfos = new HashMap<Integer, SpecificItemHandlerInfo>();
     public TileEntityLaserRelayItem connectedRelay;
-
     private Network oldNetwork;
     private int lastNetworkChangeAmount = -1;
-
-    protected final IItemHandler itemHandler;
 
     public TileEntityItemViewer(String name){
         super(name);

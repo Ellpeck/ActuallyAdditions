@@ -10,7 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.config;
 
-import de.ellpeck.actuallyadditions.mod.config.values.*;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import net.minecraftforge.common.config.Configuration;
 
 public final class ConfigValues{

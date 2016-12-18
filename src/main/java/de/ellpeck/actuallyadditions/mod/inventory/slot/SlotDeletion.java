@@ -11,10 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
- import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 
 public class SlotDeletion extends SlotItemHandlerUnconditioned{
 

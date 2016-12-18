@@ -37,9 +37,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements ISharingFluidHandler{
 
     public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
-    private Mode mode = Mode.BOTH;
-
     private final IFluidHandler[] fluidHandlers = new IFluidHandler[6];
+    private Mode mode = Mode.BOTH;
 
     public TileEntityLaserRelayFluids(){
         super("laserRelayFluids", LaserType.FLUID);
