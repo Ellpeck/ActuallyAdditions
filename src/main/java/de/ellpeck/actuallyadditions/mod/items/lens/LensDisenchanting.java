@@ -43,7 +43,7 @@ public class LensDisenchanting extends Lens{
                 for(EntityItem item : items){
                     if(item != null && !item.isDead){
                         ItemStack stack = item.getEntityItem();
-                        if(StackUtil.isValid(stack)){
+                        if(StackUtil.isValid(stack) && StackUtil.getStackSize(stack) == 1){
                             Item stackItem = stack.getItem();
                             if(stackItem == Items.BOOK || stackItem == Items.ENCHANTED_BOOK){
                                 if(book == null){
