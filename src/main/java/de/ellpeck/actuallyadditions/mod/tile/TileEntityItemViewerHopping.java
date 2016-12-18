@@ -50,6 +50,26 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer{
                     }
                 }
             }
+            else{
+                if(this.world.getTotalWorldTime()%20 == 0){
+                    List<EntityItem> items = this.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.pos.getX(), this.pos.getY()+0.5, this.pos.getZ(), this.pos.getX()+1, this.pos.getY()+2, this.pos.getZ()+1));
+                    if(items != null && !items.isEmpty()){
+                        for(EntityItem item : items){
+                            if(item != null && !item.isDead){
+                                for(int i = 0; i < this.itemHandler.getSlots(); i++){
+                                    ItemStack left = this.itemHandler.insertItem(i, item.getEntityItem(), false);
+                                    item.setEntityItemStack(left);
+
+                                    if(!StackUtil.isValid(left)){
+                                        item.setDead();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             if(this.handlerToPushTo != null){
                 outer : for(int i = 0; i < this.itemHandler.getSlots(); i++){
@@ -57,25 +77,6 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer{
                         for(int j = 0; j < this.handlerToPushTo.getSlots(); j++){
                             if(WorldUtil.doItemInteraction(i, j, this.itemHandler, this.handlerToPushTo, 4)){
                                 break outer;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if(this.world.getTotalWorldTime()%20 == 0){
-                List<EntityItem> items = this.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.pos.getX(), this.pos.getY()+0.5, this.pos.getZ(), this.pos.getX()+1, this.pos.getY()+2, this.pos.getZ()+1));
-                if(items != null && !items.isEmpty()){
-                    for(EntityItem item : items){
-                        if(item != null && !item.isDead){
-                            for(int i = 0; i < this.itemHandler.getSlots(); i++){
-                                ItemStack left = this.itemHandler.insertItem(i, item.getEntityItem(), false);
-                                item.setEntityItemStack(left);
-
-                                if(!StackUtil.isValid(left)){
-                                    item.setDead();
-                                    break;
-                                }
                             }
                         }
                     }
