@@ -86,7 +86,6 @@ public final class BlockCrafting{
     public static IRecipe recipeMiner;
     public static IRecipe recipeFireworkBox;
     public static IRecipe recipePhantomRedstoneface;
-    public static IRecipe recipeLaserRelayItem;
     public static IRecipe recipeLaserRelayItemWhitelist;
     public static IRecipe recipeItemInterface;
     public static IRecipe recipePlayerInterface;
@@ -94,7 +93,6 @@ public final class BlockCrafting{
     public static IRecipe recipeShockSuppressor;
     public static IRecipe recipeEmpowerer;
     public static IRecipe[] recipesTinyTorch = new IRecipe[2];
-    public static IRecipe recipeFluidLaser;
     public static IRecipe recipeDistributorItem;
     public static IRecipe recipeBioReactor;
     public static IRecipe recipeFarmer;
@@ -237,7 +235,7 @@ public final class BlockCrafting{
         recipeAtomicReconstructor = RecipeUtil.lastIRecipe();
 
         //Laser Relay
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLaserRelay, 2),
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLaserRelay, 6),
                 "OBO", "RCR", "OBO",
                 'B', new ItemStack(Blocks.REDSTONE_BLOCK),
                 'O', new ItemStack(Blocks.OBSIDIAN),
@@ -259,12 +257,6 @@ public final class BlockCrafting{
                 'X', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal())));
         recipeLaserRelayExtreme = RecipeUtil.lastIRecipe();
 
-        //Item Laser Relay
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockLaserRelayItem),
-                new ItemStack(InitBlocks.blockLaserRelay),
-                new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
-        recipeLaserRelayItem = RecipeUtil.lastIRecipe();
-
         //Whitelist Item Laser Relay
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockLaserRelayItemWhitelist),
                 new ItemStack(InitBlocks.blockLaserRelayItem),
@@ -272,12 +264,6 @@ public final class BlockCrafting{
                 new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
                 new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal())));
         recipeLaserRelayItemWhitelist = RecipeUtil.lastIRecipe();
-
-        //Fluid Laser Relay
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockLaserRelayFluids),
-                new ItemStack(InitBlocks.blockLaserRelay),
-                new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal())));
-        recipeFluidLaser = RecipeUtil.lastIRecipe();
 
         //Item Interface
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockItemViewer),

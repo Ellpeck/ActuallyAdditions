@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class PageReconstructor extends BookletPage{
 
     private final LensConversionRecipe recipe;
+    private boolean isWildcard;
 
     public PageReconstructor(int localizationKey, LensConversionRecipe recipe){
         super(localizationKey);
@@ -54,8 +56,17 @@ public class PageReconstructor extends BookletPage{
         super.getItemStacksForPage(list);
 
         if(this.recipe != null){
-            list.add(this.recipe.outputStack);
+            ItemStack copy = this.recipe.outputStack.copy();
+            if(this.isWildcard){
+                copy.setItemDamage(Util.WILDCARD);
+            }
+            list.add(copy);
         }
+    }
+
+    public BookletPage setWildcard(){
+        this.isWildcard = true;
+        return this;
     }
 
     @Override
