@@ -120,6 +120,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         register(TileEntityBioReactor.class);
         register(TileEntityFarmer.class);
         register(TileEntityItemViewerHopping.class);
+        register(TileEntityBatteryBox.class);
     }
 
     private static void register(Class<? extends TileEntityBase> tileClass){
@@ -253,7 +254,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
                         for(EnumFacing side : sides){
                             TileEntity tile = this.tilesAround[side.ordinal()];
-                            if(tile != null){
+                            if(tile != null && provider.canShareTo(tile)){
                                 WorldUtil.doEnergyInteraction(this, tile, side, amount);
                             }
                         }
@@ -379,6 +380,10 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     public void activateOnPulse(){
 
+    }
+
+    public boolean respondsToPulses(){
+        return this.isRedstoneToggle() && this.isPulseMode;
     }
 
     public enum NBTType{

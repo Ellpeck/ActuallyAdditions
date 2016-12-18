@@ -18,6 +18,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -150,6 +151,11 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     @Override
     public EnumFacing[] getEnergyShareSides(){
         return EnumFacing.values();
+    }
+
+    @Override
+    public boolean canShareTo(TileEntity tile){
+        return true;
     }
 
     @Override

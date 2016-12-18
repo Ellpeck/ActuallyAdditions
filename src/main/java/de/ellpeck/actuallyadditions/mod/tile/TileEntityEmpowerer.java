@@ -158,12 +158,6 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase{
     }
 
     @Override
-    public void markDirty(){
-        super.markDirty();
-        this.sendUpdate();
-    }
-
-    @Override
     public boolean isItemValidForSlot(int index, ItemStack stack){
         return !getRecipesForInput(stack).isEmpty();
     }

@@ -58,4 +58,9 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     public EnumFacing[] getEnergyShareSides(){
         return EnumFacing.values();
     }
+
+    @Override
+    public boolean canShareTo(TileEntity tile){
+        return true;
+    }
 }

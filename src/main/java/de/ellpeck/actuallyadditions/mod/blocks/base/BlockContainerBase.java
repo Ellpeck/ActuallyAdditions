@@ -135,7 +135,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityBase){
                 TileEntityBase base = (TileEntityBase)tile;
-                if(base.isRedstoneToggle() && base.isPulseMode){
+                if(base.respondsToPulses()){
                     base.activateOnPulse();
                 }
             }
@@ -176,7 +176,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
                 boolean powered = world.isBlockIndirectlyGettingPowered(pos) > 0;
                 boolean wasPowered = base.isRedstonePowered;
                 if(powered && !wasPowered){
-                    if(base.isRedstoneToggle() && base.isPulseMode){
+                    if(base.respondsToPulses()){
                         world.scheduleUpdate(pos, this, this.tickRate(world));
                     }
                     base.setRedstonePowered(true);

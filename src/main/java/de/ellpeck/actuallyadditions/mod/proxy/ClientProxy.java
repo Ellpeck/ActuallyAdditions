@@ -84,6 +84,7 @@ public class ClientProxy implements IProxy{
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDisplayStand.class, new RenderDisplayStand());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEmpowerer.class, new RenderEmpowerer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBatteryBox.class, new RenderBatteryBox());
 
         TileEntitySpecialRenderer laser = new RenderLaserRelay();
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayEnergy.class, laser);

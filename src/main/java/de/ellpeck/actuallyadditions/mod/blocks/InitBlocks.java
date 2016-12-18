@@ -109,10 +109,12 @@ public final class InitBlocks{
     public static Block blockBioReactor;
     public static Block blockTinyTorch;
     public static Block blockFarmer;
+    public static Block blockBatteryBox;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockBatteryBox = new BlockBatteryBox("block_battery_box");
         blockItemViewerHopping = new BlockItemViewerHopping("block_item_viewer_hopping");
         blockFarmer = new BlockFarmer("block_farmer");
         blockBioReactor = new BlockBioReactor("block_bio_reactor");

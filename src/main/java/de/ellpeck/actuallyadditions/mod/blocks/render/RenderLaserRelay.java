@@ -20,7 +20,10 @@ import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class RenderLaserRelay extends TileEntitySpecialRenderer{
 
     private static final float[] COLOR = new float[]{1F, 0F, 0F};

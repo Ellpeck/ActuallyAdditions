@@ -127,12 +127,6 @@ public class TileEntityDistributorItem extends TileEntityInventoryBase{
     }
 
     @Override
-    public void markDirty(){
-        super.markDirty();
-        this.sendUpdate();
-    }
-
-    @Override
     public boolean shouldSaveDataOnChangeOrWorldStart(){
         return true;
     }

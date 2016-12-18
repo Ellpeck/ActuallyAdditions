@@ -95,12 +95,6 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public void markDirty(){
-        super.markDirty();
-        this.sendUpdate();
-    }
-
-    @Override
     public boolean canExtractItem(int slot, ItemStack stack){
         return getRecipeForInput(stack) == null;
     }

@@ -238,6 +238,7 @@ tile.actuallyadditions.block_empowerer.name=Empowerer
 tile.actuallyadditions.block_distributor_item.name=Item Distributor
 tile.actuallyadditions.block_bio_reactor.name=Bio Reactor
 tile.actuallyadditions.block_farmer.name=Farmer
+tile.actuallyadditions.block_battery_box.name=Battery Box
 
 #ESD
 tile.actuallyadditions.block_inputter.name=ESD

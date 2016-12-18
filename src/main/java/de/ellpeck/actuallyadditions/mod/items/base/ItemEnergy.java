@@ -191,7 +191,7 @@ public abstract class ItemEnergy extends ItemBase{
 
     private static class EnergyCapabilityProvider implements ICapabilityProvider{
 
-        private final CustomEnergyStorage storage;
+        public final CustomEnergyStorage storage;
         private Object teslaWrapper;
 
         public EnergyCapabilityProvider(final ItemStack stack, ItemEnergy item){

@@ -58,12 +58,6 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void markDirty(){
-        super.markDirty();
-        this.sendUpdate();
-    }
-
-    @Override
     public boolean isItemValidForSlot(int index, ItemStack stack){
         return true;
     }

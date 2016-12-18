@@ -51,7 +51,7 @@ public class ItemBattery extends ItemEnergy{
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
-        if(!world.isRemote && entity instanceof EntityPlayer && ItemUtil.isEnabled(stack)){
+        if(!world.isRemote && entity instanceof EntityPlayer && ItemUtil.isEnabled(stack) && !isSelected){
             EntityPlayer player = (EntityPlayer)entity;
             for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                 ItemStack slot = player.inventory.getStackInSlot(i);

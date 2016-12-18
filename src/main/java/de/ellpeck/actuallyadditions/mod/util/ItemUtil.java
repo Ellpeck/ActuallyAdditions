@@ -171,8 +171,10 @@ public final class ItemUtil{
     }
 
     public static void changeEnabled(EntityPlayer player, EnumHand hand){
-        ItemStack stack = player.getHeldItem(hand);
+        changeEnabled(player.getHeldItem(hand));
+    }
 
+    public static void changeEnabled(ItemStack stack){
         if(!stack.hasTagCompound()){
             stack.setTagCompound(new NBTTagCompound());
         }

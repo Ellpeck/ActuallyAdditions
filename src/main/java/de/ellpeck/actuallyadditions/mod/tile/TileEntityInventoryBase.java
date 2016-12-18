@@ -108,6 +108,15 @@ public abstract class TileEntityInventoryBase extends TileEntityBase{
     }
 
     @Override
+    public void markDirty(){
+        super.markDirty();
+
+        if(this.shouldSyncSlots()){
+            this.sendUpdate();
+        }
+    }
+
+    @Override
     public int getComparatorStrength(){
         return ItemHandlerHelper.calcRedstoneFromInventory(this.slots);
     }

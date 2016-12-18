@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
 public interface ISharingEnergyProvider{
@@ -20,4 +21,5 @@ public interface ISharingEnergyProvider{
 
     EnumFacing[] getEnergyShareSides();
 
+    boolean canShareTo(TileEntity tile);
 }

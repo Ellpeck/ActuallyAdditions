@@ -112,6 +112,7 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockDropper);
         this.add(InitBlocks.blockFluidPlacer);
         this.add(InitBlocks.blockFluidCollector);
+        this.add(InitBlocks.blockBatteryBox);
 
         this.add(InitBlocks.blockMisc);
         this.add(InitBlocks.blockFeeder);

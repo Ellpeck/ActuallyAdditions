@@ -162,12 +162,6 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public void markDirty(){
-        super.markDirty();
-        this.sendUpdate();
-    }
-
-    @Override
     public boolean canExtractItem(int slot, ItemStack stack){
         return true;
     }

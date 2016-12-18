@@ -67,9 +67,10 @@ public final class WorldUtil{
 
     public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer){
         if(maxTransfer > 0){
-            if(tileFrom.hasCapability(CapabilityEnergy.ENERGY, sideTo) && tileTo.hasCapability(CapabilityEnergy.ENERGY, sideTo.getOpposite())){
+            EnumFacing opp = sideTo == null ? null : sideTo.getOpposite();
+            if(tileFrom.hasCapability(CapabilityEnergy.ENERGY, sideTo) && tileTo.hasCapability(CapabilityEnergy.ENERGY, opp)){
                 IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
-                IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, sideTo.getOpposite());
+                IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, opp);
 
                 if(handlerFrom != null && handlerTo != null){
                     int drain = handlerFrom.extractEnergy(maxTransfer, true);
@@ -82,8 +83,8 @@ public final class WorldUtil{
             }
 
             if(ActuallyAdditions.teslaLoaded){
-                if(tileTo.hasCapability(TeslaUtil.teslaConsumer, sideTo.getOpposite()) && tileFrom.hasCapability(TeslaUtil.teslaProducer, sideTo)){
-                    ITeslaConsumer handlerTo = tileTo.getCapability(TeslaUtil.teslaConsumer, sideTo.getOpposite());
+                if(tileTo.hasCapability(TeslaUtil.teslaConsumer, opp) && tileFrom.hasCapability(TeslaUtil.teslaProducer, sideTo)){
+                    ITeslaConsumer handlerTo = tileTo.getCapability(TeslaUtil.teslaConsumer, opp);
                     ITeslaProducer handlerFrom = tileFrom.getCapability(TeslaUtil.teslaProducer, sideTo);
 
                     if(handlerTo != null && handlerFrom != null){
