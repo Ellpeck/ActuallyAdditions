@@ -97,8 +97,16 @@ public final class BlockCrafting{
     public static IRecipe recipeDistributorItem;
     public static IRecipe recipeBioReactor;
     public static IRecipe recipeFarmer;
+    public static IRecipe recipeBatteryBox;
 
     public static void init(){
+
+        //Battery Box
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockBatteryBox),
+                new ItemStack(InitBlocks.blockEnergizer),
+                new ItemStack(InitBlocks.blockEnervator),
+                new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal())));
+        recipeBatteryBox = RecipeUtil.lastIRecipe();
 
         //Farmer
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFarmer),
