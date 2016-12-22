@@ -60,7 +60,7 @@ public class CommonEvents{
             //Drop Cobwebs from Spiders
             if(ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof EntitySpider){
                 if(event.getEntityLiving().worldObj.rand.nextInt(20) <= event.getLootingLevel()*2){
-                    event.getEntityLiving().entityDropItem(new ItemStack(Blocks.WEB, event.getEntityLiving().worldObj.rand.nextInt(2+event.getLootingLevel())+1), 0);
+                    event.getDrops().add(new EntityItem(event.getEntityLiving().worldObj, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(Blocks.WEB, event.getEntityLiving().worldObj.rand.nextInt(2+event.getLootingLevel())+1)));
                 }
             }
         }
