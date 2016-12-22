@@ -29,6 +29,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IShearable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -105,7 +106,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
                     //The current Block to break
                     BlockPos pos = new BlockPos(x+reachX, y+reachY, z+reachZ);
                     Block block = world.getBlockState(pos).getBlock();
-                    if(block != null && (block instanceof BlockBush || (this.isAdvanced && block.isLeaves(world.getBlockState(pos), world, pos)))){
+                    if(block != null && ((block instanceof BlockBush || block instanceof IShearable) && (this.isAdvanced || !block.isLeaves(world.getBlockState(pos), world, pos)))){
                         breakPositions.add(pos);
                     }
                 }
