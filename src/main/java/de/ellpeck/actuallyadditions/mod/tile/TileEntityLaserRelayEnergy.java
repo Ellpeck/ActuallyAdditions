@@ -123,16 +123,32 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                     TileEntity relayTile = this.worldObj.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayEnergy){
                         TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy)relayTile;
+                        boolean workedOnce = false;
 
-                        int amount = theRelay.receiversAround.size();
-                        if(theRelay == this && theRelay.receiversAround.containsKey(from)){
-                            //So that the tile energy was gotten from isn't factored into the amount
-                            amount--;
+                        for(EnumFacing facing : theRelay.receiversAround.keySet()){
+                            if(theRelay != this || facing != from){
+                                TileEntity tile = theRelay.receiversAround.get(facing);
+
+                                EnumFacing opp = facing.getOpposite();
+                                if(tile instanceof IEnergyReceiver){
+                                    IEnergyReceiver iReceiver = (IEnergyReceiver)tile;
+                                    if(iReceiver.canConnectEnergy(opp) && iReceiver.receiveEnergy(opp, Integer.MAX_VALUE, true) > 0){
+                                        totalReceiverAmount++;
+                                        workedOnce = true;
+                                    }
+                                }
+                                else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
+                                    ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
+                                    if(cap != null && cap.givePower(maxTransfer, true) > 0){
+                                        totalReceiverAmount++;
+                                        workedOnce = true;
+                                    }
+                                }
+                            }
                         }
 
-                        if(amount > 0){
+                        if(workedOnce){
                             relaysThatWork.add(theRelay);
-                            totalReceiverAmount += amount;
                         }
                     }
                 }
