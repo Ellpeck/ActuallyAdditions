@@ -78,6 +78,7 @@ public final class ItemUtil{
     public static boolean remapName(FMLMissingMappingsEvent.MissingMapping mapping){
         if(mapping != null && mapping.name != null){
             if(mapping.name.toLowerCase(Locale.ROOT).contains("distributor")){
+                mapping.ignore();
                 return true;
             }
 
