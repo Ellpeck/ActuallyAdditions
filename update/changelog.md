@@ -1,3 +1,17 @@
+# 1.10.2-r93
+### This is a backport of some of the features present in the new 1.11 versions. So have fun with that. <3
+* Replace particles with laser renderers on multiple machines
+* Make the Leaf Blower work on all shearable things including BoP grass
+* Make the Reconstructor convert without needing blocks in its sight
+* Added comparator outputs to a bunch of things (check the book)
+* Added Elucent's nice Laser renderer
+* Add drops to event list instead of dropping directly
+* Fix disenchanting lens deleting books
+* Make Laser Relays ignore full containers
+* Tone down loot generation amounts a bit
+* Backport Traveller's sack item count tooltip (number5)
+* Removed the Item Distributor :(
+
 # 1.11-r92
 * Added Battery Box to store power
 * Replace particles on Empowerer, Leaf Generator, Atomic Reconstructor and Miner with Laser Renderer
