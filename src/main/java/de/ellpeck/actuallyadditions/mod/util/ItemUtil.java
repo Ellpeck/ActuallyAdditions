@@ -25,10 +25,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 //TODO Remove the whole registry name mapping thing once the 1.11 fading phase is over
@@ -80,6 +77,10 @@ public final class ItemUtil{
 
     public static boolean remapName(FMLMissingMappingsEvent.MissingMapping mapping){
         if(mapping != null && mapping.name != null){
+            if(mapping.name.toLowerCase(Locale.ROOT).contains("distributor")){
+                return true;
+            }
+
             if(UNDERSCORELESS_TO_UNDERSCORED_NAMES.containsKey(mapping.name)){
                 String newName = UNDERSCORELESS_TO_UNDERSCORED_NAMES.get(mapping.name);
                 ResourceLocation newResLoc = new ResourceLocation(newName);

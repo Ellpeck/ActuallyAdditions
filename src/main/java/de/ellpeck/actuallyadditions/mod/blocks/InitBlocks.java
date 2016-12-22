@@ -105,7 +105,6 @@ public final class InitBlocks{
     public static Block blockDisplayStand;
     public static Block blockShockSuppressor;
     public static Block blockEmpowerer;
-    public static Block blockDistributorItem;
     public static Block blockBioReactor;
     public static Block blockTinyTorch;
     public static Block blockFarmer;
@@ -118,7 +117,6 @@ public final class InitBlocks{
         blockItemViewerHopping = new BlockItemViewerHopping("block_item_viewer_hopping");
         blockFarmer = new BlockFarmer("block_farmer");
         blockBioReactor = new BlockBioReactor("block_bio_reactor");
-        blockDistributorItem = new BlockDistributorItem("block_distributor_item");
         blockEmpowerer = new BlockEmpowerer("block_empowerer");
         blockTinyTorch = new BlockTinyTorch("block_tiny_torch");
         blockShockSuppressor = new BlockShockSuppressor("block_shock_suppressor");
