@@ -29,7 +29,7 @@ import java.util.List;
 public class TileEntityEmpowerer extends TileEntityInventoryBase{
 
     private int processTime;
-    public int recipeForRenderIndex;
+    public int recipeForRenderIndex = -1;
     private int lastRecipe;
 
     public TileEntityEmpowerer(){
