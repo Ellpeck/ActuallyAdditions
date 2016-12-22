@@ -130,19 +130,19 @@ public class DungeonLoot{
                 LootFunction amount = new SetCount(noCondition, new RandomValueRange(1, 3));
                 LootFunction[] functions = new LootFunction[]{damage, amount};
 
-                pool.addEntry(new LootEntryItem(InitItems.itemCrystal, 50, 0, functions, noCondition, ModUtil.MOD_ID+":crystalItems"));
-                pool.addEntry(new LootEntryItem(Item.getItemFromBlock(InitBlocks.blockCrystal), 5, 0, functions, noCondition, ModUtil.MOD_ID+":crystalBlocks"));
+                pool.addEntry(new LootEntryItem(InitItems.itemCrystal, 20, 0, functions, noCondition, ModUtil.MOD_ID+":crystalItems"));
+                pool.addEntry(new LootEntryItem(Item.getItemFromBlock(InitBlocks.blockCrystal), 3, 0, functions, noCondition, ModUtil.MOD_ID+":crystalBlocks"));
             }
 
             if(addDrillCore){
                 LootFunction damage = new SetMetadata(noCondition, new RandomValueRange(TheMiscItems.DRILL_CORE.ordinal()));
-                pool.addEntry(new LootEntryItem(InitItems.itemMisc, 10, 0, new LootFunction[]{damage}, noCondition, ModUtil.MOD_ID+":drillCore"));
+                pool.addEntry(new LootEntryItem(InitItems.itemMisc, 5, 0, new LootFunction[]{damage}, noCondition, ModUtil.MOD_ID+":drillCore"));
             }
 
             if(addQuartz){
                 LootFunction damage = new SetMetadata(noCondition, new RandomValueRange(TheMiscItems.QUARTZ.ordinal()));
-                LootFunction amount = new SetCount(noCondition, new RandomValueRange(1, 10));
-                pool.addEntry(new LootEntryItem(InitItems.itemMisc, 80, 0, new LootFunction[]{damage, amount}, noCondition, ModUtil.MOD_ID+":quartz"));
+                LootFunction amount = new SetCount(noCondition, new RandomValueRange(1, 5));
+                pool.addEntry(new LootEntryItem(InitItems.itemMisc, 20, 0, new LootFunction[]{damage, amount}, noCondition, ModUtil.MOD_ID+":quartz"));
             }
 
             if(addBatWings){
@@ -153,7 +153,7 @@ public class DungeonLoot{
 
             if(addBook){
                 LootFunction amount = new SetCount(noCondition, new RandomValueRange(1));
-                pool.addEntry(new LootEntryItem(InitItems.itemBooklet, 100, 0, new LootFunction[]{amount}, noCondition, ModUtil.MOD_ID+":booklet"));
+                pool.addEntry(new LootEntryItem(InitItems.itemBooklet, 10, 0, new LootFunction[]{amount}, noCondition, ModUtil.MOD_ID+":booklet"));
             }
         }
     }
