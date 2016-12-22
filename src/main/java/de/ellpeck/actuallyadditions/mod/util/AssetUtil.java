@@ -37,6 +37,9 @@ import org.lwjgl.opengl.GL11;
 
 public final class AssetUtil{
 
+    public static final int MAX_LIGHT_X = 0xF000F0;
+    public static final int MAX_LIGHT_Y = 0xF000F0;
+
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("guiInventory");
 
     public static ResourceLocation getGuiLocation(String file){
@@ -224,7 +227,10 @@ public final class AssetUtil{
 
         GlStateManager.disableLighting();
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+        int func = GL11.glGetInteger(GL11.GL_ALPHA_TEST_FUNC);
+        float ref = GL11.glGetFloat(GL11.GL_ALPHA_TEST_REF);
+        GlStateManager.alphaFunc(GL11.GL_ALWAYS, 0);
         GlStateManager.translate(firstX-TileEntityRendererDispatcher.staticPlayerX, firstY-TileEntityRendererDispatcher.staticPlayerY, firstZ-TileEntityRendererDispatcher.staticPlayerZ);
         GlStateManager.rotate((float)(180*yaw/Math.PI), 0, 1, 0);
         GlStateManager.rotate((float)(180*pitch/Math.PI), 0, 0, 1);
@@ -233,42 +239,34 @@ public final class AssetUtil{
         /*if(r != r2 || g != g2 || b != b2){
             render.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
             Minecraft.getMinecraft().renderEngine.bindTexture(ClientUtil.LIGHT_BEAM_GRADIENT);
-
             render.pos(length, -beamWidth, beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
             render.pos(length, beamWidth, beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
             render.pos(0, beamWidth, beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
             render.pos(0, -beamWidth, beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
-
             render.pos(length, -beamWidth, beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
             render.pos(length, beamWidth, beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
             render.pos(0, beamWidth, beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
             render.pos(0, -beamWidth, beamWidth).tex(0, 0).color(r2, g2, b2, alpha).endVertex();
-
             render.pos(length, beamWidth, -beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
             render.pos(length, -beamWidth, -beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
             render.pos(0, -beamWidth, -beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
             render.pos(0, beamWidth, -beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
-
             render.pos(length, beamWidth, -beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
             render.pos(length, -beamWidth, -beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
             render.pos(0, -beamWidth, -beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
             render.pos(0, beamWidth, -beamWidth).tex(0, 0).color(r2, g2, b2, alpha).endVertex();
-
             render.pos(length, beamWidth, beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
             render.pos(length, beamWidth, -beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
             render.pos(0, beamWidth, -beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
             render.pos(0, beamWidth, beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
-
             render.pos(length, beamWidth, beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
             render.pos(length, beamWidth, -beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
             render.pos(0, beamWidth, -beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
             render.pos(0, beamWidth, beamWidth).tex(0, 0).color(r2, g2, b2, alpha).endVertex();
-
             render.pos(length, -beamWidth, -beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
             render.pos(length, -beamWidth, beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
             render.pos(0, -beamWidth, beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
             render.pos(0, -beamWidth, -beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
-
             render.pos(length, -beamWidth, -beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
             render.pos(length, -beamWidth, beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
             render.pos(0, -beamWidth, beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
@@ -277,33 +275,39 @@ public final class AssetUtil{
         }
         else{*/
         GlStateManager.disableTexture2D();
-        render.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-        render.pos(length, beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(0, beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(0, -beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(length, -beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
+        render.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
+        for(double i = 0; i < 4; i++){
+            double width = beamWidth*(i/4.0);
+            render.pos(length, width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(0, width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(0, -width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(length, -width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
 
-        render.pos(length, -beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(0, -beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(0, beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(length, beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(length, -width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(0, -width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(0, width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(length, width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
 
-        render.pos(length, beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(0, beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(0, beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(length, beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(length, width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(0, width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(0, width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(length, width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
 
-        render.pos(length, -beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(0, -beamWidth, beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(0, -beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
-        render.pos(length, -beamWidth, -beamWidth).color(r, g, b, alpha).endVertex();
+            render.pos(length, -width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(0, -width, width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(0, -width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+            render.pos(length, -width, -width).tex(0, 0).lightmap(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
+        }
         tessy.draw();
 
         GlStateManager.enableTexture2D();
         //}
 
+        GlStateManager.alphaFunc(func, ref);
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.disableBlend();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
     }
+
 }
