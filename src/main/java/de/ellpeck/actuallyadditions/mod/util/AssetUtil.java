@@ -10,12 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import de.ellpeck.actuallyadditions.mod.misc.ParticleColored;
+import de.ellpeck.actuallyadditions.mod.misc.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -33,8 +34,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
-
-import java.util.Locale;
 
 public final class AssetUtil{
 
@@ -168,7 +167,7 @@ public final class AssetUtil{
         GlStateManager.popMatrix();
     }
 
-    public static void shootParticles(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int particleAmount, float particleSize, float ageMultiplier){
+    public static void spawnLaserWithTimeServer(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int maxAge, double rotationTime, float size, float alpha){
         if(!world.isRemote){
             NBTTagCompound data = new NBTTagCompound();
             data.setDouble("StartX", startX);
@@ -180,34 +179,24 @@ public final class AssetUtil{
             data.setFloat("Color1", color[0]);
             data.setFloat("Color2", color[1]);
             data.setFloat("Color3", color[2]);
-            data.setInteger("ParticleAmount", particleAmount);
-            data.setFloat("ParticleSize", particleSize);
-            data.setFloat("AgeMultiplier", ageMultiplier);
+            data.setDouble("RotationTime", rotationTime);
+            data.setFloat("Size", size);
+            data.setInteger("MaxAge", maxAge);
+            data.setFloat("Alpha", alpha);
             PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.PARTICLE_HANDLER), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 96));
         }
     }
 
     @SideOnly(Side.CLIENT)
-    public static void renderParticlesFromAToB(double startX, double startY, double startZ, double endX, double endY, double endZ, int particleAmount, float particleSize, float[] color, float ageMultiplier){
+    public static void spawnLaserWithTimeClient(double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int maxAge, double rotationTime, float size, float alpha){
         Minecraft mc = Minecraft.getMinecraft();
-        int particleSetting = mc.gameSettings.particleSetting;
 
         if(mc.thePlayer.getDistance(startX, startY, startZ) <= 64 || mc.thePlayer.getDistance(endX, endY, endZ) <= 64){
-            double difX = startX-endX;
-            double difY = startY-endY;
-            double difZ = startZ-endZ;
-            double distance = new Vec3d(startX, startY, startZ).distanceTo(new Vec3d(endX, endY, endZ));
-
-            for(int times = 0; times < Math.max(particleAmount/2, 1); times++){
-                for(double i = 0; i <= 1; i += 1/(distance*particleAmount)){
-                    if(particleSetting == 0 || (particleSetting == 1 && mc.theWorld.rand.nextFloat() >= 0.8F) || (particleSetting > 1 && mc.theWorld.rand.nextFloat() >= 0.98F)){
-                        ParticleColored fx = new ParticleColored(mc.theWorld, (difX*i)+endX+0.5, (difY*i)+endY+0.5, (difZ*i)+endZ+0.5, particleSize, color[0], color[1], color[2], ageMultiplier);
-                        mc.effectRenderer.addEffect(fx);
-                    }
-                }
-            }
+            Particle fx = new ParticleBeam(mc.theWorld, startX, startY, startZ, endX, endY, endZ, color, maxAge, rotationTime, size, alpha);
+            mc.effectRenderer.addEffect(fx);
         }
     }
+
 
     //Thanks to feldim2425 for this.
     //I can't do rendering code. Ever.

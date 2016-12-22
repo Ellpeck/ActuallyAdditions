@@ -151,10 +151,6 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
             double d3 = (double)(this.worldObj.rand.nextFloat()*1.0F*(float)i1);
             this.worldObj.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
-
-        if(this.ticksElapsed%80 == 0){
-            AssetUtil.renderParticlesFromAToB(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), this.boundPosition.getX(), this.boundPosition.getY(), this.boundPosition.getZ(), 2, 0.35F, COLORS, 3);
-        }
     }
 
     @Override

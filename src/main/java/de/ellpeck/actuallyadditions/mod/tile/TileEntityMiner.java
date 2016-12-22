@@ -163,7 +163,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
     }
 
     private void shootParticles(int endX, int endY, int endZ){
-        AssetUtil.shootParticles(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{62F/255F, 163F/255F, 74F/255F}, 5, 1.0F, 1F);
+        AssetUtil.spawnLaserWithTimeServer(this.worldObj, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{65F/255F, 150F/255F, 2F/255F}, 10, 120, 0.1F, 0.8F);
     }
 
     private boolean isBlacklisted(Block block){
