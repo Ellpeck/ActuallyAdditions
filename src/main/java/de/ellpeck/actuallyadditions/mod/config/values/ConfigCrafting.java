@@ -157,7 +157,6 @@ public enum ConfigCrafting{
     FILLING_WAND("Handheld Filler", ConfigCategories.ITEMS_CRAFTING),
     VOID_BAG("Void Bag", ConfigCategories.ITEMS_CRAFTING),
     EMPOWERER("Empowerer", ConfigCategories.BLOCKS_CRAFTING),
-    DISTRIBUTOR_ITEM("Item Distributor", ConfigCategories.BLOCKS_CRAFTING),
     FARMER("Farmer", ConfigCategories.BLOCKS_CRAFTING);
 
     public final String name;

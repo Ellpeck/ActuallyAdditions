@@ -147,16 +147,6 @@ public final class BlockCrafting{
             recipeFireworkBox = RecipeUtil.lastIRecipe();
         }
 
-        //Item Distributor
-        if(ConfigCrafting.DISTRIBUTOR_ITEM.isEnabled()){
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockDistributorItem),
-                    "WHW", "HCH", "WHW",
-                    'W', "plankWood",
-                    'H', new ItemStack(Blocks.HOPPER),
-                    'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal())));
-            recipeDistributorItem = RecipeUtil.lastIRecipe();
-        }
-
         //Shock Suppressor
         if(ConfigCrafting.SHOCK_SUPPRESSOR.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockShockSuppressor),

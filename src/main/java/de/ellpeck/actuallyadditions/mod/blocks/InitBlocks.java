@@ -104,7 +104,6 @@ public final class InitBlocks{
     public static Block blockDisplayStand;
     public static Block blockShockSuppressor;
     public static Block blockEmpowerer;
-    public static Block blockDistributorItem;
     public static Block blockBioReactor;
     public static Block blockTinyTorch;
     public static Block blockFarmer;
@@ -114,7 +113,6 @@ public final class InitBlocks{
 
         blockFarmer = new BlockFarmer("blockFarmer");
         blockBioReactor = new BlockBioReactor("blockBioReactor");
-        blockDistributorItem = new BlockDistributorItem("blockDistributorItem");
         blockEmpowerer = new BlockEmpowerer("blockEmpowerer");
         blockTinyTorch = new BlockTinyTorch("blockTinyTorch");
         blockShockSuppressor = new BlockShockSuppressor("blockShockSuppressor");

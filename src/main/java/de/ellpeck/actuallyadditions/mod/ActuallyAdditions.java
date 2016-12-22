@@ -150,7 +150,7 @@ public class ActuallyAdditions{
             if(mapping.name != null){
                 String name = mapping.name.toLowerCase(Locale.ROOT);
                 if(name.startsWith(ModUtil.MOD_ID+":")){
-                    if(name.contains("paxel") || name.contains("itemspecial") || name.contains("blockbookstand") || name.contains("rarmor") || name.contains("bucket") || name.contains("modulereconstructor") || name.contains("stand")){
+                    if(name.contains("paxel") || name.contains("itemspecial") || name.contains("blockbookstand") || name.contains("rarmor") || name.contains("bucket") || name.contains("modulereconstructor") || name.contains("stand") || name.contains("distributor")){
                         mapping.ignore();
                         ModUtil.LOGGER.info("Missing Mapping "+mapping.name+" is getting ignored. This is intentional.");
                     }
