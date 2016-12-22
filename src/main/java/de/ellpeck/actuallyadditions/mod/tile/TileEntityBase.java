@@ -140,6 +140,10 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         return new SPacketUpdateTileEntity(this.pos, -1, compound);
     }
 
+    public int getComparatorStrength(){
+        return 0;
+    }
+
     @Override
     public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
         this.readSyncableNBT(pkt.getNbtCompound(), NBTType.SYNC);

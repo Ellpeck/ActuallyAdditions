@@ -25,8 +25,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -240,8 +238,8 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     @Override
     public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos){
         TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof IInventory){
-            return Container.calcRedstoneFromInventory((IInventory)tile);
+        if(tile instanceof TileEntityBase){
+            return ((TileEntityBase)tile).getComparatorStrength();
         }
         return 0;
     }

@@ -45,6 +45,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     private int lastCanola;
     private int lastOil;
     private int lastProcessTime;
+    private int lastCompare;
 
     public TileEntityFermentingBarrel(){
         super("fermentingBarrel");
@@ -83,11 +84,17 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
                     this.oilTank.fillInternal(new FluidStack(InitFluids.fluidOil, produce), true);
                     this.canolaTank.drainInternal(produce, true);
-                    this.markDirty();
                 }
             }
             else{
                 this.currentProcessTime = 0;
+            }
+
+            int compare = this.getComparatorStrength();
+            if(compare != this.lastCompare){
+                this.lastCompare = compare;
+
+                this.markDirty();
             }
 
             if((this.canolaTank.getFluidAmount() != this.lastCanola || this.oilTank.getFluidAmount() != this.lastOil || this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()){
@@ -96,6 +103,12 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
                 this.lastOil = this.oilTank.getFluidAmount();
             }
         }
+    }
+
+    @Override
+    public int getComparatorStrength(){
+        float calc = ((float)this.oilTank.getFluidAmount()/(float)this.oilTank.getCapacity())*15F;
+        return (int)calc;
     }
 
     @SideOnly(Side.CLIENT)

@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -67,6 +68,11 @@ public abstract class TileEntityInventoryBase extends TileEntityBase implements 
         for(int i = 0; i < wrappers.length; i++){
             wrappers[i] = new SidedInvWrapper(this, EnumFacing.values()[i]);
         }
+    }
+
+    @Override
+    public int getComparatorStrength(){
+        return Container.calcRedstoneFromInventory(this);
     }
 
     @Override

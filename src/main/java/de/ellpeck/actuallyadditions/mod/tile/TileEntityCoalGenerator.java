@@ -28,6 +28,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     private int lastEnergy;
     private int lastBurnTime;
     private int lastCurrentBurnTime;
+    private int lastCompare;
 
     public TileEntityCoalGenerator(){
         super(1, "coalGenerator");
@@ -74,7 +75,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.storage.receiveEnergy(PRODUCE, false);
             }
 
-            if(this.currentBurnTime <= 0 && StackUtil.isValid(this.slots[0]) && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
+            if(!this.isRedstonePowered && this.currentBurnTime <= 0 && StackUtil.isValid(this.slots[0]) && TileEntityFurnace.getItemBurnTime(this.slots[0]) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
                 int burnTime = TileEntityFurnace.getItemBurnTime(this.slots[0]);
                 this.maxBurnTime = burnTime;
                 this.currentBurnTime = burnTime;
@@ -82,7 +83,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.slots[0] = StackUtil.addStackSize(this.slots[0], -1, true);
             }
 
-            if(flag != this.currentBurnTime > 0){
+            if(flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()){
+                this.lastCompare = this.getComparatorStrength();
                 this.markDirty();
             }
 
@@ -92,6 +94,12 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.lastBurnTime = this.currentBurnTime;
             }
         }
+    }
+
+    @Override
+    public int getComparatorStrength(){
+        float calc = ((float)this.storage.getEnergyStored()/(float)this.storage.getMaxEnergyStored())*15F;
+        return (int)calc;
     }
 
     @Override

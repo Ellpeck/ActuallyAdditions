@@ -43,6 +43,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     private int lastTank;
     private int lastBurnTime;
     private int lastEnergyProduce;
+    private int lastCompare;
 
     public TileEntityOilGenerator(){
         super("oilGenerator");
@@ -85,7 +86,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
                 this.currentBurnTime--;
                 this.storage.receiveEnergy(this.currentEnergyProduce, false);
             }
-            else{
+            else if(!this.isRedstonePowered){
                 this.currentEnergyProduce = this.getEnergyForCurrentFluid();
 
                 int fuelUsed = 50;
@@ -98,7 +99,8 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
                 }
             }
 
-            if(flag != this.currentBurnTime > 0){
+            if(flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()){
+                this.lastCompare = this.getComparatorStrength();
                 this.markDirty();
             }
 
@@ -120,6 +122,12 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
             }
         }
         return 0;
+    }
+
+    @Override
+    public int getComparatorStrength(){
+        float calc = ((float)this.storage.getEnergyStored()/(float)this.storage.getMaxEnergyStored())*15F;
+        return (int)calc;
     }
 
     @Override
