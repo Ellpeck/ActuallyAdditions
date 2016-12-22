@@ -60,6 +60,12 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
+    public EnumFacing getOrientation(){
+        IBlockState state = this.worldObj.getBlockState(this.pos);
+        return WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
+    }
+
+    @Override
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
         if(type != NBTType.SAVE_BLOCK){

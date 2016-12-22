@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.api.internal;
 
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 /**
@@ -52,4 +53,6 @@ public interface IAtomicReconstructor{
     int getEnergy();
 
     Lens getLens();
+
+    EnumFacing getOrientation();
 }
