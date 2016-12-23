@@ -554,8 +554,8 @@ tooltip.actuallyadditions.item_booklet.sub.1=This book guides you through all of
 tooltip.actuallyadditions.item_booklet.sub.2=the features that Actually Additions
 tooltip.actuallyadditions.item_booklet.sub.3=has to offer.
 tooltip.actuallyadditions.item_booklet.sub.4=Use while holding to open.
-tooltip.actuallyadditions.playerProbe.disconnect.1=The player you were probing has broken the connection before you could strap him to the Player Interface! Data will be cleared!
-tooltip.actuallyadditions.playerProbe.disconnect.2=The player you were probing has disconnected before you could strap him to the Player Interface! Data will be cleared!
+tooltip.actuallyadditions.playerProbe.disconnect.1=The player you were probing has broken the connection before you could strap them to the Player Interface! Data will be cleared!
+tooltip.actuallyadditions.playerProbe.disconnect.2=The player you were probing has disconnected before you could strap them to the Player Interface! Data will be cleared!
 tooltip.actuallyadditions.playerProbe.probing=Probing
 tooltip.actuallyadditions.playerProbe.notice=Look out! Someone tried to probe you and strap you to a Player Interface, but they failed!
 tooltip.actuallyadditions.battery.discharge=Charging other items in inventory
@@ -1067,7 +1067,7 @@ booklet.actuallyadditions.chapter.tinyTorch.name=Tiny Torch
 booklet.actuallyadditions.chapter.tinyTorch.text.1=<i>Yea.
 
 booklet.actuallyadditions.chapter.playerProbe.name=Player Probe
-booklet.actuallyadditions.chapter.playerProbe.text.1=The <item>Player Probe<r> can be used to change the player a <item>Player Interface<r> is connected to. If you don't know what the <item>Player Interface<r> does, look it up in here first! <n><n>To use the Player Probe, simply <imp>right-click any player<r> with it and then <imp>right-click the interface<r>. But watch out! <n>The Probe will <imp>notify the player and disconnect<r> from him whenever he sneaks and will also do so when he <imp>leaves the server<r>! <n><n><i>Shenanigans
+booklet.actuallyadditions.chapter.playerProbe.text.1=The <item>Player Probe<r> can be used to change the player a <item>Player Interface<r> is connected to. If you don't know what the <item>Player Interface<r> does, look it up in here first! <n><n>To use the Player Probe, simply <imp>right-click any player<r> with it and then <imp>right-click the interface<r>. But watch out! <n>The Probe will <imp>notify the player and disconnect<r> from them whenever they sneak and will also do so when they <imp>leave the server<r>! <n><n><i>Shenanigans
 
 booklet.actuallyadditions.chapter.worms.name=Worms
 booklet.actuallyadditions.chapter.worms.text.1=The <item>Worms<r> are a pretty useful species. <n>They will, once <imp>placed down on dirt or grass<r>, help you <imp>till the land<r> around them in a 3x3 area and <imp>keep it wet<r>. <n>Additionally, they will help the crops <imp>grow faster<r> by making the ground nice and soft. <n><n><item>Worms<r> can be gotten by simply <imp>tilling grass<r> with a hoe. <n>If you want to <imp>remove<r> a worm, just <imp>break the block<r> it is on.
