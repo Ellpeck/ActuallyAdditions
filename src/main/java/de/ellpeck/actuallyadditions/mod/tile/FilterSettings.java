@@ -63,10 +63,7 @@ public class FilterSettings{
                 ItemStack slot = filter.getStackInSlot(i);
 
                 if(StackUtil.isValid(slot)){
-                    if(areEqualEnough(slot, stack, meta, nbt, mod, oredict)){
-                        return whitelist;
-                    }
-                    else if(SlotFilter.isFilter(slot)){
+                    if(SlotFilter.isFilter(slot)){
                         ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerFilter.SLOT_AMOUNT);
                         ItemDrill.loadSlotsFromNBT(inv, slot);
                         for(int k = 0; k < inv.getSlots(); k++){
@@ -75,6 +72,9 @@ public class FilterSettings{
                                 return whitelist;
                             }
                         }
+                    }
+                    else if(areEqualEnough(slot, stack, meta, nbt, mod, oredict)){
+                        return whitelist;
                     }
                 }
             }
