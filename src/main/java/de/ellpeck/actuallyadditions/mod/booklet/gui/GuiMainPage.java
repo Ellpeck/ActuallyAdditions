@@ -23,7 +23,6 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
@@ -74,6 +73,7 @@ public class GuiMainPage extends GuiBooklet{
     private boolean showTutorial;
 
     private String bookletName;
+    private String bookletEdition;
 
     private List<String> quote;
     private String quoteGuy;
@@ -97,6 +97,50 @@ public class GuiMainPage extends GuiBooklet{
         if(quoteSplit.length == 2){
             this.quote = this.fontRendererObj.listFormattedStringToWidth(quoteSplit[0], 120);
             this.quoteGuy = quoteSplit[1];
+        }
+
+        String playerName = this.mc.player.getName();
+        if(playerName.equalsIgnoreCase("dqmhose")){
+            this.bookletEdition = "Pants Edition";
+        }
+        else if(playerName.equalsIgnoreCase("TwoOfEight") || playerName.equalsIgnoreCase("BootyToast")){
+            this.bookletEdition = "Illustrator's Edition";
+        }
+        else if(playerName.equalsIgnoreCase("KittyVanCat")){
+            this.bookletEdition = "Cat's Edition";
+        }
+        else if(playerName.equalsIgnoreCase("canitzp")){
+            this.bookletEdition = "P's Edition";
+        }
+        else if(playerName.equalsIgnoreCase("direwolf20")){
+            this.bookletEdition = "Edition 20";
+        }
+        else if(playerName.equalsIgnoreCase("dannydjdk") || playerName.equalsIgnoreCase("andrew_period")){
+            this.bookletEdition = "Derp's Edition";
+        }
+        else if(playerName.equalsIgnoreCase("mezz")){
+            this.bookletEdition = "Just Enough Editions";
+        }
+        else if(playerName.equalsIgnoreCase("amadornes")){
+            this.bookletEdition = "Beard's Edition";
+        }
+        else if(playerName.equalsIgnoreCase("raoul")){
+            this.bookletEdition = "Giraffe's Edition";
+        }
+        else if(playerName.equalsIgnoreCase("ellpeck") || playerName.equalsIgnoreCase("profprospector")){
+            String[] colors = new String[15];
+            for(int i = 0; i < colors.length; i++){
+                colors[i] = TextFormatting.fromColorIndex(this.mc.world.rand.nextInt(15)).toString()+TextFormatting.ITALIC;
+            }
+            this.bookletEdition = String.format("%sC%so%sl%so%sr%sf%su%sl %sE%sd%si%st%si%so%sn", (Object[])colors);
+        }
+        else{
+            if(Util.isDevVersion()){
+                this.bookletEdition = "Dev's Edition";
+            }
+            else{
+                this.bookletEdition = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.edition")+" "+Util.getMajorModVersion();
+            }
         }
 
         List<String> configText = new ArrayList<String>();
@@ -183,49 +227,7 @@ public class GuiMainPage extends GuiBooklet{
         strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.manualName.2");
         this.fontRendererObj.drawString(strg, this.guiLeft+72-this.fontRendererObj.getStringWidth(strg)/2-3, this.guiTop+19+this.fontRendererObj.FONT_HEIGHT, 0);
 
-        String versionStrg;
-        String playerName = Minecraft.getMinecraft().player.getName();
-
-        if(Util.isDevVersion()){
-            versionStrg = "Dev's Edition";
-        }
-        else{
-            String modVersion = Util.getMajorModVersion();
-            if(playerName.equalsIgnoreCase("dqmhose")){
-                versionStrg = "Pants Edition";
-            }
-            else if(playerName.equalsIgnoreCase("TwoOfEight") || playerName.equalsIgnoreCase("BootyToast")){
-                versionStrg = "Illustrator's Edition";
-            }
-            else if(playerName.equalsIgnoreCase("KittyVanCat")){
-                versionStrg = "Cat's Edition";
-            }
-            else if(playerName.equalsIgnoreCase("canitzp")){
-                versionStrg = "P's Edition";
-            }
-            else if(playerName.equalsIgnoreCase("Ellpeck")){
-                versionStrg = "Editor's Edition";
-            }
-            else if(playerName.equalsIgnoreCase("direwolf20")){
-                versionStrg = "Edition 20";
-            }
-            else if(playerName.equalsIgnoreCase("dannydjdk") || playerName.equalsIgnoreCase("andrew_period")){
-                versionStrg = "Derp's Edition";
-            }
-            else if(playerName.equalsIgnoreCase("mezz")){
-                versionStrg = "Just Enough Editions";
-            }
-            else if(playerName.equalsIgnoreCase("amadornes")){
-                versionStrg = "Beard's Edition";
-            }
-            else if(playerName.equalsIgnoreCase("raoul")){
-                versionStrg = "Giraffe's Edition";
-            }
-            else{
-                versionStrg = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.edition")+" "+modVersion;
-            }
-        }
-        strg = TextFormatting.GOLD+TextFormatting.ITALIC.toString()+"-"+versionStrg+"-";
+        strg = TextFormatting.GOLD+TextFormatting.ITALIC.toString()+this.bookletEdition;
         this.fontRendererObj.drawString(strg, this.guiLeft+72-this.fontRendererObj.getStringWidth(strg)/2-3, this.guiTop+40, 0);
 
         if(this.showTutorial){
