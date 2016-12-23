@@ -118,16 +118,19 @@ public class ItemSpawnerChanger extends ItemBase{
         }
 
         if(!(entity instanceof EntityPlayer) && entity.isNonBoss()){
-            String entityName = EntityList.getEntityString(entity);
-            if(entityName != null && !entityName.isEmpty()){
-                for(String name : ConfigStringListValues.SPAWNER_CHANGER_BLACKLIST.getValue()){
-                    if(entityName.equals(name)){
-                        return false;
+            ResourceLocation entityLoc = EntityList.getKey(entity.getClass());
+            if(entityLoc != null){
+                String entityName = entityLoc.toString();
+                if(entityName != null && !entityName.isEmpty()){
+                    for(String name : ConfigStringListValues.SPAWNER_CHANGER_BLACKLIST.getValue()){
+                        if(entityName.equals(name)){
+                            return false;
+                        }
                     }
-                }
 
-                stack.getTagCompound().setString("Entity", entityName);
-                return true;
+                    stack.getTagCompound().setString("Entity", entityName);
+                    return true;
+                }
             }
         }
         return false;
