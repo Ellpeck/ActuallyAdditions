@@ -30,6 +30,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -39,6 +40,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.Locale;
 
 @SideOnly(Side.CLIENT)
 public class ClientEvents{
@@ -126,6 +129,21 @@ public class ClientEvents{
                 else{
                     if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
                         event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".ctrlForMoreInfo.desc"));
+                    }
+                }
+            }
+        }
+
+        //Be da bland
+        if(ConfigBoolValues.MOST_BLAND_PERSON_EVER.isEnabled()){
+            ItemStack stack = event.getItemStack();
+            if(StackUtil.isValid(stack)){
+                ResourceLocation regName = stack.getItem().getRegistryName();
+                if(regName != null){
+                    if(regName.toString().toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){
+                        if(event.getToolTip().size() > 0){
+                            event.getToolTip().set(0, TextFormatting.RESET+event.getToolTip().get(0));
+                        }
                     }
                 }
             }
