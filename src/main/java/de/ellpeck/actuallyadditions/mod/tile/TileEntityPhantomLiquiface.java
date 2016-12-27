@@ -26,7 +26,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     public boolean isBoundThingInRange(){
         if(super.isBoundThingInRange()){
             TileEntity tile = this.world.getTileEntity(this.boundPosition);
-            if(tile != null){
+            if(tile != null && !(tile instanceof TileEntityLaserRelayEnergy)){
                 for(EnumFacing facing : EnumFacing.values()){
                     if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)){
                         return true;
