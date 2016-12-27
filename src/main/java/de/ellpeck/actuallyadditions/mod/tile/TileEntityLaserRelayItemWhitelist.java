@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
+import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -180,10 +181,9 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         if(type == NBTType.SAVE_TILE){
             TileEntityInventoryBase.saveSlots(this.slots, compound);
         }
-        if(type != NBTType.SAVE_BLOCK){
-            this.leftFilter.writeToNBT(compound, "LeftFilter");
-            this.rightFilter.writeToNBT(compound, "RightFilter");
-        }
+
+        this.leftFilter.writeToNBT(compound, "LeftFilter");
+        this.rightFilter.writeToNBT(compound, "RightFilter");
     }
 
     @Override
@@ -192,10 +192,9 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
         if(type == NBTType.SAVE_TILE){
             TileEntityInventoryBase.loadSlots(this.slots, compound);
         }
-        if(type != NBTType.SAVE_BLOCK){
-            this.leftFilter.readFromNBT(compound, "LeftFilter");
-            this.rightFilter.readFromNBT(compound, "RightFilter");
-        }
+
+        this.leftFilter.readFromNBT(compound, "LeftFilter");
+        this.rightFilter.readFromNBT(compound, "RightFilter");
     }
 
     @Override
@@ -222,7 +221,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                     if(!FilterSettings.check(copy, this.slots, usedSettings.startSlot, usedSettings.endSlot, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectMod, usedSettings.respectOredict)){
                         for(int k = usedSettings.startSlot; k < usedSettings.endSlot; k++){
                             if(StackUtil.isValid(this.slots[k])){
-                                if(this.slots[k].getItem() instanceof ItemFilter){
+                                if(SlotFilter.isFilter(this.slots[k])){
                                     ItemStack[] filterSlots = new ItemStack[ContainerFilter.SLOT_AMOUNT];
                                     ItemDrill.loadSlotsFromNBT(filterSlots, this.slots[k]);
 
