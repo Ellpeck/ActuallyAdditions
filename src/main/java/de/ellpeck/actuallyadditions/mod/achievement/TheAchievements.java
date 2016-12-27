@@ -41,7 +41,7 @@ public enum TheAchievements{
     CRAFT_LIQUIFACE("craftLiquiface", 2, 2, new ItemStack(InitBlocks.blockPhantomLiquiface), CRAFT_PHANTOMFACE),
     CRAFT_ENERGYFACE("craftEnergyface", 4, -1, new ItemStack(InitBlocks.blockPhantomEnergyface), CRAFT_PHANTOMFACE),
     CRAFT_LASER_RELAY("craftLaserRelay", -7, -2, new ItemStack(InitBlocks.blockLaserRelay), CRAFT_RECONSTRUCTOR),
-    CRAFT_LASER_RELAY_ITEM("craftLaserRelayItem", -9, -2, new ItemStack(InitBlocks.blockLaserRelayItem), CRAFT_LASER_RELAY),
+    CRAFT_LASER_RELAY_ITEM("craftLaserRelayItem", -9, -2, new ItemStack(InitBlocks.blockLaserRelayItem), CRAFT_LASER_RELAY, Type.PICK_UP),
     CRAFT_ITEM_INTERFACE("craftItemInterface", -11, -3, new ItemStack(InitBlocks.blockItemViewer), CRAFT_LASER_RELAY_ITEM),
     CRAFT_LASER_RELAY_ADVANCED("craftLaserRelayAdvanced", -7, -4, new ItemStack(InitBlocks.blockLaserRelayAdvanced), CRAFT_LASER_RELAY),
     CRAFT_LASER_RELAY_EXTREME("craftLaserRelayExtreme", -9, -4, new ItemStack(InitBlocks.blockLaserRelayExtreme), CRAFT_LASER_RELAY_ADVANCED),
