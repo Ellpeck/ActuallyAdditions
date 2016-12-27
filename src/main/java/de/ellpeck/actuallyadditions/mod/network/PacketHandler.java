@@ -69,7 +69,7 @@ public final class PacketHandler{
             ItemStack stack = new ItemStack(compound);
 
             double inX = compound.getDouble("InX")+0.5;
-            double inY = compound.getDouble("InY")+0.925;
+            double inY = compound.getDouble("InY")+0.78;
             double inZ = compound.getDouble("InZ")+0.5;
 
             double outX = compound.getDouble("OutX")+0.5;

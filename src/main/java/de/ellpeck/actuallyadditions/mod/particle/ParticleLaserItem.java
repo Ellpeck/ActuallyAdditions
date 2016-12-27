@@ -39,7 +39,7 @@ public class ParticleLaserItem extends Particle{
     }
 
     public ParticleLaserItem(World world, double posX, double posY, double posZ, ItemStack stack, double motionY, double otherX, double otherY, double otherZ){
-        super(world, posX+(world.rand.nextDouble()-0.5)/12, posY, posZ+(world.rand.nextDouble()-0.5)/12);
+        super(world, posX+(world.rand.nextDouble()-0.5)/8, posY, posZ+(world.rand.nextDouble()-0.5)/8);
         this.stack = stack;
         this.otherX = otherX;
         this.otherY = otherY;
@@ -49,7 +49,7 @@ public class ParticleLaserItem extends Particle{
         this.motionY = motionY;
         this.motionZ = 0;
 
-        this.particleMaxAge = 20;
+        this.particleMaxAge = 10;
         this.canCollide = false;
     }
 
