@@ -235,20 +235,25 @@ public final class WorldUtil{
 
         int working = 0;
         for(ItemStack stack : stacks){
-            for(int i = start; i < end; i++){
-                stack = inventory.insertItemInternal(i, stack, false);
+            if(StackUtil.isValid(stack)){
+                for(int i = start; i < end; i++){
+                    stack = inventory.insertItemInternal(i, stack, false);
 
-                if(!StackUtil.isValid(stack)){
-                    working++;
-                    break;
+                    if(!StackUtil.isValid(stack)){
+                        working++;
+                        break;
+                    }
                 }
+            }
+            else{
+                working++;
             }
         }
 
         //Load the slots again
         if(!actuallyDo){
             for(int i = 0; i < backupSlots.length; i++){
-                inventory.setStackInSlot(i, backupSlots[i]);
+                inventory.setStackInSlot(i, StackUtil.validateCheck(backupSlots[i]));
             }
         }
 
