@@ -192,6 +192,12 @@ public class FilterSettings{
         }
         else if(id == this.modButtonId){
             this.respectMod = !this.respectMod;
+
+            if(this.respectMod){
+                this.respectMeta = false;
+                this.respectNBT = false;
+                this.respectOredict = 0;
+            }
         }
         else if(id == this.oredictButtonId){
             if(this.respectOredict+1 > 2){
