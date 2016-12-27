@@ -1,8 +1,16 @@
 # 1.11.2-r95
 ### This is 1.11.2. Not 1.10.2. Yes, this is confusing I know.
+* Added a fancy renderer to Item Laser Relays transferring items 
+* Fix Item Laser Relay achievement being impossible to get
+* Hopefully prevent a crash with the Farmer
+* Blacklist Laser Relays from being used with Phantomfaces
+* Change some oil generator values around
+* Made Mod Mode ignore all other filter settings by default
+* Added a config option to remove colored item names
 * Made Filter items not be respected as a whitelisted item in filtered machines
 * Fix Spawner Changer crashing with some mobs like Wither Skeletons
 * Fixed creative consumption of the worms (xbony2)
+* Gender neutral language (xbony2)
 
 # 1.10.2-r94
 * Make Laser Relay crafting use the Atomic Reconstructor instead of the Crafting Table
