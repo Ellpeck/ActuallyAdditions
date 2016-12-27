@@ -38,9 +38,9 @@ public final class InitCrafting{
         ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(InitItems.itemCanolaSeed), Blocks.DIRT, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOMASS.ordinal()), Blocks.SOUL_SAND);
 
         ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCanolaOil.getName(), 40, 100);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidOil.getName(), 60, 150);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCrystalOil.getName(), 80, 350);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidEmpoweredOil.getName(), 80, 600);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidOil.getName(), 80, 120);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCrystalOil.getName(), 100, 280);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidEmpoweredOil.getName(), 120, 400);
 
         ActuallyAdditionsAPI.addFarmerBehavior(new DefaultFarmerBehavior());
         ActuallyAdditionsAPI.addFarmerBehavior(new CactusFarmerBehavior());
