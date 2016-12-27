@@ -1,3 +1,9 @@
+# 1.10.2-r94
+* Make Laser Relay crafting use the Atomic Reconstructor instead of the Crafting Table
+* Made Filter Settings not treat the Filter item as a setting
+* Blacklist Laser Relays from being used with Phantomfaces to avoid crash loops :v
+* Made Mod mode ignore other filter settings like Meta and NBT by default
+
 # 1.10.2-r93
 ### This is a backport of some of the features present in the new 1.11 versions. So have fun with that. <3
 * Replace particles with laser renderers on multiple machines
