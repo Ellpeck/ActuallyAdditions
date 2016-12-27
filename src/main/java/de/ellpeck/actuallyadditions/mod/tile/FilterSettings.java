@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
-import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -66,7 +65,7 @@ public class FilterSettings{
         if(StackUtil.isValid(stack)){
             for(int i = startSlot; i < endSlot; i++){
                 if(StackUtil.isValid(slots[i])){
-                    if(SlotFilter.isFilter(slots[i])){
+                    if(slots[i].getItem() instanceof ItemFilter){
                         ItemStack[] filterSlots = new ItemStack[ContainerFilter.SLOT_AMOUNT];
                         ItemDrill.loadSlotsFromNBT(filterSlots, slots[i]);
                         if(filterSlots != null && filterSlots.length > 0){

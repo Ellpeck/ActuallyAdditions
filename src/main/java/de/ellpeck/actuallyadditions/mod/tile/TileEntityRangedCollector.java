@@ -37,15 +37,17 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
         super.writeSyncableNBT(compound, type);
-
-        this.filter.writeToNBT(compound, "Filter");
+        if(type != NBTType.SAVE_BLOCK){
+            this.filter.writeToNBT(compound, "Filter");
+        }
     }
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
-
-        this.filter.readFromNBT(compound, "Filter");
+        if(type != NBTType.SAVE_BLOCK){
+            this.filter.readFromNBT(compound, "Filter");
+        }
     }
 
     @Override
