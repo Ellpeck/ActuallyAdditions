@@ -117,7 +117,7 @@ public class ItemSpawnerChanger extends ItemBase{
         }
 
         if(!(entity instanceof EntityPlayer) && entity.isNonBoss()){
-            String entityName = EntityList.getEntityString(entity);
+            String entityName = EntityList.getEntityStringFromClass(entity.getClass());
             if(entityName != null && !entityName.isEmpty()){
                 for(String name : ConfigStringListValues.SPAWNER_CHANGER_BLACKLIST.getValue()){
                     if(entityName.equals(name)){
