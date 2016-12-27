@@ -41,6 +41,8 @@ public final class LensRecipeHandler{
     public static LensConversionRecipe recipeNetherWart;
     public static LensConversionRecipe recipePrismarine;
     public static LensConversionRecipe recipeCrystallizedCanolaSeed;
+    public static LensConversionRecipe recipeItemLaser;
+    public static LensConversionRecipe recipeFluidLaser;
 
     public static void init(){
         //Crystal Blocks
@@ -86,6 +88,12 @@ public final class LensRecipeHandler{
         recipeDamageLens = RecipeUtil.lastReconstructorRecipe();
 
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitItems.itemDamageLens), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 5000);
+
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitBlocks.blockLaserRelay), new ItemStack(InitBlocks.blockLaserRelayFluids), 2000);
+        recipeFluidLaser = RecipeUtil.lastReconstructorRecipe();
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitBlocks.blockLaserRelayFluids), new ItemStack(InitBlocks.blockLaserRelayItem), 2000);
+        recipeItemLaser = RecipeUtil.lastReconstructorRecipe();
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(InitBlocks.blockLaserRelayItem), new ItemStack(InitBlocks.blockLaserRelay), 2000);
 
         //Misc
         if(ConfigCrafting.RECONSTRUCTOR_MISC.isEnabled()){
