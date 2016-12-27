@@ -34,7 +34,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate){
         if(this.isBoundThingInRange()){
             TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
-            if(tile != null){
+            if(tile != null && !(tile instanceof TileEntityLaserRelayEnergy)){
                 if(tile instanceof IEnergyReceiver){
                     return ((IEnergyReceiver)tile).receiveEnergy(from, maxReceive, simulate);
                 }

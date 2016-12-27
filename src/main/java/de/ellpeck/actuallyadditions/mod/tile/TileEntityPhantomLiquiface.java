@@ -31,7 +31,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     public boolean isBoundThingInRange(){
         if(super.isBoundThingInRange()){
             TileEntity tile = this.worldObj.getTileEntity(this.boundPosition);
-            if(tile != null){
+            if(tile != null && !(tile instanceof TileEntityLaserRelayFluids)){
                 if(tile instanceof net.minecraftforge.fluids.IFluidHandler){
                     return true;
                 }
