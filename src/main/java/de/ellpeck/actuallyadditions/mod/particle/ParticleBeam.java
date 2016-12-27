@@ -8,7 +8,7 @@
  * © 2015-2016 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.misc;
+package de.ellpeck.actuallyadditions.mod.particle;
 
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.particle.Particle;

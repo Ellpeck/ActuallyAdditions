@@ -12,12 +12,16 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.Network;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.*;
@@ -62,11 +66,12 @@ public class TileEntityItemViewer extends TileEntityBase{
             public ItemStack insertItem(int slot, ItemStack stack, boolean simulate){
                 SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
                 if(info != null && TileEntityItemViewer.this.isWhitelisted(info, stack, false)){
-                    ItemStack inserted = info.handler.insertItem(info.switchedIndex, stack, simulate);
-                    if(!ItemStack.areItemStacksEqual(inserted, stack)){
+                    ItemStack remain = info.handler.insertItem(info.switchedIndex, stack, simulate);
+                    if(!ItemStack.areItemStacksEqual(remain, stack) && !simulate){
                         TileEntityItemViewer.this.markDirty();
+                        TileEntityItemViewer.this.doItemParticle(stack, info.relayInQuestion.getPos(), TileEntityItemViewer.this.connectedRelay.getPos());
                     }
-                    return inserted;
+                    return remain;
                 }
                 return stack;
             }
@@ -78,8 +83,9 @@ public class TileEntityItemViewer extends TileEntityBase{
                     SpecificItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
                     if(info != null && TileEntityItemViewer.this.isWhitelisted(info, stackIn, true)){
                         ItemStack extracted = info.handler.extractItem(info.switchedIndex, amount, simulate);
-                        if(extracted != null){
+                        if(StackUtil.isValid(extracted) && !simulate){
                             TileEntityItemViewer.this.markDirty();
+                            TileEntityItemViewer.this.doItemParticle(extracted, TileEntityItemViewer.this.connectedRelay.getPos(), info.relayInQuestion.getPos());
                         }
                         return extracted;
                     }
@@ -112,6 +118,23 @@ public class TileEntityItemViewer extends TileEntityBase{
     private List<GenericItemHandlerInfo> getItemHandlerInfos(){
         this.queryAndSaveData();
         return this.genericInfos;
+    }
+
+    private void doItemParticle(ItemStack stack, BlockPos input, BlockPos output){
+        if(!this.world.isRemote){
+            NBTTagCompound compound = new NBTTagCompound();
+            stack.writeToNBT(compound);
+
+            compound.setDouble("InX", input.getX());
+            compound.setDouble("InY", input.getY());
+            compound.setDouble("InZ", input.getZ());
+
+            compound.setDouble("OutX", output.getX());
+            compound.setDouble("OutY", output.getY());
+            compound.setDouble("OutZ", output.getZ());
+
+            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), new TargetPoint(this.world.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 16));
+        }
     }
 
     private void queryAndSaveData(){

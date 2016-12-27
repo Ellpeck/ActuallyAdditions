@@ -10,21 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import de.ellpeck.actuallyadditions.mod.misc.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
+import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
@@ -32,6 +32,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -79,6 +80,31 @@ public final class AssetUtil{
             GlStateManager.popAttrib();
             GlStateManager.enableLighting();
             GlStateManager.popMatrix();
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void renderItemWithoutScrewingWithColors(ItemStack stack){
+        if(StackUtil.isValid(stack)){
+            Minecraft mc = Minecraft.getMinecraft();
+            RenderItem renderer = mc.getRenderItem();
+            TextureManager manager = mc.getTextureManager();
+
+            IBakedModel model = renderer.getItemModelWithOverrides(stack, null, null);
+
+            manager.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+            manager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+            GlStateManager.enableRescaleNormal();
+            GlStateManager.enableBlend();
+            GlStateManager.pushMatrix();
+            model = ForgeHooksClient.handleCameraTransforms(model, TransformType.FIXED, false);
+            renderer.renderItem(stack, model);
+            GlStateManager.cullFace(GlStateManager.CullFace.BACK);
+            GlStateManager.popMatrix();
+            GlStateManager.disableRescaleNormal();
+            GlStateManager.disableBlend();
+            manager.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+            manager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
         }
     }
 
@@ -188,7 +214,7 @@ public final class AssetUtil{
             data.setFloat("Size", size);
             data.setInteger("MaxAge", maxAge);
             data.setFloat("Alpha", alpha);
-            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.PARTICLE_HANDLER), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 96));
+            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.LASER_HANDLER), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 96));
         }
     }
 

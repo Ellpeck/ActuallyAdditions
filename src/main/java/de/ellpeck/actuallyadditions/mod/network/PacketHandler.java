@@ -14,13 +14,16 @@ import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.IStringReactor;
+import de.ellpeck.actuallyadditions.mod.particle.ParticleLaserItem;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -38,7 +41,7 @@ import java.util.UUID;
 public final class PacketHandler{
 
     public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<IDataHandler>();
-    public static final IDataHandler PARTICLE_HANDLER = new IDataHandler(){
+    public static final IDataHandler LASER_HANDLER = new IDataHandler(){
         @Override
         @SideOnly(Side.CLIENT)
         public void handleData(NBTTagCompound compound){
@@ -55,6 +58,27 @@ public final class PacketHandler{
                 if(tile instanceof TileEntityBase){
                     ((TileEntityBase)tile).readSyncableNBT(compound.getCompoundTag("Data"), TileEntityBase.NBTType.SYNC);
                 }
+            }
+        }
+    };
+    public static final IDataHandler LASER_PARTICLE_HANDLER = new IDataHandler(){
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void handleData(NBTTagCompound compound){
+            Minecraft mc = Minecraft.getMinecraft();
+            ItemStack stack = new ItemStack(compound);
+
+            double inX = compound.getDouble("InX")+0.5;
+            double inY = compound.getDouble("InY")+0.925;
+            double inZ = compound.getDouble("InZ")+0.5;
+
+            double outX = compound.getDouble("OutX")+0.5;
+            double outY = compound.getDouble("OutY")+0.525;
+            double outZ = compound.getDouble("OutZ")+0.5;
+
+            if(mc.player.getDistance(outX, outY, outZ) <= 16){
+                Particle fx = new ParticleLaserItem(mc.world, outX, outY, outZ, stack, 0.025, inX, inY, inZ);
+                mc.effectRenderer.addEffect(fx);
             }
         }
     };
@@ -128,12 +152,13 @@ public final class PacketHandler{
         theNetwork.registerMessage(PacketServerToClient.Handler.class, PacketServerToClient.class, 0, Side.CLIENT);
         theNetwork.registerMessage(PacketClientToServer.Handler.class, PacketClientToServer.class, 1, Side.SERVER);
 
-        DATA_HANDLERS.add(PARTICLE_HANDLER);
+        DATA_HANDLERS.add(LASER_HANDLER);
         DATA_HANDLERS.add(TILE_ENTITY_HANDLER);
         DATA_HANDLERS.add(GUI_BUTTON_TO_TILE_HANDLER);
         DATA_HANDLERS.add(GUI_STRING_TO_TILE_HANDLER);
         DATA_HANDLERS.add(GUI_NUMBER_TO_TILE_HANDLER);
         DATA_HANDLERS.add(CHANGE_PLAYER_DATA_HANDLER);
         DATA_HANDLERS.add(GUI_BUTTON_TO_CONTAINER_HANDLER);
+        DATA_HANDLERS.add(LASER_PARTICLE_HANDLER);
     }
 }
