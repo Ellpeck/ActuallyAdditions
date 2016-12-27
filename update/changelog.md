@@ -1,3 +1,9 @@
+# 1.11.2-r95
+### This is 1.11.2. Not 1.10.2. Yes, this is confusing I know.
+* Made Filter items not be respected as a whitelisted item in filtered machines
+* Fix Spawner Changer crashing with some mobs like Wither Skeletons
+* Fixed creative consumption of the worms (xbony2)
+
 # 1.10.2-r94
 * Make Laser Relay crafting use the Atomic Reconstructor instead of the Crafting Table
 * Made Filter Settings not treat the Filter item as a setting
