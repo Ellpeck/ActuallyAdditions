@@ -166,13 +166,13 @@ public final class InitBlocks{
         blockOilGenerator = new BlockOilGenerator("block_oil_generator");
         blockFermentingBarrel = new BlockFermentingBarrel("block_fermenting_barrel");
         blockRice = new BlockPlant("block_rice", 1, 2);
-        CompatUtil.registerMFRPlant(blockRice);
+        CompatUtil.registerPlant(blockRice);
         blockCanola = new BlockPlant("block_canola", 2, 3);
-        CompatUtil.registerMFRPlant(blockCanola);
+        CompatUtil.registerPlant(blockCanola);
         blockFlax = new BlockPlant("block_flax", 2, 4);
-        CompatUtil.registerMFRPlant(blockFlax);
+        CompatUtil.registerPlant(blockFlax);
         blockCoffee = new BlockPlant("block_coffee", 2, 2);
-        CompatUtil.registerMFRPlant(blockCoffee);
+        CompatUtil.registerPlant(blockCoffee);
         blockCompost = new BlockCompost("block_compost");
         blockMisc = new BlockMisc("block_misc");
         blockFeeder = new BlockFeeder("block_feeder");
