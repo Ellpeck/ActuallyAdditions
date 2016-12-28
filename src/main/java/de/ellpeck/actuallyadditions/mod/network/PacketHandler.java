@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -151,7 +152,7 @@ public final class PacketHandler{
                 }
             }
             else{
-                player = Minecraft.getMinecraft().player;
+                player = ActuallyAdditions.proxy.getCurrentPlayer();
             }
 
             if(player != null){
