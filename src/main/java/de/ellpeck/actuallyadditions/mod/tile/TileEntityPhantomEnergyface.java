@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements ISharingEnergyProvider{
@@ -42,6 +43,11 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
             }
         }
         return false;
+    }
+
+    @Override
+    protected boolean isCapabilitySupported(Capability<?> capability){
+        return capability == CapabilityEnergy.ENERGY || capability == TeslaUtil.teslaHolder || capability == TeslaUtil.teslaConsumer || capability == TeslaUtil.teslaProducer;
     }
 
     @Override

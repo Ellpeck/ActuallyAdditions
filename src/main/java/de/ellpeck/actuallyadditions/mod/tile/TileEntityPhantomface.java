@@ -24,7 +24,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile{
+public abstract class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile{
 
     public static final int RANGE = 16;
     public BlockPos boundPosition;
@@ -170,9 +170,11 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
         return this.range;
     }
 
+    protected abstract boolean isCapabilitySupported(Capability<?> capability);
+
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing){
-        if(this.isBoundThingInRange()){
+        if(this.isBoundThingInRange() && this.isCapabilitySupported(capability)){
             TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
             if(tile != null){
                 return tile.hasCapability(capability, facing);
@@ -183,7 +185,7 @@ public class TileEntityPhantomface extends TileEntityInventoryBase implements IP
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        if(this.isBoundThingInRange()){
+        if(this.isBoundThingInRange() && this.isCapabilitySupported(capability)){
             TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
             if(tile != null){
                 return tile.getCapability(capability, facing);

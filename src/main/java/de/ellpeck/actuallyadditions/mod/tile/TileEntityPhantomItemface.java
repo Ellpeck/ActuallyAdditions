@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityPhantomItemface extends TileEntityPhantomface{
@@ -41,6 +42,11 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
             }
         }
         return false;
+    }
+
+    @Override
+    protected boolean isCapabilitySupported(Capability<?> capability){
+        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
     }
 
     @Override

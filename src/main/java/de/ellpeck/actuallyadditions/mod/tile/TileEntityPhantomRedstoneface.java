@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
 
 import java.util.Arrays;
 
@@ -60,5 +61,10 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface{
         System.arraycopy(this.providesStrong, 0, this.lastProvidesStrong, 0, this.providesStrong.length);
 
         super.onUpdateSent();
+    }
+
+    @Override
+    protected boolean isCapabilitySupported(Capability<?> capability){
+        return false;
     }
 }
