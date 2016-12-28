@@ -30,7 +30,7 @@ public class ItemResonantRice extends ItemBase{
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote){
-            stack = StackUtil.addStackSize(stack, -1);
+            stack.stackSize--;
             world.createExplosion(null, player.posX, player.posY, player.posZ, 0.5F, true);
         }
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);

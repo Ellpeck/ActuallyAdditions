@@ -63,7 +63,7 @@ public class ItemHairyBall extends ItemBase{
                 entityItem.setPickupDelay(0);
                 player.worldObj.spawnEntityInWorld(entityItem);
             }
-            stack = StackUtil.addStackSize(stack, -1);
+            stack.stackSize--;
 
             world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, world.rand.nextFloat()*0.1F+0.9F);
         }
