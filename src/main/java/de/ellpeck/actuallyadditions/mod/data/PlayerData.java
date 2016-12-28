@@ -25,8 +25,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class PlayerData{
 
-    public static PlayerSave getDataFromPlayer(UUID id){
-        ConcurrentHashMap<UUID, PlayerSave> data = WorldData.getWorldUnspecificData().playerSaveData;
+    public static PlayerSave getDataFromPlayer(EntityPlayer player){
+        WorldData worldData = WorldData.get(player.getEntityWorld());
+        ConcurrentHashMap<UUID, PlayerSave> data = worldData.playerSaveData;
+        UUID id = player.getUniqueID();
+
         if(data.containsKey(id)){
             PlayerSave save = data.get(id);
             if(save != null && save.id != null && save.id.equals(id)){
@@ -37,11 +40,8 @@ public final class PlayerData{
         //Add Data if none is existant
         PlayerSave save = new PlayerSave(id);
         data.put(id, save);
+        worldData.markDirty();
         return save;
-    }
-
-    public static PlayerSave getDataFromPlayer(EntityPlayer player){
-        return getDataFromPlayer(player.getUniqueID());
     }
 
     public static class PlayerSave{

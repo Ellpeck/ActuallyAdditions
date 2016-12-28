@@ -47,6 +47,7 @@ public final class PacketHandlerHelper{
             }
         }
         else{
+            compound.setInteger("Dimension", player.world.provider.getDimension());
             PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
         }
     }

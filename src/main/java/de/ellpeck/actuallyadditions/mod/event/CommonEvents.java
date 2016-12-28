@@ -87,6 +87,7 @@ public class CommonEvents{
                     PlayerData.PlayerSave save = PlayerData.getDataFromPlayer(event.player);
                     if(save != null && !save.bookGottenAlready){
                         save.bookGottenAlready = true;
+                        WorldData.get(event.player.getEntityWorld()).markDirty();
 
                         EntityItem entityItem = new EntityItem(event.player.world, event.player.posX, event.player.posY, event.player.posZ, new ItemStack(InitItems.itemBooklet));
                         entityItem.setPickupDelay(0);
@@ -109,16 +110,6 @@ public class CommonEvents{
 
     @SubscribeEvent
     public void onLoad(WorldEvent.Load event){
-        WorldData.load(event.getWorld());
-    }
-
-    @SubscribeEvent
-    public void onUnload(WorldEvent.Unload event){
-        WorldData.unload(event.getWorld());
-    }
-
-    @SubscribeEvent
-    public void onSave(WorldEvent.Save event){
-        WorldData.save(event.getWorld());
+        WorldData.loadLegacy(event.getWorld());
     }
 }

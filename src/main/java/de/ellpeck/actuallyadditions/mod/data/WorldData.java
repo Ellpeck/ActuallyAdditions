@@ -18,119 +18,100 @@ import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraftforge.common.WorldSpecificSaveHandler;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class WorldData{
+public class WorldData extends WorldSavedData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"data";
-    private static final ConcurrentHashMap<Integer, WorldData> WORLD_DATA = new ConcurrentHashMap<Integer, WorldData>();
+    private static WorldData data;
+    //TODO Remove this as well
+    public static List<File> legacyLoadWorlds = new ArrayList<File>();
     public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<Network>();
     public final ConcurrentHashMap<UUID, PlayerSave> playerSaveData = new ConcurrentHashMap<UUID, PlayerSave>();
-    private final ISaveHandler handler;
-    private final int dimension;
 
-    public WorldData(ISaveHandler handler, int dimension){
-        this.handler = handler;
-        this.dimension = dimension;
+    public WorldData(String name){
+        super(name);
     }
 
-    public static WorldData getWorldUnspecificData(){
-        return getDataForWorld(DimensionType.OVERWORLD.getId());
-    }
+    public static WorldData get(World world, boolean forceLoad){
+        if(forceLoad || data == null){
+            if(!world.isRemote){
+                WorldSavedData savedData = world.loadData(WorldData.class, DATA_TAG);
 
-    public static WorldData getDataForWorld(World world){
-        return getDataForWorld(world.provider.getDimension());
-    }
+                if(!(savedData instanceof WorldData)){
+                    ModUtil.LOGGER.info("No WorldData found, creating...");
 
-    public static WorldData getDataForWorld(int dim){
-        WorldData data = WORLD_DATA.get(dim);
+                    WorldData newData = new WorldData(DATA_TAG);
+                    world.setData(DATA_TAG, newData);
+                    data = newData;
+                }
+                else{
+                    data = (WorldData)savedData;
+                    ModUtil.LOGGER.info("Successfully loaded WorldData.");
+                }
 
-        if(data == null){
-            data = new WorldData(null, dim);
-            WORLD_DATA.put(dim, data);
+                //TODO Remove this part as well
+                if(!legacyLoadWorlds.isEmpty()){
+                    for(File legacyFile : legacyLoadWorlds){
+                        if(legacyFile != null && legacyFile.exists()){
+                            String name = legacyFile.getName();
+
+                            try{
+                                FileInputStream stream = new FileInputStream(legacyFile);
+                                NBTTagCompound compound = CompressedStreamTools.readCompressed(stream);
+                                stream.close();
+                                WorldData data = get(world);
+                                data.readFromNBT(compound, true);
+                                data.markDirty();
+
+                                ModUtil.LOGGER.info("Successfully received and merged legacy WorldData "+name+"!");
+
+                                if(legacyFile.delete()){
+                                    ModUtil.LOGGER.info("Successfully deleted legacy WorldData "+name+"!");
+                                }
+                                else{
+                                    ModUtil.LOGGER.warn("Couldn't delete legacy WorldData file "+name+"!");
+                                }
+                            }
+                            catch(Exception e){
+                                ModUtil.LOGGER.error("Something went wrong trying to load legacy WorldData "+name+"!", e);
+                            }
+                        }
+                    }
+
+                    legacyLoadWorlds.clear();
+                }
+            }
+            else{
+                data = new WorldData(DATA_TAG);
+                ModUtil.LOGGER.info("Created temporary WorldData to cache data on the client.");
+            }
         }
 
         return data;
     }
 
-    public static void load(World world){
-        if(!world.isRemote && world instanceof WorldServer){
-            WorldData data = new WorldData(new WorldSpecificSaveHandler((WorldServer)world, world.getSaveHandler()), world.provider.getDimension());
-            WORLD_DATA.put(data.dimension, data);
-
-            try{
-                File dataFile = data.handler.getMapFileFromName(DATA_TAG+data.dimension);
-
-                if(dataFile != null && dataFile.exists()){
-                    FileInputStream stream = new FileInputStream(dataFile);
-                    NBTTagCompound compound = CompressedStreamTools.readCompressed(stream);
-                    stream.close();
-                    data.readFromNBT(compound);
-
-                    ModUtil.LOGGER.info("Successfully received WorldData for world "+data.dimension+"!");
-                }
-                else{
-                    ModUtil.LOGGER.info("No WorldData found for world "+data.dimension+", creating...");
-                }
-
-            }
-            catch(Exception e){
-                ModUtil.LOGGER.error("Something went wrong trying to load WorldData for world "+data.dimension+"!", e);
-            }
-        }
+    public static WorldData get(World world){
+        return get(world, false);
     }
 
-    public static void save(World world){
-        if(!world.isRemote){
-            WorldData data = WORLD_DATA.get(world.provider.getDimension());
-            if(data != null && data.handler != null){
-                try{
-                    File dataFile = data.handler.getMapFileFromName(DATA_TAG+data.dimension);
-
-                    if(dataFile != null){
-                        if(!dataFile.exists()){
-                            dataFile.createNewFile();
-                            ModUtil.LOGGER.info("Creating new WorldData file for world "+data.dimension+"!");
-                        }
-
-                        NBTTagCompound compound = new NBTTagCompound();
-                        data.writeToNBT(compound);
-                        FileOutputStream stream = new FileOutputStream(dataFile);
-                        CompressedStreamTools.writeCompressed(compound, stream);
-                        stream.close();
-                    }
-                }
-                catch(Exception e){
-                    ModUtil.LOGGER.error("Something went wrong trying to save WorldData for world "+data.dimension+"!", e);
-                }
-            }
-            else{
-                ModUtil.LOGGER.error("Tried to save WorldData for "+world.provider.getDimension()+" without any data handler being present!?");
-            }
-        }
-    }
-
-    public static void unload(World world){
-        if(!world.isRemote){
-            WORLD_DATA.remove(world.provider.getDimension());
-            ModUtil.LOGGER.info("Unloading WorldData for world "+world.provider.getDimension()+"!");
-        }
-    }
-
-    private void readFromNBT(NBTTagCompound compound){
+    //TODO Remove merging once removing old save handler
+    private void readFromNBT(NBTTagCompound compound, boolean merge){
         //Laser World Data
-        this.laserRelayNetworks.clear();
-
+        if(!merge){
+            this.laserRelayNetworks.clear();
+        }
         NBTTagList networkList = compound.getTagList("Networks", 10);
         for(int i = 0; i < networkList.tagCount(); i++){
             Network network = LaserRelayConnectionHandler.readNetworkFromNBT(networkList.getCompoundTagAt(i));
@@ -138,7 +119,9 @@ public class WorldData{
         }
 
         //Player Data
-        this.playerSaveData.clear();
+        if(!merge){
+            this.playerSaveData.clear();
+        }
         NBTTagList playerList = compound.getTagList("PlayerData", 10);
         for(int i = 0; i < playerList.tagCount(); i++){
             NBTTagCompound player = playerList.getCompoundTagAt(i);
@@ -152,7 +135,13 @@ public class WorldData{
         }
     }
 
-    private void writeToNBT(NBTTagCompound compound){
+    @Override
+    public void readFromNBT(NBTTagCompound compound){
+        this.readFromNBT(compound, false);
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound){
         //Laser World Data
         NBTTagList networkList = new NBTTagList();
         for(Network network : this.laserRelayNetworks){
@@ -173,5 +162,17 @@ public class WorldData{
             playerList.appendTag(player);
         }
         compound.setTag("PlayerData", playerList);
+
+        return compound;
+    }
+
+    //TODO Remove old loading mechanic after a while because it's legacy
+    public static void loadLegacy(World world){
+        if(!world.isRemote && world instanceof WorldServer){
+            int dim = world.provider.getDimension();
+            ISaveHandler handler = new WorldSpecificSaveHandler((WorldServer)world, world.getSaveHandler());
+            File dataFile = handler.getMapFileFromName(DATA_TAG+dim);
+            legacyLoadWorlds.add(dataFile);
+        }
     }
 }
