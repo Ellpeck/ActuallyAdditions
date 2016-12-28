@@ -58,7 +58,7 @@ public class WorldData extends WorldSavedData{
                 }
                 else{
                     data = (WorldData)savedData;
-                    ModUtil.LOGGER.info("Successfully loaded WorldData.");
+                    ModUtil.LOGGER.info("Successfully loaded WorldData!");
                 }
 
                 //TODO Remove this part as well
@@ -95,7 +95,7 @@ public class WorldData extends WorldSavedData{
             }
             else{
                 data = new WorldData(DATA_TAG);
-                ModUtil.LOGGER.info("Created temporary WorldData to cache data on the client.");
+                ModUtil.LOGGER.info("Created temporary WorldData to cache data on the client!");
             }
         }
 

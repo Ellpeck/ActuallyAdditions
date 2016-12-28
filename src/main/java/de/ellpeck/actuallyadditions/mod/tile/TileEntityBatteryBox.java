@@ -25,6 +25,7 @@ import java.util.List;
 public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
     private int lastEnergyStored;
+    private int lastCompare;
 
     public TileEntityBatteryBox(){
         super(1, "batteryBox");
@@ -88,9 +89,26 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
                 currStorage = storage.getEnergyStored();
             }
 
+            if(this.lastCompare != this.getComparatorStrength()){
+                this.lastCompare = this.getComparatorStrength();
+                this.markDirty();
+            }
+
             if(this.lastEnergyStored != currStorage && this.sendUpdateWithInterval()){
                 this.lastEnergyStored = currStorage;
             }
+        }
+    }
+
+    @Override
+    public int getComparatorStrength(){
+        IEnergyStorage storage = this.getEnergyStorage(null);
+        if(storage != null){
+            float calc = ((float)storage.getEnergyStored()/(float)storage.getMaxEnergyStored())*15F;
+            return (int)calc;
+        }
+        else{
+            return 0;
         }
     }
 
