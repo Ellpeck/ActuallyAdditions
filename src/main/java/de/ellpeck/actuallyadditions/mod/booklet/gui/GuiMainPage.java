@@ -134,6 +134,9 @@ public class GuiMainPage extends GuiBooklet{
             }
             this.bookletEdition = String.format("%sC%so%sl%so%sr%sf%su%sl %sE%sd%si%st%si%so%sn", (Object[])colors);
         }
+        else if(playerName.equalsIgnoreCase("oitsjustjose")){
+            this.bookletEdition = "oitsjustanedition";
+        }
         else{
             if(Util.isDevVersion()){
                 this.bookletEdition = "Dev's Edition";
