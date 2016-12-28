@@ -59,13 +59,13 @@ public class ItemSolidifiedExperience extends ItemBase{
             if(!player.isSneaking()){
                 amount = SOLID_XP_AMOUNT;
                 if(!player.capabilities.isCreativeMode){
-                    stack = StackUtil.addStackSize(stack, -1);
+                    stack.stackSize--;
                 }
             }
             else{
                 amount = SOLID_XP_AMOUNT*StackUtil.getStackSize(stack);
                 if(!player.capabilities.isCreativeMode){
-                    stack = StackUtil.setStackSize(stack, 0);
+                    stack.stackSize = 0;
                 }
             }
 
