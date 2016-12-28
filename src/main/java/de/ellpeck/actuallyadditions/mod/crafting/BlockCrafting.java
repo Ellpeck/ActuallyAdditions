@@ -235,7 +235,7 @@ public final class BlockCrafting{
         recipeAtomicReconstructor = RecipeUtil.lastIRecipe();
 
         //Laser Relay
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLaserRelay, 6),
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockLaserRelay, 4),
                 "OBO", "RCR", "OBO",
                 'B', new ItemStack(Blocks.REDSTONE_BLOCK),
                 'O', new ItemStack(Blocks.OBSIDIAN),
