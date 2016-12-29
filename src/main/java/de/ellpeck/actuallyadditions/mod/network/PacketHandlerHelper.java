@@ -51,4 +51,16 @@ public final class PacketHandlerHelper{
             PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.CHANGE_PLAYER_DATA_HANDLER));
         }
     }
+
+    public static void sendNumberPacket(TileEntity tile, double number, int id){
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setInteger("X", tile.getPos().getX());
+        compound.setInteger("Y", tile.getPos().getY());
+        compound.setInteger("Z", tile.getPos().getZ());
+        compound.setInteger("WorldID", tile.getWorld().provider.getDimension());
+        compound.setInteger("PlayerID", Minecraft.getMinecraft().player.getEntityId());
+        compound.setInteger("NumberID", id);
+        compound.setDouble("Number", number);
+        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));
+    }
 }

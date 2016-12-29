@@ -54,7 +54,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public void onNumberReceived(int text, int textID, EntityPlayer player){
+    public void onNumberReceived(double number, int textID, EntityPlayer player){
+        int text = (int)number;
+
         if(text != -1){
             if(textID == 0){
                 this.slotToPutStart = Math.max(text, 0);

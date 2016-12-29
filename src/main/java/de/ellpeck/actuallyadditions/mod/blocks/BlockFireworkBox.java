@@ -11,7 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFireworkBox;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -35,15 +37,23 @@ public class BlockFireworkBox extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
+        if(this.tryToggleRedstone(world, pos, player)){
+            return true;
+        }
+        else if(!world.isRemote){
+            TileEntityFireworkBox grinder = (TileEntityFireworkBox)world.getTileEntity(pos);
+            if(grinder != null){
+                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FIREWORK_BOX.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+            }
+        }
+        return true;
+    }
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         return new TileEntityFireworkBox();
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        return this.tryToggleRedstone(world, pos, player);
     }
 
     @Override

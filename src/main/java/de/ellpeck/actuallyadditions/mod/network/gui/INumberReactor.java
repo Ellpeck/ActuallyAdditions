@@ -17,9 +17,9 @@ public interface INumberReactor{
     /**
      * Called when a Number gets received after typing it in in the GUI
      *
-     * @param text   The number that was sent (I don't remember why I called it text. Had a reason though.)
-     * @param textID The ID (meaning the place in the GUI) of the number typed in
+     * @param number   The number that was sent
+     * @param id The ID (meaning the place in the GUI) of the number typed in
      * @param player The Player doing it
      */
-    void onNumberReceived(int text, int textID, EntityPlayer player);
+    void onNumberReceived(double number, int id, EntityPlayer player);
 }

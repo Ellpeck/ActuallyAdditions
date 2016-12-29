@@ -107,6 +107,8 @@ public class GuiHandler implements IGuiHandler{
                 return new ContainerBioReactor(player.inventory, tile);
             case FARMER:
                 return new ContainerFarmer(player.inventory, tile);
+            case FIREWORK_BOX:
+                return new ContainerFireworkBox();
             default:
                 return null;
         }
@@ -136,9 +138,9 @@ public class GuiHandler implements IGuiHandler{
             case FURNACE_DOUBLE:
                 return new GuiFurnaceDouble(player.inventory, tile);
             case INPUTTER:
-                return new GuiInputter(player.inventory, tile, x, y, z, world, false);
+                return new GuiInputter(player.inventory, tile, false);
             case INPUTTER_ADVANCED:
-                return new GuiInputter(player.inventory, tile, x, y, z, world, true);
+                return new GuiInputter(player.inventory, tile, true);
             case REPAIRER:
                 return new GuiRepairer(player.inventory, tile);
             case BREAKER:
@@ -202,6 +204,8 @@ public class GuiHandler implements IGuiHandler{
                 return new GuiBioReactor(player.inventory, tile);
             case FARMER:
                 return new GuiFarmer(player.inventory, tile);
+            case FIREWORK_BOX:
+                return new GuiFireworkBox(tile);
             default:
                 return null;
         }
@@ -242,7 +246,8 @@ public class GuiHandler implements IGuiHandler{
         BAG(false),
         VOID_BAG(false),
         BIO_REACTOR,
-        FARMER;
+        FARMER,
+        FIREWORK_BOX;
 
         public final boolean checkTileEntity;
 

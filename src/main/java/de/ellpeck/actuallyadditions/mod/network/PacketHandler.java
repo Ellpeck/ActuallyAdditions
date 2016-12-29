@@ -121,7 +121,7 @@ public final class PacketHandler{
 
             if(tile instanceof INumberReactor){
                 INumberReactor reactor = (INumberReactor)tile;
-                reactor.onNumberReceived(compound.getInteger("Number"), compound.getInteger("NumberID"), (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID")));
+                reactor.onNumberReceived(compound.getDouble("Number"), compound.getInteger("NumberID"), (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID")));
             }
         }
     };

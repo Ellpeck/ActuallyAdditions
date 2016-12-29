@@ -11,8 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerInputter;
-import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputter;
@@ -25,9 +23,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
@@ -49,10 +45,6 @@ public class GuiInputter extends GuiContainer{
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_inputter");
     private static final ResourceLocation RES_LOC_ADVANCED = AssetUtil.getGuiLocation("gui_inputter_advanced");
     public final TileEntityInputter tileInputter;
-    private final int x;
-    private final int y;
-    private final int z;
-    private final World world;
     private final boolean isAdvanced;
     private GuiTextField fieldPutStart;
     private GuiTextField fieldPutEnd;
@@ -62,13 +54,9 @@ public class GuiInputter extends GuiContainer{
     private FilterSettingsGui leftFilter;
     private FilterSettingsGui rightFilter;
 
-    public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, int x, int y, int z, World world, boolean isAdvanced){
+    public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, boolean isAdvanced){
         super(new ContainerInputter(inventory, tile, isAdvanced));
         this.tileInputter = (TileEntityInputter)tile;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.world = world;
         this.xSize = 176;
         this.ySize = 97+86+(isAdvanced ? OFFSET_ADVANCED : 0);
         this.isAdvanced = isAdvanced;
@@ -228,15 +216,7 @@ public class GuiInputter extends GuiContainer{
     }
 
     private void sendPacket(int text, int textID){
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger("X", this.x);
-        compound.setInteger("Y", this.y);
-        compound.setInteger("Z", this.z);
-        compound.setInteger("WorldID", this.world.provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getMinecraft().player.getEntityId());
-        compound.setInteger("NumberID", textID);
-        compound.setInteger("Number", text);
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));
+        PacketHandlerHelper.sendNumberPacket(this.tileInputter, text, textID);
     }
 
     private int parse(String theInt){
