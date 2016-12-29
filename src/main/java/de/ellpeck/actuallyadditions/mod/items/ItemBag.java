@@ -160,7 +160,7 @@ public class ItemBag extends ItemBase{
                         ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerBag.getSlotAmount(this.isVoid));
                         ItemDrill.loadSlotsFromNBT(inv, stack);
 
-                        for(int j = 4; j < inv.getSlots(); j++){
+                        for(int j = 0; j < inv.getSlots(); j++){
                             ItemStack invStack = inv.getStackInSlot(j);
                             if(StackUtil.isValid(invStack)){
                                 for(int i = 0; i < handler.getSlots(); i++){
