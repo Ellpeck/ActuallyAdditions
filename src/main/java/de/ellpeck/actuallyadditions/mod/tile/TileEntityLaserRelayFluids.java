@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements ISharingFluidHandler{
+public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
 
     public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
     private final IFluidHandler[] fluidHandlers = new IFluidHandler[6];
@@ -101,21 +101,6 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
                 network.changeAmount++;
             }
         }
-    }
-
-    @Override
-    public int getMaxFluidAmountToSplitShare(){
-        return 0;
-    }
-
-    @Override
-    public boolean doesShareFluid(){
-        return false;
-    }
-
-    @Override
-    public EnumFacing[] getFluidShareSides(){
-        return new EnumFacing[0];
     }
 
     @Override
