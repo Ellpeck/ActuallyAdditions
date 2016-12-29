@@ -140,9 +140,11 @@ public final class BlockCrafting{
 
         //Firework Box
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockFireworkBox),
-                "GGG", "SSS", "CCC",
+                "GFG", "SAS", "CCC",
                 'G', new ItemStack(Items.GUNPOWDER),
                 'S', new ItemStack(Items.STICK),
+                'A', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
+                'F', new ItemStack(Items.FIREWORKS, 1, Util.WILDCARD),
                 'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal())));
         recipeFireworkBox = RecipeUtil.lastIRecipe();
 

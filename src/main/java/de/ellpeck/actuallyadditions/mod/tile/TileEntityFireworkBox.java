@@ -184,8 +184,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     private NBTTagCompound makeFireworkCharge(){
         NBTTagCompound compound = new NBTTagCompound();
 
-        if(this.world.rand.nextFloat() >= this.trailOrFlickerChance){
-            if(this.world.rand.nextFloat() >= this.flickerChance){
+        if(this.world.rand.nextFloat() <= this.trailOrFlickerChance){
+            if(this.world.rand.nextFloat() <= this.flickerChance){
                 compound.setBoolean("Flicker", true);
             }
             else{
