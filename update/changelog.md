@@ -1,3 +1,13 @@
+# 1.11.2-r96
+#### This is the New Year's Eve Update. The Firework Box can now be completely customized via the newly added GUI. If you're into easy and pretty Fireworks, you should definitely check it out!
+* Fixed the bag extraction into chests ignoring the first four slots
+* Added Battery Box comparator output
+* Make the Laser Relay recipe only give 4 ones instead of 6
+* Add compatibility with Blood Magic farming stuff (which isn't updated I know, but the compat is there)
+* Changed the way world-specific data is stored. __Make a backup of your world before you update. If any Laser Relay connections are lost, submit a report on the Issue Tracker with the full log.__
+* Make Phantomfaces only support the capability they advertise
+* Made the changelog title above sound like a cheesy advertisement. O_o
+
 # 1.11.2-r95
 ### This is 1.11.2. Not 1.10.2. Yes, this is confusing I know.
 * Added a fancy renderer to Item Laser Relays transferring items 
