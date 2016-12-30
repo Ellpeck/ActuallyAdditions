@@ -260,12 +260,15 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
             //Is Block not powered by Redstone?
             if(!this.isRedstonePowered){
-                if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
-                    if(this.sideToPull != -1 && this.placeToPull != null){
-                        this.newPulling();
-                    }
-                    if(StackUtil.isValid(this.slots[0]) && this.sideToPut != -1 && this.placeToPut != null){
-                        this.newPutting();
+                if(this.ticksElapsed%30 == 0){
+                    if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
+                        if(!StackUtil.isValid(this.slots[0]) && this.sideToPull != -1 && this.placeToPull != null){
+                            this.newPulling();
+                        }
+
+                        if(StackUtil.isValid(this.slots[0]) && this.sideToPut != -1 && this.placeToPut != null){
+                            this.newPutting();
+                        }
                     }
                 }
             }
