@@ -1,3 +1,8 @@
+# 1.10.2-r97
+* Fixed an Exception with Solidified Experience, Balls of Fur and Resonant Rice
+* Fix the Item Laser Relay achievement being impossible to get
+* Made the ESD a lot less performance intensive and gave it a cooldown
+
 # 1.11.2-r96
 #### This is the New Year's Eve Update. The Firework Box can now be completely customized via the newly added GUI. If you're into easy and pretty Fireworks, you should definitely check it out!
 * Fixed the bag extraction into chests ignoring the first four slots
