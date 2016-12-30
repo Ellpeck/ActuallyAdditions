@@ -58,7 +58,7 @@ public class ItemPlayerProbe extends ItemBase{
                         }
                     }
                     else{
-                        ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
+                        ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
                         entity.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.2"));
                     }
                 }
@@ -81,7 +81,7 @@ public class ItemPlayerProbe extends ItemBase{
                         face.markDirty();
                         face.sendUpdate();
 
-                        ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
+                        ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
                     }
                     return EnumActionResult.SUCCESS;
                 }
