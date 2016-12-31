@@ -140,6 +140,9 @@ public class GuiMainPage extends GuiBooklet{
         else if(playerName.equalsIgnoreCase("xbony2")){
             this.bookletEdition = "Naughty Edition";
         }
+        else if(playerName.equalsIgnoreCase("themattabase")){
+            this.bookletEdition = "Withered Edition";
+        }
         else{
             if(Util.isDevVersion()){
                 this.bookletEdition = "Dev's Edition";
