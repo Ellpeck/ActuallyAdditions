@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.EnergyDisplay;
+import de.ellpeck.actuallyadditions.mod.items.ItemWingsOfTheBats;
 import de.ellpeck.actuallyadditions.mod.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -28,6 +29,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -57,6 +59,26 @@ public class ClientEvents{
 
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event){
+        ItemStack stack = event.getItemStack();
+        if(StackUtil.isValid(stack)){
+            //Be da bland
+            if(ConfigBoolValues.MOST_BLAND_PERSON_EVER.isEnabled()){
+                ResourceLocation regName = stack.getItem().getRegistryName();
+                if(regName != null){
+                    if(regName.toString().toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){
+                        if(event.getToolTip().size() > 0){
+                            event.getToolTip().set(0, TextFormatting.RESET+event.getToolTip().get(0));
+                        }
+                    }
+                }
+            }
+
+            if(ItemWingsOfTheBats.THE_BAT_BAT.equalsIgnoreCase(stack.getDisplayName()) && stack.getItem() instanceof ItemSword){
+                event.getToolTip().set(0, TextFormatting.GOLD+event.getToolTip().get(0));
+                event.getToolTip().add(1, TextFormatting.RED.toString()+TextFormatting.ITALIC+"That's a really bat pun");
+            }
+        }
+
         //Advanced Item Info
         if(event.isShowAdvancedItemTooltips() && StackUtil.isValid(event.getItemStack())){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
@@ -129,21 +151,6 @@ public class ClientEvents{
                 else{
                     if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
                         event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".ctrlForMoreInfo.desc"));
-                    }
-                }
-            }
-        }
-
-        //Be da bland
-        if(ConfigBoolValues.MOST_BLAND_PERSON_EVER.isEnabled()){
-            ItemStack stack = event.getItemStack();
-            if(StackUtil.isValid(stack)){
-                ResourceLocation regName = stack.getItem().getRegistryName();
-                if(regName != null){
-                    if(regName.toString().toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){
-                        if(event.getToolTip().size() > 0){
-                            event.getToolTip().set(0, TextFormatting.RESET+event.getToolTip().get(0));
-                        }
                     }
                 }
             }

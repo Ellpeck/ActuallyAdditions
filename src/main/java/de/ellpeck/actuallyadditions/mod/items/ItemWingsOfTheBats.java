@@ -18,11 +18,13 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -33,6 +35,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemWingsOfTheBats extends ItemBase{
 
+    public static final String THE_BAT_BAT = "the bat bat";
     public static final int MAX_FLY_TIME = 800;
 
     public ItemWingsOfTheBats(String name){
@@ -90,11 +93,23 @@ public class ItemWingsOfTheBats extends ItemBase{
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
-        if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
+        Entity source = event.getSource().getEntity();
+
+        if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && source instanceof EntityPlayer){
             //Drop Wings from Bats
             if(ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntityLiving() instanceof EntityBat){
-                if(event.getEntityLiving().world.rand.nextInt(15) <= event.getLootingLevel()*2){
-                    event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(InitItems.itemMisc, event.getEntityLiving().world.rand.nextInt(2+event.getLootingLevel())+1, TheMiscItems.BAT_WING.ordinal())));
+                int looting = event.getLootingLevel();
+
+                Iterable<ItemStack> equip = source.getHeldEquipment();
+                for(ItemStack stack : equip){
+                    if(StackUtil.isValid(stack) && ItemWingsOfTheBats.THE_BAT_BAT.equalsIgnoreCase(stack.getDisplayName()) && stack.getItem() instanceof ItemSword){
+                        looting += 3;
+                        break;
+                    }
+                }
+
+                if(event.getEntityLiving().world.rand.nextInt(15) <= looting*2){
+                    event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(InitItems.itemMisc, event.getEntityLiving().world.rand.nextInt(2+looting)+1, TheMiscItems.BAT_WING.ordinal())));
                 }
             }
         }
