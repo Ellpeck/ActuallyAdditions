@@ -5,7 +5,7 @@
  * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015-2016 Ellpeck
+ * © 2015-2017 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.network.gui;

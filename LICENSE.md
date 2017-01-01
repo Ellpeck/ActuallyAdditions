@@ -29,4 +29,4 @@ Everything that is not listed below applies to the above.
 * You are not allowed to copy the assets used in this mod for any other project.
 * Parts of this license, especially restrictive ones, can be ignored with personal permission. Said permission, however, will only be given to people I know or someone who has a very good reason for needing it.
 
-© 2015-2016 Ellpeck
+© 2015-2017 Ellpeck
