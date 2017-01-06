@@ -993,7 +993,7 @@ booklet.actuallyadditions.chapter.empowerer.text.3=<n><n><n><i>我想所有MOD�
 booklet.actuallyadditions.chapter.empowerer.text.4=<item>物品展示台<r>也可以用来做很多其他的事情！翻到<imp>耗能方块<r>查询更多信息！ 
 
 booklet.actuallyadditions.chapter.fluidLaser.name=流体激光中继器
-booklet.actuallyadditions.chapter.fluidLaser.text.1=<item>流体激光中继器<r>工作方式颇有点像普通的<item>激光中继器<r>，但是和<item>流体激光中继器<r>和<item>能量激光中继器<r>又有些不同，它只能把<imp>流体<r>从一个储罐传输到另一个储罐。<n><n><item>流体激光中继器<r>不能连接幻灵接口。
+booklet.actuallyadditions.chapter.fluidLaser.text.1=<item>流体激光中继器<r>工作方式颇有点像普通的<item>激光中继器<r>，但是和<item>物品激光中继器<r>和<item>能量激光中继器<r>又有些不同，它只能把<imp>流体<r>从一个储罐传输到另一个储罐。<n><n><item>流体激光中继器<r>不能连接幻灵接口。
 
 booklet.actuallyadditions.chapter.distributorItem.name=物品分配器
 booklet.actuallyadditions.chapter.distributorItem.text.1=<item>物品分配器<r>是一种简单的分流物品，并把它们导向<imp>不同方向<r>的工具。<n><n>分配器能够主动<imp>从顶部容器抽取物品<r>，然后把它们分流，并<imp>推送到<r>和它<imp>其他面<r>相贴的容器中。<n>它能够<imp>平均的<r>分派物品，尤其是在传输<imp>同一物品<r>的时候，它抽取物品时自动的。
