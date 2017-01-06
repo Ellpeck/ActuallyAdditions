@@ -514,7 +514,7 @@ tooltip.actuallyadditions.playerProbe.notice=注意！有人正在试图探测�
 tooltip.actuallyadditions.battery.discharge=会给物品栏中的其他物品充电
 tooltip.actuallyadditions.battery.noDischarge=不会给物品栏中的其他物品充电
 tooltip.actuallyadditions.battery.changeMode=Shift右键转换两种模式
-tooltip.actuallyadditions.previouslyDoubleFurnace=以前的“量仓熔炉”
+tooltip.actuallyadditions.previouslyDoubleFurnace=以前的“两仓熔炉”
 tooltip.actuallyadditions.previouslyBag=以前的“袋子”
 tooltip.actuallyadditions.previouslyVoidBag=以前的“虚空袋子”
 
@@ -717,7 +717,7 @@ booklet.actuallyadditions.chapter.quartz.text.2=<item>焦黑石英<r>在<imp>实
 
 booklet.actuallyadditions.chapter.cloud.name=微笑云朵
 booklet.actuallyadditions.chapter.cloud.text.1=<item>微笑云朵<r>是一种有魔力的浮动的云朵，通过它体内的固态经验获得生命。它在它呆的位置上上下下、兴高采烈地浮动着。当你<imp>右键点击<r>它时，你可以<imp>给它命名<r>。<n>在给它某些<imp>特殊的名字<r>时，比如说<imp>"Ellpeck"<r>或<imp>"AcidBlues"<r>,它就会拿出它携带的某些特殊的东西！
-booklet.actuallyadditions.chapter.cloud.text.2=<n><n><n><i>Huge potato
+booklet.actuallyadditions.chapter.cloud.text.2=<n><n><n><i>巨型土豆
 
 booklet.actuallyadditions.chapter.coalStuff.name=煤炭相关
 booklet.actuallyadditions.chapter.coalStuff.text.1=有时你的<item>煤炭<r><imp>燃烧时间太长或太短了<r>，你知道我的意思吗？<n>为了解决那个问题，你现在可以合成<item>小块煤炭<r>，<item>小块木炭<r>以及<item>木炭块<r>来在熔炉中使用。<n><item>木炭块<r>燃烧时间和<item>煤块<r>一样长，而<item>小块煤炭<r>和<item>小块木炭<r>燃烧时间是<imp>一块煤的八分之一<r>，这意味着它在普通熔炉中恰好能<imp>烧制一个物品<r>。
@@ -870,7 +870,7 @@ booklet.actuallyadditions.chapter.hairBalls.text.1=<item>毛球<r>会从<imp>活
 booklet.actuallyadditions.chapter.hairBalls.text.2=<item>毛球<r>是一件会从被玩家<imp>驯服<r>的<imp>猫<r>身上掉落的物品。<n>猫是一种很古怪的的生物，因为它们<imp>会让任何东西粘在自己的毛发上<r>。<item>毛球<r>或许长相令人不堪入目，但当你通过<imp>右击<r>移除上面那些杂乱的猫毛后，说不定会找到一些<imp>有价值的物品<r>。<n>或者只会收获到一些线。<n><n><n><i>FUURRRRRR！！
 
 booklet.actuallyadditions.chapter.laserIntro.name=激光中继器的介绍
-booklet.actuallyadditions.chapter.laserIntro.text.1=<item>激光中继器<r>存在<imp>很多变种<r>，但是都拥有相似的功能。使用<item>中继器扳手<r>能够将<n>一个<item>激光中继器<r>和其他中继器相连。只需要<imp>右击<r>第一个中继器后在右击另一个即可连接。连接<imp>没有上限<r>，你可以称呼它为<item>网络<r>或者<item>系统<r>。这样的网络系统没有预定的终点或者起点。
+booklet.actuallyadditions.chapter.laserIntro.text.1=<item>激光中继器<r>存在<imp>很多变种<r>，但是都拥有相似的功能。使用<item>中继器扳手<r>能够将<n>一个<item>激光中继器<r>和其他中继器相连。只需要<imp>右击<r>第一个中继器后再右击另一个即可连接。连接<imp>没有上限<r>，你可以称呼它为<item>网络<r>或者<item>系统<r>。这样的网络系统没有预定的终点或者起点。
 booklet.actuallyadditions.chapter.laserIntro.text.2=每一个<item>激光中继器<r>都能够用多种方式<imp>和其他的中继器交互<r>。<n>但是连接两个<item>激光中继器<r>却有一些限制条件。首先两个相互连接的<item>激光中继器<r><imp>至多只能相距<range>个方块远<r>。<n>除此之外，两个<item>激光中继器<r>的类型<imp>必须相同<r>。<n><n><i>继续浏览这章的其他条目查看不同类型的激光中继器！
 
 booklet.actuallyadditions.chapter.laserRelays.name=能量激光中继器
@@ -993,7 +993,7 @@ booklet.actuallyadditions.chapter.empowerer.text.3=<n><n><n><i>我想所有MOD�
 booklet.actuallyadditions.chapter.empowerer.text.4=<item>物品展示台<r>也可以用来做很多其他的事情！翻到<imp>耗能方块<r>查询更多信息！ 
 
 booklet.actuallyadditions.chapter.fluidLaser.name=流体激光中继器
-booklet.actuallyadditions.chapter.fluidLaser.text.1=<item>流体激光中继器<r>工作方式颇有点像普通的<item>激光中继器<r>，但是和<item>流体激光中继器<r>和<item>能量激光中继器<r>又有些不同,，它只能把<imp>流体<r>从一个储罐传输到另一个储罐。<n><n><item>流体激光中继器<r>不能连接幻灵接口。
+booklet.actuallyadditions.chapter.fluidLaser.text.1=<item>流体激光中继器<r>工作方式颇有点像普通的<item>激光中继器<r>，但是和<item>流体激光中继器<r>和<item>能量激光中继器<r>又有些不同，它只能把<imp>流体<r>从一个储罐传输到另一个储罐。<n><n><item>流体激光中继器<r>不能连接幻灵接口。
 
 booklet.actuallyadditions.chapter.distributorItem.name=物品分配器
 booklet.actuallyadditions.chapter.distributorItem.text.1=<item>物品分配器<r>是一种简单的分流物品，并把它们导向<imp>不同方向<r>的工具。<n><n>分配器能够主动<imp>从顶部容器抽取物品<r>，然后把它们分流，并<imp>推送到<r>和它<imp>其他面<r>相贴的容器中。<n>它能够<imp>平均的<r>分派物品，尤其是在传输<imp>同一物品<r>的时候，它抽取物品时自动的。
@@ -1020,7 +1020,7 @@ booklet.actuallyadditions.chapter.changelog.text.1=你是否对<item>Actually Ad
 booklet.actuallyadditions.chapter.changelog.button.1=打开更新日志界面
 
 booklet.actuallyadditions.chapter.curse.name=模组网站
-booklet.actuallyadditions.chapter.curse.text.1=你是否想要<imp>下载<r>这个模组的最新版本，查看有关这个模组的<imp>最新信息<r>，那我非常建议你点击下下这个<imp>CurseForge页面<r>的按钮。
+booklet.actuallyadditions.chapter.curse.text.1=你是否想要<imp>下载<r>这个模组的最新版本，查看有关这个模组的<imp>最新信息<r>，那我非常建议你点击下这个<imp>CurseForge页面<r>的按钮。
 booklet.actuallyadditions.chapter.curse.button.1=访问CurseForge页面
 
 booklet.actuallyadditions.chapter.website.name=作者的个人网页
