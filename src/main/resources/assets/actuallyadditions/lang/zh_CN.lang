@@ -6,6 +6,11 @@ actuallyadditions.lolWutHowUDoDis.name=这东西出bug了。请扔了它。
 #Fluids
 fluid.actuallyadditions.oil=原油
 fluid.actuallyadditions.canolaoil=菜籽油
+fluid.actuallyadditions.crystaloil=晶化油
+fluid.actuallyadditions.empoweredoil=充能油
+
+#Entities
+entity.Villager.actuallyadditions.jammer=果酱小贩
 
 #Banners
 item.banner.actuallyadditionsBook.black=黑色实用拓展手册旗帜
@@ -76,7 +81,7 @@ item.banner.actuallyadditionsDrill.magenta=品红色手钻旗帜
 item.banner.actuallyadditionsDrill.orange=橙色手钻旗帜
 item.banner.actuallyadditionsDrill.white=白色手钻旗帜
 
-#NEIIntegration
+#NEI Integration
 container.nei.actuallyadditions.crushing.name=磨粉机
 container.nei.actuallyadditions.crushingDouble.name=两仓磨粉机
 container.nei.actuallyadditions.ballOfHair.name=毛球
@@ -95,7 +100,7 @@ container.nei.actuallyadditions.booklet.name=实用拓展手册
 container.nei.actuallyadditions.booklet.header=<item>实用拓展手册<r>说道：
 container.nei.actuallyadditions.booklet.noText=这里空无一物！但是别担心，只需点击底部按钮，即可继续浏览其他条目！
 
-#DamageSources
+#Damage Sources
 death.actuallyadditions.atomicReconstructor.1=%s被原子重组了。
 death.actuallyadditions.atomicReconstructor.2=原子再构机发现了它的目标%s。
 death.actuallyadditions.atomicReconstructor.3=经过原子重组的%s看起来再也站不起来了。
@@ -172,6 +177,8 @@ tile.actuallyadditions.blockCanolaPress.name=油菜压榨机
 tile.actuallyadditions.blockFermentingBarrel.name=发酵桶
 tile.actuallyadditions.blockCanolaOil.name=菜籽油
 tile.actuallyadditions.blockOil.name=原油
+tile.actuallyadditions.blockCrystalOil.name=晶化油
+tile.actuallyadditions.blockEmpoweredOil.name=充能油
 tile.actuallyadditions.blockMiscEnderpearl.name=末影珍珠块
 tile.actuallyadditions.blockOilGenerator.name=原油发电机
 tile.actuallyadditions.blockBreaker.name=方块破坏器
@@ -188,6 +195,7 @@ tile.actuallyadditions.blockRangedCollector.name=物品吸收器
 tile.actuallyadditions.blockLaserRelay.name=能量激光中继器
 tile.actuallyadditions.blockLaserRelayAdvanced.name=高级能量激光中继器
 tile.actuallyadditions.blockLaserRelayExtreme.name=超级能量激光中继器
+tile.actuallyadditions.blockLaserRelayFluids.name=流体激光中继器
 tile.actuallyadditions.blockMiscIronCasing.name=铁制外壳
 tile.actuallyadditions.blockBlackLotus.name=黑莲花
 tile.actuallyadditions.blockTestifiBucksWhiteFence.name=装饰用石英围墙
@@ -223,57 +231,17 @@ tile.actuallyadditions.blockBookletStand.name=壁挂式手册
 tile.actuallyadditions.blockDisplayStand.name=物品展示台
 tile.actuallyadditions.blockShockSuppressor.name=震波吸收器
 tile.actuallyadditions.blockTinyTorch.name=微型火把
-tile.actuallyadditions.blockEmpowerer.name=Empowerer
+tile.actuallyadditions.blockEmpowerer.name=充能台
+tile.actuallyadditions.blockDistributorItem.name=物品分配器
+tile.actuallyadditions.blockBioReactor.name=生物反应器
+tile.actuallyadditions.blockFarmer.name=农场
 
-#ESD #这些词条都是作者在玩梗，请不要翻译
+#ESD
 tile.actuallyadditions.blockInputter.name=ESD
 tile.actuallyadditions.blockInputterAdvanced.name=高级ESD
-tile.actuallyadditions.blockInputter.add.1.name=Ellpeck's Slot Device
-tile.actuallyadditions.blockInputter.add.2.name=Ethereal System Dude
-tile.actuallyadditions.blockInputter.add.3.name=Energy Stuf fDistributor
-tile.actuallyadditions.blockInputter.add.4.name=Extsing Stuff Donator
-tile.actuallyadditions.blockInputter.add.5.name=ExtraUtils Stealing Device
-tile.actuallyadditions.blockInputter.add.6.name=Experienced Sauce Deriver
-tile.actuallyadditions.blockInputter.add.7.name=Excellent Spaghetti Dessert
-tile.actuallyadditions.blockInputter.add.8.name=Extraordinary Sample Deliverer
-tile.actuallyadditions.blockInputter.add.9.name=Express Sending Doughnut
-tile.actuallyadditions.blockInputter.add.10.name=Expelling Sugar Dagger
-tile.actuallyadditions.blockInputter.add.11.name=Extra-Long Solidifying Dissociation
-tile.actuallyadditions.blockInputter.add.12.name=Energetic Solo Dancer
-tile.actuallyadditions.blockInputter.add.13.name=Efficient Sucking Dilettant
-tile.actuallyadditions.blockInputter.add.14.name=Extreme Sand Digger
-tile.actuallyadditions.blockInputter.add.15.name=Ending Serious Daughter
 
 #Reconstructor
 tile.actuallyadditions.blockAtomicReconstructor.name=原子再构机
-#这些词条都是作者在玩梗，请不要翻译
-tile.actuallyadditions.blockAtomicReconstructor.info.1.1=Molecular
-tile.actuallyadditions.blockAtomicReconstructor.info.1.2=Material
-tile.actuallyadditions.blockAtomicReconstructor.info.1.3=Quarkal
-tile.actuallyadditions.blockAtomicReconstructor.info.1.4=Atomatic
-tile.actuallyadditions.blockAtomicReconstructor.info.1.5=TinyBit
-tile.actuallyadditions.blockAtomicReconstructor.info.1.6=Component
-tile.actuallyadditions.blockAtomicReconstructor.info.1.7=Vittle
-tile.actuallyadditions.blockAtomicReconstructor.info.1.8=Transmaterial
-tile.actuallyadditions.blockAtomicReconstructor.info.1.9=Partial
-tile.actuallyadditions.blockAtomicReconstructor.info.1.10=Spatial
-tile.actuallyadditions.blockAtomicReconstructor.info.1.11=Stuffy
-tile.actuallyadditions.blockAtomicReconstructor.info.1.12=Interdimensional
-#这些词条都是作者在玩梗，请不要翻译
-tile.actuallyadditions.blockAtomicReconstructor.info.2.1=Recombobulizer
-tile.actuallyadditions.blockAtomicReconstructor.info.2.2=Shiftulator
-tile.actuallyadditions.blockAtomicReconstructor.info.2.3=Recombinator
-tile.actuallyadditions.blockAtomicReconstructor.info.2.4=Modulator
-tile.actuallyadditions.blockAtomicReconstructor.info.2.5=Moleculizer
-tile.actuallyadditions.blockAtomicReconstructor.info.2.6=Modificulator
-tile.actuallyadditions.blockAtomicReconstructor.info.2.7=Changer
-tile.actuallyadditions.blockAtomicReconstructor.info.2.8=Atomizer
-tile.actuallyadditions.blockAtomicReconstructor.info.2.9=Makerator
-tile.actuallyadditions.blockAtomicReconstructor.info.2.10=Swapper
-tile.actuallyadditions.blockAtomicReconstructor.info.2.11=Exchanger
-tile.actuallyadditions.blockAtomicReconstructor.info.2.12=Replacer
-tile.actuallyadditions.blockAtomicReconstructor.info.2.13=Differentiator
-tile.actuallyadditions.blockAtomicReconstructor.info.2.14=Receiver
 
 #Items
 item.actuallyadditions.itemDrill.name=手钻
@@ -305,26 +273,6 @@ item.actuallyadditions.diamondPaxel.name=钻石全能工具
 item.actuallyadditions.emeraldPaxel.name=绿宝石全能工具
 item.actuallyadditions.obsidianPaxel.name=黑曜石全能工具
 item.actuallyadditions.quartzPaxel.name=焦黑石英全能工具
-item.actuallyadditions.paxelTFCopper.name=铜制全能工具
-item.actuallyadditions.paxelTFTin.name=锡制全能工具
-item.actuallyadditions.paxelTFLead.name=铅制全能工具
-item.actuallyadditions.paxelTFSilver.name=银制全能工具
-item.actuallyadditions.paxelTFElectrum.name=琥珀金全能工具
-item.actuallyadditions.paxelTFNickel.name=镍制全能工具
-item.actuallyadditions.paxelTFBronze.name=青铜全能工具
-item.actuallyadditions.paxelTFPlatinum.name=铂制全能工具
-item.actuallyadditions.paxelTFInvar.name=因瓦合金全能工具
-item.actuallyadditions.paxelMTObsidian.name=黑曜石全能工具
-item.actuallyadditions.paxelMTGlowstone.name=萤石全能工具
-item.actuallyadditions.paxelMTLapisLazuli.name=青金石全能工具
-item.actuallyadditions.paxelMTOsmium.name=锇制全能工具
-item.actuallyadditions.paxelMTBronze.name=青铜全能工具
-item.actuallyadditions.paxelMTSteel.name=钢制全能工具
-item.actuallyadditions.paxelSOadamantium.name=亚德曼金属全能工具
-item.actuallyadditions.paxelSOcopper.name=铜制全能工具
-item.actuallyadditions.paxelSOtin.name=锡制全能工具
-item.actuallyadditions.paxelSOonyx.name=黑玛瑙全能工具
-item.actuallyadditions.paxelSOmythril.name=秘银全能工具
 item.actuallyadditions.itemPhantomConnector.name=幻灵连接器
 item.actuallyadditions.itemMiscCup.name=空杯子
 item.actuallyadditions.itemCoffee.name=一杯咖啡
@@ -520,6 +468,11 @@ item.actuallyadditions.itemPlayerProbe.name=玩家探测器
 item.actuallyadditions.itemWorm.name=蚯蚓
 item.actuallyadditions.itemBag.name=袋子
 item.actuallyadditions.itemVoidBag.name=虚空袋子
+item.actuallyadditions.itemMiscCrystallizedCanolaSeed.name=晶化油菜种子
+item.actuallyadditions.itemMiscEmpoweredCanolaSeed.name=充能油菜种子
+item.actuallyadditions.itemMiningLens.name=矿工透镜
+item.actuallyadditions.itemMoreDamageLens.name=杀手透镜
+item.actuallyadditions.itemFillingWand.name=填充手杖
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=开启
@@ -531,7 +484,7 @@ tooltip.actuallyadditions.clearStorage.desc=合成一次以清除存储！
 tooltip.actuallyadditions.phantom.connectedRange.desc=连接正常工作。
 tooltip.actuallyadditions.phantom.connectedNoRange.desc=连接受阻：超出范围,连接方块的区块未加载或连接方块的类型不正确.
 tooltip.actuallyadditions.phantom.notConnected.desc=它没有连接！
-tooltip.actuallyadditions.phantom.blockInfo.desc=连接的方块在%sat%s,%s,%s有%s个方块远.
+tooltip.actuallyadditions.phantom.blockInfo.desc=连接的方块%s在%s,%s,%s有%s个方块远.
 tooltip.actuallyadditions.factory.notPart.desc=控制器还不是正确的多方块结构的一部分！好好看看控制器的介绍！
 tooltip.actuallyadditions.factory.works.desc=该岩浆工厂已成型，可以开始生产岩浆了！
 tooltip.actuallyadditions.oredictName.desc=矿物辞典条目：
@@ -550,6 +503,10 @@ tooltip.actuallyadditions.laser.stored.desc=连接开始！
 tooltip.actuallyadditions.laser.connected.desc=中继器已连接！
 tooltip.actuallyadditions.laser.cantConnect.desc=无法连接：中继器已是另一个网络的一部分,或者存储的中继器不在了或距离太远！
 tooltip.actuallyadditions.itemBooklet.desc=查看"指导手册",如果你愿意
+tooltip.actuallyadditions.itemBooklet.sub.1=这本手册指导你了解所有
+tooltip.actuallyadditions.itemBooklet.sub.2=的Actually Additions所
+tooltip.actuallyadditions.itemBooklet.sub.3=提供的特性。
+tooltip.actuallyadditions.itemBooklet.sub.4=手持右键即可打开
 tooltip.actuallyadditions.playerProbe.disconnect.1=那位被探测的玩家在你试图把他和玩家接口绑定之前中断了连接！数据将会被清除！
 tooltip.actuallyadditions.playerProbe.disconnect.2=那位被探测的玩家在你试图把他和玩家接口绑定之前中断了连接！数据将会被清除！
 tooltip.actuallyadditions.playerProbe.probing=探测中
@@ -557,8 +514,11 @@ tooltip.actuallyadditions.playerProbe.notice=注意！有人正在试图探测�
 tooltip.actuallyadditions.battery.discharge=会给物品栏中的其他物品充电
 tooltip.actuallyadditions.battery.noDischarge=不会给物品栏中的其他物品充电
 tooltip.actuallyadditions.battery.changeMode=Shift右键转换两种模式
+tooltip.actuallyadditions.previouslyDoubleFurnace=以前的“量仓熔炉”
+tooltip.actuallyadditions.previouslyBag=以前的“袋子”
+tooltip.actuallyadditions.previouslyVoidBag=以前的“虚空袋子”
 
-#GuiInformation
+#Gui Information
 info.actuallyadditions.gui.animals=动物
 info.actuallyadditions.gui.enoughToBreed=数量足够繁殖！
 info.actuallyadditions.gui.tooMany=数量太多了！
@@ -584,12 +544,7 @@ info.actuallyadditions.gui.smartInfo=当按下这个按钮时候，所有来自�
 info.actuallyadditions.inputter.info.1=这是<p>的起始格。
 info.actuallyadditions.inputter.info.2=这是<p>的结束格（不含）。解释：如果左边填2，这里填5，那么2、3、4格将会执行<p>的动作。
 info.actuallyadditions.noLens=没有透镜
-info.actuallyadditions.booklet.manualName.1.1=Actually Additions
-info.actuallyadditions.booklet.manualName.1.2=Actual Additions
-info.actuallyadditions.booklet.manualName.1.3=Actually Addiction
-info.actuallyadditions.booklet.manualName.1.4=Actual Edition
-info.actuallyadditions.booklet.manualName.1.5=Actual Addition
-info.actuallyadditions.booklet.manualName.1.6=Actually Addons
+info.actuallyadditions.noItem=缓冲区没有物品
 info.actuallyadditions.booklet.manualName.2=手册
 info.actuallyadditions.booklet.edition=编辑
 info.actuallyadditions.deathRecorded=你的死亡信息已被记录，请使用DeathTracker来获取死亡位置！
@@ -597,8 +552,9 @@ info.actuallyadditions.placer.sides.1=放置方向
 info.actuallyadditions.placer.sides.2=通常玩家放置方块时需要依附别的方块才能放置，但是幻灵方块放置器可以直接在悬空放置方块。不过通常情况下你还是不要这么做为好。
 info.actuallyadditions.energy.toRF=点击切换为RF单位!
 info.actuallyadditions.energy.toT=点击切换为Tesla单位!
+info.actuallyadditions.energy.disclaimer=注意这只影响显示。
 
-#ContainerNames
+#Container Names
 container.actuallyadditions.inputter.name=ESD
 container.actuallyadditions.inputterAdvanced.name=高级ESD
 container.actuallyadditions.grinder.name=磨粉机
@@ -637,8 +593,10 @@ container.actuallyadditions.laserRelayItemWhitelist.name=激光中继器
 container.actuallyadditions.filter.name=物品过滤器
 container.actuallyadditions.bag.name=袋子
 container.actuallyadditions.voidBag.name=虚空袋子
+container.actuallyadditions.bioReactor.name=生物反应器
+container.actuallyadditions.farmer.name=农场
 
-#UpdateInformation
+#Update Information
 info.actuallyadditions.update.generic=[{"text":"有新的"},{"text":"实用拓展","color":"dark_green"},{"text":"版本可用！","color":"none"}]
 info.actuallyadditions.update.versionCompare=[{"text":"当前版本:"},{"text":"%s","color":"dark_red"},{"text":",最新版本:","color":"none"},{"text":"%s","color":"dark_green"}]
 info.actuallyadditions.update.buttons=[{"text":"["},{"text":"点击以查看更新日志","color":"green","clickEvent":{"action":"open_url","value":"%s"}},{"text":"][","color":"none"},{"text":"点击以下载","color":"green","clickEvent":{"action":"open_url","value":"%s"}},{"text":"]","color":"none"}]
@@ -695,7 +653,7 @@ achievement.actuallyadditions.craftLaserRelayExtreme=为能量而疯狂吧
 achievement.actuallyadditions.craftLaserRelayExtreme.desc=制作一个超级能量激光中继器
 
 achievement.actuallyadditions.craftCrusher=双倍走起！
-achievement.actuallyadditions.craftCrusher.desc=制造一台磨粉机
+achievement.actuallyadditions.craftCrusher.desc=制造一台两仓磨粉机
 
 achievement.actuallyadditions.craftDoubleCrusher=双倍的双倍走起!
 achievement.actuallyadditions.craftCrusher.desc=制造一台两仓磨粉机
@@ -718,13 +676,13 @@ achievement.actuallyadditions.openBookletMilestone.desc=打开手册次数达50�
 achievement.actuallyadditions.getUnProbed=鬼鬼祟祟!
 achievement.actuallyadditions.getUnProbed.desc=被别的玩家用玩家探测器探测到，但是按下了Shift键脱离了探测
 
-#BookletRecipeNames
+#Booklet Recipe Names
 booklet.actuallyadditions.shapelessRecipe=无序合成
 booklet.actuallyadditions.shapedRecipe=有序合成
 booklet.actuallyadditions.shapelessOreRecipe=无序矿典合成
 booklet.actuallyadditions.shapedOreRecipe=有序矿典合成
 
-#BookletEntries
+#Booklet Entries
 booklet.actuallyadditions.indexEntry.gettingStarted.name=如何开始
 booklet.actuallyadditions.indexEntry.misc.name=其他杂项
 booklet.actuallyadditions.indexEntry.crossover.name=模组兼容
@@ -735,15 +693,16 @@ booklet.actuallyadditions.indexEntry.generatingRF.name=产能方块
 booklet.actuallyadditions.indexEntry.itemsNoRF.name=不耗能物品
 booklet.actuallyadditions.indexEntry.itemsRF.name=耗能物品
 booklet.actuallyadditions.indexEntry.reconstruction.name=再构机的透镜
+booklet.actuallyadditions.indexEntry.laserRelays.name=激光中继器的传输
+booklet.actuallyadditions.indexEntry.updatesAndInfos.name=更新信息
 
-#BookletInfo
+#Booklet Info
 booklet.actuallyadditions.recipeDisabled=这个物品的合成表在配置文件里被禁用了！如过你是多人模式,要服主同意才能开启它的配方.如过你是单人模式,点击上面的"OpenConfig"按钮开启合成表！
 booklet.actuallyadditions.unavailable=1.8.9和1.9版本属于未完成品，所以部分特性可能无法使用，所以请谨慎使用这个物品！
 booklet.actuallyadditions.clickToSeeRecipe=点击查看更多信息
-booklet.actuallyadditions.amountOfWords=总计%s个词
-booklet.actuallyadditions.amountOfChars=总计%s个字
+booklet.actuallyadditions.amountOfWordsAndChars=共计：%s词，%s字。
 
-#BookletChapters
+#Booklet Chapters
 booklet.actuallyadditions.chapter.intro.name=实用拓展的介绍
 booklet.actuallyadditions.chapter.intro.text.1=<i>长久以来，那些Minecraft的玩家们都生活在那近乎原始的时代中，被“麻烦”奴役着。是的，有成千种麻烦折磨着玩家，强迫他们将几小时，甚至数日的时间都浪费在诸如伐木、耕种、收获这样机械的工作上。他们又有多少时间能用来享受探索那无尽的未知的乐趣呢？
 booklet.actuallyadditions.chapter.intro.text.2=<i>但就算是这样，仍然没有改变世界的人出现。就在无数玩家心灰意冷的时候，一位名叫Ellepeck的实业家出现了。他立志于终结那些枯燥乏味的工作，在这样的想法的激励下，他为Minecraft世界带来了各种“真正的扩展”，彻底解放了玩家们的双手，允许玩家们将更多的时间投入到建筑和探险上。
@@ -758,12 +717,14 @@ booklet.actuallyadditions.chapter.quartz.text.2=<item>焦黑石英<r>在<imp>实
 
 booklet.actuallyadditions.chapter.cloud.name=微笑云朵
 booklet.actuallyadditions.chapter.cloud.text.1=<item>微笑云朵<r>是一种有魔力的浮动的云朵，通过它体内的固态经验获得生命。它在它呆的位置上上下下、兴高采烈地浮动着。当你<imp>右键点击<r>它时，你可以<imp>给它命名<r>。<n>在给它某些<imp>特殊的名字<r>时，比如说<imp>"Ellpeck"<r>或<imp>"AcidBlues"<r>,它就会拿出它携带的某些特殊的东西！
+booklet.actuallyadditions.chapter.cloud.text.2=<n><n><n><i>Huge potato
 
 booklet.actuallyadditions.chapter.coalStuff.name=煤炭相关
 booklet.actuallyadditions.chapter.coalStuff.text.1=有时你的<item>煤炭<r><imp>燃烧时间太长或太短了<r>，你知道我的意思吗？<n>为了解决那个问题，你现在可以合成<item>小块煤炭<r>，<item>小块木炭<r>以及<item>木炭块<r>来在熔炉中使用。<n><item>木炭块<r>燃烧时间和<item>煤块<r>一样长，而<item>小块煤炭<r>和<item>小块木炭<r>燃烧时间是<imp>一块煤的八分之一<r>，这意味着它在普通熔炉中恰好能<imp>烧制一个物品<r>。
 
 booklet.actuallyadditions.chapter.lamps.name=灯具
 booklet.actuallyadditions.chapter.lamps.text.1=<item>灯具<r>是一种提供大量光的方块，类似于萤石或火把，但是它们可以被<imp>染成Minecraft中的16种不同颜色<r>，可以<imp>直接合成它们<r>，或是把它们放在地上，<imp>手持染料右击<r>染色。<n>当空手<imp>右击<r>它们时，它们将会<imp>切换光源的开关<r>。如果你想使用<item>红石<r>信号来控制它，需要在它旁边放个<item>灯具控制器<r>。
+booklet.actuallyadditions.chapter.lamps.text.2=有一种用<imp>红石<r>来开关它们的方法，通常情况下，你放置的<item>灯具控制器<r> 被给予<imp>红石信号后<r>能够控制前方的灯具。<n>这样的放置方式还可以拓展。<imp>紧贴这个灯具放置其他灯具<r>能够使其也被控制。<n>这意味着你能够使用<imp>一个<r><item>灯具控制器<r>来控制大片的灯具。
 
 booklet.actuallyadditions.chapter.treasureChest.name=藏宝箱
 booklet.actuallyadditions.chapter.treasureChest.text.1=一个发现于水下的<item>藏宝箱<r>。
@@ -808,7 +769,7 @@ booklet.actuallyadditions.chapter.compost.text.3=<item>捣碎的食物<r>可以�
 
 booklet.actuallyadditions.chapter.crate.name=板条箱
 booklet.actuallyadditions.chapter.crate.text.1=<item>板条箱<r>很大。<imp>真的很大<r>。它们可以存储成千上万的物品，存储量比四个箱子还要多。
-booklet.actuallyadditions.chapter.crate.text.4=在破坏板条箱前把<item>板条箱守护徽章<r>放置在板条箱内，可以让板条箱<imp>保留内部所有物品<r>，但是这个过程中守护徽章将会被销毁。<n>Also note that using a filled crate for crafting will <imp>destroy its contents<r>.
+booklet.actuallyadditions.chapter.crate.text.4=在破坏板条箱前把<item>板条箱守护徽章<r>放置在板条箱内，可以让板条箱<imp>保留内部所有物品<r>，但是这个过程中守护徽章将会被销毁。<n>但是要注意可别用装有物品的板条箱来合成哦，这样可会丢失掉<imp>所有的物品信息哦<r>。
 booklet.actuallyadditions.chapter.crate.text.5=<item>板条箱升级徽章<r>允许你<imp>把任意箱子转换成板条箱<r>，并保留其中物品！<n>只需<imp>按住shift右键单击<r>箱子即可使用。
 booklet.actuallyadditions.chapter.crate.text.6=和<item>板条箱升级徽章<r>一样, 只需要手持<item>扩容升级徽章（小转中）<r>Shift右击任意一个<imp>小型板条箱<r>，都可以将其扩容为<imp>中型板条箱<r>，里面的物品也会得到保留。
 booklet.actuallyadditions.chapter.crate.text.7=和<item>板条箱升级徽章<r>一样, 只需要手持<item>扩容升级徽章（中转大）<r>Shift右击任意一个<imp>中型板条箱<r>，都可以将其扩容为<imp>大型板条箱<r>，里面的物品也会得到保留。
@@ -848,6 +809,8 @@ booklet.actuallyadditions.chapter.heatCollector.text.1=<item>热能发电机<r>�
 booklet.actuallyadditions.chapter.canola.name=油菜相关
 booklet.actuallyadditions.chapter.canola.text.1=那些在野外随处可见的油菜可以制成各种各样的东西！你可以油菜提炼<imp>菜籽油<r>或<imp>原油<r>并以此产出<imp>RF<r>。<n>首先你需要用<item>油菜压榨机<r>将一定量，<item>油菜<r>提炼为菜籽油。压榨机本身的能耗是<pressRF>RF/t。然后，用<item>发酵桶<r>可将菜籽油转化为<imp>原油<r>。最终产出的原油可在<item>原油发电机<r>中当作燃料，产生<imp><rf>RF/t<r>。
 booklet.actuallyadditions.chapter.canola.text.2=另外，如果你有很多<item>油菜籽<r>处理不了，你还可以一次性将20个油菜籽放入<item>堆肥机<r>中以生产<item>生物质<r>。<n>生物质可在<imp>熔炉<r>中烧制成<item>生物燃料<r>，它可以当做<imp>燃料<r>就像普通的煤炭那样。
+booklet.actuallyadditions.chapter.canola.text.4=<item>发酵桶<r>也能够被<item>比较器<r>检测，输出的信号强弱取决于<imp>输出槽<r> 容积的<imp>百分比<r>。
+booklet.actuallyadditions.chapter.canola.text.5=如果你打掉了<item>原油发电机<r>，里面的液体也会得到保留。<n>如果你想清空它，只需要<imp>放置在合成栏合成一次<r>，所有的液体就会被清除。<n>原油发电机收到<imp>红石信号<r>也会<imp>停止工作<r>。
 
 booklet.actuallyadditions.chapter.wings.name=蝙蝠之翼
 booklet.actuallyadditions.chapter.wings.text.1=有的时候，蝙蝠会掉落<item>翅膀<r>。由于强度不足以载人，这些翅膀不能真正用于飞行。<n>你可以把这些翅膀制作成<item>蝙蝠之翼<r>使它的强度达到能载人的水平。当你把它置于你的背包中时，它可以让你<imp>像创造模式一样悬停飞行<r>。
@@ -861,7 +824,7 @@ booklet.actuallyadditions.chapter.aiots.name=全能工具(AIOTs)
 booklet.actuallyadditions.chapter.aiots.text.1=<item>全能工具<r>是一种集<imp>镐、斧、铲、锄和剑于一身<r>的工具。它们可以用任何材料制成，如果你安装了<imp>热力基础(ThermalFoundation)<r>或者<imp>MekanismTools模组<r>，你甚至可以使用来自这些模组的材料制作全能工具！
 
 booklet.actuallyadditions.chapter.jams.name=果酱
-booklet.actuallyadditions.chapter.jams.text.1=有一次，有一只<imp>小猫<r>特别想要一些果酱。<n>于是我给它做了一些<item>果酱<r>。<n>说真的，这就是些普通果酱。你可以在村民家里找到它，或者从<imp>果酱商贩村民<r>那里买到。<n>每瓶果酱会给你两种不同的<imp>药水附加效果<r>！
+booklet.actuallyadditions.chapter.jams.text.1=有一次，有一只<imp>小猫<r>特别想要一些果酱。<n>于是我给它做了一些<item>果酱<r>。<n>说真的，这就是些普通果酱。你可以在村民家里找到它，或者从<imp>果酱小贩<r>那里买到。<n>每瓶果酱会给你两种不同的<imp>药水附加效果<r>！
 booklet.actuallyadditions.chapter.jams.text.2=一个<imp>果酱作坊<r>和<n>它的居民
 booklet.actuallyadditions.chapter.jams.text.3=所以，<n>你大概很想知道这个果酱的名字是什么意思。<n>现在，让我告诉你：<n><n><i>-哈密瓜和猕猴桃<n>-哈密瓜和可可豆<n>-菠萝和可可豆<n>-樱桃、苹果和肉桂<n>-李子、苹果和柠檬<n>-葡萄、猕猴桃和香蕉<n>-醋栗、香蕉和覆盆子<n><n><r>现在，你可能会问，哪个是哪个？自己一边儿想去吧。
 
@@ -906,10 +869,13 @@ booklet.actuallyadditions.chapter.hairBalls.name=毛球
 booklet.actuallyadditions.chapter.hairBalls.text.1=<item>毛球<r>会从<imp>活<r>猫身上掉落。<n>浏览下一页以获取更多信息。
 booklet.actuallyadditions.chapter.hairBalls.text.2=<item>毛球<r>是一件会从被玩家<imp>驯服<r>的<imp>猫<r>身上掉落的物品。<n>猫是一种很古怪的的生物，因为它们<imp>会让任何东西粘在自己的毛发上<r>。<item>毛球<r>或许长相令人不堪入目，但当你通过<imp>右击<r>移除上面那些杂乱的猫毛后，说不定会找到一些<imp>有价值的物品<r>。<n>或者只会收获到一些线。<n><n><n><i>FUURRRRRR！！
 
+booklet.actuallyadditions.chapter.laserIntro.name=激光中继器的介绍
+booklet.actuallyadditions.chapter.laserIntro.text.1=<item>激光中继器<r>存在<imp>很多变种<r>，但是都拥有相似的功能。使用<item>中继器扳手<r>能够将<n>一个<item>激光中继器<r>和其他中继器相连。只需要<imp>右击<r>第一个中继器后在右击另一个即可连接。连接<imp>没有上限<r>，你可以称呼它为<item>网络<r>或者<item>系统<r>。这样的网络系统没有预定的终点或者起点。
+booklet.actuallyadditions.chapter.laserIntro.text.2=每一个<item>激光中继器<r>都能够用多种方式<imp>和其他的中继器交互<r>。<n>但是连接两个<item>激光中继器<r>却有一些限制条件。首先两个相互连接的<item>激光中继器<r><imp>至多只能相距<range>个方块远<r>。<n>除此之外，两个<item>激光中继器<r>的类型<imp>必须相同<r>。<n><n><i>继续浏览这章的其他条目查看不同类型的激光中继器！
+
 booklet.actuallyadditions.chapter.laserRelays.name=能量激光中继器
 booklet.actuallyadditions.chapter.laserRelays.text.1=<item>能量激光中继器<r>是一台能够<imp>无线传输RF<r>的设备，这只需要把它用<item>中继器扳手<r>右击连接并生成网络即可。<n>把产能机器或接收能量的机器放置在中继器旁，即可让它从网络中的<imp>其它中继器<r>输出或接收能量。<n>两个中继器最大可以相隔<range>格方块。<n>在能量传输过程中会存在轻微的<imp>能量损失<r>，但是完全不用担心。
 booklet.actuallyadditions.chapter.laserRelays.text.2=这里有<imp>三种<r>能量激光中继器。它们每tick传输的最大能量各不相同。<imp>能量上限<r>分别为<cap1>，<cap2>，和<cap3>RF。<n>同样的，不同的中继器能量损失也不相同。<n><n><imp>混合互联<r>不同等级的中继器是可行的，然而能量传输的<imp>最低上限<r>和<imp>最高上限<r>会受到两个中继器的影响。
-booklet.actuallyadditions.chapter.laserRelays.text.7=<item>中继器扳手<r>可以通过<imp>Shift右键<r>转换模式。<n>现有的模式有三种<n><imp>始终显示激光束<r><n><imp>从不显示激光束<r><n><imp>只有在使用扳手时显示激光束<r>
 
 booklet.actuallyadditions.chapter.blackLotus.name=黑莲花
 booklet.actuallyadditions.chapter.blackLotus.text.1=想一想：<n>你需要合成<imp>黑色羊毛<r>，<imp>黑色粘土<r>或者任何其他<imp>需要黑色染料<r>的东西，但你觉得杀死那么多<imp>无辜的鱿鱼<r>让你愧疚？<n>唔，那么<item>黑莲花<r>正是你需要的东西！<n>只要<imp>在野外<r>随便找找，你就能找到一朵，然后就可以用它合成一些<item>黑色染料<r>，用来<imp>代替墨囊<r>这样你就不再需要杀掉可怜的鱿鱼了。
@@ -943,6 +909,9 @@ booklet.actuallyadditions.chapter.lensDetonation.text.1=装有<item>爆破透镜
 
 booklet.actuallyadditions.chapter.lensDisenchanting.name=祛魔透镜
 booklet.actuallyadditions.chapter.lensDisenchanting.text.1=装有<item>祛魔透镜<r>后发射的激光束可以把已经拥有附魔的工具上的单个<imp>附魔<r><imp>转移到<r><item>书<r>或者<item>附魔书<r>上面。<n>使用方式很简单，在再构机前方丢出两个物品<r>（需要注意两个物品必须要丢在<imp>同一个格子里面<r>）<n>当激光束击中它们时，物品上的<imp>高等级附魔<r>将会被<imp>转移<r>或者<imp>添加<r>到普通的书或者附魔书上面<r>。<n><n>使用一次耗能为<imp><energy>RF<r>。
+
+booklet.actuallyadditions.chapter.lensMining.name=矿工透镜
+booklet.actuallyadditions.chapter.lensMining.text.1=<item>矿工透镜<r>能够<imp>创造出矿物<r>。<n>当激光击中在<item>石头<r>上面时，它能够被转化成<imp>随机的主世界矿物<r>。同理<，item>地狱岩<r>能够被转化为<imp>地狱的矿石<r>。<n>每次操作消耗<imp><energy>RF<r>能量，除此之外还依据生成矿物的稀有程度，消耗一些<imp>额外的能量<r>。
 
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.name=一些装饰品
 booklet.actuallyadditions.chapter.miscDecorStuffsAndThings.text.1=有时候，你在搞建筑时，你会发现你<imp>根本没有足够多的装饰方块<r>。那好，我们接下来隆重推出：<item>装饰用石英<r>！<n>这些和石英相仿，但有着更好看的花纹的方块还能合成为<imp>楼梯<r>、<imp>台阶<r>和<imp>墙<r>，其合成也是一如既往的原版风格。
@@ -997,7 +966,7 @@ booklet.actuallyadditions.chapter.itemFilter.text.1=<item>物品过滤器<r>可�
 
 booklet.actuallyadditions.chapter.videoGuide.name=视频教程
 booklet.actuallyadditions.chapter.videoGuide.text.1=如果你还是不知道如何入门<imp>实用拓展模组<r>，或者只是想简单了解下这个MOD，那么恭喜你，这里有我的一个朋友<item>BootyToast<r>制作的<imp>精彩视频<r>(的确这个人的名字有点奇怪)。<n>他的教程基本涵盖了主要的内容，虽然<imp>有一点过期了<r>，很多新增内容没有介绍，但是仍不失为<imp>一个很棒的入门视频<r> 。
-booklet.actuallyadditions.chapter.videoGuide.page.1.button=立即浏览
+booklet.actuallyadditions.chapter.videoGuide.button.1=观看视频
 
 booklet.actuallyadditions.chapter.shockSuppressor.name=震波吸收器
 booklet.actuallyadditions.chapter.shockSuppressor.text.1=<item>震波吸收器<r>在供应<imp>RF<r>能量后，能够保护周围<imp>至少<range>个方块的区域<r>免受各类<imp>爆炸<r>的破坏，无论是恶魂，TNT还是爬行者发生的爆炸。<n>保护一个方块需要消耗<imp><rf>RF<r>。
@@ -1022,3 +991,38 @@ booklet.actuallyadditions.chapter.empowerer.text.1=<item>充能台<r>是一个�
 booklet.actuallyadditions.chapter.empowerer.text.2=<i><item>物品展示台<r><i>的布局
 booklet.actuallyadditions.chapter.empowerer.text.3=<n><n><n><i>我想所有MOD都得来个注魔祭坛
 booklet.actuallyadditions.chapter.empowerer.text.4=<item>物品展示台<r>也可以用来做很多其他的事情！翻到<imp>耗能方块<r>查询更多信息！ 
+
+booklet.actuallyadditions.chapter.fluidLaser.name=流体激光中继器
+booklet.actuallyadditions.chapter.fluidLaser.text.1=<item>流体激光中继器<r>工作方式颇有点像普通的<item>激光中继器<r>，但是和<item>流体激光中继器<r>和<item>能量激光中继器<r>又有些不同,，它只能把<imp>流体<r>从一个储罐传输到另一个储罐。<n><n><item>流体激光中继器<r>不能连接幻灵接口。
+
+booklet.actuallyadditions.chapter.distributorItem.name=物品分配器
+booklet.actuallyadditions.chapter.distributorItem.text.1=<item>物品分配器<r>是一种简单的分流物品，并把它们导向<imp>不同方向<r>的工具。<n><n>分配器能够主动<imp>从顶部容器抽取物品<r>，然后把它们分流，并<imp>推送到<r>和它<imp>其他面<r>相贴的容器中。<n>它能够<imp>平均的<r>分派物品，尤其是在传输<imp>同一物品<r>的时候，它抽取物品时自动的。
+
+booklet.actuallyadditions.chapter.bioReactor.name=生物反应器
+booklet.actuallyadditions.chapter.bioReactor.text.1=<item>生物反应器<r>使用多种多样的<imp>种子，食物或者作物<r>来<imp>产生RF<r>！<n>使用方式很简单，只需要在它的<imp>GUI<r>里面放上<imp>这些东西<r>。不过你很快就会发现，这东西产能并不是很多。实际上是这样的，你放置的种子，食物或者作物<imp>种类越多<r>，它的产能就越多。
+
+booklet.actuallyadditions.chapter.farmer.name=农场
+booklet.actuallyadditions.chapter.farmer.text.1=<item>农场<r>是一个能够<imp>种植并收获<r>诸如小麦，马铃薯，胡萝卜<imp>或者其他作物<r>的机器。<n>它的GUI<imp>左侧<r>的格子是用来放置<item>种子<r>的，而它<imp>右侧<r>的格子则能够存储<imp>收获的作物<r>。<n>它能够耕种机器前方<imp>9x9区域<r>的范围。<n>和其他机器一样，它需要消耗<imp><energy> RF<r>能量。<n><n><n><i>my fam
+
+booklet.actuallyadditions.chapter.lensMoreDeath.name=杀手透镜
+booklet.actuallyadditions.chapter.lensMoreDeath.text.1=<item>杀手透镜<r>其实和<item>死亡透镜<r>蛮像的，不过它杀死生物，不但能够<imp>掉落经验<r>，还能<imp>掉落那些通常玩家杀死，才能掉落的物品<r>。<n>当然这也意味着它需要消耗<imp>很多的能量<r>。<n><n>如果要收集掉落的经验，我想<item>经验固化机<r>是个不错的选择。
+
+booklet.actuallyadditions.chapter.fillingWand.name=填充手杖
+booklet.actuallyadditions.chapter.fillingWand.text.1=<item>填充手杖<r>是一种便捷的<imp>填充大面积区域<r>的工具。<n>使用方式如下：首先你<imp>Shift右击<r>你想要的<imp>填充物<r>。<n><n>接下来，右击你想填充区域的<imp>两个顶点<r>。你就可以快速填充出平面或者立方体了<n>当然使用这个东西同样需要<imp>一些能量<r>，而且你的物品栏里面的填充物也必须<imp>足够<r>。
+
+booklet.actuallyadditions.chapter.patreon.name=Patreon捐赠
+booklet.actuallyadditions.chapter.patreon.text.1=你是否<imp>非常喜欢<r> <item>Actually Additions<r>这个模组？如果是这样的话，你可以通过如下方式<imp>支持<r>Ellpeck，也就是这个模组的作者哦！<n>只需要轻轻点击下面这个按钮，就可以打开<item>Patreon<r>页面！<n>正如下一页你所见的那样,作为奖励，你的头上会出现一些<imp>悬浮的小玩意<r>。<n><n>非常感谢<3
+booklet.actuallyadditions.chapter.patreon.button.1=打开Patreon界面
+booklet.actuallyadditions.chapter.patreon.text.2=只有<item>3像素<r>的<imp>Patreon回报<r>。
+
+booklet.actuallyadditions.chapter.changelog.name=更新日志
+booklet.actuallyadditions.chapter.changelog.text.1=你是否对<item>Actually Additions<r>曾经所有版本的<imp>变化<r>抱有兴趣？<n>如果是的话，只需要点击下面的按钮就可以看到所有<item>更新日志<r>的细节，包括<imp>添加的记录<r>，所有<imp>bug修复记录<r>，以及所有其他类型的<imp>变化<r>！
+booklet.actuallyadditions.chapter.changelog.button.1=打开更新日志界面
+
+booklet.actuallyadditions.chapter.curse.name=模组网站
+booklet.actuallyadditions.chapter.curse.text.1=你是否想要<imp>下载<r>这个模组的最新版本，查看有关这个模组的<imp>最新信息<r>，那我非常建议你点击下下这个<imp>CurseForge页面<r>的按钮。
+booklet.actuallyadditions.chapter.curse.button.1=访问CurseForge页面
+
+booklet.actuallyadditions.chapter.website.name=作者的个人网页
+booklet.actuallyadditions.chapter.website.text.1=这是一则自我推销的广告词，如果你对任何有关于我，也就是这个模组的作者，<item>Ellpeck<r>感兴趣的<imp>方面<r>，你可以点击下面这个按钮，浏览我的<imp>个人网页<r>。<n>在那里，你能够找到我所使用的社交媒体链接，以及一些问题和回答，还有所做的有关于Minecraft模组的一些东西！
+booklet.actuallyadditions.chapter.website.button.1=访问个人主页
