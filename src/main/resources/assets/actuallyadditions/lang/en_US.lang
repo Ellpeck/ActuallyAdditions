@@ -985,7 +985,7 @@ booklet.actuallyadditions.chapter.lensDeath.name=Lens of Certain Death
 booklet.actuallyadditions.chapter.lensDeath.text.1=The <item>Lens of Certain Death<r> will, <imp>deal lots of damage<r> to whatever steps into it, enough, in fact, to kill a player <imp>in a single hit<r>.
 
 booklet.actuallyadditions.chapter.lensDetonation.name=Lens of Detonation
-booklet.actuallyadditions.chapter.lensDetonation.text.1=The <item>Lens of Detonation<r> will create a firey explosion <imp>around the block the laser hits<r>. <n>Be careful with this. Seriously. <n>(With this lens, the laser also goes 3 times as far!)
+booklet.actuallyadditions.chapter.lensDetonation.text.1=The <item>Lens of Detonation<r> will create a fiery explosion <imp>around the block the laser hits<r>. <n>Be careful with this. Seriously. <n>(With this lens, the laser also goes 3 times as far!)
 
 booklet.actuallyadditions.chapter.lensDisenchanting.name=Lens of Disenchanting
 booklet.actuallyadditions.chapter.lensDisenchanting.text.1=The <item>Lens of Disenchanting<r> can be used to <imp>tranfer<r> a single <imp>enchantment<r> from an enchanted item to either a <item>Book<r> or an already <item>Enchanted Book<r>. <n>This can be achieved by <imp>throwing the two items in front of the laser<r> (more than one of every type won't work!), but they have to be together <imp>in one blockspace<r>. <n>When they are hit by the laser, the <imp>topmost enchantment<r> from the non-book item is <imp>removed<r> and <imp>added onto the book<r>. <n><n>However, this uses <imp><energy> CF<r>.
