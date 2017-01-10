@@ -28,6 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemCompass;
 import net.minecraft.item.ItemStack;
@@ -48,6 +49,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import lib.mcjty.varia.WrenchChecker;
 
 public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
 
@@ -163,7 +165,8 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
         if(tile instanceof TileEntityLaserRelay){
             TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
 
-            if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemCompass){
+            Item item = stack.getItem();
+            if(StackUtil.isValid(stack) && (item instanceof ItemCompass || WrenchChecker.isAWrench(item))){
                 if(!world.isRemote){
                     relay.onCompassAction(player);
 
@@ -210,8 +213,9 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         if(posHit != null && posHit.getBlockPos() != null && minecraft.world != null && StackUtil.isValid(stack)){
-            boolean compass = stack.getItem() instanceof ItemCompass;
-            if(compass || stack.getItem() instanceof ItemLaserWrench){
+            Item item = stack.getItem();
+            boolean compass = (item instanceof ItemCompass || WrenchChecker.isAWrench(item));
+            if(compass || item instanceof ItemLaserWrench){
                 TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
                 if(tile instanceof TileEntityLaserRelay){
                     TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
@@ -224,7 +228,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                         expl = relay.getCompassDisplayString();
                     }
                     else{
-                        expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Compass to modify!";
+                        expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Compass or wrench to modify!";
                     }
 
                     StringUtil.drawSplitString(minecraft.fontRendererObj, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);

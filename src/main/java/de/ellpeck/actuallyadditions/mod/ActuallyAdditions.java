@@ -57,6 +57,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
+import lib.mcjty.varia.WrenchChecker;
 
 //                                                                           So that BuildCraft Oil always gets used
 @Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", guiFactory = "de.ellpeck.actuallyadditions.mod.config.GuiFactory")
@@ -104,6 +105,8 @@ public class ActuallyAdditions{
         SoundHandler.init();
         new UpdateChecker();
         proxy.preInit(event);
+
+        WrenchChecker.init();
 
         ModUtil.LOGGER.info("PreInitialization Finished.");
     }
