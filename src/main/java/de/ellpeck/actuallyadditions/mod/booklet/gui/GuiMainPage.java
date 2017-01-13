@@ -63,7 +63,8 @@ public class GuiMainPage extends GuiBooklet{
             "I have a feeling Actually Additions is also like Extra Utilities with Random things smashed together why is it...@lesslighter",
             "Leaf eater... munchdew... hummm@EiOs",
             "There is no such thing as canola seeds.@AlBoVa",
-            "This mod is cancer, BRUTAL EXPENSIVE POWER usage..Just, cancer.@KoJo"
+            "This mod is cancer, BRUTAL EXPENSIVE POWER usage..Just, cancer.@KoJo",
+            "Spaghetti is spaghetti, and noodles are noodles.@robsonld04"
     };
 
     private TexturedButton achievementButton;
@@ -142,6 +143,9 @@ public class GuiMainPage extends GuiBooklet{
         }
         else if(playerName.equalsIgnoreCase("themattabase")){
             this.bookletEdition = "Withered Edition";
+        }
+        else if(playerName.equalsIgnoreCase("robsonld04")){
+            this.bookletEdition = "Modpack Edition";
         }
         else{
             if(Util.isDevVersion()){
