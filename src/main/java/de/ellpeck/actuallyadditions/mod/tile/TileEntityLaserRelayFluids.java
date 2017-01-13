@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy.Mode;
+import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -36,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
 
-    public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
+    public final ConcurrentHashMap<EnumFacing, TileEntity> handlersAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
     private final IFluidHandler[] fluidHandlers = new IFluidHandler[6];
     private Mode mode = Mode.BOTH;
 
@@ -70,22 +71,35 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
     }
 
     @Override
+    public void updateEntity(){
+        super.updateEntity();
+
+        if(!this.world.isRemote){
+            if(this.mode == Mode.INPUT_ONLY){
+                for(EnumFacing side : this.handlersAround.keySet()){
+                    WorldUtil.doFluidInteraction(this.handlersAround.get(side), this, side.getOpposite(), Integer.MAX_VALUE);
+                }
+            }
+        }
+    }
+
+    @Override
     public boolean shouldSaveDataOnChangeOrWorldStart(){
         return true;
     }
 
     @Override
     public void saveDataOnChangeOrWorldStart(){
-        Map<EnumFacing, TileEntity> old = new HashMap<EnumFacing, TileEntity>(this.receiversAround);
+        Map<EnumFacing, TileEntity> old = new HashMap<EnumFacing, TileEntity>(this.handlersAround);
         boolean change = false;
 
-        this.receiversAround.clear();
+        this.handlersAround.clear();
         for(EnumFacing side : EnumFacing.values()){
             BlockPos pos = this.getPos().offset(side);
             TileEntity tile = this.world.getTileEntity(pos);
             if(tile != null && !(tile instanceof TileEntityLaserRelay)){
                 if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())){
-                    this.receiversAround.put(side, tile);
+                    this.handlersAround.put(side, tile);
 
                     TileEntity oldTile = old.get(side);
                     if(oldTile == null || !tile.equals(oldTile)){
@@ -95,7 +109,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
             }
         }
 
-        if(change || old.size() != this.receiversAround.size()){
+        if(change || old.size() != this.handlersAround.size()){
             Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
             if(network != null){
                 network.changeAmount++;
@@ -137,9 +151,9 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
                         if(theRelay.mode != Mode.INPUT_ONLY){
                             boolean workedOnce = false;
 
-                            for(EnumFacing facing : theRelay.receiversAround.keySet()){
+                            for(EnumFacing facing : theRelay.handlersAround.keySet()){
                                 if(theRelay != this || facing != from){
-                                    TileEntity tile = theRelay.receiversAround.get(facing);
+                                    TileEntity tile = theRelay.handlersAround.get(facing);
 
                                     EnumFacing opp = facing.getOpposite();
                                     if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp)){
@@ -168,7 +182,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
             }
 
             for(TileEntityLaserRelayFluids theRelay : relaysThatWork){
-                for(Map.Entry<EnumFacing, TileEntity> receiver : theRelay.receiversAround.entrySet()){
+                for(Map.Entry<EnumFacing, TileEntity> receiver : theRelay.handlersAround.entrySet()){
                     if(receiver != null){
                         EnumFacing side = receiver.getKey();
                         EnumFacing opp = side.getOpposite();
