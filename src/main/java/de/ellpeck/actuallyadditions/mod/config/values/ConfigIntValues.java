@@ -25,7 +25,11 @@ public enum ConfigIntValues{
     WORMS_DIE_TIME("Worm Death Time", ConfigCategories.OTHER, 0, 0, 10000000, "The amount of ticks it takes for a worm to die. When at 0 ticks, it will not die."),
 
     TILE_ENTITY_UPDATE_INTERVAL("Tile Entities: Update Interval", ConfigCategories.OTHER, 5, 1, 100, "The amount of ticks waited before a TileEntity sends an additional Update to the Client"),
-    CTRL_INFO_NBT_CHAR_LIMIT("Advanced Info NBT Character Limit", ConfigCategories.OTHER, 1000, 0, 100000000, "The maximum amount of characters that is displayed by the NBT view of the CTRL Advanced Info. Set to a zero to have no limit");
+    CTRL_INFO_NBT_CHAR_LIMIT("Advanced Info NBT Character Limit", ConfigCategories.OTHER, 1000, 0, 100000000, "The maximum amount of characters that is displayed by the NBT view of the CTRL Advanced Info. Set to a zero to have no limit"),
+
+    FONT_SIZE_SMALL("Booklet Small Font Size", ConfigCategories.OTHER, 0, 0, 500, "The size of the booklet's small font in percent. Set to 0 to use defaults from the lang file."),
+    FONT_SIZE_MEDIUM("Booklet Medium Font Size", ConfigCategories.OTHER, 0, 0, 500, "The size of the booklet's medium font in percent. Set to 0 to use defaults from the lang file."),
+    FONT_SIZE_LARGE("Booklet Large Font Size", ConfigCategories.OTHER, 0, 0, 500, "The size of the booklet's large font in percent. Set to 0 to use defaults from the lang file.");
 
     public final String name;
     public final String category;

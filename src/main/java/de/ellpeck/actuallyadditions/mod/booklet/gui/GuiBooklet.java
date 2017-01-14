@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.gui;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
@@ -66,6 +67,21 @@ public abstract class GuiBooklet extends GuiBookletBase{
         this.ySize = 180;
     }
 
+    private static float getFontSize(String lang, ConfigIntValues config, float defaultValue){
+        int conf = config.getValue();
+        if(conf <= 0){
+            try{
+                return Float.parseFloat(StringUtil.localize("booklet."+ModUtil.MOD_ID+".fontSize."+lang));
+            }
+            catch(Exception e){
+                return defaultValue;
+            }
+        }
+        else{
+            return (float)conf/100F;
+        }
+    }
+
     @Override
     public void initGui(){
         super.initGui();
@@ -73,18 +89,9 @@ public abstract class GuiBooklet extends GuiBookletBase{
         this.guiLeft = (this.width-this.xSize)/2;
         this.guiTop = (this.height-this.ySize)/2;
 
-        try{
-            this.smallFontSize = Float.parseFloat(StringUtil.localize("booklet."+ModUtil.MOD_ID+".fontSize.small"));
-            this.mediumFontSize = Float.parseFloat(StringUtil.localize("booklet."+ModUtil.MOD_ID+".fontSize.medium"));
-            this.largeFontSize = Float.parseFloat(StringUtil.localize("booklet."+ModUtil.MOD_ID+".fontSize.large"));
-        }
-        catch(Exception e){
-            ModUtil.LOGGER.error("Getting the booklet font size from the lang file failed!", e);
-
-            this.smallFontSize = 0.5F;
-            this.mediumFontSize = 0.75F;
-            this.largeFontSize = 0.8F;
-        }
+        this.smallFontSize = getFontSize("small", ConfigIntValues.FONT_SIZE_SMALL, 0.5F);
+        this.mediumFontSize = getFontSize("medium", ConfigIntValues.FONT_SIZE_MEDIUM, 0.75F);
+        this.largeFontSize = getFontSize("large", ConfigIntValues.FONT_SIZE_LARGE, 0.8F);
 
         if(this.hasPageLeftButton()){
             List<String> hoverText = Arrays.asList(TextFormatting.GOLD+"Previous Page", TextFormatting.ITALIC+"Or scroll up");

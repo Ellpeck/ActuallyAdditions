@@ -14,7 +14,6 @@ import java.util.Locale;
 
 public enum ConfigCategories{
 
-    PERFORMANCE("Performance", "Performance Settings"),
     TOOL_VALUES("Tool Values", "Values for Tools"),
     MACHINE_VALUES("Machine Values", "Values for Machines"),
     MOB_DROPS("Mob Drops", "Everything regarding Item drops from mobs"),
