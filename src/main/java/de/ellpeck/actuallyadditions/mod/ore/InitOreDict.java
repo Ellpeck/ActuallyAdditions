@@ -38,6 +38,7 @@ public final class InitOreDict{
         addOre(InitItems.itemDust, TheDusts.EMERALD.ordinal(), "dustEmerald");
         addOre(InitItems.itemDust, TheDusts.LAPIS.ordinal(), "dustLapis");
         addOre(InitItems.itemDust, TheDusts.QUARTZ.ordinal(), "dustQuartz");
+        addOre(InitItems.itemDust, TheDusts.QUARTZ.ordinal(), "dustNetherQuartz");
         addOre(InitItems.itemDust, TheDusts.COAL.ordinal(), "dustCoal");
         addOre(InitItems.itemDust, TheDusts.QUARTZ_BLACK.ordinal(), "dustQuartzBlack");
         addOre(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), "oreQuartzBlack");
