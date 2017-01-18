@@ -86,6 +86,8 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
     public void removeRelayFromNetwork(BlockPos relay, World world){
         Network network = this.getNetworkFor(relay, world);
         if(network != null){
+            network.changeAmount++;
+
             //Setup new network (so that splitting a network will cause it to break into two)
             WorldData data = WorldData.get(world);
             data.laserRelayNetworks.remove(network);
