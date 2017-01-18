@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
@@ -96,21 +95,23 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
         this.handlersAround.clear();
         for(EnumFacing side : EnumFacing.values()){
             BlockPos pos = this.getPos().offset(side);
-            TileEntity tile = this.world.getTileEntity(pos);
-            if(tile != null && !(tile instanceof TileEntityLaserRelay)){
-                if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())){
-                    this.handlersAround.put(side, tile);
+            if(this.world.isBlockLoaded(pos)){
+                TileEntity tile = this.world.getTileEntity(pos);
+                if(tile != null && !(tile instanceof TileEntityLaserRelay)){
+                    if(tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())){
+                        this.handlersAround.put(side, tile);
 
-                    TileEntity oldTile = old.get(side);
-                    if(oldTile == null || !tile.equals(oldTile)){
-                        change = true;
+                        TileEntity oldTile = old.get(side);
+                        if(oldTile == null || !tile.equals(oldTile)){
+                            change = true;
+                        }
                     }
                 }
             }
         }
 
         if(change || old.size() != this.handlersAround.size()){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
+            Network network = this.getNetwork();
             if(network != null){
                 network.changeAmount++;
             }
@@ -125,7 +126,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
     private int transmitFluid(EnumFacing from, FluidStack stack, boolean doFill){
         int transmitted = 0;
         if(stack != null && this.mode != Mode.OUTPUT_ONLY){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.world);
+            Network network = this.getNetwork();
             if(network != null){
                 transmitted = this.transferFluidToReceiverInNeed(from, network, stack, doFill);
             }
@@ -143,7 +144,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
 
         for(IConnectionPair pair : network.connections){
             for(BlockPos relay : pair.getPositions()){
-                if(relay != null && !alreadyChecked.contains(relay)){
+                if(relay != null && this.world.isBlockLoaded(relay) && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
                     TileEntity relayTile = this.world.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayFluids){

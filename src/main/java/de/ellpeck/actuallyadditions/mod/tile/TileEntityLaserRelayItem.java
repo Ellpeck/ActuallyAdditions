@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
@@ -69,22 +68,24 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
         for(int i = 0; i <= 5; i++){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
             BlockPos pos = this.getPos().offset(side);
-            TileEntity tile = this.world.getTileEntity(pos);
-            if(tile != null && !(tile instanceof TileEntityItemViewer) && !(tile instanceof TileEntityLaserRelay)){
-                IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                if(handler != null){
-                    this.handlersAround.put(pos, handler);
+            if(this.world.isBlockLoaded(pos)){
+                TileEntity tile = this.world.getTileEntity(pos);
+                if(tile != null && !(tile instanceof TileEntityItemViewer) && !(tile instanceof TileEntityLaserRelay)){
+                    IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                    if(handler != null){
+                        this.handlersAround.put(pos, handler);
 
-                    IItemHandler oldHandler = old.get(pos);
-                    if(oldHandler == null || !handler.equals(oldHandler)){
-                        change = true;
+                        IItemHandler oldHandler = old.get(pos);
+                        if(oldHandler == null || !handler.equals(oldHandler)){
+                            change = true;
+                        }
                     }
                 }
             }
         }
 
         if(change || old.size() != this.handlersAround.size()){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
+            Network network = this.getNetwork();
             if(network != null){
                 network.changeAmount++;
             }
@@ -97,15 +98,14 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
         for(IConnectionPair pair : network.connections){
             for(BlockPos relay : pair.getPositions()){
-                if(relay != null && !alreadyChecked.contains(relay)){
+                if(relay != null && this.world.isBlockLoaded(relay) && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
                     TileEntity aRelayTile = this.world.getTileEntity(relay);
                     if(aRelayTile instanceof TileEntityLaserRelayItem){
                         TileEntityLaserRelayItem relayTile = (TileEntityLaserRelayItem)aRelayTile;
                         GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);
 
-                        Map<BlockPos, IItemHandler> handlersAroundTile = relayTile.handlersAround;
-                        for(Map.Entry<BlockPos, IItemHandler> handler : handlersAroundTile.entrySet()){
+                        for(Map.Entry<BlockPos, IItemHandler> handler : relayTile.handlersAround.entrySet()){
                             if(!alreadyChecked.contains(handler.getKey())){
                                 alreadyChecked.add(handler.getKey());
 

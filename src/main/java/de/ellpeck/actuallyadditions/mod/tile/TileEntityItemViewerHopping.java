@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -90,23 +91,23 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer{
     public void saveDataOnChangeOrWorldStart(){
         super.saveDataOnChangeOrWorldStart();
 
+        this.handlerToPullFrom = null;
+        this.handlerToPushTo = null;
+
         TileEntity from = this.world.getTileEntity(this.pos.offset(EnumFacing.UP));
         if(from != null && !(from instanceof TileEntityItemViewer) && from.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)){
             this.handlerToPullFrom = from.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
-        }
-        else{
-            this.handlerToPullFrom = null;
         }
 
         IBlockState state = this.world.getBlockState(this.pos);
         EnumFacing facing = state.getValue(BlockHopper.FACING);
 
-        TileEntity to = this.world.getTileEntity(this.pos.offset(facing));
-        if(to != null && !(to instanceof TileEntityItemViewer) && to.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite())){
-            this.handlerToPushTo = to.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
-        }
-        else{
-            this.handlerToPushTo = null;
+        BlockPos toPos = this.pos.offset(facing);
+        if(this.world.isBlockLoaded(toPos)){
+            TileEntity to = this.world.getTileEntity(toPos);
+            if(to != null && !(to instanceof TileEntityItemViewer) && to.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite())){
+                this.handlerToPushTo = to.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
+            }
         }
     }
 }

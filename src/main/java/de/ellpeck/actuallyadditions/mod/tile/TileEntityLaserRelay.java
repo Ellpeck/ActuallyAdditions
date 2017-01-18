@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
+import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.ConnectionPair;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,6 +30,9 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     public static final int MAX_DISTANCE = 15;
 
     public final LaserType type;
+
+    private Network cachedNetwork;
+    private int changeAmountAtCaching = -1;
 
     private Set<IConnectionPair> tempConnectionStorage;
 
@@ -106,6 +110,21 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
             }
         }
     }*/
+
+    public Network getNetwork(){
+        if(this.cachedNetwork == null || this.cachedNetwork.changeAmount != this.changeAmountAtCaching){
+            this.cachedNetwork = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.world);
+
+            if(this.cachedNetwork != null){
+                this.changeAmountAtCaching = this.cachedNetwork.changeAmount;
+            }
+            else{
+                this.changeAmountAtCaching = -1;
+            }
+        }
+
+        return this.cachedNetwork;
+    }
 
     @Override
     public void invalidate(){
