@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import cofh.api.energy.IEnergyReceiver;
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
@@ -67,7 +66,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
     private int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate){
         int transmitted = 0;
         if(maxTransmit > 0 && this.mode != Mode.OUTPUT_ONLY){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);
+            Network network = this.getNetwork();
             if(network != null){
                 transmitted = this.transferEnergyToReceiverInNeed(from, network, maxTransmit, simulate);
             }
@@ -93,21 +92,23 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
         this.receiversAround.clear();
         for(EnumFacing side : EnumFacing.values()){
             BlockPos pos = this.getPos().offset(side);
-            TileEntity tile = this.worldObj.getTileEntity(pos);
-            if(tile != null && !(tile instanceof TileEntityLaserRelay)){
-                if(tile instanceof IEnergyReceiver || (ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite()))){
-                    this.receiversAround.put(side, tile);
+            if(this.worldObj.isBlockLoaded(pos)){
+                TileEntity tile = this.worldObj.getTileEntity(pos);
+                if(tile != null && !(tile instanceof TileEntityLaserRelay)){
+                    if(tile instanceof IEnergyReceiver || (ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite()))){
+                        this.receiversAround.put(side, tile);
 
-                    TileEntity oldTile = old.get(side);
-                    if(oldTile == null || !tile.equals(oldTile)){
-                        change = true;
+                        TileEntity oldTile = old.get(side);
+                        if(oldTile == null || !tile.equals(oldTile)){
+                            change = true;
+                        }
                     }
                 }
             }
         }
 
         if(change || old.size() != this.receiversAround.size()){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
+            Network network = this.getNetwork();
             if(network != null){
                 network.changeAmount++;
             }
@@ -124,7 +125,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
 
         for(IConnectionPair pair : network.connections){
             for(BlockPos relay : pair.getPositions()){
-                if(relay != null && !alreadyChecked.contains(relay)){
+                if(relay != null && this.worldObj.isBlockLoaded(relay) && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
                     TileEntity relayTile = this.worldObj.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayEnergy){

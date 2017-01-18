@@ -84,7 +84,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
         }
 
         if(change || old.size() != this.handlersAround.size()){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
+            Network network = this.getNetwork();
             if(network != null){
                 network.changeAmount++;
             }
@@ -97,15 +97,14 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
         for(IConnectionPair pair : network.connections){
             for(BlockPos relay : pair.getPositions()){
-                if(relay != null && !alreadyChecked.contains(relay)){
+                if(relay != null && this.worldObj.isBlockLoaded(relay) && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
                     TileEntity aRelayTile = this.worldObj.getTileEntity(relay);
                     if(aRelayTile instanceof TileEntityLaserRelayItem){
                         TileEntityLaserRelayItem relayTile = (TileEntityLaserRelayItem)aRelayTile;
                         GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);
 
-                        Map<BlockPos, IItemHandler> handlersAroundTile = relayTile.handlersAround;
-                        for(Map.Entry<BlockPos, IItemHandler> handler : handlersAroundTile.entrySet()){
+                        for(Map.Entry<BlockPos, IItemHandler> handler : relayTile.handlersAround.entrySet()){
                             if(!alreadyChecked.contains(handler.getKey())){
                                 alreadyChecked.add(handler.getKey());
 

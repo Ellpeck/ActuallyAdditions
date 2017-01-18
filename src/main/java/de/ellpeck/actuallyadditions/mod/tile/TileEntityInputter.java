@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -140,36 +141,42 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      */
     @Override
     public void saveDataOnChangeOrWorldStart(){
+
+        this.placeToPull = null;
+        this.placeToPut = null;
+
         if(this.sideToPull != -1){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(this.sideToPull);
-            this.placeToPull = this.worldObj.getTileEntity(this.pos.offset(side));
+            BlockPos offset = this.pos.offset(side);
 
-            if(this.slotToPullEnd <= 0 && this.placeToPull != null){
-                if(this.placeToPull.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
-                    IItemHandler cap = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                    if(cap != null){
-                        this.slotToPullEnd = cap.getSlots();
+            if(this.worldObj.isBlockLoaded(offset)){
+                this.placeToPull = this.worldObj.getTileEntity(offset);
+
+                if(this.slotToPullEnd <= 0 && this.placeToPull != null){
+                    if(this.placeToPull.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
+                        IItemHandler cap = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                        if(cap != null){
+                            this.slotToPullEnd = cap.getSlots();
+                        }
                     }
-                }
-                else if(this.placeToPull instanceof IInventory){
-                    this.slotToPullEnd = ((IInventory)this.placeToPull).getSizeInventory();
                 }
             }
         }
 
         if(this.sideToPut != -1){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(this.sideToPut);
-            this.placeToPut = this.worldObj.getTileEntity(this.pos.offset(side));
+            BlockPos offset = this.pos.offset(side);
 
-            if(this.slotToPutEnd <= 0 && this.placeToPut != null){
-                if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
-                    IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                    if(cap != null){
-                        this.slotToPutEnd = cap.getSlots();
+            if(this.worldObj.isBlockLoaded(offset)){
+                this.placeToPut = this.worldObj.getTileEntity(offset);
+
+                if(this.slotToPutEnd <= 0 && this.placeToPut != null){
+                    if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
+                        IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                        if(cap != null){
+                            this.slotToPutEnd = cap.getSlots();
+                        }
                     }
-                }
-                else if(this.placeToPut instanceof IInventory){
-                    this.slotToPutEnd = ((IInventory)this.placeToPut).getSizeInventory();
                 }
             }
         }

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -29,7 +28,6 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     private final Map<Integer, SpecificItemHandlerInfo> specificInfos = new HashMap<Integer, SpecificItemHandlerInfo>();
     public TileEntityLaserRelayItem connectedRelay;
 
-    private Network oldNetwork;
     private int lastNetworkChangeAmount = -1;
 
     public TileEntityItemViewer(){
@@ -76,9 +74,9 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
     private void queryAndSaveData(){
         if(this.connectedRelay != null){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.connectedRelay.getPos(), this.worldObj);
+            Network network = this.connectedRelay.getNetwork();
             if(network != null){
-                if(this.oldNetwork != network || this.lastNetworkChangeAmount != network.changeAmount){
+                if(this.lastNetworkChangeAmount != network.changeAmount){
                     this.clearInfos();
 
                     this.connectedRelay.getItemHandlersInNetwork(network, this.genericInfos);
@@ -96,7 +94,6 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
                         }
                     }
 
-                    this.oldNetwork = network;
                     this.lastNetworkChangeAmount = network.changeAmount;
                 }
 
@@ -105,6 +102,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         }
 
         this.clearInfos();
+        this.lastNetworkChangeAmount = -1;
     }
 
     private void clearInfos(){
@@ -134,15 +132,17 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
             for(int i = 0; i <= 5; i++){
                 EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
                 BlockPos pos = this.getPos().offset(side);
-                TileEntity tile = this.worldObj.getTileEntity(pos);
+                if(this.worldObj.isBlockLoaded(pos)){
+                    TileEntity tile = this.worldObj.getTileEntity(pos);
 
-                if(tile instanceof TileEntityLaserRelayItem){
-                    if(tileFound != null){
-                        this.connectedRelay = null;
-                        return;
-                    }
-                    else{
-                        tileFound = (TileEntityLaserRelayItem)tile;
+                    if(tile instanceof TileEntityLaserRelayItem){
+                        if(tileFound != null){
+                            this.connectedRelay = null;
+                            return;
+                        }
+                        else{
+                            tileFound = (TileEntityLaserRelayItem)tile;
+                        }
                     }
                 }
             }
@@ -158,7 +158,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
-        if(handler != null){
+        if(handler != null && handler.isLoaded()){
             if(this.isWhitelisted(handler, stack, true)){
                 if(ItemStack.areItemsEqual(handler.handler.getStackInSlot(handler.switchedIndex), stack)){
                     ItemStack gaveBack = handler.handler.extractItem(handler.switchedIndex, StackUtil.getStackSize(stack), true);
@@ -183,7 +183,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
-        if(handler != null){
+        if(handler != null && handler.isLoaded()){
             if(this.isWhitelisted(handler, stack, false)){
                 ItemStack gaveBack = handler.handler.insertItem(handler.switchedIndex, stack, true);
                 return !ItemStack.areItemStacksEqual(gaveBack, stack);
@@ -203,7 +203,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     public void setInventorySlotContents(int i, ItemStack stack){
         if(StackUtil.isValid(stack)){
             SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(i);
-            if(handler != null){
+            if(handler != null && handler.isLoaded()){
                 ItemStack toInsert = stack.copy();
                 ItemStack inSlot = handler.handler.getStackInSlot(handler.switchedIndex);
                 if(StackUtil.isValid(inSlot)){
@@ -223,8 +223,10 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
         List<GenericItemHandlerInfo> infos = this.getItemHandlerInfos();
         if(infos != null){
             for(GenericItemHandlerInfo info : infos){
-                for(IItemHandler handler : info.handlers){
-                    size += handler.getSlots();
+                if(info.isLoaded()){
+                    for(IItemHandler handler : info.handlers){
+                        size += handler.getSlots();
+                    }
                 }
             }
         }
@@ -234,7 +236,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     @Override
     public ItemStack getStackInSlot(int i){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(i);
-        if(handler != null){
+        if(handler != null && handler.isLoaded()){
             return handler.handler.getStackInSlot(handler.switchedIndex);
         }
         return null;
@@ -243,7 +245,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     @Override
     public ItemStack decrStackSize(int i, int j){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(i);
-        if(handler != null){
+        if(handler != null && handler.isLoaded()){
             return handler.handler.extractItem(handler.switchedIndex, j, false);
         }
         return null;
@@ -252,7 +254,7 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
     @Override
     public ItemStack removeStackFromSlot(int index){
         SpecificItemHandlerInfo handler = this.getSwitchedIndexHandler(index);
-        if(handler != null){
+        if(handler != null && handler.isLoaded()){
             ItemStack stackInSlot = handler.handler.getStackInSlot(handler.switchedIndex);
             if(StackUtil.isValid(stackInSlot)){
                 handler.handler.extractItem(handler.switchedIndex, StackUtil.getStackSize(stackInSlot), false);
@@ -273,6 +275,10 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
             this.switchedIndex = switchedIndex;
             this.relayInQuestion = relayInQuestion;
         }
+
+        public boolean isLoaded(){
+            return this.relayInQuestion.hasWorldObj() && this.relayInQuestion.getWorld().isBlockLoaded(this.relayInQuestion.getPos());
+        }
     }
 
     public static class GenericItemHandlerInfo implements Comparable<GenericItemHandlerInfo>{
@@ -282,6 +288,10 @@ public class TileEntityItemViewer extends TileEntityInventoryBase{
 
         public GenericItemHandlerInfo(TileEntityLaserRelayItem relayInQuestion){
             this.relayInQuestion = relayInQuestion;
+        }
+
+        public boolean isLoaded(){
+            return this.relayInQuestion.hasWorldObj() && this.relayInQuestion.getWorld().isBlockLoaded(this.relayInQuestion.getPos());
         }
 
         @Override

@@ -145,7 +145,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                 if(!world.isRemote){
                     relay.onCompassAction(player);
 
-                    Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(relay.getPos(), relay.getWorld());
+                    Network network = relay.getNetwork();
                     if(network != null){
                         network.changeAmount++;
                     }

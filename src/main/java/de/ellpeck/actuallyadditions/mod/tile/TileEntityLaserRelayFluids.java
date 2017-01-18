@@ -71,21 +71,23 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
         this.handlersAround.clear();
         for(EnumFacing side : EnumFacing.values()){
             BlockPos pos = this.getPos().offset(side);
-            TileEntity tile = this.worldObj.getTileEntity(pos);
-            if(tile != null && !(tile instanceof TileEntityLaserRelay)){
-                if(tile instanceof net.minecraftforge.fluids.IFluidHandler || tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())){
-                    this.handlersAround.put(side, tile);
+            if(this.worldObj.isBlockLoaded(pos)){
+                TileEntity tile = this.worldObj.getTileEntity(pos);
+                if(tile != null && !(tile instanceof TileEntityLaserRelay)){
+                    if(tile instanceof net.minecraftforge.fluids.IFluidHandler || tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())){
+                        this.handlersAround.put(side, tile);
 
-                    TileEntity oldTile = old.get(side);
-                    if(oldTile == null || !tile.equals(oldTile)){
-                        change = true;
+                        TileEntity oldTile = old.get(side);
+                        if(oldTile == null || !tile.equals(oldTile)){
+                            change = true;
+                        }
                     }
                 }
             }
         }
 
         if(change || old.size() != this.handlersAround.size()){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.getPos(), this.getWorld());
+            Network network = this.getNetwork();
             if(network != null){
                 network.changeAmount++;
             }
@@ -115,7 +117,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
     private int transmitEnergy(EnumFacing from, FluidStack stack, boolean doFill){
         int transmitted = 0;
         if(stack != null && this.mode != Mode.OUTPUT_ONLY){
-            Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);
+            Network network = this.getNetwork();
             if(network != null){
                 transmitted = this.transferEnergyToReceiverInNeed(from, network, stack, doFill);
             }
@@ -133,7 +135,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay implements 
 
         for(IConnectionPair pair : network.connections){
             for(BlockPos relay : pair.getPositions()){
-                if(relay != null && !alreadyChecked.contains(relay)){
+                if(relay != null && this.worldObj.isBlockLoaded(relay) && !alreadyChecked.contains(relay)){
                     alreadyChecked.add(relay);
                     TileEntity relayTile = this.worldObj.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayFluids){

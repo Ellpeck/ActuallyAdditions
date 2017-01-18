@@ -277,7 +277,10 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
 
     public void saveDataOnChangeOrWorldStart(){
         for(EnumFacing side : EnumFacing.values()){
-            this.tilesAround[side.ordinal()] = this.worldObj.getTileEntity(this.pos.offset(side));
+            BlockPos pos = this.pos.offset(side);
+            if(this.worldObj.isBlockLoaded(pos)){
+                this.tilesAround[side.ordinal()] = this.worldObj.getTileEntity(pos);
+            }
         }
     }
 
