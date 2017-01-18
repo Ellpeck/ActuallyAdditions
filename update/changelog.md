@@ -1,3 +1,10 @@
+# 1.10.2-r98
+* Fix the Player Probe not clearing its data properly
+* Add Laser Relay input/output only config
+* Made Fluid Laser pull fluids on input mode
+* Added Laser Relay network caching to reduce server load
+* Add a bunch of chunk loaded checks to hopefully avoid loading chunks inadvertently
+
 # 1.10.2-r97
 * Fixed an Exception with Solidified Experience, Balls of Fur and Resonant Rice
 * Fix the Item Laser Relay achievement being impossible to get
