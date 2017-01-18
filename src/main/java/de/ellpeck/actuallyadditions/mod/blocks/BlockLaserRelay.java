@@ -137,9 +137,9 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing par6, float par7, float par8, float par9){
-        TileEntityLaserRelay tile = (TileEntityLaserRelay)world.getTileEntity(pos);
-        if(tile instanceof TileEntityLaserRelayItem){
-            TileEntityLaserRelayItem relay = (TileEntityLaserRelayItem)tile;
+        TileEntity tile = world.getTileEntity(pos);
+        if(tile instanceof TileEntityLaserRelay){
+            TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
 
             if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemCompass){
                 if(!world.isRemote){
