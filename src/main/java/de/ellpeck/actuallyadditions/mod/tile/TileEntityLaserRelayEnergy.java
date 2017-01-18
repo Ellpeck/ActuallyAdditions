@@ -19,10 +19,15 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +39,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
 
     public static final int CAP = 1000;
     public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
+    private Mode mode = Mode.BOTH;
 
     public TileEntityLaserRelayEnergy(String name){
         super(name, LaserType.ENERGY);
@@ -60,7 +66,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
 
     private int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate){
         int transmitted = 0;
-        if(maxTransmit > 0){
+        if(maxTransmit > 0 && this.mode != Mode.OUTPUT_ONLY){
             Network network = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.worldObj);
             if(network != null){
                 transmitted = this.transferEnergyToReceiverInNeed(from, network, maxTransmit, simulate);
@@ -123,32 +129,34 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
                     TileEntity relayTile = this.worldObj.getTileEntity(relay);
                     if(relayTile instanceof TileEntityLaserRelayEnergy){
                         TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy)relayTile;
-                        boolean workedOnce = false;
+                        if(theRelay.mode != Mode.INPUT_ONLY){
+                            boolean workedOnce = false;
 
-                        for(EnumFacing facing : theRelay.receiversAround.keySet()){
-                            if(theRelay != this || facing != from){
-                                TileEntity tile = theRelay.receiversAround.get(facing);
+                            for(EnumFacing facing : theRelay.receiversAround.keySet()){
+                                if(theRelay != this || facing != from){
+                                    TileEntity tile = theRelay.receiversAround.get(facing);
 
-                                EnumFacing opp = facing.getOpposite();
-                                if(tile instanceof IEnergyReceiver){
-                                    IEnergyReceiver iReceiver = (IEnergyReceiver)tile;
-                                    if(iReceiver.canConnectEnergy(opp) && iReceiver.receiveEnergy(opp, Integer.MAX_VALUE, true) > 0){
-                                        totalReceiverAmount++;
-                                        workedOnce = true;
+                                    EnumFacing opp = facing.getOpposite();
+                                    if(tile instanceof IEnergyReceiver){
+                                        IEnergyReceiver iReceiver = (IEnergyReceiver)tile;
+                                        if(iReceiver.canConnectEnergy(opp) && iReceiver.receiveEnergy(opp, Integer.MAX_VALUE, true) > 0){
+                                            totalReceiverAmount++;
+                                            workedOnce = true;
+                                        }
                                     }
-                                }
-                                else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
-                                    ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
-                                    if(cap != null && cap.givePower(maxTransfer, true) > 0){
-                                        totalReceiverAmount++;
-                                        workedOnce = true;
+                                    else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
+                                        ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
+                                        if(cap != null && cap.givePower(maxTransfer, true) > 0){
+                                            totalReceiverAmount++;
+                                            workedOnce = true;
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        if(workedOnce){
-                            relaysThatWork.add(theRelay);
+                            if(workedOnce){
+                                relaysThatWork.add(theRelay);
+                            }
                         }
                     }
                 }
@@ -227,5 +235,65 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay implements 
 
     public double getLossPercentage(){
         return 5;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getExtraDisplayString(){
+        return "Energy Flow: "+TextFormatting.DARK_RED+this.mode.name+TextFormatting.RESET;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getCompassDisplayString(){
+        return TextFormatting.GREEN+"Right-Click to change!";
+    }
+
+    @Override
+    public void onCompassAction(EntityPlayer player){
+        this.mode = this.mode.getNext();
+    }
+
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.writeSyncableNBT(compound, type);
+
+        if(type != NBTType.SAVE_BLOCK){
+            compound.setString("Mode", this.mode.toString());
+        }
+    }
+
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+        super.readSyncableNBT(compound, type);
+
+        if(type != NBTType.SAVE_BLOCK){
+            String modeStrg = compound.getString("Mode");
+            if(modeStrg != null && !modeStrg.isEmpty()){
+                this.mode = Mode.valueOf(modeStrg);
+            }
+        }
+    }
+
+    public enum Mode{
+        BOTH("Both Directions"),
+        OUTPUT_ONLY("Only into adjacent Blocks"),
+        INPUT_ONLY("Only out of adjacent Blocks");
+
+        public final String name;
+
+        Mode(String name){
+            this.name = name;
+        }
+
+        public Mode getNext(){
+            int ordinal = this.ordinal()+1;
+
+            if(ordinal >= values().length){
+                ordinal = 0;
+            }
+
+            return values()[ordinal];
+        }
     }
 }

@@ -16,11 +16,15 @@ import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -123,6 +127,29 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
             compound.setInteger("Priority", this.priority);
         }
     }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getExtraDisplayString(){
+        return "Priority: "+TextFormatting.DARK_RED+this.getPriority()+TextFormatting.RESET;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getCompassDisplayString(){
+        return TextFormatting.GREEN+"Right-Click to increase! \nSneak-Right-Click to decrease!";
+    }
+
+    @Override
+    public void onCompassAction(EntityPlayer player){
+        if(player.isSneaking()){
+            this.priority--;
+        }
+        else{
+            this.priority++;
+        }
+    }
+
 
     @Override
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){

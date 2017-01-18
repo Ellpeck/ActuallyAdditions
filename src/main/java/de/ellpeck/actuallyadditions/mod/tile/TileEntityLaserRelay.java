@@ -15,9 +15,12 @@ import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.mod.misc.ConnectionPair;
 import io.netty.util.internal.ConcurrentSet;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Set;
 
@@ -130,4 +133,12 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     public AxisAlignedBB getRenderBoundingBox(){
         return INFINITE_EXTENT_AABB;
     }
+
+    @SideOnly(Side.CLIENT)
+    public abstract String getExtraDisplayString();
+
+    @SideOnly(Side.CLIENT)
+    public abstract String getCompassDisplayString();
+
+    public abstract void onCompassAction(EntityPlayer player);
 }
