@@ -186,5 +186,10 @@ public class BlockGiantChest extends BlockContainerBase{
                 tooltip.add(TextFormatting.ITALIC+"'Small'");
             }
         }
+
+        @Override
+        public NBTTagCompound getNBTShareTag(ItemStack stack){
+            return null;
+        }
     }
 }
