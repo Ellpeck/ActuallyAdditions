@@ -51,7 +51,9 @@ public enum ConfigBoolValues{
     LASER_RELAY_LOSS("Laser Relay Energy Loss", ConfigCategories.MACHINE_VALUES, true, "If Energy Laser Relays should have energy loss"),
 
     SUPER_DUPER_HARD_MODE("Super Duper Hard Recipes", ConfigCategories.OTHER, false, "Turn this on to make recipes for items from the mod really hard. (This is a joke feature poking fun at the whole FTB Infinity Expert Mode style of playing. You shouldn't really turn this on as it makes the mod completely unplayable.)"),
-    MOST_BLAND_PERSON_EVER("No Colored Item Names", ConfigCategories.OTHER, false, "If you want to be really boring and lame, you can turn on this setting to disable colored names on Actually Additions items. Because why would you want things to look pretty anyways, right?");
+    MOST_BLAND_PERSON_EVER("No Colored Item Names", ConfigCategories.OTHER, false, "If you want to be really boring and lame, you can turn on this setting to disable colored names on Actually Additions items. Because why would you want things to look pretty anyways, right?"),
+
+    ENABLE_DRILL_DIGGING_PACKET("Drill Digging Packet", ConfigCategories.OTHER, false, "If this is set to true, breaking a block with the Drill will send an additional packet to the server notifying that the block is being broken. This reduces the amount of ghost blocks being created, however it results in a higher connection load and it could also change the behavior of some blocks being broken.");
 
     public final String name;
     public final String category;

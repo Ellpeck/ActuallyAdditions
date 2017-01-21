@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaProducer;
@@ -364,8 +365,10 @@ public final class WorldUtil{
                 player.setHeldItem(EnumHand.MAIN_HAND, null);
             }
 
-            Minecraft mc = Minecraft.getMinecraft();
-            mc.getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, mc.objectMouseOver.sideHit));
+            if(ConfigBoolValues.ENABLE_DRILL_DIGGING_PACKET.isEnabled()){
+                Minecraft mc = Minecraft.getMinecraft();
+                mc.getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, mc.objectMouseOver.sideHit));
+            }
 
             return true;
         }
