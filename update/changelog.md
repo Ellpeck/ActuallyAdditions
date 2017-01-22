@@ -1,3 +1,15 @@
+# 1.11.2-r99
+* Make the ESD less performance intensive by making it a bit slower
+* Fix the Player Probe not properly clearing its data
+* The Bat Bat
+* Make Fluid Lasers actively pull fluids
+* Added quartz dust to the OreDictionary as dustNetherQuartz
+* Added a config option to change the booklet's font size
+* Added Laser Relay network caching to reduce server load
+* Add a bunch of chunk loaded checks to hopefully avoid loading chunks inadvertently
+* Stop the storage crate from syncing its NBT
+* Make the drill digging packet a config option that is off by default
+
 # 1.10.2-r98
 * Fix the Player Probe not clearing its data properly
 * Add Laser Relay input/output only config
