@@ -100,6 +100,11 @@ public final class BlockCrafting{
 
     public static void init(){
 
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockOilGenerator), new ItemStack(InitBlocks.blockOilGenerator)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockFluidPlacer), new ItemStack(InitBlocks.blockFluidPlacer)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockFluidCollector), new ItemStack(InitBlocks.blockFluidCollector)));
+
+
         //Battery Box
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockBatteryBox),
                 new ItemStack(InitBlocks.blockEnergizer),
@@ -492,8 +497,6 @@ public final class BlockCrafting{
                 'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
                 'B', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal())));
         recipeOilGen = RecipeUtil.lastIRecipe();
-
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockOilGenerator), new ItemStack(InitBlocks.blockOilGenerator)));
 
         //Bio Reactor
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockBioReactor),
