@@ -919,7 +919,7 @@ booklet.actuallyadditions.chapter.staff.name=Staff
 booklet.actuallyadditions.chapter.staff.text.1=The <item>Teleport Staff<r>, when charged in an Energizer, can be <imp>right-clicked<r> to <imp>teleport you to where you're looking<r>. When you are looking at a block, it will teleport you there, however, when you aren't looking at a block, you can only be looking upwards up to <imp>5 degrees<r>, otherwise the teleport will fail.
 
 booklet.actuallyadditions.chapter.magnetRing.name=Ring Of Magnetism
-booklet.actuallyadditions.chapter.magnetRing.text.1=The <item>Ring Of Magnetism<r>, when it has been charged charged in an Energizer and is inside your inventory, uses <imp>CF<r> to suck up items that are farther away than you can pick up by yourself. <n>You can enable and disable it by <imp>sneak-right-clicking<r> with it in hand.
+booklet.actuallyadditions.chapter.magnetRing.text.1=The <item>Ring Of Magnetism<r>, when it has been charged in an Energizer and is inside your inventory, uses <imp>CF<r> to suck up items that are farther away than you can pick up by yourself. <n>You can enable and disable it by <imp>sneak-right-clicking<r> with it in hand.
 
 booklet.actuallyadditions.chapter.growthRing.name=Ring Of Growth
 booklet.actuallyadditions.chapter.growthRing.text.1=The <item>Ring Of Growth<r>, when it is charged in an Energizer and in your hand, uses <imp>CF<r> to make plants around you grow much faster.
@@ -979,7 +979,7 @@ booklet.actuallyadditions.chapter.reconstructorLenses.text.1=The <item>Atomic Re
 booklet.actuallyadditions.chapter.additionalRecipes.name=Additional Recipes
 
 booklet.actuallyadditions.chapter.lensColor.name=Lens of Color
-booklet.actuallyadditions.chapter.lensColor.text.1=The <item>Lens of Color<r> changes the color of <imp>Stained Glass and Panes, Stained Clay, Carpetet, Dye, Lamps, Wool<r> in its sight. <n>Contrary to using no lens, it goes <imp>through blocks<r> and only converts blocks it touches.
+booklet.actuallyadditions.chapter.lensColor.text.1=The <item>Lens of Color<r> changes the color of <imp>Stained Glass and Panes, Stained Clay, Carpet, Dye, Lamps, Wool<r> in its sight. <n>Contrary to using no lens, it goes <imp>through blocks<r> and only converts blocks it touches.
 
 booklet.actuallyadditions.chapter.lensDeath.name=Lens of Certain Death
 booklet.actuallyadditions.chapter.lensDeath.text.1=The <item>Lens of Certain Death<r> will, <imp>deal lots of damage<r> to whatever steps into it, enough, in fact, to kill a player <imp>in a single hit<r>.
