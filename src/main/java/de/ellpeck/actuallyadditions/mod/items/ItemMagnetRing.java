@@ -52,10 +52,14 @@ public class ItemMagnetRing extends ItemEnergy{
                             int energyForItem = 50*StackUtil.getStackSize(item.getEntityItem());
 
                             if(this.getEnergyStored(stack) >= energyForItem){
+                                ItemStack oldItem = StackUtil.validateCopy(item.getEntityItem());
+
                                 item.onCollideWithPlayer(player);
 
                                 if(!player.capabilities.isCreativeMode){
-                                    this.extractEnergyInternal(stack, energyForItem, false);
+                                    if(item.isDead || !ItemStack.areItemStacksEqual(item.getEntityItem(), oldItem)){
+                                        this.extractEnergyInternal(stack, energyForItem, false);
+                                    }
                                 }
                             }
                         }
