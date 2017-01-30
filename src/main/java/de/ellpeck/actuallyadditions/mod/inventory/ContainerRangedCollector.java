@@ -53,7 +53,7 @@ public class ContainerRangedCollector extends Container{
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot){
-        int inventoryStart = 6;
+        int inventoryStart = 18;
         int inventoryEnd = inventoryStart+26;
         int hotbarStart = inventoryEnd+1;
         int hotbarEnd = hotbarStart+8;
