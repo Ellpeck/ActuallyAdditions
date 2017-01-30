@@ -844,7 +844,7 @@ booklet.actuallyadditions.chapter.feeder.text.1=The <item>Feeder<r> is a good al
 
 booklet.actuallyadditions.chapter.compost.name=Compost and Fertilizer
 booklet.actuallyadditions.chapter.compost.text.1=The <item>Compost<r> is used to make <item>Fertilizer<r> from <item>Bio-Mash<r>. <item>Fertilizer<r> acts just like Bone Meal, but can be crafted in a much simpler manner just by crafting <item>Bio-Mash<r> and then putting those inside of a <item>Compost<r> and waiting for a bit. When the mash is composted, just take it out by right-clicking again. <n><n>This, however, also works for some other items, which will be explained when needed.
-booklet.actuallyadditions.chapter.compost.text.3=<item>Bio-Mash<r> can be crafted from <imp>any type of food or plantable item<r>.
+booklet.actuallyadditions.chapter.compost.text.3=<item>Bio-Mash<r> can be crafted from <imp>any type of food item<r> by putting any number of it togeter in a crafting grid with a <item>Knife<r>. The resulting amount of <item>Bio-Mash<r> will <imp>vary depending on<r> the food's <imp>saturation<r> and <imp>healing<r> levels.
 
 booklet.actuallyadditions.chapter.crate.name=Storage Crates
 booklet.actuallyadditions.chapter.crate.text.1=<item>Storage Crates<r> are big. <imp>Really big<r>. They hold tons of items, more than 4 chests worth of them. <n>Not only that, but they can be <imp>upgraded in size<r>! View the following pages to get information on that and some other items regarding crates!

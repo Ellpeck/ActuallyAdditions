@@ -51,6 +51,9 @@ public final class InitCrafting{
 
         GameRegistry.addRecipe(new RecipePotionRingCharging());
         RecipeSorter.register(ModUtil.MOD_ID+":recipePotionRingCharging", RecipePotionRingCharging.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
+
+        GameRegistry.addRecipe(new RecipeBioMash());
+        RecipeSorter.register(ModUtil.MOD_ID+":recipeBioMash", RecipeBioMash.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
     }
 
 }

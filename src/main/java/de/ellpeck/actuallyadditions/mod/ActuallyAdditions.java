@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.InitCrafting;
-import de.ellpeck.actuallyadditions.mod.crafting.ItemCrafting;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.CommonEvents;
@@ -133,7 +132,6 @@ public class ActuallyAdditions{
         InitVillager.init();
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
-        ItemCrafting.initMashedFoodRecipes();
         HairyBallHandler.init();
         TreasureChestHandler.init();
         LensRecipeHandler.init();

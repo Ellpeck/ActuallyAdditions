@@ -14,23 +14,18 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.*;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.block.IGrowable;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionUtils;
-import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -40,7 +35,6 @@ import java.util.ArrayList;
 
 public final class ItemCrafting{
 
-    public static final ArrayList<IRecipe> RECIPES_MASHED_FOOD = new ArrayList<IRecipe>();
     public static final ArrayList<IRecipe> RECIPES_POTION_RINGS = new ArrayList<IRecipe>();
     public static final ArrayList<IRecipe> RECIPES_DRILL_COLORING = new ArrayList<IRecipe>();
     public static IRecipe recipePhantomConnector;
@@ -578,26 +572,5 @@ public final class ItemCrafting{
 
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemPotionRingAdvanced, 1, meta), new ItemStack(InitItems.itemPotionRing, 1, meta), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()));
         RECIPES_POTION_RINGS.add(RecipeUtil.lastIRecipe());
-    }
-
-    public static void initMashedFoodRecipes(){
-        for(Item item : Item.REGISTRY){
-            if(item instanceof ItemFood || item instanceof IPlantable || item instanceof IGrowable){
-                if(!isBlacklisted(item)){
-                    ItemStack ingredient = new ItemStack(item, 1, Util.WILDCARD);
-                    GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.MASHED_FOOD.ordinal()), ingredient, ingredient, ingredient, ingredient, new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD));
-                    RECIPES_MASHED_FOOD.add(RecipeUtil.lastIRecipe());
-                }
-            }
-        }
-    }
-
-    private static boolean isBlacklisted(Item item){
-        for(String except : ConfigStringListValues.MASHED_FOOD_CRAFTING_EXCEPTIONS.getValue()){
-            if(item.getRegistryName().toString().equals(except)){
-                return true;
-            }
-        }
-        return false;
     }
 }
