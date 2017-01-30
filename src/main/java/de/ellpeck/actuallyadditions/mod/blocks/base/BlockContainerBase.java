@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -32,6 +33,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidActionResult;
@@ -224,6 +228,13 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     @Override
     public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player){
         if(!player.capabilities.isCreativeMode){
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TileEntityBase){
+                if(((TileEntityBase)tile).stopFromDropping){
+                    player.sendMessage(new TextComponentTranslation("info."+ModUtil.MOD_ID+".machineBroke").setStyle(new Style().setColor(TextFormatting.RED)));
+                }
+            }
+
             this.dropBlockAsItem(world, pos, state, 0);
             //dirty workaround because of Forge calling Item.onBlockStartBreak() twice
             world.setBlockToAir(pos);
