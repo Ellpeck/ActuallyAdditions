@@ -1098,6 +1098,7 @@ booklet.actuallyadditions.chapter.farmer.text.1=The <item>Farmer<r> is a block t
 booklet.actuallyadditions.chapter.farmer.text.2=Farming basic crops <imp>crops<r> like <item>Wheat<r>, <item>Potatoes<r>, <item>Canola<r>, <item>Flax<r> and so on. Ground will be <imp>tilled<r> by the Farmer itself.
 booklet.actuallyadditions.chapter.farmer.text.3=Farming <item>Cactus<r>. Sand needs to be laid out for it to be planted. <imp><item>Cactus<r> higher than 2 blocks will have the <imp>top broken off<r> and placed inside of the Farmer.
 booklet.actuallyadditions.chapter.farmer.text.4=Farming <item>Nether Wart<r>. Soul Sand needs to be laid out for it to be planted.
+booklet.actuallyadditions.chapter.farmer.text.5=Farming <item>Sugar Cane<r>. Sand and water need to be laid out for it to be planted. Harvested in the same way as <imp><item>Cactus<r>.
 
 booklet.actuallyadditions.chapter.lensMoreDeath.name=Lens of the Killer
 booklet.actuallyadditions.chapter.lensMoreDeath.text.1=The <item>Lens of the Killer<r> works much like the <item>Lens of Certain Death<r>, however it will also <imp>drop experience<r> and <imp>player-kill loot<r>. <n>This means, however, that it will use <imp>a lot more power<r>. <n><n>To pick up the experience it drops, you might want to try an <item>Experience Solidifier<r>.
