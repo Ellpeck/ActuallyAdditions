@@ -147,6 +147,9 @@ public class GuiMainPage extends GuiBooklet{
         else if(playerName.equalsIgnoreCase("robsonld04")){
             this.bookletEdition = "Modpack Edition";
         }
+        else if(playerName.equalsIgnoreCase("snowshock35")){
+            this.bookletEdition = "Edition 35";
+        }
         else{
             if(Util.isDevVersion()){
                 this.bookletEdition = "Dev's Edition";
