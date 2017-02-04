@@ -121,14 +121,14 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer{
             TileEntity to = this.world.getTileEntity(toPos);
             if(to != null && !(to instanceof TileEntityItemViewer)){
                 IItemHandler normal = null;
-                if(from.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite())){
-                    normal = from.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
+                if(to.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite())){
+                    normal = to.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
                 }
 
                 Object slotless = null;
                 if(ActuallyAdditions.commonCapsLoaded){
-                    if(from.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, facing.getOpposite())){
-                        slotless = from.getCapability(SlotlessItemHandlerConfig.CAPABILITY, facing.getOpposite());
+                    if(to.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, facing.getOpposite())){
+                        slotless = to.getCapability(SlotlessItemHandlerConfig.CAPABILITY, facing.getOpposite());
                     }
                 }
 
