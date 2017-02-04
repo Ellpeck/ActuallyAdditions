@@ -18,7 +18,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -86,9 +85,9 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
                 Block blockToBreak = this.world.getBlockState(coordsBlock).getBlock();
                 if(blockToBreak != null && !this.world.isAirBlock(coordsBlock) && blockToBreak.getBlockHardness(this.world.getBlockState(coordsBlock), this.world, this.pos) > -1.0F){
                     List<ItemStack> drops = blockToBreak.getDrops(this.world, coordsBlock, this.world.getBlockState(coordsBlock), 0);
-                    float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.world, coordsBlock, this.world.getBlockState(coordsBlock), 0, 1, false, null);
+                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.world, coordsBlock);
 
-                    if(this.world.rand.nextFloat() <= chance){
+                    if(chance > 0 && this.world.rand.nextFloat() <= chance){
                         if(WorldUtil.addToInventory(this.slots, drops, false)){
                             this.world.playEvent(2001, coordsBlock, Block.getStateId(this.world.getBlockState(coordsBlock)));
                             this.world.setBlockToAir(coordsBlock);

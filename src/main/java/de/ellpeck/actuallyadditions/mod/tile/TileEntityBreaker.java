@@ -20,7 +20,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.IFluidBlock;
 
 import java.util.List;
@@ -87,9 +86,9 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
         Block blockToBreak = stateToBreak.getBlock();
         if(!this.isPlacer && blockToBreak != null && !this.world.isAirBlock(coordsBlock) && !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && blockToBreak.getBlockHardness(stateToBreak, this.world, coordsBlock) >= 0.0F){
             List<ItemStack> drops = blockToBreak.getDrops(this.world, coordsBlock, stateToBreak, 0);
-            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.world, coordsBlock, this.world.getBlockState(coordsBlock), 0, 1, false, null);
+            float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.world, coordsBlock);
 
-            if(this.world.rand.nextFloat() <= chance){
+            if(chance > 0 && this.world.rand.nextFloat() <= chance){
                 if(WorldUtil.addToInventory(this.slots, drops, false)){
                     this.world.playEvent(2001, coordsBlock, Block.getStateId(stateToBreak));
                     this.world.setBlockToAir(coordsBlock);

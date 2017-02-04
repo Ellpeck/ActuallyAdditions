@@ -25,7 +25,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -126,9 +125,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
             if(!block.isAir(this.world.getBlockState(pos), this.world, pos)){
                 if(block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
                     List<ItemStack> drops = block.getDrops(this.world, pos, this.world.getBlockState(pos), 0);
-                    float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.world, pos, this.world.getBlockState(pos), 0, 1, false, null);
+                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.world, pos);
 
-                    if(this.world.rand.nextFloat() <= chance){
+                    if(chance > 0 && this.world.rand.nextFloat() <= chance){
                         if(WorldUtil.addToInventory(this.slots, drops, false)){
                             this.world.playEvent(2001, pos, Block.getStateId(this.world.getBlockState(pos)));
                             this.world.setBlockToAir(pos);

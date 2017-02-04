@@ -40,11 +40,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -449,5 +451,18 @@ public final class WorldUtil{
             return true;
         }
         return false;
+    }
+
+    public static float fireFakeHarvestEventsForDropChance(List<ItemStack> drops, World world, BlockPos pos){
+        if(!world.isRemote && world instanceof WorldServer){
+            FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer)world);
+            IBlockState state = world.getBlockState(pos);
+
+            BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, pos, state, fake);
+            if(!MinecraftForge.EVENT_BUS.post(event)){
+                return ForgeEventFactory.fireBlockHarvesting(drops, world, pos, state, 0, 1, false, fake);
+            }
+        }
+        return 0F;
     }
 }
