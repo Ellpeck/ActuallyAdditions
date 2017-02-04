@@ -11,10 +11,12 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,6 +25,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor{
 
@@ -30,11 +36,11 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public int sideToPut = -1;
     public int slotToPutStart;
     public int slotToPutEnd;
-    public TileEntity placeToPut;
+    public Map<EnumFacing, SlotlessableItemHandlerWrapper> placeToPut = new ConcurrentHashMap<EnumFacing, SlotlessableItemHandlerWrapper>();
     public int sideToPull = -1;
     public int slotToPullStart;
     public int slotToPullEnd;
-    public TileEntity placeToPull;
+    public Map<EnumFacing, SlotlessableItemHandlerWrapper> placeToPull = new ConcurrentHashMap<EnumFacing, SlotlessableItemHandlerWrapper>();
     public boolean isAdvanced;
     public FilterSettings leftFilter = new FilterSettings(12, true, true, false, false, 0, -1000);
     public FilterSettings rightFilter = new FilterSettings(12, true, true, false, false, 0, -2000);
@@ -44,6 +50,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     private int lastPullSide;
     private int lastPullStart;
     private int lastPullEnd;
+    private final SlotlessableItemHandlerWrapper wrapper = new SlotlessableItemHandlerWrapper(this.slots, null);
 
     public TileEntityInputter(int slots, String name){
         super(slots, name);
@@ -77,19 +84,8 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     private boolean newPulling(){
-        for(EnumFacing side : EnumFacing.values()){
-            if(this.placeToPull.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side)){
-                IItemHandler cap = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
-                if(cap != null){
-                    for(int i = Math.max(this.slotToPullStart, 0); i < Math.min(this.slotToPullEnd, cap.getSlots()); i++){
-                        if(this.checkBothFilters(cap.getStackInSlot(i), false)){
-                            if(WorldUtil.doItemInteraction(i, 0, cap, this.slots, Integer.MAX_VALUE)){
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
+        for(EnumFacing side : this.placeToPull.keySet()){
+            WorldUtil.doItemInteraction(this.placeToPull.get(side), this.wrapper, Integer.MAX_VALUE, this.slotToPullStart, this.slotToPullEnd, !this.isAdvanced ? null : this.leftFilter);
 
             if(this.placeToPull instanceof TileEntityItemViewer){
                 break;
@@ -99,18 +95,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     private boolean newPutting(){
-        if(this.checkBothFilters(this.slots.getStackInSlot(0), true)){
-            for(EnumFacing side : EnumFacing.values()){
-                if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side)){
-                    IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
-                    if(cap != null){
-                        for(int i = Math.max(this.slotToPutStart, 0); i < Math.min(this.slotToPutEnd, cap.getSlots()); i++){
-                            if(WorldUtil.doItemInteraction(0, i, this.slots, cap, Integer.MAX_VALUE)){
-                                return true;
-                            }
-                        }
-                    }
-                }
+        if(!this.isAdvanced || this.rightFilter.check(this.slots.getStackInSlot(0))){
+            for(EnumFacing side : this.placeToPut.keySet()){
+                WorldUtil.doItemInteraction(this.wrapper, this.placeToPut.get(side), Integer.MAX_VALUE, this.slotToPutStart, this.slotToPutEnd, null);
 
                 if(this.placeToPut instanceof TileEntityItemViewer){
                     break;
@@ -118,16 +105,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             }
         }
         return false;
-    }
-
-    /**
-     * Checks if one of the filters contains the ItemStack
-     *
-     * @param stack The ItemStack
-     * @return If the Item is filtered correctly
-     */
-    private boolean checkBothFilters(ItemStack stack, boolean output){
-        return !this.isAdvanced || (output ? this.rightFilter : this.leftFilter).check(stack);
     }
 
     @Override
@@ -140,21 +117,39 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
      */
     @Override
     public void saveDataOnChangeOrWorldStart(){
-        this.placeToPull = null;
-        this.placeToPut = null;
+        this.placeToPull.clear();
+        this.placeToPut.clear();
 
         if(this.sideToPull != -1){
             EnumFacing side = WorldUtil.getDirectionBySidesInOrder(this.sideToPull);
             BlockPos offset = this.pos.offset(side);
 
             if(this.world.isBlockLoaded(offset)){
-                this.placeToPull = this.world.getTileEntity(offset);
+                TileEntity tile = this.world.getTileEntity(offset);
 
-                if(this.slotToPullEnd <= 0 && this.placeToPull != null){
-                    if(this.placeToPull.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
-                        IItemHandler cap = this.placeToPull.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                        if(cap != null){
-                            this.slotToPullEnd = cap.getSlots();
+                if(tile != null){
+                    for(EnumFacing facing : EnumFacing.values()){
+                        IItemHandler normal = null;
+                        if(tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)){
+                            normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+                        }
+
+                        Object slotless = null;
+                        if(ActuallyAdditions.commonCapsLoaded){
+                            if(tile.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, facing)){
+                                slotless = tile.getCapability(SlotlessItemHandlerConfig.CAPABILITY, facing);
+                            }
+                        }
+
+                        this.placeToPull.put(facing.getOpposite(), new SlotlessableItemHandlerWrapper(normal, slotless));
+                    }
+
+                    if(this.slotToPullEnd <= 0){
+                        if(tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
+                            IItemHandler cap = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                            if(cap != null){
+                                this.slotToPullEnd = cap.getSlots();
+                            }
                         }
                     }
                 }
@@ -166,13 +161,31 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             BlockPos offset = this.pos.offset(side);
 
             if(this.world.isBlockLoaded(offset)){
-                this.placeToPut = this.world.getTileEntity(offset);
+                TileEntity tile = this.world.getTileEntity(offset);
 
-                if(this.slotToPutEnd <= 0 && this.placeToPut != null){
-                    if(this.placeToPut.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
-                        IItemHandler cap = this.placeToPut.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                        if(cap != null){
-                            this.slotToPutEnd = cap.getSlots();
+                if(tile != null){
+                    for(EnumFacing facing : EnumFacing.values()){
+                        IItemHandler normal = null;
+                        if(tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)){
+                            normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+                        }
+
+                        Object slotless = null;
+                        if(ActuallyAdditions.commonCapsLoaded){
+                            if(tile.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, facing)){
+                                slotless = tile.getCapability(SlotlessItemHandlerConfig.CAPABILITY, facing);
+                            }
+                        }
+
+                        this.placeToPut.put(facing.getOpposite(), new SlotlessableItemHandlerWrapper(normal, slotless));
+                    }
+
+                    if(this.slotToPutEnd <= 0){
+                        if(tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
+                            IItemHandler cap = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                            if(cap != null){
+                                this.slotToPutEnd = cap.getSlots();
+                            }
                         }
                     }
                 }

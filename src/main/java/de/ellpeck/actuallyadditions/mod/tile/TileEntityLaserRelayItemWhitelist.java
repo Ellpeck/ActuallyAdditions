@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -69,43 +70,50 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     }
 
     private void addWhitelistSmart(boolean output){
+        for(SlotlessableItemHandlerWrapper handler : this.handlersAround.values()){
+            IItemHandler itemHandler = handler.getNormalHandler();
+            if(itemHandler != null){
+                for(int i = 0; i < itemHandler.getSlots(); i++){
+                    ItemStack stack = itemHandler.getStackInSlot(i);
+                    if(StackUtil.isValid(stack)){
+                        this.addWhitelistSmart(output, stack);
+                    }
+                }
+            }
+        }
+    }
+
+    private void addWhitelistSmart(boolean output, ItemStack stack){
         FilterSettings usedSettings = output ? this.rightFilter : this.leftFilter;
-        for(IItemHandler handler : this.handlersAround.values()){
-            for(int i = 0; i < handler.getSlots(); i++){
-                ItemStack stack = handler.getStackInSlot(i);
-                if(StackUtil.isValid(stack)){
-                    ItemStack copy = stack.copy();
-                    copy = StackUtil.setStackSize(copy, 1);
+        ItemStack copy = stack.copy();
+        copy = StackUtil.setStackSize(copy, 1);
 
-                    if(!FilterSettings.check(copy, usedSettings.filterInventory, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectMod, usedSettings.respectOredict)){
-                        for(int k = 0; k < usedSettings.filterInventory.getSlots(); k++){
-                            ItemStack slot = usedSettings.filterInventory.getStackInSlot(k);
-                            if(StackUtil.isValid(slot)){
-                                if(SlotFilter.isFilter(slot)){
-                                    ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerFilter.SLOT_AMOUNT);
-                                    ItemDrill.loadSlotsFromNBT(inv, slot);
+        if(!FilterSettings.check(copy, usedSettings.filterInventory, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectMod, usedSettings.respectOredict)){
+            for(int k = 0; k < usedSettings.filterInventory.getSlots(); k++){
+                ItemStack slot = usedSettings.filterInventory.getStackInSlot(k);
+                if(StackUtil.isValid(slot)){
+                    if(SlotFilter.isFilter(slot)){
+                        ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerFilter.SLOT_AMOUNT);
+                        ItemDrill.loadSlotsFromNBT(inv, slot);
 
-                                    boolean did = false;
-                                    for(int j = 0; j < inv.getSlots(); j++){
-                                        if(!StackUtil.isValid(inv.getStackInSlot(j))){
-                                            inv.setStackInSlot(j, copy);
-                                            did = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if(did){
-                                        ItemDrill.writeSlotsToNBT(inv, slot);
-                                        break;
-                                    }
-                                }
-                            }
-                            else{
-                                usedSettings.filterInventory.setStackInSlot(k, copy);
+                        boolean did = false;
+                        for(int j = 0; j < inv.getSlots(); j++){
+                            if(!StackUtil.isValid(inv.getStackInSlot(j))){
+                                inv.setStackInSlot(j, copy);
+                                did = true;
                                 break;
                             }
                         }
+
+                        if(did){
+                            ItemDrill.writeSlotsToNBT(inv, slot);
+                            break;
+                        }
                     }
+                }
+                else{
+                    usedSettings.filterInventory.setStackInSlot(k, copy);
+                    break;
                 }
             }
         }

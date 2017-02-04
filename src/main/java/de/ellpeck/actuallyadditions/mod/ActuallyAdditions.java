@@ -68,6 +68,7 @@ public class ActuallyAdditions{
     public static IProxy proxy;
 
     public static boolean teslaLoaded;
+    public static boolean commonCapsLoaded;
 
     static{
         //For some reason, this has to be done here
@@ -83,13 +84,8 @@ public class ActuallyAdditions{
         Lenses.init();
         InitBooklet.preInit();
 
-        if(Loader.isModLoaded("tesla")){
-            ModUtil.LOGGER.info("Tesla loaded... Activating Tesla Power System integration...");
-            teslaLoaded = true;
-        }
-        else{
-            ModUtil.LOGGER.info("Tesla not found! Skipping Tesla Power System integration.");
-        }
+        teslaLoaded = Loader.isModLoaded("tesla");
+        commonCapsLoaded = Loader.isModLoaded("commoncapabilities");
 
         new ConfigurationHandler(event.getSuggestedConfigurationFile());
         PacketHandler.init();

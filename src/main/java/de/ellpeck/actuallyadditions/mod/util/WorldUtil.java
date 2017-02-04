@@ -12,6 +12,8 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
+import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaProducer;
@@ -47,23 +49,97 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class WorldUtil{
 
-    public static boolean doItemInteraction(int slotExtract, int slotInsert, IItemHandler extract, IItemHandler insert, int maxExtract){
-        ItemStack theoreticalExtract = extract.extractItem(slotExtract, maxExtract, true);
+    public static boolean doItemInteraction(SlotlessableItemHandlerWrapper extractWrapper, SlotlessableItemHandlerWrapper insertWrapper, int maxExtract){
+        return doItemInteraction(extractWrapper, insertWrapper, maxExtract, null);
+    }
+
+    public static boolean doItemInteraction(SlotlessableItemHandlerWrapper extractWrapper, SlotlessableItemHandlerWrapper insertWrapper, int maxExtract, FilterSettings filter){
+        return doItemInteraction(extractWrapper, insertWrapper, maxExtract, 0, Integer.MAX_VALUE, filter);
+    }
+
+    public static boolean doItemInteraction(SlotlessableItemHandlerWrapper extractWrapper, SlotlessableItemHandlerWrapper insertWrapper, int maxExtract, int slotStart, int slotEnd, FilterSettings filter){
+        ItemStack theoreticalExtract = extractItem(extractWrapper, maxExtract, true, slotStart, slotEnd, filter);
         if(StackUtil.isValid(theoreticalExtract)){
-            ItemStack remaining = insert.insertItem(slotInsert, theoreticalExtract, false);
+            ItemStack remaining = insertItem(insertWrapper, theoreticalExtract, false, slotStart, slotEnd);
             if(!ItemStack.areItemStacksEqual(remaining, theoreticalExtract)){
                 int toExtract = !StackUtil.isValid(remaining) ? StackUtil.getStackSize(theoreticalExtract) : StackUtil.getStackSize(theoreticalExtract)-StackUtil.getStackSize(remaining);
-                extract.extractItem(slotExtract, toExtract, false);
+                extractItem(extractWrapper, toExtract, false, slotStart, slotEnd, filter);
                 return true;
             }
         }
         return false;
+    }
+
+    public static ItemStack extractItem(SlotlessableItemHandlerWrapper extractWrapper, int maxExtract, boolean simulate, int slotStart, int slotEnd, FilterSettings filter){
+        ItemStack extracted = StackUtil.getNull();
+
+        if(ActuallyAdditions.commonCapsLoaded){
+            Object handler = extractWrapper.getSlotlessHandler();
+            if(handler instanceof ISlotlessItemHandler){
+                ISlotlessItemHandler slotless = (ISlotlessItemHandler)handler;
+
+                if(filter == null){
+                    extracted = slotless.extractItem(maxExtract, simulate);
+                }
+                else{
+                    ItemStack would = slotless.extractItem(maxExtract, true);
+                    if(filter.check(would)){
+                        if(simulate){
+                            extracted = would;
+                        }
+                        else{
+                            extracted = slotless.extractItem(maxExtract, false);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(!StackUtil.isValid(extracted)){
+            IItemHandler handler = extractWrapper.getNormalHandler();
+            if(handler != null){
+                for(int i = Math.max(0, slotStart); i < Math.min(slotEnd, handler.getSlots()); i++){
+                    if(filter == null || filter.check(handler.getStackInSlot(i))){
+                        extracted = handler.extractItem(i, maxExtract, simulate);
+
+                        if(StackUtil.isValid(extracted)){
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return extracted;
+    }
+
+    public static ItemStack insertItem(SlotlessableItemHandlerWrapper insertWrapper, ItemStack stack, boolean simulate, int slotStart, int slotEnd){
+        ItemStack remain = StackUtil.validateCopy(stack);
+
+        if(ActuallyAdditions.commonCapsLoaded){
+            Object handler = insertWrapper.getSlotlessHandler();
+            if(handler instanceof ISlotlessItemHandler){
+                remain = ((ISlotlessItemHandler)handler).insertItem(remain, simulate);
+            }
+        }
+
+        if(StackUtil.isValid(remain)){
+            IItemHandler handler = insertWrapper.getNormalHandler();
+            if(handler != null){
+                for(int i = Math.max(0, slotStart); i < Math.min(slotEnd, handler.getSlots()); i++){
+                    remain = handler.insertItem(i, remain, simulate);
+                }
+            }
+        }
+
+        return remain;
     }
 
     public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer){

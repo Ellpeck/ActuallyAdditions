@@ -13,8 +13,10 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,6 +28,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
-    public final Map<BlockPos, IItemHandler> handlersAround = new ConcurrentHashMap<BlockPos, IItemHandler>();
+    public final Map<BlockPos, SlotlessableItemHandlerWrapper> handlersAround = new ConcurrentHashMap<BlockPos, SlotlessableItemHandlerWrapper>();
     public int priority;
 
     public TileEntityLaserRelayItem(String name){
@@ -61,7 +64,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
     @Override
     public void saveDataOnChangeOrWorldStart(){
-        Map<BlockPos, IItemHandler> old = new HashMap<BlockPos, IItemHandler>(this.handlersAround);
+        Map<BlockPos, SlotlessableItemHandlerWrapper> old = new HashMap<BlockPos, SlotlessableItemHandlerWrapper>(this.handlersAround);
         boolean change = false;
 
         this.handlersAround.clear();
@@ -71,11 +74,23 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
             if(this.world.isBlockLoaded(pos)){
                 TileEntity tile = this.world.getTileEntity(pos);
                 if(tile != null && !(tile instanceof TileEntityItemViewer) && !(tile instanceof TileEntityLaserRelay)){
-                    IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                    if(handler != null){
+                    IItemHandler itemHandler = null;
+                    if(tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())){
+                        itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                    }
+
+                    Object slotlessHandler = null;
+                    if(ActuallyAdditions.commonCapsLoaded){
+                        if(tile.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, side.getOpposite())){
+                            slotlessHandler = tile.getCapability(SlotlessItemHandlerConfig.CAPABILITY, side.getOpposite());
+                        }
+                    }
+
+                    if(itemHandler != null || slotlessHandler != null){
+                        SlotlessableItemHandlerWrapper handler = new SlotlessableItemHandlerWrapper(itemHandler, slotlessHandler);
                         this.handlersAround.put(pos, handler);
 
-                        IItemHandler oldHandler = old.get(pos);
+                        SlotlessableItemHandlerWrapper oldHandler = old.get(pos);
                         if(oldHandler == null || !handler.equals(oldHandler)){
                             change = true;
                         }
@@ -105,7 +120,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
                         TileEntityLaserRelayItem relayTile = (TileEntityLaserRelayItem)aRelayTile;
                         GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);
 
-                        for(Map.Entry<BlockPos, IItemHandler> handler : relayTile.handlersAround.entrySet()){
+                        for(Map.Entry<BlockPos, SlotlessableItemHandlerWrapper> handler : relayTile.handlersAround.entrySet()){
                             if(!alreadyChecked.contains(handler.getKey())){
                                 alreadyChecked.add(handler.getKey());
 
