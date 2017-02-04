@@ -210,6 +210,15 @@ public class FilterSettings{
     }
 
     public boolean check(ItemStack stack){
-        return check(stack, this.filterInventory, this.isWhitelist, this.respectMeta, this.respectNBT, this.respectMod, this.respectOredict);
+        return !this.needsCheck() || check(stack, this.filterInventory, this.isWhitelist, this.respectMeta, this.respectNBT, this.respectMod, this.respectOredict);
+    }
+
+    public boolean needsCheck(){
+        for(int i = 0; i < this.filterInventory.getSlots(); i++){
+            if(StackUtil.isValid(this.filterInventory.getStackInSlot(i))){
+                return true;
+            }
+        }
+        return this.isWhitelist;
     }
 }

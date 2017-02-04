@@ -87,8 +87,9 @@ public final class WorldUtil{
             if(handler instanceof ISlotlessItemHandler){
                 ISlotlessItemHandler slotless = (ISlotlessItemHandler)handler;
 
-                if(filter == null){
+                if(filter == null || !filter.needsCheck()){
                     extracted = slotless.extractItem(maxExtract, simulate);
+                    return extracted;
                 }
                 else{
                     ItemStack would = slotless.extractItem(maxExtract, true);
@@ -100,6 +101,7 @@ public final class WorldUtil{
                             extracted = slotless.extractItem(maxExtract, false);
                         }
                     }
+                    //Leave the possibility to fall back to vanilla when there is a filter
                 }
             }
         }
@@ -108,7 +110,7 @@ public final class WorldUtil{
             IItemHandler handler = extractWrapper.getNormalHandler();
             if(handler != null){
                 for(int i = Math.max(0, slotStart); i < Math.min(slotEnd, handler.getSlots()); i++){
-                    if(filter == null || filter.check(handler.getStackInSlot(i))){
+                    if(filter == null || !filter.needsCheck() || filter.check(handler.getStackInSlot(i))){
                         extracted = handler.extractItem(i, maxExtract, simulate);
 
                         if(StackUtil.isValid(extracted)){
@@ -129,15 +131,17 @@ public final class WorldUtil{
             Object handler = insertWrapper.getSlotlessHandler();
             if(handler instanceof ISlotlessItemHandler){
                 remain = ((ISlotlessItemHandler)handler).insertItem(remain, simulate);
+
+                if(!ItemStack.areItemStacksEqual(remain, stack)){
+                    return remain;
+                }
             }
         }
 
-        if(StackUtil.isValid(remain)){
-            IItemHandler handler = insertWrapper.getNormalHandler();
-            if(handler != null){
-                for(int i = Math.max(0, slotStart); i < Math.min(slotEnd, handler.getSlots()); i++){
-                    remain = handler.insertItem(i, remain, simulate);
-                }
+        IItemHandler handler = insertWrapper.getNormalHandler();
+        if(handler != null){
+            for(int i = Math.max(0, slotStart); i < Math.min(slotEnd, handler.getSlots()); i++){
+                remain = handler.insertItem(i, remain, simulate);
             }
         }
 
