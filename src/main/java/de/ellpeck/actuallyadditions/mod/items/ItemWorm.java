@@ -51,7 +51,7 @@ public class ItemWorm extends ItemBase{
                     EntityWorm worm = new EntityWorm(world);
                     worm.setPosition(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
                     world.spawnEntity(worm);
-                    
+
                     if(!player.capabilities.isCreativeMode){
                         player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
                     }

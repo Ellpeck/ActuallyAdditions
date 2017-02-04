@@ -1,5 +1,5 @@
 /*
- * This file ("CrusherRecipeHandler.java") is part of the Actually Additions mod for Minecraft.
+ * This file ("ReedFarmerBehavior.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://ellpeck.de/actaddlicense
@@ -14,11 +14,9 @@ import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
-import net.minecraft.block.BlockSand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

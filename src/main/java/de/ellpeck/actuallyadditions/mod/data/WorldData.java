@@ -34,9 +34,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WorldData extends WorldSavedData{
 
     public static final String DATA_TAG = ModUtil.MOD_ID+"data";
-    private static WorldData data;
     //TODO Remove this as well
     public static List<File> legacyLoadWorlds = new ArrayList<File>();
+    private static WorldData data;
     public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<Network>();
     public final ConcurrentHashMap<UUID, PlayerSave> playerSaveData = new ConcurrentHashMap<UUID, PlayerSave>();
 
@@ -106,6 +106,16 @@ public class WorldData extends WorldSavedData{
         return get(world, false);
     }
 
+    //TODO Remove old loading mechanic after a while because it's legacy
+    public static void loadLegacy(World world){
+        if(!world.isRemote && world instanceof WorldServer){
+            int dim = world.provider.getDimension();
+            ISaveHandler handler = new WorldSpecificSaveHandler((WorldServer)world, world.getSaveHandler());
+            File dataFile = handler.getMapFileFromName(DATA_TAG+dim);
+            legacyLoadWorlds.add(dataFile);
+        }
+    }
+
     //TODO Remove merging once removing old save handler
     private void readFromNBT(NBTTagCompound compound, boolean merge){
         //Laser World Data
@@ -164,15 +174,5 @@ public class WorldData extends WorldSavedData{
         compound.setTag("PlayerData", playerList);
 
         return compound;
-    }
-
-    //TODO Remove old loading mechanic after a while because it's legacy
-    public static void loadLegacy(World world){
-        if(!world.isRemote && world instanceof WorldServer){
-            int dim = world.provider.getDimension();
-            ISaveHandler handler = new WorldSpecificSaveHandler((WorldServer)world, world.getSaveHandler());
-            File dataFile = handler.getMapFileFromName(DATA_TAG+dim);
-            legacyLoadWorlds.add(dataFile);
-        }
     }
 }

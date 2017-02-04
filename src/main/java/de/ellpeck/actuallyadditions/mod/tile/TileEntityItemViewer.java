@@ -33,10 +33,10 @@ import java.util.*;
 
 public class TileEntityItemViewer extends TileEntityBase{
 
-    protected final SlotlessableItemHandlerWrapper itemHandler;
     public final List<GenericItemHandlerInfo> genericInfos = new ArrayList<GenericItemHandlerInfo>();
     public final Map<Integer, IItemHandlerInfo> itemHandlerInfos = new HashMap<Integer, IItemHandlerInfo>();
     public final List<SlotlessItemHandlerInfo> slotlessInfos = new ArrayList<SlotlessItemHandlerInfo>();
+    protected final SlotlessableItemHandlerWrapper itemHandler;
     public TileEntityLaserRelayItem connectedRelay;
     private int lastNetworkChangeAmount = -1;
 

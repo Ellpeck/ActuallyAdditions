@@ -33,6 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor{
 
     public static final int OKAY_BUTTON_ID = 133;
+    private final SlotlessableItemHandlerWrapper wrapper = new SlotlessableItemHandlerWrapper(this.slots, null);
     public int sideToPut = -1;
     public int slotToPutStart;
     public int slotToPutEnd;
@@ -50,7 +51,6 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     private int lastPullSide;
     private int lastPullStart;
     private int lastPullEnd;
-    private final SlotlessableItemHandlerWrapper wrapper = new SlotlessableItemHandlerWrapper(this.slots, null);
 
     public TileEntityInputter(int slots, String name){
         super(slots, name);

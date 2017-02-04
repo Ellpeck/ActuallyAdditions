@@ -32,24 +32,20 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
 
     public static final int USE_PER_SHOT = 500;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(20000, 200, 0);
-    private int timeUntilNextFirework;
-    private int oldEnergy;
-
     public int intValuePlay = 2;
-
     public int chargeAmount = 2;
     public int flightTime = 2;
     public float trailOrFlickerChance = 0.65F;
     public float flickerChance = 0.25F;
     public int colorAmount = 3;
-
     public float typeChance0 = 1F;
     public float typeChance1 = 0F;
     public float typeChance2 = 0F;
     public float typeChance3 = 0F;
     public float typeChance4 = 0F;
-
     public int areaOfEffect = 2;
+    private int timeUntilNextFirework;
+    private int oldEnergy;
 
     public TileEntityFireworkBox(){
         super("fireworkBox");
