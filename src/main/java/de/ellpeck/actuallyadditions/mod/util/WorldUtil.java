@@ -242,12 +242,12 @@ public final class WorldUtil{
                 if(world instanceof WorldServer){
                     FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer)world);
                     ItemStack heldBefore = fake.getHeldItemMainhand();
-                    fake.setHeldItem(EnumHand.MAIN_HAND, stack.copy());
+                    setHandItemWithoutAnnoyingSound(fake, EnumHand.MAIN_HAND, stack.copy());
 
                     fake.getHeldItemMainhand().onItemUse(fake, world, offsetPos, fake.getActiveHand(), side.getOpposite(), 0.5F, 0.5F, 0.5F);
 
                     ItemStack result = fake.getHeldItem(EnumHand.MAIN_HAND);
-                    fake.setHeldItem(EnumHand.MAIN_HAND, heldBefore);
+                    setHandItemWithoutAnnoyingSound(fake, EnumHand.MAIN_HAND, heldBefore);
                     return result;
                 }
             }
@@ -468,5 +468,14 @@ public final class WorldUtil{
             }
         }
         return 0F;
+    }
+
+    public static void setHandItemWithoutAnnoyingSound(EntityPlayer player, EnumHand hand, ItemStack stack){
+        if(hand == EnumHand.MAIN_HAND){
+            player.inventory.mainInventory.set(player.inventory.currentItem, stack);
+        }
+        else if(hand == EnumHand.OFF_HAND){
+            player.inventory.offHandInventory.set(0, stack);
+        }
     }
 }

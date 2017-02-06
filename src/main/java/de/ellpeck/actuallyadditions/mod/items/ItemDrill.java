@@ -106,14 +106,14 @@ public class ItemDrill extends ItemEnergy{
                 if(StackUtil.isValid(equip) && equip != stack){
                     ItemStack toPlaceStack = equip.copy();
 
-                    player.setHeldItem(hand, toPlaceStack);
+                    WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack);
 
                     //tryPlaceItemIntoWorld could throw an Exception
                     try{
                         //Places the Block into the World
                         if(toPlaceStack.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ) != EnumActionResult.FAIL){
                             if(!player.capabilities.isCreativeMode){
-                                player.setHeldItem(hand, StackUtil.validateCopy(toPlaceStack));
+                                WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, StackUtil.validateCopy(toPlaceStack));
                             }
                         }
                     }
@@ -123,7 +123,7 @@ public class ItemDrill extends ItemEnergy{
                     }
 
                     player.inventory.setInventorySlotContents(slot, player.getHeldItem(hand));
-                    player.setHeldItem(hand, stack);
+                    WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, stack);
 
                     return EnumActionResult.SUCCESS;
                 }
