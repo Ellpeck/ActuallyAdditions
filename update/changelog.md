@@ -1,3 +1,18 @@
+# 1.11.2-r100
+#### I wanted to do something really cool for r100, but I didn't. So the best change in this version is that worms now go forwards again. So that's nice, I guess.
+* Implemented slotless item handler compatibility. If you use Colossal Chests, you should install Common Capabilities to make Actually Additions stuff work nicely with that.
+* Make the coffee maker store its coffee cache on breaking
+* Add a recipe to empty fluid placers/collectors
+* Make the drill not use energy in creative
+* Added french translations (MisterPeModder44)
+* Fix the ranged collector deleting items when shift-clicking
+* Made bio-mash recipes be dependent on the food amount that items give
+* Fix the magnet ring using energy even when not picking anything up
+* Add a tooltip that displays when breaking machines in the villager house
+* Added sugar cane support to the farmer (dbMansfield)
+* Post a break event when auto-mining things
+* Fix inventory switching sounds with the placer and drill
+
 # 1.11.2-r99
 * Make the ESD less performance intensive by making it a bit slower
 * Fix the Player Probe not properly clearing its data
