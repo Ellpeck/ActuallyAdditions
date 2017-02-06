@@ -32,6 +32,7 @@ public class RenderWorm extends Render<EntityWorm>{
             return new RenderWorm(manager);
         }
     };
+
     private static final ItemStack STACK = new ItemStack(InitItems.itemWorm);
 
     protected RenderWorm(RenderManager renderManager){
@@ -48,9 +49,12 @@ public class RenderWorm extends Render<EntityWorm>{
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y+0.7F, z);
         double boop = Minecraft.getSystemTime()/70D;
-        GlStateManager.rotate((float)((boop%360)), 0, 1, 0);
+        GlStateManager.rotate(-(float)((boop%360)), 0, 1, 0);
         GlStateManager.translate(0, 0, 0.4);
+
+        STACK.setStackDisplayName(entity.getCustomNameTag());
         AssetUtil.renderItemInWorld(STACK);
+
         GlStateManager.popMatrix();
     }
 }

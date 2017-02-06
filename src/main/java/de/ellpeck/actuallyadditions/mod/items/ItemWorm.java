@@ -13,22 +13,28 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -38,6 +44,14 @@ public class ItemWorm extends ItemBase{
         super(name);
 
         MinecraftForge.EVENT_BUS.register(this);
+
+        this.addPropertyOverride(new ResourceLocation(ModUtil.MOD_ID, "snail"), new IItemPropertyGetter(){
+            @Override
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, World world, EntityLivingBase entity){
+                return "snail mail".equalsIgnoreCase(stack.getDisplayName()) ? 1F : 0F;
+            }
+        });
     }
 
     @Override
@@ -50,6 +64,7 @@ public class ItemWorm extends ItemBase{
                 if(!world.isRemote){
                     EntityWorm worm = new EntityWorm(world);
                     worm.setPosition(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
+                    worm.setCustomNameTag(stack.getDisplayName());
                     world.spawnEntity(worm);
 
                     if(!player.capabilities.isCreativeMode){
