@@ -52,7 +52,7 @@ public class RenderWorm extends Render<EntityWorm>{
         GlStateManager.rotate(-(float)((boop%360)), 0, 1, 0);
         GlStateManager.translate(0, 0, 0.4);
 
-        STACK.setStackDisplayName(entity.getCustomNameTag());
+        STACK.setStackDisplayName(entity.getName());
         AssetUtil.renderItemInWorld(STACK);
 
         GlStateManager.popMatrix();
