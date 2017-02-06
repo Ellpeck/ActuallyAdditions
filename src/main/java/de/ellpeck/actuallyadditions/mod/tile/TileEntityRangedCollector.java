@@ -47,29 +47,39 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
-    public void updateEntity(){
-        super.updateEntity();
-        if(!this.world.isRemote){
-            if(!this.isRedstonePowered){
-                ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.pos.getX()-RANGE, this.pos.getY()-RANGE, this.pos.getZ()-RANGE, this.pos.getX()+RANGE, this.pos.getY()+RANGE, this.pos.getZ()+RANGE));
-                if(!items.isEmpty()){
-                    for(EntityItem item : items){
-                        if(!item.isDead && !item.cannotPickup() && StackUtil.isValid(item.getEntityItem())){
-                            ItemStack toAdd = item.getEntityItem().copy();
-                            if(this.filter.check(toAdd)){
-                                ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
-                                checkList.add(toAdd);
-                                if(WorldUtil.addToInventory(this.slots, checkList, false)){
-                                    WorldUtil.addToInventory(this.slots, checkList, true);
+    public boolean isRedstoneToggle(){
+        return true;
+    }
 
-                                    ((WorldServer)this.world).spawnParticle(EnumParticleTypes.CLOUD, false, item.posX, item.posY+0.45F, item.posZ, 5, 0, 0, 0, 0.03D);
+    @Override
+    public void activateOnPulse(){
+        ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.pos.getX()-RANGE, this.pos.getY()-RANGE, this.pos.getZ()-RANGE, this.pos.getX()+RANGE, this.pos.getY()+RANGE, this.pos.getZ()+RANGE));
+        if(!items.isEmpty()){
+            for(EntityItem item : items){
+                if(!item.isDead && !item.cannotPickup() && StackUtil.isValid(item.getEntityItem())){
+                    ItemStack toAdd = item.getEntityItem().copy();
+                    if(this.filter.check(toAdd)){
+                        ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
+                        checkList.add(toAdd);
+                        if(WorldUtil.addToInventory(this.slots, checkList, false)){
+                            WorldUtil.addToInventory(this.slots, checkList, true);
 
-                                    item.setDead();
-                                }
-                            }
+                            ((WorldServer)this.world).spawnParticle(EnumParticleTypes.CLOUD, false, item.posX, item.posY+0.45F, item.posZ, 5, 0, 0, 0, 0.03D);
+
+                            item.setDead();
                         }
                     }
                 }
+            }
+        }
+    }
+
+    @Override
+    public void updateEntity(){
+        super.updateEntity();
+        if(!this.world.isRemote){
+            if(!this.isRedstonePowered && !this.isPulseMode){
+                this.activateOnPulse();
             }
 
             if(this.filter.needsUpdateSend() && this.sendUpdateWithInterval()){

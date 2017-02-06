@@ -121,11 +121,8 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
                 TileEntityBase base = (TileEntityBase)tile;
                 if(!world.isRemote && base.isRedstoneToggle()){
                     base.isPulseMode = !base.isPulseMode;
-                    tile.markDirty();
-
-                    if(tile instanceof TileEntityBase){
-                        ((TileEntityBase)tile).sendUpdate();
-                    }
+                    base.markDirty();
+                    base.sendUpdate();
                 }
                 return true;
             }
