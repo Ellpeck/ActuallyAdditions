@@ -31,9 +31,8 @@ public final class IMCHandler{
     };
 
     public static void doBlockIMC(Block block){
-        if(!ArrayUtils.contains(NO_CARRYING, block.getClass())){
-            FMLInterModComms.sendMessage("charsetlib", "addCarry", block.getRegistryName());
-        }
+        boolean allow = !ArrayUtils.contains(NO_CARRYING, block.getClass());
+        FMLInterModComms.sendMessage("charsetlib", (allow ? "add" : "remove")+"Carry", block.getRegistryName());
     }
 
     public static void doItemIMC(Item item){
