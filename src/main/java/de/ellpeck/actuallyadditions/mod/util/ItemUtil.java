@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
+import de.ellpeck.actuallyadditions.mod.util.compat.IMCHandler;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
@@ -52,6 +53,8 @@ public final class ItemUtil{
 
         block.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
 
+        IMCHandler.doBlockIMC(block);
+
         addUnderscoreNameToMapUnderscorelessName(block.getRegistryName());
     }
 
@@ -62,6 +65,8 @@ public final class ItemUtil{
         GameRegistry.register(item);
 
         item.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
+
+        IMCHandler.doItemIMC(item);
 
         if(item instanceof IColorProvidingItem){
             ActuallyAdditions.proxy.addColoredItem(item);
