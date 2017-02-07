@@ -26,6 +26,7 @@ public final class IMCHandler{
             BlockPhantom.class,
             BlockTinyTorch.class,
             BlockItemViewer.class,
+            BlockItemViewerHopping.class,
             BlockLaserRelay.class
     };
 
