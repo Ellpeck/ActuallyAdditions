@@ -64,7 +64,25 @@ public class GuiMainPage extends GuiBooklet{
             "Leaf eater... munchdew... hummm@EiOs",
             "There is no such thing as canola seeds.@AlBoVa",
             "This mod is cancer, BRUTAL EXPENSIVE POWER usage..Just, cancer.@KoJo",
-            "Spaghetti is spaghetti, and noodles are noodles.@robsonld04"
+            "Spaghetti is spaghetti, and noodles are noodles.@robsonld04",
+            "The Actually Additions name is actually true. It's actually great!@asiekierka",
+            "Such a great mod@jsdeveloper",
+            "That mod is kind of funny.@Anonymous",
+            "Actually Additions is a lot of fun.@Anonymous",
+            "Is Actually Additions still fugly?@Anonymous",
+            "I like it, but it's so small.@Anonymous",
+            "It has a couple of blocks I like, but overall it's just a mess.@Anonymous",
+            "Direwolf's 1.10 playthrough is just him shilling Actually Additions@Anonymous",
+            "We thought about sending the author a bunch of pizzas to his adress@Anonymous",
+            "It's op as heck.@billofbong0",
+            "Actually AdditionsってマイクラMODすごく良いのに日本人で遊んでる人あんまいないっぽい@stay_uk",
+            "Actually Additions is OP. Not like my favorite combination of mods, Project E + Magic Crops + Draconic Evolution.@Anonymous",
+            "To be perfectly honest, I never actually realized how much content Actually Additions has before.@Ellpeck",
+            "I don't blame you, I actually downgraded to Actually Additions.@PvtSeaCow",
+            "It is lonely because there is no device to fly items with the laser in the 1.7.10 version.@Google Translate",
+            "始めまして。日本人です。このMODは本当に素晴らしい！ただ、1.7.10ヴァージョンだと、レーザーでアイテムを飛ばす装置がないので寂しいです。@Anonymous",
+            "Some verses found in older translations, such as the KJV were actually additions made by later copyists.@Pat_Joel",
+            "I can't place filters into Laser Relays, but the mod is very cool.@LP_Jakob"
     };
 
     private TexturedButton achievementButton;
@@ -149,6 +167,9 @@ public class GuiMainPage extends GuiBooklet{
         }
         else if(playerName.equalsIgnoreCase("snowshock35")){
             this.bookletEdition = "Edition 35";
+        }
+        else if(playerName.equalsIgnoreCase("asiekierka")){
+            this.bookletEdition = "‽ Edition";
         }
         else{
             if(Util.isDevVersion()){
