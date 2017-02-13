@@ -520,6 +520,7 @@ item.actuallyadditions.item_misc_empowered_canola_seed.name=Empowered Canola See
 item.actuallyadditions.item_mining_lens.name=Lens of the Miner
 item.actuallyadditions.item_more_damage_lens.name=Lens of the Killer
 item.actuallyadditions.item_filling_wand.name=Handheld Filler
+item.actuallyadditions.item_laser_upgrade_invisibility.name=Laser Relay Modifier: Invisibility
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On

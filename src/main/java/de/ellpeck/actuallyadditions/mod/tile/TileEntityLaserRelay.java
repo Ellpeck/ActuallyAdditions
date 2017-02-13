@@ -19,13 +19,15 @@ import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.Set;
 
-public abstract class TileEntityLaserRelay extends TileEntityBase{
+public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
 
     public static final int MAX_DISTANCE = 15;
 
@@ -37,7 +39,7 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     private Set<IConnectionPair> tempConnectionStorage;
 
     public TileEntityLaserRelay(String name, LaserType type){
-        super(name);
+        super(1, name);
         this.type = type;
     }
 
@@ -149,8 +151,19 @@ public abstract class TileEntityLaserRelay extends TileEntityBase{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox(){
         return INFINITE_EXTENT_AABB;
+    }
+
+    @Override
+    public boolean shouldSyncSlots(){
+        return true;
+    }
+
+    @Override
+    public IItemHandler getItemHandler(EnumFacing facing){
+        return null;
     }
 
     @SideOnly(Side.CLIENT)

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
+import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -85,7 +86,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
         if(player != null && world != null && StackUtil.isValid(stack) && pos != null){
             IBlockState state = event.getWorld().getBlockState(pos);
             if(state != null && state.getBlock() instanceof BlockLaserRelay){
-                if(stack.getItem() instanceof ItemCompass && player.isSneaking()){
+                if(player.isSneaking()){
                     event.setUseBlock(Event.Result.ALLOW);
                 }
             }
@@ -162,22 +163,52 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
         if(tile instanceof TileEntityLaserRelay){
             TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
 
-            if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemCompass){
-                if(!world.isRemote){
-                    relay.onCompassAction(player);
+            if(StackUtil.isValid(stack)){
+                if(stack.getItem() instanceof ItemCompass){
+                    if(!world.isRemote){
+                        relay.onCompassAction(player);
 
-                    Network network = relay.getNetwork();
-                    if(network != null){
-                        network.changeAmount++;
+                        Network network = relay.getNetwork();
+                        if(network != null){
+                            network.changeAmount++;
+                        }
+
+                        relay.markDirty();
+                        relay.sendUpdate();
                     }
 
-                    relay.markDirty();
-                    relay.sendUpdate();
+                    return true;
                 }
+                else if(stack.getItem() instanceof ItemLaserRelayUpgrade){
+                    ItemStack inRelay = relay.slots.getStackInSlot(0);
+                    if(!StackUtil.isValid(inRelay)){
+                        if(!world.isRemote){
+                            player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
 
-                return true;
+                            ItemStack set = StackUtil.validateCopy(stack);
+                            relay.slots.setStackInSlot(0, StackUtil.setStackSize(set, 1));
+                        }
+                        return true;
+                    }
+
+                }
             }
-            else if(relay instanceof TileEntityLaserRelayItemWhitelist){
+
+            if(player.isSneaking()){
+                ItemStack inRelay = StackUtil.validateCopy(relay.slots.getStackInSlot(0));
+                if(StackUtil.isValid(inRelay)){
+                    if(!world.isRemote){
+                        relay.slots.setStackInSlot(0, StackUtil.getNull());
+
+                        if(!player.inventory.addItemStackToInventory(inRelay)){
+                            player.entityDropItem(inRelay, 0);
+                        }
+                    }
+                    return true;
+                }
+            }
+
+            if(relay instanceof TileEntityLaserRelayItemWhitelist){
                 if(!world.isRemote){
                     player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.LASER_RELAY_ITEM_WHITELIST.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
