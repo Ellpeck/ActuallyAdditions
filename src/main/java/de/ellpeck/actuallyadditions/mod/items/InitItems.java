@@ -194,10 +194,12 @@ public final class InitItems{
     public static Item itemVoidBag;
     public static Item itemFillingWand;
     public static Item itemLaserUpgradeInvisibility;
+    public static Item itemInfraredGoggles;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
+        itemInfraredGoggles = new ItemInfraredGoggles("item_infrared_goggles");
         itemLaserUpgradeInvisibility = new ItemLaserRelayUpgrade("item_laser_upgrade_invisibility");
         itemFillingWand = new ItemFillingWand("item_filling_wand");
         itemBag = new ItemBag("item_bag", false);

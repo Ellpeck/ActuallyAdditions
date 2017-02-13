@@ -521,6 +521,7 @@ item.actuallyadditions.item_mining_lens.name=Lens of the Miner
 item.actuallyadditions.item_more_damage_lens.name=Lens of the Killer
 item.actuallyadditions.item_filling_wand.name=Handheld Filler
 item.actuallyadditions.item_laser_upgrade_invisibility.name=Laser Relay Modifier: Invisibility
+item.actuallyadditions.item_infrared_goggles.name=Infrared Goggles
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On

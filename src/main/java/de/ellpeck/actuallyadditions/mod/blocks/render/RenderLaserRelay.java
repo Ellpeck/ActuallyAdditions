@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ItemInfraredGoggles;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -34,12 +35,14 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer{
     private static final float[] COLOR = new float[]{1F, 0F, 0F};
     private static final float[] COLOR_ITEM = new float[]{0F, 124F/255F, 16F/255F};
     private static final float[] COLOR_FLUIDS = new float[]{0F, 97F/255F, 198F/255F};
+    private static final float[] COLOR_INFRARED = new float[]{209F/255F, 179F/255F, 239F/255F};
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int par6){
         if(tile instanceof TileEntityLaserRelay){
             TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
             boolean hasInvis = false;
+            boolean hasGoggles = ItemInfraredGoggles.isWearing(Minecraft.getMinecraft().player);
 
             ItemStack upgrade = relay.slots.getStackInSlot(0);
             if(StackUtil.isValid(upgrade)){
@@ -73,10 +76,10 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer{
                             ItemStack secondUpgrade = ((TileEntityLaserRelay)secondTile).slots.getStackInSlot(0);
                             boolean otherInvis = StackUtil.isValid(secondUpgrade) && secondUpgrade.getItem() == InitItems.itemLaserUpgradeInvisibility;
 
-                            if(!hasInvis || !otherInvis){
-                                float[] color = relay.type == LaserType.ITEM ? COLOR_ITEM : (relay.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR);
+                            if(hasGoggles || !hasInvis || !otherInvis){
+                                float[] color = hasInvis && otherInvis ? COLOR_INFRARED : (relay.type == LaserType.ITEM ? COLOR_ITEM : (relay.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR));
 
-                                AssetUtil.renderLaser(first.getX()+0.5, first.getY()+0.5, first.getZ()+0.5, second.getX()+0.5, second.getY()+0.5, second.getZ()+0.5, 120, 0.35F, 0.05, color);
+                                AssetUtil.renderLaser(first.getX()+0.5, first.getY()+0.5, first.getZ()+0.5, second.getX()+0.5, second.getY()+0.5, second.getZ()+0.5, 120, hasInvis && otherInvis ? 0.1F : 0.35F, 0.05, color);
                             }
                         }
                     }

@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnergizer;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -54,7 +55,6 @@ public class ItemArmorAA extends ItemArmor{
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
-
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.rarity;
@@ -62,6 +62,6 @@ public class ItemArmorAA extends ItemArmor{
 
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
-        return ItemUtil.areItemsEqual(this.repairItem, stack, false);
+        return StackUtil.isValid(this.repairItem) && ItemUtil.areItemsEqual(this.repairItem, stack, false);
     }
 }

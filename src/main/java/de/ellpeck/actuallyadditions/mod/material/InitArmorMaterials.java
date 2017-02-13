@@ -31,6 +31,8 @@ public final class InitArmorMaterials{
     public static ArmorMaterial armorMaterialCrystalGreen;
     public static ArmorMaterial armorMaterialCrystalWhite;
 
+    public static ArmorMaterial armorMaterialGoggles;
+
     public static void init(){
         ModUtil.LOGGER.info("Initializing Armor Materials...");
 
@@ -44,6 +46,8 @@ public final class InitArmorMaterials{
         armorMaterialCrystalBlack = addArmorMaterial("armorMaterialCrystalBlack", ModUtil.MOD_ID+":armor_crystal_black", 12, new int[]{1, 3, 4, 1}, 13, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
         armorMaterialCrystalGreen = addArmorMaterial("armorMaterialCrystalGreen", ModUtil.MOD_ID+":armor_crystal_green", 60, new int[]{6, 9, 9, 4}, 18, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
         armorMaterialCrystalWhite = addArmorMaterial("armorMaterialCrystalWhite", ModUtil.MOD_ID+":armor_crystal_white", 18, new int[]{3, 6, 6, 3}, 11, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
+
+        armorMaterialGoggles = addArmorMaterial("armorMaterialGoggles", ModUtil.MOD_ID+":armor_goggles", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);
     }
 
     private static ArmorMaterial addArmorMaterial(String name, String textureName, int durability, int[] reductionAmounts, int enchantability, SoundEvent soundOnEquip){
