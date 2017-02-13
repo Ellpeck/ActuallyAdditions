@@ -164,7 +164,10 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
             TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
 
             if(StackUtil.isValid(stack)){
-                if(stack.getItem() instanceof ItemCompass){
+                if(stack.getItem() instanceof ItemLaserWrench){
+                    return false;
+                }
+                else if(stack.getItem() instanceof ItemCompass){
                     if(!world.isRemote){
                         relay.onCompassAction(player);
 
@@ -183,7 +186,9 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                     ItemStack inRelay = relay.slots.getStackInSlot(0);
                     if(!StackUtil.isValid(inRelay)){
                         if(!world.isRemote){
-                            player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
+                            if(!player.isCreative()){
+                                player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
+                            }
 
                             ItemStack set = StackUtil.validateCopy(stack);
                             relay.slots.setStackInSlot(0, StackUtil.setStackSize(set, 1));
