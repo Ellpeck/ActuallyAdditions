@@ -151,7 +151,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
         data.lastOpenBooklet = this;
 
         if(change){
-            PacketHandlerHelper.sendPlayerDataPacket(this.mc.player, true, false);
+            PacketHandlerHelper.sendPlayerDataToServer(true, 0);
         }
     }
 

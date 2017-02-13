@@ -39,7 +39,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public final class PacketHandler{
 
@@ -137,37 +136,52 @@ public final class PacketHandler{
             }
         }
     };
-    public static final IDataHandler CHANGE_PLAYER_DATA_HANDLER = new IDataHandler(){
+    public static final IDataHandler SYNC_PLAYER_DATA = new IDataHandler(){
         @Override
+        @SideOnly(Side.CLIENT)
         public void handleData(NBTTagCompound compound, MessageContext context){
             NBTTagCompound dataTag = compound.getCompoundTag("Data");
-            UUID id = compound.getUniqueId("UUID");
-            EntityPlayer player = null;
-
-            if(context.side == Side.SERVER){
-                int dim = compound.getInteger("Dimension");
-                World world = DimensionManager.getWorld(dim);
-                if(world != null){
-                    player = world.getPlayerEntityByUUID(id);
-                }
-            }
-            else{
-                player = ActuallyAdditions.proxy.getCurrentPlayer();
-            }
+            EntityPlayer player = ActuallyAdditions.proxy.getCurrentPlayer();
 
             if(player != null){
                 PlayerData.getDataFromPlayer(player).readFromNBT(dataTag, false);
-                WorldData.get(player.getEntityWorld()).markDirty();
 
                 if(compound.getBoolean("Log")){
-                    ModUtil.LOGGER.info("Receiving (new or changed) Player Data for player "+player.getName()+" with UUID "+id+".");
+                    ModUtil.LOGGER.info("Receiving (new or changed) Player Data for player "+player.getName()+".");
                 }
             }
             else{
-                ModUtil.LOGGER.error("Tried to receive Player Data for player with UUID "+id+", but he doesn't seem to be present!");
+                ModUtil.LOGGER.error("Tried to receive Player Data for the current player, but he doesn't seem to be present!");
             }
         }
     };
+    public static final IDataHandler PLAYER_DATA_TO_SERVER = new IDataHandler(){
+        @Override
+        public void handleData(NBTTagCompound compound, MessageContext context){
+            World world = DimensionManager.getWorld(compound.getInteger("World"));
+            EntityPlayer player = world.getPlayerEntityByUUID(compound.getUniqueId("UUID"));
+            if(player != null){
+                PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
+
+                int type = compound.getInteger("Type");
+                if(type == 0){
+                    data.loadBookmarks(compound.getTagList("Bookmarks", 8));
+                }
+                else if(type == 1){
+                    data.didBookTutorial = compound.getBoolean("DidBookTutorial");
+                }
+                WorldData.get(world).markDirty();
+
+                if(compound.getBoolean("Log")){
+                    ModUtil.LOGGER.info("Receiving changed Player Data for player "+player.getName()+".");
+                }
+            }
+            else{
+                ModUtil.LOGGER.error("Tried to receive Player Data for player "+player.getName()+", but he doesn't seem to be present!");
+            }
+        }
+    };
+
     public static SimpleNetworkWrapper theNetwork;
 
     public static void init(){
@@ -180,8 +194,9 @@ public final class PacketHandler{
         DATA_HANDLERS.add(GUI_BUTTON_TO_TILE_HANDLER);
         DATA_HANDLERS.add(GUI_STRING_TO_TILE_HANDLER);
         DATA_HANDLERS.add(GUI_NUMBER_TO_TILE_HANDLER);
-        DATA_HANDLERS.add(CHANGE_PLAYER_DATA_HANDLER);
+        DATA_HANDLERS.add(SYNC_PLAYER_DATA);
         DATA_HANDLERS.add(GUI_BUTTON_TO_CONTAINER_HANDLER);
         DATA_HANDLERS.add(LASER_PARTICLE_HANDLER);
+        DATA_HANDLERS.add(PLAYER_DATA_TO_SERVER);
     }
 }

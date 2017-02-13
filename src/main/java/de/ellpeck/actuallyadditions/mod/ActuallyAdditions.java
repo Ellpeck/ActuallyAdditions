@@ -152,6 +152,11 @@ public class ActuallyAdditions{
     }
 
     @EventHandler
+    public void serverStopped(FMLServerStoppedEvent event){
+        WorldData.clear();
+    }
+
+    @EventHandler
     public void missingMapping(FMLMissingMappingsEvent event){
         int totalRemaps = 0;
         int workedRemaps = 0;

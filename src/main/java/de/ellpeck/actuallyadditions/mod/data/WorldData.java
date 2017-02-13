@@ -102,6 +102,12 @@ public class WorldData extends WorldSavedData{
         return data;
     }
 
+    public static void clear(){
+        if(data != null){
+            data = null;
+        }
+    }
+
     public static WorldData get(World world){
         return get(world, false);
     }

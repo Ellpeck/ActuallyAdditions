@@ -188,7 +188,7 @@ public class ItemWingsOfTheBats extends ItemBase{
                     }
 
                     if(shouldSend){
-                        PacketHandlerHelper.sendPlayerDataPacket(player, false, true);
+                        PacketHandlerHelper.syncPlayerData(player, false);
                         data.shouldDisableBatWings = false; //was set only temporarily to send it
                     }
                 }

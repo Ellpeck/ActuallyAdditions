@@ -71,13 +71,7 @@ public final class PlayerData{
             this.batWingsFlyTime = compound.getInteger("BatWingsFlyTime");
 
             NBTTagList bookmarks = compound.getTagList("Bookmarks", 8);
-            for(int i = 0; i < bookmarks.tagCount(); i++){
-                String strg = bookmarks.getStringTagAt(i);
-                if(strg != null && !strg.isEmpty()){
-                    IBookletPage page = BookletUtils.getBookletPageById(strg);
-                    this.bookmarks[i] = page;
-                }
-            }
+            this.loadBookmarks(bookmarks);
 
             if(!savingToFile){
                 this.shouldDisableBatWings = compound.getBoolean("ShouldDisableWings");
@@ -91,17 +85,33 @@ public final class PlayerData{
             compound.setBoolean("HasBatWings", this.hasBatWings);
             compound.setInteger("BatWingsFlyTime", this.batWingsFlyTime);
 
-            NBTTagList bookmarks = new NBTTagList();
-            for(IBookletPage bookmark : this.bookmarks){
-                bookmarks.appendTag(new NBTTagString(bookmark == null ? "" : bookmark.getIdentifier()));
-            }
-            compound.setTag("Bookmarks", bookmarks);
+            compound.setTag("Bookmarks", this.saveBookmarks());
 
             if(!savingToFile){
                 compound.setBoolean("ShouldDisableWings", this.shouldDisableBatWings);
             }
         }
 
+        public NBTTagList saveBookmarks(){
+            NBTTagList bookmarks = new NBTTagList();
+            for(IBookletPage bookmark : this.bookmarks){
+                bookmarks.appendTag(new NBTTagString(bookmark == null ? "" : bookmark.getIdentifier()));
+            }
+            return bookmarks;
+        }
+
+        public void loadBookmarks(NBTTagList bookmarks){
+            for(int i = 0; i < bookmarks.tagCount(); i++){
+                String strg = bookmarks.getStringTagAt(i);
+                if(strg != null && !strg.isEmpty()){
+                    IBookletPage page = BookletUtils.getBookletPageById(strg);
+                    this.bookmarks[i] = page;
+                }
+                else{
+                    this.bookmarks[i] = null;
+                }
+            }
+        }
     }
 
 

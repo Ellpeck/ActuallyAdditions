@@ -70,7 +70,7 @@ public class CommonEvents{
     public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event){
         if(!event.player.world.isRemote && event.player instanceof EntityPlayerMP){
             EntityPlayerMP player = (EntityPlayerMP)event.player;
-            PacketHandlerHelper.sendPlayerDataPacket(player, true, true);
+            PacketHandlerHelper.syncPlayerData(player, true);
             ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+".");
         }
     }

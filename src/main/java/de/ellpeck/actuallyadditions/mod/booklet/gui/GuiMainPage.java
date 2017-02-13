@@ -247,7 +247,7 @@ public class GuiMainPage extends GuiBooklet{
 
                 PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
                 data.didBookTutorial = true;
-                PacketHandlerHelper.sendPlayerDataPacket(this.mc.player, true, false);
+                PacketHandlerHelper.sendPlayerDataToServer(true, 1);
             }
         }
         else{
