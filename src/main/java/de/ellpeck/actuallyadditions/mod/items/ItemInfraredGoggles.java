@@ -54,7 +54,7 @@ public class ItemInfraredGoggles extends ItemArmorAA{
 
             if(!this.cachedGlowingEntities.isEmpty()){
                 for(Entity entity : this.cachedGlowingEntities){
-                    if(entity.getDistanceSq(player.posX, player.posY, player.posZ) > range*range){
+                    if(entity.isDead || entity.getDistanceSq(player.posX, player.posY, player.posZ) > range*range){
                         entity.setGlowing(false);
 
                         this.cachedGlowingEntities.remove(entity);
