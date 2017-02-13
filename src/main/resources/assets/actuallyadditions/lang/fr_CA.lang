@@ -239,6 +239,21 @@ tile.actuallyadditions.block_distributor_item.name=Distibuteur d'objets
 tile.actuallyadditions.block_bio_reactor.name=Bio-réacteur
 tile.actuallyadditions.block_farmer.name=Auto-Fermier
 tile.actuallyadditions.block_battery_box.name=Batterie
+tile.actuallyadditions.block_crystal_cluster_redstone.name=Amas de cristaux rouges
+tile.actuallyadditions.block_crystal_cluster_lapis.name=Amas de cristaux bleus
+tile.actuallyadditions.block_crystal_cluster_diamond.name=Amas de cristaux bleu-clair
+tile.actuallyadditions.block_crystal_cluster_coal.name=Amas de cristaux noirs
+tile.actuallyadditions.block_crystal_cluster_emerald.name=Amas de cristaux verts
+tile.actuallyadditions.block_crystal_cluster_iron.name=Amas de cristaux blancs
+item.actuallyadditions.item_laser_upgrade_invisibility.name=Modifiaction pour relai laser: Invisibilité
+item.actuallyadditions.item_infrared_goggles.name=Lunettes infrarouge
+item.actuallyadditions.item_laser_upgrade_range.name=Modifiaction pour relai laser: Portée
+item.actuallyadditions.item_crystal_shard_red.name=Éclat de cristal rouge
+item.actuallyadditions.item_crystal_shard_blue.name=Éclat de cristal bleu
+item.actuallyadditions.item_crystal_shard_light_blue.name=Éclat de cristal bleu-clair
+item.actuallyadditions.item_crystal_shard_black.name=Éclat de cristal noir
+item.actuallyadditions.item_crystal_shard_green.name=Éclat de cristal vert
+item.actuallyadditions.item_crystal_shard_white.name=Éclat de cristal blanc
 
 #DSE
 tile.actuallyadditions.block_inputter.name=DSE
