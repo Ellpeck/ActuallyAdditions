@@ -14,9 +14,12 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
+import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.ConnectionPair;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
@@ -35,6 +38,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
 
     private Network cachedNetwork;
     private int changeAmountAtCaching = -1;
+    private int lastRange;
 
     private Set<IConnectionPair> tempConnectionStorage;
 
@@ -78,6 +82,26 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
             }
 
             compound.setTag("Connections", list);
+        }
+    }
+
+    @Override
+    public void updateEntity(){
+        super.updateEntity();
+
+        int range = this.getMaxRange();
+        if(this.lastRange != range){
+            ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.world);
+            if(connections != null && !connections.isEmpty()){
+                for(IConnectionPair pair : connections){
+                    int distanceSq = (int)pair.getPositions()[0].distanceSq(pair.getPositions()[1]);
+                    if(distanceSq > range*range){
+                        ActuallyAdditionsAPI.connectionHandler.removeConnection(this.world, pair.getPositions()[0], pair.getPositions()[1]);
+                    }
+                }
+            }
+
+            this.lastRange = range;
         }
     }
 
@@ -164,6 +188,16 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
     @Override
     public IItemHandler getItemHandler(EnumFacing facing){
         return null;
+    }
+
+    public int getMaxRange(){
+        ItemStack upgrade = this.slots.getStackInSlot(0);
+        if(StackUtil.isValid(upgrade) && upgrade.getItem() == InitItems.itemLaserUpgradeRange){
+            return 35;
+        }
+        else{
+            return MAX_DISTANCE;
+        }
     }
 
     @SideOnly(Side.CLIENT)

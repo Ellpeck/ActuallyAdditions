@@ -171,6 +171,27 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
     }
 
     @Override
+    public void removeConnection(World world, BlockPos firstRelay, BlockPos secondRelay){
+        if(world != null && firstRelay != null && secondRelay != null){
+            Network network = this.getNetworkFor(firstRelay, world);
+
+            if(network != null){
+                network.changeAmount++;
+
+                WorldData data = WorldData.get(world);
+                data.laserRelayNetworks.remove(network);
+                data.markDirty();
+
+                for(IConnectionPair pair : network.connections){
+                    if(!pair.contains(firstRelay) || !pair.contains(secondRelay)){
+                        this.addConnection(pair.getPositions()[0], pair.getPositions()[1], pair.getType(), world, pair.doesSuppressRender());
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
     public LaserType getTypeFromLaser(TileEntity tile){
         if(tile instanceof TileEntityLaserRelay){
             return ((TileEntityLaserRelay)tile).type;

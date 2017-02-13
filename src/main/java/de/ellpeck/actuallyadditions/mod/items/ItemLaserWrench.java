@@ -43,6 +43,7 @@ public class ItemLaserWrench extends ItemBase{
         ItemStack stack = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityLaserRelay){
+            TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
             if(!world.isRemote){
                 if(ItemPhantomConnector.getStoredPosition(stack) == null){
                     ItemPhantomConnector.storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
@@ -52,20 +53,26 @@ public class ItemLaserWrench extends ItemBase{
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
                     if(savedPos != null){
                         TileEntity savedTile = world.getTileEntity(savedPos);
-                        int distanceSq = (int)savedPos.distanceSq(pos);
-                        TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
-                        if(ItemPhantomConnector.getStoredWorld(stack) == world && savedTile instanceof TileEntityLaserRelay && ((TileEntityLaserRelay)savedTile).type == relay.type && distanceSq <= TileEntityLaserRelay.MAX_DISTANCE*TileEntityLaserRelay.MAX_DISTANCE && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world)){
-                            ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
+                        if(savedTile instanceof TileEntityLaserRelay){
+                            int distanceSq = (int)savedPos.distanceSq(pos);
+                            TileEntityLaserRelay savedRelay = (TileEntityLaserRelay)savedTile;
 
-                            ((TileEntityLaserRelay)savedTile).sendUpdate();
-                            relay.sendUpdate();
+                            int lowestRange = Math.min(relay.getMaxRange(), savedRelay.getMaxRange());
+                            int range = lowestRange*lowestRange;
+                            if(ItemPhantomConnector.getStoredWorld(stack) == world && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world)){
+                                ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
 
-                            player.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.connected.desc"));
+                                ((TileEntityLaserRelay)savedTile).sendUpdate();
+                                relay.sendUpdate();
+
+                                player.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.connected.desc"));
+
+                                return EnumActionResult.SUCCESS;
+                            }
                         }
-                        else{
-                            player.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.cantConnect.desc"));
-                            ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
-                        }
+
+                        player.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.cantConnect.desc"));
+                        ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
                     }
                 }
             }

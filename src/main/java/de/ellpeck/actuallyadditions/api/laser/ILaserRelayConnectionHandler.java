@@ -35,6 +35,8 @@ public interface ILaserRelayConnectionHandler{
 
     boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world, boolean suppressConnectionRender);
 
+    void removeConnection(World world, BlockPos firstRelay, BlockPos secondRelay);
+
     LaserType getTypeFromLaser(TileEntity tile);
 
     LaserType getTypeFromLaser(BlockPos pos, World world);
