@@ -1,5 +1,5 @@
 /*
- * This file ("IColorProvidingItem.java") is part of the Actually Additions mod for Minecraft.
+ * This file ("IColorProvidingBlock.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
  * http://ellpeck.de/actaddlicense
@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface IColorProvidingItem{
+public interface IColorProvidingBlock{
 
     @SideOnly(Side.CLIENT)
-    IItemColor getItemColor();
+    IBlockColor getBlockColor();
 
 }

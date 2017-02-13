@@ -162,7 +162,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IItemColor getColor(){
+    public IItemColor getItemColor(){
         return new IItemColor(){
             @Override
             public int getColorFromItemstack(ItemStack stack, int tintIndex){

@@ -239,6 +239,12 @@ tile.actuallyadditions.block_distributor_item.name=Item Distributor
 tile.actuallyadditions.block_bio_reactor.name=Bio Reactor
 tile.actuallyadditions.block_farmer.name=Farmer
 tile.actuallyadditions.block_battery_box.name=Battery Box
+tile.actuallyadditions.block_crystal_cluster_redstone.name=Red Crystal Cluster
+tile.actuallyadditions.block_crystal_cluster_lapis.name=Blue Crystal Cluster
+tile.actuallyadditions.block_crystal_cluster_diamond.name=Light Blue Crystal Cluster
+tile.actuallyadditions.block_crystal_cluster_coal.name=Black Crystal Cluster
+tile.actuallyadditions.block_crystal_cluster_emerald.name=Green Crystal Cluster
+tile.actuallyadditions.block_crystal_cluster_iron.name=White Crystal Cluster
 
 #ESD
 tile.actuallyadditions.block_inputter.name=ESD
@@ -523,6 +529,12 @@ item.actuallyadditions.item_filling_wand.name=Handheld Filler
 item.actuallyadditions.item_laser_upgrade_invisibility.name=Laser Relay Modifier: Invisibility
 item.actuallyadditions.item_infrared_goggles.name=Infrared Goggles
 item.actuallyadditions.item_laser_upgrade_range.name=Laser Relay Modifier: Range
+item.actuallyadditions.item_crystal_shard_red.name=Red Crystal Shard
+item.actuallyadditions.item_crystal_shard_blue.name=Blue Crystal Shard
+item.actuallyadditions.item_crystal_shard_light_blue.name=Light Blue Crystal Shard
+item.actuallyadditions.item_crystal_shard_black.name=Black Crystal Shard
+item.actuallyadditions.item_crystal_shard_green.name=Green Crystal Shard
+item.actuallyadditions.item_crystal_shard_white.name=White Crystal Shard
 
 #Tooltips
 tooltip.actuallyadditions.onSuffix.desc=On

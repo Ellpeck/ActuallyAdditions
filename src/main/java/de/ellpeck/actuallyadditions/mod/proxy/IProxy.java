@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.proxy;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,5 +31,8 @@ public interface IProxy{
 
     void addColoredItem(Item item);
 
+    void addColoredBlock(Block block);
+
     EntityPlayer getCurrentPlayer();
+
 }

@@ -196,10 +196,12 @@ public final class InitItems{
     public static Item itemLaserUpgradeInvisibility;
     public static Item itemLaserUpgradeRange;
     public static Item itemInfraredGoggles;
+    public static Item itemCrystalShard;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
+        itemCrystalShard = new ItemCrystalShard("item_crystal_shard");
         itemInfraredGoggles = new ItemInfraredGoggles("item_infrared_goggles");
         itemLaserUpgradeRange = new ItemLaserRelayUpgrade("item_laser_upgrade_range");
         itemLaserUpgradeInvisibility = new ItemLaserRelayUpgrade("item_laser_upgrade_invisibility");

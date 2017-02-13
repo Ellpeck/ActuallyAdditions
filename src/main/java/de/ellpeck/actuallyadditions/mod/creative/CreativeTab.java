@@ -236,10 +236,17 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemPaxelCrystalGreen);
         this.add(InitItems.itemPaxelCrystalWhite);
 
+        this.add(InitBlocks.blockCrystalClusterRedstone);
+        this.add(InitBlocks.blockCrystalClusterLapis);
+        this.add(InitBlocks.blockCrystalClusterDiamond);
+        this.add(InitBlocks.blockCrystalClusterCoal);
+        this.add(InitBlocks.blockCrystalClusterEmerald);
+        this.add(InitBlocks.blockCrystalClusterIron);
         this.add(InitBlocks.blockCrystal);
         this.add(InitBlocks.blockCrystalEmpowered);
         this.add(InitItems.itemCrystal);
         this.add(InitItems.itemCrystalEmpowered);
+        this.add(InitItems.itemCrystalShard);
 
         this.add(InitItems.itemJams);
 

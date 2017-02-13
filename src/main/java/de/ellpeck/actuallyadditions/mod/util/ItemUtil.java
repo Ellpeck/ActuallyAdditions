@@ -55,6 +55,10 @@ public final class ItemUtil{
 
         IMCHandler.doBlockIMC(block);
 
+        if(block instanceof IColorProvidingBlock){
+            ActuallyAdditions.proxy.addColoredBlock(block);
+        }
+
         addUnderscoreNameToMapUnderscorelessName(block.getRegistryName());
     }
 

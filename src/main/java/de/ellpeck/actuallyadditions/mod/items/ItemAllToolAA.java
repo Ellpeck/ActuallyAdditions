@@ -113,7 +113,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IItemColor getColor(){
+    public IItemColor getItemColor(){
         return new IItemColor(){
             @Override
             public int getColorFromItemstack(ItemStack stack, int pass){

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay.Type;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockStair;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.block.Block;
@@ -109,10 +110,22 @@ public final class InitBlocks{
     public static Block blockTinyTorch;
     public static Block blockFarmer;
     public static Block blockBatteryBox;
+    public static Block blockCrystalClusterRedstone;
+    public static Block blockCrystalClusterLapis;
+    public static Block blockCrystalClusterDiamond;
+    public static Block blockCrystalClusterCoal;
+    public static Block blockCrystalClusterEmerald;
+    public static Block blockCrystalClusterIron;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");
 
+        blockCrystalClusterRedstone = new BlockCrystalCluster("block_crystal_cluster_redstone", TheCrystals.REDSTONE);
+        blockCrystalClusterLapis = new BlockCrystalCluster("block_crystal_cluster_lapis", TheCrystals.LAPIS);
+        blockCrystalClusterDiamond = new BlockCrystalCluster("block_crystal_cluster_diamond", TheCrystals.DIAMOND);
+        blockCrystalClusterCoal = new BlockCrystalCluster("block_crystal_cluster_coal", TheCrystals.COAL);
+        blockCrystalClusterEmerald = new BlockCrystalCluster("block_crystal_cluster_emerald", TheCrystals.EMERALD);
+        blockCrystalClusterIron = new BlockCrystalCluster("block_crystal_cluster_iron", TheCrystals.IRON);
         blockBatteryBox = new BlockBatteryBox("block_battery_box");
         blockItemViewerHopping = new BlockItemViewerHopping("block_item_viewer_hopping");
         blockFarmer = new BlockFarmer("block_farmer");

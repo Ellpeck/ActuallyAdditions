@@ -15,9 +15,11 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -35,6 +37,15 @@ import java.util.Random;
 
 public class WorldGenLushCaves{
 
+    public static final Block[] CRYSTAL_CLUSTERS = new Block[]{
+            InitBlocks.blockCrystalClusterRedstone,
+            InitBlocks.blockCrystalClusterLapis,
+            InitBlocks.blockCrystalClusterDiamond,
+            InitBlocks.blockCrystalClusterCoal,
+            InitBlocks.blockCrystalClusterEmerald,
+            InitBlocks.blockCrystalClusterIron
+    };
+
     public boolean generate(World world, Random rand, BlockPos position, StructureBoundingBox blockRegion){
         this.generateCave(world, position, rand, blockRegion);
         return true;
@@ -50,10 +61,10 @@ public class WorldGenLushCaves{
         spheresBox.maxZ += 7;
         for(int i = 0; i <= spheres; i++){
             //center already is random value within population area
-            this.makeSphereWithGrassFloor(world, center.add(rand.nextInt(11)-5, rand.nextInt(7)-3, rand.nextInt(11)-5), rand.nextInt(3)+5, spheresBox);
+            this.makeSphereWithGrassFloor(world, center.add(rand.nextInt(11)-5, rand.nextInt(7)-3, rand.nextInt(11)-5), rand.nextInt(3)+5, spheresBox, rand);
         }
 
-        this.genTreesAndTallGrass(world, center, 11, spheres*3, rand, chunkRegion);
+        this.genTreesAndTallGrass(world, center, 11, spheres*2, rand, chunkRegion);
     }
 
     private void genTreesAndTallGrass(World world, BlockPos center, int radius, int amount, Random rand, StructureBoundingBox box){
@@ -61,10 +72,27 @@ public class WorldGenLushCaves{
         for(double x = -radius; x < radius; x++){
             for(double y = -radius; y < radius; y++){
                 for(double z = -radius; z < radius; z++){
-                    if(rand.nextDouble() >= 0.5D){
-                        BlockPos pos = center.add(x, y, z);
-                        if(box.isVecInside(pos) && world.getBlockState(pos).getBlock() == Blocks.GRASS){
-                            possiblePoses.add(pos);
+                    BlockPos pos = center.add(x, y, z);
+                    if(box.isVecInside(pos)){
+                        if(rand.nextDouble() >= 0.5D){
+                            if(world.getBlockState(pos).getBlock() == Blocks.GRASS){
+                                possiblePoses.add(pos);
+                            }
+                        }
+                        else if(rand.nextInt(20) == 0){
+                            EnumFacing[] values = EnumFacing.values();
+                            EnumFacing side = values[rand.nextInt(values.length)];
+                            BlockPos posSide = pos.offset(side);
+
+                            if(!this.checkIndestructable(world, posSide)){
+                                IBlockState state = world.getBlockState(pos);
+                                IBlockState stateSide = world.getBlockState(posSide);
+
+                                if(state.getBlock().isAir(state, world, pos) && stateSide.getBlock().isSideSolid(stateSide, world, posSide, side.getOpposite())){
+                                    Block block = CRYSTAL_CLUSTERS[rand.nextInt(CRYSTAL_CLUSTERS.length)];
+                                    world.setBlockState(pos, block.getDefaultState().withProperty(BlockDirectional.FACING, side.getOpposite()), 2);
+                                }
+                            }
                         }
                     }
                 }
@@ -118,7 +146,7 @@ public class WorldGenLushCaves{
         }
     }
 
-    private void makeSphereWithGrassFloor(World world, BlockPos center, int radius, StructureBoundingBox boundingBox){
+    private void makeSphereWithGrassFloor(World world, BlockPos center, int radius, StructureBoundingBox boundingBox, Random rand){
         for(double x = -radius; x < radius; x++){
             for(double y = -radius; y < radius; y++){
                 for(double z = -radius; z < radius; z++){
@@ -137,11 +165,12 @@ public class WorldGenLushCaves{
             for(double z = -radius; z < radius; z++){
                 for(double y = -radius; y <= -3; y++){
                     BlockPos pos = center.add(x, y, z);
-                    if(boundingBox.isVecInside(pos)){
+                    if(boundingBox.isVecInside(pos) && !this.checkIndestructable(world, pos)){
                         IBlockState state = world.getBlockState(pos);
                         BlockPos posUp = pos.up();
-                        IBlockState stateUp = world.getBlockState(posUp);
-                        if(!this.checkIndestructable(world, pos) && !this.checkIndestructable(world, posUp)){
+
+                        if(!this.checkIndestructable(world, posUp)){
+                            IBlockState stateUp = world.getBlockState(posUp);
                             if(!state.getBlock().isAir(state, world, pos) && stateUp.getBlock().isAir(stateUp, world, posUp)){
                                 world.setBlockState(pos, Blocks.GRASS.getDefaultState());
                             }

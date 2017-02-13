@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.FluidStateMapper;
+import de.ellpeck.actuallyadditions.mod.util.IColorProvidingBlock;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
@@ -43,6 +44,7 @@ import java.util.Map;
 public class ClientProxy implements IProxy{
 
     private static final List<Item> COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING = new ArrayList<Item>();
+    private static final List<Block> COLOR_PRODIVIDING_BLOCKS_FOR_REGISTERING = new ArrayList<Block>();
     private static final Map<ItemStack, ModelResourceLocation> MODEL_LOCATIONS_FOR_REGISTERING = new HashMap<ItemStack, ModelResourceLocation>();
 
     @Override
@@ -98,7 +100,16 @@ public class ClientProxy implements IProxy{
 
         for(Item item : COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING){
             if(item instanceof IColorProvidingItem){
-                Minecraft.getMinecraft().getItemColors().registerItemColorHandler(((IColorProvidingItem)item).getColor(), item);
+                Minecraft.getMinecraft().getItemColors().registerItemColorHandler(((IColorProvidingItem)item).getItemColor(), item);
+            }
+        }
+
+        for(Block block : COLOR_PRODIVIDING_BLOCKS_FOR_REGISTERING){
+            if(block instanceof IColorProvidingBlock){
+                Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(((IColorProvidingBlock)block).getBlockColor(), block);
+            }
+            if(block instanceof IColorProvidingItem){
+                Minecraft.getMinecraft().getItemColors().registerItemColorHandler(((IColorProvidingItem)block).getItemColor(), block);
             }
         }
     }
@@ -118,6 +129,11 @@ public class ClientProxy implements IProxy{
     @Override
     public void addColoredItem(Item item){
         COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING.add(item);
+    }
+
+    @Override
+    public void addColoredBlock(Block block){
+        COLOR_PRODIVIDING_BLOCKS_FOR_REGISTERING.add(block);
     }
 
     @Override

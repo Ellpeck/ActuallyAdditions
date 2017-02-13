@@ -107,7 +107,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IItemColor getColor(){
+    public IItemColor getItemColor(){
         return new IItemColor(){
             @Override
             public int getColorFromItemstack(ItemStack stack, int pass){
