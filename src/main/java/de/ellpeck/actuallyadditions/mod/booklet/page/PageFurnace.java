@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -36,8 +37,11 @@ public class PageFurnace extends BookletPage{
 
     private static ItemStack getInputForOutput(ItemStack output){
         for(Map.Entry<ItemStack, ItemStack> entry : FurnaceRecipes.instance().getSmeltingList().entrySet()){
-            if(entry.getValue().isItemEqual(output)){
-                return entry.getKey();
+            ItemStack stack = entry.getValue();
+            if(StackUtil.isValid(stack)){
+                if(stack.isItemEqual(output)){
+                    return entry.getKey();
+                }
             }
         }
         return null;
