@@ -197,7 +197,7 @@ public class ClientEvents{
                 if(tileHit instanceof TileEntityBase){
                     TileEntityBase base = (TileEntityBase)tileHit;
                     if(base.isRedstoneToggle()){
-                        String strg = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".redstoneMode.name", TextFormatting.DARK_RED+StringUtil.localize("info."+ModUtil.MOD_ID+".redstoneMode."+(base.isPulseMode ? "pulse" : "deactivation"))+TextFormatting.RESET);
+                    	String strg = String.format("%s: %s", StringUtil.localize("info."+ModUtil.MOD_ID+".redstoneMode.name"), TextFormatting.DARK_RED+StringUtil.localize("info."+ModUtil.MOD_ID+".redstoneMode."+(base.isPulseMode ? "pulse" : "deactivation"))+TextFormatting.RESET);
                         font.drawStringWithShadow(strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
                         String expl;

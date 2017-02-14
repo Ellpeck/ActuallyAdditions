@@ -68,7 +68,7 @@ public class ItemBag extends ItemBase{
                 slotsFilled++;
             }
         }
-        tooltip.add(TextFormatting.ITALIC.toString()+StringUtil.localizeFormatted("item."+ModUtil.MOD_ID+".item_bag.storage", slotsFilled, slotsTotal));
+        tooltip.add(TextFormatting.ITALIC.toString()+String.format("%d/%d %s", slotsFilled, slotsTotal, StringUtil.localize("item."+ModUtil.MOD_ID+".item_bag.storage")));
     }
 
     @SubscribeEvent

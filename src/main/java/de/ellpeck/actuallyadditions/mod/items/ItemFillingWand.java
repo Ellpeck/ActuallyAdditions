@@ -246,7 +246,7 @@ public class ItemFillingWand extends ItemEnergy{
             }
         }
 
-        list.add(StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID+".item_filling_wand.selectedBlock", display));
+        list.add(String.format("%s: %s", StringUtil.localize("tooltip."+ModUtil.MOD_ID+".item_filling_wand.selectedBlock"), display));
     }
 
     @Override

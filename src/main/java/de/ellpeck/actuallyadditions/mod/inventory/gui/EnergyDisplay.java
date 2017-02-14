@@ -95,6 +95,6 @@ public class EnergyDisplay extends Gui{
 
     private String getOverlayText(){
         NumberFormat format = NumberFormat.getInstance();
-        return StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".energyDisplay", format.format(this.rfReference.getEnergyStored()), format.format(this.rfReference.getMaxEnergyStored()));
+        return String.format("%s/%s Crystal Flux", format.format(this.rfReference.getEnergyStored()), format.format(this.rfReference.getMaxEnergyStored()));
     }
 }

@@ -61,7 +61,7 @@ public abstract class ItemEnergy extends ItemBase{
             IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
             if(storage != null){
                 NumberFormat format = NumberFormat.getInstance();
-                list.add(StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID+".itemEnergy", format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored())));
+                list.add(String.format("%s/%s Crystal Flux",format.format(storage.getEnergyStored()),format.format(storage.getMaxEnergyStored())));
             }
         }
     }

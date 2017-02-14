@@ -57,7 +57,7 @@ public class RenderBatteryBox extends TileEntitySpecialRenderer{
 
                 String s = format.format(cap.getEnergyStored())+"/"+format.format(cap.getMaxEnergyStored());
                 float lengthS = -font.getStringWidth(s)/2F;
-                String s2 = StringUtil.localize("info."+ModUtil.MOD_ID+".energyUnit");
+                String s2 = "Crystal Flux";
                 float lengthS2 = -font.getStringWidth(s2)/2F;
 
                 for(int i = 0; i < 4; i++){
