@@ -16,7 +16,9 @@ import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiPage;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -95,17 +97,17 @@ public class BookmarkButton extends GuiButton{
                 IBookletChapter chapter = this.assignedPage.getChapter();
 
                 list.add(TextFormatting.GOLD+chapter.getLocalizedName()+", Page "+(chapter.getPageIndex(this.assignedPage)+1));
-                list.add("Click to open");
-                list.add(TextFormatting.ITALIC+"Shift-Click to remove");
+                list.add(StringUtil.localize("booklet."+ModUtil.MOD_ID+".bookmarkButton.bookmark.openDesc"));
+                list.add(TextFormatting.ITALIC+StringUtil.localize("booklet."+ModUtil.MOD_ID+".bookmarkButton.bookmark.removeDesc"));
             }
             else{
-                list.add(TextFormatting.GOLD+"No Bookmark");
+                list.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".bookmarkButton.noBookmark.name"));
 
                 if(this.booklet instanceof GuiPage){
-                    list.add("Click to bookmark current page");
+                    list.add(StringUtil.localize("booklet."+ModUtil.MOD_ID+".bookmarkButton.noBookmark.pageDesc"));
                 }
                 else{
-                    list.add("Open a page to bookmark it");
+                    list.add(StringUtil.localize("booklet."+ModUtil.MOD_ID+".bookmarkButton.noBookmark.notPageDesc"));
                 }
             }
 

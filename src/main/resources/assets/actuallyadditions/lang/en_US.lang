@@ -351,6 +351,7 @@ item.actuallyadditions.item_misc_knife_blade.name=Knife Blade
 item.actuallyadditions.item_misc_knife_handle.name=Knife Handle
 item.actuallyadditions.item_misc_black_quartz.name=Black Quartz
 item.actuallyadditions.item_misc_ring.name=Ring
+item.actuallyadditions.item_misc_ring.storage=%s/%s Blaze Stored
 item.actuallyadditions.item_tele_staff.name=Teleport Staff
 item.actuallyadditions.item_jam_cu_ba_ra.name=CuBaRa-Jam
 item.actuallyadditions.item_jam_gra_ki_ba.name=GraKiBa-Jam
@@ -520,6 +521,7 @@ item.actuallyadditions.item_misc_biocoal.name=Bio Coal
 item.actuallyadditions.item_player_probe.name=Player Probe
 item.actuallyadditions.item_worm.name=Worm
 item.actuallyadditions.item_bag.name=Traveler's Sack
+item.actuallyadditions.item_bag.storage=%s/%s filled slots
 item.actuallyadditions.item_void_bag.name=Void Sack
 item.actuallyadditions.item_misc_crystallized_canola_seed.name=Crystallized Canola Seed
 item.actuallyadditions.item_misc_empowered_canola_seed.name=Empowered Canola Seed
@@ -579,6 +581,10 @@ tooltip.actuallyadditions.battery.changeMode=Sneak-right-click to toggle.
 tooltip.actuallyadditions.previouslyDoubleFurnace=Previously "Double Furnace"
 tooltip.actuallyadditions.previouslyBag=Previously "Bag"
 tooltip.actuallyadditions.previouslyVoidBag=Previously "Void Bag"
+tooltip.actuallyadditions.item_filling_wand.selectedBlock=Selected Block: %s
+tooltip.actuallyadditions.item_filling_wand.selectedBlock.none=None
+tooltip.actuallyadditions.itemEnergy=%s/%s Crystal Flux
+tooltip.actuallyadditions.coffeeCup.noEffect=No Effects
 
 #Gui Information
 info.actuallyadditions.gui.animals=Animals
@@ -598,6 +604,23 @@ info.actuallyadditions.gui.pull=Pull
 info.actuallyadditions.gui.whitelist=Whitelist
 info.actuallyadditions.gui.blacklist=Blacklist
 info.actuallyadditions.gui.whitelistInfo=To let all items through, an empty blacklist can be used, to let no items through, an empty whitelist can be used. To configure certain items, place them or configured Item Filters in the slots.
+info.actuallyadditions.gui.respectMeta=Respecting Metadata
+info.actuallyadditions.gui.ignoreMeta=Ignoring Metadata
+info.actuallyadditions.gui.respectNBT=Respecting NBT
+info.actuallyadditions.gui.ignoreNBT=Ignoring NBT
+info.actuallyadditions.gui.ignoreMod=Mod Mode Off
+info.actuallyadditions.gui.respectMod=Mod Mode On
+info.actuallyadditions.gui.respectModInfo.1=If this is enabled, the filter will compare the mods items come from %s. This can be useful for storage systems with mod-based chests. Can also be combined with the other options, but that normally isn't very useful.
+info.actuallyadditions.gui.respectModInfo.2=instead of comparing the items themselves
+info.actuallyadditions.gui.ignoreOredict=Ignoring OreDictionary
+info.actuallyadditions.gui.respectOredictSoft=Soft Respecting OreDictionary
+info.actuallyadditions.gui.respectOredictHard=Hard Respecting OreDictionary
+info.actuallyadditions.gui.respectOredictInfo.one.1=The item being passed only has to contain %s of the OreDictionary tags of the item in the filter.
+info.actuallyadditions.gui.respectOredictInfo.one.2=only one
+info.actuallyadditions.gui.respectOredictInfo.all.1=The item being passed has to contain %s of the OreDictionary tags of the item in the filter.
+info.actuallyadditions.gui.respectOredictInfo.all.2=all
+info.actuallyadditions.gui.autoSplitItems.on=Auto-Split Items On
+info.actuallyadditions.gui.autoSplitItems.off=Auto-Split Items Off
 info.actuallyadditions.gui.coffee=Coffee
 info.actuallyadditions.gui.ok=Ok
 info.actuallyadditions.gui.the=the
@@ -616,10 +639,18 @@ info.actuallyadditions.booklet.manualName.1.6=Actually Addons
 info.actuallyadditions.booklet.manualName.1.7=Additional Addons
 info.actuallyadditions.booklet.manualName.2=Manual
 info.actuallyadditions.booklet.edition=Edition
+info.actuallyadditions.booklet.searchField=Click to search...
 info.actuallyadditions.deathRecorded=Your death has been recorded. Use a Death Tracker to find the death location!
 info.actuallyadditions.placer.sides.1=Placement Sides
 info.actuallyadditions.placer.sides.2=Usually when placing down blocks, they are placed towards the side of another block that you are looking at. Because the Phantom Placer can place blocks in mid-air, it doesn't know that. Usually you should just set it to a solid side.
 info.actuallyadditions.machineBroke=The block shattered as you tried to break it. Maybe it wasn't sturdy enough to be broken?
+info.actuallyadditions.energyUnit=Cristal Flux
+info.actuallyadditions.energyDisplay=%s/%s Cristal Flux
+info.actuallyadditions.redstoneMode.name=Redstone Mode: %s
+info.actuallyadditions.redstoneMode.pulse=Pulse
+info.actuallyadditions.redstoneMode.deactivation=Deactivation
+info.actuallyadditions.redstoneMode.invalidItem=Hold a Redstone Torch to toggle!
+info.actuallyadditions.redstoneMode.validItem=Right-Click to toggle!
 
 #Container Names
 container.actuallyadditions.inputter.name=ESD
@@ -629,8 +660,10 @@ container.actuallyadditions.grinderDouble.name=Double Crusher
 container.actuallyadditions.furnaceDouble.name=Powered Furnace
 container.actuallyadditions.feeder.name=Feeder
 container.actuallyadditions.giantChest.name=Small Storage Crate
+container.actuallyadditions.giantChest.desc='Small'
 container.actuallyadditions.giantChestMedium.name=Medium Storage Crate
 container.actuallyadditions.giantChestLarge.name=Large Storage Crate
+container.actuallyadditions.giantChestLarge.desc=Supersolid
 container.actuallyadditions.repairer.name=Repairer
 container.actuallyadditions.placer.name=Placer
 container.actuallyadditions.breaker.name=Breaker
@@ -771,6 +804,10 @@ booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe
 booklet.actuallyadditions.shapedRecipe=Shaped Recipe
 booklet.actuallyadditions.shapelessOreRecipe=Shapeless OreDict Recipe
 booklet.actuallyadditions.shapedOreRecipe=Shaped OreDict Recipe
+booklet.actuallyadditions.empowererRecipe=Empowerer Recipe
+booklet.actuallyadditions.crusherRecipe=Crusher Recipe
+booklet.actuallyadditions.furnaceRecipe=Furnace Recipe
+booklet.actuallyadditions.reconstructorRecipe=Atomic Reconstructor Recipe
 
 #Booklet Entries
 booklet.actuallyadditions.indexEntry.gettingStarted.name=Getting Started
@@ -790,6 +827,14 @@ booklet.actuallyadditions.indexEntry.updatesAndInfos.name=Updates and Infos
 booklet.actuallyadditions.fontSize.small=0.5
 booklet.actuallyadditions.fontSize.medium=0.75
 booklet.actuallyadditions.fontSize.large=0.8
+
+#Booklet Buttons
+booklet.actuallyadditions.bookmarkButton.noBookmark.name=No Bookmark
+booklet.actuallyadditions.bookmarkButton.noBookmark.notPageDesc=Open a page to bookmark it
+booklet.actuallyadditions.bookmarkButton.noBookmark.pageDesc=Click to bookmark current page
+booklet.actuallyadditions.bookmarkButton.bookmark.openDesc=Click to open
+booklet.actuallyadditions.bookmarkButton.bookmark.removeDesc=Shift-Click to remove
+booklet.actuallyadditions.onlineButton.name=View Online
 
 #Booklet Info
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!

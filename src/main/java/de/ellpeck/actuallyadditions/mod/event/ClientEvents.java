@@ -197,15 +197,15 @@ public class ClientEvents{
                 if(tileHit instanceof TileEntityBase){
                     TileEntityBase base = (TileEntityBase)tileHit;
                     if(base.isRedstoneToggle()){
-                        String strg = "Redstone Mode: "+TextFormatting.DARK_RED+(base.isPulseMode ? "Pulse" : "Deactivation")+TextFormatting.RESET;
+                        String strg = StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".redstoneMode.name", TextFormatting.DARK_RED+StringUtil.localize("info."+ModUtil.MOD_ID+".redstoneMode."+(base.isPulseMode ? "pulse" : "deactivation"))+TextFormatting.RESET);
                         font.drawStringWithShadow(strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
                         String expl;
                         if(StackUtil.isValid(stack) && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
-                            expl = TextFormatting.GREEN+"Right-Click to toggle!";
+                            expl = TextFormatting.GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".redstoneMode.validItem");
                         }
                         else{
-                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Redstone Torch to toggle!";
+                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".redstoneMode.invalidItem");;
                         }
                         font.drawStringWithShadow(expl, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
                     }

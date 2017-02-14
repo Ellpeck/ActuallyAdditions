@@ -76,31 +76,31 @@ public class FilterSettingsGui extends Gui{
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
         else if(this.metaButton.isMouseOver()){
-            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.theSettings.respectMeta ? "Respecting" : "Ignoring")+" Metadata"), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
+            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.theSettings.respectMeta ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectMeta") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ignoreMeta"))), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
         else if(this.nbtButton.isMouseOver()){
-            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.theSettings.respectNBT ? "Respecting" : "Ignoring")+" NBT"), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
+            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.theSettings.respectNBT ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectNBT") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ignoreNBT"))), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
         else if(this.modButton.isMouseOver()){
             List<String> list = new ArrayList<String>();
-            list.add(TextFormatting.BOLD+"Mod Mode "+(this.theSettings.respectMod ? "On" : "Off"));
-            list.addAll(mc.fontRendererObj.listFormattedStringToWidth("If this is enabled, the filter will compare the mods items come from "+TextFormatting.RED+"instead of comparing the items themselves"+TextFormatting.RESET+". This can be useful for storage systems with mod-based chests. \nCan also be combined with the other options, but that normally isn't very useful.", 200));
+            list.add(TextFormatting.BOLD+(this.theSettings.respectMod ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectMod") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ignoreMod")));
+            list.addAll(mc.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".gui.respectModInfo.1", TextFormatting.RED+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectModInfo.2")+TextFormatting.RESET), 200));
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }
         else if(this.oredictButton.isMouseOver()){
             List<String> list = new ArrayList<String>();
-            list.add(TextFormatting.BOLD+(this.theSettings.respectOredict == 0 ? "Ignoring" : (this.theSettings.respectOredict == 1 ? "Soft Respecting" : "Hard Respecting"))+" OreDictionary");
-
+            list.add(TextFormatting.BOLD+(this.theSettings.respectOredict == 0 ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ignoreOredict") : (this.theSettings.respectOredict == 1 ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectOredictSoft") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectOredictHard"))));
+            
             String type = null;
             if(this.theSettings.respectOredict == 1){
-                type = "only one";
+                type = "one";
             }
             else if(this.theSettings.respectOredict == 2){
                 type = "all";
             }
 
             if(type != null){
-                list.addAll(mc.fontRendererObj.listFormattedStringToWidth("The item being passed only has to contain "+TextFormatting.DARK_GREEN+type+TextFormatting.RESET+" of the OreDictionary tags of the item in the filter.", 200));
+            	list.addAll(mc.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".gui.respectOredictInfo."+type+".1",TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectOredictInfo."+type+".2")+TextFormatting.RESET), 200));
             }
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }

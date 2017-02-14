@@ -13,6 +13,8 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaForgeUnitsWrapper;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.creativetab.CreativeTabs;
@@ -59,7 +61,7 @@ public abstract class ItemEnergy extends ItemBase{
             IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
             if(storage != null){
                 NumberFormat format = NumberFormat.getInstance();
-                list.add(format.format(storage.getEnergyStored())+"/"+format.format(storage.getMaxEnergyStored())+" Crystal Flux");
+                list.add(StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID+".itemEnergy", format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored())));
             }
         }
     }
