@@ -1,3 +1,18 @@
+# 1.11.2-r101
+* Added Laser Relay Insibility Upgrade
+* Added Laser Relay Range Upgrade
+* Added Engineer's Goggles
+* Added Engineer's Infrared Goggles
+* Added Crystal Clusters
+* Made Smiley Clouds render Patreon reward floating items
+* Fixed pickup achievements not working
+* Fixed player data sometimes not updating properly
+* Fixed an exception in the booklet due to broken furnace recipes
+* Fixed a lot of typos in fr_FR.lang (MisterPeModder44)
+* Added a bunch of quotes to the booklet
+* Implemented charset carrying for most blocks
+* Added redstone mode to the ranged collector
+
 # 1.11.2-r100
 #### I wanted to do something really cool for r100, but I didn't. So the best change in this version is that worms now go forwards again. So that's nice, I guess.
 * Implemented slotless item handler compatibility. If you use Colossal Chests, you should install Common Capabilities to make Actually Additions stuff work nicely with that.
