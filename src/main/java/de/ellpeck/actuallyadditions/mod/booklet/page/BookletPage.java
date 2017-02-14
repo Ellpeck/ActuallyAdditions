@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -23,10 +24,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BookletPage implements IBookletPage{
 
@@ -160,8 +158,15 @@ public class BookletPage implements IBookletPage{
         return this;
     }
 
-    public BookletPage addItemToPage(ItemStack stack){
-        this.itemsForPage.add(stack);
+    public BookletPage addItemsToPage(Block... blocks){
+        for(Block block : blocks){
+            this.addItemsToPage(new ItemStack(block));
+        }
+        return this;
+    }
+
+    public BookletPage addItemsToPage(ItemStack... stacks){
+        Collections.addAll(this.itemsForPage, stacks);
         return this;
     }
 

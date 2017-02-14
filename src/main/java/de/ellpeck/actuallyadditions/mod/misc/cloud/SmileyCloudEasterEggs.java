@@ -461,6 +461,20 @@ public final class SmileyCloudEasterEggs{
                 renderHeadBlock(InitBlocks.blockSmileyCloud, 0, 13F);
             }
         });
+        //MattaBase
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"themattabase", "mattabase", "matt", "mad"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHeadBlock(Blocks.WOOL, 13, 35F);
+                renderHoldingItem(false, new ItemStack(InitItems.itemSwordQuartz));
+                renderHoldingItem(true, new ItemStack(Items.SHIELD));
+            }
+        });
     }
 
     private static void register(ISmileyCloudEasterEgg egg){

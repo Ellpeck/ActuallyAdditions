@@ -24,6 +24,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -140,5 +141,10 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     @Override
     public int quantityDropped(Random random){
         return random.nextInt(5)+2;
+    }
+
+    @Override
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
+        return true;
     }
 }

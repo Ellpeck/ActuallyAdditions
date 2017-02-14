@@ -1145,3 +1145,15 @@ booklet.actuallyadditions.chapter.engineerHouse.text.2=<i>     Machines Primus
 
 booklet.actuallyadditions.chapter.batteryBox.name=Battery Box
 booklet.actuallyadditions.chapter.batteryBox.text.1=The <item>Battery Box<r> is a great way to <imp>store your power<r>. However, for it to be able to <imp>use power<r>, you have to <imp>right-click<r> a <item>Battery<r> onto it. It will then be able to store energy on the battery itself. <n><n>If you set the battery to <imp>discharge mode<r> via <imp>sneak-right-clicking it<r> or by applying a <imp>redstone pulse<r> to the <item>Battery Box<r>, it will try to spread the power it receives equally to <imp>up to 15 adjacent<r> <item>Battery Boxes<r>.
+
+booklet.actuallyadditions.chapter.laserUpgradeInvisibility.name=Modifier: Invisibility
+booklet.actuallyadditions.chapter.laserUpgradeInvisibility.text.1=The <item>Laser Relay Modifier: Invisibility<r> makes the laser connection between <imp>two Laser Relays<r> that both have it <imp>installed<r> appear <imp>completely invisible<r>. <n>You can install it by <imp>right-clicking<r> a Laser Relay with it in hand and uninstall it again by <imp>sneak-right-clicking<r> the Relay. <n><n>By wearing <item>Engineer's Goggles<r>, you can make hidden beams <imp>appear visible<r>.
+
+booklet.actuallyadditions.chapter.laserUpgradeRange.name=Modifier: Range
+booklet.actuallyadditions.chapter.laserUpgradeRange.text.1=The <item>Laser Relay Modifier: Range<r> makes two Laser Relays that are <imp>more than <def> blocks away<r> from each other be able to be connected anyway by <imp>increasing the range to <upgraded> blocks<r>. For this to work, <imp>both<r> Relays have to have this modifier installed. <n>You can install it by <imp>right-clicking<r> a Laser Relay with it in hand and uninstall it again by <imp>sneak-right-clicking<r> the Relay.
+
+booklet.actuallyadditions.chapter.goggles.name=Engineer's Goggles
+booklet.actuallyadditions.chapter.goggles.text.1=The <item>Engineer's Goggles<r> are a very useful item that can be <imp>equipped<r> on the <imp>player's head<r>. <n>They allow you to <imp>see certain information<r> that you wouldn't normally see, like the upgrades on Laser Relays and invisible beams. <n><n>The <item>Engineer's Infrared Goggles<r> are an upgraded version that additionally allows you to easily <imp>see any entity<r> in a small area around you, even when there are blocks in the way, by making them <imp>appear glowing<r>.
+
+booklet.actuallyadditions.chapter.crystalClusters.name=Crystal Clusters
+booklet.actuallyadditions.chapter.crystalClusters.text.1=<item>Crystal Clusters<r> are blocks that generate naturally inside of <imp>Lush Caves<r>. <n>When broken, they <imp>drop<r> one or more <item>Crystal Shards<r> that can be crafted together to create <item>Crystals<r>. <n><item>Crystal Clusters<r> emit a bit of light, making them perfect for <imp>decoration<r>. To harvest them in their block form, <imp>Silk Touch<r> can be used.

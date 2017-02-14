@@ -90,8 +90,44 @@ public final class ItemCrafting{
     public static IRecipe recipeVoidBag;
     public static IRecipe recipeLensMoreDeath;
     public static IRecipe recipeFillingWand;
+    public static IRecipe recipeLaserUpgradeInvisibility;
+    public static IRecipe recipeLaserUpgradeRange;
+    public static IRecipe recipeGoggles;
+    public static IRecipe recipeGogglesAdvanced;
 
     public static void init(){
+
+        //Advanced Goggles
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemEngineerGogglesAdvanced),
+                " R ", "IGI",
+                'R', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.REDSTONE.ordinal()),
+                'I', new ItemStack(Blocks.IRON_BARS),
+                'G', new ItemStack(InitItems.itemEngineerGoggles)));
+        recipeGogglesAdvanced = RecipeUtil.lastIRecipe();
+
+        //Goggles
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemEngineerGoggles),
+                " R ", "IGI",
+                'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
+                'I', new ItemStack(Blocks.IRON_BARS),
+                'G', "blockGlass"));
+        recipeGoggles = RecipeUtil.lastIRecipe();
+
+        //Laser Invis Upgrade
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLaserUpgradeInvisibility, 4),
+                "GGG", "RCR", "GGG",
+                'G', "blockGlassBlack",
+                'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()),
+                'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+        recipeLaserUpgradeInvisibility = RecipeUtil.lastIRecipe();
+
+        //Laser Range Upgrade
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemLaserUpgradeRange, 2),
+                "GGC", "RCR", "CGG",
+                'R', new ItemStack(Items.COMPASS),
+                'G', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()),
+                'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal())));
+        recipeLaserUpgradeRange = RecipeUtil.lastIRecipe();
 
         //Filling Wand
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemFillingWand),
