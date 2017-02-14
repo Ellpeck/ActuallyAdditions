@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.page.ItemDisplay;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -118,7 +119,7 @@ public class GuiPage extends GuiBooklet{
 
         List<String> links = this.getWebLinks();
         if(links != null && !links.isEmpty()){
-            this.buttonViewOnline = new TexturedButton(RES_LOC_GADGETS, -782822, this.guiLeft+this.xSize-24, this.guiTop+this.ySize-25, 0, 172, 16, 16, Collections.singletonList(TextFormatting.GOLD+"View Online"));
+            this.buttonViewOnline = new TexturedButton(RES_LOC_GADGETS, -782822, this.guiLeft+this.xSize-24, this.guiTop+this.ySize-25, 0, 172, 16, 16, Collections.singletonList(TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".onlineButton.name")));
             this.buttonList.add(this.buttonViewOnline);
         }
 

@@ -175,7 +175,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
             this.fontRendererObj.setUnicodeFlag(true);
 
             if(!this.searchField.isFocused() && (this.searchField.getText() == null || this.searchField.getText().isEmpty())){
-                this.fontRendererObj.drawString(TextFormatting.ITALIC+"Click to search...", this.guiLeft+this.xSize+2, this.guiTop+this.ySize-40+2, 0xFFFFFF, false);
+                this.fontRendererObj.drawString(TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.searchField"), this.guiLeft+this.xSize+2, this.guiTop+this.ySize-40+2, 0xFFFFFF, false);
             }
 
             this.searchField.drawTextBox();

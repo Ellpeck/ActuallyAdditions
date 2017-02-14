@@ -15,6 +15,8 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -49,7 +51,7 @@ public class GuiFurnaceDouble extends GuiContainer{
         this.energy.drawOverlay(x, y);
 
         if(this.buttonAutoSplit.isMouseOver()){
-            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+"Auto-Split Items "+(this.tileFurnace.isAutoSplit ? "On" : "Off")), x, y);
+            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.tileFurnace.isAutoSplit ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.autoSplitItems.on") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.autoSplitItems.off"))), x, y);
         }
     }
 

@@ -120,7 +120,7 @@ public class ItemCoffee extends ItemFoodBase{
             }
         }
         else{
-            list.add("No Effects");
+            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".coffeeCup.noEffect"));
         }
     }
 

@@ -17,7 +17,9 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -66,8 +68,7 @@ public class ItemBag extends ItemBase{
                 slotsFilled++;
             }
         }
-
-        tooltip.add(TextFormatting.ITALIC.toString()+slotsFilled+"/"+slotsTotal+" filled slots");
+        tooltip.add(TextFormatting.ITALIC.toString()+String.format("%d/%d %s", slotsFilled, slotsTotal, StringUtil.localize("item."+ModUtil.MOD_ID+".item_bag.storage")));
     }
 
     @SubscribeEvent

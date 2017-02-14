@@ -11,7 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -233,7 +235,7 @@ public class ItemFillingWand extends ItemEnergy{
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
         super.addInformation(stack, player, list, bool);
 
-        String display = "None";
+        String display = StringUtil.localize("tooltip."+ModUtil.MOD_ID+".item_filling_wand.selectedBlock.none");
 
         IBlockState state = loadBlock(stack);
         if(state != null){
@@ -244,7 +246,7 @@ public class ItemFillingWand extends ItemEnergy{
             }
         }
 
-        list.add("Selected Block: "+display);
+        list.add(String.format("%s: %s", StringUtil.localize("tooltip."+ModUtil.MOD_ID+".item_filling_wand.selectedBlock"), display));
     }
 
     @Override
