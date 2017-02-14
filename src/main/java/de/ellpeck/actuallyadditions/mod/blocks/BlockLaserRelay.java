@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
+import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
 import de.ellpeck.actuallyadditions.mod.tile.*;
@@ -244,25 +245,28 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
     @Override
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
-        if(posHit != null && posHit.getBlockPos() != null && minecraft.world != null && StackUtil.isValid(stack)){
-            boolean compass = stack.getItem() instanceof ItemCompass;
-            if(compass || stack.getItem() instanceof ItemLaserWrench){
-                TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
-                if(tile instanceof TileEntityLaserRelay){
-                    TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
+        if(posHit != null && posHit.getBlockPos() != null && minecraft.world != null){
+            boolean wearing = ItemEngineerGoggles.isWearing(player);
+            if(wearing || StackUtil.isValid(stack)){
+                boolean compass = stack.getItem() instanceof ItemCompass;
+                if(wearing || compass || stack.getItem() instanceof ItemLaserWrench){
+                    TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
+                    if(tile instanceof TileEntityLaserRelay){
+                        TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
 
-                    String strg = relay.getExtraDisplayString();
-                    minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
+                        String strg = relay.getExtraDisplayString();
+                        minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
-                    String expl;
-                    if(compass){
-                        expl = relay.getCompassDisplayString();
+                        String expl;
+                        if(compass){
+                            expl = relay.getCompassDisplayString();
+                        }
+                        else{
+                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Compass to modify!";
+                        }
+
+                        StringUtil.drawSplitString(minecraft.fontRendererObj, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);
                     }
-                    else{
-                        expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Compass to modify!";
-                    }
-
-                    StringUtil.drawSplitString(minecraft.fontRendererObj, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);
                 }
             }
         }

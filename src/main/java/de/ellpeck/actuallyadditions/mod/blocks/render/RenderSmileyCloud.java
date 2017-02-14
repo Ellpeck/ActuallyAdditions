@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.misc.cloud.ISmileyCloudEasterEgg;
 import de.ellpeck.actuallyadditions.mod.misc.cloud.SmileyCloudEasterEggs;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -43,17 +44,19 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
                             if(triggerName.equalsIgnoreCase(theCloud.name)){
                                 GlStateManager.pushMatrix();
                                 IBlockState state = theCloud.getWorld().getBlockState(theCloud.getPos());
-                                switch(state.getBlock().getMetaFromState(state)){
-                                    case 1:
+
+                                switch(state.getValue(BlockHorizontal.FACING)){
+                                    case NORTH:
                                         GlStateManager.rotate(180, 0, 1, 0);
                                         break;
-                                    case 2:
+                                    case EAST:
                                         GlStateManager.rotate(270, 0, 1, 0);
                                         break;
-                                    case 3:
+                                    case WEST:
                                         GlStateManager.rotate(90, 0, 1, 0);
                                         break;
                                 }
+
                                 cloud.renderExtra(0.0625F);
                                 GlStateManager.popMatrix();
                                 break easterEggs;

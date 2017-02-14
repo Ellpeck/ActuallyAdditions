@@ -15,7 +15,8 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.items.ItemInfraredGoggles;
+import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
+import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -23,6 +24,8 @@ import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemCompass;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -42,7 +45,9 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer{
         if(tile instanceof TileEntityLaserRelay){
             TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
             boolean hasInvis = false;
-            boolean hasGoggles = ItemInfraredGoggles.isWearing(Minecraft.getMinecraft().player);
+
+            EntityPlayer player = Minecraft.getMinecraft().player;
+            boolean hasGoggles = ItemEngineerGoggles.isWearing(player);
 
             ItemStack upgrade = relay.slots.getStackInSlot(0);
             if(StackUtil.isValid(upgrade)){
@@ -50,18 +55,21 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer{
                     hasInvis = true;
                 }
 
-                GlStateManager.pushMatrix();
+                ItemStack hand = player.getHeldItemMainhand();
+                if(hasGoggles || (StackUtil.isValid(hand) && (hand.getItem() instanceof ItemCompass || hand.getItem() instanceof ItemLaserWrench)) || "themattabase".equals(player.getName())){
+                    GlStateManager.pushMatrix();
 
-                float yTrans = tile.getBlockMetadata() == 0 ? 0.2F : 0.8F;
-                GlStateManager.translate((float)x+0.5F, (float)y+yTrans, (float)z+0.5F);
-                GlStateManager.scale(0.2F, 0.2F, 0.2F);
+                    float yTrans = tile.getBlockMetadata() == 0 ? 0.2F : 0.8F;
+                    GlStateManager.translate((float)x+0.5F, (float)y+yTrans, (float)z+0.5F);
+                    GlStateManager.scale(0.2F, 0.2F, 0.2F);
 
-                double boop = Minecraft.getSystemTime()/800D;
-                GlStateManager.rotate((float)(((boop*40D)%360)), 0, 1, 0);
+                    double boop = Minecraft.getSystemTime()/800D;
+                    GlStateManager.rotate((float)(((boop*40D)%360)), 0, 1, 0);
 
-                AssetUtil.renderItemInWorld(upgrade);
+                    AssetUtil.renderItemInWorld(upgrade);
 
-                GlStateManager.popMatrix();
+                    GlStateManager.popMatrix();
+                }
             }
 
             ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(tile.getPos(), tile.getWorld());
