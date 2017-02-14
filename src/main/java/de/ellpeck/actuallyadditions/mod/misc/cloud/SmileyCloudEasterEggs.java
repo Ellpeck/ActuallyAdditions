@@ -448,6 +448,33 @@ public final class SmileyCloudEasterEggs{
                 renderHoldingItem(false, new ItemStack(Items.DIAMOND_PICKAXE));
             }
         });
+        //xbony2
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"bony", "xbony", "xbony2"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHoldingItem(false, new ItemStack(InitItems.itemBooklet));
+                renderHeadBlock(InitBlocks.blockSmileyCloud, 0, 13F);
+            }
+        });
+        //MattaBase
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"themattabase", "mattabase", "matt", "mad"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHeadBlock(Blocks.WOOL, 13, 35F);
+                renderHoldingItem(false, new ItemStack(InitItems.itemSwordQuartz));
+                renderHoldingItem(true, new ItemStack(Items.SHIELD));
+            }
+        });
     }
 
     private static void register(ISmileyCloudEasterEgg egg){
@@ -458,7 +485,7 @@ public final class SmileyCloudEasterEggs{
         GlStateManager.pushMatrix();
         GlStateManager.rotate(180F, 0F, 0F, 1F);
         GlStateManager.rotate(90, 0, 1, 0);
-        GlStateManager.translate(0.2, -1F, leftHand ? -0.525F : 0.525F);
+        GlStateManager.translate(-0.15, -1F, leftHand ? -0.525F : 0.525F);
         GlStateManager.scale(0.75F, 0.75F, 0.75F);
 
         AssetUtil.renderItemInWorld(stack);

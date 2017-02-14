@@ -33,6 +33,7 @@ import java.util.Set;
 public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
 
     public static final int MAX_DISTANCE = 15;
+    public static final int MAX_DISTANCE_RANGED = 35;
 
     public final LaserType type;
 
@@ -193,7 +194,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
     public int getMaxRange(){
         ItemStack upgrade = this.slots.getStackInSlot(0);
         if(StackUtil.isValid(upgrade) && upgrade.getItem() == InitItems.itemLaserUpgradeRange){
-            return 35;
+            return MAX_DISTANCE_RANGED;
         }
         else{
             return MAX_DISTANCE;

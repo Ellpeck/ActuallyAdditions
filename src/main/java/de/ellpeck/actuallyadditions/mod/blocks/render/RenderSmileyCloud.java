@@ -12,8 +12,11 @@ package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 import de.ellpeck.actuallyadditions.mod.misc.cloud.ISmileyCloudEasterEgg;
 import de.ellpeck.actuallyadditions.mod.misc.cloud.SmileyCloudEasterEggs;
+import de.ellpeck.actuallyadditions.mod.misc.special.RenderSpecial;
+import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,6 +24,8 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Locale;
 
 @SideOnly(Side.CLIENT)
 public class RenderSmileyCloud extends TileEntitySpecialRenderer{
@@ -36,6 +41,8 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
             GlStateManager.translate(0.0F, -2F, 0.0F);
 
             if(theCloud.name != null && !theCloud.name.isEmpty()){
+                boolean renderedEaster = false;
+
                 easterEggs:
                 for(ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.CLOUD_STUFF){
                     for(String triggerName : cloud.getTriggerNames()){
@@ -43,31 +50,50 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
                             if(triggerName.equalsIgnoreCase(theCloud.name)){
                                 GlStateManager.pushMatrix();
                                 IBlockState state = theCloud.getWorld().getBlockState(theCloud.getPos());
-                                switch(state.getBlock().getMetaFromState(state)){
-                                    case 1:
+
+                                switch(state.getValue(BlockHorizontal.FACING)){
+                                    case NORTH:
                                         GlStateManager.rotate(180, 0, 1, 0);
                                         break;
-                                    case 2:
+                                    case EAST:
                                         GlStateManager.rotate(270, 0, 1, 0);
                                         break;
-                                    case 3:
+                                    case WEST:
                                         GlStateManager.rotate(90, 0, 1, 0);
                                         break;
                                 }
+
                                 cloud.renderExtra(0.0625F);
                                 GlStateManager.popMatrix();
+
+                                renderedEaster = true;
                                 break easterEggs;
                             }
                         }
                     }
                 }
+
+                String nameLower = theCloud.name.toLowerCase(Locale.ROOT);
+                if(SpecialRenderInit.SPECIAL_LIST.containsKey(nameLower)){
+                    RenderSpecial render = SpecialRenderInit.SPECIAL_LIST.get(nameLower);
+                    if(render != null){
+                        GlStateManager.pushMatrix();
+                        GlStateManager.translate(0F, renderedEaster ? 0.05F : 0.25F, 0F);
+                        GlStateManager.rotate(180F, 1.0F, 0.0F, 1.0F);
+                        GlStateManager.scale(0.75F, 0.75F, 0.75F);
+                        render.render();
+                        GlStateManager.popMatrix();
+                    }
+                }
             }
             GlStateManager.popMatrix();
 
-            if(theCloud.name != null && !theCloud.name.isEmpty() && !Minecraft.getMinecraft().gameSettings.hideGUI){
-                AssetUtil.renderNameTag(theCloud.name, x+0.5F, y+1.5F, z+0.66);
+            Minecraft mc = Minecraft.getMinecraft();
+            if(theCloud.name != null && !theCloud.name.isEmpty() && !mc.gameSettings.hideGUI){
+                if(mc.player.getDistanceSq(tile.getPos()) <= 36){
+                    AssetUtil.renderNameTag(theCloud.name, x+0.5F, y+1.5F, z+0.5F);
+                }
             }
-
         }
     }
 

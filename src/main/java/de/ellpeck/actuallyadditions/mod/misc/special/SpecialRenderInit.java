@@ -26,7 +26,7 @@ import java.util.Properties;
 
 public class SpecialRenderInit{
 
-    private static final HashMap<String, RenderSpecial> SPECIAL_LIST = new HashMap<String, RenderSpecial>();
+    public static final HashMap<String, RenderSpecial> SPECIAL_LIST = new HashMap<String, RenderSpecial>();
 
     public SpecialRenderInit(){
         new ThreadSpecialFetcher();

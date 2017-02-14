@@ -195,14 +195,16 @@ public final class InitItems{
     public static Item itemFillingWand;
     public static Item itemLaserUpgradeInvisibility;
     public static Item itemLaserUpgradeRange;
-    public static Item itemInfraredGoggles;
+    public static Item itemEngineerGoggles;
+    public static Item itemEngineerGogglesAdvanced;
     public static Item itemCrystalShard;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
 
         itemCrystalShard = new ItemCrystalShard("item_crystal_shard");
-        itemInfraredGoggles = new ItemInfraredGoggles("item_infrared_goggles");
+        itemEngineerGogglesAdvanced = new ItemEngineerGoggles("item_engineer_goggles_advanced", true);
+        itemEngineerGoggles = new ItemEngineerGoggles("item_engineer_goggles", false);
         itemLaserUpgradeRange = new ItemLaserRelayUpgrade("item_laser_upgrade_range");
         itemLaserUpgradeInvisibility = new ItemLaserRelayUpgrade("item_laser_upgrade_invisibility");
         itemFillingWand = new ItemFillingWand("item_filling_wand");

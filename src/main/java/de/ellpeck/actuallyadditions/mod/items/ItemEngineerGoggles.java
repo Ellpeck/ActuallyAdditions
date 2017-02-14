@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.api.misc.IGoggles;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemArmorAA;
 import de.ellpeck.actuallyadditions.mod.material.InitArmorMaterials;
@@ -29,12 +30,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Set;
 
-public class ItemInfraredGoggles extends ItemArmorAA{
+public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles{
 
     private final Set<Entity> cachedGlowingEntities = new ConcurrentSet<Entity>();
 
-    public ItemInfraredGoggles(String name){
+    private final boolean displayMobs;
+
+    public ItemEngineerGoggles(String name, boolean displayMobs){
         super(name, InitArmorMaterials.armorMaterialGoggles, 0, StackUtil.getNull());
+        this.displayMobs = displayMobs;
         this.setMaxDamage(0);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -45,45 +49,54 @@ public class ItemInfraredGoggles extends ItemArmorAA{
     public void onClientTick(ClientTickEvent event){
         EntityPlayer player = ActuallyAdditions.proxy.getCurrentPlayer();
         if(player != null && isWearing(player)){
-            double range = 8;
-            AxisAlignedBB aabb = new AxisAlignedBB(player.posX-range, player.posY-range, player.posZ-range, player.posX+range, player.posY+range, player.posZ+range);
-            List<Entity> entities = player.world.getEntitiesWithinAABB(Entity.class, aabb);
-            if(entities != null && !entities.isEmpty()){
-                this.cachedGlowingEntities.addAll(entities);
-            }
+            ItemStack face = player.inventory.armorInventory.get(3);
+            if(((IGoggles)face.getItem()).displaySpectralMobs()){
+                double range = 8;
+                AxisAlignedBB aabb = new AxisAlignedBB(player.posX-range, player.posY-range, player.posZ-range, player.posX+range, player.posY+range, player.posZ+range);
+                List<Entity> entities = player.world.getEntitiesWithinAABB(Entity.class, aabb);
+                if(entities != null && !entities.isEmpty()){
+                    this.cachedGlowingEntities.addAll(entities);
+                }
 
-            if(!this.cachedGlowingEntities.isEmpty()){
-                for(Entity entity : this.cachedGlowingEntities){
-                    if(entity.isDead || entity.getDistanceSq(player.posX, player.posY, player.posZ) > range*range){
-                        entity.setGlowing(false);
+                if(!this.cachedGlowingEntities.isEmpty()){
+                    for(Entity entity : this.cachedGlowingEntities){
+                        if(entity.isDead || entity.getDistanceSq(player.posX, player.posY, player.posZ) > range*range){
+                            entity.setGlowing(false);
 
-                        this.cachedGlowingEntities.remove(entity);
-                    }
-                    else{
-                        entity.setGlowing(true);
+                            this.cachedGlowingEntities.remove(entity);
+                        }
+                        else{
+                            entity.setGlowing(true);
+                        }
                     }
                 }
+
+                return;
             }
         }
-        else{
-            if(!this.cachedGlowingEntities.isEmpty()){
-                for(Entity entity : this.cachedGlowingEntities){
-                    if(!entity.isDead){
-                        entity.setGlowing(false);
-                    }
+
+        if(!this.cachedGlowingEntities.isEmpty()){
+            for(Entity entity : this.cachedGlowingEntities){
+                if(!entity.isDead){
+                    entity.setGlowing(false);
                 }
-                this.cachedGlowingEntities.clear();
             }
+            this.cachedGlowingEntities.clear();
         }
     }
 
     public static boolean isWearing(EntityPlayer player){
         ItemStack face = player.inventory.armorInventory.get(3);
-        return StackUtil.isValid(face) && face.getItem() == InitItems.itemInfraredGoggles;
+        return StackUtil.isValid(face) && face.getItem() instanceof IGoggles;
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.RARE;
+    }
+
+    @Override
+    public boolean displaySpectralMobs(){
+        return this.displayMobs;
     }
 }
