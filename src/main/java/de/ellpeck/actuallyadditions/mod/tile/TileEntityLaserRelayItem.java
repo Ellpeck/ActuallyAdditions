@@ -15,6 +15,8 @@ import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -146,13 +148,13 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
     @Override
     @SideOnly(Side.CLIENT)
     public String getExtraDisplayString(){
-        return "Priority: "+TextFormatting.DARK_RED+this.getPriority()+TextFormatting.RESET;
+        return StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.item.extra") + ": " + TextFormatting.DARK_RED+this.getPriority()+TextFormatting.RESET;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public String getCompassDisplayString(){
-        return TextFormatting.GREEN+"Right-Click to increase! \nSneak-Right-Click to decrease!";
+        return TextFormatting.GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.item.display");
     }
 
     @Override
