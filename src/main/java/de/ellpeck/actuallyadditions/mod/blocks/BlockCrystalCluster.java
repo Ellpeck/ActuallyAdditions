@@ -119,6 +119,7 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IItemColor getItemColor(){
         return new IItemColor(){
             @Override
