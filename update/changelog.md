@@ -1,3 +1,6 @@
+# 1.11.2-r102
+* Fixed dedicated servers crashing
+
 # 1.11.2-r101
 * Added Laser Relay Insibility Upgrade
 * Added Laser Relay Range Upgrade
