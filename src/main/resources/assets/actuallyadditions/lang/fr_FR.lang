@@ -528,9 +528,10 @@ item.actuallyadditions.item_misc_empowered_canola_seed.name=Graine de Colza puis
 item.actuallyadditions.item_mining_lens.name=Lentille du Mineur
 item.actuallyadditions.item_more_damage_lens.name=Lentille du Tueur
 item.actuallyadditions.item_filling_wand.name=Remplisseuse portable
-item.actuallyadditions.item_laser_upgrade_invisibility.name=Modifiaction pour relai laser: Invisibilité
-item.actuallyadditions.item_infrared_goggles.name=Lunettes infrarouge
-item.actuallyadditions.item_laser_upgrade_range.name=Modifiaction pour relai laser: Portée
+item.actuallyadditions.item_laser_upgrade_invisibility.name=Modifiaction pour relais laser: Invisibilité
+item.actuallyadditions.item_engineer_goggles.name=Lunettes d'ingénieur infrarouge
+item.actuallyadditions.item_engineer_goggles_advanced.name=Lunettes infrarouge d'ingénieur
+item.actuallyadditions.item_laser_upgrade_range.name=Modifiaction pour relais laser: Portée
 item.actuallyadditions.item_crystal_shard_red.name=Éclat de cristal rouge
 item.actuallyadditions.item_crystal_shard_blue.name=Éclat de cristal bleu
 item.actuallyadditions.item_crystal_shard_light_blue.name=Éclat de cristal bleu-clair
@@ -1145,7 +1146,7 @@ booklet.actuallyadditions.chapter.distributorItem.name=Répartiteurs à Objets
 booklet.actuallyadditions.chapter.distributorItem.text.1=Le <item>répartiteur à objets<r> est une façon simple de séparer les piles d'objets et les faire aller dans des <imp>directions différentes<r>. <n><n>Le répartiteur va <imp>prendre les objets au dessus de lui<r> tout seul, les séparer et ensuite les <imp>mettre<r> dans les inventaires connectés sur les <imp>autres faces<r>. <n>Il essaie de les séparer à parts <imp>égales<r>, mais il marche mieux avec <imp>un objet à la fois<r>, ce qu'il fait automatiquement quand il prend les objets au dessus de lui.
 
 booklet.actuallyadditions.chapter.bioReactor.name=Bio-Réacteurs
-booklet.actuallyadditions.chapter.bioReactor.text.1=Le <item>bio-réacteur<r> consomme tout type de <imp>graines, nourriture et plantes<r> pour <imp>générer des CF<r>! <n>Pour cela, <imp>mettez simplement<r> les objets <imp>dans son interface<r>. Si vous l'essayez, vous remarquerez qu'il ne génere pas tant d'énergie que ça par défaut. Mais, plus il y a de <imp>differents types<r> de plantes, graines ou nourriture, plus la quantité d'énérgie générée sera grande!
+booklet.actuallyadditions.chapter.bioReactor.text.1=Le <item>bio-réacteur<r> consomme tout type de <imp>graines, nourriture et plantes<r> pour <imp>générer des CF<r>! <n>Pour cela, <imp>mettez simplement<r> les objets <imp>dans son interface<r>. Si vous l'essayez, vous remarquerez qu'il ne génère pas tant d'énergie que ça par défaut. Mais, plus il y a de <imp>differents types<r> de plantes, graines ou nourriture, plus la quantité d'énérgie générée sera grande!
 
 booklet.actuallyadditions.chapter.farmer.name=Fermier Automatique
 booklet.actuallyadditions.chapter.farmer.text.1=Le <item>fermier automatique<r> est un bloc qui peut, une fois placé dans le monde, <imp>planter et récolter<r> différents types de plantes, <imp>des cultures<r> ou <imp>autres<r> pouvant être vues dans <imp>les pages suivantes<r>. <n>Le <imp>côté gauche<r> de son interface est réservée pour les <item>graines<r> et autres objets pouvant être plantés, tandis que le <imp>côté droit<r> contiendera <imp>la récolte<r>. <n>Il opérera dans une <imp>zone de 9x9 blocs<r> devant lui. <n>Il utilise une quantité variable de CF par operation.
@@ -1183,3 +1184,15 @@ booklet.actuallyadditions.chapter.engineerHouse.text.2=<i>*Huuuuuum*
 
 booklet.actuallyadditions.chapter.batteryBox.name=Les Batteries
 booklet.actuallyadditions.chapter.batteryBox.text.1=La <item>Batterie<r> est une bonne manière de <imp>stocker votre énergie<r>. Mais pour qu'elle puisse <imp>utiliser l'énergie<r>, vous devez <imp>cliquer-droit<r> dessus avec une <item>pile<r>. Elle stockera alors l'énergie sur la pile elle-même. <n><n>Si vous mettez la pile en <imp>mode déchargement<r> en <imp>cliquant-doit accroupi avec<r> ou alors en donnant un <imp>signal de redstone<r> à la <item>batterie<r>, elle va alors essayer de répartir l'énergie recue de façon égale jusqu'<imp>à to 15<r> <item>batteries adjacentes<r>.
+
+booklet.actuallyadditions.chapter.laserUpgradeInvisibility.name=Modification pour relais laser: Invisibilité
+booklet.actuallyadditions.chapter.laserUpgradeInvisibility.text.1=La <item>Modification pour relais laser d'invisibilité<r> rend la connection entre <imp>deux relais laser<r> qui l'<imp>ont installé<r> <imp>complètement invisible<r>. <n>Vous pouvez l'installer en <imp>cliquant-droit<r> sur un relai laser avec l'amélioration dans la main. Pour la désinstaller, faîtes un <imp>clic-droit accroupi<r> sur le relais avec une main vide. <n><n>Porter les <item>lunettes d'ingénieur<r> vous permettra de rendre les rayons <imp>visibles<r>.
+
+booklet.actuallyadditions.chapter.laserUpgradeRange.name=Modification pour Relais Laser: Portée
+booklet.actuallyadditions.chapter.laserUpgradeRange.text.1=La <item>Modification pour relais laser de portée<r> permet à deux relais laser qui sont à <imp>plus de <def> bloc de distance<r> l'un de l'autre de pouvoir se connecter quand même en <imp>augmentant la portée à <upgraded> blocs de distance<r>. Pour que cela marche, <imp>les deux<r> relais doivent avoir installés cette amélioration. <n>Vous pouvez l'installer en <imp>cliquant-droit<r> sur un relai laser avec l'amélioration dans la main. Pour la désinstaller, faîtes un <imp>clic-droit accroupi<r> sur le relais avec une main vide.
+
+booklet.actuallyadditions.chapter.goggles.name=Lunettes d'Ingénieur
+booklet.actuallyadditions.chapter.goggles.text.1=Les <item>lunettes d'ingénieur<r> sont des objets très utiles pouvant être <imp>équipés<r> sur la <imp>tête du joueur<r>. <n>Elle vous permettent de <imp>voir certaines choses<r> que vous n'auriez pas pu voir, comme les améliorations sur les relais laser ou les rayons invisibles. <n><n>Les <item>lunettes infrarouge d'ingénieur<r> est une version améliorée pour vous permet de voir facilement <imp>toutes les entités<r> dans un petit rayon autour de vous, même quand la vue est bloquée, en les <imp>faisant briller<r>.
+
+booklet.actuallyadditions.chapter.crystalClusters.name=Amas de Cristaux
+booklet.actuallyadditions.chapter.crystalClusters.text.1=Les <item>amas de cristaux<r> sont des blocs qui se génrent à l'intérieur de <imp>cavernes luxuriantes<r>. <n>Quand ils sont cassés, ils <imp>lâchent<r> un ou plusieurs <item>éclats de cristal<r> pouvant être assemblés pour créer des <item>cristaux<r>. <n>Les <item>Amas de cristaux<r> émettent un peu de lumière, les rendant parfait pour <imp>décorer<r>. Pour les récuperer tel quel, l'enchantement <imp>Toucher de Soie<r> peut être utilisé.
