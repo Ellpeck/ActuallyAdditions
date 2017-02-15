@@ -10,11 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import java.io.IOException;
+import java.util.Collections;
+
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -23,9 +28,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.io.IOException;
-import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
 public class GuiGrinder extends GuiContainer{
@@ -83,7 +85,8 @@ public class GuiGrinder extends GuiContainer{
         this.energy.drawOverlay(x, y);
 
         if(this.isDouble && this.buttonAutoSplit.isMouseOver()){
-            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+"Auto-Split Items "+(this.tileGrinder.isAutoSplit ? "On" : "Off")), x, y);
+        	
+        	this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.tileGrinder.isAutoSplit ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.autoSplitItems.on") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.autoSplitItems.off"))), x, y);
         }
     }
 

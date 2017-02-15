@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.ThePotionRings;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.color.IItemColor;
@@ -239,6 +240,6 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
         super.addInformation(stack, playerIn, tooltip, advanced);
 
-        tooltip.add(this.getStoredBlaze(stack)+"/"+MAX_BLAZE+" Blaze stored");
+        tooltip.add(String.format("%d/%d %s",this.getStoredBlaze(stack) , MAX_BLAZE, StringUtil.localize("item."+ModUtil.MOD_ID+".item_misc_ring.storage")));
     }
 }

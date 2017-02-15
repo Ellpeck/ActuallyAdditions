@@ -20,7 +20,9 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestLarge;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestMedium;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -180,10 +182,10 @@ public class BlockGiantChest extends BlockContainerBase{
         public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
             int type = this.block instanceof BlockGiantChest ? ((BlockGiantChest)this.block).type : -1;
             if(type == 2){
-                tooltip.add(TextFormatting.ITALIC+"Supersolid");
+                tooltip.add(TextFormatting.ITALIC+StringUtil.localize("container."+ModUtil.MOD_ID+".giantChestLarge.desc"));
             }
             else if(type == 0){
-                tooltip.add(TextFormatting.ITALIC+"'Small'");
+                tooltip.add(TextFormatting.ITALIC+StringUtil.localize("container."+ModUtil.MOD_ID+".giantChest.desc"));
             }
         }
 

@@ -13,7 +13,9 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
@@ -35,7 +37,7 @@ public class PageCrusherRecipe extends BookletPage{
         gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX+38, startY+6, 136, 0, 52, 74, 0);
 
-        gui.renderScaledAsciiString("(Crusher Recipe)", startX+36, startY+85, 0, false, gui.getMediumFontSize());
+        gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ModUtil.MOD_ID+".crusherRecipe")+")", startX+36, startY+85, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+100);
     }
