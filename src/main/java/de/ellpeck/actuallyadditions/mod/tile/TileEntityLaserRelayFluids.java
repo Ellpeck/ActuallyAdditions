@@ -14,6 +14,8 @@ import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy.Mode;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -217,13 +219,13 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
     @Override
     @SideOnly(Side.CLIENT)
     public String getExtraDisplayString(){
-        return "Fluid Flow: "+TextFormatting.DARK_RED+this.mode.name+TextFormatting.RESET;
+        return StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.fluid.extra") + ": " +TextFormatting.DARK_RED+StringUtil.localize(this.mode.name)+TextFormatting.RESET;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public String getCompassDisplayString(){
-        return TextFormatting.GREEN+"Right-Click to change!";
+        return TextFormatting.GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.energy.display");
     }
 
     @Override

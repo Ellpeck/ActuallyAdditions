@@ -528,9 +528,10 @@ item.actuallyadditions.item_misc_empowered_canola_seed.name=Graine de Colza puis
 item.actuallyadditions.item_mining_lens.name=Lentille du Mineur
 item.actuallyadditions.item_more_damage_lens.name=Lentille du Tueur
 item.actuallyadditions.item_filling_wand.name=Remplisseuse portable
-item.actuallyadditions.item_laser_upgrade_invisibility.name=Modifiaction pour relai laser: Invisibilité
-item.actuallyadditions.item_infrared_goggles.name=Lunettes infrarouge
-item.actuallyadditions.item_laser_upgrade_range.name=Modifiaction pour relai laser: Portée
+item.actuallyadditions.item_laser_upgrade_invisibility.name=Modification pour relais laser: Invisibilité
+item.actuallyadditions.item_engineer_goggles.name=Lunettes d'ingénieur infrarouge
+item.actuallyadditions.item_engineer_goggles_advanced.name=Lunettes infrarouge d'ingénieur
+item.actuallyadditions.item_laser_upgrade_range.name=Modification pour relais laser: Portée
 item.actuallyadditions.item_crystal_shard_red.name=Éclat de cristal rouge
 item.actuallyadditions.item_crystal_shard_blue.name=Éclat de cristal bleu
 item.actuallyadditions.item_crystal_shard_light_blue.name=Éclat de cristal bleu-clair
@@ -617,6 +618,8 @@ info.actuallyadditions.gui.respectOredictInfo.one=L'objet filtré doit contenir 
 info.actuallyadditions.gui.respectOredictInfo.all=L'objet filtré doit contenir §2tous§r les mots clés de l'OreDictionary de l'objet filtrant.
 info.actuallyadditions.gui.autoSplitItems.on=Répartition auto des objets: Activée
 info.actuallyadditions.gui.autoSplitItems.off=Répartition auto des objets: Désactivée
+info.actuallyadditions.gui.inbound=ENTREE
+info.actuallyadditions.gui.outbound=SORTIE
 info.actuallyadditions.gui.coffee=Café
 info.actuallyadditions.gui.ok=Ok
 info.actuallyadditions.gui.the=Le
@@ -636,6 +639,11 @@ info.actuallyadditions.booklet.manualName.1.7=Additional Addons
 info.actuallyadditions.booklet.manualName.2=Manuel
 info.actuallyadditions.booklet.edition=Edition
 info.actuallyadditions.booklet.searchField=Recherche...
+info.actuallyadditions.booklet.hudDisplay.page=Page
+info.actuallyadditions.booklet.hudDisplay.open=Cliquez-droit pour ouvrir...
+info.actuallyadditions.booklet.hudDisplay.noInfo=Pas d'infos disponibles! Désolé  ¯\_(ツ)_/¯
+info.actuallyadditions.booklet.hudDisplay.noInfo.desc.1=Accroupissez-vous en regardant un bloc
+info.actuallyadditions.booklet.hudDisplay.noInfo.desc.2=d'Actually Additions pour plus d'infos sur celui-ci!
 info.actuallyadditions.deathRecorded=Votre mort à été eneregistrée. Utilisez un traqeur de mort pour trouver l'endroit de la mort!
 info.actuallyadditions.placer.sides.1=Côtés de placements
 info.actuallyadditions.placer.sides.2=Habituellement en plaçant des blocs, ils sont placés vers le côté d'un autre bloc que vous regardez. A cause du fait que le placeur fantôme peut placer des blocs en l'air, il ne le connaît pas. Habituellement vous voudrez le mettre arbitrairement sur un côté quelquonque.
@@ -645,6 +653,16 @@ info.actuallyadditions.redstoneMode.pulse=Impulsion
 info.actuallyadditions.redstoneMode.deactivation=Desactivation
 info.actuallyadditions.redstoneMode.invalidItem=Utilisez une torche de redstone pour activer/désactiver!
 info.actuallyadditions.redstoneMode.validItem=Cliquez-droit pour activer/désactiver!
+info.actuallyadditions.laserRelay.item.extra=Priorité
+info.actuallyadditions.laserRelay.item.display.1=Cliquez-droit pour augmenter!
+info.actuallyadditions.laserRelay.item.display.2=Cliquez-droit accroupi pour diminuer!
+info.actuallyadditions.laserRelay.energy.extra=Flux d'énergie
+info.actuallyadditions.laserRelay.energy.display=Cliquez-droit pour changer!
+info.actuallyadditions.laserRelay.fluid.extra=Flux de liquide
+info.actuallyadditions.laserRelay.mode.both=Les deux sens
+info.actuallyadditions.laserRelay.mode.outputOnly=Seulement vers les blocs adjacents
+info.actuallyadditions.laserRelay.mode.inputOnly=Seulement hors des blocs adjacents
+info.actuallyadditions.laserRelay.mode.noCompasss=Tenez une boussole en main pour modifier!
 
 #Noms de conteneurs
 container.actuallyadditions.inputter.name=DSE
@@ -751,8 +769,8 @@ achievement.actuallyadditions.craftReconstructor.desc=Craftez un reconstructeur 
 achievement.actuallyadditions.craftEmpowerer=L'autel d'infusion
 achievement.actuallyadditions.craftEmpowerer.desc=Craftez un améliorateur de puissance
 
-achievement.actuallyadditions.makecrystal=Clair comme le cristal!
-achievement.actuallyadditions.makecrystal.desc=Fabriquez un cristal avec le reconstructeur atmoique
+achievement.actuallyadditions.makeCrystal=Clair comme le cristal!
+achievement.actuallyadditions.makeCrystal.desc=Fabriquez un cristal avec le reconstructeur atmoique
 
 achievement.actuallyadditions.craftLaserRelay=Relayé, et non pas délayé
 achievement.actuallyadditions.craftLaserRelay.desc=Craftez un relais laser
@@ -784,8 +802,8 @@ achievement.actuallyadditions.craftCoffeeMachine.desc=Craftez une cafetière
 achievement.actuallyadditions.craftFireworkBox=Bang Boom Bang
 achievement.actuallyadditions.craftFireworkBox.desc=Craftez une boîte de feux d'artifices
 
-achievement.actuallyadditions.getcrystalsMilestone=Maître de la Reconstruction
-achievement.actuallyadditions.getcrystalsMilestone.desc=Créez 200 cristaux
+achievement.actuallyadditions.getCrystalsMilestone=Maître de la Reconstruction
+achievement.actuallyadditions.getCrystalsMilestone.desc=Créez 200 cristaux
 
 achievement.actuallyadditions.openBookletMilestone=Rat de bibliothèque!
 achievement.actuallyadditions.openBookletMilestone.desc=Ouvrez le manuel 50 fois
@@ -829,6 +847,11 @@ booklet.actuallyadditions.bookmarkButton.noBookmark.pageDesc=Cliquez pour marque
 booklet.actuallyadditions.bookmarkButton.bookmark.openDesc=Cliquez pour ouvrir
 booklet.actuallyadditions.bookmarkButton.bookmark.removeDesc=Shift+Cliquez pour supprimer
 booklet.actuallyadditions.onlineButton.name=Consulter en ligne
+booklet.actuallyadditions.configButton.name=Configuration
+booklet.actuallyadditions.configButton.desc=Appuyez ici pour configurer %s en jeu. \nCertains changements nécessiteront un redémarrage du jeu!
+booklet.actuallyadditions.achievementButton.name=Succès
+booklet.actuallyadditions.achievementButton.desc=Appuyez ici pour voir les succès d'%s.
+
 
 #Booklet Info
 booklet.actuallyadditions.recipeDisabled=La recette de fabrication pour cet objet à été désactivée dans le fichier de configuration! Si vous êtes sur serveur, demandez au(x) créateur(s) du serveur de l'activer dans le fichier de configuration. Si vous êtes en solo, appuyez sur le bouton 'Configuration' en haut à gauche pour l'activer!
@@ -1083,7 +1106,7 @@ booklet.actuallyadditions.chapter.itemInterfaces.text.1=L'<item>interface à obj
 booklet.actuallyadditions.chapter.itemInterfaces.text.2=Cela signifie que vous pouvez <imp>utiliser un entonnoir<r> ou tout autre mécanisme de transport d'objets sur l'interface à objets et il fonctionnera comme un coffre, capable d'<imp>accepter les objets<r> et d'accepter l'<imp>extraction<r> de son contenu. Sauf que les objets stockés à l'intérieur de l'<imp>interface<r> proviennent du <imp>réseau de relais laser à objets<r>. <n><n>Pour <imp>connecter<r> une <item>interface à objets<r> à un réseau, <imp>placez<r> juste un <item>relais laser à objets<r>(connecté au réseau) à côté de l'interface.
 
 booklet.actuallyadditions.chapter.itemRelaysAdvanced.name=Relais Laser à Objets Avancés
-booklet.actuallyadditions.chapter.itemRelaysAdvanced.text.1=Bientôt, vous réaliserez d'avoir besoin de <imp>filtrer<r> en <imp>liste noire ou blanche<r> ce voulez faire renter dans un conteneur. <n>Le <item>relais laser à objets avancé<r> est fait pour cela. En <imp>cliquant-droit<r>, vous pouvez configurer une <imp>liste blanche<r> ou une <imp>liste noire<r> à l'interieur de l'interface. <n>Cette liste à deux côtés, Le côté <imp>"INBOUND", ou côté entrant<r> signifie "les choses qui essaient d'aller dans le conteneur sur lequel le relais est attaché", tandis que le côté <imp>"OUTBOUND", ou côté sortant<r> signifie "les choses qui essaient de quitter le conteneur attaché".
+booklet.actuallyadditions.chapter.itemRelaysAdvanced.text.1=Bientôt, vous réaliserez d'avoir besoin de <imp>filtrer<r> en <imp>liste noire ou blanche<r> ce voulez faire renter dans un conteneur. <n>Le <item>relais laser à objets avancé<r> est fait pour cela. En <imp>cliquant-droit<r>, vous pouvez configurer une <imp>liste blanche<r> ou une <imp>liste noire<r> à l'interieur de l'interface. <n>Cette liste à deux côtés, Le côté <imp>"ENTREE", ou côté entrant<r> signifie "les choses qui essaient d'aller dans le conteneur sur lequel le relais est attaché", tandis que le côté <imp>"SORTIE", ou côté sortant<r> signifie "les choses qui essaient de quitter le conteneur attaché".
 booklet.actuallyadditions.chapter.itemRelaysAdvanced.text.2=Ca ne marche pas seulement sur les <imp>stockages d'objets<r> du réseau, mais aussi sur les <item>interface à objets<r>, ce qui veut dire vous pouvez mettre en place un système de stockage et seulement prendre des objets d'endroits spécifiques.
 
 booklet.actuallyadditions.chapter.itemInterfacesHopping.name=Interface à Objets Absorbante
@@ -1145,7 +1168,7 @@ booklet.actuallyadditions.chapter.distributorItem.name=Répartiteurs à Objets
 booklet.actuallyadditions.chapter.distributorItem.text.1=Le <item>répartiteur à objets<r> est une façon simple de séparer les piles d'objets et les faire aller dans des <imp>directions différentes<r>. <n><n>Le répartiteur va <imp>prendre les objets au dessus de lui<r> tout seul, les séparer et ensuite les <imp>mettre<r> dans les inventaires connectés sur les <imp>autres faces<r>. <n>Il essaie de les séparer à parts <imp>égales<r>, mais il marche mieux avec <imp>un objet à la fois<r>, ce qu'il fait automatiquement quand il prend les objets au dessus de lui.
 
 booklet.actuallyadditions.chapter.bioReactor.name=Bio-Réacteurs
-booklet.actuallyadditions.chapter.bioReactor.text.1=Le <item>bio-réacteur<r> consomme tout type de <imp>graines, nourriture et plantes<r> pour <imp>générer des CF<r>! <n>Pour cela, <imp>mettez simplement<r> les objets <imp>dans son interface<r>. Si vous l'essayez, vous remarquerez qu'il ne génere pas tant d'énergie que ça par défaut. Mais, plus il y a de <imp>differents types<r> de plantes, graines ou nourriture, plus la quantité d'énérgie générée sera grande!
+booklet.actuallyadditions.chapter.bioReactor.text.1=Le <item>bio-réacteur<r> consomme tout type de <imp>graines, nourriture et plantes<r> pour <imp>générer des CF<r>! <n>Pour cela, <imp>mettez simplement<r> les objets <imp>dans son interface<r>. Si vous l'essayez, vous remarquerez qu'il ne génère pas tant d'énergie que ça par défaut. Mais, plus il y a de <imp>differents types<r> de plantes, graines ou nourriture, plus la quantité d'énérgie générée sera grande!
 
 booklet.actuallyadditions.chapter.farmer.name=Fermier Automatique
 booklet.actuallyadditions.chapter.farmer.text.1=Le <item>fermier automatique<r> est un bloc qui peut, une fois placé dans le monde, <imp>planter et récolter<r> différents types de plantes, <imp>des cultures<r> ou <imp>autres<r> pouvant être vues dans <imp>les pages suivantes<r>. <n>Le <imp>côté gauche<r> de son interface est réservée pour les <item>graines<r> et autres objets pouvant être plantés, tandis que le <imp>côté droit<r> contiendera <imp>la récolte<r>. <n>Il opérera dans une <imp>zone de 9x9 blocs<r> devant lui. <n>Il utilise une quantité variable de CF par operation.
@@ -1183,3 +1206,15 @@ booklet.actuallyadditions.chapter.engineerHouse.text.2=<i>*Huuuuuum*
 
 booklet.actuallyadditions.chapter.batteryBox.name=Les Batteries
 booklet.actuallyadditions.chapter.batteryBox.text.1=La <item>Batterie<r> est une bonne manière de <imp>stocker votre énergie<r>. Mais pour qu'elle puisse <imp>utiliser l'énergie<r>, vous devez <imp>cliquer-droit<r> dessus avec une <item>pile<r>. Elle stockera alors l'énergie sur la pile elle-même. <n><n>Si vous mettez la pile en <imp>mode déchargement<r> en <imp>cliquant-doit accroupi avec<r> ou alors en donnant un <imp>signal de redstone<r> à la <item>batterie<r>, elle va alors essayer de répartir l'énergie recue de façon égale jusqu'<imp>à to 15<r> <item>batteries adjacentes<r>.
+
+booklet.actuallyadditions.chapter.laserUpgradeInvisibility.name=Modification: Invisibilité
+booklet.actuallyadditions.chapter.laserUpgradeInvisibility.text.1=La <item>Modification pour relais laser d'invisibilité<r> rend la connection entre <imp>deux relais laser<r> qui l'<imp>ont installé<r> <imp>complètement invisible<r>. <n>Vous pouvez l'installer en <imp>cliquant-droit<r> sur un relai laser avec l'amélioration dans la main. Pour la désinstaller, faîtes un <imp>clic-droit accroupi<r> sur le relais avec une main vide. <n><n>Porter les <item>lunettes d'ingénieur<r> vous permettra de rendre les rayons <imp>visibles<r>.
+
+booklet.actuallyadditions.chapter.laserUpgradeRange.name=Modification: Portée
+booklet.actuallyadditions.chapter.laserUpgradeRange.text.1=La <item>Modification pour relais laser de portée<r> permet à deux relais laser qui sont à <imp>plus de <def> bloc de distance<r> l'un de l'autre de pouvoir se connecter quand même en <imp>augmentant la portée à <upgraded> blocs de distance<r>. Pour que cela marche, <imp>les deux<r> relais doivent avoir installés cette amélioration. <n>Vous pouvez l'installer en <imp>cliquant-droit<r> sur un relai laser avec l'amélioration dans la main. Pour la désinstaller, faîtes un <imp>clic-droit accroupi<r> sur le relais avec une main vide.
+
+booklet.actuallyadditions.chapter.goggles.name=Lunettes d'Ingénieur
+booklet.actuallyadditions.chapter.goggles.text.1=Les <item>lunettes d'ingénieur<r> sont des objets très utiles pouvant être <imp>équipés<r> sur la <imp>tête du joueur<r>. <n>Elle vous permettent de <imp>voir certaines choses<r> que vous n'auriez pas pu voir, comme les améliorations sur les relais laser ou les rayons invisibles. <n><n>Les <item>lunettes infrarouge d'ingénieur<r> est une version améliorée pour vous permet de voir facilement <imp>toutes les entités<r> dans un petit rayon autour de vous, même quand la vue est bloquée, en les <imp>faisant briller<r>.
+
+booklet.actuallyadditions.chapter.crystalClusters.name=Amas de Cristaux
+booklet.actuallyadditions.chapter.crystalClusters.text.1=Les <item>amas de cristaux<r> sont des blocs qui se génrent à l'intérieur de <imp>cavernes luxuriantes<r>. <n>Quand ils sont cassés, ils <imp>lâchent<r> un ou plusieurs <item>éclats de cristal<r> pouvant être assemblés pour créer des <item>cristaux<r>. <n>Les <item>Amas de cristaux<r> émettent un peu de lumière, les rendant parfait pour <imp>décorer<r>. Pour les récuperer tel quel, l'enchantement <imp>Toucher de Soie<r> peut être utilisé.

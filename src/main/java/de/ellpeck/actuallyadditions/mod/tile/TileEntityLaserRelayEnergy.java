@@ -15,6 +15,8 @@ import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -264,13 +266,13 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
     @Override
     @SideOnly(Side.CLIENT)
     public String getExtraDisplayString(){
-        return "Energy Flow: "+TextFormatting.DARK_RED+this.mode.name+TextFormatting.RESET;
+        return StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.energy.extra") + ": " +TextFormatting.DARK_RED+StringUtil.localize(this.mode.name)+TextFormatting.RESET;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public String getCompassDisplayString(){
-        return TextFormatting.GREEN+"Right-Click to change!";
+        return TextFormatting.GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.energy.display");
     }
 
     @Override
@@ -300,9 +302,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
     }
 
     public enum Mode{
-        BOTH("Both Directions"),
-        OUTPUT_ONLY("Only into adjacent Blocks"),
-        INPUT_ONLY("Only out of adjacent Blocks");
+        BOTH("info."+ModUtil.MOD_ID+".laserRelay.mode.both"),
+        OUTPUT_ONLY("info."+ModUtil.MOD_ID+".laserRelay.mode.outputOnly"),
+        INPUT_ONLY("info."+ModUtil.MOD_ID+".laserRelay.mode.inputOnly");
 
         public final String name;
 

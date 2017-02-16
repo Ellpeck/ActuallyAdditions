@@ -76,8 +76,12 @@ public class BlockSlabs extends BlockBase{
     public boolean isOpaqueCube(IBlockState state){
         return false;
     }
-
-
+    
+    @Override
+    public boolean isFullCube(IBlockState state) {
+    	return false;
+    }
+    
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
         if(facing.ordinal() == 1){

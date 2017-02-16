@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
 import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.BlockDirectional;
@@ -259,10 +260,10 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
 
                         String expl;
                         if(compass){
-                            expl = relay.getCompassDisplayString();
+                            expl = relay.getCompassDisplayString().replaceAll("\\\\n", "\n");
                         }
                         else{
-                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Compass to modify!";
+                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.mode.noCompasss");
                         }
 
                         StringUtil.drawSplitString(minecraft.fontRendererObj, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);
