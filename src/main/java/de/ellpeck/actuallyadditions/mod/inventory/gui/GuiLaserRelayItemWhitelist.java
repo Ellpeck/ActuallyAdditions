@@ -94,8 +94,8 @@ public class GuiLaserRelayItemWhitelist extends GuiContainer{
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tile);
 
-        String s1 = StringUtil.localize("info."+ModUtil.MOD_ID+".gui.io.inbound");
-        String s2 = StringUtil.localize("info."+ModUtil.MOD_ID+".gui.io.outbound");
+        String s1 = StringUtil.localize("info."+ModUtil.MOD_ID+".gui.inbound");
+        String s2 = StringUtil.localize("info."+ModUtil.MOD_ID+".gui.outbound");
         this.fontRendererObj.drawString(s1, 46-this.fontRendererObj.getStringWidth(s1)/2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
         this.fontRendererObj.drawString(s2, 131-this.fontRendererObj.getStringWidth(s2)/2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
     }

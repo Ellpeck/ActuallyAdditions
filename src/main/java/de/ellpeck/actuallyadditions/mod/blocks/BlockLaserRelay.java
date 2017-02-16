@@ -263,7 +263,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                             expl = relay.getCompassDisplayString().replaceAll("\\\\n", "\n");
                         }
                         else{
-                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.mode.noCompasss").replaceAll("\\\\n", "\n");
+                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.mode.noCompasss");
                         }
 
                         StringUtil.drawSplitString(minecraft.fontRendererObj, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);

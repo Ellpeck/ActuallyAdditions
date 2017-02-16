@@ -154,7 +154,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
     @Override
     @SideOnly(Side.CLIENT)
     public String getCompassDisplayString(){
-        return TextFormatting.GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.item.display");
+        return TextFormatting.GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.item.display.1")+"\n"+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.item.display.2");
     }
 
     @Override
