@@ -35,6 +35,7 @@ public class BookletChapterTrials extends BookletChapter{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public String getLocalizedNameWithFormatting(){
         EntityPlayer player = Minecraft.getMinecraft().player;
         PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
