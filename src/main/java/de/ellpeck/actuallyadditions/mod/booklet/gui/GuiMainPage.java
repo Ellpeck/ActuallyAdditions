@@ -204,8 +204,9 @@ public class GuiMainPage extends GuiBooklet{
         }
 
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
-            if(ActuallyAdditionsAPI.BOOKLET_ENTRIES.size() > i){
-                IBookletEntry entry = ActuallyAdditionsAPI.BOOKLET_ENTRIES.get(i);
+            List<IBookletEntry> displayed = getDisplayedEntries();
+            if(displayed.size() > i){
+                IBookletEntry entry = displayed.get(i);
                 this.buttonList.add(new EntryButton(this, i, this.guiLeft+156, this.guiTop+11+i*13, 115, 10, "- "+entry.getLocalizedNameWithFormatting(), null));
             }
             else{
@@ -217,8 +218,9 @@ public class GuiMainPage extends GuiBooklet{
     @Override
     protected void actionPerformed(GuiButton button) throws IOException{
         if(button instanceof EntryButton){
-            if(ActuallyAdditionsAPI.BOOKLET_ENTRIES.size() > button.id){
-                IBookletEntry entry = ActuallyAdditionsAPI.BOOKLET_ENTRIES.get(button.id);
+            List<IBookletEntry> displayed = getDisplayedEntries();
+            if(displayed.size() > button.id){
+                IBookletEntry entry = displayed.get(button.id);
                 if(entry != null){
                     this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this, entry, 0, "", false));
                 }
@@ -247,7 +249,7 @@ public class GuiMainPage extends GuiBooklet{
 
                 PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
                 data.didBookTutorial = true;
-                PacketHandlerHelper.sendPlayerDataToServer(true, 1);
+                PacketHandlerHelper.sendPlayerDataToServer(false, 1);
             }
         }
         else{
@@ -284,5 +286,17 @@ public class GuiMainPage extends GuiBooklet{
     @Override
     public void addOrModifyItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer){
 
+    }
+
+    private static List<IBookletEntry> getDisplayedEntries(){
+        List<IBookletEntry> displayed = new ArrayList<IBookletEntry>();
+
+        for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
+            if(entry.visibleOnFrontPage()){
+                displayed.add(entry);
+            }
+        }
+
+        return displayed;
     }
 }

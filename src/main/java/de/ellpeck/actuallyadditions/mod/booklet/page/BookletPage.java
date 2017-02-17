@@ -66,12 +66,13 @@ public class BookletPage implements IBookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public String getInfoText(){
         if(this.hasNoText){
             return null;
         }
 
-        String base = StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getIdentifier()+".text."+this.localizationKey);
+        String base = StringUtil.localize(this.getLocalizationKey());
         base = base.replaceAll("<imp>", TextFormatting.DARK_GREEN+"");
         base = base.replaceAll("<item>", TextFormatting.BLUE+"");
         base = base.replaceAll("<r>", TextFormatting.BLACK+"");
@@ -83,6 +84,11 @@ public class BookletPage implements IBookletPage{
             base = base.replaceAll(entry.getKey(), entry.getValue());
         }
         return base;
+    }
+
+    @SideOnly(Side.CLIENT)
+    protected String getLocalizationKey(){
+        return "booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getIdentifier()+".text."+this.localizationKey;
     }
 
     @Override

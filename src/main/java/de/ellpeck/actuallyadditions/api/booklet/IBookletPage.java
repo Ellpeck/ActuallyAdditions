@@ -29,6 +29,7 @@ public interface IBookletPage{
 
     void setChapter(IBookletChapter chapter);
 
+    @SideOnly(Side.CLIENT)
     String getInfoText();
 
     @SideOnly(Side.CLIENT)

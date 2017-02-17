@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
+import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterTrials;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrafting;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageFurnace;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
@@ -307,5 +308,10 @@ public class MethodHandler implements IMethodHandler{
     @Override
     public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages){
         return new BookletChapter(identifier, entry, displayStack, priority, pages);
+    }
+
+    @Override
+    public IBookletChapter createTrial(String identifier, ItemStack displayStack, boolean textOnSecondPage){
+        return new BookletChapterTrials(identifier, displayStack, textOnSecondPage);
     }
 }

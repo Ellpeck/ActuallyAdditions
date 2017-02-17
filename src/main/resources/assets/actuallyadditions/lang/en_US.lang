@@ -811,6 +811,9 @@ achievement.actuallyadditions.openBookletMilestone.desc=Open the Manual 50 times
 achievement.actuallyadditions.getUnProbed=Sneaky!
 achievement.actuallyadditions.getUnProbed.desc=Be probed by someone but sneak and notice it
 
+achievement.actuallyadditions.completeTrials=A Botanist's Dream
+achievement.actuallyadditions.completeTrials.desc=Complete all Trials in the Manual
+
 #Booklet Recipe Names
 booklet.actuallyadditions.shapelessRecipe=Shapeless Recipe
 booklet.actuallyadditions.shapedRecipe=Shaped Recipe
@@ -834,6 +837,7 @@ booklet.actuallyadditions.indexEntry.itemsRF.name=Items that use CF
 booklet.actuallyadditions.indexEntry.reconstruction.name=Reconstruction
 booklet.actuallyadditions.indexEntry.laserRelays.name=Laser Transport
 booklet.actuallyadditions.indexEntry.updatesAndInfos.name=Updates and Infos
+booklet.actuallyadditions.indexEntry.trials.name=Trials
 
 #Booklet Font Size
 booklet.actuallyadditions.fontSize.small=0.5
@@ -851,12 +855,31 @@ booklet.actuallyadditions.configButton.name=Open Config GUI
 booklet.actuallyadditions.configButton.desc=Press this to configure %s in-game. \nSome changes will require a game restart!
 booklet.actuallyadditions.achievementButton.name=Open Achievements
 booklet.actuallyadditions.achievementButton.desc=Press this to open the %s Achievements.
+booklet.actuallyadditions.trialFinishButton.completed.name=Completed
+booklet.actuallyadditions.trialFinishButton.uncompleted.name=Not Completed
+booklet.actuallyadditions.trialsButton.name=Trials
 
 #Booklet Info
 booklet.actuallyadditions.recipeDisabled=The crafting recipe for this item is disabled in the Config File! If you're on a server, ask the server author to enable it in the config. If you're on a client, press the 'Open Config'-Button on the top right and enable the recipe!
 booklet.actuallyadditions.unavailable=Parts of this feature are currently disabled or incomplete due to the not fully complete 1.8.9 and 1.9 Port. You may experience something that's missing or doesn't fully work. Please use this item with caution!
 booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
 booklet.actuallyadditions.amountOfWordsAndChars=Total: %s words, %s characters
+
+#Booklet Trials
+booklet.actuallyadditions.trials.leatherProduction.name=Leather Production
+booklet.actuallyadditions.trials.leatherProduction.text.1=Automating the <item>Atomic Reconstructor<r> can be a nice thing, especially when trying to create <item>Leather<r> from <item>Rotten Flesh<r>, allowing you to finally get some use out of those nasty unwanted resources.
+
+booklet.actuallyadditions.trials.crystalOil.name=Automate Crystallized Oil
+booklet.actuallyadditions.trials.crystalOil.text.1=The first and second tier of <item>Oil<r> are very easy to create, however, if you want to create <imp>a lot more power<r>, it gets <imp>more complicated<r> the higher tier you go with. <n>Creating <item>Crystallized Oil<r> requires an automated setup that converts <item>Oil<r> in-world, requiring a <imp>more advanced setup<r>.
+
+booklet.actuallyadditions.trials.autoDisenchanter.name=Auto-Disenchanter
+booklet.actuallyadditions.trials.autoDisenchanter.text.1=Using the <item>Lens of Disenchanting<r> makes it really easy to get enchantments off of things that you don't want them on anymore, like <imp>loot from the Fishing Net<r> or dungeons and <imp>unlucky enchantments<r> on your favorite tools. <n>Automating this process would make things a lot easier.
+
+booklet.actuallyadditions.trials.empoweredOil.name=Automate Empowered Oil
+booklet.actuallyadditions.trials.empoweredOil.text.1=The <imp>demand for power<r> has been rising and rising, yet building <imp>more farms<r> just doesn't cut it? <n>You should try to <imp>upgrade<r> your <item>Oil<r> production by creating <item>Empowered Oil<r>. However, this requires a pretty advanced <imp>in-world setup<r> to get working, so it might be tricky.
+
+booklet.actuallyadditions.trials.mobFarm.name=Monster Grinder
+booklet.actuallyadditions.trials.mobFarm.text.1=Using the <item>Spawner Changer<r> or just a big empty space and some water can be a great way to <imp>get a bunch of mobs<r> to spawn. Using the <item>Lens of Death<r> or the <item>Lens of the Killer<r> allows you to efficiently kill mobs and even get <imp>special drops<r>, allowing you to create a pretty effective <imp>automatic mob farm<r>.
 
 #Booklet Chapters
 booklet.actuallyadditions.chapter.intro.name=A story about ActAdd
@@ -1217,3 +1240,7 @@ booklet.actuallyadditions.chapter.goggles.text.1=The <item>Engineer's Goggles<r>
 
 booklet.actuallyadditions.chapter.crystalClusters.name=Crystal Clusters
 booklet.actuallyadditions.chapter.crystalClusters.text.1=<item>Crystal Clusters<r> are blocks that generate naturally inside of <imp>Lush Caves<r>. <n>When broken, they <imp>drop<r> one or more <item>Crystal Shards<r> that can be crafted together to create <item>Crystals<r>. <n><item>Crystal Clusters<r> emit a bit of light, making them perfect for <imp>decoration<r>. To harvest them in their block form, <imp>Silk Touch<r> can be used.
+
+booklet.actuallyadditions.chapter.trialsIntro.name=Intro to Trials
+booklet.actuallyadditions.chapter.trialsIntro.text.1=<item>Trials<r> are a set of fun and interesting <imp>challenges<r> that you can use to <imp>get inspiration<r> on what to build next. <n>Once you <imp>complete<r> a <item>Trial<r>, you can <imp>press the button<r> in the bottom right to mark the trial as completed, turning its name in the list green. <n>Since there is <imp>no way to check<r> if a trial is actually completed, <item>Trials<r> are meant as <imp>personal goals<r>. <n><n>To <imp>visit<r> the <item>Trials<r> page, you can click the <imp>bookmark<r> in the <imp>top right<r> corner of the manual GUI.
+booklet.actuallyadditions.chapter.trialsIntro.text.2=Note that <item>Trials<r> are designed in a way that they should be completed with the concepts of <imp>Minecraft<r> and <imp>Actually Additions<r> alone.

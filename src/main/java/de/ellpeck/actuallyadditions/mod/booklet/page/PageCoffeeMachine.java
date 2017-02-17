@@ -18,6 +18,8 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class PageCoffeeMachine extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
@@ -48,6 +51,7 @@ public class PageCoffeeMachine extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void initGui(GuiBookletBase gui, int startX, int startY){
         super.initGui(gui, startX, startY);
 

@@ -21,8 +21,10 @@ public interface IBookletEntry{
 
     String getIdentifier();
 
+    @SideOnly(Side.CLIENT)
     String getLocalizedName();
 
+    @SideOnly(Side.CLIENT)
     String getLocalizedNameWithFormatting();
 
     void addChapter(IBookletChapter chapter);
@@ -31,4 +33,7 @@ public interface IBookletEntry{
     List<IBookletChapter> getChaptersForDisplay(String searchBarText);
 
     int getSortingPriority();
+
+    @SideOnly(Side.CLIENT)
+    boolean visibleOnFrontPage();
 }

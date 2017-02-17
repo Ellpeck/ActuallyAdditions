@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.gui;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
+import de.ellpeck.actuallyadditions.mod.booklet.button.TrialsButton;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
@@ -54,6 +55,8 @@ public abstract class GuiBooklet extends GuiBookletBase{
     private GuiButton buttonLeft;
     private GuiButton buttonRight;
     private GuiButton buttonBack;
+
+    private GuiButton buttonTrials;
 
     private float smallFontSize;
     private float mediumFontSize;
@@ -130,6 +133,9 @@ public abstract class GuiBooklet extends GuiBookletBase{
                 }
             }
         }
+
+        this.buttonTrials = new TrialsButton(this);
+        this.buttonList.add(this.buttonTrials);
     }
 
     @Override
@@ -140,6 +146,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
         this.previousScreen = null;
 
         PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
+        data.lastOpenBooklet = this;
 
         boolean change = false;
         for(int i = 0; i < this.bookmarkButtons.length; i++){
@@ -148,7 +155,6 @@ public abstract class GuiBooklet extends GuiBookletBase{
                 change = true;
             }
         }
-        data.lastOpenBooklet = this;
 
         if(change){
             PacketHandlerHelper.sendPlayerDataToServer(true, 0);
@@ -256,6 +262,10 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
     }
 
+    public boolean areTrialsOpened(){
+        return false;
+    }
+
     public boolean hasBackButton(){
         return false;
     }
@@ -289,7 +299,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
     public void onSearchBarChanged(String searchBarText){
         GuiBookletBase parent = !(this instanceof GuiEntry) ? this : this.parentPage;
-        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, parent, ActuallyAdditionsAPI.allAndSearch, 0, searchBarText, true));
+        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, parent, ActuallyAdditionsAPI.entryAllAndSearch, 0, searchBarText, true));
     }
 
     @Override
@@ -302,6 +312,9 @@ public abstract class GuiBooklet extends GuiBookletBase{
         }
         else if(this.hasBackButton() && button == this.buttonBack){
             this.onBackButtonPressed();
+        }
+        if(button == this.buttonTrials){
+            this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this, ActuallyAdditionsAPI.entryTrials, 0, "", false));
         }
         else if(this.hasBookmarkButtons() && button instanceof BookmarkButton){
             int index = ArrayUtils.indexOf(this.bookmarkButtons, button);

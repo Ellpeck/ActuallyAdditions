@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.network;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -169,6 +170,13 @@ public final class PacketHandler{
                 }
                 else if(type == 1){
                     data.didBookTutorial = compound.getBoolean("DidBookTutorial");
+                }
+                else if(type == 2){
+                    data.loadTrials(compound.getTagList("Trials", 8));
+
+                    if(compound.getBoolean("Achievement")){
+                        TheAchievements.COMPLETE_TRIALS.get(player);
+                    }
                 }
                 WorldData.get(world).markDirty();
 

@@ -17,6 +17,8 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BookletChapter implements IBookletChapter{
 
@@ -51,11 +53,13 @@ public class BookletChapter implements IBookletChapter{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public String getLocalizedName(){
         return StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.getIdentifier()+".name");
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public String getLocalizedNameWithFormatting(){
         return this.color+this.getLocalizedName();
     }

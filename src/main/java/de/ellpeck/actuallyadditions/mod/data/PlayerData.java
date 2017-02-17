@@ -20,6 +20,8 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -55,6 +57,7 @@ public final class PlayerData{
         public int batWingsFlyTime;
 
         public IBookletPage[] bookmarks = new IBookletPage[12];
+        public List<String> completedTrials = new ArrayList<String>();
 
         @SideOnly(Side.CLIENT)
         public GuiBooklet lastOpenBooklet;
@@ -73,6 +76,9 @@ public final class PlayerData{
             NBTTagList bookmarks = compound.getTagList("Bookmarks", 8);
             this.loadBookmarks(bookmarks);
 
+            NBTTagList trials = compound.getTagList("Trials", 8);
+            this.loadTrials(trials);
+
             if(!savingToFile){
                 this.shouldDisableBatWings = compound.getBoolean("ShouldDisableWings");
             }
@@ -86,6 +92,7 @@ public final class PlayerData{
             compound.setInteger("BatWingsFlyTime", this.batWingsFlyTime);
 
             compound.setTag("Bookmarks", this.saveBookmarks());
+            compound.setTag("Trials", this.saveTrials());
 
             if(!savingToFile){
                 compound.setBoolean("ShouldDisableWings", this.shouldDisableBatWings);
@@ -109,6 +116,25 @@ public final class PlayerData{
                 }
                 else{
                     this.bookmarks[i] = null;
+                }
+            }
+        }
+
+        public NBTTagList saveTrials(){
+            NBTTagList trials = new NBTTagList();
+            for(String trial : this.completedTrials){
+                trials.appendTag(new NBTTagString(trial));
+            }
+            return trials;
+        }
+
+        public void loadTrials(NBTTagList trials){
+            this.completedTrials.clear();
+
+            for(int i = 0; i < trials.tagCount(); i++){
+                String strg = trials.getStringTagAt(i);
+                if(strg != null && !strg.isEmpty()){
+                    this.completedTrials.add(strg);
                 }
             }
         }

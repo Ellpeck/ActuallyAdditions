@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.button.EntryButton;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryTrials;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -159,5 +160,10 @@ public class GuiEntry extends GuiBooklet{
         else{
             super.onBackButtonPressed();
         }
+    }
+
+    @Override
+    public boolean areTrialsOpened(){
+        return this.entry instanceof BookletEntryTrials;
     }
 }

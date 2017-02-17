@@ -93,11 +93,13 @@ public class BookletEntry implements IBookletEntry{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public String getLocalizedName(){
         return StringUtil.localize("booklet."+ModUtil.MOD_ID+".indexEntry."+this.getIdentifier()+".name");
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public String getLocalizedNameWithFormatting(){
         return this.color+this.getLocalizedName();
     }
@@ -138,6 +140,12 @@ public class BookletEntry implements IBookletEntry{
     @Override
     public int getSortingPriority(){
         return this.priority;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean visibleOnFrontPage(){
+        return true;
     }
 
     public BookletEntry setImportant(){

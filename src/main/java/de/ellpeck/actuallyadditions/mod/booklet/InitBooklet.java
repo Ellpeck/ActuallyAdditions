@@ -20,8 +20,10 @@ import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterCoffee;
 import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterCrusher;
+import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterTrials;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllItems;
+import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryTrials;
 import de.ellpeck.actuallyadditions.mod.booklet.page.*;
 import de.ellpeck.actuallyadditions.mod.crafting.*;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
@@ -44,16 +46,19 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.UniversalBucket;
 
 import java.util.*;
 
 public final class InitBooklet{
 
-    public static BookletChapter[] chaptersIntroduction = new BookletChapter[10];
+    public static BookletChapter[] chaptersIntroduction = new BookletChapter[11];
 
     public static void preInit(){
-        ActuallyAdditionsAPI.allAndSearch = new BookletEntryAllItems("allAndSearch").setImportant();
+        ActuallyAdditionsAPI.entryAllAndSearch = new BookletEntryAllItems("allAndSearch").setImportant();
+        ActuallyAdditionsAPI.entryTrials = new BookletEntryTrials("trials");
 
         ActuallyAdditionsAPI.entryGettingStarted = new BookletEntry("gettingStarted").setImportant();
         ActuallyAdditionsAPI.entryReconstruction = new BookletEntry("reconstruction");
@@ -275,5 +280,13 @@ public final class InitBooklet{
         new BookletChapter("curse", ActuallyAdditionsAPI.entryUpdatesAndInfos, new ItemStack(Items.FLINT_AND_STEEL), new PageLinkButton(1, "http://ellpeck.de/actadd"));
         new BookletChapter("patreon", ActuallyAdditionsAPI.entryUpdatesAndInfos, new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), new PageLinkButton(1, "http://patreon.com/Ellpeck"), new PagePicture(2, "page_patreon", 153)).setImportant();
         new BookletChapter("website", ActuallyAdditionsAPI.entryUpdatesAndInfos, new ItemStack(InitItems.itemBooklet), new PageLinkButton(1, "http://ellpeck.de"));
+
+        //Trials
+        chaptersIntroduction[10] = new BookletChapter("trialsIntro", ActuallyAdditionsAPI.entryTrials, new ItemStack(Items.GOLD_INGOT), new PageTextOnly(1), new PageTextOnly(2)).setSpecial();
+        new BookletChapterTrials("leatherProduction", new ItemStack(Items.LEATHER), false);
+        new BookletChapterTrials("crystalOil", UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, InitFluids.fluidCrystalOil), false);
+        new BookletChapterTrials("autoDisenchanter", new ItemStack(InitItems.itemDisenchantingLens), false);
+        new BookletChapterTrials("empoweredOil", UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, InitFluids.fluidEmpoweredOil), false);
+        new BookletChapterTrials("mobFarm", new ItemStack(Items.ROTTEN_FLESH), false);
     }
 }

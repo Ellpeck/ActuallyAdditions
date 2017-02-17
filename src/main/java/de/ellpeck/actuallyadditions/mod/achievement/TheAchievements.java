@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatisticsManager;
@@ -53,7 +54,8 @@ public enum TheAchievements{
     GET_UNPROBED("getUnProbed", -7, 3, new ItemStack(InitItems.itemPlayerProbe), null, Type.MISC, true, 0),
 
     GET_CRYSTALS_MILESTONE("getCrystalsMilestone", 6, -3, new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), null, Type.PICK_UP, true, 200, new ItemStack(InitItems.itemCrystal, 1, Util.WILDCARD), new ItemStack(InitBlocks.blockCrystal, 1, Util.WILDCARD)),
-    OPEN_BOOKLET_MILESTONE("openBookletMilestone", 6, -1, new ItemStack(InitItems.itemBooklet), null, Type.MISC, true, 50);
+    OPEN_BOOKLET_MILESTONE("openBookletMilestone", 6, -1, new ItemStack(InitItems.itemBooklet), null, Type.MISC, true, 50),
+    COMPLETE_TRIALS("completeTrials", 6, 1, new ItemStack(Items.GOLD_INGOT), null, Type.MISC, true, 0);
 
     public final Achievement chieve;
     public final Type type;

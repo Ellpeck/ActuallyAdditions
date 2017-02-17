@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
+import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterTrials;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import net.minecraft.client.Minecraft;
@@ -67,6 +70,20 @@ public final class PacketHandlerHelper{
             }
             else if(type == 1){
                 compound.setBoolean("DidBookTutorial", data.didBookTutorial);
+            }
+            else if(type == 2){
+                compound.setTag("Trials", data.saveTrials());
+
+                int total = 0;
+                for(IBookletChapter chapter : ActuallyAdditionsAPI.entryTrials.getAllChapters()){
+                    if(chapter instanceof BookletChapterTrials){
+                        total++;
+                    }
+                }
+
+                if(data.completedTrials.size() >= total){
+                    compound.setBoolean("Achievement", true);
+                }
             }
 
             PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.PLAYER_DATA_TO_SERVER));

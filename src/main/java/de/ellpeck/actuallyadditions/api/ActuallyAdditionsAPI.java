@@ -81,7 +81,8 @@ public final class ActuallyAdditionsAPI{
     public static IBookletEntry entryMisc;
     public static IBookletEntry entryUpdatesAndInfos;
     //This is added to automatically, you don't need to add anything to this entry
-    public static IBookletEntry allAndSearch;
+    public static IBookletEntry entryAllAndSearch;
+    public static IBookletEntry entryTrials;
 
     //These are getting initialized in Actually Additions' PreInit phase
     //DO NOT CHANGE/OVERRIDE THESE!!

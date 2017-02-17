@@ -17,6 +17,8 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class PageEmpowerer extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
@@ -42,6 +45,7 @@ public class PageEmpowerer extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void initGui(GuiBookletBase gui, int startX, int startY){
         super.initGui(gui, startX, startY);
 

@@ -63,4 +63,6 @@ public interface IMethodHandler{
     IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result, int priority);
 
     IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages);
+
+    IBookletChapter createTrial(String identifier, ItemStack displayStack, boolean textOnSecondPage);
 }

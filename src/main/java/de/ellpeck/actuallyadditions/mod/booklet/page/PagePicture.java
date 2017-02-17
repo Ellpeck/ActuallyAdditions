@@ -15,6 +15,8 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PagePicture extends BookletPage{
 
@@ -38,6 +40,7 @@ public class PagePicture extends BookletPage{
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
