@@ -475,6 +475,20 @@ public final class SmileyCloudEasterEggs{
                 renderHoldingItem(true, new ItemStack(Items.SHIELD));
             }
         });
+        //Cloudy
+        register(new ISmileyCloudEasterEgg(){
+            @Override
+            public String[] getTriggerNames(){
+                return new String[]{"cloudy", "cloudhunter"};
+            }
+
+            @Override
+            public void renderExtra(float f){
+                renderHeadBlock(Blocks.REDSTONE_BLOCK, 0, 17F);
+                //other hand is for fapping
+                renderHoldingItem(true, new ItemStack(Items.BOW));
+            }
+        });
     }
 
     private static void register(ISmileyCloudEasterEgg egg){
