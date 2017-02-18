@@ -33,6 +33,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -137,6 +138,11 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     @Override
     public int damageDropped(IBlockState state){
         return ArrayUtils.indexOf(WorldGenLushCaves.CRYSTAL_CLUSTERS, this);
+    }
+
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player){
+        return new ItemStack(this);
     }
 
     @Override
