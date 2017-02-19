@@ -41,6 +41,6 @@ public class BookletChapterTrials extends BookletChapter{
         PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
         boolean completed = data.completedTrials.contains(this.getIdentifier());
 
-        return (completed ? TextFormatting.DARK_GREEN : TextFormatting.DARK_RED)+this.getLocalizedName();
+        return (completed ? TextFormatting.DARK_GREEN : TextFormatting.DARK_RED)+TextFormatting.ITALIC.toString()+this.getLocalizedName();
     }
 }

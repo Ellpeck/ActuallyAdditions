@@ -283,10 +283,12 @@ public final class InitBooklet{
 
         //Trials
         chaptersIntroduction[10] = new BookletChapter("trialsIntro", ActuallyAdditionsAPI.entryTrials, new ItemStack(Items.GOLD_INGOT), new PageTextOnly(1), new PageTextOnly(2)).setSpecial();
+        new BookletChapterTrials("crystalProduction", new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), false);
         new BookletChapterTrials("leatherProduction", new ItemStack(Items.LEATHER), false);
         new BookletChapterTrials("crystalOil", UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, InitFluids.fluidCrystalOil), false);
         new BookletChapterTrials("autoDisenchanter", new ItemStack(InitItems.itemDisenchantingLens), false);
         new BookletChapterTrials("empoweredOil", UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, InitFluids.fluidEmpoweredOil), false);
         new BookletChapterTrials("mobFarm", new ItemStack(Items.ROTTEN_FLESH), false);
+        new BookletChapterTrials("empowererAutomation", new ItemStack(InitBlocks.blockEmpowerer), false);
     }
 }

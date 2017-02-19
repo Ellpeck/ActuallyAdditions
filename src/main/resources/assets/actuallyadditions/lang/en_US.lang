@@ -866,6 +866,9 @@ booklet.actuallyadditions.clickToSeeRecipe=Click to see more Information
 booklet.actuallyadditions.amountOfWordsAndChars=Total: %s words, %s characters
 
 #Booklet Trials
+booklet.actuallyadditions.trials.crystalProduction.name=Automated Crystallization
+booklet.actuallyadditions.trials.crystalProduction.text.1=The different types of <item>Crystals<r> can be tedious to make, especially if you need a lot of them often. <n>Using a device to drop or place items, and a collector or a breaker, together with some Redstone, can probably help you with creating a nice system to <imp>automatically convert<r> raw materials into crystals.
+
 booklet.actuallyadditions.trials.leatherProduction.name=Leather Production
 booklet.actuallyadditions.trials.leatherProduction.text.1=Automating the <item>Atomic Reconstructor<r> can be a nice thing, especially when trying to create <item>Leather<r> from <item>Rotten Flesh<r>, allowing you to finally get some use out of those nasty unwanted resources.
 
@@ -880,6 +883,9 @@ booklet.actuallyadditions.trials.empoweredOil.text.1=The <imp>demand for power<r
 
 booklet.actuallyadditions.trials.mobFarm.name=Monster Grinder
 booklet.actuallyadditions.trials.mobFarm.text.1=Using the <item>Spawner Changer<r> or just a big empty space and some water can be a great way to <imp>get a bunch of mobs<r> to spawn. Using the <item>Lens of Death<r> or the <item>Lens of the Killer<r> allows you to efficiently kill mobs and even get <imp>special drops<r>, allowing you to create a pretty effective <imp>automatic mob farm<r>.
+
+booklet.actuallyadditions.trials.empowererAutomation.name=Empowerer Automation
+booklet.actuallyadditions.trials.empowererAutomation.text.1=The <item>Empowerer<r> requires a lot of resources to <imp>convert crystals<r>. There should be a pretty easy way to create a system that does this <imp>automatically<r>. Using some <item>Item Laser Relays<r> should provide an easy way to make the right items go onto the right display stands.
 
 #Booklet Chapters
 booklet.actuallyadditions.chapter.intro.name=A story about ActAdd
