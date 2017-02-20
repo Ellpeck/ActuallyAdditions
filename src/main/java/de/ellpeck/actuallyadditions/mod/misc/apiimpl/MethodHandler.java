@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
+import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
@@ -27,7 +28,9 @@ import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -224,6 +227,31 @@ public class MethodHandler implements IMethodHandler{
                 }
             }
             return !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean invokeReconstructor(IAtomicReconstructor tile){
+        if(tile.getEnergy() >= TileEntityAtomicReconstructor.ENERGY_USE){
+            IBlockState state = tile.getWorldObject().getBlockState(tile.getPosition());
+            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
+            Lens currentLens = tile.getLens();
+            if(currentLens.canInvoke(tile, sideToManipulate, TileEntityAtomicReconstructor.ENERGY_USE)){
+                tile.extractEnergy(TileEntityAtomicReconstructor.ENERGY_USE);
+
+                int distance = currentLens.getDistance();
+                for(int i = 0; i < distance; i++){
+                    BlockPos hitBlock = tile.getPosition().offset(sideToManipulate, i+1);
+
+                    if(currentLens.invoke(tile.getWorldObject().getBlockState(hitBlock), hitBlock, tile) || i >= distance-1){
+                        TileEntityAtomicReconstructor.shootLaser(tile.getWorldObject(), tile.getX(), tile.getY(), tile.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                        break;
+                    }
+                }
+
+                return true;
+            }
         }
         return false;
     }

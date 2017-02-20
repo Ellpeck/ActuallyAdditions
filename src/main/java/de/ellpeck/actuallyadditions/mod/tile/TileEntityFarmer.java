@@ -155,6 +155,11 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     @Override
+    public BlockPos getPosition(){
+        return this.pos;
+    }
+
+    @Override
     public int getX(){
         return this.pos.getX();
     }

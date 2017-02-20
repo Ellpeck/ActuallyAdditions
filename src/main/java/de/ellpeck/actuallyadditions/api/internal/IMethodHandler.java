@@ -42,6 +42,8 @@ public interface IMethodHandler{
 
     boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile);
 
+    boolean invokeReconstructor(IAtomicReconstructor tile);
+
     boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance);
 
     IBookletPage generateTextPage(int id);

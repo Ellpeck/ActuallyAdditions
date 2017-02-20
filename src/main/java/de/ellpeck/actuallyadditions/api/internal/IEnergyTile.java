@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.api.internal;
 
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
@@ -17,6 +18,8 @@ import net.minecraft.world.World;
  * Can be cast to TileEntity.
  */
 public interface IEnergyTile{
+
+    BlockPos getPosition();
 
     int getX();
 

@@ -77,7 +77,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
                 if(this.currentTime > 0){
                     this.currentTime--;
                     if(this.currentTime <= 0){
-                        this.doWork();
+                        ActuallyAdditionsAPI.methodHandler.invokeReconstructor(this);
                     }
                 }
                 else{
@@ -90,29 +90,6 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             }
         }
 
-    }
-
-    private void doWork(){
-        if(this.storage.getEnergyStored() >= ENERGY_USE){
-            IBlockState state = this.world.getBlockState(this.pos);
-            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
-            //The Lens the Reconstructor currently has installed
-            Lens currentLens = this.getLens();
-            if(currentLens.canInvoke(this, sideToManipulate, ENERGY_USE)){
-                //Extract energy for shooting the laser itself too!
-                this.storage.extractEnergyInternal(ENERGY_USE, false);
-
-                int distance = currentLens.getDistance();
-                for(int i = 0; i < distance; i++){
-                    BlockPos hitBlock = this.pos.offset(sideToManipulate, i+1);
-
-                    if(currentLens.invoke(this.world.getBlockState(hitBlock), hitBlock, this) || i >= distance-1){
-                        shootLaser(this.world, this.getX(), this.getY(), this.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
-                        break;
-                    }
-                }
-            }
-        }
     }
 
     @Override
@@ -129,6 +106,11 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public EnumFacing getOrientation(){
         IBlockState state = this.world.getBlockState(this.pos);
         return WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
+    }
+
+    @Override
+    public BlockPos getPosition(){
+        return this.pos;
     }
 
     @Override
@@ -188,7 +170,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public void activateOnPulse(){
-        this.doWork();
+        ActuallyAdditionsAPI.methodHandler.invokeReconstructor(this);
     }
 
     @Override
