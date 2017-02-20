@@ -30,7 +30,6 @@ import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -234,8 +233,7 @@ public class MethodHandler implements IMethodHandler{
     @Override
     public boolean invokeReconstructor(IAtomicReconstructor tile){
         if(tile.getEnergy() >= TileEntityAtomicReconstructor.ENERGY_USE){
-            IBlockState state = tile.getWorldObject().getBlockState(tile.getPosition());
-            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
+            EnumFacing sideToManipulate = tile.getOrientation();
             Lens currentLens = tile.getLens();
             if(currentLens.canInvoke(tile, sideToManipulate, TileEntityAtomicReconstructor.ENERGY_USE)){
                 tile.extractEnergy(TileEntityAtomicReconstructor.ENERGY_USE);
