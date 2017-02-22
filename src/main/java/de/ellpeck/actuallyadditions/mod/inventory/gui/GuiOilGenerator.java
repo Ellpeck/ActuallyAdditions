@@ -72,7 +72,7 @@ public class GuiOilGenerator extends GuiContainer{
         }
 
         if(this.generator.maxBurnTime > 0 && this.generator.currentEnergyProduce > 0){
-            this.drawCenteredString(this.fontRendererObj, this.generator.currentEnergyProduce+" RF/t", this.guiLeft+87, this.guiTop+65, 0xFFFFFF);
+            this.drawCenteredString(this.fontRendererObj, this.generator.currentEnergyProduce+" CF/t", this.guiLeft+87, this.guiTop+65, 0xFFFFFF);
             this.drawCenteredString(this.fontRendererObj, "for "+this.generator.maxBurnTime+" t", this.guiLeft+87, this.guiTop+75, 0xFFFFFF);
         }
 

@@ -65,7 +65,7 @@ public class GuiBioReactor extends GuiContainer{
         }
 
         if(this.tile.producePerTick > 0){
-            this.drawCenteredString(this.fontRendererObj, this.tile.producePerTick+" RF/t", this.guiLeft+87, this.guiTop+86, 0xFFFFFF);
+            this.drawCenteredString(this.fontRendererObj, this.tile.producePerTick+" CF/t", this.guiLeft+87, this.guiTop+86, 0xFFFFFF);
         }
 
         this.energy.draw();

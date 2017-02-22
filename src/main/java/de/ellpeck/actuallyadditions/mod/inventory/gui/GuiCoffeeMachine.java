@@ -58,11 +58,6 @@ public class GuiCoffeeMachine extends GuiContainer{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        String text1 = this.machine.storage.getEnergyStored()+"/"+this.machine.storage.getMaxEnergyStored()+" RF";
-        if(x >= this.guiLeft+16 && y >= this.guiTop+5 && x <= this.guiLeft+23 && y <= this.guiTop+89){
-            this.drawHoveringText(Collections.singletonList(text1), x, y);
-        }
-
         String text2 = this.machine.coffeeCacheAmount+"/"+TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.coffee");
         if(x >= this.guiLeft+40 && y >= this.guiTop+25 && x <= this.guiLeft+49 && y <= this.guiTop+56){
             this.drawHoveringText(Collections.singletonList(text2), x, y);
