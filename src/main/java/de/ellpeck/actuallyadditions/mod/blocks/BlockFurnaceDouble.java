@@ -21,6 +21,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -41,6 +42,8 @@ import java.util.Random;
 
 public class BlockFurnaceDouble extends BlockContainerBase{
 
+    public static final PropertyBool IS_ON = PropertyBool.create("on");
+
     public BlockFurnaceDouble(String name){
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
@@ -59,13 +62,9 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
-        TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileEntityFurnaceDouble){
-            TileEntityFurnaceDouble furnace = (TileEntityFurnaceDouble)tile;
-            if(furnace.firstSmeltTime > 0 || furnace.secondSmeltTime > 0){
-                for(int i = 0; i < 5; i++){
-                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
-                }
+        if(state.getValue(IS_ON)){
+            for(int i = 0; i < 5; i++){
+                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
             }
         }
     }
@@ -84,7 +83,7 @@ public class BlockFurnaceDouble extends BlockContainerBase{
 
     @Override
     public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
-        return this.getMetaFromState(state) > 3 ? 12 : 0;
+        return state.getValue(IS_ON) ? 12 : 0;
     }
 
     @Override
@@ -101,17 +100,20 @@ public class BlockFurnaceDouble extends BlockContainerBase{
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta));
+        boolean isOn = meta >= 4;
+        EnumFacing facing = EnumFacing.getHorizontal(isOn ? meta-4 : meta);
+        return this.getDefaultState().withProperty(BlockHorizontal.FACING, facing).withProperty(IS_ON, isOn);
     }
 
     @Override
     public int getMetaFromState(IBlockState state){
-        return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
+        int meta = state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
+        return state.getValue(IS_ON) ? meta+4 : meta;
     }
 
     @Override
     protected BlockStateContainer createBlockState(){
-        return new BlockStateContainer(this, BlockHorizontal.FACING);
+        return new BlockStateContainer(this, BlockHorizontal.FACING, IS_ON);
     }
 
     @Override

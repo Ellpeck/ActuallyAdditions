@@ -11,11 +11,13 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 
+import de.ellpeck.actuallyadditions.mod.blocks.BlockFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,6 +45,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     private int lastFirstCrush;
     private int lastSecondCrush;
     private boolean lastAutoSplit;
+    private boolean lastCrushed;
 
     public TileEntityGrinder(int slots, String name){
         super(slots, name);
@@ -83,7 +86,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                 TileEntityFurnaceDouble.autoSplit(this.slots, SLOT_INPUT_1, SLOT_INPUT_2);
             }
 
-            boolean flag = this.firstCrushTime > 0 || this.secondCrushTime > 0;
+            boolean crushed = false;
 
             boolean canCrushOnFirst = this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
             boolean canCrushOnSecond = false;
@@ -105,6 +108,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                     }
                     this.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
+                crushed = true;
             }
             else{
                 this.firstCrushTime = 0;
@@ -123,10 +127,20 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                         }
                         this.storage.extractEnergyInternal(ENERGY_USE, false);
                     }
+                    crushed = true;
                 }
                 else{
                     this.secondCrushTime = 0;
                 }
+            }
+
+            if(crushed != this.lastCrushed){
+                IBlockState currState = this.world.getBlockState(this.pos);
+                if(currState.getValue(BlockFurnaceDouble.IS_ON) != crushed){
+                    this.world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, crushed));
+                }
+
+                this.lastCrushed = crushed;
             }
 
             if((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstCrush != this.firstCrushTime || this.lastSecondCrush != this.secondCrushTime || this.isAutoSplit != this.lastAutoSplit) && this.sendUpdateWithInterval()){

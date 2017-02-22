@@ -11,6 +11,10 @@
   },
   "variants": {
     "normal": [{}],
-    "inventory": [{}]
+    "inventory": [{}],
+    "on": {
+      "true": { "textures": {"top": "actuallyadditions:blocks/block_grinder_on"} },
+      "false": {}
+    }
   }
 }

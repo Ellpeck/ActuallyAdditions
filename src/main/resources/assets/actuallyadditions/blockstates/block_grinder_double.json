@@ -12,9 +12,9 @@
   "variants": {
     "normal": [{}],
     "inventory": [{}],
-    "meta": {
-      "0": {},
-      "1": { "textures": { "top": "actuallyadditions:blocks/block_grinder_on" } }
+    "on": {
+      "true": { "textures": {"top": "actuallyadditions:blocks/block_grinder_on"} },
+      "false": {}
     }
   }
 }

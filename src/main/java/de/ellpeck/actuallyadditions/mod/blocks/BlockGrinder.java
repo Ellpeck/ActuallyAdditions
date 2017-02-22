@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinderDouble;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -55,19 +56,14 @@ public class BlockGrinder extends BlockContainerBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
-        TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileEntityGrinder){
-            TileEntityGrinder crusher = (TileEntityGrinder)tile;
-            if(crusher.firstCrushTime > 0 || crusher.secondCrushTime > 0){
-                for(int i = 0; i < 5; i++){
-                    double xRand = rand.nextDouble()/0.75D-0.5D;
-                    double zRand = rand.nextDouble()/0.75D-0.5D;
-                    world.spawnParticle(EnumParticleTypes.CRIT, (double)pos.getX()+0.4F, (double)pos.getY()+0.8F, (double)pos.getZ()+0.4F, xRand, 0.5D, zRand);
-                }
-                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
+        if(state.getValue(BlockFurnaceDouble.IS_ON)){
+            for(int i = 0; i < 5; i++){
+                double xRand = rand.nextDouble()/0.75D-0.5D;
+                double zRand = rand.nextDouble()/0.75D-0.5D;
+                world.spawnParticle(EnumParticleTypes.CRIT, (double)pos.getX()+0.4F, (double)pos.getY()+0.8F, (double)pos.getZ()+0.4F, xRand, 0.5D, zRand);
             }
+            world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
         }
-
     }
 
     @Override
@@ -95,5 +91,22 @@ public class BlockGrinder extends BlockContainerBase{
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return EnumRarity.EPIC;
+    }
+
+
+    @Override
+    public IBlockState getStateFromMeta(int meta){
+        boolean isOn = meta == 1;
+        return this.getDefaultState().withProperty(BlockFurnaceDouble.IS_ON, isOn);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state){
+        return state.getValue(BlockFurnaceDouble.IS_ON) ? 1 : 0;
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState(){
+        return new BlockStateContainer(this, BlockFurnaceDouble.IS_ON);
     }
 }

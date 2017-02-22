@@ -10,10 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.BlockFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -39,6 +41,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     private int lastFirstSmelt;
     private int lastSecondSmelt;
     private boolean lastAutoSplit;
+    private boolean lastSmelted;
 
     public TileEntityFurnaceDouble(){
         super(4, "furnaceDouble");
@@ -104,7 +107,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 autoSplit(this.slots, SLOT_INPUT_1, SLOT_INPUT_2);
             }
 
-            boolean flag = this.firstSmeltTime > 0 || this.secondSmeltTime > 0;
+            boolean smelted = false;
 
             boolean canSmeltOnFirst = this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1);
             boolean canSmeltOnSecond = this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2);
@@ -118,6 +121,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                     }
                     this.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
+                smelted = true;
             }
             else{
                 this.firstSmeltTime = 0;
@@ -132,9 +136,19 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                     }
                     this.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
+                smelted = true;
             }
             else{
                 this.secondSmeltTime = 0;
+            }
+
+            if(smelted != this.lastSmelted){
+                IBlockState currState = this.world.getBlockState(this.pos);
+                if(currState.getValue(BlockFurnaceDouble.IS_ON) != smelted){
+                    this.world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, smelted));
+                }
+
+                this.lastSmelted = smelted;
             }
 
             if((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime || this.isAutoSplit != this.lastAutoSplit) && this.sendUpdateWithInterval()){
