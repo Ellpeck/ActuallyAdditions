@@ -10,13 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 
+import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockGrass;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -34,9 +32,18 @@ import java.util.List;
 public class DefaultFarmerBehavior implements IFarmerBehavior{
 
     @Override
-    public boolean tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
         int use = 350;
         if(farmer.getEnergy() >= use*2){
+            if(defaultPlant(world, pos, this.getPlantablePlantFromStack(seed, world, pos), farmer, use)){
+                return FarmerResult.SUCCESS;
+            }
+        }
+        return FarmerResult.FAIL;
+    }
+
+    public static boolean defaultPlant(World world, BlockPos pos, IBlockState toPlant, IFarmer farmer, int use){
+        if(toPlant != null){
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
 
@@ -44,24 +51,21 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
                 BlockPos farmland = pos.down();
                 Block farmlandBlock = world.getBlockState(farmland).getBlock();
 
-                IBlockState toPlant = this.getPlantablePlantFromStack(seed, world, pos);
-                if(toPlant != null){
-                    if(this.tryPlant(toPlant, world, pos)){
+                if(tryPlant(toPlant, world, pos)){
+                    farmer.extractEnergy(use);
+                    return true;
+                }
+                else{
+                    if(farmlandBlock instanceof BlockDirt || farmlandBlock instanceof BlockGrass){
+                        world.setBlockState(farmland, Blocks.FARMLAND.getDefaultState(), 2);
+                        world.setBlockToAir(pos);
+                        world.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
                         farmer.extractEnergy(use);
-                        return true;
-                    }
-                    else{
-                        if(farmlandBlock instanceof BlockDirt || farmlandBlock instanceof BlockGrass){
-                            world.setBlockState(farmland, Blocks.FARMLAND.getDefaultState(), 2);
-                            world.setBlockToAir(pos);
-                            world.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
+                        if(tryPlant(toPlant, world, pos)){
                             farmer.extractEnergy(use);
-
-                            if(this.tryPlant(toPlant, world, pos)){
-                                farmer.extractEnergy(use);
-                                return true;
-                            }
+                            return true;
                         }
                     }
                 }
@@ -70,8 +74,8 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
         return false;
     }
 
-    private boolean tryPlant(IBlockState toPlant, World world, BlockPos pos){
-        BlockCrops plantBlock = (BlockCrops)toPlant.getBlock();
+    private static boolean tryPlant(IBlockState toPlant, World world, BlockPos pos){
+        BlockBush plantBlock = (BlockBush)toPlant.getBlock();
         if(plantBlock.canPlaceBlockAt(world, pos) && plantBlock.canBlockStay(world, pos, toPlant)){
             //This fixes a bug with Beetroot being able to be planted anywhere because Minecraft sucks
             if(plantBlock != Blocks.BEETROOTS || Blocks.WHEAT.canPlaceBlockAt(world, pos)){
@@ -83,7 +87,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
     }
 
     @Override
-    public boolean tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
         int use = 250;
         if(farmer.getEnergy() >= use){
             IBlockState state = world.getBlockState(pos);
@@ -121,12 +125,17 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
                         world.setBlockToAir(pos);
 
                         farmer.extractEnergy(use);
-                        return true;
+                        return FarmerResult.SUCCESS;
                     }
                 }
             }
         }
-        return false;
+        return FarmerResult.FAIL;
+    }
+
+    @Override
+    public int getPriority(){
+        return 0;
     }
 
     private IBlockState getPlantablePlantFromStack(ItemStack stack, World world, BlockPos pos){

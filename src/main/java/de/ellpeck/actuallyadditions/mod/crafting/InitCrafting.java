@@ -14,10 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.CactusFarmerBehavior;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.NetherWartFarmerBehavior;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.ReedFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -47,6 +44,7 @@ public final class InitCrafting{
         ActuallyAdditionsAPI.addFarmerBehavior(new CactusFarmerBehavior());
         ActuallyAdditionsAPI.addFarmerBehavior(new NetherWartFarmerBehavior());
         ActuallyAdditionsAPI.addFarmerBehavior(new ReedFarmerBehavior());
+        ActuallyAdditionsAPI.addFarmerBehavior(new MelonPumpkinFarmerBehavior());
 
         RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShaped", RecipeKeepDataShaped.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
         RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShapeless", RecipeKeepDataShapeless.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");

@@ -27,7 +27,7 @@ public interface IFarmerBehavior{
      * @param farmer The Farmer doing this action. Can be used to query and extract energy and add items to the slots
      * @return If planting was successful
      */
-    boolean tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer);
+    FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer);
 
     /**
      * Try to harvest a plant with this behavior
@@ -37,7 +37,7 @@ public interface IFarmerBehavior{
      * @param farmer The Farmer doing this action. Can be used to query and extract energy and add items to the slots
      * @return If harvesting was successful
      */
-    boolean tryHarvestPlant(World world, BlockPos pos, IFarmer farmer);
+    FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer);
 
-
+    int getPriority();
 }

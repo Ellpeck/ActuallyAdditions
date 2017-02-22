@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 
+import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import net.minecraft.block.Block;
@@ -27,7 +28,7 @@ import java.util.List;
 public class NetherWartFarmerBehavior implements IFarmerBehavior{
 
     @Override
-    public boolean tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
         int use = 500;
         if(farmer.getEnergy() >= use){
             if(seed.getItem() == Items.NETHER_WART){
@@ -36,15 +37,16 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior{
                 if(stateBelow.getBlock() instanceof BlockSoulSand && Blocks.NETHER_BRICK.canPlaceBlockAt(world, pos)){
                     world.setBlockState(pos, Blocks.NETHER_WART.getDefaultState(), 2);
                     farmer.extractEnergy(use);
-                    return true;
+                    return FarmerResult.SUCCESS;
                 }
+                return FarmerResult.STOP_PROCESSING;
             }
         }
-        return false;
+        return FarmerResult.FAIL;
     }
 
     @Override
-    public boolean tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
         int use = 500;
         if(farmer.getEnergy() >= use){
             IBlockState state = world.getBlockState(pos);
@@ -65,12 +67,18 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior{
                             }
 
                             farmer.extractEnergy(use);
-                            return true;
+                            return FarmerResult.SUCCESS;
                         }
                     }
                 }
+                return FarmerResult.STOP_PROCESSING;
             }
         }
-        return false;
+        return FarmerResult.FAIL;
+    }
+
+    @Override
+    public int getPriority(){
+        return 0;
     }
 }

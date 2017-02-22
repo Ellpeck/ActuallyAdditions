@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 
+import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import net.minecraft.block.Block;
@@ -26,26 +27,29 @@ import java.util.List;
 public class ReedFarmerBehavior implements IFarmerBehavior{
 
     @Override
-    public boolean tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
         int use = 250;
         if(farmer.getEnergy() >= use){
             if(seed.getItem() == Items.REEDS){
                 if(Blocks.REEDS.canPlaceBlockAt(world, pos)){
                     world.setBlockState(pos, Blocks.REEDS.getDefaultState(), 2);
                     farmer.extractEnergy(use);
-                    return true;
+                    return FarmerResult.SUCCESS;
                 }
+                return FarmerResult.STOP_PROCESSING;
             }
         }
-        return false;
+        return FarmerResult.FAIL;
     }
 
     @Override
-    public boolean tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
         int use = 250;
         if(farmer.getEnergy() >= use){
             IBlockState state = world.getBlockState(pos);
             if(state.getBlock() instanceof BlockReed){
+                FarmerResult result = FarmerResult.STOP_PROCESSING;
+
                 for(int i = 2; i >= 1; --i){
                     if(farmer.getEnergy() >= use){
                         BlockPos up = pos.up(i);
@@ -55,19 +59,27 @@ public class ReedFarmerBehavior implements IFarmerBehavior{
 
                             if(drops != null && !drops.isEmpty()){
                                 if(farmer.addToOutputInventory(drops, false)){
-                                    world.playEvent(2011, up, Block.getStateId(upState));
+                                    world.playEvent(2001, up, Block.getStateId(upState));
                                     world.setBlockToAir(up);
 
                                     farmer.extractEnergy(use);
                                     farmer.addToOutputInventory(drops, true);
+
+                                    result = FarmerResult.SUCCESS;
                                 }
                             }
                         }
                     }
                 }
-                return true;
+
+                return result;
             }
         }
-        return false;
+        return FarmerResult.FAIL;
+    }
+
+    @Override
+    public int getPriority(){
+        return 0;
     }
 }

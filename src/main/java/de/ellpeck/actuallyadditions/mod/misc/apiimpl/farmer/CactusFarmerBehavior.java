@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 
+import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import net.minecraft.block.Block;
@@ -26,31 +27,36 @@ import java.util.List;
 public class CactusFarmerBehavior implements IFarmerBehavior{
 
     @Override
-    public boolean tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
         int use = 250;
         if(farmer.getEnergy() >= use){
             Item item = seed.getItem();
             if(item instanceof ItemBlock){
                 Block block = Block.getBlockFromItem(item);
-                if(block instanceof BlockCactus && block.canPlaceBlockAt(world, pos)){
-                    IBlockState state = block.getDefaultState();
-                    world.setBlockState(pos, state, 2);
-                    world.playEvent(2001, pos, Block.getStateId(state));
+                if(block instanceof BlockCactus){
+                    if(block.canPlaceBlockAt(world, pos)){
+                        IBlockState state = block.getDefaultState();
+                        world.setBlockState(pos, state, 2);
+                        world.playEvent(2001, pos, Block.getStateId(state));
 
-                    farmer.extractEnergy(use);
-                    return true;
+                        farmer.extractEnergy(use);
+                        return FarmerResult.SUCCESS;
+                    }
+                    return FarmerResult.STOP_PROCESSING;
                 }
             }
         }
-        return false;
+        return FarmerResult.FAIL;
     }
 
     @Override
-    public boolean tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
         int use = 250;
         if(farmer.getEnergy() >= use){
             IBlockState state = world.getBlockState(pos);
             if(state.getBlock() instanceof BlockCactus){
+                FarmerResult result = FarmerResult.STOP_PROCESSING;
+
                 for(int i = 2; i >= 1; i--){
                     if(farmer.getEnergy() >= use){
                         BlockPos up = pos.up(i);
@@ -65,14 +71,21 @@ public class CactusFarmerBehavior implements IFarmerBehavior{
 
                                     farmer.extractEnergy(use);
                                     farmer.addToOutputInventory(drops, true);
+
+                                    result = FarmerResult.SUCCESS;
                                 }
                             }
                         }
                     }
                 }
-                return true;
+                return result;
             }
         }
-        return false;
+        return FarmerResult.FAIL;
+    }
+
+    @Override
+    public int getPriority(){
+        return 0;
     }
 }

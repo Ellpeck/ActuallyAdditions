@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -23,10 +24,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer{
 
+    private static final List<IFarmerBehavior> SORTED_FARMER_BEHAVIORS = new ArrayList<IFarmerBehavior>();
     public final CustomEnergyStorage storage = new CustomEnergyStorage(100000, 1000, 0);
 
     private int waitTime;
@@ -105,16 +110,35 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     private void checkBehaviors(BlockPos query){
-        for(IFarmerBehavior behavior : ActuallyAdditionsAPI.FARMER_BEHAVIORS){
-            if(behavior.tryHarvestPlant(this.world, query, this)){
+        if(SORTED_FARMER_BEHAVIORS.size() != ActuallyAdditionsAPI.FARMER_BEHAVIORS.size()){
+            SORTED_FARMER_BEHAVIORS.clear();
+            SORTED_FARMER_BEHAVIORS.addAll(ActuallyAdditionsAPI.FARMER_BEHAVIORS);
+
+            Collections.sort(SORTED_FARMER_BEHAVIORS, new Comparator<IFarmerBehavior>(){
+                @Override
+                public int compare(IFarmerBehavior behavior1, IFarmerBehavior behavior2){
+                    Integer prio1 = behavior1.getPriority();
+                    Integer prio2 = behavior2.getPriority();
+                    return prio2.compareTo(prio1);
+                }
+            });
+        }
+
+        for(IFarmerBehavior behavior : SORTED_FARMER_BEHAVIORS){
+            FarmerResult harvestResult = behavior.tryHarvestPlant(this.world, query, this);
+            if(harvestResult == FarmerResult.SUCCESS || harvestResult == FarmerResult.STOP_PROCESSING){
                 return;
             }
             else{
                 for(int i = 0; i < this.slots.getSlots(); i++){
                     ItemStack stack = this.slots.getStackInSlot(i);
                     if(StackUtil.isValid(stack)){
-                        if(behavior.tryPlantSeed(stack, this.world, query, this)){
+                        FarmerResult plantResult = behavior.tryPlantSeed(stack, this.world, query, this);
+                        if(plantResult == FarmerResult.SUCCESS){
                             this.slots.decrStackSize(i, 1);
+                            return;
+                        }
+                        else if(plantResult == FarmerResult.STOP_PROCESSING){
                             return;
                         }
                     }
