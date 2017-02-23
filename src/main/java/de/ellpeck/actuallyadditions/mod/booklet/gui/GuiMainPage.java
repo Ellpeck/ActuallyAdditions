@@ -171,6 +171,9 @@ public class GuiMainPage extends GuiBooklet{
         else if(playerName.equalsIgnoreCase("asiekierka")){
             this.bookletEdition = "‽ Edition";
         }
+        else if(playerName.equalsIgnoreCase("elucent")){
+            this.bookletEdition = "";
+        }
         else{
             if(Util.isDevVersion()){
                 this.bookletEdition = "Dev's Edition";
