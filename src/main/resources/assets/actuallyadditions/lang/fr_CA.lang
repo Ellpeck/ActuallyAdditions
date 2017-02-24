@@ -811,6 +811,9 @@ achievement.actuallyadditions.openBookletMilestone.desc=Ouvrez le manuel 50 fois
 achievement.actuallyadditions.getUnProbed=AHA! Tu m'aura pas!
 achievement.actuallyadditions.getUnProbed.desc=Être sondé par quelqu'un mais s'accroupir et le remarquer
 
+achievement.actuallyadditions.completeTrials=Un rêve de botaniste
+achievement.actuallyadditions.completeTrials.desc=Terminez toutes les Épreuves du manuel
+
 #Noms de Recettes du carnet
 booklet.actuallyadditions.shapelessRecipe=Recette sans ordre
 booklet.actuallyadditions.shapedRecipe=Recette avec ordre
@@ -834,6 +837,7 @@ booklet.actuallyadditions.indexEntry.itemsRF.name=Objets utilisant des CF
 booklet.actuallyadditions.indexEntry.reconstruction.name=Reconstruction
 booklet.actuallyadditions.indexEntry.laserRelays.name=Transport Laser
 booklet.actuallyadditions.indexEntry.updatesAndInfos.name=Mises à jour et infos
+booklet.actuallyadditions.indexEntry.trials.name=Épreuves
 
 #Booklet Font Size
 booklet.actuallyadditions.fontSize.small=0.4
@@ -851,13 +855,37 @@ booklet.actuallyadditions.configButton.name=Configuration
 booklet.actuallyadditions.configButton.desc=Appuyez ici pour configurer %s en jeu. \nCertains changements nécessiteront un redémarrage du jeu!
 booklet.actuallyadditions.achievementButton.name=Succès
 booklet.actuallyadditions.achievementButton.desc=Appuyez ici pour voir les succès d'%s.
-
+booklet.actuallyadditions.trialFinishButton.completed.name=Terminé
+booklet.actuallyadditions.trialFinishButton.uncompleted.name=Pas terminé
+booklet.actuallyadditions.trialsButton.name=Épreuves
 
 #Booklet Info
 booklet.actuallyadditions.recipeDisabled=La recette de fabrication pour cet objet à été désactivée dans le fichier de configuration! Si vous êtes sur serveur, demandez au(x) créateur(s) du serveur de l'activer dans le fichier de configuration. Si vous êtes en solo, appuyez sur le bouton 'Configuration' en haut à gauche pour l'activer!
 booklet.actuallyadditions.unavailable=Cette fonctionnalité du mod est partiellement désactivée ou incomplète dû au portage inachevé du mod vers la 1.8.9 et 1.9. Il se peut que quelque chose manque ou ne marche pas completement. Utilisez cet objet à vos risques et périls!
 booklet.actuallyadditions.clickToSeeRecipe=Cliquez pour plus d'information
 booklet.actuallyadditions.amountOfWordsAndChars=Total: %s mots, %s caractères
+
+#Booklet Trials
+booklet.actuallyadditions.trials.crystalProduction.name=Cristallisation automatique
+booklet.actuallyadditions.trials.crystalProduction.text.1=Les differents types de <item>cristaux<r> peuvent être fastidieux à faire, surtout si vous avez souvent besoin de les faire. <n>Utiliser un appareil pour jeter ou placer des objets, un collecteur ou un casseur, avec un peu de redstone, vont probablement vous aider à créer un système sympatique permettant de <imp>convertir automatiquement<r> les matières brutes en cristaux.
+
+booklet.actuallyadditions.trials.leatherProduction.name=Production de cuir
+booklet.actuallyadditions.trials.leatherProduction.text.1=Automatiser le <item>Reconstructeur Atomique<r> peut être une bonne chose à faire, surtout pour essayer de créer du <item>cuir<r> à partir de <item>chair putréfiée<r>, donnant ainsi une utilité à cette ressource indésirable.
+
+booklet.actuallyadditions.trials.crystalOil.name=Automatiser l'huile cristallisée
+booklet.actuallyadditions.trials.crystalOil.text.1=Les premier et deuxième niveaux d'<item>huile<r> sont très facile à créer, mais si vous voulez produire <imp>beaucoup plus d'énérigie<r>, c'est un peu <imp>plus compliqué<r> à chaque niveau. <n>Créer de l'<item>huile cristallisée<r> requiert une installation convertisant l'<item>huile<r> dans le monde, ce qui demande une <imp>installation plus avancée<r>.
+
+booklet.actuallyadditions.trials.autoDisenchanter.name=Désenchanteur-auto
+booklet.actuallyadditions.trials.autoDisenchanter.text.1=Utiliser les <item>lentilles de désenchantement<r> permettent d'enlever très facilement les enchantments indésirables sur des objets comme le <imp>butin des filêts de pêche<r> des donjons et même les <imp>mauvais enchantements<r> sur vos outils favoris. <n>Automatiser ce procédé rendra la chose beaucoup plus facile.
+
+booklet.actuallyadditions.trials.empoweredOil.name=Automatiser l'huile puissante
+booklet.actuallyadditions.trials.empoweredOil.text.1=La <imp>demande d'énergie<r> grandit de plus en plus, avec toujours <imp>plus de fermes<r>... Ca ne vous suffit plus? <n>Vous devrez alors essayer d'<imp>améliorer<r> votre production d'<item>huile<r> en créeant de l'<item>huile puissante<r>. Toutefois, cela requiert une installation <imp>dans le monde<r> très avancée pour fonctionner, donc ca pourrait être délicat.
+
+booklet.actuallyadditions.trials.mobFarm.name=Abattoir de monstres
+booklet.actuallyadditions.trials.mobFarm.text.1=Utiliser un <item>changeur pour génerateur de monstre<r> ou juste un grand espace vide avec de l'eau peut être un bonne façon de faire apparaître <imp>plein de monstres<r>. Les <item>lentilles de mort certaine<r> ou les <item>lentilles du tueur<r> vous permettent de tuer les monstres efficacement en obtenent au passage du <imp>butin spécial<r>, créeant ainsi une <imp>une ferme à monstres<r> très efficace.
+
+booklet.actuallyadditions.trials.empowererAutomation.name=Améliorateur de puissance auto
+booklet.actuallyadditions.trials.empowererAutomation.text.1=L'<item>améliorateur de puissance<r> requiert beacoup de ressources pour <imp>convertir les cristaux<r>. Il devrait avoir un moyen très facile de créer un système pour le faire <imp>automatiquement<r>. Utiliser des <item>relais laser à objets<r> devrait être une manère facile de faire aller les objets sur présentoirs.
 
 #Booklet Chapters
 booklet.actuallyadditions.chapter.intro.name=Une petite histoire à propos de AA
@@ -1176,6 +1204,8 @@ booklet.actuallyadditions.chapter.farmer.text.2=Cultiver des <imp>plants basique
 booklet.actuallyadditions.chapter.farmer.text.3=Pour cultiver du <item>cactus<r>, du sable doit être mis en dessous pour qu'il soit planté. <imp>Les <item>cactus<r> plus haut que 2 blocs se verront <imp>le haut coupé<r> et placé à l'intérieur de la machine.
 booklet.actuallyadditions.chapter.farmer.text.4=Pour cultiver des <item>verrues du Nether<r>, du sable des âmes devra être mis en dessous pour qu'elles soient plantées.
 booklet.actuallyadditions.chapter.farmer.text.5=Pour cultiver de la <item>canne à sucre<r>, du sable et de l'eau dervront être mis pour la planter. La canne à sucre est récoltée de la même façon que le <item>cactus<r>.
+booklet.actuallyadditions.chapter.farmer.text.6=Pour cultiver des <item>pastèques<r> et des <item>citrouilles<r>, il doit y avoir des <imp>espaces vides disposés en quinconce<r> entre chaque graine pour qu'elle pousse.
+
 
 booklet.actuallyadditions.chapter.lensMoreDeath.name=Lentilles du Tueur
 booklet.actuallyadditions.chapter.lensMoreDeath.text.1=Les <item>lentilles du tueur<r> marchent comme les <item>lentilles de mort certaine<r>, mais vont permettre à l'<imp>expérience d'être lachée<r> avec <imp>un butin seulement laché par les monstres quand tués par un joueur<r>. <n>Ca signifie aussi que ces lentilles seront <imp>beaucoup plus gourmandes en énergie<r>. <n><n>Pour collecter l'expérience lachée, un <item>solidificateur d'experience<r> est conseillé.
@@ -1218,3 +1248,7 @@ booklet.actuallyadditions.chapter.goggles.text.1=Les <item>lunettes d'ingénieur
 
 booklet.actuallyadditions.chapter.crystalClusters.name=Amas de Cristaux
 booklet.actuallyadditions.chapter.crystalClusters.text.1=Les <item>amas de cristaux<r> sont des blocs qui se génrent à l'intérieur de <imp>cavernes luxuriantes<r>. <n>Quand ils sont cassés, ils <imp>lâchent<r> un ou plusieurs <item>éclats de cristal<r> pouvant être assemblés pour créer des <item>cristaux<r>. <n>Les <item>Amas de cristaux<r> émettent un peu de lumière, les rendant parfait pour <imp>décorer<r>. Pour les récuperer tel quel, l'enchantement <imp>Toucher de Soie<r> peut être utilisé.
+
+booklet.actuallyadditions.chapter.trialsIntro.name=Introduction aux Épreuves
+booklet.actuallyadditions.chapter.trialsIntro.text.1=Les <item>épreuves<r> sont des <imp>challenges<r> fun et intéressants que vous pouvez utiliser pour <imp>avoir de l'inspiration<r> sur quoi construire. <n>Quand vous <imp>terminez<r> une <item>épreuve<r>, vous pouver <imp>appuyer sur le boutton<r> en bas à droite pour marquer l'épreuve comme terminée, colororant son nom dans la liste en vert. <n>Comme il n'y a <imp>aucun moyen de vérifier<r> qu'une épreuve a été vraiment faîte, les <item>épreuves<r> sont censés êtres des <imp>buts personnels<r>. <n><n>Pour <imp>visiter<r> la page des <item>épreuves<r>, vous pouvez cliquer sur le <imp>marque-page<r> en <imp>haut à droite<r> de l'interface du manuel.
+booklet.actuallyadditions.chapter.trialsIntro.text.2=Notez que les <item>épreuves<r> ont été conçues pour être faites avec seulement <imp>Minecraft<r> et <imp>Actually Additions<r>.
