@@ -1,3 +1,11 @@
+# 1.11.2-r103
+* Added Trials to the manual. They're like challenges that should motivate you to do more stuffs. Check it out.
+* Fixed Crystal Clusters giving the wrong pick block
+* Made furnace and crusher have an animated texture again when being activated
+* Fixed a bunch of places still saying RF instead of CF
+* Made the farmer be able to plant and harvest pumpkins and melons
+* Updated french translation (MisterPeModder44)
+
 # 1.11.2-r102
 * Fixed dedicated servers crashing
 
