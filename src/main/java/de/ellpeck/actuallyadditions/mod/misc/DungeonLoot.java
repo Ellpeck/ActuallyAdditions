@@ -57,7 +57,6 @@ public class DungeonLoot{
             boolean addDrillCore = false;
             boolean addQuartz = false;
             boolean addBatWings = false;
-            boolean addBook = false;
 
             if(LootTableList.CHESTS_SIMPLE_DUNGEON.equals(event.getName())){
                 addCrystals = true;
@@ -71,11 +70,9 @@ public class DungeonLoot{
             else if(LootTableList.CHESTS_VILLAGE_BLACKSMITH.equals(event.getName())){
                 addDrillCore = true;
                 addQuartz = true;
-                addBook = true;
             }
             else if(LootTableList.CHESTS_STRONGHOLD_LIBRARY.equals(event.getName())){
                 addBatWings = true;
-                addBook = true;
             }
             else if(LootTableList.CHESTS_IGLOO_CHEST.equals(event.getName())){
                 addBatWings = true;
@@ -88,7 +85,6 @@ public class DungeonLoot{
                 addBatWings = true;
                 addCrystals = true;
                 addDrillCore = true;
-                addBook = true;
             }
             else if(LootTableList.CHESTS_END_CITY_TREASURE.equals(event.getName())){
                 addBatWings = true;
@@ -101,7 +97,6 @@ public class DungeonLoot{
                 addCrystals = true;
                 addDrillCore = true;
                 addQuartz = true;
-                addBook = true;
             }
             else if(JAM_HOUSE.equals(event.getName())){
                 LootFunction jamDamage = new SetMetadata(noCondition, new RandomValueRange(0, TheJams.values().length-1));
@@ -112,7 +107,6 @@ public class DungeonLoot{
                 pool.addEntry(new LootEntryItem(Items.GLASS_BOTTLE, 1, 0, new LootFunction[]{glassAmount}, noCondition, ModUtil.MOD_ID+":bottles"));
             }
             else if(LUSH_CAVES.equals(event.getName())){
-                addBook = true;
                 addQuartz = true;
                 addBatWings = true;
                 addCrystals = true;
@@ -135,7 +129,6 @@ public class DungeonLoot{
                 }
             }
             else if(ENGINEER_HOUSE.equals(event.getName())){
-                addBook = true;
                 addQuartz = true;
                 addBatWings = true;
                 addCrystals = true;
@@ -174,11 +167,6 @@ public class DungeonLoot{
                 LootFunction damage = new SetMetadata(noCondition, new RandomValueRange(TheMiscItems.BAT_WING.ordinal()));
                 LootFunction amount = new SetCount(noCondition, new RandomValueRange(1, 2));
                 pool.addEntry(new LootEntryItem(InitItems.itemMisc, 5, 0, new LootFunction[]{damage, amount}, noCondition, ModUtil.MOD_ID+":batWings"));
-            }
-
-            if(addBook){
-                LootFunction amount = new SetCount(noCondition, new RandomValueRange(1));
-                pool.addEntry(new LootEntryItem(InitItems.itemBooklet, 10, 0, new LootFunction[]{amount}, noCondition, ModUtil.MOD_ID+":booklet"));
             }
         }
     }
