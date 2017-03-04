@@ -14,6 +14,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.render;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
@@ -25,7 +26,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemCompass;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -56,7 +56,7 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer{
                 }
 
                 ItemStack hand = player.getHeldItemMainhand();
-                if(hasGoggles || (StackUtil.isValid(hand) && (hand.getItem() instanceof ItemCompass || hand.getItem() instanceof ItemLaserWrench)) || "themattabase".equals(player.getName())){
+                if(hasGoggles || (StackUtil.isValid(hand) && (hand.getItem() == ConfigValues.itemCompassConfigurator || hand.getItem() instanceof ItemLaserWrench)) || "themattabase".equals(player.getName())){
                     GlStateManager.pushMatrix();
 
                     float yTrans = tile.getBlockMetadata() == 0 ? 0.2F : 0.8F;
