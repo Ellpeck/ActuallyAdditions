@@ -651,7 +651,7 @@ info.actuallyadditions.machineBroke=The block shattered as you tried to break it
 info.actuallyadditions.redstoneMode.name=Redstone Mode
 info.actuallyadditions.redstoneMode.pulse=Pulse
 info.actuallyadditions.redstoneMode.deactivation=Deactivation
-info.actuallyadditions.redstoneMode.invalidItem=Hold a Redstone Torch to toggle!
+info.actuallyadditions.redstoneMode.invalidItem=Hold a %s to toggle!
 info.actuallyadditions.redstoneMode.validItem=Right-Click to toggle!
 info.actuallyadditions.laserRelay.item.extra=Priority
 info.actuallyadditions.laserRelay.item.display.1=Right-Click to increase!
@@ -662,7 +662,7 @@ info.actuallyadditions.laserRelay.fluid.extra=Fluid Flow
 info.actuallyadditions.laserRelay.mode.both=Both Directions
 info.actuallyadditions.laserRelay.mode.outputOnly=Only into adjacent Blocks
 info.actuallyadditions.laserRelay.mode.inputOnly=Only out of adjacent Blocks
-info.actuallyadditions.laserRelay.mode.noCompasss=Hold a Compass to modify!
+info.actuallyadditions.laserRelay.mode.noCompasss=Hold a %s to modify!
 
 #Container Names
 container.actuallyadditions.inputter.name=ESD
@@ -791,7 +791,7 @@ achievement.actuallyadditions.craftCrusher=Doublin' up!
 achievement.actuallyadditions.craftCrusher.desc=Craft a Crusher
 
 achievement.actuallyadditions.craftDoubleCrusher=Double doublin' up!
-achievement.actuallyadditions.craftCrusher.desc=Craft a Double Crusher
+achievement.actuallyadditions.craftDoubleCrusher.desc=Craft a Double Crusher
 
 achievement.actuallyadditions.pickUpCoffee=Makes you addicted
 achievement.actuallyadditions.pickUpCoffee.desc=Harvest some coffee

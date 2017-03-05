@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
@@ -31,7 +32,6 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemCompass;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -169,7 +169,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                 if(stack.getItem() instanceof ItemLaserWrench){
                     return false;
                 }
-                else if(stack.getItem() instanceof ItemCompass){
+                else if(stack.getItem() == ConfigValues.itemCompassConfigurator){
                     if(!world.isRemote){
                         relay.onCompassAction(player);
 
@@ -249,7 +249,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
         if(posHit != null && posHit.getBlockPos() != null && minecraft.world != null){
             boolean wearing = ItemEngineerGoggles.isWearing(player);
             if(wearing || StackUtil.isValid(stack)){
-                boolean compass = stack.getItem() instanceof ItemCompass;
+                boolean compass = stack.getItem() == ConfigValues.itemCompassConfigurator;
                 if(wearing || compass || stack.getItem() instanceof ItemLaserWrench){
                     TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
                     if(tile instanceof TileEntityLaserRelay){
@@ -260,10 +260,10 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
 
                         String expl;
                         if(compass){
-                            expl = relay.getCompassDisplayString().replaceAll("\\\\n", "\n");
+                            expl = relay.getCompassDisplayString();
                         }
                         else{
-                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.mode.noCompasss");
+                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".laserRelay.mode.noCompasss", StringUtil.localize(ConfigValues.itemCompassConfigurator.getUnlocalizedName()+".name"));
                         }
 
                         StringUtil.drawSplitString(minecraft.fontRendererObj, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);

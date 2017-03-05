@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -18,7 +19,6 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -115,7 +115,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
 
     public boolean tryToggleRedstone(World world, BlockPos pos, EntityPlayer player){
         ItemStack stack = player.getHeldItemMainhand();
-        if(StackUtil.isValid(stack) && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
+        if(StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityBase){
                 TileEntityBase base = (TileEntityBase)tile;

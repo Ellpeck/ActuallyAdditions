@@ -14,9 +14,17 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
 public final class ConfigValues{
+
+    public static Item itemRedstoneTorchConfigurator;
+    public static Item itemCompassConfigurator;
 
     public static void defineConfigValues(Configuration config){
         for(ConfigIntValues currConf : ConfigIntValues.values()){
@@ -35,5 +43,24 @@ public final class ConfigValues{
             currConf.currentValue = config.get(currConf.category, currConf.name, currConf.defaultValue, currConf.desc).getStringList();
         }
 
+        parseConfiguratorConfig();
+    }
+
+    private static void parseConfiguratorConfig(){
+        itemRedstoneTorchConfigurator = null;
+        itemCompassConfigurator = null;
+
+        String[] conf = ConfigStringListValues.CONFIGURE_ITEMS.getValue();
+        if(conf.length == 2){
+            itemRedstoneTorchConfigurator = Item.REGISTRY.getObject(new ResourceLocation(conf[0]));
+            itemCompassConfigurator = Item.REGISTRY.getObject(new ResourceLocation(conf[1]));
+        }
+
+        if(itemRedstoneTorchConfigurator == null || itemCompassConfigurator == null){
+            ModUtil.LOGGER.error("Parsing the Configuration Items config failed, reverting back to the default settings!");
+
+            itemRedstoneTorchConfigurator = Item.getItemFromBlock(Blocks.REDSTONE_TORCH);
+            itemCompassConfigurator = Items.COMPASS;
+        }
     }
 }
