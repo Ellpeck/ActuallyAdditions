@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.data;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -54,6 +55,8 @@ public final class PlayerData{
         public boolean shouldDisableBatWings;
         public int batWingsFlyTime;
 
+        public int receivedCaveMessages;
+
         public IBookletPage[] bookmarks = new IBookletPage[12];
         public List<String> completedTrials = new ArrayList<String>();
 
@@ -80,6 +83,10 @@ public final class PlayerData{
             if(!savingToFile){
                 this.shouldDisableBatWings = compound.getBoolean("ShouldDisableWings");
             }
+
+            if(ActuallyAdditions.isCaveMode){
+                this.receivedCaveMessages = compound.getInteger("ReceivedCaveMessages");
+            }
         }
 
         public void writeToNBT(NBTTagCompound compound, boolean savingToFile){
@@ -94,6 +101,10 @@ public final class PlayerData{
 
             if(!savingToFile){
                 compound.setBoolean("ShouldDisableWings", this.shouldDisableBatWings);
+            }
+
+            if(ActuallyAdditions.isCaveMode){
+                compound.setInteger("ReceivedCaveMessages", this.receivedCaveMessages);
             }
         }
 

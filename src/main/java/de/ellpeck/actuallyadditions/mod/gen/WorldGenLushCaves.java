@@ -79,7 +79,7 @@ public class WorldGenLushCaves{
                                 possiblePoses.add(pos);
                             }
                         }
-                        else if(rand.nextInt(20) == 0){
+                        else if(this.shouldTryGenCluster(rand)){
                             EnumFacing[] values = EnumFacing.values();
                             EnumFacing side = values[rand.nextInt(values.length)];
                             BlockPos posSide = pos.offset(side);
@@ -89,7 +89,7 @@ public class WorldGenLushCaves{
                                 IBlockState stateSide = world.getBlockState(posSide);
 
                                 if(state.getBlock().isAir(state, world, pos) && stateSide.getBlock().isSideSolid(stateSide, world, posSide, side.getOpposite())){
-                                    Block block = CRYSTAL_CLUSTERS[rand.nextInt(CRYSTAL_CLUSTERS.length)];
+                                    Block block = this.getClusterToPlace(rand);
                                     world.setBlockState(pos, block.getDefaultState().withProperty(BlockDirectional.FACING, side.getOpposite()), 2);
                                 }
                             }
@@ -112,10 +112,10 @@ public class WorldGenLushCaves{
                     if(rand.nextBoolean()){
                         if(rand.nextBoolean()){
                             trees = new WorldGenBigTree(false);
+                            genCrate = true;
                         }
                         else{
                             trees = new WorldGenShrub(Blocks.LOG.getDefaultState(), Blocks.LEAVES.getDefaultState());
-                            genCrate = true;
                         }
                     }
                     else{
@@ -144,6 +144,14 @@ public class WorldGenLushCaves{
                 }
             }
         }
+    }
+
+    protected Block getClusterToPlace(Random rand){
+        return CRYSTAL_CLUSTERS[rand.nextInt(CRYSTAL_CLUSTERS.length)];
+    }
+
+    protected boolean shouldTryGenCluster(Random rand){
+        return rand.nextInt(20) == 0;
     }
 
     private void makeSphereWithGrassFloor(World world, BlockPos center, int radius, StructureBoundingBox boundingBox, Random rand){

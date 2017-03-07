@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.creative;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -147,6 +148,10 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitBlocks.blockTreasureChest);
 
         this.add(InitBlocks.blockBlackLotus);
+
+        if(ActuallyAdditions.isCaveMode){
+            this.add(InitItems.itemCrystalChisel);
+        }
 
         this.add(InitItems.itemBag);
         this.add(InitItems.itemVoidBag);

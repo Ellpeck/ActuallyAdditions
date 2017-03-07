@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.items.base.*;
 import de.ellpeck.actuallyadditions.mod.items.lens.ItemLens;
@@ -198,9 +199,14 @@ public final class InitItems{
     public static Item itemEngineerGoggles;
     public static Item itemEngineerGogglesAdvanced;
     public static Item itemCrystalShard;
+    public static Item itemCrystalChisel;
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Items...");
+
+        if(ActuallyAdditions.isCaveMode){
+            itemCrystalChisel = new ItemCrystalChisel("item_crystal_chisel");
+        }
 
         itemCrystalShard = new ItemCrystalShard("item_crystal_shard");
         itemEngineerGogglesAdvanced = new ItemEngineerGoggles("item_engineer_goggles_advanced", true);

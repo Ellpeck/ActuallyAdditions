@@ -665,7 +665,17 @@ info.actuallyadditions.laserRelay.mode.inputOnly=Only out of adjacent Blocks
 info.actuallyadditions.laserRelay.mode.noCompasss=Hold a %s to modify!
 info.actuallyadditions.cave.generating=Generating cave for player %s, server might lag for a bit...
 info.actuallyadditions.cave.generated=Finished generating cave for player %s.
-info.actuallyadditions.cave.generatingScreen=Generating cave...
+info.actuallyadditions.cave.whisper.1=
+info.actuallyadditions.cave.whisper.2=As darkness surrounds you,
+info.actuallyadditions.cave.whisper.3=you stumble through this cave.
+info.actuallyadditions.cave.whisper.4=There's trees, and bushes,
+info.actuallyadditions.cave.whisper.5=grass, and crystals, rocks.
+info.actuallyadditions.cave.whisper.6=But there is no one else,
+info.actuallyadditions.cave.whisper.7=and no way out.
+info.actuallyadditions.cave.whisper.8="What do I do?", you think.
+info.actuallyadditions.cave.whisper.9=
+info.actuallyadditions.cave.whisper.10=Maybe checking the booklet might prove beneficial.
+info.actuallyadditions.cave.whisper.11=
 
 #Container Names
 container.actuallyadditions.inputter.name=ESD
