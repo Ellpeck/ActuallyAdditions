@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.data;
 
 import de.ellpeck.actuallyadditions.api.laser.Network;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -18,6 +19,7 @@ import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.WorldServer;
@@ -26,9 +28,7 @@ import net.minecraftforge.common.WorldSpecificSaveHandler;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WorldData extends WorldSavedData{
@@ -37,8 +37,9 @@ public class WorldData extends WorldSavedData{
     //TODO Remove this as well
     public static List<File> legacyLoadWorlds = new ArrayList<File>();
     private static WorldData data;
-    public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<Network>();
-    public final ConcurrentHashMap<UUID, PlayerSave> playerSaveData = new ConcurrentHashMap<UUID, PlayerSave>();
+    public final Set<Network> laserRelayNetworks = new ConcurrentSet<Network>();
+    public final Map<UUID, PlayerSave> playerSaveData = new ConcurrentHashMap<UUID, PlayerSave>();
+    public final Map<UUID, BlockPos> generatedCaves = new ConcurrentHashMap<UUID, BlockPos>();
 
     public WorldData(String name){
         super(name);
@@ -149,6 +150,20 @@ public class WorldData extends WorldSavedData{
             save.readFromNBT(data, true);
             this.playerSaveData.put(id, save);
         }
+
+        this.generatedCaves.clear();
+
+        if(ActuallyAdditions.isCaveMode){
+            NBTTagList caveList = compound.getTagList("GeneratedCaves", 10);
+            for(int i = 0; i < caveList.tagCount(); i++){
+                NBTTagCompound cave = caveList.getCompoundTagAt(i);
+
+                UUID id = cave.getUniqueId("UUID");
+                BlockPos pos = new BlockPos(cave.getInteger("X"), cave.getInteger("Y"), cave.getInteger("Z"));
+
+                this.generatedCaves.put(id, pos);
+            }
+        }
     }
 
     @Override
@@ -178,6 +193,22 @@ public class WorldData extends WorldSavedData{
             playerList.appendTag(player);
         }
         compound.setTag("PlayerData", playerList);
+
+        if(ActuallyAdditions.isCaveMode){
+            NBTTagList caveList = new NBTTagList();
+            for(Map.Entry<UUID, BlockPos> entry : this.generatedCaves.entrySet()){
+                NBTTagCompound cave = new NBTTagCompound();
+
+                cave.setUniqueId("UUID", entry.getKey());
+                BlockPos pos = entry.getValue();
+                cave.setInteger("X", pos.getX());
+                cave.setInteger("Y", pos.getY());
+                cave.setInteger("Z", pos.getZ());
+
+                caveList.appendTag(cave);
+            }
+            compound.setTag("GeneratedCaves", caveList);
+        }
 
         return compound;
     }

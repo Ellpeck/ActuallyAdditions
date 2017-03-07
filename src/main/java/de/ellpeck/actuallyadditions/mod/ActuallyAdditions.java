@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
+import de.ellpeck.actuallyadditions.mod.cave.WorldTypeCave;
 import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.InitCrafting;
@@ -70,6 +71,8 @@ public class ActuallyAdditions{
     public static boolean teslaLoaded;
     public static boolean commonCapsLoaded;
 
+    public static boolean isCaveMode = true;
+
     static{
         //For some reason, this has to be done here
         FluidRegistry.enableUniversalBucket();
@@ -99,6 +102,10 @@ public class ActuallyAdditions{
         SoundHandler.init();
         new UpdateChecker();
         proxy.preInit(event);
+
+        if(isCaveMode){
+            new WorldTypeCave();
+        }
 
         ModUtil.LOGGER.info("PreInitialization Finished.");
     }

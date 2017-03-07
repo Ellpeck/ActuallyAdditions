@@ -663,6 +663,9 @@ info.actuallyadditions.laserRelay.mode.both=Both Directions
 info.actuallyadditions.laserRelay.mode.outputOnly=Only into adjacent Blocks
 info.actuallyadditions.laserRelay.mode.inputOnly=Only out of adjacent Blocks
 info.actuallyadditions.laserRelay.mode.noCompasss=Hold a %s to modify!
+info.actuallyadditions.cave.generating=Generating cave for player %s, server might lag for a bit...
+info.actuallyadditions.cave.generated=Finished generating cave for player %s.
+info.actuallyadditions.cave.generatingScreen=Generating cave...
 
 #Container Names
 container.actuallyadditions.inputter.name=ESD

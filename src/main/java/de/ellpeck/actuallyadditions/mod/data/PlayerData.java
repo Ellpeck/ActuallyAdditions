@@ -23,17 +23,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public final class PlayerData{
 
     public static PlayerSave getDataFromPlayer(EntityPlayer player){
-        WorldData worldData = WorldData.get(player.getEntityWorld());
-        ConcurrentHashMap<UUID, PlayerSave> data = worldData.playerSaveData;
+        WorldData data = WorldData.get(player.getEntityWorld());
         UUID id = player.getUniqueID();
 
-        if(data.containsKey(id)){
-            PlayerSave save = data.get(id);
+        if(data.playerSaveData.containsKey(id)){
+            PlayerSave save = data.playerSaveData.get(id);
             if(save != null && save.id != null && save.id.equals(id)){
                 return save;
             }
@@ -41,8 +39,8 @@ public final class PlayerData{
 
         //Add Data if none is existant
         PlayerSave save = new PlayerSave(id);
-        data.put(id, save);
-        worldData.markDirty();
+        data.playerSaveData.put(id, save);
+        data.markDirty();
         return save;
     }
 
