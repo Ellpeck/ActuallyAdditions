@@ -461,11 +461,6 @@ public final class ItemCrafting{
                 'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal())));
         recipeWings = RecipeUtil.lastIRecipe();
 
-        //Quartz
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
-                new ItemStack(Items.COAL),
-                new ItemStack(Items.QUARTZ)));
-
         //Coil
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                 " R ", "RIR", " R ",
