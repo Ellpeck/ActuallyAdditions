@@ -10,10 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
-import de.ellpeck.actuallyadditions.mod.cave.CaveEvents;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
@@ -43,10 +41,6 @@ public class CommonEvents{
     public CommonEvents(){
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new DungeonLoot());
-
-        if(ActuallyAdditions.isCaveMode){
-            MinecraftForge.EVENT_BUS.register(new CaveEvents());
-        }
     }
 
     public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){

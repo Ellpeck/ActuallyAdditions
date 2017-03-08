@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,7 +27,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     public static CompostRecipe getRecipeForInput(ItemStack input){
         if(StackUtil.isValid(input)){
             for(CompostRecipe recipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
-                if(ItemUtil.areItemsEqual(input, recipe.input, true)){
+                if(input.isItemEqual(recipe.input)){
                     return recipe;
                 }
             }

@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -38,12 +37,12 @@ public class RenderCompost extends TileEntitySpecialRenderer{
                 Block display = null;
                 int maxAmount = 0;
                 for(CompostRecipe aRecipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
-                    if(ItemUtil.areItemsEqual(slot, aRecipe.input, true)){
+                    if(slot.isItemEqual(aRecipe.input)){
                         display = aRecipe.inputDisplay;
                         maxAmount = aRecipe.input.getMaxStackSize();
                         break;
                     }
-                    else if(ItemUtil.areItemsEqual(slot, aRecipe.output, true)){
+                    else if(slot.isItemEqual(aRecipe.output)){
                         display = aRecipe.outputDisplay;
                         maxAmount = aRecipe.output.getMaxStackSize();
                         break;
