@@ -104,7 +104,6 @@ public final class BlockCrafting{
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockFluidPlacer), new ItemStack(InitBlocks.blockFluidPlacer)));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockFluidCollector), new ItemStack(InitBlocks.blockFluidCollector)));
 
-
         //Battery Box
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitBlocks.blockBatteryBox),
                 new ItemStack(InitBlocks.blockEnergizer),
@@ -234,11 +233,11 @@ public final class BlockCrafting{
                 'X', new ItemStack(InitBlocks.blockTestifiBucksGreenWall)));
 
         //Atomic Reconstructor
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockAtomicReconstructor),
-                "IRI", "RCR", "IRI",
-                'R', "dustRedstone",
-                'I', "ingotIron",
-                'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal())));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockAtomicReconstructor),
+                    "IRI", "RCR", "IRI",
+                    'R', "dustRedstone",
+                    'I', "ingotIron",
+                    'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal())));
         recipeAtomicReconstructor = RecipeUtil.lastIRecipe();
 
         //Laser Relay

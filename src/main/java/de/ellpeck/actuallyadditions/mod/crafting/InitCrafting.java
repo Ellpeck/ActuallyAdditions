@@ -11,13 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -56,11 +54,6 @@ public final class InitCrafting{
 
         GameRegistry.addRecipe(new RecipeBioMash());
         RecipeSorter.register(ModUtil.MOD_ID+":recipeBioMash", RecipeBioMash.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
-
-        if(ActuallyAdditions.isCaveMode){
-            ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(Blocks.LEAVES, 1, Util.WILDCARD), Blocks.LEAVES, new ItemStack(Blocks.DIRT), Blocks.DIRT);
-            ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(Blocks.LEAVES2, 1, Util.WILDCARD), Blocks.LEAVES2, new ItemStack(Blocks.DIRT), Blocks.DIRT);
-        }
     }
 
 }
