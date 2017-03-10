@@ -34,7 +34,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
@@ -49,13 +48,42 @@ public class GuiMainPage extends GuiBooklet{
             "A lot of stuff, some of it really good.@Narubion",
             "I like the bookmarks.@Vazkii",
             "It's got some stuff I guess.@Ellpeck",
-            "Actually Additions should be included in every new modpack that includes any form of tech.@KarillEndusa",
+            "Actually Additions should be included in every new modpack that includes any form of tech.@YasminEndusa",
             "A mod that basically lets you do what ever the heck you want.@Joshwoo70",
             "TINY TORCHES!! BABY TORCHES!! Somebody actually finally did it!!@Soaryn",
             "Balanced mod wich makes things different - in a good way.@garantiertnicht",
             "The mod everyone needs, but not everyone knows@Brewpl",
             "The in-game documentation is the best I’ve seen. I especially love the JEI integration. Even a derp like me can figure it out.@dannydjdk",
-            "The second best mod I've ever used.@mmaas44"
+            "The second best mod I've ever used.@mmaas44",
+            "The Fermenting Barrel is one of my favorite textures.@amadornes",
+            "Smiley Clouds is the reason for fascism in 2016.@raoulvdberge",
+            "The worms are an awesome idea!@greenking",
+            "Can I use that mod in my pack?@Ibraheem",
+            "Hello, love the mod.@SuntannedDuck2",
+            "Quick! Have all the fun before they nerf it!@JuddMan03",
+            "I have a feeling Actually Additions is also like Extra Utilities with Random things smashed together why is it...@lesslighter",
+            "Leaf eater... munchdew... hummm@EiOs",
+            "There is no such thing as canola seeds.@AlBoVa",
+            "This mod is cancer, BRUTAL EXPENSIVE POWER usage..Just, cancer.@KoJo",
+            "Spaghetti is spaghetti, and noodles are noodles.@robsonld04",
+            "The Actually Additions name is actually true. It's actually great!@asiekierka",
+            "Such a great mod@jsdeveloper",
+            "That mod is kind of funny.@Anonymous",
+            "Actually Additions is a lot of fun.@Anonymous",
+            "Is Actually Additions still fugly?@Anonymous",
+            "I like it, but it's so small.@Anonymous",
+            "It has a couple of blocks I like, but overall it's just a mess.@Anonymous",
+            "Direwolf's 1.10 playthrough is just him shilling Actually Additions@Anonymous",
+            "We thought about sending the author a bunch of pizzas to his adress@Anonymous",
+            "It's op as heck.@billofbong0",
+            "Actually AdditionsってマイクラMODすごく良いのに日本人で遊んでる人あんまいないっぽい@stay_uk",
+            "Actually Additions is OP. Not like my favorite combination of mods, Project E + Magic Crops + Draconic Evolution.@Anonymous",
+            "To be perfectly honest, I never actually realized how much content Actually Additions has before.@Ellpeck",
+            "I don't blame you, I actually downgraded to Actually Additions.@PvtSeaCow",
+            "It is lonely because there is no device to fly items with the laser in the 1.7.10 version.@Google Translate",
+            "始めまして。日本人です。このMODは本当に素晴らしい！ただ、1.7.10ヴァージョンだと、レーザーでアイテムを飛ばす装置がないので寂しいです。@Anonymous",
+            "Some verses found in older translations, such as the KJV were actually additions made by later copyists.@Pat_Joel",
+            "I can't place filters into Laser Relays, but the mod is very cool.@LP_Jakob"
     };
 
     private TexturedButton achievementButton;
@@ -200,6 +228,33 @@ public class GuiMainPage extends GuiBooklet{
             }
             else if(playerName.equalsIgnoreCase("mezz")){
                 versionStrg = "Just Enough Editions";
+            }
+            else if(playerName.equalsIgnoreCase("amadornes")){
+                versionStrg = "Beard's Edition";
+            }
+            else if(playerName.equalsIgnoreCase("raoul")){
+                versionStrg = "Giraffe's Edition";
+            }
+            else if(playerName.equalsIgnoreCase("oitsjustjose")){
+                versionStrg = "oitsjustanedition";
+            }
+            else if(playerName.equalsIgnoreCase("xbony2")){
+                versionStrg = "Naughty Edition";
+            }
+            else if(playerName.equalsIgnoreCase("themattabase")){
+                versionStrg = "Withered Edition";
+            }
+            else if(playerName.equalsIgnoreCase("robsonld04")){
+                versionStrg = "Modpack Edition";
+            }
+            else if(playerName.equalsIgnoreCase("snowshock35")){
+                versionStrg = "Edition 35";
+            }
+            else if(playerName.equalsIgnoreCase("asiekierka")){
+                versionStrg = "‽ Edition";
+            }
+            else if(playerName.equalsIgnoreCase("elucent")){
+                versionStrg = "";
             }
             else{
                 versionStrg = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.edition")+" "+modVersion;
