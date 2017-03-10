@@ -88,8 +88,8 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
+        compound.setInteger("Cache", this.coffeeCacheAmount);
         if(type != NBTType.SAVE_BLOCK){
-            compound.setInteger("Cache", this.coffeeCacheAmount);
             compound.setInteger("Time", this.brewTime);
         }
     }
@@ -99,8 +99,8 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
+        this.coffeeCacheAmount = compound.getInteger("Cache");
         if(type != NBTType.SAVE_BLOCK){
-            this.coffeeCacheAmount = compound.getInteger("Cache");
             this.brewTime = compound.getInteger("Time");
         }
     }
