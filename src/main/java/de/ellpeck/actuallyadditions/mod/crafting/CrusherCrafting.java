@@ -90,13 +90,13 @@ public final class CrusherCrafting{
         ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreIron", false), OreDictionary.getOres("dustIron", false), 2, OreDictionary.getOres("dustGold", false), 1, 20);
 
         if(ConfigCrafting.HORSE_ARMORS.isEnabled()){
-            ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.IRON_HORSE_ARMOR)), OreDictionary.getOres("dustIron", false), 8, null, 0, 0);
+            ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.IRON_HORSE_ARMOR)), OreDictionary.getOres("dustIron", false), 6, null, 0, 0);
             recipeIronHorseArmor = RecipeUtil.lastCrusherRecipe();
 
-            ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.GOLDEN_HORSE_ARMOR)), OreDictionary.getOres("dustGold"), 8, null, 0, 0);
+            ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.GOLDEN_HORSE_ARMOR)), OreDictionary.getOres("dustGold"), 6, null, 0, 0);
             recipeGoldHorseArmor = RecipeUtil.lastCrusherRecipe();
 
-            ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.DIAMOND_HORSE_ARMOR)), OreDictionary.getOres("dustDiamond"), 8, null, 0, 0);
+            ActuallyAdditionsAPI.addCrusherRecipes(Collections.singletonList(new ItemStack(Items.DIAMOND_HORSE_ARMOR)), OreDictionary.getOres("dustDiamond"), 6, null, 0, 0);
             recipeDiamondHorseArmor = RecipeUtil.lastCrusherRecipe();
         }
 
