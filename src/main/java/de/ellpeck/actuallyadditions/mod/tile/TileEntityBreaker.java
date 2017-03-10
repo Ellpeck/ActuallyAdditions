@@ -87,9 +87,9 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
         Block blockToBreak = stateToBreak.getBlock();
         if(!this.isPlacer && blockToBreak != null && !this.worldObj.isAirBlock(coordsBlock) && !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && blockToBreak.getBlockHardness(stateToBreak, this.worldObj, coordsBlock) >= 0.0F){
             List<ItemStack> drops = blockToBreak.getDrops(this.worldObj, coordsBlock, stateToBreak, 0);
-            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, coordsBlock, this.worldObj.getBlockState(coordsBlock), 0, 1, false, null);
+            float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.worldObj, coordsBlock);
 
-            if(this.worldObj.rand.nextFloat() <= chance){
+            if(chance > 0 && this.worldObj.rand.nextFloat() <= chance){
                 if(WorldUtil.addToInventory(this, drops, false, true)){
                     this.worldObj.playEvent(2001, coordsBlock, Block.getStateId(stateToBreak));
                     this.worldObj.setBlockToAir(coordsBlock);

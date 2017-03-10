@@ -103,9 +103,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements ICustomE
                     if(!block.isAir(this.worldObj.getBlockState(pos), this.worldObj, pos)){
                         if(block.getHarvestLevel(this.worldObj.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.worldObj, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
                             List<ItemStack> drops = block.getDrops(this.worldObj, pos, this.worldObj.getBlockState(pos), 0);
-                            float chance = ForgeEventFactory.fireBlockHarvesting(drops, this.worldObj, pos, this.worldObj.getBlockState(pos), 0, 1, false, null);
+                            float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.worldObj, pos);
 
-                            if(this.worldObj.rand.nextFloat() <= chance){
+                            if(chance > 0 && this.worldObj.rand.nextFloat() <= chance){
                                 if(WorldUtil.addToInventory(this, drops, false, true)){
                                     this.worldObj.playEvent(2001, pos, Block.getStateId(this.worldObj.getBlockState(pos)));
                                     this.worldObj.setBlockToAir(pos);
