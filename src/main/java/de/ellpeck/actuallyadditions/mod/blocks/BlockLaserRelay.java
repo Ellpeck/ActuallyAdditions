@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
 import de.ellpeck.actuallyadditions.mod.tile.*;
@@ -141,7 +142,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
         if(tile instanceof TileEntityLaserRelay){
             TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
 
-            if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemCompass){
+            if(StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemCompassConfigurator){
                 if(!world.isRemote){
                     relay.onCompassAction(player);
 
@@ -188,7 +189,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
     @SideOnly(Side.CLIENT)
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         if(posHit != null && posHit.getBlockPos() != null && minecraft.theWorld != null && StackUtil.isValid(stack)){
-            boolean compass = stack.getItem() instanceof ItemCompass;
+            boolean compass = stack.getItem() == ConfigValues.itemCompassConfigurator;
             if(compass || stack.getItem() instanceof ItemLaserWrench){
                 TileEntity tile = minecraft.theWorld.getTileEntity(posHit.getBlockPos());
                 if(tile instanceof TileEntityLaserRelay){
@@ -202,7 +203,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                         expl = relay.getCompassDisplayString();
                     }
                     else{
-                        expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Compass to modify!";
+                        expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a "+StringUtil.localize(ConfigValues.itemCompassConfigurator.getUnlocalizedName()+".name")+" to modify!";
                     }
 
                     StringUtil.drawSplitString(minecraft.fontRendererObj, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);

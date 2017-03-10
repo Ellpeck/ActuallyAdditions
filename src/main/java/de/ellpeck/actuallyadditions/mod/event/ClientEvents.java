@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.event;
 
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
+import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.EnergyDisplay;
@@ -20,7 +21,6 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
@@ -162,11 +162,11 @@ public class ClientEvents{
                         font.drawStringWithShadow(strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
                         String expl;
-                        if(StackUtil.isValid(stack) && Block.getBlockFromItem(stack.getItem()) instanceof BlockRedstoneTorch){
+                        if(StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator){
                             expl = TextFormatting.GREEN+"Right-Click to toggle!";
                         }
                         else{
-                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a Redstone Torch to toggle!";
+                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+"Hold a "+StringUtil.localize(ConfigValues.itemRedstoneTorchConfigurator.getUnlocalizedName()+".name")+" to toggle!";
                         }
                         font.drawStringWithShadow(expl, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
                     }
