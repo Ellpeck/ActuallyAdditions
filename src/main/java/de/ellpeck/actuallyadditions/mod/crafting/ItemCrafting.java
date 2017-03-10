@@ -490,13 +490,6 @@ public final class ItemCrafting{
             recipeWings = RecipeUtil.lastIRecipe();
         }
 
-        //Quartz
-        if(ConfigCrafting.QUARTZ.isEnabled()){
-            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
-                    new ItemStack(Items.COAL),
-                    new ItemStack(Items.QUARTZ)));
-        }
-
         //Coil
         if(ConfigCrafting.COIL.isEnabled()){
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
