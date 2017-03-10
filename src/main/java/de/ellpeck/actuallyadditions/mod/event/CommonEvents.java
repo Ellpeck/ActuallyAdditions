@@ -29,6 +29,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -43,7 +44,7 @@ public class CommonEvents{
     }
 
     public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
-        if(gotten != null){
+        if(gotten != null && player != null){
             for(TheAchievements ach : TheAchievements.values()){
                 if(ach.type == type){
                     if(ItemUtil.contains(ach.itemsToBeGotten, gotten, true)){
@@ -103,8 +104,8 @@ public class CommonEvents{
     }
 
     @SubscribeEvent
-    public void onPickupEvent(PlayerEvent.ItemPickupEvent event){
-        checkAchievements(event.pickedUp.getEntityItem(), event.player, InitAchievements.Type.PICK_UP);
+    public void onPickupEvent(EntityItemPickupEvent event){
+        checkAchievements(event.getItem().getEntityItem(), event.getEntityPlayer(), InitAchievements.Type.PICK_UP);
     }
 
     @SubscribeEvent
