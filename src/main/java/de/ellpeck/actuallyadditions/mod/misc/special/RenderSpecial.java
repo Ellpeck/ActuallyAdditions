@@ -29,19 +29,30 @@ public class RenderSpecial{
     }
 
     public void render(EntityPlayer player, float partialTicks){
+        if(player.isInvisible() || !player.isWearing(EnumPlayerModelParts.CAPE) || player.isElytraFlying()){
+            return;
+        }
+
+        GlStateManager.pushMatrix();
+
+        Vec3d currentPos = Minecraft.getMinecraft().thePlayer.getPositionEyes(partialTicks);
+        Vec3d playerPos = player.getPositionEyes(partialTicks);
+        GlStateManager.translate(playerPos.xCoord-currentPos.xCoord, playerPos.yCoord-currentPos.yCoord, playerPos.zCoord-currentPos.zCoord);
+        GlStateManager.translate(0D, 2.375D-(player.isSneaking() ? 0.125D : 0D), 0D);
+
+        this.render();
+        GlStateManager.popMatrix();
+    }
+
+    public void render(){
         if(StackUtil.isValid(this.theThingToRender)){
-            if(player.isInvisible() || !player.isWearing(EnumPlayerModelParts.CAPE) || player.isElytraFlying()){
-                return;
-            }
             boolean isBlock = this.theThingToRender.getItem() instanceof ItemBlock;
 
             GlStateManager.pushMatrix();
 
-            Vec3d currentPos = Minecraft.getMinecraft().thePlayer.getPositionEyes(partialTicks);
-            Vec3d playerPos = player.getPositionEyes(partialTicks);
-            GlStateManager.translate(playerPos.xCoord-currentPos.xCoord, playerPos.yCoord-currentPos.yCoord, playerPos.zCoord-currentPos.zCoord);
-
-            GlStateManager.translate(0D, 2.375D-(player.isSneaking() ? 0.125D : 0D)+(isBlock ? 0D : 0.1875D), 0D);
+            if(isBlock){
+                GlStateManager.translate(0D, -0.1875D, 0D);
+            }
             GlStateManager.rotate(180F, 1.0F, 0.0F, 1.0F);
 
             float size = isBlock ? 0.5F : 0.4F;
@@ -68,5 +79,4 @@ public class RenderSpecial{
             GlStateManager.popMatrix();
         }
     }
-
 }
