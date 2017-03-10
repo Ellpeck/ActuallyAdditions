@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -117,22 +118,15 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
             Collections.shuffle(breakPositions);
 
             BlockPos theCoord = breakPositions.get(0);
-            Block theBlock = world.getBlockState(theCoord).getBlock();
+            IBlockState theState = world.getBlockState(theCoord);
 
-            ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-            //Gets all of the Drops the Block should have
-            drops.addAll(theBlock.getDrops(world, theCoord, world.getBlockState(theCoord), 0));
-
+            theState.getBlock().dropBlockAsItem(world, theCoord, theState, 0);
             //Plays the Breaking Sound
-            world.playEvent(2001, theCoord, Block.getStateId(world.getBlockState(theCoord)));
+            world.playEvent(2001, theCoord, Block.getStateId(theState));
 
             //Deletes the Block
             world.setBlockToAir(theCoord);
 
-            for(ItemStack theDrop : drops){
-                //Drops the Items into the World
-                world.spawnEntityInWorld(new EntityItem(world, theCoord.getX()+0.5, theCoord.getY()+0.5, theCoord.getZ()+0.5, theDrop));
-            }
             return true;
         }
         return false;
