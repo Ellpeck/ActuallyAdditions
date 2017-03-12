@@ -44,6 +44,10 @@ public class BlockRangedCollector extends BlockContainerBase{
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing par6, float par7, float par8, float par9){
+        if(this.tryToggleRedstone(world, pos, player)){
+            return true;
+        }
+
         if(!world.isRemote){
             TileEntityRangedCollector breaker = (TileEntityRangedCollector)world.getTileEntity(pos);
             if(breaker != null){

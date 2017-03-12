@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -118,11 +117,8 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
                 TileEntityBase base = (TileEntityBase)tile;
                 if(!world.isRemote && base.isRedstoneToggle()){
                     base.isPulseMode = !base.isPulseMode;
-                    tile.markDirty();
-
-                    if(tile instanceof TileEntityBase){
-                        ((TileEntityBase)tile).sendUpdate();
-                    }
+                    base.markDirty();
+                    base.sendUpdate();
                 }
                 return true;
             }
