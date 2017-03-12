@@ -1,3 +1,8 @@
+# 1.10.2-r105
+* Added a Redstone Mode toggle to the Ranged Collector
+* Fixed missing textures on item laser relay manual pages
+* Supposedly fixed the bag "leaking" items with certain other mods installed
+
 # 1.10.2-r104
 * Stop the storage crate from syncing its NBT
 * Make the drill digging packet a config option that is off by default
