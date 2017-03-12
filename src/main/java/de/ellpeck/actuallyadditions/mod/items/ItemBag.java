@@ -16,9 +16,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler.GuiTypes;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -67,9 +65,9 @@ public class ItemBag extends ItemBase{
                 slotsFilled++;
             }
         }
-        
+
         // don't count the filter 4 slots 
-        slotsTotal = slotsTotal - 4;
+        slotsTotal = slotsTotal-4;
 
         tooltip.add(TextFormatting.ITALIC.toString()+slotsFilled+"/"+slotsTotal+" filled slots");
     }
@@ -101,7 +99,7 @@ public class ItemBag extends ItemBase{
                                 filter.readFromNBT(invStack.getTagCompound(), "Filter");
                                 if(filter.check(stack, inventory)){
                                     if(isVoid){
-                                        stack = StackUtil.setStackSize(stack, 0);
+                                        stack.stackSize = 0;
                                         changed = true;
                                     }
                                     else{
@@ -112,14 +110,14 @@ public class ItemBag extends ItemBase{
                                                     int maxTransfer = Math.min(StackUtil.getStackSize(stack), stack.getMaxStackSize()-StackUtil.getStackSize(bagStack));
                                                     if(maxTransfer > 0){
                                                         inventory[j] = StackUtil.addStackSize(bagStack, maxTransfer);
-                                                        stack = StackUtil.addStackSize(stack, -maxTransfer);
+                                                        stack.stackSize -= maxTransfer;
                                                         changed = true;
                                                     }
                                                 }
                                             }
                                             else{
                                                 inventory[j] = stack.copy();
-                                                stack = StackUtil.setStackSize(stack, 0);
+                                                stack.stackSize = 0;
                                                 changed = true;
                                             }
 
@@ -144,13 +142,6 @@ public class ItemBag extends ItemBase{
                         break;
                     }
                 }
-            }
-
-            if(!StackUtil.isValid(stack)){
-                item.setDead();
-            }
-            else{
-                item.setEntityItemStack(stack);
             }
         }
     }
