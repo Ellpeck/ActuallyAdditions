@@ -23,7 +23,7 @@ if(hasProperty('buildnumber')){
 }
 
 minecraft {
-    version = "1.11.2-13.20.0.2227"
+    version = "1.11.2-13.20.0.2259"
     runDir = "idea"
 
     mappings = "snapshot_20161126"

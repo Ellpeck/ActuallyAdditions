@@ -33,6 +33,7 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -71,20 +72,16 @@ public class OreGen implements IWorldGenerator{
         }
 
         if(ConfigBoolValues.GEN_LUSH_CAVES.isEnabled()){
+
+            int randConst = 0x969ce69d;//so that it won't generate the same numbers as other mod that does the same thing
+            Random chunkRand = new Random(randConst ^ world.getSeed() ^ (x*29+z*31));
+
             StructureBoundingBox box = new StructureBoundingBox(x*16+8, 0, z*16+8, x*16+8+15, 255, z*16+8+15);
-            int chunkRadius = 1;
-            for(int dx = -chunkRadius; dx <= chunkRadius; dx++){
-                for(int dz = -chunkRadius; dz <= chunkRadius; dz++){
-                    int chunkX = x+dx;
-                    int chunkZ = z+dz;
-                    int randConst = 0x969ce69d;//so that it won't generate the same numbers as other mod that does the same thing
-                    Random chunkRand = new Random(randConst ^ world.getSeed() ^ (chunkX*29+chunkZ*31));
-                    if(chunkRand.nextInt(ConfigIntValues.LUSH_CAVE_CHANCE.getValue()) <= 0){
-                        BlockPos randPos = world.getTopSolidOrLiquidBlock(new BlockPos(chunkX*16+chunkRand.nextInt(16)+8, 0, chunkZ*16+chunkRand.nextInt(16)+8));
-                        BlockPos pos = randPos.down(MathHelper.getInt(chunkRand, 15, randPos.getY()-15));
-                        this.caveGen.generate(world, chunkRand, pos, box);
-                    }
-                }
+            if(chunkRand.nextInt(ConfigIntValues.LUSH_CAVE_CHANCE.getValue()) <= 0){
+                BlockPos randPos = world.getTopSolidOrLiquidBlock(new BlockPos(x*16+chunkRand.nextInt(16)+8, 0, z*16+chunkRand.nextInt(16)+8));
+                BlockPos pos = randPos.down(MathHelper.getInt(chunkRand, 15, randPos.getY()-15));
+
+                this.caveGen.generate(world, chunkRand, pos, box);
             }
         }
     }
@@ -101,25 +98,29 @@ public class OreGen implements IWorldGenerator{
     @SubscribeEvent
     public void onWorldDecoration(DecorateBiomeEvent.Decorate event){
         if((event.getResult() == Event.Result.ALLOW || event.getResult() == Event.Result.DEFAULT)){
-            if(!ArrayUtils.contains(ConfigIntListValues.PLANT_DIMENSION_BLACKLIST.getValue(), event.getWorld().provider.getDimension())){
-                this.generateRice(event);
-                this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.CANOLA.ordinal(), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.GRASS, event);
-                this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.FLAX.ordinal(), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.GRASS, event);
-                this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.COFFEE.ordinal(), ConfigIntValues.COFFEE_AMOUNT.getValue(), ConfigBoolValues.DO_COFFEE_GEN.isEnabled(), Material.GRASS, event);
-                this.genPlantNormally(InitBlocks.blockBlackLotus, 0, ConfigIntValues.BLACK_LOTUS_AMOUNT.getValue(), ConfigBoolValues.DO_LOTUS_GEN.isEnabled(), Material.GRASS, event);
+            if(event.getType() == EventType.FLOWERS){
+                if(!ArrayUtils.contains(ConfigIntListValues.PLANT_DIMENSION_BLACKLIST.getValue(), event.getWorld().provider.getDimension())){
+                    this.generateRice(event);
+                    this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.CANOLA.ordinal(), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.GRASS, event);
+                    this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.FLAX.ordinal(), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.GRASS, event);
+                    this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.COFFEE.ordinal(), ConfigIntValues.COFFEE_AMOUNT.getValue(), ConfigBoolValues.DO_COFFEE_GEN.isEnabled(), Material.GRASS, event);
+                    this.genPlantNormally(InitBlocks.blockBlackLotus, 0, ConfigIntValues.BLACK_LOTUS_AMOUNT.getValue(), ConfigBoolValues.DO_LOTUS_GEN.isEnabled(), Material.GRASS, event);
+                }
             }
 
-            //Generate Treasure Chests
-            if(ConfigBoolValues.DO_TREASURE_CHEST_GEN.isEnabled()){
-                if(event.getRand().nextInt(300) == 0){
-                    BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
-                    randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
+            if(event.getType() == EventType.LILYPAD){
+                //Generate Treasure Chests
+                if(ConfigBoolValues.DO_TREASURE_CHEST_GEN.isEnabled()){
+                    if(event.getRand().nextInt(300) == 0){
+                        BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
+                        randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
 
-                    if(event.getWorld().getBiome(randomPos) instanceof BiomeOcean){
-                        if(randomPos.getY() >= 25 && randomPos.getY() <= 45){
-                            if(event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER){
-                                if(event.getWorld().getBlockState(randomPos.down()).getMaterial().isSolid()){
-                                    event.getWorld().setBlockState(randomPos, InitBlocks.blockTreasureChest.getStateFromMeta(event.getRand().nextInt(4)), 2);
+                        if(event.getWorld().getBiome(randomPos) instanceof BiomeOcean){
+                            if(randomPos.getY() >= 25 && randomPos.getY() <= 45){
+                                if(event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER){
+                                    if(event.getWorld().getBlockState(randomPos.down()).getMaterial().isSolid()){
+                                        event.getWorld().setBlockState(randomPos, InitBlocks.blockTreasureChest.getStateFromMeta(event.getRand().nextInt(4)), 2);
+                                    }
                                 }
                             }
                         }
@@ -132,7 +133,7 @@ public class OreGen implements IWorldGenerator{
     private void generateRice(DecorateBiomeEvent event){
         if(ConfigBoolValues.DO_RICE_GEN.isEnabled()){
             for(int i = 0; i < ConfigIntValues.RICE_AMOUNT.getValue(); i++){
-                if(event.getRand().nextInt(50) == 0){
+                if(event.getRand().nextInt(10) == 0){
                     BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
                     randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
                     if(event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER){
@@ -153,7 +154,7 @@ public class OreGen implements IWorldGenerator{
     private void genPlantNormally(Block plant, int meta, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event){
         if(doIt){
             for(int i = 0; i < amount; i++){
-                if(event.getRand().nextInt(400) == 0){
+                if(event.getRand().nextInt(100) == 0){
                     BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
                     randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
 
