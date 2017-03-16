@@ -1,3 +1,13 @@
+# 1.11.2-r106
+* Made horse armor yield less when crushing it
+* Fixed crusher achievement descriptions being messed up
+* Remove the manual from dungeon chests
+* Added a config to change the redstone torch and compass configuration items
+* Fixed a bunch of grammatical issues in the manual
+* Fixed cascading world gen caused by lush caves and plants (performance improvements! \o/)
+* Generate village chests even if dungeon loot is disabled
+* Fixed a crash issue with the smiley cloud on weirded out worlds
+
 # 1.10.2-r105
 * Added a Redstone Mode toggle to the Ranged Collector
 * Fixed missing textures on item laser relay manual pages
