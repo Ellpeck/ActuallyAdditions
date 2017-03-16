@@ -44,7 +44,7 @@ public class DungeonLoot{
 
     @SubscribeEvent
     public void onLootTableLoad(LootTableLoadEvent event){
-        if(ConfigBoolValues.DUNGEON_LOOT.isEnabled() && event.getName() != null && event.getTable() != null){
+        if(event.getName() != null && event.getTable() != null){
             LootCondition[] noCondition = new LootCondition[0];
 
             LootPool pool = event.getTable().getPool("main");
@@ -58,47 +58,50 @@ public class DungeonLoot{
             boolean addQuartz = false;
             boolean addBatWings = false;
 
-            if(LootTableList.CHESTS_SIMPLE_DUNGEON.equals(event.getName())){
-                addCrystals = true;
-                addDrillCore = true;
-                addQuartz = true;
+            if(ConfigBoolValues.DUNGEON_LOOT.isEnabled()){
+                if(LootTableList.CHESTS_SIMPLE_DUNGEON.equals(event.getName())){
+                    addCrystals = true;
+                    addDrillCore = true;
+                    addQuartz = true;
+                }
+                else if(LootTableList.CHESTS_ABANDONED_MINESHAFT.equals(event.getName())){
+                    addCrystals = true;
+                    addDrillCore = true;
+                }
+                else if(LootTableList.CHESTS_VILLAGE_BLACKSMITH.equals(event.getName())){
+                    addDrillCore = true;
+                    addQuartz = true;
+                }
+                else if(LootTableList.CHESTS_STRONGHOLD_LIBRARY.equals(event.getName())){
+                    addBatWings = true;
+                }
+                else if(LootTableList.CHESTS_IGLOO_CHEST.equals(event.getName())){
+                    addBatWings = true;
+                }
+                else if(LootTableList.CHESTS_DESERT_PYRAMID.equals(event.getName())){
+                    addDrillCore = true;
+                    addBatWings = true;
+                }
+                else if(LootTableList.CHESTS_NETHER_BRIDGE.equals(event.getName())){
+                    addBatWings = true;
+                    addCrystals = true;
+                    addDrillCore = true;
+                }
+                else if(LootTableList.CHESTS_END_CITY_TREASURE.equals(event.getName())){
+                    addBatWings = true;
+                    addCrystals = true;
+                    addDrillCore = true;
+                    addQuartz = true;
+                }
+                else if(LootTableList.CHESTS_WOODLAND_MANSION.equals(event.getName())){
+                    addBatWings = true;
+                    addCrystals = true;
+                    addDrillCore = true;
+                    addQuartz = true;
+                }
             }
-            else if(LootTableList.CHESTS_ABANDONED_MINESHAFT.equals(event.getName())){
-                addCrystals = true;
-                addDrillCore = true;
-            }
-            else if(LootTableList.CHESTS_VILLAGE_BLACKSMITH.equals(event.getName())){
-                addDrillCore = true;
-                addQuartz = true;
-            }
-            else if(LootTableList.CHESTS_STRONGHOLD_LIBRARY.equals(event.getName())){
-                addBatWings = true;
-            }
-            else if(LootTableList.CHESTS_IGLOO_CHEST.equals(event.getName())){
-                addBatWings = true;
-            }
-            else if(LootTableList.CHESTS_DESERT_PYRAMID.equals(event.getName())){
-                addDrillCore = true;
-                addBatWings = true;
-            }
-            else if(LootTableList.CHESTS_NETHER_BRIDGE.equals(event.getName())){
-                addBatWings = true;
-                addCrystals = true;
-                addDrillCore = true;
-            }
-            else if(LootTableList.CHESTS_END_CITY_TREASURE.equals(event.getName())){
-                addBatWings = true;
-                addCrystals = true;
-                addDrillCore = true;
-                addQuartz = true;
-            }
-            else if(LootTableList.CHESTS_WOODLAND_MANSION.equals(event.getName())){
-                addBatWings = true;
-                addCrystals = true;
-                addDrillCore = true;
-                addQuartz = true;
-            }
-            else if(JAM_HOUSE.equals(event.getName())){
+
+            if(JAM_HOUSE.equals(event.getName())){
                 LootFunction jamDamage = new SetMetadata(noCondition, new RandomValueRange(0, TheJams.values().length-1));
                 LootFunction jamAmount = new SetCount(noCondition, new RandomValueRange(3, 5));
                 pool.addEntry(new LootEntryItem(InitItems.itemJams, 2, 0, new LootFunction[]{jamDamage, jamAmount}, noCondition, ModUtil.MOD_ID+":jams"));
