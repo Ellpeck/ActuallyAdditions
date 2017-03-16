@@ -111,7 +111,7 @@ public class OreGen implements IWorldGenerator{
             if(event.getType() == EventType.LILYPAD){
                 //Generate Treasure Chests
                 if(ConfigBoolValues.DO_TREASURE_CHEST_GEN.isEnabled()){
-                    if(event.getRand().nextInt(300) == 0){
+                    if(event.getRand().nextInt(40) == 0){
                         BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
                         randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
 
@@ -133,7 +133,7 @@ public class OreGen implements IWorldGenerator{
     private void generateRice(DecorateBiomeEvent event){
         if(ConfigBoolValues.DO_RICE_GEN.isEnabled()){
             for(int i = 0; i < ConfigIntValues.RICE_AMOUNT.getValue(); i++){
-                if(event.getRand().nextInt(10) == 0){
+                if(event.getRand().nextInt(3) == 0){
                     BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
                     randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
                     if(event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER){
