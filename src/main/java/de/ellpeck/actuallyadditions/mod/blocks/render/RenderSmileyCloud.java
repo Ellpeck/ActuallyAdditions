@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
+import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.misc.cloud.ISmileyCloudEasterEgg;
 import de.ellpeck.actuallyadditions.mod.misc.cloud.SmileyCloudEasterEggs;
 import de.ellpeck.actuallyadditions.mod.misc.special.RenderSpecial;
@@ -49,18 +50,20 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
                         if(triggerName != null && theCloud.name != null){
                             if(triggerName.equalsIgnoreCase(theCloud.name)){
                                 GlStateManager.pushMatrix();
-                                IBlockState state = theCloud.getWorld().getBlockState(theCloud.getPos());
 
-                                switch(state.getValue(BlockHorizontal.FACING)){
-                                    case NORTH:
-                                        GlStateManager.rotate(180, 0, 1, 0);
-                                        break;
-                                    case EAST:
-                                        GlStateManager.rotate(270, 0, 1, 0);
-                                        break;
-                                    case WEST:
-                                        GlStateManager.rotate(90, 0, 1, 0);
-                                        break;
+                                IBlockState state = theCloud.getWorld().getBlockState(theCloud.getPos());
+                                if(state.getBlock() == InitBlocks.blockSmileyCloud){
+                                    switch(state.getValue(BlockHorizontal.FACING)){
+                                        case NORTH:
+                                            GlStateManager.rotate(180, 0, 1, 0);
+                                            break;
+                                        case EAST:
+                                            GlStateManager.rotate(270, 0, 1, 0);
+                                            break;
+                                        case WEST:
+                                            GlStateManager.rotate(90, 0, 1, 0);
+                                            break;
+                                    }
                                 }
 
                                 cloud.renderExtra(0.0625F);
