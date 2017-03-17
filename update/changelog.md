@@ -1,3 +1,36 @@
+# 1.11.2-r106
+* Made horse armor yield less when crushing it
+* Fixed crusher achievement descriptions being messed up
+* Remove the manual from dungeon chests
+* Added a config to change the redstone torch and compass configuration items
+* Fixed a bunch of grammatical issues in the manual
+* Fixed cascading world gen caused by lush caves and plants (performance improvements! \o/)
+* Generate village chests even if dungeon loot is disabled
+* Fixed a crash issue with the smiley cloud on weirded out worlds
+
+# 1.10.2-r105
+* Added a Redstone Mode toggle to the Ranged Collector
+* Fixed missing textures on item laser relay manual pages
+* Supposedly fixed the bag "leaking" items with certain other mods installed
+
+# 1.10.2-r104
+* Stop the storage crate from syncing its NBT
+* Make the drill digging packet a config option that is off by default
+* Make the coffee maker store its coffee cache when breaking it
+* Added emptying recipes for fluid placer and collector
+* Made the magnet ring not use energy when not picking something up
+* Fire block harvesting events when automatically mining things
+* Backported a bunch of quotes and booklet editions
+* Fix an exception in the booklet with broken furnace recipes
+* mMake the leaf blower drop blocks on their own
+* Fix pickup achievements
+* Make the smiley clouds render special stuff
+* Make horse armor yield less when crushing
+* Fix crusher achievement descritipons being wrong
+* Added a config to change the configuration items (compass and redstone torch)
+* Updated the RF API (This was the actual reason this whole update was made, so blame (or thank) KingLemming. Also, I'm only putting this bit of text here because [he told me to](http://puu.sh/uDhoP/08b063b698.png).)
+* Remove the black quartz made from coal and quartz recipe (<3)
+
 # 1.11.2-r103
 * Added Trials to the manual. They're like challenges that should motivate you to do more stuffs. Check it out.
 * Fixed Crystal Clusters giving the wrong pick block
