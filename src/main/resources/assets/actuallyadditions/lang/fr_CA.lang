@@ -651,7 +651,7 @@ info.actuallyadditions.machineBroke=Le bloc s'est détruit quand vous avez essay
 info.actuallyadditions.redstoneMode.name=Mode Redstone
 info.actuallyadditions.redstoneMode.pulse=Impulsion
 info.actuallyadditions.redstoneMode.deactivation=Desactivation
-info.actuallyadditions.redstoneMode.invalidItem=Utilisez une torche de redstone pour activer/désactiver!
+info.actuallyadditions.redstoneMode.invalidItem=Utilisez une %s pour activer/désactiver!
 info.actuallyadditions.redstoneMode.validItem=Cliquez-droit pour activer/désactiver!
 info.actuallyadditions.laserRelay.item.extra=Priorité
 info.actuallyadditions.laserRelay.item.display.1=Cliquez-droit pour augmenter!
@@ -662,7 +662,7 @@ info.actuallyadditions.laserRelay.fluid.extra=Flux de liquide
 info.actuallyadditions.laserRelay.mode.both=Les deux sens
 info.actuallyadditions.laserRelay.mode.outputOnly=Seulement vers les blocs adjacents
 info.actuallyadditions.laserRelay.mode.inputOnly=Seulement hors des blocs adjacents
-info.actuallyadditions.laserRelay.mode.noCompasss=Tenez une boussole en main pour modifier!
+info.actuallyadditions.laserRelay.mode.noCompasss=Tenez une %s en main pour modifier!
 
 #Noms de conteneurs
 container.actuallyadditions.inputter.name=DSE
@@ -791,7 +791,7 @@ achievement.actuallyadditions.craftCrusher=Double-moi ça!
 achievement.actuallyadditions.craftCrusher.desc=Craftez un broyeur
 
 achievement.actuallyadditions.craftDoubleCrusher=Double du double!
-achievement.actuallyadditions.craftCrusher.desc=Craftez un double broyeur
+achievement.actuallyadditions.craftDoubleCrusher.desc=Craftez un double broyeur
 
 achievement.actuallyadditions.pickUpCoffee=Ca rend accro...
 achievement.actuallyadditions.pickUpCoffee.desc=Récoltez un peu de café
