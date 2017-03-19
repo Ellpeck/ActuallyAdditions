@@ -46,6 +46,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.compat.CraftingTweaksCompat;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -115,6 +116,8 @@ public class ActuallyAdditions{
         new CommonEvents();
         InitCrafting.init();
         InitEntities.init();
+
+        CraftingTweaksCompat.register();
 
         proxy.init(event);
 
