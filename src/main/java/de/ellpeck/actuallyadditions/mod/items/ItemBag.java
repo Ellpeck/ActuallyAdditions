@@ -15,11 +15,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler.GuiTypes;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -191,7 +187,7 @@ public class ItemBag extends ItemBase{
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
-        if(!world.isRemote){
+        if(!world.isRemote && hand == EnumHand.MAIN_HAND){
             player.openGui(ActuallyAdditions.instance, (this.isVoid ? GuiTypes.VOID_BAG : GuiTypes.BAG).ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
         return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
