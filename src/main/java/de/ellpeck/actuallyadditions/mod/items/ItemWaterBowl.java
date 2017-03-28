@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -51,9 +52,9 @@ public class ItemWaterBowl extends ItemBase{
                     if(result == null && trace != null && trace.getBlockPos() != null){
                         if(event.getEntityPlayer().canPlayerEdit(trace.getBlockPos().offset(trace.sideHit), trace.sideHit, event.getItemStack())){
                             IBlockState state = event.getWorld().getBlockState(trace.getBlockPos());
-                            Material material = state.getMaterial();
+                            Block block = state.getBlock();
 
-                            if(material == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0){
+                            if((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && state.getValue(BlockLiquid.LEVEL) == 0){
                                 event.getEntityPlayer().playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
 
                                 if(!event.getWorld().isRemote){
