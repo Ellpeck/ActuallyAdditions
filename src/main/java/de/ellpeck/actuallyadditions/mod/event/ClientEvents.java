@@ -81,7 +81,7 @@ public class ClientEvents{
                 if(regName != null){
                     if(regName.toString().toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){
                         if(event.getToolTip().size() > 0){
-                            event.getToolTip().set(0, TextFormatting.RESET+event.getToolTip().get(0));
+                            event.getToolTip().set(0, TextFormatting.RESET+TextFormatting.WHITE.toString()+event.getToolTip().get(0));
                         }
                     }
                 }
