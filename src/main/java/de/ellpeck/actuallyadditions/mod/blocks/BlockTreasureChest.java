@@ -23,6 +23,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -61,7 +62,7 @@ public class BlockTreasureChest extends BlockBase{
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int par3){
-        return null;
+        return Items.AIR;
     }
 
     @Override
