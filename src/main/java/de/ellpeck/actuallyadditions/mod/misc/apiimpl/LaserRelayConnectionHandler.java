@@ -128,6 +128,11 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
      */
     @Override
     public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world, boolean suppressConnectionRender){
+        return this.addConnection(firstRelay, secondRelay, type, world, suppressConnectionRender, false);
+    }
+
+    @Override
+    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world, boolean suppressConnectionRender, boolean removeIfConnected){
         if(firstRelay == null || secondRelay == null || firstRelay == secondRelay || firstRelay.equals(secondRelay)){
             return false;
         }
@@ -145,7 +150,13 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
         }
         //The same Network
         else if(firstNetwork == secondNetwork){
-            return false;
+            if(removeIfConnected){
+                this.removeConnection(world, firstRelay, secondRelay);
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         //Both relays have laserRelayNetworks
         else if(firstNetwork != null && secondNetwork != null){

@@ -59,7 +59,7 @@ public class ItemLaserWrench extends ItemBase{
 
                             int lowestRange = Math.min(relay.getMaxRange(), savedRelay.getMaxRange());
                             int range = lowestRange*lowestRange;
-                            if(ItemPhantomConnector.getStoredWorld(stack) == world && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world)){
+                            if(ItemPhantomConnector.getStoredWorld(stack) == world && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world, false, true)){
                                 ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
 
                                 ((TileEntityLaserRelay)savedTile).sendUpdate();
