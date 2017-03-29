@@ -79,18 +79,20 @@ public class WorldGenLushCaves{
                                 possiblePoses.add(pos);
                             }
                         }
-                        else if(rand.nextInt(20) == 0){
-                            EnumFacing[] values = EnumFacing.values();
-                            EnumFacing side = values[rand.nextInt(values.length)];
-                            BlockPos posSide = pos.offset(side);
+                        else{
+                            if(ConfigBoolValues.DO_CRYSTAL_CLUSTERS.isEnabled() && rand.nextInt(20) == 0){
+                                EnumFacing[] values = EnumFacing.values();
+                                EnumFacing side = values[rand.nextInt(values.length)];
+                                BlockPos posSide = pos.offset(side);
 
-                            if(!this.checkIndestructable(world, posSide)){
-                                IBlockState state = world.getBlockState(pos);
-                                IBlockState stateSide = world.getBlockState(posSide);
+                                if(!this.checkIndestructable(world, posSide)){
+                                    IBlockState state = world.getBlockState(pos);
+                                    IBlockState stateSide = world.getBlockState(posSide);
 
-                                if(state.getBlock().isAir(state, world, pos) && stateSide.getBlock().isSideSolid(stateSide, world, posSide, side.getOpposite())){
-                                    Block block = CRYSTAL_CLUSTERS[rand.nextInt(CRYSTAL_CLUSTERS.length)];
-                                    world.setBlockState(pos, block.getDefaultState().withProperty(BlockDirectional.FACING, side.getOpposite()), 2);
+                                    if(state.getBlock().isAir(state, world, pos) && stateSide.getBlock().isSideSolid(stateSide, world, posSide, side.getOpposite())){
+                                        Block block = CRYSTAL_CLUSTERS[rand.nextInt(CRYSTAL_CLUSTERS.length)];
+                                        world.setBlockState(pos, block.getDefaultState().withProperty(BlockDirectional.FACING, side.getOpposite()), 2);
+                                    }
                                 }
                             }
                         }

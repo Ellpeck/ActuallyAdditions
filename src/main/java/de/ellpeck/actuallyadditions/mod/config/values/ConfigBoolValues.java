@@ -32,6 +32,7 @@ public enum ConfigBoolValues{
     DO_COFFEE_GEN("Coffee Gen", ConfigCategories.WORLD_GEN, true, "Should Coffee Plants generate in the World?"),
     DO_LOTUS_GEN("Black Lotus Gen", ConfigCategories.WORLD_GEN, true, "Should Black Lotus generate in the World?"),
     DO_TREASURE_CHEST_GEN("Treasure Chest Gen", ConfigCategories.WORLD_GEN, true, "Should Treasure Chests generate in the World?"),
+    DO_CRYSTAL_CLUSTERS("Crystal Clusters in Lush Caves", ConfigCategories.WORLD_GEN, true, "If Crystal Clusters should generate in Lush Caves"),
 
     DO_SPIDER_DROPS("Spider Cobweb Drop", ConfigCategories.MOB_DROPS, true, "Should Cobwebs drop from spiders?"),
     DO_BAT_DROPS("Bat Wing Drop", ConfigCategories.MOB_DROPS, true, "Should Bat wings drop from Bats?"),
