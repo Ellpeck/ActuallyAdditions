@@ -28,8 +28,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
 
-import java.util.Set;
-
 public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
 
     public static final int MAX_DISTANCE = 15;
@@ -40,8 +38,6 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
     private Network cachedNetwork;
     private int changeAmountAtCaching = -1;
     private int lastRange;
-
-    private Set<IConnectionPair> tempConnectionStorage;
 
     public TileEntityLaserRelay(String name, LaserType type){
         super(1, name);
@@ -151,28 +147,6 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
         }
 
         return this.cachedNetwork;
-    }
-
-    @Override
-    public void invalidate(){
-        super.invalidate();
-        //This is because Minecraft randomly invalidates tiles on world join and then validates them again
-        //We need to compensate for this so that connections don't get broken randomly
-        this.tempConnectionStorage = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.world);
-
-        ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.world);
-    }
-
-    @Override
-    public void validate(){
-        if(this.tempConnectionStorage != null){
-            for(IConnectionPair pair : this.tempConnectionStorage){
-                ActuallyAdditionsAPI.connectionHandler.addConnection(pair.getPositions()[0], pair.getPositions()[1], pair.getType(), this.world, pair.doesSuppressRender());
-            }
-            this.tempConnectionStorage = null;
-        }
-
-        super.validate();
     }
 
     @Override

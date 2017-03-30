@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
@@ -271,6 +272,13 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                 }
             }
         }
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state){
+        super.breakBlock(world, pos, state);
+
+        ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(pos, world);
     }
 
     public enum Type{
