@@ -39,6 +39,8 @@ public final class CrusherCrafting{
         MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Items.REEDS), new ItemStack(Items.SUGAR, 3), null, 0);
         MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
+        ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.BLAZE_POWDER, 4), null, 0);
+        MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
 
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.YELLOW_FLOWER), new ItemStack(Items.DYE, 3, 11), null, 0);
         MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
