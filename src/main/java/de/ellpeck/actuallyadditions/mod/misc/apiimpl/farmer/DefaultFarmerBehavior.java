@@ -31,17 +31,6 @@ import java.util.List;
 
 public class DefaultFarmerBehavior implements IFarmerBehavior{
 
-    @Override
-    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
-        int use = 350;
-        if(farmer.getEnergy() >= use*2){
-            if(defaultPlant(world, pos, this.getPlantablePlantFromStack(seed, world, pos), farmer, use)){
-                return FarmerResult.SUCCESS;
-            }
-        }
-        return FarmerResult.FAIL;
-    }
-
     public static boolean defaultPlant(World world, BlockPos pos, IBlockState toPlant, IFarmer farmer, int use){
         if(toPlant != null){
             IBlockState state = world.getBlockState(pos);
@@ -84,6 +73,17 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
             }
         }
         return false;
+    }
+
+    @Override
+    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
+        int use = 350;
+        if(farmer.getEnergy() >= use*2){
+            if(defaultPlant(world, pos, this.getPlantablePlantFromStack(seed, world, pos), farmer, use)){
+                return FarmerResult.SUCCESS;
+            }
+        }
+        return FarmerResult.FAIL;
     }
 
     @Override

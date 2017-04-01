@@ -84,7 +84,7 @@ public class FilterSettingsGui extends Gui{
         else if(this.modButton.isMouseOver()){
             List<String> list = new ArrayList<String>();
             list.add(TextFormatting.BOLD+(this.theSettings.respectMod ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectMod") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ignoreMod")));
-            
+
             list.addAll(mc.fontRendererObj.listFormattedStringToWidth(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectModInfo"), 200));
 
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
@@ -92,7 +92,7 @@ public class FilterSettingsGui extends Gui{
         else if(this.oredictButton.isMouseOver()){
             List<String> list = new ArrayList<String>();
             list.add(TextFormatting.BOLD+(this.theSettings.respectOredict == 0 ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ignoreOredict") : (this.theSettings.respectOredict == 1 ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectOredictSoft") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectOredictHard"))));
-            
+
             String type = null;
             if(this.theSettings.respectOredict == 1){
                 type = "one";
@@ -102,7 +102,7 @@ public class FilterSettingsGui extends Gui{
             }
 
             if(type != null){
-            	list.addAll(mc.fontRendererObj.listFormattedStringToWidth(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectOredictInfo."+type), 200));
+                list.addAll(mc.fontRendererObj.listFormattedStringToWidth(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectOredictInfo."+type), 200));
             }
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
         }

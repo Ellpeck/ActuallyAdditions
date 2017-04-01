@@ -25,10 +25,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PageTrials extends BookletPage{
 
+    private final int buttonId;
     @SideOnly(Side.CLIENT)
     private GuiButton button;
-
-    private final int buttonId;
 
     public PageTrials(int localizationKey, boolean button, boolean text){
         super(localizationKey);

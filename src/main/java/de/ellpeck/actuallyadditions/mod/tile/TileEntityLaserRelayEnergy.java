@@ -266,7 +266,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
     @Override
     @SideOnly(Side.CLIENT)
     public String getExtraDisplayString(){
-        return StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.energy.extra") + ": " +TextFormatting.DARK_RED+StringUtil.localize(this.mode.name)+TextFormatting.RESET;
+        return StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.energy.extra")+": "+TextFormatting.DARK_RED+StringUtil.localize(this.mode.name)+TextFormatting.RESET;
     }
 
     @Override

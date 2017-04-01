@@ -44,6 +44,11 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles{
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+    public static boolean isWearing(EntityPlayer player){
+        ItemStack face = player.inventory.armorInventory.get(3);
+        return StackUtil.isValid(face) && face.getItem() instanceof IGoggles;
+    }
+
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onClientTick(ClientTickEvent event){
@@ -83,11 +88,6 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles{
             }
             this.cachedGlowingEntities.clear();
         }
-    }
-
-    public static boolean isWearing(EntityPlayer player){
-        ItemStack face = player.inventory.armorInventory.get(3);
-        return StackUtil.isValid(face) && face.getItem() instanceof IGoggles;
     }
 
     @Override

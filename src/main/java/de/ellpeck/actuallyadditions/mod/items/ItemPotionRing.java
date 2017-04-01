@@ -240,6 +240,6 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
         super.addInformation(stack, playerIn, tooltip, advanced);
 
-        tooltip.add(String.format("%d/%d %s",this.getStoredBlaze(stack) , MAX_BLAZE, StringUtil.localize("item."+ModUtil.MOD_ID+".item_misc_ring.storage")));
+        tooltip.add(String.format("%d/%d %s", this.getStoredBlaze(stack), MAX_BLAZE, StringUtil.localize("item."+ModUtil.MOD_ID+".item_misc_ring.storage")));
     }
 }

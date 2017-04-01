@@ -105,6 +105,7 @@ public class WorldData extends WorldSavedData{
     public static void clear(){
         if(data != null){
             data = null;
+            ModUtil.LOGGER.info("Unloaded WorldData!");
         }
     }
 

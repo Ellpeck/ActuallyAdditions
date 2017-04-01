@@ -101,6 +101,18 @@ public class GuiMainPage extends GuiBooklet{
         super(previousScreen, null);
     }
 
+    private static List<IBookletEntry> getDisplayedEntries(){
+        List<IBookletEntry> displayed = new ArrayList<IBookletEntry>();
+
+        for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
+            if(entry.visibleOnFrontPage()){
+                displayed.add(entry);
+            }
+        }
+
+        return displayed;
+    }
+
     @Override
     public void initGui(){
         super.initGui();
@@ -289,17 +301,5 @@ public class GuiMainPage extends GuiBooklet{
     @Override
     public void addOrModifyItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer){
 
-    }
-
-    private static List<IBookletEntry> getDisplayedEntries(){
-        List<IBookletEntry> displayed = new ArrayList<IBookletEntry>();
-
-        for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
-            if(entry.visibleOnFrontPage()){
-                displayed.add(entry);
-            }
-        }
-
-        return displayed;
     }
 }

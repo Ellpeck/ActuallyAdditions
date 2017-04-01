@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.util.compat;
 
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerCrafter;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
@@ -54,5 +55,12 @@ public final class CompatUtil{
                 ModUtil.LOGGER.error("Failed to add farming compatibility for Blood Magic!", e);
             }
         }
+    }
+
+    public static void registerCraftingTweaksCompat(){
+        NBTTagCompound tagCompound = new NBTTagCompound();
+        tagCompound.setString("ContainerClass", ContainerCrafter.class.getName());
+        tagCompound.setString("AlignToGrid", "left");
+        FMLInterModComms.sendMessage("craftingtweaks", "RegisterProvider", tagCompound);
     }
 }

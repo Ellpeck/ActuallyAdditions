@@ -148,7 +148,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
     @Override
     @SideOnly(Side.CLIENT)
     public String getExtraDisplayString(){
-        return StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.item.extra") + ": " + TextFormatting.DARK_RED+this.getPriority()+TextFormatting.RESET;
+        return StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.item.extra")+": "+TextFormatting.DARK_RED+this.getPriority()+TextFormatting.RESET;
     }
 
     @Override

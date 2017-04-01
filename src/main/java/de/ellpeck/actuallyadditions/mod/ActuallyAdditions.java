@@ -46,7 +46,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.CraftingTweaksCompat;
+import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -116,8 +116,7 @@ public class ActuallyAdditions{
         new CommonEvents();
         InitCrafting.init();
         InitEntities.init();
-
-        CraftingTweaksCompat.register();
+        CompatUtil.registerCraftingTweaksCompat();
 
         proxy.init(event);
 
@@ -148,7 +147,7 @@ public class ActuallyAdditions{
         MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
         if(server != null){
             World world = server.getEntityWorld();
-            if(world != null){
+            if(world != null && !world.isRemote){
                 WorldData.get(world, true).markDirty();
             }
         }
