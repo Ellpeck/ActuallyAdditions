@@ -82,7 +82,8 @@ public class GuiMainPage extends GuiBooklet{
             "It is lonely because there is no device to fly items with the laser in the 1.7.10 version.@Google Translate",
             "始めまして。日本人です。このMODは本当に素晴らしい！ただ、1.7.10ヴァージョンだと、レーザーでアイテムを飛ばす装置がないので寂しいです。@Anonymous",
             "Some verses found in older translations, such as the KJV were actually additions made by later copyists.@Pat_Joel",
-            "I can't place filters into Laser Relays, but the mod is very cool.@LP_Jakob"
+            "I can't place filters into Laser Relays, but the mod is very cool.@LP_Jakob",
+            "Am I good enough to be an Actually Additions tool?@deanwhufc"
     };
 
     private TexturedButton achievementButton;
