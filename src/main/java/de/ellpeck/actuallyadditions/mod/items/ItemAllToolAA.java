@@ -45,7 +45,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
         this.color = color;
 
         this.setMaxDamage(this.getMaxDamage()*4);
-        this.setHarvestLevel("pickaxe", toolMat.getHarvestLevel());
+        this.setHarvestLevels(toolMat.getHarvestLevel());
     }
 
     public ItemAllToolAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity, int color){
@@ -53,7 +53,13 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
         this.color = color;
 
         this.setMaxDamage(this.getMaxDamage()*4);
-        this.setHarvestLevel("pickaxe", toolMat.getHarvestLevel());
+        this.setHarvestLevels(toolMat.getHarvestLevel());
+    }
+
+    private void setHarvestLevels(int amount){
+        for(String s : this.getToolClasses(null)){
+            this.setHarvestLevel(s, amount);
+        }
     }
 
     @Override
