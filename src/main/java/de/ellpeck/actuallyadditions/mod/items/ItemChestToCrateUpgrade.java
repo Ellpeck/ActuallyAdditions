@@ -62,12 +62,13 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                             ItemStack aStack = chest.getStackInSlot(i);
                             if(StackUtil.isValid(aStack)){
                                 stacks[i] = aStack.copy();
-                                chest.setStackInSlot(i, StackUtil.getNull());
                             }
                         }
 
                         //Set New Block
                         world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
+
+                        world.removeTileEntity(pos);
                         world.setBlockState(pos, this.end, 2);
 
                         //Copy Items into new Chest
