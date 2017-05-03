@@ -1,3 +1,17 @@
+# 1.11.2-r107
+* Small update to french localizations (MisterPeModder44)
+* Add Crafting Tweaks 
+* Fix a thing with boring mode (starg09)
+* Fixed the water bowl picking up stuff it shouldn't
+* Fix drill, filter and bag being openable in offhand slot
+* Fixed treasure chest having null instead of air as a drop item
+* Added a config for crystal clusters
+* Added the ability to disconnect laser relays
+* Possibly fixed Laser Relays sometimes disconnecting on their own when reloading chunks
+* Added blaze rod crushing
+* Set the harvest level for all tool types correctly to work with some modded functionality
+* Fixed some mods not working with the chest to crate upgrade causing item loss or duplication
+
 # 1.11.2-r106
 * Made horse armor yield less when crushing it
 * Fixed crusher achievement descriptions being messed up
