@@ -30,6 +30,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
@@ -129,7 +130,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
                 IPhantomTile phantom = (IPhantomTile)tile;
                 minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.GOLD+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".blockPhantomRange.desc")+": "+phantom.getRange(), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-40, StringUtil.DECIMAL_COLOR_WHITE);
                 if(phantom.hasBoundPosition()){
-                    int distance = (int)Math.ceil(new Vec3d(posHit.getBlockPos()).distanceTo(new Vec3d(phantom.getBoundPosition())));
+                    int distance = MathHelper.ceiling_double_int(new Vec3d(posHit.getBlockPos()).distanceTo(new Vec3d(phantom.getBoundPosition())));
                     IBlockState state = minecraft.world.getBlockState(phantom.getBoundPosition());
                     Block block = state.getBlock();
                     Item item = Item.getItemFromBlock(block);
