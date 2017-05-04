@@ -129,7 +129,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
                 IPhantomTile phantom = (IPhantomTile)tile;
                 minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.GOLD+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".blockPhantomRange.desc")+": "+phantom.getRange(), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-40, StringUtil.DECIMAL_COLOR_WHITE);
                 if(phantom.hasBoundPosition()){
-                    int distance = (int)new Vec3d(posHit.getBlockPos()).distanceTo(new Vec3d(phantom.getBoundPosition()));
+                    int distance = (int)Math.ceil(new Vec3d(posHit.getBlockPos()).distanceTo(new Vec3d(phantom.getBoundPosition())));
                     IBlockState state = minecraft.world.getBlockState(phantom.getBoundPosition());
                     Block block = state.getBlock();
                     Item item = Item.getItemFromBlock(block);
