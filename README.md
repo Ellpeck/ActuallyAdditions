@@ -5,4 +5,6 @@ For more information, visit the main CurseForge Page by [clicking here](http://m
 Jenkins: [Click here](https://ci.chaosfield.at/job/ActuallyAdditions/)      
 Maven: [Click here](https://maven.chaosfield.at/de/ellpeck/actuallyadditions/)
 
+Actually Additions is also on the [ModMaven](https://modmaven.k-4u.nl/info.html): [Click here](https://modmaven.k-4u.nl/de/ellpeck/actuallyadditions/)
+
 ![](https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/pics/logo.png)
