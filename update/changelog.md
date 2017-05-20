@@ -1,3 +1,13 @@
+# 1.11.2-r108
+* Added Red Orchid and Ender Lilly farmer compatibility
+* Ceil Phantomface distance so that it displays correctly
+* Added config option for tiny coal and tiny charcoal
+* Fixed item laser display not working if the player is too far away from the input point
+* Fix the chest to crate upgrade not working with some modded functionality (again)
+* Re-worded laser connection info to avoid confusion with disconnections
+* Make phantomfaces output comparator signals
+* Remove a legacy statement in the manual stating that phantom liquifaces use redstone
+
 # 1.11.2-r107
 * Small update to french localizations (MisterPeModder44)
 * Add Crafting Tweaks 
