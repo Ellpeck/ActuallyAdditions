@@ -530,18 +530,20 @@ public final class ItemCrafting{
                 new ItemStack(Items.SIGN)));
 
         //Tiny Coal
-        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_COAL.ordinal()),
-                new ItemStack(Items.COAL));
-        recipeTinyCoal = RecipeUtil.lastIRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_CHAR.ordinal()),
-                new ItemStack(Items.COAL, 1, 1));
-        recipeTinyChar = RecipeUtil.lastIRecipe();
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.COAL),
-                "CCC", "C C", "CCC",
-                'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal())));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.COAL, 1, 1),
-                "CCC", "C C", "CCC",
-                'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_CHAR.ordinal())));
+        if(ConfigBoolValues.TINY_COAL_STUFF.isEnabled()){
+            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_COAL.ordinal()),
+                    new ItemStack(Items.COAL));
+            recipeTinyCoal = RecipeUtil.lastIRecipe();
+            GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_CHAR.ordinal()),
+                    new ItemStack(Items.COAL, 1, 1));
+            recipeTinyChar = RecipeUtil.lastIRecipe();
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.COAL),
+                    "CCC", "C C", "CCC",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal())));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.COAL, 1, 1),
+                    "CCC", "C C", "CCC",
+                    'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_CHAR.ordinal())));
+        }
 
         //Rice Seeds
         GameRegistry.addShapelessRecipe(new ItemStack(InitItems.itemRiceSeed),

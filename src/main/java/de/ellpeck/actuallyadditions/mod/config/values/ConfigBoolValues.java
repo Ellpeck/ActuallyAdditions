@@ -48,6 +48,7 @@ public enum ConfigBoolValues{
     GEN_LUSH_CAVES("Generate Lush Caves", ConfigCategories.WORLD_GEN, true, "Should caves with trees and grass randomly generate underground?"),
 
     WATER_BOWL("Water Bowl", ConfigCategories.OTHER, true, "Should right-clicking a bowl on water blocks create a water bowl?"),
+    TINY_COAL_STUFF("Tiny Coal", ConfigCategories.OTHER, true, "Should Tiny Coal and Tiny Charcoal be craftable"),
 
     LASER_RELAY_LOSS("Laser Relay Energy Loss", ConfigCategories.MACHINE_VALUES, true, "If Energy Laser Relays should have energy loss"),
 
