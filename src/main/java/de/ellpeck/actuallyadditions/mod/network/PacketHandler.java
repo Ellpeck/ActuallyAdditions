@@ -79,10 +79,8 @@ public final class PacketHandler{
             double outY = compound.getDouble("OutY")+0.525;
             double outZ = compound.getDouble("OutZ")+0.5;
 
-            if(mc.player.getDistance(outX, outY, outZ) <= 16){
-                Particle fx = new ParticleLaserItem(mc.world, outX, outY, outZ, stack, 0.025, inX, inY, inZ);
-                mc.effectRenderer.addEffect(fx);
-            }
+            Particle fx = new ParticleLaserItem(mc.world, outX, outY, outZ, stack, 0.025, inX, inY, inZ);
+            mc.effectRenderer.addEffect(fx);
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_TILE_HANDLER = new IDataHandler(){

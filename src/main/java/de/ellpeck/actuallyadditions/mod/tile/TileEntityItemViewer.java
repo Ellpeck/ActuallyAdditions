@@ -18,13 +18,14 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.CommonCapsUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.items.IItemHandler;
 import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
 import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
@@ -163,7 +164,14 @@ public class TileEntityItemViewer extends TileEntityBase{
             compound.setDouble("OutY", output.getY());
             compound.setDouble("OutZ", output.getZ());
 
-            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), new TargetPoint(this.world.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 16));
+            int rangeSq = 16*16;
+            for(EntityPlayer player : this.world.playerEntities){
+                if(player instanceof EntityPlayerMP){
+                    if(player.getDistanceSq(input) <= rangeSq || player.getDistanceSq(output) <= rangeSq){
+                        PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), (EntityPlayerMP)player);
+                    }
+                }
+            }
         }
     }
 
