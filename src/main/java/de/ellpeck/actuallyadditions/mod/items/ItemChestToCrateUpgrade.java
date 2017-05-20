@@ -40,7 +40,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float par8, float par9, float par10){
+    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand){
         ItemStack heldStack = player.getHeldItem(hand);
         if(player.isSneaking()){
             TileEntity tileHit = world.getTileEntity(pos);
@@ -90,13 +90,12 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                         }
                     }
                 }
-                return EnumActionResult.SUCCESS;
+                return world.isRemote ? EnumActionResult.PASS : EnumActionResult.SUCCESS;
             }
         }
 
-        return super.onItemUse(player, world, pos, hand, facing, par8, par9, par10);
+        return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
     }
-
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
