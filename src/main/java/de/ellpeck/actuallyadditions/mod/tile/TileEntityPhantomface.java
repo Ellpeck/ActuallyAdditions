@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -33,6 +34,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     private int rangeBefore;
     private BlockPos boundPosBefore;
     private Block boundBlockBefore;
+    private int lastStrength;
 
     public TileEntityPhantomface(String name){
         super(0, name);
@@ -92,6 +94,13 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
 
             if(this.doesNeedUpdateSend()){
                 this.onUpdateSent();
+            }
+
+            int strength = this.getComparatorStrength();
+            if(this.lastStrength != strength){
+                this.lastStrength = strength;
+
+                this.markDirty();
             }
         }
         else{
@@ -192,5 +201,19 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
             }
         }
         return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public int getComparatorStrength(){
+        if(this.isBoundThingInRange()){
+            BlockPos pos = this.getBoundPosition();
+            IBlockState state = this.world.getBlockState(pos);
+            Block block = state.getBlock();
+
+            if(block.hasComparatorInputOverride(state)){
+                return block.getComparatorInputOverride(state, this.world, pos);
+            }
+        }
+        return 0;
     }
 }
