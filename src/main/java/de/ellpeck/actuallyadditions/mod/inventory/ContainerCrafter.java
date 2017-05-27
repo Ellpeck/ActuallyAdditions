@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -19,7 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
 
-
+@InventoryContainer
 public class ContainerCrafter extends Container{
 
     public final World world;
