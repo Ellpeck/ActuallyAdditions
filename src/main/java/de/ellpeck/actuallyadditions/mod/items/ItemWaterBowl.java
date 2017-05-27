@@ -18,6 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -107,7 +108,7 @@ public class ItemWaterBowl extends ItemBase{
                 if(!player.canPlayerEdit(pos1, trace.sideHit, stack)){
                     return new ActionResult(EnumActionResult.FAIL, stack);
                 }
-                else if(this.tryPlaceContainedLiquid(player, world, pos1)){
+                else if(this.tryPlaceContainedLiquid(player, world, pos1, false)){
                     return !player.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, new ItemStack(Items.BOWL)) : new ActionResult(EnumActionResult.SUCCESS, stack);
                 }
                 else{
@@ -117,7 +118,25 @@ public class ItemWaterBowl extends ItemBase{
         }
     }
 
-    public boolean tryPlaceContainedLiquid(EntityPlayer player, World world, BlockPos pos){
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
+        if(!world.isRemote){
+            if(ConfigBoolValues.WATER_BOWL_LOSS.isEnabled()){
+                if(!entity.isSneaking()){
+                    if(world.getTotalWorldTime()%10 == 0 && world.rand.nextFloat() >= 0.8F){
+                        if(entity instanceof EntityPlayer){
+                            EntityPlayer player = (EntityPlayer)entity;
+                            if(this.tryPlaceContainedLiquid(player, world, player.getPosition(), true)){
+                                player.inventory.setInventorySlotContents(itemSlot, new ItemStack(Items.BOWL));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean tryPlaceContainedLiquid(EntityPlayer player, World world, BlockPos pos, boolean finite){
         IBlockState state = world.getBlockState(pos);
         Material material = state.getMaterial();
         boolean nonSolid = !material.isSolid();
@@ -140,7 +159,15 @@ public class ItemWaterBowl extends ItemBase{
                 }
 
                 world.playSound(player, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                world.setBlockState(pos, Blocks.FLOWING_WATER.getDefaultState(), 3);
+
+                IBlockState placeState;
+                if(finite){
+                    placeState = Blocks.FLOWING_WATER.getDefaultState();
+                }
+                else{
+                    placeState = Blocks.FLOWING_WATER.getDefaultState();
+                }
+                world.setBlockState(pos, placeState, 3);
             }
 
             return true;
