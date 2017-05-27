@@ -85,7 +85,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     private boolean newPulling(){
         for(EnumFacing side : this.placeToPull.keySet()){
-            WorldUtil.doItemInteraction(this.placeToPull.get(side), this.wrapper, Integer.MAX_VALUE, this.slotToPullStart, this.slotToPullEnd, !this.isAdvanced ? null : this.leftFilter);
+            WorldUtil.doItemInteraction(this.placeToPull.get(side), this.wrapper, Integer.MAX_VALUE, this.slotToPullStart, this.slotToPullEnd, 0, 1, !this.isAdvanced ? null : this.leftFilter);
 
             if(this.placeToPull instanceof TileEntityItemViewer){
                 break;
@@ -97,7 +97,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     private boolean newPutting(){
         if(!this.isAdvanced || this.rightFilter.check(this.slots.getStackInSlot(0))){
             for(EnumFacing side : this.placeToPut.keySet()){
-                WorldUtil.doItemInteraction(this.wrapper, this.placeToPut.get(side), Integer.MAX_VALUE, this.slotToPutStart, this.slotToPutEnd, null);
+                WorldUtil.doItemInteraction(this.wrapper, this.placeToPut.get(side), Integer.MAX_VALUE, 0, 1, this.slotToPutStart, this.slotToPutEnd, null);
 
                 if(this.placeToPut instanceof TileEntityItemViewer){
                     break;

@@ -63,16 +63,16 @@ public final class WorldUtil{
     }
 
     public static boolean doItemInteraction(SlotlessableItemHandlerWrapper extractWrapper, SlotlessableItemHandlerWrapper insertWrapper, int maxExtract, FilterSettings filter){
-        return doItemInteraction(extractWrapper, insertWrapper, maxExtract, 0, Integer.MAX_VALUE, filter);
+        return doItemInteraction(extractWrapper, insertWrapper, maxExtract, 0, Integer.MAX_VALUE, 0, Integer.MAX_VALUE, filter);
     }
 
-    public static boolean doItemInteraction(SlotlessableItemHandlerWrapper extractWrapper, SlotlessableItemHandlerWrapper insertWrapper, int maxExtract, int slotStart, int slotEnd, FilterSettings filter){
-        ItemStack theoreticalExtract = extractItem(extractWrapper, maxExtract, true, slotStart, slotEnd, filter);
+    public static boolean doItemInteraction(SlotlessableItemHandlerWrapper extractWrapper, SlotlessableItemHandlerWrapper insertWrapper, int maxExtract, int extractSlotStart, int extractSlotEnd, int insertSlotStart, int insertSlotEnd, FilterSettings filter){
+        ItemStack theoreticalExtract = extractItem(extractWrapper, maxExtract, true, extractSlotStart, extractSlotEnd, filter);
         if(StackUtil.isValid(theoreticalExtract)){
-            ItemStack remaining = insertItem(insertWrapper, theoreticalExtract, false, slotStart, slotEnd);
+            ItemStack remaining = insertItem(insertWrapper, theoreticalExtract, false, insertSlotStart, insertSlotEnd);
             if(!ItemStack.areItemStacksEqual(remaining, theoreticalExtract)){
                 int toExtract = !StackUtil.isValid(remaining) ? StackUtil.getStackSize(theoreticalExtract) : StackUtil.getStackSize(theoreticalExtract)-StackUtil.getStackSize(remaining);
-                extractItem(extractWrapper, toExtract, false, slotStart, slotEnd, filter);
+                extractItem(extractWrapper, toExtract, false, extractSlotStart, extractSlotEnd, filter);
                 return true;
             }
         }
