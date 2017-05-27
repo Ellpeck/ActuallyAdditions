@@ -47,7 +47,7 @@ public class ItemLaserWrench extends ItemBase{
             if(!world.isRemote){
                 if(ItemPhantomConnector.getStoredPosition(stack) == null){
                     ItemPhantomConnector.storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-                    player.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.stored.desc"));
+                    player.sendStatusMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.stored.desc"), true);
                 }
                 else{
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
@@ -65,7 +65,7 @@ public class ItemLaserWrench extends ItemBase{
                                 ((TileEntityLaserRelay)savedTile).sendUpdate();
                                 relay.sendUpdate();
 
-                                player.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.connected.desc"));
+                                player.sendStatusMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".laser.connected.desc"), true);
 
                                 return EnumActionResult.SUCCESS;
                             }

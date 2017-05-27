@@ -101,7 +101,7 @@ public class ItemPhantomConnector extends ItemBase{
                             ((TileEntityBase)tile).sendUpdate();
                         }
                         clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
-                        player.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.connected.desc"));
+                        player.sendStatusMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.connected.desc"), true);
                         return EnumActionResult.SUCCESS;
                     }
                     return EnumActionResult.FAIL;
@@ -109,7 +109,7 @@ public class ItemPhantomConnector extends ItemBase{
             }
             //Storing Connections
             storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-            player.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.stored.desc"));
+            player.sendStatusMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.stored.desc"), true);
         }
         return EnumActionResult.SUCCESS;
     }
