@@ -31,10 +31,10 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
@@ -143,9 +143,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
     private int transferEnergyToReceiverInNeed(EnumFacing from, Network network, int maxTransfer, boolean simulate){
         int transmitted = 0;
         //Keeps track of all the Laser Relays and Energy Acceptors that have been checked already to make nothing run multiple times
-        List<BlockPos> alreadyChecked = new ArrayList<BlockPos>();
+        Set<BlockPos> alreadyChecked = new HashSet<BlockPos>();
 
-        List<TileEntityLaserRelayEnergy> relaysThatWork = new ArrayList<TileEntityLaserRelayEnergy>();
+        Set<TileEntityLaserRelayEnergy> relaysThatWork = new HashSet<TileEntityLaserRelayEnergy>();
         int totalReceiverAmount = 0;
 
         for(IConnectionPair pair : network.connections){

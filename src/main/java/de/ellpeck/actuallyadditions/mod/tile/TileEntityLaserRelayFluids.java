@@ -30,10 +30,10 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
@@ -139,9 +139,9 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
     private int transferFluidToReceiverInNeed(EnumFacing from, Network network, FluidStack stack, boolean doFill){
         int transmitted = 0;
         //Keeps track of all the Laser Relays and Energy Acceptors that have been checked already to make nothing run multiple times
-        List<BlockPos> alreadyChecked = new ArrayList<BlockPos>();
+        Set<BlockPos> alreadyChecked = new HashSet<BlockPos>();
 
-        List<TileEntityLaserRelayFluids> relaysThatWork = new ArrayList<TileEntityLaserRelayFluids>();
+        Set<TileEntityLaserRelayFluids> relaysThatWork = new HashSet<TileEntityLaserRelayFluids>();
         int totalReceiverAmount = 0;
 
         for(IConnectionPair pair : network.connections){

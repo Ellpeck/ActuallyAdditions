@@ -32,10 +32,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
@@ -111,7 +108,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
     public void getItemHandlersInNetwork(Network network, List<GenericItemHandlerInfo> storeList){
         //Keeps track of all the Laser Relays and Item Handlers that have been checked already to make nothing run multiple times
-        List<BlockPos> alreadyChecked = new ArrayList<BlockPos>();
+        Set<BlockPos> alreadyChecked = new HashSet<BlockPos>();
 
         for(IConnectionPair pair : network.connections){
             for(BlockPos relay : pair.getPositions()){
