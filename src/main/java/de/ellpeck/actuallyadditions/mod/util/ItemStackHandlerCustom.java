@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class ItemStackHandlerCustom extends ItemStackHandler{
@@ -32,11 +33,42 @@ public class ItemStackHandlerCustom extends ItemStackHandler{
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate){
+        if(!StackUtil.isValid(stack)){
+            return StackUtil.getNull();
+        }
+        this.validateSlotIndex(slot);
+
+        ItemStack existing = this.stacks.get(slot);
+
+        int limit = this.getStackLimit(slot, stack);
+        if(StackUtil.isValid(existing)){
+            if(!ItemHandlerHelper.canItemStacksStack(stack, existing)){
+                return stack;
+            }
+            limit -= existing.getCount();
+        }
+        if(limit <= 0){
+            return stack;
+        }
+
         if(!this.tempIgnoreConditions && !this.canInsert(stack, slot)){
             return stack;
         }
 
-        return super.insertItem(slot, stack, simulate);
+        boolean reachedLimit = stack.getCount() > limit;
+        if(!simulate){
+            if(!StackUtil.isValid(existing)){
+                this.stacks.set(slot, reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
+            }
+            else{
+                existing.grow(reachedLimit ? limit : stack.getCount());
+            }
+
+            this.onContentsChanged(slot);
+        }
+
+        return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.getCount()-limit) : ItemStack.EMPTY;
+
     }
 
     public ItemStack insertItemInternal(int slot, ItemStack stack, boolean simulate){
@@ -48,11 +80,39 @@ public class ItemStackHandlerCustom extends ItemStackHandler{
 
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate){
+        if(amount <= 0){
+            return StackUtil.getNull();
+        }
+        this.validateSlotIndex(slot);
+
+        ItemStack existing = this.stacks.get(slot);
+        if(!StackUtil.isValid(existing)){
+            return StackUtil.getNull();
+        }
+
+        int toExtract = Math.min(amount, existing.getMaxStackSize());
+        if(toExtract <= 0){
+            return StackUtil.getNull();
+        }
+
         if(!this.tempIgnoreConditions && !this.canExtract(this.getStackInSlot(slot), slot)){
             return StackUtil.getNull();
         }
 
-        return super.extractItem(slot, amount, simulate);
+        if(existing.getCount() <= toExtract){
+            if(!simulate){
+                this.stacks.set(slot, StackUtil.getNull());
+                this.onContentsChanged(slot);
+            }
+            return existing;
+        }
+        else{
+            if(!simulate){
+                this.stacks.set(slot, ItemHandlerHelper.copyStackWithSize(existing, existing.getCount()-toExtract));
+                this.onContentsChanged(slot);
+            }
+            return ItemHandlerHelper.copyStackWithSize(existing, toExtract);
+        }
     }
 
     public ItemStack extractItemInternal(int slot, int amount, boolean simulate){
