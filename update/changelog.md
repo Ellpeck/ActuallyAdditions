@@ -1,3 +1,12 @@
+# 1.11.2-r109
+* Don't check for insertability into machines of items that can't actually fit, increases performance
+* Change lists for sets in Laser Relays to increase performance
+* Add crafting table on a stick compat foro InvTweaks
+* Change unimportant feedback from the laser wrench and phantom connector to the action bar
+* Fix ESD not working with changed lower bounds
+* Made the water bowl spill
+* Fixed default spawner changer config allowing Villager Golems to pass through
+
 # 1.11.2-r108
 * Added Red Orchid and Ender Lilly farmer compatibility
 * Ceil Phantomface distance so that it displays correctly
