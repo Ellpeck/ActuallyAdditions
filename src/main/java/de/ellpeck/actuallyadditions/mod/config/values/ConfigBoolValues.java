@@ -28,7 +28,7 @@ public enum ConfigBoolValues{
 
     DO_RICE_GEN("Rice Gen", ConfigCategories.WORLD_GEN, true, "Should Rice generate in the World?"),
     DO_CANOLA_GEN("Canola Gen", ConfigCategories.WORLD_GEN, true, "Should Canola generate in the World?"),
-    DO_FLAX_GEN("Flax Gen", ConfigCategories.WORLD_GEN, true, "Should Canola generate in the World?"),
+    DO_FLAX_GEN("Flax Gen", ConfigCategories.WORLD_GEN, true, "Should Flax generate in the World?"),
     DO_COFFEE_GEN("Coffee Gen", ConfigCategories.WORLD_GEN, true, "Should Coffee Plants generate in the World?"),
     DO_LOTUS_GEN("Black Lotus Gen", ConfigCategories.WORLD_GEN, true, "Should Black Lotus generate in the World?"),
     DO_TREASURE_CHEST_GEN("Treasure Chest Gen", ConfigCategories.WORLD_GEN, true, "Should Treasure Chests generate in the World?"),
