@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -37,10 +38,12 @@ public final class InitCrafting{
         ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.MASHED_FOOD.ordinal()), Blocks.LEAVES, new ItemStack(InitItems.itemFertilizer), Blocks.DIRT);
         ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(InitItems.itemCanolaSeed), Blocks.DIRT, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOMASS.ordinal()), Blocks.SOUL_SAND);
 
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCanolaOil.getName(), 40, 100);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidOil.getName(), 80, 120);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCrystalOil.getName(), 100, 280);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidEmpoweredOil.getName(), 120, 400);
+        int[] power = ConfigIntListValues.OIL_POWER.getValue();
+        int[] time = ConfigIntListValues.OIL_TIME.getValue();
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCanolaOil.getName(), power[0], time[0]);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidOil.getName(), power[1], time[1]);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCrystalOil.getName(), power[2], time[2]);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidEmpoweredOil.getName(), power[3], time[3]);
 
         ActuallyAdditionsAPI.addFarmerBehavior(new DefaultFarmerBehavior());
         ActuallyAdditionsAPI.addFarmerBehavior(new CactusFarmerBehavior());
