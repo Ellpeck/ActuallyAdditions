@@ -26,6 +26,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -191,17 +192,19 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         }
 
         @Override
-        public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean bool){
+        public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced){
             long sysTime = System.currentTimeMillis();
 
             if(this.lastSysTime+3000 < sysTime){
                 this.lastSysTime = sysTime;
-                this.toPick1 = player.world.rand.nextInt(NAME_FLAVOR_AMOUNTS_1)+1;
-                this.toPick2 = player.world.rand.nextInt(NAME_FLAVOR_AMOUNTS_2)+1;
+                if(world != null){
+                    this.toPick1 = world.rand.nextInt(NAME_FLAVOR_AMOUNTS_1)+1;
+                    this.toPick2 = world.rand.nextInt(NAME_FLAVOR_AMOUNTS_2)+1;
+                }
             }
 
             String base = "tile."+ModUtil.MOD_ID+"."+((BlockAtomicReconstructor)this.block).getBaseName()+".info.";
-            list.add(StringUtil.localize(base+"1."+this.toPick1)+" "+StringUtil.localize(base+"2."+this.toPick2));
+            tooltip.add(StringUtil.localize(base+"1."+this.toPick1)+" "+StringUtil.localize(base+"2."+this.toPick2));
         }
     }
 }

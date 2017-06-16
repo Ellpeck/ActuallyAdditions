@@ -11,15 +11,16 @@
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
 
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeCategory;
+import mezz.jei.api.recipe.IRecipeCategory;
 
-public class CrusherRecipeCategory extends BlankRecipeCategory<CrusherRecipeWrapper>{
+public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipeWrapper>{
 
     public static final String NAME = "actuallyadditions.crushing";
 
@@ -37,6 +38,11 @@ public class CrusherRecipeCategory extends BlankRecipeCategory<CrusherRecipeWrap
     @Override
     public String getTitle(){
         return StringUtil.localize("container.nei."+NAME+".name");
+    }
+
+    @Override
+    public String getModName(){
+        return ModUtil.NAME;
     }
 
     @Override

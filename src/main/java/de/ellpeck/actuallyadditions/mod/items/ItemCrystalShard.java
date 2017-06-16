@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
@@ -50,9 +49,11 @@ public class ItemCrystalShard extends ItemBase implements IColorProvidingItem{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList list){
-        for(int j = 0; j < BlockCrystal.ALL_CRYSTALS.length; j++){
-            list.add(new ItemStack(this, 1, j));
+    public void getSubItems(CreativeTabs tab, NonNullList list){
+        if(this.func_194125_a(tab)){
+            for(int j = 0; j < BlockCrystal.ALL_CRYSTALS.length; j++){
+                list.add(new ItemStack(this, 1, j));
+            }
         }
     }
 

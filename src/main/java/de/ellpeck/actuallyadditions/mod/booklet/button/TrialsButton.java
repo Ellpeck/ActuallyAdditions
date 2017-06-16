@@ -27,8 +27,8 @@ public class TrialsButton extends TexturedButton{
     }
 
     @Override
-    public void drawButton(Minecraft minecraft, int x, int y){
-        super.drawButton(minecraft, x, y);
+    public void func_191745_a(Minecraft minecraft, int x, int y, float f){
+        super.func_191745_a(minecraft, x, y, f);
 
         if(this.visible){
             if(this.hovered || this.isTrials){

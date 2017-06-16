@@ -102,9 +102,9 @@ public class BlockColoredLamp extends BlockBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, NonNullList list){
+    public void getSubBlocks(CreativeTabs tab, NonNullList list){
         for(int j = 0; j < ALL_LAMP_TYPES.length; j++){
-            list.add(new ItemStack(item, 1, j));
+            list.add(new ItemStack(this, 1, j));
         }
     }
 

@@ -61,7 +61,7 @@ public class BookmarkButton extends GuiButton{
     }
 
     @Override
-    public void drawButton(Minecraft minecraft, int x, int y){
+    public void func_191745_a(Minecraft minecraft, int x, int y, float f){
         if(this.visible){
             minecraft.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

@@ -32,7 +32,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
@@ -329,9 +328,11 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, NonNullList list){
-        for(int i = 0; i < 16; i++){
-            this.addDrillStack(list, i);
+    public void getSubItems(CreativeTabs tabs, NonNullList list){
+        if(this.func_194125_a(tabs)){
+            for(int i = 0; i < 16; i++){
+                this.addDrillStack(list, i);
+            }
         }
     }
 

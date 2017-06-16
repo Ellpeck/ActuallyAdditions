@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerFluidCollector;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidCollector;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -22,7 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiFluidCollector extends GuiContainer{
+public class GuiFluidCollector extends GuiWtfMojang{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_fluid_collector");
     private final TileEntityFluidCollector collector;

@@ -12,17 +12,21 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class RecipeKeepDataShapeless extends ShapelessOreRecipe{
 
     private final ItemStack nbtCopyStack;
 
-    public RecipeKeepDataShapeless(ItemStack result, ItemStack nbtCopyStack, Object... recipe){
-        super(result, recipe);
+    public RecipeKeepDataShapeless(ResourceLocation group, ItemStack result, ItemStack nbtCopyStack, Object... recipe){
+        super(group, result, recipe);
         this.nbtCopyStack = nbtCopyStack;
+
+        RecipeHandler.addRecipe(group, this);
     }
 
     @Override
@@ -39,5 +43,4 @@ public class RecipeKeepDataShapeless extends ShapelessOreRecipe{
         }
         return stack;
     }
-
 }

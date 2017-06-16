@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,9 +28,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,7 +53,7 @@ public class ItemPlayerProbe extends ItemBase{
                             ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
                             entity.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.1"));
                             player.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.notice"));
-                            TheAchievements.GET_UNPROBED.get(player);
+                            //TheAchievements.GET_UNPROBED.get(player);
                         }
                     }
                     else{
@@ -115,12 +114,11 @@ public class ItemPlayerProbe extends ItemBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced){
         if(stack.hasTagCompound()){
             String name = stack.getTagCompound().getString("Name");
             if(name != null){
-                list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".playerProbe.probing")+": "+name);
+                tooltip.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".playerProbe.probing")+": "+name);
             }
         }
     }

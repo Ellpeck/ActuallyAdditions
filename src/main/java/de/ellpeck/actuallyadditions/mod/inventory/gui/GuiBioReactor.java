@@ -14,12 +14,11 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerBioReactor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiBioReactor extends GuiContainer{
+public class GuiBioReactor extends GuiWtfMojang{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_bio_reactor");
     private final TileEntityBioReactor tile;

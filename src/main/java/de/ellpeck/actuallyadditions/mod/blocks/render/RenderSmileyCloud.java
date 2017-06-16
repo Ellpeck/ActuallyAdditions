@@ -32,7 +32,7 @@ import java.util.Locale;
 public class RenderSmileyCloud extends TileEntitySpecialRenderer{
 
     @Override
-    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int partial){
+    public void func_192841_a(TileEntity tile, double x, double y, double z, float par5, int partial, float f){
         if(tile instanceof TileEntitySmileyCloud){
             TileEntitySmileyCloud theCloud = (TileEntitySmileyCloud)tile;
 
@@ -99,5 +99,4 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
             }
         }
     }
-
 }

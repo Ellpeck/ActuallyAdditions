@@ -12,17 +12,21 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class RecipeKeepDataShaped extends ShapedOreRecipe{
 
     private final ItemStack nbtCopyStack;
 
-    public RecipeKeepDataShaped(ItemStack result, ItemStack nbtCopyStack, Object... recipe){
-        super(result, recipe);
+    public RecipeKeepDataShaped(ResourceLocation group, ItemStack result, ItemStack nbtCopyStack, Object... recipe){
+        super(group, result, recipe);
         this.nbtCopyStack = nbtCopyStack;
+
+        RecipeHandler.addRecipe(group, this);
     }
 
     @Override

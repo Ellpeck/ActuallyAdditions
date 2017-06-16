@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestLarge;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestMedium;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -28,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
-public class GuiGiantChest extends GuiContainer{
+public class GuiGiantChest extends GuiWtfMojang{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_giant_chest");
 

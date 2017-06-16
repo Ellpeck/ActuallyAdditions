@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.util.ITooltipFlag.TooltipFlags;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -58,7 +59,7 @@ public class ItemDisplay{
             boolean flagBefore = mc.fontRendererObj.getUnicodeFlag();
             mc.fontRendererObj.setUnicodeFlag(false);
 
-            List<String> list = this.stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips);
+            List<String> list = this.stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? TooltipFlags.ADVANCED : TooltipFlags.NORMAL);
 
             for(int k = 0; k < list.size(); ++k){
                 if(k == 0){

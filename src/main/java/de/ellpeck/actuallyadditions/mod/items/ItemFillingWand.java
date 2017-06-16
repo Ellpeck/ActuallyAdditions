@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -232,8 +233,8 @@ public class ItemFillingWand extends ItemEnergy{
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
-        super.addInformation(stack, player, list, bool);
+    public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced){
+        super.addInformation(stack, playerIn, tooltip, advanced);
 
         String display = StringUtil.localize("tooltip."+ModUtil.MOD_ID+".item_filling_wand.selectedBlock.none");
 
@@ -246,7 +247,7 @@ public class ItemFillingWand extends ItemEnergy{
             }
         }
 
-        list.add(String.format("%s: %s", StringUtil.localize("tooltip."+ModUtil.MOD_ID+".item_filling_wand.selectedBlock"), display));
+        tooltip.add(String.format("%s: %s", StringUtil.localize("tooltip."+ModUtil.MOD_ID+".item_filling_wand.selectedBlock"), display));
     }
 
     @Override

@@ -19,9 +19,9 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.ISaveHandler;
+import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.WorldSpecificSaveHandler;
 
 import java.io.File;

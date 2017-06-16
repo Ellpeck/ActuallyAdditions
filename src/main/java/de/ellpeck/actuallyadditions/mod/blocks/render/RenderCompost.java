@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderCompost extends TileEntitySpecialRenderer{
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage){
+    public void func_192841_a(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float f){
         if(te instanceof TileEntityCompost){
             TileEntityCompost compost = (TileEntityCompost)te;
             ItemStack slot = compost.slots.getStackInSlot(0);

@@ -16,12 +16,11 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
+import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public final class MiscCrafting{
 
@@ -42,62 +41,62 @@ public final class MiscCrafting{
 
         //Crystals
         for(int i = 0; i < TheCrystals.values().length; i++){
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCrystal, 1, i),
+            RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockCrystal, 1, i),
                     "XXX", "XXX", "XXX",
-                    'X', new ItemStack(InitItems.itemCrystal, 1, i)));
+                    'X', new ItemStack(InitItems.itemCrystal, 1, i));
             RECIPES_CRYSTAL_BLOCKS[i] = RecipeUtil.lastIRecipe();
-            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemCrystal, 9, i), new ItemStack(InitBlocks.blockCrystal, 1, i)));
+            RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemCrystal, 9, i), new ItemStack(InitBlocks.blockCrystal, 1, i));
             RECIPES_CRYSTALS[i] = RecipeUtil.lastIRecipe();
 
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitBlocks.blockCrystalEmpowered, 1, i),
+            RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockCrystalEmpowered, 1, i),
                     "XXX", "XXX", "XXX",
-                    'X', new ItemStack(InitItems.itemCrystalEmpowered, 1, i)));
+                    'X', new ItemStack(InitItems.itemCrystalEmpowered, 1, i));
             RECIPES_EMPOWERED_CRYSTAL_BLOCKS[i] = RecipeUtil.lastIRecipe();
-            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemCrystalEmpowered, 9, i), new ItemStack(InitBlocks.blockCrystalEmpowered, 1, i)));
+            RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemCrystalEmpowered, 9, i), new ItemStack(InitBlocks.blockCrystalEmpowered, 1, i));
             RECIPES_EMPOWERED_CRYSTALS[i] = RecipeUtil.lastIRecipe();
 
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemCrystal, 1, i),
+            RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemCrystal, 1, i),
                     "XXX", "XXX", "XXX",
-                    'X', new ItemStack(InitItems.itemCrystalShard, 1, i)));
+                    'X', new ItemStack(InitItems.itemCrystalShard, 1, i));
             RECIPES_CRYSTAL_SHARDS[i] = RecipeUtil.lastIRecipe();
-            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemCrystalShard, 9, i), new ItemStack(InitItems.itemCrystal, 1, i)));
+            RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemCrystalShard, 9, i), new ItemStack(InitItems.itemCrystal, 1, i));
             RECIPES_CRYSTAL_SHARDS_BACK[i] = RecipeUtil.lastIRecipe();
         }
 
         //Dough
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.DOUGH.ordinal()),
-                "cropWheat", "cropWheat"));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.DOUGH.ordinal()),
+                "cropWheat", "cropWheat");
         ItemCrafting.recipeDough = RecipeUtil.lastIRecipe();
 
         //Rice Dough
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.RICE_DOUGH.ordinal()),
-                new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal())));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemMisc, 2, TheMiscItems.RICE_DOUGH.ordinal()),
+                new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()));
         ItemCrafting.recipeRiceDough = RecipeUtil.lastIRecipe();
 
         //Paper Cone
-        GameRegistry.addRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()),
+        RecipeHandler.addShapedRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.PAPER_CONE.ordinal()),
                 "P P", " P ",
                 'P', new ItemStack(Items.PAPER));
 
         //Knife Handle
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal()),
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal()),
                 "stickWood",
-                new ItemStack(Items.LEATHER)));
+                new ItemStack(Items.LEATHER));
         ItemCrafting.recipeKnifeHandle = RecipeUtil.lastIRecipe();
 
         //Knife Blade
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
+        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()),
                 "K", "K", "F",
                 'K', "ingotIron",
-                'F', new ItemStack(Items.FLINT)));
+                'F', new ItemStack(Items.FLINT));
         ItemCrafting.recipeKnifeBlade = RecipeUtil.lastIRecipe();
 
         //Ender Star
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()),
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()),
                 new ItemStack(Items.NETHER_STAR),
                 new ItemStack(Items.DRAGON_BREATH),
                 new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
-                new ItemStack(Items.PRISMARINE_SHARD)));
+                new ItemStack(Items.PRISMARINE_SHARD));
         ItemCrafting.recipeEnderStar = RecipeUtil.lastIRecipe();
     }
 

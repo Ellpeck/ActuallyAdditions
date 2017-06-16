@@ -20,7 +20,6 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -33,7 +32,7 @@ import org.lwjgl.input.Keyboard;
 import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
-public class GuiSmileyCloud extends GuiContainer{
+public class GuiSmileyCloud extends GuiWtfMojang{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_smiley_cloud");
 

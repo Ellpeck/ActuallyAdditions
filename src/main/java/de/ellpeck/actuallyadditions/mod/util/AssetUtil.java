@@ -147,7 +147,7 @@ public final class AssetUtil{
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         GlStateManager.shadeModel(7425);
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer renderer = tessellator.getBuffer();
+        BufferBuilder renderer = tessellator.getBuffer();
         renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
         renderer.pos((double)left, (double)top, (double)zLevel).color(f1, f2, f3, f).endVertex();
         renderer.pos((double)left, (double)bottom, (double)zLevel).color(f1, f2, f3, f).endVertex();
@@ -177,7 +177,7 @@ public final class AssetUtil{
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer renderer = tessellator.getBuffer();
+        BufferBuilder renderer = tessellator.getBuffer();
         int i = 0;
         int j = fontrenderer.getStringWidth(tag)/2;
         GlStateManager.disableTexture2D();
@@ -233,7 +233,7 @@ public final class AssetUtil{
     @SideOnly(Side.CLIENT)
     public static void renderLaser(double firstX, double firstY, double firstZ, double secondX, double secondY, double secondZ, double rotationTime, float alpha, double beamWidth, float[] color){
         Tessellator tessy = Tessellator.getInstance();
-        VertexBuffer render = tessy.getBuffer();
+        BufferBuilder render = tessy.getBuffer();
         World world = Minecraft.getMinecraft().world;
 
         float r = color[0];

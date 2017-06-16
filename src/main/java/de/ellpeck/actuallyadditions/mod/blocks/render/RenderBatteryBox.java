@@ -33,7 +33,7 @@ import java.text.NumberFormat;
 public class RenderBatteryBox extends TileEntitySpecialRenderer{
 
     @Override
-    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par5, int par6){
+    public void func_192841_a(TileEntity tile, double x, double y, double z, float par5, int par6, float f){
         if(!(tile instanceof TileEntityBatteryBox)){
             return;
         }

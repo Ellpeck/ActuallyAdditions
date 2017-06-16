@@ -8,8 +8,9 @@
  * © 2015-2017 Ellpeck
  */
 
+//TODO Achievements -> Advancements?
+/*
 package de.ellpeck.actuallyadditions.mod.achievement;
-
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.stats.Achievement;
@@ -43,3 +44,4 @@ public final class InitAchievements{
     }
 
 }
+*/

@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -26,7 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiXPSolidifier extends GuiContainer{
+public class GuiXPSolidifier extends GuiWtfMojang{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_xp_solidifier");
     private final TileEntityXPSolidifier solidifier;

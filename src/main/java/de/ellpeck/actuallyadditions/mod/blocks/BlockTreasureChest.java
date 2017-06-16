@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
-import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockHorizontal;
@@ -72,7 +71,7 @@ public class BlockTreasureChest extends BlockBase{
             this.dropItems(world, pos);
             world.setBlockToAir(pos);
 
-            TheAchievements.OPEN_TREASURE_CHEST.get(player);
+            //TheAchievements.OPEN_TREASURE_CHEST.get(player);
         }
         return true;
     }

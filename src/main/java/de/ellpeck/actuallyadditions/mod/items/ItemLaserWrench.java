@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -26,8 +27,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -87,8 +86,7 @@ public class ItemLaserWrench extends ItemBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean isHeld){
+    public void addInformation(ItemStack stack, World playerIn, List<String> list, ITooltipFlag advanced){
         BlockPos coords = ItemPhantomConnector.getStoredPosition(stack);
         if(coords != null){
             list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".boundTo.desc")+":");

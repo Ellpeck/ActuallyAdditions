@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -28,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
-public class GuiCoffeeMachine extends GuiContainer{
+public class GuiCoffeeMachine extends GuiWtfMojang{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_coffee_machine");
     private final TileEntityCoffeeMachine machine;

@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -124,7 +125,7 @@ public class PageCrafting extends BookletPage{
     }
 
     private void setupRecipe(GuiBookletBase gui, IRecipe recipe, int startX, int startY){
-        ItemStack[] stacks = new ItemStack[9];
+        Ingredient[] ings = new Ingredient[9];
         int width = 3;
         int height = 3;
 
@@ -132,13 +133,13 @@ public class PageCrafting extends BookletPage{
             ShapedRecipes shaped = (ShapedRecipes)recipe;
             width = shaped.recipeWidth;
             height = shaped.recipeHeight;
-            stacks = shaped.recipeItems;
+            ings = shaped.recipeItems.toArray(new Ingredient[shaped.recipeItems.size()]);
             this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapedRecipe";
         }
         else if(recipe instanceof ShapelessRecipes){
             ShapelessRecipes shapeless = (ShapelessRecipes)recipe;
             for(int i = 0; i < shapeless.recipeItems.size(); i++){
-                stacks[i] = shapeless.recipeItems.get(i);
+                ings[i] = shapeless.recipeItems.get(i);
             }
             this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapelessRecipe";
         }
@@ -151,34 +152,36 @@ public class PageCrafting extends BookletPage{
             catch(Exception e){
                 ModUtil.LOGGER.error("Something went wrong trying to get the Crafting Recipe in the booklet to display!", e);
             }
-            for(int i = 0; i < shaped.getInput().length; i++){
-                Object input = shaped.getInput()[i];
-                if(input != null){
-                    stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? StackUtil.getNull() : ((List<ItemStack>)input).get(0));
-                }
+            for(int i = 0; i < shaped.func_192400_c().size(); i++){
+                ings[i] = shaped.func_192400_c().get(i);
             }
             this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapedOreRecipe";
         }
         else if(recipe instanceof ShapelessOreRecipe){
             ShapelessOreRecipe shapeless = (ShapelessOreRecipe)recipe;
-            for(int i = 0; i < shapeless.getInput().size(); i++){
-                Object input = shapeless.getInput().get(i);
-                stacks[i] = input instanceof ItemStack ? (ItemStack)input : (((List<ItemStack>)input).isEmpty() ? StackUtil.getNull() : ((List<ItemStack>)input).get(0));
+            for(int i = 0; i < shapeless.func_192400_c().size(); i++){
+                ings[i] = shapeless.func_192400_c().get(i);
             }
             this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapelessOreRecipe";
         }
 
         for(int x = 0; x < width; x++){
             for(int y = 0; y < height; y++){
-                ItemStack stack = stacks[y*width+x];
-                if(StackUtil.isValid(stack)){
-                    ItemStack copy = stack.copy();
-                    copy = StackUtil.setStackSize(copy, 1);
-                    if(copy.getItemDamage() == Util.WILDCARD){
-                        copy.setItemDamage(0);
-                    }
+                Ingredient ing = ings[y*width+x];
+                if(ing != null){
+                    ItemStack[] stacks = ing.func_193365_a();
+                    if(stacks != null && stacks.length > 0){
+                        ItemStack stack = stacks[0];
+                        if(StackUtil.isValid(stack)){
+                            ItemStack copy = stack.copy();
+                            copy = StackUtil.setStackSize(copy, 1);
+                            if(copy.getItemDamage() == Util.WILDCARD){
+                                copy.setItemDamage(0);
+                            }
 
-                    gui.addOrModifyItemRenderer(copy, startX+6+x*18, startY+7+y*18, 1F, true);
+                            gui.addOrModifyItemRenderer(copy, startX+6+x*18, startY+7+y*18, 1F, true);
+                        }
+                    }
                 }
             }
         }

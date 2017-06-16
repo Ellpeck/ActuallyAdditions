@@ -14,16 +14,23 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemKnife;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
-public class RecipeBioMash implements IRecipe{
+public class RecipeBioMash extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe{
+
+    public RecipeBioMash(ResourceLocation location){
+        RecipeHandler.addRecipe(location, this);
+    }
 
     @Override
     public boolean matches(InventoryCrafting inv, World world){
@@ -79,8 +86,8 @@ public class RecipeBioMash implements IRecipe{
     }
 
     @Override
-    public int getRecipeSize(){
-        return 2;
+    public boolean func_194133_a(int p_194133_1_, int p_194133_2_){
+        return false;
     }
 
     @Override

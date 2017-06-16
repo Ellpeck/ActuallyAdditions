@@ -19,12 +19,12 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -37,6 +37,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -144,13 +145,15 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList list){
-        for(int j = 0; j < ALL_RINGS.length; j++){
-            list.add(new ItemStack(this, 1, j));
+    public void getSubItems(CreativeTabs tab, NonNullList list){
+        if(this.func_194125_a(tab)){
+            for(int j = 0; j < ALL_RINGS.length; j++){
+                list.add(new ItemStack(this, 1, j));
 
-            ItemStack full = new ItemStack(this, 1, j);
-            setStoredBlaze(full, MAX_BLAZE);
-            list.add(full);
+                ItemStack full = new ItemStack(this, 1, j);
+                setStoredBlaze(full, MAX_BLAZE);
+                list.add(full);
+            }
         }
     }
 
@@ -237,9 +240,8 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
+    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced){
         super.addInformation(stack, playerIn, tooltip, advanced);
-
-        tooltip.add(String.format("%d/%d %s", this.getStoredBlaze(stack), MAX_BLAZE, StringUtil.localize("item."+ModUtil.MOD_ID+".item_misc_ring.storage")));
+        tooltip.add(String.format("%d/%d %s", getStoredBlaze(stack), MAX_BLAZE, StringUtil.localize("item."+ModUtil.MOD_ID+".item_misc_ring.storage")));
     }
 }

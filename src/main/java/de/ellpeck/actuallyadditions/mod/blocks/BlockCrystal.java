@@ -22,7 +22,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
@@ -50,9 +49,9 @@ public class BlockCrystal extends BlockBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, NonNullList list){
+    public void getSubBlocks(CreativeTabs tab, NonNullList list){
         for(int j = 0; j < ALL_CRYSTALS.length; j++){
-            list.add(new ItemStack(item, 1, j));
+            list.add(new ItemStack(this, 1, j));
         }
     }
 

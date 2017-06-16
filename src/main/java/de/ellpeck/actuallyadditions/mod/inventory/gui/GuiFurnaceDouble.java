@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -30,7 +29,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 @SideOnly(Side.CLIENT)
-public class GuiFurnaceDouble extends GuiContainer{
+public class GuiFurnaceDouble extends GuiWtfMojang{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_furnace_double");
     private final TileEntityFurnaceDouble tileFurnace;

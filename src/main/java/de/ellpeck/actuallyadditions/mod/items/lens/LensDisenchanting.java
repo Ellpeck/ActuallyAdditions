@@ -21,6 +21,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -87,7 +88,7 @@ public class LensDisenchanting extends Lens{
                         }
 
                         ItemUtil.removeEnchantment(newDisenchantStack, enchant);
-                        Items.ENCHANTED_BOOK.addEnchantment(newBookStack, new EnchantmentData(enchant, level));
+                        ItemEnchantedBook.addEnchantment(newBookStack, new EnchantmentData(enchant, level));
 
                         EntityItem disenchanted = new EntityItem(toDisenchant.getEntityWorld(), toDisenchant.posX, toDisenchant.posY, toDisenchant.posZ, newDisenchantStack);
                         EntityItem newBook = new EntityItem(book.getEntityWorld(), book.posX, book.posY, book.posZ, newBookStack);

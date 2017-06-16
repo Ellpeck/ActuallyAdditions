@@ -34,7 +34,7 @@ public class EntryButton extends GuiButton{
     }
 
     @Override
-    public void drawButton(Minecraft minecraft, int mouseX, int mouseY){
+    public void func_191745_a(Minecraft minecraft, int mouseX, int mouseY, float f){
         if(this.visible){
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition+this.width && mouseY < this.yPosition+this.height;

@@ -21,8 +21,7 @@ import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.exu.RedOrchidFarmerB
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraft.util.ResourceLocation;
 
 public final class InitCrafting{
 
@@ -53,14 +52,13 @@ public final class InitCrafting{
         ActuallyAdditionsAPI.addFarmerBehavior(new EnderlillyFarmerBehavior());
         ActuallyAdditionsAPI.addFarmerBehavior(new RedOrchidFarmerBehavior());
 
-        RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShaped", RecipeKeepDataShaped.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
-        RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShapeless", RecipeKeepDataShapeless.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
+        //RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShaped", RecipeKeepDataShaped.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
+        //RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShapeless", RecipeKeepDataShapeless.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 
-        GameRegistry.addRecipe(new RecipePotionRingCharging());
-        RecipeSorter.register(ModUtil.MOD_ID+":recipePotionRingCharging", RecipePotionRingCharging.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
+        new RecipePotionRingCharging(new ResourceLocation(ModUtil.MOD_ID, "potion_ring_charging"));
+        //RecipeSorter.register(ModUtil.MOD_ID+":recipePotionRingCharging", RecipePotionRingCharging.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 
-        GameRegistry.addRecipe(new RecipeBioMash());
-        RecipeSorter.register(ModUtil.MOD_ID+":recipeBioMash", RecipeBioMash.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
+        new RecipeBioMash(new ResourceLocation(ModUtil.MOD_ID, "bio_mash"));
+        //RecipeSorter.register(ModUtil.MOD_ID+":recipeBioMash", RecipeBioMash.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
     }
-
 }

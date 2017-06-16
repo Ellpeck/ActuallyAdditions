@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler.GuiTypes;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.*;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -35,6 +36,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemBag extends ItemBase{
@@ -52,7 +54,7 @@ public class ItemBag extends ItemBase{
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
+    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced){
         ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerBag.getSlotAmount(this.isVoid));
         ItemDrill.loadSlotsFromNBT(inv, stack);
 
@@ -64,7 +66,7 @@ public class ItemBag extends ItemBase{
                 slotsFilled++;
             }
         }
-        tooltip.add(TextFormatting.ITALIC.toString()+String.format("%d/%d %s", slotsFilled, slotsTotal, StringUtil.localize("item."+ModUtil.MOD_ID+".item_bag.storage")));
+        tooltip.add(TextFormatting.ITALIC+String.format("%d/%d %s", slotsFilled, slotsTotal, StringUtil.localize("item."+ModUtil.MOD_ID+".item_bag.storage")));
     }
 
     @SubscribeEvent

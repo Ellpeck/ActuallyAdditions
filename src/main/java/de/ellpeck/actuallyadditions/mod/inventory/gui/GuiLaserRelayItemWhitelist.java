@@ -19,7 +19,6 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -31,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class GuiLaserRelayItemWhitelist extends GuiContainer{
+public class GuiLaserRelayItemWhitelist extends GuiWtfMojang{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_laser_relay_item_whitelist");
     private final TileEntityLaserRelayItemWhitelist tile;

@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.EntryButton;
-import de.ellpeck.actuallyadditions.mod.booklet.misc.GuiAAAchievements;
 import de.ellpeck.actuallyadditions.mod.config.GuiConfiguration;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
@@ -35,6 +34,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO Fix achievement button
 @SideOnly(Side.CLIENT)
 public class GuiMainPage extends GuiBooklet{
 
@@ -86,7 +86,7 @@ public class GuiMainPage extends GuiBooklet{
             "Am I good enough to be an Actually Additions tool?@deanwhufc"
     };
 
-    private TexturedButton achievementButton;
+    //private TexturedButton achievementButton;
     private TexturedButton configButton;
 
     private GuiButton tutorialButton;
@@ -205,8 +205,8 @@ public class GuiMainPage extends GuiBooklet{
         List<String> achievementText = new ArrayList<String>();
         achievementText.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".achievementButton.name"));
         achievementText.addAll(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID+".achievementButton.desc", ModUtil.NAME), 200));
-        this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
-        this.buttonList.add(this.achievementButton);
+        //this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
+        //this.buttonList.add(this.achievementButton);
 
         PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
         if(!data.didBookTutorial){
@@ -216,7 +216,7 @@ public class GuiMainPage extends GuiBooklet{
             this.buttonList.add(this.tutorialButton);
 
             this.configButton.visible = false;
-            this.achievementButton.visible = false;
+            //this.achievementButton.visible = false;
         }
 
         for(int i = 0; i < BUTTONS_PER_PAGE; i++){
@@ -242,10 +242,10 @@ public class GuiMainPage extends GuiBooklet{
                 }
             }
         }
-        else if(button == this.achievementButton){
-            GuiScreen achievements = new GuiAAAchievements(this, this.mc.player.getStatFileWriter());
+         /*else if(button == this.achievementButton){
+           GuiScreen achievements = new GuiAAAchievements(this, this.mc.player.getStatFileWriter());
             this.mc.displayGuiScreen(achievements);
-        }
+        }*/
         else if(button == this.configButton){
             GuiScreen config = new GuiConfiguration(this);
             this.mc.displayGuiScreen(config);
@@ -261,7 +261,7 @@ public class GuiMainPage extends GuiBooklet{
                 this.tutorialButton.visible = false;
 
                 this.configButton.visible = true;
-                this.achievementButton.visible = true;
+                //this.achievementButton.visible = true;
 
                 PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
                 data.didBookTutorial = true;

@@ -10,18 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.booklet;
 
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeCategory;
+import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookletRecipeCategory extends BlankRecipeCategory<BookletRecipeWrapper>{
+public class BookletRecipeCategory  implements IRecipeCategory<BookletRecipeWrapper>{
 
     public static final String NAME = "actuallyadditions.booklet";
 
@@ -40,6 +41,11 @@ public class BookletRecipeCategory extends BlankRecipeCategory<BookletRecipeWrap
     @Override
     public String getTitle(){
         return StringUtil.localize("container.nei."+NAME+".name");
+    }
+
+    @Override
+    public String getModName(){
+        return ModUtil.NAME;
     }
 
 

@@ -15,14 +15,15 @@ import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaForgeUnitsWrapper;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -54,12 +55,12 @@ public abstract class ItemEnergy extends ItemBase{
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
+    public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced){
         if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
             IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
             if(storage != null){
                 NumberFormat format = NumberFormat.getInstance();
-                list.add(String.format("%s/%s Crystal Flux", format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored())));
+                tooltip.add(String.format("%s/%s Crystal Flux", format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored())));
             }
         }
     }
@@ -72,19 +73,21 @@ public abstract class ItemEnergy extends ItemBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, NonNullList list){
-        ItemStack stackFull = new ItemStack(this);
-        if(stackFull.hasCapability(CapabilityEnergy.ENERGY, null)){
-            IEnergyStorage storage = stackFull.getCapability(CapabilityEnergy.ENERGY, null);
-            if(storage != null){
-                this.setEnergy(stackFull, storage.getMaxEnergyStored());
-                list.add(stackFull);
+    public void getSubItems(CreativeTabs tabs, NonNullList list){
+        if(this.func_194125_a(tabs)){
+            ItemStack stackFull = new ItemStack(this);
+            if(stackFull.hasCapability(CapabilityEnergy.ENERGY, null)){
+                IEnergyStorage storage = stackFull.getCapability(CapabilityEnergy.ENERGY, null);
+                if(storage != null){
+                    this.setEnergy(stackFull, storage.getMaxEnergyStored());
+                    list.add(stackFull);
+                }
             }
-        }
 
-        ItemStack stackEmpty = new ItemStack(this);
-        this.setEnergy(stackEmpty, 0);
-        list.add(stackEmpty);
+            ItemStack stackEmpty = new ItemStack(this);
+            this.setEnergy(stackEmpty, 0);
+            list.add(stackEmpty);
+        }
     }
 
     @Override

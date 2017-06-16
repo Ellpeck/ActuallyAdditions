@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerCanolaPress;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -22,7 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiCanolaPress extends GuiContainer{
+public class GuiCanolaPress extends GuiWtfMojang{
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_canola_press");
     private final TileEntityCanolaPress press;

@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.network;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -173,7 +172,7 @@ public final class PacketHandler{
                     data.loadTrials(compound.getTagList("Trials", 8));
 
                     if(compound.getBoolean("Achievement")){
-                        TheAchievements.COMPLETE_TRIALS.get(player);
+                        //TheAchievements.COMPLETE_TRIALS.get(player);
                     }
                 }
                 WorldData.get(world).markDirty();

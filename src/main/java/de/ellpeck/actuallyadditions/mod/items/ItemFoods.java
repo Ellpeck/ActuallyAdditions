@@ -22,7 +22,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
@@ -95,9 +94,11 @@ public class ItemFoods extends ItemFoodBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList list){
-        for(int j = 0; j < ALL_FOODS.length; j++){
-            list.add(new ItemStack(this, 1, j));
+    public void getSubItems(CreativeTabs tab, NonNullList list){
+        if(this.func_194125_a(tab)){
+            for(int j = 0; j < ALL_FOODS.length; j++){
+                list.add(new ItemStack(this, 1, j));
+            }
         }
     }
 

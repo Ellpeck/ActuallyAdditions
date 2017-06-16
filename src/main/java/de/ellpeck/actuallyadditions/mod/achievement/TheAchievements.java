@@ -8,6 +8,8 @@
  * © 2015-2017 Ellpeck
  */
 
+//TODO Fix achievements
+/*
 package de.ellpeck.actuallyadditions.mod.achievement;
 
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements.Type;
@@ -141,3 +143,4 @@ public enum TheAchievements{
         }
     }
 }
+*/

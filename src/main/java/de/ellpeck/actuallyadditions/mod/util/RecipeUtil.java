@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
-import net.minecraft.item.crafting.CraftingManager;
+import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
 import net.minecraft.item.crafting.IRecipe;
 
 import java.util.List;
@@ -32,8 +32,7 @@ public final class RecipeUtil{
     }
 
     public static IRecipe lastIRecipe(){
-        List<IRecipe> list = CraftingManager.getInstance().getRecipeList();
-        return list.get(list.size()-1);
+        return RecipeHandler.lastRecipe;
     }
 
     public static EmpowererRecipe lastEmpowererRecipe(){

@@ -20,7 +20,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -57,10 +56,12 @@ public class ItemMisc extends ItemBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList list){
-        for(int j = 0; j < ALL_MISC_ITEMS.length; j++){
-            if(j != TheMiscItems.YOUTUBE_ICON.ordinal()){
-                list.add(new ItemStack(this, 1, j));
+    public void getSubItems(CreativeTabs tab, NonNullList list){
+        if(this.func_194125_a(tab)){
+            for(int j = 0; j < ALL_MISC_ITEMS.length; j++){
+                if(j != TheMiscItems.YOUTUBE_ICON.ordinal()){
+                    list.add(new ItemStack(this, 1, j));
+                }
             }
         }
     }

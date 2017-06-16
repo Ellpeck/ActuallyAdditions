@@ -12,15 +12,22 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.mod.items.ItemPotionRing;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
-public class RecipePotionRingCharging implements IRecipe{
+public class RecipePotionRingCharging extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe{
+
+    public RecipePotionRingCharging(ResourceLocation location){
+        RecipeHandler.addRecipe(location, this);
+    }
 
     @Override
     public boolean matches(InventoryCrafting inv, World worldIn){
@@ -77,8 +84,8 @@ public class RecipePotionRingCharging implements IRecipe{
     }
 
     @Override
-    public int getRecipeSize(){
-        return 0;
+    public boolean func_194133_a(int p_194133_1_, int p_194133_2_){
+        return false;
     }
 
     @Override

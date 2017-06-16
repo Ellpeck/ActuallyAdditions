@@ -94,7 +94,7 @@ public class ClientEvents{
         }
 
         //Advanced Item Info
-        if(event.isShowAdvancedItemTooltips() && StackUtil.isValid(event.getItemStack())){
+        if(event.getFlags().func_194127_a() && StackUtil.isValid(event.getItemStack())){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
                 if(GuiScreen.isCtrlKeyDown()){
                     event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".extraInfo.desc")+":");

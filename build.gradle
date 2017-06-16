@@ -7,14 +7,14 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'idea'
 
-version = "1.11.2-r110"
+version = "1.12-r110"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
@@ -23,10 +23,10 @@ if(hasProperty('buildnumber')){
 }
 
 minecraft {
-    version = "1.11.2-13.20.0.2299"
+    version = "1.12-14.21.0.2331"
     runDir = "idea"
 
-    mappings = "snapshot_20161126"
+    mappings = "snapshot_20161220"
     makeObfSourceJar = false
     //useDepAts = true
 
@@ -47,8 +47,8 @@ repositories {
 }
 
 dependencies {
-    compile "net.darkhax.tesla:Tesla:1.11-1.3.0.52"
-    deobfCompile "mezz.jei:jei_1.11.2:4.3.5.277"
+    compile "net.darkhax.tesla:Tesla-1.12:1.0.59"
+    deobfCompile "mezz.jei:jei_1.12:4.6.0.61"
     deobfCompile "org.cyclops.commoncapabilities:CommonCapabilities:1.11.2-1.3.3-115"
 }
 

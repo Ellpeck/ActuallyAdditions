@@ -24,6 +24,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -138,7 +139,7 @@ public class BlockFurnaceDouble extends BlockContainerBase{
         }
 
         @Override
-        public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
+        public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced){
             tooltip.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".previouslyDoubleFurnace"));
         }
     }

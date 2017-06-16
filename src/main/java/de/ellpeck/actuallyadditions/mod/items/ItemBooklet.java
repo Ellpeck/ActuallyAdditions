@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -25,6 +24,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -39,6 +39,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemBooklet extends ItemBase implements IHudDisplay{
@@ -77,22 +78,21 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
         player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
 
         if(!world.isRemote){
-            TheAchievements.OPEN_BOOKLET.get(player);
-            TheAchievements.OPEN_BOOKLET_MILESTONE.get(player);
+            //TheAchievements.OPEN_BOOKLET.get(player);
+            //TheAchievements.OPEN_BOOKLET_MILESTONE.get(player);
         }
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
-        list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+"."+this.getBaseName()+".desc"));
+    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced){
+        tooltip.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+"."+this.getBaseName()+".desc"));
 
         for(int i = 1; i <= 4; i++){
             String format = i == 4 ? TextFormatting.GOLD.toString()+TextFormatting.ITALIC : TextFormatting.RESET.toString();
-            list.add(format+StringUtil.localize("tooltip."+ModUtil.MOD_ID+"."+this.getBaseName()+".sub."+i));
+            tooltip.add(format+StringUtil.localize("tooltip."+ModUtil.MOD_ID+"."+this.getBaseName()+".sub."+i));
         }
     }
-
 
     @Override
     public EnumRarity getRarity(ItemStack stack){

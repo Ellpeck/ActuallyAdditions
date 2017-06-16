@@ -12,16 +12,17 @@ package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeCategory;
+import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-public class ReconstructorRecipeCategory extends BlankRecipeCategory<ReconstructorRecipeWrapper>{
+public class ReconstructorRecipeCategory implements IRecipeCategory<ReconstructorRecipeWrapper>{
 
     public static final String NAME = "actuallyadditions.reconstructor";
 
@@ -40,6 +41,11 @@ public class ReconstructorRecipeCategory extends BlankRecipeCategory<Reconstruct
     @Override
     public String getTitle(){
         return StringUtil.localize("container.nei."+NAME+".name");
+    }
+
+    @Override
+    public String getModName(){
+        return ModUtil.NAME;
     }
 
     @Override

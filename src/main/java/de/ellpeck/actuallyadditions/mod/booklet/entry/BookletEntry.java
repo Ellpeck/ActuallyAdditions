@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
@@ -56,7 +57,7 @@ public class BookletEntry implements IBookletEntry{
         if(!items.isEmpty()){
             for(ItemStack stack : items){
                 if(StackUtil.isValid(stack)){
-                    List<String> tooltip = stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips);
+                    List<String> tooltip = stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
                     for(String strg : tooltip){
                         if(strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)){
                             return true;

@@ -17,8 +17,8 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
@@ -31,6 +31,7 @@ import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,18 +113,17 @@ public class ItemCoffee extends ItemFoodBase{
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
+    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced){
         PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
         if(effects != null){
             for(PotionEffect effect : effects){
-                list.add(StringUtil.localize(effect.getEffectName())+" "+(effect.getAmplifier()+1)+", "+StringUtils.ticksToElapsedTime(effect.getDuration()*20));
+                tooltip.add(StringUtil.localize(effect.getEffectName())+" "+(effect.getAmplifier()+1)+", "+StringUtils.ticksToElapsedTime(effect.getDuration()*20));
             }
         }
         else{
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".coffeeCup.noEffect"));
+            tooltip.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".coffeeCup.noEffect"));
         }
     }
-
 
     @Override
     public EnumRarity getRarity(ItemStack stack){

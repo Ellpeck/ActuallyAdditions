@@ -22,7 +22,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -61,9 +60,11 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList list){
-        for(int j = 0; j < ALL_JAMS.length; j++){
-            list.add(new ItemStack(this, 1, j));
+    public void getSubItems(CreativeTabs tab, NonNullList list){
+        if(this.func_194125_a(tab)){
+            for(int j = 0; j < ALL_JAMS.length; j++){
+                list.add(new ItemStack(this, 1, j));
+            }
         }
     }
 

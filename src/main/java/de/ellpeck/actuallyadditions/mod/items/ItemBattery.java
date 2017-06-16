@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -89,8 +90,8 @@ public class ItemBattery extends ItemEnergy{
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool){
-        super.addInformation(stack, player, list, bool);
+    public void addInformation(ItemStack stack, World playerIn, List<String> list, ITooltipFlag advanced){
+        super.addInformation(stack, playerIn, list, advanced);
         list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".battery."+(ItemUtil.isEnabled(stack) ? "discharge" : "noDischarge")));
         list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".battery.changeMode"));
     }

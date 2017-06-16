@@ -8,6 +8,8 @@
  * © 2015-2017 Ellpeck
  */
 
+//TODO Achievement GUI?
+/*
 package de.ellpeck.actuallyadditions.mod.booklet.misc;
 
 import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
@@ -24,7 +26,7 @@ import java.io.IOException;
 
 /**
  * (Partially excerpted from Botania by Vazkii with permission, thanks!)
- */
+ *
 @SideOnly(Side.CLIENT)
 public class GuiAAAchievements extends GuiAchievements{
 
@@ -60,3 +62,4 @@ public class GuiAAAchievements extends GuiAchievements{
         }
     }
 }
+*/

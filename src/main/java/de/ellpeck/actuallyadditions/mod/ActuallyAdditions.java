@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
@@ -97,6 +96,8 @@ public class ActuallyAdditions{
         FuelHandler.init();
         BannerHelper.init();
         SoundHandler.init();
+        InitOreDict.init();
+        InitCrafting.init();
         new UpdateChecker();
         proxy.preInit(event);
 
@@ -107,13 +108,11 @@ public class ActuallyAdditions{
     public void init(FMLInitializationEvent event){
         ModUtil.LOGGER.info("Starting Initialization Phase...");
 
-        InitOreDict.init();
-        InitAchievements.init();
+        //InitAchievements.init();
         GuiHandler.init();
         new OreGen();
         TileEntityBase.init();
         new CommonEvents();
-        InitCrafting.init();
         InitEntities.init();
         CompatUtil.registerCraftingTweaksCompat();
 

@@ -10,15 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import de.ellpeck.actuallyadditions.mod.achievement.InitAchievements;
-import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.item.EntityItem;
@@ -43,7 +40,8 @@ public class CommonEvents{
         MinecraftForge.EVENT_BUS.register(new DungeonLoot());
     }
 
-    public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
+    //TODO Checking Achievements?
+    /*public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
         if(gotten != null && player != null){
             for(TheAchievements ach : TheAchievements.values()){
                 if(ach.type == type){
@@ -53,7 +51,7 @@ public class CommonEvents{
                 }
             }
         }
-    }
+    }*/
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
@@ -78,7 +76,7 @@ public class CommonEvents{
 
     @SubscribeEvent
     public void onCraftedEvent(PlayerEvent.ItemCraftedEvent event){
-        checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
+        //checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
         if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
             if(!event.player.world.isRemote && StackUtil.isValid(event.crafting) && event.crafting.getItem() != InitItems.itemBooklet){
@@ -101,12 +99,12 @@ public class CommonEvents{
 
     @SubscribeEvent
     public void onSmeltedEvent(PlayerEvent.ItemSmeltedEvent event){
-        checkAchievements(event.smelting, event.player, InitAchievements.Type.SMELTING);
+        //checkAchievements(event.smelting, event.player, InitAchievements.Type.SMELTING);
     }
 
     @SubscribeEvent
     public void onPickupEvent(EntityItemPickupEvent event){
-        checkAchievements(event.getItem().getEntityItem(), event.getEntityPlayer(), InitAchievements.Type.PICK_UP);
+        //checkAchievements(event.getItem().getEntityItem(), event.getEntityPlayer(), InitAchievements.Type.PICK_UP);
     }
 
     @SubscribeEvent

@@ -350,13 +350,13 @@ public class CreativeTab extends CreativeTabs{
 
     public void add(Item item){
         if(item != null){
-            item.getSubItems(item, INSTANCE, this.list);
+            item.getSubItems(INSTANCE, this.list);
         }
     }
 
     public void add(Block block){
         if(block != null){
-            block.getSubBlocks(new ItemStack(block).getItem(), INSTANCE, this.list);
+            block.getSubBlocks(INSTANCE, this.list);
         }
     }
 }

@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.achievement.TheAchievements;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
@@ -74,7 +73,7 @@ public class BlockSmileyCloud extends BlockContainerBase{
             if(tile instanceof TileEntitySmileyCloud){
                 player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
 
-                TheAchievements.NAME_SMILEY_CLOUD.get(player);
+                //TheAchievements.NAME_SMILEY_CLOUD.get(player);
             }
         }
         return true;

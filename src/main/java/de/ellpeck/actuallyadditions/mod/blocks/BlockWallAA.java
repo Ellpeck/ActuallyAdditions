@@ -19,7 +19,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
@@ -124,8 +123,8 @@ public class BlockWallAA extends BlockBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tab, NonNullList list){
-        list.add(new ItemStack(item, 1, 0));
+    public void getSubBlocks(CreativeTabs tab, NonNullList list){
+        list.add(new ItemStack(this, 1, 0));
     }
 
     public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos){
