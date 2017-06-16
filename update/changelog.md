@@ -1,3 +1,6 @@
+# 1.12-r111
+* Did the thing
+
 # 1.11.2-r110
 * Fix config typo (sindrefag)
 * Add a config for oil generator values
