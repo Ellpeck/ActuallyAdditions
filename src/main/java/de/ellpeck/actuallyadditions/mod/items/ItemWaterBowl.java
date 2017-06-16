@@ -25,6 +25,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -122,18 +123,46 @@ public class ItemWaterBowl extends ItemBase{
     public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
         if(!world.isRemote){
             if(ConfigBoolValues.WATER_BOWL_LOSS.isEnabled()){
-                if(!entity.isSneaking()){
-                    if(world.getTotalWorldTime()%10 == 0 && world.rand.nextFloat() >= 0.8F){
-                        if(entity instanceof EntityPlayer){
-                            EntityPlayer player = (EntityPlayer)entity;
-                            if(this.tryPlaceContainedLiquid(player, world, player.getPosition(), true)){
-                                player.inventory.setInventorySlotContents(itemSlot, new ItemStack(Items.BOWL));
+                if(world.getTotalWorldTime()%10 == 0 && world.rand.nextFloat() >= 0.5F){
+                    int lastX = 0;
+                    int lastY = 0;
+
+                    if(stack.hasTagCompound()){
+                        NBTTagCompound compound = stack.getTagCompound();
+                        lastX = compound.getInteger("lastX");
+                        lastY = compound.getInteger("lastY");
+                    }
+
+                    boolean change = false;
+                    if((lastX != 0 && lastX != (int)entity.posX) || (lastY != 0 && lastY != (int)entity.posY)){
+                        if(!entity.isSneaking()){
+                            if(entity instanceof EntityPlayer){
+                                EntityPlayer player = (EntityPlayer)entity;
+                                if(this.tryPlaceContainedLiquid(player, world, player.getPosition(), true)){
+                                    player.inventory.setInventorySlotContents(itemSlot, new ItemStack(Items.BOWL));
+                                }
                             }
                         }
+                        change = true;
+                    }
+
+                    if(change || lastX == 0 || lastY == 0){
+                        if(!stack.hasTagCompound()){
+                            stack.setTagCompound(new NBTTagCompound());
+                        }
+
+                        NBTTagCompound compound = stack.getTagCompound();
+                        compound.setInteger("lastX", (int)entity.posX);
+                        compound.setInteger("lastY", (int)entity.posY);
                     }
                 }
             }
         }
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged){
+        return !ItemStack.areItemsEqual(oldStack, newStack);
     }
 
     public boolean tryPlaceContainedLiquid(EntityPlayer player, World world, BlockPos pos, boolean finite){
