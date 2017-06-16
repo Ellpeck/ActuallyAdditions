@@ -13,11 +13,19 @@ package de.ellpeck.actuallyadditions.mod.event;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ItemBag;
+import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
+import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +35,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
@@ -38,6 +48,90 @@ public class CommonEvents{
     public CommonEvents(){
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new DungeonLoot());
+    }
+
+    @SubscribeEvent
+    public void onBlockBreakEvent(BlockEvent.HarvestDropsEvent event){
+        IBlockState state = event.getState();
+        if(state != null && state.getBlock() == Blocks.MOB_SPAWNER){
+            event.getDrops().add(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.SPAWNER_SHARD.ordinal()));
+        }
+    }
+
+    @SubscribeEvent
+    public void onItemPickup(EntityItemPickupEvent event){
+        if(event.isCanceled() || event.getResult() == Event.Result.ALLOW){
+            return;
+        }
+
+        EntityPlayer player = event.getEntityPlayer();
+        EntityItem item = event.getItem();
+        if(item != null && !item.isDead){
+            ItemStack stack = item.getEntityItem();
+            if(StackUtil.isValid(stack)){
+                for(int i = 0; i < player.inventory.getSizeInventory(); i++){
+                    if(i != player.inventory.currentItem){
+
+                        ItemStack invStack = player.inventory.getStackInSlot(i);
+                        if(StackUtil.isValid(invStack) && invStack.getItem() instanceof ItemBag && invStack.hasTagCompound()){
+                            if(invStack.getTagCompound().getBoolean("AutoInsert")){
+                                boolean changed = false;
+
+                                boolean isVoid = ((ItemBag)invStack.getItem()).isVoid;
+                                ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerBag.getSlotAmount(isVoid));
+                                ItemDrill.loadSlotsFromNBT(inv, invStack);
+
+                                FilterSettings filter = new FilterSettings(4, false, false, false, false, 0, 0);
+                                filter.readFromNBT(invStack.getTagCompound(), "Filter");
+                                if(filter.check(stack)){
+                                    if(isVoid){
+                                        stack = StackUtil.setStackSize(stack, 0);
+                                        changed = true;
+                                    }
+                                    else{
+                                        for(int j = 0; j < inv.getSlots(); j++){
+                                            ItemStack bagStack = inv.getStackInSlot(j);
+                                            if(StackUtil.isValid(bagStack)){
+                                                if(ItemUtil.canBeStacked(bagStack, stack)){
+                                                    int maxTransfer = Math.min(StackUtil.getStackSize(stack), stack.getMaxStackSize()-StackUtil.getStackSize(bagStack));
+                                                    if(maxTransfer > 0){
+                                                        inv.setStackInSlot(j, StackUtil.addStackSize(bagStack, maxTransfer));
+                                                        stack = StackUtil.addStackSize(stack, -maxTransfer);
+                                                        changed = true;
+                                                    }
+                                                }
+                                            }
+                                            else{
+                                                inv.setStackInSlot(j, stack.copy());
+                                                stack = StackUtil.setStackSize(stack, 0);
+                                                changed = true;
+                                            }
+
+                                            if(!StackUtil.isValid(stack)){
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if(changed){
+                                    if(!isVoid){
+                                        ItemDrill.writeSlotsToNBT(inv, invStack);
+                                    }
+                                    event.setResult(Event.Result.ALLOW);
+                                }
+                            }
+                        }
+                    }
+
+                    if(!StackUtil.isValid(stack)){
+                        break;
+                    }
+                }
+            }
+
+            item.setEntityItemStack(stack);
+        }
     }
 
     //TODO Checking Achievements?
