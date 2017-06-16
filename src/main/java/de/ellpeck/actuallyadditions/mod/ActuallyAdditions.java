@@ -58,8 +58,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 
-//                                                                           So that BuildCraft Oil always gets used
-@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, dependencies = "after:BuildCraft|Energy", guiFactory = "de.ellpeck.actuallyadditions.mod.config.GuiFactory")
+@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, guiFactory = "de.ellpeck.actuallyadditions.mod.config.GuiFactory")
 public class ActuallyAdditions{
 
     @Instance(ModUtil.MOD_ID)
