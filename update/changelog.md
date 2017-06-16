@@ -1,3 +1,9 @@
+# 1.11.2-r110
+* Fix config typo (sindrefag)
+* Add a config for oil generator values
+* Remove the after:BuildCraft dependency because it's obsolete
+* Make water bowl spilling not happen when you're standing (Making Darko proud)
+
 # 1.11.2-r109
 * Don't check for insertability into machines of items that can't actually fit, increases performance
 * Change lists for sets in Laser Relays to increase performance
