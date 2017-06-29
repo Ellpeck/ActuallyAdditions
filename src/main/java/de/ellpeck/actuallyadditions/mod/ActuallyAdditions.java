@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
@@ -21,9 +20,7 @@ import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.CommonEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.OreGen;
-import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
@@ -43,11 +40,11 @@ import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.TreasureChestHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
@@ -86,18 +83,13 @@ public class ActuallyAdditions{
         teslaLoaded = Loader.isModLoaded("tesla");
         commonCapsLoaded = Loader.isModLoaded("commoncapabilities");
 
+        MinecraftForge.EVENT_BUS.register(new RegistryHandler());
+
         new ConfigurationHandler(event.getSuggestedConfigurationFile());
         PacketHandler.init();
         InitToolMaterials.init();
         InitArmorMaterials.init();
-        InitBlocks.init();
         InitFluids.init();
-        InitItems.init();
-        FuelHandler.init();
-        BannerHelper.init();
-        SoundHandler.init();
-        InitOreDict.init();
-        InitCrafting.init();
         new UpdateChecker();
         proxy.preInit(event);
 
@@ -108,6 +100,8 @@ public class ActuallyAdditions{
     public void init(FMLInitializationEvent event){
         ModUtil.LOGGER.info("Starting Initialization Phase...");
 
+        BannerHelper.init();
+        FuelHandler.init();
         //InitAchievements.init();
         GuiHandler.init();
         new OreGen();
@@ -125,7 +119,6 @@ public class ActuallyAdditions{
     public void postInit(FMLPostInitializationEvent event){
         ModUtil.LOGGER.info("Starting PostInitialization Phase...");
 
-        InitVillager.init();
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
         HairyBallHandler.init();
@@ -154,23 +147,5 @@ public class ActuallyAdditions{
     @EventHandler
     public void serverStopped(FMLServerStoppedEvent event){
         WorldData.clear();
-    }
-
-    @EventHandler
-    public void missingMapping(FMLMissingMappingsEvent event){
-        int totalRemaps = 0;
-        int workedRemaps = 0;
-
-        for(FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()){
-            totalRemaps++;
-
-            if(ItemUtil.remapName(mapping)){
-                workedRemaps++;
-            }
-        }
-
-        if(totalRemaps > 0){
-            ModUtil.LOGGER.info("Successfully remapped "+workedRemaps+" out of "+totalRemaps+" blocks and items to match the 1.11 naming conventions.");
-        }
     }
 }

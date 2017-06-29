@@ -191,16 +191,8 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
 
     protected boolean tryUseItemOnTank(EntityPlayer player, EnumHand hand, FluidTank tank){
         ItemStack heldItem = player.getHeldItem(hand);
+        return StackUtil.isValid(heldItem) && FluidUtil.interactWithFluidHandler(player, hand, tank);
 
-        if(StackUtil.isValid(heldItem)){
-            FluidActionResult result = FluidUtil.interactWithFluidHandler(heldItem, tank, player);
-            if(result.isSuccess()){
-                player.setHeldItem(hand, result.getResult());
-                return true;
-            }
-        }
-
-        return false;
     }
 
     @Override

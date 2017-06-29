@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
+import de.ellpeck.actuallyadditions.mod.RegistryHandler;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -21,11 +22,7 @@ public final class SoundHandler{
     public static SoundEvent reconstructor;
     public static SoundEvent crusher;
 
-    private static int size = 0;
-
     public static void init(){
-        size = SoundEvent.REGISTRY.getKeys().size();
-
         duhDuhDuhDuuuh = registerSound("duh_duh_duh_duuuh");
         coffeeMachine = registerSound("coffee_machine");
         reconstructor = registerSound("reconstructor");
@@ -36,9 +33,8 @@ public final class SoundHandler{
         ResourceLocation resLoc = new ResourceLocation(ModUtil.MOD_ID, name);
 
         SoundEvent event = new SoundEvent(resLoc);
-        SoundEvent.REGISTRY.register(size, resLoc, event);
-
-        size++;
+        event.setRegistryName(resLoc);
+        RegistryHandler.SOUNDS_TO_REGISTER.add(event);
         return event;
     }
 }

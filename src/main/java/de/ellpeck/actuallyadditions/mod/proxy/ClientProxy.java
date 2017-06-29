@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.proxy;
 
 
+import de.ellpeck.actuallyadditions.mod.ClientRegistryHandler;
 import de.ellpeck.actuallyadditions.mod.blocks.render.*;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
@@ -30,6 +31,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -37,42 +39,20 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ClientProxy implements IProxy{
 
     private static final List<Item> COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING = new ArrayList<Item>();
     private static final List<Block> COLOR_PRODIVIDING_BLOCKS_FOR_REGISTERING = new ArrayList<Block>();
-    private static final Map<ItemStack, ModelResourceLocation> MODEL_LOCATIONS_FOR_REGISTERING = new HashMap<ItemStack, ModelResourceLocation>();
 
     @Override
     public void preInit(FMLPreInitializationEvent event){
         ModUtil.LOGGER.info("PreInitializing ClientProxy...");
 
-        for(Map.Entry<ItemStack, ModelResourceLocation> entry : MODEL_LOCATIONS_FOR_REGISTERING.entrySet()){
-            ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), entry.getValue());
-        }
-
-        this.registerCustomFluidBlockRenderer(InitFluids.fluidCanolaOil);
-        this.registerCustomFluidBlockRenderer(InitFluids.fluidOil);
-        this.registerCustomFluidBlockRenderer(InitFluids.fluidCrystalOil);
-        this.registerCustomFluidBlockRenderer(InitFluids.fluidEmpoweredOil);
+        MinecraftForge.EVENT_BUS.register(new ClientRegistryHandler());
 
         InitEntities.initClient();
-    }
-
-    /**
-     * (Excerpted from Tinkers' Construct with permission, thanks guys!)
-     */
-    private void registerCustomFluidBlockRenderer(Fluid fluid){
-        Block block = fluid.getBlock();
-        Item item = Item.getItemFromBlock(block);
-        FluidStateMapper mapper = new FluidStateMapper(fluid);
-        ModelLoader.registerItemVariants(item);
-        ModelLoader.setCustomMeshDefinition(item, mapper);
-        ModelLoader.setCustomStateMapper(block, mapper);
     }
 
     @Override
@@ -95,8 +75,6 @@ public class ClientProxy implements IProxy{
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayItem.class, laser);
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayItemWhitelist.class, laser);
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayFluids.class, laser);
-
-        //VillagerRegistry.INSTANCE().registerVillagerSkin(ConfigIntValues.JAM_VILLAGER_ID.getValue(), new ResourceLocation(ModUtil.MOD_ID, "textures/entity/villager/jamVillager.png"));
 
         for(Item item : COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING){
             if(item instanceof IColorProvidingItem){
@@ -123,7 +101,7 @@ public class ClientProxy implements IProxy{
 
     @Override
     public void addRenderRegister(ItemStack stack, ResourceLocation location, String variant){
-        MODEL_LOCATIONS_FOR_REGISTERING.put(stack, new ModelResourceLocation(location, variant));
+        ClientRegistryHandler.MODEL_LOCATIONS_FOR_REGISTERING.put(stack, new ModelResourceLocation(location, variant));
     }
 
     @Override

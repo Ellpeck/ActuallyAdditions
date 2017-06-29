@@ -55,7 +55,6 @@ public final class InitVillager{
         MapGenStructureIO.registerStructureComponent(VillageComponentEngineerHouse.class, ModUtil.MOD_ID+":engineerHouseStructure");
 
         engineerProfession = new VillagerProfession(ModUtil.MOD_ID+":engineer", ModUtil.MOD_ID+":textures/entity/villager/engineer_villager.png", ModUtil.MOD_ID+":textures/entity/villager/engineer_villager_zombie.png");
-        VillagerRegistry.instance().register(engineerProfession);
 
         VillagerCareer crystallizer = new VillagerCareer(engineerProfession, ModUtil.MOD_ID+".crystallizer");
         crystallizer.addTrade(1,
@@ -94,7 +93,6 @@ public final class InitVillager{
 
     private static void initJamVillagePart(){
         jamProfession = new VillagerProfession(ModUtil.MOD_ID+":jamGuy", ModUtil.MOD_ID+":textures/entity/villager/jam_villager.png", ModUtil.MOD_ID+":textures/entity/villager/jam_villager_zombie.png");
-        VillagerRegistry.instance().register(jamProfession);
 
         VillagerCareer career = new VillagerCareer(jamProfession, ModUtil.MOD_ID+".jammer");
         career.addTrade(1,

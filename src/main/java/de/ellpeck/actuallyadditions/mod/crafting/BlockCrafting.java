@@ -104,7 +104,6 @@ public final class BlockCrafting{
         RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockFluidPlacer), new ItemStack(InitBlocks.blockFluidPlacer));
         RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockFluidCollector), new ItemStack(InitBlocks.blockFluidCollector));
 
-
         //Battery Box
         RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockBatteryBox),
                 new ItemStack(InitBlocks.blockEnergizer),

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.RegistryHandler;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.compat.IMCHandler;
@@ -23,16 +24,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.*;
 
-
-//TODO Remove the whole registry name mapping thing once the 1.11 fading phase is over
 public final class ItemUtil{
-
-    private static final Map<String, String> UNDERSCORELESS_TO_UNDERSCORED_NAMES = new HashMap<String, String>();
 
     public static Item getItemFromName(String name){
         ResourceLocation resLoc = new ResourceLocation(name);
@@ -46,10 +41,10 @@ public final class ItemUtil{
         block.setUnlocalizedName(ModUtil.MOD_ID+"."+name);
 
         block.setRegistryName(ModUtil.MOD_ID, name);
-        GameRegistry.register(block);
+        RegistryHandler.BLOCKS_TO_REGISTER.add(block);
 
         itemBlock.setRegistryName(block.getRegistryName());
-        GameRegistry.register(itemBlock);
+        RegistryHandler.ITEMS_TO_REGISTER.add(itemBlock);
 
         block.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
 
@@ -58,15 +53,13 @@ public final class ItemUtil{
         if(block instanceof IColorProvidingBlock){
             ActuallyAdditions.proxy.addColoredBlock(block);
         }
-
-        addUnderscoreNameToMapUnderscorelessName(block.getRegistryName());
     }
 
     public static void registerItem(Item item, String name, boolean addTab){
         item.setUnlocalizedName(ModUtil.MOD_ID+"."+name);
 
         item.setRegistryName(ModUtil.MOD_ID, name);
-        GameRegistry.register(item);
+        RegistryHandler.ITEMS_TO_REGISTER.add(item);
 
         item.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
 
@@ -75,37 +68,6 @@ public final class ItemUtil{
         if(item instanceof IColorProvidingItem){
             ActuallyAdditions.proxy.addColoredItem(item);
         }
-
-        addUnderscoreNameToMapUnderscorelessName(item.getRegistryName());
-    }
-
-    private static void addUnderscoreNameToMapUnderscorelessName(ResourceLocation name){
-        String underscoreless = name.toString().replaceAll("_", "");
-        UNDERSCORELESS_TO_UNDERSCORED_NAMES.put(underscoreless, name.toString());
-    }
-
-    public static boolean remapName(FMLMissingMappingsEvent.MissingMapping mapping){
-        if(mapping != null && mapping.name != null){
-            if(mapping.name.toLowerCase(Locale.ROOT).contains("distributor")){
-                mapping.ignore();
-                return true;
-            }
-
-            if(UNDERSCORELESS_TO_UNDERSCORED_NAMES.containsKey(mapping.name)){
-                String newName = UNDERSCORELESS_TO_UNDERSCORED_NAMES.get(mapping.name);
-                ResourceLocation newResLoc = new ResourceLocation(newName);
-
-                if(Block.REGISTRY.containsKey(newResLoc) && mapping.type == GameRegistry.Type.BLOCK){
-                    mapping.remap(Block.REGISTRY.getObject(newResLoc));
-                    return true;
-                }
-                else if(Item.REGISTRY.containsKey(newResLoc) && mapping.type == GameRegistry.Type.ITEM){
-                    mapping.remap(Item.REGISTRY.getObject(newResLoc));
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     public static boolean contains(ItemStack[] array, ItemStack stack, boolean checkWildcard){
