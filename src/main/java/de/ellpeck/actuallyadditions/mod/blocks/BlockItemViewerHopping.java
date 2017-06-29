@@ -76,8 +76,8 @@ public class BlockItemViewerHopping extends BlockItemViewer{
         return this.getDefaultState().withProperty(FACING, opp == EnumFacing.UP ? EnumFacing.DOWN : opp);
     }
 
-    @Override
-    public boolean isFullyOpaque(IBlockState state){
+    @Override //was isFullyOpaque, not sure if correct change.
+    public boolean isNormalCube(IBlockState state){
         return true;
     }
 

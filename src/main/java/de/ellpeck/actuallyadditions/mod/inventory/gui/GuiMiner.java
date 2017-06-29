@@ -49,7 +49,7 @@ public class GuiMiner extends GuiWtfMojang{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.miner);
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.miner);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class GuiMiner extends GuiWtfMojang{
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         String mining = this.miner.onlyMineOres ? "Only Mining Ores" : "Mining Everything";
-        this.fontRendererObj.drawString(mining, this.guiLeft+this.xSize/2-this.fontRendererObj.getStringWidth(mining)/2, this.guiTop+8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRenderer.drawString(mining, this.guiLeft+this.xSize/2-this.fontRenderer.getStringWidth(mining)/2, this.guiTop+8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
     }
 
     @Override

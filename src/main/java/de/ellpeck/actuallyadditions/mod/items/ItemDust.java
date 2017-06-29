@@ -52,7 +52,7 @@ public class ItemDust extends ItemBase implements IColorProvidingItem{
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList list){
-        if(this.func_194125_a(tab)){
+        if(this.isInCreativeTab(tab)){
             for(int j = 0; j < ALL_DUSTS.length; j++){
                 list.add(new ItemStack(this, 1, j));
             }

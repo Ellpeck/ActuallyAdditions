@@ -120,11 +120,11 @@ public final class AssetUtil{
         GlStateManager.scale(scale, scale, scale);
 
         Minecraft mc = Minecraft.getMinecraft();
-        boolean flagBefore = mc.fontRendererObj.getUnicodeFlag();
-        mc.fontRendererObj.setUnicodeFlag(false);
+        boolean flagBefore = mc.fontRenderer.getUnicodeFlag();
+        mc.fontRenderer.setUnicodeFlag(false);
         Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(stack, 0, 0);
-        Minecraft.getMinecraft().getRenderItem().renderItemOverlayIntoGUI(mc.fontRendererObj, stack, 0, 0, null);
-        mc.fontRendererObj.setUnicodeFlag(flagBefore);
+        Minecraft.getMinecraft().getRenderItem().renderItemOverlayIntoGUI(mc.fontRenderer, stack, 0, 0, null);
+        mc.fontRenderer.setUnicodeFlag(flagBefore);
 
         RenderHelper.disableStandardItemLighting();
         GlStateManager.popMatrix();
@@ -162,7 +162,7 @@ public final class AssetUtil{
 
     @SideOnly(Side.CLIENT)
     public static void renderNameTag(String tag, double x, double y, double z){
-        FontRenderer fontrenderer = Minecraft.getMinecraft().fontRendererObj;
+        FontRenderer fontrenderer = Minecraft.getMinecraft().fontRenderer;
         float f = 1.6F;
         float f1 = 0.016666668F*f;
         GlStateManager.pushMatrix();
@@ -245,8 +245,8 @@ public final class AssetUtil{
         Vec3d combinedVec = vec2.subtract(vec1);
 
         double rot = rotationTime > 0 ? (360D*((world.getTotalWorldTime()%rotationTime)/rotationTime)) : 0;
-        double pitch = Math.atan2(combinedVec.yCoord, Math.sqrt(combinedVec.xCoord*combinedVec.xCoord+combinedVec.zCoord*combinedVec.zCoord));
-        double yaw = Math.atan2(-combinedVec.zCoord, combinedVec.xCoord);
+        double pitch = Math.atan2(combinedVec.y, Math.sqrt(combinedVec.x*combinedVec.x+combinedVec.z*combinedVec.z));
+        double yaw = Math.atan2(-combinedVec.z, combinedVec.x);
 
         double length = combinedVec.lengthVector();
 

@@ -127,7 +127,7 @@ public class GuiMainPage extends GuiBooklet{
         String usedQuote = QUOTES[this.mc.world.rand.nextInt(QUOTES.length)];
         String[] quoteSplit = usedQuote.split("@");
         if(quoteSplit.length == 2){
-            this.quote = this.fontRendererObj.listFormattedStringToWidth(quoteSplit[0], 120);
+            this.quote = this.fontRenderer.listFormattedStringToWidth(quoteSplit[0], 120);
             this.quoteGuy = quoteSplit[1];
         }
 
@@ -198,13 +198,13 @@ public class GuiMainPage extends GuiBooklet{
 
         List<String> configText = new ArrayList<String>();
         configText.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".configButton.name"));
-        configText.addAll(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID+".configButton.desc", ModUtil.NAME).replaceAll("\\\\n", "\n"), 200));
+        configText.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID+".configButton.desc", ModUtil.NAME).replaceAll("\\\\n", "\n"), 200));
         this.configButton = new TexturedButton(RES_LOC_GADGETS, -388, this.guiLeft+16, this.guiTop+this.ySize-30, 188, 14, 16, 16, configText);
         this.buttonList.add(this.configButton);
 
         List<String> achievementText = new ArrayList<String>();
         achievementText.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".achievementButton.name"));
-        achievementText.addAll(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID+".achievementButton.desc", ModUtil.NAME), 200));
+        achievementText.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID+".achievementButton.desc", ModUtil.NAME), 200));
         //this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
         //this.buttonList.add(this.achievementButton);
 
@@ -278,12 +278,12 @@ public class GuiMainPage extends GuiBooklet{
         super.drawScreenPre(mouseX, mouseY, partialTicks);
 
         String strg = TextFormatting.DARK_GREEN+StringUtil.localize(this.bookletName);
-        this.fontRendererObj.drawString(strg, this.guiLeft+72-this.fontRendererObj.getStringWidth(strg)/2-3, this.guiTop+19, 0);
+        this.fontRenderer.drawString(strg, this.guiLeft+72-this.fontRenderer.getStringWidth(strg)/2-3, this.guiTop+19, 0);
         strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.manualName.2");
-        this.fontRendererObj.drawString(strg, this.guiLeft+72-this.fontRendererObj.getStringWidth(strg)/2-3, this.guiTop+19+this.fontRendererObj.FONT_HEIGHT, 0);
+        this.fontRenderer.drawString(strg, this.guiLeft+72-this.fontRenderer.getStringWidth(strg)/2-3, this.guiTop+19+this.fontRenderer.FONT_HEIGHT, 0);
 
         strg = TextFormatting.GOLD+TextFormatting.ITALIC.toString()+this.bookletEdition;
-        this.fontRendererObj.drawString(strg, this.guiLeft+72-this.fontRendererObj.getStringWidth(strg)/2-3, this.guiTop+40, 0);
+        this.fontRenderer.drawString(strg, this.guiLeft+72-this.fontRenderer.getStringWidth(strg)/2-3, this.guiTop+40, 0);
 
         if(this.showTutorial){
             String text = TextFormatting.BLUE+"It looks like this is the first time you are using this manual. \nIf you click the button below, some useful bookmarks will be stored at the bottom of the GUI. You should definitely check them out to get started with "+ModUtil.NAME+"! \nIf you don't want this, shift-click the button.";

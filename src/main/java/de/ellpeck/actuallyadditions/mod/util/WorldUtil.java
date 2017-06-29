@@ -199,7 +199,7 @@ public final class WorldUtil{
     /**
      * Checks if a given Block with a given Meta is present in given Positions
      *
-     * @param positions The Positions, an array of {xCoord, yCoord, zCoord} arrays containing Positions
+     * @param positions The Positions, an array of {x, y, z} arrays containing Positions
      * @param block     The Block
      * @param meta      The Meta
      * @param world     The World

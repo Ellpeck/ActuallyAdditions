@@ -82,7 +82,7 @@ public class GuiBag extends GuiWtfMojang{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, StringUtil.localize("container."+ModUtil.MOD_ID+"."+(this.isVoid ? "voidBag" : "bag")+".name"));
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container."+ModUtil.MOD_ID+"."+(this.isVoid ? "voidBag" : "bag")+".name"));
     }
 
     @Override
@@ -104,8 +104,8 @@ public class GuiBag extends GuiWtfMojang{
         if(this.buttonAutoInsert.isMouseOver()){
             List<String> text = new ArrayList<String>();
             text.add(TextFormatting.BOLD+"Auto-Insert "+(this.container.autoInsert ? "On" : "Off"));
-            text.addAll(this.mc.fontRendererObj.listFormattedStringToWidth("Turn this on to make items that get picked up automatically go into the bag.", 200));
-            text.addAll(this.mc.fontRendererObj.listFormattedStringToWidth(TextFormatting.GRAY+""+TextFormatting.ITALIC+"Note that this WON'T work when you are holding the bag in your hand.", 200));
+            text.addAll(this.mc.fontRenderer.listFormattedStringToWidth("Turn this on to make items that get picked up automatically go into the bag.", 200));
+            text.addAll(this.mc.fontRenderer.listFormattedStringToWidth(TextFormatting.GRAY+""+TextFormatting.ITALIC+"Note that this WON'T work when you are holding the bag in your hand.", 200));
             this.drawHoveringText(text, mouseX, mouseY);
         }
     }

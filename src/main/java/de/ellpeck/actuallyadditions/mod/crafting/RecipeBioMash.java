@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemKnife;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
+import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHelper;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -29,7 +29,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 public class RecipeBioMash extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe{
 
     public RecipeBioMash(ResourceLocation location){
-        RecipeHandler.addRecipe(location, this);
+        RecipeHelper.addRecipe(location.getResourcePath(), this);
     }
 
     @Override
@@ -86,8 +86,8 @@ public class RecipeBioMash extends IForgeRegistryEntry.Impl<IRecipe> implements 
     }
 
     @Override
-    public boolean func_194133_a(int p_194133_1_, int p_194133_2_){
-        return false;
+    public boolean canFit(int width, int height){
+        return width*height>5;
     }
 
     @Override

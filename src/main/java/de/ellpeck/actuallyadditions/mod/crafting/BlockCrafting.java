@@ -569,7 +569,6 @@ public final class BlockCrafting{
                 'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
                 'R', new ItemStack(Items.REPEATER),
                 'Q', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
-                'L', new ItemStack(Items.LAVA_BUCKET),
                 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                 'B', new ItemStack(Blocks.IRON_BARS));
         recipeHeatCollector = RecipeUtil.lastIRecipe();
@@ -608,7 +607,6 @@ public final class BlockCrafting{
                 'C', "cobblestone",
                 'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                 'Q', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
-                'P', new ItemStack(Blocks.PISTON),
                 'F', new ItemStack(Items.FLINT));
         recipeCrusher = RecipeUtil.lastIRecipe();
 
@@ -618,8 +616,7 @@ public final class BlockCrafting{
                 'C', "cobblestone",
                 'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()),
                 'R', InitBlocks.blockGrinder,
-                'F', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
-                'P', new ItemStack(Blocks.PISTON));
+                'F', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()));
         recipeDoubleCrusher = RecipeUtil.lastIRecipe();
 
         //Double Furnace

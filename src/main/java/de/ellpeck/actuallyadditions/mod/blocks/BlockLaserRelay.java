@@ -257,7 +257,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                         TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
 
                         String strg = relay.getExtraDisplayString();
-                        minecraft.fontRendererObj.drawStringWithShadow(strg, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRenderer.drawStringWithShadow(strg, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
                         String expl;
                         if(compass){
@@ -267,7 +267,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                             expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".laserRelay.mode.noCompasss", StringUtil.localize(ConfigValues.itemCompassConfigurator.getUnlocalizedName()+".name"));
                         }
 
-                        StringUtil.drawSplitString(minecraft.fontRendererObj, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        StringUtil.drawSplitString(minecraft.fontRenderer, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);
                     }
                 }
             }

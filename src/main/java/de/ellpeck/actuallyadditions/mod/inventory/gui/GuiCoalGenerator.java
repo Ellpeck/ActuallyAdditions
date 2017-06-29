@@ -48,7 +48,7 @@ public class GuiCoalGenerator extends GuiWtfMojang{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.generator);
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.generator);
     }
 
     @Override

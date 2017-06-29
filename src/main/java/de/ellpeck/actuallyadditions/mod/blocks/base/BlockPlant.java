@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.render.IHasModel;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockCrops;
@@ -30,7 +31,7 @@ import net.minecraftforge.common.EnumPlantType;
 import java.util.List;
 import java.util.Random;
 
-public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarity{
+public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarity, IHasModel{
 
     private final String name;
     private final int minDropAmount;
@@ -54,8 +55,6 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
 
     private void register(){
         ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
-
-        this.registerRendering();
     }
 
     protected String getBaseName(){
@@ -70,7 +69,7 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
         return false;
     }
 
-    protected void registerRendering(){
+    public void registerRendering(){
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 

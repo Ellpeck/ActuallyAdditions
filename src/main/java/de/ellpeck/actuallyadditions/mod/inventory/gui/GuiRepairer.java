@@ -48,7 +48,7 @@ public class GuiRepairer extends GuiWtfMojang{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileRepairer);
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.tileRepairer);
     }
 
     @Override

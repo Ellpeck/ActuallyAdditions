@@ -27,12 +27,12 @@ public class TrialsButton extends TexturedButton{
     }
 
     @Override
-    public void func_191745_a(Minecraft minecraft, int x, int y, float f){
-        super.func_191745_a(minecraft, x, y, f);
+    public void drawButton(Minecraft minecraft, int x, int y, float f){
+        super.drawButton(minecraft, x, y, f);
 
         if(this.visible){
             if(this.hovered || this.isTrials){
-                this.drawCenteredString(minecraft.fontRendererObj, StringUtil.localize("booklet."+ModUtil.MOD_ID+".trialsButton.name"), this.xPosition+(this.width-8)/2, this.yPosition+(this.height-8)/2, 14737632);
+                this.drawCenteredString(minecraft.fontRenderer, StringUtil.localize("booklet."+ModUtil.MOD_ID+".trialsButton.name"), this.x+(this.width-8)/2, this.y+(this.height-8)/2, 14737632);
             }
         }
     }

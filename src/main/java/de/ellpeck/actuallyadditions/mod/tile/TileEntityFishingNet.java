@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
@@ -22,8 +24,6 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-
-import java.util.List;
 
 public class TileEntityFishingNet extends TileEntityBase{
 

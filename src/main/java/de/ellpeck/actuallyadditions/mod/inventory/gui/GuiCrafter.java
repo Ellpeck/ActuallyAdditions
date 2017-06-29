@@ -34,7 +34,7 @@ public class GuiCrafter extends GuiWtfMojang{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, StringUtil.localize("container."+ModUtil.MOD_ID+".crafting.name"));
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container."+ModUtil.MOD_ID+".crafting.name"));
     }
 
     @Override

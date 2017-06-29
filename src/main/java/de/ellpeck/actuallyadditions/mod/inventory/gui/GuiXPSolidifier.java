@@ -64,7 +64,7 @@ public class GuiXPSolidifier extends GuiWtfMojang{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.solidifier);
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.solidifier);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class GuiXPSolidifier extends GuiWtfMojang{
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        this.drawCenteredString(this.fontRendererObj, Integer.toString(this.solidifier.amount), this.guiLeft+88, this.guiTop+30, StringUtil.DECIMAL_COLOR_WHITE);
+        this.drawCenteredString(this.fontRenderer, Integer.toString(this.solidifier.amount), this.guiLeft+88, this.guiTop+30, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
     @Override

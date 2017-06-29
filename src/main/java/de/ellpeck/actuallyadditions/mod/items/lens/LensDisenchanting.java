@@ -43,7 +43,7 @@ public class LensDisenchanting extends Lens{
                 EntityItem toDisenchant = null;
                 for(EntityItem item : items){
                     if(item != null && !item.isDead){
-                        ItemStack stack = item.getEntityItem();
+                        ItemStack stack = item.getItem();
                         if(StackUtil.isValid(stack) && StackUtil.getStackSize(stack) == 1){
                             Item stackItem = stack.getItem();
                             if(stackItem == Items.BOOK || stackItem == Items.ENCHANTED_BOOK){
@@ -70,8 +70,8 @@ public class LensDisenchanting extends Lens{
                 }
 
                 if(book != null && toDisenchant != null){
-                    ItemStack disenchantStack = toDisenchant.getEntityItem();
-                    ItemStack bookStack = book.getEntityItem();
+                    ItemStack disenchantStack = toDisenchant.getItem();
+                    ItemStack bookStack = book.getItem();
 
                     Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(disenchantStack);
                     if(enchants != null && !enchants.isEmpty()){

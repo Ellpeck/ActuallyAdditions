@@ -116,18 +116,18 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
                         String strg3 = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.hudDisplay.open");
 
                         AssetUtil.renderStackToGui(StackUtil.isValid(page.getChapter().getDisplayItemStack()) ? page.getChapter().getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, height+41, 1F);
-                        minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg1, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg1)/2, height+20, StringUtil.DECIMAL_COLOR_WHITE);
-                        minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg2, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg2)/2, height+30, StringUtil.DECIMAL_COLOR_WHITE);
-                        minecraft.fontRendererObj.drawStringWithShadow(TextFormatting.GOLD+strg3, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRenderer.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg1, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg1)/2, height+20, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRenderer.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg2, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg2)/2, height+30, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRenderer.drawStringWithShadow(TextFormatting.GOLD+strg3, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                     else{
                         String strg1 = TextFormatting.DARK_RED+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.hudDisplay.noInfo");
                         String strg2 = TextFormatting.DARK_GREEN+""+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.hudDisplay.noInfo.desc.1");
                         String strg3 = TextFormatting.DARK_GREEN+""+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.hudDisplay.noInfo.desc.2");
 
-                        minecraft.fontRendererObj.drawStringWithShadow(strg1, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg1)/2, height+30, StringUtil.DECIMAL_COLOR_WHITE);
-                        minecraft.fontRendererObj.drawStringWithShadow(strg2, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg2)/2, height+50, StringUtil.DECIMAL_COLOR_WHITE);
-                        minecraft.fontRendererObj.drawStringWithShadow(strg3, resolution.getScaledWidth()/2-minecraft.fontRendererObj.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRenderer.drawStringWithShadow(strg1, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg1)/2, height+30, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRenderer.drawStringWithShadow(strg2, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg2)/2, height+50, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.fontRenderer.drawStringWithShadow(strg3, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                 }
             }

@@ -105,12 +105,12 @@ public class ContainerBag extends Container implements IButtonReactor{
 
         if(this.filter.needsUpdateSend() || this.autoInsert != this.oldAutoInsert){
             for(IContainerListener listener : this.listeners){
-                listener.sendProgressBarUpdate(this, 0, this.filter.isWhitelist ? 1 : 0);
-                listener.sendProgressBarUpdate(this, 1, this.filter.respectMeta ? 1 : 0);
-                listener.sendProgressBarUpdate(this, 2, this.filter.respectNBT ? 1 : 0);
-                listener.sendProgressBarUpdate(this, 3, this.filter.respectOredict);
-                listener.sendProgressBarUpdate(this, 4, this.autoInsert ? 1 : 0);
-                listener.sendProgressBarUpdate(this, 5, this.filter.respectMod ? 1 : 0);
+                listener.sendWindowProperty(this, 0, this.filter.isWhitelist ? 1 : 0);
+                listener.sendWindowProperty(this, 1, this.filter.respectMeta ? 1 : 0);
+                listener.sendWindowProperty(this, 2, this.filter.respectNBT ? 1 : 0);
+                listener.sendWindowProperty(this, 3, this.filter.respectOredict);
+                listener.sendWindowProperty(this, 4, this.autoInsert ? 1 : 0);
+                listener.sendWindowProperty(this, 5, this.filter.respectMod ? 1 : 0);
             }
             this.filter.updateLasts();
             this.oldAutoInsert = this.autoInsert;

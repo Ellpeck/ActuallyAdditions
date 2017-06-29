@@ -10,6 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
@@ -30,10 +35,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ItemCoffee extends ItemFoodBase{
 

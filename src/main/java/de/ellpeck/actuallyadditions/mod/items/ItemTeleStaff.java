@@ -39,9 +39,9 @@ public class ItemTeleStaff extends ItemEnergy{
             if(pos != null && (pos.typeOfHit == RayTraceResult.Type.BLOCK || player.rotationPitch >= -5)){
                 int side = pos.sideHit.ordinal();
                 if(side != -1){
-                    double x = pos.hitVec.xCoord-(side == 4 ? 0.5 : 0)+(side == 5 ? 0.5 : 0);
-                    double y = pos.hitVec.yCoord-(side == 0 ? 2.0 : 0)+(side == 1 ? 0.5 : 0);
-                    double z = pos.hitVec.zCoord-(side == 2 ? 0.5 : 0)+(side == 3 ? 0.5 : 0);
+                    double x = pos.hitVec.x-(side == 4 ? 0.5 : 0)+(side == 5 ? 0.5 : 0);
+                    double y = pos.hitVec.y-(side == 0 ? 2.0 : 0)+(side == 1 ? 0.5 : 0);
+                    double z = pos.hitVec.z-(side == 2 ? 0.5 : 0)+(side == 3 ? 0.5 : 0);
                     int baseUse = 200;
                     int use = baseUse+(int)(baseUse*pos.hitVec.distanceTo(new Vec3d(player.posX, player.posY+(player.getEyeHeight()-player.getDefaultEyeHeight()), player.posZ)));
                     if(this.getEnergyStored(stack) >= use){

@@ -37,7 +37,7 @@ public class RenderSpecial{
 
         Vec3d currentPos = Minecraft.getMinecraft().player.getPositionEyes(partialTicks);
         Vec3d playerPos = player.getPositionEyes(partialTicks);
-        GlStateManager.translate(playerPos.xCoord-currentPos.xCoord, playerPos.yCoord-currentPos.yCoord, playerPos.zCoord-currentPos.zCoord);
+        GlStateManager.translate(playerPos.x-currentPos.x, playerPos.y-currentPos.y, playerPos.z-currentPos.z);
         GlStateManager.translate(0D, 2.575D-(player.isSneaking() ? 0.125D : 0D), 0D);
 
         this.render();

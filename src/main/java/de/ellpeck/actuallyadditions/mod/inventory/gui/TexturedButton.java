@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,9 +20,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class TexturedButton extends GuiButton{
@@ -42,11 +42,11 @@ public class TexturedButton extends GuiButton{
     }
 
     @Override
-    public void func_191745_a(Minecraft minecraft, int x, int y, float f){
+    public void drawButton(Minecraft minecraft, int x, int y, float f){
         if(this.visible){
             minecraft.getTextureManager().bindTexture(this.resLoc);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
+            this.hovered = x >= this.x && y >= this.y && x < this.x+this.width && y < this.y+this.height;
             int k = this.getHoverState(this.hovered);
             if(k == 0){
                 k = 1;
@@ -55,7 +55,7 @@ public class TexturedButton extends GuiButton{
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GlStateManager.blendFunc(770, 771);
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, this.texturePosX, this.texturePosY-this.height+k*this.height, this.width, this.height);
+            this.drawTexturedModalRect(this.x, this.y, this.texturePosX, this.texturePosY-this.height+k*this.height, this.width, this.height);
             this.mouseDragged(minecraft, x, y);
         }
     }
@@ -63,7 +63,7 @@ public class TexturedButton extends GuiButton{
     public void drawHover(int x, int y){
         if(this.isMouseOver()){
             Minecraft mc = Minecraft.getMinecraft();
-            GuiUtils.drawHoveringText(this.textList, x, y, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
+            GuiUtils.drawHoveringText(this.textList, x, y, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
     }
 }

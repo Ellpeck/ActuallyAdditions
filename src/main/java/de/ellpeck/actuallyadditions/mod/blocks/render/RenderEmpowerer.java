@@ -31,7 +31,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderEmpowerer extends TileEntitySpecialRenderer{
 
     @Override
-    public void func_192841_a(TileEntity tile, double x, double y, double z, float par5, int par6, float f){
+    public void render(TileEntity tile, double x, double y, double z, float par5, int par6, float f){
         if(!(tile instanceof TileEntityEmpowerer)){
             return;
         }

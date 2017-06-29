@@ -53,7 +53,7 @@ public abstract class RecipeWrapperWithButton extends BlankRecipeWrapper{
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
-        this.theButton.func_191745_a(minecraft, mouseX, mouseY, 0F);
+        this.theButton.drawButton(minecraft, mouseX, mouseY, 0F);
     }
 
     @Nullable

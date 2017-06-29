@@ -12,13 +12,14 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.render.IHasModel;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class BlockStair extends BlockStairs implements ItemBlockBase.ICustomRarity{
+public class BlockStair extends BlockStairs implements ItemBlockBase.ICustomRarity, IHasModel{
 
     private final String name;
 
@@ -36,8 +37,6 @@ public class BlockStair extends BlockStairs implements ItemBlockBase.ICustomRari
 
     private void register(){
         ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
-
-        this.registerRendering();
     }
 
     protected String getBaseName(){
@@ -52,7 +51,7 @@ public class BlockStair extends BlockStairs implements ItemBlockBase.ICustomRari
         return true;
     }
 
-    protected void registerRendering(){
+    public void registerRendering(){
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 

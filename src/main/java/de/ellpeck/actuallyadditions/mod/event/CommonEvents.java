@@ -67,7 +67,7 @@ public class CommonEvents{
         EntityPlayer player = event.getEntityPlayer();
         EntityItem item = event.getItem();
         if(item != null && !item.isDead){
-            ItemStack stack = item.getEntityItem();
+            ItemStack stack = item.getItem();
             if(StackUtil.isValid(stack)){
                 for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                     if(i != player.inventory.currentItem){
@@ -130,7 +130,7 @@ public class CommonEvents{
                 }
             }
 
-            item.setEntityItemStack(stack);
+            item.setItem(stack);
         }
     }
 
@@ -149,7 +149,7 @@ public class CommonEvents{
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
-        if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
+        if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof EntityPlayer){
             //Drop Cobwebs from Spiders
             if(ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof EntitySpider){
                 if(event.getEntityLiving().world.rand.nextInt(20) <= event.getLootingLevel()*2){
@@ -198,7 +198,7 @@ public class CommonEvents{
 
     @SubscribeEvent
     public void onPickupEvent(EntityItemPickupEvent event){
-        //checkAchievements(event.getItem().getEntityItem(), event.getEntityPlayer(), InitAchievements.Type.PICK_UP);
+        //checkAchievements(event.getItem().getItem(), event.getEntityPlayer(), InitAchievements.Type.PICK_UP);
     }
 
     @SubscribeEvent

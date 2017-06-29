@@ -97,14 +97,14 @@ public class FluidDisplay extends Gui{
         }
 
         if(this.drawTextNextTo){
-            this.drawString(mc.fontRendererObj, this.getOverlayText(), barX+25, barY+78, StringUtil.DECIMAL_COLOR_WHITE);
+            this.drawString(mc.fontRenderer, this.getOverlayText(), barX+25, barY+78, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 
     public void drawOverlay(int mouseX, int mouseY){
         if(mouseX >= this.x && mouseY >= this.y && mouseX < this.x+(this.outline ? 26 : 18) && mouseY < this.y+(this.outline ? 93 : 85)){
             Minecraft mc = Minecraft.getMinecraft();
-            GuiUtils.drawHoveringText(Collections.singletonList(this.getOverlayText()), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
+            GuiUtils.drawHoveringText(Collections.singletonList(this.getOverlayText()), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
     }
 

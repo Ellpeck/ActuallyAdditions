@@ -55,10 +55,10 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IH
         if(factory != null){
             int state = factory.isMultiblock();
             if(state == TileEntityLavaFactoryController.NOT_MULTI){
-                StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localize("tooltip."+ModUtil.MOD_ID+".factory.notPart.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                StringUtil.drawSplitString(minecraft.fontRenderer, StringUtil.localize("tooltip."+ModUtil.MOD_ID+".factory.notPart.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
             }
             else if(state == TileEntityLavaFactoryController.HAS_AIR || state == TileEntityLavaFactoryController.HAS_LAVA){
-                StringUtil.drawSplitString(minecraft.fontRendererObj, StringUtil.localize("tooltip."+ModUtil.MOD_ID+".factory.works.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                StringUtil.drawSplitString(minecraft.fontRenderer, StringUtil.localize("tooltip."+ModUtil.MOD_ID+".factory.works.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
             }
         }
     }

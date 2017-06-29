@@ -71,7 +71,7 @@ public class GuiFireworkBox extends GuiContainer implements GuiResponder{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tile);
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.tile);
     }
 
     @Override
