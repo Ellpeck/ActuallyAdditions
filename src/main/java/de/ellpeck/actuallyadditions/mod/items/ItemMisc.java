@@ -57,7 +57,7 @@ public class ItemMisc extends ItemBase{
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList list){
-        if(this.func_194125_a(tab)){
+        if(this.isInCreativeTab(tab)){
             for(int j = 0; j < ALL_MISC_ITEMS.length; j++){
                 if(j != TheMiscItems.YOUTUBE_ICON.ordinal()){
                     list.add(new ItemStack(this, 1, j));
@@ -77,7 +77,7 @@ public class ItemMisc extends ItemBase{
     @Override
     public boolean onEntityItemUpdate(EntityItem entity){
         if(!entity.world.isRemote){
-            ItemStack stack = entity.getEntityItem();
+            ItemStack stack = entity.getItem();
             if(stack != null){
                 boolean isEmpowered = stack.getItemDamage() == TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal();
                 if(stack.getItemDamage() == TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal() || isEmpowered){

@@ -60,9 +60,9 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
         if(type != NBTType.SAVE_BLOCK){
             compound.setInteger("Range", this.range);
             if(this.boundPosition != null){
-                compound.setInteger("XCoordOfTileStored", this.boundPosition.getX());
-                compound.setInteger("YCoordOfTileStored", this.boundPosition.getY());
-                compound.setInteger("ZCoordOfTileStored", this.boundPosition.getZ());
+                compound.setInteger("xOfTileStored", this.boundPosition.getX());
+                compound.setInteger("yOfTileStored", this.boundPosition.getY());
+                compound.setInteger("zOfTileStored", this.boundPosition.getZ());
             }
         }
     }
@@ -71,9 +71,9 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
         super.readSyncableNBT(compound, type);
         if(type != NBTType.SAVE_BLOCK){
-            int x = compound.getInteger("XCoordOfTileStored");
-            int y = compound.getInteger("YCoordOfTileStored");
-            int z = compound.getInteger("ZCoordOfTileStored");
+            int x = compound.getInteger("xOfTileStored");
+            int y = compound.getInteger("yOfTileStored");
+            int z = compound.getInteger("zOfTileStored");
             this.range = compound.getInteger("Range");
             if(!(x == 0 && y == 0 && z == 0)){
                 this.boundPosition = new BlockPos(x, y, z);

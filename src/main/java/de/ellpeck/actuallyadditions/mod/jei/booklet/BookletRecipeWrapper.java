@@ -47,20 +47,20 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
-        List header = minecraft.fontRendererObj.listFormattedStringToWidth(StringUtil.localize("container.nei."+ModUtil.MOD_ID+".booklet.header").replaceAll("<item>", TextFormatting.BLUE+"").replaceAll("<r>", TextFormatting.BLACK+""), 150);
+        List header = minecraft.fontRenderer.listFormattedStringToWidth(StringUtil.localize("container.nei."+ModUtil.MOD_ID+".booklet.header").replaceAll("<item>", TextFormatting.BLUE+"").replaceAll("<r>", TextFormatting.BLACK+""), 150);
         for(int i = 0; i < header.size(); i++){
-            minecraft.fontRendererObj.drawString((String)header.get(i), 0, 17+i*(minecraft.fontRendererObj.FONT_HEIGHT+1), 0, false);
+            minecraft.fontRenderer.drawString((String)header.get(i), 0, 17+i*(minecraft.fontRenderer.FONT_HEIGHT+1), 0, false);
         }
 
         int maxLines = 4;
         IBookletChapter chapter = this.thePage.getChapter();
         String aText = chapter.getAllPages()[0].getInfoText();
-        List text = minecraft.fontRendererObj.listFormattedStringToWidth(aText != null ? aText : TextFormatting.DARK_RED+StringUtil.localize("container.nei."+ModUtil.MOD_ID+".booklet.noText"), 150);
+        List text = minecraft.fontRenderer.listFormattedStringToWidth(aText != null ? aText : TextFormatting.DARK_RED+StringUtil.localize("container.nei."+ModUtil.MOD_ID+".booklet.noText"), 150);
         for(int i = 0; i < Math.min(maxLines, text.size()); i++){
-            minecraft.fontRendererObj.drawString(text.get(i)+(i == maxLines-1 && text.size() > maxLines ? TextFormatting.RESET+""+TextFormatting.BLACK+"..." : ""), 0, 16+25+i*(minecraft.fontRendererObj.FONT_HEIGHT+1), 0, false);
+            minecraft.fontRenderer.drawString(text.get(i)+(i == maxLines-1 && text.size() > maxLines ? TextFormatting.RESET+""+TextFormatting.BLACK+"..." : ""), 0, 16+25+i*(minecraft.fontRenderer.FONT_HEIGHT+1), 0, false);
         }
-        minecraft.fontRendererObj.drawString(TextFormatting.ITALIC+chapter.getLocalizedName(), 25, 85, 0, false);
-        minecraft.fontRendererObj.drawString(TextFormatting.ITALIC+"Page "+(chapter.getPageIndex(this.thePage)+1), 25, 95, 0, false);
+        minecraft.fontRenderer.drawString(TextFormatting.ITALIC+chapter.getLocalizedName(), 25, 85, 0, false);
+        minecraft.fontRenderer.drawString(TextFormatting.ITALIC+"Page "+(chapter.getPageIndex(this.thePage)+1), 25, 95, 0, false);
 
         super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);
     }

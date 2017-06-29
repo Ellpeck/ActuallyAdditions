@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
@@ -20,9 +23,6 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CrusherRecipeWrapper extends RecipeWrapperWithButton{
 
@@ -47,7 +47,7 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton{
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         if(StackUtil.isValid(this.theRecipe.outputTwoStack)){
-            minecraft.fontRendererObj.drawString(this.theRecipe.outputTwoChance+"%", 60, 60, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            minecraft.fontRenderer.drawString(this.theRecipe.outputTwoChance+"%", 60, 60, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
 
         super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);

@@ -329,7 +329,7 @@ public class ItemDrill extends ItemEnergy{
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tabs, NonNullList list){
-        if(this.func_194125_a(tabs)){
+        if(this.isInCreativeTab(tabs)){
             for(int i = 0; i < 16; i++){
                 this.addDrillStack(list, i);
             }

@@ -94,7 +94,7 @@ public class ClientEvents{
         }
 
         //Advanced Item Info
-        if(event.getFlags().func_194127_a() && StackUtil.isValid(event.getItemStack())){
+        if(event.getFlags().isAdvanced() && StackUtil.isValid(event.getItemStack())){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
                 if(GuiScreen.isCtrlKeyDown()){
                     event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".extraInfo.desc")+":");
@@ -177,7 +177,7 @@ public class ClientEvents{
             Minecraft minecraft = Minecraft.getMinecraft();
             EntityPlayer player = minecraft.player;
             RayTraceResult posHit = minecraft.objectMouseOver;
-            FontRenderer font = minecraft.fontRendererObj;
+            FontRenderer font = minecraft.fontRenderer;
             ItemStack stack = player.getHeldItemMainhand();
 
             if(StackUtil.isValid(stack)){

@@ -10,14 +10,14 @@
 
 package de.ellpeck.actuallyadditions.api.booklet;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 public interface IBookletPage{
 

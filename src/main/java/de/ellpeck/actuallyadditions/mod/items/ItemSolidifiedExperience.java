@@ -41,7 +41,7 @@ public class ItemSolidifiedExperience extends ItemBase{
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
         if(ConfigBoolValues.DO_XP_DROPS.isEnabled()){
-            if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getEntity() instanceof EntityPlayer){
+            if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof EntityPlayer){
                 //Drop Solidified XP
                 if(event.getEntityLiving() instanceof EntityCreature){
                     if(event.getEntityLiving().world.rand.nextInt(10) <= event.getLootingLevel()*2){

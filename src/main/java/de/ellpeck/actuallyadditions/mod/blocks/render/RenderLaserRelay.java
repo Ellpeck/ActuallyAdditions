@@ -41,7 +41,7 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer{
     private static final float[] COLOR_INFRARED = new float[]{209F/255F, 179F/255F, 239F/255F};
 
     @Override
-    public void func_192841_a(TileEntity tile, double x, double y, double z, float par5, int par6, float f){
+    public void render(TileEntity tile, double x, double y, double z, float par5, int par6, float f){
         if(tile instanceof TileEntityLaserRelay){
             TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
             boolean hasInvis = false;

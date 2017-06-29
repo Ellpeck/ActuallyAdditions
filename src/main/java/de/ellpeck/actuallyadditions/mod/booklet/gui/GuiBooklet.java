@@ -10,6 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
@@ -30,13 +38,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.ArrayUtils;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public abstract class GuiBooklet extends GuiBookletBase{
@@ -115,7 +116,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
         }
 
         if(this.hasSearchBar()){
-            this.searchField = new GuiTextField(-420, this.fontRendererObj, this.guiLeft+this.xSize+2, this.guiTop+this.ySize-40+2, 64, 12);
+            this.searchField = new GuiTextField(-420, this.fontRenderer, this.guiLeft+this.xSize+2, this.guiTop+this.ySize-40+2, 64, 12);
             this.searchField.setMaxStringLength(50);
             this.searchField.setEnableBackgroundDrawing(false);
         }
@@ -177,16 +178,16 @@ public abstract class GuiBooklet extends GuiBookletBase{
             this.mc.getTextureManager().bindTexture(RES_LOC_GADGETS);
             this.drawTexturedModalRect(this.guiLeft+this.xSize, this.guiTop+this.ySize-40, 188, 0, 68, 14);
 
-            boolean unicodeBefore = this.fontRendererObj.getUnicodeFlag();
-            this.fontRendererObj.setUnicodeFlag(true);
+            boolean unicodeBefore = this.fontRenderer.getUnicodeFlag();
+            this.fontRenderer.setUnicodeFlag(true);
 
             if(!this.searchField.isFocused() && (this.searchField.getText() == null || this.searchField.getText().isEmpty())){
-                this.fontRendererObj.drawString(TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.searchField"), this.guiLeft+this.xSize+2, this.guiTop+this.ySize-40+2, 0xFFFFFF, false);
+                this.fontRenderer.drawString(TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.searchField"), this.guiLeft+this.xSize+2, this.guiTop+this.ySize-40+2, 0xFFFFFF, false);
             }
 
             this.searchField.drawTextBox();
 
-            this.fontRendererObj.setUnicodeFlag(unicodeBefore);
+            this.fontRenderer.setUnicodeFlag(unicodeBefore);
         }
     }
 
@@ -348,12 +349,12 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
     @Override
     public void renderScaledAsciiString(String text, int x, int y, int color, boolean shadow, float scale){
-        StringUtil.renderScaledAsciiString(this.fontRendererObj, text, x, y, color, shadow, scale);
+        StringUtil.renderScaledAsciiString(this.fontRenderer, text, x, y, color, shadow, scale);
     }
 
     @Override
     public void renderSplitScaledAsciiString(String text, int x, int y, int color, boolean shadow, float scale, int length){
-        StringUtil.renderSplitScaledAsciiString(this.fontRendererObj, text, x, y, color, shadow, scale, length);
+        StringUtil.renderSplitScaledAsciiString(this.fontRenderer, text, x, y, color, shadow, scale, length);
     }
 
     @Override

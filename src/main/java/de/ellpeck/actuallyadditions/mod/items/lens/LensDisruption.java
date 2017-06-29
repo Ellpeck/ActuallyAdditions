@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
+import java.util.ArrayList;
+
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -24,8 +26,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.ArrayList;
-
 public class LensDisruption extends Lens{
 
     private static final int ENERGY_USE = 150000;
@@ -36,7 +36,7 @@ public class LensDisruption extends Lens{
             int range = 2;
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
             for(EntityItem item : items){
-                ItemStack stack = item.getEntityItem();
+                ItemStack stack = item.getItem();
                 if(!item.isDead && StackUtil.isValid(stack)){
                     if(!stack.hasTagCompound() || !stack.getTagCompound().getBoolean(ModUtil.MOD_ID+"DisruptedAlready")){
 

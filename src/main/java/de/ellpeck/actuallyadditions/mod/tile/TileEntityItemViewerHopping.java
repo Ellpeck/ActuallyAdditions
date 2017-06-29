@@ -55,8 +55,8 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer{
                                 if(ActuallyAdditions.commonCapsLoaded){
                                     Object slotless = this.itemHandler.getSlotlessHandler();
                                     if(slotless instanceof ISlotlessItemHandler){
-                                        ItemStack left = ((ISlotlessItemHandler)slotless).insertItem(item.getEntityItem(), false);
-                                        item.setEntityItemStack(left);
+                                        ItemStack left = ((ISlotlessItemHandler)slotless).insertItem(item.getItem(), false);
+                                        item.setItem(left);
 
                                         if(!StackUtil.isValid(left)){
                                             item.setDead();
@@ -68,8 +68,8 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer{
                                 IItemHandler handler = this.itemHandler.getNormalHandler();
                                 if(handler != null){
                                     for(int i = 0; i < handler.getSlots(); i++){
-                                        ItemStack left = handler.insertItem(i, item.getEntityItem(), false);
-                                        item.setEntityItemStack(left);
+                                        ItemStack left = handler.insertItem(i, item.getItem(), false);
+                                        item.setItem(left);
 
                                         if(!StackUtil.isValid(left)){
                                             item.setDead();

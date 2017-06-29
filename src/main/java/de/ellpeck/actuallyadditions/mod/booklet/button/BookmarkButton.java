@@ -61,11 +61,11 @@ public class BookmarkButton extends GuiButton{
     }
 
     @Override
-    public void func_191745_a(Minecraft minecraft, int x, int y, float f){
+    public void drawButton(Minecraft minecraft, int x, int y, float f){
         if(this.visible){
             minecraft.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
+            this.hovered = x >= this.x && y >= this.y && x < this.x+this.width && y < this.y+this.height;
             int k = this.getHoverState(this.hovered);
             if(k == 0){
                 k = 1;
@@ -75,14 +75,14 @@ public class BookmarkButton extends GuiButton{
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GlStateManager.blendFunc(770, 771);
             int renderHeight = 25;
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, 224+(this.assignedPage == null ? 0 : 16), 14-renderHeight+k*renderHeight, this.width, renderHeight);
+            this.drawTexturedModalRect(this.x, this.y, 224+(this.assignedPage == null ? 0 : 16), 14-renderHeight+k*renderHeight, this.width, renderHeight);
             this.mouseDragged(minecraft, x, y);
 
             if(this.assignedPage != null){
                 ItemStack display = this.assignedPage.getChapter().getDisplayItemStack();
                 if(StackUtil.isValid(display)){
                     GlStateManager.pushMatrix();
-                    AssetUtil.renderStackToGui(display, this.xPosition+2, this.yPosition+1, 0.725F);
+                    AssetUtil.renderStackToGui(display, this.x+2, this.y+1, 0.725F);
                     GlStateManager.popMatrix();
                 }
             }
@@ -112,7 +112,7 @@ public class BookmarkButton extends GuiButton{
             }
 
             Minecraft mc = Minecraft.getMinecraft();
-            GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
+            GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
     }
 }

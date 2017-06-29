@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -43,9 +46,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MethodHandler implements IMethodHandler{
 
@@ -194,7 +194,7 @@ public class MethodHandler implements IMethodHandler{
             //Converting the Items
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-rangeX, hitBlock.getY()-rangeY, hitBlock.getZ()-rangeZ, hitBlock.getX()+1+rangeX, hitBlock.getY()+1+rangeY, hitBlock.getZ()+1+rangeZ));
             for(EntityItem item : items){
-                ItemStack stack = item.getEntityItem();
+                ItemStack stack = item.getItem();
                 if(!item.isDead && StackUtil.isValid(stack)){
                     List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
                     for(LensConversionRecipe recipe : recipes){

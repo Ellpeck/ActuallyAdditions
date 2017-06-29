@@ -49,15 +49,15 @@ public class ItemMagnetRing extends ItemEnergy{
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
                         if(!item.isDead && !item.cannotPickup()){
-                            int energyForItem = 50*StackUtil.getStackSize(item.getEntityItem());
+                            int energyForItem = 50*StackUtil.getStackSize(item.getItem());
 
                             if(this.getEnergyStored(stack) >= energyForItem){
-                                ItemStack oldItem = StackUtil.validateCopy(item.getEntityItem());
+                                ItemStack oldItem = StackUtil.validateCopy(item.getItem());
 
                                 item.onCollideWithPlayer(player);
 
                                 if(!player.capabilities.isCreativeMode){
-                                    if(item.isDead || !ItemStack.areItemStacksEqual(item.getEntityItem(), oldItem)){
+                                    if(item.isDead || !ItemStack.areItemStacksEqual(item.getItem(), oldItem)){
                                         this.extractEnergyInternal(stack, energyForItem, false);
                                     }
                                 }

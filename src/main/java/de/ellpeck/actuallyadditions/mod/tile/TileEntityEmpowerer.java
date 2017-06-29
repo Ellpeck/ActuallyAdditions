@@ -10,6 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -21,10 +25,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class TileEntityEmpowerer extends TileEntityInventoryBase{
 

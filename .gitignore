@@ -10,3 +10,10 @@
 /*.iws
 /lib
 /classes
+/bin/
+
+*.classpath
+*.project
+.settings/org.eclipse.buildship.core.prefs
+*.launch
+.settings/org.eclipse.jdt.core.prefs

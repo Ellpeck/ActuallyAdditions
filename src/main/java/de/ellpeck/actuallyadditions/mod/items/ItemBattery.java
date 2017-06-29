@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -29,8 +31,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-
-import java.util.List;
 
 public class ItemBattery extends ItemEnergy{
 

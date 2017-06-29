@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
+import java.util.Arrays;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -27,9 +30,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class PageCrafting extends BookletPage{
 
@@ -152,15 +152,15 @@ public class PageCrafting extends BookletPage{
             catch(Exception e){
                 ModUtil.LOGGER.error("Something went wrong trying to get the Crafting Recipe in the booklet to display!", e);
             }
-            for(int i = 0; i < shaped.func_192400_c().size(); i++){
-                ings[i] = shaped.func_192400_c().get(i);
+            for(int i = 0; i < shaped.getIngredients().size(); i++){
+                ings[i] = shaped.getIngredients().get(i);
             }
             this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapedOreRecipe";
         }
         else if(recipe instanceof ShapelessOreRecipe){
             ShapelessOreRecipe shapeless = (ShapelessOreRecipe)recipe;
-            for(int i = 0; i < shapeless.func_192400_c().size(); i++){
-                ings[i] = shapeless.func_192400_c().get(i);
+            for(int i = 0; i < shapeless.getIngredients().size(); i++){
+                ings[i] = shapeless.getIngredients().get(i);
             }
             this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapelessOreRecipe";
         }
@@ -169,7 +169,7 @@ public class PageCrafting extends BookletPage{
             for(int y = 0; y < height; y++){
                 Ingredient ing = ings[y*width+x];
                 if(ing != null){
-                    ItemStack[] stacks = ing.func_193365_a();
+                    ItemStack[] stacks = ing.getMatchingStacks();
                     if(stacks != null && stacks.length > 0){
                         ItemStack stack = stacks[0];
                         if(StackUtil.isValid(stack)){

@@ -11,13 +11,14 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.render.IHasModel;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class BlockBushBase extends BlockBush implements ItemBlockBase.ICustomRarity{
+public class BlockBushBase extends BlockBush implements ItemBlockBase.ICustomRarity, IHasModel{
 
     private final String name;
 
@@ -30,8 +31,6 @@ public class BlockBushBase extends BlockBush implements ItemBlockBase.ICustomRar
 
     private void register(){
         ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
-
-        this.registerRendering();
     }
 
     protected String getBaseName(){
@@ -46,7 +45,7 @@ public class BlockBushBase extends BlockBush implements ItemBlockBase.ICustomRar
         return true;
     }
 
-    protected void registerRendering(){
+    public void registerRendering(){
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 

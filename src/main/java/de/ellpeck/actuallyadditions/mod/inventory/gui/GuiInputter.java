@@ -71,17 +71,17 @@ public class GuiInputter extends GuiContainer{
             this.rightFilter = new FilterSettingsGui(this.tileInputter.rightFilter, this.guiLeft+157, this.guiTop+6, this.buttonList);
         }
 
-        this.fieldPullStart = new GuiTextField(3000, this.fontRendererObj, this.guiLeft+6, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPullStart = new GuiTextField(3000, this.fontRenderer, this.guiLeft+6, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
         this.fieldPullStart.setMaxStringLength(5);
         this.fieldPullStart.setEnableBackgroundDrawing(false);
-        this.fieldPullEnd = new GuiTextField(3001, this.fontRendererObj, this.guiLeft+50, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPullEnd = new GuiTextField(3001, this.fontRenderer, this.guiLeft+50, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
         this.fieldPullEnd.setMaxStringLength(5);
         this.fieldPullEnd.setEnableBackgroundDrawing(false);
 
-        this.fieldPutStart = new GuiTextField(3002, this.fontRendererObj, this.guiLeft+91, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPutStart = new GuiTextField(3002, this.fontRenderer, this.guiLeft+91, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
         this.fieldPutStart.setMaxStringLength(5);
         this.fieldPutStart.setEnableBackgroundDrawing(false);
-        this.fieldPutEnd = new GuiTextField(3004, this.fontRendererObj, this.guiLeft+135, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPutEnd = new GuiTextField(3004, this.fontRenderer, this.guiLeft+135, this.guiTop+80+(this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
         this.fieldPutEnd.setMaxStringLength(5);
         this.fieldPutEnd.setEnableBackgroundDrawing(false);
 
@@ -106,16 +106,16 @@ public class GuiInputter extends GuiContainer{
         int newTopOffset = this.guiTop+(this.isAdvanced ? OFFSET_ADVANCED : 0);
         //Info Mode on!
         if(x >= this.guiLeft+4 && y >= newTopOffset+65 && x <= this.guiLeft+4+38 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.pull")), 200), x, y);
+            this.drawHoveringText(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.pull")), 200), x, y);
         }
         if(x >= this.guiLeft+89 && y >= newTopOffset+65 && x <= this.guiLeft+89+38 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put")), 200), x, y);
+            this.drawHoveringText(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.1").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put")), 200), x, y);
         }
         if(x >= this.guiLeft+48 && y >= newTopOffset+65 && x <= this.guiLeft+48+38 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.pull")), 200), x, y);
+            this.drawHoveringText(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.pull")), 200), x, y);
         }
         if(x >= this.guiLeft+133 && y >= newTopOffset+65 && x <= this.guiLeft+133+38 && y <= newTopOffset+65+12){
-            this.drawHoveringText(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put")), 200), x, y);
+            this.drawHoveringText(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".inputter.info.2").replace("<p>", StringUtil.localize("info."+ModUtil.MOD_ID+".gui.put")), 200), x, y);
         }
 
         if(this.isAdvanced){
@@ -126,7 +126,7 @@ public class GuiInputter extends GuiContainer{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.tileInputter);
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.tileInputter);
     }
 
     @Override
@@ -139,16 +139,16 @@ public class GuiInputter extends GuiContainer{
         this.mc.getTextureManager().bindTexture(this.isAdvanced ? RES_LOC_ADVANCED : RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 97+(this.isAdvanced ? OFFSET_ADVANCED : 0));
 
-        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.inbound"), this.guiLeft+23+3, this.guiTop+32+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRendererObj.drawString(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.outbound"), this.guiLeft+104+3, this.guiTop+32+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRenderer.drawString(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.inbound"), this.guiLeft+23+3, this.guiTop+32+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRenderer.drawString(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.outbound"), this.guiLeft+104+3, this.guiTop+32+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
-        this.fontRendererObj.drawString(SIDES[this.tileInputter.sideToPull+1], this.guiLeft+24+1, this.guiTop+45+3+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRendererObj.drawString(SIDES[this.tileInputter.sideToPut+1], this.guiLeft+109+1, this.guiTop+45+3+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRenderer.drawString(SIDES[this.tileInputter.sideToPull+1], this.guiLeft+24+1, this.guiTop+45+3+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRenderer.drawString(SIDES[this.tileInputter.sideToPut+1], this.guiLeft+109+1, this.guiTop+45+3+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutStart), this.guiLeft+92, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPutEnd), this.guiLeft+136, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullStart), this.guiLeft+7, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRendererObj.drawString(Integer.toString(this.tileInputter.slotToPullEnd), this.guiLeft+51, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPutStart), this.guiLeft+92, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPutEnd), this.guiLeft+136, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPullStart), this.guiLeft+7, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPullEnd), this.guiLeft+51, this.guiTop+67+(this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
 
         this.fieldPutStart.drawTextBox();
         this.fieldPutEnd.drawTextBox();
@@ -257,16 +257,16 @@ public class GuiInputter extends GuiContainer{
         }
 
         @Override
-        public void func_191745_a(Minecraft mc, int x, int y, float f){
+        public void drawButton(Minecraft mc, int x, int y, float f){
             if(this.visible){
                 mc.getTextureManager().bindTexture(this.resLoc);
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
+                this.hovered = x >= this.x && y >= this.y && x < this.x+this.width && y < this.y+this.height;
                 int k = this.getHoverState(this.hovered);
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 GlStateManager.blendFunc(770, 771);
-                this.drawTexturedModalRect(this.xPosition, this.yPosition, this.smaller ? 200 : 176, k*this.height, this.width, this.height);
+                this.drawTexturedModalRect(this.x, this.y, this.smaller ? 200 : 176, k*this.height, this.width, this.height);
                 this.mouseDragged(mc, x, y);
 
                 int color = 14737632;
@@ -280,7 +280,7 @@ public class GuiInputter extends GuiContainer{
                     color = 16777120;
                 }
 
-                this.drawCenteredString(mc.fontRendererObj, this.displayString, this.xPosition+this.width/2, this.yPosition+(this.height-8)/2, color);
+                this.drawCenteredString(mc.fontRenderer, this.displayString, this.x+this.width/2, this.y+(this.height-8)/2, color);
             }
         }
     }
@@ -295,16 +295,16 @@ public class GuiInputter extends GuiContainer{
         }
 
         @Override
-        public void func_191745_a(Minecraft mc, int x, int y, float f){
+        public void drawButton(Minecraft mc, int x, int y, float f){
             if(this.visible){
                 mc.getTextureManager().bindTexture(this.resLoc);
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                this.hovered = x >= this.xPosition && y >= this.yPosition && x < this.xPosition+this.width && y < this.yPosition+this.height;
+                this.hovered = x >= this.x && y >= this.y && x < this.x+this.width && y < this.y+this.height;
                 int k = this.getHoverState(this.hovered);
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 GlStateManager.blendFunc(770, 771);
-                this.drawTexturedModalRect(this.xPosition, this.yPosition, 192, k*8, 8, 8);
+                this.drawTexturedModalRect(this.x, this.y, 192, k*8, 8, 8);
                 this.mouseDragged(mc, x, y);
             }
         }

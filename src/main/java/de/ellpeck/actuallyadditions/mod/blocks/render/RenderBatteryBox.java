@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
+import java.text.NumberFormat;
+
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -27,13 +29,11 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.text.NumberFormat;
-
 @SideOnly(Side.CLIENT)
 public class RenderBatteryBox extends TileEntitySpecialRenderer{
 
     @Override
-    public void func_192841_a(TileEntity tile, double x, double y, double z, float par5, int par6, float f){
+    public void render(TileEntity tile, double x, double y, double z, float par5, int par6, float f){
         if(!(tile instanceof TileEntityBatteryBox)){
             return;
         }
@@ -52,7 +52,7 @@ public class RenderBatteryBox extends TileEntitySpecialRenderer{
             if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
                 IEnergyStorage cap = stack.getCapability(CapabilityEnergy.ENERGY, null);
                 NumberFormat format = NumberFormat.getInstance();
-                FontRenderer font = Minecraft.getMinecraft().fontRendererObj;
+                FontRenderer font = Minecraft.getMinecraft().fontRenderer;
 
                 String s = format.format(cap.getEnergyStored())+"/"+format.format(cap.getMaxEnergyStored());
                 float lengthS = -font.getStringWidth(s)/2F;

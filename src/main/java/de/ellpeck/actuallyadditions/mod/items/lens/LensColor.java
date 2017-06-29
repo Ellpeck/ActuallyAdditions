@@ -11,6 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Random;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
@@ -25,10 +29,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Random;
 
 public class LensColor extends Lens{
 
@@ -67,8 +67,8 @@ public class LensColor extends Lens{
 
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             for(EntityItem item : items){
-                if(!item.isDead && StackUtil.isValid(item.getEntityItem()) && tile.getEnergy() >= ENERGY_USE){
-                    ItemStack newStack = this.tryConvert(item.getEntityItem(), hitState, hitBlock, tile);
+                if(!item.isDead && StackUtil.isValid(item.getItem()) && tile.getEnergy() >= ENERGY_USE){
+                    ItemStack newStack = this.tryConvert(item.getItem(), hitState, hitBlock, tile);
                     if(StackUtil.isValid(newStack)){
                         item.setDead();
 

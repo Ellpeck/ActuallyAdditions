@@ -93,7 +93,7 @@ public class ItemWingsOfTheBats extends ItemBase{
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event){
-        Entity source = event.getSource().getEntity();
+        Entity source = event.getSource().getTrueSource();
 
         if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && source instanceof EntityPlayer){
             //Drop Wings from Bats

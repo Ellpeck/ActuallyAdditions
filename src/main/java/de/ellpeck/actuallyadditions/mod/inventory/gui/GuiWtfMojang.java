@@ -23,6 +23,6 @@ public abstract class GuiWtfMojang extends GuiContainer{
     public void drawScreen(int mouseX, int mouseY, float partialTicks){
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
-        this.func_191948_b(mouseX, mouseY);
+        this.renderHoveredToolTip(mouseX, mouseY);
     }
 }

@@ -69,7 +69,7 @@ public class GuiPhantomPlacer extends GuiWtfMojang{
 
             List<String> textList = new ArrayList<String>();
             textList.add(TextFormatting.GOLD+StringUtil.localize(loc+".1"));
-            textList.addAll(this.fontRendererObj.listFormattedStringToWidth(StringUtil.localize(loc+".2"), 200));
+            textList.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localize(loc+".2"), 200));
             this.drawHoveringText(textList, mouseX, mouseY);
         }
     }
@@ -87,7 +87,7 @@ public class GuiPhantomPlacer extends GuiWtfMojang{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRendererObj, this.xSize, -10, this.placer);
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.placer);
     }
 
     @Override

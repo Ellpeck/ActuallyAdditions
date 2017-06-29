@@ -74,8 +74,8 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
             if(tile instanceof TileEntityPlayerInterface){
                 TileEntityPlayerInterface face = (TileEntityPlayerInterface)tile;
                 String name = face.playerName == null ? "Unknown" : face.playerName;
-                minecraft.fontRendererObj.drawStringWithShadow("Bound to: "+TextFormatting.RED+name, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
-                minecraft.fontRendererObj.drawStringWithShadow("UUID: "+TextFormatting.DARK_GREEN+face.connectedPlayer, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
+                minecraft.fontRenderer.drawStringWithShadow("Bound to: "+TextFormatting.RED+name, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
+                minecraft.fontRenderer.drawStringWithShadow("UUID: "+TextFormatting.DARK_GREEN+face.connectedPlayer, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
             }
         }
     }

@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.mod;
 
+import de.ellpeck.actuallyadditions.mod.blocks.render.IHasModel;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.util.FluidStateMapper;
 import net.minecraft.block.Block;
@@ -20,6 +21,10 @@ public class ClientRegistryHandler{
 
     @SubscribeEvent
     public void onModelRegistry(ModelRegistryEvent event){
+    	for(Block block :  RegistryHandler.BLOCKS_TO_REGISTER){
+    		if(block instanceof IHasModel) ((IHasModel) block).registerRendering();
+    	}
+    	
         for(Map.Entry<ItemStack, ModelResourceLocation> entry : MODEL_LOCATIONS_FOR_REGISTERING.entrySet()){
             ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), entry.getValue());
         }

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.render.IHasModel;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
@@ -46,7 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class BlockContainerBase extends BlockContainer implements ItemBlockBase.ICustomRarity{
+public abstract class BlockContainerBase extends BlockContainer implements ItemBlockBase.ICustomRarity, IHasModel{
 
     private final String name;
 
@@ -59,8 +60,6 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
 
     private void register(){
         ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
-
-        this.registerRendering();
     }
 
     protected String getBaseName(){
@@ -75,7 +74,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         return true;
     }
 
-    protected void registerRendering(){
+    public void registerRendering(){
         ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 

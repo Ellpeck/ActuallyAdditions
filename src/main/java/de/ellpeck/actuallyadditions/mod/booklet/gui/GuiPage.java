@@ -10,6 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
@@ -25,13 +32,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiPage extends GuiBooklet{
@@ -167,7 +167,7 @@ public class GuiPage extends GuiBooklet{
         if(this.pages[0] != null){
             IBookletChapter chapter = this.pages[0].getChapter();
             String name = chapter.getLocalizedName();
-            this.fontRendererObj.drawString(name, this.guiLeft+this.xSize/2-this.fontRendererObj.getStringWidth(name)/2, this.guiTop-1, 0xFFFFFF, true);
+            this.fontRenderer.drawString(name, this.guiLeft+this.xSize/2-this.fontRenderer.getStringWidth(name)/2, this.guiTop-1, 0xFFFFFF, true);
         }
 
         for(int i = 0; i < this.pages.length; i++){

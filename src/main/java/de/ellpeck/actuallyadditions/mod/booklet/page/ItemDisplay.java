@@ -56,8 +56,8 @@ public class ItemDisplay{
     public void drawPost(int mouseX, int mouseY){
         if(this.isHovered(mouseX, mouseY)){
             Minecraft mc = this.gui.mc;
-            boolean flagBefore = mc.fontRendererObj.getUnicodeFlag();
-            mc.fontRendererObj.setUnicodeFlag(false);
+            boolean flagBefore = mc.fontRenderer.getUnicodeFlag();
+            mc.fontRenderer.setUnicodeFlag(false);
 
             List<String> list = this.stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? TooltipFlags.ADVANCED : TooltipFlags.NORMAL);
 
@@ -74,9 +74,9 @@ public class ItemDisplay{
                 list.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe"));
             }
 
-            GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRendererObj);
+            GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
 
-            mc.fontRendererObj.setUnicodeFlag(flagBefore);
+            mc.fontRenderer.setUnicodeFlag(flagBefore);
         }
     }
 
