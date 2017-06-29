@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
@@ -23,6 +21,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class TileEntityFeeder extends TileEntityInventoryBase{
 

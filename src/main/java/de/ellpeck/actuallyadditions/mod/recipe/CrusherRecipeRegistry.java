@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.recipe;
 
-import java.util.ArrayList;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
@@ -21,6 +19,8 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
 
 
 public final class CrusherRecipeRegistry{

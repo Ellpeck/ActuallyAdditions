@@ -10,11 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.Collections;
-import java.util.Set;
-
 import com.google.common.collect.Sets;
-
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -23,6 +19,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import java.util.Collections;
+import java.util.Set;
 
 public class ItemAxeAA extends ItemToolAA{
 

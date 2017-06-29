@@ -119,7 +119,7 @@ public class BlockColoredLamp extends BlockBase{
     }
 
     @Override
-	public void registerRendering(){
+    public void registerRendering(){
         for(int i = 0; i < ALL_LAMP_TYPES.length; i++){
             ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_LAMP_TYPES[i].regName);
         }

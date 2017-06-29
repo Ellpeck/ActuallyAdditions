@@ -1,8 +1,5 @@
 package de.ellpeck.actuallyadditions.mod;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.InitCrafting;
 import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
@@ -16,6 +13,9 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //Class to wrap around the trainwreck that is the new registry system
 public class RegistryHandler{

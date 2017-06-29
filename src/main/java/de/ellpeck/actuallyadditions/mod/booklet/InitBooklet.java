@@ -10,12 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -30,21 +24,8 @@ import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterTrials;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllItems;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryTrials;
-import de.ellpeck.actuallyadditions.mod.booklet.page.BookletPage;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrafting;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrusherRecipe;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PageEmpowerer;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PageFurnace;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PageLinkButton;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PageReconstructor;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
-import de.ellpeck.actuallyadditions.mod.crafting.BlockCrafting;
-import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
-import de.ellpeck.actuallyadditions.mod.crafting.FoodCrafting;
-import de.ellpeck.actuallyadditions.mod.crafting.ItemCrafting;
-import de.ellpeck.actuallyadditions.mod.crafting.MiscCrafting;
-import de.ellpeck.actuallyadditions.mod.crafting.ToolCrafting;
+import de.ellpeck.actuallyadditions.mod.booklet.page.*;
+import de.ellpeck.actuallyadditions.mod.crafting.*;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.OreGen;
 import de.ellpeck.actuallyadditions.mod.gen.WorldGenLushCaves;
@@ -57,28 +38,7 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityDirectionalBreaker;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFireworkBox;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceSolar;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityHeatCollector;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemRepairer;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLavaFactoryController;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLeafGenerator;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityShockSuppressor;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -89,6 +49,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.UniversalBucket;
+
+import java.util.*;
 
 public final class InitBooklet{
 

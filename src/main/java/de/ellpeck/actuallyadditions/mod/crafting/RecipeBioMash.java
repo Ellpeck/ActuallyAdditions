@@ -87,7 +87,7 @@ public class RecipeBioMash extends IForgeRegistryEntry.Impl<IRecipe> implements 
 
     @Override
     public boolean canFit(int width, int height){
-        return width*height>5;
+        return width*height > 5;
     }
 
     @Override

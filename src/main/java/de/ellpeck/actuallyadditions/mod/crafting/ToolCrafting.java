@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import java.util.ArrayList;
-
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -22,6 +20,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+
+import java.util.ArrayList;
 
 public final class ToolCrafting{
 

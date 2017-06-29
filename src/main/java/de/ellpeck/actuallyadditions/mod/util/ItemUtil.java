@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import java.util.Arrays;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.RegistryHandler;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
@@ -27,6 +24,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.Arrays;
+import java.util.List;
 
 public final class ItemUtil{
 

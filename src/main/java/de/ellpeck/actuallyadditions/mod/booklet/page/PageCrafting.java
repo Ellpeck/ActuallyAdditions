@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-import java.util.Arrays;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -30,6 +27,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class PageCrafting extends BookletPage{
 

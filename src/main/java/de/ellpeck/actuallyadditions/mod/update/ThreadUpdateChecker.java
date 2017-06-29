@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.update;
 
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.Properties;
-
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.Properties;
 
 public class ThreadUpdateChecker extends Thread{
 

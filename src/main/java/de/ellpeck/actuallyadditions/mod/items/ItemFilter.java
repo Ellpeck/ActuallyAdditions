@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -26,6 +24,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemFilter extends ItemBase{
 
@@ -58,5 +58,6 @@ public class ItemFilter extends ItemBase{
             if(StackUtil.isValid(slot)){
                 tooltip.add(slot.getItem().getItemStackDisplayName(slot));
             }
-        }}
+        }
+    }
 }

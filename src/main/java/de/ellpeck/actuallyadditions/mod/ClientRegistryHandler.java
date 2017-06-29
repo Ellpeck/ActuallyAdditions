@@ -19,22 +19,6 @@ public class ClientRegistryHandler{
 
     public static final Map<ItemStack, ModelResourceLocation> MODEL_LOCATIONS_FOR_REGISTERING = new HashMap<ItemStack, ModelResourceLocation>();
 
-    @SubscribeEvent
-    public void onModelRegistry(ModelRegistryEvent event){
-    	for(Block block :  RegistryHandler.BLOCKS_TO_REGISTER){
-    		if(block instanceof IHasModel) ((IHasModel) block).registerRendering();
-    	}
-    	
-        for(Map.Entry<ItemStack, ModelResourceLocation> entry : MODEL_LOCATIONS_FOR_REGISTERING.entrySet()){
-            ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), entry.getValue());
-        }
-
-        registerCustomFluidBlockRenderer(InitFluids.fluidCanolaOil);
-        registerCustomFluidBlockRenderer(InitFluids.fluidOil);
-        registerCustomFluidBlockRenderer(InitFluids.fluidCrystalOil);
-        registerCustomFluidBlockRenderer(InitFluids.fluidEmpoweredOil);
-    }
-
     /**
      * (Excerpted from Tinkers' Construct with permission, thanks guys!)
      */
@@ -45,5 +29,23 @@ public class ClientRegistryHandler{
         ModelLoader.registerItemVariants(item);
         ModelLoader.setCustomMeshDefinition(item, mapper);
         ModelLoader.setCustomStateMapper(block, mapper);
+    }
+
+    @SubscribeEvent
+    public void onModelRegistry(ModelRegistryEvent event){
+        for(Block block : RegistryHandler.BLOCKS_TO_REGISTER){
+            if(block instanceof IHasModel){
+                ((IHasModel)block).registerRendering();
+            }
+        }
+
+        for(Map.Entry<ItemStack, ModelResourceLocation> entry : MODEL_LOCATIONS_FOR_REGISTERING.entrySet()){
+            ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(), entry.getValue());
+        }
+
+        registerCustomFluidBlockRenderer(InitFluids.fluidCanolaOil);
+        registerCustomFluidBlockRenderer(InitFluids.fluidOil);
+        registerCustomFluidBlockRenderer(InitFluids.fluidCrystalOil);
+        registerCustomFluidBlockRenderer(InitFluids.fluidEmpoweredOil);
     }
 }

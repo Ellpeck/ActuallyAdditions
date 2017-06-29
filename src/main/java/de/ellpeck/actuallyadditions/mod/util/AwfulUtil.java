@@ -10,18 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.items.IItemHandlerModifiable;
+
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 //This is stuff copied from somewhere in vanilla and changed so that it works properly
 //It's unpolished and vanilla-y, so don't look at it! O_O

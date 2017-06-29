@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import java.text.NumberFormat;
-
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -28,6 +26,8 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.text.NumberFormat;
 
 @SideOnly(Side.CLIENT)
 public class RenderBatteryBox extends TileEntitySpecialRenderer{

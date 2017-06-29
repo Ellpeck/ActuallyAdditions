@@ -11,32 +11,12 @@
 package de.ellpeck.actuallyadditions.mod.proxy;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.ClientRegistryHandler;
-import de.ellpeck.actuallyadditions.mod.blocks.render.RenderBatteryBox;
-import de.ellpeck.actuallyadditions.mod.blocks.render.RenderCompost;
-import de.ellpeck.actuallyadditions.mod.blocks.render.RenderDisplayStand;
-import de.ellpeck.actuallyadditions.mod.blocks.render.RenderEmpowerer;
-import de.ellpeck.actuallyadditions.mod.blocks.render.RenderLaserRelay;
-import de.ellpeck.actuallyadditions.mod.blocks.render.RenderReconstructorLens;
-import de.ellpeck.actuallyadditions.mod.blocks.render.RenderSmileyCloud;
+import de.ellpeck.actuallyadditions.mod.blocks.render.*;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayFluids;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingBlock;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -53,6 +33,9 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientProxy implements IProxy{
 

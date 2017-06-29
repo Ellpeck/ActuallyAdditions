@@ -11,10 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
@@ -29,6 +25,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Random;
 
 public class LensColor extends Lens{
 

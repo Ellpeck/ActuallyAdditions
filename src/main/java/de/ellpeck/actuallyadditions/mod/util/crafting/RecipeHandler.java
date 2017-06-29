@@ -10,24 +10,8 @@
  */
 package de.ellpeck.actuallyadditions.mod.util.crafting;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import de.ellpeck.actuallyadditions.mod.RegistryHandler;
-import de.ellpeck.actuallyadditions.mod.crafting.RecipeBioMash;
-import de.ellpeck.actuallyadditions.mod.crafting.RecipePotionRingCharging;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreIngredient;
-
-import java.util.*;
+import net.minecraft.item.crafting.IRecipe;
 
 @SuppressWarnings("all")
 public final class RecipeHandler{
@@ -47,7 +31,7 @@ public final class RecipeHandler{
     }
 
     public static void addShapedRecipe(ItemStack output, Object... inputs){
-    	RecipeHelper.addOldShaped(output, inputs);
+        RecipeHelper.addOldShaped(output, inputs);
     }
 
 }

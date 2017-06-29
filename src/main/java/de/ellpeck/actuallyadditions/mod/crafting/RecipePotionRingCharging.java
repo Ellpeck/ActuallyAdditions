@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.mod.items.ItemPotionRing;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
 import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHelper;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
@@ -27,7 +26,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 public class RecipePotionRingCharging extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe{
 
     public RecipePotionRingCharging(ResourceLocation location){
-    	RecipeHelper.addRecipe(location.getResourcePath(), this);
+        RecipeHelper.addRecipe(location.getResourcePath(), this);
     }
 
     @Override
@@ -86,7 +85,7 @@ public class RecipePotionRingCharging extends IForgeRegistryEntry.Impl<IRecipe> 
 
     @Override
     public boolean canFit(int width, int height){
-        return width*height>3;
+        return width*height > 3;
     }
 
     @Override

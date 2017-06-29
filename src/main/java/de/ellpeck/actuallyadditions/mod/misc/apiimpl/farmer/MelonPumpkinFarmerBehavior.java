@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
@@ -24,6 +22,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class MelonPumpkinFarmerBehavior implements IFarmerBehavior{
 
