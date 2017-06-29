@@ -30,12 +30,7 @@ public final class RecipeHelper{
      * This adds the recipe to the list of crafting recipes.  Since who cares about names, it adds it as recipesX, where X is the current recipe you are adding.
      */
     public static void addRecipe(int j, IRecipe rec){
-        if(rec.getRegistryName() == null){
-            RECIPE_LIST.add(rec.setRegistryName(new ResourceLocation(MODID, "recipes"+j)));
-        }
-        else{
-            RECIPE_LIST.add(rec);
-        }
+        addRecipe("recipes"+j, rec);
     }
 
     /*
@@ -48,6 +43,7 @@ public final class RecipeHelper{
         else{
             RECIPE_LIST.add(rec);
         }
+        RecipeHandler.lastRecipe = rec;
     }
 
     /*
