@@ -1,3 +1,6 @@
+# 1.12-r113
+* Fixed recipes not showing up in the manual (thanks Shadows >_>)
+
 # 1.12-r112
 * Fixed the mod for newer versions of Forge
 * Actually Shadows-of-Fire did all the work so yea, thanks
