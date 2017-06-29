@@ -1,3 +1,7 @@
+# 1.12-r112
+* Fixed the mod for newer versions of Forge
+* Actually Shadows-of-Fire did all the work so yea, thanks
+
 # 1.12-r111
 * Did the thing
 
