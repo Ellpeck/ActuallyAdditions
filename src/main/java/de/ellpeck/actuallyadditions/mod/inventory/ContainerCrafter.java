@@ -123,7 +123,7 @@ public class ContainerCrafter extends Container{
     	IRecipe output = CraftingManager.findMatchingRecipe(this.craftMatrix, this.world);
     	ItemStack stack = ItemStack.EMPTY;
     	if(output != null) stack = output.getRecipeOutput();
-        this.craftResult.setInventorySlotContents(0, stack);
+        this.craftResult.setInventorySlotContents(0, stack.copy());
     }
 
     @Override
