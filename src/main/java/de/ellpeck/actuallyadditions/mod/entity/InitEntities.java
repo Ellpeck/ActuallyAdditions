@@ -30,4 +30,5 @@ public final class InitEntities{
     public static void initClient(){
         RenderingRegistry.registerEntityRenderingHandler(EntityWorm.class, RenderWorm.FACTORY);
     }
+    
 }

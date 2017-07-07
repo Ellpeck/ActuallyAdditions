@@ -26,14 +26,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderWorm extends Render<EntityWorm>{
 
-    public static final IRenderFactory FACTORY = new IRenderFactory(){
+    public static final IRenderFactory<EntityWorm> FACTORY = new IRenderFactory<EntityWorm>(){
         @Override
-        public Render createRenderFor(RenderManager manager){
+        public Render<EntityWorm> createRenderFor(RenderManager manager){
             return new RenderWorm(manager);
         }
     };
 
-    private static final ItemStack STACK = new ItemStack(InitItems.itemWorm);
+    private static ItemStack stack = ItemStack.EMPTY;
+
+    public static void fixItemStack(){
+    	stack = new ItemStack(InitItems.itemWorm);
+    }
 
     protected RenderWorm(RenderManager renderManager){
         super(renderManager);
@@ -47,13 +51,14 @@ public class RenderWorm extends Render<EntityWorm>{
     @Override
     public void doRender(EntityWorm entity, double x, double y, double z, float entityYaw, float partialTicks){
         GlStateManager.pushMatrix();
+        bindEntityTexture(entity);
         GlStateManager.translate(x, y+0.7F, z);
         double boop = Minecraft.getSystemTime()/70D;
         GlStateManager.rotate(-(float)((boop%360)), 0, 1, 0);
         GlStateManager.translate(0, 0, 0.4);
 
-        STACK.setStackDisplayName(entity.getName());
-        AssetUtil.renderItemInWorld(STACK);
+        stack.setStackDisplayName(entity.getName());
+        AssetUtil.renderItemInWorld(stack);
 
         GlStateManager.popMatrix();
     }
