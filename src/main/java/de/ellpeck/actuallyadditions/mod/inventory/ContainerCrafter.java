@@ -13,11 +13,13 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import invtweaks.api.container.InventoryContainer;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 @InventoryContainer
@@ -107,19 +109,21 @@ public class ContainerCrafter extends Container{
     public void onContainerClosed(EntityPlayer player){
         super.onContainerClosed(player);
 
-        if(!this.world.isRemote){
             for(int i = 0; i < 9; ++i){
                 ItemStack stack = this.craftMatrix.removeStackFromSlot(i);
                 if(StackUtil.isValid(stack)){
-                    player.dropItem(stack, false);
-                }
+                	if(!player.addItemStackToInventory(stack))
+                	if(!this.world.isRemote) Block.spawnAsEntity(world, player.getPosition(), stack);
             }
         }
     }
 
     @Override
     public void onCraftMatrixChanged(IInventory inv){
-        this.craftResult.setInventorySlotContents(0, CraftingManager.findMatchingRecipe(this.craftMatrix, this.world).getRecipeOutput());
+    	IRecipe output = CraftingManager.findMatchingRecipe(this.craftMatrix, this.world);
+    	ItemStack stack = ItemStack.EMPTY;
+    	if(output != null) stack = output.getRecipeOutput();
+        this.craftResult.setInventorySlotContents(0, stack);
     }
 
     @Override
