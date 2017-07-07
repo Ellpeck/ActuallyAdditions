@@ -33,10 +33,10 @@ public class RenderWorm extends Render<EntityWorm>{
         }
     };
 
-    private static ItemStack STACK = ItemStack.EMPTY;
+    private static ItemStack stack = ItemStack.EMPTY;
 
     public static void fixItemStack(){
-    	STACK = new ItemStack(InitItems.itemWorm);
+    	stack = new ItemStack(InitItems.itemWorm);
     }
 
     protected RenderWorm(RenderManager renderManager){
@@ -57,8 +57,8 @@ public class RenderWorm extends Render<EntityWorm>{
         GlStateManager.rotate(-(float)((boop%360)), 0, 1, 0);
         GlStateManager.translate(0, 0, 0.4);
 
-        STACK.setStackDisplayName(entity.getName());
-        AssetUtil.renderItemInWorld(STACK);
+        stack.setStackDisplayName(entity.getName());
+        AssetUtil.renderItemInWorld(stack);
 
         GlStateManager.popMatrix();
     }

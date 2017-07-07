@@ -14,6 +14,7 @@ package de.ellpeck.actuallyadditions.mod.proxy;
 import de.ellpeck.actuallyadditions.mod.ClientRegistryHandler;
 import de.ellpeck.actuallyadditions.mod.blocks.render.*;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
+import de.ellpeck.actuallyadditions.mod.entity.RenderWorm;
 import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.tile.*;
@@ -55,6 +56,8 @@ public class ClientProxy implements IProxy{
     public void init(FMLInitializationEvent event){
         ModUtil.LOGGER.info("Initializing ClientProxy...");
 
+        RenderWorm.fixItemStack();
+        
         new ClientEvents();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderCompost());

@@ -24,11 +24,11 @@ public final class InitEntities{
         ModUtil.LOGGER.info("Initializing Entities...");
 
         EntityRegistry.registerModEntity(new ResourceLocation(ModUtil.MOD_ID, "worm"), EntityWorm.class, ModUtil.MOD_ID+".worm", 0, ActuallyAdditions.instance, 64, 1, false);
-        RenderWorm.fixItemStack();
     }
 
     @SideOnly(Side.CLIENT)
     public static void initClient(){
         RenderingRegistry.registerEntityRenderingHandler(EntityWorm.class, RenderWorm.FACTORY);
     }
+    
 }
