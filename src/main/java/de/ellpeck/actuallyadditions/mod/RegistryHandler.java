@@ -1,6 +1,7 @@
 package de.ellpeck.actuallyadditions.mod;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.crafting.InitCrafting;
 import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -51,8 +52,8 @@ public class RegistryHandler{
     public void onVillagerRegistry(Register<VillagerProfession> event){
         InitVillager.init();
 
-        event.getRegistry().register(InitVillager.jamProfession);
-        event.getRegistry().register(InitVillager.engineerProfession);
+        if(ConfigBoolValues.JAM_VILLAGER_EXISTS.isEnabled()) event.getRegistry().register(InitVillager.jamProfession);
+        if(ConfigBoolValues.ENGINEER_VILLAGER_EXISTS.isEnabled()) event.getRegistry().register(InitVillager.engineerProfession);
     }
 
     @SubscribeEvent

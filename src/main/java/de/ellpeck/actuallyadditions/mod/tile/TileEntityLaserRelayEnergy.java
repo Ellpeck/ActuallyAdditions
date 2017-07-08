@@ -163,6 +163,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
                                     TileEntity tile = theRelay.receiversAround.get(facing);
 
                                     EnumFacing opp = facing.getOpposite();
+                                    if(tile != null){
                                     if(tile.hasCapability(CapabilityEnergy.ENERGY, opp)){
                                         IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, opp);
                                         if(cap != null && cap.receiveEnergy(maxTransfer, true) > 0){
@@ -177,6 +178,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
                                             workedOnce = true;
                                         }
                                     }
+                                }
                                 }
                             }
 
