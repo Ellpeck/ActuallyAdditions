@@ -68,10 +68,9 @@ public class BlockColoredLamp extends BlockBase{
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
         ItemStack stack = player.getHeldItem(hand);
         //Turning On
-        if(player.isSneaking()){
-            if(!world.isRemote){
-                world.setBlockState(pos, (this.isOn ? InitBlocks.blockColoredLamp : InitBlocks.blockColoredLampOn).getStateFromMeta(this.getMetaFromState(state)), 2);
-            }
+        if(stack.isEmpty() && player.isSneaking()){
+            world.setBlockState(pos, (this.isOn ? InitBlocks.blockColoredLamp : InitBlocks.blockColoredLampOn).getDefaultState().withProperty(TYPE, state.getValue(TYPE)), 2);
+            world.notifyLightSet(pos);
             return true;
         }
 
@@ -96,13 +95,12 @@ public class BlockColoredLamp extends BlockBase{
                 }
             }
         }
-
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(CreativeTabs tab, NonNullList list){
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list){
         for(int j = 0; j < ALL_LAMP_TYPES.length; j++){
             list.add(new ItemStack(this, 1, j));
         }
