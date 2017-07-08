@@ -1,3 +1,12 @@
+# 1.12-r114
+#### Shadows_of_Fire has been doing all the maintaining and fixing for 1.12 so far and I really appreciate it. So thank him for making these fixes possible <3
+* Fix the Crafting Table On A Stick not working
+* Fix worms not rendering when placed in the world
+* Make lamps only be toggleable with an empty hand
+* Make lamps' light update smoother
+* Fix Laser Relays sometimes crashing when they're transferring energy
+* Fix the game crashing if any of the villagers is disabled in the config
+
 # 1.12-r113
 * Fixed recipes not showing up in the manual (thanks Shadows >_>)
 
