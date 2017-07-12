@@ -182,7 +182,7 @@ public final class PacketHandler{
                 }
             }
             else{
-                ModUtil.LOGGER.error("Tried to receive Player Data for player "+player.getName()+", but he doesn't seem to be present!");
+                ModUtil.LOGGER.error("Tried to receive Player Data for UUID "+compound.getUniqueId("UUID")+", but he doesn't seem to be present!");
             }
         }
     };
