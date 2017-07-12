@@ -44,7 +44,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
         ItemStack heldStack = player.getHeldItem(hand);
         if(player.isSneaking()){
             TileEntity tileHit = world.getTileEntity(pos);
-            if(tileHit != null && tileHit.getClass() == this.start){
+            if(tileHit != null && start.isInstance(tileHit)){
                 if(!world.isRemote){
 
                     //Copy Slots
