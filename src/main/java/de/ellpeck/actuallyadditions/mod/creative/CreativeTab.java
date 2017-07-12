@@ -195,7 +195,7 @@ public class CreativeTab extends CreativeTabs{
 
         UniversalBucket bucket = ForgeModContainer.getInstance().universalBucket;
         this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidCanolaOil));
-        this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidOil));
+        this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidRefinedCanolaOil));
         this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidCrystalOil));
         this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidEmpoweredOil));
 

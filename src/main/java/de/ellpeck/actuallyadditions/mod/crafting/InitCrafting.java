@@ -40,7 +40,7 @@ public final class InitCrafting{
         int[] power = ConfigIntListValues.OIL_POWER.getValue();
         int[] time = ConfigIntListValues.OIL_TIME.getValue();
         ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCanolaOil.getName(), power[0], time[0]);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidOil.getName(), power[1], time[1]);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidRefinedCanolaOil.getName(), power[1], time[1]);
         ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCrystalOil.getName(), power[2], time[2]);
         ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidEmpoweredOil.getName(), power[3], time[3]);
 

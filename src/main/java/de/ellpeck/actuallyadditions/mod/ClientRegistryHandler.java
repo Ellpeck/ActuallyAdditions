@@ -44,7 +44,7 @@ public class ClientRegistryHandler{
         }
 
         registerCustomFluidBlockRenderer(InitFluids.fluidCanolaOil);
-        registerCustomFluidBlockRenderer(InitFluids.fluidOil);
+        registerCustomFluidBlockRenderer(InitFluids.fluidRefinedCanolaOil);
         registerCustomFluidBlockRenderer(InitFluids.fluidCrystalOil);
         registerCustomFluidBlockRenderer(InitFluids.fluidEmpoweredOil);
     }

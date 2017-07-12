@@ -4,7 +4,7 @@ achievement.page.actuallyadditions=Actually Additions
 actuallyadditions.lolWutHowUDoDis.name=This is bugged. Throw it away. Please.
 
 #Fluids
-fluid.actuallyadditions.oil=Oil
+fluid.actuallyadditions.refinedcanolaoil=Refined Canola Oil
 fluid.actuallyadditions.canolaoil=Canola Oil
 fluid.actuallyadditions.crystaloil=Crystallized Oil
 fluid.actuallyadditions.empoweredoil=Empowered Oil
@@ -178,7 +178,7 @@ tile.actuallyadditions.block_treasure_chest.name=Treasure Chest
 tile.actuallyadditions.block_canola_press.name=Canola Press
 tile.actuallyadditions.block_fermenting_barrel.name=Fermenting Barrel
 tile.actuallyadditions.block_canola_oil.name=Canola Oil
-tile.actuallyadditions.block_oil.name=Oil
+tile.actuallyadditions.block_refined_canola_oil.name=Refined Canola Oil
 tile.actuallyadditions.block_crystal_oil.name=Crystallized Oil
 tile.actuallyadditions.block_empowered_oil.name=Empowered Oil
 tile.actuallyadditions.block_misc_enderpearl.name=Block of Enderpearl
@@ -993,7 +993,7 @@ booklet.actuallyadditions.chapter.heatCollector.text.1=The <item>Heat Collector<
 
 booklet.actuallyadditions.chapter.canola.name=Canola and Oil
 booklet.actuallyadditions.chapter.canola.text.1=Using <item>Canola<r>, you can make a simple, yet effective power generation system from <imp>natural resources<r>. <n>To do this, first find some <item>Canola Plants<r> in the wild and plant them on your farm. <n><n>The <item>Canola<r> you get out of them can be used in a <item>Canola Press<r> to make <item>Canola Oil<r>. <n><n>This can be <imp>used in an<r> <item>Oil Generator<r>. It displays the amount of power it generates in its GUI, however, it can be <imp>upgraded further<r> to yield <imp>more power<r> than that!
-booklet.actuallyadditions.chapter.canola.text.2=For starters, you can use a <item>Fermenting Barrel<r> to convert the <item>Canola Oil<r> into <item>Oil<r>. <n><n>If you're still not satisfied with the power that generates, <imp>place the oil on the ground<r> and throw in a <item>Crystallized Canola Seed<r> to make <item>Crystallized Oil<r>.  <n><n>If that isn't enough for you either, make an <item>Empowered Canola Seed<r> and toss that into some <item>Crystallized Oil<r> to get <item>Empowered Oil<r>!
+booklet.actuallyadditions.chapter.canola.text.2=For starters, you can use a <item>Fermenting Barrel<r> to convert the <item>Canola Oil<r> into <item>Refined Canola Oil<r>. <n><n>If you're still not satisfied with the power that generates, <imp>place the refined canola oil on the ground<r> and throw in a <item>Crystallized Canola Seed<r> to make <item>Crystallized Oil<r>.  <n><n>If that isn't enough for you either, make an <item>Empowered Canola Seed<r> and toss that into some <item>Crystallized Oil<r> to get <item>Empowered Oil<r>!
 booklet.actuallyadditions.chapter.canola.text.4=The <item>Fermenting Barrel<r> can have a <item>Comparator<r> attached to it which will result in the Redstone strength being equivalent to the <imp>percentage<r> of the <imp>output tank<r>.
 booklet.actuallyadditions.chapter.canola.text.5=If you break the <item>Oil Generator<r>, it will keep the liquid inside. <n>Place it in the <imp>crafting grid<r> to empty it out. <n>It will <imp>stop generating<r> when powered by <imp>Redstone<r>. <n>Additionally, using a <item>Comparator<r> will yield the percentage of <imp>energy stored<r>.
 

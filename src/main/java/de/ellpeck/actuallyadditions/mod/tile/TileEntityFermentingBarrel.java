@@ -54,7 +54,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
         this.handlerMap = new FluidHandlerFluidMap();
         this.handlerMap.addHandler(InitFluids.fluidCanolaOil, this.canolaTank);
-        this.handlerMap.addHandler(InitFluids.fluidOil, this.oilTank);
+        this.handlerMap.addHandler(InitFluids.fluidRefinedCanolaOil, this.oilTank);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
                 if(this.currentProcessTime >= PROCESS_TIME){
                     this.currentProcessTime = 0;
 
-                    this.oilTank.fillInternal(new FluidStack(InitFluids.fluidOil, produce), true);
+                    this.oilTank.fillInternal(new FluidStack(InitFluids.fluidRefinedCanolaOil, produce), true);
                     this.canolaTank.drainInternal(produce, true);
                 }
             }

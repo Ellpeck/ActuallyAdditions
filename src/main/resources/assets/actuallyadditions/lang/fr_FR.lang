@@ -4,7 +4,7 @@ achievement.page.actuallyadditions=Actually Additions
 actuallyadditions.lolWutHowUDoDis.name=C'est buggé... Jettez-le vite avant que ca explose!
 
 #Fluides
-fluid.actuallyadditions.oil=Huile
+fluid.actuallyadditions.refinedcanolaoil=Huile
 fluid.actuallyadditions.canolaoil=Huile de Colza
 fluid.actuallyadditions.crystaloil=Huile cristallisée
 fluid.actuallyadditions.empoweredoil=Huile Puissante
@@ -178,7 +178,7 @@ tile.actuallyadditions.block_treasure_chest.name=Coffre au trésor
 tile.actuallyadditions.block_canola_press.name=Presse à colza
 tile.actuallyadditions.block_fermenting_barrel.name=Baril de fermentation
 tile.actuallyadditions.block_canola_oil.name=Huile de colza
-tile.actuallyadditions.block_oil.name=Huile
+tile.actuallyadditions.block_refined_canola_oil.name=Huile
 tile.actuallyadditions.block_crystal_oil.name=Huile cristallisée
 tile.actuallyadditions.block_empowered_oil.name=Huile puissante
 tile.actuallyadditions.block_misc_enderpearl.name=Block de perle de l'ender

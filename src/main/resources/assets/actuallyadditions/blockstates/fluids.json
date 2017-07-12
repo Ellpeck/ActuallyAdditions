@@ -5,9 +5,9 @@
       "model": "forge:fluid",
       "custom": { "fluid": "canolaoil" }
     },
-    "oil": {
+    "refinedcanolaoil": {
       "model": "forge:fluid",
-      "custom": { "fluid": "oil" }
+      "custom": { "fluid": "refinedcanolaoil" }
     },
     "crystaloil": {
       "model": "forge:fluid",

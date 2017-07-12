@@ -87,7 +87,7 @@ public class ItemMisc extends ItemBase{
 
                     if(block instanceof IFluidBlock && block.getMetaFromState(state) == 0){
                         Fluid fluid = ((IFluidBlock)block).getFluid();
-                        if(fluid != null && fluid == (isEmpowered ? InitFluids.fluidCrystalOil : InitFluids.fluidOil)){
+                        if(fluid != null && fluid == (isEmpowered ? InitFluids.fluidCrystalOil : InitFluids.fluidRefinedCanolaOil)){
                             entity.setDead();
                             entity.world.setBlockState(pos, (isEmpowered ? InitFluids.blockEmpoweredOil : InitFluids.blockCrystalOil).getDefaultState());
                         }
