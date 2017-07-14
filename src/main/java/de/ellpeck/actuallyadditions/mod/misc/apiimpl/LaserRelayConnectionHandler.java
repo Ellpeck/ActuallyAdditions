@@ -107,7 +107,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
      */
     @Override
     public Network getNetworkFor(BlockPos relay, World world){
-    	if(!world.isRemote)
+    	if(world != null)
         for(Network aNetwork : WorldData.get(world).laserRelayNetworks){
             for(IConnectionPair pair : aNetwork.connections){
                 if(pair.contains(relay)){
