@@ -1,5 +1,10 @@
-# 1.12-r114
+# 1.12-r115
 #### Shadows_of_Fire has been doing all the maintaining and fixing for 1.12 so far and I really appreciate it. So thank him for making these fixes possible <3
+* Update the name of oil (the stuff that you get when refining canola oil) in the fluid dictionary along with its block's name. **This change will remove any existing oil fluid blocks along with any existing oil in tanks etc. from your world**
+* Resolve a random NPE that would rarely trigger on leaving/joining a server
+* Made Quark chests work with the Chest To Crate Upgrade
+
+# 1.12-r114
 * Fix the Crafting Table On A Stick not working
 * Fix worms not rendering when placed in the world
 * Make lamps only be toggleable with an empty hand
