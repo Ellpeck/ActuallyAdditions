@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -83,7 +84,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
                     }
                     //Shush, don't tell anyone!
-                    else if(item == Items.RECORD_11){
+                    else if(ConfigIntValues.ELEVEN.getValue() == 11 && item == Items.RECORD_11){
                         reconstructor.counter++;
                         reconstructor.markDirty();
                     }
