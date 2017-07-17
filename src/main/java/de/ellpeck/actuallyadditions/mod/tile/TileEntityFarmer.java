@@ -126,9 +126,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
         for(IFarmerBehavior behavior : SORTED_FARMER_BEHAVIORS){
             FarmerResult harvestResult = behavior.tryHarvestPlant(this.world, query, this);
-            if(harvestResult == FarmerResult.SUCCESS || harvestResult == FarmerResult.STOP_PROCESSING){
-                return;
-            }
+            if(harvestResult == FarmerResult.STOP_PROCESSING) return;
             else{
                 for(int i = 0; i < this.slots.getSlots(); i++){
                     ItemStack stack = this.slots.getStackInSlot(i);
