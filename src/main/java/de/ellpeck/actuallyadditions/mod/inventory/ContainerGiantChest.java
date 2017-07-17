@@ -73,7 +73,7 @@ public class ContainerGiantChest extends Container{
                     }
                 }
             }
-            else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)){
+            else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, true)){
                 return StackUtil.getNull();
             }
 
