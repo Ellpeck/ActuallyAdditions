@@ -46,10 +46,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.UniversalBucket;
-
+import net.minecraftforge.fluids.FluidUtil;
 import java.util.*;
 
 public final class InitBooklet{
@@ -285,9 +284,9 @@ public final class InitBooklet{
         chaptersIntroduction[10] = new BookletChapter("trialsIntro", ActuallyAdditionsAPI.entryTrials, new ItemStack(Items.GOLD_INGOT), new PageTextOnly(1), new PageTextOnly(2)).setSpecial();
         new BookletChapterTrials("crystalProduction", new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), false);
         new BookletChapterTrials("leatherProduction", new ItemStack(Items.LEATHER), false);
-        new BookletChapterTrials("crystalOil", UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, InitFluids.fluidCrystalOil), false);
+        new BookletChapterTrials("crystalOil", FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidCrystalOil, Fluid.BUCKET_VOLUME)), false);
         new BookletChapterTrials("autoDisenchanter", new ItemStack(InitItems.itemDisenchantingLens), false);
-        new BookletChapterTrials("empoweredOil", UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, InitFluids.fluidEmpoweredOil), false);
+        new BookletChapterTrials("empoweredOil", FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidEmpoweredOil, Fluid.BUCKET_VOLUME)), false);
         new BookletChapterTrials("mobFarm", new ItemStack(Items.ROTTEN_FLESH), false);
         new BookletChapterTrials("empowererAutomation", new ItemStack(InitBlocks.blockEmpowerer), false);
     }

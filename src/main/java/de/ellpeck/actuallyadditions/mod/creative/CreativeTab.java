@@ -19,8 +19,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.fluids.UniversalBucket;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -193,11 +194,10 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemMagnetRing);
         this.add(InitItems.itemWaterRemovalRing);
 
-        UniversalBucket bucket = ForgeModContainer.getInstance().universalBucket;
-        this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidCanolaOil));
-        this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidRefinedCanolaOil));
-        this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidCrystalOil));
-        this.list.add(UniversalBucket.getFilledBucket(bucket, InitFluids.fluidEmpoweredOil));
+        this.list.add(FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidCanolaOil, Fluid.BUCKET_VOLUME)));
+        this.list.add(FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidRefinedCanolaOil, Fluid.BUCKET_VOLUME)));
+        this.list.add(FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidCrystalOil, Fluid.BUCKET_VOLUME)));
+        this.list.add(FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidEmpoweredOil, Fluid.BUCKET_VOLUME)));
 
         this.add(InitItems.itemPhantomConnector);
         this.add(InitItems.itemFilter);
