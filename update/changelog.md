@@ -1,3 +1,10 @@
+# 1.12-r116
+* Fix the game randomly crashing on load sometimes
+* Added 11 config options
+* Make shift clicking out of crates mimic vanilla
+* Make the Farmer re-plant right after it harvests *(I didn't want this but Shadows did it so I can't argue with him)*
+* Fix Knife not working in Crafting Table On A Stick
+
 # 1.12-r115
 #### Shadows_of_Fire has been doing all the maintaining and fixing for 1.12 so far and I really appreciate it. So thank him for making these fixes possible <3
 * Update the name of oil (the stuff that you get when refining canola oil) in the fluid dictionary along with its block's name. **This change will remove any existing oil fluid blocks along with any existing oil in tanks etc. from your world**
