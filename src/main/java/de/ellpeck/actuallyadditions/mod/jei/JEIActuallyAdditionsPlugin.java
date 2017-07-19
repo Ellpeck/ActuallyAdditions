@@ -11,6 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.jei;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCrafter;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoffeeMachine;
@@ -19,19 +24,20 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiGrinder;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeCategory;
-import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeCategory;
-import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeCategory;
-import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeCategory;
-import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeCategory;
-import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeHandler;
+import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
+import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
 import net.minecraft.item.ItemStack;
@@ -48,32 +54,33 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
     public void registerIngredients(IModIngredientRegistration registry){
 
     }
+    
+    @Override
+	public void registerCategories(IRecipeCategoryRegistration registry) {
+    	IJeiHelpers helpers = registry.getJeiHelpers();
+    	registry.addRecipeCategories(
+    			new CoffeeMachineRecipeCategory(helpers.getGuiHelper()),
+                new CrusherRecipeCategory(helpers.getGuiHelper()),
+                new ReconstructorRecipeCategory(helpers.getGuiHelper()),
+                new EmpowererRecipeCategory(helpers.getGuiHelper()),
+                new BookletRecipeCategory(helpers.getGuiHelper()));
+	}
 
     @Override
     public void register(IModRegistry registry){
         IJeiHelpers helpers = registry.getJeiHelpers();
 
-        registry.addRecipeCategories(
-                new CoffeeMachineRecipeCategory(helpers.getGuiHelper()),
-                new CrusherRecipeCategory(helpers.getGuiHelper()),
-                new ReconstructorRecipeCategory(helpers.getGuiHelper()),
-                new EmpowererRecipeCategory(helpers.getGuiHelper()),
-                new BookletRecipeCategory(helpers.getGuiHelper())
-        );
+        registry.handleRecipes(IBookletPage.class, BookletRecipeWrapper::new, BookletRecipeCategory.NAME);
+        registry.handleRecipes(CoffeeIngredient.class, CoffeeMachineRecipeWrapper::new, CoffeeMachineRecipeCategory.NAME);
+        registry.handleRecipes(CrusherRecipe.class, CrusherRecipeWrapper::new, CrusherRecipeCategory.NAME);
+        registry.handleRecipes(LensConversionRecipe.class, ReconstructorRecipeWrapper::new, ReconstructorRecipeCategory.NAME);
+        registry.handleRecipes(EmpowererRecipe.class, EmpowererRecipeWrapper::new, EmpowererRecipeCategory.NAME);
 
-        registry.addRecipeHandlers(
-                new CoffeeMachineRecipeHandler(),
-                new CrusherRecipeHandler(),
-                new ReconstructorRecipeHandler(),
-                new EmpowererRecipeHandler(),
-                new BookletRecipeHandler()
-        );
-
-        registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA);
-        registry.addRecipes(ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS);
-        registry.addRecipes(ActuallyAdditionsAPI.CRUSHER_RECIPES);
-        registry.addRecipes(ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES);
-        registry.addRecipes(ActuallyAdditionsAPI.EMPOWERER_RECIPES);
+        registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA, BookletRecipeCategory.NAME);
+        registry.addRecipes(ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS, CoffeeMachineRecipeCategory.NAME);
+        registry.addRecipes(ActuallyAdditionsAPI.CRUSHER_RECIPES, CrusherRecipeCategory.NAME);
+        registry.addRecipes(ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES, ReconstructorRecipeCategory.NAME);
+        registry.addRecipes(ActuallyAdditionsAPI.EMPOWERER_RECIPES, EmpowererRecipeCategory.NAME);
 
         registry.addRecipeClickArea(GuiCoffeeMachine.class, 53, 42, 22, 16, CoffeeMachineRecipeCategory.NAME);
         registry.addRecipeClickArea(GuiGrinder.class, 80, 40, 24, 22, CrusherRecipeCategory.NAME);

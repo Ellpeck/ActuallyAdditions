@@ -43,7 +43,7 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void getIngredients(IIngredients ingredients){
-        List list = new ArrayList();
+        List<ItemStack> list = new ArrayList<ItemStack>();
         list.add(this.theIngredient.ingredient);
         list.add(this.cup);
         list.add(this.coffeeBeans);

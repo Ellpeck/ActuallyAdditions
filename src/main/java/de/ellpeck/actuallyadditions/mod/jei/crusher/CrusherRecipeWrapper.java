@@ -36,7 +36,7 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton{
     public void getIngredients(IIngredients ingredients){
         ingredients.setInput(ItemStack.class, this.theRecipe.inputStack);
 
-        List list = new ArrayList();
+        List<ItemStack> list = new ArrayList<ItemStack>();
         list.add(this.theRecipe.outputOneStack);
         if(StackUtil.isValid(this.theRecipe.outputTwoStack)){
             list.add(this.theRecipe.outputTwoStack);
