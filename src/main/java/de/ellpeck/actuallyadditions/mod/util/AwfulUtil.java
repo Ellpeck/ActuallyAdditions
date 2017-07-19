@@ -59,7 +59,7 @@ public final class AwfulUtil{
 
         someInt = someInt-stacks.size();
 
-        while(someInt > 0 && ((List)list).size() > 0){
+        while(someInt > 0 && list.size() > 0){
             ItemStack itemstack2 = list.remove(MathHelper.getInt(rand, 0, list.size()-1));
             int i = MathHelper.getInt(rand, 1, itemstack2.getCount()/2);
             ItemStack itemstack1 = itemstack2.splitStack(i);
