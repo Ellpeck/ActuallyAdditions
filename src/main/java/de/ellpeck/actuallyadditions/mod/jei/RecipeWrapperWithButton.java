@@ -16,14 +16,14 @@ import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import mezz.jei.api.recipe.BlankRecipeWrapper;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class RecipeWrapperWithButton extends BlankRecipeWrapper{
+public abstract class RecipeWrapperWithButton implements IRecipeWrapper{
 
     protected final TexturedButton theButton;
 

@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.util.crafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
-@SuppressWarnings("all")
 public final class RecipeHandler{
 
     public static IRecipe lastRecipe;
