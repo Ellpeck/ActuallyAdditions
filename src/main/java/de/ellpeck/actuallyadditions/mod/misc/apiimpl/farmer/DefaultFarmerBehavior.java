@@ -16,15 +16,21 @@ import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +52,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
                 }
                 else{
                     if(farmlandBlock instanceof BlockDirt || farmlandBlock instanceof BlockGrass){
-                        world.setBlockState(farmland, Blocks.FARMLAND.getDefaultState(), 2);
+                        useHoeAt(world, pos.down());
                         world.setBlockToAir(pos);
                         world.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
@@ -163,5 +169,58 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
             }
         }
         return null;
+    }
+    
+    private static ItemStack hoe = ItemStack.EMPTY;
+    
+    private static ItemStack getHoeStack(){
+    	if(hoe.isEmpty()) hoe = new ItemStack(Items.DIAMOND_HOE);
+    	return hoe;
+    }
+    
+    public static EnumActionResult useHoeAt(World world, BlockPos pos)
+    {
+    	
+    	EntityPlayer player = FakePlayerFactory.getMinecraft((WorldServer) world);
+    	
+        ItemStack itemstack = getHoeStack();
+
+        if (!player.canPlayerEdit(pos.offset(EnumFacing.UP), EnumFacing.UP, itemstack))
+        {
+            return EnumActionResult.FAIL;
+        }
+        else
+        {
+            int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);
+            if (hook != 0) return hook > 0 ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+
+            IBlockState iblockstate = world.getBlockState(pos);
+            Block block = iblockstate.getBlock();
+
+            if (world.isAirBlock(pos.up()))
+            {
+                if (block == Blocks.GRASS || block == Blocks.GRASS_PATH)
+                {
+                    world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
+                    return EnumActionResult.SUCCESS;
+                }
+
+                if (block == Blocks.DIRT)
+                {
+                    switch (iblockstate.getValue(BlockDirt.VARIANT))
+                    {
+                        case DIRT:
+                            world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
+                            return EnumActionResult.SUCCESS;
+                        case COARSE_DIRT:
+                            world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT));
+                            return EnumActionResult.SUCCESS;
+                        default: break;
+                    }
+                }
+            }
+
+            return EnumActionResult.PASS;
+        }
     }
 }
