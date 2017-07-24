@@ -67,9 +67,8 @@ public class TileEntityDropper extends TileEntityInventoryBase{
         ItemStack theoreticalRemove = this.removeFromInventory(false);
         if(StackUtil.isValid(theoreticalRemove)){
             IBlockState state = this.world.getBlockState(this.pos);
-            if(WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state)), this.world, this.pos, StackUtil.setStackSize(theoreticalRemove.copy(), 1))){
+            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state)), this.world, this.pos, StackUtil.setStackSize(theoreticalRemove.copy(), 1));
                 this.removeFromInventory(true);
-            }
         }
     }
 
