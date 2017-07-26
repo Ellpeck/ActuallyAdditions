@@ -65,7 +65,7 @@ public class ReedFarmerBehavior implements IFarmerBehavior{
                                     farmer.extractEnergy(use);
                                     farmer.addToOutputInventory(drops, true);
 
-                                    result = FarmerResult.SUCCESS;
+                                    result = FarmerResult.STOP_PROCESSING; //Success no longer makes it not replant, and the plant logic seems sketchy right after harvesting.  This works tho.
                                 }
                             }
                         }
