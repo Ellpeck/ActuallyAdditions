@@ -145,7 +145,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList list){
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list){
         if(this.isInCreativeTab(tab)){
             for(int j = 0; j < ALL_RINGS.length; j++){
                 list.add(new ItemStack(this, 1, j));

@@ -48,7 +48,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.boundingBox = boundingBox;
     }
 
-    public static VillageComponentJamHouse buildComponent(List pieces, int p1, int p2, int p3, EnumFacing p4){
+    public static VillageComponentJamHouse buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, EnumFacing p4){
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
         return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentJamHouse(boundingBox, p4) : null;
     }
@@ -100,7 +100,8 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.fillWithBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, block.getDefaultState(), block.getDefaultState(), false);
     }
 
-    public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb){
+    @SuppressWarnings("deprecation")
+	public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb){
         //Base
         this.fillWithBlocks(world, sbb, 1, 0, 8, 9, 0, 10, Blocks.GRASS);
         this.fillWithBlocks(world, sbb, 0, 0, 0, 1, 0, 7, Blocks.COBBLESTONE);

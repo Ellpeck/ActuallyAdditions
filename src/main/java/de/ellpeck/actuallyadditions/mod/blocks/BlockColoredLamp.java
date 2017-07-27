@@ -43,7 +43,7 @@ import java.util.Random;
 public class BlockColoredLamp extends BlockBase{
 
     public static final TheColoredLampColors[] ALL_LAMP_TYPES = TheColoredLampColors.values();
-    private static final PropertyEnum<TheColoredLampColors> TYPE = PropertyEnum.create("type", TheColoredLampColors.class);
+    public static final PropertyEnum<TheColoredLampColors> TYPE = PropertyEnum.create("type", TheColoredLampColors.class);
     public final boolean isOn;
 
     public BlockColoredLamp(boolean isOn, String name){

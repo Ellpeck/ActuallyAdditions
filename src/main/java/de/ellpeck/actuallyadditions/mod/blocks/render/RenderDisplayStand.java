@@ -19,15 +19,14 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderDisplayStand extends TileEntitySpecialRenderer{
+public class RenderDisplayStand extends TileEntitySpecialRenderer<TileEntityDisplayStand>{
 
     @Override
-    public void render(TileEntity tile, double x, double y, double z, float par5, int par6, float f){
+    public void render(TileEntityDisplayStand tile, double x, double y, double z, float par5, int par6, float f){
         if(!(tile instanceof TileEntityDisplayStand)){
             return;
         }

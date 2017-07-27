@@ -65,7 +65,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
                 return ((TileEntityPhantomRedstoneface)tile).providesWeak[side.ordinal()];
             }
         }
-        return super.getWeakPower(state, world, pos, side);
+        return 0;
     }
 
     @Override

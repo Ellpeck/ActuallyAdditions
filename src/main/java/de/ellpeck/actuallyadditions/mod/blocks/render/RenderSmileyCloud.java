@@ -22,19 +22,17 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Locale;
 
 @SideOnly(Side.CLIENT)
-public class RenderSmileyCloud extends TileEntitySpecialRenderer{
+public class RenderSmileyCloud extends TileEntitySpecialRenderer<TileEntitySmileyCloud>{
 
     @Override
-    public void render(TileEntity tile, double x, double y, double z, float par5, int partial, float f){
-        if(tile instanceof TileEntitySmileyCloud){
-            TileEntitySmileyCloud theCloud = (TileEntitySmileyCloud)tile;
+    public void render(TileEntitySmileyCloud theCloud, double x, double y, double z, float par5, int partial, float f){
+        if(theCloud instanceof TileEntitySmileyCloud){
 
             GlStateManager.pushMatrix();
             GlStateManager.translate((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
@@ -63,6 +61,8 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
                                         case WEST:
                                             GlStateManager.rotate(90, 0, 1, 0);
                                             break;
+                                        default: 
+                                        	break;
                                     }
                                 }
 
@@ -93,7 +93,7 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer{
 
             Minecraft mc = Minecraft.getMinecraft();
             if(theCloud.name != null && !theCloud.name.isEmpty() && !mc.gameSettings.hideGUI){
-                if(mc.player.getDistanceSq(tile.getPos()) <= 36){
+                if(mc.player.getDistanceSq(theCloud.getPos()) <= 36){
                     AssetUtil.renderNameTag(theCloud.name, x+0.5F, y+1.5F, z+0.5F);
                 }
             }

@@ -33,7 +33,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderLaserRelay extends TileEntitySpecialRenderer{
+public class RenderLaserRelay extends TileEntitySpecialRenderer<TileEntityLaserRelay>{
 
     private static final float[] COLOR = new float[]{1F, 0F, 0F};
     private static final float[] COLOR_ITEM = new float[]{0F, 124F/255F, 16F/255F};
@@ -41,7 +41,7 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer{
     private static final float[] COLOR_INFRARED = new float[]{209F/255F, 179F/255F, 239F/255F};
 
     @Override
-    public void render(TileEntity tile, double x, double y, double z, float par5, int par6, float f){
+    public void render(TileEntityLaserRelay tile, double x, double y, double z, float par5, int par6, float f){
         if(tile instanceof TileEntityLaserRelay){
             TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
             boolean hasInvis = false;
@@ -97,7 +97,7 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer{
     }
 
     @Override
-    public boolean isGlobalRenderer(TileEntity tile){
+    public boolean isGlobalRenderer(TileEntityLaserRelay tile){
         return true;
     }
 }

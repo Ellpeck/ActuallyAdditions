@@ -41,7 +41,7 @@ import java.util.List;
 public class BlockWildPlant extends BlockBushBase{
 
     public static final TheWildPlants[] ALL_WILD_PLANTS = TheWildPlants.values();
-    private static final PropertyEnum<TheWildPlants> TYPE = PropertyEnum.create("type", TheWildPlants.class);
+    public static final PropertyEnum<TheWildPlants> TYPE = PropertyEnum.create("type", TheWildPlants.class);
 
     public BlockWildPlant(String name){
         super(name);
@@ -53,7 +53,7 @@ public class BlockWildPlant extends BlockBushBase{
         BlockPos offset = pos.down();
         IBlockState offsetState = world.getBlockState(offset);
         Block offsetBlock = offsetState.getBlock();
-        return this.getMetaFromState(state) == TheWildPlants.RICE.ordinal() ? offsetBlock.getMaterial(offsetState) == Material.WATER : offsetBlock.canSustainPlant(offsetState, world, offset, EnumFacing.UP, this);
+        return this.getMetaFromState(state) == TheWildPlants.RICE.ordinal() ? offsetState.getMaterial() == Material.WATER : offsetBlock.canSustainPlant(offsetState, world, offset, EnumFacing.UP, this);
     }
 
 
@@ -66,7 +66,7 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(CreativeTabs tab, NonNullList list){
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list){
         for(int j = 0; j < ALL_WILD_PLANTS.length; j++){
             list.add(new ItemStack(this, 1, j));
         }

@@ -20,17 +20,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderCompost extends TileEntitySpecialRenderer{
+public class RenderCompost extends TileEntitySpecialRenderer<TileEntityCompost>{
 
     @Override
-    public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float f){
-        if(te instanceof TileEntityCompost){
-            TileEntityCompost compost = (TileEntityCompost)te;
+    public void render(TileEntityCompost compost, double x, double y, double z, float partialTicks, int destroyStage, float f){
+        if(compost instanceof TileEntityCompost){
             ItemStack slot = compost.slots.getStackInSlot(0);
 
             if(StackUtil.isValid(slot)){
