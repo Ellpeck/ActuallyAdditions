@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -130,11 +131,19 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     public String getItemStackDisplayName(ItemStack stack){
+    	if(Util.isClient()) {
         String standardName = StringUtil.localize(this.getUnlocalizedName()+".name");
         if(stack.getItemDamage() < ALL_RINGS.length){
             String effect = StringUtil.localize(ALL_RINGS[stack.getItemDamage()].name);
             return standardName+" "+effect;
         }
+        return standardName;
+    	}
+    		String standardName = StringUtil.localizeIllegallyOnTheServerDontUseMePls(this.getUnlocalizedName()+".name");
+        	if(stack.getItemDamage() < ALL_RINGS.length){
+                String effect = StringUtil.localizeIllegallyOnTheServerDontUseMePls(ALL_RINGS[stack.getItemDamage()].name);
+                return standardName+" "+effect;
+        	}
         return standardName;
     }
 

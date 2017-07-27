@@ -26,8 +26,9 @@ public final class StringUtil{
     public static final String BUGGED_ITEM_NAME = ModUtil.MOD_ID+".lolWutHowUDoDis";
 
     /**
-     * Localizes a given String via StatCollector
+     * Localizes a given String
      */
+    @SideOnly(Side.CLIENT)
     public static String localize(String text){
         return I18n.format(text);
     }
@@ -35,10 +36,16 @@ public final class StringUtil{
     /**
      * Localizes a given formatted String with the given Replacements
      */
+    @SideOnly(Side.CLIENT)
     public static String localizeFormatted(String text, Object... replace){
         return I18n.format(text, replace);
     }
 
+    @SuppressWarnings("deprecation")//TODO: delete this shit and move ItemPotionRing's getItemStackDisplayName into getUnlocalizedName
+    public static String localizeIllegallyOnTheServerDontUseMePls(String langKey) {
+    	return net.minecraft.util.text.translation.I18n.translateToLocal(langKey);
+    }
+    
     @SideOnly(Side.CLIENT)
     public static void drawSplitString(FontRenderer renderer, String strg, int x, int y, int width, int color, boolean shadow){
         List<String> list = renderer.listFormattedStringToWidth(strg, width);

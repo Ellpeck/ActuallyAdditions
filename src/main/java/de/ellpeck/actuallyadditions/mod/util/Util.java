@@ -14,6 +14,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Locale;
@@ -38,6 +39,10 @@ public final class Util{
 
     public static boolean isDevVersion(){
         return ModUtil.VERSION.equals("@VERSION@");
+    }
+    
+    public static boolean isClient(){
+    	return FMLCommonHandler.instance().getEffectiveSide().isClient();
     }
 
     private static String[] splitVersion(){
