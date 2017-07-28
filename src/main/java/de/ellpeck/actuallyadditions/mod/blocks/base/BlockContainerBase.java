@@ -155,7 +155,6 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
 
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos otherPos){
-        super.neighborChanged(state, worldIn, pos, blockIn, otherPos);
         this.neighborsChangedCustom(worldIn, pos);
     }
 

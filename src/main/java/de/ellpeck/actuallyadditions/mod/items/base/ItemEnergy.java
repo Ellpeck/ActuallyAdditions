@@ -73,7 +73,7 @@ public abstract class ItemEnergy extends ItemBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tabs, NonNullList list){
+    public void getSubItems(CreativeTabs tabs, NonNullList<ItemStack> list){
         if(this.isInCreativeTab(tabs)){
             ItemStack stackFull = new ItemStack(this);
             if(stackFull.hasCapability(CapabilityEnergy.ENERGY, null)){

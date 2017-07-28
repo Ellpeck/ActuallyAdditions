@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
+import de.ellpeck.actuallyadditions.mod.blocks.BlockColoredLamp;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
@@ -67,7 +68,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
         this.boundingBox = boundingBox;
     }
 
-    public static VillageComponentEngineerHouse buildComponent(List pieces, int p1, int p2, int p3, EnumFacing p4){
+    public static VillageComponentEngineerHouse buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, EnumFacing p4){
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
         return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentEngineerHouse(boundingBox, p4) : null;
     }
@@ -171,7 +172,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
         }
 
         int meta = world.rand.nextInt(TheColoredLampColors.values().length);
-        this.setBlockState(world, InitBlocks.blockColoredLampOn.getStateFromMeta(meta), 8, 1, 6, sbb);
+        this.setBlockState(world, InitBlocks.blockColoredLampOn.getDefaultState().withProperty(BlockColoredLamp.TYPE, BlockColoredLamp.ALL_LAMP_TYPES[meta]), 8, 1, 6, sbb);
     }
 
     private void spawnActualHouse(World world, StructureBoundingBox sbb){

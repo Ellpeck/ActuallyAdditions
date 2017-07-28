@@ -30,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockMisc extends BlockBase{
 
     public static final TheMiscBlocks[] ALL_MISC_BLOCKS = TheMiscBlocks.values();
-    private static final PropertyEnum<TheMiscBlocks> TYPE = PropertyEnum.create("type", TheMiscBlocks.class);
+    public static final PropertyEnum<TheMiscBlocks> TYPE = PropertyEnum.create("type", TheMiscBlocks.class);
 
     public BlockMisc(String name){
         super(Material.ROCK, name);
@@ -46,7 +46,7 @@ public class BlockMisc extends BlockBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(CreativeTabs tab, NonNullList list){
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list){
         for(int j = 0; j < ALL_MISC_BLOCKS.length; j++){
             list.add(new ItemStack(this, 1, j));
         }

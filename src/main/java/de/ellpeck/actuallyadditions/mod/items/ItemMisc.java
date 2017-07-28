@@ -56,7 +56,7 @@ public class ItemMisc extends ItemBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList list){
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list){
         if(this.isInCreativeTab(tab)){
             for(int j = 0; j < ALL_MISC_ITEMS.length; j++){
                 if(j != TheMiscItems.YOUTUBE_ICON.ordinal()){

@@ -19,15 +19,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderReconstructorLens extends TileEntitySpecialRenderer{
+public class RenderReconstructorLens extends TileEntitySpecialRenderer<TileEntityAtomicReconstructor>{
 
     @Override
-    public void render(TileEntity tile, double x, double y, double z, float par5, int par6, float f){
+    public void render(TileEntityAtomicReconstructor tile, double x, double y, double z, float par5, int par6, float f){
         if(!(tile instanceof TileEntityAtomicReconstructor)){
             return;
         }

@@ -23,13 +23,9 @@ if(hasProperty('buildnumber')){
 }
 
 minecraft {
-    version = "1.12-14.21.1.2400"
+    version = "1.12-14.21.1.2426"
     runDir = "idea"
-
-    mappings = "snapshot_20170706"
-    makeObfSourceJar = false
-    //useDepAts = true
-
+    mappings = "snapshot_20170625"
     replaceIn "ModUtil.java"
     replace "@VERSION@", project.version.toString()
 }

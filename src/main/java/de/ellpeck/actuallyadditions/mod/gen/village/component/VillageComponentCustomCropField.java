@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -41,7 +42,7 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
         this.boundingBox = boundingBox;
     }
 
-    public static VillageComponentCustomCropField buildComponent(List pieces, int p1, int p2, int p3, EnumFacing p4){
+    public static VillageComponentCustomCropField buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, EnumFacing p4){
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
         return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentCustomCropField(boundingBox, p4) : null;
     }
@@ -102,13 +103,13 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
         int randomMeta = MathHelper.getInt(rand, 1, 7);
         switch(rand.nextInt(4)){
             case 0:
-                return InitBlocks.blockFlax.getStateFromMeta(randomMeta);
+                return InitBlocks.blockFlax.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
             case 1:
-                return InitBlocks.blockCoffee.getStateFromMeta(randomMeta);
+                return InitBlocks.blockCoffee.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
             case 2:
-                return InitBlocks.blockRice.getStateFromMeta(randomMeta);
+                return InitBlocks.blockRice.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
             default:
-                return InitBlocks.blockCanola.getStateFromMeta(randomMeta);
+                return InitBlocks.blockCanola.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
         }
     }
 }

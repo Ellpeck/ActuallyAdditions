@@ -64,7 +64,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                     BlockPos coords = this.pos.offset(WorldUtil.getDirectionBySidesInOrder(i));
                     IBlockState state = this.world.getBlockState(coords);
                     Block block = state.getBlock();
-                    if(block != null && block.getMaterial(this.world.getBlockState(coords)) == Material.LAVA && block.getMetaFromState(state) == 0){
+                    if(block != null && this.world.getBlockState(coords).getMaterial() == Material.LAVA && block.getMetaFromState(state) == 0){
                         blocksAround.add(i);
                     }
                 }

@@ -24,16 +24,16 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class TexturedButton extends GuiButton{
 
-    public final List textList = new ArrayList();
+    public final List<String> textList = new ArrayList<String>();
     private final ResourceLocation resLoc;
     public int texturePosX;
     public int texturePosY;
 
     public TexturedButton(ResourceLocation resLoc, int id, int x, int y, int texturePosX, int texturePosY, int width, int height){
-        this(resLoc, id, x, y, texturePosX, texturePosY, width, height, new ArrayList());
+        this(resLoc, id, x, y, texturePosX, texturePosY, width, height, new ArrayList<String>());
     }
 
-    public TexturedButton(ResourceLocation resLoc, int id, int x, int y, int texturePosX, int texturePosY, int width, int height, List hoverTextList){
+    public TexturedButton(ResourceLocation resLoc, int id, int x, int y, int texturePosX, int texturePosY, int width, int height, List<String> hoverTextList){
         super(id, x, y, width, height, "");
         this.texturePosX = texturePosX;
         this.texturePosY = texturePosY;

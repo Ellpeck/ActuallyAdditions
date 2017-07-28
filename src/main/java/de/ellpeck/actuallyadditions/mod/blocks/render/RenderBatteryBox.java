@@ -21,7 +21,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,10 +29,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.text.NumberFormat;
 
 @SideOnly(Side.CLIENT)
-public class RenderBatteryBox extends TileEntitySpecialRenderer{
+public class RenderBatteryBox extends TileEntitySpecialRenderer<TileEntityBatteryBox>{
 
     @Override
-    public void render(TileEntity tile, double x, double y, double z, float par5, int par6, float f){
+    public void render(TileEntityBatteryBox tile, double x, double y, double z, float par5, int par6, float f){
         if(!(tile instanceof TileEntityBatteryBox)){
             return;
         }

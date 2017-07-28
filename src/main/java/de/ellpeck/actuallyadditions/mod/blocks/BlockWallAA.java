@@ -41,7 +41,7 @@ public class BlockWallAA extends BlockBase{
 
 
     public BlockWallAA(String name, Block base, int meta){
-        super(base.getMaterial(base.getDefaultState()), name);
+        super(base.getDefaultState().getMaterial(), name);
         this.meta = meta;
 
         this.setHardness(1.5F);
@@ -123,14 +123,14 @@ public class BlockWallAA extends BlockBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(CreativeTabs tab, NonNullList list){
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list){
         list.add(new ItemStack(this, 1, 0));
     }
 
     public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos){
         IBlockState state = worldIn.getBlockState(pos);
         Block block = state.getBlock();
-        return block != Blocks.BARRIER && (!(block != this && !(block instanceof BlockFenceGate)) || ((block.getMaterial(state).isOpaque() && block.isFullCube(state)) && block.getMaterial(state) != Material.GOURD));
+        return block != Blocks.BARRIER && (!(block != this && !(block instanceof BlockFenceGate)) || ((state.getMaterial().isOpaque() && block.isFullCube(state)) && state.getMaterial() != Material.GOURD));
     }
 
 

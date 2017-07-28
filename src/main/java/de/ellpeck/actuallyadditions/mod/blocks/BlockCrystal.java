@@ -49,7 +49,7 @@ public class BlockCrystal extends BlockBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(CreativeTabs tab, NonNullList list){
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list){
         for(int j = 0; j < ALL_CRYSTALS.length; j++){
             list.add(new ItemStack(this, 1, j));
         }

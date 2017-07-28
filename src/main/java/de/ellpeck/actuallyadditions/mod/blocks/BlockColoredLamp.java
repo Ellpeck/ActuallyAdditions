@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -34,6 +35,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -43,7 +45,7 @@ import java.util.Random;
 public class BlockColoredLamp extends BlockBase{
 
     public static final TheColoredLampColors[] ALL_LAMP_TYPES = TheColoredLampColors.values();
-    private static final PropertyEnum<TheColoredLampColors> TYPE = PropertyEnum.create("type", TheColoredLampColors.class);
+    public static final PropertyEnum<TheColoredLampColors> TYPE = PropertyEnum.create("type", TheColoredLampColors.class);
     public final boolean isOn;
 
     public BlockColoredLamp(boolean isOn, String name){
@@ -157,7 +159,8 @@ public class BlockColoredLamp extends BlockBase{
             if(stack.getItemDamage() >= ALL_LAMP_TYPES.length){
                 return StringUtil.BUGGED_ITEM_NAME;
             }
-            return StringUtil.localize(this.getUnlocalizedName(stack)+".name")+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".onSuffix.desc")+")" : "");
+           if(Util.isClient()) return super.getItemStackDisplayName(stack)+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".onSuffix.desc")+")" : "");
+           else return super.getItemStackDisplayName(stack);
         }
 
 

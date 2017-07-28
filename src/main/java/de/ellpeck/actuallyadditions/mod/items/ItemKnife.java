@@ -42,8 +42,8 @@ public class ItemKnife extends ItemBase{
 
 
     @Override
-    public Multimap getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
-        Multimap map = super.getAttributeModifiers(slot, stack);
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
+        Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
         if(slot == EntityEquipmentSlot.MAINHAND){
             map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Knife Modifier", 3, 0));
         }

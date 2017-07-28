@@ -46,7 +46,7 @@ public class BlockSlabs extends BlockBase{
     }
 
     public BlockSlabs(String name, Block fullBlock, int meta){
-        super(fullBlock.getMaterial(fullBlock.getDefaultState()), name);
+        super(fullBlock.getDefaultState().getMaterial(), name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.fullBlock = fullBlock;

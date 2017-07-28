@@ -92,28 +92,28 @@ public class ItemWaterBowl extends ItemBase{
         }
 
         if(trace == null){
-            return new ActionResult(EnumActionResult.PASS, stack);
+            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
         }
         else if(trace.typeOfHit != RayTraceResult.Type.BLOCK){
-            return new ActionResult(EnumActionResult.PASS, stack);
+            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
         }
         else{
             BlockPos pos = trace.getBlockPos();
 
             if(!world.isBlockModifiable(player, pos)){
-                return new ActionResult(EnumActionResult.FAIL, stack);
+                return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
             }
             else{
                 BlockPos pos1 = world.getBlockState(pos).getBlock().isReplaceable(world, pos) && trace.sideHit == EnumFacing.UP ? pos : pos.offset(trace.sideHit);
 
                 if(!player.canPlayerEdit(pos1, trace.sideHit, stack)){
-                    return new ActionResult(EnumActionResult.FAIL, stack);
+                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
                 }
                 else if(this.tryPlaceContainedLiquid(player, world, pos1, false)){
-                    return !player.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, new ItemStack(Items.BOWL)) : new ActionResult(EnumActionResult.SUCCESS, stack);
+                    return !player.capabilities.isCreativeMode ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, new ItemStack(Items.BOWL)) : new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
                 }
                 else{
-                    return new ActionResult(EnumActionResult.FAIL, stack);
+                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
                 }
             }
         }

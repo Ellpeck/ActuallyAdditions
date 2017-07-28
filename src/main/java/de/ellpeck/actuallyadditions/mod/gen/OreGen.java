@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
+import de.ellpeck.actuallyadditions.mod.blocks.BlockMisc;
+import de.ellpeck.actuallyadditions.mod.blocks.BlockWildPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
@@ -19,9 +21,12 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -68,7 +73,7 @@ public class OreGen implements IWorldGenerator{
 
     private void generateDefault(World world, Random random, int x, int z){
         if(ConfigBoolValues.GENERATE_QUARTZ.isEnabled()){
-            this.addOreSpawn(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), Blocks.STONE, world, random, x*16, z*16, MathHelper.getInt(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
+            this.addOreSpawn(InitBlocks.blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.ORE_QUARTZ), Blocks.STONE, world, random, x*16, z*16, MathHelper.getInt(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
         }
 
         if(ConfigBoolValues.GEN_LUSH_CAVES.isEnabled()){
@@ -86,12 +91,12 @@ public class OreGen implements IWorldGenerator{
         }
     }
 
-    public void addOreSpawn(Block block, int meta, Block blockIn, World world, Random random, int blockXPos, int blockZPos, int maxVeinSize, int chancesToSpawn, int minY, int maxY){
+    public void addOreSpawn(IBlockState state, Block blockIn, World world, Random random, int blockXPos, int blockZPos, int maxVeinSize, int chancesToSpawn, int minY, int maxY){
         for(int i = 0; i < chancesToSpawn; i++){
             int posX = blockXPos+random.nextInt(16);
             int posY = minY+random.nextInt(maxY-minY);
             int posZ = blockZPos+random.nextInt(16);
-            new WorldGenMinable(block.getStateFromMeta(meta), maxVeinSize, BlockMatcher.forBlock(blockIn)).generate(world, random, new BlockPos(posX, posY, posZ));
+            new WorldGenMinable(state, maxVeinSize, BlockMatcher.forBlock(blockIn)).generate(world, random, new BlockPos(posX, posY, posZ));
         }
     }
 
@@ -101,10 +106,11 @@ public class OreGen implements IWorldGenerator{
             if(event.getType() == EventType.FLOWERS){
                 if(!ArrayUtils.contains(ConfigIntListValues.PLANT_DIMENSION_BLACKLIST.getValue(), event.getWorld().provider.getDimension())){
                     this.generateRice(event);
-                    this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.CANOLA.ordinal(), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.GRASS, event);
-                    this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.FLAX.ordinal(), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.GRASS, event);
-                    this.genPlantNormally(InitBlocks.blockWildPlant, TheWildPlants.COFFEE.ordinal(), ConfigIntValues.COFFEE_AMOUNT.getValue(), ConfigBoolValues.DO_COFFEE_GEN.isEnabled(), Material.GRASS, event);
-                    this.genPlantNormally(InitBlocks.blockBlackLotus, 0, ConfigIntValues.BLACK_LOTUS_AMOUNT.getValue(), ConfigBoolValues.DO_LOTUS_GEN.isEnabled(), Material.GRASS, event);
+                    IBlockState plantDefault = InitBlocks.blockWildPlant.getDefaultState();
+                    this.genPlantNormally(plantDefault.withProperty(BlockWildPlant.TYPE, TheWildPlants.CANOLA), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.GRASS, event);
+                    this.genPlantNormally(plantDefault.withProperty(BlockWildPlant.TYPE, TheWildPlants.FLAX), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.GRASS, event);
+                    this.genPlantNormally(plantDefault.withProperty(BlockWildPlant.TYPE, TheWildPlants.COFFEE), ConfigIntValues.COFFEE_AMOUNT.getValue(), ConfigBoolValues.DO_COFFEE_GEN.isEnabled(), Material.GRASS, event);
+                    this.genPlantNormally(InitBlocks.blockBlackLotus.getDefaultState(), ConfigIntValues.BLACK_LOTUS_AMOUNT.getValue(), ConfigBoolValues.DO_LOTUS_GEN.isEnabled(), Material.GRASS, event);
                 }
             }
 
@@ -119,7 +125,7 @@ public class OreGen implements IWorldGenerator{
                             if(randomPos.getY() >= 25 && randomPos.getY() <= 45){
                                 if(event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER){
                                     if(event.getWorld().getBlockState(randomPos.down()).getMaterial().isSolid()){
-                                        event.getWorld().setBlockState(randomPos, InitBlocks.blockTreasureChest.getStateFromMeta(event.getRand().nextInt(4)), 2);
+                                        event.getWorld().setBlockState(randomPos, InitBlocks.blockTreasureChest.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(event.getRand().nextInt(4))), 2);
                                     }
                                 }
                             }
@@ -142,7 +148,7 @@ public class OreGen implements IWorldGenerator{
                         ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.getWorld(), posToGenAt);
                         if(blocksAroundBottom.contains(Material.GRASS) || blocksAroundBottom.contains(Material.GROUND) || blocksAroundBottom.contains(Material.ROCK) || blocksAroundBottom.contains(Material.SAND)){
                             if(!blocksAroundTop.contains(Material.WATER) && event.getWorld().getBlockState(posToGenAt).getMaterial() == Material.AIR){
-                                event.getWorld().setBlockState(posToGenAt, InitBlocks.blockWildPlant.getStateFromMeta(TheWildPlants.RICE.ordinal()), 2);
+                                event.getWorld().setBlockState(posToGenAt, InitBlocks.blockWildPlant.getDefaultState().withProperty(BlockWildPlant.TYPE, TheWildPlants.RICE), 2);
                             }
                         }
                     }
@@ -151,7 +157,7 @@ public class OreGen implements IWorldGenerator{
         }
     }
 
-    private void genPlantNormally(Block plant, int meta, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event){
+    private void genPlantNormally(IBlockState plant, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event){
         if(doIt){
             for(int i = 0; i < amount; i++){
                 if(event.getRand().nextInt(100) == 0){
@@ -159,8 +165,8 @@ public class OreGen implements IWorldGenerator{
                     randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
 
                     if(event.getWorld().getBlockState(randomPos.down()).getMaterial() == blockBelow){
-                        if(plant.canPlaceBlockAt(event.getWorld(), randomPos) && event.getWorld().isAirBlock(randomPos)){
-                            event.getWorld().setBlockState(randomPos, plant.getStateFromMeta(meta), 2);
+                        if(plant.getBlock().canPlaceBlockAt(event.getWorld(), randomPos) && event.getWorld().isAirBlock(randomPos)){
+                            event.getWorld().setBlockState(randomPos, plant, 2);
                         }
                     }
                 }

@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputter;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputterAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -104,6 +105,7 @@ public class BlockInputter extends BlockContainerBase{
 
         @Override
         public String getItemStackDisplayName(ItemStack stack){
+        	if(Util.isClient()) {
             long sysTime = System.currentTimeMillis();
 
             if(this.lastSysTime+5000 < sysTime){
@@ -112,6 +114,8 @@ public class BlockInputter extends BlockContainerBase{
             }
 
             return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID+".block_inputter.add."+this.toPick+".name")+")";
+        	}
+        	else return super.getItemStackDisplayName(stack);
         }
     }
 }

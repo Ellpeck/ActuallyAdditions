@@ -247,7 +247,7 @@ public class ItemDrill extends ItemEnergy{
     @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack stack){
         Block block = state.getBlock();
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || block.getMaterial(state).isToolNotRequired() || (block == Blocks.SNOW_LAYER || block == Blocks.SNOW || (block == Blocks.OBSIDIAN ? HARVEST_LEVEL >= 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (block.getMaterial(state) == Material.ROCK || (block.getMaterial(state) == Material.IRON || block.getMaterial(state) == Material.ANVIL)) : HARVEST_LEVEL >= 2) : HARVEST_LEVEL >= 1) : HARVEST_LEVEL >= 1) : HARVEST_LEVEL >= 2) : HARVEST_LEVEL >= 2) : HARVEST_LEVEL >= 2))));
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || state.getMaterial().isToolNotRequired() || (block == Blocks.SNOW_LAYER || block == Blocks.SNOW || (block == Blocks.OBSIDIAN ? HARVEST_LEVEL >= 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (state.getMaterial() == Material.ROCK || (state.getMaterial() == Material.IRON || state.getMaterial() == Material.ANVIL)) : HARVEST_LEVEL >= 2) : HARVEST_LEVEL >= 1) : HARVEST_LEVEL >= 1) : HARVEST_LEVEL >= 2) : HARVEST_LEVEL >= 2) : HARVEST_LEVEL >= 2))));
     }
 
     @Override
@@ -328,7 +328,7 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tabs, NonNullList list){
+    public void getSubItems(CreativeTabs tabs, NonNullList<ItemStack> list){
         if(this.isInCreativeTab(tabs)){
             for(int i = 0; i < 16; i++){
                 this.addDrillStack(list, i);
@@ -336,7 +336,7 @@ public class ItemDrill extends ItemEnergy{
         }
     }
 
-    private void addDrillStack(List list, int meta){
+    private void addDrillStack(List<ItemStack> list, int meta){
         ItemStack stackFull = new ItemStack(this, 1, meta);
         this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
         list.add(stackFull);
@@ -454,7 +454,7 @@ public class ItemDrill extends ItemEnergy{
     private boolean tryHarvestBlock(World world, BlockPos pos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-        float hardness = block.getBlockHardness(state, world, pos);
+        float hardness = state.getBlockHardness(world, pos);
         boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(state, stack)) && (!isExtra || this.getStrVsBlock(stack, world.getBlockState(pos)) > 1.0F);
         if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(world.getBlockState(pos))))){
             if(!player.capabilities.isCreativeMode){

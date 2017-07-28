@@ -30,10 +30,10 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ItemChestToCrateUpgrade extends ItemBase{
 
-    private final Class start;
+    private final Class<? extends TileEntity> start;
     private final IBlockState end;
 
-    public ItemChestToCrateUpgrade(String name, Class start, IBlockState end){
+    public ItemChestToCrateUpgrade(String name, Class<? extends TileEntity> start, IBlockState end){
         super(name);
         this.start = start;
         this.end = end;
