@@ -30,6 +30,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -215,13 +216,13 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
     }
 
-    public String getDisplayedName(){
-        return StringUtil.localize("container."+ModUtil.MOD_ID+"."+this.name+".name");
+    public String getNameForTranslation(){
+        return "container."+ModUtil.MOD_ID+"."+this.name+".name";
     }
 
     @Override
     public ITextComponent getDisplayName(){
-        return new TextComponentString(this.getDisplayedName());
+        return new TextComponentTranslation(this.getNameForTranslation());
     }
 
     @Override

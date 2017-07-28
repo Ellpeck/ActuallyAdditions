@@ -60,7 +60,7 @@ public final class AssetUtil{
 
     @SideOnly(Side.CLIENT)
     public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, TileEntityBase tile){
-        displayNameString(font, xSize, yPositionOfMachineText, tile.getDisplayedName());
+        displayNameString(font, xSize, yPositionOfMachineText, StringUtil.localize(tile.getNameForTranslation()));
     }
 
     @SideOnly(Side.CLIENT)
