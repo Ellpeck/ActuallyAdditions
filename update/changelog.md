@@ -1,3 +1,10 @@
+# 1.12-r117
+* Resolve a dupe glitch with the advanced precision dropper
+* Made the worm be able to hoe BOP grasses
+* Fix Nether Wart not working in the farmer with NetherEx
+* Fix the farmer destroying sugar cane
+* Various codebase improvements that should hopefully not crash your servers
+
 # 1.12-r116
 * Fix the game randomly crashing on load sometimes
 * Added 11 config options
