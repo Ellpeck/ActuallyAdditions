@@ -12,8 +12,10 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockMagma;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -64,7 +66,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                     BlockPos coords = this.pos.offset(WorldUtil.getDirectionBySidesInOrder(i));
                     IBlockState state = this.world.getBlockState(coords);
                     Block block = state.getBlock();
-                    if(block != null && this.world.getBlockState(coords).getMaterial() == Material.LAVA && block.getMetaFromState(state) == 0){
+                    if(block != null && (this.world.getBlockState(coords).getMaterial() == Material.LAVA && block.getMetaFromState(state) == 0) || this.world.getBlockState(coords).getBlock() instanceof BlockMagma){
                         blocksAround.add(i);
                     }
                 }
