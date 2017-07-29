@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.entity;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -81,6 +82,12 @@ public class EntityWorm extends Entity{
 
                             if(!isFarmland || state.getValue(BlockFarmland.MOISTURE) < 7){
                                 if(isMiddlePose || this.world.rand.nextFloat() >= 0.45F){
+                                	
+                                	DefaultFarmerBehavior.useHoeAt(world, pos);
+                                	state = this.world.getBlockState(pos);
+                                	block = state.getBlock();
+                                	isFarmland = block instanceof BlockFarmland;
+                                	
                                     IBlockState stateToModify = isFarmland ? state : Blocks.FARMLAND.getDefaultState();
                                     this.world.setBlockState(pos, stateToModify.withProperty(BlockFarmland.MOISTURE, 7), 2);
 
