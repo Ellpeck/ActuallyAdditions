@@ -21,6 +21,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
@@ -156,10 +157,14 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 }
             }
 
-            if(StackUtil.isValid(this.slots.getStackInSlot(1)) && this.slots.getStackInSlot(1).getItem() instanceof ItemSolidifiedExperience){
-                this.amount += StackUtil.getStackSize(this.slots.getStackInSlot(1));
-                this.slots.setStackInSlot(1, StackUtil.getNull());
-                this.markDirty();
+            ItemStack stack = this.slots.getStackInSlot(1);
+            if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemSolidifiedExperience){
+                int remainingSpace = MathHelper.clamp(Integer.MAX_VALUE - amount, 0, stack.getCount());
+                if(stack.getCount() >= remainingSpace && remainingSpace != 0) {
+                	this.amount += remainingSpace;
+                	stack.shrink(remainingSpace);
+                	this.markDirty();
+                }
             }
 
             if(this.lastAmount != this.amount && this.sendUpdateWithInterval()){
@@ -170,12 +175,18 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return false;
+        return i == 1 && stack.getItem() == InitItems.itemSolidifiedExperience;
     }
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack){
         return true;
+    }
+    
+    @Override
+    public void markDirty() {
+    	if(amount < 0) amount = Integer.MAX_VALUE; //don't u go negative on me weird number
+    	super.markDirty();
     }
 
     @Override
