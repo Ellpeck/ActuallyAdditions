@@ -103,4 +103,15 @@ public class ItemMisc extends ItemBase{
     public boolean hasEffect(ItemStack stack){
         return stack.getItemDamage() == TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal();
     }
+    
+    @Override
+    public int getItemBurnTime(ItemStack stack) {
+    	int k = stack.getMetadata();
+    	
+        if(k == TheMiscItems.TINY_CHAR.ordinal()) return 200;
+        if(k == TheMiscItems.TINY_COAL.ordinal()) return 200;
+        if(k == TheMiscItems.BIOCOAL.ordinal()) return 80;
+    	
+    	return super.getItemBurnTime(stack);
+    }
 }

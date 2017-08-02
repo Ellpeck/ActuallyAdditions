@@ -47,7 +47,7 @@ public final class CompatUtil{
     private static void registerBloodMagicPlant(Block block){
         if(Loader.isModLoaded("bloodmagic")){
             try{
-                Class regClass = Class.forName("WayofTime.bloodmagic.api.registry.HarvestRegistry");
+                Class<?> regClass = Class.forName("WayofTime.bloodmagic.api.registry.HarvestRegistry");
                 Method regMethod = regClass.getDeclaredMethod("registerStandardCrop", Block.class, int.class);
                 regMethod.invoke(null, block, ((BlockCrops)block).getMaxAge());
             }

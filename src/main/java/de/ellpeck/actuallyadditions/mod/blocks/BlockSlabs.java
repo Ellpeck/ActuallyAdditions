@@ -132,28 +132,28 @@ public class BlockSlabs extends BlockBase{
         }
 
         @Override
-        public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
-            ItemStack stack = playerIn.getHeldItem(hand);
-            if(StackUtil.isValid(stack) && playerIn.canPlayerEdit(pos.offset(facing), facing, stack)){
-                IBlockState state = worldIn.getBlockState(pos);
+        public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+            ItemStack stack = player.getHeldItem(hand);
+            if(StackUtil.isValid(stack) && player.canPlayerEdit(pos.offset(facing), facing, stack)){
+                IBlockState state = world.getBlockState(pos);
 
                 if(state.getBlock() == this.block){
                     BlockSlabs theBlock = (BlockSlabs)this.block;
                     if((facing == EnumFacing.UP && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM) || (facing == EnumFacing.DOWN && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP)){
                         IBlockState newState = theBlock.fullBlock.getStateFromMeta(theBlock.meta);
-                        AxisAlignedBB bound = newState.getCollisionBoundingBox(worldIn, pos);
+                        AxisAlignedBB bound = newState.getCollisionBoundingBox(world, pos);
 
-                        if(bound != Block.NULL_AABB && worldIn.checkNoEntityCollision(bound.offset(pos)) && worldIn.setBlockState(pos, newState, 11)){
-                            SoundType soundtype = theBlock.fullBlock.getSoundType();
-                            worldIn.playSound(playerIn, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume()+1.0F)/2.0F, soundtype.getPitch()*0.8F);
-                            playerIn.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
+                        if(bound != Block.NULL_AABB && world.checkNoEntityCollision(bound.offset(pos)) && world.setBlockState(pos, newState, 11)){
+                            SoundType soundtype = theBlock.fullBlock.getSoundType(theBlock.fullBlock.getDefaultState(), world, pos, player);
+                            world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume()+1.0F)/2.0F, soundtype.getPitch()*0.8F);
+                            player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
                         }
 
                         return EnumActionResult.SUCCESS;
                     }
                 }
 
-                return this.tryPlace(playerIn, stack, hand, worldIn, pos.offset(facing)) ? EnumActionResult.SUCCESS : super.onItemUse(playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+                return this.tryPlace(player, stack, hand, world, pos.offset(facing)) ? EnumActionResult.SUCCESS : super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
             }
             else{
                 return EnumActionResult.FAIL;
@@ -174,17 +174,17 @@ public class BlockSlabs extends BlockBase{
             return worldIn.getBlockState(pos.offset(side)).getBlock() == this.block || super.canPlaceBlockOnSide(worldIn, pos, side, player, stack);
         }
 
-        private boolean tryPlace(EntityPlayer player, ItemStack stack, EnumHand hand, World worldIn, BlockPos pos){
-            IBlockState iblockstate = worldIn.getBlockState(pos);
+        private boolean tryPlace(EntityPlayer player, ItemStack stack, EnumHand hand, World world, BlockPos pos){
+            IBlockState iblockstate = world.getBlockState(pos);
 
             if(iblockstate.getBlock() == this.block){
                 BlockSlabs theBlock = (BlockSlabs)this.block;
                 IBlockState newState = theBlock.fullBlock.getStateFromMeta(theBlock.meta);
-                AxisAlignedBB bound = newState.getCollisionBoundingBox(worldIn, pos);
+                AxisAlignedBB bound = newState.getCollisionBoundingBox(world, pos);
 
-                if(bound != Block.NULL_AABB && worldIn.checkNoEntityCollision(bound.offset(pos)) && worldIn.setBlockState(pos, newState, 11)){
-                    SoundType soundtype = theBlock.fullBlock.getSoundType();
-                    worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume()+1.0F)/2.0F, soundtype.getPitch()*0.8F);
+                if(bound != Block.NULL_AABB && world.checkNoEntityCollision(bound.offset(pos)) && world.setBlockState(pos, newState, 11)){
+                	SoundType soundtype = theBlock.fullBlock.getSoundType(theBlock.fullBlock.getDefaultState(), world, pos, player);
+                    world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume()+1.0F)/2.0F, soundtype.getPitch()*0.8F);
 
                     player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
                 }

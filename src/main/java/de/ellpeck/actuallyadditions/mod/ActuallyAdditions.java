@@ -32,7 +32,6 @@ import de.ellpeck.actuallyadditions.mod.misc.apiimpl.MethodHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.proxy.IProxy;
 import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
-import de.ellpeck.actuallyadditions.mod.recipe.FuelHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.TreasureChestHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
@@ -98,7 +97,6 @@ public class ActuallyAdditions{
         ModUtil.LOGGER.info("Starting Initialization Phase...");
 
         BannerHelper.init();
-        FuelHandler.init();
         //InitAchievements.init();
         GuiHandler.init();
         new OreGen();

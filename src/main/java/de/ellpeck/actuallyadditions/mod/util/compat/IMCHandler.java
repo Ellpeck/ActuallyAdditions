@@ -19,7 +19,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public final class IMCHandler{
 
-    private static final Class<? extends Block>[] NO_CARRYING = new Class[]{
+    private static final Class<?>[] NO_CARRYING = new Class<?>[]{
             BlockGiantChest.class,
             BlockWildPlant.class,
             BlockPlant.class,

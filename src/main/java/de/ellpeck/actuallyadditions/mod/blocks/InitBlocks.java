@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
 
 public final class InitBlocks{
 
@@ -117,7 +116,6 @@ public final class InitBlocks{
     public static Block blockCrystalClusterCoal;
     public static Block blockCrystalClusterEmerald;
     public static Block blockCrystalClusterIron;
-    public static final Block FAKE_AIR_BLOCK = new BlockFakeAir();
 
     public static void init(){
         ModUtil.LOGGER.info("Initializing Blocks...");

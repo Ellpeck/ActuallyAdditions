@@ -45,7 +45,7 @@ public final class BannerHelper{
      *                      pattern.
      */
     public static void addCraftingPattern(String name, ItemStack craftingStack){
-        Class[] paramTypes = {String.class, String.class, ItemStack.class};
+        Class<?>[] paramTypes = {String.class, String.class, ItemStack.class};
         Object[] paramValues = {ModUtil.MOD_ID+name, ModUtil.MOD_ID+name, craftingStack};
         EnumHelper.addEnum(BannerPattern.class, (ModUtil.MOD_ID+"_"+name).toUpperCase(Locale.ROOT), paramTypes, paramValues);
     }

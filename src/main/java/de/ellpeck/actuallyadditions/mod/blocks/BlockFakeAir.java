@@ -16,9 +16,9 @@ import net.minecraft.world.World;
 
 public class BlockFakeAir extends Block
 {
-    public BlockFakeAir(){
+    public BlockFakeAir(String name){
         super(Material.AIR);
-        setRegistryName("actuallyadditions:block_oil");
+        setRegistryName(name);
         setUnlocalizedName("stop");
         RegistryHandler.BLOCKS_TO_REGISTER.add(this);
     }

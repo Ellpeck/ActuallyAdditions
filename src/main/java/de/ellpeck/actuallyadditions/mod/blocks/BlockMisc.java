@@ -97,5 +97,11 @@ public class BlockMisc extends BlockBase{
         public String getUnlocalizedName(ItemStack stack){
             return stack.getItemDamage() >= ALL_MISC_BLOCKS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+"_"+ALL_MISC_BLOCKS[stack.getItemDamage()].name;
         }
+
+        @Override
+        public int getItemBurnTime(ItemStack stack) {
+            if(stack.getMetadata() == TheMiscBlocks.CHARCOAL_BLOCK.ordinal()) return 16000;
+        	return super.getItemBurnTime(stack);
+        }
     }
 }

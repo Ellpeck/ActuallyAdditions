@@ -133,7 +133,8 @@ public class TileEntityItemViewer extends TileEntityBase{
         return this.itemHandler.getNormalHandler();
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
         if(ActuallyAdditions.commonCapsLoaded){
             if(capability == SlotlessItemHandlerConfig.CAPABILITY){

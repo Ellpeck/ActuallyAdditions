@@ -76,7 +76,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
                 return ((TileEntityPhantomRedstoneface)tile).providesStrong[side.ordinal()];
             }
         }
-        return super.getStrongPower(state, world, pos, side);
+        return 0;
     }
 
     @Override
