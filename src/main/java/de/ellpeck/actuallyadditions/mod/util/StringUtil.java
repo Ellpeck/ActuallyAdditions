@@ -46,6 +46,11 @@ public final class StringUtil{
     	return net.minecraft.util.text.translation.I18n.translateToLocal(langKey);
     }
     
+    @SuppressWarnings("deprecation")//Configs why must you need to be translated.
+	public static String badTranslate(String someUnlocAAItemName) {
+    	return net.minecraft.util.text.translation.I18n.translateToLocal("item.actuallyadditions."+someUnlocAAItemName+".name");
+    }
+    
     @SideOnly(Side.CLIENT)
     public static void drawSplitString(FontRenderer renderer, String strg, int x, int y, int width, int color, boolean shadow){
         List<String> list = renderer.listFormattedStringToWidth(strg, width);

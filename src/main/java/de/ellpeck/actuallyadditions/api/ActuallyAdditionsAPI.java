@@ -126,7 +126,7 @@ public final class ActuallyAdditionsAPI{
      * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
      */
     public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
-        CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputTwo, outputTwoChance));
+        CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputTwo == null ? ItemStack.EMPTY : outputTwo, outputTwoChance));
     }
 
     /**

@@ -10,18 +10,22 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
+import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
+import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 
-public class ItemSwordAA extends ItemSword{
+public class ItemSwordAA extends ItemSword implements IDisableableItem {
 
     private final String name;
     private final EnumRarity rarity;
     private final ItemStack repairItem;
+    private final boolean disabled;
 
     public ItemSwordAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, EnumRarity rarity){
         super(toolMat);
@@ -30,7 +34,8 @@ public class ItemSwordAA extends ItemSword{
         this.name = unlocalizedName;
         this.rarity = rarity;
 
-        this.register();
+        this.disabled = ConfigurationHandler.config.getBoolean("Disable: " + StringUtil.badTranslate(name), "Tool Control", false, "This will disable the " + StringUtil.badTranslate(name) +". It will not be registered.");
+        if(!disabled) this.register();
     }
 
     private void register(){
@@ -65,4 +70,9 @@ public class ItemSwordAA extends ItemSword{
     public EnumRarity getRarity(ItemStack stack){
         return this.rarity;
     }
+
+	@Override
+	public boolean isDisabled() {
+		return disabled;
+	}
 }

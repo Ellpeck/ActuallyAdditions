@@ -44,7 +44,7 @@ public class EntryButton extends GuiButton{
             this.mouseDragged(minecraft, mouseX, mouseY);
 
             int textOffsetX = 0;
-            if(StackUtil.isValid(this.stackToRender)){
+            if(StackUtil.isValid(this.stackToRender == null ? ItemStack.EMPTY : this.stackToRender)){
                 GlStateManager.pushMatrix();
                 AssetUtil.renderStackToGui(this.stackToRender, this.x-4, this.y, 0.725F);
                 GlStateManager.popMatrix();

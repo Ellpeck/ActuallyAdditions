@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.chapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
@@ -38,6 +39,7 @@ public class BookletChapter implements IBookletChapter{
         this.identifier = identifier;
         this.entry = entry;
         this.displayStack = displayStack;
+        if(displayStack.getItem() instanceof IDisableableItem && ((IDisableableItem) displayStack.getItem()).isDisabled()) displayStack = ItemStack.EMPTY;
         this.priority = priority;
         this.color = TextFormatting.RESET;
 

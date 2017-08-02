@@ -10,20 +10,24 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
+import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnergizer;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
-public class ItemArmorAA extends ItemArmor{
+public class ItemArmorAA extends ItemArmor implements IDisableableItem{
 
     private final ItemStack repairItem;
     private final String name;
     private final EnumRarity rarity;
-
+    private final boolean disabled;
+    
     public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem){
         this(name, material, type, repairItem, EnumRarity.RARE);
     }
@@ -33,8 +37,8 @@ public class ItemArmorAA extends ItemArmor{
         this.repairItem = repairItem;
         this.name = name;
         this.rarity = rarity;
-
-        this.register();
+        this.disabled = ConfigurationHandler.config.getBoolean("Disable: " + StringUtil.badTranslate(name), "Tool Control", false, "This will disable the " + StringUtil.badTranslate(name) +". It will not be registered.");
+        if(!disabled) this.register();
     }
 
     private void register(){
@@ -63,5 +67,10 @@ public class ItemArmorAA extends ItemArmor{
     @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         return StackUtil.isValid(this.repairItem) && ItemUtil.areItemsEqual(this.repairItem, stack, false);
+    }
+    
+    @Override
+    public boolean isDisabled() {
+    	return disabled;
     }
 }

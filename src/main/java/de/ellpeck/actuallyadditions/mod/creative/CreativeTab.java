@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.creative;
 
+import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -349,7 +350,7 @@ public class CreativeTab extends CreativeTabs{
     }
 
     public void add(Item item){
-        if(item != null){
+        if(item != null && (!(item instanceof IDisableableItem) || (item instanceof IDisableableItem && !((IDisableableItem) item).isDisabled()))){
             item.getSubItems(INSTANCE, this.list);
         }
     }

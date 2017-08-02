@@ -129,6 +129,8 @@ public class ActuallyAdditions{
         InitBooklet.postInit();
         proxy.postInit(event);
 
+        ConfigurationHandler.redefineConfigs();
+        
         ModUtil.LOGGER.info("PostInitialization Finished.");
     }
 

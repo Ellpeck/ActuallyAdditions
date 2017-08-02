@@ -2,6 +2,7 @@
 itemGroup.actuallyadditions=Actually Additions
 achievement.page.actuallyadditions=Actually Additions
 actuallyadditions.lolWutHowUDoDis.name=This is bugged. Throw it away. Please.
+tooltip.actuallyadditions.disabled=Disabled Object
 
 #Fluids
 fluid.actuallyadditions.refinedcanolaoil=Refined Canola Oil

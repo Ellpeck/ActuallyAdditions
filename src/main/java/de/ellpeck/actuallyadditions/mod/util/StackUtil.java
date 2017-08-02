@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
@@ -33,8 +35,10 @@ public final class StackUtil{
         }
     }
 
-    public static boolean isValid(ItemStack stack){
-        return stack != null && !stack.isEmpty();
+    public static boolean isValid(ItemStack stack){//Stacks are nonnull.  If we are making null stacks we're stupid anyway.
+    	Item i = stack.getItem();
+    	if(i instanceof IDisableableItem) return !((IDisableableItem) i).isDisabled();
+        return !stack.isEmpty();
     }
 
     public static ItemStack getNull(){

@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.util.crafting;
 
+import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import de.ellpeck.actuallyadditions.mod.RegistryHandler;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
@@ -37,6 +38,8 @@ public final class RecipeHelper{
      * This adds the recipe to the list of crafting recipes.  Cares about names.
      */
     public static void addRecipe(String name, IRecipe rec){
+    	Item i = rec.getRecipeOutput().getItem();
+    	if(i instanceof IDisableableItem && ((IDisableableItem) i).isDisabled()) rec = new BlankRecipe();
         if(rec.getRegistryName() == null){
             RECIPE_LIST.add(rec.setRegistryName(new ResourceLocation(MODID, name)));
         }

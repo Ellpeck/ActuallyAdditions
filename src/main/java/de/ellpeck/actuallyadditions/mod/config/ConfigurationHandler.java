@@ -33,7 +33,7 @@ public class ConfigurationHandler{
         redefineConfigs();
     }
 
-    private static void redefineConfigs(){
+    public static void redefineConfigs(){
         ConfigValues.defineConfigValues(config);
 
         if(config.hasChanged()){

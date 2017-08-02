@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import de.ellpeck.actuallyadditions.mod.util.crafting.BlankRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -128,8 +129,13 @@ public class PageCrafting extends BookletPage{
         Ingredient[] ings = new Ingredient[9];
         int width = 3;
         int height = 3;
-
-        if(recipe instanceof ShapedRecipes){
+        
+        if(recipe instanceof BlankRecipe){
+            this.recipeTypeLocKey = "tooltip."+ModUtil.MOD_ID+".disabled";
+            gui.addOrModifyItemRenderer(recipe.getRecipeOutput(), startX+100, startY+25, 1F, false);
+            return;
+        }
+        else if(recipe instanceof ShapedRecipes){
             ShapedRecipes shaped = (ShapedRecipes)recipe;
             width = shaped.recipeWidth;
             height = shaped.recipeHeight;
