@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.data;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
+import de.ellpeck.actuallyadditions.mod.util.AwfulUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -98,7 +99,7 @@ public class WorldData extends WorldSavedData{
                 ModUtil.LOGGER.info("Created temporary WorldData to cache data on the client!");
             }
         }
-
+        if(data == null) AwfulUtil.callTheFuckinPolice(world, forceLoad, data);
         return data;
     }
 

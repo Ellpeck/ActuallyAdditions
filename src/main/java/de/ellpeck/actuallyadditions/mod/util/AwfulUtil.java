@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import java.util.Collections;
@@ -94,5 +95,15 @@ public final class AwfulUtil{
 
         Collections.shuffle(list, rand);
         return list;
+    }
+    
+    public static void callTheFuckinPolice(Object... stuff) {
+    	int i = 0;
+    	String error = "Actually Additions: Something is incredibly wrong.  I don't know what you did, or how this method got called.  But something is just completely wrong.  This method was provided with ";
+    	for(Object k : stuff) {
+    		error += ("\n" + i++ + ":" + (k == null ? "null" : (k.getClass() + "<- CLASS | INSTANCE ->" + k.toString() + ", ")));
+    	}
+    	error += "\n" + "The current side is: " + FMLCommonHandler.instance().getEffectiveSide();
+    	throw new IllegalStateException(error);
     }
 }
