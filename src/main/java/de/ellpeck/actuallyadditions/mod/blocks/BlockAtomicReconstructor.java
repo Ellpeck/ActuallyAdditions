@@ -40,6 +40,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -207,5 +208,20 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
             String base = "tile."+ModUtil.MOD_ID+"."+((BlockAtomicReconstructor)this.block).getBaseName()+".info.";
             tooltip.add(StringUtil.localize(base+"1."+this.toPick1)+" "+StringUtil.localize(base+"2."+this.toPick2));
         }
+    }
+    
+    @Override
+    public boolean hasComparatorInputOverride(IBlockState state){
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos){
+    	TileEntity t = world.getTileEntity(pos);
+    	int i = 0;
+    	if (t instanceof TileEntityAtomicReconstructor) {
+    		i = ((TileEntityAtomicReconstructor) t).getEnergy();
+    	}
+        return MathHelper.clamp(i / 20000, 0, 15);
     }
 }
