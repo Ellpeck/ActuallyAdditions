@@ -285,6 +285,32 @@ public class MethodHandler implements IMethodHandler{
         }
         return hasWorkedOnce;
     }
+    
+    @Override
+    public boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance){
+        boolean hasWorkedOnce = false;
+        for(ItemStack input : inputs){
+            if(StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null){
+                    if(StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
+                        ItemStack outputOneCopy = outputOne.copy();
+                        outputOneCopy = StackUtil.setStackSize(outputOneCopy, outputOneAmount);
+
+                        if(outputTwo == null || outputTwo.isEmpty()){
+                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getNull(), 0);
+                            hasWorkedOnce = true;
+                        }
+                        else if(StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
+                        	ItemStack outputTwoCopy = outputTwo.copy();
+                            outputTwoCopy = StackUtil.setStackSize(outputTwoCopy, outputTwoAmount);
+
+                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, outputTwoCopy, outputTwoChance);
+                            hasWorkedOnce = true;
+                            }
+                        }
+                    }
+                }
+        return hasWorkedOnce;
+    }
 
     @Override
     public IBookletPage generateTextPage(int id){

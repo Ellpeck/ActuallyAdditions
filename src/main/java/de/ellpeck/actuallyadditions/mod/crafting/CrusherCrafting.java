@@ -71,13 +71,13 @@ public final class CrusherCrafting{
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.DOUBLE_PLANT, 1, 5), new ItemStack(Items.DYE, 4, 9), null, 0);
         MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
 
-        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreRedstone", false), OreDictionary.getOres("dustRedstone", false), 10, null, 0, 0);
-        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreLapis", false), OreDictionary.getOres("gemLapis", false), 12, null, 0, 0);
+        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreRedstone", false), new ItemStack(Items.REDSTONE), 10, null, 0, 0);
+        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreLapis", false), new ItemStack(Items.DYE, 1, 4), 12, null, 0, 0);
         ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("coal", false), OreDictionary.getOres("dustCoal", false), 1, null, 0, 0);
-        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreCoal", false), OreDictionary.getOres("coal", false), 3, null, 0, 0);
-        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("blockCoal", false), OreDictionary.getOres("coal", false), 9, null, 0, 0);
-        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreQuartz", false), OreDictionary.getOres("gemQuartz", false), 3, null, 0, 0);
-        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("cobblestone", false), OreDictionary.getOres("sand", false), 1, null, 0, 0);
+        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreCoal", false), new ItemStack(Items.COAL), 3, null, 0, 0);
+        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("blockCoal", false), new ItemStack(Items.COAL), 9, null, 0, 0);
+        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreQuartz", false), new ItemStack(Items.QUARTZ), 3, null, 0, 0);
+        ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("cobblestone", false), new ItemStack(Blocks.SAND), 1, null, 0, 0);
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.GRAVEL), new ItemStack(Items.FLINT), new ItemStack(Items.FLINT), 50);
         ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("stone", false), OreDictionary.getOres("cobblestone", false), 1, null, 0, 0);
 

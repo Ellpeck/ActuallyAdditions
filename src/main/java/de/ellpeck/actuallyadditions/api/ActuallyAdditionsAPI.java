@@ -144,6 +144,11 @@ public final class ActuallyAdditionsAPI{
         return methodHandler.addCrusherRecipes(inputs, outputOnes, outputOneAmounts, outputTwos, outputTwoAmounts, outputTwoChance);
     }
 
+    //Same thing as above, but with ItemStack outputs.
+    public static boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance){
+        return methodHandler.addCrusherRecipes(inputs, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance);
+    }
+
     /**
      * Adds a Recipe to the Oil generator
      *

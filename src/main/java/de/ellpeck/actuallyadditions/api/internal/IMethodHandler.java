@@ -45,6 +45,8 @@ public interface IMethodHandler{
     boolean invokeReconstructor(IAtomicReconstructor tile);
 
     boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance);
+    
+    boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance);
 
     IBookletPage generateTextPage(int id);
 
