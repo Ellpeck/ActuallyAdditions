@@ -89,6 +89,7 @@ public class BlockTinyTorch extends BlockBase{
         return false;
     }
     
+    @Override
     public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing facing) {
         return BlockFaceShape.UNDEFINED;
     }
