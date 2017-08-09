@@ -89,7 +89,7 @@ public class WorldGenLushCaves{
                                     IBlockState state = world.getBlockState(pos);
                                     IBlockState stateSide = world.getBlockState(posSide);
 
-                                    if(state.getBlock().isAir(state, world, pos) && stateSide.getBlock().isSideSolid(stateSide, world, posSide, side.getOpposite())){
+                                    if(state.getBlock().isAir(state, world, pos) && stateSide.isSideSolid(world, posSide, side.getOpposite())){
                                         Block block = CRYSTAL_CLUSTERS[rand.nextInt(CRYSTAL_CLUSTERS.length)];
                                         world.setBlockState(pos, block.getDefaultState().withProperty(BlockDirectional.FACING, side.getOpposite()), 2);
                                     }

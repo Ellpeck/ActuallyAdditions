@@ -44,7 +44,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
         super(4.0F, -2F, toolMat, repairItem, unlocalizedName, rarity, new HashSet<Block>());
         this.color = color;
 
-        this.setMaxDamage(this.getMaxDamage()*4);
+        this.setMaxDamage(toolMat.getMaxUses()*4);
         this.setHarvestLevels(toolMat.getHarvestLevel());
     }
 
@@ -52,7 +52,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
         super(4.0F, -2F, toolMat, repairItem, unlocalizedName, rarity, new HashSet<Block>());
         this.color = color;
 
-        this.setMaxDamage(this.getMaxDamage()*4);
+        this.setMaxDamage(toolMat.getMaxUses()*4);
         this.setHarvestLevels(toolMat.getHarvestLevel());
     }
 

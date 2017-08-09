@@ -23,12 +23,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 
-import java.util.List;
 import java.util.Random;
 
 public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarity, IHasModel{
@@ -93,7 +93,8 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
         if(this.getMetaFromState(state) >= 7){
             if(!world.isRemote){
 
-                List<ItemStack> drops = this.getDrops(world, pos, state, 0);
+                NonNullList<ItemStack> drops = NonNullList.create();
+                this.getDrops(drops, world, pos, state, 0);
                 boolean deductedSeedSize = false;
                 for(ItemStack drop : drops){
                     if(StackUtil.isValid(drop)){

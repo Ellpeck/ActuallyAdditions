@@ -213,11 +213,11 @@ public final class InitBlocks{
         blockQuartzWall = new BlockWallAA("block_quartz_wall", blockMisc, TheMiscBlocks.QUARTZ.ordinal());
         blockChiseledQuartzWall = new BlockWallAA("block_chiseled_quartz_wall", blockMisc, TheMiscBlocks.QUARTZ_CHISELED.ordinal());
         blockPillarQuartzWall = new BlockWallAA("block_pillar_quartz_wall", blockMisc, TheMiscBlocks.QUARTZ_PILLAR.ordinal());
-        blockQuartzStair = new BlockStair(blockMisc, "block_quartz_stair", TheMiscBlocks.QUARTZ.ordinal());
-        blockChiseledQuartzStair = new BlockStair(blockMisc, "block_chiseled_quartz_stair", TheMiscBlocks.QUARTZ_CHISELED.ordinal());
-        blockPillarQuartzStair = new BlockStair(blockMisc, "block_pillar_quartz_stair", TheMiscBlocks.QUARTZ_PILLAR.ordinal());
-        blockQuartzSlab = new BlockSlabs("block_quartz_slab", blockMisc, TheMiscBlocks.QUARTZ.ordinal());
-        blockChiseledQuartzSlab = new BlockSlabs("block_chiseled_quartz_slab", blockMisc, TheMiscBlocks.QUARTZ_CHISELED.ordinal());
-        blockPillarQuartzSlab = new BlockSlabs("block_pillar_quartz_slab", blockMisc, TheMiscBlocks.QUARTZ_PILLAR.ordinal());
+        blockQuartzStair = new BlockStair(blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.QUARTZ), "block_quartz_stair");
+        blockChiseledQuartzStair = new BlockStair(blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_CHISELED), "block_chiseled_quartz_stair");
+        blockPillarQuartzStair = new BlockStair(blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_PILLAR), "block_pillar_quartz_stair");
+        blockQuartzSlab = new BlockSlabs("block_quartz_slab", blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.QUARTZ));
+        blockChiseledQuartzSlab = new BlockSlabs("block_chiseled_quartz_slab", blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_CHISELED));
+        blockPillarQuartzSlab = new BlockSlabs("block_pillar_quartz_slab", blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_PILLAR));
     }
 }

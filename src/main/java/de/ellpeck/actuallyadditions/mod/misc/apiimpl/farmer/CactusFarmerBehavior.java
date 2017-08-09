@@ -19,10 +19,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class CactusFarmerBehavior implements IFarmerBehavior{
 
@@ -62,7 +61,8 @@ public class CactusFarmerBehavior implements IFarmerBehavior{
                         BlockPos up = pos.up(i);
                         IBlockState upState = world.getBlockState(up);
                         if(upState.getBlock() instanceof BlockCactus){
-                            List<ItemStack> drops = upState.getBlock().getDrops(world, up, upState, 0);
+                            NonNullList<ItemStack> drops = NonNullList.create();
+                            upState.getBlock().getDrops(drops, world, up, upState, 0);
 
                             if(drops != null && !drops.isEmpty()){
                                 if(farmer.addToOutputInventory(drops, false)){

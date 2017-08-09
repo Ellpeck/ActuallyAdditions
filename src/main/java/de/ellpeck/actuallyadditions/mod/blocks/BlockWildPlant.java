@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -35,8 +36,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 public class BlockWildPlant extends BlockBushBase{
 
@@ -73,9 +72,10 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
         int metadata = this.getMetaFromState(state);
-        return metadata >= ALL_WILD_PLANTS.length ? null : ALL_WILD_PLANTS[metadata].wildVersionOf.getDrops(world, pos, ALL_WILD_PLANTS[metadata].wildVersionOf.getStateFromMeta(7), fortune);
+        if(metadata < ALL_WILD_PLANTS.length) 
+        	ALL_WILD_PLANTS[metadata].wildVersionOf.getDrops(drops, world, pos, ALL_WILD_PLANTS[metadata].wildVersionOf.getDefaultState().withProperty(BlockCrops.AGE, 7), fortune);
     }
 
     @Override

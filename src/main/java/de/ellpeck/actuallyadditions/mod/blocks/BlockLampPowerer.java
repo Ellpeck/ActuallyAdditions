@@ -71,16 +71,15 @@ public class BlockLampPowerer extends BlockBase{
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         if(block instanceof BlockColoredLamp){
-            boolean isOn = ((BlockColoredLamp)block).isOn;
-            int meta = block.getMetaFromState(state);
+            boolean isOn = ((BlockColoredLamp) block).isOn;
             if(powered){
                 if(!isOn){
-                    world.setBlockState(pos, InitBlocks.blockColoredLampOn.getStateFromMeta(meta), 2);
+                    world.setBlockState(pos, InitBlocks.blockColoredLampOn.getDefaultState().withProperty(BlockColoredLamp.TYPE, state.getValue(BlockColoredLamp.TYPE)), 2);
                 }
             }
             else{
                 if(isOn){
-                    world.setBlockState(pos, InitBlocks.blockColoredLamp.getStateFromMeta(meta), 2);
+                    world.setBlockState(pos, InitBlocks.blockColoredLamp.getDefaultState().withProperty(BlockColoredLamp.TYPE, state.getValue(BlockColoredLamp.TYPE)), 2);
                 }
             }
 
