@@ -482,4 +482,9 @@ public class ItemDrill extends ItemEnergy{
         }
         return false;
     }
+    
+    @Override
+    public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
+        return !(newStack.isItemEqual(oldStack));
+    }
 }
