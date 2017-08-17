@@ -23,8 +23,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -59,9 +62,10 @@ public class LensColor extends Lens{
                 int meta = block.getMetaFromState(state);
                 ItemStack returnStack = this.tryConvert(new ItemStack(block, 1, meta), hitState, hitBlock, tile);
                 if(returnStack != null && returnStack.getItem() instanceof ItemBlock){
-                    tile.getWorldObject().setBlockState(hitBlock, Block.getBlockFromItem(returnStack.getItem()).getStateFromMeta(returnStack.getItemDamage()), 2);
-
-                    tile.extractEnergy(ENERGY_USE);
+                	Block toPlace = Block.getBlockFromItem(returnStack.getItem());
+                	IBlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, EnumFacing.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
+                    tile.getWorldObject().setBlockState(hitBlock, state2Place, 2);
+                    tile.extractEnergy(ENERGY_USE); 
                 }
             }
 

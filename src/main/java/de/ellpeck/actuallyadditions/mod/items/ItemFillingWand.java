@@ -66,23 +66,15 @@ public class ItemFillingWand extends ItemEnergy{
         if(!stack.hasTagCompound()){
             stack.setTagCompound(new NBTTagCompound());
         }
-        NBTTagCompound compound = stack.getTagCompound();
 
-        Block block = state.getBlock();
-        compound.setString("Block", block.getRegistryName().toString());
-        compound.setInteger("Meta", block.getMetaFromState(state));
+        stack.getTagCompound().setInteger("state", Block.getStateId(state));
     }
+    
+    //I think changing these to state ID is a good idea, but it will break all currently in-use wands, but whatever. It'll have to be done in 1.13 anyway.
 
     private static IBlockState loadBlock(ItemStack stack){
         if(stack.hasTagCompound()){
-            NBTTagCompound compound = stack.getTagCompound();
-            String blockName = compound.getString("Block");
-            int meta = compound.getInteger("Meta");
-
-            Block block = Block.getBlockFromName(blockName);
-            if(block != null){
-                return block.getStateFromMeta(meta);
-            }
+            return Block.getStateById(stack.getTagCompound().getInteger("state"));
         }
         return null;
     }

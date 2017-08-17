@@ -22,10 +22,15 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
@@ -159,8 +164,8 @@ public class LensMining extends Lens{
 
                     if(tile.getEnergy() >= adaptedUse){
                         Block block = Block.getBlockFromItem(stack.getItem());
-                        if(block != null){
-                            IBlockState state = block.getStateFromMeta(stack.getItemDamage());
+                        if(block != Blocks.AIR){
+                        	IBlockState state = block.getStateForPlacement(tile.getWorldObject(), hitPos, EnumFacing.UP, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
                             tile.getWorldObject().setBlockState(hitPos, state, 2);
 
                             tile.getWorldObject().playEvent(2001, hitPos, Block.getStateId(state));

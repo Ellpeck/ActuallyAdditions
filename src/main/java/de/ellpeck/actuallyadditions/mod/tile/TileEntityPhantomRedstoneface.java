@@ -39,8 +39,8 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface{
                     if(boundBlock != null){
                         for(int i = 0; i < EnumFacing.values().length; i++){
                             EnumFacing facing = EnumFacing.values()[i];
-                            this.providesWeak[i] = boundBlock.getWeakPower(boundState, this.world, this.boundPosition, facing);
-                            this.providesStrong[i] = boundBlock.getStrongPower(boundState, this.world, this.boundPosition, facing);
+                            this.providesWeak[i] = boundState.getWeakPower(this.world, this.boundPosition, facing);
+                            this.providesStrong[i] = boundState.getStrongPower(this.world, this.boundPosition, facing);
                         }
                     }
                 }

@@ -25,8 +25,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
-import java.util.List;
-
 public class NetherWartFarmerBehavior implements IFarmerBehavior{
 
     @Override

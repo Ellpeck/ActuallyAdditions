@@ -133,7 +133,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         if(this.isBoundThingInRange()){
             if(this.isBreaker){
                 Block blockToBreak = this.world.getBlockState(this.boundPosition).getBlock();
-                if(blockToBreak != null && blockToBreak.getBlockHardness(this.world.getBlockState(this.boundPosition), this.world, this.boundPosition) > -1.0F){
+                if(blockToBreak != null && this.world.getBlockState(this.boundPosition).getBlockHardness(this.world, this.boundPosition) > -1.0F){
                     ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
                     drops.addAll(blockToBreak.getDrops(this.world, this.boundPosition, this.world.getBlockState(this.boundPosition), 0));
 

@@ -208,10 +208,9 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
         if(this.isBoundThingInRange()){
             BlockPos pos = this.getBoundPosition();
             IBlockState state = this.world.getBlockState(pos);
-            Block block = state.getBlock();
 
-            if(block.hasComparatorInputOverride(state)){
-                return block.getComparatorInputOverride(state, this.world, pos);
+            if(state.hasComparatorInputOverride()){
+                return state.getComparatorInputOverride(this.world, pos);
             }
         }
         return 0;
