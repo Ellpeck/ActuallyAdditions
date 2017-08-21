@@ -1,3 +1,13 @@
+# 1.12-r118
+* Added magma blocks as additional sources for the heat collector
+* Fix Experience Solidifier not working with automation
+* Added config option to completely disable tools
+* Fix normal torches attaching to the sides of tiny torches
+* Fix Nether Coal from BWM being made from grinding coal in the Crusher
+* Added Comparator support for the Atomic Reconstructor
+* Fix the Drill progress being reset while it recharges
+* Fix lush caves having blocks from other mods (like marble or limestone) inside of them
+
 # 1.12-r117
 * Resolve a dupe glitch with the advanced precision dropper
 * Made the worm be able to hoe BOP grasses
