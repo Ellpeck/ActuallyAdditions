@@ -41,7 +41,7 @@ public class ItemMagnetRing extends ItemEnergy{
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5){
         if(entity instanceof EntityPlayer && !world.isRemote && !ItemUtil.isEnabled(stack)){
             EntityPlayer player = (EntityPlayer)entity;
-
+            if(player.isCreative() || player.isSpectator()) return;
             if(!entity.isSneaking()){
                 //Get all the Items in the area
                 int range = 5;
