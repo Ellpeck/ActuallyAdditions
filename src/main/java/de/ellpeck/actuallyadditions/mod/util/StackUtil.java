@@ -36,6 +36,7 @@ public final class StackUtil{
     }
 
     public static boolean isValid(ItemStack stack){//Stacks are nonnull.  If we are making null stacks we're stupid anyway.
+    	if(stack == null) AwfulUtil.callTheFuckinPolice("Oh yeah some idiot somewhere threw a null itemstack at us, might've been us, but whatever");
     	Item i = stack.getItem();
     	if(i instanceof IDisableableItem) return !((IDisableableItem) i).isDisabled();
         return !stack.isEmpty();

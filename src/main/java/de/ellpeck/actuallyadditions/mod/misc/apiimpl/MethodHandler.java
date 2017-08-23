@@ -269,7 +269,7 @@ public class MethodHandler implements IMethodHandler{
                         ItemStack outputOneCopy = outputOne.copy();
                         outputOneCopy = StackUtil.setStackSize(outputOneCopy, outputOneAmounts);
 
-                        if(outputTwos == null || outputTwos.isEmpty()){
+                        if(outputTwos.isEmpty()){
                             ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getNull(), 0);
                             hasWorkedOnce = true;
                         }
@@ -300,7 +300,7 @@ public class MethodHandler implements IMethodHandler{
                         ItemStack outputOneCopy = outputOne.copy();
                         outputOneCopy = StackUtil.setStackSize(outputOneCopy, outputOneAmount);
 
-                        if(outputTwo == null || outputTwo.isEmpty()){
+                        if(!StackUtil.isValid(outputTwo)){
                             ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getNull(), 0);
                             hasWorkedOnce = true;
                         }

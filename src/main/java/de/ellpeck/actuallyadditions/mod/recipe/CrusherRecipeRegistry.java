@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public final class CrusherRecipeRegistry{
     public static void registerFinally(){
         ArrayList<String> oresNoResult = new ArrayList<String>();
         int recipeStartedAt = ActuallyAdditionsAPI.CRUSHER_RECIPES.size();
+        final NonNullList<ItemStack> LIST = NonNullList.withSize(1, StackUtil.getNull());
 
         for(String ore : OreDictionary.getOreNames()){
             if(!hasException(ore)){
@@ -38,7 +40,7 @@ public final class CrusherRecipeRegistry{
                         if(ore.substring(0, theCase.theCase.length()).equals(theCase.theCase)){
                             String output = theCase.resultPreString+ore.substring(theCase.theCase.length());
 
-                            if(!ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres(ore, false), OreDictionary.getOres(output, false), theCase.resultAmount, null, 0, 0)){
+                            if(!ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres(ore, false), OreDictionary.getOres(output, false), theCase.resultAmount, LIST, 0, 0)){
                                 if(!oresNoResult.contains(ore)){
                                     oresNoResult.add(ore);
                                 }
@@ -101,7 +103,7 @@ public final class CrusherRecipeRegistry{
 
     public static ItemStack getOutputOnes(ItemStack input){
         CrusherRecipe recipe = getRecipeFromInput(input);
-        return recipe == null ? null : recipe.outputOneStack;
+        return recipe == null ? StackUtil.getNull() : recipe.outputOneStack;
     }
 
     public static CrusherRecipe getRecipeFromInput(ItemStack input){
@@ -115,7 +117,7 @@ public final class CrusherRecipeRegistry{
 
     public static ItemStack getOutputTwos(ItemStack input){
         CrusherRecipe recipe = getRecipeFromInput(input);
-        return recipe == null ? null : recipe.outputTwoStack;
+        return recipe == null ? StackUtil.getNull() : recipe.outputTwoStack;
     }
 
     public static int getOutputTwoChance(ItemStack input){
