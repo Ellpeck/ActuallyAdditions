@@ -18,10 +18,10 @@ import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public final class CrusherRecipeRegistry{
@@ -31,7 +31,6 @@ public final class CrusherRecipeRegistry{
     public static void registerFinally(){
         ArrayList<String> oresNoResult = new ArrayList<String>();
         int recipeStartedAt = ActuallyAdditionsAPI.CRUSHER_RECIPES.size();
-        final NonNullList<ItemStack> LIST = NonNullList.withSize(1, StackUtil.getNull());
 
         for(String ore : OreDictionary.getOreNames()){
             if(!hasException(ore)){
@@ -39,8 +38,8 @@ public final class CrusherRecipeRegistry{
                     if(ore.length() > theCase.theCase.length()){
                         if(ore.substring(0, theCase.theCase.length()).equals(theCase.theCase)){
                             String output = theCase.resultPreString+ore.substring(theCase.theCase.length());
-
-                            if(!ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres(ore, false), OreDictionary.getOres(output, false), theCase.resultAmount, LIST, 0, 0)){
+                            List<ItemStack> outputs = OreDictionary.getOres(output, false);
+                            if(!ActuallyAdditionsAPI.methodHandler.addCrusherRecipes(OreDictionary.getOres(ore, false), outputs.isEmpty() ? StackUtil.getNull() : outputs.get(0), theCase.resultAmount, StackUtil.getNull(), 0, 0)){
                                 if(!oresNoResult.contains(ore)){
                                     oresNoResult.add(ore);
                                 }
