@@ -1,3 +1,7 @@
+# 1.12.1-r119
+* Fix the Crusher crashing servers
+* Make the magnet ring only work in survival mode
+
 # 1.12-r118
 * Added magma blocks as additional sources for the heat collector
 * Fix Experience Solidifier not working with automation
