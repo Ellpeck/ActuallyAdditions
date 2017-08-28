@@ -60,9 +60,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                         ItemStack[] stacks = new ItemStack[chest.getSlots()];
                         for(int i = 0; i < stacks.length; i++){
                             ItemStack aStack = chest.getStackInSlot(i);
-                            if(StackUtil.isValid(aStack)){
                                 stacks[i] = aStack.copy();
-                            }
                         }
 
                         //Set New Block
@@ -70,6 +68,8 @@ public class ItemChestToCrateUpgrade extends ItemBase{
 
                         world.removeTileEntity(pos);
                         world.setBlockState(pos, this.end, 2);
+                        if(!player.capabilities.isCreativeMode)
+                            heldStack.shrink(1);
 
                         //Copy Items into new Chest
                         TileEntity newTileHit = world.getTileEntity(pos);
@@ -84,17 +84,13 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                                 }
                             }
                         }
-
-                        if(!player.capabilities.isCreativeMode){
-                            player.setHeldItem(hand, StackUtil.addStackSize(heldStack, -1));
-                        }
                     }
                 }
-                return world.isRemote ? EnumActionResult.PASS : EnumActionResult.SUCCESS;
+                return EnumActionResult.SUCCESS;
             }
         }
 
-        return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
+        return EnumActionResult.PASS;
     }
 
     @Override

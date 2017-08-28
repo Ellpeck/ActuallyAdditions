@@ -43,6 +43,7 @@ public class BlockGreenhouseGlass extends BlockContainerBase{
     }
 
     @Override
+    @Deprecated
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side){
         IBlockState otherState = world.getBlockState(pos.offset(side));

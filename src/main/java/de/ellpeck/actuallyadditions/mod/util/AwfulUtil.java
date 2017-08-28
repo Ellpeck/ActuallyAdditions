@@ -101,7 +101,7 @@ public final class AwfulUtil{
     	int i = 0;
     	String error = "Actually Additions: Something is incredibly wrong.  I don't know what you did, or how this method got called.  But something is just completely wrong.  This method was provided with ";
     	for(Object k : stuff) {
-    		error += ("\n" + i++ + ":" + (k == null ? "null" : (k.getClass() + "<- CLASS | INSTANCE ->" + k.toString() + ", ")));
+    		error += ("\n" + i++ + ": " + (k == null ? "null" : (k.getClass().getSimpleName() + " <- CLASS | INSTANCE -> " + k.toString() + ", ")));
     	}
     	error += "\n" + "The current side is: " + FMLCommonHandler.instance().getEffectiveSide();
     	throw new IllegalStateException(error);
