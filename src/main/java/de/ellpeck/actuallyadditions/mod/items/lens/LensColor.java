@@ -99,7 +99,7 @@ public class LensColor extends Lens{
             }
         }
 
-        return null;
+        return ItemStack.EMPTY.copy();
     }
 
     @Override
