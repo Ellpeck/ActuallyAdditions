@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.data;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
-import de.ellpeck.actuallyadditions.mod.util.AwfulUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -46,6 +45,12 @@ public class WorldData extends WorldSavedData{
     }
 
     public static WorldData get(World world, boolean forceLoad){
+    	WorldData w = getInternal(world, forceLoad);
+    	if(w == null) ModUtil.LOGGER.error("What the hell how is this stupid thing null again AEWBFINCEMR");
+    	return w == null ? new WorldData(DATA_TAG) : w;
+    }
+
+    private static WorldData getInternal(World world, boolean forceLoad){
         if(forceLoad || data == null){
             if(!world.isRemote){
                 WorldSavedData savedData = world.loadData(WorldData.class, DATA_TAG);
@@ -58,40 +63,8 @@ public class WorldData extends WorldSavedData{
                     data = newData;
                 }
                 else{
-                    data = (WorldData)savedData;
+                    data = (WorldData) savedData;
                     ModUtil.LOGGER.info("Successfully loaded WorldData!");
-                }
-
-                //TODO Remove this part as well
-                if(!legacyLoadWorlds.isEmpty()){
-                    for(File legacyFile : legacyLoadWorlds){
-                        if(legacyFile != null && legacyFile.exists()){
-                            String name = legacyFile.getName();
-
-                            try{
-                                FileInputStream stream = new FileInputStream(legacyFile);
-                                NBTTagCompound compound = CompressedStreamTools.readCompressed(stream);
-                                stream.close();
-                                WorldData data = get(world);
-                                data.readFromNBT(compound, true);
-                                data.markDirty();
-
-                                ModUtil.LOGGER.info("Successfully received and merged legacy WorldData "+name+"!");
-
-                                if(legacyFile.delete()){
-                                    ModUtil.LOGGER.info("Successfully deleted legacy WorldData "+name+"!");
-                                }
-                                else{
-                                    ModUtil.LOGGER.warn("Couldn't delete legacy WorldData file "+name+"!");
-                                }
-                            }
-                            catch(Exception e){
-                                ModUtil.LOGGER.error("Something went wrong trying to load legacy WorldData "+name+"!", e);
-                            }
-                        }
-                    }
-
-                    legacyLoadWorlds.clear();
                 }
             }
             else{
@@ -99,7 +72,6 @@ public class WorldData extends WorldSavedData{
                 ModUtil.LOGGER.info("Created temporary WorldData to cache data on the client!");
             }
         }
-        if(data == null) AwfulUtil.callTheFuckinPolice(world, forceLoad, data);
         return data;
     }
 
