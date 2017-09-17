@@ -23,12 +23,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.List;
 
 public class TileEntityMiner extends TileEntityInventoryBase implements IButtonReactor, IEnergyDisplay{
 
@@ -124,7 +123,8 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
             int meta = block.getMetaFromState(state);
             if(!block.isAir(this.world.getBlockState(pos), this.world, pos)){
                 if(block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
-                    List<ItemStack> drops = block.getDrops(this.world, pos, this.world.getBlockState(pos), 0);
+                	NonNullList<ItemStack> drops = NonNullList.create();
+                    block.getDrops(drops, world, pos, state, 0);
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.world, pos);
 
                     if(chance > 0 && this.world.rand.nextFloat() <= chance){

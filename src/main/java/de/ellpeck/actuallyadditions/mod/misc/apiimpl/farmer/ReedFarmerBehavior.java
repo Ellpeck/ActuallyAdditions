@@ -19,10 +19,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class ReedFarmerBehavior implements IFarmerBehavior{
 
@@ -55,7 +54,8 @@ public class ReedFarmerBehavior implements IFarmerBehavior{
                         BlockPos up = pos.up(i);
                         IBlockState upState = world.getBlockState(up);
                         if(upState.getBlock() instanceof BlockReed){
-                            List<ItemStack> drops = upState.getBlock().getDrops(world, up, upState, 0);
+                        	NonNullList<ItemStack> drops = NonNullList.create();
+                            upState.getBlock().getDrops(drops, world, pos, state, 0);
 
                             if(drops != null && !drops.isEmpty()){
                                 if(farmer.addToOutputInventory(drops, false)){

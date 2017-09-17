@@ -40,7 +40,8 @@ public class BlockWallAA extends BlockBase{
     }
 
 
-    public BlockWallAA(String name, Block base, int meta){
+    @SuppressWarnings("deprecation")
+	public BlockWallAA(String name, Block base, int meta){
         super(base.getDefaultState().getMaterial(), name);
         this.meta = meta;
 
@@ -95,6 +96,7 @@ public class BlockWallAA extends BlockBase{
 
     @Override
     @SideOnly(Side.CLIENT)
+    @Deprecated
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side){
         return side != EnumFacing.DOWN || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }

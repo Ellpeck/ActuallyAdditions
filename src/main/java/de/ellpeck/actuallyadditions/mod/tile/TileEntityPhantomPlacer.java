@@ -21,11 +21,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
 
 public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IButtonReactor{
 
@@ -134,8 +133,8 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             if(this.isBreaker){
                 Block blockToBreak = this.world.getBlockState(this.boundPosition).getBlock();
                 if(blockToBreak != null && this.world.getBlockState(this.boundPosition).getBlockHardness(this.world, this.boundPosition) > -1.0F){
-                    ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-                    drops.addAll(blockToBreak.getDrops(this.world, this.boundPosition, this.world.getBlockState(this.boundPosition), 0));
+                	NonNullList<ItemStack> drops = NonNullList.create();
+                    blockToBreak.getDrops(drops, world, pos, this.world.getBlockState(this.boundPosition), 0);
 
                     if(WorldUtil.addToInventory(this.slots, drops, false)){
                         this.world.playEvent(2001, this.boundPosition, Block.getStateId(this.world.getBlockState(this.boundPosition)));

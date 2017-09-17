@@ -16,12 +16,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
 
@@ -84,7 +83,8 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
                 BlockPos coordsBlock = this.pos.offset(sideToManipulate, i+1);
                 Block blockToBreak = this.world.getBlockState(coordsBlock).getBlock();
                 if(blockToBreak != null && !this.world.isAirBlock(coordsBlock) && this.world.getBlockState(coordsBlock).getBlockHardness(this.world, coordsBlock) > -1.0F){
-                    List<ItemStack> drops = blockToBreak.getDrops(this.world, coordsBlock, this.world.getBlockState(coordsBlock), 0);
+                	NonNullList<ItemStack> drops = NonNullList.create();
+                    blockToBreak.getDrops(drops, world, pos, state, 0);
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.world, coordsBlock);
 
                     if(chance > 0 && this.world.rand.nextFloat() <= chance){

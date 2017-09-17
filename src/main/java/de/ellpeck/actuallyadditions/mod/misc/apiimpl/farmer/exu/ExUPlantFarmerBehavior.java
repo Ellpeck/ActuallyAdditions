@@ -19,11 +19,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public abstract class ExUPlantFarmerBehavior implements IFarmerBehavior{
 
@@ -73,8 +72,8 @@ public abstract class ExUPlantFarmerBehavior implements IFarmerBehavior{
 
             if(reg != null && this.getPlantName().equals(reg.toString())){
                 if(block.getMetaFromState(state) >= this.getMaxStage()){
-                    List<ItemStack> drops = block.getDrops(world, pos, state, 0);
-
+                	NonNullList<ItemStack> drops = NonNullList.create();
+                    block.getDrops(drops, world, pos, state, 0);
                     for(ItemStack stack : drops){
                         if(StackUtil.isValid(stack)){
                             ResourceLocation itemReg = stack.getItem().getRegistryName();

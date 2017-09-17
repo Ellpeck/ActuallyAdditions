@@ -20,10 +20,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class MelonPumpkinFarmerBehavior implements IFarmerBehavior{
 
@@ -56,7 +55,8 @@ public class MelonPumpkinFarmerBehavior implements IFarmerBehavior{
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
             if(block == Blocks.PUMPKIN || block == Blocks.MELON_BLOCK){
-                List<ItemStack> drops = state.getBlock().getDrops(world, pos, state, 0);
+            	NonNullList<ItemStack> drops = NonNullList.create();
+                block.getDrops(drops, world, pos, state, 0);
                 if(drops != null && !drops.isEmpty()){
                     if(farmer.addToOutputInventory(drops, false)){
                         world.playEvent(2001, pos, Block.getStateId(state));

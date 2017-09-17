@@ -25,6 +25,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -103,8 +104,8 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
                 if(((BlockCrops)block).isMaxAge(state)){
                     List<ItemStack> seeds = new ArrayList<ItemStack>();
                     List<ItemStack> other = new ArrayList<ItemStack>();
-
-                    List<ItemStack> drops = block.getDrops(world, pos, state, 0);
+                    NonNullList<ItemStack> drops = NonNullList.create();
+                    block.getDrops(drops, world, pos, state, 0);
                     for(ItemStack stack : drops){
                         if(this.getPlantableFromStack(stack) != null){
                             seeds.add(stack);
