@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.*;
 import de.ellpeck.actuallyadditions.mod.items.lens.ItemLens;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
@@ -248,11 +249,11 @@ public final class InitItems{
         itemTeleStaff = new ItemTeleStaff("item_tele_staff");
         itemWingsOfTheBats = new ItemWingsOfTheBats("item_wings_of_the_bats");
         itemDrill = new ItemDrill("item_drill");
-        itemBattery = new ItemBattery("item_battery", 200000, 1000);
-        itemBatteryDouble = new ItemBattery("item_battery_double", 350000, 5000);
-        itemBatteryTriple = new ItemBattery("item_battery_triple", 600000, 10000);
-        itemBatteryQuadruple = new ItemBattery("item_battery_quadruple", 1000000, 30000);
-        itemBatteryQuintuple = new ItemBattery("item_battery_quintuple", 2000000, 100000);
+        itemBattery = new ItemBattery("item_battery", ConfigIntValues.SINGLE_BATTERY_ENERGY_CAPACITY.getValue(), ConfigIntValues.SINGLE_BATTERY_ENERGY_TRANSFER.getValue());
+        itemBatteryDouble = new ItemBattery("item_battery_double", ConfigIntValues.DOUBLE_BATTERY_ENERGY_CAPACITY.getValue(), ConfigIntValues.DOUBLE_BATTERY_ENERGY_TRANSFER.getValue());
+        itemBatteryTriple = new ItemBattery("item_battery_triple", ConfigIntValues.TRIPLE_BATTERY_ENERGY_CAPACITY.getValue(), ConfigIntValues.TRIPLE_BATTERY_ENERGY_TRANSFER.getValue());
+        itemBatteryQuadruple = new ItemBattery("item_battery_quadruple", ConfigIntValues.QUADRUPLE_BATTERY_ENERGY_CAPACITY.getValue(), ConfigIntValues.QUADRUPLE_BATTERY_ENERGY_TRANSFER.getValue());
+        itemBatteryQuintuple = new ItemBattery("item_battery_quintuple", ConfigIntValues.QUINTUPLE_BATTERY_ENERGY_CAPACITY.getValue(), ConfigIntValues.QUINTUPLE_BATTERY_ENERGY_TRANSFER.getValue());
         itemDrillUpgradeSpeed = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED, "item_drill_upgrade_speed");
         itemDrillUpgradeSpeedII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_II, "item_drill_upgrade_speed_ii");
         itemDrillUpgradeSpeedIII = new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_III, "item_drill_upgrade_speed_iii");
