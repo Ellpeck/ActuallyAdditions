@@ -1,3 +1,8 @@
+# 1.12.1-r120
+* Fix crate upgrades not being consumed
+* Fix the lens of color crashing on invalid input
+* Updated to new getDrops method for Farmer.  **May cause issues with other mods overriding the wrong method**
+
 # 1.12.1-r119
 * Fix the Crusher crashing servers
 * Make the magnet ring only work in survival mode
