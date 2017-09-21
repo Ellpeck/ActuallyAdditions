@@ -10,9 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigDoubleValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -42,17 +48,12 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 public class ItemDrill extends ItemEnergy{
 
     public static final int HARVEST_LEVEL = 4;
-    private static final int ENERGY_USE = 100;
 
     public ItemDrill(String name){
-        super(250000, 1000, name);
+        super(ConfigIntValues.DRILL_ENERGY_CAPACITY.getValue(), ConfigIntValues.DRILL_ENERGY_TRANSFER.getValue(), name);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
 
@@ -191,7 +192,7 @@ public class ItemDrill extends ItemEnergy{
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
 
         if(slot == EntityEquipmentSlot.MAINHAND){
-            map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Drill Modifier", this.getEnergyStored(stack) >= ENERGY_USE ? 8.0F : 0.1F, 0));
+            map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Drill Modifier", this.getEnergyStored(stack) >= ConfigIntValues.DRILL_ENERGY_USE.getValue() ? 8.0F : 0.1F, 0));
             map.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool Modifier", -2.5F, 0));
         }
 
@@ -270,41 +271,41 @@ public class ItemDrill extends ItemEnergy{
      * @return The Energy use per Block
      */
     public int getEnergyUsePerBlock(ItemStack stack){
-        int use = ENERGY_USE;
+        double energyToUse = ConfigIntValues.DRILL_ENERGY_USE.getValue();
 
         //Speed
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
-            use += 50;
+            energyToUse *= ConfigDoubleValues.DRILL_SPEED_I_COST_MULTIPLIER.getValue();
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
-                use += 75;
+                energyToUse *= ConfigDoubleValues.DRILL_SPEED_II_COST_MULTIPLIER.getValue();
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)){
-                    use += 175;
+                    energyToUse *= ConfigDoubleValues.DRILL_SPEED_III_COST_MULTIPLIER.getValue();
                 }
             }
         }
 
         //Silk Touch
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
-            use += 100;
+            energyToUse *= ConfigDoubleValues.DRILL_SILK_TOUCH_COST_MULTIPLIER.getValue();
         }
 
         //Fortune
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)){
-            use += 40;
+            energyToUse *= ConfigDoubleValues.DRILL_FORTUNE_I_COST_MULTIPLIER.getValue();
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II)){
-                use += 80;
+                energyToUse *= ConfigDoubleValues.DRILL_FORTUNE_II_COST_MULTIPLIER.getValue();
             }
         }
 
         //Size
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
-            use += 10;
+            energyToUse *= ConfigDoubleValues.DRILL_SIZE_3_COST_MULTIPLIER.getValue();
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                use += 30;
+                energyToUse *= ConfigDoubleValues.DRILL_SIZE_5_COST_MULTIPLIER.getValue();
             }
         }
 
-        return use;
+        return (int) energyToUse;
     }
 
     /**
@@ -482,7 +483,7 @@ public class ItemDrill extends ItemEnergy{
         }
         return false;
     }
-    
+
     @Override
     public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
         return !(newStack.isItemEqual(oldStack));
