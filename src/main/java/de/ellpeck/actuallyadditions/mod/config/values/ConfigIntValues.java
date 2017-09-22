@@ -46,7 +46,11 @@ public enum ConfigIntValues{
     QUADRUPLE_BATTERY_ENERGY_CAPACITY("Quadruple Battery: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 1000000, 1000, 1000000000, "Amount of energy Quadruple Battery can store"),
     QUADRUPLE_BATTERY_ENERGY_TRANSFER("Quadruple Battery: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 30000, 1, 1000000000, "Amount of energy Quadruple Battery can send or receive per tick"),
     QUINTUPLE_BATTERY_ENERGY_CAPACITY("Quintuple Battery: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 2000000, 1000, 1000000000, "Amount of energy Quintuple Battery can store"),
-    QUINTUPLE_BATTERY_ENERGY_TRANSFER("Quintuple Battery: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 100000, 1, 1000000000, "Amount of energy Quintuple Battery can send or receive per tick");
+    QUINTUPLE_BATTERY_ENERGY_TRANSFER("Quintuple Battery: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 100000, 1, 1000000000, "Amount of energy Quintuple Battery can send or receive per tick"),
+
+    FILLER_ENERGY_CAPACITY("Handheld Filler: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 500000, 1000, 1000000000, "Amount of energy Handheld Filler can store"),
+    FILLER_ENERGY_TRANSFER("Handheld Filler: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Handheld Filler can receive per tick"),
+    FILLER_ENERGY_USE("Handheld Filler: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 1500, 1, 1000000000, "Amount of energy used by Handheld Filler to perform action");
 
     public final String name;
     public final String category;
