@@ -10,8 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
+import java.util.List;
+import java.util.Map;
+
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.state.IBlockState;
@@ -27,18 +31,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.List;
-import java.util.Map;
-
 public class LensDisenchanting extends Lens{
-
-    public static final int ENERGY_USE = 250000;
 
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        if(tile.getEnergy() >= ENERGY_USE){
+        int energyUse = ConfigIntValues.LENS_DISENCHANTING_ENERGY_USE.getValue();
+        if(tile.getEnergy() >= energyUse){
             List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
-            if(items != null && !items.isEmpty()){
+            if(!items.isEmpty()){
                 EntityItem book = null;
                 EntityItem toDisenchant = null;
                 for(EntityItem item : items){
@@ -97,7 +97,7 @@ public class LensDisenchanting extends Lens{
                         tile.getWorldObject().spawnEntity(newBook);
                         tile.getWorldObject().spawnEntity(disenchanted);
 
-                        tile.extractEnergy(ENERGY_USE);
+                        tile.extractEnergy(energyUse);
 
                         return true;
                     }
@@ -119,6 +119,6 @@ public class LensDisenchanting extends Lens{
 
     @Override
     public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot){
-        return tile.getEnergy()-energyUsePerShot >= ENERGY_USE;
+        return tile.getEnergy()-energyUsePerShot >= ConfigIntValues.LENS_DISENCHANTING_ENERGY_USE.getValue();
     }
 }

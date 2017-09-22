@@ -11,10 +11,15 @@
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Random;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -28,10 +33,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Random;
 
 public class LensColor extends Lens{
 
@@ -56,7 +57,8 @@ public class LensColor extends Lens{
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         if(hitBlock != null){
-            if(tile.getEnergy() >= ENERGY_USE){
+            int energyUse = ConfigIntValues.LENS_COLOR_ENERGY_USE.getValue();
+            if(tile.getEnergy() >= energyUse){
                 IBlockState state = tile.getWorldObject().getBlockState(hitBlock);
                 Block block = state.getBlock();
                 int meta = block.getMetaFromState(state);
@@ -65,13 +67,13 @@ public class LensColor extends Lens{
                 	Block toPlace = Block.getBlockFromItem(returnStack.getItem());
                 	IBlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, EnumFacing.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
                     tile.getWorldObject().setBlockState(hitBlock, state2Place, 2);
-                    tile.extractEnergy(ENERGY_USE); 
+                    tile.extractEnergy(energyUse);
                 }
             }
 
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             for(EntityItem item : items){
-                if(!item.isDead && StackUtil.isValid(item.getItem()) && tile.getEnergy() >= ENERGY_USE){
+                if(!item.isDead && StackUtil.isValid(item.getItem()) && tile.getEnergy() >= energyUse){
                     ItemStack newStack = this.tryConvert(item.getItem(), hitState, hitBlock, tile);
                     if(StackUtil.isValid(newStack)){
                         item.setDead();
@@ -79,7 +81,7 @@ public class LensColor extends Lens{
                         EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, newStack);
                         tile.getWorldObject().spawnEntity(newItem);
 
-                        tile.extractEnergy(ENERGY_USE);
+                        tile.extractEnergy(energyUse);
                     }
                 }
             }
@@ -90,11 +92,9 @@ public class LensColor extends Lens{
     private ItemStack tryConvert(ItemStack stack, IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         if(StackUtil.isValid(stack)){
             Item item = stack.getItem();
-            if(item != null){
-                for(Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_COLOR_CHANGERS.entrySet()){
-                    if(item == changer.getKey()){
-                        return changer.getValue().modifyItem(stack, hitState, hitBlock, tile);
-                    }
+            for(Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_COLOR_CHANGERS.entrySet()){
+                if(item == changer.getKey()){
+                    return changer.getValue().modifyItem(stack, hitState, hitBlock, tile);
                 }
             }
         }
@@ -115,6 +115,6 @@ public class LensColor extends Lens{
 
     @Override
     public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot){
-        return tile.getEnergy()-energyUsePerShot >= ENERGY_USE;
+        return tile.getEnergy() - energyUsePerShot >= ConfigIntValues.LENS_COLOR_ENERGY_USE.getValue();
     }
 }

@@ -69,7 +69,40 @@ public enum ConfigIntValues{
 
     LIQUID_BANNING_RING_ENERGY_CAPACITY("Ring of Liquid Banning: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 800000, 1000, 1000000000, "Amount of energy Ring of Liquid Banning can store"),
     LIQUID_BANNING_RING_ENERGY_TRANSFER("Ring of Liquid Banning: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Ring of Liquid Banning can receive per tick"),
-    LIQUID_BANNING_RING_ENERGY_USE("Ring of Liquid Banning: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 150, 1, 1000000000, "Base amount of energy used by Ring of Liquid Banning to remove liquid block");
+    LIQUID_BANNING_RING_ENERGY_USE("Ring of Liquid Banning: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 150, 1, 1000000000, "Base amount of energy used by Ring of Liquid Banning to remove liquid block"),
+
+    ATOMIC_RECONSTRUCTOR_ENERGY_CAPACITY("Atomic Reconstructor: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 300000, 1000, 1000000000, "Amount of energy Atomic Reconstructor can store"),
+    ATOMIC_RECONSTRUCTOR_ENERGY_RECEIVE("Atomic Reconstructor: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 5000, 1, 1000000000, "Amount of energy Atomic Reconstructor can receive per tick"),
+    ATOMIC_RECONSTRUCTOR_ENERGY_USE("Atomic Reconstructor: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Base amount of energy used by Atomic Reconstructor to perform action"),
+    ATOMIC_RECONSTRUCTOR_RESTONIA_CRYSTAL_COST("Atomic Reconstructor: Restonia Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 40, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Restonia Crystal"),
+    ATOMIC_RECONSTRUCTOR_PALIS_CRYSTAL_COST("Atomic Reconstructor: Palis Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 40, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Palis Crystal"),
+    ATOMIC_RECONSTRUCTOR_DIAMATINE_CRYSTAL_COST("Atomic Reconstructor: Diamatine Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 60, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Diamatine Crystal"),
+    ATOMIC_RECONSTRUCTOR_EMERADIC_CRYSTAL_COST("Atomic Reconstructor: Emeradic Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 100, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Emeradic Crystal"),
+    ATOMIC_RECONSTRUCTOR_VOID_CRYSTAL_COST("Atomic Reconstructor: Void Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 60, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Void Crystal"),
+    ATOMIC_RECONSTRUCTOR_ENORI_CRYSTAL_COST("Atomic Reconstructor: Enori Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Enori Crystal"),
+    ATOMIC_RECONSTRUCTOR_RESTONIA_BLOCK_COST("Atomic Reconstructor: Restonia Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 400, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Restonia Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_PALIS_BLOCK_COST("Atomic Reconstructor: Palis Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 400, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Palis Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_DIAMATINE_BLOCK_COST("Atomic Reconstructor: Diamatine Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 600, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Diamatine Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_EMERADIC_BLOCK_COST("Atomic Reconstructor: Emeradic Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 1000, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Emeradic Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_VOID_BLOCK_COST("Atomic Reconstructor: Void Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 600, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Void Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_ENORI_BLOCK_COST("Atomic Reconstructor: Enori Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 800, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Enori Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_LENS_COST("Atomic Reconstructor: Lens Conversion Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 5000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to change type of Lens"),
+    ATOMIC_RECONSTRUCTOR_LASER_RELAY_COST("Atomic Reconstructor: Laser Relay Conversion Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 2000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to change type of Laser Relay"),
+    ATOMIC_RECONSTRUCTOR_SOUL_SAND_COST("Atomic Reconstructor: Soul Sand Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 20000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Soul Sand"),
+    ATOMIC_RECONSTRUCTOR_LEATHER_COST("Atomic Reconstructor: Leather Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 8000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Leather"),
+    ATOMIC_RECONSTRUCTOR_NETHER_WART_COST("Atomic Reconstructor: Nether Wart Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 150000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Nether Wart"),
+    ATOMIC_RECONSTRUCTOR_PRISMARINE_COST("Atomic Reconstructor: Prismarine Shard Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 30000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Prismarine Shard"),
+    ATOMIC_RECONSTRUCTOR_CRYSTALLIZED_CANOLA_COST("Atomic Reconstructor: Crystallized Canola Seed Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 2000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Crystallized Canola Seed"),
+    ATOMIC_RECONSTRUCTOR_ETHETIC_QUARTZ_COST("Atomic Reconstructor: Ethetic Quartz Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 10, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Ethetic Quartz"),
+    ATOMIC_RECONSTRUCTOR_ETHETIC_GREEN_BLOCK_COST("Atomic Reconstructor: Ethetic Green Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 10, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Ethetic Green Block"),
+    LENS_COLOR_ENERGY_USE("Lens of Color: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 200, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Color to perform action"),
+    LENS_DEATH_ENERGY_USE("Lens of Certain Death: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 350, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Certain Death to perform action"),
+    LENS_DETONATION_ENERGY_USE("Lens of Detonation: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 250000, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Detonation to perform action"),
+    LENS_KILLER_ENERGY_USE("Lens of Killer: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 2500, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Killer to perform action"),
+    LENS_DISENCHANTING_ENERGY_USE("Lens of Disenchanting: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 250000, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Disenchanting to perform action"),
+    LENS_MINER_ENERGY_USE("Lens of Miner: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 60000, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Miner to mine ore"),
+    LENS_MINER_NETHER_ORES_ENERGY_USE("Lens of Miner: Energy Use For Nether Ores", ConfigCategories.MACHINE_RECIPE_COSTS, 70000, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Miner to mine nether ore"),
+    LENS_DISRUPTION_ENERGY_USE("Lens of Disruption: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 150000, 1, 1000000000, "What?!... Is it 11?");
 
     public final String name;
     public final String category;

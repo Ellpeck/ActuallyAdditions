@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -25,6 +28,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrafting;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageFurnace;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
@@ -46,9 +50,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MethodHandler implements IMethodHandler{
 
@@ -237,11 +238,12 @@ public class MethodHandler implements IMethodHandler{
 
     @Override
     public boolean invokeReconstructor(IAtomicReconstructor tile){
-        if(tile.getEnergy() >= TileEntityAtomicReconstructor.ENERGY_USE){
+        int energyUse = ConfigIntValues.ATOMIC_RECONSTRUCTOR_ENERGY_USE.getValue();
+        if(tile.getEnergy() >= energyUse){
             EnumFacing sideToManipulate = tile.getOrientation();
             Lens currentLens = tile.getLens();
-            if(currentLens.canInvoke(tile, sideToManipulate, TileEntityAtomicReconstructor.ENERGY_USE)){
-                tile.extractEnergy(TileEntityAtomicReconstructor.ENERGY_USE);
+            if(currentLens.canInvoke(tile, sideToManipulate, energyUse)){
+                tile.extractEnergy(energyUse);
 
                 int distance = currentLens.getDistance();
                 for(int i = 0; i < distance; i++){
@@ -290,7 +292,7 @@ public class MethodHandler implements IMethodHandler{
         }
         return hasWorkedOnce;
     }
-    
+
     @Override
     public boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance){
         boolean hasWorkedOnce = false;

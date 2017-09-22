@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
@@ -46,8 +48,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 public class BlockAtomicReconstructor extends BlockContainerBase implements IHudDisplay{
 
@@ -209,7 +209,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
             tooltip.add(StringUtil.localize(base+"1."+this.toPick1)+" "+StringUtil.localize(base+"2."+this.toPick2));
         }
     }
-    
+
     @Override
     public boolean hasComparatorInputOverride(IBlockState state){
         return true;
@@ -222,6 +222,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     	if (t instanceof TileEntityAtomicReconstructor) {
     		i = ((TileEntityAtomicReconstructor) t).getEnergy();
     	}
-        return MathHelper.clamp(i / 20000, 0, 15);
+        return MathHelper.clamp(i / (ConfigIntValues.ATOMIC_RECONSTRUCTOR_ENERGY_CAPACITY.getValue() / 15), 0, 15);
     }
 }

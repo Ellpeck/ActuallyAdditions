@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet;
 
+import java.util.*;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -25,14 +27,13 @@ import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllItems;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryTrials;
 import de.ellpeck.actuallyadditions.mod.booklet.page.*;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.crafting.*;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.OreGen;
 import de.ellpeck.actuallyadditions.mod.gen.WorldGenLushCaves;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemWingsOfTheBats;
-import de.ellpeck.actuallyadditions.mod.items.lens.LensDisenchanting;
-import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
@@ -49,7 +50,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import java.util.*;
 
 public final class InitBooklet{
 
@@ -136,7 +136,7 @@ public final class InitBooklet{
         chaptersIntroduction[1] = new BookletChapter("videoGuide", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.YOUTUBE_ICON.ordinal()), new PageLinkButton(1, "https://www.youtube.com/watch?v=fhjz0Ew56pM"), new PageLinkButton(2, "https://www.youtube.com/playlist?list=PLJeFZ64pT89MrTRZYzD_rtHFajPVlt6cF")).setImportant();
         new BookletChapter("intro", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemBooklet), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3));
         ArrayList<BookletPage> crystalPages = new ArrayList<BookletPage>();
-        crystalPages.addAll(Arrays.asList(new PageTextOnly(1).addTextReplacement("<rf>", TileEntityAtomicReconstructor.ENERGY_USE), new PageTextOnly(2), new PageTextOnly(3), new PagePicture(4, "page_atomic_reconstructor", 0).setNoText(), new PageTextOnly(5), new PageCrafting(6, BlockCrafting.recipeAtomicReconstructor).setWildcard()));
+        crystalPages.addAll(Arrays.asList(new PageTextOnly(1).addTextReplacement("<rf>", ConfigIntValues.ATOMIC_RECONSTRUCTOR_ENERGY_USE.getValue()), new PageTextOnly(2), new PageTextOnly(3), new PagePicture(4, "page_atomic_reconstructor", 0).setNoText(), new PageTextOnly(5), new PageCrafting(6, BlockCrafting.recipeAtomicReconstructor).setWildcard()));
         for(int i = 0; i < LensRecipeHandler.MAIN_PAGE_RECIPES.size(); i++){
             crystalPages.add(new PageReconstructor(7+i, LensRecipeHandler.MAIN_PAGE_RECIPES.get(i)).setNoText());
         }
@@ -188,8 +188,8 @@ public final class InitBooklet{
         new BookletChapter("lensDeath", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemDamageLens), new PageTextOnly(1), new PageReconstructor(2, LensRecipeHandler.recipeDamageLens).setNoText());
         new BookletChapter("lensMoreDeath", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMoreDamageLens), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeLensMoreDeath).setNoText());
         new BookletChapter("lensDetonation", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemExplosionLens), new PageTextOnly(1), new PageReconstructor(2, LensRecipeHandler.recipeExplosionLens).setNoText());
-        new BookletChapter("lensDisenchanting", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemDisenchantingLens), new PageTextOnly(1).addTextReplacement("<energy>", LensDisenchanting.ENERGY_USE), new PageCrafting(2, ItemCrafting.recipeDisenchantingLens).setNoText()).setSpecial();
-        new BookletChapter("lensMining", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMiningLens), new PageTextOnly(1).addTextReplacement("<energy>", LensMining.ENERGY_USE), new PageCrafting(2, ItemCrafting.recipeMiningLens).setNoText()).setImportant();
+        new BookletChapter("lensDisenchanting", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemDisenchantingLens), new PageTextOnly(1).addTextReplacement("<energy>", ConfigIntValues.LENS_DISENCHANTING_ENERGY_USE.getValue()), new PageCrafting(2, ItemCrafting.recipeDisenchantingLens).setNoText()).setSpecial();
+        new BookletChapter("lensMining", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMiningLens), new PageTextOnly(1).addTextReplacement("<energy>", ConfigIntValues.LENS_MINER_ENERGY_USE.getValue()), new PageCrafting(2, ItemCrafting.recipeMiningLens).setNoText()).setImportant();
 
         //Laser Relays
         chaptersIntroduction[8] = new BookletChapter("laserIntro", ActuallyAdditionsAPI.entryLaserRelays, new ItemStack(InitItems.itemLaserWrench), new PageTextOnly(1), new PageTextOnly(2).addTextReplacement("<range>", TileEntityLaserRelay.MAX_DISTANCE), new PageCrafting(3, ItemCrafting.recipeLaserWrench)).setImportant();
