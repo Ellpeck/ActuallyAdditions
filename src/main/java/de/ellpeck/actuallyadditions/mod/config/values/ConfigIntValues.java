@@ -61,7 +61,11 @@ public enum ConfigIntValues{
 
     MAGNETIC_RING_ENERGY_CAPACITY("Magnetic Ring: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 200000, 1000, 1000000000, "Amount of energy Magnetic Ring can store"),
     MAGNETIC_RING_ENERGY_TRANSFER("Magnetic Ring: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Magnetic Ring can receive per tick"),
-    MAGNETIC_RING_ENERGY_USE("Magnetic Ring: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 50, 1, 1000000000, "Amount of energy used by Magnetic Ring to suck item");
+    MAGNETIC_RING_ENERGY_USE("Magnetic Ring: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 50, 1, 1000000000, "Amount of energy used by Magnetic Ring to suck item"),
+
+    TELEPORT_STAFF_ENERGY_CAPACITY("Teleport Staff: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 250000, 1000, 1000000000, "Amount of energy Teleport Staff can store"),
+    TELEPORT_STAFF_ENERGY_TRANSFER("Teleport Staff: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Teleport Staff can receive per tick"),
+    TELEPORT_STAFF_ENERGY_USE("Teleport Staff: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 200, 1, 1000000000, "Base amount of energy used by Teleport Staff to teleport player");
 
     public final String name;
     public final String category;
