@@ -50,7 +50,16 @@ public enum ConfigIntValues{
 
     FILLER_ENERGY_CAPACITY("Handheld Filler: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 500000, 1000, 1000000000, "Amount of energy Handheld Filler can store"),
     FILLER_ENERGY_TRANSFER("Handheld Filler: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Handheld Filler can receive per tick"),
-    FILLER_ENERGY_USE("Handheld Filler: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 1500, 1, 1000000000, "Amount of energy used by Handheld Filler to perform action");
+    FILLER_ENERGY_USE("Handheld Filler: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 1500, 1, 1000000000, "Amount of energy used by Handheld Filler to place block"),
+
+    GROWTH_RING_ENERGY_CAPACITY("Growth Ring: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 1000000, 1000, 1000000000, "Amount of energy Growth Ring can store"),
+    GROWTH_RING_ENERGY_TRANSFER("Growth Ring: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 2000, 1, 1000000000, "Amount of energy Growth Ring can receive per tick"),
+    GROWTH_RING_ENERGY_USE("Growth Ring: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 300, 1, 1000000000, "Amount of energy used by Growth Ring to fertilize crop"),
+    GROWTH_RING_FERTILIZE_ATTEMPTS("Growth Ring: Fertilize Attempts", ConfigCategories.TOOL_VALUES, 45, 1, 100, "Amount of attempts to fertilize crops; Growth Ring can fertilize up to this number of crops every 30 ticks"),
+
+    MAGNETIC_RING_ENERGY_CAPACITY("Magnetic Ring: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 200000, 1000, 1000000000, "Amount of energy Magnetic Ring can store"),
+    MAGNETIC_RING_ENERGY_TRANSFER("Magnetic Ring: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Magnetic Ring can receive per tick"),
+    MAGNETIC_RING_ENERGY_USE("Magnetic Ring: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 50, 1, 1000000000, "Amount of energy used by Magnetic Ring to suck item");
 
     public final String name;
     public final String category;
