@@ -36,7 +36,6 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 
 public class LensColor extends Lens{
 
-    public static final int ENERGY_USE = 200;
     //Thanks to xdjackiexd for this, as I couldn't be bothered
     public static final float[][] POSSIBLE_COLORS = {
             {158F, 43F, 39F}, //Red
