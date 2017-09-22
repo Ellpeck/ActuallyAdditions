@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
@@ -26,7 +27,7 @@ import net.minecraft.world.World;
 public class ItemWaterRemovalRing extends ItemEnergy{
 
     public ItemWaterRemovalRing(String name){
-        super(800000, 1000, name);
+        super(ConfigIntValues.LIQUID_BANNING_RING_ENERGY_CAPACITY.getValue(), ConfigIntValues.LIQUID_BANNING_RING_ENERGY_TRANSFER.getValue(), name);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class ItemWaterRemovalRing extends ItemEnergy{
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getHeldItemMainhand();
 
-        int energyUse = 150;
+        int energyUse = ConfigIntValues.LIQUID_BANNING_RING_ENERGY_USE.getValue();
         if(StackUtil.isValid(equipped) && equipped == stack && this.getEnergyStored(stack) >= energyUse){
 
             //Setting everything to air

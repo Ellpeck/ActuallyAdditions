@@ -65,7 +65,11 @@ public enum ConfigIntValues{
 
     TELEPORT_STAFF_ENERGY_CAPACITY("Teleport Staff: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 250000, 1000, 1000000000, "Amount of energy Teleport Staff can store"),
     TELEPORT_STAFF_ENERGY_TRANSFER("Teleport Staff: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Teleport Staff can receive per tick"),
-    TELEPORT_STAFF_ENERGY_USE("Teleport Staff: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 200, 1, 1000000000, "Base amount of energy used by Teleport Staff to teleport player");
+    TELEPORT_STAFF_ENERGY_USE("Teleport Staff: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 200, 1, 1000000000, "Base amount of energy used by Teleport Staff to teleport player"),
+
+    LIQUID_BANNING_RING_ENERGY_CAPACITY("Ring of Liquid Banning: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 800000, 1000, 1000000000, "Amount of energy Ring of Liquid Banning can store"),
+    LIQUID_BANNING_RING_ENERGY_TRANSFER("Ring of Liquid Banning: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Ring of Liquid Banning can receive per tick"),
+    LIQUID_BANNING_RING_ENERGY_USE("Ring of Liquid Banning: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 150, 1, 1000000000, "Base amount of energy used by Ring of Liquid Banning to remove liquid block");
 
     public final String name;
     public final String category;
