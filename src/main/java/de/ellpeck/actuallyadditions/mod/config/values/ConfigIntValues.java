@@ -11,6 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.config.values;
 
 import de.ellpeck.actuallyadditions.mod.config.ConfigCategories;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 public enum ConfigIntValues{
 
@@ -77,6 +79,22 @@ public enum ConfigIntValues{
         this.min = min;
         this.max = max;
         this.desc = desc;
+    }
+
+    public void initializeValue(Configuration config){
+        Property property = config.get(this.category, this.name, this.defaultValue, this.desc, this.min, this.max);
+        int value = property.getInt();
+        if (value < this.min)
+        {
+            value = this.min;
+            property.set(this.min);
+        }
+        if (value > this.max)
+        {
+            value = this.max;
+            property.set(this.max);
+        }
+        this.currentValue = value;
     }
 
     public int getValue(){

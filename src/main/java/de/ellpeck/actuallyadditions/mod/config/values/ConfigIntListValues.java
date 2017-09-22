@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.config.values;
 
 import de.ellpeck.actuallyadditions.mod.config.ConfigCategories;
+import net.minecraftforge.common.config.Configuration;
 
 public enum ConfigIntListValues{
 
@@ -31,6 +32,10 @@ public enum ConfigIntListValues{
         this.category = category.name;
         this.defaultValue = defaultValue;
         this.desc = desc;
+    }
+
+    public void initializeValue(Configuration config){
+        this.currentValue = config.get(this.category, this.name, this.defaultValue, this.desc).getIntList();
     }
 
     public int[] getValue(){
