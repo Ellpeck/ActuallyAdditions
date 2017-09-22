@@ -71,6 +71,10 @@ public enum ConfigIntValues{
     LIQUID_BANNING_RING_ENERGY_TRANSFER("Ring of Liquid Banning: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Ring of Liquid Banning can receive per tick"),
     LIQUID_BANNING_RING_ENERGY_USE("Ring of Liquid Banning: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 150, 1, 1000000000, "Base amount of energy used by Ring of Liquid Banning to remove liquid block"),
 
+    POTION_RINGS_ENERGY_USE("Potion Rings: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 325, 1, 1000000000, "Amount of energy used by Potion Rings placed on Display Stand"),
+    ADVANCED_POTION_RINGS_ENERGY_USE("Advanced Potion Rings: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 325, 1, 1000000000, "Amount of energy used by Advanced Potion Rings placed on Display Stand"),
+    LEAF_BLOWER_ENERGY_USE("Leaf Blower: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 60, 1, 1000000000, "Amount of energy used by Leaf Blower placed on Display Stand"),
+
     ATOMIC_RECONSTRUCTOR_ENERGY_CAPACITY("Atomic Reconstructor: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 300000, 1000, 1000000000, "Amount of energy Atomic Reconstructor can store"),
     ATOMIC_RECONSTRUCTOR_ENERGY_RECEIVE("Atomic Reconstructor: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 5000, 1, 1000000000, "Amount of energy Atomic Reconstructor can receive per tick"),
     ATOMIC_RECONSTRUCTOR_ENERGY_USE("Atomic Reconstructor: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Base amount of energy used by Atomic Reconstructor to perform action"),
@@ -102,7 +106,16 @@ public enum ConfigIntValues{
     LENS_DISENCHANTING_ENERGY_USE("Lens of Disenchanting: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 250000, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Disenchanting to perform action"),
     LENS_MINER_ENERGY_USE("Lens of Miner: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 60000, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Miner to mine ore"),
     LENS_MINER_NETHER_ORES_ENERGY_USE("Lens of Miner: Energy Use For Nether Ores", ConfigCategories.MACHINE_RECIPE_COSTS, 70000, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Miner to mine nether ore"),
-    LENS_DISRUPTION_ENERGY_USE("Lens of Disruption: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 150000, 1, 1000000000, "What?!... Is it 11?");
+    LENS_DISRUPTION_ENERGY_USE("Lens of Disruption: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 150000, 1, 1000000000, "What?!... Is it 11?"),
+
+    DISPLAY_STAND_ENERGY_CAPACITY("Display Stand: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 80000, 1000, 1000000000, "Amount of energy Display Stand can store"),
+    DISPLAY_STAND_ENERGY_RECEIVE("Display Stand: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Display Stand can receive per tick"),
+    EMPOWERER_CANOLA_ENERGY_COST("Empowerer: Empowered Canola Seed Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 1000, 1, 1000000000, "Amount of energy (per Display Stand) used by Empowerer to create Empowered Canola Seed"),
+    EMPOWERER_CANOLA_CREATION_TIME("Empowerer: Empowered Canola Seed Creation Time", ConfigCategories.MACHINE_RECIPE_COSTS, 30, 1, 72000, "Time (in ticks) required to create Empowered Canola Seed in Empowerer"),
+    EMPOWERER_CRYSTAL_ENERGY_COST("Empowerer: Empowered Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 5000, 1, 1000000000, "Amount of energy (per Display Stand) used by Empowerer to create Empowered Crystal"),
+    EMPOWERER_CRYSTAL_CREATION_TIME("Empowerer: Empowered Crystal Creation Time", ConfigCategories.MACHINE_RECIPE_COSTS, 50, 1, 72000, "Time (in ticks) required to create Empowered Crystal in Empowerer"),
+    EMPOWERER_BLOCK_ENERGY_COST("Empowerer: Empowered Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 50000, 1, 1000000000, "Amount of energy (per Display Stand) used by Empowerer to create Empowered Crystal Block"),
+    EMPOWERER_BLOCK_CREATION_TIME("Empowerer: Empowered Crystal Block Creation Time", ConfigCategories.MACHINE_RECIPE_COSTS, 500, 1, 72000, "Time (in ticks) required to create Empowered Crystal Block in Empowerer");
 
     public final String name;
     public final String category;

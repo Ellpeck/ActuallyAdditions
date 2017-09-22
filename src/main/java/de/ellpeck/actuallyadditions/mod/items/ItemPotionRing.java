@@ -10,15 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.Collections;
+import java.util.List;
+import javax.annotation.Nullable;
+
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.ThePotionRings;
-import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
+import de.ellpeck.actuallyadditions.mod.util.*;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -37,10 +38,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
 
 public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDisplayStandItem{
 
@@ -189,7 +186,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         boolean advanced = ((ItemPotionRing)stack.getItem()).isAdvanced;
         int range = advanced ? 48 : 16;
         List<EntityLivingBase> entities = tile.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(tile.getPos().getX()-range, tile.getPos().getY()-range, tile.getPos().getZ()-range, tile.getPos().getX()+range, tile.getPos().getY()+range, tile.getPos().getZ()+range));
-        if(entities != null && !entities.isEmpty()){
+        if(!entities.isEmpty()){
             if(advanced){
                 //Give all entities the effect
                 for(EntityLivingBase entity : entities){
@@ -226,7 +223,9 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     public int getUsePerTick(ItemStack stack, TileEntity tile, int elapsedTicks){
-        return 325;
+        return (StackUtil.isValid(stack) && ((ItemPotionRing) stack.getItem()).isAdvanced) ?
+               ConfigIntValues.ADVANCED_POTION_RINGS_ENERGY_USE.getValue() :
+               ConfigIntValues.POTION_RINGS_ENERGY_USE.getValue();
     }
 
     private boolean effectEntity(EntityLivingBase thePlayer, ItemStack stack, boolean canUseBasic){
