@@ -10,6 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -23,12 +27,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.energy.IEnergyStorage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TileEntityBioReactor extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 0, 800);
+    public final CustomEnergyStorage storage;
 
     public int burnTime;
     public int maxBurnTime;
@@ -39,6 +40,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
 
     public TileEntityBioReactor(){
         super(8, "bioReactor");
+        this.storage = new CustomEnergyStorage(ConfigIntValues.BIO_REACTOR_ENERGY_CAPACITY.getValue(), 0, ConfigIntValues.BIO_REACTOR_ENERGY_SEND.getValue());
     }
 
     public static boolean isValidItem(ItemStack stack){
@@ -86,9 +88,9 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
 
             if(types != null && !types.isEmpty()){
                 int amount = types.size();
-                this.producePerTick = (int)Math.pow(amount*2, 2);
+                this.producePerTick = (int)Math.pow(amount * ConfigIntValues.BIO_REACTOR_ENERGY_PER_ITEM.getValue(), 2);
 
-                this.maxBurnTime = 200-(int)Math.pow(1.8, amount);
+                this.maxBurnTime = ConfigIntValues.BIO_REACTOR_BURN_TIME.getValue() - (int)Math.pow(1.8, amount);
                 this.burnTime = this.maxBurnTime;
             }
             else{

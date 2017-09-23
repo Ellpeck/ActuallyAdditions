@@ -115,7 +115,12 @@ public enum ConfigIntValues{
     EMPOWERER_CRYSTAL_ENERGY_COST("Empowerer: Empowered Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 5000, 1, 1000000000, "Amount of energy (per Display Stand) used by Empowerer to create Empowered Crystal"),
     EMPOWERER_CRYSTAL_CREATION_TIME("Empowerer: Empowered Crystal Creation Time", ConfigCategories.MACHINE_RECIPE_COSTS, 50, 1, 72000, "Time (in ticks) required to create Empowered Crystal in Empowerer"),
     EMPOWERER_BLOCK_ENERGY_COST("Empowerer: Empowered Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 50000, 1, 1000000000, "Amount of energy (per Display Stand) used by Empowerer to create Empowered Crystal Block"),
-    EMPOWERER_BLOCK_CREATION_TIME("Empowerer: Empowered Crystal Block Creation Time", ConfigCategories.MACHINE_RECIPE_COSTS, 500, 1, 72000, "Time (in ticks) required to create Empowered Crystal Block in Empowerer");
+    EMPOWERER_BLOCK_CREATION_TIME("Empowerer: Empowered Crystal Block Creation Time", ConfigCategories.MACHINE_RECIPE_COSTS, 500, 1, 72000, "Time (in ticks) required to create Empowered Crystal Block in Empowerer"),
+
+    BIO_REACTOR_ENERGY_CAPACITY("Bio Reactor Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 200000, 1, 1000000000, "Amount of energy Bio Reactor can store"),
+    BIO_REACTOR_ENERGY_SEND("Bio Reactor Energy Send", ConfigCategories.MACHINE_ENERGY_VALUES, 800, 1, 1000000000, "Amount of energy Bio Reactor can send per tick"),
+    BIO_REACTOR_ENERGY_PER_ITEM("Bio Reactor Energy Generation Per Item", ConfigCategories.MACHINE_ENERGY_VALUES, 2, 1, 1000000, "Amount of energy Bio Reactor per item/per tick; this value will be squared"),
+    BIO_REACTOR_BURN_TIME("Bio Reactor Base Reaction Time", ConfigCategories.MACHINE_VALUES, 200, 1, 72000, "Base reaction time (in ticks) for one item in Bio Reactor");
 
     public final String name;
     public final String category;
