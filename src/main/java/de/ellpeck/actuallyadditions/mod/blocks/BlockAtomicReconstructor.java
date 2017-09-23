@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
@@ -49,11 +47,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
+
 public class BlockAtomicReconstructor extends BlockContainerBase implements IHudDisplay{
 
     public static final int NAME_FLAVOR_AMOUNTS_1 = 12;
     public static final int NAME_FLAVOR_AMOUNTS_2 = 14;
-
     public BlockAtomicReconstructor(String name){
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);

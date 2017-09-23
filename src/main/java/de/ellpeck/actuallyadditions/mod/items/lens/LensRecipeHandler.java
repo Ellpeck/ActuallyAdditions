@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import java.util.ArrayList;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.ColorLensChangerByDyeMeta;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
@@ -27,6 +25,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
 
 public final class LensRecipeHandler{
 

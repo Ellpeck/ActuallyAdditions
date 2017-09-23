@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
@@ -36,6 +34,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.List;
 
 public class LensMining extends Lens{
 

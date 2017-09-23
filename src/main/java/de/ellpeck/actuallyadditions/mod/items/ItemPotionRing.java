@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.Collections;
-import java.util.List;
-import javax.annotation.Nullable;
-
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
@@ -38,6 +34,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 
 public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDisplayStandItem{
 

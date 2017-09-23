@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -50,6 +47,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MethodHandler implements IMethodHandler{
 

@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
@@ -26,6 +23,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.energy.IEnergyStorage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityBioReactor extends TileEntityInventoryBase implements ISharingEnergyProvider{
 

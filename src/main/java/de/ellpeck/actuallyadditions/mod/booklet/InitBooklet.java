@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet;
 
-import java.util.*;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -50,6 +48,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+
+import java.util.*;
 
 public final class InitBooklet{
 

@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import java.util.ArrayList;
-
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
@@ -20,6 +18,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.ArrayList;
 
 public class LensDeath extends Lens{
 

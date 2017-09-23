@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import java.util.List;
-import java.util.Map;
-
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
@@ -30,6 +27,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.List;
+import java.util.Map;
 
 public class LensDisenchanting extends Lens{
 
