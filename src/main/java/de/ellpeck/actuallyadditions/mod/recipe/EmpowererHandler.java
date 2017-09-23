@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.recipe;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -44,7 +45,8 @@ public final class EmpowererHandler{
         }
 
         ItemStack seed = new ItemStack(InitItems.itemCanolaSeed);
-        ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal()), seed, seed, seed, seed, 1000, 30, new float[]{1F, 91F/255F, 76F/255F});
+        ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal()), seed, seed, seed, seed,
+                                                ConfigIntValues.EMPOWERER_CANOLA_ENERGY_COST.getValue(), ConfigIntValues.EMPOWERER_CANOLA_CREATION_TIME.getValue(), new float[]{1F, 91F / 255F, 76F / 255F});
         recipeEmpoweredCanolaSeed = RecipeUtil.lastEmpowererRecipe();
     }
 
@@ -53,9 +55,9 @@ public final class EmpowererHandler{
 
         List<ItemStack> dyes = OreDictionary.getOres(dye);
         for(ItemStack dyeStack : dyes){
-            ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitItems.itemCrystal, 1, type.ordinal()), new ItemStack(InitItems.itemCrystalEmpowered, 1, type.ordinal()), dyeStack, modifier1, modifier2, modifier3, 5000, 50, color);
+            ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitItems.itemCrystal, 1, type.ordinal()), new ItemStack(InitItems.itemCrystalEmpowered, 1, type.ordinal()), dyeStack, modifier1, modifier2, modifier3, ConfigIntValues.EMPOWERER_CRYSTAL_ENERGY_COST.getValue(), ConfigIntValues.EMPOWERER_CRYSTAL_CREATION_TIME.getValue(), color);
             MAIN_PAGE_RECIPES.add(RecipeUtil.lastEmpowererRecipe());
-            ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitBlocks.blockCrystal, 1, type.ordinal()), new ItemStack(InitBlocks.blockCrystalEmpowered, 1, type.ordinal()), dyeStack, modifier1, modifier2, modifier3, 50000, 500, color);
+            ActuallyAdditionsAPI.addEmpowererRecipe(new ItemStack(InitBlocks.blockCrystal, 1, type.ordinal()), new ItemStack(InitBlocks.blockCrystalEmpowered, 1, type.ordinal()), dyeStack, modifier1, modifier2, modifier3, ConfigIntValues.EMPOWERER_BLOCK_ENERGY_COST.getValue(), ConfigIntValues.EMPOWERER_BLOCK_CREATION_TIME.getValue(), color);
             MAIN_PAGE_RECIPES.add(RecipeUtil.lastEmpowererRecipe());
         }
     }

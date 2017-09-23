@@ -12,20 +12,20 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public class LensDetonation extends Lens{
 
-    private static final int ENERGY_USE = 250000;
-
     @Override
     public boolean invoke(IBlockState state, BlockPos hitBlock, IAtomicReconstructor tile){
         if(hitBlock != null && !state.getBlock().isAir(state, tile.getWorldObject(), hitBlock)){
-            if(tile.getEnergy() >= ENERGY_USE){
+            int energyUse = ConfigIntValues.LENS_DETONATION_ENERGY_USE.getValue();
+            if(tile.getEnergy() >= energyUse){
                 tile.getWorldObject().newExplosion(null, hitBlock.getX()+0.5, hitBlock.getY()+0.5, hitBlock.getZ()+0.5, 10F, true, true);
-                tile.extractEnergy(ENERGY_USE);
+                tile.extractEnergy(energyUse);
             }
             return true;
         }
@@ -44,6 +44,6 @@ public class LensDetonation extends Lens{
 
     @Override
     public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot){
-        return tile.getEnergy()-energyUsePerShot >= ENERGY_USE;
+        return tile.getEnergy()-energyUsePerShot >= ConfigIntValues.LENS_DETONATION_ENERGY_USE.getValue();
     }
 }

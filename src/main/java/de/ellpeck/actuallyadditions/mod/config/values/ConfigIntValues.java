@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.config.values;
 
 import de.ellpeck.actuallyadditions.mod.config.ConfigCategories;
+import net.minecraftforge.common.config.Configuration;
 
 public enum ConfigIntValues{
 	
@@ -28,8 +29,104 @@ public enum ConfigIntValues{
     FONT_SIZE_SMALL("Booklet Small Font Size", ConfigCategories.OTHER, 0, 0, 500, "The size of the booklet's small font in percent. Set to 0 to use defaults from the lang file."),
     FONT_SIZE_MEDIUM("Booklet Medium Font Size", ConfigCategories.OTHER, 0, 0, 500, "The size of the booklet's medium font in percent. Set to 0 to use defaults from the lang file."),
     FONT_SIZE_LARGE("Booklet Large Font Size", ConfigCategories.OTHER, 0, 0, 500, "The size of the booklet's large font in percent. Set to 0 to use defaults from the lang file."),
-	
-	ELEVEN("What is 11", ConfigCategories.OTHER, 11, 0, 12, "11?");
+
+    ELEVEN("What is 11", ConfigCategories.OTHER, 11, 0, 12, "11?"),
+
+    DRILL_ENERGY_CAPACITY("Drill: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 250000, 1000, 1000000000, "Amount of energy Drills can store"),
+    DRILL_ENERGY_TRANSFER("Drill: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Drill can receive per tick"),
+    DRILL_ENERGY_USE("Drill: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 100, 1, 1000000000, "Base amount energy used by Drill per mined block"),
+
+    SINGLE_BATTERY_ENERGY_CAPACITY("Single Battery: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 200000, 1000, 1000000000, "Amount of energy Single Battery can store"),
+    SINGLE_BATTERY_ENERGY_TRANSFER("Single Battery: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Single Battery can send or receive per tick"),
+    DOUBLE_BATTERY_ENERGY_CAPACITY("Double Battery: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 350000, 1000, 1000000000, "Amount of energy Double Battery can store"),
+    DOUBLE_BATTERY_ENERGY_TRANSFER("Double Battery: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 5000, 1, 1000000000, "Amount of energy Double Battery can send or receive per tick"),
+    TRIPLE_BATTERY_ENERGY_CAPACITY("Triple Battery: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 600000, 1000, 1000000000, "Amount of energy Triple Battery can store"),
+    TRIPLE_BATTERY_ENERGY_TRANSFER("Triple Battery: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 10000, 1, 1000000000, "Amount of energy Triple Battery can send or receive per tick"),
+    QUADRUPLE_BATTERY_ENERGY_CAPACITY("Quadruple Battery: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 1000000, 1000, 1000000000, "Amount of energy Quadruple Battery can store"),
+    QUADRUPLE_BATTERY_ENERGY_TRANSFER("Quadruple Battery: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 30000, 1, 1000000000, "Amount of energy Quadruple Battery can send or receive per tick"),
+    QUINTUPLE_BATTERY_ENERGY_CAPACITY("Quintuple Battery: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 2000000, 1000, 1000000000, "Amount of energy Quintuple Battery can store"),
+    QUINTUPLE_BATTERY_ENERGY_TRANSFER("Quintuple Battery: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 100000, 1, 1000000000, "Amount of energy Quintuple Battery can send or receive per tick"),
+
+    FILLER_ENERGY_CAPACITY("Handheld Filler: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 500000, 1000, 1000000000, "Amount of energy Handheld Filler can store"),
+    FILLER_ENERGY_TRANSFER("Handheld Filler: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Handheld Filler can receive per tick"),
+    FILLER_ENERGY_USE("Handheld Filler: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 1500, 1, 1000000000, "Amount of energy used by Handheld Filler to place block"),
+
+    GROWTH_RING_ENERGY_CAPACITY("Growth Ring: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 1000000, 1000, 1000000000, "Amount of energy Growth Ring can store"),
+    GROWTH_RING_ENERGY_TRANSFER("Growth Ring: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 2000, 1, 1000000000, "Amount of energy Growth Ring can receive per tick"),
+    GROWTH_RING_ENERGY_USE("Growth Ring: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 300, 1, 1000000000, "Amount of energy used by Growth Ring to fertilize crop"),
+    GROWTH_RING_FERTILIZE_ATTEMPTS("Growth Ring: Fertilize Attempts", ConfigCategories.TOOL_VALUES, 45, 1, 100, "Amount of attempts to fertilize crops; Growth Ring can fertilize up to this number of crops every 30 ticks"),
+
+    MAGNETIC_RING_ENERGY_CAPACITY("Magnetic Ring: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 200000, 1000, 1000000000, "Amount of energy Magnetic Ring can store"),
+    MAGNETIC_RING_ENERGY_TRANSFER("Magnetic Ring: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Magnetic Ring can receive per tick"),
+    MAGNETIC_RING_ENERGY_USE("Magnetic Ring: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 50, 1, 1000000000, "Amount of energy used by Magnetic Ring to suck item"),
+
+    TELEPORT_STAFF_ENERGY_CAPACITY("Teleport Staff: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 250000, 1000, 1000000000, "Amount of energy Teleport Staff can store"),
+    TELEPORT_STAFF_ENERGY_TRANSFER("Teleport Staff: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Teleport Staff can receive per tick"),
+    TELEPORT_STAFF_ENERGY_USE("Teleport Staff: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 200, 1, 1000000000, "Base amount of energy used by Teleport Staff to teleport player"),
+
+    LIQUID_BANNING_RING_ENERGY_CAPACITY("Ring of Liquid Banning: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 800000, 1000, 1000000000, "Amount of energy Ring of Liquid Banning can store"),
+    LIQUID_BANNING_RING_ENERGY_TRANSFER("Ring of Liquid Banning: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Ring of Liquid Banning can receive per tick"),
+    LIQUID_BANNING_RING_ENERGY_USE("Ring of Liquid Banning: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 150, 1, 1000000000, "Base amount of energy used by Ring of Liquid Banning to remove liquid block"),
+
+    POTION_RINGS_ENERGY_USE("Potion Rings: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 325, 1, 1000000000, "Amount of energy used by Potion Rings placed on Display Stand"),
+    ADVANCED_POTION_RINGS_ENERGY_USE("Advanced Potion Rings: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 325, 1, 1000000000, "Amount of energy used by Advanced Potion Rings placed on Display Stand"),
+    LEAF_BLOWER_ENERGY_USE("Leaf Blower: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 60, 1, 1000000000, "Amount of energy used by Leaf Blower placed on Display Stand"),
+
+    ATOMIC_RECONSTRUCTOR_ENERGY_CAPACITY("Atomic Reconstructor: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 300000, 1000, 1000000000, "Amount of energy Atomic Reconstructor can store"),
+    ATOMIC_RECONSTRUCTOR_ENERGY_RECEIVE("Atomic Reconstructor: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 5000, 1, 1000000000, "Amount of energy Atomic Reconstructor can receive per tick"),
+    ATOMIC_RECONSTRUCTOR_ENERGY_USE("Atomic Reconstructor: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Base amount of energy used by Atomic Reconstructor to perform action"),
+    ATOMIC_RECONSTRUCTOR_RESTONIA_CRYSTAL_COST("Atomic Reconstructor: Restonia Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 40, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Restonia Crystal"),
+    ATOMIC_RECONSTRUCTOR_PALIS_CRYSTAL_COST("Atomic Reconstructor: Palis Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 40, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Palis Crystal"),
+    ATOMIC_RECONSTRUCTOR_DIAMATINE_CRYSTAL_COST("Atomic Reconstructor: Diamatine Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 60, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Diamatine Crystal"),
+    ATOMIC_RECONSTRUCTOR_EMERADIC_CRYSTAL_COST("Atomic Reconstructor: Emeradic Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 100, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Emeradic Crystal"),
+    ATOMIC_RECONSTRUCTOR_VOID_CRYSTAL_COST("Atomic Reconstructor: Void Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 60, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Void Crystal"),
+    ATOMIC_RECONSTRUCTOR_ENORI_CRYSTAL_COST("Atomic Reconstructor: Enori Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Enori Crystal"),
+    ATOMIC_RECONSTRUCTOR_RESTONIA_BLOCK_COST("Atomic Reconstructor: Restonia Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 400, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Restonia Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_PALIS_BLOCK_COST("Atomic Reconstructor: Palis Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 400, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Palis Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_DIAMATINE_BLOCK_COST("Atomic Reconstructor: Diamatine Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 600, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Diamatine Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_EMERADIC_BLOCK_COST("Atomic Reconstructor: Emeradic Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 1000, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Emeradic Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_VOID_BLOCK_COST("Atomic Reconstructor: Void Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 600, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Void Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_ENORI_BLOCK_COST("Atomic Reconstructor: Enori Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 800, 1, 10000000, "Amount of energy used by Atomic Reconstructor to create Enori Crystal Block"),
+    ATOMIC_RECONSTRUCTOR_LENS_COST("Atomic Reconstructor: Lens Conversion Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 5000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to change type of Lens"),
+    ATOMIC_RECONSTRUCTOR_LASER_RELAY_COST("Atomic Reconstructor: Laser Relay Conversion Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 2000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to change type of Laser Relay"),
+    ATOMIC_RECONSTRUCTOR_SOUL_SAND_COST("Atomic Reconstructor: Soul Sand Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 20000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Soul Sand"),
+    ATOMIC_RECONSTRUCTOR_LEATHER_COST("Atomic Reconstructor: Leather Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 8000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Leather"),
+    ATOMIC_RECONSTRUCTOR_NETHER_WART_COST("Atomic Reconstructor: Nether Wart Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 150000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Nether Wart"),
+    ATOMIC_RECONSTRUCTOR_PRISMARINE_COST("Atomic Reconstructor: Prismarine Shard Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 30000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Prismarine Shard"),
+    ATOMIC_RECONSTRUCTOR_CRYSTALLIZED_CANOLA_COST("Atomic Reconstructor: Crystallized Canola Seed Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 2000, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Crystallized Canola Seed"),
+    ATOMIC_RECONSTRUCTOR_ETHETIC_QUARTZ_COST("Atomic Reconstructor: Ethetic Quartz Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 10, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Ethetic Quartz"),
+    ATOMIC_RECONSTRUCTOR_ETHETIC_GREEN_BLOCK_COST("Atomic Reconstructor: Ethetic Green Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 10, 1, 1000000, "Amount of energy used by Atomic Reconstructor to create Ethetic Green Block"),
+    LENS_COLOR_ENERGY_USE("Lens of Color: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 200, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Color to perform action"),
+    LENS_DEATH_ENERGY_USE("Lens of Certain Death: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 350, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Certain Death to perform action"),
+    LENS_DETONATION_ENERGY_USE("Lens of Detonation: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 250000, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Detonation to perform action"),
+    LENS_KILLER_ENERGY_USE("Lens of Killer: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 2500, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Killer to perform action"),
+    LENS_DISENCHANTING_ENERGY_USE("Lens of Disenchanting: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 250000, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Disenchanting to perform action"),
+    LENS_MINER_ENERGY_USE("Lens of Miner: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 60000, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Miner to mine ore"),
+    LENS_MINER_NETHER_ORES_ENERGY_USE("Lens of Miner: Energy Use For Nether Ores", ConfigCategories.MACHINE_RECIPE_COSTS, 70000, 1, 1000000000, "Amount of energy used by Atomic Reconstructor with Lens of Miner to mine nether ore"),
+    LENS_DISRUPTION_ENERGY_USE("Lens of Disruption: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 150000, 1, 1000000000, "What?!... Is it 11?"),
+
+    DISPLAY_STAND_ENERGY_CAPACITY("Display Stand: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 80000, 1000, 1000000000, "Amount of energy Display Stand can store"),
+    DISPLAY_STAND_ENERGY_RECEIVE("Display Stand: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Display Stand can receive per tick"),
+    EMPOWERER_CANOLA_ENERGY_COST("Empowerer: Empowered Canola Seed Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 1000, 1, 1000000000, "Amount of energy (per Display Stand) used by Empowerer to create Empowered Canola Seed"),
+    EMPOWERER_CANOLA_CREATION_TIME("Empowerer: Empowered Canola Seed Creation Time", ConfigCategories.MACHINE_RECIPE_COSTS, 30, 1, 72000, "Time (in ticks) required to create Empowered Canola Seed in Empowerer"),
+    EMPOWERER_CRYSTAL_ENERGY_COST("Empowerer: Empowered Crystal Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 5000, 1, 1000000000, "Amount of energy (per Display Stand) used by Empowerer to create Empowered Crystal"),
+    EMPOWERER_CRYSTAL_CREATION_TIME("Empowerer: Empowered Crystal Creation Time", ConfigCategories.MACHINE_RECIPE_COSTS, 50, 1, 72000, "Time (in ticks) required to create Empowered Crystal in Empowerer"),
+    EMPOWERER_BLOCK_ENERGY_COST("Empowerer: Empowered Crystal Block Creation Cost", ConfigCategories.MACHINE_RECIPE_COSTS, 50000, 1, 1000000000, "Amount of energy (per Display Stand) used by Empowerer to create Empowered Crystal Block"),
+    EMPOWERER_BLOCK_CREATION_TIME("Empowerer: Empowered Crystal Block Creation Time", ConfigCategories.MACHINE_RECIPE_COSTS, 500, 1, 72000, "Time (in ticks) required to create Empowered Crystal Block in Empowerer"),
+
+    BIO_REACTOR_ENERGY_CAPACITY("Bio Reactor Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 200000, 1, 1000000000, "Amount of energy Bio Reactor can store"),
+    BIO_REACTOR_ENERGY_SEND("Bio Reactor Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 800, 1, 1000000000, "Amount of energy Bio Reactor can send per tick"),
+    BIO_REACTOR_ENERGY_PER_ITEM("Bio Reactor Energy Generation Per Item", ConfigCategories.MACHINE_ENERGY_VALUES, 2, 1, 1000000, "Amount of energy Bio Reactor per item/per tick; this value will be squared"),
+    BIO_REACTOR_BURN_TIME("Bio Reactor Base Reaction Time", ConfigCategories.MACHINE_RECIPE_COSTS, 200, 1, 72000, "Base reaction time (in ticks) for one item in Bio Reactor"),
+
+    CANOLA_PRESS_ENERGY_CAPACITY("Canola Press: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 40000, 1, 1000000000, "Amount of energy Canola Press can store"),
+    CANOLA_PRESS_ENERGY_RECEIVE("Canola Press: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 100, 1, 1000000000, "Amount of energy Canola Press can receive per tick"),
+    CANOLA_PRESS_ENERGY_USE("Canola Press: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 35, 1, 1000000000, "Amount of energy used by Canola Press per tick to produce Canola Oil"),
+    CANOLA_PRESS_PRODUCTION_TIME("Canola Press: Production Time", ConfigCategories.MACHINE_RECIPE_COSTS, 30, 1, 72000, "Time in ticks to create Canola Oil from one item in Canola Press"),
+    CANOLA_PRESS_PRODUCTION_AMOUNT("Canola Press: Production Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Canola Oil (in mB) produced in Canola Press per item"),
+    FERMENTING_BARREL_PRODUCTION_TIME("Fermenting Barrel: Production Time", ConfigCategories.MACHINE_RECIPE_COSTS, 100, 1, 72000, "Time in ticks to create Refined Canola Oil in Fermenting Barrel"),
+    FERMENTING_BARREL_CONSUMPTION_AMOUNT("Fermenting Barrel: Consumption Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Canola Oil (in mB) consumed in Fermenting Barrel per cycle"),
+    FERMENTING_BARREL_PRODUCTION_AMOUNT("Fermenting Barrel: Production Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Refined Canola Oil (in mB) produced in Fermenting Barrel per cycle");
 
     public final String name;
     public final String category;
@@ -47,6 +144,10 @@ public enum ConfigIntValues{
         this.min = min;
         this.max = max;
         this.desc = desc;
+    }
+
+    public void initializeValue(Configuration config){
+        this.currentValue = config.getInt(this.name, this.category, this.defaultValue, this.min, this.max, this.desc);
     }
 
     public int getValue(){

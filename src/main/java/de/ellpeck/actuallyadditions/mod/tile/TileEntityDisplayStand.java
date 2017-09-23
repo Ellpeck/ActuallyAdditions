@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -22,11 +23,12 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay{
 
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(80000, 1000, 0);
+    public final CustomEnergyStorage storage;
     private int oldEnergy;
 
     public TileEntityDisplayStand(){
         super(1, "displayStand");
+        this.storage = new CustomEnergyStorage(ConfigIntValues.DISPLAY_STAND_ENERGY_CAPACITY.getValue(), ConfigIntValues.DISPLAY_STAND_ENERGY_RECEIVE.getValue(), 0);
     }
 
     @Override

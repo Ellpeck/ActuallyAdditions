@@ -10,10 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.config;
 
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.config.values.*;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -28,19 +25,23 @@ public final class ConfigValues{
 
     public static void defineConfigValues(Configuration config){
         for(ConfigIntValues currConf : ConfigIntValues.values()){
-            currConf.currentValue = config.get(currConf.category, currConf.name, currConf.defaultValue, currConf.desc, currConf.min, currConf.max).getInt();
+            currConf.initializeValue(config);
+        }
+
+        for(ConfigFloatValues currConf : ConfigFloatValues.values()){
+            currConf.initializeValue(config);
         }
 
         for(ConfigBoolValues currConf : ConfigBoolValues.values()){
-            currConf.currentValue = config.get(currConf.category, currConf.name, currConf.defaultValue, currConf.desc).getBoolean();
+            currConf.initializeValue(config);
         }
 
         for(ConfigIntListValues currConf : ConfigIntListValues.values()){
-            currConf.currentValue = config.get(currConf.category, currConf.name, currConf.defaultValue, currConf.desc).getIntList();
+            currConf.initializeValue(config);
         }
 
         for(ConfigStringListValues currConf : ConfigStringListValues.values()){
-            currConf.currentValue = config.get(currConf.category, currConf.name, currConf.defaultValue, currConf.desc).getStringList();
+            currConf.initializeValue(config);
         }
 
         parseConfiguratorConfig();

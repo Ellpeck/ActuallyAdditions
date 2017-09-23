@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
@@ -31,7 +32,7 @@ import java.util.List;
 public class ItemGrowthRing extends ItemEnergy{
 
     public ItemGrowthRing(String name){
-        super(1000000, 2000, name);
+        super(ConfigIntValues.GROWTH_RING_ENERGY_CAPACITY.getValue(), ConfigIntValues.GROWTH_RING_ENERGY_TRANSFER.getValue(), name);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class ItemGrowthRing extends ItemEnergy{
         EntityPlayer player = (EntityPlayer)entity;
         ItemStack equipped = player.getHeldItemMainhand();
 
-        int energyUse = 300;
+        int energyUse = ConfigIntValues.GROWTH_RING_ENERGY_USE.getValue();
         if(StackUtil.isValid(equipped) && equipped == stack && this.getEnergyStored(stack) >= energyUse){
             List<BlockPos> blocks = new ArrayList<BlockPos>();
 
@@ -67,7 +68,8 @@ public class ItemGrowthRing extends ItemEnergy{
 
                 //Fertilizing the Blocks
                 if(!blocks.isEmpty()){
-                    for(int i = 0; i < 45; i++){
+                    int fertilizeAttempts = ConfigIntValues.GROWTH_RING_FERTILIZE_ATTEMPTS.getValue();
+                    for(int i = 0; i < fertilizeAttempts; i++){
                         if(this.getEnergyStored(stack) >= energyUse){
                             BlockPos pos = blocks.get(world.rand.nextInt(blocks.size()));
 
@@ -80,10 +82,11 @@ public class ItemGrowthRing extends ItemEnergy{
                             IBlockState newState = world.getBlockState(pos);
                             if(newState.getBlock().getMetaFromState(newState) != metaBefore){
                                 world.playEvent(2005, pos, 0);
-                            }
 
-                            if(!player.capabilities.isCreativeMode){
-                                this.extractEnergyInternal(stack, energyUse, false);
+                                // Extract energy only if crop was fertilized
+                                if(!player.capabilities.isCreativeMode){
+                                    this.extractEnergyInternal(stack, energyUse, false);
+                                }
                             }
                         }
                         else{

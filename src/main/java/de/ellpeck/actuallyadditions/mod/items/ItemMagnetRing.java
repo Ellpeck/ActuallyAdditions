@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 public class ItemMagnetRing extends ItemEnergy{
 
     public ItemMagnetRing(String name){
-        super(200000, 1000, name);
+        super(ConfigIntValues.MAGNETIC_RING_ENERGY_CAPACITY.getValue(), ConfigIntValues.MAGNETIC_RING_ENERGY_TRANSFER.getValue(), name);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class ItemMagnetRing extends ItemEnergy{
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
                         if(!item.isDead && !item.cannotPickup()){
-                            int energyForItem = 50*StackUtil.getStackSize(item.getItem());
+                            int energyForItem = ConfigIntValues.MAGNETIC_RING_ENERGY_USE.getValue() * StackUtil.getStackSize(item.getItem());
 
                             if(this.getEnergyStored(stack) >= energyForItem){
                                 ItemStack oldItem = StackUtil.validateCopy(item.getItem());

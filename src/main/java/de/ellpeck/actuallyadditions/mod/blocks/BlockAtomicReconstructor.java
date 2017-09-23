@@ -53,7 +53,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     public static final int NAME_FLAVOR_AMOUNTS_1 = 12;
     public static final int NAME_FLAVOR_AMOUNTS_2 = 14;
-
     public BlockAtomicReconstructor(String name){
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
@@ -209,7 +208,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
             tooltip.add(StringUtil.localize(base+"1."+this.toPick1)+" "+StringUtil.localize(base+"2."+this.toPick2));
         }
     }
-    
+
     @Override
     public boolean hasComparatorInputOverride(IBlockState state){
         return true;
@@ -222,6 +221,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     	if (t instanceof TileEntityAtomicReconstructor) {
     		i = ((TileEntityAtomicReconstructor) t).getEnergy();
     	}
-        return MathHelper.clamp(i / 20000, 0, 15);
+        return MathHelper.clamp(i / (ConfigIntValues.ATOMIC_RECONSTRUCTOR_ENERGY_CAPACITY.getValue() / 15), 0, 15);
     }
 }
