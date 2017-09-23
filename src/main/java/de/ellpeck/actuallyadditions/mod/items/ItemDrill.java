@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigDoubleValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigFloatValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
@@ -271,37 +271,37 @@ public class ItemDrill extends ItemEnergy{
      * @return The Energy use per Block
      */
     public int getEnergyUsePerBlock(ItemStack stack){
-        double energyToUse = ConfigIntValues.DRILL_ENERGY_USE.getValue();
+        float energyToUse = ConfigIntValues.DRILL_ENERGY_USE.getValue();
 
         //Speed
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
-            energyToUse *= ConfigDoubleValues.DRILL_SPEED_I_COST_MULTIPLIER.getValue();
+            energyToUse *= ConfigFloatValues.DRILL_SPEED_I_COST_MULTIPLIER.getValue();
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
-                energyToUse *= ConfigDoubleValues.DRILL_SPEED_II_COST_MULTIPLIER.getValue();
+                energyToUse *= ConfigFloatValues.DRILL_SPEED_II_COST_MULTIPLIER.getValue();
                 if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)){
-                    energyToUse *= ConfigDoubleValues.DRILL_SPEED_III_COST_MULTIPLIER.getValue();
+                    energyToUse *= ConfigFloatValues.DRILL_SPEED_III_COST_MULTIPLIER.getValue();
                 }
             }
         }
 
         //Silk Touch
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
-            energyToUse *= ConfigDoubleValues.DRILL_SILK_TOUCH_COST_MULTIPLIER.getValue();
+            energyToUse *= ConfigFloatValues.DRILL_SILK_TOUCH_COST_MULTIPLIER.getValue();
         }
 
         //Fortune
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)){
-            energyToUse *= ConfigDoubleValues.DRILL_FORTUNE_I_COST_MULTIPLIER.getValue();
+            energyToUse *= ConfigFloatValues.DRILL_FORTUNE_I_COST_MULTIPLIER.getValue();
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II)){
-                energyToUse *= ConfigDoubleValues.DRILL_FORTUNE_II_COST_MULTIPLIER.getValue();
+                energyToUse *= ConfigFloatValues.DRILL_FORTUNE_II_COST_MULTIPLIER.getValue();
             }
         }
 
         //Size
         if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
-            energyToUse *= ConfigDoubleValues.DRILL_SIZE_3_COST_MULTIPLIER.getValue();
+            energyToUse *= ConfigFloatValues.DRILL_SIZE_3_COST_MULTIPLIER.getValue();
             if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                energyToUse *= ConfigDoubleValues.DRILL_SIZE_5_COST_MULTIPLIER.getValue();
+                energyToUse *= ConfigFloatValues.DRILL_SIZE_5_COST_MULTIPLIER.getValue();
             }
         }
 

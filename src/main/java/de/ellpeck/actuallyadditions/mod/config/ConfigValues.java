@@ -28,7 +28,7 @@ public final class ConfigValues{
             currConf.initializeValue(config);
         }
 
-        for(ConfigDoubleValues currConf : ConfigDoubleValues.values()){
+        for(ConfigFloatValues currConf : ConfigFloatValues.values()){
             currConf.initializeValue(config);
         }
 
