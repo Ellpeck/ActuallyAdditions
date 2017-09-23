@@ -118,9 +118,18 @@ public enum ConfigIntValues{
     EMPOWERER_BLOCK_CREATION_TIME("Empowerer: Empowered Crystal Block Creation Time", ConfigCategories.MACHINE_RECIPE_COSTS, 500, 1, 72000, "Time (in ticks) required to create Empowered Crystal Block in Empowerer"),
 
     BIO_REACTOR_ENERGY_CAPACITY("Bio Reactor Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 200000, 1, 1000000000, "Amount of energy Bio Reactor can store"),
-    BIO_REACTOR_ENERGY_SEND("Bio Reactor Energy Send", ConfigCategories.MACHINE_ENERGY_VALUES, 800, 1, 1000000000, "Amount of energy Bio Reactor can send per tick"),
+    BIO_REACTOR_ENERGY_SEND("Bio Reactor Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 800, 1, 1000000000, "Amount of energy Bio Reactor can send per tick"),
     BIO_REACTOR_ENERGY_PER_ITEM("Bio Reactor Energy Generation Per Item", ConfigCategories.MACHINE_ENERGY_VALUES, 2, 1, 1000000, "Amount of energy Bio Reactor per item/per tick; this value will be squared"),
-    BIO_REACTOR_BURN_TIME("Bio Reactor Base Reaction Time", ConfigCategories.MACHINE_VALUES, 200, 1, 72000, "Base reaction time (in ticks) for one item in Bio Reactor");
+    BIO_REACTOR_BURN_TIME("Bio Reactor Base Reaction Time", ConfigCategories.MACHINE_RECIPE_COSTS, 200, 1, 72000, "Base reaction time (in ticks) for one item in Bio Reactor"),
+
+    CANOLA_PRESS_ENERGY_CAPACITY("Canola Press: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 40000, 1, 1000000000, "Amount of energy Canola Press can store"),
+    CANOLA_PRESS_ENERGY_RECEIVE("Canola Press: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 100, 1, 1000000000, "Amount of energy Canola Press can receive per tick"),
+    CANOLA_PRESS_ENERGY_USE("Canola Press: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 35, 1, 1000000000, "Amount of energy used by Canola Press per tick to produce Canola Oil"),
+    CANOLA_PRESS_PRODUCTION_TIME("Canola Press: Production Time", ConfigCategories.MACHINE_RECIPE_COSTS, 30, 1, 72000, "Time in ticks to create Canola Oil from one item in Canola Press"),
+    CANOLA_PRESS_PRODUCTION_AMOUNT("Canola Press: Production Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Canola Oil (in mB) produced in Canola Press per item"),
+    FERMENTING_BARREL_PRODUCTION_TIME("Fermenting Barrel: Production Time", ConfigCategories.MACHINE_RECIPE_COSTS, 100, 1, 72000, "Time in ticks to create Refined Canola Oil in Fermenting Barrel"),
+    FERMENTING_BARREL_CONSUMPTION_AMOUNT("Fermenting Barrel: Consumption Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Canola Oil (in mB) consumed in Fermenting Barrel per cycle"),
+    FERMENTING_BARREL_PRODUCTION_AMOUNT("Fermenting Barrel: Production Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Refined Canola Oil (in mB) produced in Fermenting Barrel per cycle");
 
     public final String name;
     public final String category;
