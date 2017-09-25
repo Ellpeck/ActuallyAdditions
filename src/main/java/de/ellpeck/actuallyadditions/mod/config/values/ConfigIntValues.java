@@ -45,7 +45,10 @@ public enum ConfigIntValues{
     MAGNETISM_RING_ENERGY_USE("Ring Of Magnetism: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 50, 1, 1000000000, "Amount of energy Ring Of Magnetism uses to pick up item."),
     LIQUID_BANNING_RING_ENERGY_CAPACITY("Ring Of Liquid Banning: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 800000, 1000, 1000000000, "Amount of energy Ring Of Liquid Banning can store."),
     LIQUID_BANNING_RING_ENERGY_TRANSFER("Ring Of Liquid Banning: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Ring Of Liquid Banning can receive per tick."),
-    LIQUID_BANNING_RING_ENERGY_USE("Ring Of Liquid Banning: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 150, 1, 1000000000, "Amount of energy Ring Of Liquid Banning uses to remove liquid block.");
+    LIQUID_BANNING_RING_ENERGY_USE("Ring Of Liquid Banning: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 150, 1, 1000000000, "Amount of energy Ring Of Liquid Banning uses to remove liquid block."),
+    TELEPORT_STAFF_ENERGY_CAPACITY("Teleport Staff: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 250000, 1000, 1000000000, "Amount of energy Teleport Staff can store."),
+    TELEPORT_STAFF_ENERGY_TRANSFER("Teleport Staff: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Teleport Staff can receive per tick."),
+    TELEPORT_STAFF_ENERGY_USE("Teleport Staff: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 200, 1, 1000000000, "Amount of energy Teleport Staff uses to teleport per block.");
 
     public final String name;
     public final String category;

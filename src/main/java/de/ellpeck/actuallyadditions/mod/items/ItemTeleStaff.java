@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +29,7 @@ import net.minecraft.world.World;
 public class ItemTeleStaff extends ItemEnergy{
 
     public ItemTeleStaff(String name){
-        super(250000, 1000, name);
+        super(ConfigIntValues.TELEPORT_STAFF_ENERGY_CAPACITY.getValue(), ConfigIntValues.TELEPORT_STAFF_ENERGY_TRANSFER.getValue(), name);
     }
 
     @Override
@@ -42,14 +43,14 @@ public class ItemTeleStaff extends ItemEnergy{
                     double x = pos.hitVec.x-(side == 4 ? 0.5 : 0)+(side == 5 ? 0.5 : 0);
                     double y = pos.hitVec.y-(side == 0 ? 2.0 : 0)+(side == 1 ? 0.5 : 0);
                     double z = pos.hitVec.z-(side == 2 ? 0.5 : 0)+(side == 3 ? 0.5 : 0);
-                    int baseUse = 200;
-                    int use = baseUse+(int)(baseUse*pos.hitVec.distanceTo(new Vec3d(player.posX, player.posY+(player.getEyeHeight()-player.getDefaultEyeHeight()), player.posZ)));
-                    if(this.getEnergyStored(stack) >= use){
+                    int baseEnergyUse = ConfigIntValues.TELEPORT_STAFF_ENERGY_USE.getValue();
+                    int energyUse = baseEnergyUse+(int)(baseEnergyUse*pos.hitVec.distanceTo(new Vec3d(player.posX, player.posY+(player.getEyeHeight()-player.getDefaultEyeHeight()), player.posZ)));
+                    if(this.getEnergyStored(stack) >= energyUse){
                         ((EntityPlayerMP)player).connection.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
                         player.dismountRidingEntity();
                         world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
                         if(!player.capabilities.isCreativeMode){
-                            this.extractEnergyInternal(stack, use, false);
+                            this.extractEnergyInternal(stack, energyUse, false);
                             player.getCooldownTracker().setCooldown(this, 50);
                         }
                         return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
