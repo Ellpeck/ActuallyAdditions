@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.state.IBlockState;
@@ -32,11 +33,11 @@ import java.util.Map;
 
 public class LensDisenchanting extends Lens{
 
-    public static final int ENERGY_USE = 250000;
 
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        if(tile.getEnergy() >= ENERGY_USE){
+        int energyUse = ConfigIntListValues.ATOMIC_RECONSTRUCTOR_LENSES_ENERGY_USE.getValue()[3];
+        if(tile.getEnergy() >= energyUse){
             List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
             if(items != null && !items.isEmpty()){
                 EntityItem book = null;
@@ -97,7 +98,7 @@ public class LensDisenchanting extends Lens{
                         tile.getWorldObject().spawnEntity(newBook);
                         tile.getWorldObject().spawnEntity(disenchanted);
 
-                        tile.extractEnergy(ENERGY_USE);
+                        tile.extractEnergy(energyUse);
 
                         return true;
                     }
@@ -119,6 +120,6 @@ public class LensDisenchanting extends Lens{
 
     @Override
     public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot){
-        return tile.getEnergy()-energyUsePerShot >= ENERGY_USE;
+        return tile.getEnergy()-energyUsePerShot >= ConfigIntListValues.ATOMIC_RECONSTRUCTOR_LENSES_ENERGY_USE.getValue()[3];
     }
 }

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.WorldServer;
@@ -39,6 +40,6 @@ public class LensEvenMoarDeath extends LensDeath{
 
     @Override
     protected int getUsePerEntity(){
-        return 2500;
+        return ConfigIntListValues.ATOMIC_RECONSTRUCTOR_LENSES_ENERGY_USE.getValue()[4];
     }
 }

@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.misc.DamageSources;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,9 +27,9 @@ public class LensDeath extends Lens{
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         ArrayList<EntityLivingBase> entities = (ArrayList<EntityLivingBase>)tile.getWorldObject().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
         for(EntityLivingBase entity : entities){
-            int use = this.getUsePerEntity();
-            if(tile.getEnergy() >= use){
-                tile.extractEnergy(use);
+            int energyUse = this.getUsePerEntity();
+            if(tile.getEnergy() >= energyUse){
+                tile.extractEnergy(energyUse);
 
                 this.onAttacked(entity, tile);
             }
@@ -42,7 +43,7 @@ public class LensDeath extends Lens{
     }
 
     protected int getUsePerEntity(){
-        return 350;
+        return ConfigIntListValues.ATOMIC_RECONSTRUCTOR_LENSES_ENERGY_USE.getValue()[1];
     }
 
     @Override

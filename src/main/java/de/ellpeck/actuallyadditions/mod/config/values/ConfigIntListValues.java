@@ -19,9 +19,13 @@ public enum ConfigIntListValues{
     OIL_POWER("Oil Gen: Power Values", ConfigCategories.MACHINE_VALUES, new int[]{40, 80, 100, 120}, "The amount of power that the 4 tiers of oils generate (in order)"),
     OIL_TIME("Oil Gen: Time Values", ConfigCategories.MACHINE_VALUES, new int[]{100, 120, 280, 400}, "The amount of time that the 4 tiers of oils work for (in order)"),
 
-    DRILL_AUGMENTS_ENERGY_USE("Drill: Energy Use Per Augment", ConfigCategories.TOOL_ENERGY_VALUES, new int[]{50, 75, 175, 100, 40, 80, 10, 30, 0}, "Additional amount of energy Drill Augments use per mined block. Order of augments: Speed I, Speed II, Speed III, Silk Touch, Fortune I, Fortune II, Mining I, Mining II, Block Placing"),
+    DRILL_AUGMENTS_ENERGY_USE("Drill: Energy Use Per Augment", ConfigCategories.TOOL_ENERGY_VALUES, new int[]{50, 75, 175, 100, 40, 80, 10, 30, 0}, "Additional amount of energy Drill Augments use per mined block.\nOrder of augments: Speed I, Speed II, Speed III, Silk Touch, Fortune I, Fortune II, Mining I, Mining II, Block Placing"),
     BATTERIES_ENERGY_CAPACITY("Batteries: Energy Capacity Per Tier", ConfigCategories.TOOL_ENERGY_VALUES, new int[]{200000, 350000, 600000, 1000000, 2000000}, "Amount of energy each tier of Batteries can store."),
-    BATTERIES_ENERGY_TRANSFER("Batteries: Energy Transfer Rate Per Tier", ConfigCategories.TOOL_ENERGY_VALUES, new int[]{1000, 5000, 10000, 30000, 100000}, "Amount of energy each tier of Batteries can send or receive.");
+    BATTERIES_ENERGY_TRANSFER("Batteries: Energy Transfer Rate Per Tier", ConfigCategories.TOOL_ENERGY_VALUES, new int[]{1000, 5000, 10000, 30000, 100000}, "Amount of energy each tier of Batteries can send or receive."),
+
+    ATOMIC_RECONSTRUCTOR_LENSES_ENERGY_USE("Atomic Reconstructor: Lenses Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, new int[]{200, 350, 250000, 250000, 2500, 60000, 70000, 150000}, "Amount of energy used by each Lens type.\nOrder of lenses: Color, Certain Death, Detonation, Disenchanting, Killer, Miner, Miner (for nether ores), Disruption."),
+    ATOMIC_RECONSTRUCTOR_CRYSTALLIZATION_RECIPE_COSTS("Atomic Reconstructor: Crystallization Energy Cost", ConfigCategories.MACHINE_RECIPE_COSTS, new int[]{40, 40, 60, 100, 60, 80, 400, 400, 600, 1000, 600, 800, 2000}, "Amount of energy used to crystallize item.\nOrder of items: Restonia Crystal, Palis Crystal, Diamatine Crystal, Emeradic Crystal, Void Crystal, Enori Crystal, Restonia Block, Palis Block, Diamatine Block, Emeradic Block, Void Block, Enori Block, Crystallized Canola Seed"),
+    ATOMIC_RECONSTRUCTOR_CONVERSION_RECIPE_COSTS("Atomic Reconstructor: Conversion Energy Cost", ConfigCategories.MACHINE_RECIPE_COSTS, new int[]{5000, 2000, 20000, 8000, 150000, 30000, 10, 10}, "Amount of energy used to convert item to another one.\nOrder of items: Lenses, Relays, Soul Sand, Leather, Nether Wart, Prismarine, Ethetic Quartz, Ethetic Green Block");
 
     public final String name;
     public final String category;

@@ -52,7 +52,11 @@ public enum ConfigIntValues{
     LEAF_BLOWER_ENERGY_USE("Leaf Blower: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 60, 1, 1000000, "Amount of energy Leaf Blower uses per tick while placed on Display Stand."),
     ADVANCED_LEAF_BLOWER_ENERGY_USE("Advanced Leaf Blower: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 60, 1, 1000000, "Amount of energy Advanced Leaf Blower uses per tick while placed on Display Stand."),
     POTION_RINGS_ENERGY_USE("Potion Rings: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 325, 1, 1000000, "Amount of energy Potion Rings use per tick while placed on Display Stand."),
-    ADVANCED_POTION_RINGS_ENERGY_USE("Advanced Potion Rings: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 325, 1, 1000000, "Amount of energy Advanced Potion Rings use per tick while placed on Display Stand.");
+    ADVANCED_POTION_RINGS_ENERGY_USE("Advanced Potion Rings: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 325, 1, 1000000, "Amount of energy Advanced Potion Rings use per tick while placed on Display Stand."),
+
+    ATOMIC_RECONSTRUCTOR_ENERGY_CAPACITY("Atomic Reconstructor: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 300000, 1000, 1000000000, "Amount of energy Atomic Reconstructor can store."),
+    ATOMIC_RECONSTRUCTOR_ENERGY_RECEIVE("Atomic Reconstructor: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 5000, 1, 1000000000, "Amount of energy Atomic Reconstructor can receive per tick."),
+    ATOMIC_RECONSTRUCTOR_ENERGY_USE("Atomic Reconstructor: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Basic amount of energy Atomic Reconstructor uses per craft.");
 
     public final String name;
     public final String category;
