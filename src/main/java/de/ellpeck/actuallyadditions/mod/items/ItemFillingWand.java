@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -38,7 +39,7 @@ import java.util.List;
 public class ItemFillingWand extends ItemEnergy{
 
     public ItemFillingWand(String name){
-        super(500000, 1000, name);
+        super(ConfigIntValues.HANDHELD_FILLER_ENERGY_CAPACITY.getValue(), ConfigIntValues.HANDHELD_FILLER_ENERGY_TRANSFER.getValue(), name);
     }
 
     private static boolean removeFittingItem(IBlockState state, EntityPlayer player){
@@ -154,7 +155,7 @@ public class ItemFillingWand extends ItemEnergy{
                     BlockPos secondPos = new BlockPos(compound.getInteger("SecondX"), compound.getInteger("SecondY"), compound.getInteger("SecondZ"));
 
                     if(!BlockPos.ORIGIN.equals(firstPos) && !BlockPos.ORIGIN.equals(secondPos)){
-                        int energyUse = 1500;
+                        int energyUse = ConfigIntValues.HANDHELD_FILLER_ENERGY_USE.getValue();
 
                         IBlockState replaceState = loadBlock(stack);
                         if(replaceState != null && (creative || this.getEnergyStored(stack) >= energyUse)){
