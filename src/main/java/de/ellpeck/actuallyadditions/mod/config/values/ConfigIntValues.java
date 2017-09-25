@@ -48,7 +48,11 @@ public enum ConfigIntValues{
     LIQUID_BANNING_RING_ENERGY_USE("Ring Of Liquid Banning: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 150, 1, 1000000000, "Amount of energy Ring Of Liquid Banning uses to remove liquid block."),
     TELEPORT_STAFF_ENERGY_CAPACITY("Teleport Staff: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 250000, 1000, 1000000000, "Amount of energy Teleport Staff can store."),
     TELEPORT_STAFF_ENERGY_TRANSFER("Teleport Staff: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Teleport Staff can receive per tick."),
-    TELEPORT_STAFF_ENERGY_USE("Teleport Staff: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 200, 1, 1000000000, "Amount of energy Teleport Staff uses to teleport per block.");
+    TELEPORT_STAFF_ENERGY_USE("Teleport Staff: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 200, 1, 1000000000, "Amount of energy Teleport Staff uses to teleport per block."),
+    LEAF_BLOWER_ENERGY_USE("Leaf Blower: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 60, 1, 1000000, "Amount of energy Leaf Blower uses per tick while placed on Display Stand."),
+    ADVANCED_LEAF_BLOWER_ENERGY_USE("Advanced Leaf Blower: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 60, 1, 1000000, "Amount of energy Advanced Leaf Blower uses per tick while placed on Display Stand."),
+    POTION_RINGS_ENERGY_USE("Potion Rings: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 325, 1, 1000000, "Amount of energy Potion Rings use per tick while placed on Display Stand."),
+    ADVANCED_POTION_RINGS_ENERGY_USE("Advanced Potion Rings: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 325, 1, 1000000, "Amount of energy Advanced Potion Rings use per tick while placed on Display Stand.");
 
     public final String name;
     public final String category;

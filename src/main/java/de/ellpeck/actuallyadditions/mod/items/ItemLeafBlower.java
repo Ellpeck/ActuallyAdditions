@@ -11,7 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.state.IBlockState;
@@ -139,6 +141,6 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
 
     @Override
     public int getUsePerTick(ItemStack stack, TileEntity tile, int elapsedTicks){
-        return 60;
+        return StackUtil.isValid(stack) && ((ItemLeafBlower) stack.getItem()).isAdvanced ? ConfigIntValues.ADVANCED_LEAF_BLOWER_ENERGY_USE.getValue() : ConfigIntValues.LEAF_BLOWER_ENERGY_USE.getValue();
     }
 }
