@@ -19,7 +19,9 @@ public enum ConfigIntListValues{
     OIL_POWER("Oil Gen: Power Values", ConfigCategories.MACHINE_VALUES, new int[]{40, 80, 100, 120}, "The amount of power that the 4 tiers of oils generate (in order)"),
     OIL_TIME("Oil Gen: Time Values", ConfigCategories.MACHINE_VALUES, new int[]{100, 120, 280, 400}, "The amount of time that the 4 tiers of oils work for (in order)"),
 
-    DRILL_AUGMENTS_ENERGY_USE("Drill: Energy Use Per Augment", ConfigCategories.TOOL_ENERGY_VALUES, new int[]{50, 75, 175, 100, 40, 80, 10, 30, 0}, "Additional amount of energy Drill Augments use per mined block. Order of augments: Speed I, Speed II, Speed III, Silk Touch, Fortune I, Fortune II, Mining I, Mining II, Block Placing");
+    DRILL_AUGMENTS_ENERGY_USE("Drill: Energy Use Per Augment", ConfigCategories.TOOL_ENERGY_VALUES, new int[]{50, 75, 175, 100, 40, 80, 10, 30, 0}, "Additional amount of energy Drill Augments use per mined block. Order of augments: Speed I, Speed II, Speed III, Silk Touch, Fortune I, Fortune II, Mining I, Mining II, Block Placing"),
+    BATTERIES_ENERGY_CAPACITY("Batteries: Energy Capacity Per Tier", ConfigCategories.TOOL_ENERGY_VALUES, new int[]{200000, 350000, 600000, 1000000, 2000000}, "Amount of energy each tier of Batteries can store."),
+    BATTERIES_ENERGY_TRANSFER("Batteries: Energy Transfer Rate Per Tier", ConfigCategories.TOOL_ENERGY_VALUES, new int[]{1000, 5000, 10000, 30000, 100000}, "Amount of energy each tier of Batteries can send or receive.");
 
     public final String name;
     public final String category;
