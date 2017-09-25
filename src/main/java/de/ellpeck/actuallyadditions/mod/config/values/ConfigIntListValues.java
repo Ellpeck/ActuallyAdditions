@@ -17,7 +17,9 @@ public enum ConfigIntListValues{
     ORE_GEN_DIMENSION_BLACKLIST("OreGen Dimension Blacklist", ConfigCategories.WORLD_GEN, new int[0], "The list of IDs that Actually Additions OreGen (Ex: Black Quartz) is banned in. This also applies for other world gen like lush caves."),
     PLANT_DIMENSION_BLACKLIST("Plant Blacklist", ConfigCategories.WORLD_GEN, new int[0], "The list of IDs of the dimensions that Actually Additions Plants (Rice for example) are banned in."),
     OIL_POWER("Oil Gen: Power Values", ConfigCategories.MACHINE_VALUES, new int[]{40, 80, 100, 120}, "The amount of power that the 4 tiers of oils generate (in order)"),
-    OIL_TIME("Oil Gen: Time Values", ConfigCategories.MACHINE_VALUES, new int[]{100, 120, 280, 400}, "The amount of time that the 4 tiers of oils work for (in order)");
+    OIL_TIME("Oil Gen: Time Values", ConfigCategories.MACHINE_VALUES, new int[]{100, 120, 280, 400}, "The amount of time that the 4 tiers of oils work for (in order)"),
+
+    DRILL_AUGMENTS_ENERGY_USE("Drill: Energy Use Per Augment", ConfigCategories.TOOL_ENERGY_VALUES, new int[]{50, 75, 175, 100, 40, 80, 10, 30, 0}, "Additional amount of energy Drill Augments use per mined block. Order of augments: Speed I, Speed II, Speed III, Silk Touch, Fortune I, Fortune II, Mining I, Mining II, Block Placing");
 
     public final String name;
     public final String category;

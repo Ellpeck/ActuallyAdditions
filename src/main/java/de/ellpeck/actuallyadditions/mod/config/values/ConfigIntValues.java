@@ -29,7 +29,11 @@ public enum ConfigIntValues{
     FONT_SIZE_MEDIUM("Booklet Medium Font Size", ConfigCategories.OTHER, 0, 0, 500, "The size of the booklet's medium font in percent. Set to 0 to use defaults from the lang file."),
     FONT_SIZE_LARGE("Booklet Large Font Size", ConfigCategories.OTHER, 0, 0, 500, "The size of the booklet's large font in percent. Set to 0 to use defaults from the lang file."),
 	
-	ELEVEN("What is 11", ConfigCategories.OTHER, 11, 0, 12, "11?");
+    ELEVEN("What is 11", ConfigCategories.OTHER, 11, 0, 12, "11?"),
+
+    DRILL_ENERGY_CAPACITY("Drill: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 250000, 1000, 1000000000, "Amount of energy Drill can store."),
+    DRILL_ENERGY_TRANSFER("Drill: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Drill can receive per tick."),
+    DRILL_ENERGY_USE("Drill: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 100, 1, 1000000000, "Amount of energy Drill uses to mine block.");
 
     public final String name;
     public final String category;

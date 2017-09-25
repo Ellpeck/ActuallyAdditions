@@ -18,6 +18,7 @@ public enum ConfigCategories{
     MACHINE_VALUES("Machine Values", "Values for Machines"),
     MOB_DROPS("Mob Drops", "Everything regarding Item drops from mobs"),
     WORLD_GEN("World Gen", "Everything regarding World Generation"),
+    TOOL_ENERGY_VALUES("Tool Energy Values", "Energy values for Tools"),
     OTHER("Other", "Everything else");
 
     public final String name;
