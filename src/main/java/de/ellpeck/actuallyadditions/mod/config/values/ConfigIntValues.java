@@ -36,7 +36,16 @@ public enum ConfigIntValues{
     DRILL_ENERGY_USE("Drill: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 100, 1, 1000000000, "Amount of energy Drill uses to mine block."),
     HANDHELD_FILLER_ENERGY_CAPACITY("Handheld Filler: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 500000, 1000, 1000000000, "Amount of energy Handheld Filler can store."),
     HANDHELD_FILLER_ENERGY_TRANSFER("Handheld Filler: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Handheld Filler can receive per tick."),
-    HANDHELD_FILLER_ENERGY_USE("Handheld Filler: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 1500, 1, 1000000000, "Amount of energy Handheld Filler uses to place block.");
+    HANDHELD_FILLER_ENERGY_USE("Handheld Filler: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 1500, 1, 1000000000, "Amount of energy Handheld Filler uses to place block."),
+    GROWTH_RING_ENERGY_CAPACITY("Ring Of Growth: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 1000000, 1000, 1000000000, "Amount of energy Ring Of Growth can store."),
+    GROWTH_RING_ENERGY_TRANSFER("Ring Of Growth: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 2000, 1, 1000000000, "Amount of energy Ring Of Growth can receive per tick."),
+    GROWTH_RING_ENERGY_USE("Ring Of Growth: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 300, 1, 1000000000, "Amount of energy Ring Of Growth uses to fertilize plant."),
+    MAGNETISM_RING_ENERGY_CAPACITY("Ring Of Magnetism: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 200000, 1000, 1000000000, "Amount of energy Ring Of Magnetism can store."),
+    MAGNETISM_RING_ENERGY_TRANSFER("Ring Of Magnetism: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Ring Of Magnetism can receive per tick."),
+    MAGNETISM_RING_ENERGY_USE("Ring Of Magnetism: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 50, 1, 1000000000, "Amount of energy Ring Of Magnetism uses to pick up item."),
+    LIQUID_BANNING_RING_ENERGY_CAPACITY("Ring Of Liquid Banning: Energy Capacity", ConfigCategories.TOOL_ENERGY_VALUES, 800000, 1000, 1000000000, "Amount of energy Ring Of Liquid Banning can store."),
+    LIQUID_BANNING_RING_ENERGY_TRANSFER("Ring Of Liquid Banning: Energy Transfer Rate", ConfigCategories.TOOL_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Ring Of Liquid Banning can receive per tick."),
+    LIQUID_BANNING_RING_ENERGY_USE("Ring Of Liquid Banning: Energy Use", ConfigCategories.TOOL_ENERGY_VALUES, 150, 1, 1000000000, "Amount of energy Ring Of Liquid Banning uses to remove liquid block.");
 
     public final String name;
     public final String category;
