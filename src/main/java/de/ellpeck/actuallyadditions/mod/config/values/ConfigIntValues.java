@@ -56,7 +56,9 @@ public enum ConfigIntValues{
 
     ATOMIC_RECONSTRUCTOR_ENERGY_CAPACITY("Atomic Reconstructor: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 300000, 1000, 1000000000, "Amount of energy Atomic Reconstructor can store."),
     ATOMIC_RECONSTRUCTOR_ENERGY_RECEIVE("Atomic Reconstructor: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 5000, 1, 1000000000, "Amount of energy Atomic Reconstructor can receive per tick."),
-    ATOMIC_RECONSTRUCTOR_ENERGY_USE("Atomic Reconstructor: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Basic amount of energy Atomic Reconstructor uses per craft.");
+    ATOMIC_RECONSTRUCTOR_ENERGY_USE("Atomic Reconstructor: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Basic amount of energy Atomic Reconstructor uses per craft."),
+    DISPLAY_STAND_ENERGY_CAPACITY("Display Stand: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 80000, 1000, 1000000000, "Amount of energy Display Stand can store."),
+    DISPLAY_STAND_ENERGY_RECEIVE("Display Stand: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Display Stand can receive per tick.");
 
     public final String name;
     public final String category;
