@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +24,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler{
 
-    private static final int PROCESS_TIME = 100;
     public final FluidTank canolaTank = new FluidTank(2*Util.BUCKET){
         @Override
         public boolean canDrain(){
@@ -82,14 +82,16 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            int produce = 80;
-            if(this.canolaTank.getFluidAmount() >= produce && produce <= this.oilTank.getCapacity()-this.oilTank.getFluidAmount()){
+            int consumptionAmount = ConfigIntValues.FERMENTING_BARREL_CONSUMPTION_AMOUNT.getValue();
+            int productionAmount = ConfigIntValues.FERMENTING_BARREL_PRODUCTION_AMOUNT.getValue();
+            int processingTime = ConfigIntValues.FERMENTING_BARREL_RECIPE_DURATION.getValue();
+            if(this.canolaTank.getFluidAmount() >= productionAmount && productionAmount <= this.oilTank.getCapacity()-this.oilTank.getFluidAmount()){
                 this.currentProcessTime++;
-                if(this.currentProcessTime >= PROCESS_TIME){
+                if(this.currentProcessTime >= processingTime){
                     this.currentProcessTime = 0;
 
-                    this.oilTank.fillInternal(new FluidStack(InitFluids.fluidRefinedCanolaOil, produce), true);
-                    this.canolaTank.drainInternal(produce, true);
+                    this.oilTank.fillInternal(new FluidStack(InitFluids.fluidRefinedCanolaOil, productionAmount), true);
+                    this.canolaTank.drainInternal(consumptionAmount, true);
                 }
             }
             else{
@@ -119,7 +121,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
-        return this.currentProcessTime*i/PROCESS_TIME;
+        return this.currentProcessTime*i/ ConfigIntValues.FERMENTING_BARREL_RECIPE_DURATION.getValue();
     }
 
     @SideOnly(Side.CLIENT)

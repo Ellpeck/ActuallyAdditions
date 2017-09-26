@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -26,10 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements ISharingFluidHandler{
 
-    public static final int PRODUCE = 80;
-    public static final int ENERGY_USE = 35;
-    private static final int TIME = 30;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(40000, 100, 0);
+    public final CustomEnergyStorage storage;
     public final FluidTank tank = new FluidTank(2*Util.BUCKET){
         @Override
         public boolean canFill(){
@@ -43,6 +41,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
 
     public TileEntityCanolaPress(){
         super(1, "canolaPress");
+        this.storage = new CustomEnergyStorage(ConfigIntValues.CANOLA_PRESS_ENERGY_CAPACITY.getValue(), ConfigIntValues.CANOLA_PRESS_ENERGY_RECEIVE.getValue(), 0);
     }
 
     @SideOnly(Side.CLIENT)
@@ -52,7 +51,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
 
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
-        return this.currentProcessTime*i/TIME;
+        return this.currentProcessTime*i/ConfigIntValues.CANOLA_PRESS_RECIPE_DURATION.getValue();
     }
 
     @SideOnly(Side.CLIENT)
@@ -84,16 +83,19 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            if(this.isCanola(0) && PRODUCE <= this.tank.getCapacity()-this.tank.getFluidAmount()){
-                if(this.storage.getEnergyStored() >= ENERGY_USE){
+            int energyUse = ConfigIntValues.CANOLA_PRESS_RECIPE_COST.getValue();
+            int productionAmount = ConfigIntValues.CANOLA_PRESS_PRODUCTION_AMOUNT.getValue();
+            int processingTime = ConfigIntValues.CANOLA_PRESS_RECIPE_DURATION.getValue();
+            if(this.isCanola(0) && productionAmount <= this.tank.getCapacity()-this.tank.getFluidAmount()){
+                if(this.storage.getEnergyStored() >= energyUse){
                     this.currentProcessTime++;
-                    this.storage.extractEnergyInternal(ENERGY_USE, false);
-                    if(this.currentProcessTime >= TIME){
+                    this.storage.extractEnergyInternal(energyUse, false);
+                    if(this.currentProcessTime >= processingTime){
                         this.currentProcessTime = 0;
 
                         this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -1));
 
-                        this.tank.fillInternal(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
+                        this.tank.fillInternal(new FluidStack(InitFluids.fluidCanolaOil, productionAmount), true);
                         this.markDirty();
                     }
                 }

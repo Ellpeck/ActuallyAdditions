@@ -58,7 +58,15 @@ public enum ConfigIntValues{
     ATOMIC_RECONSTRUCTOR_ENERGY_RECEIVE("Atomic Reconstructor: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 5000, 1, 1000000000, "Amount of energy Atomic Reconstructor can receive per tick."),
     ATOMIC_RECONSTRUCTOR_ENERGY_USE("Atomic Reconstructor: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Basic amount of energy Atomic Reconstructor uses per craft."),
     DISPLAY_STAND_ENERGY_CAPACITY("Display Stand: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 80000, 1000, 1000000000, "Amount of energy Display Stand can store."),
-    DISPLAY_STAND_ENERGY_RECEIVE("Display Stand: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Display Stand can receive per tick.");
+    DISPLAY_STAND_ENERGY_RECEIVE("Display Stand: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Display Stand can receive per tick."),
+    CANOLA_PRESS_ENERGY_CAPACITY("Canola Press: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 40000, 1000, 1000000000, "Amount of energy Canola Press can store."),
+    CANOLA_PRESS_ENERGY_RECEIVE("Canola Press: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 100, 1, 1000000000, "Amount of energy Canola Press can receive per tick."),
+    CANOLA_PRESS_RECIPE_COST("Canola Press: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 35, 1, 1000000000, "Amount of energy Canola Press uses to extract Canola Oil from one item."),
+    CANOLA_PRESS_RECIPE_DURATION("Canola Press: Processing Duration", ConfigCategories.MACHINE_RECIPE_COSTS, 30, 1, 72000, "Time in ticks required to process one Canola in Canola Press."),
+    CANOLA_PRESS_PRODUCTION_AMOUNT("Canola Press: Production Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Canola Oil (in mB) Canola Press produces from one Canola."),
+    FERMENTING_BARREL_RECIPE_DURATION("Fermenting Barrel: Processing Duration", ConfigCategories.MACHINE_RECIPE_COSTS, 100, 1, 72000, "Time in ticks required for one operation in Fermenting Barrel."),
+    FERMENTING_BARREL_CONSUMPTION_AMOUNT("Fermenting Barrel: Consumption Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Canola Oil (in mB) Fermenting Barrel uses per operation."),
+    FERMENTING_BARREL_PRODUCTION_AMOUNT("Fermenting Barrel: Production Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Refined Canola Oil Fermenting Barrel produces per operation.");
 
     public final String name;
     public final String category;
