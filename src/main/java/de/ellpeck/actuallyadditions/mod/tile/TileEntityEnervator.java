@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaHolder;
@@ -26,11 +27,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, 1000);
+    public final CustomEnergyStorage storage;
     private int lastEnergy;
 
     public TileEntityEnervator(){
         super(2, "enervator");
+        this.storage = new CustomEnergyStorage(ConfigIntValues.ENERVATOR_ENERGY_CAPACITY.getValue(), 0, ConfigIntValues.ENERVATOR_ENERGY_SEND.getValue());
     }
 
     @Override

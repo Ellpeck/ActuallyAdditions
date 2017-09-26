@@ -66,7 +66,11 @@ public enum ConfigIntValues{
     CANOLA_PRESS_PRODUCTION_AMOUNT("Canola Press: Production Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Canola Oil (in mB) Canola Press produces from one Canola."),
     FERMENTING_BARREL_RECIPE_DURATION("Fermenting Barrel: Processing Duration", ConfigCategories.MACHINE_RECIPE_COSTS, 100, 1, 72000, "Time in ticks required for one operation in Fermenting Barrel."),
     FERMENTING_BARREL_CONSUMPTION_AMOUNT("Fermenting Barrel: Consumption Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Canola Oil (in mB) Fermenting Barrel uses per operation."),
-    FERMENTING_BARREL_PRODUCTION_AMOUNT("Fermenting Barrel: Production Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Refined Canola Oil Fermenting Barrel produces per operation.");
+    FERMENTING_BARREL_PRODUCTION_AMOUNT("Fermenting Barrel: Production Amount", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 2000, "Amount of Refined Canola Oil Fermenting Barrel produces per operation."),
+    ENERGIZER_ENERGY_CAPACITY("Energizer: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 50000, 1000, 1000000000, "Amount of energy Energizer can store."),
+    ENERGIZER_ENERGY_RECEIVE("Energizer: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Energizer can receive per tick"),
+    ENERVATOR_ENERGY_CAPACITY("Enervator: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 50000, 1000, 1000000000, "Amount of energy Enervator can store."),
+    ENERVATOR_ENERGY_SEND("Enervator: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Enervator can send per tick");
 
     public final String name;
     public final String category;
