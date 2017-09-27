@@ -70,7 +70,10 @@ public enum ConfigIntValues{
     ENERGIZER_ENERGY_CAPACITY("Energizer: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 50000, 1000, 1000000000, "Amount of energy Energizer can store."),
     ENERGIZER_ENERGY_RECEIVE("Energizer: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Energizer can receive per tick"),
     ENERVATOR_ENERGY_CAPACITY("Enervator: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 50000, 1000, 1000000000, "Amount of energy Enervator can store."),
-    ENERVATOR_ENERGY_SEND("Enervator: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Enervator can send per tick");
+    ENERVATOR_ENERGY_SEND("Enervator: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 1000, 1, 1000000000, "Amount of energy Enervator can send per tick"),
+    COAL_GENERATOR_ENERGY_CAPACITY("Coal Generator: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 60000, 1000, 1000000000, "Amount of energy Coal Generator can store."),
+    COAL_GENERATOR_ENERGY_SEND("Coal Generator: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 80, 1, 1000000000, "Amount of energy Coal Generator can send per tick."),
+    COAL_GENERATOR_ENERGY_PRODUCTION("Coal Generator: Energy Production", ConfigCategories.MACHINE_ENERGY_VALUES, 30, 1, 1000000000, "Amount of energy Coal Generator can produces per tick.");
 
     public final String name;
     public final String category;

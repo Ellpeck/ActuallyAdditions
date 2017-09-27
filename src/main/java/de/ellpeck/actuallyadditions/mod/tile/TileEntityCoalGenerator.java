@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,8 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
-    public static final int PRODUCE = 30;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 0, 80);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.COAL_GENERATOR_ENERGY_CAPACITY.getValue(), 0, ConfigIntValues.COAL_GENERATOR_ENERGY_SEND.getValue());
     public int maxBurnTime;
     public int currentBurnTime;
     private int lastEnergy;
@@ -73,7 +73,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
             if(this.currentBurnTime > 0){
                 this.currentBurnTime--;
-                this.storage.receiveEnergyInternal(PRODUCE, false);
+                this.storage.receiveEnergyInternal(ConfigIntValues.COAL_GENERATOR_ENERGY_PRODUCTION.getValue(), false);
             }
 
             if(!this.isRedstonePowered && this.currentBurnTime <= 0 && StackUtil.isValid(this.slots.getStackInSlot(0)) && TileEntityFurnace.getItemBurnTime(this.slots.getStackInSlot(0)) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
