@@ -75,7 +75,11 @@ public enum ConfigIntValues{
     COAL_GENERATOR_ENERGY_SEND("Coal Generator: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 80, 1, 1000000000, "Amount of energy Coal Generator can send per tick."),
     COAL_GENERATOR_ENERGY_PRODUCTION("Coal Generator: Energy Production", ConfigCategories.MACHINE_ENERGY_VALUES, 30, 1, 1000000000, "Amount of energy Coal Generator can produces per tick."),
     OIL_GENERATOR_ENERGY_CAPACITY("Oil Generator: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 50000, 1000, 1000000000, "Amount of energy Oil Generator can store."),
-    OIL_GENERATOR_ENERGY_SEND("Oil Generator: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 150, 1, 1000000000, "Amount of energy Oil Generator can send per tick.");
+    OIL_GENERATOR_ENERGY_SEND("Oil Generator: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 150, 1, 1000000000, "Amount of energy Oil Generator can send per tick."),
+    LEAF_GENERATOR_ENERGY_CAPACITY("Leaf-Eating Generator: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 35000, 1000, 1000000000, "Amount of energy Leaf-Eating Generator can store."),
+    LEAF_GENERATOR_ENERGY_SEND("Leaf-Eating Generator: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 450, 1, 1000000000, "Amount of energy Leaf-Eating Generator can send per tick."),
+    LEAF_GENERATOR_ENERGY_PRODUCTION("Leaf-Eating Generator: Energy Production", ConfigCategories.MACHINE_ENERGY_VALUES, 300, 1, 1000000000, "Amount of energy Leaf-Eating Generator produces per leaf block."),
+    LEAF_GENERATOR_WORK_RANGE("Leaf-Eating Generator: Work Range", ConfigCategories.MACHINE_ENERGY_VALUES, 7, 1, 16, "Radius (in blocks) in which Leaf-Eating Generator consumes leaves.");
 
     public final String name;
     public final String category;
