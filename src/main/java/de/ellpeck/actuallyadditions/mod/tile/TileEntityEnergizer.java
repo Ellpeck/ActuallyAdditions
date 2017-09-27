@@ -26,12 +26,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityEnergizer extends TileEntityInventoryBase{
 
-    public final CustomEnergyStorage storage;
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.ENERGIZER_ENERGY_CAPACITY.getValue(), ConfigIntValues.ENERGIZER_ENERGY_RECEIVE.getValue(), 0);
     private int lastEnergy;
 
     public TileEntityEnergizer(){
         super(2, "energizer");
-        this.storage = new CustomEnergyStorage(ConfigIntValues.ENERGIZER_ENERGY_CAPACITY.getValue(), ConfigIntValues.ENERGIZER_ENERGY_RECEIVE.getValue(), 0);
     }
 
     @Override

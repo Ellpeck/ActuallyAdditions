@@ -27,12 +27,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
-    public final CustomEnergyStorage storage;
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.ENERVATOR_ENERGY_CAPACITY.getValue(), 0, ConfigIntValues.ENERVATOR_ENERGY_SEND.getValue());
     private int lastEnergy;
 
     public TileEntityEnervator(){
         super(2, "enervator");
-        this.storage = new CustomEnergyStorage(ConfigIntValues.ENERVATOR_ENERGY_CAPACITY.getValue(), 0, ConfigIntValues.ENERVATOR_ENERGY_SEND.getValue());
     }
 
     @Override

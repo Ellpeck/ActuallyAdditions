@@ -31,14 +31,13 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyDisplay, IAtomicReconstructor{
 
-    public final CustomEnergyStorage storage;
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.ATOMIC_RECONSTRUCTOR_ENERGY_CAPACITY.getValue(), ConfigIntValues.ATOMIC_RECONSTRUCTOR_ENERGY_RECEIVE.getValue(), 0);
     public int counter;
     private int currentTime;
     private int oldEnergy;
 
     public TileEntityAtomicReconstructor(){
         super(1, "reconstructor");
-        this.storage = new CustomEnergyStorage(ConfigIntValues.ATOMIC_RECONSTRUCTOR_ENERGY_CAPACITY.getValue(), ConfigIntValues.ATOMIC_RECONSTRUCTOR_ENERGY_RECEIVE.getValue(), 0);
     }
 
     public static void shootLaser(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens){

@@ -23,12 +23,11 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay{
 
-    public final CustomEnergyStorage storage;
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.DISPLAY_STAND_ENERGY_CAPACITY.getValue(), ConfigIntValues.DISPLAY_STAND_ENERGY_RECEIVE.getValue(), 0);
     private int oldEnergy;
 
     public TileEntityDisplayStand(){
         super(1, "displayStand");
-        this.storage = new CustomEnergyStorage(ConfigIntValues.DISPLAY_STAND_ENERGY_CAPACITY.getValue(), ConfigIntValues.DISPLAY_STAND_ENERGY_RECEIVE.getValue(), 0);
     }
 
     @Override

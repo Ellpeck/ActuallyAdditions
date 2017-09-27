@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements ISharingFluidHandler{
 
-    public final CustomEnergyStorage storage;
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.CANOLA_PRESS_ENERGY_CAPACITY.getValue(), ConfigIntValues.CANOLA_PRESS_ENERGY_RECEIVE.getValue(), 0);
     public final FluidTank tank = new FluidTank(2*Util.BUCKET){
         @Override
         public boolean canFill(){
@@ -41,7 +41,6 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
 
     public TileEntityCanolaPress(){
         super(1, "canolaPress");
-        this.storage = new CustomEnergyStorage(ConfigIntValues.CANOLA_PRESS_ENERGY_CAPACITY.getValue(), ConfigIntValues.CANOLA_PRESS_ENERGY_RECEIVE.getValue(), 0);
     }
 
     @SideOnly(Side.CLIENT)
