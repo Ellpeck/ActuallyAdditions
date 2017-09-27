@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.OilGenRecipe;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -26,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler{
 
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, 150);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.OIL_GENERATOR_ENERGY_CAPACITY.getValue(), 0, ConfigIntValues.OIL_GENERATOR_ENERGY_SEND.getValue());
     public final FluidTank tank = new FluidTank(2*Util.BUCKET){
         @Override
         public boolean canDrain(){

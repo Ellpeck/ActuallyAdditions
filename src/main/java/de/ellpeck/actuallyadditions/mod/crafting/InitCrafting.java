@@ -37,12 +37,12 @@ public final class InitCrafting{
         ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.MASHED_FOOD.ordinal()), Blocks.LEAVES, new ItemStack(InitItems.itemFertilizer), Blocks.DIRT);
         ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(InitItems.itemCanolaSeed), Blocks.DIRT, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOMASS.ordinal()), Blocks.SOUL_SAND);
 
-        int[] power = ConfigIntListValues.OIL_POWER.getValue();
-        int[] time = ConfigIntListValues.OIL_TIME.getValue();
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCanolaOil.getName(), power[0], time[0]);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidRefinedCanolaOil.getName(), power[1], time[1]);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCrystalOil.getName(), power[2], time[2]);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidEmpoweredOil.getName(), power[3], time[3]);
+        int[] energyProduction = ConfigIntListValues.OIL_GENERATOR_ENERGY_PRODUCTION.getValue();
+        int[] productionTime = ConfigIntListValues.OIL_GENERATOR_BURN_TIME.getValue();
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCanolaOil.getName(), energyProduction[0], productionTime[0]);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidRefinedCanolaOil.getName(), energyProduction[1], productionTime[1]);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCrystalOil.getName(), energyProduction[2], productionTime[2]);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidEmpoweredOil.getName(), energyProduction[3], productionTime[3]);
 
         ActuallyAdditionsAPI.addFarmerBehavior(new DefaultFarmerBehavior());
         ActuallyAdditionsAPI.addFarmerBehavior(new CactusFarmerBehavior());
