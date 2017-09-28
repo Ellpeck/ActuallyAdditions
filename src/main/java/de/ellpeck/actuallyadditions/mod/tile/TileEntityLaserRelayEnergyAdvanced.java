@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-public class TileEntityLaserRelayEnergyAdvanced extends TileEntityLaserRelayEnergy{
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 
-    public static final int CAP = 10000;
+public class TileEntityLaserRelayEnergyAdvanced extends TileEntityLaserRelayEnergy{
 
     public TileEntityLaserRelayEnergyAdvanced(){
         super("laserRelayAdvanced");
@@ -20,11 +20,11 @@ public class TileEntityLaserRelayEnergyAdvanced extends TileEntityLaserRelayEner
 
     @Override
     public int getEnergyCap(){
-        return CAP;
+        return ConfigIntListValues.LASER_RELAY_ENERGY_TRANSFER.getValue()[1];
     }
 
     @Override
     public double getLossPercentage(){
-        return 8;
+        return ConfigIntListValues.LASER_RELAY_ENERGY_LOSS_PERCENTAGE.getValue()[1];
     }
 }

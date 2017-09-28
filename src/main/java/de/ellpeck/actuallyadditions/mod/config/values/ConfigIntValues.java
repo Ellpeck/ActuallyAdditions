@@ -83,7 +83,9 @@ public enum ConfigIntValues{
     BIO_REACTOR_ENERGY_CAPACITY("Bio Reactor: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 200000, 1000, 1000000000, "Amount of energy Bio Reactor can store."),
     BIO_REACTOR_ENERGY_SEND("Bio Reactor: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 800, 1, 1000000000, "Amount of energy Bio Reactor can send per tick."),
     BIO_REACTOR_ENERGY_PRODUCTION("Bio Reactor: Energy Production Per Type", ConfigCategories.MACHINE_ENERGY_VALUES, 2, 1, 10000, "Amount of energy Bio Reactor produces per item time.\nResulting energy production is: (this value * amount of different items) ^ 2."),
-    BIO_REACTOR_BURN_TIME("Bio Reactor: Maximum Burn Time", ConfigCategories.MACHINE_VALUES, 200, 1, 72000, "Maximum time in ticks Bio Reactor can burn one item.\nLow values can result in nonoperability of Bio Reactor.");
+    BIO_REACTOR_BURN_TIME("Bio Reactor: Maximum Burn Time", ConfigCategories.MACHINE_VALUES, 200, 1, 72000, "Maximum time in ticks Bio Reactor can burn one item.\nLow values can result in nonoperability of Bio Reactor."),
+    LASER_RELAY_MAXIMUM_DISTANCE("Laser Relay: Maximum Distance", ConfigCategories.MACHINE_VALUES, 15, 1, 48, "Maximum distance in blocks between two Laser Relays"),
+    LASER_RELAY_MAXIMUM_UPGRADED_DISTANCE("Laser Relay: Maximum Distance With Range Upgrade", ConfigCategories.MACHINE_VALUES, 35, 1, 96, "Maximum distance in blocks between two Laser Relays with Range upgrade");
 
     public final String name;
     public final String category;

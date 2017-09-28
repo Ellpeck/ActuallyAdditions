@@ -27,7 +27,9 @@ public enum ConfigIntListValues{
     EMPOWERER_RECIPE_COSTS("Empowerer: Recipe Energy Cost", ConfigCategories.MACHINE_RECIPE_COSTS, new int[]{5000, 50000, 1000}, "Amount of energy per Display Stand used per tick to craft item in Empowerer.\nOrder of items: Empowered Crystals, Empowered Crystal Blocks, Empowered Canola Seed"),
     EMPOWERER_RECIPE_DURATIONS("Empowerer: Recipe Duration", ConfigCategories.MACHINE_RECIPE_COSTS, new int[]{50, 500, 30}, "Time in ticks required to craft item in Empowerer.\nOrder of items: Empowered Crystals, Empowered Crystal Blocks, Empowered Canola Seed"),
     OIL_GENERATOR_ENERGY_PRODUCTION("Oil Generator: Energy Production", ConfigCategories.MACHINE_ENERGY_VALUES, new int[]{40, 80, 100, 120}, "Amound of energy Oil Generator produces for each oil type.\nThese values change energy density of each type of oil.\nConfig option 'Oil Gen: Power Values' is obsolete, please remove it."),
-    OIL_GENERATOR_BURN_TIME("Oil Generator: Production Time", ConfigCategories.MACHINE_VALUES, new int[]{100, 120, 280, 400}, "Time in seconds each type of oil burns in Oil Generator.\nThese values change burn time of each type of oil.\nConfig option 'Oil Gen: Time Values' is obsolete, please remove it.");
+    OIL_GENERATOR_BURN_TIME("Oil Generator: Production Time", ConfigCategories.MACHINE_VALUES, new int[]{100, 120, 280, 400}, "Time in seconds each type of oil burns in Oil Generator.\nThese values change burn time of each type of oil.\nConfig option 'Oil Gen: Time Values' is obsolete, please remove it."),
+    LASER_RELAY_ENERGY_TRANSFER("Energy Laser Relay: Energy Transfer Rate Per Tier", ConfigCategories.MACHINE_ENERGY_VALUES, new int[]{1000, 10000, 100000}, "Amount of energy each tier of Energy Laser Relay can transfer per tick (per side)."),
+    LASER_RELAY_ENERGY_LOSS_PERCENTAGE("Energy Laser Relay: Energy Loss Percentage Per Tier", ConfigCategories.MACHINE_ENERGY_VALUES, new int[]{5, 8, 10}, "Energy loss in percents for each tier of Energy Laser Relays, if enabled.");
 
     public final String name;
     public final String category;
