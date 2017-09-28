@@ -27,7 +27,7 @@ public enum ConfigIntListValues{
     EMPOWERER_RECIPE_COSTS("Empowerer: Recipe Energy Cost", ConfigCategories.MACHINE_RECIPE_COSTS, new int[]{5000, 50000, 1000}, "Amount of energy per Display Stand used per tick to craft item in Empowerer.\nOrder of items: Empowered Crystals, Empowered Crystal Blocks, Empowered Canola Seed"),
     EMPOWERER_RECIPE_DURATIONS("Empowerer: Recipe Duration", ConfigCategories.MACHINE_RECIPE_COSTS, new int[]{50, 500, 30}, "Time in ticks required to craft item in Empowerer.\nOrder of items: Empowered Crystals, Empowered Crystal Blocks, Empowered Canola Seed"),
     OIL_GENERATOR_ENERGY_PRODUCTION("Oil Generator: Energy Production", ConfigCategories.MACHINE_ENERGY_VALUES, new int[]{40, 80, 100, 120}, "Amound of energy Oil Generator produces for each oil type.\nThese values change energy density of each type of oil.\nConfig option 'Oil Gen: Power Values' is obsolete, please remove it."),
-    OIL_GENERATOR_BURN_TIME("Oil Generator: Production Time", ConfigCategories.MACHINE_ENERGY_VALUES, new int[]{100, 120, 280, 400}, "Time in seconds each type of oil burns in Oil Generator.\nThese values change burn time of each type of oil.\nConfig option 'Oil Gen: Time Values' is obsolete, please remove it.");
+    OIL_GENERATOR_BURN_TIME("Oil Generator: Production Time", ConfigCategories.MACHINE_VALUES, new int[]{100, 120, 280, 400}, "Time in seconds each type of oil burns in Oil Generator.\nThese values change burn time of each type of oil.\nConfig option 'Oil Gen: Time Values' is obsolete, please remove it.");
 
     public final String name;
     public final String category;

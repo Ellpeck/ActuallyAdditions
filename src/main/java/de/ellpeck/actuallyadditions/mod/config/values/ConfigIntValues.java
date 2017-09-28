@@ -79,7 +79,11 @@ public enum ConfigIntValues{
     LEAF_GENERATOR_ENERGY_CAPACITY("Leaf-Eating Generator: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 35000, 1000, 1000000000, "Amount of energy Leaf-Eating Generator can store."),
     LEAF_GENERATOR_ENERGY_SEND("Leaf-Eating Generator: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 450, 1, 1000000000, "Amount of energy Leaf-Eating Generator can send per tick."),
     LEAF_GENERATOR_ENERGY_PRODUCTION("Leaf-Eating Generator: Energy Production", ConfigCategories.MACHINE_ENERGY_VALUES, 300, 1, 1000000000, "Amount of energy Leaf-Eating Generator produces per leaf block."),
-    LEAF_GENERATOR_WORK_RANGE("Leaf-Eating Generator: Work Range", ConfigCategories.MACHINE_VALUES, 7, 1, 16, "Radius (in blocks) in which Leaf-Eating Generator consumes leaves.");
+    LEAF_GENERATOR_WORK_RANGE("Leaf-Eating Generator: Work Range", ConfigCategories.MACHINE_VALUES, 7, 1, 16, "Radius (in blocks) in which Leaf-Eating Generator consumes leaves."),
+    BIO_REACTOR_ENERGY_CAPACITY("Bio Reactor: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 200000, 1000, 1000000000, "Amount of energy Bio Reactor can store."),
+    BIO_REACTOR_ENERGY_SEND("Bio Reactor: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 800, 1, 1000000000, "Amount of energy Bio Reactor can send per tick."),
+    BIO_REACTOR_ENERGY_PRODUCTION("Bio Reactor: Energy Production Per Type", ConfigCategories.MACHINE_ENERGY_VALUES, 2, 1, 10000, "Amount of energy Bio Reactor produces per item time.\nResulting energy production is: (this value * amount of different items) ^ 2."),
+    BIO_REACTOR_BURN_TIME("Bio Reactor: Maximum Burn Time", ConfigCategories.MACHINE_VALUES, 200, 1, 72000, "Maximum time in ticks Bio Reactor can burn one item.\nLow values can result in nonoperability of Bio Reactor.");
 
     public final String name;
     public final String category;
