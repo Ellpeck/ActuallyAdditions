@@ -89,7 +89,9 @@ public enum ConfigIntValues{
     POWERED_FURNACE_ENERGY_CAPACITY("Powered Furnace: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 30000, 1000, 1000000000, "Amount of energy Powered Furnace can store."),
     POWERED_FURNACE_ENERGY_RECEIVE("Powered Furnace: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 150, 1, 1000000000, "Amount of energy Powered Furnace can receive per tick."),
     POWERED_FURNACE_ENERGY_USE("Powered Furnace: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 25, 1, 1000000000, "Amount of energy Powered Furnace uses per tick."),
-    POWERED_FURNACE_PROCESSING_DURATION("Powered Furnace: Processing Time", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 72000, "Time in ticks required to smelt one item in Powered Furnace.");
+    POWERED_FURNACE_PROCESSING_DURATION("Powered Furnace: Processing Time", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 72000, "Time in ticks required to smelt one item in Powered Furnace."),
+    CRUSHER_ENERGY_CAPACITY("Crusher: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 60000, 1000, 1000000000, "Amount of energy Crusher and Double Crusher can store."),
+    CRUSHER_ENERGY_RECEIVE("Crusher: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 100, 1, 1000000000, "Amount of energy Crusher and Double Crusher can receive per tick.");
 
     public final String name;
     public final String category;

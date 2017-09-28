@@ -12,6 +12,8 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 
 import de.ellpeck.actuallyadditions.mod.blocks.BlockFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
@@ -35,8 +37,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     public static final int SLOT_INPUT_2 = 3;
     public static final int SLOT_OUTPUT_2_1 = 4;
     public static final int SLOT_OUTPUT_2_2 = 5;
-    public static final int ENERGY_USE = 40;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 100, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.CRUSHER_ENERGY_CAPACITY.getValue(), ConfigIntValues.CRUSHER_ENERGY_RECEIVE.getValue(), 0);
     public int firstCrushTime;
     public int secondCrushTime;
     public boolean isDouble;
@@ -96,8 +97,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
 
             boolean shouldPlaySound = false;
 
+            int energyUse = ConfigIntListValues.CRUSHER_ENERGY_USE.getValue()[this.isDouble ? 1 : 0];
             if(canCrushOnFirst){
-                if(this.storage.getEnergyStored() >= ENERGY_USE){
+                if(this.storage.getEnergyStored() >= energyUse){
                     if(this.firstCrushTime%20 == 0){
                         shouldPlaySound = true;
                     }
@@ -106,7 +108,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                         this.finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
                         this.firstCrushTime = 0;
                     }
-                    this.storage.extractEnergyInternal(ENERGY_USE, false);
+                    this.storage.extractEnergyInternal(energyUse, false);
                 }
                 crushed = true;
             }
@@ -116,7 +118,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
 
             if(this.isDouble){
                 if(canCrushOnSecond){
-                    if(this.storage.getEnergyStored() >= ENERGY_USE){
+                    if(this.storage.getEnergyStored() >= energyUse){
                         if(this.secondCrushTime%20 == 0){
                             shouldPlaySound = true;
                         }
@@ -125,7 +127,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                             this.finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
                             this.secondCrushTime = 0;
                         }
-                        this.storage.extractEnergyInternal(ENERGY_USE, false);
+                        this.storage.extractEnergyInternal(energyUse, false);
                     }
                     crushed = true;
                 }
@@ -181,7 +183,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     }
 
     private int getMaxCrushTime(){
-        return this.isDouble ? 150 : 100;
+        int[] processingTime = ConfigIntListValues.CRUSHER_PROCESSING_TIME.getValue();
+        return processingTime[this.isDouble ? 1 : 0];
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput){
