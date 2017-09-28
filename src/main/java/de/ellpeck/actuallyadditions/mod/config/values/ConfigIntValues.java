@@ -85,7 +85,11 @@ public enum ConfigIntValues{
     BIO_REACTOR_ENERGY_PRODUCTION("Bio Reactor: Energy Production Per Type", ConfigCategories.MACHINE_ENERGY_VALUES, 2, 1, 10000, "Amount of energy Bio Reactor produces per item time.\nResulting energy production is: (this value * amount of different items) ^ 2."),
     BIO_REACTOR_BURN_TIME("Bio Reactor: Maximum Burn Time", ConfigCategories.MACHINE_VALUES, 200, 1, 72000, "Maximum time in ticks Bio Reactor can burn one item.\nLow values can result in nonoperability of Bio Reactor."),
     LASER_RELAY_MAXIMUM_DISTANCE("Laser Relay: Maximum Distance", ConfigCategories.MACHINE_VALUES, 15, 1, 48, "Maximum distance in blocks between two Laser Relays"),
-    LASER_RELAY_MAXIMUM_UPGRADED_DISTANCE("Laser Relay: Maximum Distance With Range Upgrade", ConfigCategories.MACHINE_VALUES, 35, 1, 96, "Maximum distance in blocks between two Laser Relays with Range upgrade");
+    LASER_RELAY_MAXIMUM_UPGRADED_DISTANCE("Laser Relay: Maximum Distance With Range Upgrade", ConfigCategories.MACHINE_VALUES, 35, 1, 96, "Maximum distance in blocks between two Laser Relays with Range upgrade"),
+    POWERED_FURNACE_ENERGY_CAPACITY("Powered Furnace: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 30000, 1000, 1000000000, "Amount of energy Powered Furnace can store."),
+    POWERED_FURNACE_ENERGY_RECEIVE("Powered Furnace: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 150, 1, 1000000000, "Amount of energy Powered Furnace can receive per tick."),
+    POWERED_FURNACE_ENERGY_USE("Powered Furnace: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 25, 1, 1000000000, "Amount of energy Powered Furnace uses per tick."),
+    POWERED_FURNACE_PROCESSING_DURATION("Powered Furnace: Processing Time", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 72000, "Time in ticks required to smelt one item in Powered Furnace.");
 
     public final String name;
     public final String category;
