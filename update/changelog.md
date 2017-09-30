@@ -1,3 +1,8 @@
+# 1.12.1-r121
+* Fix crashes relating to the breakers
+* Fix the jam zombie having invisible arms
+* Wings of the Bats no longer works in spectator mode
+
 # 1.12.1-r120
 * Fix crate upgrades not being consumed
 * Fix the lens of color crashing on invalid input
