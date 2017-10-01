@@ -103,8 +103,9 @@ public class ItemStackHandlerCustom extends ItemStackHandler{
             if(!simulate){
                 this.stacks.set(slot, StackUtil.getNull());
                 this.onContentsChanged(slot);
+                return existing;
             }
-            return existing;
+            return existing.copy();
         }
         else{
             if(!simulate){
