@@ -60,7 +60,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
             int energyUse = ConfigIntValues.LAVA_FACTORY_ENERGY_USE.getValue();
             if(this.storage.getEnergyStored() >= energyUse && this.isMultiblock() == HAS_AIR){
                 this.currentWorkTime++;
-                if(this.currentWorkTime >= 200){
+                if(this.currentWorkTime >= ConfigIntValues.LAVA_FACTORY_PRODUCTION_DURATION.getValue()){
                     this.currentWorkTime = 0;
                     this.world.setBlockState(this.pos.up(), Blocks.LAVA.getDefaultState(), 2);
                     this.storage.extractEnergyInternal(energyUse, false);
