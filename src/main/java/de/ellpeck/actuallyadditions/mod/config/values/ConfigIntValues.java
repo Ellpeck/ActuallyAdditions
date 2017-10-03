@@ -98,7 +98,9 @@ public enum ConfigIntValues{
     SHOCK_ABSORBER_WORK_RANGE("Shock Absorber: Work Range", ConfigCategories.MACHINE_VALUES, 5, 1, 16, "Distance in block in which Shock Absorber protects blocks and entities."),
     PLAYER_INTERFACE_ENERGY_CAPACITY("Player Interface: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 30000, 1000, 1000000000, "Amount of energy Player Interface can store."),
     PLAYER_INTERFACE_ENERGY_RECEIVE("Player Interface: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 50, 1, 1000000000, "Amount of energy Player Interface can receive per tick.\nThis option defines rate of charging items in player's inventory."),
-    PLAYER_INTERFACE_WORK_RANGE("Player Interface: Work Range", ConfigCategories.MACHINE_VALUES, 32, 1, 64, "Distance in block in which Player Interface works.");
+    PLAYER_INTERFACE_WORK_RANGE("Player Interface: Work Range", ConfigCategories.MACHINE_VALUES, 32, 1, 64, "Distance in block in which Player Interface works."),
+    PHANTOMFACE_WORK_RANGE("Phantomface: Work Range", ConfigCategories.MACHINE_VALUES, 16, 1, 32, "Distance in block in which Phantomface, Phantom Itemface, Phantom Liquidface, Phantom Energyface and Phantom Redstoneface work."),
+    PHANTOM_PLACER_WORK_RANGE("Phantom Breaker/Placer: Work Range", ConfigCategories.MACHINE_VALUES, 3, 1, 8, "Distance in block in which Phantom Breaker and Placer work.");
 
     public final String name;
     public final String category;

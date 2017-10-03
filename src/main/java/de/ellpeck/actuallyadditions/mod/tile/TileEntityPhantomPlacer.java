@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -28,7 +29,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IButtonReactor{
 
-    public static final int RANGE = 3;
     public BlockPos boundPosition;
     public int currentTime;
     public int range;
@@ -83,7 +83,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            this.range = TileEntityPhantomface.upgradeRange(RANGE, this.world, this.pos);
+            this.range = TileEntityPhantomface.upgradeRange(ConfigIntValues.PHANTOM_PLACER_WORK_RANGE.getValue(), this.world, this.pos);
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;
