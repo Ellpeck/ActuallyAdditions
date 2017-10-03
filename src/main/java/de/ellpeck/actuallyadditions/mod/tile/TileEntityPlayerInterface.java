@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
@@ -27,8 +28,7 @@ import java.util.UUID;
 
 public class TileEntityPlayerInterface extends TileEntityBase implements IEnergyDisplay{
 
-    public static final int DEFAULT_RANGE = 32;
-    private final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 50, 0);
+    private final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.PLAYER_INTERFACE_ENERGY_CAPACITY.getValue(), ConfigIntValues.PLAYER_INTERFACE_ENERGY_RECEIVE.getValue(), 0);
     public UUID connectedPlayer;
     public String playerName;
     private IItemHandler playerHandler;
@@ -71,7 +71,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
         if(!this.world.isRemote){
             boolean changed = false;
 
-            this.range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.world, this.pos);
+            this.range = TileEntityPhantomface.upgradeRange(ConfigIntValues.PLAYER_INTERFACE_DEFAULT_RANGE.getValue(), this.world, this.pos);
 
             EntityPlayer player = this.getPlayer();
             if(player != null){
