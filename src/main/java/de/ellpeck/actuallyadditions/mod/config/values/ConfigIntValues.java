@@ -91,7 +91,10 @@ public enum ConfigIntValues{
     POWERED_FURNACE_ENERGY_USE("Powered Furnace: Energy Use", ConfigCategories.MACHINE_RECIPE_COSTS, 25, 1, 1000000000, "Amount of energy Powered Furnace uses per tick."),
     POWERED_FURNACE_PROCESSING_DURATION("Powered Furnace: Processing Time", ConfigCategories.MACHINE_RECIPE_COSTS, 80, 1, 72000, "Time in ticks required to smelt one item in Powered Furnace."),
     CRUSHER_ENERGY_CAPACITY("Crusher: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 60000, 1000, 1000000000, "Amount of energy Crusher and Double Crusher can store."),
-    CRUSHER_ENERGY_RECEIVE("Crusher: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 100, 1, 1000000000, "Amount of energy Crusher and Double Crusher can receive per tick.");
+    CRUSHER_ENERGY_RECEIVE("Crusher: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 100, 1, 1000000000, "Amount of energy Crusher and Double Crusher can receive per tick."),
+    SHOCK_ABSORBER_ENERGY_CAPACITY("Shock Absorber: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 300000, 1000, 1000000000, "Amount of energy Shock Absorber can store."),
+    SHOCK_ABSORBER_ENERGY_RECEIVE("Shock Absorber: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 400, 1, 1000000000, "Amount of energy Shock Absorber can receive per tick."),
+    SHOCK_ABSORBER_ENERGY_USE("Shock Absorber: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 300, 1, 1000000000, "Amount of energy Shock Absorber uses to protect block or entity.");
 
     public final String name;
     public final String category;

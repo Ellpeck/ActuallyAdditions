@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -21,10 +22,9 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
 
     public static final List<TileEntityShockSuppressor> SUPPRESSORS = new ArrayList<TileEntityShockSuppressor>();
 
-    public static final int USE_PER = 300;
     public static final int RANGE = 5;
 
-    public CustomEnergyStorage storage = new CustomEnergyStorage(300000, 400, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.SHOCK_ABSORBER_ENERGY_CAPACITY.getValue(), ConfigIntValues.SHOCK_ABSORBER_ENERGY_RECEIVE.getValue(), 0);
     private int oldEnergy;
 
     public TileEntityShockSuppressor(){

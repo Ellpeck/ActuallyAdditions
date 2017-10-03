@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityShockSuppressor;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -48,7 +49,7 @@ public class BlockShockSuppressor extends BlockContainerBase{
             List<Entity> affectedEntities = event.getAffectedEntities();
 
             int rangeSq = TileEntityShockSuppressor.RANGE*TileEntityShockSuppressor.RANGE;
-            int use = TileEntityShockSuppressor.USE_PER;
+            int energyUse = ConfigIntValues.SHOCK_ABSORBER_ENERGY_USE.getValue();
 
             for(TileEntityShockSuppressor suppressor : TileEntityShockSuppressor.SUPPRESSORS){
                 if(!suppressor.isRedstonePowered){
@@ -72,8 +73,8 @@ public class BlockShockSuppressor extends BlockContainerBase{
                     Collections.shuffle(posesToRemove);
 
                     for(BlockPos pos : posesToRemove){
-                        if(suppressor.storage.getEnergyStored() >= use){
-                            suppressor.storage.extractEnergyInternal(use, false);
+                        if(suppressor.storage.getEnergyStored() >= energyUse){
+                            suppressor.storage.extractEnergyInternal(energyUse, false);
                             affectedBlocks.remove(pos);
                         }
                         else{
@@ -81,8 +82,8 @@ public class BlockShockSuppressor extends BlockContainerBase{
                         }
                     }
                     for(Entity entity : entitiesToRemove){
-                        if(suppressor.storage.getEnergyStored() >= use){
-                            suppressor.storage.extractEnergyInternal(use, false);
+                        if(suppressor.storage.getEnergyStored() >= energyUse){
+                            suppressor.storage.extractEnergyInternal(energyUse, false);
                             affectedEntities.remove(entity);
                         }
                         else{
