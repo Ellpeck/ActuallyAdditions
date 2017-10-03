@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -26,8 +27,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public static final int NOT_MULTI = 0;
     public static final int HAS_LAVA = 1;
     public static final int HAS_AIR = 2;
-    public static final int ENERGY_USE = 150000;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 2000, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.LAVA_FACTORY_ENERGY_CAPACITY.getValue(), ConfigIntValues.LAVA_FACTORY_ENERGY_RECEIVE.getValue(), 0);
     private int currentWorkTime;
     private int oldEnergy;
 
@@ -57,12 +57,13 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            if(this.storage.getEnergyStored() >= ENERGY_USE && this.isMultiblock() == HAS_AIR){
+            int energyUse = ConfigIntValues.LAVA_FACTORY_ENERGY_USE.getValue();
+            if(this.storage.getEnergyStored() >= energyUse && this.isMultiblock() == HAS_AIR){
                 this.currentWorkTime++;
                 if(this.currentWorkTime >= 200){
                     this.currentWorkTime = 0;
                     this.world.setBlockState(this.pos.up(), Blocks.LAVA.getDefaultState(), 2);
-                    this.storage.extractEnergyInternal(ENERGY_USE, false);
+                    this.storage.extractEnergyInternal(energyUse, false);
                 }
             }
             else{

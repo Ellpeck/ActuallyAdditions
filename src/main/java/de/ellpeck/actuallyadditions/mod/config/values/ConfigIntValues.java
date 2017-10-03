@@ -105,7 +105,11 @@ public enum ConfigIntValues{
     VERTICAL_DIGGER_ENERGY_RECEIVE("Vertical Digger: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 2000, 1, 1000000000, "Amount of energy Vertical Digger can receive per tick."),
     VERTICAL_DIGGER_ENERGY_USE_PER_BLOCK("Vertical Digger: Energy Use Per Block", ConfigCategories.MACHINE_ENERGY_VALUES, 650, 1, 1000000000, "Amount of energy Vertical Digger uses to mine block."),
     VERTICAL_DIGGER_ENERGY_USE_PER_ORE("Vertical Digger: Energy Use Per Ore", ConfigCategories.MACHINE_ENERGY_VALUES, 1950, 1, 1000000000, "Amount of energy Vertical Digger uses to mine block in mode 'Only Ores'"),
-    VERTICAL_DIGGER_WORK_RANGE("Vertical Digger: Work Range", ConfigCategories.MACHINE_VALUES, 2, 1, 8, "Distance in blocks in which Vertical Digger can mine blocks.");
+    VERTICAL_DIGGER_WORK_RANGE("Vertical Digger: Work Range", ConfigCategories.MACHINE_VALUES, 2, 1, 8, "Distance in blocks in which Vertical Digger can mine blocks."),
+    LAVA_FACTORY_ENERGY_CAPACITY("Lava Factory: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 300000, 1000, 1000000000, "Amount of energy Lava Factory can store."),
+    LAVA_FACTORY_ENERGY_RECEIVE("Lava Factory: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 2000, 1, 1000000000, "Amount of energy Lava Factory can receive per tick."),
+    LAVA_FACTORY_ENERGY_USE("Lava Factory: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 150000, 1, 1000000000, "Amount of energy Lava Factory uses to create block of lava."),
+    LAVA_FACTORY_PRODUCTION_DURATION("Lava Factory: Production Duration", ConfigCategories.MACHINE_RECIPE_COSTS, 200, 1, 72000, "Time in ticks required by Lava Factory to produce block of lava.");
 
     public final String name;
     public final String category;
