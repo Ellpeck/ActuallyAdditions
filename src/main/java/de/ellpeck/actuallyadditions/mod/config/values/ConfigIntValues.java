@@ -95,9 +95,10 @@ public enum ConfigIntValues{
     SHOCK_ABSORBER_ENERGY_CAPACITY("Shock Absorber: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 300000, 1000, 1000000000, "Amount of energy Shock Absorber can store."),
     SHOCK_ABSORBER_ENERGY_RECEIVE("Shock Absorber: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 400, 1, 1000000000, "Amount of energy Shock Absorber can receive per tick."),
     SHOCK_ABSORBER_ENERGY_USE("Shock Absorber: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 300, 1, 1000000000, "Amount of energy Shock Absorber uses to protect block or entity."),
+    SHOCK_ABSORBER_WORK_RANGE("Shock Absorber: Work Range", ConfigCategories.MACHINE_VALUES, 5, 1, 16, "Distance in block in which Shock Absorber protects blocks and entities."),
     PLAYER_INTERFACE_ENERGY_CAPACITY("Player Interface: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 30000, 1000, 1000000000, "Amount of energy Player Interface can store."),
     PLAYER_INTERFACE_ENERGY_RECEIVE("Player Interface: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 50, 1, 1000000000, "Amount of energy Player Interface can receive per tick.\nThis option defines rate of charging items in player's inventory."),
-    PLAYER_INTERFACE_DEFAULT_RANGE("Player Interface: Default Range", ConfigCategories.MACHINE_VALUES, 32, 1, 64, "Distance in block in which Player Interface works.");
+    PLAYER_INTERFACE_WORK_RANGE("Player Interface: Work Range", ConfigCategories.MACHINE_VALUES, 32, 1, 64, "Distance in block in which Player Interface works.");
 
     public final String name;
     public final String category;

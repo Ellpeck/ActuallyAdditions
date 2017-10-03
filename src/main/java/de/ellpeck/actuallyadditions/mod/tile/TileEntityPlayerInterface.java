@@ -71,7 +71,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
         if(!this.world.isRemote){
             boolean changed = false;
 
-            this.range = TileEntityPhantomface.upgradeRange(ConfigIntValues.PLAYER_INTERFACE_DEFAULT_RANGE.getValue(), this.world, this.pos);
+            this.range = TileEntityPhantomface.upgradeRange(ConfigIntValues.PLAYER_INTERFACE_WORK_RANGE.getValue(), this.world, this.pos);
 
             EntityPlayer player = this.getPlayer();
             if(player != null){

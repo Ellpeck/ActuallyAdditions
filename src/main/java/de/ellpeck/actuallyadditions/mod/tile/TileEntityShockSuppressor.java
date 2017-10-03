@@ -22,8 +22,6 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
 
     public static final List<TileEntityShockSuppressor> SUPPRESSORS = new ArrayList<TileEntityShockSuppressor>();
 
-    public static final int RANGE = 5;
-
     public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.SHOCK_ABSORBER_ENERGY_CAPACITY.getValue(), ConfigIntValues.SHOCK_ABSORBER_ENERGY_RECEIVE.getValue(), 0);
     private int oldEnergy;
 

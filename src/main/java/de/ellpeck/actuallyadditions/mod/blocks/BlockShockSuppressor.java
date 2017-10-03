@@ -48,7 +48,8 @@ public class BlockShockSuppressor extends BlockContainerBase{
             List<BlockPos> affectedBlocks = event.getAffectedBlocks();
             List<Entity> affectedEntities = event.getAffectedEntities();
 
-            int rangeSq = TileEntityShockSuppressor.RANGE*TileEntityShockSuppressor.RANGE;
+            int range = ConfigIntValues.SHOCK_ABSORBER_WORK_RANGE.getValue();
+            int rangeSq = range*range;
             int energyUse = ConfigIntValues.SHOCK_ABSORBER_ENERGY_USE.getValue();
 
             for(TileEntityShockSuppressor suppressor : TileEntityShockSuppressor.SUPPRESSORS){
