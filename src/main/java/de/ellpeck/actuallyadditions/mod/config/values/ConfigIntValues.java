@@ -83,7 +83,7 @@ public enum ConfigIntValues{
     BIO_REACTOR_ENERGY_CAPACITY("Bio Reactor: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 200000, 1000, 1000000000, "Amount of energy Bio Reactor can store."),
     BIO_REACTOR_ENERGY_SEND("Bio Reactor: Energy Send Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 800, 1, 1000000000, "Amount of energy Bio Reactor can send per tick."),
     BIO_REACTOR_ENERGY_PRODUCTION("Bio Reactor: Energy Production Per Type", ConfigCategories.MACHINE_ENERGY_VALUES, 2, 1, 10000, "Amount of energy Bio Reactor produces per item time.\nResulting energy production is: (this value * amount of different items) ^ 2."),
-    BIO_REACTOR_BURN_TIME("Bio Reactor: Maximum Burn Time", ConfigCategories.MACHINE_VALUES, 200, 1, 72000, "Maximum time in ticks Bio Reactor can burn one item.\nLow values can result in nonoperability of Bio Reactor."),
+    BIO_REACTOR_BURN_TIME("Bio Reactor: Maximum Burn Time", ConfigCategories.MACHINE_RECIPE_COSTS, 200, 1, 72000, "Maximum time in ticks Bio Reactor can burn one item.\nLow values can result in nonoperability of Bio Reactor."),
     LASER_RELAY_MAXIMUM_DISTANCE("Laser Relay: Maximum Distance", ConfigCategories.MACHINE_VALUES, 15, 1, 48, "Maximum distance in blocks between two Laser Relays"),
     LASER_RELAY_MAXIMUM_UPGRADED_DISTANCE("Laser Relay: Maximum Distance With Range Upgrade", ConfigCategories.MACHINE_VALUES, 35, 1, 96, "Maximum distance in blocks between two Laser Relays with Range upgrade"),
     POWERED_FURNACE_ENERGY_CAPACITY("Powered Furnace: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 30000, 1000, 1000000000, "Amount of energy Powered Furnace can store."),
@@ -109,7 +109,10 @@ public enum ConfigIntValues{
     LAVA_FACTORY_ENERGY_CAPACITY("Lava Factory: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 300000, 1000, 1000000000, "Amount of energy Lava Factory can store."),
     LAVA_FACTORY_ENERGY_RECEIVE("Lava Factory: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 2000, 1, 1000000000, "Amount of energy Lava Factory can receive per tick."),
     LAVA_FACTORY_ENERGY_USE("Lava Factory: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 150000, 1, 1000000000, "Amount of energy Lava Factory uses to create block of lava."),
-    LAVA_FACTORY_PRODUCTION_DURATION("Lava Factory: Production Duration", ConfigCategories.MACHINE_RECIPE_COSTS, 200, 1, 72000, "Time in ticks required by Lava Factory to produce block of lava.");
+    LAVA_FACTORY_PRODUCTION_DURATION("Lava Factory: Production Duration", ConfigCategories.MACHINE_RECIPE_COSTS, 200, 1, 72000, "Time in ticks required by Lava Factory to produce block of lava."),
+    ITEM_REPAIRER_ENERGY_CAPACITY("Item Repairer: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 300000, 1000, 1000000000, "Amount of energy Item Repairer can store."),
+    ITEM_REPAIRER_ENERGY_RECEIVE("Item Repairer: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 6000, 1, 1000000000, "Amount of energy Item Repairer can receive per tick."),
+    ITEM_REPAIRER_ENERGY_USE("Item Repairer: Energy Use", ConfigCategories.MACHINE_ENERGY_VALUES, 2500, 1, 1000000000, "Amount of energy Item Repairer uses per tick.");
 
     public final String name;
     public final String category;
