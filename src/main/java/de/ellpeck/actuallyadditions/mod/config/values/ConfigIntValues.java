@@ -100,7 +100,12 @@ public enum ConfigIntValues{
     PLAYER_INTERFACE_ENERGY_RECEIVE("Player Interface: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 50, 1, 1000000000, "Amount of energy Player Interface can receive per tick.\nThis option defines rate of charging items in player's inventory."),
     PLAYER_INTERFACE_WORK_RANGE("Player Interface: Work Range", ConfigCategories.MACHINE_VALUES, 32, 1, 64, "Distance in block in which Player Interface works."),
     PHANTOMFACE_WORK_RANGE("Phantomface: Work Range", ConfigCategories.MACHINE_VALUES, 16, 1, 32, "Distance in block in which Phantomface, Phantom Itemface, Phantom Liquidface, Phantom Energyface and Phantom Redstoneface work."),
-    PHANTOM_PLACER_WORK_RANGE("Phantom Breaker/Placer: Work Range", ConfigCategories.MACHINE_VALUES, 3, 1, 8, "Distance in block in which Phantom Breaker and Placer work.");
+    PHANTOM_PLACER_WORK_RANGE("Phantom Breaker/Placer: Work Range", ConfigCategories.MACHINE_VALUES, 3, 1, 8, "Distance in block in which Phantom Breaker and Placer work."),
+    VERTICAL_DIGGER_ENERGY_CAPACITY("Vertical Digger: Energy Capacity", ConfigCategories.MACHINE_ENERGY_VALUES, 200000, 1000, 1000000000, "Amount of energy Vertical Digger can store."),
+    VERTICAL_DIGGER_ENERGY_RECEIVE("Vertical Digger: Energy Receive Rate", ConfigCategories.MACHINE_ENERGY_VALUES, 2000, 1, 1000000000, "Amount of energy Vertical Digger can receive per tick."),
+    VERTICAL_DIGGER_ENERGY_USE_PER_BLOCK("Vertical Digger: Energy Use Per Block", ConfigCategories.MACHINE_ENERGY_VALUES, 650, 1, 1000000000, "Amount of energy Vertical Digger uses to mine block."),
+    VERTICAL_DIGGER_ENERGY_USE_PER_ORE("Vertical Digger: Energy Use Per Ore", ConfigCategories.MACHINE_ENERGY_VALUES, 1950, 1, 1000000000, "Amount of energy Vertical Digger uses to mine block in mode 'Only Ores'"),
+    VERTICAL_DIGGER_WORK_RANGE("Vertical Digger: Work Range", ConfigCategories.MACHINE_VALUES, 2, 1, 8, "Distance in blocks in which Vertical Digger can mine blocks.");
 
     public final String name;
     public final String category;
