@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
@@ -57,7 +58,7 @@ public class GuiCoffeeMachine extends GuiWtfMojang{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
 
-        String text2 = this.machine.coffeeCacheAmount+"/"+TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.coffee");
+        String text2 = this.machine.coffeeCacheAmount+"/"+ ConfigIntValues.COFFEE_MAKER_COFFEE_STORAGE.getValue()+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.coffee");
         if(x >= this.guiLeft+40 && y >= this.guiTop+25 && x <= this.guiLeft+49 && y <= this.guiTop+56){
             this.drawHoveringText(Collections.singletonList(text2), x, y);
         }
