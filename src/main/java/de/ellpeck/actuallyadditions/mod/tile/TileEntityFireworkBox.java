@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,8 +31,7 @@ import java.util.List;
 
 public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisplay, INumberReactor{
 
-    public static final int USE_PER_SHOT = 500;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(20000, 200, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.FIREWORK_BOX_ENERGY_CAPACITY.getValue(), ConfigIntValues.FIREWORK_BOX_ENERGY_USE.getValue(), 0);
     public int intValuePlay = 2;
     public int chargeAmount = 2;
     public int flightTime = 2;
@@ -246,10 +246,11 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     private void doWork(){
-        if(this.storage.getEnergyStored() >= USE_PER_SHOT){
+        int energyUse = ConfigIntValues.FIREWORK_BOX_ENERGY_USE.getValue();
+        if(this.storage.getEnergyStored() >= energyUse){
             this.spawnFireworks(this.world, this.pos.getX(), this.pos.getY(), this.pos.getZ());
 
-            this.storage.extractEnergyInternal(USE_PER_SHOT, false);
+            this.storage.extractEnergyInternal(energyUse, false);
         }
     }
 

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.ConnectionPair;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -29,9 +30,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
 
 public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
-
-    public static final int MAX_DISTANCE = 15;
-    public static final int MAX_DISTANCE_RANGED = 35;
 
     public final LaserType type;
 
@@ -168,10 +166,10 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
     public int getMaxRange(){
         ItemStack upgrade = this.slots.getStackInSlot(0);
         if(StackUtil.isValid(upgrade) && upgrade.getItem() == InitItems.itemLaserUpgradeRange){
-            return MAX_DISTANCE_RANGED;
+            return ConfigIntValues.LASER_RELAY_MAXIMUM_UPGRADED_DISTANCE.getValue();
         }
         else{
-            return MAX_DISTANCE;
+            return ConfigIntValues.LASER_RELAY_MAXIMUM_DISTANCE.getValue();
         }
     }
 

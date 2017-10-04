@@ -222,6 +222,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     	if (t instanceof TileEntityAtomicReconstructor) {
     		i = ((TileEntityAtomicReconstructor) t).getEnergy();
     	}
-        return MathHelper.clamp(i / 20000, 0, 15);
+        return MathHelper.clamp(i / (ConfigIntValues.ATOMIC_RECONSTRUCTOR_ENERGY_CAPACITY.getValue() / 15), 0, 15);
     }
 }

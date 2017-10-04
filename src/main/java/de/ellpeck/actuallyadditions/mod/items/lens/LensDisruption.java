@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -29,11 +30,11 @@ import java.util.ArrayList;
 
 public class LensDisruption extends Lens{
 
-    private static final int ENERGY_USE = 150000;
 
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        if(ConfigIntValues.ELEVEN.getValue() == 11 && tile.getEnergy() >= ENERGY_USE && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)){
+        int energyUse = ConfigIntListValues.ATOMIC_RECONSTRUCTOR_LENSES_ENERGY_USE.getValue()[7];
+        if(ConfigIntValues.ELEVEN.getValue() == 11 && tile.getEnergy() >= energyUse && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)){
             int range = 2;
             ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
             for(EntityItem item : items){
@@ -64,7 +65,7 @@ public class LensDisruption extends Lens{
                         EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, newStack);
                         tile.getWorldObject().spawnEntity(newItem);
 
-                        tile.extractEnergy(ENERGY_USE);
+                        tile.extractEnergy(energyUse);
                     }
                 }
             }
@@ -85,6 +86,6 @@ public class LensDisruption extends Lens{
 
     @Override
     public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot){
-        return tile.getEnergy()-energyUsePerShot >= ENERGY_USE;
+        return tile.getEnergy()-energyUsePerShot >= ConfigIntListValues.ATOMIC_RECONSTRUCTOR_LENSES_ENERGY_USE.getValue()[7];
     }
 }

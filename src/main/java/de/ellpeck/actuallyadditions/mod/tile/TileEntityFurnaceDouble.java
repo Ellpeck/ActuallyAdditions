@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.BlockFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -31,9 +32,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public static final int SLOT_OUTPUT_1 = 1;
     public static final int SLOT_INPUT_2 = 2;
     public static final int SLOT_OUTPUT_2 = 3;
-    public static final int ENERGY_USE = 25;
-    private static final int SMELT_TIME = 80;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 150, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.POWERED_FURNACE_ENERGY_CAPACITY.getValue(), ConfigIntValues.POWERED_FURNACE_ENERGY_RECEIVE.getValue(), 0);
     public int firstSmeltTime;
     public int secondSmeltTime;
     public boolean isAutoSplit;
@@ -112,14 +111,16 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             boolean canSmeltOnFirst = this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1);
             boolean canSmeltOnSecond = this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2);
 
+            int energyUse = ConfigIntValues.POWERED_FURNACE_ENERGY_USE.getValue();
+            int processingTime = ConfigIntValues.POWERED_FURNACE_PROCESSING_DURATION.getValue();
             if(canSmeltOnFirst){
-                if(this.storage.getEnergyStored() >= ENERGY_USE){
+                if(this.storage.getEnergyStored() >= energyUse){
                     this.firstSmeltTime++;
-                    if(this.firstSmeltTime >= SMELT_TIME){
+                    if(this.firstSmeltTime >= processingTime){
                         this.finishBurning(SLOT_INPUT_1, SLOT_OUTPUT_1);
                         this.firstSmeltTime = 0;
                     }
-                    this.storage.extractEnergyInternal(ENERGY_USE, false);
+                    this.storage.extractEnergyInternal(energyUse, false);
                 }
                 smelted = true;
             }
@@ -128,13 +129,13 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             }
 
             if(canSmeltOnSecond){
-                if(this.storage.getEnergyStored() >= ENERGY_USE){
+                if(this.storage.getEnergyStored() >= energyUse){
                     this.secondSmeltTime++;
-                    if(this.secondSmeltTime >= SMELT_TIME){
+                    if(this.secondSmeltTime >= processingTime){
                         this.finishBurning(SLOT_INPUT_2, SLOT_OUTPUT_2);
                         this.secondSmeltTime = 0;
                     }
-                    this.storage.extractEnergyInternal(ENERGY_USE, false);
+                    this.storage.extractEnergyInternal(energyUse, false);
                 }
                 smelted = true;
             }
@@ -192,12 +193,12 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
     @SideOnly(Side.CLIENT)
     public int getFirstTimeToScale(int i){
-        return this.firstSmeltTime*i/SMELT_TIME;
+        return this.firstSmeltTime*i/ConfigIntValues.POWERED_FURNACE_PROCESSING_DURATION.getValue();
     }
 
     @SideOnly(Side.CLIENT)
     public int getSecondTimeToScale(int i){
-        return this.secondSmeltTime*i/SMELT_TIME;
+        return this.secondSmeltTime*i/ConfigIntValues.POWERED_FURNACE_PROCESSING_DURATION.getValue();
     }
 
     @Override

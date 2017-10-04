@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.darkhax.tesla.api.ITeslaConsumer;
@@ -25,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityEnergizer extends TileEntityInventoryBase{
 
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 1000, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.ENERGIZER_ENERGY_CAPACITY.getValue(), ConfigIntValues.ENERGIZER_ENERGY_RECEIVE.getValue(), 0);
     private int lastEnergy;
 
     public TileEntityEnergizer(){

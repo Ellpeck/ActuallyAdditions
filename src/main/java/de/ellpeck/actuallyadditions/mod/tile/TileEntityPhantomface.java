@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,7 +28,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile{
 
-    public static final int RANGE = 16;
     public BlockPos boundPosition;
     public BlockPhantom.Type type;
     public int range;
@@ -86,7 +86,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            this.range = upgradeRange(RANGE, this.world, this.getPos());
+            this.range = upgradeRange(ConfigIntValues.PHANTOMFACE_WORK_RANGE.getValue(), this.world, this.getPos());
 
             if(!this.hasBoundPosition()){
                 this.boundPosition = null;

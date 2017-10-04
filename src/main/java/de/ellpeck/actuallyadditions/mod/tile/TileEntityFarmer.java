@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.state.IBlockState;
@@ -32,7 +33,7 @@ import java.util.List;
 public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer{
 
     private static final List<IFarmerBehavior> SORTED_FARMER_BEHAVIORS = new ArrayList<IFarmerBehavior>();
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(100000, 1000, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.FARMER_ENERGY_CAPACITY.getValue(), ConfigIntValues.FARMER_ENERGY_RECEIVE.getValue(), 0);
 
     private int waitTime;
     private int checkX;

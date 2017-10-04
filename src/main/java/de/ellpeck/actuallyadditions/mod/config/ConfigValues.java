@@ -28,7 +28,7 @@ public final class ConfigValues{
 
     public static void defineConfigValues(Configuration config){
         for(ConfigIntValues currConf : ConfigIntValues.values()){
-            currConf.currentValue = config.get(currConf.category, currConf.name, currConf.defaultValue, currConf.desc, currConf.min, currConf.max).getInt();
+            currConf.currentValue = config.getInt(currConf.name, currConf.category, currConf.defaultValue, currConf.min, currConf.max, currConf.desc);
         }
 
         for(ConfigBoolValues currConf : ConfigBoolValues.values()){

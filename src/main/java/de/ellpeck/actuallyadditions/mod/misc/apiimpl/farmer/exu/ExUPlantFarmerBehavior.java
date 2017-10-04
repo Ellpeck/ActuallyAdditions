@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.exu;
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -28,7 +29,7 @@ public abstract class ExUPlantFarmerBehavior implements IFarmerBehavior{
 
     @Override
     public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
-        int use = 600;
+        int use = ConfigIntListValues.FARMER_ENERGY_USE_PER_PLANT.getValue()[5];
         if(farmer.getEnergy() >= use){
             if(StackUtil.isValid(seed)){
                 Item item = seed.getItem();
@@ -64,7 +65,7 @@ public abstract class ExUPlantFarmerBehavior implements IFarmerBehavior{
 
     @Override
     public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
-        int use = 600;
+        int use = ConfigIntListValues.FARMER_ENERGY_USE_PER_HARVEST.getValue()[5];
         if(farmer.getEnergy() >= use){
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();

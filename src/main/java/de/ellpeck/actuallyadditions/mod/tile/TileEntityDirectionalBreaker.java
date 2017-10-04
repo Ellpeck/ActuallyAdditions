@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -24,9 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
 
-    public static final int RANGE = 8;
-    public static final int ENERGY_USE = 5;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(10000, 20, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.LONG_RANGE_BREAKER_ENERGY_CAPACITY.getValue(), ConfigIntValues.LONG_RANGE_BREAKER_ENERGY_RECEIVE.getValue(), 0);
     private int lastEnergy;
     private int currentTime;
 
@@ -75,11 +74,13 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
     }
 
     private void doWork(){
-        if(this.storage.getEnergyStored() >= ENERGY_USE*RANGE){
+        int energyUse = ConfigIntValues.LONG_RANGE_BREAKER_ENERGY_USE.getValue();
+        int workDistance = ConfigIntValues.LONG_RANGE_BREAKER_WORK_DISTANCE.getValue();
+        if(this.storage.getEnergyStored() >= energyUse*workDistance){
             IBlockState state = this.world.getBlockState(this.pos);
             EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
 
-            for(int i = 0; i < RANGE; i++){
+            for(int i = 0; i < workDistance; i++){
                 BlockPos coordsBlock = this.pos.offset(sideToManipulate, i+1);
                 IBlockState breakState = world.getBlockState(coordsBlock);
                 Block blockToBreak = breakState.getBlock();
@@ -93,7 +94,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
                             this.world.playEvent(2001, coordsBlock, Block.getStateId(this.world.getBlockState(coordsBlock)));
                             this.world.setBlockToAir(coordsBlock);
                             WorldUtil.addToInventory(this.slots, drops, true);
-                            this.storage.extractEnergyInternal(ENERGY_USE, false);
+                            this.storage.extractEnergyInternal(energyUse, false);
                             this.markDirty();
                         }
                     }

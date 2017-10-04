@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -30,8 +31,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyDisplay, IAtomicReconstructor{
 
-    public static final int ENERGY_USE = 1000;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 5000, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.ATOMIC_RECONSTRUCTOR_ENERGY_CAPACITY.getValue(), ConfigIntValues.ATOMIC_RECONSTRUCTOR_ENERGY_RECEIVE.getValue(), 0);
     public int counter;
     private int currentTime;
     private int oldEnergy;

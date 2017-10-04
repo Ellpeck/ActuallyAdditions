@@ -10,12 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,8 +26,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
-    public static final int ENERGY_USE = 2500;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 6000, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.ITEM_REPAIRER_ENERGY_CAPACITY.getValue(), ConfigIntValues.ITEM_REPAIRER_ENERGY_RECEIVE.getValue(), 0);
     public int nextRepairTick;
     private int lastEnergy;
 
@@ -36,17 +37,16 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
     public static boolean canBeRepaired(ItemStack stack){
         if(StackUtil.isValid(stack)){
             Item item = stack.getItem();
-            if(item != null){
-                if(item.isRepairable() && item.getMaxDamage(stack) > 0){
-                    return true;
-                }
-                else{
-                    String reg = item.getRegistryName().toString();
-                    if(reg != null){
-                        for(String strg : ConfigStringListValues.REPAIRER_EXTRA_WHITELIST.getValue()){
-                            if(reg.equals(strg)){
-                                return true;
-                            }
+            if(item.isRepairable() && item.getMaxDamage(stack) > 0){
+                return true;
+            }
+            else{
+                ResourceLocation resourceLocation = item.getRegistryName();
+                if(resourceLocation != null){
+                    String reg = resourceLocation.toString();
+                    for(String strg : ConfigStringListValues.REPAIRER_EXTRA_WHITELIST.getValue()){
+                        if(reg.equals(strg)){
+                            return true;
                         }
                     }
                 }
@@ -85,9 +85,10 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
                     this.nextRepairTick = 0;
                 }
                 else{
-                    if(this.storage.getEnergyStored() >= ENERGY_USE){
+                    int energyUse = ConfigIntValues.ITEM_REPAIRER_ENERGY_USE.getValue();
+                    if(this.storage.getEnergyStored() >= energyUse){
                         this.nextRepairTick++;
-                        this.storage.extractEnergyInternal(ENERGY_USE, false);
+                        this.storage.extractEnergyInternal(energyUse, false);
                         if(this.nextRepairTick >= 4){
                             this.nextRepairTick = 0;
                             input.setItemDamage(input.getItemDamage()-1);

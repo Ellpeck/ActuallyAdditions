@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -19,8 +20,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay{
 
-    public static final int PRODUCE = 8;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 0, 100);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.SOLAR_PANEL_ENERGY_CAPACITY.getValue(), 0, ConfigIntValues.SOLAR_PANEL_ENERGY_SEND.getValue());
     private int oldEnergy;
 
     public TileEntityFurnaceSolar(){
@@ -43,7 +43,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            int power = this.getPowerToGenerate(PRODUCE);
+            int power = this.getPowerToGenerate(ConfigIntValues.SOLAR_PANEL_ENERGY_PRODUCTION.getValue());
             if(this.world.isDaytime() && power > 0){
                 if(power <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                     this.storage.receiveEnergyInternal(power, false);

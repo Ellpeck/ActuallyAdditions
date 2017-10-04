@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
@@ -39,7 +40,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
 
-    public static final int CAP = 1000;
     public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
     private final IEnergyStorage[] energyStorages = new IEnergyStorage[6];
     private Mode mode = Mode.BOTH;
@@ -258,11 +258,11 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
     }
 
     public int getEnergyCap(){
-        return CAP;
+        return ConfigIntListValues.LASER_RELAY_ENERGY_TRANSFER.getValue()[0];
     }
 
     public double getLossPercentage(){
-        return 5;
+        return ConfigIntListValues.LASER_RELAY_ENERGY_LOSS_PERCENTAGE.getValue()[0];
     }
 
     @Override

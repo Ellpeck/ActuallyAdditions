@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
@@ -37,7 +38,6 @@ import java.util.List;
 
 public class LensMining extends Lens{
 
-    public static final int ENERGY_USE = 60000;
 
     public static void init(){
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreCoal", 5000);
@@ -126,8 +126,9 @@ public class LensMining extends Lens{
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitPos, IAtomicReconstructor tile){
         if(!tile.getWorldObject().isAirBlock(hitPos)){
-            if(tile.getEnergy() >= ENERGY_USE){
-                int adaptedUse = ENERGY_USE;
+            int energyUse = ConfigIntListValues.ATOMIC_RECONSTRUCTOR_LENSES_ENERGY_USE.getValue()[5];
+            if(tile.getEnergy() >= energyUse){
+                int adaptedUse = energyUse;
 
                 List<WeightedOre> ores = null;
                 Block hitBlock = hitState.getBlock();
@@ -136,7 +137,7 @@ public class LensMining extends Lens{
                 }
                 else if(hitBlock instanceof BlockNetherrack){
                     ores = ActuallyAdditionsAPI.NETHERRACK_ORES;
-                    adaptedUse += 10000;
+                    adaptedUse = ConfigIntListValues.ATOMIC_RECONSTRUCTOR_LENSES_ENERGY_USE.getValue()[6];
                 }
 
                 if(ores != null){

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -31,9 +32,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityMiner extends TileEntityInventoryBase implements IButtonReactor, IEnergyDisplay{
 
-    public static final int ENERGY_USE_PER_BLOCK = 650;
-    public static final int DEFAULT_RANGE = 2;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 2000, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.VERTICAL_DIGGER_ENERGY_CAPACITY.getValue(), ConfigIntValues.VERTICAL_DIGGER_ENERGY_RECEIVE.getValue(), 0);
 
     public boolean onlyMineOres;
     public int checkX;
@@ -81,7 +80,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
 
             if(!this.isRedstonePowered && this.ticksElapsed%5 == 0){
                 if(this.checkY != 0){
-                    int range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.world, this.pos);
+                    int range = TileEntityPhantomface.upgradeRange(ConfigIntValues.VERTICAL_DIGGER_WORK_RANGE.getValue(), this.world, this.pos);
                     if(this.checkY < 0){
                         this.checkY = this.pos.getY()-1;
                         this.checkX = -range;
@@ -114,8 +113,8 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     }
 
     private boolean mine(){
-        int actualUse = ENERGY_USE_PER_BLOCK*(this.onlyMineOres ? 3 : 1);
-        if(this.storage.getEnergyStored() >= actualUse){
+        int energyUse = this.onlyMineOres ? ConfigIntValues.VERTICAL_DIGGER_ENERGY_USE_PER_ORE.getValue() : ConfigIntValues.VERTICAL_DIGGER_ENERGY_USE_PER_BLOCK.getValue();
+        if(this.storage.getEnergyStored() >= energyUse){
             BlockPos pos = new BlockPos(this.pos.getX()+this.checkX, this.checkY, this.pos.getZ()+this.checkZ);
 
             IBlockState state = this.world.getBlockState(pos);
@@ -135,7 +134,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
                             WorldUtil.addToInventory(this.slots, drops, true);
                             this.markDirty();
 
-                            this.storage.extractEnergyInternal(actualUse, false);
+                            this.storage.extractEnergyInternal(energyUse, false);
                             this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
                         }
                         else{

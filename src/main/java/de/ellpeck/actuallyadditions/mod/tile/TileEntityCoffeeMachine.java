@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -35,12 +36,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public static final int SLOT_COFFEE_BEANS = 0;
     public static final int SLOT_INPUT = 1;
     public static final int SLOT_OUTPUT = 2;
-    public static final int CACHE_USE = 35;
-    public static final int ENERGY_USED = 150;
-    public static final int WATER_USE = 500;
-    public static final int COFFEE_CACHE_MAX_AMOUNT = 300;
-    private static final int TIME_USED = 500;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 250, 0);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.COFFEE_MAKER_ENERGY_CAPACITY.getValue(), ConfigIntValues.COFFEE_MAKER_ENERGY_RECEIVE.getValue(), 0);
     public final FluidTank tank = new FluidTank(4*Util.BUCKET){
         @Override
         public boolean canDrain(){
@@ -65,7 +61,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @SideOnly(Side.CLIENT)
     public int getCoffeeScaled(int i){
-        return this.coffeeCacheAmount*i/COFFEE_CACHE_MAX_AMOUNT;
+        return this.coffeeCacheAmount*i/ConfigIntValues.COFFEE_MAKER_COFFEE_STORAGE.getValue();
     }
 
     @SideOnly(Side.CLIENT)
@@ -80,7 +76,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @SideOnly(Side.CLIENT)
     public int getBrewScaled(int i){
-        return this.brewTime*i/TIME_USED;
+        return this.brewTime*i/ConfigIntValues.COFFEE_MAKER_PROCESSING_DURATION.getValue();
     }
 
     @Override
@@ -132,7 +128,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public void storeCoffee(){
         if(StackUtil.isValid(this.slots.getStackInSlot(SLOT_COFFEE_BEANS)) && this.slots.getStackInSlot(SLOT_COFFEE_BEANS).getItem() == InitItems.itemCoffeeBean){
             int toAdd = 2;
-            if(toAdd <= COFFEE_CACHE_MAX_AMOUNT-this.coffeeCacheAmount){
+            if(toAdd <= ConfigIntValues.COFFEE_MAKER_COFFEE_STORAGE.getValue()-this.coffeeCacheAmount){
                 this.slots.setStackInSlot(SLOT_COFFEE_BEANS, StackUtil.addStackSize(this.slots.getStackInSlot(SLOT_COFFEE_BEANS), -1));
                 this.coffeeCacheAmount += toAdd;
             }
@@ -141,15 +137,19 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     public void brew(){
         if(!this.world.isRemote){
-            if(StackUtil.isValid(this.slots.getStackInSlot(SLOT_INPUT)) && this.slots.getStackInSlot(SLOT_INPUT).getItem() == InitItems.itemMisc && this.slots.getStackInSlot(SLOT_INPUT).getItemDamage() == TheMiscItems.CUP.ordinal() && !StackUtil.isValid(this.slots.getStackInSlot(SLOT_OUTPUT)) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= WATER_USE){
-                if(this.storage.getEnergyStored() >= ENERGY_USED){
+            int energyUse = ConfigIntValues.COFFEE_MAKER_ENERGY_USE.getValue();
+            int waterUse = ConfigIntValues.COFFEE_MAKER_WATER_USE.getValue();
+            int coffeeUse = ConfigIntValues.COFFEE_MAKER_COFFEE_USE.getValue();
+            int processingDuration = ConfigIntValues.COFFEE_MAKER_PROCESSING_DURATION.getValue();
+            if(StackUtil.isValid(this.slots.getStackInSlot(SLOT_INPUT)) && this.slots.getStackInSlot(SLOT_INPUT).getItem() == InitItems.itemMisc && this.slots.getStackInSlot(SLOT_INPUT).getItemDamage() == TheMiscItems.CUP.ordinal() && !StackUtil.isValid(this.slots.getStackInSlot(SLOT_OUTPUT)) && this.coffeeCacheAmount >= coffeeUse && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= waterUse){
+                if(this.storage.getEnergyStored() >= energyUse){
                     if(this.brewTime%30 == 0){
                         this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.35F, 1.0F);
                     }
 
                     this.brewTime++;
-                    this.storage.extractEnergyInternal(ENERGY_USED, false);
-                    if(this.brewTime >= TIME_USED){
+                    this.storage.extractEnergyInternal(energyUse, false);
+                    if(this.brewTime >= processingDuration){
                         this.brewTime = 0;
                         ItemStack output = new ItemStack(InitItems.itemCoffee);
                         for(int i = 3; i < this.slots.getSlots(); i++){
@@ -164,8 +164,8 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                         }
                         this.slots.setStackInSlot(SLOT_OUTPUT, output.copy());
                         this.slots.setStackInSlot(SLOT_INPUT, StackUtil.addStackSize(this.slots.getStackInSlot(SLOT_INPUT), -1));
-                        this.coffeeCacheAmount -= CACHE_USE;
-                        this.tank.drainInternal(WATER_USE, true);
+                        this.coffeeCacheAmount -= coffeeUse;
+                        this.tank.drainInternal(waterUse, true);
                     }
                 }
             }
