@@ -50,7 +50,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
 
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
-        return this.currentProcessTime*i/ConfigIntValues.CANOLA_PRESS_RECIPE_DURATION.getValue();
+        return this.currentProcessTime*i/ConfigIntValues.CANOLA_PRESS_PROCESSING_DURATION.getValue();
     }
 
     @SideOnly(Side.CLIENT)
@@ -84,7 +84,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
         if(!this.world.isRemote){
             int energyUse = ConfigIntValues.CANOLA_PRESS_RECIPE_COST.getValue();
             int productionAmount = ConfigIntValues.CANOLA_PRESS_PRODUCTION_AMOUNT.getValue();
-            int processingTime = ConfigIntValues.CANOLA_PRESS_RECIPE_DURATION.getValue();
+            int processingTime = ConfigIntValues.CANOLA_PRESS_PROCESSING_DURATION.getValue();
             if(this.isCanola(0) && productionAmount <= this.tank.getCapacity()-this.tank.getFluidAmount()){
                 if(this.storage.getEnergyStored() >= energyUse){
                     this.currentProcessTime++;

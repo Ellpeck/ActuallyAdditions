@@ -84,7 +84,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
         if(!this.world.isRemote){
             int consumptionAmount = ConfigIntValues.FERMENTING_BARREL_CONSUMPTION_AMOUNT.getValue();
             int productionAmount = ConfigIntValues.FERMENTING_BARREL_PRODUCTION_AMOUNT.getValue();
-            int processingTime = ConfigIntValues.FERMENTING_BARREL_RECIPE_DURATION.getValue();
+            int processingTime = ConfigIntValues.FERMENTING_BARREL_PROCESSING_DURATION.getValue();
             if(this.canolaTank.getFluidAmount() >= productionAmount && productionAmount <= this.oilTank.getCapacity()-this.oilTank.getFluidAmount()){
                 this.currentProcessTime++;
                 if(this.currentProcessTime >= processingTime){
@@ -121,7 +121,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     @SideOnly(Side.CLIENT)
     public int getProcessScaled(int i){
-        return this.currentProcessTime*i/ ConfigIntValues.FERMENTING_BARREL_RECIPE_DURATION.getValue();
+        return this.currentProcessTime*i/ ConfigIntValues.FERMENTING_BARREL_PROCESSING_DURATION.getValue();
     }
 
     @SideOnly(Side.CLIENT)
