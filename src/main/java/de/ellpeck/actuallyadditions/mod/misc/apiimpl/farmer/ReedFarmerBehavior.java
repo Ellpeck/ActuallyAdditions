@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
 import net.minecraft.block.state.IBlockState;
@@ -27,7 +28,7 @@ public class ReedFarmerBehavior implements IFarmerBehavior{
 
     @Override
     public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
-        int use = 250;
+        int use = ConfigIntListValues.FARMER_ENERGY_USE_PER_PLANT.getValue()[2];
         if(farmer.getEnergy() >= use){
             if(seed.getItem() == Items.REEDS){
                 if(Blocks.REEDS.canPlaceBlockAt(world, pos)){
@@ -43,7 +44,7 @@ public class ReedFarmerBehavior implements IFarmerBehavior{
 
     @Override
     public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
-        int use = 250;
+        int use = ConfigIntListValues.FARMER_ENERGY_USE_PER_HARVEST.getValue()[2];
         if(farmer.getEnergy() >= use){
             IBlockState state = world.getBlockState(pos);
             if(state.getBlock() instanceof BlockReed){
