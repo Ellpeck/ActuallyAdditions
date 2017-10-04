@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockMagma;
@@ -25,9 +26,8 @@ import java.util.ArrayList;
 
 public class TileEntityHeatCollector extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay{
 
-    public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 0, 80);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(ConfigIntValues.HEAT_COLLECTOR_ENERGY_CAPACITY.getValue(), 0, ConfigIntValues.HEAT_COLLECTOR_ENERGY_SEND.getValue());
     private int oldEnergy;
     private int disappearTime;
 
@@ -59,8 +59,9 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
+            int energyProduction = ConfigIntValues.HEAT_COLLECTOR_ENERGY_PRODUCTION.getValue();
             ArrayList<Integer> blocksAround = new ArrayList<Integer>();
-            if(ENERGY_PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
+            if(energyProduction <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                 for(int i = 1; i <= 5; i++){
                     BlockPos coords = this.pos.offset(WorldUtil.getDirectionBySidesInOrder(i));
                     IBlockState state = this.world.getBlockState(coords);
@@ -71,7 +72,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                 }
 
                 if(blocksAround.size() >= BLOCKS_NEEDED){
-                    this.storage.receiveEnergyInternal(ENERGY_PRODUCE, false);
+                    this.storage.receiveEnergyInternal(energyProduction, false);
                     this.markDirty();
 
                     this.disappearTime++;
