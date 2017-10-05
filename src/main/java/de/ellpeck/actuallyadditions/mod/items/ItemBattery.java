@@ -55,7 +55,7 @@ public class ItemBattery extends ItemEnergy{
             EntityPlayer player = (EntityPlayer)entity;
             for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                 ItemStack slot = player.inventory.getStackInSlot(i);
-                if(StackUtil.isValid(slot)){
+                if(StackUtil.isValid(slot) && slot.getCount() == 1){
                     int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
                     int received = 0;
 

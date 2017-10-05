@@ -78,7 +78,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
                 for(int i = 0; i < player.inventory.getSizeInventory(); i++){
                     if(this.storage.getEnergyStored() > 0){
                         ItemStack slot = player.inventory.getStackInSlot(i);
-                        if(StackUtil.isValid(slot)){
+                        if(StackUtil.isValid(slot) && slot.getCount() == 1){
 
                             int received = 0;
                             if(slot.hasCapability(CapabilityEnergy.ENERGY, null)){
