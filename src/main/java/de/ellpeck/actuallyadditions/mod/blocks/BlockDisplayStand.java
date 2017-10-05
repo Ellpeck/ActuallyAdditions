@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -93,6 +94,17 @@ public class BlockDisplayStand extends BlockContainerBase{
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;
+    }
+    
+    @Override
+    public boolean isFullCube(IBlockState state){
+        return false;
+    }
+    
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face) {
+    	if(face == EnumFacing.DOWN) return BlockFaceShape.SOLID;
+    	return BlockFaceShape.UNDEFINED;
     }
 
     @Override
