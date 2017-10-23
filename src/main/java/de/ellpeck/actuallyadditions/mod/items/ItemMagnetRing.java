@@ -24,7 +24,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ItemMagnetRing extends ItemEnergy{
 
@@ -45,9 +45,10 @@ public class ItemMagnetRing extends ItemEnergy{
             if(!entity.isSneaking()){
                 //Get all the Items in the area
                 int range = 5;
-                ArrayList<EntityItem> items = (ArrayList<EntityItem>)world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(entity.posX-range, entity.posY-range, entity.posZ-range, entity.posX+range, entity.posY+range, entity.posZ+range));
+                List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(entity.posX-range, entity.posY-range, entity.posZ-range, entity.posX+range, entity.posY+range, entity.posZ+range));
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
+                    	if(item.getEntityData().getBoolean("PreventRemoteMovement")) continue;
                         if(!item.isDead && !item.cannotPickup()){
                             int energyForItem = 50*StackUtil.getStackSize(item.getItem());
 
