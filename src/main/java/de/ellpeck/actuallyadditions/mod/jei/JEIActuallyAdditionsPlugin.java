@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.jei;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
@@ -27,6 +28,8 @@ import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeWrapper;
+import de.ellpeck.actuallyadditions.mod.jei.compost.CompostRecipeCategory;
+import de.ellpeck.actuallyadditions.mod.jei.compost.CompostRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeCategory;
@@ -59,7 +62,8 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
 	public void registerCategories(IRecipeCategoryRegistration registry) {
     	IJeiHelpers helpers = registry.getJeiHelpers();
     	registry.addRecipeCategories(
-    			new CoffeeMachineRecipeCategory(helpers.getGuiHelper()),
+                new CoffeeMachineRecipeCategory(helpers.getGuiHelper()),
+                new CompostRecipeCategory(helpers.getGuiHelper()),
                 new CrusherRecipeCategory(helpers.getGuiHelper()),
                 new ReconstructorRecipeCategory(helpers.getGuiHelper()),
                 new EmpowererRecipeCategory(helpers.getGuiHelper()),
@@ -75,12 +79,14 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         registry.handleRecipes(CrusherRecipe.class, CrusherRecipeWrapper::new, CrusherRecipeCategory.NAME);
         registry.handleRecipes(LensConversionRecipe.class, ReconstructorRecipeWrapper::new, ReconstructorRecipeCategory.NAME);
         registry.handleRecipes(EmpowererRecipe.class, EmpowererRecipeWrapper::new, EmpowererRecipeCategory.NAME);
+        registry.handleRecipes(CompostRecipe.class, CompostRecipeWrapper::new, CompostRecipeCategory.NAME);
 
         registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA, BookletRecipeCategory.NAME);
         registry.addRecipes(ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS, CoffeeMachineRecipeCategory.NAME);
         registry.addRecipes(ActuallyAdditionsAPI.CRUSHER_RECIPES, CrusherRecipeCategory.NAME);
         registry.addRecipes(ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES, ReconstructorRecipeCategory.NAME);
         registry.addRecipes(ActuallyAdditionsAPI.EMPOWERER_RECIPES, EmpowererRecipeCategory.NAME);
+        registry.addRecipes(ActuallyAdditionsAPI.COMPOST_RECIPES, CompostRecipeCategory.NAME);
 
         registry.addRecipeClickArea(GuiCoffeeMachine.class, 53, 42, 22, 16, CoffeeMachineRecipeCategory.NAME);
         registry.addRecipeClickArea(GuiGrinder.class, 80, 40, 24, 22, CrusherRecipeCategory.NAME);
@@ -107,6 +113,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockAtomicReconstructor), ReconstructorRecipeCategory.NAME);
         registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockEmpowerer), EmpowererRecipeCategory.NAME);
         registry.addRecipeCatalyst(new ItemStack(InitItems.itemBooklet), BookletRecipeCategory.NAME);
+        registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockCompost), CompostRecipeCategory.NAME);
     }
 
     @Override
