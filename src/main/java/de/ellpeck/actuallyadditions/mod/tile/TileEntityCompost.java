@@ -18,6 +18,8 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityCompost extends TileEntityInventoryBase{
 
+    public static final int COMPOST_TIME_TICKS = 3000;
+
     public int conversionTime;
 
     public TileEntityCompost(){
@@ -66,7 +68,7 @@ public class TileEntityCompost extends TileEntityInventoryBase{
                 CompostRecipe recipe = getRecipeForInput(this.slots.getStackInSlot(0));
                 if(recipe != null){
                     this.conversionTime++;
-                    if(this.conversionTime >= 3000){
+                    if(this.conversionTime >= COMPOST_TIME_TICKS){
                         ItemStack output = recipe.output.copy();
                         this.slots.setStackInSlot(0, StackUtil.setStackSize(output, StackUtil.getStackSize(this.slots.getStackInSlot(0))));
                         this.conversionTime = 0;
