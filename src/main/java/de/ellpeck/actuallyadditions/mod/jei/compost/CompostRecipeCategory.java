@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.compost;
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -19,14 +18,11 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
-import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
 
 public class CompostRecipeCategory implements IRecipeCategory<CompostRecipeWrapper>{
 
     public static final String NAME = "actuallyadditions.compost";
 
-    private static final ItemStack COMPOST = new ItemStack(InitBlocks.blockCompost);
     private final IDrawable background;
 
     public CompostRecipeCategory(IGuiHelper helper){
@@ -51,11 +47,6 @@ public class CompostRecipeCategory implements IRecipeCategory<CompostRecipeWrapp
     @Override
     public IDrawable getBackground(){
         return this.background;
-    }
-
-    @Override
-    public void drawExtras(Minecraft minecraft){
-        AssetUtil.renderStackToGui(COMPOST, 1, 35, 1.5F);
     }
 
     @Override

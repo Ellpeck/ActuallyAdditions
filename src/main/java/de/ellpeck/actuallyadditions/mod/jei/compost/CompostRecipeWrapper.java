@@ -38,17 +38,17 @@ public class CompostRecipeWrapper extends RecipeWrapperWithButton{
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         int bake_time = TileEntityCompost.COMPOST_TIME_TICKS / 20;
         minecraft.fontRenderer.drawString(bake_time + "s", 28, 3, 0xFFFFFF, true);
-        super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);
+        //super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);  Not sure the button needs to be here.
     }
 
     @Override
     public int getButtonX(){
-        return 65;
+        return 32;
     }
 
     @Override
     public int getButtonY(){
-        return 43;
+        return 35;
     }
 
     @Override
