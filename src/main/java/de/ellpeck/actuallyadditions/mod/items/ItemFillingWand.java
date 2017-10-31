@@ -70,8 +70,6 @@ public class ItemFillingWand extends ItemEnergy{
         stack.getTagCompound().setInteger("state", Block.getStateId(state));
     }
     
-    //I think changing these to state ID is a good idea, but it will break all currently in-use wands, but whatever. It'll have to be done in 1.13 anyway.
-
     private static IBlockState loadBlock(ItemStack stack){
         if(stack.hasTagCompound()){
             return Block.getStateById(stack.getTagCompound().getInteger("state"));
@@ -174,7 +172,7 @@ public class ItemFillingWand extends ItemEnergy{
                                     world.setBlockState(pos, replaceState, 2);
 
                                     SoundType sound = replaceState.getBlock().getSoundType(replaceState, world, pos, player);
-                                    world.playSound(null, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume()+1.0F)/2.0F, sound.getPitch()*0.8F);
+                                    world.playSound(null, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, sound.getVolume()/2F + .5F, sound.getPitch()*0.8F);
 
                                     if(!creative){
                                         this.extractEnergyInternal(stack, energyUse, false);
