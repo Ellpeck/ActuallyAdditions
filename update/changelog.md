@@ -1,3 +1,11 @@
+# 1.12.2-r122
+* Artemish: Added JEI support for compost recipes
+* Added a recipe for smelting spawner shards into iron ingots
+* Made the magnet not grab items on IE conveyor belts
+* Torches can no longer be placed on the sides of display stands
+* Batteries will now only charge items with a stacksize of 1
+* Thiakil: AA's itemstack handler now returns a copy during simulate
+
 # 1.12.1-r121
 * Fix crashes relating to the breakers
 * Fix the jam zombie having invisible arms
