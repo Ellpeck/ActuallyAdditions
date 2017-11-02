@@ -36,7 +36,7 @@ public final class CommonCapsUtil{
                             }
 
                             if(!StackUtil.isValid(remain)){
-                                return StackUtil.getNull();
+                                return StackUtil.getEmpty();
                             }
                         }
                     }

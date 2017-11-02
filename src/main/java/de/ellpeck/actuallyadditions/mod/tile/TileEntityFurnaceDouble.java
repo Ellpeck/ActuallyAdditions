@@ -52,7 +52,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         ItemStack second = slots.getStackInSlot(slot2);
 
         if(StackUtil.isValid(first) || StackUtil.isValid(second)){
-            ItemStack toSplit = StackUtil.getNull();
+            ItemStack toSplit = StackUtil.getEmpty();
             if(!StackUtil.isValid(first) && StackUtil.isValid(second) && StackUtil.getStackSize(second) > 1){
                 toSplit = second;
             }

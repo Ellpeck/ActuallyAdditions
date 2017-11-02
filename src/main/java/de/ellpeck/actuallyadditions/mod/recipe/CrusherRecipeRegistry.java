@@ -39,7 +39,7 @@ public final class CrusherRecipeRegistry{
                         if(ore.substring(0, theCase.theCase.length()).equals(theCase.theCase)){
                             String output = theCase.resultPreString+ore.substring(theCase.theCase.length());
                             List<ItemStack> outputs = OreDictionary.getOres(output, false);
-                            if(!ActuallyAdditionsAPI.methodHandler.addCrusherRecipes(OreDictionary.getOres(ore, false), outputs.isEmpty() ? StackUtil.getNull() : outputs.get(0), theCase.resultAmount, StackUtil.getNull(), 0, 0)){
+                            if(!ActuallyAdditionsAPI.methodHandler.addCrusherRecipes(OreDictionary.getOres(ore, false), outputs.isEmpty() ? StackUtil.getEmpty() : outputs.get(0), theCase.resultAmount, StackUtil.getEmpty(), 0, 0)){
                                 if(!oresNoResult.contains(ore)){
                                     oresNoResult.add(ore);
                                 }
@@ -102,7 +102,7 @@ public final class CrusherRecipeRegistry{
 
     public static ItemStack getOutputOnes(ItemStack input){
         CrusherRecipe recipe = getRecipeFromInput(input);
-        return recipe == null ? StackUtil.getNull() : recipe.outputOneStack;
+        return recipe == null ? StackUtil.getEmpty() : recipe.outputOneStack;
     }
 
     public static CrusherRecipe getRecipeFromInput(ItemStack input){
@@ -116,7 +116,7 @@ public final class CrusherRecipeRegistry{
 
     public static ItemStack getOutputTwos(ItemStack input){
         CrusherRecipe recipe = getRecipeFromInput(input);
-        return recipe == null ? StackUtil.getNull() : recipe.outputTwoStack;
+        return recipe == null ? StackUtil.getEmpty() : recipe.outputTwoStack;
     }
 
     public static int getOutputTwoChance(ItemStack input){

@@ -24,6 +24,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,11 +32,7 @@ import java.util.List;
 public final class ItemUtil{
 
     public static Item getItemFromName(String name){
-        ResourceLocation resLoc = new ResourceLocation(name);
-        if(Item.REGISTRY.containsKey(resLoc)){
-            return Item.REGISTRY.getObject(resLoc);
-        }
-        return null;
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
     }
 
     public static void registerBlock(Block block, ItemBlockBase itemBlock, String name, boolean addTab){

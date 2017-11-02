@@ -67,7 +67,7 @@ public class ContainerGrinder extends Container{
             //Slots in Inventory to shift from
             if(slot == TileEntityGrinder.SLOT_OUTPUT_1_1 || slot == TileEntityGrinder.SLOT_OUTPUT_1_2 || (this.isDouble && (slot == TileEntityGrinder.SLOT_OUTPUT_2_1 || slot == TileEntityGrinder.SLOT_OUTPUT_2_2))){
                 if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, true)){
-                    return StackUtil.getNull();
+                    return StackUtil.getEmpty();
                 }
                 theSlot.onSlotChange(newStack, currentStack);
             }
@@ -78,11 +78,11 @@ public class ContainerGrinder extends Container{
                     if(!this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_1, TileEntityGrinder.SLOT_INPUT_1+1, false)){
                         if(this.isDouble){
                             if(!this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_2, TileEntityGrinder.SLOT_INPUT_2+1, false)){
-                                return StackUtil.getNull();
+                                return StackUtil.getEmpty();
                             }
                         }
                         else{
-                            return StackUtil.getNull();
+                            return StackUtil.getEmpty();
                         }
                     }
                 }
@@ -90,32 +90,32 @@ public class ContainerGrinder extends Container{
 
                 else if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
-                        return StackUtil.getNull();
+                        return StackUtil.getEmpty();
                     }
                 }
                 else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
-                    return StackUtil.getNull();
+                    return StackUtil.getEmpty();
                 }
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)){
-                return StackUtil.getNull();
+                return StackUtil.getEmpty();
             }
 
             if(!StackUtil.isValid(newStack)){
-                theSlot.putStack(StackUtil.getNull());
+                theSlot.putStack(StackUtil.getEmpty());
             }
             else{
                 theSlot.onSlotChanged();
             }
 
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
-                return StackUtil.getNull();
+                return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);
 
             return currentStack;
         }
-        return StackUtil.getNull();
+        return StackUtil.getEmpty();
     }
 
     @Override

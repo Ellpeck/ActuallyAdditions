@@ -34,7 +34,7 @@ public class SlotImmovable extends Slot{
 
     @Override
     public ItemStack decrStackSize(int i){
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override

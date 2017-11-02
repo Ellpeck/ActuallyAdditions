@@ -34,7 +34,7 @@ public class ItemStackHandlerCustom extends ItemStackHandler{
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate){
         if(!StackUtil.isValid(stack)){
-            return StackUtil.getNull();
+            return StackUtil.getEmpty();
         }
         this.validateSlotIndex(slot);
 
@@ -81,27 +81,27 @@ public class ItemStackHandlerCustom extends ItemStackHandler{
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate){
         if(amount <= 0){
-            return StackUtil.getNull();
+            return StackUtil.getEmpty();
         }
         this.validateSlotIndex(slot);
 
         ItemStack existing = this.stacks.get(slot);
         if(!StackUtil.isValid(existing)){
-            return StackUtil.getNull();
+            return StackUtil.getEmpty();
         }
 
         int toExtract = Math.min(amount, existing.getMaxStackSize());
         if(toExtract <= 0){
-            return StackUtil.getNull();
+            return StackUtil.getEmpty();
         }
 
         if(!this.tempIgnoreConditions && !this.canExtract(this.getStackInSlot(slot), slot)){
-            return StackUtil.getNull();
+            return StackUtil.getEmpty();
         }
 
         if(existing.getCount() <= toExtract){
             if(!simulate){
-                this.stacks.set(slot, StackUtil.getNull());
+                this.stacks.set(slot, StackUtil.getEmpty());
                 this.onContentsChanged(slot);
                 return existing;
             }

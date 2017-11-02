@@ -90,7 +90,7 @@ public class TileEntityFishingNet extends TileEntityBase{
                             stack = cap.insertItem(i, stack, false);
 
                             if(!StackUtil.isValid(stack)){
-                                return StackUtil.getNull();
+                                return StackUtil.getEmpty();
                             }
                         }
                     }

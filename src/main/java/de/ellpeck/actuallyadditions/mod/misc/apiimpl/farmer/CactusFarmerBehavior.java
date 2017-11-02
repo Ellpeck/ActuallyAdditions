@@ -64,7 +64,7 @@ public class CactusFarmerBehavior implements IFarmerBehavior{
                             NonNullList<ItemStack> drops = NonNullList.create();
                             upState.getBlock().getDrops(drops, world, up, upState, 0);
 
-                            if(drops != null && !drops.isEmpty()){
+                            if(!drops.isEmpty()){
                                 if(farmer.addToOutputInventory(drops, false)){
                                     world.playEvent(2001, up, Block.getStateId(upState));
                                     world.setBlockToAir(up);

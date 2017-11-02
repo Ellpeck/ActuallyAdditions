@@ -101,7 +101,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
             int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
             this.slots.setStackInSlot(theSlot, WorldUtil.useItemAtSide(sideToManipulate, this.world, this.pos, this.slots.getStackInSlot(theSlot)));
             if(!StackUtil.isValid(this.slots.getStackInSlot(theSlot))){
-                this.slots.setStackInSlot(theSlot, StackUtil.getNull());
+                this.slots.setStackInSlot(theSlot, StackUtil.getEmpty());
             }
         }
     }

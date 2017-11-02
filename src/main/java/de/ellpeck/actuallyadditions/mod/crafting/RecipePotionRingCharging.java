@@ -55,7 +55,7 @@ public class RecipePotionRingCharging extends IForgeRegistryEntry.Impl<IRecipe> 
 
     @Override
     public ItemStack getCraftingResult(InventoryCrafting inv){
-        ItemStack inputRing = StackUtil.getNull();
+        ItemStack inputRing = StackUtil.getEmpty();
         int totalBlaze = 0;
 
         for(int i = 0; i < inv.getSizeInventory(); i++){
@@ -80,7 +80,7 @@ public class RecipePotionRingCharging extends IForgeRegistryEntry.Impl<IRecipe> 
             }
         }
 
-        return StackUtil.getNull();
+        return StackUtil.getEmpty();
     }
 
     @Override
@@ -90,7 +90,7 @@ public class RecipePotionRingCharging extends IForgeRegistryEntry.Impl<IRecipe> 
 
     @Override
     public ItemStack getRecipeOutput(){
-        return StackUtil.getNull();
+        return StackUtil.getEmpty();
     }
 
     @Override

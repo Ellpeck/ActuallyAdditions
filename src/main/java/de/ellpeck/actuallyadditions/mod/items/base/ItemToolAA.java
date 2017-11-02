@@ -33,7 +33,7 @@ public class ItemToolAA extends ItemTool implements IDisableableItem{
     private final boolean disabled;
 
     public ItemToolAA(float attack, float speed, ToolMaterial toolMat, String repairItem, String unlocalizedName, EnumRarity rarity, Set<Block> effectiveStuff){
-        this(attack, speed, toolMat, (ItemStack)null, unlocalizedName, rarity, effectiveStuff);
+        this(attack, speed, toolMat, ItemStack.EMPTY, unlocalizedName, rarity, effectiveStuff);
         this.repairOredict = repairItem;
     }
 

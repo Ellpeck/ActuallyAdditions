@@ -53,7 +53,7 @@ public class SlotFilter extends SlotItemHandlerUnconditioned{
                 player.inventory.setItemStack(stackInSlot);
             }
 
-            this.putStack(StackUtil.getNull());
+            this.putStack(StackUtil.getEmpty());
         }
         else if(StackUtil.isValid(heldStack)){
             if(!isFilter(stackInSlot)){

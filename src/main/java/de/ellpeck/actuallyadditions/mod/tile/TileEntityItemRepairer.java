@@ -81,7 +81,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
             if(!StackUtil.isValid(this.slots.getStackInSlot(SLOT_OUTPUT)) && canBeRepaired(input)){
                 if(input.getItemDamage() <= 0){
                     this.slots.setStackInSlot(SLOT_OUTPUT, input.copy());
-                    this.slots.setStackInSlot(SLOT_INPUT, StackUtil.getNull());
+                    this.slots.setStackInSlot(SLOT_INPUT, StackUtil.getEmpty());
                     this.nextRepairTick = 0;
                 }
                 else{

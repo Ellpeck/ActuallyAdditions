@@ -70,7 +70,7 @@ public class TileEntityItemViewer extends TileEntityBase{
                 if(handler != null && handler.isLoaded()){
                     return handler.handler.getStackInSlot(handler.switchedIndex);
                 }
-                return StackUtil.getNull();
+                return StackUtil.getEmpty();
             }
 
             @Override
@@ -101,7 +101,7 @@ public class TileEntityItemViewer extends TileEntityBase{
                         return extracted;
                     }
                 }
-                return StackUtil.getNull();
+                return StackUtil.getEmpty();
             }
 
             @Override

@@ -119,7 +119,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                 else{
                     if(!StackUtil.isValid(stackPlayer)){
                         player.setHeldItem(hand, slot.copy());
-                        compost.slots.setStackInSlot(0, StackUtil.getNull());
+                        compost.slots.setStackInSlot(0, StackUtil.getEmpty());
                         return true;
                     }
                     else if(ItemUtil.canBeStacked(stackPlayer, slot)){

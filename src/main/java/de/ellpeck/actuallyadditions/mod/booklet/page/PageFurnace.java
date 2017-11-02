@@ -48,7 +48,7 @@ public class PageFurnace extends BookletPage{
                 }
             }
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override

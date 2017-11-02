@@ -81,7 +81,7 @@ public class RecipeBioMash extends IForgeRegistryEntry.Impl<IRecipe> implements 
             return new ItemStack(InitItems.itemMisc, amount, TheMiscItems.MASHED_FOOD.ordinal());
         }
         else{
-            return StackUtil.getNull();
+            return StackUtil.getEmpty();
         }
     }
 
@@ -92,7 +92,7 @@ public class RecipeBioMash extends IForgeRegistryEntry.Impl<IRecipe> implements 
 
     @Override
     public ItemStack getRecipeOutput(){
-        return StackUtil.getNull();
+        return StackUtil.getEmpty();
     }
 
     @Override

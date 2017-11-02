@@ -57,7 +57,7 @@ public class ItemWingsOfTheBats extends ItemBase{
                 return player.inventory.getStackInSlot(i);
             }
         }
-        return StackUtil.getNull();
+        return StackUtil.getEmpty();
     }
 
     @Override

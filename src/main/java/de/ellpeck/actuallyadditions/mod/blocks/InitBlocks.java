@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockStair;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.block.Block;
 
 public final class InitBlocks{
@@ -179,13 +178,9 @@ public final class InitBlocks{
         blockOilGenerator = new BlockOilGenerator("block_oil_generator");
         blockFermentingBarrel = new BlockFermentingBarrel("block_fermenting_barrel");
         blockRice = new BlockPlant("block_rice", 1, 2);
-        CompatUtil.registerPlant(blockRice);
         blockCanola = new BlockPlant("block_canola", 2, 3);
-        CompatUtil.registerPlant(blockCanola);
         blockFlax = new BlockPlant("block_flax", 2, 4);
-        CompatUtil.registerPlant(blockFlax);
         blockCoffee = new BlockPlant("block_coffee", 2, 2);
-        CompatUtil.registerPlant(blockCoffee);
         blockCompost = new BlockCompost("block_compost");
         blockMisc = new BlockMisc("block_misc");
         blockFeeder = new BlockFeeder("block_feeder");

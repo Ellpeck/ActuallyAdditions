@@ -51,7 +51,7 @@ public class ItemFillingWand extends ItemEnergy{
                 if(StackUtil.isValid(slot) && slot.isItemEqual(stack)){
                     slot = StackUtil.addStackSize(slot, -1);
                     if(!StackUtil.isValid(slot)){
-                        player.inventory.setInventorySlotContents(i, StackUtil.getNull());
+                        player.inventory.setInventorySlotContents(i, StackUtil.getEmpty());
                     }
 
                     return true;

@@ -80,7 +80,7 @@ public final class WorldUtil{
     }
 
     public static ItemStack extractItem(SlotlessableItemHandlerWrapper extractWrapper, int maxExtract, boolean simulate, int slotStart, int slotEnd, FilterSettings filter){
-        ItemStack extracted = StackUtil.getNull();
+        ItemStack extracted = StackUtil.getEmpty();
 
         if(ActuallyAdditions.commonCapsLoaded){
             Object handler = extractWrapper.getSlotlessHandler();
@@ -444,7 +444,7 @@ public final class WorldUtil{
 
             if(StackUtil.getStackSize(stack) <= 0 && stack == player.getHeldItemMainhand()){
                 ForgeEventFactory.onPlayerDestroyItem(player, stack, EnumHand.MAIN_HAND);
-                player.setHeldItem(EnumHand.MAIN_HAND, null);
+                player.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
             }
 
             if(ConfigBoolValues.ENABLE_DRILL_DIGGING_PACKET.isEnabled()){

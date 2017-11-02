@@ -206,7 +206,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                 ItemStack inRelay = StackUtil.validateCopy(relay.slots.getStackInSlot(0));
                 if(StackUtil.isValid(inRelay)){
                     if(!world.isRemote){
-                        relay.slots.setStackInSlot(0, StackUtil.getNull());
+                        relay.slots.setStackInSlot(0, StackUtil.getEmpty());
 
                         if(!player.inventory.addItemStackToInventory(inRelay)){
                             player.entityDropItem(inRelay, 0);

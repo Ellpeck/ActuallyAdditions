@@ -83,7 +83,7 @@ public class TileEntityDropper extends TileEntityInventoryBase{
                 return slot;
             }
         }
-        return StackUtil.getNull();
+        return StackUtil.getEmpty();
     }
 
     @Override

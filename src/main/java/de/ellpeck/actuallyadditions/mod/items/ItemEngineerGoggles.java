@@ -37,7 +37,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles{
     private final boolean displayMobs;
 
     public ItemEngineerGoggles(String name, boolean displayMobs){
-        super(name, InitArmorMaterials.armorMaterialGoggles, 0, StackUtil.getNull());
+        super(name, InitArmorMaterials.armorMaterialGoggles, 0, StackUtil.getEmpty());
         this.displayMobs = displayMobs;
         this.setMaxDamage(0);
 

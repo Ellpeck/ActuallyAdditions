@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.misc;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
@@ -20,17 +22,15 @@ import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiPage;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class BookletUtils{
 
     public static IBookletPage findFirstPageForStack(ItemStack stack){
         for(IBookletPage page : ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA){
-            List<ItemStack> stacks = new ArrayList<ItemStack>();
+            List<ItemStack> stacks = NonNullList.create();
             page.getItemStacksForPage(stacks);
             if(stacks != null && !stacks.isEmpty()){
                 for(ItemStack pageStack : stacks){

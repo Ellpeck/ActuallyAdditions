@@ -79,7 +79,7 @@ public class BlockDisplayStand extends BlockContainerBase{
                 else{
                     if(StackUtil.isValid(display)){
                         player.setHeldItem(hand, display.copy());
-                        stand.slots.setStackInSlot(0, StackUtil.getNull());
+                        stand.slots.setStackInSlot(0, StackUtil.getEmpty());
                         return true;
                     }
                 }

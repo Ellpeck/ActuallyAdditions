@@ -30,6 +30,7 @@ public class EntryButton extends GuiButton{
     public EntryButton(GuiBookletBase gui, int id, int x, int y, int width, int height, String text, ItemStack stackToRender){
         super(id, x, y, width, height, text);
         this.gui = gui;
+        StackUtil.isValid(stackToRender);
         this.stackToRender = stackToRender;
     }
 
@@ -44,7 +45,7 @@ public class EntryButton extends GuiButton{
             this.mouseDragged(minecraft, mouseX, mouseY);
 
             int textOffsetX = 0;
-            if(StackUtil.isValid(this.stackToRender == null ? ItemStack.EMPTY : this.stackToRender)){
+            if(StackUtil.isValid(this.stackToRender)){
                 GlStateManager.pushMatrix();
                 AssetUtil.renderStackToGui(this.stackToRender, this.x-4, this.y, 0.725F);
                 GlStateManager.popMatrix();

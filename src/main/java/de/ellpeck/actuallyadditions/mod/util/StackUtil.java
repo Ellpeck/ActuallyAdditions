@@ -22,7 +22,7 @@ public final class StackUtil{
             return stack.copy();
         }
         else{
-            return getNull();
+            return getEmpty();
         }
     }
 
@@ -31,18 +31,18 @@ public final class StackUtil{
             return stack;
         }
         else{
-            return getNull();
+            return getEmpty();
         }
     }
 
-    public static boolean isValid(ItemStack stack){//Stacks are nonnull.  If we are making null stacks we're stupid anyway.
-    	if(stack == null) AwfulUtil.callTheFuckinPolice("Oh yeah some idiot somewhere threw a null itemstack at us, might've been us, but whatever");
+    public static boolean isValid(ItemStack stack){
+    	if(stack == null) AwfulUtil.callTheFuckinPolice("Null ItemStack detected", stack);
     	Item i = stack.getItem();
     	if(i instanceof IDisableableItem) return !((IDisableableItem) i).isDisabled();
         return !stack.isEmpty();
     }
 
-    public static ItemStack getNull(){
+    public static ItemStack getEmpty(){
         return ItemStack.EMPTY;
     }
 
@@ -65,7 +65,7 @@ public final class StackUtil{
                 return stack.getItem().getContainerItem(stack);
             }
             else{
-                return getNull();
+                return getEmpty();
             }
         }
         stack.setCount(size);
@@ -91,7 +91,7 @@ public final class StackUtil{
     }
 
     public static NonNullList<ItemStack> createSlots(int size){
-        return NonNullList.withSize(size, getNull());
+        return NonNullList.withSize(size, getEmpty());
     }
 
 

@@ -270,7 +270,7 @@ public class MethodHandler implements IMethodHandler{
                         outputOneCopy = StackUtil.setStackSize(outputOneCopy, outputOneAmounts);
 
                         if(outputTwos.isEmpty()){
-                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getNull(), 0);
+                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getEmpty(), 0);
                             hasWorkedOnce = true;
                         }
                         else{
@@ -301,7 +301,7 @@ public class MethodHandler implements IMethodHandler{
                         outputOneCopy = StackUtil.setStackSize(outputOneCopy, outputOneAmount);
 
                         if(!StackUtil.isValid(outputTwo)){
-                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getNull(), 0);
+                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getEmpty(), 0);
                             hasWorkedOnce = true;
                         }
                         else if(StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){

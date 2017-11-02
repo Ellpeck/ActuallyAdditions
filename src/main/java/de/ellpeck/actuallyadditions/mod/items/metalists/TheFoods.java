@@ -46,7 +46,7 @@ public enum TheFoods{
     public final boolean getsDrunken;
     public final int useDuration;
     public final EnumRarity rarity;
-    public ItemStack returnItem = StackUtil.getNull();
+    public ItemStack returnItem = StackUtil.getEmpty();
 
     TheFoods(String name, int healAmount, float saturation, boolean getsDrunken, int useDuration, EnumRarity rarity){
         this.name = name;

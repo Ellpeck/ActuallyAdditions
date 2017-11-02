@@ -59,39 +59,39 @@ public class ContainerCoalGenerator extends Container{
                 //Shift from Inventory
                 if(TileEntityFurnace.getItemBurnTime(newStack) > 0){
                     if(!this.mergeItemStack(newStack, 0, 1, false)){
-                        return StackUtil.getNull();
+                        return StackUtil.getEmpty();
                     }
                 }
                 //
 
                 else if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
-                        return StackUtil.getNull();
+                        return StackUtil.getEmpty();
                     }
                 }
                 else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
-                    return StackUtil.getNull();
+                    return StackUtil.getEmpty();
                 }
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)){
-                return StackUtil.getNull();
+                return StackUtil.getEmpty();
             }
 
             if(!StackUtil.isValid(newStack)){
-                theSlot.putStack(StackUtil.getNull());
+                theSlot.putStack(StackUtil.getEmpty());
             }
             else{
                 theSlot.onSlotChanged();
             }
 
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
-                return StackUtil.getNull();
+                return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);
 
             return currentStack;
         }
-        return StackUtil.getNull();
+        return StackUtil.getEmpty();
     }
 
     @Override

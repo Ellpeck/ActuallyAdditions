@@ -78,7 +78,7 @@ public class BlockEmpowerer extends BlockContainerBase{
                 else{
                     if(StackUtil.isValid(stackThere)){
                         player.setHeldItem(hand, stackThere.copy());
-                        empowerer.slots.setStackInSlot(0, StackUtil.getNull());
+                        empowerer.slots.setStackInSlot(0, StackUtil.getEmpty());
                         return true;
                     }
                 }

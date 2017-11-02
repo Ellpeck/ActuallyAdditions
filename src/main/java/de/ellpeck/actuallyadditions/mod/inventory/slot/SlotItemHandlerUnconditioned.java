@@ -34,7 +34,7 @@ public class SlotItemHandlerUnconditioned extends SlotItemHandler{
             this.handler.setStackInSlot(this.getSlotIndex(), ItemStack.EMPTY);
             ItemStack remainder = this.handler.insertItemInternal(this.getSlotIndex(), stack, true);
             this.handler.setStackInSlot(this.getSlotIndex(), currentStack);
-            return remainder == null || remainder.getCount() < stack.getCount();
+            return remainder.isEmpty() || remainder.getCount() < stack.getCount();
         }
         return false;
     }

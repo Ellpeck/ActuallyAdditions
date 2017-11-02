@@ -71,7 +71,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase{
             NBTTagList tagList = compound.getTagList("Items", 10);
             for(int i = 0; i < slots.getSlots(); i++){
                 NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                slots.setStackInSlot(i, tagCompound != null && tagCompound.hasKey("id") ? new ItemStack(tagCompound) : StackUtil.getNull());
+                slots.setStackInSlot(i, tagCompound != null && tagCompound.hasKey("id") ? new ItemStack(tagCompound) : StackUtil.getEmpty());
             }
         }
     }

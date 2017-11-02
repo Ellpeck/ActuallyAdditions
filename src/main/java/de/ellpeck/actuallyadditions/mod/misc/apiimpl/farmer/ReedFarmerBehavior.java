@@ -57,7 +57,7 @@ public class ReedFarmerBehavior implements IFarmerBehavior{
                         	NonNullList<ItemStack> drops = NonNullList.create();
                             upState.getBlock().getDrops(drops, world, pos, state, 0);
 
-                            if(drops != null && !drops.isEmpty()){
+                            if(!drops.isEmpty()){
                                 if(farmer.addToOutputInventory(drops, false)){
                                     world.playEvent(2001, up, Block.getStateId(upState));
                                     world.setBlockToAir(up);

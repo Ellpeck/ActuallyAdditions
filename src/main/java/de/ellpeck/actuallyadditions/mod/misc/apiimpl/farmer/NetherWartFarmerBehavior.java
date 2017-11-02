@@ -50,19 +50,19 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior{
             IBlockState state = world.getBlockState(pos);
             if(state.getBlock() instanceof BlockNetherWart){
                 if(state.getValue(BlockNetherWart.AGE) >= 3){
-                    NonNullList<ItemStack> output = NonNullList.create();
-                    state.getBlock().getDrops(output, world, pos, state, 0);
-                    if(output != null && !output.isEmpty()){
-                        boolean toInput = farmer.addToSeedInventory(output, false);
-                        if(toInput || farmer.addToOutputInventory(output, false)){
+                    NonNullList<ItemStack> drops = NonNullList.create();
+                    state.getBlock().getDrops(drops, world, pos, state, 0);
+                    if(!drops.isEmpty()){
+                        boolean toInput = farmer.addToSeedInventory(drops, false);
+                        if(toInput || farmer.addToOutputInventory(drops, false)){
                             world.playEvent(2001, pos, Block.getStateId(state));
                             world.setBlockToAir(pos);
 
                             if(toInput){
-                                farmer.addToSeedInventory(output, true);
+                                farmer.addToSeedInventory(drops, true);
                             }
                             else{
-                                farmer.addToOutputInventory(output, true);
+                                farmer.addToOutputInventory(drops, true);
                             }
 
                             farmer.extractEnergy(use);

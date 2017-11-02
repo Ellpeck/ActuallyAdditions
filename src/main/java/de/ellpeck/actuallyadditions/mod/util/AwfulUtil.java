@@ -99,7 +99,7 @@ public final class AwfulUtil{
     
     public static void callTheFuckinPolice(Object... stuff) {
     	int i = 0;
-    	String error = "Actually Additions: Something is incredibly wrong.  I don't know what you did, or how this method got called.  But something is just completely wrong.  This method was provided with ";
+    	String error = "Actually Additions: Something is very wrong.  This method was provided with ";
     	for(Object k : stuff) {
     		error += ("\n" + i++ + ": " + (k == null ? "null" : (k.getClass().getSimpleName() + " <- CLASS | INSTANCE -> " + k.toString() + ", ")));
     	}

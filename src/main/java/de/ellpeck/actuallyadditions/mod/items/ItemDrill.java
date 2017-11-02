@@ -141,7 +141,7 @@ public class ItemDrill extends ItemEnergy{
     public ItemStack getHasUpgradeAsStack(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade){
         NBTTagCompound compound = stack.getTagCompound();
         if(compound == null){
-            return StackUtil.getNull();
+            return StackUtil.getEmpty();
         }
 
         ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerDrill.SLOT_AMOUNT);
@@ -154,7 +154,7 @@ public class ItemDrill extends ItemEnergy{
                 }
             }
         }
-        return StackUtil.getNull();
+        return StackUtil.getEmpty();
     }
 
     @Override

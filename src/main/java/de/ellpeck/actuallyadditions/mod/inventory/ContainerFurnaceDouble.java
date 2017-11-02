@@ -61,7 +61,7 @@ public class ContainerFurnaceDouble extends Container{
             //Slots in Inventory to shift from
             if(slot == TileEntityFurnaceDouble.SLOT_OUTPUT_1 || slot == TileEntityFurnaceDouble.SLOT_OUTPUT_2){
                 if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, true)){
-                    return StackUtil.getNull();
+                    return StackUtil.getEmpty();
                 }
                 theSlot.onSlotChange(newStack, currentStack);
             }
@@ -71,7 +71,7 @@ public class ContainerFurnaceDouble extends Container{
                 if(StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(newStack))){
                     if(!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1+1, false)){
                         if(!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2+1, false)){
-                            return StackUtil.getNull();
+                            return StackUtil.getEmpty();
                         }
                     }
                 }
@@ -79,32 +79,32 @@ public class ContainerFurnaceDouble extends Container{
 
                 else if(slot >= inventoryStart && slot <= inventoryEnd){
                     if(!this.mergeItemStack(newStack, hotbarStart, hotbarEnd+1, false)){
-                        return StackUtil.getNull();
+                        return StackUtil.getEmpty();
                     }
                 }
                 else if(slot >= inventoryEnd+1 && slot < hotbarEnd+1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd+1, false)){
-                    return StackUtil.getNull();
+                    return StackUtil.getEmpty();
                 }
             }
             else if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, false)){
-                return StackUtil.getNull();
+                return StackUtil.getEmpty();
             }
 
             if(!StackUtil.isValid(newStack)){
-                theSlot.putStack(StackUtil.getNull());
+                theSlot.putStack(StackUtil.getEmpty());
             }
             else{
                 theSlot.onSlotChanged();
             }
 
             if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
-                return StackUtil.getNull();
+                return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);
 
             return currentStack;
         }
-        return StackUtil.getNull();
+        return StackUtil.getEmpty();
     }
 
     @Override
