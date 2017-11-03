@@ -1,3 +1,6 @@
+# 1.12.2-r123
+* Made things crash less (null itemstack issues)
+
 # 1.12.2-r122
 * Artemish: Added JEI support for compost recipes
 * Added a recipe for smelting spawner shards into iron ingots
