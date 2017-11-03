@@ -223,7 +223,7 @@ public class GuiMainPage extends GuiBooklet{
             List<IBookletEntry> displayed = getDisplayedEntries();
             if(displayed.size() > i){
                 IBookletEntry entry = displayed.get(i);
-                this.buttonList.add(new EntryButton(this, i, this.guiLeft+156, this.guiTop+11+i*13, 115, 10, "- "+entry.getLocalizedNameWithFormatting(), null));
+                this.buttonList.add(new EntryButton(this, i, this.guiLeft+156, this.guiTop+11+i*13, 115, 10, "- "+entry.getLocalizedNameWithFormatting(), ItemStack.EMPTY));
             }
             else{
                 return;
