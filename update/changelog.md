@@ -1,3 +1,6 @@
+# 1.12.2-r124
+* Made the booklet not crash
+
 # 1.12.2-r123
 * Made things crash less (null itemstack issues)
 
