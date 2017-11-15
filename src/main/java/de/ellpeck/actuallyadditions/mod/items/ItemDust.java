@@ -71,7 +71,7 @@ public class ItemDust extends ItemBase implements IColorProvidingItem{
     public IItemColor getItemColor(){
         return new IItemColor(){
             @Override
-            public int getColorFromItemstack(ItemStack stack, int pass){
+            public int colorMultiplier(ItemStack stack, int pass){
                 return stack.getItemDamage() >= ALL_DUSTS.length ? 0xFFFFFF : ALL_DUSTS[stack.getItemDamage()].color;
             }
         };

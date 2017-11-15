@@ -178,7 +178,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     public IItemColor getItemColor(){
         return new IItemColor(){
             @Override
-            public int getColorFromItemstack(ItemStack stack, int tintIndex){
+            public int colorMultiplier(ItemStack stack, int tintIndex){
                 return stack.getItemDamage() >= ALL_RINGS.length ? 0xFFFFFF : ALL_RINGS[stack.getItemDamage()].color;
             }
         };

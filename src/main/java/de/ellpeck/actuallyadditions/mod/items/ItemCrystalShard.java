@@ -69,7 +69,7 @@ public class ItemCrystalShard extends ItemBase implements IColorProvidingItem{
     public IItemColor getItemColor(){
         return new IItemColor(){
             @Override
-            public int getColorFromItemstack(ItemStack stack, int tintIndex){
+            public int colorMultiplier(ItemStack stack, int tintIndex){
                 int damage = stack.getItemDamage();
                 if(damage >= 0 && damage < BlockCrystal.ALL_CRYSTALS.length){
                     return BlockCrystal.ALL_CRYSTALS[damage].clusterColor;

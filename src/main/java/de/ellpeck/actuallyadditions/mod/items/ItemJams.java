@@ -111,7 +111,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem{
     public IItemColor getItemColor(){
         return new IItemColor(){
             @Override
-            public int getColorFromItemstack(ItemStack stack, int pass){
+            public int colorMultiplier(ItemStack stack, int pass){
                 return pass > 0 ? (stack.getItemDamage() >= ALL_JAMS.length ? 0xFFFFFF : ALL_JAMS[stack.getItemDamage()].color) : 0xFFFFFF;
             }
         };

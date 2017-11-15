@@ -69,7 +69,7 @@ public class BlockColoredLamp extends BlockBase{
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
         ItemStack stack = player.getHeldItem(hand);
         //Turning On
-        if(stack.isEmpty() && player.isSneaking()){
+        if(hand == EnumHand.MAIN_HAND && stack.isEmpty()){
             world.setBlockState(pos, (this.isOn ? InitBlocks.blockColoredLamp : InitBlocks.blockColoredLampOn).getDefaultState().withProperty(TYPE, state.getValue(TYPE)), 2);
             world.notifyLightSet(pos);
             return true;

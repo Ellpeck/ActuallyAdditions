@@ -124,7 +124,7 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     public IItemColor getItemColor(){
         return new IItemColor(){
             @Override
-            public int getColorFromItemstack(ItemStack stack, int tintIndex){
+            public int colorMultiplier(ItemStack stack, int tintIndex){
                 return BlockCrystalCluster.this.crystal.clusterColor;
             }
         };

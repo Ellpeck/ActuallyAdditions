@@ -108,12 +108,12 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
     }
 
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state){
+    public float getDestroySpeed(ItemStack stack, IBlockState state){
         if(state.getBlock() == Blocks.WEB){
             return 15.0F;
         }
         else{
-            return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state)) ? this.efficiencyOnProperMaterial : 1.0F;
+            return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state)) ? this.efficiency : 1.0F;
         }
     }
 
@@ -122,7 +122,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
     public IItemColor getItemColor(){
         return new IItemColor(){
             @Override
-            public int getColorFromItemstack(ItemStack stack, int pass){
+            public int colorMultiplier(ItemStack stack, int pass){
                 return pass > 0 ? ItemAllToolAA.this.color : 0xFFFFFF;
             }
         };
