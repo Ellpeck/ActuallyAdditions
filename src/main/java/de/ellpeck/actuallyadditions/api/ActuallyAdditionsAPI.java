@@ -136,7 +136,7 @@ public final class ActuallyAdditionsAPI{
      * @param inputs           The inputs as an ItemStack List, stacksizes are ignored
      * @param outputOnes       The first outputs as an ItemStack List, stacksizes are ignored
      * @param outputOneAmounts The amount of the first output, will be equal for all entries in the list
-     * @param outputTwos       The second outputs as an List<ItemStack> (can be null or empty if there should be none)
+     * @param outputTwos       The second outputs as a List (can be null or empty if there should be none)
      * @param outputTwoAmounts The amount of the second output, will be equal for all entries in the list
      * @param outputTwoChance  The chance of the second output (0 won't occur at all, 100 will all the time)
      */
