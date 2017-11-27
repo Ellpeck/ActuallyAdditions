@@ -23,7 +23,7 @@ if(hasProperty('buildnumber')){
 }
 
 minecraft {
-    version = "1.12.2-14.23.0.2536"
+    version = "1.12.2-14.23.1.2554"
     runDir = "run"
     mappings = "snapshot_20171108"
     replaceIn "ModUtil.java"
