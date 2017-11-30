@@ -219,7 +219,7 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return player.getHeldItemMainhand() == sack;
+        return !sack.isEmpty() && player.getHeldItemMainhand() == sack;
     }
 
     @Override
