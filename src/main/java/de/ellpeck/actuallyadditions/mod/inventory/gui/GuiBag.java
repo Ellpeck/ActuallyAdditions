@@ -20,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
@@ -41,8 +42,8 @@ public class GuiBag extends GuiWtfMojang{
     private FilterSettingsGui filter;
     private GuiButton buttonAutoInsert;
 
-    public GuiBag(InventoryPlayer inventory, boolean isVoid){
-        this(isVoid, new ContainerBag(inventory, isVoid));
+    public GuiBag(ItemStack sack, InventoryPlayer inventory, boolean isVoid){
+        this(isVoid, new ContainerBag(sack, inventory, isVoid));
     }
 
     private GuiBag(boolean isVoid, ContainerBag container){

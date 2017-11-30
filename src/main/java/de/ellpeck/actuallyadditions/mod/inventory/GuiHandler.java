@@ -100,9 +100,9 @@ public class GuiHandler implements IGuiHandler{
             case LASER_RELAY_ITEM_WHITELIST:
                 return new ContainerLaserRelayItemWhitelist(player.inventory, tile);
             case BAG:
-                return new ContainerBag(player.inventory, false);
+                return new ContainerBag(player.getHeldItemMainhand(), player.inventory, false);
             case VOID_BAG:
-                return new ContainerBag(player.inventory, true);
+                return new ContainerBag(player.getHeldItemMainhand(), player.inventory, true);
             case BIO_REACTOR:
                 return new ContainerBioReactor(player.inventory, tile);
             case FARMER:
@@ -197,9 +197,9 @@ public class GuiHandler implements IGuiHandler{
             case LASER_RELAY_ITEM_WHITELIST:
                 return new GuiLaserRelayItemWhitelist(player.inventory, tile);
             case BAG:
-                return new GuiBag(player.inventory, false);
+                return new GuiBag(player.getHeldItemMainhand(), player.inventory, false);
             case VOID_BAG:
-                return new GuiBag(player.inventory, true);
+                return new GuiBag(player.getHeldItemMainhand(), player.inventory, true);
             case BIO_REACTOR:
                 return new GuiBioReactor(player.inventory, tile);
             case FARMER:

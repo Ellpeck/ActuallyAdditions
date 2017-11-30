@@ -39,11 +39,13 @@ public class ContainerBag extends Container implements IButtonReactor{
     private final boolean isVoid;
     public boolean autoInsert;
     private boolean oldAutoInsert;
+    private final ItemStack sack;
 
-    public ContainerBag(InventoryPlayer inventory, boolean isVoid){
+    public ContainerBag(ItemStack sack, InventoryPlayer inventory, boolean isVoid){
         this.inventory = inventory;
         this.bagInventory = new ItemStackHandlerCustom(getSlotAmount(isVoid));
         this.isVoid = isVoid;
+        this.sack = sack;
 
         for(int i = 0; i < 4; i++){
             this.addSlotToContainer(new SlotFilter(this.filter, i, 155, 10+i*18));
@@ -217,7 +219,7 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     @Override
     public boolean canInteractWith(EntityPlayer player){
-        return true;
+        return player.getHeldItemMainhand() == sack;
     }
 
     @Override
