@@ -10,6 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotDeletion;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
@@ -19,6 +25,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -26,8 +33,11 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -43,7 +53,13 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     public ContainerBag(ItemStack sack, InventoryPlayer inventory, boolean isVoid){
         this.inventory = inventory;
-        this.bagInventory = new ItemStackHandlerCustom(getSlotAmount(isVoid));
+        this.bagInventory = new ItemStackHandlerCustom(getSlotAmount(isVoid)) {
+        	@Override
+        	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+        		if(isBlacklisted(stack)) return stack;
+        		return super.insertItem(slot, stack, simulate);
+        	};
+        };
         this.isVoid = isVoid;
         this.sack = sack;
 
@@ -65,7 +81,7 @@ public class ContainerBag extends Container implements IButtonReactor{
                     this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.bagInventory, j+i*7, 10+j*18, 10+i*18){
                         @Override
                         public boolean isItemValid(ItemStack stack){
-                            return ContainerBag.this.filter.check(stack);
+                            return !isBlacklisted(stack) && ContainerBag.this.filter.check(stack);
                         }
                     });
                 }
@@ -230,5 +246,29 @@ public class ContainerBag extends Container implements IButtonReactor{
         else{
             this.filter.onButtonPressed(buttonID);
         }
+    }
+    
+    private static final List<Pair<Item, Integer>> BLACKLIST = new ArrayList<>();
+    
+    private static boolean runOnce = false;
+    
+    public static boolean isBlacklisted(ItemStack stack) {
+    	if(!runOnce) {
+    		runOnce = true;
+    		for(String s : ConfigStringListValues.SACK_BLACKLIST.getValue()) {
+    			String[] split = s.split("@");
+    			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0]));
+    			if(item == null) {
+    				ModUtil.LOGGER.error("Invalid item in sack blacklist: " + s);
+    				continue;
+    			}
+    			if(split.length == 1) 
+    				BLACKLIST.add(Pair.of(item, 0));
+    			else if(split.length == 2) {
+    				BLACKLIST.add(Pair.of(item, Integer.parseInt(split[1])));
+    			}
+    		}
+    	}
+    	return BLACKLIST.contains(Pair.of(stack.getItem(), stack.getMetadata()));
     }
 }
