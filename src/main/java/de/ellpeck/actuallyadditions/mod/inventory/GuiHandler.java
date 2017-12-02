@@ -64,7 +64,7 @@ public class GuiHandler implements IGuiHandler{
             case BREAKER:
                 return new ContainerBreaker(player.inventory, tile);
             case DROPPER:
-                return new ContainerDropper(player.inventory, tile);
+                return new ContainerDropper(player, tile);
             case CANOLA_PRESS:
                 return new ContainerCanolaPress(player.inventory, tile);
             case FERMENTING_BARREL:
@@ -146,7 +146,7 @@ public class GuiHandler implements IGuiHandler{
             case BREAKER:
                 return new GuiBreaker(player.inventory, tile);
             case DROPPER:
-                return new GuiDropper(player.inventory, tile);
+                return new GuiDropper(player, tile);
             case CANOLA_PRESS:
                 return new GuiCanolaPress(player.inventory, tile);
             case FERMENTING_BARREL:

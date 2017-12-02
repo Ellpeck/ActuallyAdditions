@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
@@ -24,10 +25,12 @@ import net.minecraft.item.ItemStack;
 public class ContainerDropper extends Container{
 
     private final TileEntityDropper dropper;
+    EntityPlayer player;
 
-    public ContainerDropper(InventoryPlayer inventory, TileEntityBase tile){
+    public ContainerDropper(EntityPlayer player, TileEntityBase tile){
         this.dropper = (TileEntityDropper)tile;
-
+        this.player = player;
+        InventoryPlayer inventory = player.inventory;
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){
                 this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.dropper.slots, j+i*3, 62+j*18, 21+i*18));
@@ -96,5 +99,11 @@ public class ContainerDropper extends Container{
     @Override
     public boolean canInteractWith(EntityPlayer player){
         return this.dropper.canPlayerUse(player);
+    }
+    
+    @Override
+    public void onContainerClosed(EntityPlayer playerIn) {
+    	super.onContainerClosed(playerIn);
+        if (!player.isSpectator()) dropper.getWorld().notifyNeighborsOfStateChange(dropper.getPos(), InitBlocks.blockDropper, false);
     }
 }
