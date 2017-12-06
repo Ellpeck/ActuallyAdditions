@@ -74,6 +74,7 @@ public abstract class ExUPlantFarmerBehavior implements IFarmerBehavior{
                 if(block.getMetaFromState(state) >= this.getMaxStage()){
                 	NonNullList<ItemStack> drops = NonNullList.create();
                     block.getDrops(drops, world, pos, state, 0);
+                    if(drops.isEmpty()) return FarmerResult.FAIL;
                     for(ItemStack stack : drops){
                         if(StackUtil.isValid(stack)){
                             ResourceLocation itemReg = stack.getItem().getRegistryName();
