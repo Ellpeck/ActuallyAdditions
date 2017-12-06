@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import java.util.Collection;
+
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -92,6 +94,12 @@ public final class StackUtil{
 
     public static NonNullList<ItemStack> createSlots(int size){
         return NonNullList.withSize(size, getEmpty());
+    }
+    
+    public static boolean isEmpty(Collection<ItemStack> stacks) {
+    	if(stacks.isEmpty()) return true;
+    	else for(ItemStack s : stacks) if (!s.isEmpty()) return false;
+    	return true;
     }
 
 
