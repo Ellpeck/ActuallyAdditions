@@ -1,3 +1,12 @@
+# 1.12.2-r125
+* The colored lamps now no longer require sneaking to turn them on/off
+* Viveleroi: Fixed a few typos in the booklet 
+* TartaricAcid: Update zh_CN.lang
+* Require holding the traveller's sack (prevents a dupe)
+* Adds a blacklist for the traveller's sack
+* Makes the Precision Dropper update comparator output when the gui closes
+* Blocks the harvesting of XU2 crops to prevent deletion until it is fixed on XU's end
+
 # 1.12.2-r124
 * Made the booklet not crash
 
