@@ -61,9 +61,8 @@ public class ReconstructorRecipeCategory implements IRecipeCategory<Reconstructo
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, ReconstructorRecipeWrapper wrapper, IIngredients ingredients){
         recipeLayout.getItemStacks().init(0, true, 4, 18);
-        recipeLayout.getItemStacks().set(0, wrapper.theRecipe.inputStack);
-
+        recipeLayout.getItemStacks().set(0, ingredients.getInputs(ItemStack.class).get(0).get(0));
         recipeLayout.getItemStacks().init(1, false, 66, 18);
-        recipeLayout.getItemStacks().set(1, wrapper.theRecipe.outputStack);
+        recipeLayout.getItemStacks().set(1, ingredients.getOutputs(ItemStack.class).get(0).get(0));
     }
 }

@@ -37,9 +37,11 @@ import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.reconstructor.ReconstructorRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import mezz.jei.api.*;
+import mezz.jei.api.IJeiHelpers;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.IModRegistry;
+import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
-import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
@@ -47,16 +49,6 @@ import net.minecraft.item.ItemStack;
 
 @JEIPlugin
 public class JEIActuallyAdditionsPlugin implements IModPlugin{
-
-    @Override
-    public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry){
-
-    }
-
-    @Override
-    public void registerIngredients(IModIngredientRegistration registry){
-
-    }
     
     @Override
 	public void registerCategories(IRecipeCategoryRegistration registry) {
@@ -77,7 +69,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         registry.handleRecipes(IBookletPage.class, BookletRecipeWrapper::new, BookletRecipeCategory.NAME);
         registry.handleRecipes(CoffeeIngredient.class, CoffeeMachineRecipeWrapper::new, CoffeeMachineRecipeCategory.NAME);
         registry.handleRecipes(CrusherRecipe.class, CrusherRecipeWrapper::new, CrusherRecipeCategory.NAME);
-        registry.handleRecipes(LensConversionRecipe.class, ReconstructorRecipeWrapper::new, ReconstructorRecipeCategory.NAME);
+        registry.handleRecipes(LensConversionRecipe.class, ReconstructorRecipeWrapper.FACTORY, ReconstructorRecipeCategory.NAME);
         registry.handleRecipes(EmpowererRecipe.class, EmpowererRecipeWrapper::new, EmpowererRecipeCategory.NAME);
         registry.handleRecipes(CompostRecipe.class, CompostRecipeWrapper::new, CompostRecipeCategory.NAME);
 
@@ -114,10 +106,5 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin{
         registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockEmpowerer), EmpowererRecipeCategory.NAME);
         registry.addRecipeCatalyst(new ItemStack(InitItems.itemBooklet), BookletRecipeCategory.NAME);
         registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockCompost), CompostRecipeCategory.NAME);
-    }
-
-    @Override
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime){
-
     }
 }

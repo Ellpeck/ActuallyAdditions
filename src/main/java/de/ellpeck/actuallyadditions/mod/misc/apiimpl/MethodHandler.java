@@ -173,8 +173,8 @@ public class MethodHandler implements IMethodHandler{
                                 if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
                                     ItemStack output = recipe.outputStack;
                                     if(StackUtil.isValid(output)){
-                                        tile.getWorldObject().playEvent(2001, pos, Block.getStateId(tile.getWorldObject().getBlockState(pos)));
-                                        //This change might break something? Not sure.  It could.
+                                        tile.getWorldObject().playEvent(2001, pos, Block.getStateId(state));
+                                        recipe.transformHook(ItemStack.EMPTY, state, pos, tile);
                                         if(output.getItem() instanceof ItemBlock){
                                         	Block toPlace = Block.getBlockFromItem(output.getItem());
                                         	IBlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
@@ -197,7 +197,7 @@ public class MethodHandler implements IMethodHandler{
             }
 
             //Converting the Items
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-rangeX, hitBlock.getY()-rangeY, hitBlock.getZ()-rangeZ, hitBlock.getX()+1+rangeX, hitBlock.getY()+1+rangeY, hitBlock.getZ()+1+rangeZ));
+            List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-rangeX, hitBlock.getY()-rangeY, hitBlock.getZ()-rangeZ, hitBlock.getX()+1+rangeX, hitBlock.getY()+1+rangeY, hitBlock.getZ()+1+rangeZ));
             for(EntityItem item : items){
                 ItemStack stack = item.getItem();
                 if(!item.isDead && StackUtil.isValid(stack)){
@@ -207,6 +207,7 @@ public class MethodHandler implements IMethodHandler{
                             int itemsPossible = Math.min(tile.getEnergy()/recipe.energyUse, StackUtil.getStackSize(stack));
 
                             if(itemsPossible > 0){
+                            	recipe.transformHook(item.getItem(), null, item.getPosition(), tile);
                                 item.setDead();
 
                                 if(StackUtil.getStackSize(stack)-itemsPossible > 0){

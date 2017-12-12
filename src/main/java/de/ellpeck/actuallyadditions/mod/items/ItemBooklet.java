@@ -49,7 +49,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
 
     public ItemBooklet(String name){
         super(name);
-        this.setMaxStackSize(16);
+        this.setMaxStackSize(1);
         this.setMaxDamage(0);
     }
 

@@ -15,11 +15,22 @@ import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
+import de.ellpeck.actuallyadditions.mod.recipe.EnchBookConversion;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 
 public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton{
+	
+	public static final IRecipeWrapperFactory<LensConversionRecipe> FACTORY = (recipe) -> {
+		if(recipe instanceof EnchBookConversion) return new EnchBookWrapper((EnchBookConversion) recipe);
+		return new ReconstructorRecipeWrapper(recipe);
+	};
 
     public final LensConversionRecipe theRecipe;
 
@@ -52,5 +63,30 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton{
     @Override
     public IBookletPage getPage(){
         return BookletUtils.findFirstPageForStack(new ItemStack(InitBlocks.blockAtomicReconstructor));
+    }
+    
+    public static class EnchBookWrapper extends ReconstructorRecipeWrapper {
+
+    	private static final ItemStack BOOK = new ItemStack(Items.ENCHANTED_BOOK);
+    	private static final ItemStack OUT = new ItemStack(Items.ENCHANTED_BOOK);
+    	
+    	static {
+    		OUT.setStackDisplayName("Split Book");
+    		NBTTagCompound t = OUT.getTagCompound().getCompoundTag("display");
+    		NBTTagList l = new NBTTagList();
+    		l.appendTag(new NBTTagString("Book will be split based on enchantments!"));
+    		t.setTag("Lore", l);
+    	}
+    	
+		public EnchBookWrapper(EnchBookConversion recipe) {
+			super(recipe);
+		}
+		
+	    @Override
+	    public void getIngredients(IIngredients ingredients){
+	        ingredients.setInput(ItemStack.class, BOOK);
+	        ingredients.setOutput(ItemStack.class, OUT);
+	    }
+
     }
 }

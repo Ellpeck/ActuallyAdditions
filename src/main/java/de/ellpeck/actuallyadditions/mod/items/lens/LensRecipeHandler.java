@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
+import java.util.ArrayList;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.ColorLensChangerByDyeMeta;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
@@ -18,14 +20,13 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.recipe.EnchBookConversion;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
-import java.util.ArrayList;
 
 public final class LensRecipeHandler{
 
@@ -42,6 +43,7 @@ public final class LensRecipeHandler{
     public static LensConversionRecipe recipeCrystallizedCanolaSeed;
     public static LensConversionRecipe recipeItemLaser;
     public static LensConversionRecipe recipeFluidLaser;
+    public static EnchBookConversion recipeEnchBook;
 
     public static void init(){
         //Crystal Blocks
@@ -105,6 +107,8 @@ public final class LensRecipeHandler{
         recipeWhiteWall = RecipeUtil.lastReconstructorRecipe();
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(new ItemStack(Blocks.QUARTZ_BLOCK, 1, 1), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10);
         recipeGreenWall = RecipeUtil.lastReconstructorRecipe();
+        
+        ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(recipeEnchBook = new EnchBookConversion());
 
         IColorLensChanger changer = new ColorLensChangerByDyeMeta();
         ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Items.DYE, changer);

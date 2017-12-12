@@ -10,8 +10,11 @@
 
 package de.ellpeck.actuallyadditions.api.recipe;
 
+import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 
 public class LensConversionRecipe{
 
@@ -26,4 +29,6 @@ public class LensConversionRecipe{
         this.energyUse = energyUse;
         this.type = type;
     }
+    
+    public void transformHook(ItemStack stack, IBlockState state, BlockPos pos, IAtomicReconstructor tile) {}
 }
