@@ -1,3 +1,7 @@
+# 1.12.2-r126
+* New feature!  The atomic reconstructor can now split enchanted books with multiple enchantments!
+* Leomil72: Added it_IT.lang
+
 # 1.12.2-r125
 * The colored lamps now no longer require sneaking to turn them on/off
 * Viveleroi: Fixed a few typos in the booklet 
