@@ -10,11 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
-import net.darkhax.tesla.api.ITeslaConsumer;
-import net.darkhax.tesla.api.ITeslaHolder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -60,20 +56,6 @@ public class TileEntityEnergizer extends TileEntityInventoryBase{
                             canTakeUp = cap.getEnergyStored() >= cap.getMaxEnergyStored();
                         }
                     }
-                    else if(ActuallyAdditions.teslaLoaded){
-                        if(this.slots.getStackInSlot(0).hasCapability(TeslaUtil.teslaConsumer, null)){
-                            ITeslaConsumer cap = this.slots.getStackInSlot(0).getCapability(TeslaUtil.teslaConsumer, null);
-                            if(cap != null){
-                                received = (int)cap.givePower(this.storage.getEnergyStored(), false);
-                            }
-                        }
-                        if(this.slots.getStackInSlot(0).hasCapability(TeslaUtil.teslaHolder, null)){
-                            ITeslaHolder cap = this.slots.getStackInSlot(0).getCapability(TeslaUtil.teslaHolder, null);
-                            if(cap != null){
-                                canTakeUp = cap.getStoredPower() >= cap.getCapacity();
-                            }
-                        }
-                    }
                     if(received > 0){
                         this.storage.extractEnergyInternal(received, false);
                     }
@@ -93,7 +75,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase{
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0 && ((ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaConsumer, null)) || stack.hasCapability(CapabilityEnergy.ENERGY, null));
+        return i == 0 && (stack.hasCapability(CapabilityEnergy.ENERGY, null));
     }
 
     @Override

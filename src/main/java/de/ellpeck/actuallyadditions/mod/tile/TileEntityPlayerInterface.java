@@ -10,10 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import java.util.UUID;
+
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
-import net.darkhax.tesla.api.ITeslaConsumer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,8 +21,6 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
-
-import java.util.UUID;
 
 public class TileEntityPlayerInterface extends TileEntityBase implements IEnergyDisplay{
 
@@ -85,12 +82,6 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
                                 IEnergyStorage cap = slot.getCapability(CapabilityEnergy.ENERGY, null);
                                 if(cap != null){
                                     received = cap.receiveEnergy(this.storage.getEnergyStored(), false);
-                                }
-                            }
-                            else if(ActuallyAdditions.teslaLoaded && slot.hasCapability(TeslaUtil.teslaConsumer, null)){
-                                ITeslaConsumer cap = slot.getCapability(TeslaUtil.teslaConsumer, null);
-                                if(cap != null){
-                                    received = (int)cap.givePower(this.storage.getEnergyStored(), false);
                                 }
                             }
 

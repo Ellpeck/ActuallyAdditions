@@ -10,13 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
-import net.darkhax.tesla.api.ITeslaConsumer;
-import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -51,10 +53,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
-import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class WorldUtil{
 
@@ -161,21 +159,6 @@ public final class WorldUtil{
                         int filled = handlerTo.receiveEnergy(drain, false);
                         handlerFrom.extractEnergy(filled, false);
                         return;
-                    }
-                }
-            }
-
-            if(ActuallyAdditions.teslaLoaded){
-                if(tileTo.hasCapability(TeslaUtil.teslaConsumer, opp) && tileFrom.hasCapability(TeslaUtil.teslaProducer, sideTo)){
-                    ITeslaConsumer handlerTo = tileTo.getCapability(TeslaUtil.teslaConsumer, opp);
-                    ITeslaProducer handlerFrom = tileFrom.getCapability(TeslaUtil.teslaProducer, sideTo);
-
-                    if(handlerTo != null && handlerFrom != null){
-                        long drain = handlerFrom.takePower(maxTransfer, true);
-                        if(drain > 0){
-                            long filled = handlerTo.givePower(drain, false);
-                            handlerFrom.takePower(filled, false);
-                        }
                     }
                 }
             }

@@ -59,7 +59,6 @@ public class ActuallyAdditions{
     @SidedProxy(clientSide = ModUtil.PROXY_CLIENT, serverSide = ModUtil.PROXY_SERVER)
     public static IProxy proxy;
 
-    public static boolean teslaLoaded;
     public static boolean commonCapsLoaded;
 
     static{
@@ -76,7 +75,6 @@ public class ActuallyAdditions{
         Lenses.init();
         InitBooklet.preInit();
 
-        teslaLoaded = Loader.isModLoaded("tesla");
         commonCapsLoaded = Loader.isModLoaded("commoncapabilities");
 
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());

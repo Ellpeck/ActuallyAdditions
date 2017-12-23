@@ -10,9 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -34,11 +32,6 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
                     if(tile.hasCapability(CapabilityEnergy.ENERGY, facing)){
                         return true;
                     }
-                    else if(ActuallyAdditions.teslaLoaded){
-                        if(tile.hasCapability(TeslaUtil.teslaHolder, facing)){
-                            return true;
-                        }
-                    }
                 }
             }
         }
@@ -47,7 +40,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     @Override
     protected boolean isCapabilitySupported(Capability<?> capability){
-        return capability == CapabilityEnergy.ENERGY || capability == TeslaUtil.teslaHolder || capability == TeslaUtil.teslaConsumer || capability == TeslaUtil.teslaProducer;
+        return capability == CapabilityEnergy.ENERGY;
     }
 
     @Override

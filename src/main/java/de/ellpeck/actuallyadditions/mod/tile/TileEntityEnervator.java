@@ -10,11 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
-import net.darkhax.tesla.api.ITeslaHolder;
-import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -62,20 +58,6 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
                             canTakeUp = cap.getEnergyStored() <= 0;
                         }
                     }
-                    else if(ActuallyAdditions.teslaLoaded){
-                        if(this.slots.getStackInSlot(0).hasCapability(TeslaUtil.teslaProducer, null)){
-                            ITeslaProducer cap = this.slots.getStackInSlot(0).getCapability(TeslaUtil.teslaProducer, null);
-                            if(cap != null){
-                                extracted = (int)cap.takePower(maxExtract, false);
-                            }
-                        }
-                        if(this.slots.getStackInSlot(0).hasCapability(TeslaUtil.teslaHolder, null)){
-                            ITeslaHolder cap = this.slots.getStackInSlot(0).getCapability(TeslaUtil.teslaHolder, null);
-                            if(cap != null){
-                                canTakeUp = cap.getStoredPower() <= 0;
-                            }
-                        }
-                    }
                     if(extracted > 0){
                         this.storage.receiveEnergyInternal(extracted, false);
                     }
@@ -95,7 +77,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0 && ((ActuallyAdditions.teslaLoaded && stack.hasCapability(TeslaUtil.teslaProducer, null)) || stack.hasCapability(CapabilityEnergy.ENERGY, null));
+        return i == 0 && (stack.hasCapability(CapabilityEnergy.ENERGY, null));
     }
 
     @SideOnly(Side.CLIENT)

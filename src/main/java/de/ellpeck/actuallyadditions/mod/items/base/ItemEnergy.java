@@ -10,11 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
+import java.text.NumberFormat;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaForgeUnitsWrapper;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,10 +33,6 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
-import java.text.NumberFormat;
-import java.util.List;
 
 public abstract class ItemEnergy extends ItemBase{
 
@@ -72,7 +71,6 @@ public abstract class ItemEnergy extends ItemBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tabs, NonNullList<ItemStack> list){
         if(this.isInCreativeTab(tabs)){
             ItemStack stackFull = new ItemStack(this);
@@ -195,7 +193,6 @@ public abstract class ItemEnergy extends ItemBase{
     private static class EnergyCapabilityProvider implements ICapabilityProvider{
 
         public final CustomEnergyStorage storage;
-        private Object teslaWrapper;
 
         public EnergyCapabilityProvider(final ItemStack stack, ItemEnergy item){
             this.storage = new CustomEnergyStorage(item.maxPower, item.transfer, item.transfer){
@@ -225,20 +222,12 @@ public abstract class ItemEnergy extends ItemBase{
             return this.getCapability(capability, facing) != null;
         }
 
-        @SuppressWarnings("unchecked")//gud quality system needs @SuppressWarnings to not complain
+        
 		@Nullable
         @Override
         public <T> T getCapability(Capability<T> capability, EnumFacing facing){
             if(capability == CapabilityEnergy.ENERGY){
-                return (T) this.storage;
-            }
-            else if(ActuallyAdditions.teslaLoaded){
-                if(capability == TeslaUtil.teslaConsumer || capability == TeslaUtil.teslaProducer || capability == TeslaUtil.teslaHolder){
-                    if(this.teslaWrapper == null){
-                        this.teslaWrapper = new TeslaForgeUnitsWrapper(this.storage);
-                    }
-                    return (T) this.teslaWrapper;
-                }
+                return CapabilityEnergy.ENERGY.cast(this.storage);
             }
             return null;
         }

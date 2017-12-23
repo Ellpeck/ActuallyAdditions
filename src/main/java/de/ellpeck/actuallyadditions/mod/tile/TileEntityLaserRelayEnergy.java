@@ -10,15 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
-import net.darkhax.tesla.api.ITeslaConsumer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -30,12 +33,6 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
 
@@ -120,7 +117,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
             if(this.world.isBlockLoaded(pos)){
                 TileEntity tile = this.world.getTileEntity(pos);
                 if(tile != null && !(tile instanceof TileEntityLaserRelay)){
-                    if((ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, side.getOpposite())) || tile.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())){
+                    if(tile.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())){
                         this.receiversAround.put(side, tile);
 
                         TileEntity oldTile = old.get(side);
@@ -171,13 +168,6 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
                                             workedOnce = true;
                                         }
                                     }
-                                    else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
-                                        ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
-                                        if(cap != null && cap.givePower(maxTransfer, true) > 0){
-                                            totalReceiverAmount++;
-                                            workedOnce = true;
-                                        }
-                                    }
                                 }
                                 }
                             }
@@ -219,21 +209,6 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
                                             }
 
                                             transmitted += cap.receiveEnergy(theoreticalReceived-deduct, simulate);
-                                            transmitted += deduct;
-                                        }
-                                    }
-                                }
-                                else if(ActuallyAdditions.teslaLoaded && tile.hasCapability(TeslaUtil.teslaConsumer, opp)){
-                                    ITeslaConsumer cap = tile.getCapability(TeslaUtil.teslaConsumer, opp);
-                                    if(cap != null){
-                                        int theoreticalReceived = (int)cap.givePower(Math.min(amountPer, lowestCap), true);
-                                        if(theoreticalReceived > 0){
-                                            int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
-                                            if(deduct >= theoreticalReceived){ //Happens with small numbers
-                                                deduct = 0;
-                                            }
-
-                                            transmitted += cap.givePower(theoreticalReceived-deduct, simulate);
                                             transmitted += deduct;
                                         }
                                     }

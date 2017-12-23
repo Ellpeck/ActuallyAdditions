@@ -10,14 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaForgeUnitsWrapper;
-import de.ellpeck.actuallyadditions.mod.util.compat.TeslaUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -49,8 +46,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     protected int ticksElapsed;
     protected TileEntity[] tilesAround = new TileEntity[6];
     protected boolean hasSavedDataOnChangeOrWorldStart;
-
-    private Object teslaWrapper;
 
     public TileEntityBase(String name){
         this.name = name;
@@ -346,17 +341,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
             IEnergyStorage storage = this.getEnergyStorage(facing);
             if(storage != null){
                 return (T)storage;
-            }
-        }
-        else if(ActuallyAdditions.teslaLoaded){
-            if(capability == TeslaUtil.teslaConsumer || capability == TeslaUtil.teslaProducer || capability == TeslaUtil.teslaHolder){
-                IEnergyStorage storage = this.getEnergyStorage(facing);
-                if(storage != null){
-                    if(this.teslaWrapper == null){
-                        this.teslaWrapper = new TeslaForgeUnitsWrapper(storage);
-                    }
-                    return (T)this.teslaWrapper;
-                }
             }
         }
         return super.getCapability(capability, facing);
