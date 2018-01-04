@@ -77,18 +77,25 @@ public class BlockGreenhouseGlass extends BlockBase {
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		if (world.isRemote) return;
 
-		if (rand.nextInt(2) == 0 && world.canBlockSeeSky(pos) && world.isDaytime()) {
+		if (world.canBlockSeeSky(pos) && world.isDaytime()) {
+			
+			System.out.println("debugg");
 
-			Triple<BlockPos, IBlockState, IGrowable> trip = firstSolidBlock(world, pos);
+			Triple<BlockPos, IBlockState, IGrowable> trip = firstBlock(world, pos);
 
+			boolean once = false;
+			
+			for(int i = 0; i < 3; i++)
 			if (trip != null && trip.getRight().canGrow(world, trip.getLeft(), trip.getMiddle(), false)) {
 				trip.getRight().grow(world, rand, trip.getLeft(), trip.getMiddle());
-				world.playEvent(2005, trip.getMiddle().isOpaqueCube() ? trip.getLeft().up() : trip.getLeft(), 0);
+				once = true;
 			}
+			
+			if(once) world.playEvent(2005, trip.getMiddle().isOpaqueCube() ? trip.getLeft().up() : trip.getLeft(), 0);
 		}
 	}
 
-	public static Triple<BlockPos, IBlockState, IGrowable> firstSolidBlock(World world, BlockPos glassPos) {
+	public static Triple<BlockPos, IBlockState, IGrowable> firstBlock(World world, BlockPos glassPos) {
 		BlockPos.MutableBlockPos mut = new BlockPos.MutableBlockPos(glassPos);
 		while (true) {
 			mut.setPos(mut.getX(), mut.getY() - 1, mut.getZ());
