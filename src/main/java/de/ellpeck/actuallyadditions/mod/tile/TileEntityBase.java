@@ -66,7 +66,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         register(TileEntityFurnaceSolar.class);
         register(TileEntityHeatCollector.class);
         register(TileEntityItemRepairer.class);
-        register(TileEntityGreenhouseGlass.class);
         register(TileEntityBreaker.class);
         register(TileEntityDropper.class);
         register(TileEntityInputterAdvanced.class);
