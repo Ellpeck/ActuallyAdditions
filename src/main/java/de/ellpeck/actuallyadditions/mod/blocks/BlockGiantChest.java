@@ -33,6 +33,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
@@ -118,9 +119,8 @@ public class BlockGiantChest extends BlockContainerBase{
 
 
     @Override
-    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-        ArrayList<ItemStack> drops = super.getDrops(world, pos, state, fortune);
-
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+        super.getDrops(drops, world, pos, state, fortune);
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityGiantChest){
             ItemStackHandlerCustom slots = ((TileEntityGiantChest)tile).slots;
@@ -149,19 +149,12 @@ public class BlockGiantChest extends BlockContainerBase{
                 }
             }
         }
-
-        return drops;
     }
 
     @Override
-    public boolean shouldDropInventory(World world, BlockPos pos){
+    public boolean shouldDropInventory(World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileEntityGiantChest){
-            if(ItemUtil.contains(((TileEntityGiantChest)tile).slots.getItems(), new ItemStack(InitItems.itemCrateKeeper), false)){
-                return false;
-            }
-        }
-        return true;
+        return !(tile instanceof TileEntityGiantChest) || !ItemUtil.contains(((TileEntityGiantChest) tile).slots.getItems(), new ItemStack(InitItems.itemCrateKeeper), false);
     }
 
     @Override

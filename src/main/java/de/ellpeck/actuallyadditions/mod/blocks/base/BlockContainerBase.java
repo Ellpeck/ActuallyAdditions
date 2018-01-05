@@ -33,6 +33,7 @@ import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -42,6 +43,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -220,10 +222,6 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
                     player.sendMessage(new TextComponentTranslation("info."+ModUtil.MOD_ID+".machineBroke").setStyle(new Style().setColor(TextFormatting.RED)));
                 }
             }
-
-            this.dropBlockAsItem(world, pos, state, 0);
-            //dirty workaround because of Forge calling Item.onBlockStartBreak() twice
-            world.setBlockToAir(pos);
         }
     }
 
@@ -242,9 +240,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-        ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityBase){
             TileEntityBase base = (TileEntityBase)tile;
@@ -276,9 +272,20 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
 
                 drops.add(stack);
             }
+        } else {
+            super.getDrops(drops, world, pos, state, fortune);
         }
+    }
 
-        return drops;
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+        return willHarvest || super.removedByPlayer(state, world, pos, player, false);
+    }
+
+    @Override
+    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+        super.harvestBlock(worldIn, player, pos, state, te, stack);
+        worldIn.setBlockToAir(pos);
     }
 
     @Override
