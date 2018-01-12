@@ -71,8 +71,7 @@ public class GuiOilGenerator extends GuiWtfMojang{
         }
 
         if(this.generator.maxBurnTime > 0 && this.generator.currentEnergyProduce > 0){
-            this.drawCenteredString(this.fontRenderer, this.generator.currentEnergyProduce+" CF/t", this.guiLeft+87, this.guiTop+65, 0xFFFFFF);
-            this.drawCenteredString(this.fontRenderer, "for "+this.generator.maxBurnTime+" t", this.guiLeft+87, this.guiTop+75, 0xFFFFFF);
+            this.drawCenteredString(this.fontRenderer, this.generator.currentEnergyProduce + " CF/t", this.guiLeft + 87, this.guiTop + 65, 0xFFFFFF);
         }
 
         this.energy.draw();
