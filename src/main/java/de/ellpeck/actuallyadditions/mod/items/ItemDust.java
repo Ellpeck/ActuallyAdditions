@@ -76,4 +76,10 @@ public class ItemDust extends ItemBase implements IColorProvidingItem{
             }
         };
     }
+    
+    @Override
+    public int getItemBurnTime(ItemStack stack) {
+    	if(stack.getMetadata() == 6) return 1200;
+    	return super.getItemBurnTime(stack);
+    }
 }
