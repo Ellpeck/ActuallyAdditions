@@ -1,3 +1,10 @@
+# 1.12.2-r127
+* Removed explicit tesla support.
+* The AIOT will now accept sword enchantments.
+* Greenhouse Glass is no longer a tile entity, this should significantly improve performance.  It will be a bit slower in terms of plant growth though.
+* Canitzp: Fixes a duplication bug with MeeCreeps and AA containers.
+* Fixes a log error with Coal Dust and JEI.
+
 # 1.12.2-r126
 * New feature!  The atomic reconstructor can now split enchanted books with multiple enchantments!
 * Leomil72: Added it_IT.lang
