@@ -45,7 +45,7 @@ public class BlockGreenhouseGlass extends BlockBase {
 	public boolean isFullCube(IBlockState state) {
 		return true;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
@@ -78,20 +78,17 @@ public class BlockGreenhouseGlass extends BlockBase {
 		if (world.isRemote) return;
 
 		if (world.canBlockSeeSky(pos) && world.isDaytime()) {
-			
-			System.out.println("debugg");
-
 			Triple<BlockPos, IBlockState, IGrowable> trip = firstBlock(world, pos);
 
 			boolean once = false;
-			
-			for(int i = 0; i < 3; i++)
-			if (trip != null && trip.getRight().canGrow(world, trip.getLeft(), trip.getMiddle(), false)) {
-				trip.getRight().grow(world, rand, trip.getLeft(), trip.getMiddle());
-				once = true;
-			}
-			
-			if(once) world.playEvent(2005, trip.getMiddle().isOpaqueCube() ? trip.getLeft().up() : trip.getLeft(), 0);
+
+			for (int i = 0; i < 3; i++)
+				if (trip != null && trip.getRight().canGrow(world, trip.getLeft(), trip.getMiddle(), false)) {
+					trip.getRight().grow(world, rand, trip.getLeft(), trip.getMiddle());
+					once = true;
+				}
+
+			if (once) world.playEvent(2005, trip.getMiddle().isOpaqueCube() ? trip.getLeft().up() : trip.getLeft(), 0);
 		}
 	}
 
