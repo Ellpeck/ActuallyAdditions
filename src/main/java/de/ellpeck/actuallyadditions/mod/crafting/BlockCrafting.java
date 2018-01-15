@@ -25,6 +25,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 
 public final class BlockCrafting{
@@ -98,6 +99,22 @@ public final class BlockCrafting{
     public static IRecipe recipeFarmer;
     public static IRecipe recipeBatteryBox;
 
+	private static class FireworkIngredient extends Ingredient {
+
+		ItemStack firework = new ItemStack(Items.FIREWORKS);
+		ItemStack[] fireworks = new ItemStack[] {firework};
+
+		@Override
+		public ItemStack[] getMatchingStacks() {
+			return fireworks;
+		}
+
+		@Override
+		public boolean apply(ItemStack stack) {
+			return stack.getItem() == Items.FIREWORKS;
+		}
+	}
+    
     public static void init(){
 
         RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockOilGenerator), new ItemStack(InitBlocks.blockOilGenerator));
@@ -141,14 +158,14 @@ public final class BlockCrafting{
                 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_CHAR.ordinal()),
                 'W', "stickWood");
         recipesTinyTorch[1] = RecipeUtil.lastIRecipe();
-
+        
         //Firework Box
         RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockFireworkBox),
                 "GFG", "SAS", "CCC",
                 'G', new ItemStack(Items.GUNPOWDER),
                 'S', new ItemStack(Items.STICK),
                 'A', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
-                'F', new ItemStack(Items.FIREWORKS, 1, Util.WILDCARD),
+                'F', new FireworkIngredient(),
                 'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()));
         recipeFireworkBox = RecipeUtil.lastIRecipe();
 
