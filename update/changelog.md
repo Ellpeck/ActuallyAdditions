@@ -1,3 +1,7 @@
+# 1.12.2-r128
+* Removed a debug line in Greenhouse Glass
+* Fixed the firework box recipe displaying wrongly in JEI
+
 # 1.12.2-r127
 * Removed explicit tesla support.
 * The AIOT will now accept sword enchantments.
