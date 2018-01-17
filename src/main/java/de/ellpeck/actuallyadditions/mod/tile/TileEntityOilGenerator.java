@@ -35,7 +35,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
 
         @Override
         public boolean canFillFluidType(FluidStack stack){
-            Fluid fluid = stack.getFluid();
+            Fluid fluid = stack == null ? null : stack.getFluid();
             return fluid != null && getRecipeForFluid(fluid.getName()) != null;
         }
     };
