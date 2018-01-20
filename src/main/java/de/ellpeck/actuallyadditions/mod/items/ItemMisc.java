@@ -110,7 +110,7 @@ public class ItemMisc extends ItemBase{
     	
         if(k == TheMiscItems.TINY_CHAR.ordinal()) return 200;
         if(k == TheMiscItems.TINY_COAL.ordinal()) return 200;
-        if(k == TheMiscItems.BIOCOAL.ordinal()) return 80;
+        if(k == TheMiscItems.BIOCOAL.ordinal()) return 800;
     	
     	return super.getItemBurnTime(stack);
     }
