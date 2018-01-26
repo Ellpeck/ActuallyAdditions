@@ -12,10 +12,14 @@ package de.ellpeck.actuallyadditions.mod.entity;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.BlockGrass;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -85,11 +89,10 @@ public class EntityWorm extends Entity{
                                 	
                                 	DefaultFarmerBehavior.useHoeAt(world, pos);
                                 	state = this.world.getBlockState(pos);
-                                	block = state.getBlock();
-                                	isFarmland = block instanceof BlockFarmland;
+                                	isFarmland = state.getBlock() instanceof BlockFarmland;
                                 	
-                                    IBlockState stateToModify = isFarmland ? state : Blocks.FARMLAND.getDefaultState();
-                                    this.world.setBlockState(pos, stateToModify.withProperty(BlockFarmland.MOISTURE, 7), 2);
+                                    if(isFarmland)
+                                    this.world.setBlockState(pos, state.withProperty(BlockFarmland.MOISTURE, 7), 2);
 
                                     if(!isFarmland){
                                         this.world.setBlockToAir(pos.up());

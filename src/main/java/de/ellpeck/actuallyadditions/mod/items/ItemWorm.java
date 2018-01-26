@@ -32,6 +32,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -77,9 +79,9 @@ public class ItemWorm extends ItemBase{
         return super.onItemUse(player, world, pos, hand, side, par8, par9, par10);
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void onHoe(UseHoeEvent event){
-        if(ConfigBoolValues.WORMS.isEnabled()){
+        if(ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Result.DENY){
             World world = event.getWorld();
             if(!world.isRemote){
                 BlockPos pos = event.getPos();
