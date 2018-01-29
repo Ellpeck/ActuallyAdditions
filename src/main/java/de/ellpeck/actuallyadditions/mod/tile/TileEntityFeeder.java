@@ -10,7 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import java.util.List;
+import java.util.Optional;
+
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Items;
@@ -19,10 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
+import net.minecraft.util.math.MathHelper;
 
 public class TileEntityFeeder extends TileEntityInventoryBase{
 
@@ -37,7 +36,6 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         super(1, "feeder");
     }
 
-    @SideOnly(Side.CLIENT)
     public int getCurrentTimerToScale(int i){
         return this.currentTimer*i/TIME;
     }
@@ -63,59 +61,33 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     @Override
     public void updateEntity(){
         super.updateEntity();
-        if(!this.world.isRemote){
-            boolean theFlag = this.currentTimer > 0;
-            int range = 5;
-            List<EntityAnimal> animals = this.world.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
-            if(animals != null){
-                this.currentAnimalAmount = animals.size();
-                if(this.currentAnimalAmount >= 2){
-                    if(this.currentAnimalAmount < THRESHOLD){
-                        if(this.currentTimer >= TIME){
-                            this.currentTimer = 0;
-                            if(StackUtil.isValid(this.slots.getStackInSlot(0))){
-                                EntityAnimal randomAnimal = animals.get(this.world.rand.nextInt(this.currentAnimalAmount));
-                                if(!randomAnimal.isInLove() && randomAnimal.getGrowingAge() == 0 && (randomAnimal.isBreedingItem(this.slots.getStackInSlot(0)) || this.canHorseBeFed(randomAnimal))){
-
-                                    this.feedAnimal(randomAnimal);
-
-                                    this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -1));
-                                }
-                            }
-                        }
-                        else{
-                            this.currentTimer++;
-                        }
-                    }
-                    else{
-                        this.currentTimer = 0;
-                    }
-                }
-                else{
-                    this.currentTimer = 0;
-                }
+        currentTimer = MathHelper.clamp(++currentTimer, 0, 100);
+        if(world.isRemote) return;
+        boolean theFlag = this.currentTimer > 0;
+        int range = 5;
+        ItemStack stack = this.slots.getStackInSlot(0);
+        if(!stack.isEmpty() && this.currentTimer >= TIME) {
+        	List<EntityAnimal> animals = this.world.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
+        	this.currentAnimalAmount = animals.size();
+            if(currentAnimalAmount >= 2 && currentAnimalAmount < THRESHOLD){
+            	Optional<EntityAnimal> opt = animals.stream().filter((e) -> canBeFed(stack, e)).findAny();
+            	if(opt.isPresent()) {
+            		EntityAnimal animal = opt.get();
+            		feedAnimal(animal);
+            		stack.shrink(1);
+            		this.currentTimer = 0;
+            	}
             }
+        }
 
-            if(theFlag != this.currentTimer > 0){
+        if(theFlag != this.currentTimer > 0){
                 this.markDirty();
-            }
-
-            if((this.lastAnimalAmount != this.currentAnimalAmount || this.lastTimer != this.currentTimer) && this.sendUpdateWithInterval()){
-                this.lastAnimalAmount = this.currentAnimalAmount;
-                this.lastTimer = this.currentTimer;
-            }
         }
-    }
 
-    private boolean canHorseBeFed(EntityAnimal animal){
-        if(animal instanceof EntityHorse){
-            EntityHorse horse = (EntityHorse)animal;
-            if(horse.isTame()){
-                Item item = this.slots.getStackInSlot(0).getItem();
-                return item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT;
-            }
+        if((this.lastAnimalAmount != this.currentAnimalAmount || this.lastTimer != this.currentTimer) && this.sendUpdateWithInterval()){
+        	this.lastAnimalAmount = this.currentAnimalAmount;
+        	this.lastTimer = this.currentTimer;
         }
-        return false;
     }
 
     @Override
@@ -123,18 +95,29 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         return true;
     }
 
-    public void feedAnimal(EntityAnimal animal){
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack){
+        return false;
+    }
+    
+    private static void feedAnimal(EntityAnimal animal){
         animal.setInLove(null);
         for(int i = 0; i < 7; i++){
             double d = animal.world.rand.nextGaussian()*0.02D;
             double d1 = animal.world.rand.nextGaussian()*0.02D;
             double d2 = animal.world.rand.nextGaussian()*0.02D;
-            this.world.spawnParticle(EnumParticleTypes.HEART, (animal.posX+(double)(animal.world.rand.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(animal.world.rand.nextFloat()*animal.height), (animal.posZ+(double)(animal.world.rand.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
+            animal.world.spawnParticle(EnumParticleTypes.HEART, (animal.posX+(double)(animal.world.rand.nextFloat()*animal.width*2.0F))-animal.width, animal.posY+0.5D+(double)(animal.world.rand.nextFloat()*animal.height), (animal.posZ+(double)(animal.world.rand.nextFloat()*animal.width*2.0F))-animal.width, d, d1, d2);
         }
     }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return false;
+    
+    private static boolean canBeFed(ItemStack stack, EntityAnimal animal){
+    	if(animal instanceof EntityHorse){
+            EntityHorse horse = (EntityHorse)animal;
+            if(horse.isTame()){
+                Item item = stack.getItem();
+                return item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT;
+            }
+        }
+        return animal.getGrowingAge() == 0 && !animal.isInLove() && animal.isBreedingItem(stack);
     }
 }
