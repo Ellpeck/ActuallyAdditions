@@ -1,3 +1,12 @@
+# 1.12.2-r129
+* Dalapo: Added an extra null check to canFillFluidType
+* Biocoal burn time is now 800 again, instead of 80.  Whoops.
+* Worms shouldn't show up from areas that cannot be tilled.
+* (Hopefully) fixed desync issues with the 5x5 and 3x3 drill.
+* Feeder has gained +5 INT.
+* Config added for the fur ball drop chance.
+* Greenhouse Glass recipe now makes 2 glass, and uses a single empowered palis crystal.
+
 # 1.12.2-r128
 * Removed a debug line in Greenhouse Glass
 * Fixed the firework box recipe displaying wrongly in JEI
