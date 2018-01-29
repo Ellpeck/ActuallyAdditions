@@ -10,7 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.google.common.collect.Multimap;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
@@ -18,7 +23,11 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
-import de.ellpeck.actuallyadditions.mod.util.*;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -34,17 +43,18 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class ItemDrill extends ItemEnergy{
 
@@ -55,13 +65,6 @@ public class ItemDrill extends ItemEnergy{
         super(250000, 1000, name);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
-
-        //For Iguana Tweaks author
-        //
-        //You know what? It's bad, when you know
-        //There is already getHarvestLevel(), yo
-        //But then Iguana comes and fucks with you
-        //So that you need to use setHarvestLevel() too.
         this.setHarvestLevel("shovel", HARVEST_LEVEL);
         this.setHarvestLevel("pickaxe", HARVEST_LEVEL);
     }
@@ -221,19 +224,18 @@ public class ItemDrill extends ItemEnergy{
             //Block hit
             RayTraceResult ray = WorldUtil.getNearestBlockWithDefaultReachDistance(player.world, player);
             if(ray != null){
-                int side = ray.sideHit.ordinal();
-
+            	
                 //Breaks the Blocks
                 if(!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
                     if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
-                        toReturn = this.breakBlocks(stack, 2, player.world, side != 0 && side != 1 ? pos.up() : pos, side, player);
+                        toReturn = this.breakBlocks(stack, 2, player.world, pos, ray.sideHit, player);
                     }
                     else{
-                        toReturn = this.breakBlocks(stack, 1, player.world, pos, side, player);
+                        toReturn = this.breakBlocks(stack, 1, player.world, pos, ray.sideHit, player);
                     }
                 }
                 else{
-                    toReturn = this.breakBlocks(stack, 0, player.world, pos, side, player);
+                    toReturn = this.breakBlocks(stack, 0, player.world, pos, ray.sideHit, player);
                 }
 
                 //Removes Enchantments added above
@@ -385,17 +387,17 @@ public class ItemDrill extends ItemEnergy{
      * @param world  The World
      * @param player The Player who breaks the Blocks
      */
-    public boolean breakBlocks(ItemStack stack, int radius, World world, BlockPos aPos, int side, EntityPlayer player){
+    public boolean breakBlocks(ItemStack stack, int radius, World world, BlockPos aPos, EnumFacing side, EntityPlayer player){
         int xRange = radius;
         int yRange = radius;
         int zRange = 0;
 
         //Corrects Blocks to hit depending on Side of original Block hit
-        if(side == 0 || side == 1){
+        if(side.getAxis() == Axis.Y){
             zRange = radius;
             yRange = 0;
         }
-        if(side == 4 || side == 5){
+        if(side.getAxis() == Axis.X){
             xRange = 0;
             zRange = radius;
         }
@@ -413,6 +415,14 @@ public class ItemDrill extends ItemEnergy{
         }
         else{
             return false;
+        }
+        
+        if(radius == 2 && side.getAxis() != Axis.Y) { 
+        	aPos = aPos.up();
+        	IBlockState theState = world.getBlockState(aPos);
+        	if(theState.getBlockHardness(world, aPos) <= mainHardness+5.0F){
+        		this.tryHarvestBlock(world, aPos, true, stack, player, use);
+        	}
         }
 
         //Break Blocks around
@@ -455,13 +465,13 @@ public class ItemDrill extends ItemEnergy{
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         float hardness = state.getBlockHardness(world, pos);
-        boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(state, stack)) && (!isExtra || this.getDestroySpeed(stack, world.getBlockState(pos)) > 1.0F);
+        boolean canHarvest = WorldUtil.canBreakExtraBlock(stack, world, player, pos);
         if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(world.getBlockState(pos))))){
             if(!player.capabilities.isCreativeMode){
                 this.extractEnergyInternal(stack, use, false);
             }
             //Break the Block
-            return WorldUtil.playerHarvestBlock(stack, world, player, pos);
+            return WorldUtil.breakExtraBlock(stack, world, player, pos);
         }
         return false;
     }

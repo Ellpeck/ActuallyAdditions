@@ -681,7 +681,7 @@ public final class BlockCrafting{
         RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockGreenhouseGlass, 3),
                 "GSG", "SDS", "GSG",
                 'G', "blockGlass",
-                'D', new ItemStack(InitBlocks.blockCrystalEmpowered, 1, TheCrystals.LAPIS.ordinal()),
+                'D', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.LAPIS.ordinal()),
                 'S', "treeSapling");
         recipeGlass = RecipeUtil.lastIRecipe();
 
