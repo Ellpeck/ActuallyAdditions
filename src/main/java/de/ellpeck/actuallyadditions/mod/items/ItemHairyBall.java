@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.item.EntityItem;
@@ -40,17 +41,13 @@ public class ItemHairyBall extends ItemBase{
     @SubscribeEvent
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event){
         //Ocelots dropping Hair Balls
-        if(event.getEntityLiving() != null){
-            if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote){
-                if((event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot)event.getEntityLiving()).isTamed()) || (event.getEntityLiving() instanceof EntityPlayer && event.getEntityLiving().getUniqueID().equals(/*KittyVanCat*/ UUID.fromString("681d4e20-10ef-40c9-a0a5-ba2f1995ef44")))){
-                    if(ConfigBoolValues.DO_CAT_DROPS.isEnabled()){
-                        if(event.getEntityLiving().world.rand.nextInt(5000)+1 == 1){
-                            EntityItem item = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX+0.5, event.getEntityLiving().posY+0.5, event.getEntityLiving().posZ+0.5, new ItemStack(InitItems.itemHairyBall));
-                            event.getEntityLiving().world.spawnEntity(item);
-                        }
-                    }
-                }
-            }
+        if(ConfigBoolValues.DO_CAT_DROPS.isEnabled() && event.getEntityLiving() != null && event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote){
+        	if((event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot)event.getEntityLiving()).isTamed()) || (event.getEntityLiving() instanceof EntityPlayer && event.getEntityLiving().getUniqueID().equals(/*KittyVanCat*/ UUID.fromString("681d4e20-10ef-40c9-a0a5-ba2f1995ef44")))){
+        		if(event.getEntityLiving().world.rand.nextInt(ConfigIntValues.FUR_CHANCE.getValue()) == 0){
+        			EntityItem item = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX+0.5, event.getEntityLiving().posY+0.5, event.getEntityLiving().posZ+0.5, new ItemStack(InitItems.itemHairyBall));
+        			event.getEntityLiving().world.spawnEntity(item);
+        		}
+        	}
         }
     }
 

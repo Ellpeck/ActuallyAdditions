@@ -28,8 +28,9 @@ public enum ConfigIntValues{
     FONT_SIZE_SMALL("Booklet Small Font Size", ConfigCategories.OTHER, 0, 0, 500, "The size of the booklet's small font in percent. Set to 0 to use defaults from the lang file."),
     FONT_SIZE_MEDIUM("Booklet Medium Font Size", ConfigCategories.OTHER, 0, 0, 500, "The size of the booklet's medium font in percent. Set to 0 to use defaults from the lang file."),
     FONT_SIZE_LARGE("Booklet Large Font Size", ConfigCategories.OTHER, 0, 0, 500, "The size of the booklet's large font in percent. Set to 0 to use defaults from the lang file."),
-	
-	ELEVEN("What is 11", ConfigCategories.OTHER, 11, 0, 12, "11?");
+
+    ELEVEN("What is 11", ConfigCategories.OTHER, 11, 0, 12, "11?"),
+	FUR_CHANCE("Fur Drop Chance", ConfigCategories.OTHER, 5000, 1, Integer.MAX_VALUE, "The 1/n drop chance, per tick, for a fur ball to be dropped.");
 
     public final String name;
     public final String category;

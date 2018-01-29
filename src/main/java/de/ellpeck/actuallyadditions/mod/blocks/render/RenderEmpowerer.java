@@ -50,7 +50,7 @@ public class RenderEmpowerer extends TileEntitySpecialRenderer<TileEntityEmpower
                 AssetUtil.renderItemInWorld(stack);
             }
             catch(Exception e){
-                ModUtil.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is "+stack.getItem().getRegistryName()+"!", e);
+                ModUtil.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is " + stack.getItem().getRegistryName() + ":" + stack.getMetadata() + "!", e);
             }
 
             GlStateManager.popMatrix();
