@@ -678,10 +678,10 @@ public final class BlockCrafting{
         recipeCrateLarge = RecipeUtil.lastIRecipe();
 
         //Greenhouse Glass
-        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockGreenhouseGlass, 3),
+        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockGreenhouseGlass, 2),
                 "GSG", "SDS", "GSG",
                 'G', "blockGlass",
-                'D', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.LAPIS.ordinal()),
+                'D', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.LAPIS.ordinal()),
                 'S', "treeSapling");
         recipeGlass = RecipeUtil.lastIRecipe();
 
