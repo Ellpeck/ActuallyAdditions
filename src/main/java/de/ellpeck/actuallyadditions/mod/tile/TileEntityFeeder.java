@@ -63,7 +63,6 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         super.updateEntity();
         currentTimer = MathHelper.clamp(++currentTimer, 0, 100);
         if(world.isRemote) return;
-        boolean theFlag = this.currentTimer > 0;
         int range = 5;
         ItemStack stack = this.slots.getStackInSlot(0);
         if(!stack.isEmpty() && this.currentTimer >= TIME) {
@@ -72,18 +71,13 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
             if(currentAnimalAmount >= 2 && currentAnimalAmount < THRESHOLD){
             	Optional<EntityAnimal> opt = animals.stream().filter((e) -> canBeFed(stack, e)).findAny();
             	if(opt.isPresent()) {
-            		EntityAnimal animal = opt.get();
-            		feedAnimal(animal);
+            		feedAnimal(opt.get());
             		stack.shrink(1);
             		this.currentTimer = 0;
+            		markDirty();
             	}
             }
         }
-
-        if(theFlag != this.currentTimer > 0){
-                this.markDirty();
-        }
-
         if((this.lastAnimalAmount != this.currentAnimalAmount || this.lastTimer != this.currentTimer) && this.sendUpdateWithInterval()){
         	this.lastAnimalAmount = this.currentAnimalAmount;
         	this.lastTimer = this.currentTimer;
@@ -111,12 +105,9 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
     
     private static boolean canBeFed(ItemStack stack, EntityAnimal animal){
-    	if(animal instanceof EntityHorse){
-            EntityHorse horse = (EntityHorse)animal;
-            if(horse.isTame()){
-                Item item = stack.getItem();
-                return item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT;
-            }
+    	if(animal instanceof EntityHorse && ((EntityHorse) animal).isTame()){
+    		Item item = stack.getItem();
+    		return (animal.getGrowingAge() == 0 && !animal.isInLove()) && (item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT);
         }
         return animal.getGrowingAge() == 0 && !animal.isInLove() && animal.isBreedingItem(stack);
     }
