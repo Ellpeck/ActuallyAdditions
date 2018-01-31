@@ -370,39 +370,6 @@ public final class WorldUtil {
 	}
 
 	//Stolen from TiC
-
-	/**
-	 * Returns true if the tool is effective for harvesting the given block.
-	 */
-	public static boolean isToolEffective(ItemStack stack, IBlockState state) {
-		// check material
-		for (String type : stack.getItem().getToolClasses(stack)) {
-			if (state.getBlock().isToolEffective(type, state)) { return true; }
-		}
-
-		return false;
-	}
-
-	public static boolean canBreakExtraBlock(ItemStack stack, World world, EntityPlayer player, BlockPos pos) {
-		// prevent calling that stuff for air blocks, could lead to unexpected behaviour since it fires events
-		if (world.isAirBlock(pos)) { return false; }
-
-		// check if the block can be broken, since extra block breaks shouldn't instantly break stuff like obsidian
-		// or precious ores you can't harvest while mining stone
-		IBlockState state = world.getBlockState(pos);
-		Block block = state.getBlock();
-
-		// only effective materials
-		if (!isToolEffective(stack, state)) { return false; }
-
-		// only harvestable blocks that aren't impossibly slow to harvest
-		if (!ForgeHooks.canHarvestBlock(block, player, world, pos)) { return false; }
-
-		// From this point on it's clear that the player CAN break the block
-
-		return true;
-	}
-
 	public static boolean breakExtraBlock(ItemStack stack, World world, EntityPlayer player, BlockPos pos) {
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();

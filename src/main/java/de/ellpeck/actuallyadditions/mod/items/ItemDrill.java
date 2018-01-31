@@ -53,6 +53,7 @@ import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -465,7 +466,7 @@ public class ItemDrill extends ItemEnergy{
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         float hardness = state.getBlockHardness(world, pos);
-        boolean canHarvest = WorldUtil.canBreakExtraBlock(stack, world, player, pos);
+        boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(state, stack)) && (!isExtra || this.getDestroySpeed(stack, world.getBlockState(pos)) > 1.0F);
         if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(world.getBlockState(pos))))){
             if(!player.capabilities.isCreativeMode){
                 this.extractEnergyInternal(stack, use, false);
