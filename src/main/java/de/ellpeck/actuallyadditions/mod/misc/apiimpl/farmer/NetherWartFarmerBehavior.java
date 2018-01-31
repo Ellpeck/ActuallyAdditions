@@ -78,6 +78,6 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior{
 
     @Override
     public int getPriority(){
-        return 0;
+        return 3;
     }
 }

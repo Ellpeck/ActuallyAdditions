@@ -43,27 +43,19 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
 
-            if(world.isAirBlock(pos) || block.isReplaceable(world, pos)){
+            if(block.isReplaceable(world, pos)){
                 BlockPos farmland = pos.down();
                 Block farmlandBlock = world.getBlockState(farmland).getBlock();
+                if(farmlandBlock instanceof BlockDirt || farmlandBlock instanceof BlockGrass){
+                	world.setBlockToAir(pos);
+                	useHoeAt(world, farmland);
+                	world.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                	farmer.extractEnergy(use);
+                }
 
                 if(tryPlant(toPlant, world, pos)){
-                    farmer.extractEnergy(use);
-                    return true;
-                }
-                else{
-                    if(farmlandBlock instanceof BlockDirt || farmlandBlock instanceof BlockGrass){
-                        useHoeAt(world, pos.down());
-                        world.setBlockToAir(pos);
-                        world.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-                        farmer.extractEnergy(use);
-
-                        if(tryPlant(toPlant, world, pos)){
-                            farmer.extractEnergy(use);
-                            return true;
-                        }
-                    }
+                	farmer.extractEnergy(use);
+                	return true;
                 }
             }
         }
@@ -98,40 +90,48 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
 
             if(block instanceof BlockCrops){
                 if(((BlockCrops)block).isMaxAge(state)){
-                    List<ItemStack> seeds = new ArrayList<ItemStack>();
-                    List<ItemStack> other = new ArrayList<ItemStack>();
-                    NonNullList<ItemStack> drops = NonNullList.create();
-                    block.getDrops(drops, world, pos, state, 0);
-                    for(ItemStack stack : drops){
-                        if(this.getPlantableFromStack(stack) != null){
-                            seeds.add(stack);
-                        }
-                        else{
-                            other.add(stack);
-                        }
-                    }
-
-                    boolean putSeeds = true;
-                    if(!farmer.addToSeedInventory(seeds, false)){
-                        other.addAll(seeds);
-                        putSeeds = false;
-                    }
-
-                    if(farmer.addToOutputInventory(other, false)){
-                        farmer.addToOutputInventory(other, true);
-
-                        if(putSeeds){
-                            farmer.addToSeedInventory(seeds, true);
-                        }
-
-                        world.playEvent(2001, pos, Block.getStateId(state));
-                        world.setBlockToAir(pos);
-
-                        farmer.extractEnergy(use);
-                        return FarmerResult.SUCCESS;
-                    }
+                	return doFarmerStuff(state, world, pos, farmer);
                 }
             }
+            else if((BlockCrops.AGE).equals(block.getBlockState().getProperty("age"))) {
+            	if(state.getValue(BlockCrops.AGE) >= 7) return doFarmerStuff(state, world, pos, farmer);
+            }
+        }
+        return FarmerResult.FAIL;
+    }
+    
+    private FarmerResult doFarmerStuff(IBlockState state, World world, BlockPos pos, IFarmer farmer) {
+        List<ItemStack> seeds = new ArrayList<>();
+        List<ItemStack> other = new ArrayList<>();
+        NonNullList<ItemStack> drops = NonNullList.create();
+        state.getBlock().getDrops(drops, world, pos, state, 0);
+        for(ItemStack stack : drops){
+            if(this.getPlantableFromStack(stack) != null){
+                seeds.add(stack);
+            }
+            else{
+                other.add(stack);
+            }
+        }
+
+        boolean putSeeds = true;
+        if(!farmer.addToSeedInventory(seeds, false)){
+            other.addAll(seeds);
+            putSeeds = false;
+        }
+
+        if(farmer.addToOutputInventory(other, false)){
+            farmer.addToOutputInventory(other, true);
+
+            if(putSeeds){
+                farmer.addToSeedInventory(seeds, true);
+            }
+
+            world.playEvent(2001, pos, Block.getStateId(state));
+            world.setBlockToAir(pos);
+
+            farmer.extractEnergy(250);
+            return FarmerResult.SUCCESS;
         }
         return FarmerResult.FAIL;
     }
@@ -146,7 +146,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
             IPlantable plantable = this.getPlantableFromStack(stack);
             if(plantable != null){
                 IBlockState state = plantable.getPlant(world, pos);
-                if(state != null && state.getBlock() instanceof BlockCrops){
+                if(state != null && state.getBlock() instanceof IGrowable){
                     return state;
                 }
             }
