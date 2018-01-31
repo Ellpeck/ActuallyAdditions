@@ -71,13 +71,9 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
     }
 
     private static boolean tryPlant(IBlockState toPlant, World world, BlockPos pos){
-        BlockBush plantBlock = (BlockBush)toPlant.getBlock();
-        if(plantBlock.canPlaceBlockAt(world, pos) && plantBlock.canBlockStay(world, pos, toPlant)){
-            //This fixes a bug with Beetroot being able to be planted anywhere because Minecraft sucks
-            if(plantBlock != Blocks.BEETROOTS || Blocks.WHEAT.canPlaceBlockAt(world, pos)){
-                world.setBlockState(pos, toPlant, 3);
-                return true;
-            }
+        if(toPlant.getBlock().canPlaceBlockAt(world, pos)){
+        	world.setBlockState(pos, toPlant);
+        	return true;      
         }
         return false;
     }
