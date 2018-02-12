@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -20,8 +23,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.WorldServer;
-
-import java.util.ArrayList;
 
 public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor{
 
@@ -53,7 +54,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
 
     @Override
     public void activateOnPulse(){
-        ArrayList<EntityItem> items = (ArrayList<EntityItem>)this.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.pos.getX()-RANGE, this.pos.getY()-RANGE, this.pos.getZ()-RANGE, this.pos.getX()+RANGE, this.pos.getY()+RANGE, this.pos.getZ()+RANGE));
+        List<EntityItem> items = this.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.pos.getX()-RANGE, this.pos.getY()-RANGE, this.pos.getZ()-RANGE, this.pos.getX()+RANGE, this.pos.getY()+RANGE, this.pos.getZ()+RANGE));
         if(!items.isEmpty()){
             for(EntityItem item : items){
                 if(!item.isDead && !item.cannotPickup() && StackUtil.isValid(item.getItem())){
