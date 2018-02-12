@@ -25,6 +25,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.oredict.OreDictionary;
@@ -120,9 +125,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
 
             IBlockState state = this.world.getBlockState(pos);
             Block block = state.getBlock();
-            int meta = block.getMetaFromState(state);
+            ItemStack stack = block.getPickBlock(state, new RayTraceResult(Type.BLOCK, new Vec3d(0,0,0), EnumFacing.DOWN, pos), world, pos, FakePlayerFactory.getMinecraft((WorldServer) world));
             if(!block.isAir(this.world.getBlockState(pos), this.world, pos)){
-                if(block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, meta)){
+                if(block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, stack)){
                 	NonNullList<ItemStack> drops = NonNullList.create();
                     block.getDrops(drops, world, pos, state, 0);
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.world, pos);
@@ -149,14 +154,13 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
         return false;
     }
 
-    private boolean isMinable(Block block, int meta){
+    private boolean isMinable(Block block, ItemStack stack){
         if(block != null){
             if(!this.isBlacklisted(block)){
                 if(!this.onlyMineOres){
                     return true;
                 }
                 else{
-                    ItemStack stack = new ItemStack(block, 1, meta);
                     if(StackUtil.isValid(stack)){
                         int[] ids = OreDictionary.getOreIDs(stack);
                         for(int id : ids){
