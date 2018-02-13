@@ -41,6 +41,9 @@ repositories {
     maven {
         url "http://maven.epoxide.xyz"
     }
+    maven {
+        url "http://maven.mcmoddev.com"
+    }
 }
 
 dependencies {
