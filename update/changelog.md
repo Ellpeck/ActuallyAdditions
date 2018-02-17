@@ -1,3 +1,9 @@
+# 1.12.2-r131
+* Vertical Digger no longer uses getMetaFromState and now uses getPickBlock.
+* Farmer no longer breaks stem blocks.
+* Config for atomic reconstructor battery size.
+* Made a note on the oil generator that values are per 50 mB.
+
 # 1.12.2-r130
 * Fixes the drill not breaking blocks of similar hardness in 3x3 or 5x5 mode.
 * Fixes the default farmer casting every IPlantable to a BlockBush.
