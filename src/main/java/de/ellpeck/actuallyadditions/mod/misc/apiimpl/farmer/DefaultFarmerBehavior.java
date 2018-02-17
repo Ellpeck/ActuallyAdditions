@@ -10,11 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockGrass;
+import net.minecraft.block.BlockStem;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -32,9 +40,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DefaultFarmerBehavior implements IFarmerBehavior{
 
@@ -94,7 +99,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
                 }
             }
             else if((BlockCrops.AGE).equals(block.getBlockState().getProperty("age"))) {
-            	if(state.getValue(BlockCrops.AGE) >= 7) return doFarmerStuff(state, world, pos, farmer);
+            	if(state.getValue(BlockCrops.AGE) >= 7 && !(block instanceof BlockStem)) return doFarmerStuff(state, world, pos, farmer);
             }
         }
         return FarmerResult.FAIL;
