@@ -61,7 +61,7 @@ public final class StringUtil{
     }
 
     @SideOnly(Side.CLIENT)
-    public static void renderScaledAsciiString(FontRenderer font, String text, int x, int y, int color, boolean shadow, float scale){
+    public static void renderScaledAsciiString(FontRenderer font, String text, float x, float y, int color, boolean shadow, float scale){
         GlStateManager.pushMatrix();
         GlStateManager.scale(scale, scale, scale);
         boolean oldUnicode = font.getUnicodeFlag();
