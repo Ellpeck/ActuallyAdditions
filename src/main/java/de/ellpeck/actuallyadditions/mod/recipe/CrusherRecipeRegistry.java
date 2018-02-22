@@ -55,8 +55,8 @@ public final class CrusherRecipeRegistry{
             CrusherRecipe recipe = ActuallyAdditionsAPI.CRUSHER_RECIPES.get(i);
             addedRecipes.add(recipe.inputStack+" -> "+recipe.outputOneStack);
         }
-        ModUtil.LOGGER.info("Added "+addedRecipes.size()+" Crusher Recipes automatically: "+addedRecipes);
-        ModUtil.LOGGER.warn("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically, either because the inputs were missing outputs, or because they exist already: "+oresNoResult);
+        ModUtil.LOGGER.debug("Added "+addedRecipes.size()+" Crusher Recipes automatically: "+addedRecipes);
+        ModUtil.LOGGER.debug("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically, either because the inputs were missing outputs, or because they exist already: "+oresNoResult);
     }
 
     public static boolean hasBlacklistedOutput(ItemStack output, String[] config){
