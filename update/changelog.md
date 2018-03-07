@@ -1,3 +1,8 @@
+# 1.12.2-r132
+* Added compat with FastWorkbench for the portable crafter.
+* Made the logging of the crusher recipes a debug, instead of info (less log spam).
+* The\_Fireplace: added en_UD.lang
+
 # 1.12.2-r131
 * Vertical Digger no longer uses getMetaFromState and now uses getPickBlock.
 * Farmer no longer breaks stem blocks.
