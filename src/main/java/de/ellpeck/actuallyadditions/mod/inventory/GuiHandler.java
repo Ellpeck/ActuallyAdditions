@@ -15,10 +15,38 @@ import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiMainPage;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
-import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiBag;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiBioReactor;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiBreaker;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCanolaPress;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoalGenerator;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoffeeMachine;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiDirectionalBreaker;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiDrill;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiDropper;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiEnergizer;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiEnervator;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFarmer;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFeeder;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFermentingBarrel;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFilter;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFluidCollector;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiGiantChest;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiGrinder;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiLaserRelayItemWhitelist;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiMiner;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiOilGenerator;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiPhantomPlacer;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiRangedCollector;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiRepairer;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiSmileyCloud;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.items.ItemBooklet;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -48,7 +76,7 @@ public class GuiHandler implements IGuiHandler{
             case GIANT_CHEST_PAGE_3:
                 return new ContainerGiantChest(player.inventory, tile, 2);
             case CRAFTER:
-                return new ContainerCrafter(player);
+                return CompatUtil.getCrafterContainerElement(player, world, x, y, z);
             case GRINDER:
                 return new ContainerGrinder(player.inventory, tile, false);
             case GRINDER_DOUBLE:
@@ -130,7 +158,7 @@ public class GuiHandler implements IGuiHandler{
             case GIANT_CHEST_PAGE_3:
                 return new GuiGiantChest(player.inventory, tile, 2);
             case CRAFTER:
-                return new GuiCrafter(player);
+                return CompatUtil.getCrafterGuiElement(player, world, x, y, z);
             case GRINDER:
                 return new GuiGrinder(player.inventory, tile);
             case GRINDER_DOUBLE:

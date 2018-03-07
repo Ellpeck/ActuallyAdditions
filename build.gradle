@@ -28,6 +28,7 @@ minecraft {
     mappings = "snapshot_20180119"
     replaceIn "ModUtil.java"
     replace "@VERSION@", project.version.toString()
+	makeObfSourceJar = false
 }
 
 repositories {
@@ -43,7 +44,7 @@ repositories {
 }
 
 dependencies {
-	deobfCompile "mezz.jei:jei_1.12.1:+"
+	deobfCompile "mezz.jei:jei_1.12.2:+"
 	deobfCompile "mcp.mobius.waila:Hwyla:+"
     deobfCompile "org.cyclops.commoncapabilities:CommonCapabilities:1.12.2-+"
 }

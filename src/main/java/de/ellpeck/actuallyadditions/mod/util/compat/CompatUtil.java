@@ -10,16 +10,28 @@
 
 package de.ellpeck.actuallyadditions.mod.util.compat;
 
-import de.ellpeck.actuallyadditions.mod.inventory.ContainerCrafter;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraft.client.gui.inventory.GuiCrafting;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ContainerWorkbench;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
 
-public final class CompatUtil{
+public final class CompatUtil {
 
-    public static void registerCraftingTweaksCompat(){
-        NBTTagCompound tagCompound = new NBTTagCompound();
-        tagCompound.setString("ContainerClass", ContainerCrafter.class.getName());
-        tagCompound.setString("AlignToGrid", "left");
-        FMLInterModComms.sendMessage("craftingtweaks", "RegisterProvider", tagCompound);
-    }
+	static boolean fb = Loader.isModLoaded("fastbench");
+
+	public static Object getCrafterGuiElement(EntityPlayer player, World world, int x, int y, int z) {
+		if (fb) return CompatFastBench.getFastBenchGui(player, world, x, y, z);
+		return new GuiCrafting(player.inventory, world, new BlockPos(x, y, z));
+	}
+
+	public static Object getCrafterContainerElement(EntityPlayer player, World world, int x, int y, int z) {
+		if (fb) return CompatFastBench.getFastBenchContainer(player, world, x, y, z);
+		return new ContainerWorkbench(player.inventory, world, new BlockPos(x, y, z)) {
+			public boolean canInteractWith(EntityPlayer playerIn) {
+				return true;
+			}
+		};
+	}
 }
