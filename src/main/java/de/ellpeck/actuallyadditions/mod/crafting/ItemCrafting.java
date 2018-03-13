@@ -575,8 +575,6 @@ public final class ItemCrafting{
                 new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 1F);
         GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.QUARTZ.ordinal()),
                 new ItemStack(Items.QUARTZ), 1F);
-        GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.COAL.ordinal()),
-                new ItemStack(Items.COAL), 1F);
 
     }
 
