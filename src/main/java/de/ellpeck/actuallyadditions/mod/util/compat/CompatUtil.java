@@ -16,11 +16,14 @@ import net.minecraft.inventory.ContainerWorkbench;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public final class CompatUtil {
 
 	static boolean fb = Loader.isModLoaded("fastbench");
 
+	@SideOnly(Side.CLIENT)
 	public static Object getCrafterGuiElement(EntityPlayer player, World world, int x, int y, int z) {
 		if (fb) return CompatFastBench.getFastBenchGui(player, world, x, y, z);
 		return new GuiCrafting(player.inventory, world, new BlockPos(x, y, z));
