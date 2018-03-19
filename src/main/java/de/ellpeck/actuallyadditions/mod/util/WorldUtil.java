@@ -376,7 +376,6 @@ public final class WorldUtil {
 		Block block = state.getBlock();
 
 		if (player.capabilities.isCreativeMode) {
-			block.onBlockHarvested(world, pos, state, player);
 			if (block.removedByPlayer(state, world, pos, player, false)) {
 				block.onBlockDestroyedByPlayer(world, pos, state);
 			}
@@ -395,12 +394,9 @@ public final class WorldUtil {
 		if (!world.isRemote) {
 			// send the blockbreak event
 			int xp = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP) player).interactionManager.getGameType(), (EntityPlayerMP) player, pos);
-			if (xp == -1) { return false; }
-
-			// serverside we reproduce ItemInWorldManager.tryHarvestBlock
+			if (xp == -1) return false;
 
 			TileEntity tileEntity = world.getTileEntity(pos);
-			// ItemInWorldManager.removeBlock
 			if (block.removedByPlayer(state, world, pos, player, true)) { // boolean is if block can be harvested, checked above
 				block.onBlockDestroyedByPlayer(world, pos, state);
 				block.harvestBlock(world, player, pos, state, tileEntity, stack);

@@ -217,10 +217,8 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player){
         if(!player.capabilities.isCreativeMode){
             TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof TileEntityBase){
-                if(((TileEntityBase)tile).stopFromDropping){
-                    player.sendMessage(new TextComponentTranslation("info."+ModUtil.MOD_ID+".machineBroke").setStyle(new Style().setColor(TextFormatting.RED)));
-                }
+            if(tile instanceof TileEntityBase && ((TileEntityBase)tile).stopFromDropping){
+                player.sendMessage(new TextComponentTranslation("info."+ModUtil.MOD_ID+".machineBroke").setStyle(new Style().setColor(TextFormatting.RED)));
             }
         }
     }

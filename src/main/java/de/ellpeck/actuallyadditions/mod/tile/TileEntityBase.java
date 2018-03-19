@@ -174,30 +174,30 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
-        if(type != NBTType.SAVE_BLOCK){
-            super.writeToNBT(compound);
-        }
+        if(type != NBTType.SAVE_BLOCK) super.writeToNBT(compound);
 
         if(type == NBTType.SAVE_TILE){
             compound.setBoolean("Redstone", this.isRedstonePowered);
             compound.setInteger("TicksElapsed", this.ticksElapsed);
             compound.setBoolean("StopDrop", this.stopFromDropping);
         }
+        else if(type == NBTType.SYNC && stopFromDropping) compound.setBoolean("StopDrop", this.stopFromDropping);
+
         if(this.isRedstoneToggle() && (type != NBTType.SAVE_BLOCK || this.isPulseMode)){
             compound.setBoolean("IsPulseMode", this.isPulseMode);
         }
     }
 
     public void readSyncableNBT(NBTTagCompound compound, NBTType type){
-        if(type != NBTType.SAVE_BLOCK){
-            super.readFromNBT(compound);
-        }
+        if(type != NBTType.SAVE_BLOCK) super.readFromNBT(compound);
 
         if(type == NBTType.SAVE_TILE){
             this.isRedstonePowered = compound.getBoolean("Redstone");
             this.ticksElapsed = compound.getInteger("TicksElapsed");
             this.stopFromDropping = compound.getBoolean("StopDrop");
         }
+        else if(type == NBTType.SYNC) this.stopFromDropping = compound.getBoolean("StopDrop");
+
         if(this.isRedstoneToggle()){
             this.isPulseMode = compound.getBoolean("IsPulseMode");
         }
