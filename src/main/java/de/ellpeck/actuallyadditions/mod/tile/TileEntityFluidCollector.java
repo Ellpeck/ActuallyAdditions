@@ -68,8 +68,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
 
     private void doWork(){
         IBlockState state = this.world.getBlockState(this.pos);
-        Block block = state.getBlock();
-        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(block.getMetaFromState(state));
+        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
         BlockPos coordsBlock = this.pos.offset(sideToManipulate);
 
         IBlockState stateToBreak = this.world.getBlockState(coordsBlock);

@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -260,8 +261,8 @@ public final class WorldUtil {
 		}
 	}
 
-	public static EnumFacing getDirectionByPistonRotation(int meta) {
-		return EnumFacing.values()[meta];
+	public static EnumFacing getDirectionByPistonRotation(IBlockState state) {
+		return state.getValue(BlockDirectional.FACING);
 	}
 
 	public static ArrayList<Material> getMaterialsAround(World world, BlockPos pos) {

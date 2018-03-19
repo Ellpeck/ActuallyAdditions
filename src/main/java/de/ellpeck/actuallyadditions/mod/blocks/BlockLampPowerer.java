@@ -62,7 +62,7 @@ public class BlockLampPowerer extends BlockBase{
     private void updateLamp(World world, BlockPos pos){
         if(!world.isRemote){
             IBlockState state = world.getBlockState(pos);
-            BlockPos coords = pos.offset(WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state)));
+            BlockPos coords = pos.offset(WorldUtil.getDirectionByPistonRotation(state));
             this.updateLampsAtPos(world, coords, world.isBlockIndirectlyGettingPowered(pos) > 0, new ArrayList<BlockPos>());
         }
     }

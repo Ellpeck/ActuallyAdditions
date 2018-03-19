@@ -112,7 +112,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     @Override
     public EnumFacing getOrientation(){
         IBlockState state = this.world.getBlockState(this.pos);
-        return WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
+        return WorldUtil.getDirectionByPistonRotation(state);
     }
 
     @Override

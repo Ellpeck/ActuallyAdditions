@@ -78,7 +78,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase{
 
     private void doWork(){
         IBlockState state = this.world.getBlockState(this.pos);
-        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
+        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
 
         BlockPos coordsBlock = this.pos.offset(sideToManipulate);
         IBlockState stateToBreak = this.world.getBlockState(coordsBlock);

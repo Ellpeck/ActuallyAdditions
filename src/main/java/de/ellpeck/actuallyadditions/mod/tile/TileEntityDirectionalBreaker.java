@@ -77,7 +77,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
     private void doWork(){
         if(this.storage.getEnergyStored() >= ENERGY_USE*RANGE){
             IBlockState state = this.world.getBlockState(this.pos);
-            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
+            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
 
             for(int i = 0; i < RANGE; i++){
                 BlockPos coordsBlock = this.pos.offset(sideToManipulate, i+1);

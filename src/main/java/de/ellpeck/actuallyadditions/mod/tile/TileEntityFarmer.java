@@ -163,7 +163,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     @Override
     public EnumFacing getOrientation(){
         IBlockState state = this.world.getBlockState(this.pos);
-        return WorldUtil.getDirectionByPistonRotation(state.getBlock().getMetaFromState(state));
+        return WorldUtil.getDirectionByPistonRotation(state);
     }
 
     @Override
