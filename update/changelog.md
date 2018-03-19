@@ -1,3 +1,9 @@
+# 1.12.2-r133
+* Fixed info text not showing on unbreakable village machines.
+* Breaker should no longer crash with property errors.
+* Small bit of code cleanup.
+* Fixes the portable crafter not working on servers.
+
 # 1.12.2-r132
 * Added compat with FastWorkbench for the portable crafter.
 * Made the logging of the crusher recipes a debug, instead of info (less log spam).
