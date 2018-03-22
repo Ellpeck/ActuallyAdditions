@@ -110,7 +110,7 @@ public class EntityWorm extends Entity{
                                         plantBlock.updateTick(this.world, plant, plantState, this.world.rand);
 
                                         IBlockState newState = this.world.getBlockState(plant);
-                                        if(newState.getBlock().getMetaFromState(newState) != plantBlock.getMetaFromState(plantState)){
+                                        if(newState != plantState){
                                             this.world.playEvent(2005, plant, 0);
                                         }
                                     }
