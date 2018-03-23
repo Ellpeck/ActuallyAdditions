@@ -31,26 +31,29 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemFillingWand extends ItemEnergy{
+import org.apache.commons.lang3.tuple.Pair;
 
-    public ItemFillingWand(String name){
+public class ItemFillingWand extends ItemEnergy {
+
+    public ItemFillingWand(String name) {
         super(500000, 1000, name);
     }
 
-    private static boolean removeFittingItem(IBlockState state, EntityPlayer player){
+    private static boolean removeFittingItem(IBlockState state, EntityPlayer player) {
         Block block = state.getBlock();
         ItemStack stack = new ItemStack(block, 1, block.damageDropped(state));
 
-        if(StackUtil.isValid(stack)){
-            for(int i = 0; i < player.inventory.getSizeInventory(); i++){
+        if (StackUtil.isValid(stack)) {
+            for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
                 ItemStack slot = player.inventory.getStackInSlot(i);
-                if(StackUtil.isValid(slot) && slot.isItemEqual(stack)){
+                if (StackUtil.isValid(slot) && slot.isItemEqual(stack)) {
                     slot = StackUtil.addStackSize(slot, -1);
-                    if(!StackUtil.isValid(slot)){
+                    if (!StackUtil.isValid(slot)) {
                         player.inventory.setInventorySlotContents(i, StackUtil.getEmpty());
                     }
 
@@ -62,37 +65,34 @@ public class ItemFillingWand extends ItemEnergy{
         return false;
     }
 
-    private static void saveBlock(IBlockState state, ItemStack stack){
-        if(!stack.hasTagCompound()){
-            stack.setTagCompound(new NBTTagCompound());
-        }
+    private static void saveData(ItemStack pickBlock, IBlockState state, ItemStack wand) {
+        if (!wand.hasTagCompound()) wand.setTagCompound(new NBTTagCompound());
+        wand.getTagCompound().setInteger("state", Block.getStateId(state));
+        wand.getTagCompound().setString("name", pickBlock.getDisplayName());
 
-        stack.getTagCompound().setInteger("state", Block.getStateId(state));
     }
-    
-    private static IBlockState loadBlock(ItemStack stack){
-        if(stack.hasTagCompound()){
-            return Block.getStateById(stack.getTagCompound().getInteger("state"));
-        }
+
+    private static Pair<IBlockState, String> loadData(ItemStack stack) {
+        if (stack.hasTagCompound()) return Pair.of(Block.getStateById(stack.getTagCompound().getInteger("state")), stack.getTagCompound().getString("name"));
         return null;
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
-        if(!world.isRemote && player.getItemInUseCount() <= 0){
-            if(player.isSneaking()){
+        if (!world.isRemote && player.getItemInUseCount() <= 0) {
+            if (player.isSneaking()) {
                 IBlockState state = world.getBlockState(pos);
-                saveBlock(state, stack);
+                ItemStack pick = state.getBlock().getPickBlock(state, world.rayTraceBlocks(player.getPositionVector(), new Vec3d(pos.getX() + hitX, pos.getY() + hitY, pos.getZ() + hitZ)), world, pos, player);
+                saveData(pick, state, stack);
                 return EnumActionResult.SUCCESS;
-            }
-            else if(loadBlock(stack) != null){
-                if(!stack.hasTagCompound()){
+            } else if (loadData(stack) != null) {
+                if (!stack.hasTagCompound()) {
                     stack.setTagCompound(new NBTTagCompound());
                 }
                 NBTTagCompound compound = stack.getTagCompound();
 
-                if(compound.getInteger("CurrX") == 0 && compound.getInteger("CurrY") == 0 && compound.getInteger("CurrZ") == 0){
+                if (compound.getInteger("CurrX") == 0 && compound.getInteger("CurrY") == 0 && compound.getInteger("CurrZ") == 0) {
                     compound.setInteger("FirstX", pos.getX());
                     compound.setInteger("FirstY", pos.getY());
                     compound.setInteger("FirstZ", pos.getZ());
@@ -106,13 +106,13 @@ public class ItemFillingWand extends ItemEnergy{
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entity, int timeLeft){
-        if(!world.isRemote){
+    public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entity, int timeLeft) {
+        if (!world.isRemote) {
             boolean clear = true;
-            if(entity instanceof EntityPlayer){
-                RayTraceResult result = WorldUtil.getNearestBlockWithDefaultReachDistance(world, (EntityPlayer)entity);
-                if(result != null && result.getBlockPos() != null){
-                    if(!stack.hasTagCompound()){
+            if (entity instanceof EntityPlayer) {
+                RayTraceResult result = WorldUtil.getNearestBlockWithDefaultReachDistance(world, (EntityPlayer) entity);
+                if (result != null && result.getBlockPos() != null) {
+                    if (!stack.hasTagCompound()) {
                         stack.setTagCompound(new NBTTagCompound());
                     }
                     NBTTagCompound compound = stack.getTagCompound();
@@ -126,7 +126,7 @@ public class ItemFillingWand extends ItemEnergy{
                 }
             }
 
-            if(clear){
+            if (clear) {
                 ItemPhantomConnector.clearStorage(stack, "FirstX", "FirstY", "FirstZ");
             }
         }
@@ -135,15 +135,15 @@ public class ItemFillingWand extends ItemEnergy{
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
         super.onUpdate(stack, world, entity, itemSlot, isSelected);
 
-        if(!world.isRemote){
+        if (!world.isRemote) {
             boolean shouldClear = false;
 
-            if(isSelected){
-                if(entity instanceof EntityPlayer && stack.hasTagCompound()){
-                    EntityPlayer player = (EntityPlayer)entity;
+            if (isSelected) {
+                if (entity instanceof EntityPlayer && stack.hasTagCompound()) {
+                    EntityPlayer player = (EntityPlayer) entity;
                     boolean creative = player.capabilities.isCreativeMode;
 
                     NBTTagCompound compound = stack.getTagCompound();
@@ -151,11 +151,12 @@ public class ItemFillingWand extends ItemEnergy{
                     BlockPos firstPos = new BlockPos(compound.getInteger("FirstX"), compound.getInteger("FirstY"), compound.getInteger("FirstZ"));
                     BlockPos secondPos = new BlockPos(compound.getInteger("SecondX"), compound.getInteger("SecondY"), compound.getInteger("SecondZ"));
 
-                    if(!BlockPos.ORIGIN.equals(firstPos) && !BlockPos.ORIGIN.equals(secondPos)){
+                    if (!BlockPos.ORIGIN.equals(firstPos) && !BlockPos.ORIGIN.equals(secondPos)) {
                         int energyUse = 1500;
 
-                        IBlockState replaceState = loadBlock(stack);
-                        if(replaceState != null && (creative || this.getEnergyStored(stack) >= energyUse)){
+                        Pair<IBlockState, String> data = loadData(stack);
+                        if (data != null && (creative || this.getEnergyStored(stack) >= energyUse)) {
+                            IBlockState replaceState = data.getLeft();
                             int lowestX = Math.min(firstPos.getX(), secondPos.getX());
                             int lowestY = Math.min(firstPos.getY(), secondPos.getY());
                             int lowestZ = Math.min(firstPos.getZ(), secondPos.getZ());
@@ -164,89 +165,82 @@ public class ItemFillingWand extends ItemEnergy{
                             int currY = compound.getInteger("CurrY");
                             int currZ = compound.getInteger("CurrZ");
 
-                            BlockPos pos = new BlockPos(lowestX+currX, lowestY+currY, lowestZ+currZ);
+                            BlockPos pos = new BlockPos(lowestX + currX, lowestY + currY, lowestZ + currZ);
                             IBlockState state = world.getBlockState(pos);
 
-                            if(state.getBlock().isReplaceable(world, pos) && replaceState.getBlock().canPlaceBlockAt(world, pos)){
-                                if(creative || removeFittingItem(replaceState, player)){
+                            if (state.getBlock().isReplaceable(world, pos) && replaceState.getBlock().canPlaceBlockAt(world, pos)) {
+                                if (creative || removeFittingItem(replaceState, player)) {
                                     world.setBlockState(pos, replaceState, 2);
 
                                     SoundType sound = replaceState.getBlock().getSoundType(replaceState, world, pos, player);
-                                    world.playSound(null, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, sound.getVolume()/2F + .5F, sound.getPitch()*0.8F);
+                                    world.playSound(null, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, sound.getVolume() / 2F + .5F, sound.getPitch() * 0.8F);
 
-                                    if(!creative){
+                                    if (!creative) {
                                         this.extractEnergyInternal(stack, energyUse, false);
                                     }
-                                }
-                                else{
+                                } else {
                                     shouldClear = true;
                                 }
                             }
 
-                            int distX = Math.abs(secondPos.getX()-firstPos.getX());
-                            int distY = Math.abs(secondPos.getY()-firstPos.getY());
-                            int distZ = Math.abs(secondPos.getZ()-firstPos.getZ());
+                            int distX = Math.abs(secondPos.getX() - firstPos.getX());
+                            int distY = Math.abs(secondPos.getY() - firstPos.getY());
+                            int distZ = Math.abs(secondPos.getZ() - firstPos.getZ());
 
                             currX++;
-                            if(currX > distX){
+                            if (currX > distX) {
                                 currX = 0;
                                 currY++;
-                                if(currY > distY){
+                                if (currY > distY) {
                                     currY = 0;
                                     currZ++;
-                                    if(currZ > distZ){
+                                    if (currZ > distZ) {
                                         shouldClear = true;
                                     }
                                 }
                             }
 
-                            if(!shouldClear){
+                            if (!shouldClear) {
                                 compound.setInteger("CurrX", currX);
                                 compound.setInteger("CurrY", currY);
                                 compound.setInteger("CurrZ", currZ);
                             }
-                        }
-                        else{
+                        } else {
                             shouldClear = true;
                         }
                     }
                 }
-            }
-            else{
+            } else {
                 shouldClear = true;
             }
 
-            if(shouldClear){
+            if (shouldClear) {
                 ItemPhantomConnector.clearStorage(stack, "FirstX", "FirstY", "FirstZ", "SecondX", "SecondY", "SecondZ", "CurrX", "CurrY", "CurrZ");
             }
         }
     }
 
     @Override
-    public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced){
+    public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, tooltip, advanced);
 
-        String display = StringUtil.localize("tooltip."+ModUtil.MOD_ID+".item_filling_wand.selectedBlock.none");
+        String display = StringUtil.localize("tooltip." + ModUtil.MOD_ID + ".item_filling_wand.selectedBlock.none");
 
-        IBlockState state = loadBlock(stack);
-        if(state != null){
-            Block block = state.getBlock();
-            ItemStack blockStack = new ItemStack(block, 1, block.getMetaFromState(state));
-            if(StackUtil.isValid(blockStack)){
-                display = blockStack.getDisplayName();
-            }
+        Pair<IBlockState, String> data = loadData(stack);
+        if (data != null) {
+            display = data.getRight();
         }
 
-        tooltip.add(String.format("%s: %s", StringUtil.localize("tooltip."+ModUtil.MOD_ID+".item_filling_wand.selectedBlock"), display));
+        tooltip.add(String.format("%s: %s", StringUtil.localize("tooltip." + ModUtil.MOD_ID + ".item_filling_wand.selectedBlock"), display));
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack stack){
+    public int getMaxItemUseDuration(ItemStack stack) {
         return Integer.MAX_VALUE;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 }
