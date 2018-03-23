@@ -41,12 +41,16 @@ repositories {
 	maven {
         url "https://dl.bintray.com/cyclopsmc/dev/"
     }
+    maven {
+        url "http://files.minecraftforge.net/maven"
+    }
 }
 
 dependencies {
 	deobfCompile "mezz.jei:jei_1.12.2:+"
 	deobfCompile "mcp.mobius.waila:Hwyla:+"
     deobfCompile "org.cyclops.commoncapabilities:CommonCapabilities:1.12.2-+"
+    deobfCompile "com.github.glitchfiend.biomesoplenty:BiomesOPlenty:1.12.2-7.0.1.2334:deobf"
 }
 
 processResources {

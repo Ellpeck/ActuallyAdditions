@@ -10,11 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import biomesoplenty.common.block.BlockBOPGrass;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,12 +38,16 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class ItemWorm extends ItemBase{
+
+    @GameRegistry.ObjectHolder("biomesoplenty:grass")
+    public static final Block biomesOPlentyGrass = null;
 
     public ItemWorm(String name){
         super(name);
@@ -79,6 +86,21 @@ public class ItemWorm extends ItemBase{
         return super.onItemUse(player, world, pos, hand, side, par8, par9, par10);
     }
 
+    public static IBlockState blockHoeing;
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void determineBlockHoeing(UseHoeEvent event) {
+        if(ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Result.DENY){
+            World world = event.getWorld();
+            if(!world.isRemote){
+                BlockPos pos = event.getPos();
+                if(world.isAirBlock(pos.up())){
+                    blockHoeing = world.getBlockState(pos);
+                }
+            }
+        }
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onHoe(UseHoeEvent event){
         if(ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Result.DENY){
@@ -86,11 +108,25 @@ public class ItemWorm extends ItemBase{
             if(!world.isRemote){
                 BlockPos pos = event.getPos();
                 if(world.isAirBlock(pos.up())){
-                    IBlockState state = world.getBlockState(pos);
+                    IBlockState state = blockHoeing;
                     if(state.getBlock() instanceof BlockGrass && world.rand.nextFloat() >= 0.95F){
                         ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2)+1);
                         EntityItem item = new EntityItem(event.getWorld(), pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5, stack);
                         world.spawnEntity(item);
+                    }
+                    else if(biomesOPlentyGrass != null && state.getBlock() == biomesOPlentyGrass){
+                        switch((BlockBOPGrass.BOPGrassType)state.getValue(BlockBOPGrass.VARIANT)){
+                            case LOAMY:
+                            case SANDY:
+                            case SILTY:
+                            case ORIGIN:
+                            case DAISY:
+                                if(world.rand.nextFloat() >= 0.95F){
+                                    ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2) + 1);
+                                    EntityItem item = new EntityItem(event.getWorld(), pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
+                                    world.spawnEntity(item);
+                                }
+                        }
                     }
                 }
             }
