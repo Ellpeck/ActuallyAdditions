@@ -86,17 +86,12 @@ public class EntityWorm extends Entity{
 
                             if(!isFarmland || state.getValue(BlockFarmland.MOISTURE) < 7){
                                 if(isMiddlePose || this.world.rand.nextFloat() >= 0.45F){
-                                	
-                                	DefaultFarmerBehavior.useHoeAt(world, pos);
+
+                                	if(!isFarmland) DefaultFarmerBehavior.useHoeAt(world, pos);
                                 	state = this.world.getBlockState(pos);
                                 	isFarmland = state.getBlock() instanceof BlockFarmland;
-                                	
-                                    if(isFarmland)
-                                    this.world.setBlockState(pos, state.withProperty(BlockFarmland.MOISTURE, 7), 2);
 
-                                    if(!isFarmland){
-                                        this.world.setBlockToAir(pos.up());
-                                    }
+                                    if(isFarmland) this.world.setBlockState(pos, state.withProperty(BlockFarmland.MOISTURE, 7), 2);
                                 }
                             }
 
