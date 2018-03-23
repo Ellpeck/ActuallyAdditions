@@ -37,6 +37,7 @@ import de.ellpeck.actuallyadditions.mod.recipe.TreasureChestHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -54,7 +55,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 @Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, guiFactory = "de.ellpeck.actuallyadditions.mod.config.GuiFactory", acceptedMinecraftVersions = "[1.12, 1.13)")
-public class ActuallyAdditions{
+public class ActuallyAdditions {
 
     @Instance(ModUtil.MOD_ID)
     public static ActuallyAdditions instance;
@@ -64,20 +65,20 @@ public class ActuallyAdditions{
 
     public static boolean commonCapsLoaded;
 
-    static{
+    static {
         //For some reason, this has to be done here
         FluidRegistry.enableUniversalBucket();
     }
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event){
+    public void preInit(FMLPreInitializationEvent event) {
         ModUtil.LOGGER.info("Starting PreInitialization Phase...");
 
         ActuallyAdditionsAPI.methodHandler = new MethodHandler();
         ActuallyAdditionsAPI.connectionHandler = new LaserRelayConnectionHandler();
         Lenses.init();
         InitBooklet.preInit();
-
+        CompatUtil.registerCraftingTweaks();
         commonCapsLoaded = Loader.isModLoaded("commoncapabilities");
 
         MinecraftForge.EVENT_BUS.register(new RegistryHandler());
@@ -94,7 +95,7 @@ public class ActuallyAdditions{
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event){
+    public void init(FMLInitializationEvent event) {
         ModUtil.LOGGER.info("Starting Initialization Phase...");
 
         BannerHelper.init();
@@ -113,7 +114,7 @@ public class ActuallyAdditions{
     }
 
     @EventHandler
-    public void postInit(FMLPostInitializationEvent event){
+    public void postInit(FMLPostInitializationEvent event) {
         ModUtil.LOGGER.info("Starting PostInitialization Phase...");
 
         ItemCoffee.initIngredients();
@@ -128,23 +129,23 @@ public class ActuallyAdditions{
         proxy.postInit(event);
 
         ConfigurationHandler.redefineConfigs();
-        
+
         ModUtil.LOGGER.info("PostInitialization Finished.");
     }
 
     @EventHandler
-    public void serverStarted(FMLServerStartedEvent event){
+    public void serverStarted(FMLServerStartedEvent event) {
         MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-        if(server != null){
+        if (server != null) {
             World world = server.getEntityWorld();
-            if(world != null && !world.isRemote){
+            if (world != null && !world.isRemote) {
                 WorldData.get(world, true).markDirty();
             }
         }
     }
 
     @EventHandler
-    public void serverStopped(FMLServerStoppedEvent event){
+    public void serverStopped(FMLServerStoppedEvent event) {
         WorldData.clear();
     }
 }
