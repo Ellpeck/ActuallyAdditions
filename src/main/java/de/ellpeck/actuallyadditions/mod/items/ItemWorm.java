@@ -86,6 +86,21 @@ public class ItemWorm extends ItemBase{
         return super.onItemUse(player, world, pos, hand, side, par8, par9, par10);
     }
 
+    public static IBlockState blockHoeing;
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void determineBlockHoeing(UseHoeEvent event) {
+        if(ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Result.DENY){
+            World world = event.getWorld();
+            if(!world.isRemote){
+                BlockPos pos = event.getPos();
+                if(world.isAirBlock(pos.up())){
+                    blockHoeing = world.getBlockState(pos);
+                }
+            }
+        }
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onHoe(UseHoeEvent event){
         if(ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Result.DENY){
@@ -93,22 +108,24 @@ public class ItemWorm extends ItemBase{
             if(!world.isRemote){
                 BlockPos pos = event.getPos();
                 if(world.isAirBlock(pos.up())){
-                    IBlockState state = world.getBlockState(pos);
+                    IBlockState state = blockHoeing;
                     if(state.getBlock() instanceof BlockGrass && world.rand.nextFloat() >= 0.95F){
                         ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2)+1);
                         EntityItem item = new EntityItem(event.getWorld(), pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5, stack);
                         world.spawnEntity(item);
                     }
-                    else if(state.getBlock() == biomesOPlentyGrass){
+                    else if(biomesOPlentyGrass != null && state.getBlock() == biomesOPlentyGrass){
                         switch((BlockBOPGrass.BOPGrassType)state.getValue(BlockBOPGrass.VARIANT)){
                             case LOAMY:
                             case SANDY:
                             case SILTY:
                             case ORIGIN:
                             case DAISY:
-                                ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2) + 1);
-                                EntityItem item = new EntityItem(event.getWorld(), pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
-                                world.spawnEntity(item);
+                                if(world.rand.nextFloat() >= 0.95F){
+                                    ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2) + 1);
+                                    EntityItem item = new EntityItem(event.getWorld(), pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
+                                    world.spawnEntity(item);
+                                }
                         }
                     }
                 }
