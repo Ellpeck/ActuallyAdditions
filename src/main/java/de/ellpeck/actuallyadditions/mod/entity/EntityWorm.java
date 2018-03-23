@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.entity;
 
+import biomesoplenty.common.block.BlockBOPGrass;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
 import net.minecraft.block.Block;
@@ -24,8 +25,21 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class EntityWorm extends Entity{
+
+    @GameRegistry.ObjectHolder("biomesoplenty:grass")
+    public static final Block biomesOPlentyGrass = null;
+
+    @GameRegistry.ObjectHolder("biomesoplenty:dirt")
+    public static final Block biomesOPlentyDirt = null;
+
+    @GameRegistry.ObjectHolder("biomesoplenty:farmland_0")
+    public static final Block biomesOPlentyFarmland0 = null;
+
+    @GameRegistry.ObjectHolder("biomesoplenty:farmland_1")
+    public static final Block biomesOPlentyFarmland1 = null;
 
     public int timer;
 
@@ -38,6 +52,38 @@ public class EntityWorm extends Entity{
         Block block = state.getBlock();
         boolean rightBlock = block instanceof BlockFarmland || block instanceof BlockDirt || block instanceof BlockGrass;
         if(rightBlock){
+            BlockPos posUp = pos.up();
+            IBlockState stateUp = world.getBlockState(posUp);
+            Block blockUp = stateUp.getBlock();
+            return blockUp instanceof IPlantable || blockUp instanceof BlockBush || blockUp.isReplaceable(world, posUp);
+        }
+        else if(biomesOPlentyGrass != null && block == biomesOPlentyGrass){
+            switch((BlockBOPGrass.BOPGrassType)state.getValue(BlockBOPGrass.VARIANT)){
+                case LOAMY:
+                case SANDY:
+                case SILTY:
+                case ORIGIN:
+                case DAISY:
+                    BlockPos posUp = pos.up();
+                    IBlockState stateUp = world.getBlockState(posUp);
+                    Block blockUp = stateUp.getBlock();
+                    return blockUp instanceof IPlantable || blockUp instanceof BlockBush || blockUp.isReplaceable(world, posUp);
+            }
+            return false;
+        }
+        else if(biomesOPlentyDirt != null && block == biomesOPlentyDirt) {
+            BlockPos posUp = pos.up();
+            IBlockState stateUp = world.getBlockState(posUp);
+            Block blockUp = stateUp.getBlock();
+            return blockUp instanceof IPlantable || blockUp instanceof BlockBush || blockUp.isReplaceable(world, posUp);
+        }
+        else if(biomesOPlentyFarmland0 != null && block == biomesOPlentyFarmland0) {
+            BlockPos posUp = pos.up();
+            IBlockState stateUp = world.getBlockState(posUp);
+            Block blockUp = stateUp.getBlock();
+            return blockUp instanceof IPlantable || blockUp instanceof BlockBush || blockUp.isReplaceable(world, posUp);
+        }
+        else if(biomesOPlentyFarmland1 != null && block == biomesOPlentyFarmland0) {
             BlockPos posUp = pos.up();
             IBlockState stateUp = world.getBlockState(posUp);
             Block blockUp = stateUp.getBlock();
