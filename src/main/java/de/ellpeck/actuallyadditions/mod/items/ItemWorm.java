@@ -16,6 +16,8 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockGrass;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -79,6 +81,21 @@ public class ItemWorm extends ItemBase{
         return super.onItemUse(player, world, pos, hand, side, par8, par9, par10);
     }
 
+    public static IBlockState blockHoeing;
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void determineBlockHoeing(UseHoeEvent event) {
+        if(ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Result.DENY){
+            World world = event.getWorld();
+            if(!world.isRemote){
+                BlockPos pos = event.getPos();
+                if(world.isAirBlock(pos.up())){
+                    blockHoeing = world.getBlockState(pos);
+                }
+            }
+        }
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onHoe(UseHoeEvent event){
         if(ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Result.DENY){
@@ -86,11 +103,30 @@ public class ItemWorm extends ItemBase{
             if(!world.isRemote){
                 BlockPos pos = event.getPos();
                 if(world.isAirBlock(pos.up())){
-                    IBlockState state = world.getBlockState(pos);
+                    IBlockState state = blockHoeing;
                     if(state.getBlock() instanceof BlockGrass && world.rand.nextFloat() >= 0.95F){
                         ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2)+1);
                         EntityItem item = new EntityItem(event.getWorld(), pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5, stack);
                         world.spawnEntity(item);
+                    }
+                    else if(state.getBlock().getRegistryName().toString().equals("biomesoplenty:grass")){
+                        for(IProperty<?> property : state.getPropertyKeys()){
+                            if(property.getName().equals("variant")){
+                                String grassType = ((PropertyEnum) state.getValue(property)).getName();
+                                switch(grassType){
+                                    case "LOAMY":
+                                    case "SANDY":
+                                    case "SILTY":
+                                    case "ORIGIN":
+                                    case "DAISY":
+                                        if(world.rand.nextFloat() >= 0.95F){
+                                            ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2) + 1);
+                                            EntityItem item = new EntityItem(event.getWorld(), pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
+                                            world.spawnEntity(item);
+                                        }
+                                }
+                            }
+                        }
                     }
                 }
             }

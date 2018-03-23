@@ -18,6 +18,8 @@ import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,7 +45,35 @@ public class EntityWorm extends Entity{
             Block blockUp = stateUp.getBlock();
             return blockUp instanceof IPlantable || blockUp instanceof BlockBush || blockUp.isReplaceable(world, posUp);
         }
+        else if(state.getBlock().getRegistryName().equals("biomesoplenty:grass")){
+            for(IProperty<?> property : state.getPropertyKeys()){
+                if(property.getName().equals("variant")){
+                    String grassType = ((PropertyEnum) state.getValue(property)).getName();
+                    switch (grassType){
+                        case "LOAMY":
+                        case "SANDY":
+                        case "SILTY":
+                        case "ORIGIN":
+                        case "DAISY":
+                            BlockPos posUp = pos.up();
+                            IBlockState stateUp = world.getBlockState(posUp);
+                            Block blockUp = stateUp.getBlock();
+                            return blockUp instanceof IPlantable || blockUp instanceof BlockBush || blockUp.isReplaceable(world, posUp);
+                    }
+                }
+            }
+            return false;
+        }
         else{
+            switch (block.getRegistryName().toString()){
+                case "biomesoplenty:dirt":
+                case "biomesoplenty:farmland_0":
+                case "biomesoplenty:farmland_1":
+                    BlockPos posUp = pos.up();
+                    IBlockState stateUp = world.getBlockState(posUp);
+                    Block blockUp = stateUp.getBlock();
+                    return blockUp instanceof IPlantable || blockUp instanceof BlockBush || blockUp.isReplaceable(world, posUp);
+            }
             return false;
         }
     }
