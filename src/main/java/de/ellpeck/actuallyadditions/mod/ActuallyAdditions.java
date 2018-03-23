@@ -54,7 +54,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
-@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, guiFactory = "de.ellpeck.actuallyadditions.mod.config.GuiFactory", acceptedMinecraftVersions = "[1.12, 1.13)")
+@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, guiFactory = "de.ellpeck.actuallyadditions.mod.config.GuiFactory", acceptedMinecraftVersions = "[1.12, 1.13)", dependencies = "before:craftingtweaks")
 public class ActuallyAdditions {
 
     @Instance(ModUtil.MOD_ID)
