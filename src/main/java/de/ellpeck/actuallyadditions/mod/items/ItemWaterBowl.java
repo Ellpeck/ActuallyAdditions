@@ -139,7 +139,7 @@ public class ItemWaterBowl extends ItemBase{
                             if(entity instanceof EntityPlayer){
                                 EntityPlayer player = (EntityPlayer)entity;
                                 if(this.tryPlaceContainedLiquid(player, world, player.getPosition(), true)){
-                                    player.inventory.setInventorySlotContents(itemSlot, new ItemStack(Items.BOWL));
+                                   checkReplace(player, stack, new ItemStack(Items.BOWL), itemSlot);
                                 }
                             }
                         }
@@ -158,6 +158,11 @@ public class ItemWaterBowl extends ItemBase{
                 }
             }
         }
+    }
+    
+    private void checkReplace(EntityPlayer player, ItemStack old, ItemStack stack, int slot) {
+        if(player.inventory.getStackInSlot(slot) == old) player.inventory.setInventorySlotContents(slot, stack);
+        else if(player.inventory.offHandInventory.get(slot) == old) player.inventory.offHandInventory.set(slot, stack);
     }
 
     @Override
