@@ -36,7 +36,12 @@ public class ContainerEnergizer extends Container{
         this.energizer = (TileEntityEnergizer)tile;
         InventoryPlayer inventory = player.inventory;
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.energizer.slots, 0, 76, 73));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.energizer.slots, 0, 76, 73) {
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                return super.isItemValid(stack) && stack.hasCapability(CapabilityEnergy.ENERGY, null);
+            }
+        });
         this.addSlotToContainer(new SlotOutput(this.energizer.slots, 1, 76, 42));
 
         for(int i = 0; i < 3; i++){
