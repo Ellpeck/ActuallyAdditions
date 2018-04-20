@@ -18,9 +18,9 @@ import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.Locale;
 
-public final class BannerHelper{
+public final class BannerHelper {
 
-    public static void init(){
+    public static void init() {
         addCraftingPattern("drill", new ItemStack(InitItems.itemDrill, 1, 3));
         addCraftingPattern("leaf_blo", new ItemStack(InitItems.itemLeafBlower));
         addCraftingPattern("phan_con", new ItemStack(InitItems.itemPhantomConnector));
@@ -44,10 +44,10 @@ public final class BannerHelper{
      *                      An example of this would be the creeper skull being used for the creeper
      *                      pattern.
      */
-    public static void addCraftingPattern(String name, ItemStack craftingStack){
-        Class<?>[] paramTypes = {String.class, String.class, ItemStack.class};
-        Object[] paramValues = {ModUtil.MOD_ID+name, ModUtil.MOD_ID+name, craftingStack};
-        EnumHelper.addEnum(BannerPattern.class, (ModUtil.MOD_ID+"_"+name).toUpperCase(Locale.ROOT), paramTypes, paramValues);
+    public static void addCraftingPattern(String name, ItemStack craftingStack) {
+        Class<?>[] paramTypes = { String.class, String.class, ItemStack.class };
+        Object[] paramValues = { ModUtil.MOD_ID + "_" + name, ModUtil.MOD_ID + "_" + name, craftingStack };
+        EnumHelper.addEnum(BannerPattern.class, (ModUtil.MOD_ID + "_" + name).toUpperCase(Locale.ROOT), paramTypes, paramValues);
     }
 
 }
