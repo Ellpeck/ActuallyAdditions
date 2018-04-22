@@ -1,3 +1,10 @@
+# 1.12.2-r134
+* Worm should no longer attempt to post a UseHoeEvent on farmland.
+* Only items with FE capability can be placed in the energizer.
+* Water bowl in the offhand is no longer a weapon of mass destruction.
+* Oil generator outputs now properly scale with configured values.
+* AA banner patterns now work properly.
+
 # 1.12.2-r133
 * Fixed info text not showing on unbreakable village machines.
 * Breaker should no longer crash with property errors.
