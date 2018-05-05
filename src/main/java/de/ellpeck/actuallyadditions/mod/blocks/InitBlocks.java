@@ -205,9 +205,9 @@ public final class InitBlocks{
         blockCoffeeMachine = new BlockCoffeeMachine("block_coffee_machine");
         blockPhantomBooster = new BlockPhantomBooster("block_phantom_booster");
         blockWildPlant = new BlockWildPlant("block_wild");
-        blockQuartzWall = new BlockWallAA("block_quartz_wall", blockMisc, TheMiscBlocks.QUARTZ.ordinal());
-        blockChiseledQuartzWall = new BlockWallAA("block_chiseled_quartz_wall", blockMisc, TheMiscBlocks.QUARTZ_CHISELED.ordinal());
-        blockPillarQuartzWall = new BlockWallAA("block_pillar_quartz_wall", blockMisc, TheMiscBlocks.QUARTZ_PILLAR.ordinal());
+        blockQuartzWall = new BlockWallAA("block_quartz_wall", blockMisc);
+        blockChiseledQuartzWall = new BlockWallAA("block_chiseled_quartz_wall", blockMisc);
+        blockPillarQuartzWall = new BlockWallAA("block_pillar_quartz_wall", blockMisc);
         blockQuartzStair = new BlockStair(blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.QUARTZ), "block_quartz_stair");
         blockChiseledQuartzStair = new BlockStair(blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_CHISELED), "block_chiseled_quartz_stair");
         blockPillarQuartzStair = new BlockStair(blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_PILLAR), "block_pillar_quartz_stair");
