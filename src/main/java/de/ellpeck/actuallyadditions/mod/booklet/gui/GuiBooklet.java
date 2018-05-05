@@ -145,6 +145,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
         //Don't cache the parent GUI, otherwise it opens again when you close the cached book!
         this.previousScreen = null;
 
+        if(this.mc.player == null) return;
         PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
         data.lastOpenBooklet = this;
 
