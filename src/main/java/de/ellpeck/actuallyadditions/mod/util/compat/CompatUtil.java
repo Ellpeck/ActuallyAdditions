@@ -27,12 +27,12 @@ public final class CompatUtil {
 
     @SideOnly(Side.CLIENT)
     public static Object getCrafterGuiElement(EntityPlayer player, World world, int x, int y, int z) {
-        if (fb) return CompatFastBench.getFastBenchGui(player, world, x, y, z);
+        if (fb) return CompatFastBench.getFastBenchGui(player, world);
         return new GuiCrafting(player.inventory, world, new BlockPos(x, y, z));
     }
 
     public static Object getCrafterContainerElement(EntityPlayer player, World world, int x, int y, int z) {
-        if (fb) return CompatFastBench.getFastBenchContainer(player, world, x, y, z);
+        if (fb) return CompatFastBench.getFastBenchContainer(player, world);
         return new ContainerWorkbench(player.inventory, world, new BlockPos(x, y, z)) {
             public boolean canInteractWith(EntityPlayer playerIn) {
                 return true;

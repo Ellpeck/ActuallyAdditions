@@ -12,8 +12,8 @@ import shadows.fastbench.gui.GuiFastBench;
 
 public class CompatFastBench {
 
-	public static Container getFastBenchContainer(EntityPlayer p, World world, int x, int y, int z) {
-		return new ContainerFastBench(p, world, x, y, z) {
+	public static Container getFastBenchContainer(EntityPlayer p, World world) {
+		return new ContainerFastBench(p, world, BlockPos.ORIGIN) {
 			@Override
 			public boolean canInteractWith(EntityPlayer playerIn) {
 				return true;
@@ -22,8 +22,8 @@ public class CompatFastBench {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static Gui getFastBenchGui(EntityPlayer p, World world, int x, int y, int z) {
-		return new GuiFastBench(p.inventory, world, new BlockPos(x, y, z));
+	public static Gui getFastBenchGui(EntityPlayer p, World world) {
+		return new GuiFastBench(p.inventory, world, BlockPos.ORIGIN);
 	}
 
 }
