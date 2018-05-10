@@ -1,3 +1,10 @@
+# 1.12.2-r135
+* Added armor toughness to a few AA armors.
+* Resolved a mod interaction with RealBench.  This fix only functions if FastWorkbench is present.
+* Walls now drop the proper item form.
+* Resolves an edge-case crash if you were kicked with the booklet open.
+* Konstantin: Added ru_RU.lang
+
 # 1.12.2-r134
 * Worm should no longer attempt to post a UseHoeEvent on farmland.
 * Only items with FE capability can be placed in the energizer.
