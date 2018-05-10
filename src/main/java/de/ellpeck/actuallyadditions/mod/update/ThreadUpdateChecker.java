@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.update;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -21,14 +22,14 @@ import java.util.Properties;
 public class ThreadUpdateChecker extends Thread{
 
     public ThreadUpdateChecker(){
-        this.setName(ModUtil.NAME+" Update Checker");
+        this.setName(ActuallyAdditions.NAME+" Update Checker");
         this.setDaemon(true);
         this.start();
     }
 
     @Override
     public void run(){
-        ModUtil.LOGGER.info("Starting Update Check...");
+        ActuallyAdditions.LOGGER.info("Starting Update Check...");
         try{
             URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/updateVersions.properties");
             Properties updateProperties = new Properties();
@@ -64,22 +65,22 @@ public class ThreadUpdateChecker extends Thread{
                 UpdateChecker.needsUpdateNotify = true;
             }
 
-            ModUtil.LOGGER.info("Update Check done!");
+            ActuallyAdditions.LOGGER.info("Update Check done!");
         }
         catch(Exception e){
-            ModUtil.LOGGER.error("Update Check failed!", e);
+            ActuallyAdditions.LOGGER.error("Update Check failed!", e);
             UpdateChecker.checkFailed = true;
         }
 
         if(!UpdateChecker.checkFailed){
             if(UpdateChecker.needsUpdateNotify){
-                ModUtil.LOGGER.info("There is an Update for "+ModUtil.NAME+" available!");
-                ModUtil.LOGGER.info("Current Version: "+ModUtil.VERSION+", newest Version: "+UpdateChecker.updateVersionString+"!");
-                ModUtil.LOGGER.info("View the Changelog at "+UpdateChecker.CHANGELOG_LINK);
-                ModUtil.LOGGER.info("Download at "+UpdateChecker.DOWNLOAD_LINK);
+                ActuallyAdditions.LOGGER.info("There is an Update for "+ActuallyAdditions.NAME+" available!");
+                ActuallyAdditions.LOGGER.info("Current Version: "+ModUtil.VERSION+", newest Version: "+UpdateChecker.updateVersionString+"!");
+                ActuallyAdditions.LOGGER.info("View the Changelog at "+UpdateChecker.CHANGELOG_LINK);
+                ActuallyAdditions.LOGGER.info("Download at "+UpdateChecker.DOWNLOAD_LINK);
             }
             else{
-                ModUtil.LOGGER.info(ModUtil.NAME+" is up to date!");
+                ActuallyAdditions.LOGGER.info(ActuallyAdditions.NAME+" is up to date!");
             }
         }
     }

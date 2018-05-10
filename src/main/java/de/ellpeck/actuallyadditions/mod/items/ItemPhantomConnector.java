@@ -11,9 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -101,7 +101,7 @@ public class ItemPhantomConnector extends ItemBase{
                             ((TileEntityBase)tile).sendUpdate();
                         }
                         clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
-                        player.sendStatusMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.connected.desc"), true);
+                        player.sendStatusMessage(new TextComponentTranslation("tooltip."+ActuallyAdditions.MODID+".phantom.connected.desc"), true);
                         return EnumActionResult.SUCCESS;
                     }
                     return EnumActionResult.FAIL;
@@ -109,7 +109,7 @@ public class ItemPhantomConnector extends ItemBase{
             }
             //Storing Connections
             storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-            player.sendStatusMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".phantom.stored.desc"), true);
+            player.sendStatusMessage(new TextComponentTranslation("tooltip."+ActuallyAdditions.MODID+".phantom.stored.desc"), true);
         }
         return EnumActionResult.SUCCESS;
     }
@@ -123,11 +123,11 @@ public class ItemPhantomConnector extends ItemBase{
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> list, ITooltipFlag advanced){
         BlockPos coords = getStoredPosition(stack);
         if(coords != null){
-            list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".boundTo.desc")+":");
+            list.add(StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".boundTo.desc")+":");
             list.add("X: "+coords.getX());
             list.add("Y: "+coords.getY());
             list.add("Z: "+coords.getZ());
-            list.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".clearStorage.desc"));
+            list.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".clearStorage.desc"));
         }
     }
 

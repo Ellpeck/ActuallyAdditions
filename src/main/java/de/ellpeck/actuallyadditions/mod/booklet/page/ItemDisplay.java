@@ -11,11 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiPage;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -71,7 +71,7 @@ public class ItemDisplay{
             }
 
             if(this.page != null && this.page != this.gui.pages[0] && this.page != this.gui.pages[1]){
-                list.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe"));
+                list.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".clickToSeeRecipe"));
             }
 
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);

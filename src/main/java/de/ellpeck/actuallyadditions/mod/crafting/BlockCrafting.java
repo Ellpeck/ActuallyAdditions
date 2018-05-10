@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.crafting;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockColoredLamp;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
@@ -17,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
@@ -663,14 +663,14 @@ public final class BlockCrafting{
                 'W', "plankWood");
         recipeCrate = RecipeUtil.lastIRecipe();
 
-        new RecipeKeepDataShaped(new ResourceLocation(ModUtil.MOD_ID, "giant_chest_media"), new ItemStack(InitBlocks.blockGiantChestMedium), new ItemStack(InitBlocks.blockGiantChest),
+        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "giant_chest_media"), new ItemStack(InitBlocks.blockGiantChestMedium), new ItemStack(InitBlocks.blockGiantChest),
                 "CWC", "WDW", "CWC",
                 'C', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal()),
                 'D', new ItemStack(InitBlocks.blockGiantChest),
                 'W', "plankWood");
         recipeCrateMedium = RecipeUtil.lastIRecipe();
 
-        new RecipeKeepDataShaped(new ResourceLocation(ModUtil.MOD_ID, "giant_chest_large"), new ItemStack(InitBlocks.blockGiantChestLarge), new ItemStack(InitBlocks.blockGiantChestMedium),
+        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "giant_chest_large"), new ItemStack(InitBlocks.blockGiantChestLarge), new ItemStack(InitBlocks.blockGiantChestMedium),
                 "CWC", "WDW", "CWC",
                 'C', new ItemStack(InitBlocks.blockCrystalEmpowered, 1, TheCrystals.COAL.ordinal()),
                 'D', new ItemStack(InitBlocks.blockGiantChestMedium),

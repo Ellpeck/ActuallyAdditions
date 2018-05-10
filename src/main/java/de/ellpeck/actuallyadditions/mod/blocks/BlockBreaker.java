@@ -60,7 +60,7 @@ public class BlockBreaker extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityBreaker breaker = (TileEntityBreaker)world.getTileEntity(pos);
             if(breaker != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BREAKER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.BREAKER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }

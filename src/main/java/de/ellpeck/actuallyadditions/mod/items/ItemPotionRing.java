@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.ThePotionRings;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -169,7 +168,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     @Override
     protected void registerRendering(){
         for(int i = 0; i < ALL_RINGS.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), "inventory");
+            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), "inventory");
         }
     }
 
@@ -251,6 +250,6 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     @Override
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced){
         super.addInformation(stack, playerIn, tooltip, advanced);
-        tooltip.add(String.format("%d/%d %s", getStoredBlaze(stack), MAX_BLAZE, StringUtil.localize("item."+ModUtil.MOD_ID+".item_misc_ring.storage")));
+        tooltip.add(String.format("%d/%d %s", getStoredBlaze(stack), MAX_BLAZE, StringUtil.localize("item."+ActuallyAdditions.MODID+".item_misc_ring.storage")));
     }
 }

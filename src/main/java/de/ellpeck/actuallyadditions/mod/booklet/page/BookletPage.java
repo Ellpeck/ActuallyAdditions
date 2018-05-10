@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
@@ -88,7 +88,7 @@ public class BookletPage implements IBookletPage{
 
     @SideOnly(Side.CLIENT)
     protected String getLocalizationKey(){
-        return "booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getIdentifier()+".text."+this.localizationKey;
+        return "booklet."+ActuallyAdditions.MODID+".chapter."+this.chapter.getIdentifier()+".text."+this.localizationKey;
     }
 
     @Override

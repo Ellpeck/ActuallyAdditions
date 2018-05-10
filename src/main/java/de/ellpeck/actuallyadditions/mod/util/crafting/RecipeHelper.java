@@ -1,8 +1,8 @@
 package de.ellpeck.actuallyadditions.mod.util.crafting;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.RegistryHandler;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,8 +23,8 @@ import java.util.List;
 public final class RecipeHelper{
 
     private static int j = 0;
-    private static final String MODID = ModUtil.MOD_ID;
-    private static final String MODNAME = ModUtil.NAME;
+    private static final String MODID = ActuallyAdditions.MODID;
+    private static final String MODNAME = ActuallyAdditions.NAME;
     public static final List<IRecipe> RECIPE_LIST = RegistryHandler.RECIPES_TO_REGISTER;
 
     /*

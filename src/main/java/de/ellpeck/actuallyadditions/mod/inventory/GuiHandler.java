@@ -45,7 +45,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.items.ItemBooklet;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -56,8 +55,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 public class GuiHandler implements IGuiHandler{
 
     public static void init(){
-        ModUtil.LOGGER.info("Initializing GuiHandler...");
-        NetworkRegistry.INSTANCE.registerGuiHandler(ActuallyAdditions.instance, new GuiHandler());
+        ActuallyAdditions.LOGGER.info("Initializing GuiHandler...");
+        NetworkRegistry.INSTANCE.registerGuiHandler(ActuallyAdditions.INSTANCE, new GuiHandler());
     }
 
     @Override

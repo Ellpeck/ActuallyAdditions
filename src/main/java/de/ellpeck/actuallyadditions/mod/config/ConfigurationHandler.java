@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.config;
 
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -23,7 +23,7 @@ public class ConfigurationHandler{
     public static Configuration config;
 
     public ConfigurationHandler(File configFile){
-        ModUtil.LOGGER.info("Grabbing Configurations...");
+        ActuallyAdditions.LOGGER.info("Grabbing Configurations...");
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -43,7 +43,7 @@ public class ConfigurationHandler{
 
     @SubscribeEvent
     public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event){
-        if(event.getModID().equalsIgnoreCase(ModUtil.MOD_ID)){
+        if(event.getModID().equalsIgnoreCase(ActuallyAdditions.MODID)){
             redefineConfigs();
         }
     }

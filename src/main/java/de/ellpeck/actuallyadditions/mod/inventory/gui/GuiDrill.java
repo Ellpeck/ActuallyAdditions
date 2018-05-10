@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -33,7 +33,7 @@ public class GuiDrill extends GuiWtfMojang{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container."+ModUtil.MOD_ID+".drill.name"));
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container."+ActuallyAdditions.MODID+".drill.name"));
     }
 
     @Override

@@ -67,7 +67,7 @@ public class ItemWingsOfTheBats extends ItemBase{
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack){
-        EntityPlayer player = ActuallyAdditions.proxy.getCurrentPlayer();
+        EntityPlayer player = ActuallyAdditions.PROXY.getCurrentPlayer();
         if(player != null){
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if(data != null){
@@ -80,7 +80,7 @@ public class ItemWingsOfTheBats extends ItemBase{
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack){
-        EntityPlayer player = ActuallyAdditions.proxy.getCurrentPlayer();
+        EntityPlayer player = ActuallyAdditions.PROXY.getCurrentPlayer();
         if(player != null){
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if(data != null){

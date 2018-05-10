@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
@@ -75,7 +74,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
-        player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
+        player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
 
         if(!world.isRemote){
             //TheAchievements.OPEN_BOOKLET.get(player);
@@ -86,11 +85,11 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced){
-        tooltip.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+"."+this.getBaseName()+".desc"));
+        tooltip.add(StringUtil.localize("tooltip."+ActuallyAdditions.MODID+"."+this.getBaseName()+".desc"));
 
         for(int i = 1; i <= 4; i++){
             String format = i == 4 ? TextFormatting.GOLD.toString()+TextFormatting.ITALIC : TextFormatting.RESET.toString();
-            tooltip.add(format+StringUtil.localize("tooltip."+ModUtil.MOD_ID+"."+this.getBaseName()+".sub."+i));
+            tooltip.add(format+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+"."+this.getBaseName()+".sub."+i));
         }
     }
 
@@ -112,8 +111,8 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
                     IBookletPage page = BookletUtils.findFirstPageForStack(blockStack);
                     if(page != null){
                         String strg1 = page.getChapter().getLocalizedName();
-                        String strg2 = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.hudDisplay.page")+" "+(page.getChapter().getPageIndex(page)+1);
-                        String strg3 = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.hudDisplay.open");
+                        String strg2 = StringUtil.localize("info."+ActuallyAdditions.MODID+".booklet.hudDisplay.page")+" "+(page.getChapter().getPageIndex(page)+1);
+                        String strg3 = StringUtil.localize("info."+ActuallyAdditions.MODID+".booklet.hudDisplay.open");
 
                         AssetUtil.renderStackToGui(StackUtil.isValid(page.getChapter().getDisplayItemStack()) ? page.getChapter().getDisplayItemStack() : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth()/2-10, height+41, 1F);
                         minecraft.fontRenderer.drawStringWithShadow(TextFormatting.YELLOW+""+TextFormatting.ITALIC+strg1, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg1)/2, height+20, StringUtil.DECIMAL_COLOR_WHITE);
@@ -121,9 +120,9 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
                         minecraft.fontRenderer.drawStringWithShadow(TextFormatting.GOLD+strg3, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg3)/2, height+60, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                     else{
-                        String strg1 = TextFormatting.DARK_RED+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.hudDisplay.noInfo");
-                        String strg2 = TextFormatting.DARK_GREEN+""+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.hudDisplay.noInfo.desc.1");
-                        String strg3 = TextFormatting.DARK_GREEN+""+TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.hudDisplay.noInfo.desc.2");
+                        String strg1 = TextFormatting.DARK_RED+StringUtil.localize("info."+ActuallyAdditions.MODID+".booklet.hudDisplay.noInfo");
+                        String strg2 = TextFormatting.DARK_GREEN+""+TextFormatting.ITALIC+StringUtil.localize("info."+ActuallyAdditions.MODID+".booklet.hudDisplay.noInfo.desc.1");
+                        String strg3 = TextFormatting.DARK_GREEN+""+TextFormatting.ITALIC+StringUtil.localize("info."+ActuallyAdditions.MODID+".booklet.hudDisplay.noInfo.desc.2");
 
                         minecraft.fontRenderer.drawStringWithShadow(strg1, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg1)/2, height+30, StringUtil.DECIMAL_COLOR_WHITE);
                         minecraft.fontRenderer.drawStringWithShadow(strg2, resolution.getScaledWidth()/2-minecraft.fontRenderer.getStringWidth(strg2)/2, height+50, StringUtil.DECIMAL_COLOR_WHITE);

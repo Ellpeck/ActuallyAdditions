@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotDeletion;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
@@ -25,7 +26,6 @@ import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -259,7 +259,7 @@ public class ContainerBag extends Container implements IButtonReactor{
     			String[] split = s.split("@");
     			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0]));
     			if(item == null) {
-    				ModUtil.LOGGER.error("Invalid item in sack blacklist: " + s);
+    				ActuallyAdditions.LOGGER.error("Invalid item in sack blacklist: " + s);
     				continue;
     			}
     			if(split.length == 1) 

@@ -11,12 +11,12 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
@@ -116,7 +116,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
             ItemStack slot = ((TileEntityAtomicReconstructor)tile).slots.getStackInSlot(0);
             String strg;
             if(!StackUtil.isValid(slot)){
-                strg = StringUtil.localize("info."+ModUtil.MOD_ID+".noLens");
+                strg = StringUtil.localize("info."+ActuallyAdditions.MODID+".noLens");
             }
             else{
                 strg = slot.getItem().getItemStackDisplayName(slot);
@@ -205,7 +205,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                 }
             }
 
-            String base = "tile."+ModUtil.MOD_ID+"."+((BlockAtomicReconstructor)this.block).getBaseName()+".info.";
+            String base = "tile."+ActuallyAdditions.MODID+"."+((BlockAtomicReconstructor)this.block).getBaseName()+".info.";
             tooltip.add(StringUtil.localize(base+"1."+this.toPick1)+" "+StringUtil.localize(base+"2."+this.toPick2));
         }
     }

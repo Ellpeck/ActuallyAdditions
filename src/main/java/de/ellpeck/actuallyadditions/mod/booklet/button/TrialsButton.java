@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 
@@ -32,7 +32,7 @@ public class TrialsButton extends TexturedButton{
 
         if(this.visible){
             if(this.hovered || this.isTrials){
-                this.drawCenteredString(minecraft.fontRenderer, StringUtil.localize("booklet."+ModUtil.MOD_ID+".trialsButton.name"), this.x+(this.width-8)/2, this.y+(this.height-8)/2, 14737632);
+                this.drawCenteredString(minecraft.fontRenderer, StringUtil.localize("booklet."+ActuallyAdditions.MODID+".trialsButton.name"), this.x+(this.width-8)/2, this.y+(this.height-8)/2, 14737632);
             }
         }
     }

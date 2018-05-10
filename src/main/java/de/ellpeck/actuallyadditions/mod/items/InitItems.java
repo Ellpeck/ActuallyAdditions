@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemArmorAA;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodSeed;
@@ -25,7 +26,6 @@ import de.ellpeck.actuallyadditions.mod.material.InitArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.material.InitToolMaterials;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestMedium;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -203,7 +203,7 @@ public final class InitItems{
     public static Item itemCrystalShard;
 
     public static void init(){
-        ModUtil.LOGGER.info("Initializing Items...");
+        ActuallyAdditions.LOGGER.info("Initializing Items...");
 
         itemCrystalShard = new ItemCrystalShard("item_crystal_shard");
         itemEngineerGogglesAdvanced = new ItemEngineerGoggles("item_engineer_goggles_advanced", true);

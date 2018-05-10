@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -51,14 +51,14 @@ public class ItemPlayerProbe extends ItemBase{
                     if(player != null){
                         if(player.isSneaking()){
                             ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
-                            entity.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.1"));
-                            player.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.notice"));
+                            entity.sendMessage(new TextComponentTranslation("tooltip."+ActuallyAdditions.MODID+".playerProbe.disconnect.1"));
+                            player.sendMessage(new TextComponentTranslation("tooltip."+ActuallyAdditions.MODID+".playerProbe.notice"));
                             //TheAchievements.GET_UNPROBED.get(player);
                         }
                     }
                     else{
                         ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
-                        entity.sendMessage(new TextComponentTranslation("tooltip."+ModUtil.MOD_ID+".playerProbe.disconnect.2"));
+                        entity.sendMessage(new TextComponentTranslation("tooltip."+ActuallyAdditions.MODID+".playerProbe.disconnect.2"));
                     }
                 }
             }
@@ -118,7 +118,7 @@ public class ItemPlayerProbe extends ItemBase{
         if(stack.hasTagCompound()){
             String name = stack.getTagCompound().getString("Name");
             if(name != null){
-                tooltip.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".playerProbe.probing")+": "+name);
+                tooltip.add(StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".playerProbe.probing")+": "+name);
             }
         }
     }

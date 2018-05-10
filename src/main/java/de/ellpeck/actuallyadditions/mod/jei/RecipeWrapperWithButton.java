@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.jei;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
@@ -60,7 +60,7 @@ public abstract class RecipeWrapperWithButton implements IRecipeWrapper{
     @Override
     public List<String> getTooltipStrings(int mouseX, int mouseY){
         if(this.theButton.isMouseOver()){
-            return Collections.singletonList(StringUtil.localize("booklet."+ModUtil.MOD_ID+".clickToSeeRecipe"));
+            return Collections.singletonList(StringUtil.localize("booklet."+ActuallyAdditions.MODID+".clickToSeeRecipe"));
         }
         else{
             return Collections.emptyList();

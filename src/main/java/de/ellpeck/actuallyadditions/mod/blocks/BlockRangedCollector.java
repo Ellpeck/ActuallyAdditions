@@ -50,7 +50,7 @@ public class BlockRangedCollector extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityRangedCollector breaker = (TileEntityRangedCollector)world.getTileEntity(pos);
             if(breaker != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.RANGED_COLLECTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.RANGED_COLLECTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }

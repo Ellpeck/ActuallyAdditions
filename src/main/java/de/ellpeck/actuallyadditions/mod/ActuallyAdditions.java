@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
@@ -36,7 +39,6 @@ import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.TreasureChestHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
@@ -54,25 +56,32 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
-@Mod(modid = ModUtil.MOD_ID, name = ModUtil.NAME, version = ModUtil.VERSION, guiFactory = "de.ellpeck.actuallyadditions.mod.config.GuiFactory", acceptedMinecraftVersions = "[1.12, 1.13)", dependencies = "before:craftingtweaks")
+@Mod(modid = ActuallyAdditions.MODID, name = ActuallyAdditions.NAME, version = ActuallyAdditions.VERSION, guiFactory = ActuallyAdditions.GUIFACTORY, dependencies = ActuallyAdditions.DEPS)
 public class ActuallyAdditions {
 
-    @Instance(ModUtil.MOD_ID)
-    public static ActuallyAdditions instance;
+    public static final String MODID = ActuallyAdditionsAPI.MOD_ID;
+    public static final String NAME = "Actually Additions";
+    public static final String VERSION = "@VERSION@";
+    public static final String GUIFACTORY = "de.ellpeck.actuallyadditions.mod.config.GuiFactory";
+    public static final String DEPS = "before:craftingtweaks;after:fastbench@[1.3.2,)";
 
-    @SidedProxy(clientSide = ModUtil.PROXY_CLIENT, serverSide = ModUtil.PROXY_SERVER)
-    public static IProxy proxy;
+    @Instance
+    public static ActuallyAdditions INSTANCE;
 
-    public static boolean commonCapsLoaded;
+    @SidedProxy(clientSide = "de.ellpeck.actuallyadditions.mod.proxy.ClientProxy", serverSide = "de.ellpeck.actuallyadditions.mod.proxy.ServerProxy")
+    public static IProxy PROXY;
+
+    public static final Logger LOGGER = LogManager.getLogger(NAME);
 
     static {
-        //For some reason, this has to be done here
         FluidRegistry.enableUniversalBucket();
     }
 
+    public static boolean commonCapsLoaded;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        ModUtil.LOGGER.info("Starting PreInitialization Phase...");
+        ActuallyAdditions.LOGGER.info("Starting PreInitialization Phase...");
 
         ActuallyAdditionsAPI.methodHandler = new MethodHandler();
         ActuallyAdditionsAPI.connectionHandler = new LaserRelayConnectionHandler();
@@ -89,14 +98,14 @@ public class ActuallyAdditions {
         InitArmorMaterials.init();
         InitFluids.init();
         new UpdateChecker();
-        proxy.preInit(event);
+        PROXY.preInit(event);
 
-        ModUtil.LOGGER.info("PreInitialization Finished.");
+        ActuallyAdditions.LOGGER.info("PreInitialization Finished.");
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        ModUtil.LOGGER.info("Starting Initialization Phase...");
+        ActuallyAdditions.LOGGER.info("Starting Initialization Phase...");
 
         BannerHelper.init();
         //InitAchievements.init();
@@ -106,16 +115,16 @@ public class ActuallyAdditions {
         new CommonEvents();
         InitEntities.init();
 
-        proxy.init(event);
+        PROXY.init(event);
 
         RegistryHandler.BLOCKS_TO_REGISTER.clear();
 
-        ModUtil.LOGGER.info("Initialization Finished.");
+        ActuallyAdditions.LOGGER.info("Initialization Finished.");
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        ModUtil.LOGGER.info("Starting PostInitialization Phase...");
+        ActuallyAdditions.LOGGER.info("Starting PostInitialization Phase...");
 
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
@@ -126,11 +135,11 @@ public class ActuallyAdditions {
         LensMining.init();
 
         InitBooklet.postInit();
-        proxy.postInit(event);
+        PROXY.postInit(event);
 
         ConfigurationHandler.redefineConfigs();
 
-        ModUtil.LOGGER.info("PostInitialization Finished.");
+        ActuallyAdditions.LOGGER.info("PostInitialization Finished.");
     }
 
     @EventHandler

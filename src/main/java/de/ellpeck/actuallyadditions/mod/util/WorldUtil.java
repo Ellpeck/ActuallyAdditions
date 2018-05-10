@@ -225,7 +225,7 @@ public final class WorldUtil {
 					return result;
 				}
 			} catch (Exception e) {
-				ModUtil.LOGGER.error("Something that places Blocks at " + offsetPos.getX() + ", " + offsetPos.getY() + ", " + offsetPos.getZ() + " in World " + world.provider.getDimension() + " threw an Exception! Don't let that happen again!", e);
+				ActuallyAdditions.LOGGER.error("Something that places Blocks at " + offsetPos.getX() + ", " + offsetPos.getY() + ", " + offsetPos.getZ() + " in World " + world.provider.getDimension() + " threw an Exception! Don't let that happen again!", e);
 			}
 		}
 		return stack;
@@ -421,7 +421,7 @@ public final class WorldUtil {
 			stack.onBlockDestroyed(world, state, pos, player);
 
 			// send an update to the server, so we get an update back
-			ActuallyAdditions.proxy.sendBreakPacket(pos);
+			ActuallyAdditions.PROXY.sendBreakPacket(pos);
 			return true;
 		}
 	}

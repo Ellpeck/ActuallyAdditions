@@ -71,7 +71,7 @@ public class BlockGrinder extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityGrinder grinder = (TileEntityGrinder)world.getTileEntity(pos);
             if(grinder != null){
-                player.openGui(ActuallyAdditions.instance, this.isDouble ? GuiHandler.GuiTypes.GRINDER_DOUBLE.ordinal() : GuiHandler.GuiTypes.GRINDER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, this.isDouble ? GuiHandler.GuiTypes.GRINDER_DOUBLE.ordinal() : GuiHandler.GuiTypes.GRINDER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }

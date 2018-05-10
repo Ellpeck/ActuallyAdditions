@@ -53,7 +53,7 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay{
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityMiner){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.MINER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.MINER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;

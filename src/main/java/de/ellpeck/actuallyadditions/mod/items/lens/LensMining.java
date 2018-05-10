@@ -14,9 +14,9 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
@@ -117,7 +117,7 @@ public class LensMining extends Lens{
                     }
                 }
                 catch(Exception e){
-                    ModUtil.LOGGER.warn("A config option appears to be incorrect: The entry "+conf+" can't be parsed!");
+                    ActuallyAdditions.LOGGER.warn("A config option appears to be incorrect: The entry "+conf+" can't be parsed!");
                 }
             }
         }

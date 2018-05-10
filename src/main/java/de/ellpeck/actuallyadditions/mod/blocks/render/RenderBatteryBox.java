@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -79,7 +79,7 @@ public class RenderBatteryBox extends TileEntitySpecialRenderer<TileEntityBatter
                 AssetUtil.renderItemInWorld(stack);
             }
             catch(Exception e){
-                ModUtil.LOGGER.error("Something went wrong trying to render an item in a battery box! The item is "+stack.getItem().getRegistryName()+"!", e);
+                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a battery box! The item is "+stack.getItem().getRegistryName()+"!", e);
             }
 
             GlStateManager.popMatrix();

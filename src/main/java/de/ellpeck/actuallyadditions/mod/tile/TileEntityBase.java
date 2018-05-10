@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -52,7 +52,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public static void init(){
-        ModUtil.LOGGER.info("Registering TileEntities...");
+        ActuallyAdditions.LOGGER.info("Registering TileEntities...");
 
         register(TileEntityCompost.class);
         register(TileEntityFeeder.class);
@@ -116,11 +116,11 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     private static void register(Class<? extends TileEntityBase> tileClass){
         try{
             //This is hacky and dirty but it works so whatever
-            String name = ModUtil.MOD_ID+":"+tileClass.newInstance().name;
+            String name = ActuallyAdditions.MODID+":"+tileClass.newInstance().name;
             GameRegistry.registerTileEntity(tileClass, name);
         }
         catch(Exception e){
-            ModUtil.LOGGER.fatal("Registering a TileEntity failed!", e);
+            ActuallyAdditions.LOGGER.fatal("Registering a TileEntity failed!", e);
         }
     }
 
@@ -209,7 +209,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     public String getNameForTranslation(){
-        return "container."+ModUtil.MOD_ID+"."+this.name+".name";
+        return "container."+ActuallyAdditions.MODID+"."+this.name+".name";
     }
 
     @Override

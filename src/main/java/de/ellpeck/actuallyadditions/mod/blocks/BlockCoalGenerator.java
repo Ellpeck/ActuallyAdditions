@@ -77,7 +77,7 @@ public class BlockCoalGenerator extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityCoalGenerator press = (TileEntityCoalGenerator)world.getTileEntity(pos);
             if(press != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.COAL_GENERATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.COAL_GENERATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }

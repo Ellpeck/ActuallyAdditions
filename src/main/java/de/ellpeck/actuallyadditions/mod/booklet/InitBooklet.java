@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
@@ -41,7 +42,6 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -128,7 +128,7 @@ public final class InitBooklet{
             }
         });
 
-        ModUtil.LOGGER.info("Registered a total of "+chapCount+" booklet chapters, where "+infoCount+" out of "+pageCount+" booklet pages contain information about items or fluids!");
+        ActuallyAdditions.LOGGER.info("Registered a total of "+chapCount+" booklet chapters, where "+infoCount+" out of "+pageCount+" booklet pages contain information about items or fluids!");
     }
 
     private static void initChapters(){

@@ -12,8 +12,8 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -39,7 +39,7 @@ public class PageEmpowerer extends BookletPage{
         gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX+5, startY+10, 117, 74, 116, 72, 0);
 
-        gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ModUtil.MOD_ID+".empowererRecipe")+")", startX+6, startY+85, 0, false, gui.getMediumFontSize());
+        gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".empowererRecipe")+")", startX+6, startY+85, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+100);
     }

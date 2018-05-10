@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -32,7 +33,7 @@ public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinit
     public FluidStateMapper(Fluid fluid){
         this.fluid = fluid;
 
-        this.location = new ModelResourceLocation(new ResourceLocation(ModUtil.MOD_ID, "fluids"), fluid.getName());
+        this.location = new ModelResourceLocation(new ResourceLocation(ActuallyAdditions.MODID, "fluids"), fluid.getName());
     }
 
     @Override

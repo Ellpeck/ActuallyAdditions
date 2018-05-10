@@ -52,7 +52,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles{
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onClientTick(ClientTickEvent event){
-        EntityPlayer player = ActuallyAdditions.proxy.getCurrentPlayer();
+        EntityPlayer player = ActuallyAdditions.PROXY.getCurrentPlayer();
         if(player != null && isWearing(player)){
             ItemStack face = player.inventory.armorInventory.get(3);
             if(((IGoggles)face.getItem()).displaySpectralMobs()){

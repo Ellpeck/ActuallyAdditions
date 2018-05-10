@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
@@ -42,7 +42,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipeWrapp
 
     @Override
     public String getModName(){
-        return ModUtil.NAME;
+        return ActuallyAdditions.NAME;
     }
 
     @Override

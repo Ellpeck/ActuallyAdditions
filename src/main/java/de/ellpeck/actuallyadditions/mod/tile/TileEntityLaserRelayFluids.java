@@ -13,8 +13,8 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy.Mode;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -219,13 +219,13 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
     @Override
     @SideOnly(Side.CLIENT)
     public String getExtraDisplayString(){
-        return StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.fluid.extra")+": "+TextFormatting.DARK_RED+StringUtil.localize(this.mode.name)+TextFormatting.RESET;
+        return StringUtil.localize("info."+ActuallyAdditions.MODID+".laserRelay.fluid.extra")+": "+TextFormatting.DARK_RED+StringUtil.localize(this.mode.name)+TextFormatting.RESET;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public String getCompassDisplayString(){
-        return TextFormatting.GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.energy.display");
+        return TextFormatting.GREEN+StringUtil.localize("info."+ActuallyAdditions.MODID+".laserRelay.energy.display");
     }
 
     @Override

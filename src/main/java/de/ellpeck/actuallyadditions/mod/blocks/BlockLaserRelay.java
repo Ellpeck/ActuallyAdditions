@@ -20,7 +20,6 @@ import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
 import de.ellpeck.actuallyadditions.mod.tile.*;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.BlockDirectional;
@@ -218,7 +217,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
 
             if(relay instanceof TileEntityLaserRelayItemWhitelist){
                 if(!world.isRemote){
-                    player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.LASER_RELAY_ITEM_WHITELIST.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.LASER_RELAY_ITEM_WHITELIST.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
                 return true;
             }
@@ -264,7 +263,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                             expl = relay.getCompassDisplayString();
                         }
                         else{
-                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".laserRelay.mode.noCompasss", StringUtil.localize(ConfigValues.itemCompassConfigurator.getUnlocalizedName()+".name"));
+                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".laserRelay.mode.noCompasss", StringUtil.localize(ConfigValues.itemCompassConfigurator.getUnlocalizedName()+".name"));
                         }
 
                         StringUtil.drawSplitString(minecraft.fontRenderer, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);

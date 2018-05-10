@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.update;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -37,7 +38,7 @@ public class UpdateChecker{
 
     public UpdateChecker(){
         if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled() && !Util.isDevVersion()){
-            ModUtil.LOGGER.info("Initializing Update Checker...");
+            ActuallyAdditions.LOGGER.info("Initializing Update Checker...");
 
             new ThreadUpdateChecker();
             MinecraftForge.EVENT_BUS.register(this);
@@ -53,13 +54,13 @@ public class UpdateChecker{
             if(ticksElapsedBeforeInfo >= 800){
                 EntityPlayer player = Minecraft.getMinecraft().player;
                 if(UpdateChecker.checkFailed){
-                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.failed")));
+                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ActuallyAdditions.MODID+".update.failed")));
                     notified = true;
                 }
                 else if(UpdateChecker.needsUpdateNotify){
-                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ModUtil.MOD_ID+".update.generic")));
-                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)));
-                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
+                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ActuallyAdditions.MODID+".update.generic")));
+                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)));
+                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
                     notified = true;
                 }
                 ticksElapsedBeforeInfo = 0;

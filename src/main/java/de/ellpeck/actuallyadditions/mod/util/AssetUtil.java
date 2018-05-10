@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
@@ -46,7 +47,7 @@ public final class AssetUtil{
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("gui_inventory");
 
     public static ResourceLocation getGuiLocation(String file){
-        return new ResourceLocation(ModUtil.MOD_ID, "textures/gui/"+file+".png");
+        return new ResourceLocation(ActuallyAdditions.MODID, "textures/gui/"+file+".png");
     }
 
     public static ResourceLocation getBookletGuiLocation(String file){

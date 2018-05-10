@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
@@ -66,8 +66,8 @@ public class GuiSmileyCloud extends GuiWtfMojang{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        String name = this.cloud.name == null || this.cloud.name.isEmpty() ? "" : TextFormatting.GOLD+this.cloud.name+TextFormatting.RESET+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.the")+" ";
-        String localizedName = name+StringUtil.localize("container."+ModUtil.MOD_ID+".cloud.name");
+        String name = this.cloud.name == null || this.cloud.name.isEmpty() ? "" : TextFormatting.GOLD+this.cloud.name+TextFormatting.RESET+" "+StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.the")+" ";
+        String localizedName = name+StringUtil.localize("container."+ActuallyAdditions.MODID+".cloud.name");
         this.fontRenderer.drawString(localizedName, this.xSize/2-this.fontRenderer.getStringWidth(localizedName)/2, -10, StringUtil.DECIMAL_COLOR_WHITE);
     }
 

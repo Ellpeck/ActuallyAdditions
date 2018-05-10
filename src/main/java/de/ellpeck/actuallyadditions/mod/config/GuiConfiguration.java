@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.config;
 
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.fml.client.config.GuiConfig;
@@ -19,10 +18,12 @@ import net.minecraftforge.fml.client.config.IConfigElement;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+
 public class GuiConfiguration extends GuiConfig{
 
     public GuiConfiguration(GuiScreen parentScreen){
-        super(parentScreen, getConfigElements(), ModUtil.MOD_ID, false, false, GuiConfig.getAbridgedConfigPath(ConfigurationHandler.config.toString()));
+        super(parentScreen, getConfigElements(), ActuallyAdditions.MODID, false, false, GuiConfig.getAbridgedConfigPath(ConfigurationHandler.config.toString()));
     }
 
     private static List<IConfigElement> getConfigElements(){

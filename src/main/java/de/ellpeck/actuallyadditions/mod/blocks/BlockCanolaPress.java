@@ -57,7 +57,7 @@ public class BlockCanolaPress extends BlockContainerBase{
             TileEntityCanolaPress press = (TileEntityCanolaPress)world.getTileEntity(pos);
             if(press != null){
                 if(!this.tryUseItemOnTank(player, hand, press.tank)){
-                    player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CANOLA_PRESS.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.CANOLA_PRESS.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
             return true;

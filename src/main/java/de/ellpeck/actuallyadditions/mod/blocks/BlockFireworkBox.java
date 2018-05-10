@@ -45,7 +45,7 @@ public class BlockFireworkBox extends BlockContainerBase{
         else if(!world.isRemote){
             TileEntityFireworkBox grinder = (TileEntityFireworkBox)world.getTileEntity(pos);
             if(grinder != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FIREWORK_BOX.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FIREWORK_BOX.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;

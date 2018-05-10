@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.empowerer;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -41,7 +41,7 @@ public class EmpowererRecipeCategory implements IRecipeCategory<EmpowererRecipeW
 
     @Override
     public String getModName(){
-        return ModUtil.NAME;
+        return ActuallyAdditions.NAME;
     }
 
     @Override

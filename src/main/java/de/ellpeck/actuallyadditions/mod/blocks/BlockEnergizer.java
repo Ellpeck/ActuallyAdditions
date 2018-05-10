@@ -52,13 +52,13 @@ public class BlockEnergizer extends BlockContainerBase{
             if(this.isEnergizer){
                 TileEntityEnergizer energizer = (TileEntityEnergizer)world.getTileEntity(pos);
                 if(energizer != null){
-                    player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.ENERGIZER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.ENERGIZER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
             else{
                 TileEntityEnervator energizer = (TileEntityEnervator)world.getTileEntity(pos);
                 if(energizer != null){
-                    player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.ENERVATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.ENERVATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
             return true;

@@ -57,7 +57,7 @@ public class BlockFermentingBarrel extends BlockContainerBase{
             TileEntityFermentingBarrel press = (TileEntityFermentingBarrel)world.getTileEntity(pos);
             if(press != null){
                 if(!this.tryUseItemOnTank(player, hand, press.canolaTank) && !this.tryUseItemOnTank(player, hand, press.oilTank)){
-                    player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FERMENTING_BARREL.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                    player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FERMENTING_BARREL.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
             return true;

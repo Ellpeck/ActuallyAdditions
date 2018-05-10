@@ -55,7 +55,7 @@ public class BlockDropper extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityDropper dropper = (TileEntityDropper)world.getTileEntity(pos);
             if(dropper != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.DROPPER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.DROPPER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }

@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHandlerInfo;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
@@ -145,13 +144,13 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
     @Override
     @SideOnly(Side.CLIENT)
     public String getExtraDisplayString(){
-        return StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.item.extra")+": "+TextFormatting.DARK_RED+this.getPriority()+TextFormatting.RESET;
+        return StringUtil.localize("info."+ActuallyAdditions.MODID+".laserRelay.item.extra")+": "+TextFormatting.DARK_RED+this.getPriority()+TextFormatting.RESET;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public String getCompassDisplayString(){
-        return TextFormatting.GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.item.display.1")+"\n"+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.item.display.2");
+        return TextFormatting.GREEN+StringUtil.localize("info."+ActuallyAdditions.MODID+".laserRelay.item.display.1")+"\n"+StringUtil.localize("info."+ActuallyAdditions.MODID+".laserRelay.item.display.2");
     }
 
     @Override

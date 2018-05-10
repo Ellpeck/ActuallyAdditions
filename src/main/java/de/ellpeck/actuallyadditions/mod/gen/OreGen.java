@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockMisc;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockWildPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
@@ -18,7 +19,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -56,7 +56,7 @@ public class OreGen implements IWorldGenerator{
     private final WorldGenLushCaves caveGen = new WorldGenLushCaves();
 
     public OreGen(){
-        ModUtil.LOGGER.info("Registering World Generator...");
+        ActuallyAdditions.LOGGER.info("Registering World Generator...");
         GameRegistry.registerWorldGenerator(this, 100);
         MinecraftForge.TERRAIN_GEN_BUS.register(this);
     }

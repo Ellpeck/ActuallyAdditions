@@ -5,13 +5,14 @@
  * http://ellpeck.de/actaddlicense
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
- * © 2015-2017 Ellpeck
+ * Â© 2015-2017 Ellpeck
  */
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.button.EntryButton;
 import de.ellpeck.actuallyadditions.mod.config.GuiConfiguration;
@@ -19,7 +20,6 @@ import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.gui.GuiButton;
@@ -122,7 +122,7 @@ public class GuiMainPage extends GuiBooklet{
         if(this.mc.world.rand.nextFloat() <= 0.1){
             flavor = MathHelper.getInt(this.mc.world.rand, 2, 7);
         }
-        this.bookletName = "info."+ModUtil.MOD_ID+".booklet.manualName.1."+flavor;
+        this.bookletName = "info."+ActuallyAdditions.MODID+".booklet.manualName.1."+flavor;
 
         String usedQuote = QUOTES[this.mc.world.rand.nextInt(QUOTES.length)];
         String[] quoteSplit = usedQuote.split("@");
@@ -182,7 +182,7 @@ public class GuiMainPage extends GuiBooklet{
             this.bookletEdition = "Edition 35";
         }
         else if(playerName.equalsIgnoreCase("asiekierka")){
-            this.bookletEdition = "‽ Edition";
+            this.bookletEdition = "â€½ Edition";
         }
         else if(playerName.equalsIgnoreCase("elucent")){
             this.bookletEdition = "";
@@ -192,19 +192,19 @@ public class GuiMainPage extends GuiBooklet{
                 this.bookletEdition = "Dev's Edition";
             }
             else{
-                this.bookletEdition = StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.edition")+" "+Util.getMajorModVersion();
+                this.bookletEdition = StringUtil.localize("info."+ActuallyAdditions.MODID+".booklet.edition")+" "+Util.getMajorModVersion();
             }
         }
 
         List<String> configText = new ArrayList<String>();
-        configText.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".configButton.name"));
-        configText.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID+".configButton.desc", ModUtil.NAME).replaceAll("\\\\n", "\n"), 200));
+        configText.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".configButton.name"));
+        configText.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet."+ActuallyAdditions.MODID+".configButton.desc", ActuallyAdditions.NAME).replaceAll("\\\\n", "\n"), 200));
         this.configButton = new TexturedButton(RES_LOC_GADGETS, -388, this.guiLeft+16, this.guiTop+this.ySize-30, 188, 14, 16, 16, configText);
         this.buttonList.add(this.configButton);
 
         List<String> achievementText = new ArrayList<String>();
-        achievementText.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".achievementButton.name"));
-        achievementText.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet."+ModUtil.MOD_ID+".achievementButton.desc", ModUtil.NAME), 200));
+        achievementText.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".achievementButton.name"));
+        achievementText.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet."+ActuallyAdditions.MODID+".achievementButton.desc", ActuallyAdditions.NAME), 200));
         //this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
         //this.buttonList.add(this.achievementButton);
 
@@ -279,14 +279,14 @@ public class GuiMainPage extends GuiBooklet{
 
         String strg = TextFormatting.DARK_GREEN+StringUtil.localize(this.bookletName);
         this.fontRenderer.drawString(strg, this.guiLeft+72-this.fontRenderer.getStringWidth(strg)/2-3, this.guiTop+19, 0);
-        strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.manualName.2");
+        strg = TextFormatting.DARK_GREEN+StringUtil.localize("info."+ActuallyAdditions.MODID+".booklet.manualName.2");
         this.fontRenderer.drawString(strg, this.guiLeft+72-this.fontRenderer.getStringWidth(strg)/2-3, this.guiTop+19+this.fontRenderer.FONT_HEIGHT, 0);
 
         strg = TextFormatting.GOLD+TextFormatting.ITALIC.toString()+this.bookletEdition;
         this.fontRenderer.drawString(strg, this.guiLeft+72-this.fontRenderer.getStringWidth(strg)/2-3, this.guiTop+40, 0);
 
         if(this.showTutorial){
-            String text = TextFormatting.BLUE+"It looks like this is the first time you are using this manual. \nIf you click the button below, some useful bookmarks will be stored at the bottom of the GUI. You should definitely check them out to get started with "+ModUtil.NAME+"! \nIf you don't want this, shift-click the button.";
+            String text = TextFormatting.BLUE+"It looks like this is the first time you are using this manual. \nIf you click the button below, some useful bookmarks will be stored at the bottom of the GUI. You should definitely check them out to get started with "+ActuallyAdditions.NAME+"! \nIf you don't want this, shift-click the button.";
             this.renderSplitScaledAsciiString(text, this.guiLeft+11, this.guiTop+55, 0, false, this.getMediumFontSize(), 120);
         }
         else if(this.quote != null && !this.quote.isEmpty() && this.quoteGuy != null){

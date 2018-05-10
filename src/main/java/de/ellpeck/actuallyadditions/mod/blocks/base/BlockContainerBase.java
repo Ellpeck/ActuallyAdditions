@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -76,7 +75,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
     }
 
     public void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
+        ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
     @Override
@@ -218,7 +217,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         if(!player.capabilities.isCreativeMode){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityBase && ((TileEntityBase)tile).stopFromDropping){
-                player.sendMessage(new TextComponentTranslation("info."+ModUtil.MOD_ID+".machineBroke").setStyle(new Style().setColor(TextFormatting.RED)));
+                player.sendMessage(new TextComponentTranslation("info."+ActuallyAdditions.MODID+".machineBroke").setStyle(new Style().setColor(TextFormatting.RED)));
             }
         }
     }

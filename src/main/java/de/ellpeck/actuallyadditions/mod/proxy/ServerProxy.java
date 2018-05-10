@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.proxy;
 
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -24,17 +24,17 @@ public class ServerProxy implements IProxy{
 
     @Override
     public void preInit(FMLPreInitializationEvent event){
-        ModUtil.LOGGER.info("PreInitializing ServerProxy...");
+        ActuallyAdditions.LOGGER.info("PreInitializing ServerProxy...");
     }
 
     @Override
     public void init(FMLInitializationEvent event){
-        ModUtil.LOGGER.info("Initializing ServerProxy...");
+        ActuallyAdditions.LOGGER.info("Initializing ServerProxy...");
     }
 
     @Override
     public void postInit(FMLPostInitializationEvent event){
-        ModUtil.LOGGER.info("PostInitializing ServerProxy...");
+        ActuallyAdditions.LOGGER.info("PostInitializing ServerProxy...");
     }
 
     @Override

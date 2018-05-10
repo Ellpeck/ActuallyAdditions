@@ -52,7 +52,7 @@ public class BlockFarmer extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityFarmer farmer = (TileEntityFarmer)world.getTileEntity(pos);
             if(farmer != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FARMER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FARMER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }

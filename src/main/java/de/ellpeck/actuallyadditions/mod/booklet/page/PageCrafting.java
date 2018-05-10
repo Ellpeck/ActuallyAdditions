@@ -11,8 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -131,7 +131,7 @@ public class PageCrafting extends BookletPage{
         int height = 3;
         
         if(recipe instanceof BlankRecipe){
-            this.recipeTypeLocKey = "tooltip."+ModUtil.MOD_ID+".disabled";
+            this.recipeTypeLocKey = "tooltip."+ActuallyAdditions.MODID+".disabled";
             gui.addOrModifyItemRenderer(recipe.getRecipeOutput(), startX+100, startY+25, 1F, false);
             return;
         }
@@ -140,14 +140,14 @@ public class PageCrafting extends BookletPage{
             width = shaped.recipeWidth;
             height = shaped.recipeHeight;
             ings = shaped.recipeItems.toArray(new Ingredient[shaped.recipeItems.size()]);
-            this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapedRecipe";
+            this.recipeTypeLocKey = "booklet."+ActuallyAdditions.MODID+".shapedRecipe";
         }
         else if(recipe instanceof ShapelessRecipes){
             ShapelessRecipes shapeless = (ShapelessRecipes)recipe;
             for(int i = 0; i < shapeless.recipeItems.size(); i++){
                 ings[i] = shapeless.recipeItems.get(i);
             }
-            this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapelessRecipe";
+            this.recipeTypeLocKey = "booklet."+ActuallyAdditions.MODID+".shapelessRecipe";
         }
         else if(recipe instanceof ShapedOreRecipe){
             ShapedOreRecipe shaped = (ShapedOreRecipe)recipe;
@@ -156,19 +156,19 @@ public class PageCrafting extends BookletPage{
                 height = ReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shaped, 5);
             }
             catch(Exception e){
-                ModUtil.LOGGER.error("Something went wrong trying to get the Crafting Recipe in the booklet to display!", e);
+                ActuallyAdditions.LOGGER.error("Something went wrong trying to get the Crafting Recipe in the booklet to display!", e);
             }
             for(int i = 0; i < shaped.getIngredients().size(); i++){
                 ings[i] = shaped.getIngredients().get(i);
             }
-            this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapedOreRecipe";
+            this.recipeTypeLocKey = "booklet."+ActuallyAdditions.MODID+".shapedOreRecipe";
         }
         else if(recipe instanceof ShapelessOreRecipe){
             ShapelessOreRecipe shapeless = (ShapelessOreRecipe)recipe;
             for(int i = 0; i < shapeless.getIngredients().size(); i++){
                 ings[i] = shapeless.getIngredients().get(i);
             }
-            this.recipeTypeLocKey = "booklet."+ModUtil.MOD_ID+".shapelessOreRecipe";
+            this.recipeTypeLocKey = "booklet."+ActuallyAdditions.MODID+".shapelessOreRecipe";
         }
 
         for(int x = 0; x < width; x++){

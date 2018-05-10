@@ -14,6 +14,7 @@ package de.ellpeck.actuallyadditions.mod.proxy;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.ClientRegistryHandler;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderBatteryBox;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderCompost;
@@ -41,7 +42,6 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingBlock;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -66,7 +66,7 @@ public class ClientProxy implements IProxy{
 
     @Override
     public void preInit(FMLPreInitializationEvent event){
-        ModUtil.LOGGER.info("PreInitializing ClientProxy...");
+        ActuallyAdditions.LOGGER.info("PreInitializing ClientProxy...");
 
         MinecraftForge.EVENT_BUS.register(new ClientRegistryHandler());
 
@@ -75,7 +75,7 @@ public class ClientProxy implements IProxy{
 
     @Override
     public void init(FMLInitializationEvent event){
-        ModUtil.LOGGER.info("Initializing ClientProxy...");
+        ActuallyAdditions.LOGGER.info("Initializing ClientProxy...");
 
         RenderWorm.fixItemStack();
         
@@ -114,7 +114,7 @@ public class ClientProxy implements IProxy{
 
     @Override
     public void postInit(FMLPostInitializationEvent event){
-        ModUtil.LOGGER.info("PostInitializing ClientProxy...");
+        ActuallyAdditions.LOGGER.info("PostInitializing ClientProxy...");
 
         new SpecialRenderInit();
     }

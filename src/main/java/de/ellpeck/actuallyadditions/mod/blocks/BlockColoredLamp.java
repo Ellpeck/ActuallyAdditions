@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -120,7 +119,7 @@ public class BlockColoredLamp extends BlockBase{
     @Override
     public void registerRendering(){
         for(int i = 0; i < ALL_LAMP_TYPES.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_LAMP_TYPES[i].regName);
+            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_LAMP_TYPES[i].regName);
         }
     }
 
@@ -158,7 +157,7 @@ public class BlockColoredLamp extends BlockBase{
             if(stack.getItemDamage() >= ALL_LAMP_TYPES.length){
                 return StringUtil.BUGGED_ITEM_NAME;
             }
-           if(Util.isClient()) return super.getItemStackDisplayName(stack)+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".onSuffix.desc")+")" : "");
+           if(Util.isClient()) return super.getItemStackDisplayName(stack)+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".onSuffix.desc")+")" : "");
            else return super.getItemStackDisplayName(stack);
         }
 

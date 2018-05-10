@@ -53,7 +53,7 @@ public class BlockXPSolidifier extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)world.getTileEntity(pos);
             if(solidifier != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.XP_SOLIDIFIER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.XP_SOLIDIFIER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }

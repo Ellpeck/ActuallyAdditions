@@ -11,9 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.data;
 
 import de.ellpeck.actuallyadditions.api.laser.Network;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class WorldData extends WorldSavedData{
 
-    public static final String DATA_TAG = ModUtil.MOD_ID+"data";
+    public static final String DATA_TAG = ActuallyAdditions.MODID+"data";
     //TODO Remove this as well
     public static List<File> legacyLoadWorlds = new ArrayList<File>();
     private static WorldData data;
@@ -44,7 +44,7 @@ public class WorldData extends WorldSavedData{
 
     public static WorldData get(World world, boolean forceLoad){
     	WorldData w = getInternal(world, forceLoad);
-    	if(w == null) ModUtil.LOGGER.error("What the hell how is this stupid thing null again AEWBFINCEMR");
+    	if(w == null) ActuallyAdditions.LOGGER.error("What the hell how is this stupid thing null again AEWBFINCEMR");
     	return w == null ? new WorldData(DATA_TAG) : w;
     }
 
@@ -54,7 +54,7 @@ public class WorldData extends WorldSavedData{
                 WorldSavedData savedData = world.loadData(WorldData.class, DATA_TAG);
 
                 if(!(savedData instanceof WorldData)){
-                    ModUtil.LOGGER.info("No WorldData found, creating...");
+                    ActuallyAdditions.LOGGER.info("No WorldData found, creating...");
 
                     WorldData newData = new WorldData(DATA_TAG);
                     world.setData(DATA_TAG, newData);
@@ -62,12 +62,12 @@ public class WorldData extends WorldSavedData{
                 }
                 else{
                     data = (WorldData) savedData;
-                    ModUtil.LOGGER.info("Successfully loaded WorldData!");
+                    ActuallyAdditions.LOGGER.info("Successfully loaded WorldData!");
                 }
             }
             else{
                 data = new WorldData(DATA_TAG);
-                ModUtil.LOGGER.info("Created temporary WorldData to cache data on the client!");
+                ActuallyAdditions.LOGGER.info("Created temporary WorldData to cache data on the client!");
             }
         }
         return data;
@@ -76,7 +76,7 @@ public class WorldData extends WorldSavedData{
     public static void clear(){
         if(data != null){
             data = null;
-            ModUtil.LOGGER.info("Unloaded WorldData!");
+            ActuallyAdditions.LOGGER.info("Unloaded WorldData!");
         }
     }
 

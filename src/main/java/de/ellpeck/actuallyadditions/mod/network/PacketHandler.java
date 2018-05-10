@@ -19,7 +19,6 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IStringReactor;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleLaserItem;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
@@ -139,17 +138,17 @@ public final class PacketHandler{
         @SideOnly(Side.CLIENT)
         public void handleData(NBTTagCompound compound, MessageContext context){
             NBTTagCompound dataTag = compound.getCompoundTag("Data");
-            EntityPlayer player = ActuallyAdditions.proxy.getCurrentPlayer();
+            EntityPlayer player = ActuallyAdditions.PROXY.getCurrentPlayer();
 
             if(player != null){
                 PlayerData.getDataFromPlayer(player).readFromNBT(dataTag, false);
 
                 if(compound.getBoolean("Log")){
-                    ModUtil.LOGGER.info("Receiving (new or changed) Player Data for player "+player.getName()+".");
+                    ActuallyAdditions.LOGGER.info("Receiving (new or changed) Player Data for player "+player.getName()+".");
                 }
             }
             else{
-                ModUtil.LOGGER.error("Tried to receive Player Data for the current player, but he doesn't seem to be present!");
+                ActuallyAdditions.LOGGER.error("Tried to receive Player Data for the current player, but he doesn't seem to be present!");
             }
         }
     };
@@ -178,11 +177,11 @@ public final class PacketHandler{
                 WorldData.get(world).markDirty();
 
                 if(compound.getBoolean("Log")){
-                    ModUtil.LOGGER.info("Receiving changed Player Data for player "+player.getName()+".");
+                    ActuallyAdditions.LOGGER.info("Receiving changed Player Data for player "+player.getName()+".");
                 }
             }
             else{
-                ModUtil.LOGGER.error("Tried to receive Player Data for UUID "+compound.getUniqueId("UUID")+", but he doesn't seem to be present!");
+                ActuallyAdditions.LOGGER.error("Tried to receive Player Data for UUID "+compound.getUniqueId("UUID")+", but he doesn't seem to be present!");
             }
         }
     };
@@ -190,7 +189,7 @@ public final class PacketHandler{
     public static SimpleNetworkWrapper theNetwork;
 
     public static void init(){
-        theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(ModUtil.MOD_ID);
+        theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(ActuallyAdditions.MODID);
         theNetwork.registerMessage(PacketServerToClient.Handler.class, PacketServerToClient.class, 0, Side.CLIENT);
         theNetwork.registerMessage(PacketClientToServer.Handler.class, PacketClientToServer.class, 1, Side.SERVER);
 

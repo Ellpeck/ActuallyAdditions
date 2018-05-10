@@ -46,7 +46,7 @@ public class BlockBioReactor extends BlockContainerBase{
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
         if(!world.isRemote){
             if(world.getTileEntity(pos) instanceof TileEntityBioReactor){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.BIO_REACTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.BIO_REACTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;

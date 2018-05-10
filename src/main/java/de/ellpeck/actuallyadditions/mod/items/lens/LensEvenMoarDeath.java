@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
@@ -30,7 +30,7 @@ public class LensEvenMoarDeath extends LensDeath{
                 ReflectionHelper.setPrivateValue(EntityLivingBase.class, entity, 100, 38);
             }
             catch(Exception e){
-                ModUtil.LOGGER.error("A Damage Lens at "+tile.getX()+", "+tile.getY()+", "+tile.getZ()+" in World "+tile.getWorldObject().provider.getDimension()+" threw an Exception! Don't let that happen again!", e);
+                ActuallyAdditions.LOGGER.error("A Damage Lens at "+tile.getX()+", "+tile.getY()+", "+tile.getZ()+" in World "+tile.getWorldObject().provider.getDimension()+" threw an Exception! Don't let that happen again!", e);
             }
         }
 

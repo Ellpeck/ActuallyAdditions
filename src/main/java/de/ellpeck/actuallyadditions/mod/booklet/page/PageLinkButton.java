@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraftforge.fml.relauncher.Side;
@@ -40,7 +40,7 @@ public class PageLinkButton extends BookletPage{
     public void initGui(GuiBookletBase gui, int startX, int startY){
         super.initGui(gui, startX, startY);
 
-        gui.getButtonList().add(new GuiButton(this.buttonId, startX+125/2-50, startY+130, 100, 20, StringUtil.localize("booklet."+ModUtil.MOD_ID+".chapter."+this.chapter.getIdentifier()+".button."+this.localizationKey)));
+        gui.getButtonList().add(new GuiButton(this.buttonId, startX+125/2-50, startY+130, 100, 20, StringUtil.localize("booklet."+ActuallyAdditions.MODID+".chapter."+this.chapter.getIdentifier()+".button."+this.localizationKey)));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class PageLinkButton extends BookletPage{
                     Desktop.getDesktop().browse(new URI(this.link));
                 }
                 catch(Exception e){
-                    ModUtil.LOGGER.error("Couldn't open website from Link Button page!", e);
+                    ActuallyAdditions.LOGGER.error("Couldn't open website from Link Button page!", e);
                 }
             }
         }

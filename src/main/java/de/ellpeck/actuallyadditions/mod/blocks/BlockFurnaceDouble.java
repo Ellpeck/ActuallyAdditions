@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -75,7 +74,7 @@ public class BlockFurnaceDouble extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityFurnaceDouble furnace = (TileEntityFurnaceDouble)world.getTileEntity(pos);
             if(furnace != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FURNACE_DOUBLE.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FURNACE_DOUBLE.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }
@@ -140,7 +139,7 @@ public class BlockFurnaceDouble extends BlockContainerBase{
 
         @Override
         public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced){
-            tooltip.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".previouslyDoubleFurnace"));
+            tooltip.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".previouslyDoubleFurnace"));
         }
     }
 }

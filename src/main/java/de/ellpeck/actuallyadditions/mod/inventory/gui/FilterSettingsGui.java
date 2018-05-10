@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -71,27 +71,27 @@ public class FilterSettingsGui extends Gui{
 
         if(this.whitelistButton.isMouseOver()){
             List<String> list = new ArrayList<String>();
-            list.add(TextFormatting.BOLD+(this.theSettings.isWhitelist ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.whitelist") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.blacklist")));
-            list.addAll(mc.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".gui.whitelistInfo"), 200));
+            list.add(TextFormatting.BOLD+(this.theSettings.isWhitelist ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.whitelist") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.blacklist")));
+            list.addAll(mc.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".gui.whitelistInfo"), 200));
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
         else if(this.metaButton.isMouseOver()){
-            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.theSettings.respectMeta ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectMeta") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ignoreMeta"))), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
+            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.theSettings.respectMeta ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectMeta") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.ignoreMeta"))), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
         else if(this.nbtButton.isMouseOver()){
-            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.theSettings.respectNBT ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectNBT") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ignoreNBT"))), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
+            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.theSettings.respectNBT ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectNBT") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.ignoreNBT"))), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
         else if(this.modButton.isMouseOver()){
             List<String> list = new ArrayList<String>();
-            list.add(TextFormatting.BOLD+(this.theSettings.respectMod ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectMod") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ignoreMod")));
+            list.add(TextFormatting.BOLD+(this.theSettings.respectMod ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectMod") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.ignoreMod")));
 
-            list.addAll(mc.fontRenderer.listFormattedStringToWidth(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectModInfo"), 200));
+            list.addAll(mc.fontRenderer.listFormattedStringToWidth(StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectModInfo"), 200));
 
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
         else if(this.oredictButton.isMouseOver()){
             List<String> list = new ArrayList<String>();
-            list.add(TextFormatting.BOLD+(this.theSettings.respectOredict == 0 ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.ignoreOredict") : (this.theSettings.respectOredict == 1 ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectOredictSoft") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectOredictHard"))));
+            list.add(TextFormatting.BOLD+(this.theSettings.respectOredict == 0 ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.ignoreOredict") : (this.theSettings.respectOredict == 1 ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectOredictSoft") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectOredictHard"))));
 
             String type = null;
             if(this.theSettings.respectOredict == 1){
@@ -102,7 +102,7 @@ public class FilterSettingsGui extends Gui{
             }
 
             if(type != null){
-                list.addAll(mc.fontRenderer.listFormattedStringToWidth(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.respectOredictInfo."+type), 200));
+                list.addAll(mc.fontRenderer.listFormattedStringToWidth(StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectOredictInfo."+type), 200));
             }
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }

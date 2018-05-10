@@ -68,7 +68,7 @@ public class ItemCrystal extends ItemBase{
     protected void registerRendering(){
         for(int i = 0; i < BlockCrystal.ALL_CRYSTALS.length; i++){
             String name = this.getRegistryName()+"_"+BlockCrystal.ALL_CRYSTALS[i].name;
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
+            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
     }
 }

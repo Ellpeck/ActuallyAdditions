@@ -12,9 +12,9 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -83,7 +83,7 @@ public class ItemBattery extends ItemEnergy{
     @Override
     public void addInformation(ItemStack stack, World playerIn, List<String> list, ITooltipFlag advanced){
         super.addInformation(stack, playerIn, list, advanced);
-        list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".battery."+(ItemUtil.isEnabled(stack) ? "discharge" : "noDischarge")));
-        list.add(StringUtil.localize("tooltip."+ModUtil.MOD_ID+".battery.changeMode"));
+        list.add(StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".battery."+(ItemUtil.isEnabled(stack) ? "discharge" : "noDischarge")));
+        list.add(StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".battery.changeMode"));
     }
 }

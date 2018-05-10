@@ -10,18 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.fluids;
 
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 
 public class FluidAA extends Fluid{
 
     public FluidAA(String fluidName, String textureName){
-        super(fluidName, new ResourceLocation(ModUtil.MOD_ID, "blocks/"+textureName+"_still"), new ResourceLocation(ModUtil.MOD_ID, "blocks/"+textureName+"_flowing"));
+        super(fluidName, new ResourceLocation(ActuallyAdditions.MODID, "blocks/"+textureName+"_still"), new ResourceLocation(ActuallyAdditions.MODID, "blocks/"+textureName+"_flowing"));
     }
 
     @Override
     public String getUnlocalizedName(){
-        return "fluid."+ModUtil.MOD_ID+"."+this.unlocalizedName;
+        return "fluid."+ActuallyAdditions.MODID+"."+this.unlocalizedName;
     }
 }

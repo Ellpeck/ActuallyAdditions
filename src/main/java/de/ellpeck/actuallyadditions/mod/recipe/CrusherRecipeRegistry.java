@@ -12,9 +12,9 @@ package de.ellpeck.actuallyadditions.mod.recipe;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -55,8 +55,8 @@ public final class CrusherRecipeRegistry{
             CrusherRecipe recipe = ActuallyAdditionsAPI.CRUSHER_RECIPES.get(i);
             addedRecipes.add(recipe.inputStack+" -> "+recipe.outputOneStack);
         }
-        ModUtil.LOGGER.debug("Added "+addedRecipes.size()+" Crusher Recipes automatically: "+addedRecipes);
-        ModUtil.LOGGER.debug("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically, either because the inputs were missing outputs, or because they exist already: "+oresNoResult);
+        ActuallyAdditions.LOGGER.debug("Added "+addedRecipes.size()+" Crusher Recipes automatically: "+addedRecipes);
+        ActuallyAdditions.LOGGER.debug("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically, either because the inputs were missing outputs, or because they exist already: "+oresNoResult);
     }
 
     public static boolean hasBlacklistedOutput(ItemStack output, String[] config){
@@ -76,7 +76,7 @@ public final class CrusherRecipeRegistry{
                             meta = Integer.parseInt(split[1]);
                         }
                         catch(Exception e){
-                            ModUtil.LOGGER.warn("A config option appears to be incorrect: The entry "+conf+" can't be parsed!");
+                            ActuallyAdditions.LOGGER.warn("A config option appears to be incorrect: The entry "+conf+" can't be parsed!");
                         }
                     }
 

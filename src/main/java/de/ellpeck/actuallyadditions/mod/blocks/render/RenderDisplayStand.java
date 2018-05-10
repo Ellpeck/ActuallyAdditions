@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -46,7 +46,7 @@ public class RenderDisplayStand extends TileEntitySpecialRenderer<TileEntityDisp
                 AssetUtil.renderItemInWorld(stack);
             }
             catch(Exception e){
-                ModUtil.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is "+stack.getItem().getRegistryName()+"!", e);
+                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is "+stack.getItem().getRegistryName()+"!", e);
             }
 
             GlStateManager.popMatrix();

@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
@@ -47,7 +47,7 @@ public class PacketServerToClient implements IMessage{
             }
         }
         catch(Exception e){
-            ModUtil.LOGGER.error("Something went wrong trying to receive a client packet!", e);
+            ActuallyAdditions.LOGGER.error("Something went wrong trying to receive a client packet!", e);
         }
     }
 

@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -80,8 +80,8 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang{
 
         if(this.buttonSmartWhitelistLeft.isMouseOver() || this.buttonSmartWhitelistRight.isMouseOver()){
             List<String> list = new ArrayList<String>();
-            list.add(TextFormatting.BOLD+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.smart"));
-            list.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localize("info."+ModUtil.MOD_ID+".gui.smartInfo"), 200));
+            list.add(TextFormatting.BOLD+StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.smart"));
+            list.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.smartInfo"), 200));
             this.drawHoveringText(list, x, y);
         }
 
@@ -93,8 +93,8 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang{
     public void drawGuiContainerForegroundLayer(int x, int y){
         AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.tile);
 
-        String s1 = StringUtil.localize("info."+ModUtil.MOD_ID+".gui.inbound");
-        String s2 = StringUtil.localize("info."+ModUtil.MOD_ID+".gui.outbound");
+        String s1 = StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.inbound");
+        String s2 = StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.outbound");
         this.fontRenderer.drawString(s1, 46-this.fontRenderer.getStringWidth(s1)/2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
         this.fontRenderer.drawString(s2, 131-this.fontRenderer.getStringWidth(s2)/2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
     }

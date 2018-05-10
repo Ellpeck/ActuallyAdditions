@@ -12,8 +12,8 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -39,7 +39,7 @@ public class LensDisruption extends Lens{
             for(EntityItem item : items){
                 ItemStack stack = item.getItem();
                 if(!item.isDead && StackUtil.isValid(stack)){
-                    if(!stack.hasTagCompound() || !stack.getTagCompound().getBoolean(ModUtil.MOD_ID+"DisruptedAlready")){
+                    if(!stack.hasTagCompound() || !stack.getTagCompound().getBoolean(ActuallyAdditions.MODID+"DisruptedAlready")){
 
                         ItemStack newStack;
                         do{
@@ -57,7 +57,7 @@ public class LensDisruption extends Lens{
                         if(!newStack.hasTagCompound()){
                             newStack.setTagCompound(new NBTTagCompound());
                         }
-                        newStack.getTagCompound().setBoolean(ModUtil.MOD_ID+"DisruptedAlready", true);
+                        newStack.getTagCompound().setBoolean(ActuallyAdditions.MODID+"DisruptedAlready", true);
 
                         item.setDead();
 

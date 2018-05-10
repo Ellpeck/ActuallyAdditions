@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -224,14 +224,14 @@ public class ItemFillingWand extends ItemEnergy {
     public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, tooltip, advanced);
 
-        String display = StringUtil.localize("tooltip." + ModUtil.MOD_ID + ".item_filling_wand.selectedBlock.none");
+        String display = StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".item_filling_wand.selectedBlock.none");
 
         Pair<IBlockState, String> data = loadData(stack);
         if (data != null) {
             display = data.getRight();
         }
 
-        tooltip.add(String.format("%s: %s", StringUtil.localize("tooltip." + ModUtil.MOD_ID + ".item_filling_wand.selectedBlock"), display));
+        tooltip.add(String.format("%s: %s", StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".item_filling_wand.selectedBlock"), display));
     }
 
     @Override

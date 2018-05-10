@@ -36,9 +36,9 @@ public final class ItemUtil{
     }
 
     public static void registerBlock(Block block, ItemBlockBase itemBlock, String name, boolean addTab){
-        block.setUnlocalizedName(ModUtil.MOD_ID+"."+name);
+        block.setUnlocalizedName(ActuallyAdditions.MODID+"."+name);
 
-        block.setRegistryName(ModUtil.MOD_ID, name);
+        block.setRegistryName(ActuallyAdditions.MODID, name);
         RegistryHandler.BLOCKS_TO_REGISTER.add(block);
 
         itemBlock.setRegistryName(block.getRegistryName());
@@ -49,14 +49,14 @@ public final class ItemUtil{
         IMCHandler.doBlockIMC(block);
 
         if(block instanceof IColorProvidingBlock){
-            ActuallyAdditions.proxy.addColoredBlock(block);
+            ActuallyAdditions.PROXY.addColoredBlock(block);
         }
     }
 
     public static void registerItem(Item item, String name, boolean addTab){
-        item.setUnlocalizedName(ModUtil.MOD_ID+"."+name);
+        item.setUnlocalizedName(ActuallyAdditions.MODID+"."+name);
 
-        item.setRegistryName(ModUtil.MOD_ID, name);
+        item.setRegistryName(ActuallyAdditions.MODID, name);
         RegistryHandler.ITEMS_TO_REGISTER.add(item);
 
         item.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
@@ -64,7 +64,7 @@ public final class ItemUtil{
         IMCHandler.doItemIMC(item);
 
         if(item instanceof IColorProvidingItem){
-            ActuallyAdditions.proxy.addColoredItem(item);
+            ActuallyAdditions.PROXY.addColoredItem(item);
         }
     }
 

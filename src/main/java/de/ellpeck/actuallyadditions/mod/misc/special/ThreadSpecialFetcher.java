@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.special;
 
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -19,24 +19,24 @@ import java.util.Properties;
 public class ThreadSpecialFetcher extends Thread{
 
     public ThreadSpecialFetcher(){
-        this.setName(ModUtil.NAME+" Special Fetcher");
+        this.setName(ActuallyAdditions.NAME+" Special Fetcher");
         this.setDaemon(true);
         this.start();
     }
 
     @Override
     public void run(){
-        ModUtil.LOGGER.info("Fetching Special People Stuff...");
+        ActuallyAdditions.LOGGER.info("Fetching Special People Stuff...");
         try{
             URL url = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/specialPeopleStuff.properties");
             Properties specialProperties = new Properties();
             specialProperties.load(new InputStreamReader(url.openStream()));
             SpecialRenderInit.parse(specialProperties);
 
-            ModUtil.LOGGER.info("Fetching Special People Stuff done!");
+            ActuallyAdditions.LOGGER.info("Fetching Special People Stuff done!");
         }
         catch(Exception e){
-            ModUtil.LOGGER.error("Fetching Special People Stuff failed! (You can ignore this error technically.)", e);
+            ActuallyAdditions.LOGGER.error("Fetching Special People Stuff failed! (You can ignore this error technically.)", e);
         }
     }
 }

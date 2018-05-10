@@ -12,8 +12,8 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
@@ -41,7 +41,7 @@ public class PageReconstructor extends BookletPage{
         gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX+30, startY+10, 80, 146, 68, 48, 0);
 
-        gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ModUtil.MOD_ID+".reconstructorRecipe")+")", startX+6, startY+63, 0, false, gui.getMediumFontSize());
+        gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".reconstructorRecipe")+")", startX+6, startY+63, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+88);
     }

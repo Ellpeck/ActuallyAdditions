@@ -12,11 +12,11 @@ package de.ellpeck.actuallyadditions.mod.booklet.button;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiPage;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
@@ -97,17 +97,17 @@ public class BookmarkButton extends GuiButton{
                 IBookletChapter chapter = this.assignedPage.getChapter();
 
                 list.add(TextFormatting.GOLD+chapter.getLocalizedName()+", Page "+(chapter.getPageIndex(this.assignedPage)+1));
-                list.add(StringUtil.localize("booklet."+ModUtil.MOD_ID+".bookmarkButton.bookmark.openDesc"));
-                list.add(TextFormatting.ITALIC+StringUtil.localize("booklet."+ModUtil.MOD_ID+".bookmarkButton.bookmark.removeDesc"));
+                list.add(StringUtil.localize("booklet."+ActuallyAdditions.MODID+".bookmarkButton.bookmark.openDesc"));
+                list.add(TextFormatting.ITALIC+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".bookmarkButton.bookmark.removeDesc"));
             }
             else{
-                list.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".bookmarkButton.noBookmark.name"));
+                list.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".bookmarkButton.noBookmark.name"));
 
                 if(this.booklet instanceof GuiPage){
-                    list.add(StringUtil.localize("booklet."+ModUtil.MOD_ID+".bookmarkButton.noBookmark.pageDesc"));
+                    list.add(StringUtil.localize("booklet."+ActuallyAdditions.MODID+".bookmarkButton.noBookmark.pageDesc"));
                 }
                 else{
-                    list.add(StringUtil.localize("booklet."+ModUtil.MOD_ID+".bookmarkButton.noBookmark.notPageDesc"));
+                    list.add(StringUtil.localize("booklet."+ActuallyAdditions.MODID+".bookmarkButton.noBookmark.notPageDesc"));
                 }
             }
 

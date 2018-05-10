@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
@@ -96,7 +96,7 @@ public class BookletEntry implements IBookletEntry{
     @Override
     @SideOnly(Side.CLIENT)
     public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID+".indexEntry."+this.getIdentifier()+".name");
+        return StringUtil.localize("booklet."+ActuallyAdditions.MODID+".indexEntry."+this.getIdentifier()+".name");
     }
 
     @Override

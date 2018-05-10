@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.*;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -110,7 +109,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof IPhantomTile && ((IPhantomTile)tile).getGuiID() != -1){
-                player.openGui(ActuallyAdditions.instance, ((IPhantomTile)tile).getGuiID(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, ((IPhantomTile)tile).getGuiID(), world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;
@@ -128,24 +127,24 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
         if(tile != null){
             if(tile instanceof IPhantomTile){
                 IPhantomTile phantom = (IPhantomTile)tile;
-                minecraft.fontRenderer.drawStringWithShadow(TextFormatting.GOLD+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".blockPhantomRange.desc")+": "+phantom.getRange(), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-40, StringUtil.DECIMAL_COLOR_WHITE);
+                minecraft.fontRenderer.drawStringWithShadow(TextFormatting.GOLD+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".blockPhantomRange.desc")+": "+phantom.getRange(), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-40, StringUtil.DECIMAL_COLOR_WHITE);
                 if(phantom.hasBoundPosition()){
                     int distance = MathHelper.ceil(new Vec3d(posHit.getBlockPos()).distanceTo(new Vec3d(phantom.getBoundPosition())));
                     IBlockState state = minecraft.world.getBlockState(phantom.getBoundPosition());
                     Block block = state.getBlock();
                     Item item = Item.getItemFromBlock(block);
                     String name = item == null ? "Something Unrecognizable" : item.getItemStackDisplayName(new ItemStack(block, 1, block.getMetaFromState(state)));
-                    StringUtil.drawSplitString(minecraft.fontRenderer, StringUtil.localizeFormatted("tooltip."+ModUtil.MOD_ID+".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-30, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                    StringUtil.drawSplitString(minecraft.fontRenderer, StringUtil.localizeFormatted("tooltip."+ActuallyAdditions.MODID+".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-30, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
 
                     if(phantom.isBoundThingInRange()){
-                        StringUtil.drawSplitString(minecraft.fontRenderer, TextFormatting.DARK_GREEN+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".phantom.connectedRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        StringUtil.drawSplitString(minecraft.fontRenderer, TextFormatting.DARK_GREEN+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".phantom.connectedRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
                     }
                     else{
-                        StringUtil.drawSplitString(minecraft.fontRenderer, TextFormatting.DARK_RED+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".phantom.connectedNoRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        StringUtil.drawSplitString(minecraft.fontRenderer, TextFormatting.DARK_RED+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".phantom.connectedNoRange.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
                     }
                 }
                 else{
-                    minecraft.fontRenderer.drawStringWithShadow(TextFormatting.RED+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".phantom.notConnected.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, StringUtil.DECIMAL_COLOR_WHITE);
+                    minecraft.fontRenderer.drawStringWithShadow(TextFormatting.RED+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".phantom.notConnected.desc"), resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+25, StringUtil.DECIMAL_COLOR_WHITE);
                 }
             }
         }

@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFeeder;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -41,7 +41,7 @@ public class GuiFeeder extends GuiWtfMojang{
     public void drawScreen(int x, int y, float f){
         super.drawScreen(x, y, f);
         if(x >= this.guiLeft+69 && y >= this.guiTop+30 && x <= this.guiLeft+69+10 && y <= this.guiTop+30+10){
-            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount+" "+StringUtil.localize("info."+ModUtil.MOD_ID+".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD) ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.tooMany") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.notEnough")))};
+            String[] array = new String[]{(this.tileFeeder.currentAnimalAmount+" "+StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.animals")), ((this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD) ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.enoughToBreed") : (this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.tooMany") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.notEnough")))};
             this.drawHoveringText(Arrays.asList(array), x, y);
         }
     }

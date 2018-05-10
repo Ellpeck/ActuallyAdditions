@@ -56,7 +56,7 @@ public class BlockDirectionalBreaker extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityDirectionalBreaker breaker = (TileEntityDirectionalBreaker)world.getTileEntity(pos);
             if(breaker != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.DIRECTIONAL_BREAKER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.DIRECTIONAL_BREAKER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }

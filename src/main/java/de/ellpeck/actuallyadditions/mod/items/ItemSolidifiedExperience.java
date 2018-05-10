@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.item.EntityItem;
@@ -71,7 +71,7 @@ public class ItemSolidifiedExperience extends ItemBase{
             }
 
             EntityXPOrb orb = new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, amount);
-            orb.getEntityData().setBoolean(ModUtil.MOD_ID+"FromSolidified", true);
+            orb.getEntityData().setBoolean(ActuallyAdditions.MODID+"FromSolidified", true);
             world.spawnEntity(orb);
         }
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);

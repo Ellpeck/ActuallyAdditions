@@ -84,7 +84,7 @@ public class BlockGiantChest extends BlockContainerBase{
             TileEntityGiantChest chest = (TileEntityGiantChest)world.getTileEntity(pos);
             if(chest != null){
                 chest.fillWithLoot(player);
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.GIANT_CHEST.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.GIANT_CHEST.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }
@@ -171,10 +171,10 @@ public class BlockGiantChest extends BlockContainerBase{
         public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced){
             int type = this.block instanceof BlockGiantChest ? ((BlockGiantChest)this.block).type : -1;
             if(type == 2){
-                tooltip.add(TextFormatting.ITALIC+StringUtil.localize("container."+ModUtil.MOD_ID+".giantChestLarge.desc"));
+                tooltip.add(TextFormatting.ITALIC+StringUtil.localize("container."+ActuallyAdditions.MODID+".giantChestLarge.desc"));
             }
             else if(type == 0){
-                tooltip.add(TextFormatting.ITALIC+StringUtil.localize("container."+ModUtil.MOD_ID+".giantChest.desc"));
+                tooltip.add(TextFormatting.ITALIC+StringUtil.localize("container."+ActuallyAdditions.MODID+".giantChest.desc"));
             }
         }
 

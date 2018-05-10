@@ -60,7 +60,7 @@ public class ItemCrystalShard extends ItemBase implements IColorProvidingItem{
     @Override
     protected void registerRendering(){
         for(int i = 0; i < BlockCrystal.ALL_CRYSTALS.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), "inventory");
+            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), "inventory");
         }
     }
 

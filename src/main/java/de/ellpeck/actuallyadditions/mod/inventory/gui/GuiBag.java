@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -83,7 +83,7 @@ public class GuiBag extends GuiWtfMojang{
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container."+ModUtil.MOD_ID+"."+(this.isVoid ? "voidBag" : "bag")+".name"));
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container."+ActuallyAdditions.MODID+"."+(this.isVoid ? "voidBag" : "bag")+".name"));
     }
 
     @Override

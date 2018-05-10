@@ -71,7 +71,7 @@ public class BlockSmileyCloud extends BlockContainerBase{
         if(!world.isRemote){
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntitySmileyCloud){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.CLOUD.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.CLOUD.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
 
                 //TheAchievements.NAME_SMILEY_CLOUD.get(player);
             }

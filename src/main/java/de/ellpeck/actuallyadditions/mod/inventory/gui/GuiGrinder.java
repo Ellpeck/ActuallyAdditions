@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -85,7 +85,7 @@ public class GuiGrinder extends GuiWtfMojang{
 
         if(this.isDouble && this.buttonAutoSplit.isMouseOver()){
 
-            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.tileGrinder.isAutoSplit ? StringUtil.localize("info."+ModUtil.MOD_ID+".gui.autoSplitItems.on") : StringUtil.localize("info."+ModUtil.MOD_ID+".gui.autoSplitItems.off"))), x, y);
+            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.tileGrinder.isAutoSplit ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.autoSplitItems.on") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.autoSplitItems.off"))), x, y);
         }
     }
 

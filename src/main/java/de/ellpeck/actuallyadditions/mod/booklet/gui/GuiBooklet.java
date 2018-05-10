@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.button.BookmarkButton;
 import de.ellpeck.actuallyadditions.mod.booklet.button.TrialsButton;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
@@ -20,7 +21,6 @@ import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -74,7 +74,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
         int conf = config.getValue();
         if(conf <= 0){
             try{
-                return Float.parseFloat(StringUtil.localize("booklet."+ModUtil.MOD_ID+".fontSize."+lang));
+                return Float.parseFloat(StringUtil.localize("booklet."+ActuallyAdditions.MODID+".fontSize."+lang));
             }
             catch(Exception e){
                 return defaultValue;
@@ -182,7 +182,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
             this.fontRenderer.setUnicodeFlag(true);
 
             if(!this.searchField.isFocused() && (this.searchField.getText() == null || this.searchField.getText().isEmpty())){
-                this.fontRenderer.drawString(TextFormatting.ITALIC+StringUtil.localize("info."+ModUtil.MOD_ID+".booklet.searchField"), this.guiLeft+this.xSize+2, this.guiTop+this.ySize-40+2, 0xFFFFFF, false);
+                this.fontRenderer.drawString(TextFormatting.ITALIC+StringUtil.localize("info."+ActuallyAdditions.MODID+".booklet.searchField"), this.guiLeft+this.xSize+2, this.guiTop+this.ySize-40+2, 0xFFFFFF, false);
             }
 
             this.searchField.drawTextBox();

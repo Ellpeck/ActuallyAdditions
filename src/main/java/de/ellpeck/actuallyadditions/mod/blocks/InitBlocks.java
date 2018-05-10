@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay.Type;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockStair;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 
 public final class InitBlocks{
@@ -117,7 +117,7 @@ public final class InitBlocks{
     public static Block blockCrystalClusterIron;
 
     public static void init(){
-        ModUtil.LOGGER.info("Initializing Blocks...");
+        ActuallyAdditions.LOGGER.info("Initializing Blocks...");
 
         blockCrystalClusterRedstone = new BlockCrystalCluster("block_crystal_cluster_redstone", TheCrystals.REDSTONE);
         blockCrystalClusterLapis = new BlockCrystalCluster("block_crystal_cluster_lapis", TheCrystals.LAPIS);

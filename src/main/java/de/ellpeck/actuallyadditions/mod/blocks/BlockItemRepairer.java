@@ -50,7 +50,7 @@ public class BlockItemRepairer extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityItemRepairer repairer = (TileEntityItemRepairer)world.getTileEntity(pos);
             if(repairer != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.REPAIRER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.REPAIRER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }

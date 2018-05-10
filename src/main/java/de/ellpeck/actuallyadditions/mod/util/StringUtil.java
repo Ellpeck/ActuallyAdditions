@@ -18,12 +18,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+
 public final class StringUtil{
 
     public static final int DECIMAL_COLOR_WHITE = 16777215;
     public static final int DECIMAL_COLOR_GRAY_TEXT = 4210752;
 
-    public static final String BUGGED_ITEM_NAME = ModUtil.MOD_ID+".lolWutHowUDoDis";
+    public static final String BUGGED_ITEM_NAME = ActuallyAdditions.MODID+".lolWutHowUDoDis";
 
     /**
      * Localizes a given String

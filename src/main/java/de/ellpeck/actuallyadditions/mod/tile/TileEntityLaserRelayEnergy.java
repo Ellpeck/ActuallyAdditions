@@ -19,8 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -243,13 +243,13 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
     @Override
     @SideOnly(Side.CLIENT)
     public String getExtraDisplayString(){
-        return StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.energy.extra")+": "+TextFormatting.DARK_RED+StringUtil.localize(this.mode.name)+TextFormatting.RESET;
+        return StringUtil.localize("info."+ActuallyAdditions.MODID+".laserRelay.energy.extra")+": "+TextFormatting.DARK_RED+StringUtil.localize(this.mode.name)+TextFormatting.RESET;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public String getCompassDisplayString(){
-        return TextFormatting.GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".laserRelay.energy.display");
+        return TextFormatting.GREEN+StringUtil.localize("info."+ActuallyAdditions.MODID+".laserRelay.energy.display");
     }
 
     @Override
@@ -279,9 +279,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
     }
 
     public enum Mode{
-        BOTH("info."+ModUtil.MOD_ID+".laserRelay.mode.both"),
-        OUTPUT_ONLY("info."+ModUtil.MOD_ID+".laserRelay.mode.outputOnly"),
-        INPUT_ONLY("info."+ModUtil.MOD_ID+".laserRelay.mode.inputOnly");
+        BOTH("info."+ActuallyAdditions.MODID+".laserRelay.mode.both"),
+        OUTPUT_ONLY("info."+ActuallyAdditions.MODID+".laserRelay.mode.outputOnly"),
+        INPUT_ONLY("info."+ActuallyAdditions.MODID+".laserRelay.mode.inputOnly");
 
         public final String name;
 

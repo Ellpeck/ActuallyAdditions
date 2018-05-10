@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockColoredLamp;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
@@ -23,7 +24,6 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.*;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -51,7 +51,7 @@ import java.util.Random;
 
 public class VillageComponentEngineerHouse extends StructureVillagePieces.House1{
 
-    private static final ResourceLocation STRUCTURE_RES_LOC = new ResourceLocation(ModUtil.MOD_ID, "andrew_period_house");
+    private static final ResourceLocation STRUCTURE_RES_LOC = new ResourceLocation(ActuallyAdditions.MODID, "andrew_period_house");
 
     private static final int X_SIZE = 13;
     private static final int Y_SIZE = 11;

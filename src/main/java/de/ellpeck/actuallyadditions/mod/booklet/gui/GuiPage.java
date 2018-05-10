@@ -13,10 +13,10 @@ package de.ellpeck.actuallyadditions.mod.booklet.gui;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.page.ItemDisplay;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -96,7 +96,7 @@ public class GuiPage extends GuiBooklet{
                         Desktop.getDesktop().browse(new URI(link));
                     }
                     catch(Exception e){
-                        ModUtil.LOGGER.error("Couldn't open website from Booklet page!", e);
+                        ActuallyAdditions.LOGGER.error("Couldn't open website from Booklet page!", e);
                     }
                 }
             }
@@ -119,7 +119,7 @@ public class GuiPage extends GuiBooklet{
 
         List<String> links = this.getWebLinks();
         if(links != null && !links.isEmpty()){
-            this.buttonViewOnline = new TexturedButton(RES_LOC_GADGETS, -782822, this.guiLeft+this.xSize-24, this.guiTop+this.ySize-25, 0, 172, 16, 16, Collections.singletonList(TextFormatting.GOLD+StringUtil.localize("booklet."+ModUtil.MOD_ID+".onlineButton.name")));
+            this.buttonViewOnline = new TexturedButton(RES_LOC_GADGETS, -782822, this.guiLeft+this.xSize-24, this.guiTop+this.ySize-25, 0, 172, 16, 16, Collections.singletonList(TextFormatting.GOLD+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".onlineButton.name")));
             this.buttonList.add(this.buttonViewOnline);
         }
 

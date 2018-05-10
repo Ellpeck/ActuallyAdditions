@@ -13,12 +13,12 @@ package de.ellpeck.actuallyadditions.mod.jei.coffee;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
@@ -55,12 +55,12 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton{
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
         if(this.theIngredient.getExtraText() != null){
-            minecraft.fontRenderer.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID+".coffee.special")+":", 2, 4, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            minecraft.fontRenderer.drawString(StringUtil.localize("container.nei."+ActuallyAdditions.MODID+".coffee.special")+":", 2, 4, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
             minecraft.fontRenderer.drawString(this.theIngredient.getExtraText(), 2, 16, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
 
         if(this.theIngredient.maxAmplifier > 0){
-            minecraft.fontRenderer.drawString(StringUtil.localize("container.nei."+ModUtil.MOD_ID+".coffee.maxAmount")+": "+this.theIngredient.maxAmplifier, 2, 28, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+            minecraft.fontRenderer.drawString(StringUtil.localize("container.nei."+ActuallyAdditions.MODID+".coffee.maxAmount")+": "+this.theIngredient.maxAmplifier, 2, 28, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
 
         super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);

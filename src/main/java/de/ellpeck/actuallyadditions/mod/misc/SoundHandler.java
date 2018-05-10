@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.RegistryHandler;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
@@ -30,7 +30,7 @@ public final class SoundHandler{
     }
 
     private static SoundEvent registerSound(String name){
-        ResourceLocation resLoc = new ResourceLocation(ModUtil.MOD_ID, name);
+        ResourceLocation resLoc = new ResourceLocation(ActuallyAdditions.MODID, name);
 
         SoundEvent event = new SoundEvent(resLoc);
         event.setRegistryName(resLoc);

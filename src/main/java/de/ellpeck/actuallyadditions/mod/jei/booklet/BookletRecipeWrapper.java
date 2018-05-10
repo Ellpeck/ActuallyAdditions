@@ -12,8 +12,8 @@ package de.ellpeck.actuallyadditions.mod.jei.booklet;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
@@ -47,7 +47,7 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
-        List<String> header = minecraft.fontRenderer.listFormattedStringToWidth(StringUtil.localize("container.nei."+ModUtil.MOD_ID+".booklet.header").replaceAll("<item>", TextFormatting.BLUE+"").replaceAll("<r>", TextFormatting.BLACK+""), 150);
+        List<String> header = minecraft.fontRenderer.listFormattedStringToWidth(StringUtil.localize("container.nei."+ActuallyAdditions.MODID+".booklet.header").replaceAll("<item>", TextFormatting.BLUE+"").replaceAll("<r>", TextFormatting.BLACK+""), 150);
         for(int i = 0; i < header.size(); i++){
             minecraft.fontRenderer.drawString((String)header.get(i), 0, 17+i*(minecraft.fontRenderer.FONT_HEIGHT+1), 0, false);
         }
@@ -55,7 +55,7 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton{
         int maxLines = 4;
         IBookletChapter chapter = this.thePage.getChapter();
         String aText = chapter.getAllPages()[0].getInfoText();
-        List<String> text = minecraft.fontRenderer.listFormattedStringToWidth(aText != null ? aText : TextFormatting.DARK_RED+StringUtil.localize("container.nei."+ModUtil.MOD_ID+".booklet.noText"), 150);
+        List<String> text = minecraft.fontRenderer.listFormattedStringToWidth(aText != null ? aText : TextFormatting.DARK_RED+StringUtil.localize("container.nei."+ActuallyAdditions.MODID+".booklet.noText"), 150);
         for(int i = 0; i < Math.min(maxLines, text.size()); i++){
             minecraft.fontRenderer.drawString(text.get(i)+(i == maxLines-1 && text.size() > maxLines ? TextFormatting.RESET+""+TextFormatting.BLACK+"..." : ""), 0, 16+25+i*(minecraft.fontRenderer.FONT_HEIGHT+1), 0, false);
         }

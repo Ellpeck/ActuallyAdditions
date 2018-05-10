@@ -12,10 +12,10 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.init.Blocks;
@@ -35,7 +35,7 @@ public final class CrusherCrafting{
     public static CrusherRecipe recipeDiamondHorseArmor;
 
     public static void init(){
-        ModUtil.LOGGER.info("Initializing Crusher Recipes...");
+        ActuallyAdditions.LOGGER.info("Initializing Crusher Recipes...");
 
         final NonNullList<ItemStack> LIST = NonNullList.withSize(1, StackUtil.getEmpty());
         

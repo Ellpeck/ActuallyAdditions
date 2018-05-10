@@ -81,7 +81,7 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
                 type = GuiHandler.GuiTypes.GIANT_CHEST_PAGE_3;
             }
 
-            player.openGui(ActuallyAdditions.instance, type.ordinal(), this.world, this.pos.getX(), this.pos.getY(), this.pos.getZ());
+            player.openGui(ActuallyAdditions.INSTANCE, type.ordinal(), this.world, this.pos.getX(), this.pos.getY(), this.pos.getZ());
         }
     }
 

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
@@ -19,7 +20,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.EnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.items.ItemWingsOfTheBats;
 import de.ellpeck.actuallyadditions.mod.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
@@ -79,7 +79,7 @@ public class ClientEvents{
             if(ConfigBoolValues.MOST_BLAND_PERSON_EVER.isEnabled()){
                 ResourceLocation regName = stack.getItem().getRegistryName();
                 if(regName != null){
-                    if(regName.toString().toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){
+                    if(regName.toString().toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)){
                         if(event.getToolTip().size() > 0){
                             event.getToolTip().set(0, TextFormatting.RESET+TextFormatting.WHITE.toString()+event.getToolTip().get(0));
                         }
@@ -97,48 +97,48 @@ public class ClientEvents{
         if(event.getFlags().isAdvanced() && StackUtil.isValid(event.getItemStack())){
             if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
                 if(GuiScreen.isCtrlKeyDown()){
-                    event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".extraInfo.desc")+":");
+                    event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".extraInfo.desc")+":");
 
                     //OreDict Names
                     int[] oreIDs = OreDictionary.getOreIDs(event.getItemStack());
-                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".oredictName.desc")+":");
+                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".oredictName.desc")+":");
                     if(oreIDs.length > 0){
                         for(int oreID : oreIDs){
                             event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+OreDictionary.getOreName(oreID));
                         }
                     }
                     else{
-                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".noOredictNameAvail.desc"));
+                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".noOredictNameAvail.desc"));
                     }
 
                     //Code Name
-                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".codeName.desc")+":");
+                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".codeName.desc")+":");
                     event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+Item.REGISTRY.getNameForObject(event.getItemStack().getItem()));
 
                     //Base Item's Unlocalized Name
                     String baseName = event.getItemStack().getItem().getUnlocalizedName();
                     if(baseName != null){
-                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".baseUnlocName.desc")+":");
+                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".baseUnlocName.desc")+":");
                         event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+baseName);
                     }
 
                     //Metadata
                     int meta = event.getItemStack().getItemDamage();
                     int max = event.getItemStack().getMaxDamage();
-                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".meta.desc")+":");
+                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".meta.desc")+":");
                     event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+meta+(max > 0 ? "/"+max : ""));
 
                     //Unlocalized Name
                     String metaName = event.getItemStack().getItem().getUnlocalizedName(event.getItemStack());
                     if(metaName != null && baseName != null && !metaName.equals(baseName)){
-                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".unlocName.desc")+":");
+                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".unlocName.desc")+":");
                         event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+metaName);
                     }
 
                     //NBT
                     NBTTagCompound compound = event.getItemStack().getTagCompound();
                     if(compound != null && !compound.hasNoTags()){
-                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".nbt.desc")+":");
+                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".nbt.desc")+":");
                         if(GuiScreen.isShiftKeyDown()){
                             int limit = ConfigIntValues.CTRL_INFO_NBT_CHAR_LIMIT.getValue();
                             String compoundStrg = compound.toString();
@@ -154,17 +154,17 @@ public class ClientEvents{
                             event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+compoundDisplay);
                         }
                         else{
-                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+TextFormatting.ITALIC+"["+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".pressShift.desc")+"]");
+                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+TextFormatting.ITALIC+"["+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".pressShift.desc")+"]");
                         }
                     }
 
                     //Disabling Info
-                    event.getToolTip().add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".disablingInfo.desc"));
+                    event.getToolTip().add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".disablingInfo.desc"));
 
                 }
                 else{
                     if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
-                        event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ModUtil.MOD_ID+".ctrlForMoreInfo.desc"));
+                        event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".ctrlForMoreInfo.desc"));
                     }
                 }
             }
@@ -197,15 +197,15 @@ public class ClientEvents{
                 if(tileHit instanceof TileEntityBase){
                     TileEntityBase base = (TileEntityBase)tileHit;
                     if(base.isRedstoneToggle()){
-                        String strg = String.format("%s: %s", StringUtil.localize("info."+ModUtil.MOD_ID+".redstoneMode.name"), TextFormatting.DARK_RED+StringUtil.localize("info."+ModUtil.MOD_ID+".redstoneMode."+(base.isPulseMode ? "pulse" : "deactivation"))+TextFormatting.RESET);
+                        String strg = String.format("%s: %s", StringUtil.localize("info."+ActuallyAdditions.MODID+".redstoneMode.name"), TextFormatting.DARK_RED+StringUtil.localize("info."+ActuallyAdditions.MODID+".redstoneMode."+(base.isPulseMode ? "pulse" : "deactivation"))+TextFormatting.RESET);
                         font.drawStringWithShadow(strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
 
                         String expl;
                         if(StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator){
-                            expl = TextFormatting.GREEN+StringUtil.localize("info."+ModUtil.MOD_ID+".redstoneMode.validItem");
+                            expl = TextFormatting.GREEN+StringUtil.localize("info."+ActuallyAdditions.MODID+".redstoneMode.validItem");
                         }
                         else{
-                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localizeFormatted("info."+ModUtil.MOD_ID+".redstoneMode.invalidItem", StringUtil.localize(ConfigValues.itemRedstoneTorchConfigurator.getUnlocalizedName()+".name"));
+                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".redstoneMode.invalidItem", StringUtil.localize(ConfigValues.itemRedstoneTorchConfigurator.getUnlocalizedName()+".name"));
                         }
                         font.drawStringWithShadow(expl, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
                     }

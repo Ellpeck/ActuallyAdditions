@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -65,7 +65,7 @@ public class GuiPhantomPlacer extends GuiWtfMojang{
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         if(!this.placer.isBreaker && this.buttonList.get(0).isMouseOver()){
-            String loc = "info."+ModUtil.MOD_ID+".placer.sides";
+            String loc = "info."+ActuallyAdditions.MODID+".placer.sides";
 
             List<String> textList = new ArrayList<String>();
             textList.add(TextFormatting.GOLD+StringUtil.localize(loc+".1"));

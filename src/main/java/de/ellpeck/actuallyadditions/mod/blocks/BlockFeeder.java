@@ -47,7 +47,7 @@ public class BlockFeeder extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityFeeder feeder = (TileEntityFeeder)world.getTileEntity(pos);
             if(feeder != null){
-                player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.FEEDER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FEEDER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }

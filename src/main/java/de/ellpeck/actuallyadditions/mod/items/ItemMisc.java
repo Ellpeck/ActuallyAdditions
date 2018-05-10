@@ -70,7 +70,7 @@ public class ItemMisc extends ItemBase{
     protected void registerRendering(){
         for(int i = 0; i < ALL_MISC_ITEMS.length; i++){
             String name = this.getRegistryName()+"_"+ALL_MISC_ITEMS[i].name;
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
+            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
     }
 

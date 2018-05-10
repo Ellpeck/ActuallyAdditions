@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.booklet;
 
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -45,7 +45,7 @@ public class BookletRecipeCategory implements IRecipeCategory<BookletRecipeWrapp
 
     @Override
     public String getModName(){
-        return ModUtil.NAME;
+        return ActuallyAdditions.NAME;
     }
 
 

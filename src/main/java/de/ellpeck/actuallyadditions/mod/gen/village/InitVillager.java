@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.gen.village;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
@@ -23,7 +24,6 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
@@ -37,7 +37,7 @@ public final class InitVillager{
     public static VillagerProfession engineerProfession;
 
     public static void init(){
-        ModUtil.LOGGER.info("Initializing Village Addons...");
+        ActuallyAdditions.LOGGER.info("Initializing Village Addons...");
 
         if(ConfigBoolValues.JAM_VILLAGER_EXISTS.isEnabled()){
             initJamVillagePart();
@@ -52,11 +52,11 @@ public final class InitVillager{
 
     private static void initEngineerVillagePart(){
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageEngineerHouseHandler());
-        MapGenStructureIO.registerStructureComponent(VillageComponentEngineerHouse.class, ModUtil.MOD_ID+":engineerHouseStructure");
+        MapGenStructureIO.registerStructureComponent(VillageComponentEngineerHouse.class, ActuallyAdditions.MODID+":engineerHouseStructure");
 
-        engineerProfession = new VillagerProfession(ModUtil.MOD_ID+":engineer", ModUtil.MOD_ID+":textures/entity/villager/engineer_villager.png", ModUtil.MOD_ID+":textures/entity/villager/engineer_villager_zombie.png");
+        engineerProfession = new VillagerProfession(ActuallyAdditions.MODID+":engineer", ActuallyAdditions.MODID+":textures/entity/villager/engineer_villager.png", ActuallyAdditions.MODID+":textures/entity/villager/engineer_villager_zombie.png");
 
-        VillagerCareer crystallizer = new VillagerCareer(engineerProfession, ModUtil.MOD_ID+".crystallizer");
+        VillagerCareer crystallizer = new VillagerCareer(engineerProfession, ActuallyAdditions.MODID+".crystallizer");
         crystallizer.addTrade(1,
                 new BasicTradeList(new PriceInfo(1, 2), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), new PriceInfo(2, 8)),
                 new BasicTradeList(new PriceInfo(1, 3), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), new PriceInfo(2, 6)),
@@ -73,7 +73,7 @@ public final class InitVillager{
                 new BasicTradeList(new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), new PriceInfo(4, 6), new PriceInfo(1, 1)),
                 new BasicTradeList(new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), new PriceInfo(6, 12), new PriceInfo(1, 2)));
 
-        VillagerCareer engineer = new VillagerCareer(engineerProfession, ModUtil.MOD_ID+".engineer");
+        VillagerCareer engineer = new VillagerCareer(engineerProfession, ActuallyAdditions.MODID+".engineer");
         engineer.addTrade(1,
                 new BasicTradeList(new PriceInfo(1, 2), new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal()), new PriceInfo(2, 3)),
                 new BasicTradeList(new PriceInfo(1, 2), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), new PriceInfo(6, 8)),
@@ -92,9 +92,9 @@ public final class InitVillager{
     }
 
     private static void initJamVillagePart(){
-        jamProfession = new VillagerProfession(ModUtil.MOD_ID+":jamGuy", ModUtil.MOD_ID+":textures/entity/villager/jam_villager.png", ModUtil.MOD_ID+":textures/entity/villager/jam_villager_zombie.png");
+        jamProfession = new VillagerProfession(ActuallyAdditions.MODID+":jamGuy", ActuallyAdditions.MODID+":textures/entity/villager/jam_villager.png", ActuallyAdditions.MODID+":textures/entity/villager/jam_villager_zombie.png");
 
-        VillagerCareer career = new VillagerCareer(jamProfession, ModUtil.MOD_ID+".jammer");
+        VillagerCareer career = new VillagerCareer(jamProfession, ActuallyAdditions.MODID+".jammer");
         career.addTrade(1,
                 new BasicTradeList(new PriceInfo(1, 4), new ItemStack(InitItems.itemJams, 1, TheJams.CU_BA_RA.ordinal()), new PriceInfo(1, 3)),
                 new BasicTradeList(new PriceInfo(1, 4), new ItemStack(InitItems.itemJams, 1, TheJams.GRA_KI_BA.ordinal()), new PriceInfo(1, 3)));
@@ -107,12 +107,12 @@ public final class InitVillager{
                 new BasicTradeList(new PriceInfo(1, 4), new ItemStack(InitItems.itemJams, 1, TheJams.PI_CO.ordinal()), new PriceInfo(1, 3)));
 
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageJamHouseHandler());
-        MapGenStructureIO.registerStructureComponent(VillageComponentJamHouse.class, ModUtil.MOD_ID+":jamHouseStructure");
+        MapGenStructureIO.registerStructureComponent(VillageComponentJamHouse.class, ActuallyAdditions.MODID+":jamHouseStructure");
     }
 
     private static void initCustomCropFieldPart(){
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageCustomCropFieldHandler());
-        MapGenStructureIO.registerStructureComponent(VillageComponentCustomCropField.class, ModUtil.MOD_ID+":customCropFieldStructure");
+        MapGenStructureIO.registerStructureComponent(VillageComponentCustomCropField.class, ActuallyAdditions.MODID+":customCropFieldStructure");
     }
 
 }

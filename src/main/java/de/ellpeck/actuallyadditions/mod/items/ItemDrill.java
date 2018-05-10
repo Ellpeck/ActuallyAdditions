@@ -25,7 +25,6 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -122,7 +121,7 @@ public class ItemDrill extends ItemEnergy{
                     }
                     //Notify the Player and log the Exception
                     catch(Exception e){
-                        ModUtil.LOGGER.error("Player "+player.getName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.getDimension()+" threw an Exception! Don't let that happen again!");
+                        ActuallyAdditions.LOGGER.error("Player "+player.getName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.getDimension()+" threw an Exception! Don't let that happen again!");
                     }
 
                     player.inventory.setInventorySlotContents(slot, player.getHeldItem(hand));
@@ -164,7 +163,7 @@ public class ItemDrill extends ItemEnergy{
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
         if(!world.isRemote && player.isSneaking() && hand == EnumHand.MAIN_HAND){
-            player.openGui(ActuallyAdditions.instance, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
+            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
         return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
@@ -325,7 +324,7 @@ public class ItemDrill extends ItemEnergy{
     protected void registerRendering(){
         for(int i = 0; i < 16; i++){
             String name = this.getRegistryName()+"_"+TheColoredLampColors.values()[i].regName;
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
+            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
     }
 

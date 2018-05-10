@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -67,7 +67,7 @@ public class PageTrials extends BookletPage{
     @Override
     @SideOnly(Side.CLIENT)
     protected String getLocalizationKey(){
-        return "booklet."+ModUtil.MOD_ID+".trials."+this.chapter.getIdentifier()+".text."+this.localizationKey;
+        return "booklet."+ActuallyAdditions.MODID+".trials."+this.chapter.getIdentifier()+".text."+this.localizationKey;
     }
 
     @Override
@@ -102,10 +102,10 @@ public class PageTrials extends BookletPage{
 
             boolean completed = data.completedTrials.contains(this.chapter.getIdentifier());
             if(completed){
-                this.button.displayString = TextFormatting.DARK_GREEN+StringUtil.localize("booklet."+ModUtil.MOD_ID+".trialFinishButton.completed.name");
+                this.button.displayString = TextFormatting.DARK_GREEN+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".trialFinishButton.completed.name");
             }
             else{
-                this.button.displayString = TextFormatting.DARK_RED+StringUtil.localize("booklet."+ModUtil.MOD_ID+".trialFinishButton.uncompleted.name");
+                this.button.displayString = TextFormatting.DARK_RED+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".trialFinishButton.uncompleted.name");
             }
 
         }

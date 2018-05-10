@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.config;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -57,7 +57,7 @@ public final class ConfigValues{
         }
 
         if(itemRedstoneTorchConfigurator == null || itemCompassConfigurator == null){
-            ModUtil.LOGGER.error("Parsing the Configuration Items config failed, reverting back to the default settings!");
+            ActuallyAdditions.LOGGER.error("Parsing the Configuration Items config failed, reverting back to the default settings!");
 
             itemRedstoneTorchConfigurator = Item.getItemFromBlock(Blocks.REDSTONE_TORCH);
             itemCompassConfigurator = Items.COMPASS;

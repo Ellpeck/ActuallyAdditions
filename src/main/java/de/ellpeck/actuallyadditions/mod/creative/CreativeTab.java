@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.creative;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -32,8 +32,8 @@ public class CreativeTab extends CreativeTabs{
     private NonNullList<ItemStack> list;
 
     public CreativeTab(){
-        super(ModUtil.MOD_ID);
-        this.setBackgroundImageName(ModUtil.MOD_ID+".png");
+        super(ActuallyAdditions.MODID);
+        this.setBackgroundImageName(ActuallyAdditions.MODID+".png");
     }
 
     @Override

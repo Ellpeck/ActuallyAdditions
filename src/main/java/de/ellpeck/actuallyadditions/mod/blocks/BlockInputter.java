@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputter;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputterAdvanced;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
@@ -62,7 +61,7 @@ public class BlockInputter extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityInputter inputter = (TileEntityInputter)world.getTileEntity(pos);
             if(inputter != null){
-                player.openGui(ActuallyAdditions.instance, this.isAdvanced ? GuiHandler.GuiTypes.INPUTTER_ADVANCED.ordinal() : GuiHandler.GuiTypes.INPUTTER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, this.isAdvanced ? GuiHandler.GuiTypes.INPUTTER_ADVANCED.ordinal() : GuiHandler.GuiTypes.INPUTTER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }
@@ -113,7 +112,7 @@ public class BlockInputter extends BlockContainerBase{
                 this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS)+1;
             }
 
-            return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ModUtil.MOD_ID+".block_inputter.add."+this.toPick+".name")+")";
+            return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ActuallyAdditions.MODID+".block_inputter.add."+this.toPick+".name")+")";
         	}
         	else return super.getItemStackDisplayName(stack);
         }

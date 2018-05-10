@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
@@ -23,7 +24,6 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -164,7 +164,7 @@ public class CommonEvents{
         if(!event.player.world.isRemote && event.player instanceof EntityPlayerMP){
             EntityPlayerMP player = (EntityPlayerMP)event.player;
             PacketHandlerHelper.syncPlayerData(player, true);
-            ModUtil.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+".");
+            ActuallyAdditions.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+".");
         }
     }
 
@@ -176,7 +176,7 @@ public class CommonEvents{
             if(!event.player.world.isRemote && StackUtil.isValid(event.crafting) && event.crafting.getItem() != InitItems.itemBooklet){
 
                 String name = event.crafting.getItem().getRegistryName().toString();
-                if(name != null && name.toLowerCase(Locale.ROOT).contains(ModUtil.MOD_ID)){
+                if(name != null && name.toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)){
                     PlayerData.PlayerSave save = PlayerData.getDataFromPlayer(event.player);
                     if(save != null && !save.bookGottenAlready){
                         save.bookGottenAlready = true;

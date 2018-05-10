@@ -57,7 +57,7 @@ public class BlockMisc extends BlockBase{
     @Override
     public void registerRendering(){
         for(int i = 0; i < ALL_MISC_BLOCKS.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_MISC_BLOCKS[i].name);
+            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_MISC_BLOCKS[i].name);
         }
     }
 

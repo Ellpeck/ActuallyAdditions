@@ -63,7 +63,7 @@ public class BlockCrystal extends BlockBase{
     @Override
     public void registerRendering(){
         for(int i = 0; i < ALL_CRYSTALS.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_CRYSTALS[i].name);
+            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_CRYSTALS[i].name);
         }
     }
 

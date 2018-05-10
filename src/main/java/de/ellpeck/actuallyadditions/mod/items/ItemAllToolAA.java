@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -67,7 +66,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem{
 
     @Override
     protected void registerRendering(){
-        ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this), new ResourceLocation(ModUtil.MOD_ID, "item_paxel"), "inventory");
+        ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), new ResourceLocation(ActuallyAdditions.MODID, "item_paxel"), "inventory");
     }
 
 

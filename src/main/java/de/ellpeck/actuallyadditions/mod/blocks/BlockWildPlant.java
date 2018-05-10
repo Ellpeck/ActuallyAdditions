@@ -96,7 +96,7 @@ public class BlockWildPlant extends BlockBushBase{
     @Override
     public void registerRendering(){
         for(int i = 0; i < ALL_WILD_PLANTS.length; i++){
-            ActuallyAdditions.proxy.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_WILD_PLANTS[i].name);
+            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_WILD_PLANTS[i].name);
         }
     }
 

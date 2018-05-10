@@ -12,9 +12,9 @@ package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -50,7 +50,7 @@ public class RenderEmpowerer extends TileEntitySpecialRenderer<TileEntityEmpower
                 AssetUtil.renderItemInWorld(stack);
             }
             catch(Exception e){
-                ModUtil.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is " + stack.getItem().getRegistryName() + ":" + stack.getMetadata() + "!", e);
+                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is " + stack.getItem().getRegistryName() + ":" + stack.getMetadata() + "!", e);
             }
 
             GlStateManager.popMatrix();

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
@@ -17,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -32,9 +32,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DungeonLoot{
 
-    public static final ResourceLocation JAM_HOUSE = new ResourceLocation(ModUtil.MOD_ID, "jam_house");
-    public static final ResourceLocation LUSH_CAVES = new ResourceLocation(ModUtil.MOD_ID, "lush_caves");
-    public static final ResourceLocation ENGINEER_HOUSE = new ResourceLocation(ModUtil.MOD_ID, "engineer_house");
+    public static final ResourceLocation JAM_HOUSE = new ResourceLocation(ActuallyAdditions.MODID, "jam_house");
+    public static final ResourceLocation LUSH_CAVES = new ResourceLocation(ActuallyAdditions.MODID, "lush_caves");
+    public static final ResourceLocation ENGINEER_HOUSE = new ResourceLocation(ActuallyAdditions.MODID, "engineer_house");
 
     public DungeonLoot(){
         LootTableList.register(JAM_HOUSE);
@@ -104,31 +104,31 @@ public class DungeonLoot{
             if(JAM_HOUSE.equals(event.getName())){
                 LootFunction jamDamage = new SetMetadata(noCondition, new RandomValueRange(0, TheJams.values().length-1));
                 LootFunction jamAmount = new SetCount(noCondition, new RandomValueRange(3, 5));
-                pool.addEntry(new LootEntryItem(InitItems.itemJams, 2, 0, new LootFunction[]{jamDamage, jamAmount}, noCondition, ModUtil.MOD_ID+":jams"));
+                pool.addEntry(new LootEntryItem(InitItems.itemJams, 2, 0, new LootFunction[]{jamDamage, jamAmount}, noCondition, ActuallyAdditions.MODID+":jams"));
 
                 LootFunction glassAmount = new SetCount(noCondition, new RandomValueRange(2));
-                pool.addEntry(new LootEntryItem(Items.GLASS_BOTTLE, 1, 0, new LootFunction[]{glassAmount}, noCondition, ModUtil.MOD_ID+":bottles"));
+                pool.addEntry(new LootEntryItem(Items.GLASS_BOTTLE, 1, 0, new LootFunction[]{glassAmount}, noCondition, ActuallyAdditions.MODID+":bottles"));
             }
             else if(LUSH_CAVES.equals(event.getName())){
                 addQuartz = true;
                 addBatWings = true;
                 addCrystals = true;
 
-                pool.addEntry(new LootEntryItem(Items.BOOK, 50, 0, new LootFunction[0], noCondition, ModUtil.MOD_ID+":book"));
+                pool.addEntry(new LootEntryItem(Items.BOOK, 50, 0, new LootFunction[0], noCondition, ActuallyAdditions.MODID+":book"));
 
                 LootFunction bonesAmount = new SetCount(noCondition, new RandomValueRange(1, 12));
-                pool.addEntry(new LootEntryItem(Items.BONE, 100, 0, new LootFunction[]{bonesAmount}, noCondition, ModUtil.MOD_ID+":bones"));
+                pool.addEntry(new LootEntryItem(Items.BONE, 100, 0, new LootFunction[]{bonesAmount}, noCondition, ActuallyAdditions.MODID+":bones"));
 
                 Item[] aiots = new Item[]{InitItems.woodenPaxel, InitItems.stonePaxel, InitItems.quartzPaxel, InitItems.itemPaxelCrystalBlack, InitItems.itemPaxelCrystalWhite};
                 for(int i = 0; i < aiots.length; i++){
                     LootFunction damage = new SetDamage(noCondition, new RandomValueRange(0F, 0.25F));
-                    pool.addEntry(new LootEntryItem(aiots[i], 30-i*5, 0, new LootFunction[]{damage}, noCondition, ModUtil.MOD_ID+":aiot"+i));
+                    pool.addEntry(new LootEntryItem(aiots[i], 30-i*5, 0, new LootFunction[]{damage}, noCondition, ActuallyAdditions.MODID+":aiot"+i));
                 }
 
                 Item[] armor = new Item[]{Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS};
                 for(int i = 0; i < armor.length; i++){
                     LootFunction damage = new SetDamage(noCondition, new RandomValueRange(0F, 0.75F));
-                    pool.addEntry(new LootEntryItem(armor[i], 50, 0, new LootFunction[]{damage}, noCondition, ModUtil.MOD_ID+":armor"+i));
+                    pool.addEntry(new LootEntryItem(armor[i], 50, 0, new LootFunction[]{damage}, noCondition, ActuallyAdditions.MODID+":armor"+i));
                 }
             }
             else if(ENGINEER_HOUSE.equals(event.getName())){
@@ -139,11 +139,11 @@ public class DungeonLoot{
 
                 LootFunction woodCaseAmount = new SetCount(noCondition, new RandomValueRange(3, 10));
                 LootFunction woodCaseDamage = new SetMetadata(noCondition, new RandomValueRange(TheMiscBlocks.WOOD_CASING.ordinal()));
-                pool.addEntry(new LootEntryItem(Item.getItemFromBlock(InitBlocks.blockMisc), 60, 0, new LootFunction[]{woodCaseAmount, woodCaseDamage}, noCondition, ModUtil.MOD_ID+":woodenCase"));
+                pool.addEntry(new LootEntryItem(Item.getItemFromBlock(InitBlocks.blockMisc), 60, 0, new LootFunction[]{woodCaseAmount, woodCaseDamage}, noCondition, ActuallyAdditions.MODID+":woodenCase"));
 
                 LootFunction ironCaseAmount = new SetCount(noCondition, new RandomValueRange(1, 3));
                 LootFunction ironCaseDamage = new SetMetadata(noCondition, new RandomValueRange(TheMiscBlocks.IRON_CASING.ordinal()));
-                pool.addEntry(new LootEntryItem(Item.getItemFromBlock(InitBlocks.blockMisc), 40, 0, new LootFunction[]{ironCaseAmount, ironCaseDamage}, noCondition, ModUtil.MOD_ID+":ironCase"));
+                pool.addEntry(new LootEntryItem(Item.getItemFromBlock(InitBlocks.blockMisc), 40, 0, new LootFunction[]{ironCaseAmount, ironCaseDamage}, noCondition, ActuallyAdditions.MODID+":ironCase"));
             }
 
             if(addCrystals){
@@ -151,25 +151,25 @@ public class DungeonLoot{
                 LootFunction amount = new SetCount(noCondition, new RandomValueRange(1, 3));
                 LootFunction[] functions = new LootFunction[]{damage, amount};
 
-                pool.addEntry(new LootEntryItem(InitItems.itemCrystal, 20, 0, functions, noCondition, ModUtil.MOD_ID+":crystalItems"));
-                pool.addEntry(new LootEntryItem(Item.getItemFromBlock(InitBlocks.blockCrystal), 3, 0, functions, noCondition, ModUtil.MOD_ID+":crystalBlocks"));
+                pool.addEntry(new LootEntryItem(InitItems.itemCrystal, 20, 0, functions, noCondition, ActuallyAdditions.MODID+":crystalItems"));
+                pool.addEntry(new LootEntryItem(Item.getItemFromBlock(InitBlocks.blockCrystal), 3, 0, functions, noCondition, ActuallyAdditions.MODID+":crystalBlocks"));
             }
 
             if(addDrillCore){
                 LootFunction damage = new SetMetadata(noCondition, new RandomValueRange(TheMiscItems.DRILL_CORE.ordinal()));
-                pool.addEntry(new LootEntryItem(InitItems.itemMisc, 5, 0, new LootFunction[]{damage}, noCondition, ModUtil.MOD_ID+":drillCore"));
+                pool.addEntry(new LootEntryItem(InitItems.itemMisc, 5, 0, new LootFunction[]{damage}, noCondition, ActuallyAdditions.MODID+":drillCore"));
             }
 
             if(addQuartz){
                 LootFunction damage = new SetMetadata(noCondition, new RandomValueRange(TheMiscItems.QUARTZ.ordinal()));
                 LootFunction amount = new SetCount(noCondition, new RandomValueRange(1, 5));
-                pool.addEntry(new LootEntryItem(InitItems.itemMisc, 20, 0, new LootFunction[]{damage, amount}, noCondition, ModUtil.MOD_ID+":quartz"));
+                pool.addEntry(new LootEntryItem(InitItems.itemMisc, 20, 0, new LootFunction[]{damage, amount}, noCondition, ActuallyAdditions.MODID+":quartz"));
             }
 
             if(addBatWings){
                 LootFunction damage = new SetMetadata(noCondition, new RandomValueRange(TheMiscItems.BAT_WING.ordinal()));
                 LootFunction amount = new SetCount(noCondition, new RandomValueRange(1, 2));
-                pool.addEntry(new LootEntryItem(InitItems.itemMisc, 5, 0, new LootFunction[]{damage, amount}, noCondition, ModUtil.MOD_ID+":batWings"));
+                pool.addEntry(new LootEntryItem(InitItems.itemMisc, 5, 0, new LootFunction[]{damage, amount}, noCondition, ActuallyAdditions.MODID+":batWings"));
             }
         }
     }

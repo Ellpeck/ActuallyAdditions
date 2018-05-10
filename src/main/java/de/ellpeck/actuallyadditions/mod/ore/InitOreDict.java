@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.ore;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheDusts;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -26,7 +26,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public final class InitOreDict{
 
     public static void init(){
-        ModUtil.LOGGER.info("Initializing OreDictionary Entries...");
+        ActuallyAdditions.LOGGER.info("Initializing OreDictionary Entries...");
 
         //Vanilla Ores
         addOre(Items.COAL, "coal");

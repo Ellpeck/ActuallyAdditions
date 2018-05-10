@@ -11,9 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.booklet.chapter;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageTrials;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,7 +31,7 @@ public class BookletChapterTrials extends BookletChapter{
     @Override
     @SideOnly(Side.CLIENT)
     public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ModUtil.MOD_ID+".trials."+this.getIdentifier()+".name");
+        return StringUtil.localize("booklet."+ActuallyAdditions.MODID+".trials."+this.getIdentifier()+".name");
     }
 
     @Override

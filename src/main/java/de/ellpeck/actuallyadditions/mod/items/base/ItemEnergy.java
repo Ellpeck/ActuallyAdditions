@@ -108,7 +108,7 @@ public abstract class ItemEnergy extends ItemBase{
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack){
-        EntityPlayer player = ActuallyAdditions.proxy.getCurrentPlayer();
+        EntityPlayer player = ActuallyAdditions.PROXY.getCurrentPlayer();
         if(player != null && player.world != null){
             float[] color = AssetUtil.getWheelColor(player.world.getTotalWorldTime()%256);
             return MathHelper.rgb(color[0]/255F, color[1]/255F, color[2]/255F);

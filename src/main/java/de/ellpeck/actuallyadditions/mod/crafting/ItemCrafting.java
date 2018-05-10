@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.crafting;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.*;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
@@ -301,7 +301,7 @@ public final class ItemCrafting{
 
         for(int i = 0; i < 16; i++){
             if(i != TheColoredLampColors.LIGHT_BLUE.ordinal()){
-                new RecipeKeepDataShapeless(new ResourceLocation(ModUtil.MOD_ID, "dril_color_change"+i), new ItemStack(InitItems.itemDrill, 1, i), new ItemStack(InitItems.itemDrill, 1, Util.WILDCARD), lightBlueDrill.copy(), "dye"+TheColoredLampColors.values()[i].oreName);
+                new RecipeKeepDataShapeless(new ResourceLocation(ActuallyAdditions.MODID, "dril_color_change"+i), new ItemStack(InitItems.itemDrill, 1, i), new ItemStack(InitItems.itemDrill, 1, Util.WILDCARD), lightBlueDrill.copy(), "dye"+TheColoredLampColors.values()[i].oreName);
                 RECIPES_DRILL_COLORING.add(RecipeUtil.lastIRecipe());
             }
         }
@@ -401,7 +401,7 @@ public final class ItemCrafting{
         recipeBattery = RecipeUtil.lastIRecipe();
 
         //Double Battery
-        new RecipeKeepDataShaped(new ResourceLocation(ModUtil.MOD_ID, "double_battery"), new ItemStack(InitItems.itemBatteryDouble), new ItemStack(InitItems.itemBattery),
+        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "double_battery"), new ItemStack(InitItems.itemBatteryDouble), new ItemStack(InitItems.itemBattery),
                 " R ", "ICI", "III",
                 'R', new ItemStack(InitItems.itemBattery),
                 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()),
@@ -434,7 +434,7 @@ public final class ItemCrafting{
         recipeWaterRing = RecipeUtil.lastIRecipe();
 
         //Triple Battery
-        new RecipeKeepDataShaped(new ResourceLocation(ModUtil.MOD_ID, "triple_battery"), new ItemStack(InitItems.itemBatteryTriple), new ItemStack(InitItems.itemBatteryDouble),
+        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "triple_battery"), new ItemStack(InitItems.itemBatteryTriple), new ItemStack(InitItems.itemBatteryDouble),
                 " R ", "ICI", "III",
                 'R', new ItemStack(InitItems.itemBatteryDouble),
                 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()),
@@ -442,7 +442,7 @@ public final class ItemCrafting{
         recipeBatteryTriple = RecipeUtil.lastIRecipe();
 
         //Quadruple Battery
-        new RecipeKeepDataShaped(new ResourceLocation(ModUtil.MOD_ID, "quadruple_battery"), new ItemStack(InitItems.itemBatteryQuadruple), new ItemStack(InitItems.itemBatteryTriple),
+        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "quadruple_battery"), new ItemStack(InitItems.itemBatteryQuadruple), new ItemStack(InitItems.itemBatteryTriple),
                 " R ", "ICI", "III",
                 'R', new ItemStack(InitItems.itemBatteryTriple),
                 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()),
@@ -450,7 +450,7 @@ public final class ItemCrafting{
         recipeBatteryQuadruple = RecipeUtil.lastIRecipe();
 
         //Quintuple Battery
-        new RecipeKeepDataShaped(new ResourceLocation(ModUtil.MOD_ID, "quintuple_battery"), new ItemStack(InitItems.itemBatteryQuintuple), new ItemStack(InitItems.itemBatteryQuadruple),
+        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "quintuple_battery"), new ItemStack(InitItems.itemBatteryQuintuple), new ItemStack(InitItems.itemBatteryQuadruple),
                 " R ", "ICI", "III",
                 'R', new ItemStack(InitItems.itemBatteryQuadruple),
                 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()),

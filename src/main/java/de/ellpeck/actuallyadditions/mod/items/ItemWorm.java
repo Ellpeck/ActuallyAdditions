@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.state.IBlockState;
@@ -47,7 +47,7 @@ public class ItemWorm extends ItemBase{
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        this.addPropertyOverride(new ResourceLocation(ModUtil.MOD_ID, "snail"), new IItemPropertyGetter(){
+        this.addPropertyOverride(new ResourceLocation(ActuallyAdditions.MODID, "snail"), new IItemPropertyGetter(){
             @Override
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, World world, EntityLivingBase entity){
