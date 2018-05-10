@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.update;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.Minecraft;
@@ -59,7 +58,7 @@ public class UpdateChecker{
                 }
                 else if(UpdateChecker.needsUpdateNotify){
                     player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ActuallyAdditions.MODID+".update.generic")));
-                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".update.versionCompare", ModUtil.VERSION, UpdateChecker.updateVersionString)));
+                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".update.versionCompare", ActuallyAdditions.VERSION, UpdateChecker.updateVersionString)));
                     player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
                     notified = true;
                 }

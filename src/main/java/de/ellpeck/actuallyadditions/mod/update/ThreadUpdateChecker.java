@@ -10,14 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.update;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.util.ModUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
-
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Properties;
+
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 
 public class ThreadUpdateChecker extends Thread{
 
@@ -75,7 +74,7 @@ public class ThreadUpdateChecker extends Thread{
         if(!UpdateChecker.checkFailed){
             if(UpdateChecker.needsUpdateNotify){
                 ActuallyAdditions.LOGGER.info("There is an Update for "+ActuallyAdditions.NAME+" available!");
-                ActuallyAdditions.LOGGER.info("Current Version: "+ModUtil.VERSION+", newest Version: "+UpdateChecker.updateVersionString+"!");
+                ActuallyAdditions.LOGGER.info("Current Version: "+ActuallyAdditions.VERSION+", newest Version: "+UpdateChecker.updateVersionString+"!");
                 ActuallyAdditions.LOGGER.info("View the Changelog at "+UpdateChecker.CHANGELOG_LINK);
                 ActuallyAdditions.LOGGER.info("Download at "+UpdateChecker.DOWNLOAD_LINK);
             }

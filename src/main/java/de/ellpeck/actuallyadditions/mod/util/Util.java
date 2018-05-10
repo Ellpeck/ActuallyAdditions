@@ -10,16 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import java.util.Locale;
+
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.Locale;
-
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 
 public final class Util{
 
@@ -40,7 +39,7 @@ public final class Util{
     }
 
     public static boolean isDevVersion(){
-        return ModUtil.VERSION.equals("@VERSION@");
+        return ActuallyAdditions.VERSION.equals("@VERSION@");
     }
     
     public static boolean isClient(){
@@ -48,7 +47,7 @@ public final class Util{
     }
 
     private static String[] splitVersion(){
-        return ModUtil.VERSION.split("-");
+        return ActuallyAdditions.VERSION.split("-");
     }
 
     public static String getMcVersion(){
