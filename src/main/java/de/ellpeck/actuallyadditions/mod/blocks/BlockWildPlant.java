@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCrops;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -52,15 +51,14 @@ public class BlockWildPlant extends BlockBushBase{
         BlockPos offset = pos.down();
         IBlockState offsetState = world.getBlockState(offset);
         Block offsetBlock = offsetState.getBlock();
-        return this.getMetaFromState(state) == TheWildPlants.RICE.ordinal() ? offsetState.getMaterial() == Material.WATER : offsetBlock.canSustainPlant(offsetState, world, offset, EnumFacing.UP, this);
+        return state.getValue(TYPE) == TheWildPlants.RICE ? offsetState.getMaterial() == Material.WATER : offsetBlock.canSustainPlant(offsetState, world, offset, EnumFacing.UP, this);
     }
 
 
     @Override
-    @SideOnly(Side.CLIENT)
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player){
-        int metadata = this.getMetaFromState(state);
-        return metadata >= ALL_WILD_PLANTS.length ? null : new ItemStack(((BlockPlant)ALL_WILD_PLANTS[metadata].wildVersionOf).seedItem);
+        BlockPlant wild = (BlockPlant) state.getValue(TYPE).wildVersionOf;
+        return new ItemStack(wild.seedItem);
     }
 
     @Override
