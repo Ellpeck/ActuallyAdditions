@@ -73,9 +73,7 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-        int metadata = this.getMetaFromState(state);
-        if(metadata < ALL_WILD_PLANTS.length) 
-        	ALL_WILD_PLANTS[metadata].wildVersionOf.getDrops(drops, world, pos, ALL_WILD_PLANTS[metadata].wildVersionOf.getDefaultState().withProperty(BlockCrops.AGE, 7), fortune);
+        state.getValue(TYPE).wildVersionOf.getDrops(drops, world, pos, state, fortune);
     }
 
     @Override
