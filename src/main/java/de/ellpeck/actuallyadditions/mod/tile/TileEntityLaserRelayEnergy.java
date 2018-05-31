@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,6 +21,7 @@ import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -140,9 +140,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
     private int transferEnergyToReceiverInNeed(EnumFacing from, Network network, int maxTransfer, boolean simulate){
         int transmitted = 0;
         //Keeps track of all the Laser Relays and Energy Acceptors that have been checked already to make nothing run multiple times
-        Set<BlockPos> alreadyChecked = new HashSet<BlockPos>();
+        Set<BlockPos> alreadyChecked = new ObjectOpenHashSet<>();
 
-        Set<TileEntityLaserRelayEnergy> relaysThatWork = new HashSet<TileEntityLaserRelayEnergy>();
+        Set<TileEntityLaserRelayEnergy> relaysThatWork = new ObjectOpenHashSet<>();
         int totalReceiverAmount = 0;
 
         for(IConnectionPair pair : network.connections){
