@@ -11,11 +11,13 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import java.util.Collection;
+import java.util.List;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.items.IItemHandler;
 
 public final class StackUtil{
 
@@ -100,6 +102,31 @@ public final class StackUtil{
     	if(stacks.isEmpty()) return true;
     	else for(ItemStack s : stacks) if (!s.isEmpty()) return false;
     	return true;
+    }
+    
+    public static boolean canAddAll(IItemHandler inv, List<ItemStack> stacks) {
+
+        int slotMax = inv.getSlots();
+        int counter = 0;
+
+        for(ItemStack s : stacks) {
+            for(int i = 0; i < slotMax; i++) {
+                s = inv.insertItem(i, s, true);
+                if(s.isEmpty()) break;
+            }
+            if(s.isEmpty()) counter++;
+        }
+        return counter == stacks.size();
+    }
+    
+    public static void addAll(IItemHandler inv, List<ItemStack> stacks) {
+        int slotMax = inv.getSlots();
+        for(ItemStack s : stacks) {
+            for(int i = 0; i < slotMax; i++) {
+                s = inv.insertItem(i, s, false);
+                if(s.isEmpty()) break;
+            }
+        }
     }
 
 

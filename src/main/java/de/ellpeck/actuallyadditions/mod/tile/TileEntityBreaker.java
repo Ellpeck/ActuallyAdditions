@@ -72,7 +72,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack stack) {
-		return this.isPlacer;
+		return true;
 	}
 
 	private void doWork() {
@@ -87,10 +87,9 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
 			float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, world, breakCoords);
 
 			if (chance > 0 && world.rand.nextFloat() <= chance) {
-				if (WorldUtil.addToInventory(slots, drops, false)) {
-					this.world.playEvent(2001, breakCoords, Block.getStateId(stateToBreak));
-					this.world.setBlockToAir(breakCoords);
-					WorldUtil.addToInventory(slots, drops, true);
+				if (StackUtil.canAddAll(slots, drops)) {
+					world.destroyBlock(breakCoords, false);
+					StackUtil.addAll(slots, drops);
 					this.markDirty();
 				}
 			}
