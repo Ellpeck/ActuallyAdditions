@@ -25,6 +25,7 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -278,6 +279,11 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
         super.breakBlock(world, pos, state);
 
         ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(pos, world);
+    }
+    
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+        return BlockFaceShape.UNDEFINED;
     }
 
     public enum Type{
