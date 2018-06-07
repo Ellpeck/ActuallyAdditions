@@ -17,7 +17,7 @@ public enum ConfigBoolValues{
     JAM_VILLAGER_EXISTS("Jam Villager: Existence", ConfigCategories.WORLD_GEN, true, "Should the Jam Villager and his House generate in the world?"),
     CROP_FIELD_EXISTS("Crop Field: Existence", ConfigCategories.WORLD_GEN, true, "Should Custom Crop Fields exist?"),
     ENGINEER_VILLAGER_EXISTS("Engineer Villager: Existence", ConfigCategories.WORLD_GEN, true, "Should the Engineer Villager and his House generate in the worl?"),
-
+    ENGINEER_HOUSE_MACHINES_DROP("Engineer House Machines Drop or Not", ConfigCategories.WORLD_GEN, true, "Should Machines from Engineer House drop when breaked?"),
     GENERATE_QUARTZ("Black Quartz", ConfigCategories.WORLD_GEN, true, "Shold Black Quartz generate in the world?"),
 
     DO_UPDATE_CHECK("Do Update Check", ConfigCategories.OTHER, true, "If true, Actually Additions Checks for updates on World Load."),
