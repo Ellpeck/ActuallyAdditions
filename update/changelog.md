@@ -1,3 +1,12 @@
+# 1.12.2-r136
+* Fixed a crash in BlockWildPlant.
+* Prevented torch placement on laser relays.
+* Auto breaker no longer dupes clay.
+* Traveller's Sack should no longer crash with NBT-heavy items inside.
+* Items with Curse of Binding can no longer be removed inside the Energizer gui.
+* Crusher recipes no longer allow duplicates, and use Ingredient for inputs.  Hopefully modtweaker compat was maintainted.
+* Massive overhaul to the inventory system of AA.  Some things might be broken, but overall the underlying structure fixed a few things.
+
 # 1.12.2-r135
 * Added armor toughness to a few AA armors.
 * Resolved a mod interaction with RealBench.  This fix only functions if FastWorkbench is present.
