@@ -35,8 +35,8 @@ public class ContainerEnervator extends Container{
         this.enervator = (TileEntityEnervator)tile;
         InventoryPlayer inventory = player.inventory;
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.enervator.slots, 0, 76, 73));
-        this.addSlotToContainer(new SlotOutput(this.enervator.slots, 1, 76, 42));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.enervator.inv, 0, 76, 73));
+        this.addSlotToContainer(new SlotOutput(this.enervator.inv, 1, 76, 42));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -119,7 +119,7 @@ public class ContainerEnervator extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

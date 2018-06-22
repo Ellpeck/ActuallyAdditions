@@ -120,16 +120,16 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
         }
 
         boolean putSeeds = true;
-        if(!farmer.addToSeedInventory(seeds, false)){
+        if(!farmer.canAddToSeeds(seeds)){
             other.addAll(seeds);
             putSeeds = false;
         }
 
-        if(farmer.addToOutputInventory(other, false)){
-            farmer.addToOutputInventory(other, true);
+        if(farmer.canAddToOutput(other)){
+            farmer.addToOutput(other);
 
             if(putSeeds){
-                farmer.addToSeedInventory(seeds, true);
+                farmer.addToSeeds(seeds);
             }
 
             world.playEvent(2001, pos, Block.getStateId(state));

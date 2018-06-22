@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -21,15 +23,17 @@ import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 public class PageCrusherRecipe extends BookletPage{
 
     private final CrusherRecipe recipe;
+    private int counter = 0;
+    private int rotate = 0;
+    private final ItemStack[] stacks;
 
     public PageCrusherRecipe(int localizationKey, CrusherRecipe recipe){
         super(localizationKey);
         this.recipe = recipe;
+        stacks = recipe.getInput().getMatchingStacks();
     }
 
     @Override
@@ -43,6 +47,8 @@ public class PageCrusherRecipe extends BookletPage{
         gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".crusherRecipe")+")", startX+36, startY+85, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+100);
+        
+        if(counter++ % 50 == 0)gui.addOrModifyItemRenderer(stacks[rotate++ % stacks.length], startX+38+18, startY+6+1, 1F, true);
     }
 
     @Override
@@ -51,11 +57,11 @@ public class PageCrusherRecipe extends BookletPage{
         super.initGui(gui, startX, startY);
 
         if(this.recipe != null){
-            gui.addOrModifyItemRenderer(this.recipe.inputStack, startX+38+18, startY+6+2, 1F, true);
-            gui.addOrModifyItemRenderer(this.recipe.outputOneStack, startX+38+4, startY+6+53, 1F, false);
+            gui.addOrModifyItemRenderer(stacks[rotate++ % stacks.length], startX+38+18, startY+6+1, 1F, true);
+            gui.addOrModifyItemRenderer(this.recipe.getOutputOne(), startX+38+4, startY+6+53, 1F, false);
 
-            if(StackUtil.isValid(this.recipe.outputTwoStack)){
-                gui.addOrModifyItemRenderer(this.recipe.outputTwoStack, startX+38+30, startY+6+53, 1F, false);
+            if(StackUtil.isValid(this.recipe.getOutputTwo())){
+                gui.addOrModifyItemRenderer(this.recipe.getOutputTwo(), startX+38+30, startY+6+53, 1F, false);
             }
         }
     }
@@ -65,10 +71,10 @@ public class PageCrusherRecipe extends BookletPage{
         super.getItemStacksForPage(list);
 
         if(this.recipe != null){
-            list.add(this.recipe.outputOneStack);
+            list.add(this.recipe.getOutputOne());
 
-            if(StackUtil.isValid(this.recipe.outputTwoStack)){
-                list.add(this.recipe.outputTwoStack);
+            if(StackUtil.isValid(this.recipe.getOutputTwo())){
+                list.add(this.recipe.getOutputTwo());
             }
         }
     }

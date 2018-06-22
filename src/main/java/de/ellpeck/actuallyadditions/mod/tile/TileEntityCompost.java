@@ -63,14 +63,15 @@ public class TileEntityCompost extends TileEntityInventoryBase{
         super.updateEntity();
         if(!this.world.isRemote){
             boolean theFlag = this.conversionTime > 0;
-
-            if(StackUtil.isValid(this.slots.getStackInSlot(0))){
-                CompostRecipe recipe = getRecipeForInput(this.slots.getStackInSlot(0));
+            ItemStack input = inv.getStackInSlot(0);
+            if(StackUtil.isValid(input)){
+                CompostRecipe recipe = getRecipeForInput(input);
                 if(recipe != null){
                     this.conversionTime++;
                     if(this.conversionTime >= COMPOST_TIME_TICKS){
                         ItemStack output = recipe.output.copy();
-                        this.slots.setStackInSlot(0, StackUtil.setStackSize(output, StackUtil.getStackSize(this.slots.getStackInSlot(0))));
+                        output.setCount(input.getCount());
+                        this.inv.setStackInSlot(0, output);
                         this.conversionTime = 0;
                         this.markDirty();
                     }
@@ -87,12 +88,12 @@ public class TileEntityCompost extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean canInsert(int i, ItemStack stack, boolean automation){
         return getRecipeForInput(stack) != null;
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
+    public boolean canExtract(int slot, ItemStack stack, boolean automation){
         return getRecipeForInput(stack) == null;
     }
 }

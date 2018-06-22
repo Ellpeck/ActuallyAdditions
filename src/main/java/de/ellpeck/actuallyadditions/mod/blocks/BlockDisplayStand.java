@@ -29,9 +29,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockDisplayStand extends BlockContainerBase{
+public class BlockDisplayStand extends BlockContainerBase {
 
-    public BlockDisplayStand(String name){
+    public BlockDisplayStand(String name) {
         super(Material.ROCK, name);
 
         this.setHarvestLevel("pickaxe", 0);
@@ -41,74 +41,71 @@ public class BlockDisplayStand extends BlockContainerBase{
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta){
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityDisplayStand();
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return BlockSlabs.AABB_BOTTOM_HALF;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
         ItemStack heldItem = player.getHeldItem(hand);
-        if(!world.isRemote){
-            TileEntityDisplayStand stand = (TileEntityDisplayStand)world.getTileEntity(pos);
-            if(stand != null){
-                ItemStack display = stand.slots.getStackInSlot(0);
-                if(StackUtil.isValid(heldItem)){
-                    if(!StackUtil.isValid(display)){
+        if (!world.isRemote) {
+            TileEntityDisplayStand stand = (TileEntityDisplayStand) world.getTileEntity(pos);
+            if (stand != null) {
+                ItemStack display = stand.inv.getStackInSlot(0);
+                if (StackUtil.isValid(heldItem)) {
+                    if (!StackUtil.isValid(display)) {
                         ItemStack toPut = heldItem.copy();
-                        toPut = StackUtil.setStackSize(toPut, 1);
-                        stand.slots.setStackInSlot(0, toPut);
-                        player.setHeldItem(hand, StackUtil.addStackSize(heldItem, -1));
+                        toPut.setCount(1);
+                        stand.inv.setStackInSlot(0, toPut);
+                        if(!player.capabilities.isCreativeMode) heldItem.shrink(1);
                         return true;
-                    }
-                    else if(ItemUtil.canBeStacked(heldItem, display)){
-                        int maxTransfer = Math.min(StackUtil.getStackSize(display), heldItem.getMaxStackSize()-StackUtil.getStackSize(heldItem));
-                        if(maxTransfer > 0){
-                            player.setHeldItem(hand, StackUtil.addStackSize(heldItem, maxTransfer));
+                    } else if (ItemUtil.canBeStacked(heldItem, display)) {
+                        int maxTransfer = Math.min(display.getCount(), heldItem.getMaxStackSize() - heldItem.getCount());
+                        if (maxTransfer > 0) {
+                            heldItem.grow(maxTransfer);
                             ItemStack newDisplay = display.copy();
-                            newDisplay = StackUtil.addStackSize(newDisplay, -maxTransfer);
-                            stand.slots.setStackInSlot(0, StackUtil.validateCheck(newDisplay));
+                            newDisplay.shrink(maxTransfer);
+                            stand.inv.setStackInSlot(0, newDisplay);
                             return true;
                         }
                     }
-                }
-                else{
-                    if(StackUtil.isValid(display)){
+                } else {
+                    if (StackUtil.isValid(display)) {
                         player.setHeldItem(hand, display.copy());
-                        stand.slots.setStackInSlot(0, StackUtil.getEmpty());
+                        stand.inv.setStackInSlot(0, StackUtil.getEmpty());
                         return true;
                     }
                 }
             }
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
-    }
-    
-    @Override
-    public boolean isFullCube(IBlockState state){
-        return false;
-    }
-    
-    @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face) {
-    	if(face == EnumFacing.DOWN) return BlockFaceShape.SOLID;
-    	return BlockFaceShape.UNDEFINED;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face) {
+        if (face == EnumFacing.DOWN) return BlockFaceShape.SOLID;
+        return BlockFaceShape.UNDEFINED;
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 }

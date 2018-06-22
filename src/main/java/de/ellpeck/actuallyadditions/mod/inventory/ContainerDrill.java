@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -28,7 +28,7 @@ public class ContainerDrill extends Container{
 
     public static final int SLOT_AMOUNT = 5;
 
-    private final ItemStackHandlerCustom drillInventory = new ItemStackHandlerCustom(SLOT_AMOUNT);
+    private final ItemStackHandlerAA drillInventory = new ItemStackHandlerAA(SLOT_AMOUNT);
     private final InventoryPlayer inventory;
 
     public ContainerDrill(InventoryPlayer inventory){
@@ -106,7 +106,7 @@ public class ContainerDrill extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

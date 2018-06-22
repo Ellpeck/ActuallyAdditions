@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.BlockFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.state.IBlockState;
@@ -22,8 +22,6 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IButtonReactor{
 
@@ -47,32 +45,32 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         super(4, "furnaceDouble");
     }
 
-    public static void autoSplit(ItemStackHandlerCustom slots, int slot1, int slot2){
-        ItemStack first = slots.getStackInSlot(slot1);
-        ItemStack second = slots.getStackInSlot(slot2);
+    public static void autoSplit(ItemStackHandlerAA inv, int slot1, int slot2){
+        ItemStack first = inv.getStackInSlot(slot1);
+        ItemStack second = inv.getStackInSlot(slot2);
 
         if(StackUtil.isValid(first) || StackUtil.isValid(second)){
             ItemStack toSplit = StackUtil.getEmpty();
-            if(!StackUtil.isValid(first) && StackUtil.isValid(second) && StackUtil.getStackSize(second) > 1){
+            if(!StackUtil.isValid(first) && StackUtil.isValid(second) && second.getCount() > 1){
                 toSplit = second;
             }
-            else if(!StackUtil.isValid(second) && StackUtil.isValid(first) && StackUtil.getStackSize(first) > 1){
+            else if(!StackUtil.isValid(second) && StackUtil.isValid(first) && first.getCount() > 1){
                 toSplit = first;
             }
             else if(ItemUtil.canBeStacked(first, second)){
-                if(StackUtil.getStackSize(first) < first.getMaxStackSize() || StackUtil.getStackSize(second) < second.getMaxStackSize()){
-                    if(!((StackUtil.getStackSize(first) <= StackUtil.getStackSize(second)+1 && StackUtil.getStackSize(first) >= StackUtil.getStackSize(second)-1) || (StackUtil.getStackSize(second) <= StackUtil.getStackSize(first)+1 && StackUtil.getStackSize(second) >= StackUtil.getStackSize(first)-1))){
+                if(first.getCount() < first.getMaxStackSize() || second.getCount() < second.getMaxStackSize()){
+                    if(!((first.getCount() <= second.getCount()+1 && first.getCount() >= second.getCount()-1) || (second.getCount() <= first.getCount()+1 && second.getCount() >= first.getCount()-1))){
                         toSplit = first;
-                        toSplit = StackUtil.addStackSize(toSplit, StackUtil.getStackSize(second));
+                        toSplit.grow(second.getCount());
                     }
                 }
             }
 
             if(StackUtil.isValid(toSplit)){
                 ItemStack splitFirst = toSplit.copy();
-                ItemStack secondSplit = splitFirst.splitStack(StackUtil.getStackSize(splitFirst)/2);
-                slots.setStackInSlot(slot1, StackUtil.validateCheck(splitFirst));
-                slots.setStackInSlot(slot2, StackUtil.validateCheck(secondSplit));
+                ItemStack secondSplit = splitFirst.splitStack(splitFirst.getCount()/2);
+                inv.setStackInSlot(slot1, splitFirst);
+                inv.setStackInSlot(slot2, secondSplit);
             }
         }
     }
@@ -104,7 +102,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         super.updateEntity();
         if(!this.world.isRemote){
             if(this.isAutoSplit){
-                autoSplit(this.slots, SLOT_INPUT_1, SLOT_INPUT_2);
+                autoSplit(this.inv, SLOT_INPUT_1, SLOT_INPUT_2);
             }
 
             boolean smelted = false;
@@ -161,15 +159,15 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(stack));
+    public boolean canInsert(int i, ItemStack stack, boolean automation){
+        return !automation || ((i == SLOT_INPUT_1 || i == SLOT_INPUT_2) && StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(stack)));
     }
 
     public boolean canSmeltOn(int theInput, int theOutput){
-        if(StackUtil.isValid(this.slots.getStackInSlot(theInput))){
-            ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.slots.getStackInSlot(theInput));
+        if(StackUtil.isValid(this.inv.getStackInSlot(theInput))){
+            ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.inv.getStackInSlot(theInput));
             if(StackUtil.isValid(output)){
-                if(!StackUtil.isValid(this.slots.getStackInSlot(theOutput)) || (this.slots.getStackInSlot(theOutput).isItemEqual(output) && StackUtil.getStackSize(this.slots.getStackInSlot(theOutput)) <= this.slots.getStackInSlot(theOutput).getMaxStackSize()-StackUtil.getStackSize(output))){
+                if(!StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || (this.inv.getStackInSlot(theOutput).isItemEqual(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize()-output.getCount())){
                     return true;
                 }
             }
@@ -179,30 +177,28 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     public void finishBurning(int theInput, int theOutput){
-        ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.slots.getStackInSlot(theInput));
-        if(!StackUtil.isValid(this.slots.getStackInSlot(theOutput))){
-            this.slots.setStackInSlot(theOutput, output.copy());
+        ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.inv.getStackInSlot(theInput));
+        if(!StackUtil.isValid(this.inv.getStackInSlot(theOutput))){
+            this.inv.setStackInSlot(theOutput, output.copy());
         }
-        else if(this.slots.getStackInSlot(theOutput).getItem() == output.getItem()){
-            this.slots.setStackInSlot(theOutput, StackUtil.addStackSize(this.slots.getStackInSlot(theOutput), StackUtil.getStackSize(output)));
+        else if(this.inv.getStackInSlot(theOutput).getItem() == output.getItem()){
+            this.inv.getStackInSlot(theOutput).grow(output.getCount());
         }
 
-        this.slots.setStackInSlot(theInput, StackUtil.addStackSize(this.slots.getStackInSlot(theInput), -1));
+        this.inv.getStackInSlot(theInput).shrink(1);
     }
 
-    @SideOnly(Side.CLIENT)
     public int getFirstTimeToScale(int i){
         return this.firstSmeltTime*i/SMELT_TIME;
     }
 
-    @SideOnly(Side.CLIENT)
     public int getSecondTimeToScale(int i){
         return this.secondSmeltTime*i/SMELT_TIME;
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2;
+    public boolean canExtract(int slot, ItemStack stack, boolean automation){
+        return !automation || (slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2);
     }
 
     @Override

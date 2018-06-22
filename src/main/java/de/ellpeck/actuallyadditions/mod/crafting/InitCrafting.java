@@ -52,13 +52,7 @@ public final class InitCrafting{
         ActuallyAdditionsAPI.addFarmerBehavior(new EnderlillyFarmerBehavior());
         ActuallyAdditionsAPI.addFarmerBehavior(new RedOrchidFarmerBehavior());
 
-        //RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShaped", RecipeKeepDataShaped.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
-        //RecipeSorter.register(ModUtil.MOD_ID+":recipeKeepDataShapeless", RecipeKeepDataShapeless.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
-
         new RecipePotionRingCharging(new ResourceLocation(ActuallyAdditions.MODID, "potion_ring_charging"));
-        //RecipeSorter.register(ModUtil.MOD_ID+":recipePotionRingCharging", RecipePotionRingCharging.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
-
         new RecipeBioMash(new ResourceLocation(ActuallyAdditions.MODID, "bio_mash"));
-        //RecipeSorter.register(ModUtil.MOD_ID+":recipeBioMash", RecipeBioMash.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
     }
 }

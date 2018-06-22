@@ -53,16 +53,16 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior{
                     NonNullList<ItemStack> drops = NonNullList.create();
                     state.getBlock().getDrops(drops, world, pos, state, 0);
                     if(!drops.isEmpty()){
-                        boolean toInput = farmer.addToSeedInventory(drops, false);
-                        if(toInput || farmer.addToOutputInventory(drops, false)){
+                        boolean toInput = farmer.canAddToSeeds(drops);
+                        if(toInput || farmer.canAddToOutput(drops)){
                             world.playEvent(2001, pos, Block.getStateId(state));
                             world.setBlockToAir(pos);
 
                             if(toInput){
-                                farmer.addToSeedInventory(drops, true);
+                                farmer.addToSeeds(drops);
                             }
                             else{
-                                farmer.addToOutputInventory(drops, true);
+                                farmer.addToOutput(drops);
                             }
 
                             farmer.extractEnergy(use);

@@ -10,11 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,8 +26,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class ItemFilter extends ItemBase{
 
@@ -51,7 +51,7 @@ public class ItemFilter extends ItemBase{
     public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced){
         super.addInformation(stack, playerIn, tooltip, advanced);
 
-        ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerFilter.SLOT_AMOUNT);
+        ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
         ItemDrill.loadSlotsFromNBT(inv, stack);
         for(int i = 0; i < inv.getSlots(); i++){
             ItemStack slot = inv.getStackInSlot(i);

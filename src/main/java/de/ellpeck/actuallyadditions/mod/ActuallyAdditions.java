@@ -40,6 +40,7 @@ import de.ellpeck.actuallyadditions.mod.recipe.TreasureChestHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -64,6 +65,7 @@ public class ActuallyAdditions {
     public static final String VERSION = "@VERSION@";
     public static final String GUIFACTORY = "de.ellpeck.actuallyadditions.mod.config.GuiFactory";
     public static final String DEPS = "before:craftingtweaks;after:fastbench@[1.3.2,)";
+    public static final boolean DEOBF = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
     @Instance
     public static ActuallyAdditions INSTANCE;

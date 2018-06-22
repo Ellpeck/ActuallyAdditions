@@ -10,17 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
-import org.apache.commons.lang3.ArrayUtils;
 
 public class FilterSettings{
 
@@ -29,7 +30,7 @@ public class FilterSettings{
     public final int nbtButtonId;
     public final int oredictButtonId;
     public final int modButtonId;
-    public final ItemStackHandlerCustom filterInventory;
+    public final ItemStackHandlerAA filterInventory;
     public boolean isWhitelist;
     public boolean respectMeta;
     public boolean respectNBT;
@@ -42,7 +43,7 @@ public class FilterSettings{
     private int lastRecpectOredict;
 
     public FilterSettings(int slots, boolean defaultWhitelist, boolean defaultRespectMeta, boolean defaultRespectNBT, boolean defaultRespectMod, int defaultRespectOredict, int buttonIdStart){
-        this.filterInventory = new ItemStackHandlerCustom(slots);
+        this.filterInventory = new ItemStackHandlerAA(slots);
 
         this.isWhitelist = defaultWhitelist;
         this.respectMeta = defaultRespectMeta;
@@ -57,14 +58,14 @@ public class FilterSettings{
         this.modButtonId = buttonIdStart+4;
     }
 
-    public static boolean check(ItemStack stack, ItemStackHandlerCustom filter, boolean whitelist, boolean meta, boolean nbt, boolean mod, int oredict){
+    public static boolean check(ItemStack stack, ItemStackHandlerAA filter, boolean whitelist, boolean meta, boolean nbt, boolean mod, int oredict){
         if(StackUtil.isValid(stack)){
             for(int i = 0; i < filter.getSlots(); i++){
                 ItemStack slot = filter.getStackInSlot(i);
 
                 if(StackUtil.isValid(slot)){
                     if(SlotFilter.isFilter(slot)){
-                        ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerFilter.SLOT_AMOUNT);
+                        ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
                         ItemDrill.loadSlotsFromNBT(inv, slot);
                         for(int k = 0; k < inv.getSlots(); k++){
                             ItemStack filterSlot = inv.getStackInSlot(k);

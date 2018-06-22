@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -19,8 +20,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
 
@@ -89,10 +88,10 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.world, coordsBlock);
 
                     if(chance > 0 && this.world.rand.nextFloat() <= chance){
-                        if(WorldUtil.addToInventory(this.slots, drops, false)){
+                        if(StackUtil.canAddAll(this.inv, drops, false)){
                             this.world.playEvent(2001, coordsBlock, Block.getStateId(this.world.getBlockState(coordsBlock)));
                             this.world.setBlockToAir(coordsBlock);
-                            WorldUtil.addToInventory(this.slots, drops, true);
+                            StackUtil.addAll(this.inv, drops, false);
                             this.storage.extractEnergyInternal(ENERGY_USE, false);
                             this.markDirty();
                         }
@@ -103,17 +102,16 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return false;
+    public boolean canInsert(int slot, ItemStack stack, boolean automation){
+        return !automation;
     }
 
-    @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
         return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
+    public boolean canExtract(int slot, ItemStack stack, boolean automation){
         return true;
     }
 

@@ -10,33 +10,31 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import javax.annotation.Nonnull;
+
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
-import javax.annotation.Nonnull;
+public class SlotItemHandlerUnconditioned extends SlotItemHandler {
 
-public class SlotItemHandlerUnconditioned extends SlotItemHandler{
+    private final ItemStackHandlerAA inv;
 
-    private final ItemStackHandlerCustom handler;
-
-    public SlotItemHandlerUnconditioned(ItemStackHandlerCustom handler, int index, int xPosition, int yPosition){
-        super(handler, index, xPosition, yPosition);
-        this.handler = handler;
+    public SlotItemHandlerUnconditioned(ItemStackHandlerAA inv, int index, int xPosition, int yPosition) {
+        super(inv, index, xPosition, yPosition);
+        this.inv = inv;
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack){
-        if(StackUtil.isValid(stack)){
-            ItemStack currentStack = this.handler.getStackInSlot(this.getSlotIndex());
-            this.handler.setStackInSlot(this.getSlotIndex(), ItemStack.EMPTY);
-            ItemStack remainder = this.handler.insertItemInternal(this.getSlotIndex(), stack, true);
-            this.handler.setStackInSlot(this.getSlotIndex(), currentStack);
-            return remainder.isEmpty() || remainder.getCount() < stack.getCount();
-        }
-        return false;
+    public boolean isItemValid(ItemStack stack) {
+        if (stack.isEmpty() || !inv.canAccept(getSlotIndex(), stack, false)) return false;
+
+        ItemStack currentStack = this.inv.getStackInSlot(this.getSlotIndex());
+        this.inv.setStackInSlot(this.getSlotIndex(), ItemStack.EMPTY);
+        ItemStack remainder = this.inv.insertItem(this.getSlotIndex(), stack, true, false);
+        this.inv.setStackInSlot(this.getSlotIndex(), currentStack);
+        return remainder.isEmpty() || remainder.getCount() < stack.getCount();
     }
 
     /**
@@ -44,34 +42,34 @@ public class SlotItemHandlerUnconditioned extends SlotItemHandler{
      */
     @Override
     @Nonnull
-    public ItemStack getStack(){
-        return this.handler.getStackInSlot(this.getSlotIndex());
+    public ItemStack getStack() {
+        return this.inv.getStackInSlot(this.getSlotIndex());
     }
 
     @Override
-    public void putStack(ItemStack stack){
-        this.handler.setStackInSlot(this.getSlotIndex(), stack);
+    public void putStack(ItemStack stack) {
+        this.inv.setStackInSlot(this.getSlotIndex(), stack);
         this.onSlotChanged();
     }
 
     @Override
-    public int getItemStackLimit(ItemStack stack){
+    public int getItemStackLimit(ItemStack stack) {
         ItemStack maxAdd = stack.copy();
         maxAdd.setCount(stack.getMaxStackSize());
-        ItemStack currentStack = this.handler.getStackInSlot(this.getSlotIndex());
-        this.handler.setStackInSlot(this.getSlotIndex(), ItemStack.EMPTY);
-        ItemStack remainder = this.handler.insertItemInternal(this.getSlotIndex(), maxAdd, true);
-        this.handler.setStackInSlot(this.getSlotIndex(), currentStack);
-        return stack.getMaxStackSize()-remainder.getCount();
+        ItemStack currentStack = this.inv.getStackInSlot(this.getSlotIndex());
+        this.inv.setStackInSlot(this.getSlotIndex(), ItemStack.EMPTY);
+        ItemStack remainder = this.inv.insertItem(this.getSlotIndex(), maxAdd, true, false);
+        this.inv.setStackInSlot(this.getSlotIndex(), currentStack);
+        return stack.getMaxStackSize() - remainder.getCount();
     }
 
     @Override
-    public boolean canTakeStack(EntityPlayer playerIn){
-        return !this.handler.extractItemInternal(this.getSlotIndex(), 1, true).isEmpty();
+    public boolean canTakeStack(EntityPlayer playerIn) {
+        return !this.inv.extractItem(this.getSlotIndex(), 1, true, false).isEmpty();
     }
 
     @Override
-    public ItemStack decrStackSize(int amount){
-        return this.handler.extractItemInternal(this.getSlotIndex(), amount, false);
+    public ItemStack decrStackSize(int amount) {
+        return this.inv.extractItem(this.getSlotIndex(), amount, false, false);
     }
 }

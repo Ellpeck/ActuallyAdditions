@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -31,7 +30,7 @@ public class ItemResonantRice extends ItemBase{
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
         ItemStack stack = player.getHeldItem(hand);
         if(!world.isRemote){
-            stack = StackUtil.addStackSize(stack, -1);
+            stack.shrink(1);
             world.createExplosion(null, player.posX, player.posY, player.posZ, 0.5F, true);
         }
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);

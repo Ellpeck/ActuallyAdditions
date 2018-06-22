@@ -49,7 +49,7 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer<TileEntityLaserR
             EntityPlayer player = Minecraft.getMinecraft().player;
             boolean hasGoggles = ItemEngineerGoggles.isWearing(player);
 
-            ItemStack upgrade = relay.slots.getStackInSlot(0);
+            ItemStack upgrade = relay.inv.getStackInSlot(0);
             if(StackUtil.isValid(upgrade)){
                 if(upgrade.getItem() == InitItems.itemLaserUpgradeInvisibility){
                     hasInvis = true;
@@ -81,7 +81,7 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer<TileEntityLaserR
 
                         TileEntity secondTile = tile.getWorld().getTileEntity(second);
                         if(secondTile instanceof TileEntityLaserRelay){
-                            ItemStack secondUpgrade = ((TileEntityLaserRelay)secondTile).slots.getStackInSlot(0);
+                            ItemStack secondUpgrade = ((TileEntityLaserRelay)secondTile).inv.getStackInSlot(0);
                             boolean otherInvis = StackUtil.isValid(secondUpgrade) && secondUpgrade.getItem() == InitItems.itemLaserUpgradeInvisibility;
 
                             if(hasGoggles || !hasInvis || !otherInvis){

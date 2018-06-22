@@ -64,7 +64,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
         currentTimer = MathHelper.clamp(++currentTimer, 0, 100);
         if(world.isRemote) return;
         int range = 5;
-        ItemStack stack = this.slots.getStackInSlot(0);
+        ItemStack stack = this.inv.getStackInSlot(0);
         if(!stack.isEmpty() && this.currentTimer >= TIME) {
         	List<EntityAnimal> animals = this.world.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(this.pos.getX()-range, this.pos.getY()-range, this.pos.getZ()-range, this.pos.getX()+range, this.pos.getY()+range, this.pos.getZ()+range));
         	this.currentAnimalAmount = animals.size();
@@ -85,13 +85,8 @@ public class TileEntityFeeder extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return true;
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return false;
+    public boolean canExtract(int slot, ItemStack stack, boolean automation){
+        return !automation;
     }
     
     private static void feedAnimal(EntityAnimal animal){

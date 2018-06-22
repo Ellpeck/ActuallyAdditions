@@ -166,7 +166,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
     }
 
     public int getMaxRange(){
-        ItemStack upgrade = this.slots.getStackInSlot(0);
+        ItemStack upgrade = this.inv.getStackInSlot(0);
         if(StackUtil.isValid(upgrade) && upgrade.getItem() == InitItems.itemLaserUpgradeRange){
             return MAX_DISTANCE_RANGED;
         }

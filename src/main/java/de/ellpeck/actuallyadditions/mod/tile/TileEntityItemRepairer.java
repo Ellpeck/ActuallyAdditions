@@ -77,11 +77,11 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            ItemStack input = this.slots.getStackInSlot(SLOT_INPUT);
-            if(!StackUtil.isValid(this.slots.getStackInSlot(SLOT_OUTPUT)) && canBeRepaired(input)){
+            ItemStack input = this.inv.getStackInSlot(SLOT_INPUT);
+            if(!StackUtil.isValid(this.inv.getStackInSlot(SLOT_OUTPUT)) && canBeRepaired(input)){
                 if(input.getItemDamage() <= 0){
-                    this.slots.setStackInSlot(SLOT_OUTPUT, input.copy());
-                    this.slots.setStackInSlot(SLOT_INPUT, StackUtil.getEmpty());
+                    this.inv.setStackInSlot(SLOT_OUTPUT, input.copy());
+                    this.inv.setStackInSlot(SLOT_INPUT, StackUtil.getEmpty());
                     this.nextRepairTick = 0;
                 }
                 else{
@@ -114,8 +114,8 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == SLOT_INPUT;
+    public boolean canInsert(int i, ItemStack stack, boolean automation){
+        return !automation || i == SLOT_INPUT;
     }
 
     @SideOnly(Side.CLIENT)
@@ -123,17 +123,16 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
         return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
-    @SideOnly(Side.CLIENT)
     public int getItemDamageToScale(int i){
-        if(StackUtil.isValid(this.slots.getStackInSlot(SLOT_INPUT))){
-            return (this.slots.getStackInSlot(SLOT_INPUT).getMaxDamage()-this.slots.getStackInSlot(SLOT_INPUT).getItemDamage())*i/this.slots.getStackInSlot(SLOT_INPUT).getMaxDamage();
+        if(StackUtil.isValid(this.inv.getStackInSlot(SLOT_INPUT))){
+            return (this.inv.getStackInSlot(SLOT_INPUT).getMaxDamage()-this.inv.getStackInSlot(SLOT_INPUT).getItemDamage())*i/this.inv.getStackInSlot(SLOT_INPUT).getMaxDamage();
         }
         return 0;
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return slot == SLOT_OUTPUT;
+    public boolean canExtract(int slot, ItemStack stack, boolean automation){
+        return !automation || slot == SLOT_OUTPUT;
     }
 
     @Override

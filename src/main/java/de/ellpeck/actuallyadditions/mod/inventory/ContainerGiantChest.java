@@ -31,7 +31,7 @@ public class ContainerGiantChest extends Container{
 
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 13; j++){
-                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileChest.slots, (9*13*page)+j+(i*13), 5+j*18, 5+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileChest.inv, (9*13*page)+j+(i*13), 5+j*18, 5+i*18));
             }
         }
 
@@ -84,7 +84,7 @@ public class ContainerGiantChest extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

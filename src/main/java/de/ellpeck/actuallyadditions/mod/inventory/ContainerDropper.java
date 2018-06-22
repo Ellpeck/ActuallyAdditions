@@ -33,7 +33,7 @@ public class ContainerDropper extends Container{
         InventoryPlayer inventory = player.inventory;
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){
-                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.dropper.slots, j+i*3, 62+j*18, 21+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.dropper.inv, j+i*3, 62+j*18, 21+i*18));
             }
         }
 
@@ -86,7 +86,7 @@ public class ContainerDropper extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

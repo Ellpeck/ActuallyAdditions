@@ -71,7 +71,7 @@ public class ItemSpawnerChanger extends ItemBase{
                         ItemPhantomConnector.clearStorage(stack, "Entity");
 
                         if(!player.capabilities.isCreativeMode){
-                            player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
+                            player.setHeldItem(hand, StackUtil.shrink(stack, 1));
                         }
 
                         return EnumActionResult.SUCCESS;

@@ -24,7 +24,7 @@ public final class CommonCapsUtil{
         return new DefaultSlotlessItemHandlerWrapper(normalHandler){
             @Override
             public ItemStack insertItem(ItemStack stack, boolean simulate){
-                ItemStack remain = StackUtil.validateCopy(stack);
+                ItemStack remain = stack.copy();
                 for(SlotlessItemHandlerInfo handler : tile.slotlessInfos){
                     if(handler.isLoaded() && tile.isWhitelisted(handler, stack, false)){
                         if(handler.handler instanceof ISlotlessItemHandler){

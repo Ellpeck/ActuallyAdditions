@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -18,9 +21,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
@@ -33,7 +33,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
 
     @Override
     public IEnergyStorage getEnergyStorage(EnumFacing facing){
-        ItemStack stack = this.slots.getStackInSlot(0);
+        ItemStack stack = this.inv.getStackInSlot(0);
         if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemBattery){
             if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
                 return stack.getCapability(CapabilityEnergy.ENERGY, null);
@@ -51,7 +51,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
 
             IEnergyStorage storage = this.getEnergyStorage(null);
             if(storage != null){
-                ItemStack stack = this.slots.getStackInSlot(0);
+                ItemStack stack = this.inv.getStackInSlot(0);
                 if(StackUtil.isValid(stack) && ItemUtil.isEnabled(stack)){
                     if(storage.getEnergyStored() > 0){
                         List<TileEntityBatteryBox> tiles = new ArrayList<TileEntityBatteryBox>();
@@ -67,7 +67,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
                             int maxPer = storage.extractEnergy(energyPer, true);
 
                             for(TileEntityBatteryBox tile : tiles){
-                                ItemStack battery = tile.slots.getStackInSlot(0);
+                                ItemStack battery = tile.inv.getStackInSlot(0);
                                 if(StackUtil.isValid(battery) && !ItemUtil.isEnabled(battery)){
                                     if(tile.hasCapability(CapabilityEnergy.ENERGY, null)){
                                         IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, null);
@@ -119,7 +119,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
 
     @Override
     public void activateOnPulse(){
-        ItemStack stack = this.slots.getStackInSlot(0);
+        ItemStack stack = this.inv.getStackInSlot(0);
         if(StackUtil.isValid(stack)){
             ItemUtil.changeEnabled(stack);
             this.markDirty();
@@ -144,13 +144,13 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
+    public boolean canExtract(int slot, ItemStack stack, boolean byAutomation){
         return true;
     }
 
     @Override
-    public boolean isItemValidForSlot(int slot, ItemStack stack){
-        return StackUtil.isValid(stack) && stack.getItem() instanceof ItemBattery;
+    public boolean canInsert(int slot, ItemStack stack, boolean fromAutomation){
+        return stack.getItem() instanceof ItemBattery;
     }
 
     @Override

@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
@@ -18,7 +20,10 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestLarge;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestMedium;
-import de.ellpeck.actuallyadditions.mod.util.*;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -38,8 +43,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import java.util.List;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 public class BlockGiantChest extends BlockContainerBase{
 
@@ -102,12 +106,12 @@ public class BlockGiantChest extends BlockContainerBase{
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityGiantChest){
                 NBTTagList list = stack.getTagCompound().getTagList("Items", 10);
-                ItemStackHandlerCustom slots = ((TileEntityGiantChest)tile).slots;
+                IItemHandlerModifiable inv = ((TileEntityGiantChest)tile).inv;
 
                 for(int i = 0; i < list.tagCount(); i++){
                     NBTTagCompound compound = list.getCompoundTagAt(i);
                     if(compound != null && compound.hasKey("id")){
-                        slots.setStackInSlot(i, new ItemStack(list.getCompoundTagAt(i)));
+                        inv.setStackInSlot(i, new ItemStack(list.getCompoundTagAt(i)));
                     }
                 }
             }
@@ -122,7 +126,7 @@ public class BlockGiantChest extends BlockContainerBase{
         super.getDrops(drops, world, pos, state, fortune);
         TileEntity tile = world.getTileEntity(pos);
         if(tile instanceof TileEntityGiantChest){
-            ItemStackHandlerCustom slots = ((TileEntityGiantChest)tile).slots;
+            ItemStackHandlerAA slots = ((TileEntityGiantChest)tile).inv;
             int place = ItemUtil.getPlaceAt(slots.getItems(), new ItemStack(InitItems.itemCrateKeeper), false);
             if(place >= 0){
                 NBTTagList list = new NBTTagList();
@@ -153,7 +157,7 @@ public class BlockGiantChest extends BlockContainerBase{
     @Override
     public boolean shouldDropInventory(World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
-        return !(tile instanceof TileEntityGiantChest) || !ItemUtil.contains(((TileEntityGiantChest) tile).slots.getItems(), new ItemStack(InitItems.itemCrateKeeper), false);
+        return !(tile instanceof TileEntityGiantChest) || !ItemUtil.contains(((TileEntityGiantChest) tile).inv.getItems(), new ItemStack(InitItems.itemCrateKeeper), false);
     }
 
     @Override

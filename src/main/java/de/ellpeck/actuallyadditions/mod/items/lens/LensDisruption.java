@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
+import java.util.ArrayList;
+
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -24,8 +26,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-
-import java.util.ArrayList;
 
 public class LensDisruption extends Lens{
 
@@ -52,7 +52,7 @@ public class LensDisruption extends Lens{
                         }
                         while(!StackUtil.isValid(newStack));
 
-                        newStack = StackUtil.setStackSize(newStack, StackUtil.getStackSize(stack));
+                        newStack.setCount(stack.getCount());
 
                         if(!newStack.hasTagCompound()){
                             newStack.setTagCompound(new NBTTagCompound());

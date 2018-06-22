@@ -58,37 +58,30 @@ public class TileEntityDropper extends TileEntityInventoryBase{
         }
     }
 
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return true;
-    }
 
     private void doWork(){
         ItemStack theoreticalRemove = this.removeFromInventory(false);
         if(StackUtil.isValid(theoreticalRemove)){
             IBlockState state = this.world.getBlockState(this.pos);
-            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state), this.world, this.pos, StackUtil.setStackSize(theoreticalRemove.copy(), 1));
+            ItemStack drop = theoreticalRemove.copy();
+            drop.setCount(1);
+            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state), this.world, this.pos, drop);
                 this.removeFromInventory(true);
         }
     }
 
     public ItemStack removeFromInventory(boolean actuallyDo){
-        for(int i = 0; i < this.slots.getSlots(); i++){
-            if(StackUtil.isValid(this.slots.getStackInSlot(i))){
-                ItemStack slot = this.slots.getStackInSlot(i).copy();
+        for(int i = 0; i < this.inv.getSlots(); i++){
+            if(StackUtil.isValid(this.inv.getStackInSlot(i))){
+                ItemStack slot = this.inv.getStackInSlot(i).copy();
                 if(actuallyDo){
-                    this.slots.setStackInSlot(i, StackUtil.addStackSize(this.slots.getStackInSlot(i), -1));
+                    this.inv.setStackInSlot(i, StackUtil.shrink(this.inv.getStackInSlot(i), 1));
                     this.markDirty();
                 }
                 return slot;
             }
         }
         return StackUtil.getEmpty();
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return true;
     }
 
     @Override

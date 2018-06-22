@@ -69,10 +69,11 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
 			}
 		}
 	}
-
+	
 	@Override
-	public boolean isItemValidForSlot(int i, ItemStack stack) {
-		return true;
+	public boolean canInsert(int slot, ItemStack stack, boolean automation) {
+	    if(isPlacer) return true;
+	    else return !automation;
 	}
 
 	private void doWork() {
@@ -87,24 +88,17 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
 			float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, world, breakCoords);
 
 			if (chance > 0 && world.rand.nextFloat() <= chance) {
-				if (StackUtil.canAddAll(slots, drops)) {
+				if (StackUtil.canAddAll(inv, drops, false)) {
 					world.destroyBlock(breakCoords, false);
-					StackUtil.addAll(slots, drops);
+					StackUtil.addAll(inv, drops, false);
 					this.markDirty();
 				}
 			}
 		} else if (this.isPlacer) {
-			int theSlot = WorldUtil.findFirstFilledSlot(slots);
-			this.slots.setStackInSlot(theSlot, WorldUtil.useItemAtSide(side, world, pos, slots.getStackInSlot(theSlot)));
-			if (!StackUtil.isValid(slots.getStackInSlot(theSlot))) {
-				this.slots.setStackInSlot(theSlot, StackUtil.getEmpty());
-			}
+			int slot = StackUtil.findFirstFilled(inv);
+			if(slot == -1) return;
+			this.inv.setStackInSlot(slot, WorldUtil.useItemAtSide(side, world, pos, inv.getStackInSlot(slot)));
 		}
-	}
-
-	@Override
-	public boolean canExtractItem(int slot, ItemStack stack) {
-		return true;
 	}
 
 	@Override

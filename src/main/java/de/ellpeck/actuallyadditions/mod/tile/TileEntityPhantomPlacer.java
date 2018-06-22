@@ -23,8 +23,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IButtonReactor{
 
@@ -136,25 +134,21 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
                 	NonNullList<ItemStack> drops = NonNullList.create();
                     blockToBreak.getDrops(drops, world, pos, this.world.getBlockState(this.boundPosition), 0);
 
-                    if(WorldUtil.addToInventory(this.slots, drops, false)){
+                    if(StackUtil.canAddAll(this.inv, drops, false)){
                         this.world.playEvent(2001, this.boundPosition, Block.getStateId(this.world.getBlockState(this.boundPosition)));
                         this.world.setBlockToAir(this.boundPosition);
-                        WorldUtil.addToInventory(this.slots, drops, true);
+                        StackUtil.addAll(this.inv, drops, false);
                         this.markDirty();
                     }
                 }
             }
             else{
-                int theSlot = WorldUtil.findFirstFilledSlot(this.slots);
-                this.slots.setStackInSlot(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.world, this.boundPosition, this.slots.getStackInSlot(theSlot)));
-                if(!StackUtil.isValid(this.slots.getStackInSlot(theSlot))){
-                    this.slots.setStackInSlot(theSlot, StackUtil.getEmpty());
-                }
+                int theSlot = StackUtil.findFirstFilled(this.inv);
+                inv.setStackInSlot(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.world, this.boundPosition, inv.getStackInSlot(theSlot)));
             }
         }
     }
 
-    @SideOnly(Side.CLIENT)
     public void renderParticles(){
         if(this.world.rand.nextInt(2) == 0){
             double d1 = (double)((float)this.boundPosition.getY()+this.world.rand.nextFloat());
@@ -195,13 +189,13 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return !this.isBreaker;
+    public boolean canInsert(int i, ItemStack stack, boolean automation){
+        return !automation || !this.isBreaker;
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return this.isBreaker;
+    public boolean canExtract(int slot, ItemStack stack, boolean automation){
+        return !automation || this.isBreaker;
     }
 
     @Override

@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -86,14 +86,14 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     private void addWhitelistSmart(boolean output, ItemStack stack){
         FilterSettings usedSettings = output ? this.rightFilter : this.leftFilter;
         ItemStack copy = stack.copy();
-        copy = StackUtil.setStackSize(copy, 1);
+        copy.setCount(1);
 
         if(!FilterSettings.check(copy, usedSettings.filterInventory, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectMod, usedSettings.respectOredict)){
             for(int k = 0; k < usedSettings.filterInventory.getSlots(); k++){
                 ItemStack slot = usedSettings.filterInventory.getStackInSlot(k);
                 if(StackUtil.isValid(slot)){
                     if(SlotFilter.isFilter(slot)){
-                        ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerFilter.SLOT_AMOUNT);
+                        ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
                         ItemDrill.loadSlotsFromNBT(inv, slot);
 
                         boolean did = false;

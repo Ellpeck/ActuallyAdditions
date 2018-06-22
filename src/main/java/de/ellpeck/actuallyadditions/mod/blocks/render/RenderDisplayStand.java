@@ -31,7 +31,7 @@ public class RenderDisplayStand extends TileEntitySpecialRenderer<TileEntityDisp
             return;
         }
 
-        ItemStack stack = ((TileEntityDisplayStand)tile).slots.getStackInSlot(0);
+        ItemStack stack = ((TileEntityDisplayStand)tile).inv.getStackInSlot(0);
         if(StackUtil.isValid(stack)){
             GlStateManager.pushMatrix();
             GlStateManager.translate((float)x+0.5F, (float)y+1F, (float)z+0.5F);

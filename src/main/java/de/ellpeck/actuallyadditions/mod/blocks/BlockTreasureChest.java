@@ -10,10 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import java.util.Random;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -27,14 +28,18 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Random;
 
 public class BlockTreasureChest extends BlockBase{
 
@@ -92,7 +97,7 @@ public class BlockTreasureChest extends BlockBase{
         for(int i = 0; i < MathHelper.getInt(world.rand, 3, 6); i++){
             TreasureChestLoot theReturn = WeightedRandom.getRandomItem(world.rand, ActuallyAdditionsAPI.TREASURE_CHEST_LOOT);
             ItemStack itemStack = theReturn.returnItem.copy();
-            itemStack = StackUtil.setStackSize(itemStack, MathHelper.getInt(world.rand, theReturn.minAmount, theReturn.maxAmount));
+            itemStack.setCount(MathHelper.getInt(world.rand, theReturn.minAmount, theReturn.maxAmount));
 
             float dX = world.rand.nextFloat()*0.8F+0.1F;
             float dY = world.rand.nextFloat()*0.8F+0.1F;

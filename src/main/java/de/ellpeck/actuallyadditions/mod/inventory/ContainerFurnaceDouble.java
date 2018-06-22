@@ -30,10 +30,10 @@ public class ContainerFurnaceDouble extends Container{
     public ContainerFurnaceDouble(InventoryPlayer inventory, TileEntityBase tile){
         this.tileFurnace = (TileEntityFurnaceDouble)tile;
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileFurnace.slots, TileEntityFurnaceDouble.SLOT_INPUT_1, 51, 21));
-        this.addSlotToContainer(new SlotOutput(this.tileFurnace.slots, TileEntityFurnaceDouble.SLOT_OUTPUT_1, 51, 69));
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileFurnace.slots, TileEntityFurnaceDouble.SLOT_INPUT_2, 109, 21));
-        this.addSlotToContainer(new SlotOutput(this.tileFurnace.slots, TileEntityFurnaceDouble.SLOT_OUTPUT_2, 108, 69));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileFurnace.inv, TileEntityFurnaceDouble.SLOT_INPUT_1, 51, 21));
+        this.addSlotToContainer(new SlotOutput(this.tileFurnace.inv, TileEntityFurnaceDouble.SLOT_OUTPUT_1, 51, 69));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileFurnace.inv, TileEntityFurnaceDouble.SLOT_INPUT_2, 109, 21));
+        this.addSlotToContainer(new SlotOutput(this.tileFurnace.inv, TileEntityFurnaceDouble.SLOT_OUTPUT_2, 108, 69));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -97,7 +97,7 @@ public class ContainerFurnaceDouble extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

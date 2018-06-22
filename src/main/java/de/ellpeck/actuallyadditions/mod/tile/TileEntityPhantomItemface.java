@@ -25,8 +25,8 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return this.isBoundThingInRange();
+    public boolean canInsert(int i, ItemStack stack, boolean automation){
+        return !automation || this.isBoundThingInRange();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface{
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return this.isBoundThingInRange();
+    public boolean canExtract(int slot, ItemStack stack, boolean automation){
+        return !automation || this.isBoundThingInRange();
     }
 }

@@ -186,15 +186,16 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                     return true;
                 }
                 else if(stack.getItem() instanceof ItemLaserRelayUpgrade){
-                    ItemStack inRelay = relay.slots.getStackInSlot(0);
+                    ItemStack inRelay = relay.inv.getStackInSlot(0);
                     if(!StackUtil.isValid(inRelay)){
                         if(!world.isRemote){
                             if(!player.isCreative()){
-                                player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
+                                player.setHeldItem(hand, StackUtil.shrink(stack, 1));
                             }
 
-                            ItemStack set = StackUtil.validateCopy(stack);
-                            relay.slots.setStackInSlot(0, StackUtil.setStackSize(set, 1));
+                            ItemStack set = stack.copy();
+                            set.setCount(1);
+                            relay.inv.setStackInSlot(0, set);
                         }
                         return true;
                     }
@@ -203,10 +204,10 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
             }
 
             if(player.isSneaking()){
-                ItemStack inRelay = StackUtil.validateCopy(relay.slots.getStackInSlot(0));
+                ItemStack inRelay = relay.inv.getStackInSlot(0).copy();
                 if(StackUtil.isValid(inRelay)){
                     if(!world.isRemote){
-                        relay.slots.setStackInSlot(0, StackUtil.getEmpty());
+                        relay.inv.setStackInSlot(0, StackUtil.getEmpty());
 
                         if(!player.inventory.addItemStackToInventory(inRelay)){
                             player.entityDropItem(inRelay, 0);

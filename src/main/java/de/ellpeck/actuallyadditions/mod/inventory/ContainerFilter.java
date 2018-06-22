@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -27,7 +27,7 @@ public class ContainerFilter extends Container{
 
     public static final int SLOT_AMOUNT = 24;
 
-    private final ItemStackHandlerCustom filterInventory = new ItemStackHandlerCustom(SLOT_AMOUNT);
+    private final ItemStackHandlerAA filterInventory = new ItemStackHandlerAA(SLOT_AMOUNT);
     private final InventoryPlayer inventory;
 
     public ContainerFilter(InventoryPlayer inventory){
@@ -96,7 +96,7 @@ public class ContainerFilter extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

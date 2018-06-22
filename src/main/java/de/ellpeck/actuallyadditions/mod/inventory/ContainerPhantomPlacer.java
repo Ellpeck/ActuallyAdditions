@@ -30,7 +30,7 @@ public class ContainerPhantomPlacer extends Container{
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){
-                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.placer.slots, j+i*3, 62+j*18, 21+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.placer.inv, j+i*3, 62+j*18, 21+i*18));
             }
         }
 
@@ -83,7 +83,7 @@ public class ContainerPhantomPlacer extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

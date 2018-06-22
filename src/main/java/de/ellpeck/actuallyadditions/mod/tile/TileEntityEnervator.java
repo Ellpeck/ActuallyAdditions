@@ -17,8 +17,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider{
 
@@ -45,14 +43,14 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            if(StackUtil.isValid(this.slots.getStackInSlot(0)) && !StackUtil.isValid(this.slots.getStackInSlot(1))){
+            if(StackUtil.isValid(this.inv.getStackInSlot(0)) && !StackUtil.isValid(this.inv.getStackInSlot(1))){
                 if(this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
                     int extracted = 0;
                     boolean canTakeUp = false;
 
                     int maxExtract = this.storage.getMaxEnergyStored()-this.storage.getEnergyStored();
-                    if(this.slots.getStackInSlot(0).hasCapability(CapabilityEnergy.ENERGY, null)){
-                        IEnergyStorage cap = this.slots.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null);
+                    if(this.inv.getStackInSlot(0).hasCapability(CapabilityEnergy.ENERGY, null)){
+                        IEnergyStorage cap = this.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null);
                         if(cap != null){
                             extracted = cap.extractEnergy(maxExtract, false);
                             canTakeUp = cap.getEnergyStored() <= 0;
@@ -63,8 +61,8 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
                     }
 
                     if(canTakeUp){
-                        this.slots.setStackInSlot(1, this.slots.getStackInSlot(0).copy());
-                        this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -1));
+                        this.inv.setStackInSlot(1, this.inv.getStackInSlot(0).copy());
+                        this.inv.getStackInSlot(0).shrink(1);
                     }
                 }
             }
@@ -76,18 +74,17 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0 && (stack.hasCapability(CapabilityEnergy.ENERGY, null));
+    public boolean canInsert(int i, ItemStack stack, boolean automation){
+        return !automation || (i == 0 && (stack.hasCapability(CapabilityEnergy.ENERGY, null)));
     }
 
-    @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i){
         return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return slot == 1;
+    public boolean canExtract(int slot, ItemStack stack, boolean automation){
+        return !automation || slot == 1;
     }
 
     @Override

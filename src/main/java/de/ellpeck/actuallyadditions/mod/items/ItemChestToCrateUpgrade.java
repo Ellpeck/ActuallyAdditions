@@ -53,7 +53,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                         chest = new InvWrapper((IInventory)tileHit);
                     }
                     else if(tileHit instanceof TileEntityInventoryBase){
-                        chest = ((TileEntityInventoryBase)tileHit).slots;
+                        chest = ((TileEntityInventoryBase)tileHit).inv;
                     }
 
                     if(chest != null){
@@ -74,7 +74,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
                         //Copy Items into new Chest
                         TileEntity newTileHit = world.getTileEntity(pos);
                         if(newTileHit instanceof TileEntityInventoryBase){
-                            IItemHandlerModifiable newChest = ((TileEntityInventoryBase)newTileHit).slots;
+                            IItemHandlerModifiable newChest = ((TileEntityInventoryBase)newTileHit).inv;
 
                             for(int i = 0; i < stacks.length; i++){
                                 if(StackUtil.isValid(stacks[i])){

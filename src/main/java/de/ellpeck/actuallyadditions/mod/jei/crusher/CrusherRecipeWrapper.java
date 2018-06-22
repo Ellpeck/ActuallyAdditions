@@ -10,6 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
@@ -21,9 +25,6 @@ import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CrusherRecipeWrapper extends RecipeWrapperWithButton{
 
     public final CrusherRecipe theRecipe;
@@ -34,20 +35,20 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void getIngredients(IIngredients ingredients){
-        ingredients.setInput(ItemStack.class, this.theRecipe.inputStack);
+        ingredients.setInputs(ItemStack.class, Arrays.asList(theRecipe.getInput().getMatchingStacks()));
 
-        List<ItemStack> list = new ArrayList<ItemStack>();
-        list.add(this.theRecipe.outputOneStack);
-        if(StackUtil.isValid(this.theRecipe.outputTwoStack)){
-            list.add(this.theRecipe.outputTwoStack);
+        List<ItemStack> list = new ArrayList<>();
+        list.add(this.theRecipe.getOutputOne());
+        if(StackUtil.isValid(this.theRecipe.getOutputTwo())){
+            list.add(this.theRecipe.getOutputTwo());
         }
         ingredients.setOutputs(ItemStack.class, list);
     }
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
-        if(StackUtil.isValid(this.theRecipe.outputTwoStack)){
-            minecraft.fontRenderer.drawString(this.theRecipe.outputTwoChance+"%", 60, 60, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+        if(StackUtil.isValid(this.theRecipe.getOutputTwo())){
+            minecraft.fontRenderer.drawString(this.theRecipe.getSecondChance()+"%", 60, 60, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
 
         super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);

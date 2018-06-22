@@ -51,25 +51,6 @@ public class BlockSlabs extends BlockBase{
         this.fullBlockState = fullBlockState;
     }
 
-    /*@Override
-    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB axis, List list, Entity entity){
-        this.setBlockBoundsBasedOnState(world, pos);
-        super.addCollisionBoxesToList(world, pos, state, axis, list, entity);
-    }
-
-    @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos){
-        int meta = PosUtil.getMetadata(pos, world);
-        float minY = meta == 1 ? 0.5F : 0.0F;
-        float maxY = meta == 1 ? 1.0F : 0.5F;
-        this.setBlockBounds(0.0F, minY, 0F, 1.0F, maxY, 1.0F);
-    }
-
-    @Override
-    public void setBlockBoundsForItemRender(){
-        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
-    }*/
-
     @Override
     public boolean isOpaqueCube(IBlockState state){
         return false;
@@ -144,7 +125,7 @@ public class BlockSlabs extends BlockBase{
                         if(bound != Block.NULL_AABB && world.checkNoEntityCollision(bound.offset(pos)) && world.setBlockState(pos, newState, 11)){
                             SoundType soundtype = theBlock.fullBlockState.getBlock().getSoundType(theBlock.fullBlockState, world, pos, player);
                             world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume()+1.0F)/2.0F, soundtype.getPitch()*0.8F);
-                            player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
+                            player.setHeldItem(hand, StackUtil.shrink(stack, 1));
                         }
 
                         return EnumActionResult.SUCCESS;
@@ -184,7 +165,7 @@ public class BlockSlabs extends BlockBase{
                 	SoundType soundtype = theBlock.fullBlockState.getBlock().getSoundType(theBlock.fullBlockState, world, pos, player);
                     world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume()+1.0F)/2.0F, soundtype.getPitch()*0.8F);
 
-                    player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
+                    player.setHeldItem(hand, StackUtil.shrink(stack, 1));
                 }
 
                 return true;

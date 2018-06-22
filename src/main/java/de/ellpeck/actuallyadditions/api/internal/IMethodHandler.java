@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.api.internal;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
@@ -20,8 +22,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-
-import java.util.List;
 
 /**
  * This is the internal method handler.
@@ -43,9 +43,9 @@ public interface IMethodHandler{
     boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile);
 
     boolean invokeReconstructor(IAtomicReconstructor tile);
-
     boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance);
     
+    @Deprecated //Use Ingredient input on AA API class
     boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance);
 
     IBookletPage generateTextPage(int id);

@@ -29,7 +29,7 @@ public class ContainerCoalGenerator extends Container{
     public ContainerCoalGenerator(InventoryPlayer inventory, TileEntityBase tile){
         this.generator = (TileEntityCoalGenerator)tile;
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.generator.slots, 0, 87, 43));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.generator.inv, 0, 87, 43));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -84,7 +84,7 @@ public class ContainerCoalGenerator extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

@@ -10,17 +10,22 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler.GuiTypes;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -31,9 +36,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class ItemBag extends ItemBase{
 
@@ -47,7 +49,7 @@ public class ItemBag extends ItemBase{
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced){
-        ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerBag.getSlotAmount(this.isVoid));
+        ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerBag.getSlotAmount(this.isVoid));
         ItemDrill.loadSlotsFromNBT(inv, stack);
 
         int slotsTotal = inv.getSlots();
@@ -72,7 +74,7 @@ public class ItemBag extends ItemBase{
                     if(handler != null){
                         boolean changed = false;
 
-                        ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerBag.getSlotAmount(this.isVoid));
+                        ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerBag.getSlotAmount(this.isVoid));
                         ItemDrill.loadSlotsFromNBT(inv, stack);
 
                         for(int j = 0; j < inv.getSlots(); j++){
@@ -81,7 +83,7 @@ public class ItemBag extends ItemBase{
                                 for(int i = 0; i < handler.getSlots(); i++){
                                     ItemStack remain = handler.insertItem(i, invStack, false);
                                     if(!ItemStack.areItemStacksEqual(remain, invStack)){
-                                        inv.setStackInSlot(j, StackUtil.validateCopy(remain));
+                                        inv.setStackInSlot(j, remain.copy());
                                         changed = true;
 
                                         if(!StackUtil.isValid(remain)){
@@ -108,11 +110,16 @@ public class ItemBag extends ItemBase{
         if(!world.isRemote && hand == EnumHand.MAIN_HAND){
             player.openGui(ActuallyAdditions.INSTANCE, (this.isVoid ? GuiTypes.VOID_BAG : GuiTypes.BAG).ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
+        return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
         return this.isVoid ? EnumRarity.RARE : EnumRarity.UNCOMMON;
+    }
+    
+    @Override
+    public NBTTagCompound getNBTShareTag(ItemStack stack){
+        return null;
     }
 }

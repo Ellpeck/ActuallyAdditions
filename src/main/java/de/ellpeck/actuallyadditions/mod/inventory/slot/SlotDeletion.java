@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import net.minecraft.item.ItemStack;
 
 public class SlotDeletion extends SlotItemHandlerUnconditioned{
 
-    public SlotDeletion(ItemStackHandlerCustom inv, int slot, int x, int y){
+    public SlotDeletion(ItemStackHandlerAA inv, int slot, int x, int y){
         super(inv, slot, x, y);
     }
 

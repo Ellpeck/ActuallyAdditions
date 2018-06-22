@@ -10,11 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -37,8 +38,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 public class ItemWorm extends ItemBase{
 
@@ -68,10 +67,7 @@ public class ItemWorm extends ItemBase{
                     worm.setPosition(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
                     worm.setCustomNameTag(stack.getDisplayName());
                     world.spawnEntity(worm);
-
-                    if(!player.capabilities.isCreativeMode){
-                        player.setHeldItem(hand, StackUtil.addStackSize(stack, -1));
-                    }
+                    if(!player.capabilities.isCreativeMode) stack.shrink(1);
                 }
                 return EnumActionResult.SUCCESS;
             }

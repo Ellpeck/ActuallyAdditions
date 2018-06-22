@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -60,13 +59,13 @@ public class ItemSolidifiedExperience extends ItemBase{
             if(!player.isSneaking()){
                 amount = SOLID_XP_AMOUNT;
                 if(!player.capabilities.isCreativeMode){
-                    stack = StackUtil.addStackSize(stack, -1);
+                    stack.shrink(1);
                 }
             }
             else{
-                amount = SOLID_XP_AMOUNT*StackUtil.getStackSize(stack);
+                amount = SOLID_XP_AMOUNT*stack.getCount();
                 if(!player.capabilities.isCreativeMode){
-                    stack = StackUtil.setStackSize(stack, 0);
+                    stack.setCount(0);
                 }
             }
 
@@ -74,7 +73,7 @@ public class ItemSolidifiedExperience extends ItemBase{
             orb.getEntityData().setBoolean(ActuallyAdditions.MODID+"FromSolidified", true);
             world.spawnEntity(orb);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
 

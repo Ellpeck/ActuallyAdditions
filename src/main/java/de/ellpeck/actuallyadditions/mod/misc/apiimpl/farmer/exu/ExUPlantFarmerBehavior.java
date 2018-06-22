@@ -79,19 +79,19 @@ public abstract class ExUPlantFarmerBehavior implements IFarmerBehavior{
                         if(StackUtil.isValid(stack)){
                             ResourceLocation itemReg = stack.getItem().getRegistryName();
                             if(itemReg != null && this.getPlantName().equals(itemReg.toString())){
-                                if(StackUtil.getStackSize(stack) <= 1){
+                                if(stack.getCount() <= 1){
                                     drops.remove(stack);
                                     break;
                                 }
                                 else{
-                                    StackUtil.addStackSize(stack, -1);
+                                    stack.shrink(1);
                                 }
                             }
                         }
                     }
 
-                    if(farmer.addToOutputInventory(drops, false)){
-                        farmer.addToOutputInventory(drops, true);
+                    if(farmer.canAddToOutput(drops)){
+                        farmer.addToOutput(drops);
 
                         world.playEvent(2001, pos, Block.getStateId(state));
                         world.setBlockState(pos, block.getDefaultState(), 2);

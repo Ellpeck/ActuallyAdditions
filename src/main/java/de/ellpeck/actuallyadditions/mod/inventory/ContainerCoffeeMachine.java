@@ -32,13 +32,13 @@ public class ContainerCoffeeMachine extends Container{
     public ContainerCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile){
         this.machine = (TileEntityCoffeeMachine)tile;
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.slots, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, 37, 6));
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.slots, TileEntityCoffeeMachine.SLOT_INPUT, 80, 42));
-        this.addSlotToContainer(new SlotOutput(this.machine.slots, TileEntityCoffeeMachine.SLOT_OUTPUT, 80, 73));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.inv, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, 37, 6));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.inv, TileEntityCoffeeMachine.SLOT_INPUT, 80, 42));
+        this.addSlotToContainer(new SlotOutput(this.machine.inv, TileEntityCoffeeMachine.SLOT_OUTPUT, 80, 73));
 
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.slots, j+i*2+3, 125+j*18, 6+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.inv, j+i*2+3, 125+j*18, 6+i*18));
             }
         }
 
@@ -112,7 +112,7 @@ public class ContainerCoffeeMachine extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

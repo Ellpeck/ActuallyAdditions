@@ -23,7 +23,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -45,16 +45,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 public class ItemDrill extends ItemEnergy{
 
@@ -74,7 +76,7 @@ public class ItemDrill extends ItemEnergy{
      *
      * @param stack The Drill
      */
-    public static void loadSlotsFromNBT(ItemStackHandlerCustom slots, ItemStack stack){
+    public static void loadSlotsFromNBT(IItemHandlerModifiable slots, ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
         if(compound != null){
             TileEntityInventoryBase.loadSlots(slots, compound);
@@ -87,7 +89,7 @@ public class ItemDrill extends ItemEnergy{
      * @param slots The Slots
      * @param stack The Drill
      */
-    public static void writeSlotsToNBT(ItemStackHandlerCustom slots, ItemStack stack){
+    public static void writeSlotsToNBT(IItemHandler slots, ItemStack stack){
         NBTTagCompound compound = stack.getTagCompound();
         if(compound == null){
             compound = new NBTTagCompound();
@@ -115,7 +117,7 @@ public class ItemDrill extends ItemEnergy{
                         //Places the Block into the World
                         if(toPlaceStack.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ) != EnumActionResult.FAIL){
                             if(!player.capabilities.isCreativeMode){
-                                WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, StackUtil.validateCopy(toPlaceStack));
+                                WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack.copy());
                             }
                         }
                     }
@@ -147,7 +149,7 @@ public class ItemDrill extends ItemEnergy{
             return StackUtil.getEmpty();
         }
 
-        ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerDrill.SLOT_AMOUNT);
+        ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerDrill.SLOT_AMOUNT);
         loadSlotsFromNBT(inv, stack);
         for(int i = 0; i < inv.getSlots(); i++){
             ItemStack slotStack = inv.getStackInSlot(i);

@@ -10,25 +10,28 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.Random;
+import java.util.UUID;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.Random;
-import java.util.UUID;
 
 public class ItemHairyBall extends ItemBase{
 
@@ -61,7 +64,7 @@ public class ItemHairyBall extends ItemBase{
                 entityItem.setPickupDelay(0);
                 player.world.spawnEntity(entityItem);
             }
-            stack = StackUtil.addStackSize(stack, -1);
+            stack.shrink(1);
 
             world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, world.rand.nextFloat()*0.1F+0.9F);
         }

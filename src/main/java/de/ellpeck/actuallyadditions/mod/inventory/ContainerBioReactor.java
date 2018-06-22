@@ -29,7 +29,7 @@ public class ContainerBioReactor extends Container{
 
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tile.slots, j+i*2, 50+j*18, 13+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tile.inv, j+i*2, 50+j*18, 13+i*18));
             }
         }
 
@@ -86,7 +86,7 @@ public class ContainerBioReactor extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

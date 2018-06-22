@@ -99,7 +99,7 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
                 for(ItemStack drop : drops){
                     if(StackUtil.isValid(drop)){
                         if(drop.getItem() == this.seedItem && !deductedSeedSize){
-                            StackUtil.addStackSize(drop, -1);
+                            drop.shrink(1);
                             deductedSeedSize = true;
                         }
 

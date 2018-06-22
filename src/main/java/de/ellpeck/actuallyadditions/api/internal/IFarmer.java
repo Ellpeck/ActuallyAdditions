@@ -25,7 +25,11 @@ public interface IFarmer extends IEnergyTile{
 
     EnumFacing getOrientation();
 
-    boolean addToSeedInventory(List<ItemStack> stacks, boolean actuallyDo);
+    boolean canAddToSeeds(List<ItemStack> stacks);
 
-    boolean addToOutputInventory(List<ItemStack> stacks, boolean actuallyDo);
+    boolean canAddToOutput(List<ItemStack> stacks);
+    
+    void addToSeeds(List<ItemStack> stacks);
+    
+    void addToOutput(List<ItemStack> stacks);
 }

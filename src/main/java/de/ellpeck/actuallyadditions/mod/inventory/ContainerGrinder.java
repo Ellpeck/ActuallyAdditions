@@ -32,13 +32,13 @@ public class ContainerGrinder extends Container{
         this.tileGrinder = (TileEntityGrinder)tile;
         this.isDouble = isDouble;
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileGrinder.slots, TileEntityGrinder.SLOT_INPUT_1, this.isDouble ? 51 : 80, 21));
-        this.addSlotToContainer(new SlotOutput(this.tileGrinder.slots, TileEntityGrinder.SLOT_OUTPUT_1_1, this.isDouble ? 37 : 66, 69));
-        this.addSlotToContainer(new SlotOutput(this.tileGrinder.slots, TileEntityGrinder.SLOT_OUTPUT_1_2, this.isDouble ? 64 : 92, 69));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityGrinder.SLOT_INPUT_1, this.isDouble ? 51 : 80, 21));
+        this.addSlotToContainer(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_1_1, this.isDouble ? 37 : 66, 69));
+        this.addSlotToContainer(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_1_2, this.isDouble ? 64 : 92, 69));
         if(this.isDouble){
-            this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileGrinder.slots, TileEntityGrinder.SLOT_INPUT_2, 109, 21));
-            this.addSlotToContainer(new SlotOutput(this.tileGrinder.slots, TileEntityGrinder.SLOT_OUTPUT_2_1, 96, 69));
-            this.addSlotToContainer(new SlotOutput(this.tileGrinder.slots, TileEntityGrinder.SLOT_OUTPUT_2_2, 121, 69));
+            this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityGrinder.SLOT_INPUT_2, 109, 21));
+            this.addSlotToContainer(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_2_1, 96, 69));
+            this.addSlotToContainer(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_2_2, 121, 69));
         }
 
         for(int i = 0; i < 3; i++){
@@ -108,7 +108,7 @@ public class ContainerGrinder extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

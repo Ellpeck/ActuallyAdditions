@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor{
 
     public static final int OKAY_BUTTON_ID = 133;
-    private final SlotlessableItemHandlerWrapper wrapper = new SlotlessableItemHandlerWrapper(this.slots, null);
+    private final SlotlessableItemHandlerWrapper wrapper = new SlotlessableItemHandlerWrapper(this.inv, null);
     public int sideToPut = -1;
     public int slotToPutStart;
     public int slotToPutEnd;
@@ -95,7 +95,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     private boolean newPutting(){
-        if(!this.isAdvanced || this.rightFilter.check(this.slots.getStackInSlot(0))){
+        if(!this.isAdvanced || this.rightFilter.check(this.inv.getStackInSlot(0))){
             for(EnumFacing side : this.placeToPut.keySet()){
                 WorldUtil.doItemInteraction(this.wrapper, this.placeToPut.get(side), Integer.MAX_VALUE, 0, 1, this.slotToPutStart, this.slotToPutEnd, null);
 
@@ -281,11 +281,11 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             if(!this.isRedstonePowered){
                 if(this.ticksElapsed%30 == 0){
                     if(!(this.sideToPull == this.sideToPut && this.slotToPullStart == this.slotToPutStart && this.slotToPullEnd == this.slotToPutEnd)){
-                        if(!StackUtil.isValid(this.slots.getStackInSlot(0)) && this.sideToPull != -1 && this.placeToPull != null){
+                        if(!StackUtil.isValid(this.inv.getStackInSlot(0)) && this.sideToPull != -1 && this.placeToPull != null){
                             this.newPulling();
                         }
 
-                        if(StackUtil.isValid(this.slots.getStackInSlot(0)) && this.sideToPut != -1 && this.placeToPut != null){
+                        if(StackUtil.isValid(this.inv.getStackInSlot(0)) && this.sideToPut != -1 && this.placeToPut != null){
                             this.newPutting();
                         }
                     }
@@ -307,12 +307,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return i == 0;
+    public boolean canInsert(int i, ItemStack stack, boolean automation){
+        return !automation || i == 0;
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return slot == 0;
+    public boolean canExtract(int slot, ItemStack stack, boolean automation){
+        return !automation || slot == 0;
     }
 }

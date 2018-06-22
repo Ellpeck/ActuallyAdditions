@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
 import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 
 public class SlotFilter extends SlotItemHandlerUnconditioned{
 
-    public SlotFilter(ItemStackHandlerCustom inv, int slot, int x, int y){
+    public SlotFilter(ItemStackHandlerAA inv, int slot, int x, int y){
         super(inv, slot, x, y);
     }
 
@@ -57,10 +57,10 @@ public class SlotFilter extends SlotItemHandlerUnconditioned{
         }
         else if(StackUtil.isValid(heldStack)){
             if(!isFilter(stackInSlot)){
-                this.putStack(StackUtil.setStackSize(heldStack.copy(), 1));
+                this.putStack(StackUtil.grow(heldStack.copy(), 1));
 
                 if(isFilter(heldStack)){
-                    player.inventory.setItemStack(StackUtil.addStackSize(heldStack, -1));
+                    player.inventory.setItemStack(StackUtil.shrink(heldStack, 1));
                 }
             }
         }
@@ -73,7 +73,7 @@ public class SlotFilter extends SlotItemHandlerUnconditioned{
 
     @Override
     public void putStack(ItemStack stack){
-        super.putStack(StackUtil.validateCopy(stack));
+        super.putStack(stack.copy());
     }
 
     @Override

@@ -27,7 +27,7 @@ public class ContainerFeeder extends Container{
 
     public ContainerFeeder(InventoryPlayer inventory, TileEntityBase tile){
         this.tileFeeder = (TileEntityFeeder)tile;
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileFeeder.slots, 0, 80, 45));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileFeeder.inv, 0, 80, 45));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -78,7 +78,7 @@ public class ContainerFeeder extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

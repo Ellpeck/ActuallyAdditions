@@ -30,12 +30,12 @@ public class ContainerFarmer extends Container{
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.farmer.slots, j+i*2, 67+j*18, 21+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.farmer.inv, j+i*2, 67+j*18, 21+i*18));
             }
         }
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 2; j++){
-                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.farmer.slots, 6+j+i*2, 105+j*18, 21+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.farmer.inv, 6+j+i*2, 105+j*18, 21+i*18));
             }
         }
 
@@ -88,7 +88,7 @@ public class ContainerFarmer extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

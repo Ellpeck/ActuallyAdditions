@@ -25,7 +25,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemBag;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -44,7 +44,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerBag extends Container implements IButtonReactor{
 
     public final FilterSettings filter = new FilterSettings(4, false, true, false, false, 0, -1000);
-    private final ItemStackHandlerCustom bagInventory;
+    private final ItemStackHandlerAA bagInventory;
     private final InventoryPlayer inventory;
     private final boolean isVoid;
     public boolean autoInsert;
@@ -53,7 +53,7 @@ public class ContainerBag extends Container implements IButtonReactor{
 
     public ContainerBag(ItemStack sack, InventoryPlayer inventory, boolean isVoid){
         this.inventory = inventory;
-        this.bagInventory = new ItemStackHandlerCustom(getSlotAmount(isVoid)) {
+        this.bagInventory = new ItemStackHandlerAA(getSlotAmount(isVoid)) {
         	@Override
         	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
         		if(isBlacklisted(stack)) return stack;
@@ -198,7 +198,7 @@ public class ContainerBag extends Container implements IButtonReactor{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -46,9 +49,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MethodHandler implements IMethodHandler{
 
@@ -204,22 +204,22 @@ public class MethodHandler implements IMethodHandler{
                     List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
                     for(LensConversionRecipe recipe : recipes){
                         if(recipe != null && recipe.type == tile.getLens()){
-                            int itemsPossible = Math.min(tile.getEnergy()/recipe.energyUse, StackUtil.getStackSize(stack));
+                            int itemsPossible = Math.min(tile.getEnergy()/recipe.energyUse, stack.getCount());
 
                             if(itemsPossible > 0){
                             	recipe.transformHook(item.getItem(), null, item.getPosition(), tile);
                                 item.setDead();
 
-                                if(StackUtil.getStackSize(stack)-itemsPossible > 0){
+                                if(stack.getCount()-itemsPossible > 0){
                                     ItemStack stackCopy = stack.copy();
-                                    stackCopy = StackUtil.addStackSize(stackCopy, -itemsPossible);
+                                    stackCopy.shrink(itemsPossible);
 
                                     EntityItem inputLeft = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, stackCopy);
                                     tile.getWorldObject().spawnEntity(inputLeft);
                                 }
 
                                 ItemStack outputCopy = recipe.outputStack.copy();
-                                outputCopy = StackUtil.setStackSize(outputCopy, itemsPossible);
+                                outputCopy.setCount(itemsPossible);
 
                                 EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
                                 tile.getWorldObject().spawnEntity(newItem);
@@ -268,7 +268,7 @@ public class MethodHandler implements IMethodHandler{
                 for(ItemStack outputOne : outputOnes){
                     if(StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
                         ItemStack outputOneCopy = outputOne.copy();
-                        outputOneCopy = StackUtil.setStackSize(outputOneCopy, outputOneAmounts);
+                        outputOneCopy.setCount(outputOneAmounts);
 
                         if(outputTwos.isEmpty()){
                             ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getEmpty(), 0);
@@ -278,7 +278,7 @@ public class MethodHandler implements IMethodHandler{
                             for(ItemStack outputTwo : outputTwos){
                                 if(StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
                                     ItemStack outputTwoCopy = outputTwo.copy();
-                                    outputTwoCopy = StackUtil.setStackSize(outputTwoCopy, outputTwoAmounts);
+                                    outputTwoCopy.setCount(outputTwoAmounts);
 
                                     ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, outputTwoCopy, outputTwoChance);
                                     hasWorkedOnce = true;
@@ -299,7 +299,7 @@ public class MethodHandler implements IMethodHandler{
             if(StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null){
                     if(StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
                         ItemStack outputOneCopy = outputOne.copy();
-                        outputOneCopy = StackUtil.setStackSize(outputOneCopy, outputOneAmount);
+                        outputOneCopy.setCount(outputOneAmount);
 
                         if(!StackUtil.isValid(outputTwo)){
                             ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getEmpty(), 0);
@@ -307,7 +307,7 @@ public class MethodHandler implements IMethodHandler{
                         }
                         else if(StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
                         	ItemStack outputTwoCopy = outputTwo.copy();
-                            outputTwoCopy = StackUtil.setStackSize(outputTwoCopy, outputTwoAmount);
+                            outputTwoCopy.setCount(outputTwoAmount);
 
                             ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, outputTwoCopy, outputTwoChance);
                             hasWorkedOnce = true;

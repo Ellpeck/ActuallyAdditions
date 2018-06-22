@@ -34,7 +34,7 @@ public class ContainerInputter extends Container{
         this.tileInputter = (TileEntityInputter)tile;
         this.isAdvanced = isAdvanced;
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileInputter.slots, 0, 80, 21+(isAdvanced ? 12 : 0)));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileInputter.inv, 0, 80, 21+(isAdvanced ? 12 : 0)));
 
         if(isAdvanced){
             for(int i = 0; i < 2; i++){
@@ -95,7 +95,7 @@ public class ContainerInputter extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

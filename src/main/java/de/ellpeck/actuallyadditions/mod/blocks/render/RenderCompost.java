@@ -29,7 +29,7 @@ public class RenderCompost extends TileEntitySpecialRenderer<TileEntityCompost>{
     @Override
     public void render(TileEntityCompost compost, double x, double y, double z, float partialTicks, int destroyStage, float f){
         if(compost instanceof TileEntityCompost){
-            ItemStack slot = compost.slots.getStackInSlot(0);
+            ItemStack slot = compost.inv.getStackInSlot(0);
 
             if(StackUtil.isValid(slot)){
                 Block display = null;
@@ -47,7 +47,7 @@ public class RenderCompost extends TileEntitySpecialRenderer<TileEntityCompost>{
                     }
                 }
                 if(display != null){
-                    float i = (float)StackUtil.getStackSize(slot)/(float)maxAmount;
+                    float i = (float)slot.getCount()/(float)maxAmount;
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((float)x+0.5F, (float)y+(i/3F)+0.01F, (float)z+0.5F);
                     //Hehe

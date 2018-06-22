@@ -61,7 +61,7 @@ public class ItemWaterBowl extends ItemBase{
 
                                 if(!event.getWorld().isRemote){
                                     event.getWorld().setBlockState(trace.getBlockPos(), Blocks.AIR.getDefaultState(), 11);
-                                    ItemStack reduced = StackUtil.addStackSize(event.getItemStack(), -1);
+                                    ItemStack reduced = StackUtil.shrink(event.getItemStack(), 1);
 
                                     ItemStack bowl = new ItemStack(InitItems.itemWaterBowl);
                                     if(!StackUtil.isValid(reduced)){

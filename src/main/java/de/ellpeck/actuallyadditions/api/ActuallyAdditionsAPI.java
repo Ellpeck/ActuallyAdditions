@@ -10,6 +10,11 @@
 
 package de.ellpeck.actuallyadditions.api;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
@@ -18,39 +23,44 @@ import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
-import de.ellpeck.actuallyadditions.api.recipe.*;
+import de.ellpeck.actuallyadditions.api.recipe.BallOfFurReturn;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.OilGenRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
+import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import net.minecraft.item.crafting.Ingredient;
 
 public final class ActuallyAdditionsAPI{
 
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID+"api";
-    public static final String API_VERSION = "33";
+    public static final String API_VERSION = "34";
 
-    public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<CrusherRecipe>();
-    public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<BallOfFurReturn>();
-    public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<TreasureChestLoot>();
-    public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<LensConversionRecipe>();
-    public static final List<EmpowererRecipe> EMPOWERER_RECIPES = new ArrayList<EmpowererRecipe>();
-    public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<Item, IColorLensChanger>();
-    public static final List<IFarmerBehavior> FARMER_BEHAVIORS = new ArrayList<IFarmerBehavior>();
-    public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<CoffeeIngredient>();
-    public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<CompostRecipe>();
-    public static final List<OilGenRecipe> OIL_GENERATOR_RECIPES = new ArrayList<OilGenRecipe>();
-    public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<IBookletEntry>();
+    public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<>();
+    public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<>();
+    public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<>();
+    public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<>();
+    public static final List<EmpowererRecipe> EMPOWERER_RECIPES = new ArrayList<>();
+    public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<>();
+    public static final List<IFarmerBehavior> FARMER_BEHAVIORS = new ArrayList<>();
+    public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<>();
+    public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<>();
+    public static final List<OilGenRecipe> OIL_GENERATOR_RECIPES = new ArrayList<>();
+    public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<>();
     //This is added to automatically, you don't need to add anything to this list
-    public static final List<IBookletChapter> ALL_CHAPTERS = new ArrayList<IBookletChapter>();
+    public static final List<IBookletChapter> ALL_CHAPTERS = new ArrayList<>();
     //This is added to automatically, you don't need to add anything to this list
-    public static final List<IBookletPage> BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA = new ArrayList<IBookletPage>();
-    public static final List<WeightedOre> STONE_ORES = new ArrayList<WeightedOre>();
-    public static final List<WeightedOre> NETHERRACK_ORES = new ArrayList<WeightedOre>();
+    public static final List<IBookletPage> BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA = new ArrayList<>();
+    public static final List<WeightedOre> STONE_ORES = new ArrayList<>();
+    public static final List<WeightedOre> NETHERRACK_ORES = new ArrayList<>();
 
     /**
      * Use this to handle things that aren't based in the API itself
@@ -126,6 +136,18 @@ public final class ActuallyAdditionsAPI{
      * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
      */
     public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
+        CRUSHER_RECIPES.add(new CrusherRecipe(Ingredient.fromStacks(input), outputOne, outputTwo.isEmpty() ? ItemStack.EMPTY : outputTwo, outputTwoChance));
+    }
+    
+    /**
+     * Adds a Recipe to the Crusher Recipe Registry
+     *
+     * @param input           The input as an Ingredient
+     * @param outputOne       The first output as an ItemStack
+     * @param outputTwo       The second output as an ItemStack (can be ItemStack.EMPTY if there should be none)
+     * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
+     */
+    public static void addCrusherRecipe(Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
         CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputTwo.isEmpty() ? ItemStack.EMPTY : outputTwo, outputTwoChance));
     }
 
@@ -145,6 +167,7 @@ public final class ActuallyAdditionsAPI{
     }
 
     //Same thing as above, but with ItemStack outputs.
+    @Deprecated //Use Ingredient
     public static boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance){
         return methodHandler.addCrusherRecipes(inputs, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance);
     }

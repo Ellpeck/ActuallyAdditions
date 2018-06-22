@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
+import java.util.Locale;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
@@ -22,7 +24,7 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerCustom;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.state.IBlockState;
@@ -40,8 +42,6 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-
-import java.util.Locale;
 
 public class CommonEvents{
 
@@ -78,14 +78,14 @@ public class CommonEvents{
                                 boolean changed = false;
 
                                 boolean isVoid = ((ItemBag)invStack.getItem()).isVoid;
-                                ItemStackHandlerCustom inv = new ItemStackHandlerCustom(ContainerBag.getSlotAmount(isVoid));
+                                ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerBag.getSlotAmount(isVoid));
                                 ItemDrill.loadSlotsFromNBT(inv, invStack);
 
                                 FilterSettings filter = new FilterSettings(4, false, false, false, false, 0, 0);
                                 filter.readFromNBT(invStack.getTagCompound(), "Filter");
                                 if(filter.check(stack)){
                                     if(isVoid){
-                                        stack = StackUtil.setStackSize(stack, 0);
+                                        stack.setCount(0);
                                         changed = true;
                                     }
                                     else{
@@ -93,17 +93,17 @@ public class CommonEvents{
                                             ItemStack bagStack = inv.getStackInSlot(j);
                                             if(StackUtil.isValid(bagStack)){
                                                 if(ItemUtil.canBeStacked(bagStack, stack)){
-                                                    int maxTransfer = Math.min(StackUtil.getStackSize(stack), stack.getMaxStackSize()-StackUtil.getStackSize(bagStack));
+                                                    int maxTransfer = Math.min(stack.getCount(), stack.getMaxStackSize()-bagStack.getCount());
                                                     if(maxTransfer > 0){
-                                                        inv.setStackInSlot(j, StackUtil.addStackSize(bagStack, maxTransfer));
-                                                        stack = StackUtil.addStackSize(stack, -maxTransfer);
+                                                        inv.setStackInSlot(j, StackUtil.grow(bagStack, maxTransfer));
+                                                        stack.shrink(maxTransfer);
                                                         changed = true;
                                                     }
                                                 }
                                             }
                                             else{
                                                 inv.setStackInSlot(j, stack.copy());
-                                                stack = StackUtil.setStackSize(stack, 0);
+                                                stack.setCount(0);
                                                 changed = true;
                                             }
 

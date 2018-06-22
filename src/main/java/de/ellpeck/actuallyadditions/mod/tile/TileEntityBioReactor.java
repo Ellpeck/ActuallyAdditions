@@ -66,8 +66,8 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
             List<Item> types = null;
 
             if(this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
-                for(int i = 0; i < this.slots.getSlots(); i++){
-                    ItemStack stack = this.slots.getStackInSlot(i);
+                for(int i = 0; i < this.inv.getSlots(); i++){
+                    ItemStack stack = this.inv.getStackInSlot(i);
                     if(StackUtil.isValid(stack)){
                         Item item = stack.getItem();
                         if(isValidItem(stack) && (types == null || !types.contains(item))){
@@ -76,7 +76,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
                             }
                             types.add(item);
 
-                            this.slots.setStackInSlot(i, StackUtil.addStackSize(stack, -1));
+                            this.inv.setStackInSlot(i, StackUtil.shrink(stack, 1));
                         }
                     }
                 }
@@ -129,12 +129,12 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public boolean canExtractItem(int index, ItemStack stack){
+    public boolean canExtract(int index, ItemStack stack, boolean byAutomation){
         return false;
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack){
+    public boolean canInsert(int index, ItemStack stack, boolean fromAutomation){
         return isValidItem(stack);
     }
 

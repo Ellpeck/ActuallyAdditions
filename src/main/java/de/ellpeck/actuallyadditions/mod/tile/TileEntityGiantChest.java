@@ -16,15 +16,12 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AwfulUtil;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.ILootContainer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
-
-import java.util.Random;
 
 public class TileEntityGiantChest extends TileEntityInventoryBase implements IButtonReactor, ILootContainer{
 
@@ -54,16 +51,6 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
         if(compound.hasKey("LootTable")){
             this.lootTable = new ResourceLocation(compound.getString("LootTable"));
         }
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return true;
-    }
-
-    @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return true;
     }
 
     @Override
@@ -99,7 +86,7 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
             if(player != null){
                 builder.withLuck(player.getLuck());
             }
-            AwfulUtil.fillInventory(table, this.slots, new Random(), builder.build());
+            AwfulUtil.fillInventory(table, this.inv, world.rand, builder.build());
         }
     }
 }

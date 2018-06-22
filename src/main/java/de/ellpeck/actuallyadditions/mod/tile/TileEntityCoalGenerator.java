@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -76,17 +75,16 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.storage.receiveEnergyInternal(PRODUCE, false);
             }
 
-            if(!this.isRedstonePowered && this.currentBurnTime <= 0 && StackUtil.isValid(this.slots.getStackInSlot(0)) && TileEntityFurnace.getItemBurnTime(this.slots.getStackInSlot(0)) > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
-                int burnTime = TileEntityFurnace.getItemBurnTime(this.slots.getStackInSlot(0));
-                this.maxBurnTime = burnTime;
-                this.currentBurnTime = burnTime;
-
-                this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -1, true));
+            ItemStack stack = inv.getStackInSlot(0);
+            int burn = TileEntityFurnace.getItemBurnTime(stack);
+            if(!this.isRedstonePowered && this.currentBurnTime <= 0 && burn > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
+                this.maxBurnTime = burn;
+                this.currentBurnTime = burn;
+                stack.shrink(1);
             }
 
             if(flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()){
                 this.lastCompare = this.getComparatorStrength();
-
                 this.markDirty();
             }
 
@@ -105,13 +103,14 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
+    public boolean canInsert(int i, ItemStack stack, boolean fromAutomation){
         return TileEntityFurnace.getItemBurnTime(stack) > 0;
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return TileEntityFurnace.getItemBurnTime(this.slots.getStackInSlot(0)) <= 0;
+    public boolean canExtract(int slot, ItemStack stack, boolean byAutomation){
+        if(!byAutomation) return true;
+        return TileEntityFurnace.getItemBurnTime(this.inv.getStackInSlot(0)) <= 0;
     }
 
     @Override

@@ -58,12 +58,12 @@ public class ReedFarmerBehavior implements IFarmerBehavior{
                             upState.getBlock().getDrops(drops, world, pos, state, 0);
 
                             if(!drops.isEmpty()){
-                                if(farmer.addToOutputInventory(drops, false)){
+                                if(farmer.canAddToOutput(drops)){
                                     world.playEvent(2001, up, Block.getStateId(upState));
                                     world.setBlockToAir(up);
 
                                     farmer.extractEnergy(use);
-                                    farmer.addToOutputInventory(drops, true);
+                                    farmer.addToOutput(drops);
 
                                     result = FarmerResult.STOP_PROCESSING; //Success no longer makes it not replant, and the plant logic seems sketchy right after harvesting.  This works tho.
                                 }

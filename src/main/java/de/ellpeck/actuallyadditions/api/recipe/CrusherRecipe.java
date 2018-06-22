@@ -11,20 +11,49 @@
 package de.ellpeck.actuallyadditions.api.recipe;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 
-public class CrusherRecipe{
+public class CrusherRecipe {
 
-    public ItemStack inputStack;
+    @Deprecated //ModTweaker compat, will be removed soon.
     public ItemStack outputOneStack;
-    public ItemStack outputTwoStack;
-    public int outputTwoChance;
+    
+    private Ingredient input;
+    private ItemStack outputOne;
+    private ItemStack outputTwo;
+    private int outputChance;
 
-    public CrusherRecipe(ItemStack inputStack, ItemStack outputOneStack, ItemStack outputTwoStack, int outputTwoChance){
-        this.inputStack = inputStack;
-        this.outputOneStack = outputOneStack;
-        this.outputTwoStack = outputTwoStack;
-        this.outputTwoChance = outputTwoChance;
+    @Deprecated //ModTweaker compat, will be removed soon.
+    public CrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputChance) {
+        this(Ingredient.fromStacks(input), outputOne, outputTwo, outputChance);
+    }
+    
+    public CrusherRecipe(Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputChance) {
+        this.input = input;
+        this.outputOne = outputOne;
+        this.outputTwo = outputTwo;
+        this.outputChance = outputChance;
+        outputOneStack = outputOne;
     }
 
+    public boolean matches(ItemStack stack) {
+        return input.apply(stack);
+    }
+
+    public ItemStack getOutputOne() {
+        return outputOne;
+    }
+
+    public ItemStack getOutputTwo() {
+        return outputTwo;
+    }
+
+    public int getSecondChance() {
+        return outputChance;
+    }
+
+    public Ingredient getInput() {
+        return input;
+    }
 
 }

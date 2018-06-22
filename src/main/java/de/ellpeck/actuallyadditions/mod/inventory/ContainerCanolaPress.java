@@ -30,7 +30,7 @@ public class ContainerCanolaPress extends Container{
     public ContainerCanolaPress(InventoryPlayer inventory, TileEntityBase tile){
         this.press = (TileEntityCanolaPress)tile;
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.press.slots, 0, 81, 10));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.press.inv, 0, 81, 10));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -85,7 +85,7 @@ public class ContainerCanolaPress extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

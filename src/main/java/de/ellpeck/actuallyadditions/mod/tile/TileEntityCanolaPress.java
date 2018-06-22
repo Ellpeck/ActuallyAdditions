@@ -84,14 +84,14 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            if(this.isCanola(0) && PRODUCE <= this.tank.getCapacity()-this.tank.getFluidAmount()){
+            if(isCanola(inv.getStackInSlot(0)) && PRODUCE <= this.tank.getCapacity()-this.tank.getFluidAmount()){
                 if(this.storage.getEnergyStored() >= ENERGY_USE){
                     this.currentProcessTime++;
                     this.storage.extractEnergyInternal(ENERGY_USE, false);
                     if(this.currentProcessTime >= TIME){
                         this.currentProcessTime = 0;
 
-                        this.slots.setStackInSlot(0, StackUtil.addStackSize(this.slots.getStackInSlot(0), -1));
+                        this.inv.setStackInSlot(0, StackUtil.shrink(this.inv.getStackInSlot(0), 1));
 
                         this.tank.fillInternal(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
                         this.markDirty();
@@ -111,17 +111,17 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack stack){
-        return (i == 0 && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CANOLA.ordinal());
+    public boolean canInsert(int slot, ItemStack stack, boolean fromAutomation){
+        return (slot == 0 && isCanola(stack));
     }
 
-    public boolean isCanola(int slot){
-        return StackUtil.isValid(this.slots.getStackInSlot(slot)) && this.slots.getStackInSlot(slot).getItem() == InitItems.itemMisc && this.slots.getStackInSlot(slot).getItemDamage() == TheMiscItems.CANOLA.ordinal();
+    public static boolean isCanola(ItemStack stack){
+        return stack.getItem() == InitItems.itemMisc && stack.getMetadata() == TheMiscItems.CANOLA.ordinal();
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack stack){
-        return false;
+    public boolean canExtract(int slot, ItemStack stack, boolean byAutomation){
+        return !byAutomation;
     }
 
     @Override

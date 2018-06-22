@@ -55,22 +55,22 @@ public class BlockEmpowerer extends BlockContainerBase{
         if(!world.isRemote){
             TileEntityEmpowerer empowerer = (TileEntityEmpowerer)world.getTileEntity(pos);
             if(empowerer != null){
-                ItemStack stackThere = empowerer.slots.getStackInSlot(0);
+                ItemStack stackThere = empowerer.inv.getStackInSlot(0);
                 if(StackUtil.isValid(heldItem)){
                     if(!StackUtil.isValid(stackThere) && !TileEntityEmpowerer.getRecipesForInput(heldItem).isEmpty()){
                         ItemStack toPut = heldItem.copy();
-                        toPut = StackUtil.setStackSize(toPut, 1);
-                        empowerer.slots.setStackInSlot(0, toPut);
-                        player.setHeldItem(hand, StackUtil.addStackSize(heldItem, -1));
+                        toPut.grow(1);
+                        empowerer.inv.setStackInSlot(0, toPut);
+                        player.setHeldItem(hand, StackUtil.shrink(heldItem, 1));
                         return true;
                     }
                     else if(ItemUtil.canBeStacked(heldItem, stackThere)){
-                        int maxTransfer = Math.min(StackUtil.getStackSize(stackThere), heldItem.getMaxStackSize()-StackUtil.getStackSize(heldItem));
+                        int maxTransfer = Math.min(stackThere.getCount(), heldItem.getMaxStackSize()-heldItem.getCount());
                         if(maxTransfer > 0){
-                            player.setHeldItem(hand, StackUtil.addStackSize(heldItem, maxTransfer));
+                            player.setHeldItem(hand, StackUtil.grow(heldItem, maxTransfer));
                             ItemStack newStackThere = stackThere.copy();
-                            newStackThere = StackUtil.addStackSize(newStackThere, -maxTransfer);
-                            empowerer.slots.setStackInSlot(0, StackUtil.validateCheck(newStackThere));
+                            newStackThere = StackUtil.shrink(newStackThere, maxTransfer);
+                            empowerer.inv.setStackInSlot(0, newStackThere);
                             return true;
                         }
                     }
@@ -78,7 +78,7 @@ public class BlockEmpowerer extends BlockContainerBase{
                 else{
                     if(StackUtil.isValid(stackThere)){
                         player.setHeldItem(hand, stackThere.copy());
-                        empowerer.slots.setStackInSlot(0, StackUtil.getEmpty());
+                        empowerer.inv.setStackInSlot(0, StackUtil.getEmpty());
                         return true;
                     }
                 }

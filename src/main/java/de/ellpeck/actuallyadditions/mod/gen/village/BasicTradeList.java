@@ -10,7 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.gen.village;
 
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import java.util.Random;
+
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
@@ -18,8 +19,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
-
-import java.util.Random;
 
 public class BasicTradeList implements ITradeList{
 
@@ -46,9 +45,9 @@ public class BasicTradeList implements ITradeList{
     @Override
     public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random){
         ItemStack in = this.input.copy();
-        in = StackUtil.setStackSize(in, this.inputAmount.getPrice(random));
+        in.setCount(this.inputAmount.getPrice(random));
         ItemStack out = this.output.copy();
-        out = StackUtil.setStackSize(out, this.outputAmount.getPrice(random));
+        out.setCount(this.outputAmount.getPrice(random));
         recipeList.add(new MerchantRecipe(in, out));
     }
 }

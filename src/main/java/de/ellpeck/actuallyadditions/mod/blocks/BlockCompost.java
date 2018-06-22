@@ -88,27 +88,27 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityCompost){
                 TileEntityCompost compost = (TileEntityCompost)tile;
-                ItemStack slot = compost.slots.getStackInSlot(0);
+                ItemStack slot = compost.inv.getStackInSlot(0);
                 CompostRecipe recipeIn = TileEntityCompost.getRecipeForInput(slot);
                 if(!StackUtil.isValid(slot) || recipeIn != null){
                     if(StackUtil.isValid(stackPlayer)){
                         CompostRecipe recipeHand = TileEntityCompost.getRecipeForInput(stackPlayer);
                         if(recipeHand != null && (recipeIn == null || recipeIn == recipeHand)){
-                            int maxAdd = StackUtil.getStackSize(stackPlayer);
+                            int maxAdd = stackPlayer.getCount();
 
                             if(!StackUtil.isValid(slot)){
                                 ItemStack stackToAdd = stackPlayer.copy();
-                                stackToAdd = StackUtil.setStackSize(stackToAdd, maxAdd);
-                                compost.slots.setStackInSlot(0, stackToAdd);
+                                stackToAdd.setCount(maxAdd);
+                                compost.inv.setStackInSlot(0, stackToAdd);
                                 player.inventory.decrStackSize(player.inventory.currentItem, maxAdd);
                                 return true;
                             }
                             else{
                                 ItemStack stackIn = slot.copy();
-                                if(StackUtil.getStackSize(stackIn) < recipeHand.input.getMaxStackSize()){
-                                    int sizeAdded = Math.min(maxAdd, recipeHand.input.getMaxStackSize()-StackUtil.getStackSize(stackIn));
-                                    stackIn = StackUtil.addStackSize(stackIn, sizeAdded);
-                                    compost.slots.setStackInSlot(0, stackIn);
+                                if(stackIn.getCount() < recipeHand.input.getMaxStackSize()){
+                                    int sizeAdded = Math.min(maxAdd, recipeHand.input.getMaxStackSize()-stackIn.getCount());
+                                    stackIn.grow(sizeAdded);
+                                    compost.inv.setStackInSlot(0, stackIn);
                                     player.inventory.decrStackSize(player.inventory.currentItem, sizeAdded);
                                     return true;
                                 }
@@ -119,15 +119,15 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
                 else{
                     if(!StackUtil.isValid(stackPlayer)){
                         player.setHeldItem(hand, slot.copy());
-                        compost.slots.setStackInSlot(0, StackUtil.getEmpty());
+                        compost.inv.setStackInSlot(0, StackUtil.getEmpty());
                         return true;
                     }
                     else if(ItemUtil.canBeStacked(stackPlayer, slot)){
-                        int addedStackSize = Math.min(StackUtil.getStackSize(slot), stackPlayer.getMaxStackSize()-StackUtil.getStackSize(stackPlayer));
+                        int addedStackSize = Math.min(slot.getCount(), stackPlayer.getMaxStackSize()-stackPlayer.getCount());
                         ItemStack stackToAdd = stackPlayer.copy();
-                        stackToAdd = StackUtil.addStackSize(stackToAdd, addedStackSize);
+                        stackToAdd.grow(addedStackSize);
                         player.setHeldItem(hand, stackToAdd);
-                        compost.slots.decrStackSize(0, addedStackSize);
+                        compost.inv.getStackInSlot(0).shrink(addedStackSize);
                         return true;
 
                     }
@@ -156,13 +156,13 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay{
     public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if(tile instanceof TileEntityCompost){
-            ItemStack slot = ((TileEntityCompost)tile).slots.getStackInSlot(0);
+            ItemStack slot = ((TileEntityCompost)tile).inv.getStackInSlot(0);
             String strg;
             if(!StackUtil.isValid(slot)){
                 strg = "Empty";
             }
             else{
-                strg = slot.getItem().getItemStackDisplayName(slot);
+                strg = slot.getDisplayName();
 
                 AssetUtil.renderStackToGui(slot, resolution.getScaledWidth()/2+15, resolution.getScaledHeight()/2-29, 1F);
             }

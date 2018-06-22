@@ -180,7 +180,7 @@ public class PageCrafting extends BookletPage{
                         ItemStack stack = stacks[0];
                         if(StackUtil.isValid(stack)){
                             ItemStack copy = stack.copy();
-                            copy = StackUtil.setStackSize(copy, 1);
+                            copy.setCount(1);
                             if(copy.getItemDamage() == Util.WILDCARD){
                                 copy.setItemDamage(0);
                             }

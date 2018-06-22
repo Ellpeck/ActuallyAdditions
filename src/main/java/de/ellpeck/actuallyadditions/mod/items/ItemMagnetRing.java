@@ -10,9 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,8 +24,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class ItemMagnetRing extends ItemEnergy{
 
@@ -50,10 +49,10 @@ public class ItemMagnetRing extends ItemEnergy{
                     for(EntityItem item : items){
                     	if(item.getEntityData().getBoolean("PreventRemoteMovement")) continue;
                         if(!item.isDead && !item.cannotPickup()){
-                            int energyForItem = 50*StackUtil.getStackSize(item.getItem());
+                            int energyForItem = 50*item.getItem().getCount();
 
                             if(this.getEnergyStored(stack) >= energyForItem){
-                                ItemStack oldItem = StackUtil.validateCopy(item.getItem());
+                                ItemStack oldItem = item.getItem().copy();
 
                                 item.onCollideWithPlayer(player);
 

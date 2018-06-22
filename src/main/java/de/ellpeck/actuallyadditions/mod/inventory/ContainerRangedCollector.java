@@ -32,7 +32,7 @@ public class ContainerRangedCollector extends Container{
 
         for(int i = 0; i < 2; i++){
             for(int j = 0; j < 3; j++){
-                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.collector.slots, j+i*3, 96+j*18, 24+i*18));
+                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.collector.inv, j+i*3, 96+j*18, 24+i*18));
             }
         }
         for(int i = 0; i < 4; i++){
@@ -90,7 +90,7 @@ public class ContainerRangedCollector extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);

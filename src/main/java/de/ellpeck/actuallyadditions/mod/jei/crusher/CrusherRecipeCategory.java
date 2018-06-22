@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
 
+import java.util.Arrays;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -53,14 +55,14 @@ public class CrusherRecipeCategory implements IRecipeCategory<CrusherRecipeWrapp
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, CrusherRecipeWrapper wrapper, IIngredients ingredients){
         recipeLayout.getItemStacks().init(0, true, 19, 7);
-        recipeLayout.getItemStacks().set(0, wrapper.theRecipe.inputStack);
+        recipeLayout.getItemStacks().set(0, Arrays.asList(wrapper.theRecipe.getInput().getMatchingStacks()));
 
         recipeLayout.getItemStacks().init(1, false, 7, 55);
-        recipeLayout.getItemStacks().set(1, wrapper.theRecipe.outputOneStack);
+        recipeLayout.getItemStacks().set(1, wrapper.theRecipe.getOutputOne());
 
-        if(StackUtil.isValid(wrapper.theRecipe.outputTwoStack)){
+        if(StackUtil.isValid(wrapper.theRecipe.getOutputTwo())){
             recipeLayout.getItemStacks().init(2, false, 31, 55);
-            recipeLayout.getItemStacks().set(2, wrapper.theRecipe.outputTwoStack);
+            recipeLayout.getItemStacks().set(2, wrapper.theRecipe.getOutputTwo());
         }
     }
 }

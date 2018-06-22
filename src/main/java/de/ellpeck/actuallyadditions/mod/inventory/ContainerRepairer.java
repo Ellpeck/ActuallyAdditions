@@ -29,8 +29,8 @@ public class ContainerRepairer extends Container{
     public ContainerRepairer(InventoryPlayer inventory, TileEntityBase tile){
         this.tileRepairer = (TileEntityItemRepairer)tile;
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileRepairer.slots, TileEntityItemRepairer.SLOT_INPUT, 47, 53));
-        this.addSlotToContainer(new SlotOutput(this.tileRepairer.slots, TileEntityItemRepairer.SLOT_OUTPUT, 109, 53));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileRepairer.inv, TileEntityItemRepairer.SLOT_INPUT, 47, 53));
+        this.addSlotToContainer(new SlotOutput(this.tileRepairer.inv, TileEntityItemRepairer.SLOT_OUTPUT, 109, 53));
 
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 9; j++){
@@ -85,7 +85,7 @@ public class ContainerRepairer extends Container{
                 theSlot.onSlotChanged();
             }
 
-            if(StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack)){
+            if(newStack.getCount() == currentStack.getCount()){
                 return StackUtil.getEmpty();
             }
             theSlot.onTake(player, newStack);
