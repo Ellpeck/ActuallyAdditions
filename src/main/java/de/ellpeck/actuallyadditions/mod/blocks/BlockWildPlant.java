@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -71,7 +72,7 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-        state.getValue(TYPE).wildVersionOf.getDrops(drops, world, pos, state, fortune);
+        state.getValue(TYPE).wildVersionOf.getDrops(drops, world, pos, state.getValue(TYPE).wildVersionOf.getDefaultState().withProperty(BlockCrops.AGE, 7), fortune);
     }
 
     @Override
