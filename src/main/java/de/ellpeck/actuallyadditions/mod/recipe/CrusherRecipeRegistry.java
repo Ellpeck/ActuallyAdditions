@@ -67,7 +67,8 @@ public final class CrusherRecipeRegistry{
         ArrayList<CrusherRecipe> removed = new ArrayList<>();
         for(CrusherRecipe r : ActuallyAdditionsAPI.CRUSHER_RECIPES) {
             boolean canUse = true;
-            for(CrusherRecipe re : usable) {
+            if(r.getInput().getMatchingStacks().length == 0) canUse = false;
+            else for(CrusherRecipe re : usable) {
                 if(re.getInput().apply(r.getInput().getMatchingStacks()[0])) canUse = false;
             }
             
