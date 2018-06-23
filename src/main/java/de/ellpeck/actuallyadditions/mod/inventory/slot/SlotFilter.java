@@ -57,10 +57,12 @@ public class SlotFilter extends SlotItemHandlerUnconditioned{
         }
         else if(StackUtil.isValid(heldStack)){
             if(!isFilter(stackInSlot)){
-                this.putStack(StackUtil.grow(heldStack.copy(), 1));
+                ItemStack s = heldStack.copy();
+                s.setCount(1);
+                this.putStack(s);
 
                 if(isFilter(heldStack)){
-                    player.inventory.setItemStack(StackUtil.shrink(heldStack, 1));
+                    heldStack.shrink(1);
                 }
             }
         }
