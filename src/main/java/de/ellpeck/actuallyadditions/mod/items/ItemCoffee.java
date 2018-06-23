@@ -56,6 +56,8 @@ public class ItemCoffee extends ItemFoodBase{
         }
 
         ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.SUGAR), new PotionEffect[]{new PotionEffect(MobEffects.SPEED, 30, 0)}, 4));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.ROTTEN_FLESH), new PotionEffect[]{new PotionEffect(MobEffects.HUNGER, 15, 0)}, 2));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.EGG), new PotionEffect[]{new PotionEffect(MobEffects.NAUSEA, 30, 0)}, 2));
         ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.MAGMA_CREAM), new PotionEffect[]{new PotionEffect(MobEffects.FIRE_RESISTANCE, 20, 0)}, 2));
         ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.FISH, 1, 3), new PotionEffect[]{new PotionEffect(MobEffects.WATER_BREATHING, 10, 0)}, 2));
         ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.GOLDEN_CARROT), new PotionEffect[]{new PotionEffect(MobEffects.NIGHT_VISION, 30, 0)}, 2));
