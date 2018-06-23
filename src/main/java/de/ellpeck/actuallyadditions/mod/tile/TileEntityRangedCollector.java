@@ -62,7 +62,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                         ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
                         checkList.add(toAdd);
                         if (StackUtil.canAddAll(inv, checkList, false)) {
-                            StackUtil.addAll(inv, checkList);
+                            StackUtil.addAll(inv, checkList, false);
                             ((WorldServer) this.world).spawnParticle(EnumParticleTypes.CLOUD, false, item.posX, item.posY + 0.45F, item.posZ, 5, 0, 0, 0, 0.03D);
                             item.setDead();
                         }

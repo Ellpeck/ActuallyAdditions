@@ -137,7 +137,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
                             this.world.playEvent(2001, pos, Block.getStateId(this.world.getBlockState(pos)));
                             this.world.setBlockToAir(pos);
 
-                            StackUtil.addAll(inv, drops);
+                            StackUtil.addAll(inv, drops, false);
                             this.markDirty();
 
                             this.storage.extractEnergyInternal(actualUse, false);
