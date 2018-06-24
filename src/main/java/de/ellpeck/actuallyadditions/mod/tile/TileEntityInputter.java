@@ -21,6 +21,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -130,7 +131,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 if(tile != null){
                     for(EnumFacing facing : EnumFacing.values()){
                         IItemHandler normal = null;
-                        if(tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)){
+                        if(tile.getClass() == TileEntityFurnace.class) 
+                            normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                        else if(tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)){
                             normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
                         }
 
