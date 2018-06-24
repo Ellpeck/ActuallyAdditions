@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.api.recipe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
@@ -45,7 +48,17 @@ public class EmpowererRecipe {
     }
 
     public boolean matches(ItemStack base, ItemStack stand1, ItemStack stand2, ItemStack stand3, ItemStack stand4) {
-        return input.apply(base) && modifier1.apply(stand1) && modifier2.apply(stand2) && modifier3.apply(stand3) && modifier4.apply(stand4);
+        if (!input.apply(base)) return false;
+        List<Ingredient> matches = new ArrayList<>();
+        ItemStack[] stacks = { stand1, stand2, stand3, stand4 };
+        for (ItemStack s : stacks) {
+            if (!matches.contains(modifier1) && modifier1.apply(s)) matches.add(modifier1);
+            else if (!matches.contains(modifier2) && modifier2.apply(s)) matches.add(modifier2);
+            else if (!matches.contains(modifier3) && modifier3.apply(s)) matches.add(modifier3);
+            else if (!matches.contains(modifier4) && modifier4.apply(s)) matches.add(modifier4);
+        }
+
+        return matches.size() == 4;
     }
 
     public Ingredient getInput() {

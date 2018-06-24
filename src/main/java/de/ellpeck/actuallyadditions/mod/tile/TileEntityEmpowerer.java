@@ -81,6 +81,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
                         if (done) {
                             stand.inv.getStackInSlot(0).shrink(1);
+                            stand.markDirty();
                         }
                     }
 
