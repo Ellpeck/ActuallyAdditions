@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
+import java.util.Locale;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
@@ -45,8 +47,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.Locale;
 
 @SideOnly(Side.CLIENT)
 public class ClientEvents{

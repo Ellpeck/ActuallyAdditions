@@ -25,10 +25,24 @@ import java.util.List;
 public class PageEmpowerer extends BookletPage{
 
     private final EmpowererRecipe recipe;
+    private int counter = 0;
+    private int rotate = 0;
+    ItemStack[] inputs;
+    ItemStack[] stand1;
+    ItemStack[] stand2;
+    ItemStack[] stand3;
+    ItemStack[] stand4;
 
     public PageEmpowerer(int localizationKey, EmpowererRecipe recipe){
         super(localizationKey);
         this.recipe = recipe;
+        if(recipe != null) {
+            this.inputs = recipe.getInput().getMatchingStacks();
+            this.stand1 = recipe.getStandOne().getMatchingStacks();
+            this.stand2 = recipe.getStandTwo().getMatchingStacks();
+            this.stand3 = recipe.getStandThree().getMatchingStacks();
+            this.stand4 = recipe.getStandFour().getMatchingStacks();
+        }
     }
 
     @Override
@@ -42,6 +56,7 @@ public class PageEmpowerer extends BookletPage{
         gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".empowererRecipe")+")", startX+6, startY+85, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+100);
+        if(recipe != null) updateInputs(gui, startX, startY);
     }
 
     @Override
@@ -50,13 +65,25 @@ public class PageEmpowerer extends BookletPage{
         super.initGui(gui, startX, startY);
 
         if(this.recipe != null){
-            gui.addOrModifyItemRenderer(this.recipe.modifier1, startX+5+26, startY+10+1, 1F, true);
-            gui.addOrModifyItemRenderer(this.recipe.modifier2, startX+5+1, startY+10+26, 1F, true);
-            gui.addOrModifyItemRenderer(this.recipe.modifier3, startX+5+51, startY+10+26, 1F, true);
-            gui.addOrModifyItemRenderer(this.recipe.modifier4, startX+5+26, startY+10+51, 1F, true);
+            gui.addOrModifyItemRenderer(stand1[0], startX+5+26, startY+10+1, 1F, true);
+            gui.addOrModifyItemRenderer(stand2[0], startX+5+1, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(stand3[0], startX+5+51, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(stand4[0], startX+5+26, startY+10+51, 1F, true);
 
-            gui.addOrModifyItemRenderer(this.recipe.input, startX+5+26, startY+10+26, 1F, true);
-            gui.addOrModifyItemRenderer(this.recipe.output, startX+5+96, startY+10+26, 1F, false);
+            gui.addOrModifyItemRenderer(inputs[0], startX+5+26, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(this.recipe.getOutput(), startX+5+96, startY+10+26, 1F, false);
+        }
+    }
+    
+    private void updateInputs(GuiBookletBase gui, int startX, int startY) {
+        if(counter++ % 50 == 0) {
+            rotate++;
+            gui.addOrModifyItemRenderer(stand1[rotate % stand1.length], startX+5+26, startY+10+1, 1F, true);
+            gui.addOrModifyItemRenderer(stand2[rotate % stand2.length], startX+5+1, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(stand3[rotate % stand3.length], startX+5+51, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(stand4[rotate % stand4.length], startX+5+26, startY+10+51, 1F, true);
+
+            gui.addOrModifyItemRenderer(inputs[rotate % inputs.length], startX+5+26, startY+10+26, 1F, true);
         }
     }
 
@@ -65,7 +92,7 @@ public class PageEmpowerer extends BookletPage{
         super.getItemStacksForPage(list);
 
         if(this.recipe != null){
-            list.add(this.recipe.output);
+            list.add(this.recipe.getOutput());
         }
     }
 

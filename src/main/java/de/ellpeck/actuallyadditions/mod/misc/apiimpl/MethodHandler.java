@@ -61,7 +61,7 @@ public class MethodHandler implements IMethodHandler{
                 for(PotionEffect effect : effects){
                     PotionEffect effectHas = this.getSameEffectFromStack(stack, effect);
                     if(effectHas != null){
-                        if(effectHas.getAmplifier() < ingredient.maxAmplifier-1){
+                        if(effectHas.getAmplifier() < ingredient.getMaxAmplifier()-1){
                             this.addEffectProperties(stack, effect, false, true);
                             worked = true;
                         }
@@ -168,10 +168,9 @@ public class MethodHandler implements IMethodHandler{
                         BlockPos pos = new BlockPos(hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
                         if(!tile.getWorldObject().isAirBlock(pos)){
                             IBlockState state = tile.getWorldObject().getBlockState(pos);
-                            List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
-                            for(LensConversionRecipe recipe : recipes){
-                                if(recipe != null && recipe.type == tile.getLens() && tile.getEnergy() >= recipe.energyUse){
-                                    ItemStack output = recipe.outputStack;
+                            LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), tile.getLens());
+                                if(recipe != null && tile.getEnergy() >= recipe.getEnergyUsed()){
+                                    ItemStack output = recipe.getOutput();
                                     if(StackUtil.isValid(output)){
                                         tile.getWorldObject().playEvent(2001, pos, Block.getStateId(state));
                                         recipe.transformHook(ItemStack.EMPTY, state, pos, tile);
@@ -186,14 +185,13 @@ public class MethodHandler implements IMethodHandler{
                                             tile.getWorldObject().setBlockToAir(pos);
                                         }
 
-                                        tile.extractEnergy(recipe.energyUse);
+                                        tile.extractEnergy(recipe.getEnergyUsed());
                                         break;
                                     }
                                 }
                             }
                         }
                     }
-                }
             }
 
             //Converting the Items
@@ -201,10 +199,9 @@ public class MethodHandler implements IMethodHandler{
             for(EntityItem item : items){
                 ItemStack stack = item.getItem();
                 if(!item.isDead && StackUtil.isValid(stack)){
-                    List<LensConversionRecipe> recipes = LensRecipeHandler.getRecipesFor(stack);
-                    for(LensConversionRecipe recipe : recipes){
-                        if(recipe != null && recipe.type == tile.getLens()){
-                            int itemsPossible = Math.min(tile.getEnergy()/recipe.energyUse, stack.getCount());
+                    LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(stack, tile.getLens());
+                        if(recipe != null){
+                            int itemsPossible = Math.min(tile.getEnergy()/recipe.getEnergyUsed(), stack.getCount());
 
                             if(itemsPossible > 0){
                             	recipe.transformHook(item.getItem(), null, item.getPosition(), tile);
@@ -218,18 +215,17 @@ public class MethodHandler implements IMethodHandler{
                                     tile.getWorldObject().spawnEntity(inputLeft);
                                 }
 
-                                ItemStack outputCopy = recipe.outputStack.copy();
+                                ItemStack outputCopy = recipe.getOutput().copy();
                                 outputCopy.setCount(itemsPossible);
 
                                 EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
                                 tile.getWorldObject().spawnEntity(newItem);
 
-                                tile.extractEnergy(recipe.energyUse*itemsPossible);
+                                tile.extractEnergy(recipe.getEnergyUsed()*itemsPossible);
                                 break;
                             }
                         }
                     }
-                }
             }
             return !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock);
         }

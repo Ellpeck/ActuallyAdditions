@@ -47,6 +47,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -185,7 +186,7 @@ public final class InitBooklet{
         //Reconstruction
         chaptersIntroduction[7] = new BookletChapter("reconstructorLenses", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), new PageTextOnly(1)).setImportant();
         new BookletChapter("additionalRecipes", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(Items.LEATHER), new PageReconstructor(1, LensRecipeHandler.recipeSoulSand).setNoText(), new PageReconstructor(2, LensRecipeHandler.recipeLeather).setNoText(), new PageReconstructor(3, LensRecipeHandler.recipeNetherWart).setNoText(), new PageReconstructor(4, LensRecipeHandler.recipePrismarine).setNoText()).setSpecial();
-        new BookletChapter("bookSplitting", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(Items.ENCHANTED_BOOK), new PageTextOnly(1), new PageReconstructor(2, new LensConversionRecipe(new ItemStack(Items.ENCHANTED_BOOK), new ItemStack(Items.ENCHANTED_BOOK), 0, ActuallyAdditionsAPI.lensDefaultConversion)).setNoText());
+        new BookletChapter("bookSplitting", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(Items.ENCHANTED_BOOK), new PageTextOnly(1), new PageReconstructor(2, new LensConversionRecipe(Ingredient.fromItem(Items.ENCHANTED_BOOK), new ItemStack(Items.ENCHANTED_BOOK), 0, ActuallyAdditionsAPI.lensDefaultConversion)).setNoText());
         new BookletChapter("lensColor", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemColorLens), new PageTextOnly(1), new PageReconstructor(2, LensRecipeHandler.recipeColorLens).setNoText());
         new BookletChapter("lensDeath", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemDamageLens), new PageTextOnly(1), new PageReconstructor(2, LensRecipeHandler.recipeDamageLens).setNoText());
         new BookletChapter("lensMoreDeath", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMoreDamageLens), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeLensMoreDeath).setNoText());

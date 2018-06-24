@@ -57,7 +57,7 @@ public class BlockEmpowerer extends BlockContainerBase{
             if(empowerer != null){
                 ItemStack stackThere = empowerer.inv.getStackInSlot(0);
                 if(StackUtil.isValid(heldItem)){
-                    if(!StackUtil.isValid(stackThere) && !TileEntityEmpowerer.getRecipesForInput(heldItem).isEmpty()){
+                    if(!StackUtil.isValid(stackThere) && TileEntityEmpowerer.isPossibleInput(heldItem)){
                         ItemStack toPut = heldItem.copy();
                         toPut.grow(1);
                         empowerer.inv.setStackInSlot(0, toPut);

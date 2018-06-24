@@ -10,6 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -25,15 +30,12 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ItemCoffee extends ItemFoodBase{
 
@@ -46,29 +48,28 @@ public class ItemCoffee extends ItemFoodBase{
     }
 
     public static void initIngredients(){
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(new ItemStack(Items.MILK_BUCKET)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.fromItem(Items.MILK_BUCKET)));
         //Pam's Soy Milk (For Jemx because he's lactose intolerant. YER HAPPY NAO!?)
         if(Loader.isModLoaded("harvestcraft")){
             Item item = ItemUtil.getItemFromName("harvestcraft:soymilkItem");
             if(item != null){
-                ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(new ItemStack(item)));
+                ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.fromItem(item)));
             }
         }
 
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.SUGAR), new PotionEffect[]{new PotionEffect(MobEffects.SPEED, 30, 0)}, 4));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.MAGMA_CREAM), new PotionEffect[]{new PotionEffect(MobEffects.FIRE_RESISTANCE, 20, 0)}, 2));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.FISH, 1, 3), new PotionEffect[]{new PotionEffect(MobEffects.WATER_BREATHING, 10, 0)}, 2));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.GOLDEN_CARROT), new PotionEffect[]{new PotionEffect(MobEffects.NIGHT_VISION, 30, 0)}, 2));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.GHAST_TEAR), new PotionEffect[]{new PotionEffect(MobEffects.REGENERATION, 5, 0)}, 3));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.BLAZE_POWDER), new PotionEffect[]{new PotionEffect(MobEffects.STRENGTH, 15, 0)}, 4));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(new ItemStack(Items.FERMENTED_SPIDER_EYE), new PotionEffect[]{new PotionEffect(MobEffects.INVISIBILITY, 25, 0)}, 2));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.SUGAR), 4, new PotionEffect(MobEffects.SPEED, 30, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.MAGMA_CREAM), 2, new PotionEffect(MobEffects.FIRE_RESISTANCE, 20, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromStacks(new ItemStack(Items.FISH, 1, 3)), 2, new PotionEffect(MobEffects.WATER_BREATHING, 10, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.GOLDEN_CARROT), 2, new PotionEffect(MobEffects.NIGHT_VISION, 30, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.GHAST_TEAR), 3, new PotionEffect(MobEffects.REGENERATION, 5, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.BLAZE_POWDER), 4, new PotionEffect(MobEffects.STRENGTH, 15, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE), 2, new PotionEffect(MobEffects.INVISIBILITY, 25, 0)));
     }
 
+    @Nullable
     public static CoffeeIngredient getIngredientFromStack(ItemStack stack){
         for(CoffeeIngredient ingredient : ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS){
-            if(ingredient.ingredient.copy().isItemEqual(stack)){
-                return ingredient;
-            }
+            if(ingredient.getInput().apply(stack)) return ingredient;
         }
         return null;
     }
@@ -132,8 +133,8 @@ public class ItemCoffee extends ItemFoodBase{
 
     public static class MilkIngredient extends CoffeeIngredient{
 
-        public MilkIngredient(ItemStack ingredient){
-            super(ingredient, null, 0);
+        public MilkIngredient(Ingredient ingredient){
+            super(ingredient, 0);
         }
 
         @Override

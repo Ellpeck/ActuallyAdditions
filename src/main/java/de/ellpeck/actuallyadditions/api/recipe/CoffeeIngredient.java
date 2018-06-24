@@ -12,29 +12,47 @@ package de.ellpeck.actuallyadditions.api.recipe;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionEffect;
 
-public class CoffeeIngredient{
+public class CoffeeIngredient {
 
-    public final ItemStack ingredient;
-    public final int maxAmplifier;
+    protected final Ingredient input;
+    protected final int maxAmplifier;
     protected PotionEffect[] effects;
 
-    public CoffeeIngredient(ItemStack ingredient, PotionEffect[] effects, int maxAmplifier){
-        this.ingredient = ingredient.copy();
+    @Deprecated
+    public CoffeeIngredient(ItemStack input, PotionEffect[] effects, int maxAmplifier) {
+        this(Ingredient.fromStacks(input), maxAmplifier, effects);
+    }
+    
+    public CoffeeIngredient(Ingredient input, int maxAmplifier, PotionEffect... effects) {
+        this.input = input;
         this.effects = effects;
         this.maxAmplifier = maxAmplifier;
     }
+    
+    public boolean matches(ItemStack stack) {
+        return input.apply(stack);
+    }
+    
+    public Ingredient getInput() {
+        return input;
+    }
 
-    public PotionEffect[] getEffects(){
+    public PotionEffect[] getEffects() {
         return this.effects;
     }
 
-    public boolean effect(ItemStack stack){
+    public boolean effect(ItemStack stack) {
         return ActuallyAdditionsAPI.methodHandler.addEffectToStack(stack, this);
     }
 
-    public String getExtraText(){
+    public String getExtraText() {
         return "";
+    }
+    
+    public int getMaxAmplifier() {
+        return maxAmplifier;
     }
 }

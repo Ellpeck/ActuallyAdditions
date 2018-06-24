@@ -144,6 +144,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             }
             else{
                 int theSlot = StackUtil.findFirstFilled(this.inv);
+                if(theSlot == -1) return;
                 inv.setStackInSlot(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.world, this.boundPosition, inv.getStackInSlot(theSlot)));
             }
         }

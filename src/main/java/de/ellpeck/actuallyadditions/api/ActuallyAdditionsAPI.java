@@ -34,6 +34,7 @@ import de.ellpeck.actuallyadditions.api.recipe.OilGenRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -200,7 +201,20 @@ public final class ActuallyAdditionsAPI{
      * @param output        The itemstack to be output from the compost once conversion finishes
      * @param outputDisplay The block to display when there is output in the compost
      */
+    @Deprecated
     public static void addCompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay){
+        COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
+    }
+    
+    /**
+     * Adds a new conversion recipe to the compost.
+     *
+     * @param input         The ingredient to be input into the compost
+     * @param inputDisplay  The state to display when there is input in the compost
+     * @param output        The itemstack to be output from the compost once conversion finishes
+     * @param outputDisplay The state to display when there is output in the compost
+     */
+    public static void addCompostRecipe(Ingredient input, IBlockState inputDisplay, ItemStack output, IBlockState outputDisplay){
         COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
     }
 
@@ -226,7 +240,12 @@ public final class ActuallyAdditionsAPI{
         TREASURE_CHEST_LOOT.add(new TreasureChestLoot(stack, chance, minAmount, maxAmount));
     }
 
+    @Deprecated
     public static void addEmpowererRecipe(ItemStack input, ItemStack output, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4, int energyPerStand, int time, float[] particleColor){
+        EMPOWERER_RECIPES.add(new EmpowererRecipe(input, output, modifier1, modifier2, modifier3, modifier4, energyPerStand, time, particleColor));
+    }
+    
+    public static void addEmpowererRecipe(Ingredient input, ItemStack output, Ingredient modifier1, Ingredient modifier2, Ingredient modifier3, Ingredient modifier4, int energyPerStand, int time, float[] particleColor){
         EMPOWERER_RECIPES.add(new EmpowererRecipe(input, output, modifier1, modifier2, modifier3, modifier4, energyPerStand, time, particleColor));
     }
 
@@ -240,11 +259,31 @@ public final class ActuallyAdditionsAPI{
      * @param type      The type of lens used for the conversion. To use the default type, use method below.
      *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
      */
+    @Deprecated
     public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse, LensConversion type){
         RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
     }
 
+    @Deprecated
     public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse){
+        addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
+    }
+    
+    /**
+     * Adds a recipe to the Atomic Reconstructor conversion lenses
+     * StackSizes can only be 1 and greater ones will be ignored
+     *
+     * @param input     The input as an ItemStack
+     * @param output    The output as an ItemStack
+     * @param energyUse The amount of RF used per conversion
+     * @param type      The type of lens used for the conversion. To use the default type, use method below.
+     *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
+     */
+    public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse, LensConversion type){
+        RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
+    }
+    
+    public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse){
         addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
     }
 

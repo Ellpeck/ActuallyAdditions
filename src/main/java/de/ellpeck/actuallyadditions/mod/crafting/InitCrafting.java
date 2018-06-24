@@ -16,11 +16,16 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.*;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.CactusFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.MelonPumpkinFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.NetherWartFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.ReedFarmerBehavior;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.exu.EnderlillyFarmerBehavior;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.exu.RedOrchidFarmerBehavior;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 
 public final class InitCrafting{
@@ -34,8 +39,8 @@ public final class InitCrafting{
         FoodCrafting.init();
         ToolCrafting.init();
 
-        ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.MASHED_FOOD.ordinal()), Blocks.LEAVES, new ItemStack(InitItems.itemFertilizer), Blocks.DIRT);
-        ActuallyAdditionsAPI.addCompostRecipe(new ItemStack(InitItems.itemCanolaSeed), Blocks.DIRT, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOMASS.ordinal()), Blocks.SOUL_SAND);
+        ActuallyAdditionsAPI.addCompostRecipe(Ingredient.fromStacks(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.MASHED_FOOD.ordinal())), Blocks.LEAVES.getDefaultState(), new ItemStack(InitItems.itemFertilizer), Blocks.DIRT.getDefaultState());
+        ActuallyAdditionsAPI.addCompostRecipe(Ingredient.fromItem(InitItems.itemCanolaSeed), Blocks.DIRT.getDefaultState(), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOMASS.ordinal()), Blocks.SOUL_SAND.getDefaultState());
 
         int[] power = ConfigIntListValues.OIL_POWER.getValue();
         int[] time = ConfigIntListValues.OIL_TIME.getValue();

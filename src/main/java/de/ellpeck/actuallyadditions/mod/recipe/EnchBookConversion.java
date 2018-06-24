@@ -13,12 +13,13 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
 
 public class EnchBookConversion extends LensConversionRecipe {
 
 	public EnchBookConversion() {
-		super(new ItemStack(Items.ENCHANTED_BOOK), ItemStack.EMPTY, 155000, ActuallyAdditionsAPI.lensDefaultConversion);
+		super(Ingredient.fromItem(Items.ENCHANTED_BOOK), ItemStack.EMPTY, 155000, ActuallyAdditionsAPI.lensDefaultConversion);
 	}
 	
 	@Override

@@ -15,25 +15,21 @@ import net.minecraft.item.crafting.Ingredient;
 
 public class CrusherRecipe {
 
-    @Deprecated //ModTweaker compat, will be removed soon.
-    public ItemStack outputOneStack;
-    
-    private Ingredient input;
-    private ItemStack outputOne;
-    private ItemStack outputTwo;
-    private int outputChance;
+    protected Ingredient input;
+    protected ItemStack outputOne;
+    protected ItemStack outputTwo;
+    protected int outputChance;
 
-    @Deprecated //ModTweaker compat, will be removed soon.
+    @Deprecated
     public CrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputChance) {
         this(Ingredient.fromStacks(input), outputOne, outputTwo, outputChance);
     }
-    
+
     public CrusherRecipe(Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputChance) {
         this.input = input;
         this.outputOne = outputOne;
         this.outputTwo = outputTwo;
         this.outputChance = outputChance;
-        outputOneStack = outputOne;
     }
 
     public boolean matches(ItemStack stack) {

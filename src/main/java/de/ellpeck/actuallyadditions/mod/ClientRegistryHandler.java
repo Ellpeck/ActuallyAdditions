@@ -1,5 +1,7 @@
 package de.ellpeck.actuallyadditions.mod;
 
+import de.ellpeck.actuallyadditions.mod.blocks.render.ActualCompostModel;
+import de.ellpeck.actuallyadditions.mod.blocks.render.CompostModel;
 import de.ellpeck.actuallyadditions.mod.blocks.render.IHasModel;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.util.FluidStateMapper;
@@ -7,6 +9,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
@@ -47,5 +51,12 @@ public class ClientRegistryHandler{
         registerCustomFluidBlockRenderer(InitFluids.fluidRefinedCanolaOil);
         registerCustomFluidBlockRenderer(InitFluids.fluidCrystalOil);
         registerCustomFluidBlockRenderer(InitFluids.fluidEmpoweredOil);
+    }
+    
+    @SubscribeEvent
+    public void onModelBake(ModelBakeEvent e) {
+        ModelResourceLocation mrl = new ModelResourceLocation(new ResourceLocation(ActuallyAdditions.MODID, "block_compost"), "normal");
+        CompostModel.compostBase = e.getModelRegistry().getObject(mrl);
+        e.getModelRegistry().putObject(mrl, new ActualCompostModel());
     }
 }

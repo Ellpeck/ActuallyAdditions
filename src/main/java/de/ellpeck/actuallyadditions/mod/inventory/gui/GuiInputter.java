@@ -10,6 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import java.io.IOException;
+
+import org.lwjgl.input.Keyboard;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerInputter;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
@@ -20,18 +24,14 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
-
-import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
-public class GuiInputter extends GuiContainer{
+public class GuiInputter extends GuiWtfMojang{
 
     public static final int OFFSET_ADVANCED = 12+36;
     public static final String[] SIDES = new String[]{

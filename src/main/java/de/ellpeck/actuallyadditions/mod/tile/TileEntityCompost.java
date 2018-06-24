@@ -12,88 +12,110 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityCompost extends TileEntityInventoryBase{
+public class TileEntityCompost extends TileEntityInventoryBase {
 
     public static final int COMPOST_TIME_TICKS = 3000;
 
-    public int conversionTime;
+    protected int conversionTime;
+    protected CompostRecipe recipe;
 
-    public TileEntityCompost(){
+    public TileEntityCompost() {
         super(1, "compost");
     }
 
-    public static CompostRecipe getRecipeForInput(ItemStack input){
-        if(StackUtil.isValid(input)){
-            for(CompostRecipe recipe : ActuallyAdditionsAPI.COMPOST_RECIPES){
-                if(input.isItemEqual(recipe.input)){
-                    return recipe;
-                }
+    public static CompostRecipe getRecipeForInput(ItemStack input) {
+        if (StackUtil.isValid(input)) {
+            for (CompostRecipe recipe : ActuallyAdditionsAPI.COMPOST_RECIPES) {
+                if (recipe.matches(input)) return recipe;
             }
         }
         return null;
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
-        if(type != NBTType.SAVE_BLOCK){
+        if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("ConversionTime", this.conversionTime);
         }
     }
 
     @Override
-    public boolean shouldSyncSlots(){
+    public boolean shouldSyncSlots() {
         return true;
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.readSyncableNBT(compound, type);
-        if(type != NBTType.SAVE_BLOCK){
+        if (type != NBTType.SAVE_BLOCK) {
             this.conversionTime = compound.getInteger("ConversionTime");
         }
+        if (type == NBTType.SYNC) this.world.markBlockRangeForRenderUpdate(this.pos, this.pos.up());
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
-        if(!this.world.isRemote){
+        if (!this.world.isRemote) {
             boolean theFlag = this.conversionTime > 0;
             ItemStack input = inv.getStackInSlot(0);
-            if(StackUtil.isValid(input)){
-                CompostRecipe recipe = getRecipeForInput(input);
-                if(recipe != null){
+            if (StackUtil.isValid(input)) {
+                if (recipe == null || !recipe.matches(input)) recipe = getRecipeForInput(input);
+                if (recipe != null) {
                     this.conversionTime++;
-                    if(this.conversionTime >= COMPOST_TIME_TICKS){
-                        ItemStack output = recipe.output.copy();
+                    if (this.conversionTime >= COMPOST_TIME_TICKS) {
+                        ItemStack output = recipe.getOutput().copy();
                         output.setCount(input.getCount());
                         this.inv.setStackInSlot(0, output);
                         this.conversionTime = 0;
                         this.markDirty();
                     }
-                }
-                else{
+                } else {
                     this.conversionTime = 0;
                 }
             }
 
-            if(theFlag != this.conversionTime > 0){
+            if (theFlag != this.conversionTime > 0) {
                 this.markDirty();
             }
         }
     }
 
     @Override
-    public boolean canInsert(int i, ItemStack stack, boolean automation){
+    public boolean canInsert(int i, ItemStack stack, boolean automation) {
         return getRecipeForInput(stack) != null;
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean automation){
+    public boolean canExtract(int slot, ItemStack stack, boolean automation) {
         return getRecipeForInput(stack) == null;
+    }
+
+    public IBlockState getCurrentDisplay() {
+        ItemStack input = inv.getStackInSlot(0);
+        CompostRecipe displayRecipe = recipe;
+        if (displayRecipe == null || !displayRecipe.matches(input)) displayRecipe = getRecipeForInput(input);
+
+        if (displayRecipe == null) for (CompostRecipe r : ActuallyAdditionsAPI.COMPOST_RECIPES) {
+            if (ItemUtil.areItemsEqual(input, r.getOutput(), true)) return r.getOutputDisplay();
+            else if (r.getInput().apply(input)) return r.getInputDisplay();
+        }
+
+        if(displayRecipe != null) return displayRecipe.getInputDisplay();
+        return Blocks.AIR.getDefaultState();
+    }
+
+    public float getHeight() {
+        ItemStack input = inv.getStackInSlot(0);
+        if (input.isEmpty()) return 0;
+        return (float) input.getCount() / input.getMaxStackSize();
     }
 }

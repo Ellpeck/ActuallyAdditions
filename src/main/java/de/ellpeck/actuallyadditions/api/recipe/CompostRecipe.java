@@ -11,20 +11,47 @@
 package de.ellpeck.actuallyadditions.api.recipe;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 
 public class CompostRecipe{
 
-    public final ItemStack input;
-    public final ItemStack output;
-    public final Block inputDisplay;
-    public final Block outputDisplay;
+    protected final Ingredient input;
+    protected final ItemStack output;
+    protected final IBlockState inputDisplay;
+    protected final IBlockState outputDisplay;
 
-    public CompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay){
+    @Deprecated
+    public CompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay) {
+        this(Ingredient.fromStacks(input), inputDisplay.getDefaultState(), output, outputDisplay.getDefaultState());
+    }
+    
+    public CompostRecipe(Ingredient input, IBlockState inputDisplay, ItemStack output, IBlockState outputDisplay){
         this.input = input;
         this.output = output;
         this.inputDisplay = inputDisplay;
         this.outputDisplay = outputDisplay;
+    }
+    
+    public boolean matches(ItemStack stack) {
+        return input.apply(stack);
+    }
+    
+    public Ingredient getInput() {
+        return input;
+    }
+    
+    public ItemStack getOutput() {
+        return output;
+    }
+    
+    public IBlockState getInputDisplay() {
+        return inputDisplay;
+    }
+    
+    public IBlockState getOutputDisplay() {
+        return outputDisplay;
     }
 
 }

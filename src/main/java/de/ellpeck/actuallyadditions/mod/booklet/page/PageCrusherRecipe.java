@@ -48,7 +48,7 @@ public class PageCrusherRecipe extends BookletPage{
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+100);
         
-        if(counter++ % 50 == 0)gui.addOrModifyItemRenderer(stacks[rotate++ % stacks.length], startX+38+18, startY+6+1, 1F, true);
+        if(counter++ % 50 == 0) gui.addOrModifyItemRenderer(stacks[rotate++ % stacks.length], startX+38+18, startY+6+1, 1F, true);
     }
 
     @Override

@@ -10,18 +10,25 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import org.lwjgl.opengl.GL11;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -31,13 +38,14 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 public final class AssetUtil{
 
@@ -82,6 +90,20 @@ public final class AssetUtil{
             GlStateManager.enableLighting();
             GlStateManager.popMatrix();
         }
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public static void renderStateInWorld(IBlockState state, IBlockAccess world, BlockPos pos, float brightness){
+        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
+        GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
+        int i = Minecraft.getMinecraft().getBlockColors().colorMultiplier(state, world, pos, 0);
+
+        float r = (float) (i >> 16 & 255) / 255F;
+        float g = (float) (i >> 8 & 255) / 255F;
+        float b = (float) (i & 255) / 255F;
+
+        Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(state, model, brightness, r, g, b);
     }
 
     @SideOnly(Side.CLIENT)

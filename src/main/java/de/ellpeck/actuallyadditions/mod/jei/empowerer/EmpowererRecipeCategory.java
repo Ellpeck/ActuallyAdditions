@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.empowerer;
 
+import java.util.Arrays;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -52,21 +54,21 @@ public class EmpowererRecipeCategory implements IRecipeCategory<EmpowererRecipeW
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, EmpowererRecipeWrapper wrapper, IIngredients ingredients){
         recipeLayout.getItemStacks().init(0, true, 31, 31);
-        recipeLayout.getItemStacks().set(0, wrapper.theRecipe.input);
+        recipeLayout.getItemStacks().set(0, Arrays.asList(wrapper.theRecipe.getInput().getMatchingStacks()));
 
         recipeLayout.getItemStacks().init(1, true, 1, 31);
-        recipeLayout.getItemStacks().set(1, wrapper.theRecipe.modifier1);
+        recipeLayout.getItemStacks().set(1, Arrays.asList(wrapper.theRecipe.getStandOne().getMatchingStacks()));
 
         recipeLayout.getItemStacks().init(2, true, 31, 1);
-        recipeLayout.getItemStacks().set(2, wrapper.theRecipe.modifier2);
+        recipeLayout.getItemStacks().set(2, Arrays.asList(wrapper.theRecipe.getStandTwo().getMatchingStacks()));
 
         recipeLayout.getItemStacks().init(3, true, 61, 31);
-        recipeLayout.getItemStacks().set(3, wrapper.theRecipe.modifier3);
+        recipeLayout.getItemStacks().set(3, Arrays.asList(wrapper.theRecipe.getStandThree().getMatchingStacks()));
 
         recipeLayout.getItemStacks().init(4, true, 31, 61);
-        recipeLayout.getItemStacks().set(4, wrapper.theRecipe.modifier4);
+        recipeLayout.getItemStacks().set(4, Arrays.asList(wrapper.theRecipe.getStandFour().getMatchingStacks()));
 
         recipeLayout.getItemStacks().init(5, false, 112, 31);
-        recipeLayout.getItemStacks().set(5, wrapper.theRecipe.output);
+        recipeLayout.getItemStacks().set(5, wrapper.theRecipe.getOutput());
     }
 }

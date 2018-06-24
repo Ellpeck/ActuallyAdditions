@@ -64,7 +64,7 @@ public class RenderEmpowerer extends TileEntitySpecialRenderer<TileEntityEmpower
                     EnumFacing facing = EnumFacing.HORIZONTALS[i];
                     BlockPos offset = tile.getPos().offset(facing, 3);
 
-                    AssetUtil.renderLaser(tile.getPos().getX()+0.5, tile.getPos().getY()+0.5, tile.getPos().getZ()+0.5, offset.getX()+0.5, offset.getY()+0.95, offset.getZ()+0.5, 80, 1F, 0.1F, recipe.particleColor);
+                    AssetUtil.renderLaser(tile.getPos().getX()+0.5, tile.getPos().getY()+0.5, tile.getPos().getZ()+0.5, offset.getX()+0.5, offset.getY()+0.95, offset.getZ()+0.5, 80, 1F, 0.1F, recipe.getParticleColors());
                 }
             }
         }

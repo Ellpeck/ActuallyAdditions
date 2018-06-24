@@ -16,8 +16,8 @@ import java.util.List;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.ClientRegistryHandler;
+import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderBatteryBox;
-import de.ellpeck.actuallyadditions.mod.blocks.render.RenderCompost;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderDisplayStand;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderEmpowerer;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderLaserRelay;
@@ -43,14 +43,17 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingBlock;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
@@ -81,7 +84,7 @@ public class ClientProxy implements IProxy{
         
         new ClientEvents();
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderCompost());
+        //ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderCompost());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAtomicReconstructor.class, new RenderReconstructorLens());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySmileyCloud.class, new RenderSmileyCloud());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDisplayStand.class, new RenderDisplayStand());
@@ -110,6 +113,18 @@ public class ClientProxy implements IProxy{
                 Minecraft.getMinecraft().getItemColors().registerItemColorHandler(((IColorProvidingItem)block).getItemColor(), block);
             }
         }
+        
+        IBlockColor color = (state, world, pos, tint) -> {
+            if (world != null && pos != null) {
+                TileEntity tileentity = world.getTileEntity(pos);
+                if (tileentity instanceof TileEntityCompost && ((TileEntityCompost) tileentity).getCurrentDisplay().getBlock() != state.getBlock()) {
+                    IBlockState iblockstate = ((TileEntityCompost) tileentity).getCurrentDisplay();
+                    return Minecraft.getMinecraft().getBlockColors().colorMultiplier(iblockstate, world, pos, tint);
+                }
+            }
+            return -1;
+        };
+        Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(color, InitBlocks.blockCompost);
     }
 
     @Override

@@ -27,10 +27,15 @@ public class PageReconstructor extends BookletPage{
 
     private final LensConversionRecipe recipe;
     private boolean isWildcard;
+    private int counter = 0;
+    private int rotate = 0;
+    private ItemStack[] stacks;
+
 
     public PageReconstructor(int localizationKey, LensConversionRecipe recipe){
         super(localizationKey);
         this.recipe = recipe;
+        if(recipe != null) this.stacks = recipe.getInput().getMatchingStacks();
     }
 
     @Override
@@ -44,6 +49,9 @@ public class PageReconstructor extends BookletPage{
         gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".reconstructorRecipe")+")", startX+6, startY+63, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+88);
+        if(this.recipe != null){
+            if(counter++ % 50 == 0) gui.addOrModifyItemRenderer(stacks[rotate++ % stacks.length], startX+30+1, startY+10+13, 1F, true);
+        }
     }
 
     @Override
@@ -52,8 +60,8 @@ public class PageReconstructor extends BookletPage{
         super.initGui(gui, startX, startY);
 
         if(this.recipe != null){
-            gui.addOrModifyItemRenderer(this.recipe.inputStack, startX+30+1, startY+10+13, 1F, true);
-            gui.addOrModifyItemRenderer(this.recipe.outputStack, startX+30+47, startY+10+13, 1F, false);
+            gui.addOrModifyItemRenderer(stacks[0], startX+30+1, startY+10+13, 1F, true);
+            gui.addOrModifyItemRenderer(this.recipe.getOutput(), startX+30+47, startY+10+13, 1F, false);
         }
     }
 
@@ -62,7 +70,7 @@ public class PageReconstructor extends BookletPage{
         super.getItemStacksForPage(list);
 
         if(this.recipe != null){
-            ItemStack copy = this.recipe.outputStack.copy();
+            ItemStack copy = this.recipe.getOutput().copy();
             if(this.isWildcard){
                 copy.setItemDamage(Util.WILDCARD);
             }

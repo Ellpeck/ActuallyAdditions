@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -99,5 +100,9 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     @Override
     public IEnergyStorage getEnergyStorage(EnumFacing facing){
         return this.storage;
+    }
+    
+    public ItemStack getStack() {
+        return this.inv.getStackInSlot(0);
     }
 }

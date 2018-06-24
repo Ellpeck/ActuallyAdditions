@@ -11,24 +11,51 @@
 package de.ellpeck.actuallyadditions.api.recipe;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
-import de.ellpeck.actuallyadditions.api.lens.LensConversion;
+import de.ellpeck.actuallyadditions.api.lens.Lens;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
 
-public class LensConversionRecipe{
+public class LensConversionRecipe {
 
-    public final int energyUse;
-    public final LensConversion type;
-    public ItemStack inputStack;
-    public ItemStack outputStack;
+    protected final Ingredient input;
+    protected final ItemStack output;
+    protected final int energy;
+    protected final Lens type;
 
-    public LensConversionRecipe(ItemStack input, ItemStack output, int energyUse, LensConversion type){
-        this.inputStack = input;
-        this.outputStack = output;
-        this.energyUse = energyUse;
+    @Deprecated
+    public LensConversionRecipe(ItemStack input, ItemStack output, int energy, Lens type) {
+        this(Ingredient.fromStacks(input), output, energy, type);
+    }
+
+    public LensConversionRecipe(Ingredient input, ItemStack output, int energy, Lens type) {
+        this.input = input;
+        this.output = output;
+        this.energy = energy;
         this.type = type;
     }
-    
-    public void transformHook(ItemStack stack, IBlockState state, BlockPos pos, IAtomicReconstructor tile) {}
+
+    public boolean matches(ItemStack input, Lens lens) {
+        return this.input.apply(input) && this.type == lens;
+    }
+
+    public Ingredient getInput() {
+        return input;
+    }
+
+    public ItemStack getOutput() {
+        return output;
+    }
+
+    public int getEnergyUsed() {
+        return energy;
+    }
+
+    public Lens getType() {
+        return type;
+    }
+
+    public void transformHook(ItemStack stack, IBlockState state, BlockPos pos, IAtomicReconstructor tile) {
+    }
 }

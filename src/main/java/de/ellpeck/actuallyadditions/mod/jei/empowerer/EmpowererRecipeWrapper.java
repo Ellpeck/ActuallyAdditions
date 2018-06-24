@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.empowerer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
@@ -17,8 +20,6 @@ import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.item.ItemStack;
-
-import java.util.Arrays;
 
 public class EmpowererRecipeWrapper extends RecipeWrapperWithButton{
 
@@ -30,8 +31,20 @@ public class EmpowererRecipeWrapper extends RecipeWrapperWithButton{
 
     @Override
     public void getIngredients(IIngredients ingredients){
-        ingredients.setInputs(ItemStack.class, Arrays.asList(this.theRecipe.input, this.theRecipe.modifier1, this.theRecipe.modifier2, this.theRecipe.modifier3, this.theRecipe.modifier4));
-        ingredients.setOutput(ItemStack.class, this.theRecipe.output);
+        List<ItemStack> inputs = new ArrayList<>();
+        for(ItemStack s : theRecipe.getInput().getMatchingStacks()) 
+            inputs.add(s);
+        for(ItemStack s : theRecipe.getStandOne().getMatchingStacks()) 
+            inputs.add(s);
+        for(ItemStack s : theRecipe.getStandTwo().getMatchingStacks()) 
+            inputs.add(s);
+        for(ItemStack s : theRecipe.getStandThree().getMatchingStacks()) 
+            inputs.add(s);
+        for(ItemStack s : theRecipe.getStandFour().getMatchingStacks()) 
+            inputs.add(s);
+    
+        ingredients.setInputs(ItemStack.class, inputs);
+        ingredients.setOutput(ItemStack.class, this.theRecipe.getOutput());
     }
 
     @Override

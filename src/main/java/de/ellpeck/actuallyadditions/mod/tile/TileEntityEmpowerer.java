@@ -10,9 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,153 +26,143 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class TileEntityEmpowerer extends TileEntityInventoryBase{
+public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
     public int processTime;
     public int recipeForRenderIndex = -1;
     private int lastRecipe;
 
-    public TileEntityEmpowerer(){
+    public TileEntityEmpowerer() {
         super(1, "empowerer");
     }
 
-    public static List<EmpowererRecipe> getRecipesForInput(ItemStack input){
+    @Deprecated //Use findMatchingRecipe
+    public static List<EmpowererRecipe> getRecipesForInput(ItemStack input) {
         List<EmpowererRecipe> recipesThatWork = new ArrayList<EmpowererRecipe>();
-        if(StackUtil.isValid(input)){
-            for(EmpowererRecipe recipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES){
-                if(StackUtil.isValid(recipe.input) && recipe.input.isItemEqual(input)){
+        if (StackUtil.isValid(input)) {
+            for (EmpowererRecipe recipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
+                if (recipe.getInput().apply(input)) {
                     recipesThatWork.add(recipe);
                 }
             }
         }
         return recipesThatWork;
     }
+    
+    public static boolean isPossibleInput(ItemStack stack) {
+        for(EmpowererRecipe r : ActuallyAdditionsAPI.EMPOWERER_RECIPES) if(r.getInput().apply(stack)) return true;
+        return false;
+    }
+
+    @Nullable
+    public static EmpowererRecipe findMatchingRecipe(ItemStack base, ItemStack stand1, ItemStack stand2, ItemStack stand3, ItemStack stand4) {
+        for (EmpowererRecipe r : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
+            if (r.matches(base, stand1, stand2, stand3, stand4)) return r;
+        }
+        return null;
+    }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
 
-        if(!this.world.isRemote){
-            List<EmpowererRecipe> recipes = getRecipesForInput(this.inv.getStackInSlot(0));
-            if(!recipes.isEmpty()){
-                for(EmpowererRecipe recipe : recipes){
-                    TileEntityDisplayStand[] modifierStands = this.getFittingModifiers(recipe, recipe.time);
-                    if(modifierStands != null){ //Meaning the display stands around match all the criteria
-                        this.recipeForRenderIndex = ActuallyAdditionsAPI.EMPOWERER_RECIPES.indexOf(recipe);
+        if (!this.world.isRemote) {
+            TileEntityDisplayStand[] stands = this.getNearbyStands();
+            if (stands != null) {
+                EmpowererRecipe recipe = findMatchingRecipe(this.inv.getStackInSlot(0), stands[0].getStack(), stands[1].getStack(), stands[2].getStack(), stands[3].getStack());
+                if (recipe != null) {
+                    this.recipeForRenderIndex = ActuallyAdditionsAPI.EMPOWERER_RECIPES.indexOf(recipe);
 
-                        this.processTime++;
-                        boolean done = this.processTime >= recipe.time;
+                    this.processTime++;
+                    boolean done = this.processTime >= recipe.getTime();
 
-                        for(TileEntityDisplayStand stand : modifierStands){
-                            stand.storage.extractEnergyInternal(recipe.energyPerStand/recipe.time, false);
+                    for (TileEntityDisplayStand stand : stands) {
+                        stand.storage.extractEnergyInternal(recipe.getEnergyPerStand() / recipe.getTime(), false);
 
-                            if(done){
-                                stand.inv.getStackInSlot(0).shrink(1);
-                            }
+                        if (done) {
+                            stand.inv.getStackInSlot(0).shrink(1);
                         }
-
-                        if(this.processTime%5 == 0 && this.world instanceof WorldServer){
-                            ((WorldServer)this.world).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 2, 0, 0, 0, 0.1D);
-                        }
-
-                        if(done){
-                            ((WorldServer)this.world).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX()+0.5, this.pos.getY()+1.1, this.pos.getZ()+0.5, 100, 0, 0, 0, 0.25D);
-
-                            this.inv.setStackInSlot(0, recipe.output.copy());
-                            this.markDirty();
-
-                            this.processTime = 0;
-                            this.recipeForRenderIndex = -1;
-                        }
-
-                        break;
                     }
-                }
-            }
-            else{
-                this.processTime = 0;
-                this.recipeForRenderIndex = -1;
-            }
 
-            if(this.lastRecipe != this.recipeForRenderIndex){
-                this.lastRecipe = this.recipeForRenderIndex;
-                this.sendUpdate();
+                    if (this.processTime % 5 == 0 && this.world instanceof WorldServer) {
+                        ((WorldServer) this.world).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 2, 0, 0, 0, 0.1D);
+                    }
+
+                    if (done) {
+                        ((WorldServer) this.world).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 100, 0, 0, 0, 0.25D);
+
+                        this.inv.setStackInSlot(0, recipe.getOutput().copy());
+                        this.markDirty();
+
+                        this.processTime = 0;
+                        this.recipeForRenderIndex = -1;
+                    }
+                } else {
+                    this.processTime = 0;
+                    this.recipeForRenderIndex = -1;
+                }
+
+                if (this.lastRecipe != this.recipeForRenderIndex) {
+                    this.lastRecipe = this.recipeForRenderIndex;
+                    this.sendUpdate();
+                }
             }
         }
     }
 
-    private TileEntityDisplayStand[] getFittingModifiers(EmpowererRecipe recipe, int powerDivider){
-        TileEntityDisplayStand[] modifierStands = new TileEntityDisplayStand[4];
-        List<ItemStack> itemsStillNeeded = new ArrayList<ItemStack>(Arrays.asList(recipe.modifier1, recipe.modifier2, recipe.modifier3, recipe.modifier4));
+    private TileEntityDisplayStand[] getNearbyStands() {
+        TileEntityDisplayStand[] stands = new TileEntityDisplayStand[4];
 
-        for(int i = 0; i < EnumFacing.HORIZONTALS.length; i++){
+        for (int i = 0; i < EnumFacing.HORIZONTALS.length; i++) {
             EnumFacing facing = EnumFacing.HORIZONTALS[i];
             BlockPos offset = this.pos.offset(facing, 3);
             TileEntity tile = this.world.getTileEntity(offset);
-
-            if(tile instanceof TileEntityDisplayStand){
-                TileEntityDisplayStand stand = (TileEntityDisplayStand)tile;
-                ItemStack standItem = stand.inv.getStackInSlot(0);
-                int containPlace = ItemUtil.getPlaceAt(itemsStillNeeded, standItem, true);
-                if(stand.storage.getEnergyStored() >= recipe.energyPerStand/powerDivider && containPlace != -1){
-                    modifierStands[i] = stand;
-                    itemsStillNeeded.remove(containPlace);
-                }
-                else{
-                    return null;
-                }
-            }
-            else{
-                return null;
-            }
+            if (tile instanceof TileEntityDisplayStand) stands[i] = (TileEntityDisplayStand) tile;
+            else return null;
         }
 
-        return modifierStands;
+        return stands;
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
-        if(type == NBTType.SAVE_TILE){
+        if (type == NBTType.SAVE_TILE) {
             compound.setInteger("ProcessTime", this.processTime);
         }
-        if(type == NBTType.SYNC){
+        if (type == NBTType.SYNC) {
             compound.setInteger("RenderIndex", this.recipeForRenderIndex);
         }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.readSyncableNBT(compound, type);
-        if(type == NBTType.SAVE_TILE){
+        if (type == NBTType.SAVE_TILE) {
             this.processTime = compound.getInteger("ProcessTime");
         }
-        if(type == NBTType.SYNC){
+        if (type == NBTType.SYNC) {
             this.recipeForRenderIndex = compound.getInteger("RenderIndex");
         }
     }
 
     @Override
-    public boolean shouldSyncSlots(){
+    public boolean shouldSyncSlots() {
         return true;
     }
 
     @Override
-    public boolean canInsert(int index, ItemStack stack, boolean automation){
+    public boolean canInsert(int index, ItemStack stack, boolean automation) {
         return !automation || !getRecipesForInput(stack).isEmpty();
     }
 
     @Override
-    public boolean canExtract(int index, ItemStack stack, boolean automation){
+    public boolean canExtract(int index, ItemStack stack, boolean automation) {
         return !automation || getRecipesForInput(stack).isEmpty();
     }
 
     @Override
-    public int getMaxStackSize(int slot){
+    public int getMaxStackSize(int slot) {
         return 1;
     }
 }
