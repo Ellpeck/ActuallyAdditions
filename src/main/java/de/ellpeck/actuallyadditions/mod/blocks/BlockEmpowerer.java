@@ -59,9 +59,9 @@ public class BlockEmpowerer extends BlockContainerBase{
                 if(StackUtil.isValid(heldItem)){
                     if(!StackUtil.isValid(stackThere) && TileEntityEmpowerer.isPossibleInput(heldItem)){
                         ItemStack toPut = heldItem.copy();
-                        toPut.grow(1);
+                        toPut.setCount(1);
                         empowerer.inv.setStackInSlot(0, toPut);
-                        player.setHeldItem(hand, StackUtil.shrink(heldItem, 1));
+                        if(!player.capabilities.isCreativeMode) heldItem.shrink(1);
                         return true;
                     }
                     else if(ItemUtil.canBeStacked(heldItem, stackThere)){
