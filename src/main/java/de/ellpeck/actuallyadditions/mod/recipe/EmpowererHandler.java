@@ -35,19 +35,19 @@ public final class EmpowererHandler {
     public static EmpowererRecipe recipeEmpoweredCanolaSeed;
 
     public static void init() {
-        addCrystalEmpowering(TheCrystals.REDSTONE, "dyeRed", Ingredient.fromItem(Items.NETHERBRICK), Ingredient.fromItem(Items.REDSTONE), Ingredient.fromItem(Items.BRICK));
-        addCrystalEmpowering(TheCrystals.LAPIS, "dyeCyan", Ingredient.fromItem(Items.PRISMARINE_SHARD), Ingredient.fromItem(Items.PRISMARINE_SHARD), Ingredient.fromItem(Items.PRISMARINE_SHARD));
-        addCrystalEmpowering(TheCrystals.DIAMOND, "dyeLightBlue", Ingredient.fromItem(Items.CLAY_BALL), Ingredient.fromItem(Items.CLAY_BALL), fromBlock(Blocks.CLAY));
-        addCrystalEmpowering(TheCrystals.IRON, "dyeGray", Ingredient.fromItem(Items.SNOWBALL), fromBlock(Blocks.STONE_BUTTON), fromBlock(Blocks.COBBLESTONE));
+        addCrystalEmpowering(TheCrystals.REDSTONE, "dyeRed", Ingredient.fromItems(Items.NETHERBRICK), Ingredient.fromItems(Items.REDSTONE), Ingredient.fromItems(Items.BRICK));
+        addCrystalEmpowering(TheCrystals.LAPIS, "dyeCyan", Ingredient.fromItems(Items.PRISMARINE_SHARD), Ingredient.fromItems(Items.PRISMARINE_SHARD), Ingredient.fromItems(Items.PRISMARINE_SHARD));
+        addCrystalEmpowering(TheCrystals.DIAMOND, "dyeLightBlue", Ingredient.fromItems(Items.CLAY_BALL), Ingredient.fromItems(Items.CLAY_BALL), fromBlock(Blocks.CLAY));
+        addCrystalEmpowering(TheCrystals.IRON, "dyeGray", Ingredient.fromItems(Items.SNOWBALL), fromBlock(Blocks.STONE_BUTTON), fromBlock(Blocks.COBBLESTONE));
 
-        addCrystalEmpowering(TheCrystals.COAL, "dyeBlack", igd(new ItemStack(Items.COAL, 1, 1)), Ingredient.fromItem(Items.FLINT), fromBlock(Blocks.STONE));
+        addCrystalEmpowering(TheCrystals.COAL, "dyeBlack", igd(new ItemStack(Items.COAL, 1, 1)), Ingredient.fromItems(Items.FLINT), fromBlock(Blocks.STONE));
 
         List<ItemStack> balls = OreDictionary.getOres("slimeball");
         for (ItemStack ball : balls) {
             addCrystalEmpowering(TheCrystals.EMERALD, "dyeLime", igd(new ItemStack(Blocks.TALLGRASS, 1, 1)), igd(new ItemStack(Blocks.SAPLING)), igd(ball.copy()));
         }
 
-        Ingredient seed = Ingredient.fromItem(InitItems.itemCanolaSeed);
+        Ingredient seed = Ingredient.fromItems(InitItems.itemCanolaSeed);
         ActuallyAdditionsAPI.addEmpowererRecipe(Ingredient.fromStacks(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal())), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal()), seed, seed, seed, seed, 1000, 30, new float[] { 1F, 91F / 255F, 76F / 255F });
         recipeEmpoweredCanolaSeed = RecipeUtil.lastEmpowererRecipe();
     }
@@ -66,6 +66,6 @@ public final class EmpowererHandler {
     }
 
     private static Ingredient fromBlock(Block b) {
-        return Ingredient.fromItem(Item.getItemFromBlock(b));
+        return Ingredient.fromItems(Item.getItemFromBlock(b));
     }
 }

@@ -66,27 +66,27 @@ public final class LensRecipeHandler{
         MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
 
         //Crystal Items
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItem(Items.REDSTONE), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 40);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.REDSTONE), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 40);
         MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromStacks(new ItemStack(Items.DYE, 1, 4)), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), 40);
         MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItem(Items.DIAMOND), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 60);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.DIAMOND), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 60);
         MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItem(Items.EMERALD), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), 100);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.EMERALD), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), 100);
         MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItem(Items.COAL), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), 60);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.COAL), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), 60);
         MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItem(Items.IRON_INGOT), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 80);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.IRON_INGOT), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 80);
         MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
 
         //Lenses
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromStacks(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal())), new ItemStack(InitItems.itemColorLens), 5000);
         recipeColorLens = RecipeUtil.lastReconstructorRecipe();
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItem(InitItems.itemColorLens), new ItemStack(InitItems.itemExplosionLens), 5000);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(InitItems.itemColorLens), new ItemStack(InitItems.itemExplosionLens), 5000);
         recipeExplosionLens = RecipeUtil.lastReconstructorRecipe();
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItem(InitItems.itemExplosionLens), new ItemStack(InitItems.itemDamageLens), 5000);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(InitItems.itemExplosionLens), new ItemStack(InitItems.itemDamageLens), 5000);
         recipeDamageLens = RecipeUtil.lastReconstructorRecipe();
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItem(InitItems.itemDamageLens), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 5000);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(InitItems.itemDamageLens), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 5000);
 
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(InitBlocks.blockLaserRelay), new ItemStack(InitBlocks.blockLaserRelayFluids), 2000);
         recipeFluidLaser = RecipeUtil.lastReconstructorRecipe();
@@ -97,15 +97,15 @@ public final class LensRecipeHandler{
         //Misc
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.SAND), new ItemStack(Blocks.SOUL_SAND), 20000);
         recipeSoulSand = RecipeUtil.lastReconstructorRecipe();
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItem(Items.ROTTEN_FLESH), new ItemStack(Items.LEATHER), 8000);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.ROTTEN_FLESH), new ItemStack(Items.LEATHER), 8000);
         recipeLeather = RecipeUtil.lastReconstructorRecipe();
 
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.RED_MUSHROOM), new ItemStack(Items.NETHER_WART), 150000);
         recipeNetherWart = RecipeUtil.lastReconstructorRecipe();
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItem(Items.QUARTZ), new ItemStack(Items.PRISMARINE_SHARD), 30000);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.QUARTZ), new ItemStack(Items.PRISMARINE_SHARD), 30000);
         recipePrismarine = RecipeUtil.lastReconstructorRecipe();
 
-        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItem(InitItems.itemCanolaSeed), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal()), 2000);
+        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(InitItems.itemCanolaSeed), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal()), 2000);
         recipeCrystallizedCanolaSeed = RecipeUtil.lastReconstructorRecipe();
 
         ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.QUARTZ_BLOCK), new ItemStack(InitBlocks.blockTestifiBucksWhiteWall), 10);
@@ -142,6 +142,6 @@ public final class LensRecipeHandler{
     }
     
     private static Ingredient fromBlock(Block b) {
-        return Ingredient.fromItem(Item.getItemFromBlock(b));
+        return Ingredient.fromItems(Item.getItemFromBlock(b));
     }
 }

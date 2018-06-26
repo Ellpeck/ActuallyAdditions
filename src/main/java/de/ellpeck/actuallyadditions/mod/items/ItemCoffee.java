@@ -51,7 +51,7 @@ public class ItemCoffee extends ItemFoodBase{
         ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.fromItem(Items.MILK_BUCKET)));
         //Pam's Soy Milk (For Jemx because he's lactose intolerant. YER HAPPY NAO!?)
         if(Loader.isModLoaded("harvestcraft")){
-            Item item = ItemUtil.getItemFromName("harvestcraft:soymilkItem");
+            Item item = ItemUtil.getItemFromName("harvestcraft:soymilkitem");
             if(item != null){
                 ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.fromItem(item)));
             }
