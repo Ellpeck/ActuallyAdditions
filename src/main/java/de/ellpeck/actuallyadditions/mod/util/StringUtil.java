@@ -10,15 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
+import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.translation.LanguageMap;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public final class StringUtil{
 
@@ -46,11 +48,6 @@ public final class StringUtil{
     @SuppressWarnings("deprecation")//TODO: delete this shit and move ItemPotionRing's getItemStackDisplayName into getUnlocalizedName
     public static String localizeIllegallyOnTheServerDontUseMePls(String langKey) {
     	return net.minecraft.util.text.translation.I18n.translateToLocal(langKey);
-    }
-    
-    @SuppressWarnings("deprecation")//Configs why must you need to be translated.
-	public static String badTranslate(String someUnlocAAItemName) {
-    	return net.minecraft.util.text.translation.I18n.translateToLocal("item.actuallyadditions."+someUnlocAAItemName+".name");
     }
     
     @SideOnly(Side.CLIENT)
@@ -81,5 +78,27 @@ public final class StringUtil{
         for(int i = 0; i < lines.size(); i++){
             renderScaledAsciiString(font, lines.get(i), x, y+(i*(int)(font.FONT_HEIGHT*scale+3)), color, shadow, scale);
         }
+    }
+    
+    //TODO: Remove
+    static LanguageMap cancerino;
+
+    static void setupLangMap() {
+        try {
+            Method m = LanguageMap.class.getDeclaredMethod("inject", LanguageMap.class, InputStream.class);
+            m.setAccessible(true);
+            m.invoke(null, cancerino = new LanguageMap(), ActuallyAdditions.class.getResourceAsStream("/assets/actuallyadditions/lang/en_US.lang"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Actually Additions failed to access LanguageMap.inject.  Report this!");
+        }
+    }
+
+    public static String badTranslate(String someUnlocAAItemName) {
+        if (cancerino == null) {
+            cancerino = new LanguageMap();
+            setupLangMap();
+        }
+        return cancerino.translateKey("item.actuallyadditions."+someUnlocAAItemName+".name");
     }
 }
