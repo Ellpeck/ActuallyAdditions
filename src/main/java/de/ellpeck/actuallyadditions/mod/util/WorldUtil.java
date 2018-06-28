@@ -190,17 +190,13 @@ public final class WorldUtil {
 
             //Everything else
             try {
-                if (world instanceof WorldServer) {
-                    FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer) world);
-                    ItemStack heldBefore = fake.getHeldItemMainhand();
-                    setHandItemWithoutAnnoyingSound(fake, EnumHand.MAIN_HAND, stack.copy());
-
-                    fake.getHeldItemMainhand().onItemUse(fake, world, offsetPos, fake.getActiveHand(), side.getOpposite(), 0.5F, 0.5F, 0.5F);
-
-                    ItemStack result = fake.getHeldItem(EnumHand.MAIN_HAND);
-                    setHandItemWithoutAnnoyingSound(fake, EnumHand.MAIN_HAND, heldBefore);
-                    return result;
-                }
+                FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer) world);
+                ItemStack heldBefore = fake.getHeldItemMainhand();
+                setHandItemWithoutAnnoyingSound(fake, EnumHand.MAIN_HAND, stack.copy());
+                fake.interactionManager.processRightClickBlock(fake, world, fake.getHeldItemMainhand(), EnumHand.MAIN_HAND, offsetPos, side.getOpposite(), 0.5F, 0.5F, 0.5F);
+                ItemStack result = fake.getHeldItem(EnumHand.MAIN_HAND);
+                setHandItemWithoutAnnoyingSound(fake, EnumHand.MAIN_HAND, heldBefore);
+                return result;
             } catch (Exception e) {
                 ActuallyAdditions.LOGGER.error("Something that places Blocks at " + offsetPos.getX() + ", " + offsetPos.getY() + ", " + offsetPos.getZ() + " in World " + world.provider.getDimension() + " threw an Exception! Don't let that happen again!", e);
             }
