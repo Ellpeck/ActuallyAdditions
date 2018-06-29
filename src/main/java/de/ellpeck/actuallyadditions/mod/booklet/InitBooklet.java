@@ -10,6 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -26,8 +32,21 @@ import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterTrials;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryAllItems;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryTrials;
-import de.ellpeck.actuallyadditions.mod.booklet.page.*;
-import de.ellpeck.actuallyadditions.mod.crafting.*;
+import de.ellpeck.actuallyadditions.mod.booklet.page.BookletPage;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrafting;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrusherRecipe;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageEmpowerer;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageFurnace;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageLinkButton;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageReconstructor;
+import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
+import de.ellpeck.actuallyadditions.mod.crafting.BlockCrafting;
+import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
+import de.ellpeck.actuallyadditions.mod.crafting.FoodCrafting;
+import de.ellpeck.actuallyadditions.mod.crafting.ItemCrafting;
+import de.ellpeck.actuallyadditions.mod.crafting.MiscCrafting;
+import de.ellpeck.actuallyadditions.mod.crafting.ToolCrafting;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.OreGen;
 import de.ellpeck.actuallyadditions.mod.gen.WorldGenLushCaves;
@@ -40,7 +59,28 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
-import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityDirectionalBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFireworkBox;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceSolar;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityHeatCollector;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemRepairer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLavaFactoryController;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLeafGenerator;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityShockSuppressor;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.init.Blocks;
@@ -51,7 +91,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import java.util.*;
 
 public final class InitBooklet{
 
@@ -226,7 +265,16 @@ public final class InitBooklet{
         new BookletChapter("farmer", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockFarmer), new PageTextOnly(1), new PagePicture(2, "page_farmer_crops", 95).addItemsToPage(new ItemStack(Items.WHEAT_SEEDS)).addItemsToPage(new ItemStack(InitItems.itemCanolaSeed)), new PagePicture(3, "page_farmer_cactus", 105).addItemsToPage(new ItemStack(Blocks.CACTUS)), new PagePicture(4, "page_farmer_wart", 95).addItemsToPage(new ItemStack(Items.NETHER_WART)), new PagePicture(5, "page_farmer_reeds", 105).addItemsToPage(new ItemStack(Items.REEDS)), new PagePicture(6, "page_farmer_melons", 105).addItemsToPage(new ItemStack(Items.MELON), new ItemStack(Blocks.PUMPKIN), new ItemStack(Blocks.MELON_BLOCK)), new PagePicture(7, "page_farmer_enderlilly", 105), new PagePicture(8, "page_farmer_redorchid", 105), new PageCrafting(4, BlockCrafting.recipeFarmer).setWildcard().setNoText()).setImportant();
         new BookletChapter("miner", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockMiner), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityMiner.ENERGY_USE_PER_BLOCK).addTextReplacement("<range>", TileEntityMiner.DEFAULT_RANGE), new PageCrafting(2, BlockCrafting.recipeMiner)).setSpecial();
         new BookletChapterCoffee("coffeeMachine", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockCoffeeMachine), new PageTextOnly(1).addItemsToPage(new ItemStack(InitItems.itemCoffeeBean)).addTextReplacement("<rf>", TileEntityCoffeeMachine.ENERGY_USED).addTextReplacement("<coffee>", TileEntityCoffeeMachine.CACHE_USE).addTextReplacement("<water>", TileEntityCoffeeMachine.WATER_USE), new PageTextOnly(2).addItemsToPage(new ItemStack(InitItems.itemCoffee)), new PagePicture(3, "page_coffee_machine", 115), new PageCrafting(4, BlockCrafting.recipeCoffeeMachine).setWildcard().setNoText(), new PageCrafting(5, ItemCrafting.recipeCup).setNoText()).setImportant();
-        new BookletChapterCrusher("crusher", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockGrinderDouble), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityGrinder.ENERGY_USE), new PageCrafting(2, BlockCrafting.recipeCrusher).setWildcard().setNoText(), new PageCrafting(3, BlockCrafting.recipeDoubleCrusher).setWildcard().setNoText(), new PageCrusherRecipe(4, CrusherCrafting.recipeIronHorseArmor).setNoText(), new PageCrusherRecipe(5, CrusherCrafting.recipeGoldHorseArmor).setNoText(), new PageCrusherRecipe(6, CrusherCrafting.recipeDiamondHorseArmor).setNoText());
+        
+        List<IBookletPage> list = new ArrayList<>();
+        list.add(new PageTextOnly(1).addTextReplacement("<rf>", TileEntityGrinder.ENERGY_USE));
+        list.add(new PageCrafting(2, BlockCrafting.recipeCrusher).setWildcard().setNoText());
+        list.add(new PageCrafting(3, BlockCrafting.recipeDoubleCrusher).setWildcard().setNoText());
+        if(CrusherCrafting.recipeIronHorseArmor != null) list.add(new PageCrusherRecipe(4, CrusherCrafting.recipeIronHorseArmor).setNoText());
+        if(CrusherCrafting.recipeGoldHorseArmor != null) list.add(new PageCrusherRecipe(5, CrusherCrafting.recipeGoldHorseArmor).setNoText());
+        if(CrusherCrafting.recipeDiamondHorseArmor != null) list.add(new PageCrusherRecipe(6, CrusherCrafting.recipeDiamondHorseArmor).setNoText());
+        
+        new BookletChapterCrusher("crusher", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockGrinderDouble), list.toArray(new IBookletPage[0]));
         new BookletChapter("furnaceDouble", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockFurnaceDouble), new PageCrafting(1, BlockCrafting.recipeFurnace).setWildcard().addTextReplacement("<rf>", TileEntityFurnaceDouble.ENERGY_USE));
         new BookletChapter("lavaFactory", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockLavaFactoryController), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityLavaFactoryController.ENERGY_USE), new PagePicture(2, "page_lava_factory", 0).setNoText(), new PageCrafting(3, BlockCrafting.recipeLavaFactory).setNoText(), new PageCrafting(4, BlockCrafting.recipeCasing).setNoText());
         new BookletChapter("energizer", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockEnergizer), new PageCrafting(1, BlockCrafting.recipeEnergizer), new PageCrafting(2, BlockCrafting.recipeEnervator));
