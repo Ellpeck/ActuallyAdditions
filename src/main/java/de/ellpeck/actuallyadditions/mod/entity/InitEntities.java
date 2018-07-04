@@ -27,7 +27,7 @@ public final class InitEntities{
 
     @SideOnly(Side.CLIENT)
     public static void initClient(){
-        RenderingRegistry.registerEntityRenderingHandler(EntityWorm.class, RenderWorm.FACTORY);
+        RenderingRegistry.registerEntityRenderingHandler(EntityWorm.class, RenderWorm::new);
     }
     
 }

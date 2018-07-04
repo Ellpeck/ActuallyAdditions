@@ -19,19 +19,11 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderWorm extends Render<EntityWorm>{
-
-    public static final IRenderFactory<EntityWorm> FACTORY = new IRenderFactory<EntityWorm>(){
-        @Override
-        public Render<EntityWorm> createRenderFor(RenderManager manager){
-            return new RenderWorm(manager);
-        }
-    };
 
     private static ItemStack stack = ItemStack.EMPTY;
 
