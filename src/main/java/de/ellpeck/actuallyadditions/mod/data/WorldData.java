@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.data;
 
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
@@ -18,16 +21,7 @@ import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldSavedData;
-import net.minecraftforge.common.WorldSpecificSaveHandler;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class WorldData extends WorldSavedData {
 
