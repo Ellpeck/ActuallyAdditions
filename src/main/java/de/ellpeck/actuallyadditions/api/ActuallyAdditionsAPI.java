@@ -51,6 +51,9 @@ public final class ActuallyAdditionsAPI{
     public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<>();
     public static final List<EmpowererRecipe> EMPOWERER_RECIPES = new ArrayList<>();
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<>();
+    /**
+     * Farmer behaviors are sorted when first accessed, this will not be done until after loading, but do not add behaviors at runtime.
+     */
     public static final List<IFarmerBehavior> FARMER_BEHAVIORS = new ArrayList<>();
     public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<>();
     public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<>();

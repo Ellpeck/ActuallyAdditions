@@ -19,7 +19,8 @@ public interface IFarmerBehavior{
 
     /**
      * Try to plant a seed with this behavior
-     * If this method return true, the seed ItemStack will have one item deducted from it.
+     * If this method returns true, the seed ItemStack will be shrunk by one.
+     * This method will not be called if the block at the given position is not replaceable.
      *
      * @param seed   The seed stack to plant
      * @param world  The world
@@ -40,4 +41,6 @@ public interface IFarmerBehavior{
     FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer);
 
     int getPriority();
+    
+    default Integer getPrioInt() { return getPriority(); }
 }

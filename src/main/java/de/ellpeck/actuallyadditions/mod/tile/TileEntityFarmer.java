@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
@@ -31,7 +30,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer {
 
-    private static final List<IFarmerBehavior> SORTED_FARMER_BEHAVIORS = new ArrayList<IFarmerBehavior>();
+    private static final List<IFarmerBehavior> SORTED_FARMER_BEHAVIORS = new ArrayList<>();
     public final CustomEnergyStorage storage = new CustomEnergyStorage(100000, 1000, 0);
 
     private int waitTime;
@@ -108,36 +107,30 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
         }
     }
 
-    private void checkBehaviors(BlockPos query) {
-        if (SORTED_FARMER_BEHAVIORS.size() != ActuallyAdditionsAPI.FARMER_BEHAVIORS.size()) {
-            SORTED_FARMER_BEHAVIORS.clear();
-            SORTED_FARMER_BEHAVIORS.addAll(ActuallyAdditionsAPI.FARMER_BEHAVIORS);
+    private static boolean sorted = false;
 
-            Collections.sort(SORTED_FARMER_BEHAVIORS, new Comparator<IFarmerBehavior>() {
-                @Override
-                public int compare(IFarmerBehavior behavior1, IFarmerBehavior behavior2) {
-                    Integer prio1 = behavior1.getPriority();
-                    Integer prio2 = behavior2.getPriority();
-                    return prio2.compareTo(prio1);
-                }
-            });
-        }
+    private static void sort() {
+        SORTED_FARMER_BEHAVIORS.clear();
+        SORTED_FARMER_BEHAVIORS.addAll(ActuallyAdditionsAPI.FARMER_BEHAVIORS);
+        Collections.sort(SORTED_FARMER_BEHAVIORS, (b1, b2) -> b2.getPrioInt().compareTo(b1.getPrioInt()));
+    }
+
+    private void checkBehaviors(BlockPos query) {
+
+        if (!sorted) sort();
 
         for (IFarmerBehavior behavior : SORTED_FARMER_BEHAVIORS) {
             FarmerResult harvestResult = behavior.tryHarvestPlant(this.world, query, this);
             if (harvestResult == FarmerResult.STOP_PROCESSING) return;
-            else {
-                for (int i = 0; i < this.inv.getSlots(); i++) {
-                    ItemStack stack = this.inv.getStackInSlot(i);
-                    if (StackUtil.isValid(stack)) {
-                        FarmerResult plantResult = behavior.tryPlantSeed(stack, this.world, query, this);
-                        if (plantResult == FarmerResult.SUCCESS) {
-                            this.inv.getStackInSlot(i).shrink(1);
-                            return;
-                        } else if (plantResult == FarmerResult.STOP_PROCESSING) { return; }
-                    }
+            for (int i = 0; i < 6; i++) { //Process seed slots only
+                ItemStack stack = this.inv.getStackInSlot(i);
+                IBlockState state = world.getBlockState(query);
+                if (StackUtil.isValid(stack) && state.getBlock().isReplaceable(world, query)) {
+                    FarmerResult plantResult = behavior.tryPlantSeed(stack, this.world, query, this);
+                    if (plantResult == FarmerResult.SUCCESS) this.inv.getStackInSlot(i).shrink(1);
                 }
             }
+
         }
     }
 
@@ -206,7 +199,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     public boolean canAddToOutput(List<ItemStack> stacks) {
         return StackUtil.canAddAll(inv, stacks, 6, 12, false);
     }
-    
+
     @Override
     public void addToSeeds(List<ItemStack> stacks) {
         StackUtil.addAll(inv, stacks, 0, 6, false);

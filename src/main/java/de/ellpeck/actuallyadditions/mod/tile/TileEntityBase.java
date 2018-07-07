@@ -369,9 +369,18 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         return this.isRedstoneToggle() && this.isPulseMode;
     }
 
-    public enum NBTType{
+    public enum NBTType {
+        /**
+         * Use when normal writeToNBT/readToNBT is expected.
+         */
         SAVE_TILE,
+        /**
+         * Use when data needs to be sent to the client.
+         */
         SYNC,
+        /**
+         * Wat
+         */
         SAVE_BLOCK
     }
 }

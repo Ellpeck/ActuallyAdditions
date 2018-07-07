@@ -41,94 +41,83 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
-public class DefaultFarmerBehavior implements IFarmerBehavior{
+public class DefaultFarmerBehavior implements IFarmerBehavior {
 
-    public static boolean defaultPlant(World world, BlockPos pos, IBlockState toPlant, IFarmer farmer, int use){
-        if(toPlant != null){
-            IBlockState state = world.getBlockState(pos);
-            Block block = state.getBlock();
+    public static boolean defaultPlant(World world, BlockPos pos, IBlockState toPlant, IFarmer farmer, int use) {
+        if (toPlant != null) {
+            BlockPos farmland = pos.down();
+            Block farmlandBlock = world.getBlockState(farmland).getBlock();
+            if (farmlandBlock instanceof BlockDirt || farmlandBlock instanceof BlockGrass) {
+                world.setBlockToAir(pos);
+                useHoeAt(world, farmland);
+                world.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                farmer.extractEnergy(use);
+            }
 
-            if(block.isReplaceable(world, pos)){
-                BlockPos farmland = pos.down();
-                Block farmlandBlock = world.getBlockState(farmland).getBlock();
-                if(farmlandBlock instanceof BlockDirt || farmlandBlock instanceof BlockGrass){
-                	world.setBlockToAir(pos);
-                	useHoeAt(world, farmland);
-                	world.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                	farmer.extractEnergy(use);
-                }
-
-                if(tryPlant(toPlant, world, pos)){
-                	farmer.extractEnergy(use);
-                	return true;
-                }
+            if (tryPlant(toPlant, world, pos)) {
+                farmer.extractEnergy(use);
+                return true;
             }
         }
         return false;
     }
 
-    private static boolean tryPlant(IBlockState toPlant, World world, BlockPos pos){
-        if(toPlant.getBlock().canPlaceBlockAt(world, pos)){
-        	world.setBlockState(pos, toPlant);
-        	return true;      
+    private static boolean tryPlant(IBlockState toPlant, World world, BlockPos pos) {
+        if (toPlant.getBlock().canPlaceBlockAt(world, pos)) {
+            world.setBlockState(pos, toPlant);
+            return true;
         }
         return false;
     }
 
     @Override
-    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer) {
         int use = 350;
-        if(farmer.getEnergy() >= use*2){
-            if(defaultPlant(world, pos, this.getPlantablePlantFromStack(seed, world, pos), farmer, use)){
-                return FarmerResult.SUCCESS;
-            }
+        if (farmer.getEnergy() >= use * 2) {
+            if (defaultPlant(world, pos, this.getPlantablePlantFromStack(seed, world, pos), farmer, use)) { return FarmerResult.SUCCESS; }
         }
         return FarmerResult.FAIL;
     }
 
     @Override
-    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer) {
         int use = 250;
-        if(farmer.getEnergy() >= use){
+        if (farmer.getEnergy() >= use) {
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
 
-            if(block instanceof BlockCrops){
-                if(((BlockCrops)block).isMaxAge(state)){
-                	return doFarmerStuff(state, world, pos, farmer);
-                }
-            }
-            else if((BlockCrops.AGE).equals(block.getBlockState().getProperty("age"))) {
-            	if(state.getValue(BlockCrops.AGE) >= 7 && !(block instanceof BlockStem)) return doFarmerStuff(state, world, pos, farmer);
+            if (block instanceof BlockCrops) {
+                if (((BlockCrops) block).isMaxAge(state)) { return doFarmerStuff(state, world, pos, farmer); }
+            } else if ((BlockCrops.AGE).equals(block.getBlockState().getProperty("age"))) {
+                if (state.getValue(BlockCrops.AGE) >= 7 && !(block instanceof BlockStem)) return doFarmerStuff(state, world, pos, farmer);
             }
         }
         return FarmerResult.FAIL;
     }
-    
+
     private FarmerResult doFarmerStuff(IBlockState state, World world, BlockPos pos, IFarmer farmer) {
         List<ItemStack> seeds = new ArrayList<>();
         List<ItemStack> other = new ArrayList<>();
         NonNullList<ItemStack> drops = NonNullList.create();
         state.getBlock().getDrops(drops, world, pos, state, 0);
-        for(ItemStack stack : drops){
-            if(this.getPlantableFromStack(stack) != null){
+        for (ItemStack stack : drops) {
+            if (this.getPlantableFromStack(stack) != null) {
                 seeds.add(stack);
-            }
-            else{
+            } else {
                 other.add(stack);
             }
         }
 
         boolean putSeeds = true;
-        if(!farmer.canAddToSeeds(seeds)){
+        if (!farmer.canAddToSeeds(seeds)) {
             other.addAll(seeds);
             putSeeds = false;
         }
 
-        if(farmer.canAddToOutput(other)){
+        if (farmer.canAddToOutput(other)) {
             farmer.addToOutput(other);
 
-            if(putSeeds){
+            if (putSeeds) {
                 farmer.addToSeeds(seeds);
             }
 
@@ -142,82 +131,69 @@ public class DefaultFarmerBehavior implements IFarmerBehavior{
     }
 
     @Override
-    public int getPriority(){
+    public int getPriority() {
         return 0;
     }
 
-    private IBlockState getPlantablePlantFromStack(ItemStack stack, World world, BlockPos pos){
-        if(StackUtil.isValid(stack)){
+    private IBlockState getPlantablePlantFromStack(ItemStack stack, World world, BlockPos pos) {
+        if (StackUtil.isValid(stack)) {
             IPlantable plantable = this.getPlantableFromStack(stack);
-            if(plantable != null){
+            if (plantable != null) {
                 IBlockState state = plantable.getPlant(world, pos);
-                if(state != null && state.getBlock() instanceof IGrowable){
-                    return state;
-                }
+                if (state != null && state.getBlock() instanceof IGrowable) return state;
             }
         }
         return null;
     }
 
-    private IPlantable getPlantableFromStack(ItemStack stack){
+    private IPlantable getPlantableFromStack(ItemStack stack) {
         Item item = stack.getItem();
-        if(item instanceof IPlantable){
-            return (IPlantable)item;
-        }
-        else if(item instanceof ItemBlock){
+        if (item instanceof IPlantable) {
+            return (IPlantable) item;
+        } else if (item instanceof ItemBlock) {
             Block block = Block.getBlockFromItem(item);
-            if(block instanceof IPlantable){
-                return (IPlantable)block;
-            }
+            if (block instanceof IPlantable) return (IPlantable) block;
         }
         return null;
     }
-    
+
     private static ItemStack hoe = ItemStack.EMPTY;
-    
-    private static ItemStack getHoeStack(){
-    	if(hoe.isEmpty()) hoe = new ItemStack(Items.DIAMOND_HOE);
-    	return hoe;
+
+    private static ItemStack getHoeStack() {
+        if (hoe.isEmpty()) hoe = new ItemStack(Items.DIAMOND_HOE);
+        return hoe;
     }
-    
-    public static EnumActionResult useHoeAt(World world, BlockPos pos)
-    {
-    	
-    	EntityPlayer player = FakePlayerFactory.getMinecraft((WorldServer) world);
-    	
+
+    public static EnumActionResult useHoeAt(World world, BlockPos pos) {
+
+        EntityPlayer player = FakePlayerFactory.getMinecraft((WorldServer) world);
+
         ItemStack itemstack = getHoeStack();
 
-        if (!player.canPlayerEdit(pos.offset(EnumFacing.UP), EnumFacing.UP, itemstack))
-        {
+        if (!player.canPlayerEdit(pos.offset(EnumFacing.UP), EnumFacing.UP, itemstack)) {
             return EnumActionResult.FAIL;
-        }
-        else
-        {
+        } else {
             int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);
             if (hook != 0) return hook > 0 ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
 
             IBlockState iblockstate = world.getBlockState(pos);
             Block block = iblockstate.getBlock();
 
-            if (world.isAirBlock(pos.up()))
-            {
-                if (block == Blocks.GRASS || block == Blocks.GRASS_PATH)
-                {
+            if (world.isAirBlock(pos.up())) {
+                if (block == Blocks.GRASS || block == Blocks.GRASS_PATH) {
                     world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
                     return EnumActionResult.SUCCESS;
                 }
 
-                if (block == Blocks.DIRT)
-                {
-                    switch (iblockstate.getValue(BlockDirt.VARIANT))
-                    {
-                        case DIRT:
-                            world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
-                            return EnumActionResult.SUCCESS;
-                        case COARSE_DIRT:
-                            world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT));
-                            return EnumActionResult.SUCCESS;
-                        default: break;
+                if (block == Blocks.DIRT) {
+                    switch (iblockstate.getValue(BlockDirt.VARIANT)) {
+                    case DIRT:
+                        world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
+                        return EnumActionResult.SUCCESS;
+                    case COARSE_DIRT:
+                        world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT));
+                        return EnumActionResult.SUCCESS;
+                    default:
                     }
                 }
             }
