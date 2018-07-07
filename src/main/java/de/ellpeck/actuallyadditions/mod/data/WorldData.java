@@ -29,43 +29,39 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class WorldData extends WorldSavedData{
+public class WorldData extends WorldSavedData {
 
-    public static final String DATA_TAG = ActuallyAdditions.MODID+"data";
-    //TODO Remove this as well
-    public static List<File> legacyLoadWorlds = new ArrayList<File>();
+    public static final String DATA_TAG = ActuallyAdditions.MODID + "data";
     private static WorldData data;
     public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<Network>();
     public final ConcurrentHashMap<UUID, PlayerSave> playerSaveData = new ConcurrentHashMap<UUID, PlayerSave>();
 
-    public WorldData(String name){
+    public WorldData(String name) {
         super(name);
     }
 
-    public static WorldData get(World world, boolean forceLoad){
-    	WorldData w = getInternal(world, forceLoad);
-    	if(w == null) ActuallyAdditions.LOGGER.error("What the hell how is this stupid thing null again AEWBFINCEMR");
-    	return w == null ? new WorldData(DATA_TAG) : w;
+    public static WorldData get(World world, boolean forceLoad) {
+        WorldData w = getInternal(world, forceLoad);
+        if (w == null) ActuallyAdditions.LOGGER.error("An impossible bug has occured.");
+        return w == null ? new WorldData(DATA_TAG) : w;
     }
 
-    private static WorldData getInternal(World world, boolean forceLoad){
-        if(forceLoad || data == null){
-            if(!world.isRemote){
+    private static WorldData getInternal(World world, boolean forceLoad) {
+        if (forceLoad || data == null) {
+            if (!world.isRemote) {
                 WorldSavedData savedData = world.loadData(WorldData.class, DATA_TAG);
 
-                if(!(savedData instanceof WorldData)){
+                if (savedData == null) {
                     ActuallyAdditions.LOGGER.info("No WorldData found, creating...");
 
                     WorldData newData = new WorldData(DATA_TAG);
                     world.setData(DATA_TAG, newData);
                     data = newData;
-                }
-                else{
+                } else {
                     data = (WorldData) savedData;
                     ActuallyAdditions.LOGGER.info("Successfully loaded WorldData!");
                 }
-            }
-            else{
+            } else {
                 data = new WorldData(DATA_TAG);
                 ActuallyAdditions.LOGGER.info("Created temporary WorldData to cache data on the client!");
             }
@@ -73,45 +69,29 @@ public class WorldData extends WorldSavedData{
         return data;
     }
 
-    public static void clear(){
-        if(data != null){
+    public static void clear() {
+        if (data != null) {
             data = null;
             ActuallyAdditions.LOGGER.info("Unloaded WorldData!");
         }
     }
 
-    public static WorldData get(World world){
+    public static WorldData get(World world) {
         return get(world, false);
     }
 
-    //TODO Remove old loading mechanic after a while because it's legacy
-    public static void loadLegacy(World world){
-        if(!world.isRemote && world instanceof WorldServer){
-            int dim = world.provider.getDimension();
-            ISaveHandler handler = new WorldSpecificSaveHandler((WorldServer)world, world.getSaveHandler());
-            File dataFile = handler.getMapFileFromName(DATA_TAG+dim);
-            legacyLoadWorlds.add(dataFile);
-        }
-    }
-
-    //TODO Remove merging once removing old save handler
-    private void readFromNBT(NBTTagCompound compound, boolean merge){
-        //Laser World Data
-        if(!merge){
-            this.laserRelayNetworks.clear();
-        }
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        this.laserRelayNetworks.clear();
         NBTTagList networkList = compound.getTagList("Networks", 10);
-        for(int i = 0; i < networkList.tagCount(); i++){
+        for (int i = 0; i < networkList.tagCount(); i++) {
             Network network = LaserRelayConnectionHandler.readNetworkFromNBT(networkList.getCompoundTagAt(i));
             this.laserRelayNetworks.add(network);
         }
 
-        //Player Data
-        if(!merge){
-            this.playerSaveData.clear();
-        }
+        this.playerSaveData.clear();
         NBTTagList playerList = compound.getTagList("PlayerData", 10);
-        for(int i = 0; i < playerList.tagCount(); i++){
+        for (int i = 0; i < playerList.tagCount(); i++) {
             NBTTagCompound player = playerList.getCompoundTagAt(i);
 
             UUID id = player.getUniqueId("UUID");
@@ -124,22 +104,17 @@ public class WorldData extends WorldSavedData{
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound){
-        this.readFromNBT(compound, false);
-    }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound){
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         //Laser World Data
         NBTTagList networkList = new NBTTagList();
-        for(Network network : this.laserRelayNetworks){
+        for (Network network : this.laserRelayNetworks) {
             networkList.appendTag(LaserRelayConnectionHandler.writeNetworkToNBT(network));
         }
         compound.setTag("Networks", networkList);
 
         //Player Data
         NBTTagList playerList = new NBTTagList();
-        for(PlayerSave save : this.playerSaveData.values()){
+        for (PlayerSave save : this.playerSaveData.values()) {
             NBTTagCompound player = new NBTTagCompound();
             player.setUniqueId("UUID", save.id);
 
