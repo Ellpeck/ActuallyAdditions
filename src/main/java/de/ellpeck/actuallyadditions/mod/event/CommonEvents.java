@@ -38,7 +38,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -199,10 +198,5 @@ public class CommonEvents{
     @SubscribeEvent
     public void onPickupEvent(EntityItemPickupEvent event){
         //checkAchievements(event.getItem().getItem(), event.getEntityPlayer(), InitAchievements.Type.PICK_UP);
-    }
-
-    @SubscribeEvent
-    public void onLoad(WorldEvent.Load event){
-        WorldData.loadLegacy(event.getWorld());
     }
 }
