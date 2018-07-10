@@ -51,11 +51,21 @@ public class EmpowererRecipe {
         if (!input.apply(base)) return false;
         List<Ingredient> matches = new ArrayList<>();
         ItemStack[] stacks = { stand1, stand2, stand3, stand4 };
+        boolean[] unused = { true, true, true, true };
         for (ItemStack s : stacks) {
-            if (!matches.contains(modifier1) && modifier1.apply(s)) matches.add(modifier1);
-            else if (!matches.contains(modifier2) && modifier2.apply(s)) matches.add(modifier2);
-            else if (!matches.contains(modifier3) && modifier3.apply(s)) matches.add(modifier3);
-            else if (!matches.contains(modifier4) && modifier4.apply(s)) matches.add(modifier4);
+            if (unused[0] && modifier1.apply(s)) {
+                matches.add(modifier1);
+                unused[0] = false;
+            } else if (unused[1] && modifier2.apply(s)) {
+                matches.add(modifier2);
+                unused[1] = false;
+            } else if (unused[2] && modifier3.apply(s)) {
+                matches.add(modifier3);
+                unused[2] = false;
+            } else if (unused[3] && modifier4.apply(s)) {
+                matches.add(modifier4);
+                unused[3] = false;
+            }
         }
 
         return matches.size() == 4;
