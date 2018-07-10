@@ -1,3 +1,18 @@
+# 1.12.2-r137
+* Should resolve all issues introduced by r136.
+* Removes legacy world data loader.  It wasn't used for the entire life of 1.12, so this won't matter.
+* Fixes matching logic in the Empowerer so that recipes using the same ingredient instance work properly.
+* The farmer will now only plant from seed slots.
+* The farmer will now only attempt to plant if the current block can be replaced.
+* Fixes issues with the farmer overriding existing blocks.
+* AutoPlacer now properly fires every event it can.
+* The disableable item configs now properly only read from english, these will be reworked in 1.13.
+* API version updated.  Some compat may be broken.  Modtweaker has already updated, Agricraft has updated, IE has not.
+* Resolves an unusual interaction between the ESD and the vanilla furnace.
+* All recipe systems have been rewritten to use Ingredient.
+* Compost now uses a custom IBakedModel instead of a TESR.
+* The crusher is no longer animated when not crushing.
+
 # 1.12.2-r136
 * Fixed a crash in BlockWildPlant.
 * Prevented torch placement on laser relays.
