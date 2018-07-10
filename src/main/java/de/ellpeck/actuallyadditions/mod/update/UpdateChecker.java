@@ -31,14 +31,11 @@ public class UpdateChecker{
     public static boolean needsUpdateNotify;
     public static int updateVersionInt;
     public static String updateVersionString;
-
-    private static boolean notified = false;
-    private static int ticksElapsedBeforeInfo;
+    public static boolean threadFinished = false;
 
     public UpdateChecker(){
         if(ConfigBoolValues.DO_UPDATE_CHECK.isEnabled() && !Util.isDevVersion()){
             ActuallyAdditions.LOGGER.info("Initializing Update Checker...");
-
             new ThreadUpdateChecker();
             MinecraftForge.EVENT_BUS.register(this);
         }
@@ -47,23 +44,17 @@ public class UpdateChecker{
     @SideOnly(Side.CLIENT)
     @SubscribeEvent(receiveCanceled = true)
     public void onTick(TickEvent.ClientTickEvent event){
-        //Don't notify directly to prevent the Message getting lost in Spam on World Joining
-        if(!notified && Minecraft.getMinecraft().player != null){
-            ticksElapsedBeforeInfo++;
-            if(ticksElapsedBeforeInfo >= 800){
-                EntityPlayer player = Minecraft.getMinecraft().player;
-                if(UpdateChecker.checkFailed){
-                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ActuallyAdditions.MODID+".update.failed")));
-                    notified = true;
-                }
-                else if(UpdateChecker.needsUpdateNotify){
-                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ActuallyAdditions.MODID+".update.generic")));
-                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".update.versionCompare", ActuallyAdditions.VERSION, UpdateChecker.updateVersionString)));
-                    player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
-                    notified = true;
-                }
-                ticksElapsedBeforeInfo = 0;
+        if(Minecraft.getMinecraft().player != null){
+            EntityPlayer player = Minecraft.getMinecraft().player;
+            if(UpdateChecker.checkFailed){
+                player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ActuallyAdditions.MODID+".update.failed")));
             }
+            else if(UpdateChecker.needsUpdateNotify){
+                player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localize("info."+ActuallyAdditions.MODID+".update.generic")));
+                player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".update.versionCompare", ActuallyAdditions.VERSION, UpdateChecker.updateVersionString)));
+                player.sendMessage(ITextComponent.Serializer.jsonToComponent(StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)));
+            }
+            if(threadFinished) MinecraftForge.EVENT_BUS.unregister(this);
         }
     }
 }

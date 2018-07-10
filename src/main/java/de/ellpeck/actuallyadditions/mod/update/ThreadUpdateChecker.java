@@ -82,5 +82,7 @@ public class ThreadUpdateChecker extends Thread{
                 ActuallyAdditions.LOGGER.info(ActuallyAdditions.NAME+" is up to date!");
             }
         }
+
+        UpdateChecker.threadFinished = true;
     }
 }
