@@ -1,3 +1,11 @@
+# 1.12.2-r138
+* DiamondKnight23: Clarify the text for chest upgrades.
+* Fixed farmer behaviors, mainly resolves pumpkins and melons being planted incorrectly.
+* Removed the tooltip on the Traveller's Sack, as it is now invalid.
+* Coal generator properly updates container item.
+* Added redstone sensitivity / comparator output to Bio Reactor.
+* Added a config option to allow the Lens of Color to rotate dyes based on oredict, instead of only the vanilla dye item.
+
 # 1.12.2-r137
 * Should resolve all issues introduced by r136.
 * Removes legacy world data loader.  It wasn't used for the entire life of 1.12, so this won't matter.
