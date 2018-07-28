@@ -80,7 +80,9 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             if(!this.isRedstonePowered && this.currentBurnTime <= 0 && burn > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
                 this.maxBurnTime = burn;
                 this.currentBurnTime = burn;
+                ItemStack copy = stack.copy();
                 stack.shrink(1);
+                if(stack.isEmpty()) inv.setStackInSlot(0, copy.getItem().getContainerItem(copy));
             }
 
             if(flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()){
