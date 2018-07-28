@@ -65,7 +65,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
         if(this.burnTime <= 0){
             List<Item> types = null;
 
-            if(this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
+            if(!this.isRedstonePowered && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
                 for(int i = 0; i < this.inv.getSlots(); i++){
                     ItemStack stack = this.inv.getStackInSlot(i);
                     if(StackUtil.isValid(stack)){
@@ -161,5 +161,11 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     @Override
     public IEnergyStorage getEnergyStorage(EnumFacing facing){
         return this.storage;
+    }
+
+    @Override
+    public int getComparatorStrength(){
+        float calc = ((float)this.storage.getEnergyStored()/(float)this.storage.getMaxEnergyStored())*15F;
+        return (int)calc;
     }
 }
