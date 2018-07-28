@@ -90,16 +90,13 @@ public class LensColor extends Lens{
     private ItemStack tryConvert(ItemStack stack, IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         if(StackUtil.isValid(stack)){
             Item item = stack.getItem();
-            if(item != null){
                 for(Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_COLOR_CHANGERS.entrySet()){
                     if(item == changer.getKey()){
                         return changer.getValue().modifyItem(stack, hitState, hitBlock, tile);
-                    }
                 }
             }
         }
-
-        return ItemStack.EMPTY.copy();
+        return ItemStack.EMPTY;
     }
 
     @Override

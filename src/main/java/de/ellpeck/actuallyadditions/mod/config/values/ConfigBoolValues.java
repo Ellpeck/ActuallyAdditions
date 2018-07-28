@@ -54,7 +54,9 @@ public enum ConfigBoolValues{
     LASER_RELAY_LOSS("Laser Relay Energy Loss", ConfigCategories.MACHINE_VALUES, true, "If Energy Laser Relays should have energy loss"),
 
     SUPER_DUPER_HARD_MODE("Super Duper Hard Recipes", ConfigCategories.OTHER, false, "Turn this on to make recipes for items from the mod really hard. (This is a joke feature poking fun at the whole FTB Infinity Expert Mode style of playing. You shouldn't really turn this on as it makes the mod completely unplayable.)"),
-    MOST_BLAND_PERSON_EVER("No Colored Item Names", ConfigCategories.OTHER, false, "If you want to be really boring and lame, you can turn on this setting to disable colored names on Actually Additions items. Because why would you want things to look pretty anyways, right?");
+    MOST_BLAND_PERSON_EVER("No Colored Item Names", ConfigCategories.OTHER, false, "If you want to be really boring and lame, you can turn on this setting to disable colored names on Actually Additions items. Because why would you want things to look pretty anyways, right?"),
+
+    COLOR_LENS_USES_OREDICT("Color Lens Oredict", ConfigCategories.OTHER, false, "If true, the Lens of Color will attempt to pull from the oredict instead of only using vanilla dyes.");
 
     public final String name;
     public final String category;
