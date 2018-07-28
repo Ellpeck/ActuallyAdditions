@@ -41,7 +41,7 @@ public class CactusFarmerBehavior implements IFarmerBehavior{
                         farmer.extractEnergy(use);
                         return FarmerResult.SUCCESS;
                     }
-                    return FarmerResult.STOP_PROCESSING;
+                    return FarmerResult.FAIL;
                 }
             }
         }

@@ -37,7 +37,7 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior{
                     farmer.extractEnergy(use);
                     return FarmerResult.SUCCESS;
                 }
-                return FarmerResult.STOP_PROCESSING;
+                return FarmerResult.FAIL;
             }
         }
         return FarmerResult.FAIL;
@@ -70,7 +70,7 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior{
                         }
                     }
                 }
-                return FarmerResult.STOP_PROCESSING;
+                return FarmerResult.FAIL;
             }
         }
         return FarmerResult.FAIL;

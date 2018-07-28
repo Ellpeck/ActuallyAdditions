@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public interface IFarmerBehavior{
+public interface IFarmerBehavior {
 
     /**
      * Try to plant a seed with this behavior
@@ -41,6 +41,8 @@ public interface IFarmerBehavior{
     FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer);
 
     int getPriority();
-    
-    default Integer getPrioInt() { return getPriority(); }
+
+    default Integer getPrioInt() {
+        return getPriority();
+    }
 }

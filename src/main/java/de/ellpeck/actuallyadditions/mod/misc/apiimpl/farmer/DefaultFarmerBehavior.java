@@ -74,7 +74,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer) {
         int use = 350;
         if (farmer.getEnergy() >= use * 2) {
-            if (defaultPlant(world, pos, this.getPlantablePlantFromStack(seed, world, pos), farmer, use)) { return FarmerResult.SUCCESS; }
+            if (defaultPlant(world, pos, this.getPlantablePlantFromStack(seed, world, pos), farmer, use)) return FarmerResult.SUCCESS;
         }
         return FarmerResult.FAIL;
     }

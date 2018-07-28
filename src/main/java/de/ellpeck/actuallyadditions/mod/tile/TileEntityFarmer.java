@@ -127,7 +127,10 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
                 IBlockState state = world.getBlockState(query);
                 if (StackUtil.isValid(stack) && state.getBlock().isReplaceable(world, query)) {
                     FarmerResult plantResult = behavior.tryPlantSeed(stack, this.world, query, this);
-                    if (plantResult == FarmerResult.SUCCESS) this.inv.getStackInSlot(i).shrink(1);
+                    if (plantResult == FarmerResult.SUCCESS) {
+                        this.inv.getStackInSlot(i).shrink(1);
+                        return;
+                    } else if (plantResult == FarmerResult.STOP_PROCESSING) return;
                 }
             }
 

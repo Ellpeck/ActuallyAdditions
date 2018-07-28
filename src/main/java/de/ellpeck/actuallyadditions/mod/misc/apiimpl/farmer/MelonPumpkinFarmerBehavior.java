@@ -24,41 +24,39 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class MelonPumpkinFarmerBehavior implements IFarmerBehavior{
+public class MelonPumpkinFarmerBehavior implements IFarmerBehavior {
 
     @Override
-    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer) {
         int use = 350;
-        if(farmer.getEnergy() >= use*2){
-            if(StackUtil.isValid(seed)){
+        if (farmer.getEnergy() >= use * 2) {
+            if (StackUtil.isValid(seed)) {
                 Item seedItem = seed.getItem();
                 boolean isPumpkin = seedItem == Items.PUMPKIN_SEEDS;
-                if(isPumpkin || seedItem == Items.MELON_SEEDS){
-                    if((pos.getX()%2 == 0) == (pos.getZ()%2 == 0)){
+                if (isPumpkin || seedItem == Items.MELON_SEEDS) {
+                    if ((pos.getX() % 2 == 0) == (pos.getZ() % 2 == 0)) {
                         IBlockState toPlant = (isPumpkin ? Blocks.PUMPKIN_STEM : Blocks.MELON_STEM).getDefaultState();
-
-                        if(DefaultFarmerBehavior.defaultPlant(world, pos, toPlant, farmer, use)){
-                            return FarmerResult.SUCCESS;
-                        }
+                        if (DefaultFarmerBehavior.defaultPlant(world, pos, toPlant, farmer, use)) return FarmerResult.SUCCESS;
                     }
                     return FarmerResult.STOP_PROCESSING;
                 }
+                return FarmerResult.FAIL;
             }
         }
         return FarmerResult.FAIL;
     }
 
     @Override
-    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer) {
         int use = 500;
-        if(farmer.getEnergy() >= use){
+        if (farmer.getEnergy() >= use) {
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
-            if(block == Blocks.PUMPKIN || block == Blocks.MELON_BLOCK){
-            	NonNullList<ItemStack> drops = NonNullList.create();
+            if (block == Blocks.PUMPKIN || block == Blocks.MELON_BLOCK) {
+                NonNullList<ItemStack> drops = NonNullList.create();
                 block.getDrops(drops, world, pos, state, 0);
-                if(!drops.isEmpty()){
-                    if(farmer.canAddToOutput(drops)){
+                if (!drops.isEmpty()) {
+                    if (farmer.canAddToOutput(drops)) {
                         world.playEvent(2001, pos, Block.getStateId(state));
                         world.setBlockToAir(pos);
 
@@ -75,7 +73,7 @@ public class MelonPumpkinFarmerBehavior implements IFarmerBehavior{
     }
 
     @Override
-    public int getPriority(){
+    public int getPriority() {
         return 10;
     }
 }
