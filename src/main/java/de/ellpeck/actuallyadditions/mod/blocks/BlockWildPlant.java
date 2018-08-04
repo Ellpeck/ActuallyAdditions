@@ -56,8 +56,8 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player){
-        BlockPlant wild = (BlockPlant) state.getValue(TYPE).wildVersionOf;
-        return new ItemStack(wild.seedItem);
+        BlockPlant normal = (BlockPlant) state.getValue(TYPE).getNormalVersion();
+        return new ItemStack(normal.seedItem);
     }
 
     @Override
@@ -69,7 +69,8 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-        state.getValue(TYPE).wildVersionOf.getDrops(drops, world, pos, state.getValue(TYPE).wildVersionOf.getDefaultState().withProperty(BlockCrops.AGE, 7), fortune);
+        Block normal = state.getValue(TYPE).getNormalVersion();
+        normal.getDrops(drops, world, pos, normal.getDefaultState().withProperty(BlockCrops.AGE, 7), fortune);
     }
 
     @Override
@@ -90,7 +91,7 @@ public class BlockWildPlant extends BlockBushBase{
     @Override
     public void registerRendering(){
         for(int i = 0; i < ALL_WILD_PLANTS.length; i++){
-            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_WILD_PLANTS[i].name);
+            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_WILD_PLANTS[i].getName());
         }
     }
 
@@ -111,7 +112,7 @@ public class BlockWildPlant extends BlockBushBase{
 
     @Override
     public EnumRarity getRarity(ItemStack stack){
-        return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? EnumRarity.COMMON : ALL_WILD_PLANTS[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? EnumRarity.COMMON : ALL_WILD_PLANTS[stack.getItemDamage()].getRarity();
     }
 
     public static class TheItemBlock extends ItemBlockBase{
@@ -125,7 +126,7 @@ public class BlockWildPlant extends BlockBushBase{
 
         @Override
         public String getTranslationKey(ItemStack stack){
-            return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+ALL_WILD_PLANTS[stack.getItemDamage()].name;
+            return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+ALL_WILD_PLANTS[stack.getItemDamage()].getName();
         }
     }
 }
