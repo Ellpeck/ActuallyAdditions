@@ -36,7 +36,7 @@ public final class ItemUtil{
     }
 
     public static void registerBlock(Block block, ItemBlockBase itemBlock, String name, boolean addTab){
-        block.setUnlocalizedName(ActuallyAdditions.MODID+"."+name);
+        block.setTranslationKey(ActuallyAdditions.MODID+"."+name);
 
         block.setRegistryName(ActuallyAdditions.MODID, name);
         RegistryHandler.BLOCKS_TO_REGISTER.add(block);
@@ -54,7 +54,7 @@ public final class ItemUtil{
     }
 
     public static void registerItem(Item item, String name, boolean addTab){
-        item.setUnlocalizedName(ActuallyAdditions.MODID+"."+name);
+        item.setTranslationKey(ActuallyAdditions.MODID+"."+name);
 
         item.setRegistryName(ActuallyAdditions.MODID, name);
         RegistryHandler.ITEMS_TO_REGISTER.add(item);
@@ -126,7 +126,7 @@ public final class ItemUtil{
                     ench.removeTag(i);
                 }
             }
-            if(ench.hasNoTags() && stack.hasTagCompound()){
+            if(ench.isEmpty() && stack.hasTagCompound()){
                 stack.getTagCompound().removeTag("ench");
             }
         }

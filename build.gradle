@@ -23,12 +23,12 @@ if(hasProperty('buildnumber')){
 }
 
 minecraft {
-    version = "1.12.2-14.23.1.2599"
+    version = "1.12.2-14.23.4.2739"
     runDir = "run"
-    mappings = "snapshot_20180119"
+    mappings = "snapshot_20180720"
+	makeObfSourceJar = false
     replaceIn "ActuallyAdditions.java"
     replace "@VERSION@", project.version.toString()
-	makeObfSourceJar = false
 }
 
 repositories {

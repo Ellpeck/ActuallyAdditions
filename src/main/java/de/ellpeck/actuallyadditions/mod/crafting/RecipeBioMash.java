@@ -29,7 +29,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 public class RecipeBioMash extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe{
 
     public RecipeBioMash(ResourceLocation location){
-        RecipeHelper.addRecipe(location.getResourcePath(), this);
+        RecipeHelper.addRecipe(location.getPath(), this);
     }
 
     @Override

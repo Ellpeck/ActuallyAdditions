@@ -52,7 +52,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
             ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.world);
 
             NBTTagList list = compound.getTagList("Connections", 10);
-            if(!list.hasNoTags()){
+            if(!list.isEmpty()){
                 for(int i = 0; i < list.tagCount(); i++){
                     ConnectionPair pair = new ConnectionPair();
                     pair.readFromNBT(list.getCompoundTagAt(i));

@@ -98,7 +98,7 @@ public class BlockCoalGenerator extends BlockContainerBase{
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta));
+        return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
     }
 
     @Override

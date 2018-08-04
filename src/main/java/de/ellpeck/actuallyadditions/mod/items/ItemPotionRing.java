@@ -91,8 +91,8 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= ALL_RINGS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+ALL_RINGS[stack.getItemDamage()].name;
+    public String getTranslationKey(ItemStack stack){
+        return stack.getItemDamage() >= ALL_RINGS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+ALL_RINGS[stack.getItemDamage()].name;
     }
 
     @Override
@@ -131,14 +131,14 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     @Override
     public String getItemStackDisplayName(ItemStack stack){
     	if(Util.isClient()) {
-        String standardName = StringUtil.localize(this.getUnlocalizedName()+".name");
+        String standardName = StringUtil.localize(this.getTranslationKey()+".name");
         if(stack.getItemDamage() < ALL_RINGS.length){
             String effect = StringUtil.localize(ALL_RINGS[stack.getItemDamage()].name);
             return standardName+" "+effect;
         }
         return standardName;
     	}
-    		String standardName = StringUtil.localizeIllegallyOnTheServerDontUseMePls(this.getUnlocalizedName()+".name");
+    		String standardName = StringUtil.localizeIllegallyOnTheServerDontUseMePls(this.getTranslationKey()+".name");
         	if(stack.getItemDamage() < ALL_RINGS.length){
                 String effect = StringUtil.localizeIllegallyOnTheServerDontUseMePls(ALL_RINGS[stack.getItemDamage()].name);
                 return standardName+" "+effect;

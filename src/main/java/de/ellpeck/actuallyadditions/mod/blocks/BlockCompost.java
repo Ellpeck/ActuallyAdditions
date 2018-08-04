@@ -71,6 +71,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
+    @Deprecated
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean someBool) {
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);

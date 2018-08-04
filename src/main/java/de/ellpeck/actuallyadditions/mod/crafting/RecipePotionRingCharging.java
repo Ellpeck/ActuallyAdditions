@@ -26,7 +26,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 public class RecipePotionRingCharging extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe{
 
     public RecipePotionRingCharging(ResourceLocation location){
-        RecipeHelper.addRecipe(location.getResourcePath(), this);
+        RecipeHelper.addRecipe(location.getPath(), this);
     }
 
     @Override

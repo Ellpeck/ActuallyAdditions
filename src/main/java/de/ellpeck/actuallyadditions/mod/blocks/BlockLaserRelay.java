@@ -136,7 +136,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.getFront(meta));
+        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
     }
 
     @Override
@@ -265,7 +265,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
                             expl = relay.getCompassDisplayString();
                         }
                         else{
-                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".laserRelay.mode.noCompasss", StringUtil.localize(ConfigValues.itemCompassConfigurator.getUnlocalizedName()+".name"));
+                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".laserRelay.mode.noCompasss", StringUtil.localize(ConfigValues.itemCompassConfigurator.getTranslationKey()+".name"));
                         }
 
                         StringUtil.drawSplitString(minecraft.fontRenderer, expl, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);

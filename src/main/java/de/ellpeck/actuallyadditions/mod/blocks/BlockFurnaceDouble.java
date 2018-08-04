@@ -101,7 +101,7 @@ public class BlockFurnaceDouble extends BlockContainerBase{
     @Override
     public IBlockState getStateFromMeta(int meta){
         boolean isOn = meta >= 4;
-        EnumFacing facing = EnumFacing.getHorizontal(isOn ? meta-4 : meta);
+        EnumFacing facing = EnumFacing.byHorizontalIndex(isOn ? meta-4 : meta);
         return this.getDefaultState().withProperty(BlockHorizontal.FACING, facing).withProperty(IS_ON, isOn);
     }
 

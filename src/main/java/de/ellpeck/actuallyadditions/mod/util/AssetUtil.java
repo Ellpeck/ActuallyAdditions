@@ -271,7 +271,7 @@ public final class AssetUtil{
         double pitch = Math.atan2(combinedVec.y, Math.sqrt(combinedVec.x*combinedVec.x+combinedVec.z*combinedVec.z));
         double yaw = Math.atan2(-combinedVec.z, combinedVec.x);
 
-        double length = combinedVec.lengthVector();
+        double length = combinedVec.length();
 
         GlStateManager.pushMatrix();
 

@@ -78,7 +78,7 @@ public class FluidDisplay extends Gui{
             this.oldFluid = fluid;
 
             if(fluid != null && fluid.getStill() != null){
-                this.resLoc = new ResourceLocation(fluid.getStill().getResourceDomain(), "textures/"+fluid.getStill().getResourcePath()+".png");
+                this.resLoc = new ResourceLocation(fluid.getStill().getNamespace(), "textures/"+fluid.getStill().getPath()+".png");
             }
         }
 

@@ -57,6 +57,7 @@ public class BlockItemViewerHopping extends BlockItemViewer{
     }
 
     @Override
+    @Deprecated
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean someBool){
         addCollisionBoxToList(pos, entityBox, collidingBoxes, BASE_AABB);
         addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_AABB);
@@ -98,14 +99,13 @@ public class BlockItemViewerHopping extends BlockItemViewer{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer(){
+    public BlockRenderLayer getRenderLayer(){
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
+        return this.getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta));
     }
 
     @Override

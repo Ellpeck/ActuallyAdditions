@@ -63,7 +63,7 @@ public class BlockLampPowerer extends BlockBase{
         if(!world.isRemote){
             IBlockState state = world.getBlockState(pos);
             BlockPos coords = pos.offset(WorldUtil.getDirectionByPistonRotation(state));
-            this.updateLampsAtPos(world, coords, world.isBlockIndirectlyGettingPowered(pos) > 0, new ArrayList<BlockPos>());
+            this.updateLampsAtPos(world, coords, world.getRedstonePowerFromNeighbors(pos) > 0, new ArrayList<BlockPos>());
         }
     }
 
@@ -104,7 +104,7 @@ public class BlockLampPowerer extends BlockBase{
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.getFront(meta));
+        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
     }
 
     @Override

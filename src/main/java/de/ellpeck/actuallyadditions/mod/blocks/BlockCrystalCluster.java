@@ -79,7 +79,7 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.getFront(meta));
+        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
     }
 
     @Override
@@ -114,8 +114,7 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer(){
+    public BlockRenderLayer getRenderLayer(){
         return BlockRenderLayer.TRANSLUCENT;
     }
 

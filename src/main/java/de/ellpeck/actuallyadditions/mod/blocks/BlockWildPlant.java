@@ -34,8 +34,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockWildPlant extends BlockBushBase{
 
@@ -63,7 +61,6 @@ public class BlockWildPlant extends BlockBushBase{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list){
         for(int j = 0; j < ALL_WILD_PLANTS.length; j++){
             list.add(new ItemStack(this, 1, j));
@@ -127,8 +124,8 @@ public class BlockWildPlant extends BlockBushBase{
 
 
         @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+"_"+ALL_WILD_PLANTS[stack.getItemDamage()].name;
+        public String getTranslationKey(ItemStack stack){
+            return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+ALL_WILD_PLANTS[stack.getItemDamage()].name;
         }
     }
 }

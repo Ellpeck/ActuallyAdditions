@@ -26,8 +26,8 @@ public class ItemBlockBase extends ItemBlock{
 
 
     @Override
-    public String getUnlocalizedName(ItemStack stack){
-        return this.getUnlocalizedName();
+    public String getTranslationKey(ItemStack stack){
+        return this.getTranslationKey();
     }
 
     @Override

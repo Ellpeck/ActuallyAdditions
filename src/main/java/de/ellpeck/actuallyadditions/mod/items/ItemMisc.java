@@ -44,8 +44,8 @@ public class ItemMisc extends ItemBase{
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+"_"+ALL_MISC_ITEMS[stack.getItemDamage()].name;
+    public String getTranslationKey(ItemStack stack){
+        return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+ALL_MISC_ITEMS[stack.getItemDamage()].name;
     }
 
 

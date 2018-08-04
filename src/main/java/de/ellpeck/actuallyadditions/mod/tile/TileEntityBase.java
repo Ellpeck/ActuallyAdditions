@@ -23,6 +23,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -116,7 +117,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     private static void register(Class<? extends TileEntityBase> tileClass){
         try{
             //This is hacky and dirty but it works so whatever
-            String name = ActuallyAdditions.MODID+":"+tileClass.newInstance().name;
+            ResourceLocation name = new ResourceLocation(ActuallyAdditions.MODID, tileClass.newInstance().name);
             GameRegistry.registerTileEntity(tileClass, name);
         }
         catch(Exception e){

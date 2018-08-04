@@ -116,7 +116,7 @@ public class ClientEvents{
                     event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+Item.REGISTRY.getNameForObject(event.getItemStack().getItem()));
 
                     //Base Item's Unlocalized Name
-                    String baseName = event.getItemStack().getItem().getUnlocalizedName();
+                    String baseName = event.getItemStack().getItem().getTranslationKey();
                     if(baseName != null){
                         event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".baseUnlocName.desc")+":");
                         event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+baseName);
@@ -129,7 +129,7 @@ public class ClientEvents{
                     event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+meta+(max > 0 ? "/"+max : ""));
 
                     //Unlocalized Name
-                    String metaName = event.getItemStack().getItem().getUnlocalizedName(event.getItemStack());
+                    String metaName = event.getItemStack().getItem().getTranslationKey(event.getItemStack());
                     if(metaName != null && baseName != null && !metaName.equals(baseName)){
                         event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".unlocName.desc")+":");
                         event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+metaName);
@@ -137,7 +137,7 @@ public class ClientEvents{
 
                     //NBT
                     NBTTagCompound compound = event.getItemStack().getTagCompound();
-                    if(compound != null && !compound.hasNoTags()){
+                    if(compound != null && !compound.isEmpty()){
                         event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".nbt.desc")+":");
                         if(GuiScreen.isShiftKeyDown()){
                             int limit = ConfigIntValues.CTRL_INFO_NBT_CHAR_LIMIT.getValue();
@@ -205,7 +205,7 @@ public class ClientEvents{
                             expl = TextFormatting.GREEN+StringUtil.localize("info."+ActuallyAdditions.MODID+".redstoneMode.validItem");
                         }
                         else{
-                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".redstoneMode.invalidItem", StringUtil.localize(ConfigValues.itemRedstoneTorchConfigurator.getUnlocalizedName()+".name"));
+                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".redstoneMode.invalidItem", StringUtil.localize(ConfigValues.itemRedstoneTorchConfigurator.getTranslationKey()+".name"));
                         }
                         font.drawStringWithShadow(expl, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
                     }

@@ -147,7 +147,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.getFront(meta));
+        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
     }
 
     @Override
@@ -184,8 +184,8 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
 
         @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
+        public String getTranslationKey(ItemStack stack){
+            return this.getTranslationKey();
         }
 
         @Override

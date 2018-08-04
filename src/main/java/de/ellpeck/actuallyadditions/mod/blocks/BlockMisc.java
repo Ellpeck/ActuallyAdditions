@@ -91,8 +91,8 @@ public class BlockMisc extends BlockBase{
 
 
         @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return stack.getItemDamage() >= ALL_MISC_BLOCKS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+"_"+ALL_MISC_BLOCKS[stack.getItemDamage()].name;
+        public String getTranslationKey(ItemStack stack){
+            return stack.getItemDamage() >= ALL_MISC_BLOCKS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+ALL_MISC_BLOCKS[stack.getItemDamage()].name;
         }
 
         @Override

@@ -44,8 +44,8 @@ public class ItemCrystal extends ItemBase{
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+"_"+BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].name;
+    public String getTranslationKey(ItemStack stack){
+        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].name;
     }
 
 

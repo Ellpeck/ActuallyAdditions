@@ -26,7 +26,7 @@ public class RecipeKeepDataShaped extends ShapedOreRecipe{
         super(group, result, recipe);
         this.nbtCopyStack = nbtCopyStack;
 
-        RecipeHelper.addRecipe(group.getResourcePath(), this);
+        RecipeHelper.addRecipe(group.getPath(), this);
     }
 
     @Override

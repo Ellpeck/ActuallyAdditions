@@ -118,14 +118,14 @@ public class OreGen implements IWorldGenerator{
                 //Generate Treasure Chests
                 if(ConfigBoolValues.DO_TREASURE_CHEST_GEN.isEnabled()){
                     if(event.getRand().nextInt(40) == 0){
-                        BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
+                        BlockPos randomPos = event.getChunkPos().getBlock(event.getRand().nextInt(16)+8, 0, event.getRand().nextInt(16)+8);
                         randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
 
                         if(event.getWorld().getBiome(randomPos) instanceof BiomeOcean){
                             if(randomPos.getY() >= 25 && randomPos.getY() <= 45){
                                 if(event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER){
                                     if(event.getWorld().getBlockState(randomPos.down()).getMaterial().isSolid()){
-                                        event.getWorld().setBlockState(randomPos, InitBlocks.blockTreasureChest.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(event.getRand().nextInt(4))), 2);
+                                        event.getWorld().setBlockState(randomPos, InitBlocks.blockTreasureChest.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(event.getRand().nextInt(4))), 2);
                                     }
                                 }
                             }
@@ -140,7 +140,7 @@ public class OreGen implements IWorldGenerator{
         if(ConfigBoolValues.DO_RICE_GEN.isEnabled()){
             for(int i = 0; i < ConfigIntValues.RICE_AMOUNT.getValue(); i++){
                 if(event.getRand().nextInt(3) == 0){
-                    BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
+                    BlockPos randomPos = event.getChunkPos().getBlock(event.getRand().nextInt(16)+8, 0, event.getRand().nextInt(16)+8);
                     randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
                     if(event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER){
                         ArrayList<Material> blocksAroundBottom = WorldUtil.getMaterialsAround(event.getWorld(), randomPos);
@@ -161,7 +161,7 @@ public class OreGen implements IWorldGenerator{
         if(doIt){
             for(int i = 0; i < amount; i++){
                 if(event.getRand().nextInt(100) == 0){
-                    BlockPos randomPos = new BlockPos(event.getPos().getX()+event.getRand().nextInt(16)+8, 0, event.getPos().getZ()+event.getRand().nextInt(16)+8);
+                    BlockPos randomPos = event.getChunkPos().getBlock(event.getRand().nextInt(16)+8, 0, event.getRand().nextInt(16)+8);
                     randomPos = event.getWorld().getTopSolidOrLiquidBlock(randomPos);
 
                     if(event.getWorld().getBlockState(randomPos.down()).getMaterial() == blockBelow){

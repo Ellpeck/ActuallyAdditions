@@ -82,7 +82,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
                         IBlockState state = this.world.getBlockState(this.pos);
                         int meta = state.getBlock().getMetaFromState(state);
-                        BlockPos center = this.pos.offset(EnumFacing.getHorizontal(meta), radiusAroundCenter + 1);
+                        BlockPos center = this.pos.offset(EnumFacing.byHorizontalIndex(meta), radiusAroundCenter + 1);
 
                         BlockPos query = center.add(this.checkX, 0, this.checkY);
                         this.checkBehaviors(query);

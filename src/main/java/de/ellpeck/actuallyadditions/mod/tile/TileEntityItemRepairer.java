@@ -94,7 +94,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
 
                             if(input.hasTagCompound()){
                                 //TiCon un-break tools
-                                if("tconstruct".equalsIgnoreCase(input.getItem().getRegistryName().getResourceDomain())){
+                                if("tconstruct".equalsIgnoreCase(input.getItem().getRegistryName().getNamespace())){
                                     NBTTagCompound stats = input.getTagCompound().getCompoundTag("Stats");
                                     stats.removeTag("Broken");
                                 }

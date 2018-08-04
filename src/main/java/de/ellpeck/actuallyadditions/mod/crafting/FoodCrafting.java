@@ -20,6 +20,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public final class FoodCrafting{
@@ -44,7 +45,7 @@ public final class FoodCrafting{
 
     public static void init(){
 
-        ItemStack knifeStack = new ItemStack(InitItems.itemKnife, 1, Util.WILDCARD);
+        Ingredient knife = Ingredient.fromItem(InitItems.itemKnife);
 
         //Rice Bread
         GameRegistry.addSmelting(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RICE_DOUGH.ordinal()),
@@ -52,7 +53,7 @@ public final class FoodCrafting{
 
         //Bacon
         RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemFoods, 3, TheFoods.BACON.ordinal()),
-                knifeStack.copy(), new ItemStack(Items.COOKED_PORKCHOP));
+                knife, new ItemStack(Items.COOKED_PORKCHOP));
         recipeBacon = RecipeUtil.lastIRecipe();
 
         //Baguette
@@ -66,7 +67,7 @@ public final class FoodCrafting{
                 'M', new ItemStack(Blocks.BROWN_MUSHROOM),
                 'C', "cropCarrot",
                 'F', new ItemStack(Items.COOKED_FISH, 1, Util.WILDCARD),
-                'K', knifeStack.copy(),
+                'K', knife,
                 'H', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()));
         recipePizza = RecipeUtil.lastIRecipe();
 
@@ -75,7 +76,7 @@ public final class FoodCrafting{
                 "KT ", "CB ", " T ",
                 'T', new ItemStack(InitItems.itemFoods, 1, TheFoods.TOAST.ordinal()),
                 'C', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
-                'K', knifeStack.copy(),
+                'K', knife,
                 'B', new ItemStack(Items.COOKED_BEEF));
         recipeHamburger = RecipeUtil.lastIRecipe();
 
@@ -93,13 +94,13 @@ public final class FoodCrafting{
                 'C', new ItemStack(InitItems.itemFoods, 1, TheFoods.CHEESE.ordinal()),
                 'F', new ItemStack(Items.COOKED_BEEF, 1, Util.WILDCARD),
                 'B', new ItemStack(InitItems.itemFoods, 1, TheFoods.BAGUETTE.ordinal()),
-                'K', knifeStack.copy());
+                'K', knife);
         recipeSubSandwich = RecipeUtil.lastIRecipe();
 
         //French Fry
         RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemFoods, 2, TheFoods.FRENCH_FRY.ordinal()),
                 new ItemStack(Items.BAKED_POTATO),
-                knifeStack.copy());
+                knife);
         recipeFrenchFry = RecipeUtil.lastIRecipe();
 
         //French Fries
@@ -131,7 +132,7 @@ public final class FoodCrafting{
 
         //Carrot Juice
         RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.CARROT_JUICE.ordinal()),
-                new ItemStack(Items.GLASS_BOTTLE), "cropCarrot", knifeStack.copy());
+                new ItemStack(Items.GLASS_BOTTLE), "cropCarrot", knife);
         recipeCarrotJuice = RecipeUtil.lastIRecipe();
 
         //Spaghetti
@@ -143,7 +144,7 @@ public final class FoodCrafting{
 
         //Noodle
         RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.NOODLE.ordinal()),
-                "cropWheat", knifeStack.copy());
+                "cropWheat", knife);
         recipeNoodle = RecipeUtil.lastIRecipe();
 
         //Chocolate

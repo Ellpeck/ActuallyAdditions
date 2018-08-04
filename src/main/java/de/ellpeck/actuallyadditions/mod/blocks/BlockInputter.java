@@ -92,8 +92,8 @@ public class BlockInputter extends BlockContainerBase{
 
 
         @Override
-        public String getUnlocalizedName(ItemStack stack){
-            return this.getUnlocalizedName();
+        public String getTranslationKey(ItemStack stack){
+            return this.getTranslationKey();
         }
 
         @Override
@@ -112,7 +112,7 @@ public class BlockInputter extends BlockContainerBase{
                 this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS)+1;
             }
 
-            return StringUtil.localize(this.getUnlocalizedName()+".name")+" ("+StringUtil.localize("tile."+ActuallyAdditions.MODID+".block_inputter.add."+this.toPick+".name")+")";
+            return StringUtil.localize(this.getTranslationKey()+".name")+" ("+StringUtil.localize("tile."+ActuallyAdditions.MODID+".block_inputter.add."+this.toPick+".name")+")";
         	}
         	else return super.getItemStackDisplayName(stack);
         }

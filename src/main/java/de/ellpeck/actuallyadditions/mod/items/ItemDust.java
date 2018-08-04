@@ -39,8 +39,8 @@ public class ItemDust extends ItemBase implements IColorProvidingItem{
 
 
     @Override
-    public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= ALL_DUSTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+"_"+ALL_DUSTS[stack.getItemDamage()].name;
+    public String getTranslationKey(ItemStack stack){
+        return stack.getItemDamage() >= ALL_DUSTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+ALL_DUSTS[stack.getItemDamage()].name;
     }
 
 

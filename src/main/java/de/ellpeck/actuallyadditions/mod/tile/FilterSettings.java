@@ -90,8 +90,8 @@ public class FilterSettings{
             ResourceLocation firstReg = firstItem.getRegistryName();
             ResourceLocation secondReg = secondItem.getRegistryName();
             if(firstReg != null && secondReg != null){
-                String firstDomain = firstReg.getResourceDomain();
-                String secondDomain = secondReg.getResourceDomain();
+                String firstDomain = firstReg.getNamespace();
+                String secondDomain = secondReg.getNamespace();
                 if(firstDomain != null && secondDomain != null){
                     if(!firstDomain.equals(secondDomain)){
                         return false;

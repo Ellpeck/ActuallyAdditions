@@ -172,7 +172,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
             TileEntity tile = world.getTileEntity(pos);
             if(tile instanceof TileEntityBase){
                 TileEntityBase base = (TileEntityBase)tile;
-                boolean powered = world.isBlockIndirectlyGettingPowered(pos) > 0;
+                boolean powered = world.getRedstonePowerFromNeighbors(pos) > 0;
                 boolean wasPowered = base.isRedstonePowered;
                 if(powered && !wasPowered){
                     if(base.respondsToPulses()){
@@ -262,7 +262,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
                 }
 
                 ItemStack stack = new ItemStack(this.getItemDropped(state, tile.getWorld().rand, fortune), 1, this.damageDropped(state));
-                if(!data.hasNoTags()){
+                if(!data.isEmpty()){
                     stack.setTagCompound(new NBTTagCompound());
                     stack.getTagCompound().setTag("Data", data);
                 }

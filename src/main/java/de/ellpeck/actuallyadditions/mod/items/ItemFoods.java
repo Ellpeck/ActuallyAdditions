@@ -82,8 +82,8 @@ public class ItemFoods extends ItemFoodBase{
 
 
     @Override
-    public String getUnlocalizedName(ItemStack stack){
-        return stack.getItemDamage() >= ALL_FOODS.length ? StringUtil.BUGGED_ITEM_NAME : this.getUnlocalizedName()+"_"+ALL_FOODS[stack.getItemDamage()].name;
+    public String getTranslationKey(ItemStack stack){
+        return stack.getItemDamage() >= ALL_FOODS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+ALL_FOODS[stack.getItemDamage()].name;
     }
 
 

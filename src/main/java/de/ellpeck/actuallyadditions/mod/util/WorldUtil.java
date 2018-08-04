@@ -264,7 +264,7 @@ public final class WorldUtil {
         float f5 = MathHelper.sin(-f * 0.017453292F);
         float f6 = f3 * f4;
         float f7 = f2 * f4;
-        Vec3d vec31 = vec3.addVector((double) f6 * distance, (double) f5 * distance, (double) f7 * distance);
+        Vec3d vec31 = vec3.add((double) f6 * distance, (double) f5 * distance, (double) f7 * distance);
         return world.rayTraceBlocks(vec3, vec31, p1, p2, p3);
     }
 
@@ -310,7 +310,7 @@ public final class WorldUtil {
 
         if (player.capabilities.isCreativeMode) {
             if (block.removedByPlayer(state, world, pos, player, false)) {
-                block.onBlockDestroyedByPlayer(world, pos, state);
+                block.onPlayerDestroy(world, pos, state);
             }
 
             // send update to client
@@ -331,7 +331,7 @@ public final class WorldUtil {
 
             TileEntity tileEntity = world.getTileEntity(pos);
             if (block.removedByPlayer(state, world, pos, player, true)) { // boolean is if block can be harvested, checked above
-                block.onBlockDestroyedByPlayer(world, pos, state);
+                block.onPlayerDestroy(world, pos, state);
                 block.harvestBlock(world, player, pos, state, tileEntity, stack);
                 block.dropXpOnBlockBreak(world, pos, xp);
             }
@@ -348,7 +348,7 @@ public final class WorldUtil {
             // following code can be found in PlayerControllerMP.onPlayerDestroyBlock
             world.playEvent(2001, pos, Block.getStateId(state));
             if (block.removedByPlayer(state, world, pos, player, true)) {
-                block.onBlockDestroyedByPlayer(world, pos, state);
+                block.onPlayerDestroy(world, pos, state);
             }
             // callback to the tool
             stack.onBlockDestroyed(world, state, pos, player);

@@ -82,7 +82,7 @@ public class BlockBreaker extends BlockContainerBase{
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.getFront(meta));
+        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
     }
 
     @Override
