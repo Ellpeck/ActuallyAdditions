@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public final class StackUtil {
 
@@ -76,7 +78,7 @@ public final class StackUtil {
         int slotMax = inv.getSlots();
         int counter = 0;
 
-        for (ItemStack s : stacks) {
+        for (ItemStack s : stacks = merge(stacks)) {
             for (int i = 0; i < slotMax; i++) {
                 s = inv.insertItem(i, s, true);
                 if (s.isEmpty()) break;
@@ -113,7 +115,7 @@ public final class StackUtil {
         int slotMax = inv.getSlots();
         int counter = 0;
 
-        for (ItemStack s : stacks) {
+        for (ItemStack s : stacks = merge(stacks)) {
             for (int i = 0; i < slotMax; i++) {
                 s = inv.insertItem(i, s, true, fromAutomation);
                 if (s.isEmpty()) break;
@@ -138,7 +140,7 @@ public final class StackUtil {
             }
         }
     }
-    
+
     /**
      * Checks if all provided itemstacks will fit in the AA handler.  Use addAll below to actually add the stacks.  This is strictly a check function.
      * @param inv The AA Item handler
@@ -151,7 +153,7 @@ public final class StackUtil {
     public static boolean canAddAll(ItemStackHandlerAA inv, List<ItemStack> stacks, int slot, int endSlot, boolean fromAutomation) {
         int counter = 0;
 
-        for (ItemStack s : stacks) {
+        for (ItemStack s : stacks = merge(stacks)) {
             for (int i = slot; i < endSlot; i++) {
                 s = inv.insertItem(i, s, true, fromAutomation);
                 if (s.isEmpty()) break;
@@ -205,13 +207,13 @@ public final class StackUtil {
         s.shrink(i);
         return s;
     }
-    
+
     /**
      * Helper method to remove stack size and return the stack.
      */
     public static ItemStack shrinkForContainer(ItemStack s, int i) {
         s.shrink(i);
-        if(s.isEmpty()) return s.getItem().getContainerItem(s);
+        if (s.isEmpty()) return s.getItem().getContainerItem(s);
         return s;
     }
 
@@ -244,6 +246,34 @@ public final class StackUtil {
         }
 
         return remain;
+    }
+
+    /**
+     * Combines every stack in the given list into larger stacks when possible.
+     */
+    public static List<ItemStack> merge(List<ItemStack> stacks) {
+        if (stacks.isEmpty()) return stacks;
+
+        ItemStack[] array = stacks.toArray(new ItemStack[0]);
+        List<ItemStack> list = new ArrayList<>();
+
+        while (!array[array.length - 1].isEmpty()) {
+            ItemStack merged = ItemStack.EMPTY;
+            for (int i = 0; i < array.length; i++) {
+                ItemStack stack = array[i];
+                if (merged.isEmpty()) {
+                    merged = stack.copy();
+                    array[i] = ItemStack.EMPTY;
+                } else if (ItemHandlerHelper.canItemStacksStack(merged, stack)) {
+                    merged.grow(stack.getCount());
+                    array[i] = ItemStack.EMPTY;
+                } else break;
+            }
+            list.add(merged);
+            merged = ItemStack.EMPTY;
+        }
+
+        return list;
     }
 
 }

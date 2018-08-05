@@ -108,16 +108,16 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             }
         }
 
-        boolean putSeeds = true;
+        boolean addSeeds = true;
         if (!farmer.canAddToSeeds(seeds)) {
             other.addAll(seeds);
-            putSeeds = false;
+            addSeeds = false;
         }
 
         if (farmer.canAddToOutput(other)) {
             farmer.addToOutput(other);
 
-            if (putSeeds) {
+            if (addSeeds) {
                 farmer.addToSeeds(seeds);
             }
 
