@@ -1,3 +1,7 @@
+# 1.12.2-r139
+* Added a crash check to figure out who is causing TheWildPlants to be loaded before block init.
+* Fixed the farmer (and other inventories) failing to add items if all items have a stacksize of 1.
+
 # 1.12.2-r138
 * DiamondKnight23: Clarify the text for chest upgrades.
 * Fixed farmer behaviors, mainly resolves pumpkins and melons being planted incorrectly.
