@@ -104,6 +104,7 @@ public final class AwfulUtil{
     		error += ("\n" + i++ + ": " + (k == null ? "null" : (k.getClass().getSimpleName() + " <- CLASS | INSTANCE -> " + k.toString() + ", ")));
     	}
     	error += "\n" + "The current side is: " + FMLCommonHandler.instance().getEffectiveSide();
+    	error += "\n" + "Report this to https://github.com/Ellpeck/ActuallyAdditions/issues";
     	throw new IllegalStateException(error);
     }
 }

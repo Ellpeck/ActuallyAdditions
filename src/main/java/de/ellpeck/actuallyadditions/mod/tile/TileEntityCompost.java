@@ -12,6 +12,8 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.state.IBlockState;
@@ -90,13 +92,13 @@ public class TileEntityCompost extends TileEntityInventoryBase {
     }
 
     @Override
-    public boolean canInsert(int i, ItemStack stack, boolean automation) {
-        return getRecipeForInput(stack) != null;
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> getRecipeForInput(stack) != null;
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean automation) {
-        return getRecipeForInput(stack) == null;
+    public IRemover getRemover() {
+        return (slot, automation) -> getRecipeForInput(inv.getStackInSlot(slot)) == null;
     }
 
     public IBlockState getCurrentDisplay() {
@@ -109,7 +111,7 @@ public class TileEntityCompost extends TileEntityInventoryBase {
             else if (r.getInput().apply(input)) return r.getInputDisplay();
         }
 
-        if(displayRecipe != null) return displayRecipe.getInputDisplay();
+        if (displayRecipe != null) return displayRecipe.getInputDisplay();
         return Blocks.AIR.getDefaultState();
     }
 

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -25,90 +26,89 @@ import net.minecraftforge.fluids.IFluidBlock;
 
 public class TileEntityBreaker extends TileEntityInventoryBase {
 
-	public boolean isPlacer;
-	private int currentTime;
+    public boolean isPlacer;
+    private int currentTime;
 
-	public TileEntityBreaker(int slots, String name) {
-		super(slots, name);
-	}
+    public TileEntityBreaker(int slots, String name) {
+        super(slots, name);
+    }
 
-	public TileEntityBreaker() {
-		super(9, "breaker");
-		this.isPlacer = false;
-	}
+    public TileEntityBreaker() {
+        super(9, "breaker");
+        this.isPlacer = false;
+    }
 
-	@Override
-	public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
-		super.writeSyncableNBT(compound, type);
-		if (type != NBTType.SAVE_BLOCK) {
-			compound.setInteger("CurrentTime", this.currentTime);
-		}
-	}
+    @Override
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+        super.writeSyncableNBT(compound, type);
+        if (type != NBTType.SAVE_BLOCK) {
+            compound.setInteger("CurrentTime", this.currentTime);
+        }
+    }
 
-	@Override
-	public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
-		super.readSyncableNBT(compound, type);
-		if (type != NBTType.SAVE_BLOCK) {
-			this.currentTime = compound.getInteger("CurrentTime");
-		}
-	}
+    @Override
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+        super.readSyncableNBT(compound, type);
+        if (type != NBTType.SAVE_BLOCK) {
+            this.currentTime = compound.getInteger("CurrentTime");
+        }
+    }
 
-	@Override
-	public void updateEntity() {
-		super.updateEntity();
-		if (!this.world.isRemote) {
-			if (!this.isRedstonePowered && !this.isPulseMode) {
-				if (this.currentTime > 0) {
-					this.currentTime--;
-					if (this.currentTime <= 0) {
-						this.doWork();
-					}
-				} else {
-					this.currentTime = 15;
-				}
-			}
-		}
-	}
-	
-	@Override
-	public boolean canInsert(int slot, ItemStack stack, boolean automation) {
-	    if(isPlacer) return true;
-	    else return !automation;
-	}
+    @Override
+    public void updateEntity() {
+        super.updateEntity();
+        if (!this.world.isRemote) {
+            if (!this.isRedstonePowered && !this.isPulseMode) {
+                if (this.currentTime > 0) {
+                    this.currentTime--;
+                    if (this.currentTime <= 0) {
+                        this.doWork();
+                    }
+                } else {
+                    this.currentTime = 15;
+                }
+            }
+        }
+    }
 
-	private void doWork() {
-		EnumFacing side = WorldUtil.getDirectionByPistonRotation(world.getBlockState(pos));
-		BlockPos breakCoords = pos.offset(side);
-		IBlockState stateToBreak = world.getBlockState(breakCoords);
-		Block blockToBreak = stateToBreak.getBlock();
+    @Override
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> !automation;
+    }
 
-		if (!this.isPlacer && blockToBreak != Blocks.AIR && !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && stateToBreak.getBlockHardness(this.world, breakCoords) >= 0.0F) {
-			NonNullList<ItemStack> drops = NonNullList.create();
-			blockToBreak.getDrops(drops, world, breakCoords, stateToBreak, 0);
-			float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, world, breakCoords);
+    private void doWork() {
+        EnumFacing side = WorldUtil.getDirectionByPistonRotation(world.getBlockState(pos));
+        BlockPos breakCoords = pos.offset(side);
+        IBlockState stateToBreak = world.getBlockState(breakCoords);
+        Block blockToBreak = stateToBreak.getBlock();
 
-			if (chance > 0 && world.rand.nextFloat() <= chance) {
-				if (StackUtil.canAddAll(inv, drops, false)) {
-					world.destroyBlock(breakCoords, false);
-					StackUtil.addAll(inv, drops, false);
-					this.markDirty();
-				}
-			}
-		} else if (this.isPlacer) {
-			int slot = StackUtil.findFirstFilled(inv);
-			if(slot == -1) return;
-			this.inv.setStackInSlot(slot, WorldUtil.useItemAtSide(side, world, pos, inv.getStackInSlot(slot)));
-		}
-	}
+        if (!this.isPlacer && blockToBreak != Blocks.AIR && !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && stateToBreak.getBlockHardness(this.world, breakCoords) >= 0.0F) {
+            NonNullList<ItemStack> drops = NonNullList.create();
+            blockToBreak.getDrops(drops, world, breakCoords, stateToBreak, 0);
+            float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, world, breakCoords);
 
-	@Override
-	public boolean isRedstoneToggle() {
-		return true;
-	}
+            if (chance > 0 && world.rand.nextFloat() <= chance) {
+                if (StackUtil.canAddAll(inv, drops, false)) {
+                    world.destroyBlock(breakCoords, false);
+                    StackUtil.addAll(inv, drops, false);
+                    this.markDirty();
+                }
+            }
+        } else if (this.isPlacer) {
+            int slot = StackUtil.findFirstFilled(inv);
+            if (slot == -1) return;
+            this.inv.setStackInSlot(slot, WorldUtil.useItemAtSide(side, world, pos, inv.getStackInSlot(slot)));
+        }
+    }
 
-	@Override
-	public void activateOnPulse() {
-		this.doWork();
-	}
+    @Override
+    public boolean isRedstoneToggle() {
+        return true;
+    }
+
+    @Override
+    public void activateOnPulse() {
+        this.doWork();
+    }
 
 }

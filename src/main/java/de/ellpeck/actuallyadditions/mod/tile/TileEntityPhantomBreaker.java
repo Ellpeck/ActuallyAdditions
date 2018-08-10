@@ -10,11 +10,25 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-public class TileEntityPhantomBreaker extends TileEntityPhantomPlacer{
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 
-    public TileEntityPhantomBreaker(){
+public class TileEntityPhantomBreaker extends TileEntityPhantomPlacer {
+
+    public TileEntityPhantomBreaker() {
         super(9, "phantomBreaker");
         this.isBreaker = true;
+    }
+
+    @Override
+    public IAcceptor getAcceptor() {
+        return ItemStackHandlerAA.ACCEPT_FALSE;
+    }
+
+    @Override
+    public IRemover getRemover() {
+        return ItemStackHandlerAA.REMOVE_TRUE;
     }
 
 }

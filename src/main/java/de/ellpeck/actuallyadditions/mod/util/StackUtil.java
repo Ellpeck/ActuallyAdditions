@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,7 +22,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 public final class StackUtil {
 
@@ -68,42 +66,6 @@ public final class StackUtil {
     }
 
     /**
-     * Checks if all provided itemstacks will fit in the handler.  If you have an AA item handler, use the more sensitive below methods.
-     * @param inv The Item handler
-     * @param stacks The stacks to add
-     * @return If all stacks fit fully.  If even one item would not fit, the method returns false.
-     */
-    public static boolean canAddAll(IItemHandler inv, List<ItemStack> stacks) {
-
-        int slotMax = inv.getSlots();
-        int counter = 0;
-
-        for (ItemStack s : stacks = merge(stacks)) {
-            for (int i = 0; i < slotMax; i++) {
-                s = inv.insertItem(i, s, true);
-                if (s.isEmpty()) break;
-            }
-            if (s.isEmpty()) counter++;
-        }
-        return counter == stacks.size();
-    }
-
-    /**
-     * Adds all itemstacks in a list to an item handler.  If you have an AA item handler, use the more sensitive below methods.
-     * @param inv The Item handler
-     * @param stacks The stacks to add
-     */
-    public static void addAll(IItemHandler inv, List<ItemStack> stacks) {
-        int slotMax = inv.getSlots();
-        for (ItemStack s : stacks) {
-            for (int i = 0; i < slotMax; i++) {
-                s = inv.insertItem(i, s, false);
-                if (s.isEmpty()) break;
-            }
-        }
-    }
-
-    /**
      * Checks if all provided itemstacks will fit in the AA handler.  Use addAll below to actually add the stacks.  This is strictly a check function.
      * @param inv The AA Item handler
      * @param stacks The stacks to add
@@ -111,13 +73,11 @@ public final class StackUtil {
      * @return If all stacks fit fully.  If even one item would not fit, the method returns false.
      */
     public static boolean canAddAll(ItemStackHandlerAA inv, List<ItemStack> stacks, boolean fromAutomation) {
-
-        int slotMax = inv.getSlots();
         int counter = 0;
-
-        for (ItemStack s : stacks = merge(stacks)) {
-            for (int i = 0; i < slotMax; i++) {
-                s = inv.insertItem(i, s, true, fromAutomation);
+        ItemStackHandlerAA dummy = testDummy(inv, 0, inv.getSlots());
+        for (ItemStack s : stacks) {
+            for (int i = 0; i < dummy.getSlots(); i++) {
+                s = dummy.insertItem(i, s, false, fromAutomation);
                 if (s.isEmpty()) break;
             }
             if (s.isEmpty()) counter++;
@@ -152,10 +112,10 @@ public final class StackUtil {
      */
     public static boolean canAddAll(ItemStackHandlerAA inv, List<ItemStack> stacks, int slot, int endSlot, boolean fromAutomation) {
         int counter = 0;
-
-        for (ItemStack s : stacks = merge(stacks)) {
-            for (int i = slot; i < endSlot; i++) {
-                s = inv.insertItem(i, s, true, fromAutomation);
+        ItemStackHandlerAA dummy = testDummy(inv, slot, endSlot);
+        for (ItemStack s : stacks) {
+            for (int i = 0; i < dummy.getSlots(); i++) {
+                s = dummy.insertItem(i, s, false, fromAutomation);
                 if (s.isEmpty()) break;
             }
             if (s.isEmpty()) counter++;
@@ -249,31 +209,14 @@ public final class StackUtil {
     }
 
     /**
-     * Combines every stack in the given list into larger stacks when possible.
+     * Constructs a clone of the given item handler, from the given slots.  The new item handler will have the provided slot as slot 0.
+     * This is used for testing the ability to add all itemstacks, and should not be used for anything else.
      */
-    public static List<ItemStack> merge(List<ItemStack> stacks) {
-        if (stacks.isEmpty()) return stacks;
-
-        ItemStack[] array = stacks.toArray(new ItemStack[0]);
-        List<ItemStack> list = new ArrayList<>();
-
-        while (!array[array.length - 1].isEmpty()) {
-            ItemStack merged = ItemStack.EMPTY;
-            for (int i = 0; i < array.length; i++) {
-                ItemStack stack = array[i];
-                if (merged.isEmpty()) {
-                    merged = stack.copy();
-                    array[i] = ItemStack.EMPTY;
-                } else if (ItemHandlerHelper.canItemStacksStack(merged, stack)) {
-                    merged.grow(stack.getCount());
-                    array[i] = ItemStack.EMPTY;
-                } else break;
-            }
-            list.add(merged);
-            merged = ItemStack.EMPTY;
-        }
-
-        return list;
+    public static ItemStackHandlerAA testDummy(ItemStackHandlerAA inv, int slot, int endSlot) {
+        NonNullList<ItemStack> stacks = NonNullList.withSize(endSlot - slot, getEmpty());
+        for (int i = slot; i < endSlot; i++)
+            stacks.set(i - slot, inv.getStackInSlot(i).copy());
+        return new ItemStackHandlerAA(stacks, inv.getAcceptor(), inv.getRemover());
     }
 
 }

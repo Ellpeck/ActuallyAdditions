@@ -20,8 +20,32 @@ import net.minecraftforge.items.ItemStackHandler;
  */
 public class ItemStackHandlerAA extends ItemStackHandler {
 
-    public ItemStackHandlerAA(int slots) {
+    public static final IAcceptor ACCEPT_TRUE = (a, b, c) -> true;
+    public static final IRemover REMOVE_TRUE = (a, b) -> true;
+    public static final IAcceptor ACCEPT_FALSE = (a, b, c) -> false;
+    public static final IRemover REMOVE_FALSE = (a, b) -> false;
+
+    IAcceptor acceptor;
+    IRemover remover;
+
+    public ItemStackHandlerAA(NonNullList<ItemStack> stacks, IAcceptor acceptor, IRemover remover) {
+        super(stacks);
+        this.acceptor = acceptor;
+        this.remover = remover;
+    }
+
+    public ItemStackHandlerAA(int slots, IAcceptor acceptor, IRemover remover) {
         super(slots);
+        this.acceptor = acceptor;
+        this.remover = remover;
+    }
+
+    public ItemStackHandlerAA(NonNullList<ItemStack> stacks) {
+        this(stacks, ACCEPT_TRUE, REMOVE_TRUE);
+    }
+
+    public ItemStackHandlerAA(int slots) {
+        this(slots, ACCEPT_TRUE, REMOVE_TRUE);
     }
 
     public NonNullList<ItemStack> getItems() {
@@ -48,11 +72,33 @@ public class ItemStackHandlerAA extends ItemStackHandler {
         return super.extractItem(slot, amount, simulate);
     }
 
-    public boolean canAccept(int slot, ItemStack stack, boolean fromAutomation) {
-        return true;
+    public final boolean canAccept(int slot, ItemStack stack, boolean automation) {
+        IAcceptor acceptor = getAcceptor();
+        try {
+            return acceptor.canAccept(slot, stack, automation);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public boolean canRemove(int slot, boolean byAutomation) {
-        return true;
+    public final boolean canRemove(int slot, boolean automation) {
+        return getRemover().canRemove(slot, automation);
+    }
+
+    public IAcceptor getAcceptor() {
+        return acceptor;
+    }
+
+    public IRemover getRemover() {
+        return remover;
+    }
+
+    public static interface IAcceptor {
+        boolean canAccept(int slot, ItemStack stack, boolean automation);
+    }
+
+    public static interface IRemover {
+        boolean canRemove(int slot, boolean automation);
     }
 }

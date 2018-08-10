@@ -10,10 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,8 +24,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
-
-import java.util.List;
 
 public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor {
 
@@ -162,13 +163,8 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public boolean canInsert(int slot, ItemStack stack, boolean fromAutomation) {
-        return slot == 1 && stack.getItem() == InitItems.itemSolidifiedExperience;
-    }
-
-    @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean byAutomation) {
-        return true;
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> slot == 1 && stack.getItem() == InitItems.itemSolidifiedExperience;
     }
 
     @Override

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -87,13 +88,8 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
-    public boolean canInsert(int i, ItemStack stack, boolean fromAutomation) {
-        return !fromAutomation;
-    }
-
-    @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean byAutomation) {
-        return true;
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> !automation;
     }
 
     @Override

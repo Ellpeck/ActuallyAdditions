@@ -11,6 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -67,12 +69,12 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
         return this.inv;
     }
 
-    public boolean canInsert(int slot, ItemStack stack, boolean automation) {
-        return true;
+    public IAcceptor getAcceptor() {
+        return ItemStackHandlerAA.ACCEPT_TRUE;
     }
 
-    public boolean canExtract(int slot, ItemStack stack, boolean automation) {
-        return true;
+    public IRemover getRemover() {
+        return ItemStackHandlerAA.REMOVE_TRUE;
     }
 
     public int getMaxStackSize(int slot) {
@@ -112,13 +114,13 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
         }
 
         @Override
-        public boolean canAccept(int slot, ItemStack stack, boolean fromAutomation) {
-            return TileEntityInventoryBase.this.canInsert(slot, stack, fromAutomation);
+        public IAcceptor getAcceptor() {
+            return TileEntityInventoryBase.this.getAcceptor();
         }
 
         @Override
-        public boolean canRemove(int slot, boolean byAutomation) {
-            return TileEntityInventoryBase.this.canExtract(slot, this.getStackInSlot(slot), byAutomation);
+        public IRemover getRemover() {
+            return TileEntityInventoryBase.this.getRemover();
         }
 
         @Override

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -195,13 +196,8 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     }
 
     @Override
-    public boolean canInsert(int slot, ItemStack stack, boolean fromAutomation) {
-        return !fromAutomation;
-    }
-
-    @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean byAutomation) {
-        return true;
+    public IAcceptor getAcceptor() {
+        return (stack, slot, automation) -> !automation;
     }
 
     @Override

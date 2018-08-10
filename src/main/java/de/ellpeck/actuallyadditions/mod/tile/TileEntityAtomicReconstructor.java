@@ -18,11 +18,11 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -143,13 +143,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public boolean canInsert(int i, ItemStack stack, boolean fromAutomation) {
-        return StackUtil.isValid(stack) && stack.getItem() instanceof ILensItem;
-    }
-
-    @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean byAutomation) {
-        return true;
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> StackUtil.isValid(stack) && stack.getItem() instanceof ILensItem;
     }
 
     @Override

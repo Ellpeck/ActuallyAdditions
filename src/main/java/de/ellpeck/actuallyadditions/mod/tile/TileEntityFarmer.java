@@ -18,6 +18,8 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.state.IBlockState;
@@ -138,13 +140,13 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     @Override
-    public boolean canInsert(int i, ItemStack stack, boolean automation) {
-        return !automation || i < 6;
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> !automation || slot < 6;
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean automation) {
-        return !automation || slot >= 6;
+    public IRemover getRemover() {
+        return (slot, automation) -> !automation || slot >= 6;
     }
 
     @Override

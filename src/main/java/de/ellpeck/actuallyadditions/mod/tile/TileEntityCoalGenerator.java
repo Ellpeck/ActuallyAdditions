@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -19,7 +21,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoalGenerator extends TileEntityInventoryBase implements ISharingEnergyProvider{
+public class TileEntityCoalGenerator extends TileEntityInventoryBase implements ISharingEnergyProvider {
 
     public static final int PRODUCE = 30;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 0, 80);
@@ -30,23 +32,23 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     private int lastCurrentBurnTime;
     private int lastCompare;
 
-    public TileEntityCoalGenerator(){
+    public TileEntityCoalGenerator() {
         super(1, "coalGenerator");
     }
 
     @SideOnly(Side.CLIENT)
-    public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
+    public int getEnergyScaled(int i) {
+        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
     @SideOnly(Side.CLIENT)
-    public int getBurningScaled(int i){
-        return this.currentBurnTime*i/this.maxBurnTime;
+    public int getBurningScaled(int i) {
+        return this.currentBurnTime * i / this.maxBurnTime;
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
-        if(type != NBTType.SAVE_BLOCK){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+        if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("BurnTime", this.currentBurnTime);
             compound.setInteger("MaxBurnTime", this.maxBurnTime);
         }
@@ -55,8 +57,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
-        if(type != NBTType.SAVE_BLOCK){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+        if (type != NBTType.SAVE_BLOCK) {
             this.currentBurnTime = compound.getInteger("BurnTime");
             this.maxBurnTime = compound.getInteger("MaxBurnTime");
         }
@@ -65,32 +67,32 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
-        if(!this.world.isRemote){
+        if (!this.world.isRemote) {
             boolean flag = this.currentBurnTime > 0;
 
-            if(this.currentBurnTime > 0){
+            if (this.currentBurnTime > 0) {
                 this.currentBurnTime--;
                 this.storage.receiveEnergyInternal(PRODUCE, false);
             }
 
             ItemStack stack = inv.getStackInSlot(0);
             int burn = TileEntityFurnace.getItemBurnTime(stack);
-            if(!this.isRedstonePowered && this.currentBurnTime <= 0 && burn > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
+            if (!this.isRedstonePowered && this.currentBurnTime <= 0 && burn > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()) {
                 this.maxBurnTime = burn;
                 this.currentBurnTime = burn;
                 ItemStack copy = stack.copy();
                 stack.shrink(1);
-                if(stack.isEmpty()) inv.setStackInSlot(0, copy.getItem().getContainerItem(copy));
+                if (stack.isEmpty()) inv.setStackInSlot(0, copy.getItem().getContainerItem(copy));
             }
 
-            if(flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()){
+            if (flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()) {
                 this.lastCompare = this.getComparatorStrength();
                 this.markDirty();
             }
 
-            if((this.storage.getEnergyStored() != this.lastEnergy || this.currentBurnTime != this.lastCurrentBurnTime || this.lastBurnTime != this.maxBurnTime) && this.sendUpdateWithInterval()){
+            if ((this.storage.getEnergyStored() != this.lastEnergy || this.currentBurnTime != this.lastCurrentBurnTime || this.lastBurnTime != this.maxBurnTime) && this.sendUpdateWithInterval()) {
                 this.lastEnergy = this.storage.getEnergyStored();
                 this.lastCurrentBurnTime = this.currentBurnTime;
                 this.lastBurnTime = this.currentBurnTime;
@@ -99,44 +101,46 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public int getComparatorStrength(){
-        float calc = ((float)this.storage.getEnergyStored()/(float)this.storage.getMaxEnergyStored())*15F;
-        return (int)calc;
+    public int getComparatorStrength() {
+        float calc = ((float) this.storage.getEnergyStored() / (float) this.storage.getMaxEnergyStored()) * 15F;
+        return (int) calc;
     }
 
     @Override
-    public boolean canInsert(int i, ItemStack stack, boolean fromAutomation){
-        return TileEntityFurnace.getItemBurnTime(stack) > 0;
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> TileEntityFurnace.getItemBurnTime(stack) > 0;
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean byAutomation){
-        if(!byAutomation) return true;
-        return TileEntityFurnace.getItemBurnTime(this.inv.getStackInSlot(0)) <= 0;
+    public IRemover getRemover() {
+        return (slot, automation) -> {
+            if (!automation) return true;
+            return TileEntityFurnace.getItemBurnTime(this.inv.getStackInSlot(0)) <= 0;
+        };
     }
 
     @Override
-    public int getEnergyToSplitShare(){
+    public int getEnergyToSplitShare() {
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public boolean doesShareEnergy(){
+    public boolean doesShareEnergy() {
         return true;
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides(){
+    public EnumFacing[] getEnergyShareSides() {
         return EnumFacing.values();
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile){
+    public boolean canShareTo(TileEntity tile) {
         return true;
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
         return this.storage;
     }
 }

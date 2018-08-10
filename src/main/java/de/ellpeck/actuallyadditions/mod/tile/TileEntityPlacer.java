@@ -10,11 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-public class TileEntityPlacer extends TileEntityBreaker{
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 
-    public TileEntityPlacer(){
+public class TileEntityPlacer extends TileEntityBreaker {
+
+    public TileEntityPlacer() {
         super(9, "placer");
         this.isPlacer = true;
+    }
+
+    @Override
+    public IAcceptor getAcceptor() {
+        return ItemStackHandlerAA.ACCEPT_TRUE;
     }
 
 }

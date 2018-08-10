@@ -10,84 +10,85 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityEnergizer extends TileEntityInventoryBase{
+public class TileEntityEnergizer extends TileEntityInventoryBase {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 1000, 0);
     private int lastEnergy;
 
-    public TileEntityEnergizer(){
+    public TileEntityEnergizer() {
         super(2, "energizer");
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         this.storage.writeToNBT(compound);
         super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         this.storage.readFromNBT(compound);
         super.readSyncableNBT(compound, type);
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
-        if(!this.world.isRemote){
-            if(StackUtil.isValid(this.inv.getStackInSlot(0)) && !StackUtil.isValid(this.inv.getStackInSlot(1))){
-                if(this.storage.getEnergyStored() > 0){
+        if (!this.world.isRemote) {
+            if (StackUtil.isValid(this.inv.getStackInSlot(0)) && !StackUtil.isValid(this.inv.getStackInSlot(1))) {
+                if (this.storage.getEnergyStored() > 0) {
                     int received = 0;
                     boolean canTakeUp = false;
 
-                    if(this.inv.getStackInSlot(0).hasCapability(CapabilityEnergy.ENERGY, null)){
+                    if (this.inv.getStackInSlot(0).hasCapability(CapabilityEnergy.ENERGY, null)) {
                         IEnergyStorage cap = this.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null);
-                        if(cap != null){
+                        if (cap != null) {
                             received = cap.receiveEnergy(this.storage.getEnergyStored(), false);
                             canTakeUp = cap.getEnergyStored() >= cap.getMaxEnergyStored();
                         }
                     }
-                    if(received > 0){
+                    if (received > 0) {
                         this.storage.extractEnergyInternal(received, false);
                     }
 
-                    if(canTakeUp){
+                    if (canTakeUp) {
                         this.inv.setStackInSlot(1, this.inv.getStackInSlot(0).copy());
                         this.inv.setStackInSlot(0, StackUtil.shrink(this.inv.getStackInSlot(0), 1));
                     }
                 }
             }
 
-            if(this.lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+            if (this.lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
                 this.lastEnergy = this.storage.getEnergyStored();
             }
         }
     }
 
     @Override
-    public boolean canInsert(int i, ItemStack stack, boolean automation){
-        return !automation || (i == 0 && (stack.hasCapability(CapabilityEnergy.ENERGY, null)));
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> !automation || (slot == 0 && (stack.hasCapability(CapabilityEnergy.ENERGY, null)));
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean automation){
-        return !EnchantmentHelper.hasBindingCurse(stack) && !automation || (slot == 1);
+    public IRemover getRemover() {
+        return (slot, automation) -> !EnchantmentHelper.hasBindingCurse(inv.getStackInSlot(slot)) && !automation || (slot == 1);
     }
 
-    public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
+    public int getEnergyScaled(int i) {
+        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
         return this.storage;
     }
 }

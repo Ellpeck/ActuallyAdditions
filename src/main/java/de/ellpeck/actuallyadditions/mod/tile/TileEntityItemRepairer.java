@@ -11,6 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,7 +22,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityItemRepairer extends TileEntityInventoryBase{
+public class TileEntityItemRepairer extends TileEntityInventoryBase {
 
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT = 1;
@@ -29,24 +31,21 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
     public int nextRepairTick;
     private int lastEnergy;
 
-    public TileEntityItemRepairer(){
+    public TileEntityItemRepairer() {
         super(2, "repairer");
     }
 
-    public static boolean canBeRepaired(ItemStack stack){
-        if(StackUtil.isValid(stack)){
+    public static boolean canBeRepaired(ItemStack stack) {
+        if (StackUtil.isValid(stack)) {
             Item item = stack.getItem();
-            if(item != null){
-                if(item.isRepairable() && item.getMaxDamage(stack) > 0){
+            if (item != null) {
+                if (item.isRepairable() && item.getMaxDamage(stack) > 0) {
                     return true;
-                }
-                else{
+                } else {
                     String reg = item.getRegistryName().toString();
-                    if(reg != null){
-                        for(String strg : ConfigStringListValues.REPAIRER_EXTRA_WHITELIST.getValue()){
-                            if(reg.equals(strg)){
-                                return true;
-                            }
+                    if (reg != null) {
+                        for (String strg : ConfigStringListValues.REPAIRER_EXTRA_WHITELIST.getValue()) {
+                            if (reg.equals(strg)) { return true; }
                         }
                     }
                 }
@@ -56,8 +55,8 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
-        if(type != NBTType.SAVE_BLOCK){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+        if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("NextRepairTick", this.nextRepairTick);
         }
         super.writeSyncableNBT(compound, type);
@@ -65,8 +64,8 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
-        if(type != NBTType.SAVE_BLOCK){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+        if (type != NBTType.SAVE_BLOCK) {
             this.nextRepairTick = compound.getInteger("NextRepairTick");
         }
         super.readSyncableNBT(compound, type);
@@ -74,27 +73,26 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
-        if(!this.world.isRemote){
+        if (!this.world.isRemote) {
             ItemStack input = this.inv.getStackInSlot(SLOT_INPUT);
-            if(!StackUtil.isValid(this.inv.getStackInSlot(SLOT_OUTPUT)) && canBeRepaired(input)){
-                if(input.getItemDamage() <= 0){
+            if (!StackUtil.isValid(this.inv.getStackInSlot(SLOT_OUTPUT)) && canBeRepaired(input)) {
+                if (input.getItemDamage() <= 0) {
                     this.inv.setStackInSlot(SLOT_OUTPUT, input.copy());
                     this.inv.setStackInSlot(SLOT_INPUT, StackUtil.getEmpty());
                     this.nextRepairTick = 0;
-                }
-                else{
-                    if(this.storage.getEnergyStored() >= ENERGY_USE){
+                } else {
+                    if (this.storage.getEnergyStored() >= ENERGY_USE) {
                         this.nextRepairTick++;
                         this.storage.extractEnergyInternal(ENERGY_USE, false);
-                        if(this.nextRepairTick >= 4){
+                        if (this.nextRepairTick >= 4) {
                             this.nextRepairTick = 0;
-                            input.setItemDamage(input.getItemDamage()-1);
+                            input.setItemDamage(input.getItemDamage() - 1);
 
-                            if(input.hasTagCompound()){
+                            if (input.hasTagCompound()) {
                                 //TiCon un-break tools
-                                if("tconstruct".equalsIgnoreCase(input.getItem().getRegistryName().getNamespace())){
+                                if ("tconstruct".equalsIgnoreCase(input.getItem().getRegistryName().getNamespace())) {
                                     NBTTagCompound stats = input.getTagCompound().getCompoundTag("Stats");
                                     stats.removeTag("Broken");
                                 }
@@ -102,41 +100,38 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase{
                         }
                     }
                 }
-            }
-            else{
+            } else {
                 this.nextRepairTick = 0;
             }
 
-            if(this.lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+            if (this.lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
                 this.lastEnergy = this.storage.getEnergyStored();
             }
         }
     }
 
     @Override
-    public boolean canInsert(int i, ItemStack stack, boolean automation){
-        return !automation || i == SLOT_INPUT;
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> !automation || slot == SLOT_INPUT;
     }
 
     @SideOnly(Side.CLIENT)
-    public int getEnergyScaled(int i){
-        return this.storage.getEnergyStored()*i/this.storage.getMaxEnergyStored();
+    public int getEnergyScaled(int i) {
+        return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
-    public int getItemDamageToScale(int i){
-        if(StackUtil.isValid(this.inv.getStackInSlot(SLOT_INPUT))){
-            return (this.inv.getStackInSlot(SLOT_INPUT).getMaxDamage()-this.inv.getStackInSlot(SLOT_INPUT).getItemDamage())*i/this.inv.getStackInSlot(SLOT_INPUT).getMaxDamage();
-        }
+    public int getItemDamageToScale(int i) {
+        if (StackUtil.isValid(this.inv.getStackInSlot(SLOT_INPUT))) { return (this.inv.getStackInSlot(SLOT_INPUT).getMaxDamage() - this.inv.getStackInSlot(SLOT_INPUT).getItemDamage()) * i / this.inv.getStackInSlot(SLOT_INPUT).getMaxDamage(); }
         return 0;
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean automation){
-        return !automation || slot == SLOT_OUTPUT;
+    public IRemover getRemover() {
+        return (slot, automation) -> !automation || slot == SLOT_OUTPUT;
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
         return this.storage;
     }
 }

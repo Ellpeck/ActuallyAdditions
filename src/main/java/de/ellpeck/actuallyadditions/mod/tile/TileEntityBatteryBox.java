@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
@@ -144,13 +145,8 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean byAutomation){
-        return true;
-    }
-
-    @Override
-    public boolean canInsert(int slot, ItemStack stack, boolean fromAutomation){
-        return stack.getItem() instanceof ItemBattery;
+    public IAcceptor getAcceptor(){
+        return (slot, stack, automation) -> stack.getItem() instanceof ItemBattery;
     }
 
     @Override

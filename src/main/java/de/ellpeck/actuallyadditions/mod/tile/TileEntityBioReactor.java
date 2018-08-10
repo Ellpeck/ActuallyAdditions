@@ -10,6 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -23,10 +29,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.energy.IEnergyStorage;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class TileEntityBioReactor extends TileEntityInventoryBase implements ISharingEnergyProvider{
+public class TileEntityBioReactor extends TileEntityInventoryBase implements ISharingEnergyProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 0, 800);
 
@@ -37,41 +40,38 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     private int lastBurnTime;
     private int lastProducePerTick;
 
-    public TileEntityBioReactor(){
+    public TileEntityBioReactor() {
         super(8, "bioReactor");
     }
 
-    public static boolean isValidItem(ItemStack stack){
-        if(StackUtil.isValid(stack)){
+    public static boolean isValidItem(ItemStack stack) {
+        if (StackUtil.isValid(stack)) {
             Item item = stack.getItem();
-            if(isValid(item)){
+            if (isValid(item)) {
                 return true;
-            }
-            else if(item instanceof ItemBlock){
-                return isValid(Block.getBlockFromItem(item));
-            }
+            } else if (item instanceof ItemBlock) { return isValid(Block.getBlockFromItem(item)); }
         }
         return false;
     }
 
-    private static boolean isValid(Object o){
+    private static boolean isValid(Object o) {
         return o instanceof IPlantable || o instanceof IGrowable || o instanceof ItemFood;
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
 
-        if(this.burnTime <= 0){
+        if (this.burnTime <= 0) {
             List<Item> types = null;
 
-            if(!this.isRedstonePowered && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()){
-                for(int i = 0; i < this.inv.getSlots(); i++){
+            if (!this.isRedstonePowered && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()) {
+                for (int i = 0; i < this.inv.getSlots(); i++) {
                     ItemStack stack = this.inv.getStackInSlot(i);
-                    if(StackUtil.isValid(stack)){
+                    if (StackUtil.isValid(stack)) {
                         Item item = stack.getItem();
-                        if(isValidItem(stack) && (types == null || !types.contains(item))){
-                            if(types == null){
+                        if (isValidItem(stack) && (types == null || !types.contains(item))) {
+                            if (types == null) {
                                 types = new ArrayList<Item>();
                             }
                             types.add(item);
@@ -84,32 +84,30 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
                 this.markDirty();
             }
 
-            if(types != null && !types.isEmpty()){
+            if (types != null && !types.isEmpty()) {
                 int amount = types.size();
-                this.producePerTick = (int)Math.pow(amount*2, 2);
+                this.producePerTick = (int) Math.pow(amount * 2, 2);
 
-                this.maxBurnTime = 200-(int)Math.pow(1.8, amount);
+                this.maxBurnTime = 200 - (int) Math.pow(1.8, amount);
                 this.burnTime = this.maxBurnTime;
-            }
-            else{
+            } else {
                 this.burnTime = 0;
                 this.maxBurnTime = 0;
                 this.producePerTick = 0;
             }
-        }
-        else{
+        } else {
             this.burnTime--;
             this.storage.receiveEnergyInternal(this.producePerTick, false);
         }
 
-        if((this.lastBurnTime != this.burnTime || this.lastProducePerTick != this.producePerTick) && this.sendUpdateWithInterval()){
+        if ((this.lastBurnTime != this.burnTime || this.lastProducePerTick != this.producePerTick) && this.sendUpdateWithInterval()) {
             this.lastBurnTime = this.burnTime;
             this.lastProducePerTick = this.producePerTick;
         }
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         this.storage.writeToNBT(compound);
@@ -119,7 +117,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         this.storage.readFromNBT(compound);
@@ -129,43 +127,43 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public boolean canExtract(int index, ItemStack stack, boolean byAutomation){
-        return false;
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> isValidItem(stack);
     }
 
     @Override
-    public boolean canInsert(int index, ItemStack stack, boolean fromAutomation){
-        return isValidItem(stack);
+    public IRemover getRemover() {
+        return ItemStackHandlerAA.REMOVE_FALSE;
     }
 
     @Override
-    public int getEnergyToSplitShare(){
+    public int getEnergyToSplitShare() {
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public boolean doesShareEnergy(){
+    public boolean doesShareEnergy() {
         return true;
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides(){
+    public EnumFacing[] getEnergyShareSides() {
         return EnumFacing.values();
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile){
+    public boolean canShareTo(TileEntity tile) {
         return true;
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
         return this.storage;
     }
 
     @Override
-    public int getComparatorStrength(){
-        float calc = ((float)this.storage.getEnergyStored()/(float)this.storage.getMaxEnergyStored())*15F;
-        return (int)calc;
+    public int getComparatorStrength() {
+        float calc = ((float) this.storage.getEnergyStored() / (float) this.storage.getMaxEnergyStored()) * 15F;
+        return (int) calc;
     }
 }

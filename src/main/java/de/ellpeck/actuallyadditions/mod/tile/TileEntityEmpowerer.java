@@ -17,6 +17,8 @@ import javax.annotation.Nullable;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -48,9 +50,10 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
         }
         return recipesThatWork;
     }
-    
+
     public static boolean isPossibleInput(ItemStack stack) {
-        for(EmpowererRecipe r : ActuallyAdditionsAPI.EMPOWERER_RECIPES) if(r.getInput().apply(stack)) return true;
+        for (EmpowererRecipe r : ActuallyAdditionsAPI.EMPOWERER_RECIPES)
+            if (r.getInput().apply(stack)) return true;
         return false;
     }
 
@@ -153,13 +156,13 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     }
 
     @Override
-    public boolean canInsert(int index, ItemStack stack, boolean automation) {
-        return !automation || !getRecipesForInput(stack).isEmpty();
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> !automation || isPossibleInput(stack);
     }
 
     @Override
-    public boolean canExtract(int index, ItemStack stack, boolean automation) {
-        return !automation || getRecipesForInput(stack).isEmpty();
+    public IRemover getRemover() {
+        return (slot, automation) -> !automation || !isPossibleInput(inv.getStackInSlot(0));
     }
 
     @Override

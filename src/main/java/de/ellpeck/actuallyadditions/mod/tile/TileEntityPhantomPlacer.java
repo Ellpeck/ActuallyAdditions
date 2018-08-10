@@ -13,6 +13,9 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
+import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -24,7 +27,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IButtonReactor{
+public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IButtonReactor {
 
     public static final int RANGE = 3;
     public BlockPos boundPosition;
@@ -34,90 +37,88 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public int side;
     private int oldRange;
 
-    public TileEntityPhantomPlacer(int slots, String name){
+    public TileEntityPhantomPlacer(int slots, String name) {
         super(slots, name);
     }
 
-    public TileEntityPhantomPlacer(){
+    public TileEntityPhantomPlacer() {
         super(9, "phantomPlacer");
         this.isBreaker = false;
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
-        if(type != NBTType.SAVE_BLOCK){
+        if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("Range", this.range);
-            if(this.boundPosition != null){
+            if (this.boundPosition != null) {
                 compound.setInteger("xOfTileStored", this.boundPosition.getX());
                 compound.setInteger("yOfTileStored", this.boundPosition.getY());
                 compound.setInteger("zOfTileStored", this.boundPosition.getZ());
             }
-            if(!this.isBreaker){
+            if (!this.isBreaker) {
                 compound.setInteger("Side", this.side);
             }
         }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.readSyncableNBT(compound, type);
-        if(type != NBTType.SAVE_BLOCK){
+        if (type != NBTType.SAVE_BLOCK) {
             int x = compound.getInteger("xOfTileStored");
             int y = compound.getInteger("yOfTileStored");
             int z = compound.getInteger("zOfTileStored");
             this.range = compound.getInteger("Range");
-            if(!(x == 0 && y == 0 && z == 0)){
+            if (!(x == 0 && y == 0 && z == 0)) {
                 this.boundPosition = new BlockPos(x, y, z);
                 this.markDirty();
             }
-            if(!this.isBreaker){
+            if (!this.isBreaker) {
                 this.side = compound.getInteger("Side");
             }
         }
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
-        if(!this.world.isRemote){
+        if (!this.world.isRemote) {
             this.range = TileEntityPhantomface.upgradeRange(RANGE, this.world, this.pos);
 
-            if(!this.hasBoundPosition()){
+            if (!this.hasBoundPosition()) {
                 this.boundPosition = null;
             }
 
-            if(this.isBoundThingInRange()){
-                if(!this.isRedstonePowered && !this.isPulseMode){
-                    if(this.currentTime > 0){
+            if (this.isBoundThingInRange()) {
+                if (!this.isRedstonePowered && !this.isPulseMode) {
+                    if (this.currentTime > 0) {
                         this.currentTime--;
-                        if(this.currentTime <= 0){
+                        if (this.currentTime <= 0) {
                             this.doWork();
                         }
-                    }
-                    else{
+                    } else {
                         this.currentTime = 30;
                     }
                 }
             }
 
-            if(this.oldRange != this.range){
+            if (this.oldRange != this.range) {
                 this.oldRange = this.range;
 
                 this.sendUpdate();
             }
-        }
-        else{
-            if(this.boundPosition != null){
+        } else {
+            if (this.boundPosition != null) {
                 this.renderParticles();
             }
         }
     }
 
     @Override
-    public boolean hasBoundPosition(){
-        if(this.boundPosition != null){
-            if(this.world.getTileEntity(this.boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ() && this.world.provider.getDimension() == this.world.provider.getDimension())){
+    public boolean hasBoundPosition() {
+        if (this.boundPosition != null) {
+            if (this.world.getTileEntity(this.boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ() && this.world.provider.getDimension() == this.world.provider.getDimension())) {
                 this.boundPosition = null;
                 return false;
             }
@@ -126,95 +127,93 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         return false;
     }
 
-    private void doWork(){
-        if(this.isBoundThingInRange()){
-            if(this.isBreaker){
+    private void doWork() {
+        if (this.isBoundThingInRange()) {
+            if (this.isBreaker) {
                 Block blockToBreak = this.world.getBlockState(this.boundPosition).getBlock();
-                if(blockToBreak != null && this.world.getBlockState(this.boundPosition).getBlockHardness(this.world, this.boundPosition) > -1.0F){
-                	NonNullList<ItemStack> drops = NonNullList.create();
+                if (blockToBreak != null && this.world.getBlockState(this.boundPosition).getBlockHardness(this.world, this.boundPosition) > -1.0F) {
+                    NonNullList<ItemStack> drops = NonNullList.create();
                     blockToBreak.getDrops(drops, world, pos, this.world.getBlockState(this.boundPosition), 0);
 
-                    if(StackUtil.canAddAll(this.inv, drops, false)){
+                    if (StackUtil.canAddAll(this.inv, drops, false)) {
                         this.world.playEvent(2001, this.boundPosition, Block.getStateId(this.world.getBlockState(this.boundPosition)));
                         this.world.setBlockToAir(this.boundPosition);
                         StackUtil.addAll(this.inv, drops, false);
                         this.markDirty();
                     }
                 }
-            }
-            else{
+            } else {
                 int theSlot = StackUtil.findFirstFilled(this.inv);
-                if(theSlot == -1) return;
+                if (theSlot == -1) return;
                 inv.setStackInSlot(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.world, this.boundPosition, inv.getStackInSlot(theSlot)));
             }
         }
     }
 
-    public void renderParticles(){
-        if(this.world.rand.nextInt(2) == 0){
-            double d1 = (double)((float)this.boundPosition.getY()+this.world.rand.nextFloat());
-            int i1 = this.world.rand.nextInt(2)*2-1;
-            int j1 = this.world.rand.nextInt(2)*2-1;
-            double d4 = ((double)this.world.rand.nextFloat()-0.5D)*0.125D;
-            double d2 = (double)this.boundPosition.getZ()+0.5D+0.25D*(double)j1;
-            double d5 = (double)(this.world.rand.nextFloat()*1.0F*(float)j1);
-            double d0 = (double)this.boundPosition.getX()+0.5D+0.25D*(double)i1;
-            double d3 = (double)(this.world.rand.nextFloat()*1.0F*(float)i1);
+    public void renderParticles() {
+        if (this.world.rand.nextInt(2) == 0) {
+            double d1 = (double) ((float) this.boundPosition.getY() + this.world.rand.nextFloat());
+            int i1 = this.world.rand.nextInt(2) * 2 - 1;
+            int j1 = this.world.rand.nextInt(2) * 2 - 1;
+            double d4 = ((double) this.world.rand.nextFloat() - 0.5D) * 0.125D;
+            double d2 = (double) this.boundPosition.getZ() + 0.5D + 0.25D * (double) j1;
+            double d5 = (double) (this.world.rand.nextFloat() * 1.0F * (float) j1);
+            double d0 = (double) this.boundPosition.getX() + 0.5D + 0.25D * (double) i1;
+            double d3 = (double) (this.world.rand.nextFloat() * 1.0F * (float) i1);
             this.world.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
     }
 
     @Override
-    public boolean isBoundThingInRange(){
-        return this.hasBoundPosition() && this.boundPosition.distanceSq(this.pos) <= this.range*this.range;
+    public boolean isBoundThingInRange() {
+        return this.hasBoundPosition() && this.boundPosition.distanceSq(this.pos) <= this.range * this.range;
     }
 
     @Override
-    public BlockPos getBoundPosition(){
+    public BlockPos getBoundPosition() {
         return this.boundPosition;
     }
 
     @Override
-    public void setBoundPosition(BlockPos pos){
+    public void setBoundPosition(BlockPos pos) {
         this.boundPosition = pos;
     }
 
     @Override
-    public int getGuiID(){
+    public int getGuiID() {
         return GuiHandler.GuiTypes.PHANTOM_PLACER.ordinal();
     }
 
     @Override
-    public int getRange(){
+    public int getRange() {
         return this.range;
     }
 
     @Override
-    public boolean canInsert(int i, ItemStack stack, boolean automation){
-        return !automation || !this.isBreaker;
+    public IAcceptor getAcceptor() {
+        return ItemStackHandlerAA.ACCEPT_TRUE;
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, boolean automation){
-        return !automation || this.isBreaker;
+    public IRemover getRemover() {
+        return ItemStackHandlerAA.REMOVE_FALSE;
     }
 
     @Override
-    public boolean isRedstoneToggle(){
+    public boolean isRedstoneToggle() {
         return true;
     }
 
     @Override
-    public void activateOnPulse(){
+    public void activateOnPulse() {
         this.doWork();
     }
 
     @Override
-    public void onButtonPressed(int buttonID, EntityPlayer player){
-        if(this.side+1 >= EnumFacing.values().length){
+    public void onButtonPressed(int buttonID, EntityPlayer player) {
+        if (this.side + 1 >= EnumFacing.values().length) {
             this.side = 0;
-        }
-        else{
+        } else {
             this.side++;
         }
 
