@@ -1,3 +1,6 @@
+# 1.12.2-r140
+* Fixed empowerer ignoring energy costs.
+
 # 1.12.2-r139
 * Added a crash check to figure out who is causing TheWildPlants to be loaded before block init.
 * Fixed the farmer (and other inventories) failing to add items if all items have a stacksize of 1.
