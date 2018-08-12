@@ -76,30 +76,39 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
                 if (recipe != null) {
                     this.recipeForRenderIndex = ActuallyAdditionsAPI.EMPOWERER_RECIPES.indexOf(recipe);
 
-                    this.processTime++;
-                    boolean done = this.processTime >= recipe.getTime();
+                    boolean hasPower = true;
 
                     for (TileEntityDisplayStand stand : stands) {
-                        stand.storage.extractEnergyInternal(recipe.getEnergyPerStand() / recipe.getTime(), false);
+                        if (stand.storage.getEnergyStored() < recipe.getEnergyPerStand() / recipe.getTime()) hasPower = false;
+                    }
+
+                    if (hasPower) {
+
+                        this.processTime++;
+                        boolean done = this.processTime >= recipe.getTime();
+
+                        for (TileEntityDisplayStand stand : stands) {
+                            stand.storage.extractEnergyInternal(recipe.getEnergyPerStand() / recipe.getTime(), false);
+
+                            if (done) {
+                                stand.inv.getStackInSlot(0).shrink(1);
+                                stand.markDirty();
+                            }
+                        }
+
+                        if (this.processTime % 5 == 0 && this.world instanceof WorldServer) {
+                            ((WorldServer) this.world).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 2, 0, 0, 0, 0.1D);
+                        }
 
                         if (done) {
-                            stand.inv.getStackInSlot(0).shrink(1);
-                            stand.markDirty();
+                            ((WorldServer) this.world).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 100, 0, 0, 0, 0.25D);
+
+                            this.inv.setStackInSlot(0, recipe.getOutput().copy());
+                            this.markDirty();
+
+                            this.processTime = 0;
+                            this.recipeForRenderIndex = -1;
                         }
-                    }
-
-                    if (this.processTime % 5 == 0 && this.world instanceof WorldServer) {
-                        ((WorldServer) this.world).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 2, 0, 0, 0, 0.1D);
-                    }
-
-                    if (done) {
-                        ((WorldServer) this.world).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 100, 0, 0, 0, 0.25D);
-
-                        this.inv.setStackInSlot(0, recipe.getOutput().copy());
-                        this.markDirty();
-
-                        this.processTime = 0;
-                        this.recipeForRenderIndex = -1;
                     }
                 } else {
                     this.processTime = 0;
