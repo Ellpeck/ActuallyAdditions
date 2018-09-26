@@ -113,7 +113,7 @@ public final class CrusherRecipeRegistry{
         return true;
     }
 
-    private static boolean hasException(String ore){
+    public static boolean hasException(String ore){
         for(String conf : ConfigStringListValues.CRUSHER_RECIPE_EXCEPTIONS.getValue()){
             if(conf.equals(ore)){
                 return true;

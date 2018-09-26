@@ -75,14 +75,22 @@ public final class CrusherCrafting {
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.DOUBLE_PLANT, 1, 5), new ItemStack(Items.DYE, 4, 9), StackUtil.getEmpty(), 0);
         MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
 
+        if(!CrusherRecipeRegistry.hasException("oreRedstone"))
         ActuallyAdditionsAPI.addCrusherRecipe(new OreIngredient("oreRedstone"), new ItemStack(Items.REDSTONE, 10), StackUtil.getEmpty(), 0);
+        if(!CrusherRecipeRegistry.hasException("oreLapis"))
         ActuallyAdditionsAPI.addCrusherRecipe(new OreIngredient("oreLapis"), new ItemStack(Items.DYE, 12, 4), StackUtil.getEmpty(), 0);
+        if(!CrusherRecipeRegistry.hasException("coal"))
         ActuallyAdditionsAPI.addCrusherRecipe(new OreIngredient("coal"), new ItemStack(InitItems.itemDust, 1, TheDusts.COAL.ordinal()), StackUtil.getEmpty(), 0);
+        if(!CrusherRecipeRegistry.hasException("oreCoal"))
         ActuallyAdditionsAPI.addCrusherRecipe(new OreIngredient("oreCoal"), new ItemStack(Items.COAL, 3), StackUtil.getEmpty(), 0);
+        if(!CrusherRecipeRegistry.hasException("blockCoal"))
         ActuallyAdditionsAPI.addCrusherRecipe(new OreIngredient("blockCoal"), new ItemStack(Items.COAL, 9), StackUtil.getEmpty(), 0);
+        if(!CrusherRecipeRegistry.hasException("oreQuartz"))
         ActuallyAdditionsAPI.addCrusherRecipe(new OreIngredient("oreQuartz"), new ItemStack(Items.QUARTZ, 3), StackUtil.getEmpty(), 0);
+        if(!CrusherRecipeRegistry.hasException("cobblestone"))
         ActuallyAdditionsAPI.addCrusherRecipe(new OreIngredient("cobblestone"), new ItemStack(Blocks.SAND), StackUtil.getEmpty(), 0);
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.GRAVEL), new ItemStack(Items.FLINT), new ItemStack(Items.FLINT), 50);
+        if(!CrusherRecipeRegistry.hasException("stone"))
         ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("stone", false), OreDictionary.getOres("cobblestone", false), 1, NonNullList.withSize(1, StackUtil.getEmpty()), 0, 0);
 
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), new ItemStack(Items.SUGAR, 2), StackUtil.getEmpty(), 0);
@@ -91,7 +99,9 @@ public final class CrusherCrafting {
         ActuallyAdditionsAPI.addCrusherRecipe(new ItemStack(Blocks.GLOWSTONE), new ItemStack(Items.GLOWSTONE_DUST, 4), StackUtil.getEmpty(), 0);
         MISC_RECIPES.add(RecipeUtil.lastCrusherRecipe());
 
+        if(!CrusherRecipeRegistry.hasException("oreNickel"))
         ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreNickel", false), OreDictionary.getOres("dustNickel", false), 2, OreDictionary.getOres("dustPlatinum", false), 1, 15);
+        if(!CrusherRecipeRegistry.hasException("oreIron"))
         ActuallyAdditionsAPI.addCrusherRecipes(OreDictionary.getOres("oreIron", false), OreDictionary.getOres("dustIron", false), 2, OreDictionary.getOres("dustGold", false), 1, 20);
 
         ItemStack temp = getStack("dustIron");
