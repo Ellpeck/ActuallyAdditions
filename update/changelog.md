@@ -1,3 +1,10 @@
+# 1.12.2-r141
+* Fixed Lens of the Killer not providing player-only drops.
+* Fixed Greenhouse Glass skipping steps on certain hard to grow crops.
+* Fixed Coffee Machine.  Whole thing was broken.
+* Made the weight of lush caves 10k, if other mods are still generating later it'll have to be moved to an event.
+* Fixed the crusher search case blacklist not being applied to default recipes.
+
 # 1.12.2-r140
 * Fixed empowerer ignoring energy costs.
 
