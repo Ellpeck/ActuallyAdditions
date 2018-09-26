@@ -128,12 +128,12 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> (slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null) || (slot == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (slot == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal());
+        return (slot, stack, automation) -> !automation || (slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null) || (slot == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (slot == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal());
     }
 
     @Override
     public IRemover getRemover() {
-        return (slot, automation) -> slot == SLOT_OUTPUT || (slot >= 3 && slot < this.inv.getSlots() && ItemCoffee.getIngredientFromStack(inv.getStackInSlot(slot)) == null);
+        return (slot, automation) -> !automation || slot == SLOT_OUTPUT || (slot >= 3 && slot < this.inv.getSlots() && ItemCoffee.getIngredientFromStack(inv.getStackInSlot(slot)) == null);
     }
 
     public void storeCoffee() {
@@ -152,7 +152,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
             if (StackUtil.isValid(input) && input.getItem() == InitItems.itemMisc && input.getItemDamage() == TheMiscItems.CUP.ordinal() && !StackUtil.isValid(this.inv.getStackInSlot(SLOT_OUTPUT)) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= WATER_USE) {
                 if (this.storage.getEnergyStored() >= ENERGY_USED) {
                     if (this.brewTime % 30 == 0) {
-                        this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.35F, 1.0F);
+                        this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.1F, 1.0F);
                     }
 
                     this.brewTime++;

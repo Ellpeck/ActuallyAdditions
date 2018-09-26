@@ -172,8 +172,9 @@ public final class StackUtil {
      * Helper method to remove stack size and return the stack.
      */
     public static ItemStack shrinkForContainer(ItemStack s, int i) {
+        ItemStack sc = s.copy();
         s.shrink(i);
-        if (s.isEmpty()) return s.getItem().getContainerItem(s);
+        if (s.isEmpty()) return sc.getItem().getContainerItem(sc);
         return s;
     }
 

@@ -23,7 +23,7 @@ if(hasProperty('buildnumber')){
 }
 
 minecraft {
-    version = "1.12.2-14.23.4.2739"
+    version = "1.12.2-14.23.4.2760"
     runDir = "run"
     mappings = "snapshot_20180720"
 	makeObfSourceJar = false
