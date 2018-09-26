@@ -27,6 +27,7 @@ public interface IEnergyTile{
 
     int getZ();
 
+    //TODO: Rename to getWorld
     World getWorldObject();
 
     void extractEnergy(int amount);
