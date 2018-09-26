@@ -57,7 +57,7 @@ public class OreGen implements IWorldGenerator{
 
     public OreGen(){
         ActuallyAdditions.LOGGER.info("Registering World Generator...");
-        GameRegistry.registerWorldGenerator(this, 100);
+        GameRegistry.registerWorldGenerator(this, 10000);
         MinecraftForge.TERRAIN_GEN_BUS.register(this);
     }
 
