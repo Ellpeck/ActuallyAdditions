@@ -12,8 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
+import de.ellpeck.actuallyadditions.mod.util.VanillaPacketDispatcher;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,7 +32,6 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -159,8 +157,10 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public final void handleUpdateTag(NBTTagCompound compound){
         this.readSyncableNBT(compound, NBTType.SYNC);
     }
-
+    
     public final void sendUpdate(){
+    	if(world != null && !world.isRemote) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
+    	/*
         if(this.world != null && !this.world.isRemote){
             NBTTagCompound compound = new NBTTagCompound();
             this.writeSyncableNBT(compound, NBTType.SYNC);
@@ -170,8 +170,8 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
             data.setInteger("X", this.pos.getX());
             data.setInteger("Y", this.pos.getY());
             data.setInteger("Z", this.pos.getZ());
-            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER), new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
-        }
+            PacketHandler.theNetwork.sendToAllTracking(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER), new TargetPoint(this.world.provider.getDimension(), this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 0));
+        }*/
     }
 
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
@@ -226,12 +226,15 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public int getComparatorStrength(){
         return 0;
     }
+    
+    private boolean shareEnergy = this instanceof ISharingEnergyProvider;
+    private boolean shareFluid = this instanceof ISharingFluidHandler;
 
     public void updateEntity(){
         this.ticksElapsed++;
 
         if(!this.world.isRemote){
-            if(this instanceof ISharingEnergyProvider){
+            if(shareEnergy){
                 ISharingEnergyProvider provider = (ISharingEnergyProvider)this;
                 if(provider.doesShareEnergy()){
                     int total = provider.getEnergyToSplitShare();
@@ -253,7 +256,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                 }
             }
 
-            if(this instanceof ISharingFluidHandler){
+            if(shareFluid){
                 ISharingFluidHandler handler = (ISharingFluidHandler)this;
                 if(handler.doesShareFluid()){
                     int total = handler.getMaxFluidAmountToSplitShare();

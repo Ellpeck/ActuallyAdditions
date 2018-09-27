@@ -38,6 +38,10 @@ public class CustomEnergyStorage extends EnergyStorage{
         this.maxReceive = before;
         return toReturn;
     }
+    
+    public void addEnergyRaw(int energy){
+    	this.energy = Math.min(this.energy + energy, this.capacity);
+    }
 
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate){
