@@ -124,7 +124,6 @@ public final class WorldUtil {
                 IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
                 IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, opp);
                 if (handlerFrom != null && handlerTo != null) {
-                	if(handlerFrom.getEnergyStored() == 0) return;
                     int drain = handlerFrom.extractEnergy(maxTransfer, true);
                     if (drain > 0) {
                         int filled = handlerTo.receiveEnergy(drain, false);
