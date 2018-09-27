@@ -1,3 +1,6 @@
+# 1.12.2-r142
+* Coal Gen go fast now.
+
 # 1.12.2-r141
 * Fixed Lens of the Killer not providing player-only drops.
 * Fixed Greenhouse Glass skipping steps on certain hard to grow crops.
