@@ -96,7 +96,7 @@ public class BlockGreenhouseGlass extends BlockBase {
         while (true) {
             mut.setPos(mut.getX(), mut.getY() - 1, mut.getZ());
             IBlockState state = world.getBlockState(mut);
-            if (!state.getBlock().isAir(state, world, mut)) {
+            if (!state.isOpaqueCube() || state.getBlock() instanceof IGrowable) {
                 if (state.getBlock() instanceof IGrowable) return Triple.of(mut.toImmutable(), state, (IGrowable) state.getBlock());
                 else return null;
             }
