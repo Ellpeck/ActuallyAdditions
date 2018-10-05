@@ -79,8 +79,7 @@ public class BlockGreenhouseGlass extends BlockBase {
         if (world.canBlockSeeSky(pos) && world.isDaytime()) {
             Triple<BlockPos, IBlockState, IGrowable> trip = firstBlock(world, pos);
             boolean once = false;
-            if(trip != null)
-            for (int i = 0; i < 3; i++) {
+            if (trip != null) for (int i = 0; i < 3; i++) {
                 IBlockState growState = i == 0 ? trip.getMiddle() : world.getBlockState(trip.getLeft());
                 if (trip.getRight().canGrow(world, trip.getLeft(), growState, false)) {
                     trip.getRight().grow(world, rand, trip.getLeft(), growState);
@@ -95,6 +94,7 @@ public class BlockGreenhouseGlass extends BlockBase {
         BlockPos.MutableBlockPos mut = new BlockPos.MutableBlockPos(glassPos);
         while (true) {
             mut.setPos(mut.getX(), mut.getY() - 1, mut.getZ());
+            if (mut.getY() < 0) return null;
             IBlockState state = world.getBlockState(mut);
             if (!state.isOpaqueCube() || state.getBlock() instanceof IGrowable) {
                 if (state.getBlock() instanceof IGrowable) return Triple.of(mut.toImmutable(), state, (IGrowable) state.getBlock());
