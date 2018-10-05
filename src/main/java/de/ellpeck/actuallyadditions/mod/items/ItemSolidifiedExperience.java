@@ -24,6 +24,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -69,9 +70,12 @@ public class ItemSolidifiedExperience extends ItemBase{
                 }
             }
 
-            EntityXPOrb orb = new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, amount);
-            orb.getEntityData().setBoolean(ActuallyAdditions.MODID+"FromSolidified", true);
-            world.spawnEntity(orb);
+            if(ConfigBoolValues.SOLID_XP_ALWAYS_ORBS.currentValue || player instanceof FakePlayer) {
+                EntityXPOrb orb = new EntityXPOrb(world, player.posX+0.5, player.posY+0.5, player.posZ+0.5, amount);
+                orb.getEntityData().setBoolean(ActuallyAdditions.MODID+"FromSolidified", true);
+                world.spawnEntity(orb);
+            }
+            else player.addExperience(amount);
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
