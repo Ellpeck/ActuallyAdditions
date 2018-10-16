@@ -1,3 +1,9 @@
+# 1.12.2-r143
+* Greenhouse Glass will now work with any non-opaque block below it, instead of only air below it.  Yes, this means they can stack.
+* Greenhouse Glass should no longer crash if it is over the void.
+* Solidified experience now defaultly does not spawn orbs, but adds the value to the player's xp.  This can be configured back to original behavior.
+* Greenhouse Glass no longer crashes if the state changes blocks during the growth process.
+
 # 1.12.2-r142
 * Coal Gen go fast now.
 
