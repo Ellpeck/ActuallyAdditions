@@ -81,7 +81,7 @@ public class BlockGreenhouseGlass extends BlockBase {
             boolean once = false;
             if (trip != null) for (int i = 0; i < 3; i++) {
                 IBlockState growState = i == 0 ? trip.getMiddle() : world.getBlockState(trip.getLeft());
-                if (trip.getRight().canGrow(world, trip.getLeft(), growState, false)) {
+                if (growState.getBlock() == trip.getRight() && trip.getRight().canGrow(world, trip.getLeft(), growState, false)) {
                     trip.getRight().grow(world, rand, trip.getLeft(), growState);
                     once = true;
                 }
