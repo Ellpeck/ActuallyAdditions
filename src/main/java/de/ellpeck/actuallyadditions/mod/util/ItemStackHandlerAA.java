@@ -73,13 +73,7 @@ public class ItemStackHandlerAA extends ItemStackHandler {
     }
 
     public final boolean canAccept(int slot, ItemStack stack, boolean automation) {
-        IAcceptor acceptor = getAcceptor();
-        try {
-            return acceptor.canAccept(slot, stack, automation);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return getAcceptor().canAccept(slot, stack, automation);
     }
 
     public final boolean canRemove(int slot, boolean automation) {

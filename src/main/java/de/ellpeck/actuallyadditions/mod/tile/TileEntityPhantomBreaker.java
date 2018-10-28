@@ -23,7 +23,7 @@ public class TileEntityPhantomBreaker extends TileEntityPhantomPlacer {
 
     @Override
     public IAcceptor getAcceptor() {
-        return ItemStackHandlerAA.ACCEPT_FALSE;
+        return (slot, stack, automation) -> !automation;
     }
 
     @Override

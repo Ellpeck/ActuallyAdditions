@@ -196,7 +196,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
     @Override
     public IRemover getRemover() {
-        return ItemStackHandlerAA.REMOVE_FALSE;
+        return (slot, automation) -> !automation;
     }
 
     @Override
