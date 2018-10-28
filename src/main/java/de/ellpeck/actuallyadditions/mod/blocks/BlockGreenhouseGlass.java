@@ -42,13 +42,18 @@ public class BlockGreenhouseGlass extends BlockBase {
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
-        return true;
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isFullCube(IBlockState state) {
         return false;
+    }
+
+    @Override
+    public int getLightOpacity(IBlockState state) {
+        return 0;
     }
 
     @Override
@@ -75,7 +80,6 @@ public class BlockGreenhouseGlass extends BlockBase {
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         if (world.isRemote) return;
-
         if (world.canBlockSeeSky(pos) && world.isDaytime()) {
             Triple<BlockPos, IBlockState, IGrowable> trip = firstBlock(world, pos);
             boolean once = false;
@@ -96,7 +100,7 @@ public class BlockGreenhouseGlass extends BlockBase {
             mut.setPos(mut.getX(), mut.getY() - 1, mut.getZ());
             if (mut.getY() < 0) return null;
             IBlockState state = world.getBlockState(mut);
-            if (!state.isOpaqueCube() || state.getBlock() instanceof IGrowable) {
+            if (state.isOpaqueCube() || state.getBlock() instanceof IGrowable) {
                 if (state.getBlock() instanceof IGrowable) return Triple.of(mut.toImmutable(), state, (IGrowable) state.getBlock());
                 else return null;
             }
