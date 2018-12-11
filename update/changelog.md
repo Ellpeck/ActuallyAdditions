@@ -1,3 +1,7 @@
+# 1.12.2-r144
+* Phantom Breakers should function properly again.
+* Greenhouse Glass functions again (wasn't broken, but it works now)
+
 # 1.12.2-r143
 * Greenhouse Glass will now work with any non-opaque block below it, instead of only air below it.  Yes, this means they can stack.
 * Greenhouse Glass should no longer crash if it is over the void.

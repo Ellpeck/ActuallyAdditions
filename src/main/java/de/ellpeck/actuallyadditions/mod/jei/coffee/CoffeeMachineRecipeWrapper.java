@@ -26,6 +26,7 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
@@ -46,13 +47,13 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton {
     @Override
     public void getIngredients(IIngredients ingredients) {
         List<ItemStack> list = new ArrayList<>();
-        for(ItemStack s : ingredient.getInput().getMatchingStacks())
-        list.add(s);
+        for (ItemStack s : ingredient.getInput().getMatchingStacks())
+            list.add(s);
         list.add(this.cup);
         list.add(this.coffeeBeans);
-        ingredients.setInputs(ItemStack.class, list);
-        
-        ingredients.setOutput(ItemStack.class, this.theOutput);
+        ingredients.setInputs(VanillaTypes.ITEM, list);
+
+        ingredients.setOutput(VanillaTypes.ITEM, this.theOutput);
     }
 
     @Override

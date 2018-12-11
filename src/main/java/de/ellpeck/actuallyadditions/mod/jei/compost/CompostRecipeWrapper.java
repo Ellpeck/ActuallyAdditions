@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
@@ -32,8 +33,8 @@ public class CompostRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        ingredients.setInputs(ItemStack.class, Arrays.asList(recipe.getInput().getMatchingStacks()));
-        ingredients.setOutput(ItemStack.class, recipe.getOutput());
+        ingredients.setInputs(VanillaTypes.ITEM, Arrays.asList(recipe.getInput().getMatchingStacks()));
+        ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
     }
 
     @Override

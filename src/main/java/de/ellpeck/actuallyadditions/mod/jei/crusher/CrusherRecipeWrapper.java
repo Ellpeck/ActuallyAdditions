@@ -22,50 +22,51 @@ import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-public class CrusherRecipeWrapper extends RecipeWrapperWithButton{
+public class CrusherRecipeWrapper extends RecipeWrapperWithButton {
 
     public final CrusherRecipe theRecipe;
 
-    public CrusherRecipeWrapper(CrusherRecipe recipe){
+    public CrusherRecipeWrapper(CrusherRecipe recipe) {
         this.theRecipe = recipe;
     }
 
     @Override
-    public void getIngredients(IIngredients ingredients){
-        ingredients.setInputs(ItemStack.class, Arrays.asList(theRecipe.getInput().getMatchingStacks()));
+    public void getIngredients(IIngredients ingredients) {
+        ingredients.setInputs(VanillaTypes.ITEM, Arrays.asList(theRecipe.getInput().getMatchingStacks()));
 
         List<ItemStack> list = new ArrayList<>();
         list.add(this.theRecipe.getOutputOne());
-        if(StackUtil.isValid(this.theRecipe.getOutputTwo())){
+        if (StackUtil.isValid(this.theRecipe.getOutputTwo())) {
             list.add(this.theRecipe.getOutputTwo());
         }
-        ingredients.setOutputs(ItemStack.class, list);
+        ingredients.setOutputs(VanillaTypes.ITEM, list);
     }
 
     @Override
-    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY){
-        if(StackUtil.isValid(this.theRecipe.getOutputTwo())){
-            minecraft.fontRenderer.drawString(this.theRecipe.getSecondChance()+"%", 60, 60, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
+        if (StackUtil.isValid(this.theRecipe.getOutputTwo())) {
+            minecraft.fontRenderer.drawString(this.theRecipe.getSecondChance() + "%", 60, 60, StringUtil.DECIMAL_COLOR_GRAY_TEXT, false);
         }
 
         super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);
     }
 
     @Override
-    public int getButtonX(){
+    public int getButtonX() {
         return -5;
     }
 
     @Override
-    public int getButtonY(){
+    public int getButtonY() {
         return 26;
     }
 
     @Override
-    public IBookletPage getPage(){
+    public IBookletPage getPage() {
         return BookletUtils.findFirstPageForStack(new ItemStack(InitBlocks.blockGrinder));
     }
 }

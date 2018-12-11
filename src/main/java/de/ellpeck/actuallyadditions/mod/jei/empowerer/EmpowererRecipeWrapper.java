@@ -19,46 +19,47 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 
-public class EmpowererRecipeWrapper extends RecipeWrapperWithButton{
+public class EmpowererRecipeWrapper extends RecipeWrapperWithButton {
 
     public final EmpowererRecipe theRecipe;
 
-    public EmpowererRecipeWrapper(EmpowererRecipe recipe){
+    public EmpowererRecipeWrapper(EmpowererRecipe recipe) {
         this.theRecipe = recipe;
     }
 
     @Override
-    public void getIngredients(IIngredients ingredients){
+    public void getIngredients(IIngredients ingredients) {
         List<ItemStack> inputs = new ArrayList<>();
-        for(ItemStack s : theRecipe.getInput().getMatchingStacks()) 
+        for (ItemStack s : theRecipe.getInput().getMatchingStacks())
             inputs.add(s);
-        for(ItemStack s : theRecipe.getStandOne().getMatchingStacks()) 
+        for (ItemStack s : theRecipe.getStandOne().getMatchingStacks())
             inputs.add(s);
-        for(ItemStack s : theRecipe.getStandTwo().getMatchingStacks()) 
+        for (ItemStack s : theRecipe.getStandTwo().getMatchingStacks())
             inputs.add(s);
-        for(ItemStack s : theRecipe.getStandThree().getMatchingStacks()) 
+        for (ItemStack s : theRecipe.getStandThree().getMatchingStacks())
             inputs.add(s);
-        for(ItemStack s : theRecipe.getStandFour().getMatchingStacks()) 
+        for (ItemStack s : theRecipe.getStandFour().getMatchingStacks())
             inputs.add(s);
-    
-        ingredients.setInputs(ItemStack.class, inputs);
-        ingredients.setOutput(ItemStack.class, this.theRecipe.getOutput());
+
+        ingredients.setInputs(VanillaTypes.ITEM, inputs);
+        ingredients.setOutput(VanillaTypes.ITEM, this.theRecipe.getOutput());
     }
 
     @Override
-    public int getButtonX(){
+    public int getButtonX() {
         return 2;
     }
 
     @Override
-    public int getButtonY(){
+    public int getButtonY() {
         return 2;
     }
 
     @Override
-    public IBookletPage getPage(){
+    public IBookletPage getPage() {
         return BookletUtils.findFirstPageForStack(new ItemStack(InitBlocks.blockEmpowerer));
     }
 }

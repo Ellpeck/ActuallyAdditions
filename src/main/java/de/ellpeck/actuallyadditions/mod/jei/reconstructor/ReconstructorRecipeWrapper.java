@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.mod.recipe.EnchBookConversion;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Items;
@@ -42,8 +43,8 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        ingredients.setInputs(ItemStack.class, Arrays.asList(this.theRecipe.getInput().getMatchingStacks()));
-        ingredients.setOutput(ItemStack.class, this.theRecipe.getOutput());
+        ingredients.setInputs(VanillaTypes.ITEM, Arrays.asList(this.theRecipe.getInput().getMatchingStacks()));
+        ingredients.setOutput(VanillaTypes.ITEM, this.theRecipe.getOutput());
     }
 
     @Override
@@ -86,8 +87,8 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton {
 
         @Override
         public void getIngredients(IIngredients ingredients) {
-            ingredients.setInput(ItemStack.class, BOOK);
-            ingredients.setOutput(ItemStack.class, OUT);
+            ingredients.setInput(VanillaTypes.ITEM, BOOK);
+            ingredients.setOutput(VanillaTypes.ITEM, OUT);
         }
 
     }
