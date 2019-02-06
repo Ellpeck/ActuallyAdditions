@@ -22,6 +22,7 @@ import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay;
 import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
 import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterTrials;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrafting;
@@ -168,6 +169,7 @@ public class MethodHandler implements IMethodHandler{
                         BlockPos pos = new BlockPos(hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
                         if(!tile.getWorldObject().isAirBlock(pos)){
                             IBlockState state = tile.getWorldObject().getBlockState(pos);
+                            if(state.getBlock() instanceof BlockLaserRelay) continue;
                             LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), tile.getLens());
                                 if(recipe != null && tile.getEnergy() >= recipe.getEnergyUsed()){
                                     ItemStack output = recipe.getOutput();
