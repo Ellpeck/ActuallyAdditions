@@ -1,6 +1,14 @@
+# 1.12.2-r145
+* Sir-Will: Cache KittyVanCat UUID.
+* Ore generation can be dimension whitelisted.
+* Filters work properly now.  OreDict was completely non-functional.
+* Farmer farming area is now configurable.
+* Placed laser relays will not be converted by the reconstructor.
+* Canola Press and Fermenting Barrel can now be nbt-cleared in a crafting grid.
+
 # 1.12.2-r144
 * Phantom Breakers should function properly again.
-* Greenhouse Glass functions again (wasn't broken, but it works now)
+* Greenhouse Glass functions again (wasn't broken, but it works now).
 
 # 1.12.2-r143
 * Greenhouse Glass will now work with any non-opaque block below it, instead of only air below it.  Yes, this means they can stack.
