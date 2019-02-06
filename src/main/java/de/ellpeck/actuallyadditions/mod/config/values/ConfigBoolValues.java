@@ -57,7 +57,9 @@ public enum ConfigBoolValues{
     MOST_BLAND_PERSON_EVER("No Colored Item Names", ConfigCategories.OTHER, false, "If you want to be really boring and lame, you can turn on this setting to disable colored names on Actually Additions items. Because why would you want things to look pretty anyways, right?"),
 
     COLOR_LENS_USES_OREDICT("Color Lens Oredict", ConfigCategories.OTHER, false, "If true, the Lens of Color will attempt to pull from the oredict instead of only using vanilla dyes."),
-    SOLID_XP_ALWAYS_ORBS("Solid XP Orbs", ConfigCategories.OTHER, false, "If true, Solidified Experience will always spawn orbs, even for regular players.");
+    SOLID_XP_ALWAYS_ORBS("Solid XP Orbs", ConfigCategories.OTHER, false, "If true, Solidified Experience will always spawn orbs, even for regular players."),
+
+    ORE_GEN_DIM_WHITELIST("Ore Gen Whitelist", ConfigCategories.WORLD_GEN, false, "If true, the ore gen dimension blacklist will be treated as a whitelist.");
 
 
     public final String name;
