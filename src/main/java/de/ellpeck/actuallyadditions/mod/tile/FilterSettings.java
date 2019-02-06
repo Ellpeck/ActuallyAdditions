@@ -20,10 +20,9 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class FilterSettings{
+public class FilterSettings {
 
     public final int whitelistButtonId;
     public final int metaButtonId;
@@ -42,7 +41,7 @@ public class FilterSettings{
     private boolean lastRespectMod;
     private int lastRecpectOredict;
 
-    public FilterSettings(int slots, boolean defaultWhitelist, boolean defaultRespectMeta, boolean defaultRespectNBT, boolean defaultRespectMod, int defaultRespectOredict, int buttonIdStart){
+    public FilterSettings(int slots, boolean defaultWhitelist, boolean defaultRespectMeta, boolean defaultRespectNBT, boolean defaultRespectMod, int defaultRespectOredict, int buttonIdStart) {
         this.filterInventory = new ItemStackHandlerAA(slots);
 
         this.isWhitelist = defaultWhitelist;
@@ -52,103 +51,75 @@ public class FilterSettings{
         this.respectOredict = defaultRespectOredict;
 
         this.whitelistButtonId = buttonIdStart;
-        this.metaButtonId = buttonIdStart+1;
-        this.nbtButtonId = buttonIdStart+2;
-        this.oredictButtonId = buttonIdStart+3;
-        this.modButtonId = buttonIdStart+4;
+        this.metaButtonId = buttonIdStart + 1;
+        this.nbtButtonId = buttonIdStart + 2;
+        this.oredictButtonId = buttonIdStart + 3;
+        this.modButtonId = buttonIdStart + 4;
     }
 
-    public static boolean check(ItemStack stack, ItemStackHandlerAA filter, boolean whitelist, boolean meta, boolean nbt, boolean mod, int oredict){
-        if(StackUtil.isValid(stack)){
-            for(int i = 0; i < filter.getSlots(); i++){
+    public static boolean check(ItemStack stack, ItemStackHandlerAA filter, boolean whitelist, boolean meta, boolean nbt, boolean mod, int oredict) {
+        if (StackUtil.isValid(stack)) {
+            for (int i = 0; i < filter.getSlots(); i++) {
                 ItemStack slot = filter.getStackInSlot(i);
 
-                if(StackUtil.isValid(slot)){
-                    if(SlotFilter.isFilter(slot)){
+                if (StackUtil.isValid(slot)) {
+                    if (SlotFilter.isFilter(slot)) {
                         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
                         ItemDrill.loadSlotsFromNBT(inv, slot);
-                        for(int k = 0; k < inv.getSlots(); k++){
+                        for (int k = 0; k < inv.getSlots(); k++) {
                             ItemStack filterSlot = inv.getStackInSlot(k);
-                            if(StackUtil.isValid(filterSlot) && areEqualEnough(filterSlot, stack, meta, nbt, mod, oredict)){
-                                return whitelist;
-                            }
+                            if (StackUtil.isValid(filterSlot) && areEqualEnough(filterSlot, stack, meta, nbt, mod, oredict)) { return whitelist; }
                         }
-                    }
-                    else if(areEqualEnough(slot, stack, meta, nbt, mod, oredict)){
-                        return whitelist;
-                    }
+                    } else if (areEqualEnough(slot, stack, meta, nbt, mod, oredict)) { return whitelist; }
                 }
             }
         }
         return !whitelist;
     }
 
-    private static boolean areEqualEnough(ItemStack first, ItemStack second, boolean meta, boolean nbt, boolean mod, int oredict){
+    private static boolean areEqualEnough(ItemStack first, ItemStack second, boolean meta, boolean nbt, boolean mod, int oredict) {
         Item firstItem = first.getItem();
         Item secondItem = second.getItem();
-        if(mod){
-            ResourceLocation firstReg = firstItem.getRegistryName();
-            ResourceLocation secondReg = secondItem.getRegistryName();
-            if(firstReg != null && secondReg != null){
-                String firstDomain = firstReg.getNamespace();
-                String secondDomain = secondReg.getNamespace();
-                if(firstDomain != null && secondDomain != null){
-                    if(!firstDomain.equals(secondDomain)){
-                        return false;
+        if (mod && firstItem.getRegistryName().getNamespace().equals(secondItem.getRegistryName().getNamespace())) return true;
+
+        if (oredict != 0) {
+            int[] firstIds = OreDictionary.getOreIDs(first);
+            int[] secondIds = OreDictionary.getOreIDs(second);
+            boolean firstEmpty = ArrayUtils.isEmpty(firstIds);
+            boolean secondEmpty = ArrayUtils.isEmpty(secondIds);
+
+            //Both empty, meaning none has OreDict entries, so they are equal
+            if (firstEmpty && secondEmpty) {
+                return true;
+            }
+            //Only one empty, meaning they are not equal
+            else if (firstEmpty || secondEmpty) {
+                return false;
+            } else {
+                for (int id : firstIds) {
+                    if (ArrayUtils.contains(secondIds, id)) {
+                        //Needs to match only one id, so return true on first match
+                        if (oredict == 1) { return true; }
                     }
+                    //Needs to match every id, so just return false when no match
+                    else if (oredict == 2) { return false; }
+
                 }
+                //If oredict mode 1, this will fail because nothing matched
+                //If oredict mode 2, this will mean nothing hasn't matched
+                return oredict == 2;
             }
         }
-        else if(firstItem != secondItem){
-            return false;
-        }
+
+        if (firstItem != secondItem) return false;
 
         boolean metaFine = !meta || first.getItemDamage() == second.getItemDamage();
         boolean nbtFine = !nbt || ItemStack.areItemStackTagsEqual(first, second);
-        if(metaFine && nbtFine){
-            if(oredict == 0){
-                return true;
-            }
-            else{
-                int[] firstIds = OreDictionary.getOreIDs(first);
-                int[] secondIds = OreDictionary.getOreIDs(second);
-                boolean firstEmpty = ArrayUtils.isEmpty(firstIds);
-                boolean secondEmpty = ArrayUtils.isEmpty(secondIds);
-
-                //Both empty, meaning none has OreDict entries, so they are equal
-                if(firstEmpty && secondEmpty){
-                    return true;
-                }
-                //Only one empty, meaning they are not equal
-                else if(firstEmpty || secondEmpty){
-                    return false;
-                }
-                else{
-                    for(int id : firstIds){
-                        if(ArrayUtils.contains(secondIds, id)){
-                            //Needs to match only one id, so return true on first match
-                            if(oredict == 1){
-                                return true;
-                            }
-                        }
-                        //Needs to match every id, so just return false when no match
-                        else if(oredict == 2){
-                            return false;
-                        }
-
-                    }
-                    //If oredict mode 1, this will fail because nothing matched
-                    //If oredict mode 2, this will mean nothing hasn't matched
-                    return oredict == 2;
-                }
-            }
-        }
-        else{
-            return false;
-        }
+        if (metaFine && nbtFine) return true;
+        return false;
     }
 
-    public void writeToNBT(NBTTagCompound tag, String name){
+    public void writeToNBT(NBTTagCompound tag, String name) {
         NBTTagCompound compound = new NBTTagCompound();
         compound.setBoolean("Whitelist", this.isWhitelist);
         compound.setBoolean("Meta", this.respectMeta);
@@ -159,7 +130,7 @@ public class FilterSettings{
         tag.setTag(name, compound);
     }
 
-    public void readFromNBT(NBTTagCompound tag, String name){
+    public void readFromNBT(NBTTagCompound tag, String name) {
         NBTTagCompound compound = tag.getCompoundTag(name);
         this.isWhitelist = compound.getBoolean("Whitelist");
         this.respectMeta = compound.getBoolean("Meta");
@@ -169,11 +140,11 @@ public class FilterSettings{
         TileEntityInventoryBase.loadSlots(this.filterInventory, compound);
     }
 
-    public boolean needsUpdateSend(){
+    public boolean needsUpdateSend() {
         return this.lastWhitelist != this.isWhitelist || this.lastRespectMeta != this.respectMeta || this.lastRespectNBT != this.respectNBT || this.lastRespectMod != this.respectMod || this.lastRecpectOredict != this.respectOredict;
     }
 
-    public void updateLasts(){
+    public void updateLasts() {
         this.lastWhitelist = this.isWhitelist;
         this.lastRespectMeta = this.respectMeta;
         this.lastRespectNBT = this.respectNBT;
@@ -181,44 +152,37 @@ public class FilterSettings{
         this.lastRecpectOredict = this.respectOredict;
     }
 
-    public void onButtonPressed(int id){
-        if(id == this.whitelistButtonId){
+    public void onButtonPressed(int id) {
+        if (id == this.whitelistButtonId) {
             this.isWhitelist = !this.isWhitelist;
-        }
-        else if(id == this.metaButtonId){
+        } else if (id == this.metaButtonId) {
             this.respectMeta = !this.respectMeta;
-        }
-        else if(id == this.nbtButtonId){
+        } else if (id == this.nbtButtonId) {
             this.respectNBT = !this.respectNBT;
-        }
-        else if(id == this.modButtonId){
+        } else if (id == this.modButtonId) {
             this.respectMod = !this.respectMod;
 
-            if(this.respectMod){
+            if (this.respectMod) {
                 this.respectMeta = false;
                 this.respectNBT = false;
                 this.respectOredict = 0;
             }
-        }
-        else if(id == this.oredictButtonId){
-            if(this.respectOredict+1 > 2){
+        } else if (id == this.oredictButtonId) {
+            if (this.respectOredict + 1 > 2) {
                 this.respectOredict = 0;
-            }
-            else{
+            } else {
                 this.respectOredict++;
             }
         }
     }
 
-    public boolean check(ItemStack stack){
+    public boolean check(ItemStack stack) {
         return !this.needsCheck() || check(stack, this.filterInventory, this.isWhitelist, this.respectMeta, this.respectNBT, this.respectMod, this.respectOredict);
     }
 
-    public boolean needsCheck(){
-        for(int i = 0; i < this.filterInventory.getSlots(); i++){
-            if(StackUtil.isValid(this.filterInventory.getStackInSlot(i))){
-                return true;
-            }
+    public boolean needsCheck() {
+        for (int i = 0; i < this.filterInventory.getSlots(); i++) {
+            if (StackUtil.isValid(this.filterInventory.getStackInSlot(i))) { return true; }
         }
         return this.isWhitelist;
     }
