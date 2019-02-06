@@ -20,8 +20,10 @@ import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -80,21 +82,22 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
                     this.waitTime--;
 
                     if (this.waitTime <= 0) {
-                        int radiusAroundCenter = 4;
+                        int area = ConfigIntValues.FARMER_AREA.getValue();
+                        if (area % 2 == 0) area++;
+                        int radius = area / 2;
 
                         IBlockState state = this.world.getBlockState(this.pos);
-                        int meta = state.getBlock().getMetaFromState(state);
-                        BlockPos center = this.pos.offset(EnumFacing.byHorizontalIndex(meta), radiusAroundCenter + 1);
+                        BlockPos center = this.pos.offset(state.getValue(BlockHorizontal.FACING), radius + 1);
 
                         BlockPos query = center.add(this.checkX, 0, this.checkY);
                         this.checkBehaviors(query);
 
                         this.checkX++;
-                        if (this.checkX > radiusAroundCenter) {
-                            this.checkX = -radiusAroundCenter;
+                        if (this.checkX > radius) {
+                            this.checkX = -radius;
                             this.checkY++;
-                            if (this.checkY > radiusAroundCenter) {
-                                this.checkY = -radiusAroundCenter;
+                            if (this.checkY > radius) {
+                                this.checkY = -radius;
                             }
                         }
                     }
