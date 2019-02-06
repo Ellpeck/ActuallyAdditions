@@ -21,6 +21,7 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -117,9 +118,10 @@ public final class BlockCrafting{
     
     public static void init(){
 
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockOilGenerator), new ItemStack(InitBlocks.blockOilGenerator));
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockFluidPlacer), new ItemStack(InitBlocks.blockFluidPlacer));
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockFluidCollector), new ItemStack(InitBlocks.blockFluidCollector));
+        Block[] removeNBTBlocks = new Block[] { InitBlocks.blockOilGenerator, InitBlocks.blockFluidPlacer, InitBlocks.blockFluidCollector, InitBlocks.blockCanolaPress, InitBlocks.blockFermentingBarrel };
+
+        for(Block b : removeNBTBlocks)
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(b), new ItemStack(b));
 
         //Battery Box
         RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockBatteryBox),
