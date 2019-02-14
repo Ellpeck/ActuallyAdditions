@@ -79,7 +79,7 @@ public class OreGen implements IWorldGenerator {
 
     private void generateDefault(World world, Random random, int x, int z) {
         if (ConfigBoolValues.GENERATE_QUARTZ.isEnabled()) {
-            this.addOreSpawn(InitBlocks.blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.ORE_QUARTZ), Blocks.STONE, world, random, x * 16, z * 16, MathHelper.getInt(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
+            this.addOreSpawn(InitBlocks.blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.ORE_QUARTZ), Blocks.STONE, world, random, x * 16, z * 16, MathHelper.getInt(random, ConfigIntValues.QUARTZ_VEIN_SIZE.currentValue / 2 + 1, ConfigIntValues.QUARTZ_VEIN_SIZE.currentValue), ConfigIntValues.QUARTZ_SPAWN_CHANCES.currentValue, ConfigIntValues.QUARTZ_MIN_Y.currentValue, ConfigIntValues.QUARTZ_MAX_Y.currentValue);
         }
 
         if (ConfigBoolValues.GEN_LUSH_CAVES.isEnabled()) {
