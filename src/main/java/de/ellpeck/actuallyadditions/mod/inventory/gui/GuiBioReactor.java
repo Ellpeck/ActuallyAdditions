@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
@@ -64,7 +65,7 @@ public class GuiBioReactor extends GuiWtfMojang{
         }
 
         if(this.tile.producePerTick > 0){
-            this.drawCenteredString(this.fontRenderer, this.tile.producePerTick+" CF/t", this.guiLeft+87, this.guiTop+86, 0xFFFFFF);
+            this.drawCenteredString(this.fontRenderer, this.tile.producePerTick+" "+I18n.format("actuallyadditions.cft"), this.guiLeft+87, this.guiTop+86, 0xFFFFFF);
         }
 
         this.energy.draw();

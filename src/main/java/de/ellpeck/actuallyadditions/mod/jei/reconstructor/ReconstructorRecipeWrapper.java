@@ -22,6 +22,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -49,7 +50,7 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-        minecraft.fontRenderer.drawString(this.theRecipe.getEnergyUsed() + " CF", 55, 0, 0xFFFFFF, true);
+        minecraft.fontRenderer.drawString(this.theRecipe.getEnergyUsed() + " "+I18n.format("actuallyadditions.cf"), 55, 0, 0xFFFFFF, true);
         super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);
     }
 

@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -72,7 +73,7 @@ public class GuiOilGenerator extends GuiWtfMojang{
         }
 
         if(this.generator.maxBurnTime > 0 && this.generator.currentEnergyProduce > 0){
-            this.drawCenteredString(this.fontRenderer, this.generator.currentEnergyProduce + " CF/t", this.guiLeft + 87, this.guiTop + 65, 0xFFFFFF);
+            this.drawCenteredString(this.fontRenderer, this.generator.currentEnergyProduce + " "+I18n.format("actuallyadditions.cft"), this.guiLeft + 87, this.guiTop + 65, 0xFFFFFF);
             this.drawCenteredString(this.fontRenderer, "for "+ this.generator.maxBurnTime + " t", this.guiLeft + 87, this.guiTop + 75, 0xFFFFFF);
             GlStateManager.pushMatrix();
             GlStateManager.scale(0.75, 0.75, 1);
