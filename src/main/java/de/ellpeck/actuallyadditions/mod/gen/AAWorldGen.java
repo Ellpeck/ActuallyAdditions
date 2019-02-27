@@ -85,7 +85,7 @@ public class AAWorldGen implements IWorldGenerator {
 
             StructureBoundingBox box = new StructureBoundingBox(x * 16 + 8, 0, z * 16 + 8, x * 16 + 8 + 15, 255, z * 16 + 8 + 15);
             if (chunkRand.nextInt(ConfigIntValues.LUSH_CAVE_CHANCE.getValue()) <= 0) {
-                BlockPos randPos = world.getTopSolidOrLiquidBlock(new BlockPos(x * 16 + chunkRand.nextInt(16) + 8, 0, z * 16 + chunkRand.nextInt(16) + 8));
+                BlockPos randPos = world.getTopSolidOrLiquidBlock(new BlockPos(x * 16 + MathHelper.getInt(random, 6, 10), 0, z * 16 + MathHelper.getInt(random, 6, 10)));
                 BlockPos pos = randPos.down(MathHelper.getInt(chunkRand, 15, randPos.getY() - 15));
 
                 this.caveGen.generate(world, chunkRand, pos, box);

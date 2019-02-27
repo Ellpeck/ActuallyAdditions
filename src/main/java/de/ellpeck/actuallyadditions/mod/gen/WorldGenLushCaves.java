@@ -130,7 +130,7 @@ public class WorldGenLushCaves{
 
                         IBlockState state = world.getBlockState(cratePos);
                         if(state != null && state.getBlock().isLeaves(state, world, cratePos)){
-                            world.setBlockState(cratePos, InitBlocks.blockGiantChest.getDefaultState());
+                            world.setBlockState(cratePos, InitBlocks.blockGiantChest.getDefaultState(), 2);
 
                             TileEntity tile = world.getTileEntity(cratePos);
                             if(tile instanceof TileEntityGiantChest){
@@ -174,7 +174,7 @@ public class WorldGenLushCaves{
                         if(!this.checkIndestructable(world, posUp)){
                             IBlockState stateUp = world.getBlockState(posUp);
                             if(!state.getBlock().isAir(state, world, pos) && stateUp.getBlock().isAir(stateUp, world, posUp)){
-                                world.setBlockState(pos, Blocks.GRASS.getDefaultState());
+                                world.setBlockState(pos, Blocks.GRASS.getDefaultState(), 2);
                             }
                         }
                     }
