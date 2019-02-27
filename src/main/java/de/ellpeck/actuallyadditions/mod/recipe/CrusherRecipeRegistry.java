@@ -29,7 +29,7 @@ public final class CrusherRecipeRegistry{
     public static final ArrayList<SearchCase> SEARCH_CASES = new ArrayList<>();
 
     public static void registerFinally(){
-        ArrayList<String> oresNoResult = new ArrayList<String>();
+        ArrayList<String> oresNoResult = new ArrayList<>();
         int recipeStartedAt = ActuallyAdditionsAPI.CRUSHER_RECIPES.size();
 
         for(String ore : OreDictionary.getOreNames()){
@@ -52,7 +52,7 @@ public final class CrusherRecipeRegistry{
             }
         }
 
-        ArrayList<String> addedRecipes = new ArrayList<String>();
+        ArrayList<String> addedRecipes = new ArrayList<>();
         for(int i = recipeStartedAt; i < ActuallyAdditionsAPI.CRUSHER_RECIPES.size(); i++){
             CrusherRecipe recipe = ActuallyAdditionsAPI.CRUSHER_RECIPES.get(i);
             addedRecipes.add(recipe.getInput().getMatchingStacks()+" -> "+recipe.getOutputOne());
@@ -61,7 +61,7 @@ public final class CrusherRecipeRegistry{
         ActuallyAdditions.LOGGER.debug("Couldn't add "+oresNoResult.size()+" Crusher Recipes automatically, either because the inputs were missing outputs, or because they exist already: "+oresNoResult);
         removeDuplicateRecipes();
     }
-    
+
     public static void removeDuplicateRecipes() {
         ArrayList<CrusherRecipe> usable = new ArrayList<>();
         ArrayList<CrusherRecipe> removed = new ArrayList<>();
@@ -71,15 +71,15 @@ public final class CrusherRecipeRegistry{
             else for(CrusherRecipe re : usable) {
                 if(re.getInput().apply(r.getInput().getMatchingStacks()[0])) canUse = false;
             }
-            
+
             if(canUse) usable.add(r);
             else removed.add(r);
         }
-        
+
         ActuallyAdditionsAPI.CRUSHER_RECIPES.clear();
         ActuallyAdditionsAPI.CRUSHER_RECIPES.addAll(usable);
         ActuallyAdditions.LOGGER.debug(String.format("Removed %s crusher recipes that had dupliate inputs, %s remain.", removed.size(), usable.size()));
-       }
+    }
 
     public static boolean hasBlacklistedOutput(ItemStack output, String[] config){
         if(StackUtil.isValid(output)){

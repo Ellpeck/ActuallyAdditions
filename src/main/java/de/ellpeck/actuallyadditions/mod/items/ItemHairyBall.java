@@ -34,7 +34,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemHairyBall extends ItemBase{
-    
+
     private final UUID KittyVanCatUUID = UUID.fromString("681d4e20-10ef-40c9-a0a5-ba2f1995ef44");
 
     public ItemHairyBall(String name){
@@ -47,12 +47,12 @@ public class ItemHairyBall extends ItemBase{
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event){
         //Ocelots dropping Hair Balls
         if(ConfigBoolValues.DO_CAT_DROPS.isEnabled() && event.getEntityLiving() != null && event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote){
-        	if((event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot)event.getEntityLiving()).isTamed()) || (event.getEntityLiving() instanceof EntityPlayer && event.getEntityLiving().getUniqueID().equals(KittyVanCatUUID))){
-        		if(event.getEntityLiving().world.rand.nextInt(ConfigIntValues.FUR_CHANCE.getValue()) == 0){
-        			EntityItem item = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX+0.5, event.getEntityLiving().posY+0.5, event.getEntityLiving().posZ+0.5, new ItemStack(InitItems.itemHairyBall));
-        			event.getEntityLiving().world.spawnEntity(item);
-        		}
-        	}
+            if(event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot)event.getEntityLiving()).isTamed() || event.getEntityLiving() instanceof EntityPlayer && event.getEntityLiving().getUniqueID().equals(this.KittyVanCatUUID)){
+                if(event.getEntityLiving().world.rand.nextInt(ConfigIntValues.FUR_CHANCE.getValue()) == 0){
+                    EntityItem item = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX+0.5, event.getEntityLiving().posY+0.5, event.getEntityLiving().posZ+0.5, new ItemStack(InitItems.itemHairyBall));
+                    event.getEntityLiving().world.spawnEntity(item);
+                }
+            }
         }
     }
 
@@ -70,7 +70,7 @@ public class ItemHairyBall extends ItemBase{
 
             world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, world.rand.nextFloat()*0.1F+0.9F);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
     public ItemStack getRandomReturnItem(Random rand){

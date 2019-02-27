@@ -34,7 +34,6 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -105,12 +104,7 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     @Override
     @SideOnly(Side.CLIENT)
     public IBlockColor getBlockColor(){
-        return new IBlockColor(){
-            @Override
-            public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex){
-                return BlockCrystalCluster.this.crystal.clusterColor;
-            }
-        };
+        return (state, world, pos, tintIndex) -> BlockCrystalCluster.this.crystal.clusterColor;
     }
 
     @Override
@@ -121,12 +115,7 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     @Override
     @SideOnly(Side.CLIENT)
     public IItemColor getItemColor(){
-        return new IItemColor(){
-            @Override
-            public int colorMultiplier(ItemStack stack, int tintIndex){
-                return BlockCrystalCluster.this.crystal.clusterColor;
-            }
-        };
+        return (stack, tintIndex) -> BlockCrystalCluster.this.crystal.clusterColor;
     }
 
     @Override

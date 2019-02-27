@@ -98,7 +98,7 @@ public class BlockMisc extends BlockBase{
         @Override
         public int getItemBurnTime(ItemStack stack) {
             if(stack.getMetadata() == TheMiscBlocks.CHARCOAL_BLOCK.ordinal()) return 16000;
-        	return super.getItemBurnTime(stack);
+            return super.getItemBurnTime(stack);
         }
     }
 }

@@ -54,8 +54,8 @@ public class BlockShockSuppressor extends BlockContainerBase{
                 if(!suppressor.isRedstonePowered){
                     BlockPos supPos = suppressor.getPos();
 
-                    List<Entity> entitiesToRemove = new ArrayList<Entity>();
-                    List<BlockPos> posesToRemove = new ArrayList<BlockPos>();
+                    List<Entity> entitiesToRemove = new ArrayList<>();
+                    List<BlockPos> posesToRemove = new ArrayList<>();
 
                     for(BlockPos pos : affectedBlocks){
                         if(pos.distanceSq(supPos) <= rangeSq){

@@ -33,7 +33,7 @@ public class PageCrusherRecipe extends BookletPage{
     public PageCrusherRecipe(int localizationKey, CrusherRecipe recipe){
         super(localizationKey);
         this.recipe = recipe;
-        stacks = recipe.getInput().getMatchingStacks();
+        this.stacks = recipe.getInput().getMatchingStacks();
     }
 
     @Override
@@ -47,8 +47,8 @@ public class PageCrusherRecipe extends BookletPage{
         gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".crusherRecipe")+")", startX+36, startY+85, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+100);
-        
-        if(counter++ % 50 == 0) gui.addOrModifyItemRenderer(stacks[rotate++ % stacks.length], startX+38+18, startY+6+1, 1F, true);
+
+        if(this.counter++ % 50 == 0) gui.addOrModifyItemRenderer(this.stacks[this.rotate++ % this.stacks.length], startX+38+18, startY+6+1, 1F, true);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class PageCrusherRecipe extends BookletPage{
         super.initGui(gui, startX, startY);
 
         if(this.recipe != null){
-            gui.addOrModifyItemRenderer(stacks[rotate++ % stacks.length], startX+38+18, startY+6+1, 1F, true);
+            gui.addOrModifyItemRenderer(this.stacks[this.rotate++ % this.stacks.length], startX+38+18, startY+6+1, 1F, true);
             gui.addOrModifyItemRenderer(this.recipe.getOutputOne(), startX+38+4, startY+6+53, 1F, false);
 
             if(StackUtil.isValid(this.recipe.getOutputTwo())){

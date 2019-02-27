@@ -101,7 +101,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     public IEnergyStorage getEnergyStorage(EnumFacing facing){
         return this.storage;
     }
-    
+
     public ItemStack getStack() {
         return this.inv.getStackInSlot(0);
     }

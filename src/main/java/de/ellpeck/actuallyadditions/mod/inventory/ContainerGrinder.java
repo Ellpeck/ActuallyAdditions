@@ -65,7 +65,7 @@ public class ContainerGrinder extends Container{
             ItemStack currentStack = newStack.copy();
 
             //Slots in Inventory to shift from
-            if(slot == TileEntityGrinder.SLOT_OUTPUT_1_1 || slot == TileEntityGrinder.SLOT_OUTPUT_1_2 || (this.isDouble && (slot == TileEntityGrinder.SLOT_OUTPUT_2_1 || slot == TileEntityGrinder.SLOT_OUTPUT_2_2))){
+            if(slot == TileEntityGrinder.SLOT_OUTPUT_1_1 || slot == TileEntityGrinder.SLOT_OUTPUT_1_2 || this.isDouble && (slot == TileEntityGrinder.SLOT_OUTPUT_2_1 || slot == TileEntityGrinder.SLOT_OUTPUT_2_2)){
                 if(!this.mergeItemStack(newStack, inventoryStart, hotbarEnd+1, true)){
                     return StackUtil.getEmpty();
                 }

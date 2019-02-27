@@ -37,7 +37,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
 
     public static final int CAP = 1000;
-    public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
+    public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<>();
     private final IEnergyStorage[] energyStorages = new IEnergyStorage[6];
     private Mode mode = Mode.BOTH;
 
@@ -108,7 +108,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
 
     @Override
     public void saveDataOnChangeOrWorldStart(){
-        Map<EnumFacing, TileEntity> old = new HashMap<EnumFacing, TileEntity>(this.receiversAround);
+        Map<EnumFacing, TileEntity> old = new HashMap<>(this.receiversAround);
         boolean change = false;
 
         this.receiversAround.clear();
@@ -161,14 +161,14 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
 
                                     EnumFacing opp = facing.getOpposite();
                                     if(tile != null){
-                                    if(tile.hasCapability(CapabilityEnergy.ENERGY, opp)){
-                                        IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, opp);
-                                        if(cap != null && cap.receiveEnergy(maxTransfer, true) > 0){
-                                            totalReceiverAmount++;
-                                            workedOnce = true;
+                                        if(tile.hasCapability(CapabilityEnergy.ENERGY, opp)){
+                                            IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, opp);
+                                            if(cap != null && cap.receiveEnergy(maxTransfer, true) > 0){
+                                                totalReceiverAmount++;
+                                                workedOnce = true;
+                                            }
                                         }
                                     }
-                                }
                                 }
                             }
 

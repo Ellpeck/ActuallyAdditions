@@ -41,9 +41,9 @@ public final class Util{
     public static boolean isDevVersion(){
         return ActuallyAdditions.VERSION.equals("@VERSION@");
     }
-    
+
     public static boolean isClient(){
-    	return FMLCommonHandler.instance().getEffectiveSide().isClient();
+        return FMLCommonHandler.instance().getEffectiveSide().isClient();
     }
 
     private static String[] splitVersion(){

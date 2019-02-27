@@ -101,7 +101,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
     }
 
     @SuppressWarnings("deprecation")
-	public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb){
+    public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb){
         //Base
         this.fillWithBlocks(world, sbb, 1, 0, 8, 9, 0, 10, Blocks.GRASS);
         this.fillWithBlocks(world, sbb, 0, 0, 0, 1, 0, 7, Blocks.COBBLESTONE);

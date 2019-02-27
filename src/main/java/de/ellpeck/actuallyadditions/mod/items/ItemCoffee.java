@@ -140,7 +140,7 @@ public class ItemCoffee extends ItemFoodBase{
         @Override
         public boolean effect(ItemStack stack){
             PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
-            ArrayList<PotionEffect> effectsNew = new ArrayList<PotionEffect>();
+            ArrayList<PotionEffect> effectsNew = new ArrayList<>();
             if(effects != null && effects.length > 0){
                 for(PotionEffect effect : effects){
                     if(effect.getAmplifier() > 0){

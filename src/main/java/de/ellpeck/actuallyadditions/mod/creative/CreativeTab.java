@@ -350,7 +350,7 @@ public class CreativeTab extends CreativeTabs{
     }
 
     public void add(Item item){
-        if(item != null && (!(item instanceof IDisableableItem) || (item instanceof IDisableableItem && !((IDisableableItem) item).isDisabled()))){
+        if(item != null && (!(item instanceof IDisableableItem) || item instanceof IDisableableItem && !((IDisableableItem) item).isDisabled())){
             item.getSubItems(INSTANCE, this.list);
         }
     }

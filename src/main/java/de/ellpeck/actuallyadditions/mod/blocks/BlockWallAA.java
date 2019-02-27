@@ -117,7 +117,7 @@ public class BlockWallAA extends BlockBase{
     public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos){
         IBlockState state = worldIn.getBlockState(pos);
         Block block = state.getBlock();
-        return block != Blocks.BARRIER && (!(block != this && !(block instanceof BlockFenceGate)) || ((state.getMaterial().isOpaque() && state.isFullCube()) && state.getMaterial() != Material.GOURD));
+        return block != Blocks.BARRIER && (!(block != this && !(block instanceof BlockFenceGate)) || state.getMaterial().isOpaque() && state.isFullCube() && state.getMaterial() != Material.GOURD);
     }
 
 

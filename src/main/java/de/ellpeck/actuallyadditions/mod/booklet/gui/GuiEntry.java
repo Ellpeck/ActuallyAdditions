@@ -87,7 +87,7 @@ public class GuiEntry extends GuiBooklet{
             }
         }
 
-        int idOffset = this.entryPage*(BUTTONS_PER_PAGE*2);
+        int idOffset = this.entryPage*BUTTONS_PER_PAGE*2;
         for(int x = 0; x < 2; x++){
             for(int y = 0; y < BUTTONS_PER_PAGE; y++){
                 int id = y+x*BUTTONS_PER_PAGE;
@@ -105,7 +105,7 @@ public class GuiEntry extends GuiBooklet{
     @Override
     protected void actionPerformed(GuiButton button) throws IOException{
         if(button instanceof EntryButton){
-            int actualId = button.id+this.entryPage*(BUTTONS_PER_PAGE*2);
+            int actualId = button.id+this.entryPage*BUTTONS_PER_PAGE*2;
 
             if(this.chapters.size() > actualId){
                 IBookletChapter chapter = this.chapters.get(actualId);

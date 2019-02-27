@@ -209,7 +209,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
             tooltip.add(StringUtil.localize(base+"1."+this.toPick1)+" "+StringUtil.localize(base+"2."+this.toPick2));
         }
     }
-    
+
     @Override
     public boolean hasComparatorInputOverride(IBlockState state){
         return true;
@@ -217,11 +217,11 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     @Override
     public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos){
-    	TileEntity t = world.getTileEntity(pos);
-    	int i = 0;
-    	if (t instanceof TileEntityAtomicReconstructor) {
-    		i = ((TileEntityAtomicReconstructor) t).getEnergy();
-    	}
+        TileEntity t = world.getTileEntity(pos);
+        int i = 0;
+        if (t instanceof TileEntityAtomicReconstructor) {
+            i = ((TileEntityAtomicReconstructor) t).getEnergy();
+        }
         return MathHelper.clamp(i / 20000, 0, 15);
     }
 }

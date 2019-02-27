@@ -31,7 +31,7 @@ import net.minecraftforge.oredict.OreIngredient;
 
 public final class EmpowererHandler {
 
-    public static final ArrayList<EmpowererRecipe> MAIN_PAGE_RECIPES = new ArrayList<EmpowererRecipe>();
+    public static final ArrayList<EmpowererRecipe> MAIN_PAGE_RECIPES = new ArrayList<>();
     public static EmpowererRecipe recipeEmpoweredCanolaSeed;
 
     public static void init() {

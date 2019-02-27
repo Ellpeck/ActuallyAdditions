@@ -37,7 +37,7 @@ public class RenderBatteryBox extends TileEntitySpecialRenderer<TileEntityBatter
             return;
         }
 
-        ItemStack stack = ((TileEntityBatteryBox)tile).inv.getStackInSlot(0);
+        ItemStack stack = tile.inv.getStackInSlot(0);
         if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemBattery){
             GlStateManager.pushMatrix();
             GlStateManager.translate((float)x+0.5F, (float)y+1F, (float)z+0.5F);
@@ -71,7 +71,7 @@ public class RenderBatteryBox extends TileEntitySpecialRenderer<TileEntityBatter
 
             double boop = Minecraft.getSystemTime()/800D;
             GlStateManager.translate(0D, Math.sin(boop%(2*Math.PI))*0.065, 0D);
-            GlStateManager.rotate((float)(((boop*40D)%360)), 0, 1, 0);
+            GlStateManager.rotate((float)(boop*40D%360), 0, 1, 0);
 
             float scale = stack.getItem() instanceof ItemBlock ? 0.85F : 0.65F;
             GlStateManager.scale(scale, scale, scale);

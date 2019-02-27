@@ -165,7 +165,7 @@ public class LensMining extends Lens{
                     if(tile.getEnergy() >= adaptedUse){
                         Block block = Block.getBlockFromItem(stack.getItem());
                         if(block != Blocks.AIR){
-                        	IBlockState state = block.getStateForPlacement(tile.getWorldObject(), hitPos, EnumFacing.UP, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
+                            IBlockState state = block.getStateForPlacement(tile.getWorldObject(), hitPos, EnumFacing.UP, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
                             tile.getWorldObject().setBlockState(hitPos, state, 2);
 
                             tile.getWorldObject().playEvent(2001, hitPos, Block.getStateId(state));

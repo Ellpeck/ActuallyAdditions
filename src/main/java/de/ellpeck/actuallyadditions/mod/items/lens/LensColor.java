@@ -62,10 +62,10 @@ public class LensColor extends Lens{
                 int meta = block.getMetaFromState(state);
                 ItemStack returnStack = this.tryConvert(new ItemStack(block, 1, meta), hitState, hitBlock, tile);
                 if(returnStack != null && returnStack.getItem() instanceof ItemBlock){
-                	Block toPlace = Block.getBlockFromItem(returnStack.getItem());
-                	IBlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, EnumFacing.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
+                    Block toPlace = Block.getBlockFromItem(returnStack.getItem());
+                    IBlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, EnumFacing.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
                     tile.getWorldObject().setBlockState(hitBlock, state2Place, 2);
-                    tile.extractEnergy(ENERGY_USE); 
+                    tile.extractEnergy(ENERGY_USE);
                 }
             }
 
@@ -90,9 +90,9 @@ public class LensColor extends Lens{
     private ItemStack tryConvert(ItemStack stack, IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
         if(StackUtil.isValid(stack)){
             Item item = stack.getItem();
-                for(Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_COLOR_CHANGERS.entrySet()){
-                    if(item == changer.getKey()){
-                        return changer.getValue().modifyItem(stack, hitState, hitBlock, tile);
+            for(Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_COLOR_CHANGERS.entrySet()){
+                if(item == changer.getKey()){
+                    return changer.getValue().modifyItem(stack, hitState, hitBlock, tile);
                 }
             }
         }

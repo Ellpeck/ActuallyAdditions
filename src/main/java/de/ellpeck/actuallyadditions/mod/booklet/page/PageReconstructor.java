@@ -50,7 +50,7 @@ public class PageReconstructor extends BookletPage{
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+88);
         if(this.recipe != null){
-            if(counter++ % 50 == 0) gui.addOrModifyItemRenderer(stacks[rotate++ % stacks.length], startX+30+1, startY+10+13, 1F, true);
+            if(this.counter++ % 50 == 0) gui.addOrModifyItemRenderer(this.stacks[this.rotate++ % this.stacks.length], startX+30+1, startY+10+13, 1F, true);
         }
     }
 
@@ -60,7 +60,7 @@ public class PageReconstructor extends BookletPage{
         super.initGui(gui, startX, startY);
 
         if(this.recipe != null){
-            gui.addOrModifyItemRenderer(stacks[0], startX+30+1, startY+10+13, 1F, true);
+            gui.addOrModifyItemRenderer(this.stacks[0], startX+30+1, startY+10+13, 1F, true);
             gui.addOrModifyItemRenderer(this.recipe.getOutput(), startX+30+47, startY+10+13, 1F, false);
         }
     }

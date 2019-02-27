@@ -18,7 +18,7 @@ import net.minecraftforge.oredict.OreIngredient;
 
 import java.util.List;
 
-//This class created by Shadows_of_Fire 
+//This class created by Shadows_of_Fire
 //MIT License
 public final class RecipeHelper {
 
@@ -65,8 +65,8 @@ public final class RecipeHelper {
     }
 
     /*
-    * This adds a shaped recipe to the list of crafting recipes, using the forge format, with a custom group.
-    */
+     * This adds a shaped recipe to the list of crafting recipes, using the forge format, with a custom group.
+     */
     public static void addOldShaped(String name, String group, ItemStack output, Object... input) {
         ShapedPrimer primer = CraftingHelper.parseShaped(input);
         addRecipe(j++, new ShapedRecipes(new ResourceLocation(MODID, group).toString(), primer.width, primer.height, primer.input, output).setRegistryName(MODID, name));

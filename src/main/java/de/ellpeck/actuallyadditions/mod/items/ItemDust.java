@@ -69,17 +69,12 @@ public class ItemDust extends ItemBase implements IColorProvidingItem{
     @SideOnly(Side.CLIENT)
     @Override
     public IItemColor getItemColor(){
-        return new IItemColor(){
-            @Override
-            public int colorMultiplier(ItemStack stack, int pass){
-                return stack.getItemDamage() >= ALL_DUSTS.length ? 0xFFFFFF : ALL_DUSTS[stack.getItemDamage()].color;
-            }
-        };
+        return (stack, pass) -> stack.getItemDamage() >= ALL_DUSTS.length ? 0xFFFFFF : ALL_DUSTS[stack.getItemDamage()].color;
     }
-    
+
     @Override
     public int getItemBurnTime(ItemStack stack) {
-    	if(stack.getMetadata() == 6) return 1200;
-    	return super.getItemBurnTime(stack);
+        if(stack.getMetadata() == 6) return 1200;
+        return super.getItemBurnTime(stack);
     }
 }

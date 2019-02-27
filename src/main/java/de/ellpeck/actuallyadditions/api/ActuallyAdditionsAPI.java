@@ -142,7 +142,7 @@ public final class ActuallyAdditionsAPI{
     public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
         CRUSHER_RECIPES.add(new CrusherRecipe(Ingredient.fromStacks(input), outputOne, outputTwo.isEmpty() ? ItemStack.EMPTY : outputTwo, outputTwoChance));
     }
-    
+
     /**
      * Adds a Recipe to the Crusher Recipe Registry
      *
@@ -208,7 +208,7 @@ public final class ActuallyAdditionsAPI{
     public static void addCompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay){
         COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
     }
-    
+
     /**
      * Adds a new conversion recipe to the compost.
      *
@@ -247,7 +247,7 @@ public final class ActuallyAdditionsAPI{
     public static void addEmpowererRecipe(ItemStack input, ItemStack output, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4, int energyPerStand, int time, float[] particleColor){
         EMPOWERER_RECIPES.add(new EmpowererRecipe(input, output, modifier1, modifier2, modifier3, modifier4, energyPerStand, time, particleColor));
     }
-    
+
     public static void addEmpowererRecipe(Ingredient input, ItemStack output, Ingredient modifier1, Ingredient modifier2, Ingredient modifier3, Ingredient modifier4, int energyPerStand, int time, float[] particleColor){
         EMPOWERER_RECIPES.add(new EmpowererRecipe(input, output, modifier1, modifier2, modifier3, modifier4, energyPerStand, time, particleColor));
     }
@@ -271,7 +271,7 @@ public final class ActuallyAdditionsAPI{
     public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse){
         addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
     }
-    
+
     /**
      * Adds a recipe to the Atomic Reconstructor conversion lenses
      * StackSizes can only be 1 and greater ones will be ignored
@@ -285,7 +285,7 @@ public final class ActuallyAdditionsAPI{
     public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse, LensConversion type){
         RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
     }
-    
+
     public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse){
         addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
     }

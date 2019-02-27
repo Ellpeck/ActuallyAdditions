@@ -36,7 +36,7 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        ingredients.setInputs(VanillaTypes.ITEM, Arrays.asList(theRecipe.getInput().getMatchingStacks()));
+        ingredients.setInputs(VanillaTypes.ITEM, Arrays.asList(this.theRecipe.getInput().getMatchingStacks()));
 
         List<ItemStack> list = new ArrayList<>();
         list.add(this.theRecipe.getOutputOne());

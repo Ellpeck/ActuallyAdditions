@@ -75,12 +75,12 @@ public class TileEntityEnergizer extends TileEntityInventoryBase {
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || (slot == 0 && (stack.hasCapability(CapabilityEnergy.ENERGY, null)));
+        return (slot, stack, automation) -> !automation || slot == 0 && stack.hasCapability(CapabilityEnergy.ENERGY, null);
     }
 
     @Override
     public IRemover getRemover() {
-        return (slot, automation) -> !EnchantmentHelper.hasBindingCurse(inv.getStackInSlot(slot)) && !automation || (slot == 1);
+        return (slot, automation) -> !EnchantmentHelper.hasBindingCurse(this.inv.getStackInSlot(slot)) && !automation || slot == 1;
     }
 
     public int getEnergyScaled(int i) {

@@ -129,7 +129,7 @@ public class PageCrafting extends BookletPage{
         Ingredient[] ings = new Ingredient[9];
         int width = 3;
         int height = 3;
-        
+
         if(recipe instanceof BlankRecipe){
             this.recipeTypeLocKey = "tooltip."+ActuallyAdditions.MODID+".disabled";
             gui.addOrModifyItemRenderer(recipe.getRecipeOutput(), startX+100, startY+25, 1F, false);

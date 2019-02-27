@@ -96,7 +96,7 @@ public class MethodHandler implements IMethodHandler{
         stack.setTagCompound(new NBTTagCompound());
         for(int i = 0; i < effects.length; i++){
             if(effects[i].getPotion() == effect.getPotion()){
-                effects[i] = new PotionEffect(effects[i].getPotion(), effects[i].getDuration()+(addDur ? effect.getDuration() : 0), effects[i].getAmplifier()+(addAmp ? (effect.getAmplifier() > 0 ? effect.getAmplifier() : 1) : 0));
+                effects[i] = new PotionEffect(effects[i].getPotion(), effects[i].getDuration()+(addDur ? effect.getDuration() : 0), effects[i].getAmplifier()+(addAmp ? effect.getAmplifier() > 0 ? effect.getAmplifier() : 1 : 0));
             }
             this.addEffectToStack(stack, effects[i]);
         }
@@ -124,7 +124,7 @@ public class MethodHandler implements IMethodHandler{
 
     @Override
     public PotionEffect[] getEffectsFromStack(ItemStack stack){
-        ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
+        ArrayList<PotionEffect> effects = new ArrayList<>();
         NBTTagCompound tag = stack.getTagCompound();
         if(tag != null){
             int counter = tag.getInteger("Counter");
@@ -171,29 +171,29 @@ public class MethodHandler implements IMethodHandler{
                             IBlockState state = tile.getWorldObject().getBlockState(pos);
                             if(state.getBlock() instanceof BlockLaserRelay) continue;
                             LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), tile.getLens());
-                                if(recipe != null && tile.getEnergy() >= recipe.getEnergyUsed()){
-                                    ItemStack output = recipe.getOutput();
-                                    if(StackUtil.isValid(output)){
-                                        tile.getWorldObject().playEvent(2001, pos, Block.getStateId(state));
-                                        recipe.transformHook(ItemStack.EMPTY, state, pos, tile);
-                                        if(output.getItem() instanceof ItemBlock){
-                                        	Block toPlace = Block.getBlockFromItem(output.getItem());
-                                        	IBlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
-                                            tile.getWorldObject().setBlockState(pos, state2Place, 2);
-                                        }
-                                        else{
-                                            EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
-                                            tile.getWorldObject().spawnEntity(item);
-                                            tile.getWorldObject().setBlockToAir(pos);
-                                        }
-
-                                        tile.extractEnergy(recipe.getEnergyUsed());
-                                        break;
+                            if(recipe != null && tile.getEnergy() >= recipe.getEnergyUsed()){
+                                ItemStack output = recipe.getOutput();
+                                if(StackUtil.isValid(output)){
+                                    tile.getWorldObject().playEvent(2001, pos, Block.getStateId(state));
+                                    recipe.transformHook(ItemStack.EMPTY, state, pos, tile);
+                                    if(output.getItem() instanceof ItemBlock){
+                                        Block toPlace = Block.getBlockFromItem(output.getItem());
+                                        IBlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
+                                        tile.getWorldObject().setBlockState(pos, state2Place, 2);
                                     }
+                                    else{
+                                        EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
+                                        tile.getWorldObject().spawnEntity(item);
+                                        tile.getWorldObject().setBlockToAir(pos);
+                                    }
+
+                                    tile.extractEnergy(recipe.getEnergyUsed());
+                                    break;
                                 }
                             }
                         }
                     }
+                }
             }
 
             //Converting the Items
@@ -202,32 +202,32 @@ public class MethodHandler implements IMethodHandler{
                 ItemStack stack = item.getItem();
                 if(!item.isDead && StackUtil.isValid(stack)){
                     LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(stack, tile.getLens());
-                        if(recipe != null){
-                            int itemsPossible = Math.min(tile.getEnergy()/recipe.getEnergyUsed(), stack.getCount());
+                    if(recipe != null){
+                        int itemsPossible = Math.min(tile.getEnergy()/recipe.getEnergyUsed(), stack.getCount());
 
-                            if(itemsPossible > 0){
-                            	recipe.transformHook(item.getItem(), null, item.getPosition(), tile);
-                                item.setDead();
+                        if(itemsPossible > 0){
+                            recipe.transformHook(item.getItem(), null, item.getPosition(), tile);
+                            item.setDead();
 
-                                if(stack.getCount()-itemsPossible > 0){
-                                    ItemStack stackCopy = stack.copy();
-                                    stackCopy.shrink(itemsPossible);
+                            if(stack.getCount()-itemsPossible > 0){
+                                ItemStack stackCopy = stack.copy();
+                                stackCopy.shrink(itemsPossible);
 
-                                    EntityItem inputLeft = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, stackCopy);
-                                    tile.getWorldObject().spawnEntity(inputLeft);
-                                }
-
-                                ItemStack outputCopy = recipe.getOutput().copy();
-                                outputCopy.setCount(itemsPossible);
-
-                                EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
-                                tile.getWorldObject().spawnEntity(newItem);
-
-                                tile.extractEnergy(recipe.getEnergyUsed()*itemsPossible);
-                                break;
+                                EntityItem inputLeft = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, stackCopy);
+                                tile.getWorldObject().spawnEntity(inputLeft);
                             }
+
+                            ItemStack outputCopy = recipe.getOutput().copy();
+                            outputCopy.setCount(itemsPossible);
+
+                            EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
+                            tile.getWorldObject().spawnEntity(newItem);
+
+                            tile.extractEnergy(recipe.getEnergyUsed()*itemsPossible);
+                            break;
                         }
                     }
+                }
             }
             return !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock);
         }
@@ -289,30 +289,30 @@ public class MethodHandler implements IMethodHandler{
         }
         return hasWorkedOnce;
     }
-    
+
     @Override
     public boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance){
         boolean hasWorkedOnce = false;
         for(ItemStack input : inputs){
             if(StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null){
-                    if(StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
-                        ItemStack outputOneCopy = outputOne.copy();
-                        outputOneCopy.setCount(outputOneAmount);
+                if(StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
+                    ItemStack outputOneCopy = outputOne.copy();
+                    outputOneCopy.setCount(outputOneAmount);
 
-                        if(!StackUtil.isValid(outputTwo)){
-                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getEmpty(), 0);
-                            hasWorkedOnce = true;
-                        }
-                        else if(StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
-                        	ItemStack outputTwoCopy = outputTwo.copy();
-                            outputTwoCopy.setCount(outputTwoAmount);
+                    if(!StackUtil.isValid(outputTwo)){
+                        ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getEmpty(), 0);
+                        hasWorkedOnce = true;
+                    }
+                    else if(StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
+                        ItemStack outputTwoCopy = outputTwo.copy();
+                        outputTwoCopy.setCount(outputTwoAmount);
 
-                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, outputTwoCopy, outputTwoChance);
-                            hasWorkedOnce = true;
-                            }
-                        }
+                        ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, outputTwoCopy, outputTwoChance);
+                        hasWorkedOnce = true;
                     }
                 }
+            }
+        }
         return hasWorkedOnce;
     }
 

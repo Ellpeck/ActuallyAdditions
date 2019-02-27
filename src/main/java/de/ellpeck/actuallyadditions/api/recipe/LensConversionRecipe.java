@@ -41,19 +41,19 @@ public class LensConversionRecipe {
     }
 
     public Ingredient getInput() {
-        return input;
+        return this.input;
     }
 
     public ItemStack getOutput() {
-        return output;
+        return this.output;
     }
 
     public int getEnergyUsed() {
-        return energy;
+        return this.energy;
     }
 
     public Lens getType() {
-        return type;
+        return this.type;
     }
 
     public void transformHook(ItemStack stack, IBlockState state, BlockPos pos, IAtomicReconstructor tile) {

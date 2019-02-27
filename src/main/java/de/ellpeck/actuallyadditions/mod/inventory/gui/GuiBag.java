@@ -103,7 +103,7 @@ public class GuiBag extends GuiWtfMojang{
         this.filter.drawHover(mouseX, mouseY);
 
         if(this.buttonAutoInsert.isMouseOver()){
-            List<String> text = new ArrayList<String>();
+            List<String> text = new ArrayList<>();
             text.add(TextFormatting.BOLD+"Auto-Insert "+(this.container.autoInsert ? "On" : "Off"));
             text.addAll(this.mc.fontRenderer.listFormattedStringToWidth("Turn this on to make items that get picked up automatically go into the bag.", 200));
             text.addAll(this.mc.fontRenderer.listFormattedStringToWidth(TextFormatting.GRAY+""+TextFormatting.ITALIC+"Note that this WON'T work when you are holding the bag in your hand.", 200));

@@ -72,7 +72,7 @@ public class ParticleLaserItem extends Particle{
         GlStateManager.scale(0.3F, 0.3F, 0.3F);
 
         double boop = Minecraft.getSystemTime()/600D;
-        GlStateManager.rotate((float)((boop*40D)%360), 0, 1, 0);
+        GlStateManager.rotate((float)(boop*40D%360), 0, 1, 0);
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_CONSTANT_COLOR, GlStateManager.SourceFactor.ONE.factor, GlStateManager.DestFactor.ZERO.factor);

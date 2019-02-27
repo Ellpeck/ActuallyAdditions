@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
 
-    public final ConcurrentHashMap<EnumFacing, TileEntity> handlersAround = new ConcurrentHashMap<EnumFacing, TileEntity>();
+    public final ConcurrentHashMap<EnumFacing, TileEntity> handlersAround = new ConcurrentHashMap<>();
     private final IFluidHandler[] fluidHandlers = new IFluidHandler[6];
     private Mode mode = Mode.BOTH;
 
@@ -91,7 +91,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
 
     @Override
     public void saveDataOnChangeOrWorldStart(){
-        Map<EnumFacing, TileEntity> old = new HashMap<EnumFacing, TileEntity>(this.handlersAround);
+        Map<EnumFacing, TileEntity> old = new HashMap<>(this.handlersAround);
         boolean change = false;
 
         this.handlersAround.clear();
@@ -139,9 +139,9 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay{
     private int transferFluidToReceiverInNeed(EnumFacing from, Network network, FluidStack stack, boolean doFill){
         int transmitted = 0;
         //Keeps track of all the Laser Relays and Energy Acceptors that have been checked already to make nothing run multiple times
-        Set<BlockPos> alreadyChecked = new HashSet<BlockPos>();
+        Set<BlockPos> alreadyChecked = new HashSet<>();
 
-        Set<TileEntityLaserRelayFluids> relaysThatWork = new HashSet<TileEntityLaserRelayFluids>();
+        Set<TileEntityLaserRelayFluids> relaysThatWork = new HashSet<>();
         int totalReceiverAmount = 0;
 
         for(IConnectionPair pair : network.connections){

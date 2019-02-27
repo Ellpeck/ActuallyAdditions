@@ -34,8 +34,8 @@ public class ItemSwordAA extends ItemSword implements IDisableableItem {
         this.name = unlocalizedName;
         this.rarity = rarity;
 
-        this.disabled = ConfigurationHandler.config.getBoolean("Disable: " + StringUtil.badTranslate(name), "Tool Control", false, "This will disable the " + StringUtil.badTranslate(name) +". It will not be registered.");
-        if(!disabled) this.register();
+        this.disabled = ConfigurationHandler.config.getBoolean("Disable: " + StringUtil.badTranslate(this.name), "Tool Control", false, "This will disable the " + StringUtil.badTranslate(this.name) +". It will not be registered.");
+        if(!this.disabled) this.register();
     }
 
     private void register(){
@@ -71,8 +71,8 @@ public class ItemSwordAA extends ItemSword implements IDisableableItem {
         return this.rarity;
     }
 
-	@Override
-	public boolean isDisabled() {
-		return disabled;
-	}
+    @Override
+    public boolean isDisabled() {
+        return this.disabled;
+    }
 }

@@ -44,7 +44,7 @@ public class ItemFilter extends ItemBase{
         if(!world.isRemote && hand == EnumHand.MAIN_HAND){
             player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FILTER.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
+        return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @Override

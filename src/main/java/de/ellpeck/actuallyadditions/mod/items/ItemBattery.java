@@ -75,7 +75,7 @@ public class ItemBattery extends ItemEnergy{
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand){
         if(!worldIn.isRemote && player.isSneaking()){
             ItemUtil.changeEnabled(player, hand);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+            return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
         }
         return super.onItemRightClick(worldIn, player, hand);
     }

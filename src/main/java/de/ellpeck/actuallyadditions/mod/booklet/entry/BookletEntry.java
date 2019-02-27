@@ -33,7 +33,7 @@ public class BookletEntry implements IBookletEntry{
 
     private final String identifier;
     private final int priority;
-    private final List<IBookletChapter> chapters = new ArrayList<IBookletChapter>();
+    private final List<IBookletChapter> chapters = new ArrayList<>();
     private TextFormatting color;
 
     public BookletEntry(String identifier){
@@ -52,7 +52,7 @@ public class BookletEntry implements IBookletEntry{
     private static boolean fitsFilter(IBookletPage page, String searchBarText){
         Minecraft mc = Minecraft.getMinecraft();
 
-        List<ItemStack> items = new ArrayList<ItemStack>();
+        List<ItemStack> items = new ArrayList<>();
         page.getItemStacksForPage(items);
         if(!items.isEmpty()){
             for(ItemStack stack : items){
@@ -67,7 +67,7 @@ public class BookletEntry implements IBookletEntry{
             }
         }
 
-        List<FluidStack> fluids = new ArrayList<FluidStack>();
+        List<FluidStack> fluids = new ArrayList<>();
         page.getFluidStacksForPage(fluids);
         if(!fluids.isEmpty()){
             for(FluidStack stack : fluids){
@@ -116,7 +116,7 @@ public class BookletEntry implements IBookletEntry{
         if(searchBarText != null && !searchBarText.isEmpty()){
             String search = searchBarText.toLowerCase(Locale.ROOT);
 
-            List<IBookletChapter> fittingChapters = new ArrayList<IBookletChapter>();
+            List<IBookletChapter> fittingChapters = new ArrayList<>();
             for(IBookletChapter chapter : this.getAllChapters()){
                 if(chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(search)){
                     fittingChapters.add(chapter);

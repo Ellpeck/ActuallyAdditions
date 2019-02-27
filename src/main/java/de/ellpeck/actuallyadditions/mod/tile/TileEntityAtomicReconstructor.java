@@ -43,7 +43,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         super(1, "reconstructor");
         int power = ConfigIntValues.RECONSTRUCTOR_POWER.getValue();
         int recieve = MathHelper.ceil(power * 0.016666F);
-        storage = new CustomEnergyStorage(power, recieve, 0);
+        this.storage = new CustomEnergyStorage(power, recieve, 0);
     }
 
     public static void shootLaser(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens) {
@@ -93,7 +93,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
             if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
                 this.oldEnergy = this.storage.getEnergyStored();
-                this.world.updateComparatorOutputLevel(pos, InitBlocks.blockAtomicReconstructor);
+                this.world.updateComparatorOutputLevel(this.pos, InitBlocks.blockAtomicReconstructor);
             }
         }
 
@@ -101,7 +101,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public Lens getLens() {
-        Item item = inv.getStackInSlot(0).getItem();
+        Item item = this.inv.getStackInSlot(0).getItem();
         if (item instanceof ILensItem) return ((ILensItem) item).getLens();
         return this.counter >= 500 ? ActuallyAdditionsAPI.lensDisruption : ActuallyAdditionsAPI.lensDefaultConversion;
     }

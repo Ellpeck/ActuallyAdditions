@@ -64,12 +64,9 @@ public class PacketServerToClient implements IMessage{
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(final PacketServerToClient message, final MessageContext ctx){
-            Minecraft.getMinecraft().addScheduledTask(new Runnable(){
-                @Override
-                public void run(){
-                    if(message.data != null && message.handler != null){
-                        message.handler.handleData(message.data, ctx);
-                    }
+            Minecraft.getMinecraft().addScheduledTask(() -> {
+                if(message.data != null && message.handler != null){
+                    message.handler.handleData(message.data, ctx);
                 }
             });
             return null;

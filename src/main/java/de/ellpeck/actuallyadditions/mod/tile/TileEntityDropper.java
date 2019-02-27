@@ -66,7 +66,7 @@ public class TileEntityDropper extends TileEntityInventoryBase{
             ItemStack drop = theoreticalRemove.copy();
             drop.setCount(1);
             WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state), this.world, this.pos, drop);
-                this.removeFromInventory(true);
+            this.removeFromInventory(true);
         }
     }
 

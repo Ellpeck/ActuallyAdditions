@@ -139,7 +139,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay {
                     }
                 }
                 tile.markDirty();
-                world.notifyBlockUpdate(pos, getDefaultState(), getDefaultState(), 3);
+                world.notifyBlockUpdate(pos, this.getDefaultState(), this.getDefaultState(), 3);
             }
         } else {
             return true;

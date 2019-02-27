@@ -48,22 +48,22 @@ public class EmpowererRecipe {
     }
 
     public boolean matches(ItemStack base, ItemStack stand1, ItemStack stand2, ItemStack stand3, ItemStack stand4) {
-        if (!input.apply(base)) return false;
+        if (!this.input.apply(base)) return false;
         List<Ingredient> matches = new ArrayList<>();
         ItemStack[] stacks = { stand1, stand2, stand3, stand4 };
         boolean[] unused = { true, true, true, true };
         for (ItemStack s : stacks) {
-            if (unused[0] && modifier1.apply(s)) {
-                matches.add(modifier1);
+            if (unused[0] && this.modifier1.apply(s)) {
+                matches.add(this.modifier1);
                 unused[0] = false;
-            } else if (unused[1] && modifier2.apply(s)) {
-                matches.add(modifier2);
+            } else if (unused[1] && this.modifier2.apply(s)) {
+                matches.add(this.modifier2);
                 unused[1] = false;
-            } else if (unused[2] && modifier3.apply(s)) {
-                matches.add(modifier3);
+            } else if (unused[2] && this.modifier3.apply(s)) {
+                matches.add(this.modifier3);
                 unused[2] = false;
-            } else if (unused[3] && modifier4.apply(s)) {
-                matches.add(modifier4);
+            } else if (unused[3] && this.modifier4.apply(s)) {
+                matches.add(this.modifier4);
                 unused[3] = false;
             }
         }
@@ -72,38 +72,38 @@ public class EmpowererRecipe {
     }
 
     public Ingredient getInput() {
-        return input;
+        return this.input;
     }
 
     public ItemStack getOutput() {
-        return output;
+        return this.output;
     }
 
     public Ingredient getStandOne() {
-        return modifier1;
+        return this.modifier1;
     }
 
     public Ingredient getStandTwo() {
-        return modifier2;
+        return this.modifier2;
     }
 
     public Ingredient getStandThree() {
-        return modifier3;
+        return this.modifier3;
     }
 
     public Ingredient getStandFour() {
-        return modifier4;
+        return this.modifier4;
     }
 
     public int getTime() {
-        return time;
+        return this.time;
     }
 
     public int getEnergyPerStand() {
-        return energyPerStand;
+        return this.energyPerStand;
     }
 
     public float[] getParticleColors() {
-        return particleColor;
+        return this.particleColor;
     }
 }

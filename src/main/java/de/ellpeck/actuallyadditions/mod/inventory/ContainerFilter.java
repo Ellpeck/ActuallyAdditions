@@ -35,7 +35,7 @@ public class ContainerFilter extends Container{
 
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 6; j++){
-                this.addSlotToContainer(new SlotFilter(this.filterInventory, j+(i*6), 35+j*18, 10+i*18));
+                this.addSlotToContainer(new SlotFilter(this.filterInventory, j+i*6, 35+j*18, 10+i*18));
             }
         }
 

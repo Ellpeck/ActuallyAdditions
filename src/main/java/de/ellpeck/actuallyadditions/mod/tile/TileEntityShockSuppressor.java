@@ -19,7 +19,7 @@ import java.util.List;
 
 public class TileEntityShockSuppressor extends TileEntityBase implements IEnergyDisplay{
 
-    public static final List<TileEntityShockSuppressor> SUPPRESSORS = new ArrayList<TileEntityShockSuppressor>();
+    public static final List<TileEntityShockSuppressor> SUPPRESSORS = new ArrayList<>();
 
     public static final int USE_PER = 300;
     public static final int RANGE = 5;

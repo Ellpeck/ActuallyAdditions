@@ -14,7 +14,7 @@ import io.netty.util.internal.ConcurrentSet;
 
 public class Network{
 
-    public final ConcurrentSet<IConnectionPair> connections = new ConcurrentSet<IConnectionPair>();
+    public final ConcurrentSet<IConnectionPair> connections = new ConcurrentSet<>();
     public int changeAmount;
 
     @Override

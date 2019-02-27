@@ -80,7 +80,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay{
             //TheAchievements.OPEN_BOOKLET.get(player);
             //TheAchievements.OPEN_BOOKLET_MILESTONE.get(player);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
     @Override

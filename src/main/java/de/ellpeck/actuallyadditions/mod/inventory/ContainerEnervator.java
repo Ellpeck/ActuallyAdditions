@@ -49,7 +49,7 @@ public class ContainerEnervator extends Container{
 
         for(int k = 0; k < 4; ++k){
             final EntityEquipmentSlot slot = ContainerEnergizer.VALID_EQUIPMENT_SLOTS[k];
-            this.addSlotToContainer(new Slot(player.inventory, 36+(3-k), 102, 19+k*18){
+            this.addSlotToContainer(new Slot(player.inventory, 36+3-k, 102, 19+k*18){
                 @Override
                 public int getSlotStackLimit(){
                     return 1;

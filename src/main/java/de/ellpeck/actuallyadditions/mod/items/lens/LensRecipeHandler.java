@@ -39,7 +39,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public final class LensRecipeHandler {
 
-    public static final ArrayList<LensConversionRecipe> MAIN_PAGE_RECIPES = new ArrayList<LensConversionRecipe>();
+    public static final ArrayList<LensConversionRecipe> MAIN_PAGE_RECIPES = new ArrayList<>();
     public static LensConversionRecipe recipeColorLens;
     public static LensConversionRecipe recipeSoulSand;
     public static LensConversionRecipe recipeGreenWall;

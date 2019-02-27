@@ -92,28 +92,28 @@ public class ItemWaterBowl extends ItemBase{
         }
 
         if(trace == null){
-            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+            return new ActionResult<>(EnumActionResult.PASS, stack);
         }
         else if(trace.typeOfHit != RayTraceResult.Type.BLOCK){
-            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+            return new ActionResult<>(EnumActionResult.PASS, stack);
         }
         else{
             BlockPos pos = trace.getBlockPos();
 
             if(!world.isBlockModifiable(player, pos)){
-                return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+                return new ActionResult<>(EnumActionResult.FAIL, stack);
             }
             else{
                 BlockPos pos1 = world.getBlockState(pos).getBlock().isReplaceable(world, pos) && trace.sideHit == EnumFacing.UP ? pos : pos.offset(trace.sideHit);
 
                 if(!player.canPlayerEdit(pos1, trace.sideHit, stack)){
-                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+                    return new ActionResult<>(EnumActionResult.FAIL, stack);
                 }
                 else if(this.tryPlaceContainedLiquid(player, world, pos1, false)){
-                    return !player.capabilities.isCreativeMode ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, new ItemStack(Items.BOWL)) : new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+                    return !player.capabilities.isCreativeMode ? new ActionResult<>(EnumActionResult.SUCCESS, new ItemStack(Items.BOWL)) : new ActionResult<>(EnumActionResult.SUCCESS, stack);
                 }
                 else{
-                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+                    return new ActionResult<>(EnumActionResult.FAIL, stack);
                 }
             }
         }
@@ -134,12 +134,12 @@ public class ItemWaterBowl extends ItemBase{
                     }
 
                     boolean change = false;
-                    if((lastX != 0 && lastX != (int)entity.posX) || (lastY != 0 && lastY != (int)entity.posY)){
+                    if(lastX != 0 && lastX != (int)entity.posX || lastY != 0 && lastY != (int)entity.posY){
                         if(!entity.isSneaking()){
                             if(entity instanceof EntityPlayer){
                                 EntityPlayer player = (EntityPlayer)entity;
                                 if(this.tryPlaceContainedLiquid(player, world, player.getPosition(), true)){
-                                   checkReplace(player, stack, new ItemStack(Items.BOWL), itemSlot);
+                                    this.checkReplace(player, stack, new ItemStack(Items.BOWL), itemSlot);
                                 }
                             }
                         }
@@ -159,7 +159,7 @@ public class ItemWaterBowl extends ItemBase{
             }
         }
     }
-    
+
     private void checkReplace(EntityPlayer player, ItemStack old, ItemStack stack, int slot) {
         if(player.inventory.getStackInSlot(slot) == old) player.inventory.setInventorySlotContents(slot, stack);
         else if(player.inventory.offHandInventory.get(slot) == old) player.inventory.offHandInventory.set(slot, stack);
@@ -184,7 +184,7 @@ public class ItemWaterBowl extends ItemBase{
                 world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F+(world.rand.nextFloat()-world.rand.nextFloat())*0.8F);
 
                 for(int k = 0; k < 8; k++){
-                    world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double)pos.getX()+Math.random(), (double)pos.getY()+Math.random(), (double)pos.getZ()+Math.random(), 0.0D, 0.0D, 0.0D);
+                    world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, pos.getX()+Math.random(), pos.getY()+Math.random(), pos.getZ()+Math.random(), 0.0D, 0.0D, 0.0D);
                 }
             }
             else{

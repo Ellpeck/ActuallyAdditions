@@ -26,32 +26,32 @@ public class CompostRecipe{
     public CompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay) {
         this(Ingredient.fromStacks(input), inputDisplay.getDefaultState(), output, outputDisplay.getDefaultState());
     }
-    
+
     public CompostRecipe(Ingredient input, IBlockState inputDisplay, ItemStack output, IBlockState outputDisplay){
         this.input = input;
         this.output = output;
         this.inputDisplay = inputDisplay;
         this.outputDisplay = outputDisplay;
     }
-    
+
     public boolean matches(ItemStack stack) {
-        return input.apply(stack);
+        return this.input.apply(stack);
     }
-    
+
     public Ingredient getInput() {
-        return input;
+        return this.input;
     }
-    
+
     public ItemStack getOutput() {
-        return output;
+        return this.output;
     }
-    
+
     public IBlockState getInputDisplay() {
-        return inputDisplay;
+        return this.inputDisplay;
     }
-    
+
     public IBlockState getOutputDisplay() {
-        return outputDisplay;
+        return this.outputDisplay;
     }
 
 }

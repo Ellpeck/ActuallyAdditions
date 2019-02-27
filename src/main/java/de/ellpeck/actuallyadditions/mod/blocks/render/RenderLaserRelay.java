@@ -43,7 +43,7 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer<TileEntityLaserR
     @Override
     public void render(TileEntityLaserRelay tile, double x, double y, double z, float par5, int par6, float f){
         if(tile instanceof TileEntityLaserRelay){
-            TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
+            TileEntityLaserRelay relay = tile;
             boolean hasInvis = false;
 
             EntityPlayer player = Minecraft.getMinecraft().player;
@@ -56,7 +56,7 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer<TileEntityLaserR
                 }
 
                 ItemStack hand = player.getHeldItemMainhand();
-                if(hasGoggles || (StackUtil.isValid(hand) && (hand.getItem() == ConfigValues.itemCompassConfigurator || hand.getItem() instanceof ItemLaserWrench)) || "themattabase".equals(player.getName())){
+                if(hasGoggles || StackUtil.isValid(hand) && (hand.getItem() == ConfigValues.itemCompassConfigurator || hand.getItem() instanceof ItemLaserWrench) || "themattabase".equals(player.getName())){
                     GlStateManager.pushMatrix();
 
                     float yTrans = tile.getBlockMetadata() == 0 ? 0.2F : 0.8F;
@@ -64,7 +64,7 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer<TileEntityLaserR
                     GlStateManager.scale(0.2F, 0.2F, 0.2F);
 
                     double boop = Minecraft.getSystemTime()/800D;
-                    GlStateManager.rotate((float)(((boop*40D)%360)), 0, 1, 0);
+                    GlStateManager.rotate((float)(boop*40D%360), 0, 1, 0);
 
                     AssetUtil.renderItemInWorld(upgrade);
 
@@ -85,7 +85,7 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer<TileEntityLaserR
                             boolean otherInvis = StackUtil.isValid(secondUpgrade) && secondUpgrade.getItem() == InitItems.itemLaserUpgradeInvisibility;
 
                             if(hasGoggles || !hasInvis || !otherInvis){
-                                float[] color = hasInvis && otherInvis ? COLOR_INFRARED : (relay.type == LaserType.ITEM ? COLOR_ITEM : (relay.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR));
+                                float[] color = hasInvis && otherInvis ? COLOR_INFRARED : relay.type == LaserType.ITEM ? COLOR_ITEM : relay.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR;
 
                                 AssetUtil.renderLaser(first.getX()+0.5, first.getY()+0.5, first.getZ()+0.5, second.getX()+0.5, second.getY()+0.5, second.getZ()+0.5, 120, hasInvis && otherInvis ? 0.1F : 0.35F, 0.05, color);
                             }

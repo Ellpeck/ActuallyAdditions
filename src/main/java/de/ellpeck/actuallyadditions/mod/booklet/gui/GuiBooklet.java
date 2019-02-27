@@ -81,7 +81,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
             }
         }
         else{
-            return (float)conf/100F;
+            return conf/100F;
         }
     }
 
@@ -330,7 +330,7 @@ public abstract class GuiBooklet extends GuiBookletBase{
 
     @Override
     protected void keyTyped(char typedChar, int key) throws IOException{
-        if(key == Keyboard.KEY_ESCAPE || (key == this.mc.gameSettings.keyBindInventory.getKeyCode() && (!this.hasSearchBar() || !this.searchField.isFocused()))){
+        if(key == Keyboard.KEY_ESCAPE || key == this.mc.gameSettings.keyBindInventory.getKeyCode() && (!this.hasSearchBar() || !this.searchField.isFocused())){
             this.mc.displayGuiScreen(this.previousScreen);
         }
         else if(this.hasSearchBar() & this.searchField.isFocused()){

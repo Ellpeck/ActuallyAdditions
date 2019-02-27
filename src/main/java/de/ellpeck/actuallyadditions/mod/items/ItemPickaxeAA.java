@@ -51,7 +51,7 @@ public class ItemPickaxeAA extends ItemToolAA{
                         if(block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE){
                             if(block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE){
                                 Material material = blockIn.getMaterial();
-                                return material == Material.ROCK || (material == Material.IRON || material == Material.ANVIL);
+                                return material == Material.ROCK || material == Material.IRON || material == Material.ANVIL;
                             }
                             else{
                                 return this.toolMaterial.getHarvestLevel() >= 2;

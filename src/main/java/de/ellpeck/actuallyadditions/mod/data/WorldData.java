@@ -27,8 +27,8 @@ public class WorldData extends WorldSavedData {
 
     public static final String DATA_TAG = ActuallyAdditions.MODID + "data";
     private static WorldData data;
-    public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<Network>();
-    public final ConcurrentHashMap<UUID, PlayerSave> playerSaveData = new ConcurrentHashMap<UUID, PlayerSave>();
+    public final ConcurrentSet<Network> laserRelayNetworks = new ConcurrentSet<>();
+    public final ConcurrentHashMap<UUID, PlayerSave> playerSaveData = new ConcurrentHashMap<>();
 
     public WorldData(String name) {
         super(name);

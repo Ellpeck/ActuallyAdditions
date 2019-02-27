@@ -69,6 +69,7 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
         return false;
     }
 
+    @Override
     public void registerRendering(){
         ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }

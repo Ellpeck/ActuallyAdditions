@@ -68,13 +68,13 @@ public class TileEntityCompost extends TileEntityInventoryBase {
         super.updateEntity();
         if (!this.world.isRemote) {
             boolean theFlag = this.conversionTime > 0;
-            ItemStack input = inv.getStackInSlot(0);
+            ItemStack input = this.inv.getStackInSlot(0);
             if (StackUtil.isValid(input)) {
-                if (recipe == null || !recipe.matches(input)) recipe = getRecipeForInput(input);
-                if (recipe != null) {
+                if (this.recipe == null || !this.recipe.matches(input)) this.recipe = getRecipeForInput(input);
+                if (this.recipe != null) {
                     this.conversionTime++;
                     if (this.conversionTime >= COMPOST_TIME_TICKS) {
-                        ItemStack output = recipe.getOutput().copy();
+                        ItemStack output = this.recipe.getOutput().copy();
                         output.setCount(input.getCount());
                         this.inv.setStackInSlot(0, output);
                         this.conversionTime = 0;
@@ -98,12 +98,12 @@ public class TileEntityCompost extends TileEntityInventoryBase {
 
     @Override
     public IRemover getRemover() {
-        return (slot, automation) -> getRecipeForInput(inv.getStackInSlot(slot)) == null;
+        return (slot, automation) -> getRecipeForInput(this.inv.getStackInSlot(slot)) == null;
     }
 
     public IBlockState getCurrentDisplay() {
-        ItemStack input = inv.getStackInSlot(0);
-        CompostRecipe displayRecipe = recipe;
+        ItemStack input = this.inv.getStackInSlot(0);
+        CompostRecipe displayRecipe = this.recipe;
         if (displayRecipe == null || !displayRecipe.matches(input)) displayRecipe = getRecipeForInput(input);
 
         if (displayRecipe == null) for (CompostRecipe r : ActuallyAdditionsAPI.COMPOST_RECIPES) {
@@ -116,7 +116,7 @@ public class TileEntityCompost extends TileEntityInventoryBase {
     }
 
     public float getHeight() {
-        ItemStack input = inv.getStackInSlot(0);
+        ItemStack input = this.inv.getStackInSlot(0);
         if (input.isEmpty()) return 0;
         return (float) input.getCount() / input.getMaxStackSize();
     }

@@ -30,7 +30,7 @@ public class BookletChapterCoffee extends BookletChapter{
     }
 
     private static IBookletPage[] getPages(IBookletPage... pages){
-        List<IBookletPage> allPages = new ArrayList<IBookletPage>();
+        List<IBookletPage> allPages = new ArrayList<>();
         allPages.addAll(Arrays.asList(pages));
 
         for(CoffeeIngredient ingredient : ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS){

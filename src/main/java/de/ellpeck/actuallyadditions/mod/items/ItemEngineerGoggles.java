@@ -32,7 +32,7 @@ import java.util.Set;
 
 public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles{
 
-    private final Set<Entity> cachedGlowingEntities = new ConcurrentSet<Entity>();
+    private final Set<Entity> cachedGlowingEntities = new ConcurrentSet<>();
 
     private final boolean displayMobs;
 

@@ -99,7 +99,7 @@ public class ConnectionPair implements IConnectionPair{
         if(obj instanceof ConnectionPair){
             ConnectionPair pair = (ConnectionPair)obj;
             for(int i = 0; i < this.positions.length; i++){
-                if(this.positions[i] == pair.positions[i] || (this.positions[i] != null && this.positions[i].equals(pair.positions[i]))){
+                if(this.positions[i] == pair.positions[i] || this.positions[i] != null && this.positions[i].equals(pair.positions[i])){
                     return true;
                 }
             }

@@ -51,7 +51,7 @@ public class GuiGiantChest extends GuiWtfMojang{
             this.buttonList.add(new GuiButton(this.page-1, this.guiLeft+13, this.guiTop+172, 20, 20, "<"));
         }
 
-        if((this.page == 0 && this.chest instanceof TileEntityGiantChestMedium) || (this.page <= 1 && this.chest instanceof TileEntityGiantChestLarge)){
+        if(this.page == 0 && this.chest instanceof TileEntityGiantChestMedium || this.page <= 1 && this.chest instanceof TileEntityGiantChestLarge){
             this.buttonList.add(new GuiButton(this.page+1, this.guiLeft+209, this.guiTop+172, 20, 20, ">"));
         }
     }

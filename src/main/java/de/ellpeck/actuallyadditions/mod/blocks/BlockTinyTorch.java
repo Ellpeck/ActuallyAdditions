@@ -55,16 +55,16 @@ public class BlockTinyTorch extends BlockBase{
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         switch(state.getValue(BlockTorch.FACING)){
-            case EAST:
-                return TORCH_EAST_AABB;
-            case WEST:
-                return TORCH_WEST_AABB;
-            case SOUTH:
-                return TORCH_SOUTH_AABB;
-            case NORTH:
-                return TORCH_NORTH_AABB;
-            default:
-                return STANDING_AABB;
+        case EAST:
+            return TORCH_EAST_AABB;
+        case WEST:
+            return TORCH_WEST_AABB;
+        case SOUTH:
+            return TORCH_SOUTH_AABB;
+        case NORTH:
+            return TORCH_NORTH_AABB;
+        default:
+            return STANDING_AABB;
         }
     }
 
@@ -83,12 +83,12 @@ public class BlockTinyTorch extends BlockBase{
     public boolean isFullCube(IBlockState state){
         return false;
     }
-    
+
     @Override
     public boolean isNormalCube(IBlockState state){
         return false;
     }
-    
+
     @Override
     public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing facing) {
         return BlockFaceShape.UNDEFINED;
@@ -189,14 +189,14 @@ public class BlockTinyTorch extends BlockBase{
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand){
         if(rand.nextBoolean()){
             EnumFacing enumfacing = stateIn.getValue(BlockTorch.FACING);
-            double d0 = (double)pos.getX()+0.5D;
-            double d1 = (double)pos.getY()+0.4D;
-            double d2 = (double)pos.getZ()+0.5D;
+            double d0 = pos.getX()+0.5D;
+            double d1 = pos.getY()+0.4D;
+            double d2 = pos.getZ()+0.5D;
 
             if(enumfacing.getAxis().isHorizontal()){
                 EnumFacing enumfacing1 = enumfacing.getOpposite();
-                worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+0.35D*(double)enumfacing1.getXOffset(), d1+0.22D, d2+0.35D*(double)enumfacing1.getZOffset(), 0.0D, 0.0D, 0.0D);
-                worldIn.spawnParticle(EnumParticleTypes.FLAME, d0+0.35D*(double)enumfacing1.getXOffset(), d1+0.22D, d2+0.35D*(double)enumfacing1.getZOffset(), 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0+0.35D*enumfacing1.getXOffset(), d1+0.22D, d2+0.35D*enumfacing1.getZOffset(), 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle(EnumParticleTypes.FLAME, d0+0.35D*enumfacing1.getXOffset(), d1+0.22D, d2+0.35D*enumfacing1.getZOffset(), 0.0D, 0.0D, 0.0D);
             }
             else{
                 worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D);
@@ -210,21 +210,21 @@ public class BlockTinyTorch extends BlockBase{
         IBlockState iblockstate = this.getDefaultState();
 
         switch(meta){
-            case 1:
-                iblockstate = iblockstate.withProperty(BlockTorch.FACING, EnumFacing.EAST);
-                break;
-            case 2:
-                iblockstate = iblockstate.withProperty(BlockTorch.FACING, EnumFacing.WEST);
-                break;
-            case 3:
-                iblockstate = iblockstate.withProperty(BlockTorch.FACING, EnumFacing.SOUTH);
-                break;
-            case 4:
-                iblockstate = iblockstate.withProperty(BlockTorch.FACING, EnumFacing.NORTH);
-                break;
-            case 5:
-            default:
-                iblockstate = iblockstate.withProperty(BlockTorch.FACING, EnumFacing.UP);
+        case 1:
+            iblockstate = iblockstate.withProperty(BlockTorch.FACING, EnumFacing.EAST);
+            break;
+        case 2:
+            iblockstate = iblockstate.withProperty(BlockTorch.FACING, EnumFacing.WEST);
+            break;
+        case 3:
+            iblockstate = iblockstate.withProperty(BlockTorch.FACING, EnumFacing.SOUTH);
+            break;
+        case 4:
+            iblockstate = iblockstate.withProperty(BlockTorch.FACING, EnumFacing.NORTH);
+            break;
+        case 5:
+        default:
+            iblockstate = iblockstate.withProperty(BlockTorch.FACING, EnumFacing.UP);
         }
 
         return iblockstate;
@@ -240,22 +240,22 @@ public class BlockTinyTorch extends BlockBase{
         int i = 0;
 
         switch(state.getValue(BlockTorch.FACING)){
-            case EAST:
-                i = i | 1;
-                break;
-            case WEST:
-                i = i | 2;
-                break;
-            case SOUTH:
-                i = i | 3;
-                break;
-            case NORTH:
-                i = i | 4;
-                break;
-            case DOWN:
-            case UP:
-            default:
-                i = i | 5;
+        case EAST:
+            i = i | 1;
+            break;
+        case WEST:
+            i = i | 2;
+            break;
+        case SOUTH:
+            i = i | 3;
+            break;
+        case NORTH:
+            i = i | 4;
+            break;
+        case DOWN:
+        case UP:
+        default:
+            i = i | 5;
         }
 
         return i;

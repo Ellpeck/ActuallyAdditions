@@ -102,14 +102,14 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
     private IBlockState getRandomCropType(Random rand){
         int randomMeta = MathHelper.getInt(rand, 1, 7);
         switch(rand.nextInt(4)){
-            case 0:
-                return InitBlocks.blockFlax.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
-            case 1:
-                return InitBlocks.blockCoffee.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
-            case 2:
-                return InitBlocks.blockRice.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
-            default:
-                return InitBlocks.blockCanola.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+        case 0:
+            return InitBlocks.blockFlax.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+        case 1:
+            return InitBlocks.blockCoffee.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+        case 2:
+            return InitBlocks.blockRice.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+        default:
+            return InitBlocks.blockCanola.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
         }
     }
 }

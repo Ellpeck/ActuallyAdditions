@@ -57,7 +57,7 @@ public final class PlayerData{
         public int batWingsFlyTime;
 
         public IBookletPage[] bookmarks = new IBookletPage[12];
-        public List<String> completedTrials = new ArrayList<String>();
+        public List<String> completedTrials = new ArrayList<>();
 
         @SideOnly(Side.CLIENT)
         public GuiBooklet lastOpenBooklet;

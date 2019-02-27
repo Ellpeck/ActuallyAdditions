@@ -62,7 +62,7 @@ public class RenderSpecial{
             //Peck edit: What do you mean by "nice" you jackass? >_>
             double boop = Minecraft.getSystemTime()/1000D;
             GlStateManager.translate(0D, Math.sin(boop%(2*Math.PI))*0.25, 0D);
-            GlStateManager.rotate((float)(((boop*40D)%360)), 0, 1, 0);
+            GlStateManager.rotate((float)(boop*40D%360), 0, 1, 0);
 
             GlStateManager.disableLighting();
             GlStateManager.pushMatrix();

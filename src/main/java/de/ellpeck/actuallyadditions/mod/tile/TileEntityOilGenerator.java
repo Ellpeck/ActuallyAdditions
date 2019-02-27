@@ -29,7 +29,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
 
     int[] i = ConfigIntListValues.OIL_POWER.getValue();
 
-    public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, Math.max(Math.max(i[0], i[1]), Math.max(i[2], i[3])) + 20);
+    public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, Math.max(Math.max(this.i[0], this.i[1]), Math.max(this.i[2], this.i[3])) + 20);
     public final FluidTank tank = new FluidTank(2*Util.BUCKET){
         @Override
         public boolean canDrain(){
@@ -154,7 +154,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
 
     @Override
     public int getComparatorStrength(){
-        float calc = ((float)this.storage.getEnergyStored()/(float)this.storage.getMaxEnergyStored())*15F;
+        float calc = (float)this.storage.getEnergyStored()/(float)this.storage.getMaxEnergyStored()*15F;
         return (int)calc;
     }
 

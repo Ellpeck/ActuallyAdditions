@@ -96,15 +96,15 @@ public final class AwfulUtil{
         Collections.shuffle(list, rand);
         return list;
     }
-    
+
     public static void callTheFuckinPolice(Object... stuff) {
-    	int i = 0;
-    	String error = "Actually Additions: Something is very wrong.  This method was provided with ";
-    	for(Object k : stuff) {
-    		error += ("\n" + i++ + ": " + (k == null ? "null" : (k.getClass().getSimpleName() + " <- CLASS | INSTANCE -> " + k.toString() + ", ")));
-    	}
-    	error += "\n" + "The current side is: " + FMLCommonHandler.instance().getEffectiveSide();
-    	error += "\n" + "Report this to https://github.com/Ellpeck/ActuallyAdditions/issues";
-    	throw new IllegalStateException(error);
+        int i = 0;
+        String error = "Actually Additions: Something is very wrong.  This method was provided with ";
+        for(Object k : stuff) {
+            error += "\n" + i++ + ": " + (k == null ? "null" : k.getClass().getSimpleName() + " <- CLASS | INSTANCE -> " + k.toString() + ", ");
+        }
+        error += "\n" + "The current side is: " + FMLCommonHandler.instance().getEffectiveSide();
+        error += "\n" + "Report this to https://github.com/Ellpeck/ActuallyAdditions/issues";
+        throw new IllegalStateException(error);
     }
 }

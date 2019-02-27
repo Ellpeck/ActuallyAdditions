@@ -43,15 +43,15 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer<TileEntitySmile
                 boolean renderedEaster = false;
 
                 easterEggs:
-                for(ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.CLOUD_STUFF){
-                    for(String triggerName : cloud.getTriggerNames()){
-                        if(triggerName != null && theCloud.name != null){
-                            if(triggerName.equalsIgnoreCase(theCloud.name)){
-                                GlStateManager.pushMatrix();
+                    for(ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.CLOUD_STUFF){
+                        for(String triggerName : cloud.getTriggerNames()){
+                            if(triggerName != null && theCloud.name != null){
+                                if(triggerName.equalsIgnoreCase(theCloud.name)){
+                                    GlStateManager.pushMatrix();
 
-                                IBlockState state = theCloud.getWorld().getBlockState(theCloud.getPos());
-                                if(state.getBlock() == InitBlocks.blockSmileyCloud){
-                                    switch(state.getValue(BlockHorizontal.FACING)){
+                                    IBlockState state = theCloud.getWorld().getBlockState(theCloud.getPos());
+                                    if(state.getBlock() == InitBlocks.blockSmileyCloud){
+                                        switch(state.getValue(BlockHorizontal.FACING)){
                                         case NORTH:
                                             GlStateManager.rotate(180, 0, 1, 0);
                                             break;
@@ -61,20 +61,20 @@ public class RenderSmileyCloud extends TileEntitySpecialRenderer<TileEntitySmile
                                         case WEST:
                                             GlStateManager.rotate(90, 0, 1, 0);
                                             break;
-                                        default: 
-                                        	break;
+                                        default:
+                                            break;
+                                        }
                                     }
+
+                                    cloud.renderExtra(0.0625F);
+                                    GlStateManager.popMatrix();
+
+                                    renderedEaster = true;
+                                    break easterEggs;
                                 }
-
-                                cloud.renderExtra(0.0625F);
-                                GlStateManager.popMatrix();
-
-                                renderedEaster = true;
-                                break easterEggs;
                             }
                         }
                     }
-                }
 
                 String nameLower = theCloud.name.toLowerCase(Locale.ROOT);
                 if(SpecialRenderInit.SPECIAL_LIST.containsKey(nameLower)){

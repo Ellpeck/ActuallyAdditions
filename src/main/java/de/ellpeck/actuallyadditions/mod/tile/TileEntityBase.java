@@ -157,10 +157,10 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public final void handleUpdateTag(NBTTagCompound compound){
         this.readSyncableNBT(compound, NBTType.SYNC);
     }
-    
+
     public final void sendUpdate(){
-    	if(world != null && !world.isRemote) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
-    	/*
+        if(this.world != null && !this.world.isRemote) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
+        /*
         if(this.world != null && !this.world.isRemote){
             NBTTagCompound compound = new NBTTagCompound();
             this.writeSyncableNBT(compound, NBTType.SYNC);
@@ -182,7 +182,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
             compound.setInteger("TicksElapsed", this.ticksElapsed);
             compound.setBoolean("StopDrop", this.stopFromDropping);
         }
-        else if(type == NBTType.SYNC && stopFromDropping) compound.setBoolean("StopDrop", this.stopFromDropping);
+        else if(type == NBTType.SYNC && this.stopFromDropping) compound.setBoolean("StopDrop", this.stopFromDropping);
 
         if(this.isRedstoneToggle() && (type != NBTType.SAVE_BLOCK || this.isPulseMode)){
             compound.setBoolean("IsPulseMode", this.isPulseMode);
@@ -226,7 +226,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     public int getComparatorStrength(){
         return 0;
     }
-    
+
     private boolean shareEnergy = this instanceof ISharingEnergyProvider;
     private boolean shareFluid = this instanceof ISharingFluidHandler;
 
@@ -234,7 +234,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         this.ticksElapsed++;
 
         if(!this.world.isRemote){
-            if(shareEnergy){
+            if(this.shareEnergy){
                 ISharingEnergyProvider provider = (ISharingEnergyProvider)this;
                 if(provider.doesShareEnergy()){
                     int total = provider.getEnergyToSplitShare();
@@ -256,7 +256,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                 }
             }
 
-            if(shareFluid){
+            if(this.shareFluid){
                 ISharingFluidHandler handler = (ISharingFluidHandler)this;
                 if(handler.doesShareFluid()){
                     int total = handler.getMaxFluidAmountToSplitShare();
@@ -326,7 +326,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
         if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
             IItemHandler handler = this.getItemHandler(facing);

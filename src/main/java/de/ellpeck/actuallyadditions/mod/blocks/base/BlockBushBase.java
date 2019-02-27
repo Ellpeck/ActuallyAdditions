@@ -45,6 +45,7 @@ public class BlockBushBase extends BlockBush implements ItemBlockBase.ICustomRar
         return true;
     }
 
+    @Override
     public void registerRendering(){
         ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }

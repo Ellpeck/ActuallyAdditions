@@ -77,27 +77,27 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
     }
 
     private void doWork() {
-        EnumFacing side = WorldUtil.getDirectionByPistonRotation(world.getBlockState(pos));
-        BlockPos breakCoords = pos.offset(side);
-        IBlockState stateToBreak = world.getBlockState(breakCoords);
+        EnumFacing side = WorldUtil.getDirectionByPistonRotation(this.world.getBlockState(this.pos));
+        BlockPos breakCoords = this.pos.offset(side);
+        IBlockState stateToBreak = this.world.getBlockState(breakCoords);
         Block blockToBreak = stateToBreak.getBlock();
 
         if (!this.isPlacer && blockToBreak != Blocks.AIR && !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && stateToBreak.getBlockHardness(this.world, breakCoords) >= 0.0F) {
             NonNullList<ItemStack> drops = NonNullList.create();
-            blockToBreak.getDrops(drops, world, breakCoords, stateToBreak, 0);
-            float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, world, breakCoords);
+            blockToBreak.getDrops(drops, this.world, breakCoords, stateToBreak, 0);
+            float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.world, breakCoords);
 
-            if (chance > 0 && world.rand.nextFloat() <= chance) {
-                if (StackUtil.canAddAll(inv, drops, false)) {
-                    world.destroyBlock(breakCoords, false);
-                    StackUtil.addAll(inv, drops, false);
+            if (chance > 0 && this.world.rand.nextFloat() <= chance) {
+                if (StackUtil.canAddAll(this.inv, drops, false)) {
+                    this.world.destroyBlock(breakCoords, false);
+                    StackUtil.addAll(this.inv, drops, false);
                     this.markDirty();
                 }
             }
         } else if (this.isPlacer) {
-            int slot = StackUtil.findFirstFilled(inv);
+            int slot = StackUtil.findFirstFilled(this.inv);
             if (slot == -1) return;
-            this.inv.setStackInSlot(slot, WorldUtil.useItemAtSide(side, world, pos, inv.getStackInSlot(slot)));
+            this.inv.setStackInSlot(slot, WorldUtil.useItemAtSide(side, this.world, this.pos, this.inv.getStackInSlot(slot)));
         }
     }
 

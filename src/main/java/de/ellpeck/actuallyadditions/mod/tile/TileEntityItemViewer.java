@@ -34,9 +34,9 @@ import java.util.*;
 
 public class TileEntityItemViewer extends TileEntityBase{
 
-    public final List<GenericItemHandlerInfo> genericInfos = new ArrayList<GenericItemHandlerInfo>();
-    public final Map<Integer, IItemHandlerInfo> itemHandlerInfos = new HashMap<Integer, IItemHandlerInfo>();
-    public final List<SlotlessItemHandlerInfo> slotlessInfos = new ArrayList<SlotlessItemHandlerInfo>();
+    public final List<GenericItemHandlerInfo> genericInfos = new ArrayList<>();
+    public final Map<Integer, IItemHandlerInfo> itemHandlerInfos = new HashMap<>();
+    public final List<SlotlessItemHandlerInfo> slotlessInfos = new ArrayList<>();
     protected final SlotlessableItemHandlerWrapper itemHandler;
     public TileEntityLaserRelayItem connectedRelay;
     private int lastNetworkChangeAmount = -1;
@@ -134,7 +134,7 @@ public class TileEntityItemViewer extends TileEntityBase{
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing){
         if(ActuallyAdditions.commonCapsLoaded){
             if(capability == SlotlessItemHandlerConfig.CAPABILITY){
@@ -316,7 +316,7 @@ public class TileEntityItemViewer extends TileEntityBase{
 
     public static class GenericItemHandlerInfo implements Comparable<GenericItemHandlerInfo>{
 
-        public final List<SlotlessableItemHandlerWrapper> handlers = new ArrayList<SlotlessableItemHandlerWrapper>();
+        public final List<SlotlessableItemHandlerWrapper> handlers = new ArrayList<>();
         public final TileEntityLaserRelayItem relayInQuestion;
 
         public GenericItemHandlerInfo(TileEntityLaserRelayItem relayInQuestion){

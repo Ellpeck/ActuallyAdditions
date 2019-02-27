@@ -39,11 +39,11 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public int sideToPut = -1;
     public int slotToPutStart;
     public int slotToPutEnd;
-    public Map<EnumFacing, SlotlessableItemHandlerWrapper> placeToPut = new ConcurrentHashMap<EnumFacing, SlotlessableItemHandlerWrapper>();
+    public Map<EnumFacing, SlotlessableItemHandlerWrapper> placeToPut = new ConcurrentHashMap<>();
     public int sideToPull = -1;
     public int slotToPullStart;
     public int slotToPullEnd;
-    public Map<EnumFacing, SlotlessableItemHandlerWrapper> placeToPull = new ConcurrentHashMap<EnumFacing, SlotlessableItemHandlerWrapper>();
+    public Map<EnumFacing, SlotlessableItemHandlerWrapper> placeToPull = new ConcurrentHashMap<>();
     public boolean isAdvanced;
     public FilterSettings leftFilter = new FilterSettings(12, true, true, false, false, 0, -1000);
     public FilterSettings rightFilter = new FilterSettings(12, true, true, false, false, 0, -2000);

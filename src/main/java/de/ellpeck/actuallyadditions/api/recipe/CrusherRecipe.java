@@ -33,23 +33,23 @@ public class CrusherRecipe {
     }
 
     public boolean matches(ItemStack stack) {
-        return input.apply(stack);
+        return this.input.apply(stack);
     }
 
     public ItemStack getOutputOne() {
-        return outputOne;
+        return this.outputOne;
     }
 
     public ItemStack getOutputTwo() {
-        return outputTwo;
+        return this.outputTwo;
     }
 
     public int getSecondChance() {
-        return outputChance;
+        return this.outputChance;
     }
 
     public Ingredient getInput() {
-        return input;
+        return this.input;
     }
 
 }

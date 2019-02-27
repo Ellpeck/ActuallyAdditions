@@ -59,7 +59,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 toSplit = first;
             } else if (ItemUtil.canBeStacked(first, second)) {
                 if (first.getCount() < first.getMaxStackSize() || second.getCount() < second.getMaxStackSize()) {
-                    if (!((first.getCount() <= second.getCount() + 1 && first.getCount() >= second.getCount() - 1) || (second.getCount() <= first.getCount() + 1 && second.getCount() >= first.getCount() - 1))) {
+                    if (!(first.getCount() <= second.getCount() + 1 && first.getCount() >= second.getCount() - 1 || second.getCount() <= first.getCount() + 1 && second.getCount() >= first.getCount() - 1)) {
                         toSplit = first;
                         toSplit.grow(second.getCount());
                     }
@@ -158,19 +158,19 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || ((slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(stack)));
+        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(stack));
     }
 
     @Override
     public IRemover getRemover() {
-        return (slot, automation) -> !automation || (slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2);
+        return (slot, automation) -> !automation || slot == SLOT_OUTPUT_1 || slot == SLOT_OUTPUT_2;
     }
 
     public boolean canSmeltOn(int theInput, int theOutput) {
         if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
             ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.inv.getStackInSlot(theInput));
             if (StackUtil.isValid(output)) {
-                if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || (this.inv.getStackInSlot(theOutput).isItemEqual(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount())) { return true; }
+                if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || this.inv.getStackInSlot(theOutput).isItemEqual(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount()) { return true; }
             }
 
         }

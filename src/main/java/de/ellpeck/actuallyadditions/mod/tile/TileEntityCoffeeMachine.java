@@ -128,12 +128,12 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || (slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null) || (slot == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean) || (slot == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal());
+        return (slot, stack, automation) -> !automation || slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null || slot == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean || slot == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal();
     }
 
     @Override
     public IRemover getRemover() {
-        return (slot, automation) -> !automation || slot == SLOT_OUTPUT || (slot >= 3 && slot < this.inv.getSlots() && ItemCoffee.getIngredientFromStack(inv.getStackInSlot(slot)) == null);
+        return (slot, automation) -> !automation || slot == SLOT_OUTPUT || slot >= 3 && slot < this.inv.getSlots() && ItemCoffee.getIngredientFromStack(this.inv.getStackInSlot(slot)) == null;
     }
 
     public void storeCoffee() {

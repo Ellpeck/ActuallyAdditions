@@ -35,7 +35,7 @@ public interface IProxy{
     void addColoredBlock(Block block);
 
     EntityPlayer getCurrentPlayer();
-    
+
     default void sendBreakPacket(BlockPos pos) {};
 
 }

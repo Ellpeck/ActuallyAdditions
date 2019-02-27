@@ -62,20 +62,20 @@ public class TileEntityFeeder extends TileEntityInventoryBase {
     @Override
     public void updateEntity() {
         super.updateEntity();
-        currentTimer = MathHelper.clamp(++currentTimer, 0, 100);
-        if (world.isRemote) return;
+        this.currentTimer = MathHelper.clamp(++this.currentTimer, 0, 100);
+        if (this.world.isRemote) return;
         int range = 5;
         ItemStack stack = this.inv.getStackInSlot(0);
         if (!stack.isEmpty() && this.currentTimer >= TIME) {
             List<EntityAnimal> animals = this.world.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(this.pos.getX() - range, this.pos.getY() - range, this.pos.getZ() - range, this.pos.getX() + range, this.pos.getY() + range, this.pos.getZ() + range));
             this.currentAnimalAmount = animals.size();
-            if (currentAnimalAmount >= 2 && currentAnimalAmount < THRESHOLD) {
+            if (this.currentAnimalAmount >= 2 && this.currentAnimalAmount < THRESHOLD) {
                 Optional<EntityAnimal> opt = animals.stream().filter((e) -> canBeFed(stack, e)).findAny();
                 if (opt.isPresent()) {
                     feedAnimal(opt.get());
                     stack.shrink(1);
                     this.currentTimer = 0;
-                    markDirty();
+                    this.markDirty();
                 }
             }
         }
@@ -96,14 +96,14 @@ public class TileEntityFeeder extends TileEntityInventoryBase {
             double d = animal.world.rand.nextGaussian() * 0.02D;
             double d1 = animal.world.rand.nextGaussian() * 0.02D;
             double d2 = animal.world.rand.nextGaussian() * 0.02D;
-            animal.world.spawnParticle(EnumParticleTypes.HEART, (animal.posX + (double) (animal.world.rand.nextFloat() * animal.width * 2.0F)) - animal.width, animal.posY + 0.5D + (double) (animal.world.rand.nextFloat() * animal.height), (animal.posZ + (double) (animal.world.rand.nextFloat() * animal.width * 2.0F)) - animal.width, d, d1, d2);
+            animal.world.spawnParticle(EnumParticleTypes.HEART, animal.posX + animal.world.rand.nextFloat() * animal.width * 2.0F - animal.width, animal.posY + 0.5D + animal.world.rand.nextFloat() * animal.height, animal.posZ + animal.world.rand.nextFloat() * animal.width * 2.0F - animal.width, d, d1, d2);
         }
     }
 
     private static boolean canBeFed(ItemStack stack, EntityAnimal animal) {
         if (animal instanceof EntityHorse && ((EntityHorse) animal).isTame()) {
             Item item = stack.getItem();
-            return (animal.getGrowingAge() == 0 && !animal.isInLove()) && (item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT);
+            return animal.getGrowingAge() == 0 && !animal.isInLove() && (item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT);
         }
         return animal.getGrowingAge() == 0 && !animal.isInLove() && animal.isBreedingItem(stack);
     }

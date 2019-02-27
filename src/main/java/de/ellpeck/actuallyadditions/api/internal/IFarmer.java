@@ -28,8 +28,8 @@ public interface IFarmer extends IEnergyTile{
     boolean canAddToSeeds(List<ItemStack> stacks);
 
     boolean canAddToOutput(List<ItemStack> stacks);
-    
+
     void addToSeeds(List<ItemStack> stacks);
-    
+
     void addToOutput(List<ItemStack> stacks);
 }

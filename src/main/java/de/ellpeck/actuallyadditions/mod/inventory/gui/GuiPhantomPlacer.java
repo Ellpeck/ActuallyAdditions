@@ -67,7 +67,7 @@ public class GuiPhantomPlacer extends GuiWtfMojang{
         if(!this.placer.isBreaker && this.buttonList.get(0).isMouseOver()){
             String loc = "info."+ActuallyAdditions.MODID+".placer.sides";
 
-            List<String> textList = new ArrayList<String>();
+            List<String> textList = new ArrayList<>();
             textList.add(TextFormatting.GOLD+StringUtil.localize(loc+".1"));
             textList.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localize(loc+".2"), 200));
             this.drawHoveringText(textList, mouseX, mouseY);

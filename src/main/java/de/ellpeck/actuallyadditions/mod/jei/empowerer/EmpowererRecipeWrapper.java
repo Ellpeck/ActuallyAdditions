@@ -33,15 +33,15 @@ public class EmpowererRecipeWrapper extends RecipeWrapperWithButton {
     @Override
     public void getIngredients(IIngredients ingredients) {
         List<ItemStack> inputs = new ArrayList<>();
-        for (ItemStack s : theRecipe.getInput().getMatchingStacks())
+        for (ItemStack s : this.theRecipe.getInput().getMatchingStacks())
             inputs.add(s);
-        for (ItemStack s : theRecipe.getStandOne().getMatchingStacks())
+        for (ItemStack s : this.theRecipe.getStandOne().getMatchingStacks())
             inputs.add(s);
-        for (ItemStack s : theRecipe.getStandTwo().getMatchingStacks())
+        for (ItemStack s : this.theRecipe.getStandTwo().getMatchingStacks())
             inputs.add(s);
-        for (ItemStack s : theRecipe.getStandThree().getMatchingStacks())
+        for (ItemStack s : this.theRecipe.getStandThree().getMatchingStacks())
             inputs.add(s);
-        for (ItemStack s : theRecipe.getStandFour().getMatchingStacks())
+        for (ItemStack s : this.theRecipe.getStandFour().getMatchingStacks())
             inputs.add(s);
 
         ingredients.setInputs(VanillaTypes.ITEM, inputs);

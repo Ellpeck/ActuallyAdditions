@@ -157,8 +157,8 @@ public class BlockColoredLamp extends BlockBase{
             if(stack.getItemDamage() >= ALL_LAMP_TYPES.length){
                 return StringUtil.BUGGED_ITEM_NAME;
             }
-           if(Util.isClient()) return super.getItemStackDisplayName(stack)+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".onSuffix.desc")+")" : "");
-           else return super.getItemStackDisplayName(stack);
+            if(Util.isClient()) return super.getItemStackDisplayName(stack)+(((BlockColoredLamp)this.block).isOn ? " ("+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".onSuffix.desc")+")" : "");
+            else return super.getItemStackDisplayName(stack);
         }
 
 

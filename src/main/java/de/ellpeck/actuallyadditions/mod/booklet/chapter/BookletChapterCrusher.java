@@ -28,7 +28,7 @@ public class BookletChapterCrusher extends BookletChapter{
     }
 
     private static IBookletPage[] getPages(IBookletPage... pages){
-        List<IBookletPage> allPages = new ArrayList<IBookletPage>();
+        List<IBookletPage> allPages = new ArrayList<>();
         allPages.addAll(Arrays.asList(pages));
 
         for(CrusherRecipe recipe : CrusherCrafting.MISC_RECIPES){

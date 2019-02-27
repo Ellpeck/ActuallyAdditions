@@ -34,7 +34,7 @@ public class MelonPumpkinFarmerBehavior implements IFarmerBehavior {
                 Item seedItem = seed.getItem();
                 boolean isPumpkin = seedItem == Items.PUMPKIN_SEEDS;
                 if (isPumpkin || seedItem == Items.MELON_SEEDS) {
-                    if ((pos.getX() % 2 == 0) == (pos.getZ() % 2 == 0)) {
+                    if (pos.getX() % 2 == 0 == (pos.getZ() % 2 == 0)) {
                         IBlockState toPlant = (isPumpkin ? Blocks.PUMPKIN_STEM : Blocks.MELON_STEM).getDefaultState();
                         if (DefaultFarmerBehavior.defaultPlant(world, pos, toPlant, farmer, use)) return FarmerResult.SUCCESS;
                     }

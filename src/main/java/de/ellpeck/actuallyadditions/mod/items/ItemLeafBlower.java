@@ -48,7 +48,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
         player.setActiveHand(hand);
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
 
@@ -96,18 +96,18 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem{
      * @param z     The Z Position of the Player
      */
     public boolean breakStuff(World world, int x, int y, int z){
-        ArrayList<BlockPos> breakPositions = new ArrayList<BlockPos>();
+        ArrayList<BlockPos> breakPositions = new ArrayList<>();
 
         int rangeSides = 5;
         int rangeUp = 1;
         for(int reachX = -rangeSides; reachX < rangeSides+1; reachX++){
             for(int reachZ = -rangeSides; reachZ < rangeSides+1; reachZ++){
-                for(int reachY = (this.isAdvanced ? -rangeSides : -rangeUp); reachY < (this.isAdvanced ? rangeSides : rangeUp)+1; reachY++){
+                for(int reachY = this.isAdvanced ? -rangeSides : -rangeUp; reachY < (this.isAdvanced ? rangeSides : rangeUp)+1; reachY++){
                     //The current Block to break
                     BlockPos pos = new BlockPos(x+reachX, y+reachY, z+reachZ);
                     Block block = world.getBlockState(pos).getBlock();
 
-                    if(block != null && ((block instanceof BlockBush || block instanceof IShearable) && (this.isAdvanced || !block.isLeaves(world.getBlockState(pos), world, pos)))){
+                    if(block != null && (block instanceof BlockBush || block instanceof IShearable) && (this.isAdvanced || !block.isLeaves(world.getBlockState(pos), world, pos))){
                         breakPositions.add(pos);
                     }
                 }

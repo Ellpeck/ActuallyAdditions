@@ -56,7 +56,7 @@ public class PageEmpowerer extends BookletPage{
         gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".empowererRecipe")+")", startX+6, startY+85, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+100);
-        if(recipe != null) updateInputs(gui, startX, startY);
+        if(this.recipe != null) this.updateInputs(gui, startX, startY);
     }
 
     @Override
@@ -65,25 +65,25 @@ public class PageEmpowerer extends BookletPage{
         super.initGui(gui, startX, startY);
 
         if(this.recipe != null){
-            gui.addOrModifyItemRenderer(stand1[0], startX+5+26, startY+10+1, 1F, true);
-            gui.addOrModifyItemRenderer(stand2[0], startX+5+1, startY+10+26, 1F, true);
-            gui.addOrModifyItemRenderer(stand3[0], startX+5+51, startY+10+26, 1F, true);
-            gui.addOrModifyItemRenderer(stand4[0], startX+5+26, startY+10+51, 1F, true);
+            gui.addOrModifyItemRenderer(this.stand1[0], startX+5+26, startY+10+1, 1F, true);
+            gui.addOrModifyItemRenderer(this.stand2[0], startX+5+1, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(this.stand3[0], startX+5+51, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(this.stand4[0], startX+5+26, startY+10+51, 1F, true);
 
-            gui.addOrModifyItemRenderer(inputs[0], startX+5+26, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(this.inputs[0], startX+5+26, startY+10+26, 1F, true);
             gui.addOrModifyItemRenderer(this.recipe.getOutput(), startX+5+96, startY+10+26, 1F, false);
         }
     }
-    
-    private void updateInputs(GuiBookletBase gui, int startX, int startY) {
-        if(counter++ % 50 == 0) {
-            rotate++;
-            gui.addOrModifyItemRenderer(stand1[rotate % stand1.length], startX+5+26, startY+10+1, 1F, true);
-            gui.addOrModifyItemRenderer(stand2[rotate % stand2.length], startX+5+1, startY+10+26, 1F, true);
-            gui.addOrModifyItemRenderer(stand3[rotate % stand3.length], startX+5+51, startY+10+26, 1F, true);
-            gui.addOrModifyItemRenderer(stand4[rotate % stand4.length], startX+5+26, startY+10+51, 1F, true);
 
-            gui.addOrModifyItemRenderer(inputs[rotate % inputs.length], startX+5+26, startY+10+26, 1F, true);
+    private void updateInputs(GuiBookletBase gui, int startX, int startY) {
+        if(this.counter++ % 50 == 0) {
+            this.rotate++;
+            gui.addOrModifyItemRenderer(this.stand1[this.rotate % this.stand1.length], startX+5+26, startY+10+1, 1F, true);
+            gui.addOrModifyItemRenderer(this.stand2[this.rotate % this.stand2.length], startX+5+1, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(this.stand3[this.rotate % this.stand3.length], startX+5+51, startY+10+26, 1F, true);
+            gui.addOrModifyItemRenderer(this.stand4[this.rotate % this.stand4.length], startX+5+26, startY+10+51, 1F, true);
+
+            gui.addOrModifyItemRenderer(this.inputs[this.rotate % this.inputs.length], startX+5+26, startY+10+26, 1F, true);
         }
     }
 

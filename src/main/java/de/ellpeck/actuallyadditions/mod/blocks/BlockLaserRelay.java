@@ -99,18 +99,18 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
         switch(this.getMetaFromState(state)){
-            case 1:
-                return AABB_UP;
-            case 2:
-                return AABB_NORTH;
-            case 3:
-                return AABB_SOUTH;
-            case 4:
-                return AABB_WEST;
-            case 5:
-                return AABB_EAST;
-            default:
-                return AABB_DOWN;
+        case 1:
+            return AABB_UP;
+        case 2:
+            return AABB_NORTH;
+        case 3:
+            return AABB_SOUTH;
+        case 4:
+            return AABB_WEST;
+        case 5:
+            return AABB_EAST;
+        default:
+            return AABB_DOWN;
         }
     }
 
@@ -230,18 +230,18 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
     @Override
     public TileEntity createNewTileEntity(World world, int i){
         switch(this.type){
-            case ITEM:
-                return new TileEntityLaserRelayItem();
-            case ITEM_WHITELIST:
-                return new TileEntityLaserRelayItemWhitelist();
-            case ENERGY_ADVANCED:
-                return new TileEntityLaserRelayEnergyAdvanced();
-            case ENERGY_EXTREME:
-                return new TileEntityLaserRelayEnergyExtreme();
-            case FLUIDS:
-                return new TileEntityLaserRelayFluids();
-            default:
-                return new TileEntityLaserRelayEnergy();
+        case ITEM:
+            return new TileEntityLaserRelayItem();
+        case ITEM_WHITELIST:
+            return new TileEntityLaserRelayItemWhitelist();
+        case ENERGY_ADVANCED:
+            return new TileEntityLaserRelayEnergyAdvanced();
+        case ENERGY_EXTREME:
+            return new TileEntityLaserRelayEnergyExtreme();
+        case FLUIDS:
+            return new TileEntityLaserRelayFluids();
+        default:
+            return new TileEntityLaserRelayEnergy();
         }
     }
 
@@ -281,7 +281,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay{
 
         ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(pos, world);
     }
-    
+
     @Override
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;

@@ -100,10 +100,10 @@ public class ContainerDropper extends Container{
     public boolean canInteractWith(EntityPlayer player){
         return this.dropper.canPlayerUse(player);
     }
-    
+
     @Override
     public void onContainerClosed(EntityPlayer playerIn) {
-    	super.onContainerClosed(playerIn);
-        if (!player.isSpectator()) dropper.getWorld().notifyNeighborsOfStateChange(dropper.getPos(), InitBlocks.blockDropper, false);
+        super.onContainerClosed(playerIn);
+        if (!this.player.isSpectator()) this.dropper.getWorld().notifyNeighborsOfStateChange(this.dropper.getPos(), InitBlocks.blockDropper, false);
     }
 }

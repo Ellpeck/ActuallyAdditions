@@ -98,7 +98,7 @@ public final class MiscCrafting{
                 new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
                 new ItemStack(Items.PRISMARINE_SHARD));
         ItemCrafting.recipeEnderStar = RecipeUtil.lastIRecipe();
-        
+
         //Spawner Shard -> ingot
         GameRegistry.addSmelting(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.SPAWNER_SHARD.ordinal()), new ItemStack(Items.IRON_INGOT, 2), 5F);
     }

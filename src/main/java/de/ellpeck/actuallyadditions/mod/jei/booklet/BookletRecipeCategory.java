@@ -58,7 +58,7 @@ public class BookletRecipeCategory implements IRecipeCategory<BookletRecipeWrapp
     public void setRecipe(IRecipeLayout recipeLayout, BookletRecipeWrapper wrapper, IIngredients ingredients){
         recipeLayout.getItemStacks().init(0, true, 70, -4);
 
-        List<ItemStack> list = new ArrayList<ItemStack>();
+        List<ItemStack> list = new ArrayList<>();
         wrapper.thePage.getItemStacksForPage(list);
         recipeLayout.getItemStacks().set(0, list);
     }

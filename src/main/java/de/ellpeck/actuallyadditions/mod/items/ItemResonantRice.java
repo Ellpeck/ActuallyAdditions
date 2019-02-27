@@ -33,7 +33,7 @@ public class ItemResonantRice extends ItemBase{
             stack.shrink(1);
             world.createExplosion(null, player.posX, player.posY, player.posZ, 0.5F, true);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
 

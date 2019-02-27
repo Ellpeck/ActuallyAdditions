@@ -103,7 +103,7 @@ public class GuiMainPage extends GuiBooklet{
     }
 
     private static List<IBookletEntry> getDisplayedEntries(){
-        List<IBookletEntry> displayed = new ArrayList<IBookletEntry>();
+        List<IBookletEntry> displayed = new ArrayList<>();
 
         for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
             if(entry.visibleOnFrontPage()){
@@ -196,13 +196,13 @@ public class GuiMainPage extends GuiBooklet{
             }
         }
 
-        List<String> configText = new ArrayList<String>();
+        List<String> configText = new ArrayList<>();
         configText.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".configButton.name"));
         configText.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet."+ActuallyAdditions.MODID+".configButton.desc", ActuallyAdditions.NAME).replaceAll("\\\\n", "\n"), 200));
         this.configButton = new TexturedButton(RES_LOC_GADGETS, -388, this.guiLeft+16, this.guiTop+this.ySize-30, 188, 14, 16, 16, configText);
         this.buttonList.add(this.configButton);
 
-        List<String> achievementText = new ArrayList<String>();
+        List<String> achievementText = new ArrayList<>();
         achievementText.add(TextFormatting.GOLD+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".achievementButton.name"));
         achievementText.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet."+ActuallyAdditions.MODID+".achievementButton.desc", ActuallyAdditions.NAME), 200));
         //this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
@@ -242,7 +242,7 @@ public class GuiMainPage extends GuiBooklet{
                 }
             }
         }
-         /*else if(button == this.achievementButton){
+        /*else if(button == this.achievementButton){
            GuiScreen achievements = new GuiAAAchievements(this, this.mc.player.getStatFileWriter());
             this.mc.displayGuiScreen(achievements);
         }*/
@@ -293,7 +293,7 @@ public class GuiMainPage extends GuiBooklet{
             int quoteSize = this.quote.size();
 
             for(int i = 0; i < quoteSize; i++){
-                this.renderScaledAsciiString(TextFormatting.ITALIC+this.quote.get(i), this.guiLeft+25, this.guiTop+90+(i*8), 0, false, this.getMediumFontSize());
+                this.renderScaledAsciiString(TextFormatting.ITALIC+this.quote.get(i), this.guiLeft+25, this.guiTop+90+i*8, 0, false, this.getMediumFontSize());
             }
             this.renderScaledAsciiString("- "+this.quoteGuy, this.guiLeft+60, this.guiTop+93+quoteSize*8, 0, false, this.getLargeFontSize());
         }

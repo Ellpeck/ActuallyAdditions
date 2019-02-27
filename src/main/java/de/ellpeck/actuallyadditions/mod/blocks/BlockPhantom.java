@@ -86,18 +86,18 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay{
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         switch(this.type){
-            case PLACER:
-                return new TileEntityPhantomPlacer();
-            case BREAKER:
-                return new TileEntityPhantomBreaker();
-            case LIQUIFACE:
-                return new TileEntityPhantomLiquiface();
-            case ENERGYFACE:
-                return new TileEntityPhantomEnergyface();
-            case REDSTONEFACE:
-                return new TileEntityPhantomRedstoneface();
-            default:
-                return new TileEntityPhantomItemface();
+        case PLACER:
+            return new TileEntityPhantomPlacer();
+        case BREAKER:
+            return new TileEntityPhantomBreaker();
+        case LIQUIFACE:
+            return new TileEntityPhantomLiquiface();
+        case ENERGYFACE:
+            return new TileEntityPhantomEnergyface();
+        case REDSTONEFACE:
+            return new TileEntityPhantomRedstoneface();
+        default:
+            return new TileEntityPhantomItemface();
         }
     }
 

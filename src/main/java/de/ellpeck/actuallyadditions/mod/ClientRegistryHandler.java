@@ -6,6 +6,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.render.IHasModel;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.util.FluidStateMapper;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 public class ClientRegistryHandler{
 
-    public static final Map<ItemStack, ModelResourceLocation> MODEL_LOCATIONS_FOR_REGISTERING = new HashMap<ItemStack, ModelResourceLocation>();
+    public static final Map<ItemStack, ModelResourceLocation> MODEL_LOCATIONS_FOR_REGISTERING = new HashMap<>();
 
     /**
      * (Excerpted from Tinkers' Construct with permission, thanks guys!)
@@ -30,7 +31,7 @@ public class ClientRegistryHandler{
         Block block = fluid.getBlock();
         Item item = Item.getItemFromBlock(block);
         FluidStateMapper mapper = new FluidStateMapper(fluid);
-        ModelLoader.registerItemVariants(item);
+        ModelBakery.registerItemVariants(item);
         ModelLoader.setCustomMeshDefinition(item, mapper);
         ModelLoader.setCustomStateMapper(block, mapper);
     }
@@ -52,7 +53,7 @@ public class ClientRegistryHandler{
         registerCustomFluidBlockRenderer(InitFluids.fluidCrystalOil);
         registerCustomFluidBlockRenderer(InitFluids.fluidEmpoweredOil);
     }
-    
+
     @SubscribeEvent
     public void onModelBake(ModelBakeEvent e) {
         ModelResourceLocation mrl = new ModelResourceLocation(new ResourceLocation(ActuallyAdditions.MODID, "block_compost"), "normal");

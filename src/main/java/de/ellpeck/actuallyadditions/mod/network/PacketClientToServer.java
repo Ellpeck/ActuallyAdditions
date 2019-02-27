@@ -61,12 +61,9 @@ public class PacketClientToServer implements IMessage{
 
         @Override
         public IMessage onMessage(final PacketClientToServer message, final MessageContext ctx){
-            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(new Runnable(){
-                @Override
-                public void run(){
-                    if(message.data != null && message.handler != null){
-                        message.handler.handleData(message.data, ctx);
-                    }
+            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
+                if(message.data != null && message.handler != null){
+                    message.handler.handleData(message.data, ctx);
                 }
             });
             return null;

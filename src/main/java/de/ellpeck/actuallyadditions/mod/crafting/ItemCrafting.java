@@ -37,8 +37,8 @@ import java.util.ArrayList;
 
 public final class ItemCrafting{
 
-    public static final ArrayList<IRecipe> RECIPES_POTION_RINGS = new ArrayList<IRecipe>();
-    public static final ArrayList<IRecipe> RECIPES_DRILL_COLORING = new ArrayList<IRecipe>();
+    public static final ArrayList<IRecipe> RECIPES_POTION_RINGS = new ArrayList<>();
+    public static final ArrayList<IRecipe> RECIPES_DRILL_COLORING = new ArrayList<>();
     public static IRecipe recipePhantomConnector;
     public static IRecipe recipeCoil;
     public static IRecipe recipeCoilAdvanced;
@@ -469,7 +469,7 @@ public final class ItemCrafting{
         RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()),
                 " R ", "RIR", " R ",
                 'I', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()) : new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()),
-                'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()));
+                        'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()));
         recipeCoil = RecipeUtil.lastIRecipe();
 
         //Cup

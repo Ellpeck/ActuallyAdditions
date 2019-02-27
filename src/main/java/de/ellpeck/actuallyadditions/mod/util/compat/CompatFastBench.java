@@ -12,18 +12,18 @@ import shadows.fastbench.gui.GuiFastBench;
 
 public class CompatFastBench {
 
-	public static Container getFastBenchContainer(EntityPlayer p, World world) {
-		return new ContainerFastBench(p, world, BlockPos.ORIGIN) {
-			@Override
-			public boolean canInteractWith(EntityPlayer playerIn) {
-				return true;
-			}
-		};
-	}
+    public static Container getFastBenchContainer(EntityPlayer p, World world) {
+        return new ContainerFastBench(p, world, BlockPos.ORIGIN) {
+            @Override
+            public boolean canInteractWith(EntityPlayer playerIn) {
+                return true;
+            }
+        };
+    }
 
-	@SideOnly(Side.CLIENT)
-	public static Gui getFastBenchGui(EntityPlayer p, World world) {
-		return new GuiFastBench(p.inventory, world, BlockPos.ORIGIN);
-	}
+    @SideOnly(Side.CLIENT)
+    public static Gui getFastBenchGui(EntityPlayer p, World world) {
+        return new GuiFastBench(p.inventory, world, BlockPos.ORIGIN);
+    }
 
 }

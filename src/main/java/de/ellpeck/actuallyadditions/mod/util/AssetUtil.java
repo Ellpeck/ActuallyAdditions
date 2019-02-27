@@ -91,7 +91,7 @@ public final class AssetUtil{
             GlStateManager.popMatrix();
         }
     }
-    
+
     @SideOnly(Side.CLIENT)
     public static void renderStateInWorld(IBlockState state, IBlockAccess world, BlockPos pos, float brightness){
         Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
@@ -99,9 +99,9 @@ public final class AssetUtil{
         GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
         int i = Minecraft.getMinecraft().getBlockColors().colorMultiplier(state, world, pos, 0);
 
-        float r = (float) (i >> 16 & 255) / 255F;
-        float g = (float) (i >> 8 & 255) / 255F;
-        float b = (float) (i & 255) / 255F;
+        float r = (i >> 16 & 255) / 255F;
+        float g = (i >> 8 & 255) / 255F;
+        float b = (i & 255) / 255F;
 
         Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(state, model, brightness, r, g, b);
     }
@@ -156,14 +156,14 @@ public final class AssetUtil{
     //Copied from Gui.class and changed
     @SideOnly(Side.CLIENT)
     public static void drawHorizontalGradientRect(int left, int top, int right, int bottom, int startColor, int endColor, float zLevel){
-        float f = (float)(startColor >> 24 & 255)/255.0F;
-        float f1 = (float)(startColor >> 16 & 255)/255.0F;
-        float f2 = (float)(startColor >> 8 & 255)/255.0F;
-        float f3 = (float)(startColor & 255)/255.0F;
-        float f4 = (float)(endColor >> 24 & 255)/255.0F;
-        float f5 = (float)(endColor >> 16 & 255)/255.0F;
-        float f6 = (float)(endColor >> 8 & 255)/255.0F;
-        float f7 = (float)(endColor & 255)/255.0F;
+        float f = (startColor >> 24 & 255)/255.0F;
+        float f1 = (startColor >> 16 & 255)/255.0F;
+        float f2 = (startColor >> 8 & 255)/255.0F;
+        float f3 = (startColor & 255)/255.0F;
+        float f4 = (endColor >> 24 & 255)/255.0F;
+        float f5 = (endColor >> 16 & 255)/255.0F;
+        float f6 = (endColor >> 8 & 255)/255.0F;
+        float f7 = (endColor & 255)/255.0F;
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
         GlStateManager.disableAlpha();
@@ -172,10 +172,10 @@ public final class AssetUtil{
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder renderer = tessellator.getBuffer();
         renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        renderer.pos((double)left, (double)top, (double)zLevel).color(f1, f2, f3, f).endVertex();
-        renderer.pos((double)left, (double)bottom, (double)zLevel).color(f1, f2, f3, f).endVertex();
-        renderer.pos((double)right, (double)bottom, (double)zLevel).color(f5, f6, f7, f4).endVertex();
-        renderer.pos((double)right, (double)top, (double)zLevel).color(f5, f6, f7, f4).endVertex();
+        renderer.pos(left, top, zLevel).color(f1, f2, f3, f).endVertex();
+        renderer.pos(left, bottom, zLevel).color(f1, f2, f3, f).endVertex();
+        renderer.pos(right, bottom, zLevel).color(f5, f6, f7, f4).endVertex();
+        renderer.pos(right, top, zLevel).color(f5, f6, f7, f4).endVertex();
         tessellator.draw();
         GlStateManager.shadeModel(7424);
         GlStateManager.disableBlend();
@@ -205,10 +205,10 @@ public final class AssetUtil{
         int j = fontrenderer.getStringWidth(tag)/2;
         GlStateManager.disableTexture2D();
         renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        renderer.pos((double)(-j-1), (double)(-1+i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        renderer.pos((double)(-j-1), (double)(8+i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        renderer.pos((double)(j+1), (double)(8+i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        renderer.pos((double)(j+1), (double)(-1+i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        renderer.pos(-j-1, -1+i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        renderer.pos(-j-1, 8+i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        renderer.pos(j+1, 8+i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        renderer.pos(j+1, -1+i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
         tessellator.draw();
         GlStateManager.enableTexture2D();
         fontrenderer.drawString(tag, -fontrenderer.getStringWidth(tag)/2, i, 553648127);
@@ -267,7 +267,7 @@ public final class AssetUtil{
         Vec3d vec2 = new Vec3d(secondX, secondY, secondZ);
         Vec3d combinedVec = vec2.subtract(vec1);
 
-        double rot = rotationTime > 0 ? (360D*((world.getTotalWorldTime()%rotationTime)/rotationTime)) : 0;
+        double rot = rotationTime > 0 ? 360D*(world.getTotalWorldTime()%rotationTime/rotationTime) : 0;
         double pitch = Math.atan2(combinedVec.y, Math.sqrt(combinedVec.x*combinedVec.x+combinedVec.z*combinedVec.z));
         double yaw = Math.atan2(-combinedVec.z, combinedVec.x);
 

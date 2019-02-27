@@ -126,19 +126,19 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
 
             IBlockState state = this.world.getBlockState(pos);
             Block block = state.getBlock();
-            ItemStack stack = block.getPickBlock(state, new RayTraceResult(Type.BLOCK, new Vec3d(0, 0, 0), EnumFacing.DOWN, pos), world, pos, FakePlayerFactory.getMinecraft((WorldServer) world));
+            ItemStack stack = block.getPickBlock(state, new RayTraceResult(Type.BLOCK, new Vec3d(0, 0, 0), EnumFacing.DOWN, pos), this.world, pos, FakePlayerFactory.getMinecraft((WorldServer) this.world));
             if (!block.isAir(this.world.getBlockState(pos), this.world, pos)) {
                 if (block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
                     NonNullList<ItemStack> drops = NonNullList.create();
-                    block.getDrops(drops, world, pos, state, 0);
+                    block.getDrops(drops, this.world, pos, state, 0);
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.world, pos);
 
                     if (chance > 0 && this.world.rand.nextFloat() <= chance) {
-                        if (StackUtil.canAddAll(inv, drops, false)) {
+                        if (StackUtil.canAddAll(this.inv, drops, false)) {
                             this.world.playEvent(2001, pos, Block.getStateId(this.world.getBlockState(pos)));
                             this.world.setBlockToAir(pos);
 
-                            StackUtil.addAll(inv, drops, false);
+                            StackUtil.addAll(this.inv, drops, false);
                             this.markDirty();
 
                             this.storage.extractEnergyInternal(actualUse, false);

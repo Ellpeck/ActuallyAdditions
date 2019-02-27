@@ -28,11 +28,11 @@ import java.util.*;
 
 public class BookletPage implements IBookletPage{
 
-    protected final HashMap<String, String> textReplacements = new HashMap<String, String>();
+    protected final HashMap<String, String> textReplacements = new HashMap<>();
     protected final int localizationKey;
     private final int priority;
-    private final List<ItemStack> itemsForPage = new ArrayList<ItemStack>();
-    private final List<FluidStack> fluidsForPage = new ArrayList<FluidStack>();
+    private final List<ItemStack> itemsForPage = new ArrayList<>();
+    private final List<FluidStack> fluidsForPage = new ArrayList<>();
     protected IBookletChapter chapter;
     protected boolean hasNoText;
 

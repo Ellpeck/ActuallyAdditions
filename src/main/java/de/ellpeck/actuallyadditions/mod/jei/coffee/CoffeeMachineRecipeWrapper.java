@@ -47,7 +47,7 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton {
     @Override
     public void getIngredients(IIngredients ingredients) {
         List<ItemStack> list = new ArrayList<>();
-        for (ItemStack s : ingredient.getInput().getMatchingStacks())
+        for (ItemStack s : this.ingredient.getInput().getMatchingStacks())
             list.add(s);
         list.add(this.cup);
         list.add(this.coffeeBeans);

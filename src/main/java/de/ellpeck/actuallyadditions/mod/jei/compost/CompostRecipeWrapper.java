@@ -33,8 +33,8 @@ public class CompostRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        ingredients.setInputs(VanillaTypes.ITEM, Arrays.asList(recipe.getInput().getMatchingStacks()));
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
+        ingredients.setInputs(VanillaTypes.ITEM, Arrays.asList(this.recipe.getInput().getMatchingStacks()));
+        ingredients.setOutput(VanillaTypes.ITEM, this.recipe.getOutput());
     }
 
     @Override

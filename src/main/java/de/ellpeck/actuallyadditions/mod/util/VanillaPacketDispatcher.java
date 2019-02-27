@@ -9,20 +9,20 @@ import net.minecraft.world.WorldServer;
 
 public final class VanillaPacketDispatcher {
 
-	//Don't call from the client.
-	public static void dispatchTEToNearbyPlayers(TileEntity tile) {
-		WorldServer world = (WorldServer) tile.getWorld();
-		PlayerChunkMapEntry entry = world.getPlayerChunkMap().getEntry(tile.getPos().getX() >> 4, tile.getPos().getZ() >> 4);
+    //Don't call from the client.
+    public static void dispatchTEToNearbyPlayers(TileEntity tile) {
+        WorldServer world = (WorldServer) tile.getWorld();
+        PlayerChunkMapEntry entry = world.getPlayerChunkMap().getEntry(tile.getPos().getX() >> 4, tile.getPos().getZ() >> 4);
 
-		if (entry == null) return;
+        if (entry == null) return;
 
-		for (EntityPlayerMP player : entry.getWatchingPlayers())
-			((EntityPlayerMP) player).connection.sendPacket(tile.getUpdatePacket());
+        for (EntityPlayerMP player : entry.getWatchingPlayers())
+            player.connection.sendPacket(tile.getUpdatePacket());
 
-	}
+    }
 
-	public static void dispatchTEToNearbyPlayers(World world, BlockPos pos) {
-		TileEntity tile = world.getTileEntity(pos);
-		if (tile != null) dispatchTEToNearbyPlayers(tile);
-	}
+    public static void dispatchTEToNearbyPlayers(World world, BlockPos pos) {
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile != null) dispatchTEToNearbyPlayers(tile);
+    }
 }

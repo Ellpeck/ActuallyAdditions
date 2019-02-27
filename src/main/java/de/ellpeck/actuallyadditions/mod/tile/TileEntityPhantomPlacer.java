@@ -118,7 +118,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     @Override
     public boolean hasBoundPosition() {
         if (this.boundPosition != null) {
-            if (this.world.getTileEntity(this.boundPosition) instanceof IPhantomTile || (this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ() && this.world.provider.getDimension() == this.world.provider.getDimension())) {
+            if (this.world.getTileEntity(this.boundPosition) instanceof IPhantomTile || this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ() && this.world.provider.getDimension() == this.world.provider.getDimension()) {
                 this.boundPosition = null;
                 return false;
             }
@@ -133,7 +133,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
                 Block blockToBreak = this.world.getBlockState(this.boundPosition).getBlock();
                 if (blockToBreak != null && this.world.getBlockState(this.boundPosition).getBlockHardness(this.world, this.boundPosition) > -1.0F) {
                     NonNullList<ItemStack> drops = NonNullList.create();
-                    blockToBreak.getDrops(drops, world, pos, this.world.getBlockState(this.boundPosition), 0);
+                    blockToBreak.getDrops(drops, this.world, this.pos, this.world.getBlockState(this.boundPosition), 0);
 
                     if (StackUtil.canAddAll(this.inv, drops, false)) {
                         this.world.playEvent(2001, this.boundPosition, Block.getStateId(this.world.getBlockState(this.boundPosition)));
@@ -145,21 +145,21 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             } else {
                 int theSlot = StackUtil.findFirstFilled(this.inv);
                 if (theSlot == -1) return;
-                inv.setStackInSlot(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.world, this.boundPosition, inv.getStackInSlot(theSlot)));
+                this.inv.setStackInSlot(theSlot, WorldUtil.useItemAtSide(WorldUtil.getDirectionBySidesInOrder(this.side), this.world, this.boundPosition, this.inv.getStackInSlot(theSlot)));
             }
         }
     }
 
     public void renderParticles() {
         if (this.world.rand.nextInt(2) == 0) {
-            double d1 = (double) ((float) this.boundPosition.getY() + this.world.rand.nextFloat());
+            double d1 = this.boundPosition.getY() + this.world.rand.nextFloat();
             int i1 = this.world.rand.nextInt(2) * 2 - 1;
             int j1 = this.world.rand.nextInt(2) * 2 - 1;
-            double d4 = ((double) this.world.rand.nextFloat() - 0.5D) * 0.125D;
-            double d2 = (double) this.boundPosition.getZ() + 0.5D + 0.25D * (double) j1;
-            double d5 = (double) (this.world.rand.nextFloat() * 1.0F * (float) j1);
-            double d0 = (double) this.boundPosition.getX() + 0.5D + 0.25D * (double) i1;
-            double d3 = (double) (this.world.rand.nextFloat() * 1.0F * (float) i1);
+            double d4 = (this.world.rand.nextFloat() - 0.5D) * 0.125D;
+            double d2 = this.boundPosition.getZ() + 0.5D + 0.25D * j1;
+            double d5 = this.world.rand.nextFloat() * 1.0F * j1;
+            double d0 = this.boundPosition.getX() + 0.5D + 0.25D * i1;
+            double d3 = this.world.rand.nextFloat() * 1.0F * i1;
             this.world.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
     }

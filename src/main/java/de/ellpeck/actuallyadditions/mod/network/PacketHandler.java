@@ -41,7 +41,7 @@ import java.util.List;
 
 public final class PacketHandler{
 
-    public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<IDataHandler>();
+    public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<>();
     public static final IDataHandler LASER_HANDLER = new IDataHandler(){
         @Override
         @SideOnly(Side.CLIENT)
@@ -81,56 +81,44 @@ public final class PacketHandler{
             mc.effectRenderer.addEffect(fx);
         }
     };
-    public static final IDataHandler GUI_BUTTON_TO_TILE_HANDLER = new IDataHandler(){
-        @Override
-        public void handleData(NBTTagCompound compound, MessageContext context){
-            World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
-            TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
+    public static final IDataHandler GUI_BUTTON_TO_TILE_HANDLER = (compound, context) -> {
+        World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
+        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
 
-            if(tile instanceof IButtonReactor){
-                IButtonReactor reactor = (IButtonReactor)tile;
-                Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
-                if(entity instanceof EntityPlayer){
-                    reactor.onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)entity);
-                }
-            }
-        }
-    };
-    public static final IDataHandler GUI_BUTTON_TO_CONTAINER_HANDLER = new IDataHandler(){
-        @Override
-        public void handleData(NBTTagCompound compound, MessageContext context){
-            World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
+        if(tile instanceof IButtonReactor){
+            IButtonReactor reactor = (IButtonReactor)tile;
             Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
             if(entity instanceof EntityPlayer){
-                Container container = ((EntityPlayer)entity).openContainer;
-                if(container instanceof IButtonReactor){
-                    ((IButtonReactor)container).onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)entity);
-                }
+                reactor.onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)entity);
             }
         }
     };
-    public static final IDataHandler GUI_NUMBER_TO_TILE_HANDLER = new IDataHandler(){
-        @Override
-        public void handleData(NBTTagCompound compound, MessageContext context){
-            World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
-            TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
-
-            if(tile instanceof INumberReactor){
-                INumberReactor reactor = (INumberReactor)tile;
-                reactor.onNumberReceived(compound.getDouble("Number"), compound.getInteger("NumberID"), (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID")));
+    public static final IDataHandler GUI_BUTTON_TO_CONTAINER_HANDLER = (compound, context) -> {
+        World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
+        Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
+        if(entity instanceof EntityPlayer){
+            Container container = ((EntityPlayer)entity).openContainer;
+            if(container instanceof IButtonReactor){
+                ((IButtonReactor)container).onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)entity);
             }
         }
     };
-    public static final IDataHandler GUI_STRING_TO_TILE_HANDLER = new IDataHandler(){
-        @Override
-        public void handleData(NBTTagCompound compound, MessageContext context){
-            World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
-            TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
+    public static final IDataHandler GUI_NUMBER_TO_TILE_HANDLER = (compound, context) -> {
+        World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
+        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
 
-            if(tile instanceof IStringReactor){
-                IStringReactor reactor = (IStringReactor)tile;
-                reactor.onTextReceived(compound.getString("Text"), compound.getInteger("TextID"), (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID")));
-            }
+        if(tile instanceof INumberReactor){
+            INumberReactor reactor = (INumberReactor)tile;
+            reactor.onNumberReceived(compound.getDouble("Number"), compound.getInteger("NumberID"), (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID")));
+        }
+    };
+    public static final IDataHandler GUI_STRING_TO_TILE_HANDLER = (compound, context) -> {
+        World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
+        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
+
+        if(tile instanceof IStringReactor){
+            IStringReactor reactor = (IStringReactor)tile;
+            reactor.onTextReceived(compound.getString("Text"), compound.getInteger("TextID"), (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID")));
         }
     };
     public static final IDataHandler SYNC_PLAYER_DATA = new IDataHandler(){
@@ -152,37 +140,34 @@ public final class PacketHandler{
             }
         }
     };
-    public static final IDataHandler PLAYER_DATA_TO_SERVER = new IDataHandler(){
-        @Override
-        public void handleData(NBTTagCompound compound, MessageContext context){
-            World world = DimensionManager.getWorld(compound.getInteger("World"));
-            EntityPlayer player = world.getPlayerEntityByUUID(compound.getUniqueId("UUID"));
-            if(player != null){
-                PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
+    public static final IDataHandler PLAYER_DATA_TO_SERVER = (compound, context) -> {
+        World world = DimensionManager.getWorld(compound.getInteger("World"));
+        EntityPlayer player = world.getPlayerEntityByUUID(compound.getUniqueId("UUID"));
+        if(player != null){
+            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
 
-                int type = compound.getInteger("Type");
-                if(type == 0){
-                    data.loadBookmarks(compound.getTagList("Bookmarks", 8));
-                }
-                else if(type == 1){
-                    data.didBookTutorial = compound.getBoolean("DidBookTutorial");
-                }
-                else if(type == 2){
-                    data.loadTrials(compound.getTagList("Trials", 8));
+            int type = compound.getInteger("Type");
+            if(type == 0){
+                data.loadBookmarks(compound.getTagList("Bookmarks", 8));
+            }
+            else if(type == 1){
+                data.didBookTutorial = compound.getBoolean("DidBookTutorial");
+            }
+            else if(type == 2){
+                data.loadTrials(compound.getTagList("Trials", 8));
 
-                    if(compound.getBoolean("Achievement")){
-                        //TheAchievements.COMPLETE_TRIALS.get(player);
-                    }
-                }
-                WorldData.get(world).markDirty();
-
-                if(compound.getBoolean("Log")){
-                    ActuallyAdditions.LOGGER.info("Receiving changed Player Data for player "+player.getName()+".");
+                if(compound.getBoolean("Achievement")){
+                    //TheAchievements.COMPLETE_TRIALS.get(player);
                 }
             }
-            else{
-                ActuallyAdditions.LOGGER.error("Tried to receive Player Data for UUID "+compound.getUniqueId("UUID")+", but he doesn't seem to be present!");
+            WorldData.get(world).markDirty();
+
+            if(compound.getBoolean("Log")){
+                ActuallyAdditions.LOGGER.info("Receiving changed Player Data for player "+player.getName()+".");
             }
+        }
+        else{
+            ActuallyAdditions.LOGGER.error("Tried to receive Player Data for UUID "+compound.getUniqueId("UUID")+", but he doesn't seem to be present!");
         }
     };
 

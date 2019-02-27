@@ -45,7 +45,7 @@ public class ColorLensRotator implements IColorLensChanger {
 
         if (idx == -1) return ItemStack.EMPTY;
 
-        ItemStack s = rotations.get((idx + 1) % rotations.size()).copy();
+        ItemStack s = this.rotations.get((idx + 1) % this.rotations.size()).copy();
         s.setCount(stack.getCount());
         return s;
     }

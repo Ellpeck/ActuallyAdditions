@@ -74,6 +74,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
         return true;
     }
 
+    @Override
     public void registerRendering(){
         ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
@@ -246,7 +247,7 @@ public abstract class BlockContainerBase extends BlockContainer implements ItemB
                 base.writeSyncableNBT(data, TileEntityBase.NBTType.SAVE_BLOCK);
 
                 //Remove unnecessarily saved default values to avoid unstackability
-                List<String> keysToRemove = new ArrayList<String>();
+                List<String> keysToRemove = new ArrayList<>();
                 for(String key : data.getKeySet()){
                     NBTBase tag = data.getTag(key);
                     //Remove only ints because they are the most common ones

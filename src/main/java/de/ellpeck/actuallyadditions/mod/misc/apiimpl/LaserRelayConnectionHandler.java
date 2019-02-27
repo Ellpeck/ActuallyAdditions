@@ -69,7 +69,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
      */
     @Override
     public ConcurrentSet<IConnectionPair> getConnectionsFor(BlockPos relay, World world){
-        ConcurrentSet<IConnectionPair> allPairs = new ConcurrentSet<IConnectionPair>();
+        ConcurrentSet<IConnectionPair> allPairs = new ConcurrentSet<>();
         for(Network aNetwork : WorldData.get(world).laserRelayNetworks){
             for(IConnectionPair pair : aNetwork.connections){
                 if(pair.contains(relay)){
@@ -107,14 +107,14 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
      */
     @Override
     public Network getNetworkFor(BlockPos relay, World world){
-    	if(world != null)
-        for(Network aNetwork : WorldData.get(world).laserRelayNetworks){
-            for(IConnectionPair pair : aNetwork.connections){
-                if(pair.contains(relay)){
-                    return aNetwork;
+        if(world != null)
+            for(Network aNetwork : WorldData.get(world).laserRelayNetworks){
+                for(IConnectionPair pair : aNetwork.connections){
+                    if(pair.contains(relay)){
+                        return aNetwork;
+                    }
                 }
             }
-        }
         return null;
     }
 

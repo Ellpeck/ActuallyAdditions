@@ -79,7 +79,7 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang{
         super.drawScreen(x, y, f);
 
         if(this.buttonSmartWhitelistLeft.isMouseOver() || this.buttonSmartWhitelistRight.isMouseOver()){
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             list.add(TextFormatting.BOLD+StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.smart"));
             list.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.smartInfo"), 200));
             this.drawHoveringText(list, x, y);

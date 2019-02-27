@@ -63,14 +63,14 @@ public class FilterSettingsGui extends Gui{
         this.metaButton.displayString = (this.theSettings.respectMeta ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"ME";
         this.nbtButton.displayString = (this.theSettings.respectNBT ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"NB";
         this.modButton.displayString = (this.theSettings.respectMod ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"MO";
-        this.oredictButton.displayString = (this.theSettings.respectOredict == 0 ? TextFormatting.RED : (this.theSettings.respectOredict == 1 ? TextFormatting.GREEN : TextFormatting.DARK_GREEN))+"OR";
+        this.oredictButton.displayString = (this.theSettings.respectOredict == 0 ? TextFormatting.RED : this.theSettings.respectOredict == 1 ? TextFormatting.GREEN : TextFormatting.DARK_GREEN)+"OR";
     }
 
     public void drawHover(int mouseX, int mouseY){
         Minecraft mc = Minecraft.getMinecraft();
 
         if(this.whitelistButton.isMouseOver()){
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             list.add(TextFormatting.BOLD+(this.theSettings.isWhitelist ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.whitelist") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.blacklist")));
             list.addAll(mc.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".gui.whitelistInfo"), 200));
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
@@ -82,7 +82,7 @@ public class FilterSettingsGui extends Gui{
             GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD+(this.theSettings.respectNBT ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectNBT") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.ignoreNBT"))), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
         else if(this.modButton.isMouseOver()){
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             list.add(TextFormatting.BOLD+(this.theSettings.respectMod ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectMod") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.ignoreMod")));
 
             list.addAll(mc.fontRenderer.listFormattedStringToWidth(StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectModInfo"), 200));
@@ -90,8 +90,8 @@ public class FilterSettingsGui extends Gui{
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
         else if(this.oredictButton.isMouseOver()){
-            List<String> list = new ArrayList<String>();
-            list.add(TextFormatting.BOLD+(this.theSettings.respectOredict == 0 ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.ignoreOredict") : (this.theSettings.respectOredict == 1 ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectOredictSoft") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectOredictHard"))));
+            List<String> list = new ArrayList<>();
+            list.add(TextFormatting.BOLD+(this.theSettings.respectOredict == 0 ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.ignoreOredict") : this.theSettings.respectOredict == 1 ? StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectOredictSoft") : StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.respectOredictHard")));
 
             String type = null;
             if(this.theSettings.respectOredict == 1){

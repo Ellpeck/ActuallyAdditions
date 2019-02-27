@@ -87,9 +87,9 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             Block block = state.getBlock();
 
             if (block instanceof BlockCrops) {
-                if (((BlockCrops) block).isMaxAge(state)) { return doFarmerStuff(state, world, pos, farmer); }
-            } else if ((BlockCrops.AGE).equals(block.getBlockState().getProperty("age"))) {
-                if (state.getValue(BlockCrops.AGE) >= 7 && !(block instanceof BlockStem)) return doFarmerStuff(state, world, pos, farmer);
+                if (((BlockCrops) block).isMaxAge(state)) { return this.doFarmerStuff(state, world, pos, farmer); }
+            } else if (BlockCrops.AGE.equals(block.getBlockState().getProperty("age"))) {
+                if (state.getValue(BlockCrops.AGE) >= 7 && !(block instanceof BlockStem)) return this.doFarmerStuff(state, world, pos, farmer);
             }
         }
         return FarmerResult.FAIL;

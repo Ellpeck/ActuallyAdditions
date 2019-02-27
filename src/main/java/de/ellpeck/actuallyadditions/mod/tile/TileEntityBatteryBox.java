@@ -55,7 +55,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
                 ItemStack stack = this.inv.getStackInSlot(0);
                 if(StackUtil.isValid(stack) && ItemUtil.isEnabled(stack)){
                     if(storage.getEnergyStored() > 0){
-                        List<TileEntityBatteryBox> tiles = new ArrayList<TileEntityBatteryBox>();
+                        List<TileEntityBatteryBox> tiles = new ArrayList<>();
                         this.energyPushOffLoop(this, tiles);
 
                         if(!tiles.isEmpty()){
@@ -105,7 +105,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     public int getComparatorStrength(){
         IEnergyStorage storage = this.getEnergyStorage(null);
         if(storage != null){
-            float calc = ((float)storage.getEnergyStored()/(float)storage.getMaxEnergyStored())*15F;
+            float calc = (float)storage.getEnergyStored()/(float)storage.getMaxEnergyStored()*15F;
             return (int)calc;
         }
         else{

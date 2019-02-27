@@ -222,8 +222,8 @@ public abstract class ItemEnergy extends ItemBase{
             return this.getCapability(capability, facing) != null;
         }
 
-        
-		@Nullable
+
+        @Nullable
         @Override
         public <T> T getCapability(Capability<T> capability, EnumFacing facing){
             if(capability == CapabilityEnergy.ENERGY){

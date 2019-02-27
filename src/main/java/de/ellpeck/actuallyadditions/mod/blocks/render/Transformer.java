@@ -29,18 +29,18 @@ public class Transformer extends VertexTransformer {
 
     @Override
     public void put(int element, float... data) {
-        VertexFormatElement.EnumUsage usage = parent.getVertexFormat().getElement(element).getUsage();
+        VertexFormatElement.EnumUsage usage = this.parent.getVertexFormat().getElement(element).getUsage();
 
         // transform normals and position
         if (usage == VertexFormatElement.EnumUsage.POSITION && data.length >= 3) {
             Vector4f vec = new Vector4f(data);
             vec.setW(1.0f);
-            transformation.transform(vec);
+            this.transformation.transform(vec);
             data = new float[4];
             vec.get(data);
         } else if (usage == VertexFormatElement.EnumUsage.NORMAL && data.length >= 3) {
             Vector3f vec = new Vector3f(data);
-            normalTransformation.transform(vec);
+            this.normalTransformation.transform(vec);
             vec.normalize();
             data = new float[4];
             vec.get(data);
@@ -49,6 +49,6 @@ public class Transformer extends VertexTransformer {
     }
 
     public UnpackedBakedQuad build() {
-        return ((UnpackedBakedQuad.Builder) parent).build();
+        return ((UnpackedBakedQuad.Builder) this.parent).build();
     }
 }

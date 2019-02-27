@@ -86,7 +86,7 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
             if(player != null){
                 builder.withLuck(player.getLuck());
             }
-            AwfulUtil.fillInventory(table, this.inv, world.rand, builder.build());
+            AwfulUtil.fillInventory(table, this.inv, this.world.rand, builder.build());
         }
     }
 }

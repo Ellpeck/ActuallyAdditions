@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
-    public final Map<BlockPos, SlotlessableItemHandlerWrapper> handlersAround = new ConcurrentHashMap<BlockPos, SlotlessableItemHandlerWrapper>();
+    public final Map<BlockPos, SlotlessableItemHandlerWrapper> handlersAround = new ConcurrentHashMap<>();
     public int priority;
 
     public TileEntityLaserRelayItem(String name){
@@ -62,7 +62,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
     @Override
     public void saveDataOnChangeOrWorldStart(){
-        Map<BlockPos, SlotlessableItemHandlerWrapper> old = new HashMap<BlockPos, SlotlessableItemHandlerWrapper>(this.handlersAround);
+        Map<BlockPos, SlotlessableItemHandlerWrapper> old = new HashMap<>(this.handlersAround);
         boolean change = false;
 
         this.handlersAround.clear();
@@ -107,7 +107,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay{
 
     public void getItemHandlersInNetwork(Network network, List<GenericItemHandlerInfo> storeList){
         //Keeps track of all the Laser Relays and Item Handlers that have been checked already to make nothing run multiple times
-        Set<BlockPos> alreadyChecked = new HashSet<BlockPos>();
+        Set<BlockPos> alreadyChecked = new HashSet<>();
 
         for(IConnectionPair pair : network.connections){
             for(BlockPos relay : pair.getPositions()){

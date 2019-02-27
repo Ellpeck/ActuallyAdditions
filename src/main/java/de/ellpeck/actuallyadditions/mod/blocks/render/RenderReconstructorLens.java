@@ -27,10 +27,9 @@ public class RenderReconstructorLens extends TileEntitySpecialRenderer<TileEntit
 
     @Override
     public void render(TileEntityAtomicReconstructor tile, double x, double y, double z, float par5, int par6, float f){
-        if(!(tile instanceof TileEntityAtomicReconstructor)){
-            return;
-        }
-        ItemStack stack = ((TileEntityAtomicReconstructor)tile).inv.getStackInSlot(0);
+        if(tile == null) return;
+
+        ItemStack stack = tile.inv.getStackInSlot(0);
 
         if(StackUtil.isValid(stack) && stack.getItem() instanceof ILensItem){
             GlStateManager.pushMatrix();

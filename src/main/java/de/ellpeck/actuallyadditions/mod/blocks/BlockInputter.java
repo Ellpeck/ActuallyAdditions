@@ -104,17 +104,17 @@ public class BlockInputter extends BlockContainerBase{
 
         @Override
         public String getItemStackDisplayName(ItemStack stack){
-        	if(Util.isClient()) {
-            long sysTime = System.currentTimeMillis();
+            if(Util.isClient()) {
+                long sysTime = System.currentTimeMillis();
 
-            if(this.lastSysTime+5000 < sysTime){
-                this.lastSysTime = sysTime;
-                this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS)+1;
+                if(this.lastSysTime+5000 < sysTime){
+                    this.lastSysTime = sysTime;
+                    this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS)+1;
+                }
+
+                return StringUtil.localize(this.getTranslationKey()+".name")+" ("+StringUtil.localize("tile."+ActuallyAdditions.MODID+".block_inputter.add."+this.toPick+".name")+")";
             }
-
-            return StringUtil.localize(this.getTranslationKey()+".name")+" ("+StringUtil.localize("tile."+ActuallyAdditions.MODID+".block_inputter.add."+this.toPick+".name")+")";
-        	}
-        	else return super.getItemStackDisplayName(stack);
+            else return super.getItemStackDisplayName(stack);
         }
     }
 }

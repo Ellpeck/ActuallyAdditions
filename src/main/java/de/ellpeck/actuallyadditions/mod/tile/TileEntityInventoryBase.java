@@ -28,7 +28,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
 
     public TileEntityInventoryBase(int slots, String name) {
         super(name);
-        inv = new TileStackHandler(slots);
+        this.inv = new TileStackHandler(slots);
     }
 
     public static void saveSlots(IItemHandler slots, NBTTagCompound compound) {
@@ -59,7 +59,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
     @Override
     public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
-        if (type == NBTType.SAVE_TILE || (type == NBTType.SYNC && this.shouldSyncSlots())) {
+        if (type == NBTType.SAVE_TILE || type == NBTType.SYNC && this.shouldSyncSlots()) {
             saveSlots(this.inv, compound);
         }
     }
@@ -102,7 +102,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
     @Override
     public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.readSyncableNBT(compound, type);
-        if (type == NBTType.SAVE_TILE || (type == NBTType.SYNC && this.shouldSyncSlots())) {
+        if (type == NBTType.SAVE_TILE || type == NBTType.SYNC && this.shouldSyncSlots()) {
             loadSlots(this.inv, compound);
         }
     }

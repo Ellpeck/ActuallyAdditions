@@ -72,7 +72,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
                         Item item = stack.getItem();
                         if (isValidItem(stack) && (types == null || !types.contains(item))) {
                             if (types == null) {
-                                types = new ArrayList<Item>();
+                                types = new ArrayList<>();
                             }
                             types.add(item);
 
@@ -163,7 +163,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
 
     @Override
     public int getComparatorStrength() {
-        float calc = ((float) this.storage.getEnergyStored() / (float) this.storage.getMaxEnergyStored()) * 15F;
+        float calc = (float) this.storage.getEnergyStored() / (float) this.storage.getMaxEnergyStored() * 15F;
         return (int) calc;
     }
 }

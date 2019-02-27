@@ -100,28 +100,28 @@ public final class BlockCrafting{
     public static IRecipe recipeFarmer;
     public static IRecipe recipeBatteryBox;
 
-	private static class FireworkIngredient extends Ingredient {
+    private static class FireworkIngredient extends Ingredient {
 
-		ItemStack firework = new ItemStack(Items.FIREWORKS);
-		ItemStack[] fireworks = new ItemStack[] {firework};
+        ItemStack firework = new ItemStack(Items.FIREWORKS);
+        ItemStack[] fireworks = new ItemStack[] {this.firework};
 
-		@Override
-		public ItemStack[] getMatchingStacks() {
-			return fireworks;
-		}
+        @Override
+        public ItemStack[] getMatchingStacks() {
+            return this.fireworks;
+        }
 
-		@Override
-		public boolean apply(ItemStack stack) {
-			return stack.getItem() == Items.FIREWORKS;
-		}
-	}
-    
+        @Override
+        public boolean apply(ItemStack stack) {
+            return stack.getItem() == Items.FIREWORKS;
+        }
+    }
+
     public static void init(){
 
         Block[] removeNBTBlocks = new Block[] { InitBlocks.blockOilGenerator, InitBlocks.blockFluidPlacer, InitBlocks.blockFluidCollector, InitBlocks.blockCanolaPress, InitBlocks.blockFermentingBarrel };
 
         for(Block b : removeNBTBlocks)
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(b), new ItemStack(b));
+            RecipeHandler.addShapelessOreDictRecipe(new ItemStack(b), new ItemStack(b));
 
         //Battery Box
         RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockBatteryBox),
@@ -160,7 +160,7 @@ public final class BlockCrafting{
                 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_CHAR.ordinal()),
                 'W', "stickWood");
         recipesTinyTorch[1] = RecipeUtil.lastIRecipe();
-        
+
         //Firework Box
         RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockFireworkBox),
                 "GFG", "SAS", "CCC",
@@ -371,8 +371,8 @@ public final class BlockCrafting{
         RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()),
                 "WSW", "SRS", "WSW",
                 'W', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()) : new ItemStack(Items.ENDER_PEARL),
-                'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()),
-                'S', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(Blocks.DIAMOND_BLOCK) : new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()));
+                        'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()),
+                        'S', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(Blocks.DIAMOND_BLOCK) : new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()));
         recipeEnderCase = RecipeUtil.lastIRecipe();
 
         //Phantom Booster

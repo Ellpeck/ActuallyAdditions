@@ -20,14 +20,14 @@ import org.apache.commons.lang3.ArrayUtils;
 public final class IMCHandler{
 
     private static final Class<?>[] NO_CARRYING = new Class<?>[]{
-            BlockGiantChest.class,
-            BlockWildPlant.class,
-            BlockPlant.class,
-            BlockPhantom.class,
-            BlockTinyTorch.class,
-            BlockItemViewer.class,
-            BlockItemViewerHopping.class,
-            BlockLaserRelay.class
+        BlockGiantChest.class,
+        BlockWildPlant.class,
+        BlockPlant.class,
+        BlockPhantom.class,
+        BlockTinyTorch.class,
+        BlockItemViewer.class,
+        BlockItemViewerHopping.class,
+        BlockLaserRelay.class
     };
 
     public static void doBlockIMC(Block block){

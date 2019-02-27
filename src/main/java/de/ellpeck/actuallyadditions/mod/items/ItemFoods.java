@@ -62,7 +62,7 @@ public class ItemFoods extends ItemFoodBase{
 
     @Override
     public EnumAction getItemUseAction(ItemStack stack){
-        return stack.getItemDamage() >= ALL_FOODS.length ? EnumAction.EAT : (ALL_FOODS[stack.getItemDamage()].getsDrunken ? EnumAction.DRINK : EnumAction.EAT);
+        return stack.getItemDamage() >= ALL_FOODS.length ? EnumAction.EAT : ALL_FOODS[stack.getItemDamage()].getsDrunken ? EnumAction.DRINK : EnumAction.EAT;
     }
 
     @Override

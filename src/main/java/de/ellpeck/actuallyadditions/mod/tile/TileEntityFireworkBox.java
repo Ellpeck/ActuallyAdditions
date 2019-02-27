@@ -96,42 +96,42 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     @Override
     public void onNumberReceived(double number, int id, EntityPlayer player){
         switch(id){
-            case 0:
-                this.intValuePlay = (int)number;
-                break;
-            case 1:
-                this.chargeAmount = (int)number;
-                break;
-            case 2:
-                this.flightTime = (int)number;
-                break;
-            case 3:
-                this.trailOrFlickerChance = (float)number;
-                break;
-            case 4:
-                this.flickerChance = (float)number;
-                break;
-            case 5:
-                this.colorAmount = (int)number;
-                break;
-            case 6:
-                this.typeChance0 = (float)number;
-                break;
-            case 7:
-                this.typeChance1 = (float)number;
-                break;
-            case 8:
-                this.typeChance2 = (float)number;
-                break;
-            case 9:
-                this.typeChance3 = (float)number;
-                break;
-            case 10:
-                this.typeChance4 = (float)number;
-                break;
-            case 11:
-                this.areaOfEffect = (int)number;
-                break;
+        case 0:
+            this.intValuePlay = (int)number;
+            break;
+        case 1:
+            this.chargeAmount = (int)number;
+            break;
+        case 2:
+            this.flightTime = (int)number;
+            break;
+        case 3:
+            this.trailOrFlickerChance = (float)number;
+            break;
+        case 4:
+            this.flickerChance = (float)number;
+            break;
+        case 5:
+            this.colorAmount = (int)number;
+            break;
+        case 6:
+            this.typeChance0 = (float)number;
+            break;
+        case 7:
+            this.typeChance1 = (float)number;
+            break;
+        case 8:
+            this.typeChance2 = (float)number;
+            break;
+        case 9:
+            this.typeChance3 = (float)number;
+            break;
+        case 10:
+            this.typeChance4 = (float)number;
+            break;
+        case 11:
+            this.areaOfEffect = (int)number;
+            break;
         }
 
         this.sendUpdate();
@@ -205,7 +205,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     private int getRandomType(){
-        List<WeightedFireworkType> possible = new ArrayList<WeightedFireworkType>();
+        List<WeightedFireworkType> possible = new ArrayList<>();
 
         possible.add(new WeightedFireworkType(0, this.typeChance0));
         possible.add(new WeightedFireworkType(1, this.typeChance1));

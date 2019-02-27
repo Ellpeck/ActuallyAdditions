@@ -129,8 +129,8 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
             if (harvestResult == FarmerResult.STOP_PROCESSING) return;
             for (int i = 0; i < 6; i++) { //Process seed slots only
                 ItemStack stack = this.inv.getStackInSlot(i);
-                IBlockState state = world.getBlockState(query);
-                if (StackUtil.isValid(stack) && state.getBlock().isReplaceable(world, query)) {
+                IBlockState state = this.world.getBlockState(query);
+                if (StackUtil.isValid(stack) && state.getBlock().isReplaceable(this.world, query)) {
                     FarmerResult plantResult = behavior.tryPlantSeed(stack, this.world, query, this);
                     if (plantResult == FarmerResult.SUCCESS) {
                         this.inv.getStackInSlot(i).shrink(1);
@@ -200,21 +200,21 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     @Override
     public boolean canAddToSeeds(List<ItemStack> stacks) {
-        return StackUtil.canAddAll(inv, stacks, 0, 6, false);
+        return StackUtil.canAddAll(this.inv, stacks, 0, 6, false);
     }
 
     @Override
     public boolean canAddToOutput(List<ItemStack> stacks) {
-        return StackUtil.canAddAll(inv, stacks, 6, 12, false);
+        return StackUtil.canAddAll(this.inv, stacks, 6, 12, false);
     }
 
     @Override
     public void addToSeeds(List<ItemStack> stacks) {
-        StackUtil.addAll(inv, stacks, 0, 6, false);
+        StackUtil.addAll(this.inv, stacks, 0, 6, false);
     }
 
     @Override
     public void addToOutput(List<ItemStack> stacks) {
-        StackUtil.addAll(inv, stacks, 6, 12, false);
+        StackUtil.addAll(this.inv, stacks, 6, 12, false);
     }
 }

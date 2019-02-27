@@ -44,7 +44,7 @@ public class ItemToolAA extends ItemTool implements IDisableableItem{
         this.name = unlocalizedName;
         this.rarity = rarity;
         this.disabled = ConfigurationHandler.config.getBoolean("Disable: " + StringUtil.badTranslate(unlocalizedName), "Tool Control", false, "This will disable the " + StringUtil.badTranslate(unlocalizedName) +". It will not be registered.");
-        if(!disabled) this.register();
+        if(!this.disabled) this.register();
     }
 
     private void register(){
@@ -87,8 +87,8 @@ public class ItemToolAA extends ItemTool implements IDisableableItem{
         return false;
     }
 
-	@Override
-	public boolean isDisabled() {
-		return disabled;
-	}
+    @Override
+    public boolean isDisabled() {
+        return this.disabled;
+    }
 }

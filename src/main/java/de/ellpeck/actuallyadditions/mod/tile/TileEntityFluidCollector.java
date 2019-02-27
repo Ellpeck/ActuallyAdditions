@@ -108,7 +108,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
 
                             if(this.world instanceof WorldServer){
                                 for(int l = 0; l < 8; ++l){
-                                    ((WorldServer)this.world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, (double)offsetPos.getX()+Math.random(), (double)offsetPos.getY()+Math.random(), (double)offsetPos.getZ()+Math.random(), 1, 0.0D, 0.0D, 0.0D, 0);
+                                    ((WorldServer)this.world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, offsetPos.getX()+Math.random(), offsetPos.getY()+Math.random(), offsetPos.getZ()+Math.random(), 1, 0.0D, 0.0D, 0.0D, 0);
                                 }
                             }
                         }
@@ -123,7 +123,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
 
     @Override
     public int getComparatorStrength(){
-        float calc = ((float)this.tank.getFluidAmount()/(float)this.tank.getCapacity())*15F;
+        float calc = (float)this.tank.getFluidAmount()/(float)this.tank.getCapacity()*15F;
         return (int)calc;
     }
 

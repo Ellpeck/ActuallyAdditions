@@ -18,18 +18,18 @@ import net.minecraft.util.math.BlockPos;
 
 public class EnchBookConversion extends LensConversionRecipe {
 
-	public EnchBookConversion() {
-		super(Ingredient.fromItem(Items.ENCHANTED_BOOK), ItemStack.EMPTY, 155000, ActuallyAdditionsAPI.lensDefaultConversion);
-	}
-	
-	@Override
-	public void transformHook(ItemStack stack, IBlockState state, BlockPos pos, IAtomicReconstructor tile) {
-		for(Map.Entry<Enchantment,Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
-			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
-			Map<Enchantment, Integer> ench = ImmutableMap.of(e.getKey(), e.getValue());
-			EnchantmentHelper.setEnchantments(ench, book);
-			Block.spawnAsEntity(tile.getWorldObject(), pos, book);
-		}
-	}
+    public EnchBookConversion() {
+        super(Ingredient.fromItem(Items.ENCHANTED_BOOK), ItemStack.EMPTY, 155000, ActuallyAdditionsAPI.lensDefaultConversion);
+    }
+
+    @Override
+    public void transformHook(ItemStack stack, IBlockState state, BlockPos pos, IAtomicReconstructor tile) {
+        for(Map.Entry<Enchantment,Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
+            ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
+            Map<Enchantment, Integer> ench = ImmutableMap.of(e.getKey(), e.getValue());
+            EnchantmentHelper.setEnchantments(ench, book);
+            Block.spawnAsEntity(tile.getWorldObject(), pos, book);
+        }
+    }
 
 }

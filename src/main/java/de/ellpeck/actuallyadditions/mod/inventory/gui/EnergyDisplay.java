@@ -82,7 +82,7 @@ public class EnergyDisplay extends Gui{
         if(this.isMouseOver(mouseX, mouseY)){
             Minecraft mc = Minecraft.getMinecraft();
 
-            List<String> text = new ArrayList<String>();
+            List<String> text = new ArrayList<>();
             text.add(this.getOverlayText());
             GuiUtils.drawHoveringText(text, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }

@@ -27,7 +27,7 @@ public class CompostModel implements IBakedModel {
 
     public CompostModel(IBlockState flowerState, float height) {
         this.display = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(flowerState);
-        
+
         TRSRTransformation transform = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(new Vector3f(0, -.218F, 0), null, new Vector3f(0.75F, height / 1.81F, 0.75F), null));
 
         ImmutableList.Builder<BakedQuad> builder;
@@ -35,8 +35,8 @@ public class CompostModel implements IBakedModel {
 
         for (EnumFacing face : EnumFacing.values()) {
             builder = ImmutableList.builder();
-            if (!display.isBuiltInRenderer()) {
-                for (BakedQuad quad : display.getQuads(flowerState, face, 0)) {
+            if (!this.display.isBuiltInRenderer()) {
+                for (BakedQuad quad : this.display.getQuads(flowerState, face, 0)) {
                     Transformer transformer = new Transformer(transform, quad.getFormat());
                     quad.pipe(transformer);
                     builder.add(transformer.build());
@@ -46,29 +46,29 @@ public class CompostModel implements IBakedModel {
             faces.put(face, builder.build());
         }
 
-        if (!display.isBuiltInRenderer()) {
+        if (!this.display.isBuiltInRenderer()) {
             builder = ImmutableList.builder();
-            for (BakedQuad quad : display.getQuads(flowerState, null, 0)) {
+            for (BakedQuad quad : this.display.getQuads(flowerState, null, 0)) {
                 Transformer transformer = new Transformer(transform, quad.getFormat());
                 quad.pipe(transformer);
                 builder.add(transformer.build());
             }
             builder.addAll(compostBase.getQuads(null, null, 0));
             this.general = builder.build();
-        } else general = ImmutableList.of();
+        } else this.general = ImmutableList.of();
 
         this.faces = Maps.immutableEnumMap(faces);
     }
 
     @Override
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
-        if (side == null) return general;
-        return faces.get(side);
+        if (side == null) return this.general;
+        return this.faces.get(side);
     }
 
     @Override
     public boolean isAmbientOcclusion() {
-        return compostBase.isAmbientOcclusion() && display.isAmbientOcclusion();
+        return compostBase.isAmbientOcclusion() && this.display.isAmbientOcclusion();
     }
 
     @Override

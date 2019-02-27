@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import com.google.common.base.Predicate;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewerHopping;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -34,12 +33,7 @@ import java.util.List;
 //Most of this is just copied from BlockHopper, no credit taken. Or clue what it is.
 public class BlockItemViewerHopping extends BlockItemViewer{
 
-    public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>(){
-        @Override
-        public boolean apply(EnumFacing facing){
-            return facing != EnumFacing.UP;
-        }
-    });
+    public static final PropertyDirection FACING = PropertyDirection.create("facing", facing -> facing != EnumFacing.UP);
 
     private static final AxisAlignedBB BASE_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D);
     private static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);

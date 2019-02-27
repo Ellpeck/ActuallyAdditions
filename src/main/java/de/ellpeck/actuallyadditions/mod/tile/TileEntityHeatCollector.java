@@ -59,13 +59,13 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     public void updateEntity(){
         super.updateEntity();
         if(!this.world.isRemote){
-            ArrayList<Integer> blocksAround = new ArrayList<Integer>();
+            ArrayList<Integer> blocksAround = new ArrayList<>();
             if(ENERGY_PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
                 for(int i = 1; i <= 5; i++){
                     BlockPos coords = this.pos.offset(WorldUtil.getDirectionBySidesInOrder(i));
                     IBlockState state = this.world.getBlockState(coords);
                     Block block = state.getBlock();
-                    if(block != null && (this.world.getBlockState(coords).getMaterial() == Material.LAVA && block.getMetaFromState(state) == 0) || this.world.getBlockState(coords).getBlock() instanceof BlockMagma){
+                    if(block != null && this.world.getBlockState(coords).getMaterial() == Material.LAVA && block.getMetaFromState(state) == 0 || this.world.getBlockState(coords).getBlock() instanceof BlockMagma){
                         blocksAround.add(i);
                     }
                 }

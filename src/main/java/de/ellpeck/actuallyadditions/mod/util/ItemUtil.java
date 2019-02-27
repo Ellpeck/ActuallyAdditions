@@ -79,7 +79,7 @@ public final class ItemUtil{
     public static int getPlaceAt(List<ItemStack> list, ItemStack stack, boolean checkWildcard){
         if(list != null && list.size() > 0){
             for(int i = 0; i < list.size(); i++){
-                if((!StackUtil.isValid(stack) && !StackUtil.isValid(list.get(i))) || areItemsEqual(stack, list.get(i), checkWildcard)){
+                if(!StackUtil.isValid(stack) && !StackUtil.isValid(list.get(i)) || areItemsEqual(stack, list.get(i), checkWildcard)){
                     return i;
                 }
             }
@@ -88,7 +88,7 @@ public final class ItemUtil{
     }
 
     public static boolean areItemsEqual(ItemStack stack1, ItemStack stack2, boolean checkWildcard){
-        return StackUtil.isValid(stack1) && StackUtil.isValid(stack2) && (stack1.isItemEqual(stack2) || (checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD)));
+        return StackUtil.isValid(stack1) && StackUtil.isValid(stack2) && (stack1.isItemEqual(stack2) || checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD));
     }
 
     /**

@@ -72,7 +72,7 @@ public class ItemWingsOfTheBats extends ItemBase{
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if(data != null){
                 double diff = MAX_FLY_TIME-data.batWingsFlyTime;
-                return 1-(diff/MAX_FLY_TIME);
+                return 1-diff/MAX_FLY_TIME;
             }
         }
         return super.getDurabilityForDisplay(stack);

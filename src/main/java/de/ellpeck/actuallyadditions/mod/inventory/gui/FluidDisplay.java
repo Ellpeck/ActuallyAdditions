@@ -90,7 +90,7 @@ public class FluidDisplay extends Gui{
             GlStateManager.disableAlpha();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             int i = this.fluidReference.getFluidAmount()*83/this.fluidReference.getCapacity();
-            GuiInputter.drawModalRectWithCustomSizedTexture(barX+1, barY+84-i, 36, 172, 16, i, 16, 512);
+            Gui.drawModalRectWithCustomSizedTexture(barX+1, barY+84-i, 36, 172, 16, i, 16, 512);
             GlStateManager.disableBlend();
             GlStateManager.enableAlpha();
             GlStateManager.popMatrix();

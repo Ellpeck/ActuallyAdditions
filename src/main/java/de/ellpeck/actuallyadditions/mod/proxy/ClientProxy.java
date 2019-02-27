@@ -64,8 +64,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ClientProxy implements IProxy{
 
-    private static final List<Item> COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING = new ArrayList<Item>();
-    private static final List<Block> COLOR_PRODIVIDING_BLOCKS_FOR_REGISTERING = new ArrayList<Block>();
+    private static final List<Item> COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING = new ArrayList<>();
+    private static final List<Block> COLOR_PRODIVIDING_BLOCKS_FOR_REGISTERING = new ArrayList<>();
 
     @Override
     public void preInit(FMLPreInitializationEvent event){
@@ -81,7 +81,7 @@ public class ClientProxy implements IProxy{
         ActuallyAdditions.LOGGER.info("Initializing ClientProxy...");
 
         RenderWorm.fixItemStack();
-        
+
         new ClientEvents();
 
         //ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompost.class, new RenderCompost());
@@ -113,7 +113,7 @@ public class ClientProxy implements IProxy{
                 Minecraft.getMinecraft().getItemColors().registerItemColorHandler(((IColorProvidingItem)block).getItemColor(), block);
             }
         }
-        
+
         IBlockColor color = (state, world, pos, tint) -> {
             if (world != null && pos != null) {
                 TileEntity tileentity = world.getTileEntity(pos);
@@ -153,12 +153,12 @@ public class ClientProxy implements IProxy{
     public EntityPlayer getCurrentPlayer(){
         return Minecraft.getMinecraft().player;
     }
-    
+
     @Override
     public void sendBreakPacket(BlockPos pos) {
         NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getConnection();
         assert netHandlerPlayClient != null;
         netHandlerPlayClient.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft
-            .getMinecraft().objectMouseOver.sideHit));
+                .getMinecraft().objectMouseOver.sideHit));
     }
 }

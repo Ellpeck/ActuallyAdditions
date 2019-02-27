@@ -82,7 +82,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     public static int getPlayerXP(EntityPlayer player) {
-        return (int) (getExperienceForLevel(player.experienceLevel) + (player.experience * player.xpBarCap()));
+        return (int) (getExperienceForLevel(player.experienceLevel) + player.experience * player.xpBarCap());
     }
 
     public static void addPlayerXP(EntityPlayer player, int amount) {
@@ -120,7 +120,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                     this.markDirty();
                 } else if (stack.getCount() < 64) {
                     int needed = 64 - stack.getCount();
-                    int toAdd = Math.min(needed, amount);
+                    int toAdd = Math.min(needed, this.amount);
                     stack.grow(toAdd);
                     this.amount -= toAdd;
                     this.markDirty();
@@ -148,7 +148,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
             ItemStack stack = this.inv.getStackInSlot(1);
             if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemSolidifiedExperience) {
-                int remainingSpace = MathHelper.clamp(Integer.MAX_VALUE - amount, 0, stack.getCount());
+                int remainingSpace = MathHelper.clamp(Integer.MAX_VALUE - this.amount, 0, stack.getCount());
                 if (stack.getCount() >= remainingSpace && remainingSpace != 0) {
                     this.amount += remainingSpace;
                     stack.shrink(remainingSpace);
@@ -169,7 +169,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
     @Override
     public void markDirty() {
-        if (amount < 0) amount = Integer.MAX_VALUE; //don't u go negative on me weird number
+        if (this.amount < 0) this.amount = Integer.MAX_VALUE; //don't u go negative on me weird number
         super.markDirty();
     }
 

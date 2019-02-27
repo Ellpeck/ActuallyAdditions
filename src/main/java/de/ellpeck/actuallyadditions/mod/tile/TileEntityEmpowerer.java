@@ -40,7 +40,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
     @Deprecated //Use findMatchingRecipe
     public static List<EmpowererRecipe> getRecipesForInput(ItemStack input) {
-        List<EmpowererRecipe> recipesThatWork = new ArrayList<EmpowererRecipe>();
+        List<EmpowererRecipe> recipesThatWork = new ArrayList<>();
         if (StackUtil.isValid(input)) {
             for (EmpowererRecipe recipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
                 if (recipe.getInput().apply(input)) {
@@ -171,7 +171,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
     @Override
     public IRemover getRemover() {
-        return (slot, automation) -> !automation || !isPossibleInput(inv.getStackInSlot(0));
+        return (slot, automation) -> !automation || !isPossibleInput(this.inv.getStackInSlot(0));
     }
 
     @Override

@@ -63,12 +63,12 @@ public class BlockGiantChest extends BlockContainerBase{
     @Override
     public TileEntity createNewTileEntity(World world, int par2){
         switch(this.type){
-            case 1:
-                return new TileEntityGiantChestMedium();
-            case 2:
-                return new TileEntityGiantChestLarge();
-            default:
-                return new TileEntityGiantChest();
+        case 1:
+            return new TileEntityGiantChestMedium();
+        case 2:
+            return new TileEntityGiantChestLarge();
+        default:
+            return new TileEntityGiantChest();
         }
     }
 

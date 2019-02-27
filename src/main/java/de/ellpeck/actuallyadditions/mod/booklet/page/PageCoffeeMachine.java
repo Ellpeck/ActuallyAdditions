@@ -52,8 +52,8 @@ public class PageCoffeeMachine extends BookletPage{
         gui.renderSplitScaledAsciiString("Hover over this to see the effect!", startX+5, startY+51, 0, false, gui.getSmallFontSize(), 35);
 
         PageTextOnly.renderTextToPage(gui, this, startX+6, startY+90);
-        
-        if(counter++ % 50 == 0) gui.addOrModifyItemRenderer(stacks[rotate++ % stacks.length], startX+5+82, startY+10+1, 1F, true);
+
+        if(this.counter++ % 50 == 0) gui.addOrModifyItemRenderer(this.stacks[this.rotate++ % this.stacks.length], startX+5+82, startY+10+1, 1F, true);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class PageCoffeeMachine extends BookletPage{
     public void initGui(GuiBookletBase gui, int startX, int startY){
         super.initGui(gui, startX, startY);
 
-        gui.addOrModifyItemRenderer(stacks[0], startX+5+82, startY+10+1, 1F, true);
+        gui.addOrModifyItemRenderer(this.stacks[0], startX+5+82, startY+10+1, 1F, true);
         gui.addOrModifyItemRenderer(this.outcome, startX+5+36, startY+10+42, 1F, false);
 
         gui.addOrModifyItemRenderer(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), startX+5+37, startY+10+1, 1F, true);

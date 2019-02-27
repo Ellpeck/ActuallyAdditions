@@ -28,7 +28,7 @@ public class RenderWorm extends Render<EntityWorm>{
     private static ItemStack stack = ItemStack.EMPTY;
 
     public static void fixItemStack(){
-    	stack = new ItemStack(InitItems.itemWorm);
+        stack = new ItemStack(InitItems.itemWorm);
     }
 
     protected RenderWorm(RenderManager renderManager){
@@ -43,10 +43,10 @@ public class RenderWorm extends Render<EntityWorm>{
     @Override
     public void doRender(EntityWorm entity, double x, double y, double z, float entityYaw, float partialTicks){
         GlStateManager.pushMatrix();
-        bindEntityTexture(entity);
+        this.bindEntityTexture(entity);
         GlStateManager.translate(x, y+0.7F, z);
         double boop = Minecraft.getSystemTime()/70D;
-        GlStateManager.rotate(-(float)((boop%360)), 0, 1, 0);
+        GlStateManager.rotate(-(float)(boop%360), 0, 1, 0);
         GlStateManager.translate(0, 0, 0.4);
 
         stack.setStackDisplayName(entity.getName());

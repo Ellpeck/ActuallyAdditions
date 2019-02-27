@@ -86,7 +86,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     public void updateEntity() {
         super.updateEntity();
         if (!this.world.isRemote) {
-            if (isCanola(inv.getStackInSlot(0)) && PRODUCE <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
+            if (isCanola(this.inv.getStackInSlot(0)) && PRODUCE <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
                 if (this.storage.getEnergyStored() >= ENERGY_USE) {
                     this.currentProcessTime++;
                     this.storage.extractEnergyInternal(ENERGY_USE, false);

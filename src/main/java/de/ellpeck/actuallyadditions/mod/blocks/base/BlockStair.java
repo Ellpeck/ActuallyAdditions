@@ -52,6 +52,7 @@ public class BlockStair extends BlockStairs implements ItemBlockBase.ICustomRari
         return true;
     }
 
+    @Override
     public void registerRendering(){
         ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }

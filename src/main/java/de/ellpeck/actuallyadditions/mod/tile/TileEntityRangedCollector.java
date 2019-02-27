@@ -60,10 +60,10 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                 if (!item.isDead && !item.cannotPickup() && StackUtil.isValid(item.getItem())) {
                     ItemStack toAdd = item.getItem().copy();
                     if (this.filter.check(toAdd)) {
-                        ArrayList<ItemStack> checkList = new ArrayList<ItemStack>();
+                        ArrayList<ItemStack> checkList = new ArrayList<>();
                         checkList.add(toAdd);
-                        if (StackUtil.canAddAll(inv, checkList, false)) {
-                            StackUtil.addAll(inv, checkList, false);
+                        if (StackUtil.canAddAll(this.inv, checkList, false)) {
+                            StackUtil.addAll(this.inv, checkList, false);
                             ((WorldServer) this.world).spawnParticle(EnumParticleTypes.CLOUD, false, item.posX, item.posY + 0.45F, item.posZ, 5, 0, 0, 0, 0.03D);
                             item.setDead();
                         }

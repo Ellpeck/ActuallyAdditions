@@ -167,7 +167,7 @@ public class ItemDrill extends ItemEnergy{
         if(!world.isRemote && player.isSneaking() && hand == EnumHand.MAIN_HAND){
             player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
+        return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @Override
@@ -205,7 +205,7 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     public float getDestroySpeed(ItemStack stack, IBlockState state){
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) ? (this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state)) ? this.getEfficiencyFromUpgrade(stack) : 1.0F) : 0.1F;
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) ? this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state)) ? this.getEfficiencyFromUpgrade(stack) : 1.0F : 0.1F;
     }
 
     @Override
@@ -226,7 +226,7 @@ public class ItemDrill extends ItemEnergy{
             //Block hit
             RayTraceResult ray = WorldUtil.getNearestBlockWithDefaultReachDistance(player.world, player);
             if(ray != null){
-            	
+
                 //Breaks the Blocks
                 if(!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
                     if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
@@ -251,12 +251,12 @@ public class ItemDrill extends ItemEnergy{
     @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack stack){
         Block block = state.getBlock();
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || state.getMaterial().isToolNotRequired() || (block == Blocks.SNOW_LAYER || block == Blocks.SNOW || (block == Blocks.OBSIDIAN ? HARVEST_LEVEL >= 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (state.getMaterial() == Material.ROCK || (state.getMaterial() == Material.IRON || state.getMaterial() == Material.ANVIL)) : HARVEST_LEVEL >= 2) : HARVEST_LEVEL >= 1) : HARVEST_LEVEL >= 1) : HARVEST_LEVEL >= 2) : HARVEST_LEVEL >= 2) : HARVEST_LEVEL >= 2))));
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || state.getMaterial().isToolNotRequired() || block == Blocks.SNOW_LAYER || block == Blocks.SNOW || (block == Blocks.OBSIDIAN ? HARVEST_LEVEL >= 3 : block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON || state.getMaterial() == Material.ANVIL : HARVEST_LEVEL >= 2 : HARVEST_LEVEL >= 1 : HARVEST_LEVEL >= 1 : HARVEST_LEVEL >= 2 : HARVEST_LEVEL >= 2 : HARVEST_LEVEL >= 2));
     }
 
     @Override
     public Set<String> getToolClasses(ItemStack stack){
-        HashSet<String> hashSet = new HashSet<String>();
+        HashSet<String> hashSet = new HashSet<>();
         hashSet.add("pickaxe");
         hashSet.add("shovel");
         return hashSet;
@@ -418,13 +418,13 @@ public class ItemDrill extends ItemEnergy{
         else{
             return false;
         }
-        
-        if(radius == 2 && side.getAxis() != Axis.Y) { 
-        	aPos = aPos.up();
-        	IBlockState theState = world.getBlockState(aPos);
-        	if(theState.getBlockHardness(world, aPos) <= mainHardness+5.0F){
-        		this.tryHarvestBlock(world, aPos, true, stack, player, use);
-        	}
+
+        if(radius == 2 && side.getAxis() != Axis.Y) {
+            aPos = aPos.up();
+            IBlockState theState = world.getBlockState(aPos);
+            if(theState.getBlockHardness(world, aPos) <= mainHardness+5.0F){
+                this.tryHarvestBlock(world, aPos, true, stack, player, use);
+            }
         }
 
         //Break Blocks around
@@ -468,7 +468,7 @@ public class ItemDrill extends ItemEnergy{
         Block block = state.getBlock();
         float hardness = state.getBlockHardness(world, pos);
         boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(state, stack)) && (!isExtra || this.getDestroySpeed(stack, world.getBlockState(pos)) > 1.0F);
-        if(hardness >= 0.0F && (!isExtra || (canHarvest && !block.hasTileEntity(world.getBlockState(pos))))){
+        if(hardness >= 0.0F && (!isExtra || canHarvest && !block.hasTileEntity(world.getBlockState(pos)))){
             if(!player.capabilities.isCreativeMode){
                 this.extractEnergyInternal(stack, use, false);
             }
@@ -494,9 +494,9 @@ public class ItemDrill extends ItemEnergy{
         }
         return false;
     }
-    
+
     @Override
     public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
-        return !(newStack.isItemEqual(oldStack));
+        return !newStack.isItemEqual(oldStack);
     }
 }

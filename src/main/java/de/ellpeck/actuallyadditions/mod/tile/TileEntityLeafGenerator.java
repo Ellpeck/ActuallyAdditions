@@ -56,7 +56,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
                     this.nextUseCounter = 0;
 
                     if(ENERGY_PRODUCED <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
-                        List<BlockPos> breakPositions = new ArrayList<BlockPos>();
+                        List<BlockPos> breakPositions = new ArrayList<>();
 
                         for(int reachX = -RANGE; reachX < RANGE+1; reachX++){
                             for(int reachZ = -RANGE; reachZ < RANGE+1; reachZ++){

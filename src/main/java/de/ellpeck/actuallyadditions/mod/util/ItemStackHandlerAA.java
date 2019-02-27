@@ -54,38 +54,38 @@ public class ItemStackHandlerAA extends ItemStackHandler {
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        return insertItem(slot, stack, simulate, true);
+        return this.insertItem(slot, stack, simulate, true);
     }
 
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate, boolean fromAutomation) {
-        if (!canAccept(slot, stack, fromAutomation)) return stack;
+        if (!this.canAccept(slot, stack, fromAutomation)) return stack;
         return super.insertItem(slot, stack, simulate);
     }
 
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        return extractItem(slot, amount, simulate, true);
+        return this.extractItem(slot, amount, simulate, true);
     }
 
     public ItemStack extractItem(int slot, int amount, boolean simulate, boolean byAutomation) {
-        if (!canRemove(slot, byAutomation)) return ItemStack.EMPTY;
+        if (!this.canRemove(slot, byAutomation)) return ItemStack.EMPTY;
         return super.extractItem(slot, amount, simulate);
     }
 
     public final boolean canAccept(int slot, ItemStack stack, boolean automation) {
-        return getAcceptor().canAccept(slot, stack, automation);
+        return this.getAcceptor().canAccept(slot, stack, automation);
     }
 
     public final boolean canRemove(int slot, boolean automation) {
-        return getRemover().canRemove(slot, automation);
+        return this.getRemover().canRemove(slot, automation);
     }
 
     public IAcceptor getAcceptor() {
-        return acceptor;
+        return this.acceptor;
     }
 
     public IRemover getRemover() {
-        return remover;
+        return this.remover;
     }
 
     public static interface IAcceptor {

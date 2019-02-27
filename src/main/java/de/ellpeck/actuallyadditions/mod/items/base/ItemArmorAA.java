@@ -27,7 +27,7 @@ public class ItemArmorAA extends ItemArmor implements IDisableableItem{
     private final String name;
     private final EnumRarity rarity;
     private final boolean disabled;
-    
+
     public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem){
         this(name, material, type, repairItem, EnumRarity.RARE);
     }
@@ -38,7 +38,7 @@ public class ItemArmorAA extends ItemArmor implements IDisableableItem{
         this.name = name;
         this.rarity = rarity;
         this.disabled = ConfigurationHandler.config.getBoolean("Disable: " + StringUtil.badTranslate(name), "Tool Control", false, "This will disable the " + StringUtil.badTranslate(name) +". It will not be registered.");
-        if(!disabled) this.register();
+        if(!this.disabled) this.register();
     }
 
     private void register(){
@@ -68,9 +68,9 @@ public class ItemArmorAA extends ItemArmor implements IDisableableItem{
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         return StackUtil.isValid(this.repairItem) && ItemUtil.areItemsEqual(this.repairItem, stack, false);
     }
-    
+
     @Override
     public boolean isDisabled() {
-    	return disabled;
+        return this.disabled;
     }
 }

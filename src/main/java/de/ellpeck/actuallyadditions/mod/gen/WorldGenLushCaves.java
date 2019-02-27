@@ -68,7 +68,7 @@ public class WorldGenLushCaves{
     }
 
     private void genTreesAndTallGrass(World world, BlockPos center, int radius, int amount, Random rand, StructureBoundingBox box){
-        List<BlockPos> possiblePoses = new ArrayList<BlockPos>();
+        List<BlockPos> possiblePoses = new ArrayList<>();
         for(double x = -radius; x < radius; x++){
             for(double y = -radius; y < radius; y++){
                 for(double z = -radius; z < radius; z++){
@@ -152,7 +152,7 @@ public class WorldGenLushCaves{
         for(double x = -radius; x < radius; x++){
             for(double y = -radius; y < radius; y++){
                 for(double z = -radius; z < radius; z++){
-                    if(Math.sqrt((x*x)+(y*y)+(z*z)) < radius){
+                    if(Math.sqrt(x*x+y*y+z*z) < radius){
                         BlockPos pos = center.add(x, y, z);
                         //Note: order matters, checkIndestructable will generate chunks if order is reversed
                         if(boundingBox.isVecInside(pos) && !this.checkIndestructable(world, pos)){

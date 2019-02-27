@@ -47,7 +47,7 @@ public class ItemMagnetRing extends ItemEnergy{
                 List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(entity.posX-range, entity.posY-range, entity.posZ-range, entity.posX+range, entity.posY+range, entity.posZ+range));
                 if(!items.isEmpty()){
                     for(EntityItem item : items){
-                    	if(item.getEntityData().getBoolean("PreventRemoteMovement")) continue;
+                        if(item.getEntityData().getBoolean("PreventRemoteMovement")) continue;
                         if(!item.isDead && !item.cannotPickup()){
                             int energyForItem = 50*item.getItem().getCount();
 
@@ -73,7 +73,7 @@ public class ItemMagnetRing extends ItemEnergy{
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand){
         if(!worldIn.isRemote && player.isSneaking()){
             ItemUtil.changeEnabled(player, hand);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+            return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
         }
         return super.onItemRightClick(worldIn, player, hand);
     }

@@ -91,7 +91,7 @@ public class BookmarkButton extends GuiButton{
 
     public void drawHover(int mouseX, int mouseY){
         if(this.isMouseOver()){
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
 
             if(this.assignedPage != null){
                 IBookletChapter chapter = this.assignedPage.getChapter();

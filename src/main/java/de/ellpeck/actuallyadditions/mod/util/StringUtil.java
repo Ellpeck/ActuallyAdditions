@@ -47,15 +47,15 @@ public final class StringUtil{
 
     @SuppressWarnings("deprecation")//TODO: delete this shit and move ItemPotionRing's getItemStackDisplayName into getUnlocalizedName
     public static String localizeIllegallyOnTheServerDontUseMePls(String langKey) {
-    	return net.minecraft.util.text.translation.I18n.translateToLocal(langKey);
+        return net.minecraft.util.text.translation.I18n.translateToLocal(langKey);
     }
-    
+
     @SideOnly(Side.CLIENT)
     public static void drawSplitString(FontRenderer renderer, String strg, int x, int y, int width, int color, boolean shadow){
         List<String> list = renderer.listFormattedStringToWidth(strg, width);
         for(int i = 0; i < list.size(); i++){
-            String s1 = (String)list.get(i);
-            renderer.drawString(s1, x, y+(i*renderer.FONT_HEIGHT), color, shadow);
+            String s1 = list.get(i);
+            renderer.drawString(s1, x, y+i*renderer.FONT_HEIGHT, color, shadow);
         }
     }
 
@@ -76,10 +76,10 @@ public final class StringUtil{
     public static void renderSplitScaledAsciiString(FontRenderer font, String text, int x, int y, int color, boolean shadow, float scale, int length){
         List<String> lines = font.listFormattedStringToWidth(text, (int)(length/scale));
         for(int i = 0; i < lines.size(); i++){
-            renderScaledAsciiString(font, lines.get(i), x, y+(i*(int)(font.FONT_HEIGHT*scale+3)), color, shadow, scale);
+            renderScaledAsciiString(font, lines.get(i), x, y+i*(int)(font.FONT_HEIGHT*scale+3), color, shadow, scale);
         }
     }
-    
+
     //TODO: Remove
     static LanguageMap cancerino;
 

@@ -108,7 +108,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                     }
                     this.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
-                crushed = storage.getEnergyStored() >= ENERGY_USE;
+                crushed = this.storage.getEnergyStored() >= ENERGY_USE;
             } else {
                 this.firstCrushTime = 0;
             }
@@ -126,7 +126,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                         }
                         this.storage.extractEnergyInternal(ENERGY_USE, false);
                     }
-                    crushed = storage.getEnergyStored() >= ENERGY_USE;
+                    crushed = this.storage.getEnergyStored() >= ENERGY_USE;
                 } else {
                     this.secondCrushTime = 0;
                 }
@@ -156,17 +156,17 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || ((slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && CrusherRecipeRegistry.getRecipeFromInput(stack) != null);
+        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && CrusherRecipeRegistry.getRecipeFromInput(stack) != null;
     }
 
     @Override
     public IRemover getRemover() {
-        return (slot, automation) -> !automation || (slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2);
+        return (slot, automation) -> !automation || slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
     }
 
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput) {
         if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
-            CrusherRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(inv.getStackInSlot(theInput));
+            CrusherRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));
             if (recipe == null) return false;
             ItemStack outputOne = recipe.getOutputOne();
             ItemStack outputTwo = recipe.getOutputTwo();
@@ -177,7 +177,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                 if (StackUtil.isValid(outputTwo) && outputTwo.getItemDamage() == Util.WILDCARD) {
                     outputTwo.setItemDamage(0);
                 }
-                if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || (this.inv.getStackInSlot(theFirstOutput).isItemEqual(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount())) && (!StackUtil.isValid(outputTwo) || (!StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || (this.inv.getStackInSlot(theSecondOutput).isItemEqual(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())))) { return true; }
+                if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).isItemEqual(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).isItemEqual(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) { return true; }
             }
         }
         return false;
@@ -188,7 +188,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput) {
-        CrusherRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(inv.getStackInSlot(theInput));
+        CrusherRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));
         if (recipe == null) return;
         ItemStack outputOne = recipe.getOutputOne();
         if (StackUtil.isValid(outputOne)) {

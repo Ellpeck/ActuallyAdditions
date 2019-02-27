@@ -37,7 +37,7 @@ import java.util.List;
 public class GuiPage extends GuiBooklet{
 
     public final IBookletPage[] pages = new IBookletPage[2];
-    private final List<ItemDisplay> itemDisplays = new ArrayList<ItemDisplay>();
+    private final List<ItemDisplay> itemDisplays = new ArrayList<>();
     private int pageTimer;
 
     private GuiButton buttonViewOnline;
@@ -132,7 +132,7 @@ public class GuiPage extends GuiBooklet{
     }
 
     private List<String> getWebLinks(){
-        List<String> links = new ArrayList<String>();
+        List<String> links = new ArrayList<>();
 
         for(IBookletPage page : this.pages){
             if(page != null){

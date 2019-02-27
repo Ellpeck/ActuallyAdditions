@@ -76,7 +76,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || (slot == 0 && (stack.hasCapability(CapabilityEnergy.ENERGY, null)));
+        return (slot, stack, automation) -> !automation || slot == 0 && stack.hasCapability(CapabilityEnergy.ENERGY, null);
     }
 
     @Override

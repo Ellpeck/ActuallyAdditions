@@ -40,10 +40,10 @@ public enum TheWildPlants implements IStringSerializable {
     }
 
     public EnumRarity getRarity() {
-        return rarity;
+        return this.rarity;
     }
 
     public Block getNormalVersion() {
-        return normal;
+        return this.normal;
     }
 }

@@ -121,16 +121,16 @@ public final class WorldUtil {
     public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
             EnumFacing opp = sideTo == null ? null : sideTo.getOpposite();
-                IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
-                IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, opp);
-                if (handlerFrom != null && handlerTo != null) {
-                    int drain = handlerFrom.extractEnergy(maxTransfer, true);
-                    if (drain > 0) {
-                        int filled = handlerTo.receiveEnergy(drain, false);
-                        handlerFrom.extractEnergy(filled, false);
-                        return;
-                    }
+            IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
+            IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, opp);
+            if (handlerFrom != null && handlerTo != null) {
+                int drain = handlerFrom.extractEnergy(maxTransfer, true);
+                if (drain > 0) {
+                    int filled = handlerTo.receiveEnergy(drain, false);
+                    handlerFrom.extractEnergy(filled, false);
+                    return;
                 }
+            }
         }
     }
 
@@ -236,7 +236,7 @@ public final class WorldUtil {
     }
 
     public static ArrayList<Material> getMaterialsAround(World world, BlockPos pos) {
-        ArrayList<Material> blocks = new ArrayList<Material>();
+        ArrayList<Material> blocks = new ArrayList<>();
         blocks.add(world.getBlockState(pos.offset(EnumFacing.NORTH)).getMaterial());
         blocks.add(world.getBlockState(pos.offset(EnumFacing.EAST)).getMaterial());
         blocks.add(world.getBlockState(pos.offset(EnumFacing.SOUTH)).getMaterial());
@@ -252,7 +252,7 @@ public final class WorldUtil {
         float f = player.rotationPitch;
         float f1 = player.rotationYaw;
         double d0 = player.posX;
-        double d1 = player.posY + (double) player.getEyeHeight();
+        double d1 = player.posY + player.getEyeHeight();
         double d2 = player.posZ;
         Vec3d vec3 = new Vec3d(d0, d1, d2);
         float f2 = MathHelper.cos(-f1 * 0.017453292F - (float) Math.PI);
@@ -261,7 +261,7 @@ public final class WorldUtil {
         float f5 = MathHelper.sin(-f * 0.017453292F);
         float f6 = f3 * f4;
         float f7 = f2 * f4;
-        Vec3d vec31 = vec3.add((double) f6 * distance, (double) f5 * distance, (double) f7 * distance);
+        Vec3d vec31 = vec3.add(f6 * distance, f5 * distance, f7 * distance);
         return world.rayTraceBlocks(vec3, vec31, p1, p2, p3);
     }
 

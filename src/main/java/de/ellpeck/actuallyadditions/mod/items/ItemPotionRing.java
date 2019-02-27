@@ -113,7 +113,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
                     ItemStack equippedStack = thePlayer.getHeldItemMainhand();
                     ItemStack offhandStack = thePlayer.getHeldItemOffhand();
 
-                    if(this.effectEntity(thePlayer, stack, (StackUtil.isValid(equippedStack) && stack == equippedStack) || (StackUtil.isValid(offhandStack) && stack == offhandStack))){
+                    if(this.effectEntity(thePlayer, stack, StackUtil.isValid(equippedStack) && stack == equippedStack || StackUtil.isValid(offhandStack) && stack == offhandStack)){
                         if(world.getTotalWorldTime()%10 == 0){
                             setStoredBlaze(stack, storedBlaze-1);
                         }
@@ -130,19 +130,19 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     public String getItemStackDisplayName(ItemStack stack){
-    	if(Util.isClient()) {
-        String standardName = StringUtil.localize(this.getTranslationKey()+".name");
+        if(Util.isClient()) {
+            String standardName = StringUtil.localize(this.getTranslationKey()+".name");
+            if(stack.getItemDamage() < ALL_RINGS.length){
+                String effect = StringUtil.localize(ALL_RINGS[stack.getItemDamage()].name);
+                return standardName+" "+effect;
+            }
+            return standardName;
+        }
+        String standardName = StringUtil.localizeIllegallyOnTheServerDontUseMePls(this.getTranslationKey()+".name");
         if(stack.getItemDamage() < ALL_RINGS.length){
-            String effect = StringUtil.localize(ALL_RINGS[stack.getItemDamage()].name);
+            String effect = StringUtil.localizeIllegallyOnTheServerDontUseMePls(ALL_RINGS[stack.getItemDamage()].name);
             return standardName+" "+effect;
         }
-        return standardName;
-    	}
-    		String standardName = StringUtil.localizeIllegallyOnTheServerDontUseMePls(this.getTranslationKey()+".name");
-        	if(stack.getItemDamage() < ALL_RINGS.length){
-                String effect = StringUtil.localizeIllegallyOnTheServerDontUseMePls(ALL_RINGS[stack.getItemDamage()].name);
-                return standardName+" "+effect;
-        	}
         return standardName;
     }
 
@@ -175,12 +175,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     @Override
     @SideOnly(Side.CLIENT)
     public IItemColor getItemColor(){
-        return new IItemColor(){
-            @Override
-            public int colorMultiplier(ItemStack stack, int tintIndex){
-                return stack.getItemDamage() >= ALL_RINGS.length ? 0xFFFFFF : ALL_RINGS[stack.getItemDamage()].color;
-            }
-        };
+        return (stack, tintIndex) -> stack.getItemDamage() >= ALL_RINGS.length ? 0xFFFFFF : ALL_RINGS[stack.getItemDamage()].color;
     }
 
     @Override
@@ -232,7 +227,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         ThePotionRings effect = ThePotionRings.values()[stack.getItemDamage()];
         Potion potion = Potion.getPotionById(effect.effectID);
         PotionEffect activeEffect = thePlayer.getActivePotionEffect(potion);
-        if(!effect.needsWaitBeforeActivating || (activeEffect == null || activeEffect.getDuration() <= 1)){
+        if(!effect.needsWaitBeforeActivating || activeEffect == null || activeEffect.getDuration() <= 1){
             if(!((ItemPotionRing)stack.getItem()).isAdvanced){
                 if(canUseBasic){
                     thePlayer.addPotionEffect(new PotionEffect(potion, effect.activeTime, effect.normalAmplifier, true, false));

@@ -45,6 +45,7 @@ public class BlockBase extends Block implements ItemBlockBase.ICustomRarity, IHa
         return true;
     }
 
+    @Override
     public void registerRendering(){
         ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }

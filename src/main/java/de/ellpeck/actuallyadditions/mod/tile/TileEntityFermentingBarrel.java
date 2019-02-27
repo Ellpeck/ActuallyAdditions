@@ -113,7 +113,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     @Override
     public int getComparatorStrength(){
-        float calc = ((float)this.oilTank.getFluidAmount()/(float)this.oilTank.getCapacity())*15F;
+        float calc = (float)this.oilTank.getFluidAmount()/(float)this.oilTank.getCapacity()*15F;
         return (int)calc;
     }
 

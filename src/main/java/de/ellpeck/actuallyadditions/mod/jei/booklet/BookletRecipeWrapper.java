@@ -35,12 +35,12 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        List<ItemStack> itemList = new ArrayList<ItemStack>();
+        List<ItemStack> itemList = new ArrayList<>();
         this.thePage.getItemStacksForPage(itemList);
         ingredients.setInputs(VanillaTypes.ITEM, itemList);
         ingredients.setOutputs(VanillaTypes.ITEM, itemList);
 
-        List<FluidStack> fluidList = new ArrayList<FluidStack>();
+        List<FluidStack> fluidList = new ArrayList<>();
         this.thePage.getFluidStacksForPage(fluidList);
         ingredients.setInputs(VanillaTypes.FLUID, fluidList);
         ingredients.setOutputs(VanillaTypes.FLUID, fluidList);
@@ -50,7 +50,7 @@ public class BookletRecipeWrapper extends RecipeWrapperWithButton {
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
         List<String> header = minecraft.fontRenderer.listFormattedStringToWidth(StringUtil.localize("container.nei." + ActuallyAdditions.MODID + ".booklet.header").replaceAll("<item>", TextFormatting.BLUE + "").replaceAll("<r>", TextFormatting.BLACK + ""), 150);
         for (int i = 0; i < header.size(); i++) {
-            minecraft.fontRenderer.drawString((String) header.get(i), 0, 17 + i * (minecraft.fontRenderer.FONT_HEIGHT + 1), 0, false);
+            minecraft.fontRenderer.drawString(header.get(i), 0, 17 + i * (minecraft.fontRenderer.FONT_HEIGHT + 1), 0, false);
         }
 
         int maxLines = 4;

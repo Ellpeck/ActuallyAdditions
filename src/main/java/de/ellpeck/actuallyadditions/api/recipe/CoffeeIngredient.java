@@ -25,19 +25,19 @@ public class CoffeeIngredient {
     public CoffeeIngredient(ItemStack input, PotionEffect[] effects, int maxAmplifier) {
         this(Ingredient.fromStacks(input), maxAmplifier, effects);
     }
-    
+
     public CoffeeIngredient(Ingredient input, int maxAmplifier, PotionEffect... effects) {
         this.input = input;
         this.effects = effects;
         this.maxAmplifier = maxAmplifier;
     }
-    
+
     public boolean matches(ItemStack stack) {
-        return input.apply(stack);
+        return this.input.apply(stack);
     }
-    
+
     public Ingredient getInput() {
-        return input;
+        return this.input;
     }
 
     public PotionEffect[] getEffects() {
@@ -51,8 +51,8 @@ public class CoffeeIngredient {
     public String getExtraText() {
         return "";
     }
-    
+
     public int getMaxAmplifier() {
-        return maxAmplifier;
+        return this.maxAmplifier;
     }
 }

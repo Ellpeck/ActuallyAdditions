@@ -43,9 +43,9 @@ public class ItemDrillUpgrade extends ItemBase{
         ItemStack stack = player.getHeldItem(hand);
         if(!world.isRemote && this.type == UpgradeType.PLACER){
             this.setSlotToPlaceFrom(stack, player.inventory.currentItem);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }
-        return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+        return new ActionResult<>(EnumActionResult.FAIL, stack);
     }
 
     public void setSlotToPlaceFrom(ItemStack stack, int slot){
