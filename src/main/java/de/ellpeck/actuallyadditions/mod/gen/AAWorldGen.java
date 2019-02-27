@@ -41,25 +41,21 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class OreGen implements IWorldGenerator {
+public class AAWorldGen implements IWorldGenerator {
 
     public static final int QUARTZ_MIN = 0;
     public static final int QUARTZ_MAX = 45;
 
     private final WorldGenLushCaves caveGen = new WorldGenLushCaves();
 
-    public OreGen() {
+    public AAWorldGen() {
         ActuallyAdditions.LOGGER.info("Registering World Generator...");
-        GameRegistry.registerWorldGenerator(this, 10000);
-        MinecraftForge.TERRAIN_GEN_BUS.register(this);
     }
 
     @Override
