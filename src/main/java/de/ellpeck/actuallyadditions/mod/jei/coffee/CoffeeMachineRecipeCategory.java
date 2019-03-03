@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.jei.coffee;
 import java.util.Arrays;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
@@ -60,7 +61,7 @@ public class CoffeeMachineRecipeCategory implements IRecipeCategory<CoffeeMachin
         recipeLayout.getItemStacks().set(1, wrapper.cup);
 
         recipeLayout.getItemStacks().init(2, true, 1, 38);
-        recipeLayout.getItemStacks().set(2, wrapper.coffeeBeans);
+        recipeLayout.getItemStacks().set(2, Arrays.asList(TileEntityCoffeeMachine.COFFEE.getMatchingStacks()));
 
         recipeLayout.getItemStacks().init(3, false, 44, 69);
         recipeLayout.getItemStacks().set(3, wrapper.theOutput);

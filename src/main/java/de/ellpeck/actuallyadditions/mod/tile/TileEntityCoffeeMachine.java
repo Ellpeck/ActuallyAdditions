@@ -31,6 +31,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreIngredient;
 
 public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, ISharingFluidHandler {
 
@@ -41,7 +42,8 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public static final int ENERGY_USED = 150;
     public static final int WATER_USE = 500;
     public static final int COFFEE_CACHE_MAX_AMOUNT = 300;
-    private static final int TIME_USED = 500;
+    public static final int TIME_USED = 500;
+    public static final OreIngredient COFFEE = new OreIngredient("cropCoffee");
     public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 250, 0);
     public final FluidTank tank = new FluidTank(4 * Util.BUCKET) {
         @Override
@@ -128,7 +130,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null || slot == SLOT_COFFEE_BEANS && stack.getItem() == InitItems.itemCoffeeBean || slot == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal();
+        return (slot, stack, automation) -> !automation || slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null || slot == SLOT_COFFEE_BEANS && COFFEE.apply(stack) || slot == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal();
     }
 
     @Override
@@ -137,7 +139,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     public void storeCoffee() {
-        if (StackUtil.isValid(this.inv.getStackInSlot(SLOT_COFFEE_BEANS)) && this.inv.getStackInSlot(SLOT_COFFEE_BEANS).getItem() == InitItems.itemCoffeeBean) {
+        if (StackUtil.isValid(this.inv.getStackInSlot(SLOT_COFFEE_BEANS)) && COFFEE.apply(this.inv.getStackInSlot(SLOT_COFFEE_BEANS))) {
             int toAdd = 2;
             if (toAdd <= COFFEE_CACHE_MAX_AMOUNT - this.coffeeCacheAmount) {
                 this.inv.setStackInSlot(SLOT_COFFEE_BEANS, StackUtil.shrink(this.inv.getStackInSlot(SLOT_COFFEE_BEANS), 1));

@@ -85,7 +85,7 @@ public class ContainerCoffeeMachine extends Container{
                         return StackUtil.getEmpty();
                     }
                 }
-                else if(newStack.getItem() == InitItems.itemCoffeeBean){
+                else if(TileEntityCoffeeMachine.COFFEE.apply(newStack)){
                     if(!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS+1, false)){
                         return StackUtil.getEmpty();
                     }

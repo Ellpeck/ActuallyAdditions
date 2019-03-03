@@ -476,7 +476,7 @@ public final class ItemCrafting{
         RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()),
                 "S S", "SCS", "SSS",
                 'S', "stone",
-                'C', InitItems.itemCoffeeBean);
+                'C', "cropCoffee");
         recipeCup = RecipeUtil.lastIRecipe();
 
         //Resonant Rice

@@ -24,6 +24,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
@@ -35,7 +36,6 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton {
     public final CoffeeIngredient ingredient;
     public final ItemStack theOutput;
     public final ItemStack cup = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal());
-    public final ItemStack coffeeBeans = new ItemStack(InitItems.itemCoffeeBean);
 
     public CoffeeMachineRecipeWrapper(CoffeeIngredient ingredient) {
         this.ingredient = ingredient;
@@ -50,7 +50,8 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton {
         for (ItemStack s : this.ingredient.getInput().getMatchingStacks())
             list.add(s);
         list.add(this.cup);
-        list.add(this.coffeeBeans);
+        for(ItemStack s : TileEntityCoffeeMachine.COFFEE.getMatchingStacks())
+        list.add(s);
         ingredients.setInputs(VanillaTypes.ITEM, list);
 
         ingredients.setOutput(VanillaTypes.ITEM, this.theOutput);

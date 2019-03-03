@@ -387,7 +387,7 @@ public final class BlockCrafting{
         RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockCoffeeMachine),
                 " C ", " S ", "AMA",
                 'M', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()),
-                'C', InitItems.itemCoffeeBean,
+                'C', "cropCoffee",
                 'S', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()),
                 'A', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()));
         recipeCoffeeMachine = RecipeUtil.lastIRecipe();
