@@ -132,14 +132,18 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                 }
             }
 
-            if (crushed != this.lastCrushed) {
-                IBlockState currState = this.world.getBlockState(this.pos);
-                if (currState.getValue(BlockFurnaceDouble.IS_ON) != crushed) {
-                    this.world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, crushed));
-                }
+            IBlockState currState = this.world.getBlockState(this.pos);
+            boolean current = currState.getValue(BlockFurnaceDouble.IS_ON);
+            boolean changeTo = current;
+            if (lastCrushed != crushed) changeTo = crushed;
+            if (this.isRedstonePowered) changeTo = true;
+            if (!crushed && !this.isRedstonePowered) changeTo = false;
 
-                this.lastCrushed = crushed;
+            if (changeTo != current) {
+                world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, changeTo));
             }
+
+            this.lastCrushed = crushed;
 
             if ((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstCrush != this.firstCrushTime || this.lastSecondCrush != this.secondCrushTime || this.isAutoSplit != this.lastAutoSplit) && this.sendUpdateWithInterval()) {
                 this.lastEnergy = this.storage.getEnergyStored();

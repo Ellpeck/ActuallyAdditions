@@ -138,14 +138,18 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 this.secondSmeltTime = 0;
             }
 
-            if (smelted != this.lastSmelted) {
-                IBlockState currState = this.world.getBlockState(this.pos);
-                if (currState.getValue(BlockFurnaceDouble.IS_ON) != smelted) {
-                    this.world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, smelted));
-                }
+            IBlockState currState = this.world.getBlockState(this.pos);
+            boolean current = currState.getValue(BlockFurnaceDouble.IS_ON);
+            boolean changeTo = current;
+            if (lastSmelted != smelted) changeTo = smelted;
+            if (this.isRedstonePowered) changeTo = true;
+            if (!smelted && !this.isRedstonePowered) changeTo = false;
 
-                this.lastSmelted = smelted;
+            if (changeTo != current) {
+                world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, changeTo));
             }
+
+            this.lastSmelted = smelted;
 
             if ((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime || this.isAutoSplit != this.lastAutoSplit) && this.sendUpdateWithInterval()) {
                 this.lastEnergy = this.storage.getEnergyStored();
