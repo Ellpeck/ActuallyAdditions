@@ -1,3 +1,12 @@
+# 1.12.2-r146
+* IrresoluteArkia: Solid experience no longer drops when doMobLoob = false.
+* IrresoluteArkia: Black quartz blocks and black dye oredicts updated.
+* Cascading would gen should be less prevalent.  May be fixed entirely.
+* A few more references to CF have been localized.
+* shejery: Added ko_KR.lang
+* Crushers and powered furnaces can now be forced into the "on" state with a redstone signal to avoid block updates.
+* The Coffee Machine now uses the oredict "cropCoffee" for valid coffee beans.
+
 # 1.12.2-r145
 * Sir-Will: Cache KittyVanCat UUID.
 * Ore generation can be dimension whitelisted.
