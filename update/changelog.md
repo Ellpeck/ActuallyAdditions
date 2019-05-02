@@ -1,3 +1,13 @@
+# 1.12.2-r147
+* Sacks should no longer duplicate items when used on multi-slot inventories with slot size limits.
+* Updated systems to use IForgeRarity instead of EnumRarity.
+* Formatted the everything.
+* Plants now try to add the stack to the player inv before spawning it on right click.
+* Block Breakers now set the location of the fake player to their location.
+* Auto-Placers will no longer spam errors when clicking on a GUI-based block.
+* A blacklist has been added for the Item Repairer.
+* Atomic Reconstructor beams should now check a slightly larger area (for compat with ItemPhysic).
+
 # 1.12.2-r146
 * IrresoluteArkia: Solid experience no longer drops when doMobLoob = false.
 * IrresoluteArkia: Black quartz blocks and black dye oredicts updated.
