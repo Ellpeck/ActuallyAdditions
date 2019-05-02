@@ -10,6 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
@@ -18,7 +24,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -110,11 +118,6 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase {
         }
     }
 
-    @Override
-    public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot == SLOT_INPUT;
-    }
-
     @SideOnly(Side.CLIENT)
     public int getEnergyScaled(int i) {
         return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
@@ -126,12 +129,40 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase {
     }
 
     @Override
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+        return this.storage;
+    }
+
+    @Override
+    public IAcceptor getAcceptor() {
+        return (slot, stack, automation) -> !isBlacklisted(stack) && (!automation || slot == SLOT_INPUT);
+    }
+
+    @Override
     public IRemover getRemover() {
         return (slot, automation) -> !automation || slot == SLOT_OUTPUT;
     }
 
-    @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
-        return this.storage;
+    private static final List<Pair<Item, Integer>> BLACKLIST = new ArrayList<>();
+
+    private static boolean runOnce = false;
+
+    public static boolean isBlacklisted(ItemStack stack) {
+        if (!runOnce) {
+            runOnce = true;
+            for (String s : ConfigStringListValues.REPAIR_BLACKLIST.getValue()) {
+                String[] split = s.split("@");
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0]));
+                if (item == null) {
+                    ActuallyAdditions.LOGGER.error("Invalid item in repair blacklist: " + s);
+                    continue;
+                }
+                if (split.length == 1) BLACKLIST.add(Pair.of(item, 0));
+                else if (split.length == 2) {
+                    BLACKLIST.add(Pair.of(item, Integer.parseInt(split[1])));
+                }
+            }
+        }
+        return BLACKLIST.contains(Pair.of(stack.getItem(), stack.getMetadata()));
     }
 }
