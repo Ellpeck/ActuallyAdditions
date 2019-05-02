@@ -191,7 +191,9 @@ public class MethodHandler implements IMethodHandler {
             }
 
             //Converting the Items
-            List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX() - rangeX, hitBlock.getY() - rangeY, hitBlock.getZ() - rangeZ, hitBlock.getX() + 1 + rangeX, hitBlock.getY() + 1 + rangeY, hitBlock.getZ() + 1 + rangeZ));
+            AxisAlignedBB aabb = new AxisAlignedBB(tile.getPosition().getX(), tile.getPosition().getY(), tile.getPosition().getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1);
+            aabb.grow(0.02, 0.02, 0.02);
+            List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, aabb);
             for (EntityItem item : items) {
                 ItemStack stack = item.getItem();
                 if (!item.isDead && StackUtil.isValid(stack)) {
