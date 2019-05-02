@@ -109,7 +109,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
             this.renderParticles();
         }
     }
-    
+
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
         if(this.world.rand.nextInt(8) == 0){

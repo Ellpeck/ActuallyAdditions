@@ -163,7 +163,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
         if(this.world != null && !this.world.isRemote){
             NBTTagCompound compound = new NBTTagCompound();
             this.writeSyncableNBT(compound, NBTType.SYNC);
-        
+
             NBTTagCompound data = new NBTTagCompound();
             data.setTag("Data", compound);
             data.setInteger("X", this.pos.getX());

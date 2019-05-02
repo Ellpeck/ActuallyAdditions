@@ -85,7 +85,6 @@ public enum ConfigStringListValues {
             new String[0],
             "The items that aren't allowed to be put in the Repairer. Use REGISTRY NAMES, and if metadata is needed, add it like so: somemod:some_block@3");
 
-
     public final String name;
     public final String category;
     public final String[] defaultValue;

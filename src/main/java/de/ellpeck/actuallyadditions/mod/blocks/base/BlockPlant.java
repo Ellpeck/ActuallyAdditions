@@ -1,12 +1,12 @@
 ﻿/*
- * This file ("BlockPlant.java") is part of the Actually Additions mod for Minecraft.
- * It is created and owned by Ellpeck and distributed
- * under the Actually Additions License to be found at
- * http://ellpeck.de/actaddlicense
- * View the source code at https://github.com/Ellpeck/ActuallyAdditions
- *
- * © 2015-2017 Ellpeck
- */
+* This file ("BlockPlant.java") is part of the Actually Additions mod for Minecraft.
+* It is created and owned by Ellpeck and distributed
+* under the Actually Additions License to be found at
+* http://ellpeck.de/actaddlicense
+* View the source code at https://github.com/Ellpeck/ActuallyAdditions
+*
+* © 2015-2017 Ellpeck
+*/
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
@@ -103,7 +103,7 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
                             drop.shrink(1);
                             deductedSeedSize = true;
                         }
-                        if(StackUtil.isValid(drop)){
+                        if (StackUtil.isValid(drop)) {
                             ItemHandlerHelper.giveItemToPlayer(player, drop);
                         }
                     }
