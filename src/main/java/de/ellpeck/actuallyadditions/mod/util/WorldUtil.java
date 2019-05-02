@@ -188,6 +188,7 @@ public final class WorldUtil {
             //Everything else
             try {
                 FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer) world);
+                if (fake.connection == null) fake.connection = new NetHandlerSpaghettiServer(fake);
                 ItemStack heldBefore = fake.getHeldItemMainhand();
                 setHandItemWithoutAnnoyingSound(fake, EnumHand.MAIN_HAND, stack.copy());
                 fake.interactionManager.processRightClickBlock(fake, world, fake.getHeldItemMainhand(), EnumHand.MAIN_HAND, offsetPos, side.getOpposite(), 0.5F, 0.5F, 0.5F);
