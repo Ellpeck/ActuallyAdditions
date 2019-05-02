@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file ("BlockPlant.java") is part of the Actually Additions mod for Minecraft.
  * It is created and owned by Ellpeck and distributed
  * under the Actually Additions License to be found at
@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -30,6 +29,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarity, IHasModel {
 
@@ -103,10 +103,8 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
                             drop.shrink(1);
                             deductedSeedSize = true;
                         }
-
-                        if (StackUtil.isValid(drop)) {
-                            EntityItem entity = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop);
-                            world.spawnEntity(entity);
+                        if(StackUtil.isValid(drop)){
+                            ItemHandlerHelper.giveItemToPlayer(player, drop);
                         }
                     }
                 }
