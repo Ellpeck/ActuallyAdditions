@@ -21,29 +21,29 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiCanolaPress extends GuiWtfMojang{
+public class GuiCanolaPress extends GuiWtfMojang {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_canola_press");
     private final TileEntityCanolaPress press;
     private EnergyDisplay energy;
     private FluidDisplay fluid;
 
-    public GuiCanolaPress(InventoryPlayer inventory, TileEntityBase tile){
+    public GuiCanolaPress(InventoryPlayer inventory, TileEntityBase tile) {
         super(new ContainerCanolaPress(inventory, tile));
-        this.press = (TileEntityCanolaPress)tile;
+        this.press = (TileEntityCanolaPress) tile;
         this.xSize = 176;
-        this.ySize = 93+86;
+        this.ySize = 93 + 86;
     }
 
     @Override
-    public void initGui(){
+    public void initGui() {
         super.initGui();
-        this.energy = new EnergyDisplay(this.guiLeft+42, this.guiTop+5, this.press.storage);
-        this.fluid = new FluidDisplay(this.guiLeft+116, this.guiTop+5, this.press.tank);
+        this.energy = new EnergyDisplay(this.guiLeft + 42, this.guiTop + 5, this.press.storage);
+        this.fluid = new FluidDisplay(this.guiLeft + 116, this.guiTop + 5, this.press.tank);
     }
 
     @Override
-    public void drawScreen(int x, int y, float f){
+    public void drawScreen(int x, int y, float f) {
         super.drawScreen(x, y, f);
 
         this.energy.drawOverlay(x, y);
@@ -51,23 +51,23 @@ public class GuiCanolaPress extends GuiWtfMojang{
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y){
+    public void drawGuiContainerForegroundLayer(int x, int y) {
         AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.press);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y){
+    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.press.currentProcessTime > 0){
+        if (this.press.currentProcessTime > 0) {
             int i = this.press.getProcessScaled(29);
-            this.drawTexturedModalRect(this.guiLeft+83, this.guiTop+32, 176, 0, 12, i);
+            this.drawTexturedModalRect(this.guiLeft + 83, this.guiTop + 32, 176, 0, 12, i);
         }
 
         this.energy.draw();

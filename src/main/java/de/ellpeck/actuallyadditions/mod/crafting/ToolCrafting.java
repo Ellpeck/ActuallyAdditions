@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.crafting;
 
+import java.util.ArrayList;
+
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -21,13 +23,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
-import java.util.ArrayList;
-
-public final class ToolCrafting{
+public final class ToolCrafting {
 
     public static final ArrayList<IRecipe> RECIPES_PAXELS = new ArrayList<>();
 
-    public static void init(){
+    public static void init() {
 
         addToolAndArmorRecipes(new ItemStack(Items.EMERALD), InitItems.itemPickaxeEmerald, InitItems.itemSwordEmerald, InitItems.itemAxeEmerald, InitItems.itemShovelEmerald, InitItems.itemHoeEmerald, InitItems.itemHelmEmerald, InitItems.itemChestEmerald, InitItems.itemPantsEmerald, InitItems.itemBootsEmerald);
         addToolAndArmorRecipes(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), InitItems.itemPickaxeQuartz, InitItems.itemSwordQuartz, InitItems.itemAxeQuartz, InitItems.itemShovelQuartz, InitItems.itemHoeQuartz, InitItems.itemHelmQuartz, InitItems.itemChestQuartz, InitItems.itemPantsQuartz, InitItems.itemBootsQuartz);
@@ -41,156 +41,63 @@ public final class ToolCrafting{
         addToolAndArmorRecipes(new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), InitItems.itemPickaxeCrystalBlack, InitItems.itemSwordCrystalBlack, InitItems.itemAxeCrystalBlack, InitItems.itemShovelCrystalBlack, InitItems.itemHoeCrystalBlack, InitItems.itemHelmCrystalBlack, InitItems.itemChestCrystalBlack, InitItems.itemPantsCrystalBlack, InitItems.itemBootsCrystalBlack);
 
         //Paxels
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.woodenPaxel),
-                new ItemStack(Items.WOODEN_AXE),
-                new ItemStack(Items.WOODEN_PICKAXE),
-                new ItemStack(Items.WOODEN_SHOVEL),
-                new ItemStack(Items.WOODEN_SWORD),
-                new ItemStack(Items.WOODEN_HOE));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.woodenPaxel), new ItemStack(Items.WOODEN_AXE), new ItemStack(Items.WOODEN_PICKAXE), new ItemStack(Items.WOODEN_SHOVEL), new ItemStack(Items.WOODEN_SWORD), new ItemStack(Items.WOODEN_HOE));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.stonePaxel),
-                new ItemStack(Items.STONE_AXE),
-                new ItemStack(Items.STONE_PICKAXE),
-                new ItemStack(Items.STONE_SHOVEL),
-                new ItemStack(Items.STONE_SWORD),
-                new ItemStack(Items.STONE_HOE));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.stonePaxel), new ItemStack(Items.STONE_AXE), new ItemStack(Items.STONE_PICKAXE), new ItemStack(Items.STONE_SHOVEL), new ItemStack(Items.STONE_SWORD), new ItemStack(Items.STONE_HOE));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.ironPaxel),
-                new ItemStack(Items.IRON_AXE),
-                new ItemStack(Items.IRON_PICKAXE),
-                new ItemStack(Items.IRON_SHOVEL),
-                new ItemStack(Items.IRON_SWORD),
-                new ItemStack(Items.IRON_HOE));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.ironPaxel), new ItemStack(Items.IRON_AXE), new ItemStack(Items.IRON_PICKAXE), new ItemStack(Items.IRON_SHOVEL), new ItemStack(Items.IRON_SWORD), new ItemStack(Items.IRON_HOE));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.goldPaxel),
-                new ItemStack(Items.GOLDEN_AXE),
-                new ItemStack(Items.GOLDEN_PICKAXE),
-                new ItemStack(Items.GOLDEN_SHOVEL),
-                new ItemStack(Items.GOLDEN_SWORD),
-                new ItemStack(Items.GOLDEN_HOE));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.goldPaxel), new ItemStack(Items.GOLDEN_AXE), new ItemStack(Items.GOLDEN_PICKAXE), new ItemStack(Items.GOLDEN_SHOVEL), new ItemStack(Items.GOLDEN_SWORD), new ItemStack(Items.GOLDEN_HOE));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.diamondPaxel),
-                new ItemStack(Items.DIAMOND_AXE),
-                new ItemStack(Items.DIAMOND_PICKAXE),
-                new ItemStack(Items.DIAMOND_SHOVEL),
-                new ItemStack(Items.DIAMOND_SWORD),
-                new ItemStack(Items.DIAMOND_HOE));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.diamondPaxel), new ItemStack(Items.DIAMOND_AXE), new ItemStack(Items.DIAMOND_PICKAXE), new ItemStack(Items.DIAMOND_SHOVEL), new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.DIAMOND_HOE));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.emeraldPaxel),
-                new ItemStack(InitItems.itemAxeEmerald),
-                new ItemStack(InitItems.itemPickaxeEmerald),
-                new ItemStack(InitItems.itemSwordEmerald),
-                new ItemStack(InitItems.itemShovelEmerald),
-                new ItemStack(InitItems.itemHoeEmerald));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.emeraldPaxel), new ItemStack(InitItems.itemAxeEmerald), new ItemStack(InitItems.itemPickaxeEmerald), new ItemStack(InitItems.itemSwordEmerald), new ItemStack(InitItems.itemShovelEmerald), new ItemStack(InitItems.itemHoeEmerald));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.obsidianPaxel),
-                new ItemStack(InitItems.itemAxeObsidian),
-                new ItemStack(InitItems.itemPickaxeObsidian),
-                new ItemStack(InitItems.itemSwordObsidian),
-                new ItemStack(InitItems.itemShovelObsidian),
-                new ItemStack(InitItems.itemHoeObsidian));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.obsidianPaxel), new ItemStack(InitItems.itemAxeObsidian), new ItemStack(InitItems.itemPickaxeObsidian), new ItemStack(InitItems.itemSwordObsidian), new ItemStack(InitItems.itemShovelObsidian), new ItemStack(InitItems.itemHoeObsidian));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.quartzPaxel),
-                new ItemStack(InitItems.itemAxeQuartz),
-                new ItemStack(InitItems.itemPickaxeQuartz),
-                new ItemStack(InitItems.itemSwordQuartz),
-                new ItemStack(InitItems.itemShovelQuartz),
-                new ItemStack(InitItems.itemHoeQuartz));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.quartzPaxel), new ItemStack(InitItems.itemAxeQuartz), new ItemStack(InitItems.itemPickaxeQuartz), new ItemStack(InitItems.itemSwordQuartz), new ItemStack(InitItems.itemShovelQuartz), new ItemStack(InitItems.itemHoeQuartz));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
 
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalRed),
-                new ItemStack(InitItems.itemAxeCrystalRed),
-                new ItemStack(InitItems.itemPickaxeCrystalRed),
-                new ItemStack(InitItems.itemSwordCrystalRed),
-                new ItemStack(InitItems.itemShovelCrystalRed),
-                new ItemStack(InitItems.itemHoeCrystalRed));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalRed), new ItemStack(InitItems.itemAxeCrystalRed), new ItemStack(InitItems.itemPickaxeCrystalRed), new ItemStack(InitItems.itemSwordCrystalRed), new ItemStack(InitItems.itemShovelCrystalRed), new ItemStack(InitItems.itemHoeCrystalRed));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalGreen),
-                new ItemStack(InitItems.itemAxeCrystalGreen),
-                new ItemStack(InitItems.itemPickaxeCrystalGreen),
-                new ItemStack(InitItems.itemSwordCrystalGreen),
-                new ItemStack(InitItems.itemShovelCrystalGreen),
-                new ItemStack(InitItems.itemHoeCrystalGreen));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalGreen), new ItemStack(InitItems.itemAxeCrystalGreen), new ItemStack(InitItems.itemPickaxeCrystalGreen), new ItemStack(InitItems.itemSwordCrystalGreen), new ItemStack(InitItems.itemShovelCrystalGreen), new ItemStack(InitItems.itemHoeCrystalGreen));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalBlue),
-                new ItemStack(InitItems.itemAxeCrystalBlue),
-                new ItemStack(InitItems.itemPickaxeCrystalBlue),
-                new ItemStack(InitItems.itemSwordCrystalBlue),
-                new ItemStack(InitItems.itemShovelCrystalBlue),
-                new ItemStack(InitItems.itemHoeCrystalBlue));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalBlue), new ItemStack(InitItems.itemAxeCrystalBlue), new ItemStack(InitItems.itemPickaxeCrystalBlue), new ItemStack(InitItems.itemSwordCrystalBlue), new ItemStack(InitItems.itemShovelCrystalBlue), new ItemStack(InitItems.itemHoeCrystalBlue));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalLightBlue),
-                new ItemStack(InitItems.itemAxeCrystalLightBlue),
-                new ItemStack(InitItems.itemPickaxeCrystalLightBlue),
-                new ItemStack(InitItems.itemSwordCrystalLightBlue),
-                new ItemStack(InitItems.itemShovelCrystalLightBlue),
-                new ItemStack(InitItems.itemHoeCrystalLightBlue));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalLightBlue), new ItemStack(InitItems.itemAxeCrystalLightBlue), new ItemStack(InitItems.itemPickaxeCrystalLightBlue), new ItemStack(InitItems.itemSwordCrystalLightBlue), new ItemStack(InitItems.itemShovelCrystalLightBlue), new ItemStack(InitItems.itemHoeCrystalLightBlue));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalBlack),
-                new ItemStack(InitItems.itemAxeCrystalBlack),
-                new ItemStack(InitItems.itemPickaxeCrystalBlack),
-                new ItemStack(InitItems.itemSwordCrystalBlack),
-                new ItemStack(InitItems.itemShovelCrystalBlack),
-                new ItemStack(InitItems.itemHoeCrystalBlack));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalBlack), new ItemStack(InitItems.itemAxeCrystalBlack), new ItemStack(InitItems.itemPickaxeCrystalBlack), new ItemStack(InitItems.itemSwordCrystalBlack), new ItemStack(InitItems.itemShovelCrystalBlack), new ItemStack(InitItems.itemHoeCrystalBlack));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalWhite),
-                new ItemStack(InitItems.itemAxeCrystalWhite),
-                new ItemStack(InitItems.itemPickaxeCrystalWhite),
-                new ItemStack(InitItems.itemSwordCrystalWhite),
-                new ItemStack(InitItems.itemShovelCrystalWhite),
-                new ItemStack(InitItems.itemHoeCrystalWhite));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemPaxelCrystalWhite), new ItemStack(InitItems.itemAxeCrystalWhite), new ItemStack(InitItems.itemPickaxeCrystalWhite), new ItemStack(InitItems.itemSwordCrystalWhite), new ItemStack(InitItems.itemShovelCrystalWhite), new ItemStack(InitItems.itemHoeCrystalWhite));
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
     }
 
-    public static void addToolAndArmorRecipes(ItemStack base, Item pickaxe, Item sword, Item axe, Item shovel, Item hoe, Item helm, Item chest, Item pants, Item boots){
+    public static void addToolAndArmorRecipes(ItemStack base, Item pickaxe, Item sword, Item axe, Item shovel, Item hoe, Item helm, Item chest, Item pants, Item boots) {
         //Pickaxe
-        RecipeHandler.addOreDictRecipe(new ItemStack(pickaxe),
-                "EEE", " S ", " S ",
-                'E', base,
-                'S', new ItemStack(Items.STICK));
+        RecipeHandler.addOreDictRecipe(new ItemStack(pickaxe), "EEE", " S ", " S ", 'E', base, 'S', new ItemStack(Items.STICK));
 
         //Sword
-        RecipeHandler.addOreDictRecipe(new ItemStack(sword),
-                "E", "E", "S",
-                'E', base,
-                'S', new ItemStack(Items.STICK));
+        RecipeHandler.addOreDictRecipe(new ItemStack(sword), "E", "E", "S", 'E', base, 'S', new ItemStack(Items.STICK));
 
         //Axe
-        RecipeHandler.addOreDictRecipe(new ItemStack(axe),
-                "EE", "ES", " S",
-                'E', base,
-                'S', new ItemStack(Items.STICK));
+        RecipeHandler.addOreDictRecipe(new ItemStack(axe), "EE", "ES", " S", 'E', base, 'S', new ItemStack(Items.STICK));
 
         //Shovel
-        RecipeHandler.addOreDictRecipe(new ItemStack(shovel),
-                "E", "S", "S",
-                'E', base,
-                'S', new ItemStack(Items.STICK));
+        RecipeHandler.addOreDictRecipe(new ItemStack(shovel), "E", "S", "S", 'E', base, 'S', new ItemStack(Items.STICK));
 
         //Hoe
-        RecipeHandler.addOreDictRecipe(new ItemStack(hoe),
-                "EE", " S", " S",
-                'E', base,
-                'S', new ItemStack(Items.STICK));
+        RecipeHandler.addOreDictRecipe(new ItemStack(hoe), "EE", " S", " S", 'E', base, 'S', new ItemStack(Items.STICK));
 
         //Helm
-        RecipeHandler.addShapedRecipe(new ItemStack(helm),
-                "OOO", "O O",
-                'O', base);
+        RecipeHandler.addShapedRecipe(new ItemStack(helm), "OOO", "O O", 'O', base);
 
         //Chest
-        RecipeHandler.addShapedRecipe(new ItemStack(chest),
-                "O O", "OOO", "OOO",
-                'O', base);
+        RecipeHandler.addShapedRecipe(new ItemStack(chest), "O O", "OOO", "OOO", 'O', base);
 
         //Legs
-        RecipeHandler.addShapedRecipe(new ItemStack(pants),
-                "OOO", "O O", "O O",
-                'O', base);
+        RecipeHandler.addShapedRecipe(new ItemStack(pants), "OOO", "O O", "O O", 'O', base);
 
         //Boots
-        RecipeHandler.addShapedRecipe(new ItemStack(boots),
-                "O O", "O O",
-                'O', base);
+        RecipeHandler.addShapedRecipe(new ItemStack(boots), "O O", "O O", 'O', base);
     }
 }

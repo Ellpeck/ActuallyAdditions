@@ -19,9 +19,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockItemViewer extends BlockContainerBase{
+public class BlockItemViewer extends BlockContainerBase {
 
-    public BlockItemViewer(String name){
+    public BlockItemViewer(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -30,12 +30,12 @@ public class BlockItemViewer extends BlockContainerBase{
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta){
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityItemViewer();
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 }

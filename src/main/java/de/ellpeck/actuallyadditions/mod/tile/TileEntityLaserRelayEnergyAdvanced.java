@@ -10,21 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-public class TileEntityLaserRelayEnergyAdvanced extends TileEntityLaserRelayEnergy{
+public class TileEntityLaserRelayEnergyAdvanced extends TileEntityLaserRelayEnergy {
 
     public static final int CAP = 10000;
 
-    public TileEntityLaserRelayEnergyAdvanced(){
+    public TileEntityLaserRelayEnergyAdvanced() {
         super("laserRelayAdvanced");
     }
 
     @Override
-    public int getEnergyCap(){
+    public int getEnergyCap() {
         return CAP;
     }
 
     @Override
-    public double getLossPercentage(){
+    public double getLossPercentage() {
         return 8;
     }
 }

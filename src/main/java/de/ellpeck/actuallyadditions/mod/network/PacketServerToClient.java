@@ -21,51 +21,50 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PacketServerToClient implements IMessage{
+public class PacketServerToClient implements IMessage {
 
     private NBTTagCompound data;
     private IDataHandler handler;
 
-    public PacketServerToClient(){
+    public PacketServerToClient() {
 
     }
 
-    public PacketServerToClient(NBTTagCompound data, IDataHandler handler){
+    public PacketServerToClient(NBTTagCompound data, IDataHandler handler) {
         this.data = data;
         this.handler = handler;
     }
 
     @Override
-    public void fromBytes(ByteBuf buf){
+    public void fromBytes(ByteBuf buf) {
         PacketBuffer buffer = new PacketBuffer(buf);
-        try{
+        try {
             this.data = buffer.readCompoundTag();
 
             int handlerId = buffer.readInt();
-            if(handlerId >= 0 && handlerId < PacketHandler.DATA_HANDLERS.size()){
+            if (handlerId >= 0 && handlerId < PacketHandler.DATA_HANDLERS.size()) {
                 this.handler = PacketHandler.DATA_HANDLERS.get(handlerId);
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             ActuallyAdditions.LOGGER.error("Something went wrong trying to receive a client packet!", e);
         }
     }
 
     @Override
-    public void toBytes(ByteBuf buf){
+    public void toBytes(ByteBuf buf) {
         PacketBuffer buffer = new PacketBuffer(buf);
 
         buffer.writeCompoundTag(this.data);
         buffer.writeInt(PacketHandler.DATA_HANDLERS.indexOf(this.handler));
     }
 
-    public static class Handler implements IMessageHandler<PacketServerToClient, IMessage>{
+    public static class Handler implements IMessageHandler<PacketServerToClient, IMessage> {
 
         @Override
         @SideOnly(Side.CLIENT)
-        public IMessage onMessage(final PacketServerToClient message, final MessageContext ctx){
+        public IMessage onMessage(final PacketServerToClient message, final MessageContext ctx) {
             Minecraft.getMinecraft().addScheduledTask(() -> {
-                if(message.data != null && message.handler != null){
+                if (message.data != null && message.handler != null) {
                     message.handler.handleData(message.data, ctx);
                 }
             });

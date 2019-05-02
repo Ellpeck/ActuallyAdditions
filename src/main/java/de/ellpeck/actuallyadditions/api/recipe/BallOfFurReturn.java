@@ -13,11 +13,11 @@ package de.ellpeck.actuallyadditions.api.recipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
 
-public class BallOfFurReturn extends WeightedRandom.Item{
+public class BallOfFurReturn extends WeightedRandom.Item {
 
     public final ItemStack returnItem;
 
-    public BallOfFurReturn(ItemStack returnItem, int chance){
+    public BallOfFurReturn(ItemStack returnItem, int chance) {
         super(chance);
         this.returnItem = returnItem;
     }

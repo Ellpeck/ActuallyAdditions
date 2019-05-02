@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import java.text.NumberFormat;
+import java.util.Collections;
+
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
@@ -23,11 +26,8 @@ import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.text.NumberFormat;
-import java.util.Collections;
-
 @SideOnly(Side.CLIENT)
-public class FluidDisplay extends Gui{
+public class FluidDisplay extends Gui {
 
     private FluidTank fluidReference;
     private Fluid oldFluid;
@@ -40,15 +40,15 @@ public class FluidDisplay extends Gui{
 
     private boolean drawTextNextTo;
 
-    public FluidDisplay(int x, int y, FluidTank fluidReference, boolean outline, boolean drawTextNextTo){
+    public FluidDisplay(int x, int y, FluidTank fluidReference, boolean outline, boolean drawTextNextTo) {
         this.setData(x, y, fluidReference, outline, drawTextNextTo);
     }
 
-    public FluidDisplay(int x, int y, FluidTank fluidReference){
+    public FluidDisplay(int x, int y, FluidTank fluidReference) {
         this(x, y, fluidReference, false, false);
     }
 
-    public void setData(int x, int y, FluidTank fluidReference, boolean outline, boolean drawTextNextTo){
+    public void setData(int x, int y, FluidTank fluidReference, boolean outline, boolean drawTextNextTo) {
         this.x = x;
         this.y = y;
         this.fluidReference = fluidReference;
@@ -56,14 +56,14 @@ public class FluidDisplay extends Gui{
         this.drawTextNextTo = drawTextNextTo;
     }
 
-    public void draw(){
+    public void draw() {
         Minecraft mc = Minecraft.getMinecraft();
         mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
 
         int barX = this.x;
         int barY = this.y;
 
-        if(this.outline){
+        if (this.outline) {
             this.drawTexturedModalRect(this.x, this.y, 52, 163, 26, 93);
 
             barX += 4;
@@ -74,44 +74,44 @@ public class FluidDisplay extends Gui{
         FluidStack stack = this.fluidReference.getFluid();
         Fluid fluid = stack == null ? null : stack.getFluid();
 
-        if(this.resLoc == null || this.oldFluid != fluid){
+        if (this.resLoc == null || this.oldFluid != fluid) {
             this.oldFluid = fluid;
 
-            if(fluid != null && fluid.getStill() != null){
-                this.resLoc = new ResourceLocation(fluid.getStill().getNamespace(), "textures/"+fluid.getStill().getPath()+".png");
+            if (fluid != null && fluid.getStill() != null) {
+                this.resLoc = new ResourceLocation(fluid.getStill().getNamespace(), "textures/" + fluid.getStill().getPath() + ".png");
             }
         }
 
-        if(stack != null && fluid != null && this.resLoc != null){
+        if (stack != null && fluid != null && this.resLoc != null) {
             mc.getTextureManager().bindTexture(this.resLoc);
 
             GlStateManager.pushMatrix();
             GlStateManager.enableBlend();
             GlStateManager.disableAlpha();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-            int i = this.fluidReference.getFluidAmount()*83/this.fluidReference.getCapacity();
-            Gui.drawModalRectWithCustomSizedTexture(barX+1, barY+84-i, 36, 172, 16, i, 16, 512);
+            int i = this.fluidReference.getFluidAmount() * 83 / this.fluidReference.getCapacity();
+            Gui.drawModalRectWithCustomSizedTexture(barX + 1, barY + 84 - i, 36, 172, 16, i, 16, 512);
             GlStateManager.disableBlend();
             GlStateManager.enableAlpha();
             GlStateManager.popMatrix();
         }
 
-        if(this.drawTextNextTo){
-            this.drawString(mc.fontRenderer, this.getOverlayText(), barX+25, barY+78, StringUtil.DECIMAL_COLOR_WHITE);
+        if (this.drawTextNextTo) {
+            this.drawString(mc.fontRenderer, this.getOverlayText(), barX + 25, barY + 78, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 
-    public void drawOverlay(int mouseX, int mouseY){
-        if(mouseX >= this.x && mouseY >= this.y && mouseX < this.x+(this.outline ? 26 : 18) && mouseY < this.y+(this.outline ? 93 : 85)){
+    public void drawOverlay(int mouseX, int mouseY) {
+        if (mouseX >= this.x && mouseY >= this.y && mouseX < this.x + (this.outline ? 26 : 18) && mouseY < this.y + (this.outline ? 93 : 85)) {
             Minecraft mc = Minecraft.getMinecraft();
             GuiUtils.drawHoveringText(Collections.singletonList(this.getOverlayText()), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
     }
 
-    private String getOverlayText(){
+    private String getOverlayText() {
         NumberFormat format = NumberFormat.getInstance();
         FluidStack stack = this.fluidReference.getFluid();
         String cap = format.format(this.fluidReference.getCapacity());
-        return stack == null || stack.getFluid() == null ? "0/"+cap+" mB" : format.format(this.fluidReference.getFluidAmount())+"/"+cap+" mB "+stack.getLocalizedName();
+        return stack == null || stack.getFluid() == null ? "0/" + cap + " mB" : format.format(this.fluidReference.getFluidAmount()) + "/" + cap + " mB " + stack.getLocalizedName();
     }
 }

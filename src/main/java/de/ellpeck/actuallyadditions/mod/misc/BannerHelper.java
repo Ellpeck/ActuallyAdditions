@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
+import java.util.Locale;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.BannerPattern;
 import net.minecraftforge.common.util.EnumHelper;
-
-import java.util.Locale;
 
 public final class BannerHelper {
 

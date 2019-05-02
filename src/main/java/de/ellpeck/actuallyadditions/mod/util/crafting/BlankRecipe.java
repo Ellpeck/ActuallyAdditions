@@ -6,8 +6,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-
-public class BlankRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe{
+public class BlankRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
     @Override
     public boolean matches(InventoryCrafting inv, World worldIn) {

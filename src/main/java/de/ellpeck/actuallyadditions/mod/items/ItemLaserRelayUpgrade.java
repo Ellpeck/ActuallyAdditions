@@ -14,14 +14,14 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class ItemLaserRelayUpgrade extends ItemBase{
+public class ItemLaserRelayUpgrade extends ItemBase {
 
-    public ItemLaserRelayUpgrade(String name){
+    public ItemLaserRelayUpgrade(String name) {
         super(name);
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.UNCOMMON;
     }
 }

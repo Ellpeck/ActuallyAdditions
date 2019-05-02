@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
+import java.util.List;
+import java.util.Map;
+
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -27,40 +30,34 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.List;
-import java.util.Map;
-
-public class LensDisenchanting extends Lens{
+public class LensDisenchanting extends Lens {
 
     public static final int ENERGY_USE = 250000;
 
     @Override
-    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        if(tile.getEnergy() >= ENERGY_USE){
-            List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
-            if(items != null && !items.isEmpty()){
+    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
+        if (tile.getEnergy() >= ENERGY_USE) {
+            List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
+            if (items != null && !items.isEmpty()) {
                 EntityItem book = null;
                 EntityItem toDisenchant = null;
-                for(EntityItem item : items){
-                    if(item != null && !item.isDead){
+                for (EntityItem item : items) {
+                    if (item != null && !item.isDead) {
                         ItemStack stack = item.getItem();
-                        if(StackUtil.isValid(stack) && stack.getCount() == 1){
+                        if (StackUtil.isValid(stack) && stack.getCount() == 1) {
                             Item stackItem = stack.getItem();
-                            if(stackItem == Items.BOOK || stackItem == Items.ENCHANTED_BOOK){
-                                if(book == null){
+                            if (stackItem == Items.BOOK || stackItem == Items.ENCHANTED_BOOK) {
+                                if (book == null) {
                                     book = item;
-                                }
-                                else{
+                                } else {
                                     return false;
                                 }
-                            }
-                            else{
+                            } else {
                                 Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
-                                if(enchants != null && !enchants.isEmpty()){
-                                    if(toDisenchant == null){
+                                if (enchants != null && !enchants.isEmpty()) {
+                                    if (toDisenchant == null) {
                                         toDisenchant = item;
-                                    }
-                                    else{
+                                    } else {
                                         return false;
                                     }
                                 }
@@ -69,21 +66,20 @@ public class LensDisenchanting extends Lens{
                     }
                 }
 
-                if(book != null && toDisenchant != null){
+                if (book != null && toDisenchant != null) {
                     ItemStack disenchantStack = toDisenchant.getItem();
                     ItemStack bookStack = book.getItem();
 
                     Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(disenchantStack);
-                    if(enchants != null && !enchants.isEmpty()){
+                    if (enchants != null && !enchants.isEmpty()) {
                         Enchantment enchant = enchants.keySet().iterator().next();
                         int level = enchants.get(enchant);
 
                         ItemStack newDisenchantStack = disenchantStack.copy();
                         ItemStack newBookStack;
-                        if(bookStack.getItem() == Items.BOOK){
+                        if (bookStack.getItem() == Items.BOOK) {
                             newBookStack = new ItemStack(Items.ENCHANTED_BOOK);
-                        }
-                        else{
+                        } else {
                             newBookStack = bookStack.copy();
                         }
 
@@ -108,17 +104,17 @@ public class LensDisenchanting extends Lens{
     }
 
     @Override
-    public float[] getColor(){
-        return new float[]{234F/255F, 173F/255F, 255F/255F};
+    public float[] getColor() {
+        return new float[] { 234F / 255F, 173F / 255F, 255F / 255F };
     }
 
     @Override
-    public int getDistance(){
+    public int getDistance() {
         return 5;
     }
 
     @Override
-    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot){
-        return tile.getEnergy()-energyUsePerShot >= ENERGY_USE;
+    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot) {
+        return tile.getEnergy() - energyUsePerShot >= ENERGY_USE;
     }
 }

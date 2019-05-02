@@ -15,7 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
-public class CompostRecipe{
+public class CompostRecipe {
 
     protected final Ingredient input;
     protected final ItemStack output;
@@ -27,7 +27,7 @@ public class CompostRecipe{
         this(Ingredient.fromStacks(input), inputDisplay.getDefaultState(), output, outputDisplay.getDefaultState());
     }
 
-    public CompostRecipe(Ingredient input, IBlockState inputDisplay, ItemStack output, IBlockState outputDisplay){
+    public CompostRecipe(Ingredient input, IBlockState inputDisplay, ItemStack output, IBlockState outputDisplay) {
         this.input = input;
         this.output = output;
         this.inputDisplay = inputDisplay;

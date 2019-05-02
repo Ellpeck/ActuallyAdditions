@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.api.misc;
 
-public interface IGoggles{
+public interface IGoggles {
 
     boolean displaySpectralMobs();
 

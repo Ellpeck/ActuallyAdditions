@@ -10,6 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
@@ -29,36 +34,31 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.UUID;
+public class ItemPlayerProbe extends ItemBase {
 
-public class ItemPlayerProbe extends ItemBase{
-
-    public ItemPlayerProbe(String name){
+    public ItemPlayerProbe(String name) {
         super(name);
         this.setMaxStackSize(1);
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
-        if(!world.isRemote){
-            if(stack.hasTagCompound()){
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+        if (!world.isRemote) {
+            if (stack.hasTagCompound()) {
                 NBTTagCompound compound = stack.getTagCompound();
-                if(compound.hasKey("UUIDMost")){
+                if (compound.hasKey("UUIDMost")) {
                     UUID id = compound.getUniqueId("UUID");
                     EntityPlayer player = world.getPlayerEntityByUUID(id);
-                    if(player != null){
-                        if(player.isSneaking()){
+                    if (player != null) {
+                        if (player.isSneaking()) {
                             ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
-                            entity.sendMessage(new TextComponentTranslation("tooltip."+ActuallyAdditions.MODID+".playerProbe.disconnect.1"));
-                            player.sendMessage(new TextComponentTranslation("tooltip."+ActuallyAdditions.MODID+".playerProbe.notice"));
+                            entity.sendMessage(new TextComponentTranslation("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.1"));
+                            player.sendMessage(new TextComponentTranslation("tooltip." + ActuallyAdditions.MODID + ".playerProbe.notice"));
                             //TheAchievements.GET_UNPROBED.get(player);
                         }
-                    }
-                    else{
+                    } else {
                         ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
-                        entity.sendMessage(new TextComponentTranslation("tooltip."+ActuallyAdditions.MODID+".playerProbe.disconnect.2"));
+                        entity.sendMessage(new TextComponentTranslation("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.2"));
                     }
                 }
             }
@@ -66,15 +66,15 @@ public class ItemPlayerProbe extends ItemBase{
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileEntityPlayerInterface){
-            if(stack.hasTagCompound()){
+        if (tile instanceof TileEntityPlayerInterface) {
+            if (stack.hasTagCompound()) {
                 NBTTagCompound compound = stack.getTagCompound();
-                if(compound.hasKey("UUIDMost")){
-                    if(!world.isRemote){
-                        TileEntityPlayerInterface face = (TileEntityPlayerInterface)tile;
+                if (compound.hasKey("UUIDMost")) {
+                    if (!world.isRemote) {
+                        TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
                         face.connectedPlayer = compound.getUniqueId("UUID");
                         face.playerName = compound.getString("Name");
                         face.markDirty();
@@ -90,15 +90,15 @@ public class ItemPlayerProbe extends ItemBase{
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack aStack, EntityPlayer player, EntityLivingBase entity, EnumHand hand){
-        if(!player.world.isRemote){
+    public boolean itemInteractionForEntity(ItemStack aStack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+        if (!player.world.isRemote) {
             ItemStack stack = player.getHeldItemMainhand();
-            if(StackUtil.isValid(stack) && stack.getItem() == this){
-                if(entity instanceof EntityPlayer){
-                    EntityPlayer playerHit = (EntityPlayer)entity;
+            if (StackUtil.isValid(stack) && stack.getItem() == this) {
+                if (entity instanceof EntityPlayer) {
+                    EntityPlayer playerHit = (EntityPlayer) entity;
 
-                    if(!playerHit.isSneaking()){
-                        if(!stack.hasTagCompound()){
+                    if (!playerHit.isSneaking()) {
+                        if (!stack.hasTagCompound()) {
                             stack.setTagCompound(new NBTTagCompound());
                         }
 
@@ -114,11 +114,11 @@ public class ItemPlayerProbe extends ItemBase{
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced){
-        if(stack.hasTagCompound()){
+    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
+        if (stack.hasTagCompound()) {
             String name = stack.getTagCompound().getString("Name");
-            if(name != null){
-                tooltip.add(StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".playerProbe.probing")+": "+name);
+            if (name != null) {
+                tooltip.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".playerProbe.probing") + ": " + name);
             }
         }
     }

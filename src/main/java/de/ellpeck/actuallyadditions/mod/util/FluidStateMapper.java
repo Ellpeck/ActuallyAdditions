@@ -25,25 +25,24 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * (Excerpted from Tinkers' Construct with permission, thanks guys!)
  */
 @SideOnly(Side.CLIENT)
-public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinition{
+public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinition {
 
     public final Fluid fluid;
     public final ModelResourceLocation location;
 
-    public FluidStateMapper(Fluid fluid){
+    public FluidStateMapper(Fluid fluid) {
         this.fluid = fluid;
 
         this.location = new ModelResourceLocation(new ResourceLocation(ActuallyAdditions.MODID, "fluids"), fluid.getName());
     }
 
     @Override
-    protected ModelResourceLocation getModelResourceLocation(IBlockState state){
+    protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
         return this.location;
     }
 
-
     @Override
-    public ModelResourceLocation getModelLocation(ItemStack stack){
+    public ModelResourceLocation getModelLocation(ItemStack stack) {
         return this.location;
     }
 }

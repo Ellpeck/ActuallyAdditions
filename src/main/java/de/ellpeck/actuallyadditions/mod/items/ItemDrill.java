@@ -58,12 +58,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-public class ItemDrill extends ItemEnergy{
+public class ItemDrill extends ItemEnergy {
 
     public static final int HARVEST_LEVEL = 4;
     private static final int ENERGY_USE = 100;
 
-    public ItemDrill(String name){
+    public ItemDrill(String name) {
         super(250000, 1000, name);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
@@ -76,9 +76,9 @@ public class ItemDrill extends ItemEnergy{
      *
      * @param stack The Drill
      */
-    public static void loadSlotsFromNBT(IItemHandlerModifiable slots, ItemStack stack){
+    public static void loadSlotsFromNBT(IItemHandlerModifiable slots, ItemStack stack) {
         NBTTagCompound compound = stack.getTagCompound();
-        if(compound != null){
+        if (compound != null) {
             TileEntityInventoryBase.loadSlots(slots, compound);
         }
     }
@@ -89,9 +89,9 @@ public class ItemDrill extends ItemEnergy{
      * @param slots The Slots
      * @param stack The Drill
      */
-    public static void writeSlotsToNBT(IItemHandler slots, ItemStack stack){
+    public static void writeSlotsToNBT(IItemHandler slots, ItemStack stack) {
         NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null){
+        if (compound == null) {
             compound = new NBTTagCompound();
         }
         TileEntityInventoryBase.saveSlots(slots, compound);
@@ -100,30 +100,30 @@ public class ItemDrill extends ItemEnergy{
 
     @Override
     //Places Blocks if the Placing Upgrade is installed
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         ItemStack upgrade = this.getHasUpgradeAsStack(stack, ItemDrillUpgrade.UpgradeType.PLACER);
-        if(StackUtil.isValid(upgrade)){
+        if (StackUtil.isValid(upgrade)) {
             int slot = ItemDrillUpgrade.getSlotToPlaceFrom(upgrade);
-            if(slot >= 0 && slot < InventoryPlayer.getHotbarSize()){
+            if (slot >= 0 && slot < InventoryPlayer.getHotbarSize()) {
                 ItemStack equip = player.inventory.getStackInSlot(slot);
-                if(StackUtil.isValid(equip) && equip != stack){
+                if (StackUtil.isValid(equip) && equip != stack) {
                     ItemStack toPlaceStack = equip.copy();
 
                     WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack);
 
                     //tryPlaceItemIntoWorld could throw an Exception
-                    try{
+                    try {
                         //Places the Block into the World
-                        if(toPlaceStack.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ) != EnumActionResult.FAIL){
-                            if(!player.capabilities.isCreativeMode){
+                        if (toPlaceStack.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ) != EnumActionResult.FAIL) {
+                            if (!player.capabilities.isCreativeMode) {
                                 WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack.copy());
                             }
                         }
                     }
                     //Notify the Player and log the Exception
-                    catch(Exception e){
-                        ActuallyAdditions.LOGGER.error("Player "+player.getName()+" who should place a Block using a Drill at "+player.posX+", "+player.posY+", "+player.posZ+" in World "+world.provider.getDimension()+" threw an Exception! Don't let that happen again!");
+                    catch (Exception e) {
+                        ActuallyAdditions.LOGGER.error("Player " + player.getName() + " who should place a Block using a Drill at " + player.posX + ", " + player.posY + ", " + player.posZ + " in World " + world.provider.getDimension() + " threw an Exception! Don't let that happen again!");
                     }
 
                     player.inventory.setInventorySlotContents(slot, player.getHeldItem(hand));
@@ -143,43 +143,39 @@ public class ItemDrill extends ItemEnergy{
      * @param upgrade The Upgrade to be checked
      * @return The Upgrade, if it's installed
      */
-    public ItemStack getHasUpgradeAsStack(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade){
+    public ItemStack getHasUpgradeAsStack(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade) {
         NBTTagCompound compound = stack.getTagCompound();
-        if(compound == null){
-            return StackUtil.getEmpty();
-        }
+        if (compound == null) { return StackUtil.getEmpty(); }
 
         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerDrill.SLOT_AMOUNT);
         loadSlotsFromNBT(inv, stack);
-        for(int i = 0; i < inv.getSlots(); i++){
+        for (int i = 0; i < inv.getSlots(); i++) {
             ItemStack slotStack = inv.getStackInSlot(i);
-            if(StackUtil.isValid(slotStack) && slotStack.getItem() instanceof ItemDrillUpgrade){
-                if(((ItemDrillUpgrade)slotStack.getItem()).type == upgrade){
-                    return slotStack;
-                }
+            if (StackUtil.isValid(slotStack) && slotStack.getItem() instanceof ItemDrillUpgrade) {
+                if (((ItemDrillUpgrade) slotStack.getItem()).type == upgrade) { return slotStack; }
             }
         }
         return StackUtil.getEmpty();
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
-        if(!world.isRemote && player.isSneaking() && hand == EnumHand.MAIN_HAND){
-            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        if (!world.isRemote && player.isSneaking() && hand == EnumHand.MAIN_HAND) {
+            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
         return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @Override
-    public int getMetadata(int damage){
+    public int getMetadata(int damage) {
         return damage;
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase entity1, EntityLivingBase entity2){
+    public boolean hitEntity(ItemStack stack, EntityLivingBase entity1, EntityLivingBase entity2) {
         int use = this.getEnergyUsePerBlock(stack);
-        if(!(entity2 instanceof EntityPlayer) || !((EntityPlayer)entity2).capabilities.isCreativeMode){
-            if(this.getEnergyStored(stack) >= use){
+        if (!(entity2 instanceof EntityPlayer) || !((EntityPlayer) entity2).capabilities.isCreativeMode) {
+            if (this.getEnergyStored(stack) >= use) {
                 this.extractEnergyInternal(stack, use, false);
             }
         }
@@ -187,15 +183,15 @@ public class ItemDrill extends ItemEnergy{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
 
-        if(slot == EntityEquipmentSlot.MAINHAND){
+        if (slot == EntityEquipmentSlot.MAINHAND) {
             map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Drill Modifier", this.getEnergyStored(stack) >= ENERGY_USE ? 8.0F : 0.1F, 0));
             map.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool Modifier", -2.5F, 0));
         }
@@ -204,39 +200,36 @@ public class ItemDrill extends ItemEnergy{
     }
 
     @Override
-    public float getDestroySpeed(ItemStack stack, IBlockState state){
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
         return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) ? this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state)) ? this.getEfficiencyFromUpgrade(stack) : 1.0F : 0.1F;
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player){
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player) {
         boolean toReturn = false;
         int use = this.getEnergyUsePerBlock(stack);
-        if(this.getEnergyStored(stack) >= use){
+        if (this.getEnergyStored(stack) >= use) {
             //Enchants the Drill depending on the Upgrades it has
-            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
+            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) {
                 ItemUtil.addEnchantment(stack, Enchantments.SILK_TOUCH, 1);
-            }
-            else{
-                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)){
+            } else {
+                if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)) {
                     ItemUtil.addEnchantment(stack, Enchantments.FORTUNE, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
                 }
             }
 
             //Block hit
             RayTraceResult ray = WorldUtil.getNearestBlockWithDefaultReachDistance(player.world, player);
-            if(ray != null){
+            if (ray != null) {
 
                 //Breaks the Blocks
-                if(!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
-                    if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
+                if (!player.isSneaking() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
+                    if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
                         toReturn = this.breakBlocks(stack, 2, player.world, pos, ray.sideHit, player);
-                    }
-                    else{
+                    } else {
                         toReturn = this.breakBlocks(stack, 1, player.world, pos, ray.sideHit, player);
                     }
-                }
-                else{
+                } else {
                     toReturn = this.breakBlocks(stack, 0, player.world, pos, ray.sideHit, player);
                 }
 
@@ -249,13 +242,13 @@ public class ItemDrill extends ItemEnergy{
     }
 
     @Override
-    public boolean canHarvestBlock(IBlockState state, ItemStack stack){
+    public boolean canHarvestBlock(IBlockState state, ItemStack stack) {
         Block block = state.getBlock();
         return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || state.getMaterial().isToolNotRequired() || block == Blocks.SNOW_LAYER || block == Blocks.SNOW || (block == Blocks.OBSIDIAN ? HARVEST_LEVEL >= 3 : block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON || state.getMaterial() == Material.ANVIL : HARVEST_LEVEL >= 2 : HARVEST_LEVEL >= 1 : HARVEST_LEVEL >= 1 : HARVEST_LEVEL >= 2 : HARVEST_LEVEL >= 2 : HARVEST_LEVEL >= 2));
     }
 
     @Override
-    public Set<String> getToolClasses(ItemStack stack){
+    public Set<String> getToolClasses(ItemStack stack) {
         HashSet<String> hashSet = new HashSet<>();
         hashSet.add("pickaxe");
         hashSet.add("shovel");
@@ -263,7 +256,7 @@ public class ItemDrill extends ItemEnergy{
     }
 
     @Override
-    public int getHarvestLevel(ItemStack stack, String toolClass, EntityPlayer player, IBlockState blockState){
+    public int getHarvestLevel(ItemStack stack, String toolClass, EntityPlayer player, IBlockState blockState) {
         return HARVEST_LEVEL;
     }
 
@@ -273,37 +266,37 @@ public class ItemDrill extends ItemEnergy{
      * @param stack The Drill
      * @return The Energy use per Block
      */
-    public int getEnergyUsePerBlock(ItemStack stack){
+    public int getEnergyUsePerBlock(ItemStack stack) {
         int use = ENERGY_USE;
 
         //Speed
-        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
+        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)) {
             use += 50;
-            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
+            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)) {
                 use += 75;
-                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)){
+                if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)) {
                     use += 175;
                 }
             }
         }
 
         //Silk Touch
-        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)){
+        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) {
             use += 100;
         }
 
         //Fortune
-        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)){
+        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)) {
             use += 40;
-            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II)){
+            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II)) {
                 use += 80;
             }
         }
 
         //Size
-        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
+        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
             use += 10;
-            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
+            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
                 use += 30;
             }
         }
@@ -318,29 +311,29 @@ public class ItemDrill extends ItemEnergy{
      * @param upgrade The Upgrade to be checked
      * @return Is the Upgrade applied?
      */
-    public boolean getHasUpgrade(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade){
+    public boolean getHasUpgrade(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade) {
         return StackUtil.isValid(this.getHasUpgradeAsStack(stack, upgrade));
     }
 
     @Override
-    protected void registerRendering(){
-        for(int i = 0; i < 16; i++){
-            String name = this.getRegistryName()+"_"+TheColoredLampColors.values()[i].regName;
+    protected void registerRendering() {
+        for (int i = 0; i < 16; i++) {
+            String name = this.getRegistryName() + "_" + TheColoredLampColors.values()[i].regName;
             ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tabs, NonNullList<ItemStack> list){
-        if(this.isInCreativeTab(tabs)){
-            for(int i = 0; i < 16; i++){
+    public void getSubItems(CreativeTabs tabs, NonNullList<ItemStack> list) {
+        if (this.isInCreativeTab(tabs)) {
+            for (int i = 0; i < 16; i++) {
                 this.addDrillStack(list, i);
             }
         }
     }
 
-    private void addDrillStack(List<ItemStack> list, int meta){
+    private void addDrillStack(List<ItemStack> list, int meta) {
         ItemStack stackFull = new ItemStack(this, 1, meta);
         this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
         list.add(stackFull);
@@ -356,24 +349,22 @@ public class ItemDrill extends ItemEnergy{
      * @param stack The Drill
      * @return The Mining Speed depending on the Speed Upgrades
      */
-    public float getEfficiencyFromUpgrade(ItemStack stack){
+    public float getEfficiencyFromUpgrade(ItemStack stack) {
         float efficiency = 8.0F;
-        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)){
-            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)){
-                if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)){
+        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)) {
+            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)) {
+                if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)) {
                     efficiency += 37.0F;
-                }
-                else{
+                } else {
                     efficiency += 25.0F;
                 }
-            }
-            else{
+            } else {
                 efficiency += 8.0F;
             }
         }
-        if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)){
+        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
             efficiency *= 0.5F;
-            if(this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)){
+            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
                 efficiency *= 0.35F;
             }
         }
@@ -389,17 +380,17 @@ public class ItemDrill extends ItemEnergy{
      * @param world  The World
      * @param player The Player who breaks the Blocks
      */
-    public boolean breakBlocks(ItemStack stack, int radius, World world, BlockPos aPos, EnumFacing side, EntityPlayer player){
+    public boolean breakBlocks(ItemStack stack, int radius, World world, BlockPos aPos, EnumFacing side, EntityPlayer player) {
         int xRange = radius;
         int yRange = radius;
         int zRange = 0;
 
         //Corrects Blocks to hit depending on Side of original Block hit
-        if(side.getAxis() == Axis.Y){
+        if (side.getAxis() == Axis.Y) {
             zRange = radius;
             yRange = 0;
         }
-        if(side.getAxis() == Axis.X){
+        if (side.getAxis() == Axis.X) {
             xRange = 0;
             zRange = radius;
         }
@@ -410,38 +401,34 @@ public class ItemDrill extends ItemEnergy{
 
         //Break Middle Block first
         int use = this.getEnergyUsePerBlock(stack);
-        if(this.getEnergyStored(stack) >= use){
-            if(!this.tryHarvestBlock(world, aPos, false, stack, player, use)){
-                return false;
-            }
-        }
-        else{
+        if (this.getEnergyStored(stack) >= use) {
+            if (!this.tryHarvestBlock(world, aPos, false, stack, player, use)) { return false; }
+        } else {
             return false;
         }
 
-        if(radius == 2 && side.getAxis() != Axis.Y) {
+        if (radius == 2 && side.getAxis() != Axis.Y) {
             aPos = aPos.up();
             IBlockState theState = world.getBlockState(aPos);
-            if(theState.getBlockHardness(world, aPos) <= mainHardness+5.0F){
+            if (theState.getBlockHardness(world, aPos) <= mainHardness + 5.0F) {
                 this.tryHarvestBlock(world, aPos, true, stack, player, use);
             }
         }
 
         //Break Blocks around
-        if(radius > 0 && mainHardness >= 0.2F){
-            for(int xPos = aPos.getX()-xRange; xPos <= aPos.getX()+xRange; xPos++){
-                for(int yPos = aPos.getY()-yRange; yPos <= aPos.getY()+yRange; yPos++){
-                    for(int zPos = aPos.getZ()-zRange; zPos <= aPos.getZ()+zRange; zPos++){
-                        if(!(aPos.getX() == xPos && aPos.getY() == yPos && aPos.getZ() == zPos)){
-                            if(this.getEnergyStored(stack) >= use){
+        if (radius > 0 && mainHardness >= 0.2F) {
+            for (int xPos = aPos.getX() - xRange; xPos <= aPos.getX() + xRange; xPos++) {
+                for (int yPos = aPos.getY() - yRange; yPos <= aPos.getY() + yRange; yPos++) {
+                    for (int zPos = aPos.getZ() - zRange; zPos <= aPos.getZ() + zRange; zPos++) {
+                        if (!(aPos.getX() == xPos && aPos.getY() == yPos && aPos.getZ() == zPos)) {
+                            if (this.getEnergyStored(stack) >= use) {
                                 //Only break Blocks around that are (about) as hard or softer
                                 BlockPos thePos = new BlockPos(xPos, yPos, zPos);
                                 IBlockState theState = world.getBlockState(thePos);
-                                if(theState.getBlockHardness(world, thePos) <= mainHardness+5.0F){
+                                if (theState.getBlockHardness(world, thePos) <= mainHardness + 5.0F) {
                                     this.tryHarvestBlock(world, thePos, true, stack, player, use);
                                 }
-                            }
-                            else{
+                            } else {
                                 return false;
                             }
                         }
@@ -463,13 +450,13 @@ public class ItemDrill extends ItemEnergy{
      * @param player  The Player breaking the Blocks
      * @param use     The Energy that should be extracted per Block
      */
-    private boolean tryHarvestBlock(World world, BlockPos pos, boolean isExtra, ItemStack stack, EntityPlayer player, int use){
+    private boolean tryHarvestBlock(World world, BlockPos pos, boolean isExtra, ItemStack stack, EntityPlayer player, int use) {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         float hardness = state.getBlockHardness(world, pos);
         boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(state, stack)) && (!isExtra || this.getDestroySpeed(stack, world.getBlockState(pos)) > 1.0F);
-        if(hardness >= 0.0F && (!isExtra || canHarvest && !block.hasTileEntity(world.getBlockState(pos)))){
-            if(!player.capabilities.isCreativeMode){
+        if (hardness >= 0.0F && (!isExtra || canHarvest && !block.hasTileEntity(world.getBlockState(pos)))) {
+            if (!player.capabilities.isCreativeMode) {
                 this.extractEnergyInternal(stack, use, false);
             }
             //Break the Block
@@ -478,16 +465,14 @@ public class ItemDrill extends ItemEnergy{
         return false;
     }
 
-    private boolean hasExtraWhitelist(Block block){
-        if(block != null){
+    private boolean hasExtraWhitelist(Block block) {
+        if (block != null) {
             ResourceLocation location = block.getRegistryName();
-            if(location != null){
+            if (location != null) {
                 String name = location.toString();
-                if(name != null){
-                    for(String s : ConfigStringListValues.DRILL_EXTRA_MINING_WHITELIST.getValue()){
-                        if(s != null && s.equals(name)){
-                            return true;
-                        }
+                if (name != null) {
+                    for (String s : ConfigStringListValues.DRILL_EXTRA_MINING_WHITELIST.getValue()) {
+                        if (s != null && s.equals(name)) { return true; }
                     }
                 }
             }

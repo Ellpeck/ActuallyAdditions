@@ -1,5 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.util.crafting;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.RegistryHandler;
@@ -15,8 +17,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.CraftingHelper.ShapedPrimer;
 import net.minecraftforge.oredict.OreIngredient;
-
-import java.util.List;
 
 //This class created by Shadows_of_Fire
 //MIT License

@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import java.util.Random;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -32,13 +34,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Random;
-
-public class BlockGrinder extends BlockContainerBase{
+public class BlockGrinder extends BlockContainerBase {
 
     private final boolean isDouble;
 
-    public BlockGrinder(boolean isDouble, String name){
+    public BlockGrinder(boolean isDouble, String name) {
         super(Material.ROCK, name);
         this.isDouble = isDouble;
         this.setHarvestLevel("pickaxe", 0);
@@ -49,28 +49,28 @@ public class BlockGrinder extends BlockContainerBase{
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return this.isDouble ? new TileEntityGrinderDouble() : new TileEntityGrinder();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
-        if(state.getValue(BlockFurnaceDouble.IS_ON)){
-            for(int i = 0; i < 5; i++){
-                double xRand = rand.nextDouble()/0.75D-0.5D;
-                double zRand = rand.nextDouble()/0.75D-0.5D;
-                world.spawnParticle(EnumParticleTypes.CRIT, (double)pos.getX()+0.4F, (double)pos.getY()+0.8F, (double)pos.getZ()+0.4F, xRand, 0.5D, zRand);
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+        if (state.getValue(BlockFurnaceDouble.IS_ON)) {
+            for (int i = 0; i < 5; i++) {
+                double xRand = rand.nextDouble() / 0.75D - 0.5D;
+                double zRand = rand.nextDouble() / 0.75D - 0.5D;
+                world.spawnParticle(EnumParticleTypes.CRIT, (double) pos.getX() + 0.4F, (double) pos.getY() + 0.8F, (double) pos.getZ() + 0.4F, xRand, 0.5D, zRand);
             }
-            world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
+            world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) pos.getX() + 0.5F, (double) pos.getY() + 1.0F, (double) pos.getZ() + 0.5F, 0.0D, 0.0D, 0.0D);
         }
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityGrinder grinder = (TileEntityGrinder)world.getTileEntity(pos);
-            if(grinder != null){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+        if (!world.isRemote) {
+            TileEntityGrinder grinder = (TileEntityGrinder) world.getTileEntity(pos);
+            if (grinder != null) {
                 player.openGui(ActuallyAdditions.INSTANCE, this.isDouble ? GuiHandler.GuiTypes.GRINDER_DOUBLE.ordinal() : GuiHandler.GuiTypes.GRINDER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
@@ -79,34 +79,33 @@ public class BlockGrinder extends BlockContainerBase{
     }
 
     @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos){
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
         return this.getMetaFromState(state) == 1 ? 12 : 0;
     }
 
     @Override
-    public int damageDropped(IBlockState state){
+    public int damageDropped(IBlockState state) {
         return 0;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 
-
     @Override
-    public IBlockState getStateFromMeta(int meta){
+    public IBlockState getStateFromMeta(int meta) {
         boolean isOn = meta == 1;
         return this.getDefaultState().withProperty(BlockFurnaceDouble.IS_ON, isOn);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state){
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(BlockFurnaceDouble.IS_ON) ? 1 : 0;
     }
 
     @Override
-    protected BlockStateContainer createBlockState(){
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, BlockFurnaceDouble.IS_ON);
     }
 }

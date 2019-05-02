@@ -13,20 +13,20 @@ package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.exu;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneOre;
 
-public class RedOrchidFarmerBehavior extends ExUPlantFarmerBehavior{
+public class RedOrchidFarmerBehavior extends ExUPlantFarmerBehavior {
 
     @Override
-    protected String getPlantName(){
+    protected String getPlantName() {
         return "extrautils2:redorchid";
     }
 
     @Override
-    protected boolean canPlaceOn(Block block){
+    protected boolean canPlaceOn(Block block) {
         return block instanceof BlockRedstoneOre;
     }
 
     @Override
-    protected int getMaxStage(){
+    protected int getMaxStage() {
         return 6;
     }
 }

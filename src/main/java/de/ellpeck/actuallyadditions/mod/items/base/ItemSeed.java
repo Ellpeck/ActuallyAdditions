@@ -23,50 +23,50 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class ItemSeed extends ItemSeeds{
+public class ItemSeed extends ItemSeeds {
 
     public final Block plant;
     public final String name;
     public final String oredictName;
 
-    public ItemSeed(String name, String oredictName, Block plant, Item returnItem, int returnMeta){
+    public ItemSeed(String name, String oredictName, Block plant, Item returnItem, int returnMeta) {
         super(plant, Blocks.FARMLAND);
         this.name = name;
         this.oredictName = oredictName;
         this.plant = plant;
 
-        if(plant instanceof BlockPlant){
-            ((BlockPlant)plant).doStuff(this, returnItem, returnMeta);
+        if (plant instanceof BlockPlant) {
+            ((BlockPlant) plant).doStuff(this, returnItem, returnMeta);
         }
 
         this.register();
     }
 
-    private void register(){
+    private void register() {
         ItemUtil.registerItem(this, this.getBaseName(), this.shouldAddCreative());
 
         this.registerRendering();
     }
 
-    protected String getBaseName(){
+    protected String getBaseName() {
         return this.name;
     }
 
-    public boolean shouldAddCreative(){
+    public boolean shouldAddCreative() {
         return true;
     }
 
-    protected void registerRendering(){
+    protected void registerRendering() {
         ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 
     @Override
-    public IBlockState getPlant(IBlockAccess world, BlockPos pos){
+    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
         return this.plant.getDefaultState();
     }
 }

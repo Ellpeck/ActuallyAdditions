@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.network.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 
-public interface IButtonReactor{
+public interface IButtonReactor {
 
     /**
      * Called when a Button in a GUI is pressed

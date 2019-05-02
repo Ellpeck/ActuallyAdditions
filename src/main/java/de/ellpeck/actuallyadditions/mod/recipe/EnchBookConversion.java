@@ -24,7 +24,7 @@ public class EnchBookConversion extends LensConversionRecipe {
 
     @Override
     public void transformHook(ItemStack stack, IBlockState state, BlockPos pos, IAtomicReconstructor tile) {
-        for(Map.Entry<Enchantment,Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
+        for (Map.Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
             ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
             Map<Enchantment, Integer> ench = ImmutableMap.of(e.getKey(), e.getValue());
             EnchantmentHelper.setEnchantments(ench, book);

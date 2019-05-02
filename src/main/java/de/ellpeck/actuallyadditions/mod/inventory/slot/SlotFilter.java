@@ -19,49 +19,48 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class SlotFilter extends SlotItemHandlerUnconditioned{
+public class SlotFilter extends SlotItemHandlerUnconditioned {
 
-    public SlotFilter(ItemStackHandlerAA inv, int slot, int x, int y){
+    public SlotFilter(ItemStackHandlerAA inv, int slot, int x, int y) {
         super(inv, slot, x, y);
     }
 
-    public SlotFilter(FilterSettings inv, int slot, int x, int y){
+    public SlotFilter(FilterSettings inv, int slot, int x, int y) {
         this(inv.filterInventory, slot, x, y);
     }
 
-    public static boolean checkFilter(Container container, int slotId, EntityPlayer player){
-        if(slotId >= 0 && slotId < container.inventorySlots.size()){
+    public static boolean checkFilter(Container container, int slotId, EntityPlayer player) {
+        if (slotId >= 0 && slotId < container.inventorySlots.size()) {
             Slot slot = container.getSlot(slotId);
-            if(slot instanceof SlotFilter){
-                ((SlotFilter)slot).slotClick(player);
+            if (slot instanceof SlotFilter) {
+                ((SlotFilter) slot).slotClick(player);
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean isFilter(ItemStack stack){
+    public static boolean isFilter(ItemStack stack) {
         return StackUtil.isValid(stack) && stack.getItem() instanceof ItemFilter;
     }
 
-    private void slotClick(EntityPlayer player){
+    private void slotClick(EntityPlayer player) {
         ItemStack heldStack = player.inventory.getItemStack();
         ItemStack stackInSlot = this.getStack();
 
-        if(StackUtil.isValid(stackInSlot) && !StackUtil.isValid(heldStack)){
-            if(isFilter(stackInSlot)){
+        if (StackUtil.isValid(stackInSlot) && !StackUtil.isValid(heldStack)) {
+            if (isFilter(stackInSlot)) {
                 player.inventory.setItemStack(stackInSlot);
             }
 
             this.putStack(StackUtil.getEmpty());
-        }
-        else if(StackUtil.isValid(heldStack)){
-            if(!isFilter(stackInSlot)){
+        } else if (StackUtil.isValid(heldStack)) {
+            if (!isFilter(stackInSlot)) {
                 ItemStack s = heldStack.copy();
                 s.setCount(1);
                 this.putStack(s);
 
-                if(isFilter(heldStack)){
+                if (isFilter(heldStack)) {
                     heldStack.shrink(1);
                 }
             }
@@ -69,17 +68,17 @@ public class SlotFilter extends SlotItemHandlerUnconditioned{
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack){
+    public boolean isItemValid(ItemStack stack) {
         return false;
     }
 
     @Override
-    public void putStack(ItemStack stack){
+    public void putStack(ItemStack stack) {
         super.putStack(stack.copy());
     }
 
     @Override
-    public boolean canTakeStack(EntityPlayer player){
+    public boolean canTakeStack(EntityPlayer player) {
         return false;
     }
 }

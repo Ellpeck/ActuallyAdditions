@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-public class TileEntityFluidPlacer extends TileEntityFluidCollector{
+public class TileEntityFluidPlacer extends TileEntityFluidCollector {
 
-    public TileEntityFluidPlacer(){
+    public TileEntityFluidPlacer() {
         super("fluidPlacer");
         this.isPlacer = true;
     }

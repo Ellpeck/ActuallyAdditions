@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.api.internal;
 
+import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-
-import java.util.List;
 
 /**
  * This is a helper interface for IFarmerBehavior.
@@ -21,7 +21,7 @@ import java.util.List;
  * This is not supposed to be implemented.
  * Can be cast to TileEntity.
  */
-public interface IFarmer extends IEnergyTile{
+public interface IFarmer extends IEnergyTile {
 
     EnumFacing getOrientation();
 

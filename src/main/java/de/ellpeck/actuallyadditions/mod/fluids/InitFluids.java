@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.fluids;
 
+import java.util.Locale;
+
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockFluidFlowing;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -17,9 +19,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
-import java.util.Locale;
-
-public final class InitFluids{
+public final class InitFluids {
 
     public static Fluid fluidCanolaOil;
     public static Fluid fluidRefinedCanolaOil;
@@ -31,7 +31,7 @@ public final class InitFluids{
     public static Block blockCrystalOil;
     public static Block blockEmpoweredOil;
 
-    public static void init(){
+    public static void init() {
         fluidCanolaOil = registerFluid("canolaoil", "block_canola_oil", EnumRarity.UNCOMMON);
         fluidRefinedCanolaOil = registerFluid("refinedcanolaoil", "block_refined_canola_oil", EnumRarity.UNCOMMON);
         fluidCrystalOil = registerFluid("crystaloil", "block_crystal_oil", EnumRarity.RARE);
@@ -43,7 +43,7 @@ public final class InitFluids{
         blockEmpoweredOil = registerFluidBlock(fluidEmpoweredOil, Material.WATER, "block_empowered_oil");
     }
 
-    private static Fluid registerFluid(String fluidName, String fluidTextureName, EnumRarity rarity){
+    private static Fluid registerFluid(String fluidName, String fluidTextureName, EnumRarity rarity) {
         Fluid fluid = new FluidAA(fluidName.toLowerCase(Locale.ROOT), fluidTextureName).setRarity(rarity);
         FluidRegistry.registerFluid(fluid);
         FluidRegistry.addBucketForFluid(fluid);
@@ -51,7 +51,7 @@ public final class InitFluids{
         return FluidRegistry.getFluid(fluid.getName());
     }
 
-    private static Block registerFluidBlock(Fluid fluid, Material material, String name){
+    private static Block registerFluidBlock(Fluid fluid, Material material, String name) {
         return new BlockFluidFlowing(fluid, material, name);
     }
 }

@@ -19,7 +19,7 @@ import net.minecraft.util.EnumFacing;
  * This is not supposed to be implemented.
  * Can be cast to TileEntity.
  */
-public interface IAtomicReconstructor extends IEnergyTile{
+public interface IAtomicReconstructor extends IEnergyTile {
 
     Lens getLens();
 

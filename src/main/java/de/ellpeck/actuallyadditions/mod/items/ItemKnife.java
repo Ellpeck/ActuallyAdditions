@@ -19,9 +19,9 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class ItemKnife extends ItemBase{
+public class ItemKnife extends ItemBase {
 
-    public ItemKnife(String name){
+    public ItemKnife(String name) {
         super(name);
         this.setMaxDamage(100);
         this.setMaxStackSize(1);
@@ -30,31 +30,28 @@ public class ItemKnife extends ItemBase{
     }
 
     @Override
-    public boolean getShareTag(){
+    public boolean getShareTag() {
         return true;
     }
 
-
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 
-
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack){
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
-        if(slot == EntityEquipmentSlot.MAINHAND){
+        if (slot == EntityEquipmentSlot.MAINHAND) {
             map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Knife Modifier", 3, 0));
         }
         return map;
     }
 
-
     @Override
-    public ItemStack getContainerItem(ItemStack stack){
+    public ItemStack getContainerItem(ItemStack stack) {
         ItemStack theStack = stack.copy();
-        theStack.setItemDamage(theStack.getItemDamage()+1);
+        theStack.setItemDamage(theStack.getItemDamage() + 1);
         return theStack;
     }
 }

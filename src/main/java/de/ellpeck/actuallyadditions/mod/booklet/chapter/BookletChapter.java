@@ -21,7 +21,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BookletChapter implements IBookletChapter{
+public class BookletChapter implements IBookletChapter {
 
     public final IBookletPage[] pages;
     public final IBookletEntry entry;
@@ -30,78 +30,76 @@ public class BookletChapter implements IBookletChapter{
     private final int priority;
     public TextFormatting color;
 
-    public BookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages){
+    public BookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages) {
         this(identifier, entry, displayStack, 0, pages);
     }
 
-    public BookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages){
+    public BookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages) {
         this.pages = pages;
         this.identifier = identifier;
         this.entry = entry;
         this.displayStack = displayStack;
-        if(displayStack.getItem() instanceof IDisableableItem && ((IDisableableItem) displayStack.getItem()).isDisabled()) displayStack = ItemStack.EMPTY;
+        if (displayStack.getItem() instanceof IDisableableItem && ((IDisableableItem) displayStack.getItem()).isDisabled()) displayStack = ItemStack.EMPTY;
         this.priority = priority;
         this.color = TextFormatting.RESET;
 
         this.entry.addChapter(this);
-        for(IBookletPage page : this.pages){
+        for (IBookletPage page : this.pages) {
             page.setChapter(this);
         }
     }
 
     @Override
-    public IBookletPage[] getAllPages(){
+    public IBookletPage[] getAllPages() {
         return this.pages;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ActuallyAdditions.MODID+".chapter."+this.getIdentifier()+".name");
+    public String getLocalizedName() {
+        return StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".chapter." + this.getIdentifier() + ".name");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public String getLocalizedNameWithFormatting(){
-        return this.color+this.getLocalizedName();
+    public String getLocalizedNameWithFormatting() {
+        return this.color + this.getLocalizedName();
     }
 
     @Override
-    public IBookletEntry getEntry(){
+    public IBookletEntry getEntry() {
         return this.entry;
     }
 
     @Override
-    public ItemStack getDisplayItemStack(){
+    public ItemStack getDisplayItemStack() {
         return this.displayStack;
     }
 
     @Override
-    public String getIdentifier(){
+    public String getIdentifier() {
         return this.identifier;
     }
 
     @Override
-    public int getPageIndex(IBookletPage page){
-        for(int i = 0; i < this.pages.length; i++){
-            if(this.pages[i] == page){
-                return i;
-            }
+    public int getPageIndex(IBookletPage page) {
+        for (int i = 0; i < this.pages.length; i++) {
+            if (this.pages[i] == page) { return i; }
         }
         return -1;
     }
 
     @Override
-    public int getSortingPriority(){
+    public int getSortingPriority() {
         return this.priority;
     }
 
-    public BookletChapter setImportant(){
+    public BookletChapter setImportant() {
         this.color = TextFormatting.DARK_GREEN;
         return this;
     }
 
-    public BookletChapter setSpecial(){
+    public BookletChapter setSpecial() {
         this.color = TextFormatting.DARK_PURPLE;
         return this;
     }

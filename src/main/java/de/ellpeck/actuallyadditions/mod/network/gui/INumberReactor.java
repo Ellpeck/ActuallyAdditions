@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.network.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 
-public interface INumberReactor{
+public interface INumberReactor {
 
     /**
      * Called when a Number gets received after typing it in in the GUI

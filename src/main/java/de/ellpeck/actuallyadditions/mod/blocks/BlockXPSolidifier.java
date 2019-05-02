@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -32,9 +31,9 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockXPSolidifier extends BlockContainerBase{
+public class BlockXPSolidifier extends BlockContainerBase {
 
-    public BlockXPSolidifier(String name){
+    public BlockXPSolidifier(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(2.5F);
@@ -42,17 +41,16 @@ public class BlockXPSolidifier extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
-
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityXPSolidifier();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier)world.getTileEntity(pos);
-            if(solidifier != null){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+        if (!world.isRemote) {
+            TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier) world.getTileEntity(pos);
+            if (solidifier != null) {
                 player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.XP_SOLIDIFIER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
@@ -61,39 +59,39 @@ public class BlockXPSolidifier extends BlockContainerBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
         world.setBlockState(pos, state.withProperty(BlockHorizontal.FACING, player.getHorizontalFacing().getOpposite()), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta){
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state){
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
     }
 
     @Override
-    protected BlockStateContainer createBlockState(){
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, BlockHorizontal.FACING);
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot){
+    public IBlockState withRotation(IBlockState state, Rotation rot) {
         return state.withProperty(BlockHorizontal.FACING, rot.rotate(state.getValue(BlockHorizontal.FACING)));
     }
 
     @Override
-    public IBlockState withMirror(IBlockState state, Mirror mirror){
+    public IBlockState withMirror(IBlockState state, Mirror mirror) {
         return this.withRotation(state, mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
     }
 }

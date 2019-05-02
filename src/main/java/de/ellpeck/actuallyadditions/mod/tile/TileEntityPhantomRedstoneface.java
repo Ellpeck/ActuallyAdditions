@@ -10,14 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.Arrays;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 
-import java.util.Arrays;
-
-public class TileEntityPhantomRedstoneface extends TileEntityPhantomface{
+public class TileEntityPhantomRedstoneface extends TileEntityPhantomface {
 
     public final int[] providesStrong = new int[EnumFacing.values().length];
     public final int[] providesWeak = new int[EnumFacing.values().length];
@@ -25,19 +25,19 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface{
     private final int[] lastProvidesStrong = new int[this.providesStrong.length];
     private final int[] lastProvidesWeak = new int[this.providesWeak.length];
 
-    public TileEntityPhantomRedstoneface(){
+    public TileEntityPhantomRedstoneface() {
         super("redstoneface");
     }
 
     @Override
-    public void updateEntity(){
-        if(!this.world.isRemote){
-            if(this.isBoundThingInRange()){
+    public void updateEntity() {
+        if (!this.world.isRemote) {
+            if (this.isBoundThingInRange()) {
                 IBlockState boundState = this.world.getBlockState(this.boundPosition);
-                if(boundState != null){
+                if (boundState != null) {
                     Block boundBlock = boundState.getBlock();
-                    if(boundBlock != null){
-                        for(int i = 0; i < EnumFacing.values().length; i++){
+                    if (boundBlock != null) {
+                        for (int i = 0; i < EnumFacing.values().length; i++) {
                             EnumFacing facing = EnumFacing.values()[i];
                             this.providesWeak[i] = boundState.getWeakPower(this.world, this.boundPosition, facing);
                             this.providesStrong[i] = boundState.getStrongPower(this.world, this.boundPosition, facing);
@@ -51,12 +51,12 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface{
     }
 
     @Override
-    protected boolean doesNeedUpdateSend(){
+    protected boolean doesNeedUpdateSend() {
         return super.doesNeedUpdateSend() || !Arrays.equals(this.providesStrong, this.lastProvidesStrong) || !Arrays.equals(this.providesWeak, this.lastProvidesWeak);
     }
 
     @Override
-    protected void onUpdateSent(){
+    protected void onUpdateSent() {
         System.arraycopy(this.providesWeak, 0, this.lastProvidesWeak, 0, this.providesWeak.length);
         System.arraycopy(this.providesStrong, 0, this.lastProvidesStrong, 0, this.providesStrong.length);
 
@@ -64,7 +64,7 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface{
     }
 
     @Override
-    protected boolean isCapabilitySupported(Capability<?> capability){
+    protected boolean isCapabilitySupported(Capability<?> capability) {
         return false;
     }
 }

@@ -23,11 +23,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockFishingNet extends BlockContainerBase{
+public class BlockFishingNet extends BlockContainerBase {
 
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.0625, 1);
 
-    public BlockFishingNet(String name){
+    public BlockFishingNet(String name) {
         super(Material.WOOD, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
@@ -36,28 +36,27 @@ public class BlockFishingNet extends BlockContainerBase{
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return AABB;
     }
 
-
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityFishingNet();
     }
 
     @Override
-    public boolean isFullCube(IBlockState state){
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 }

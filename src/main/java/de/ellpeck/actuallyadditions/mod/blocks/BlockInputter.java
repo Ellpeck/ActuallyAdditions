@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import java.util.Random;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
@@ -32,15 +33,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Random;
-
-public class BlockInputter extends BlockContainerBase{
+public class BlockInputter extends BlockContainerBase {
 
     public static final int NAME_FLAVOR_AMOUNTS = 15;
 
     public final boolean isAdvanced;
 
-    public BlockInputter(boolean isAdvanced, String name){
+    public BlockInputter(boolean isAdvanced, String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -50,17 +49,16 @@ public class BlockInputter extends BlockContainerBase{
         this.isAdvanced = isAdvanced;
     }
 
-
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return this.isAdvanced ? new TileEntityInputterAdvanced() : new TileEntityInputter();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityInputter inputter = (TileEntityInputter)world.getTileEntity(pos);
-            if(inputter != null){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+        if (!world.isRemote) {
+            TileEntityInputter inputter = (TileEntityInputter) world.getTileEntity(pos);
+            if (inputter != null) {
                 player.openGui(ActuallyAdditions.INSTANCE, this.isAdvanced ? GuiHandler.GuiTypes.INPUTTER_ADVANCED.ordinal() : GuiHandler.GuiTypes.INPUTTER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
@@ -69,52 +67,49 @@ public class BlockInputter extends BlockContainerBase{
     }
 
     @Override
-    protected ItemBlockBase getItemBlock(){
+    protected ItemBlockBase getItemBlock() {
         return new TheItemBlock(this);
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 
-    public static class TheItemBlock extends ItemBlockBase{
+    public static class TheItemBlock extends ItemBlockBase {
 
         private final Random rand = new Random();
         private long lastSysTime;
         private int toPick;
 
-        public TheItemBlock(Block block){
+        public TheItemBlock(Block block) {
             super(block);
             this.setHasSubtypes(false);
             this.setMaxDamage(0);
         }
 
-
         @Override
-        public String getTranslationKey(ItemStack stack){
+        public String getTranslationKey(ItemStack stack) {
             return this.getTranslationKey();
         }
 
         @Override
-        public int getMetadata(int damage){
+        public int getMetadata(int damage) {
             return damage;
         }
 
-
         @Override
-        public String getItemStackDisplayName(ItemStack stack){
-            if(Util.isClient()) {
+        public String getItemStackDisplayName(ItemStack stack) {
+            if (Util.isClient()) {
                 long sysTime = System.currentTimeMillis();
 
-                if(this.lastSysTime+5000 < sysTime){
+                if (this.lastSysTime + 5000 < sysTime) {
                     this.lastSysTime = sysTime;
-                    this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS)+1;
+                    this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS) + 1;
                 }
 
-                return StringUtil.localize(this.getTranslationKey()+".name")+" ("+StringUtil.localize("tile."+ActuallyAdditions.MODID+".block_inputter.add."+this.toPick+".name")+")";
-            }
-            else return super.getItemStackDisplayName(stack);
+                return StringUtil.localize(this.getTranslationKey() + ".name") + " (" + StringUtil.localize("tile." + ActuallyAdditions.MODID + ".block_inputter.add." + this.toPick + ".name") + ")";
+            } else return super.getItemStackDisplayName(stack);
         }
     }
 }

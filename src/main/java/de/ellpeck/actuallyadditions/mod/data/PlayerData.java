@@ -10,6 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.data;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
@@ -20,23 +25,16 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
+public final class PlayerData {
 
-public final class PlayerData{
-
-    public static PlayerSave getDataFromPlayer(EntityPlayer player){
+    public static PlayerSave getDataFromPlayer(EntityPlayer player) {
         WorldData worldData = WorldData.get(player.getEntityWorld());
         ConcurrentHashMap<UUID, PlayerSave> data = worldData.playerSaveData;
         UUID id = player.getUniqueID();
 
-        if(data.containsKey(id)){
+        if (data.containsKey(id)) {
             PlayerSave save = data.get(id);
-            if(save != null && save.id != null && save.id.equals(id)){
-                return save;
-            }
+            if (save != null && save.id != null && save.id.equals(id)) { return save; }
         }
 
         //Add Data if none is existant
@@ -46,7 +44,7 @@ public final class PlayerData{
         return save;
     }
 
-    public static class PlayerSave{
+    public static class PlayerSave {
 
         public UUID id;
 
@@ -62,11 +60,11 @@ public final class PlayerData{
         @SideOnly(Side.CLIENT)
         public GuiBooklet lastOpenBooklet;
 
-        public PlayerSave(UUID id){
+        public PlayerSave(UUID id) {
             this.id = id;
         }
 
-        public void readFromNBT(NBTTagCompound compound, boolean savingToFile){
+        public void readFromNBT(NBTTagCompound compound, boolean savingToFile) {
             this.bookGottenAlready = compound.getBoolean("BookGotten");
             this.didBookTutorial = compound.getBoolean("DidTutorial");
 
@@ -79,12 +77,12 @@ public final class PlayerData{
             NBTTagList trials = compound.getTagList("Trials", 8);
             this.loadTrials(trials);
 
-            if(!savingToFile){
+            if (!savingToFile) {
                 this.shouldDisableBatWings = compound.getBoolean("ShouldDisableWings");
             }
         }
 
-        public void writeToNBT(NBTTagCompound compound, boolean savingToFile){
+        public void writeToNBT(NBTTagCompound compound, boolean savingToFile) {
             compound.setBoolean("BookGotten", this.bookGottenAlready);
             compound.setBoolean("DidTutorial", this.didBookTutorial);
 
@@ -94,51 +92,49 @@ public final class PlayerData{
             compound.setTag("Bookmarks", this.saveBookmarks());
             compound.setTag("Trials", this.saveTrials());
 
-            if(!savingToFile){
+            if (!savingToFile) {
                 compound.setBoolean("ShouldDisableWings", this.shouldDisableBatWings);
             }
         }
 
-        public NBTTagList saveBookmarks(){
+        public NBTTagList saveBookmarks() {
             NBTTagList bookmarks = new NBTTagList();
-            for(IBookletPage bookmark : this.bookmarks){
+            for (IBookletPage bookmark : this.bookmarks) {
                 bookmarks.appendTag(new NBTTagString(bookmark == null ? "" : bookmark.getIdentifier()));
             }
             return bookmarks;
         }
 
-        public void loadBookmarks(NBTTagList bookmarks){
-            for(int i = 0; i < bookmarks.tagCount(); i++){
+        public void loadBookmarks(NBTTagList bookmarks) {
+            for (int i = 0; i < bookmarks.tagCount(); i++) {
                 String strg = bookmarks.getStringTagAt(i);
-                if(strg != null && !strg.isEmpty()){
+                if (strg != null && !strg.isEmpty()) {
                     IBookletPage page = BookletUtils.getBookletPageById(strg);
                     this.bookmarks[i] = page;
-                }
-                else{
+                } else {
                     this.bookmarks[i] = null;
                 }
             }
         }
 
-        public NBTTagList saveTrials(){
+        public NBTTagList saveTrials() {
             NBTTagList trials = new NBTTagList();
-            for(String trial : this.completedTrials){
+            for (String trial : this.completedTrials) {
                 trials.appendTag(new NBTTagString(trial));
             }
             return trials;
         }
 
-        public void loadTrials(NBTTagList trials){
+        public void loadTrials(NBTTagList trials) {
             this.completedTrials.clear();
 
-            for(int i = 0; i < trials.tagCount(); i++){
+            for (int i = 0; i < trials.tagCount(); i++) {
                 String strg = trials.getStringTagAt(i);
-                if(strg != null && !strg.isEmpty()){
+                if (strg != null && !strg.isEmpty()) {
                     this.completedTrials.add(strg);
                 }
             }
         }
     }
-
 
 }

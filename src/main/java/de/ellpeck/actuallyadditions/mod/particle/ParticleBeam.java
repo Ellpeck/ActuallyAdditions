@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ParticleBeam extends Particle{
+public class ParticleBeam extends Particle {
 
     private final double endX;
     private final double endY;
@@ -29,7 +29,7 @@ public class ParticleBeam extends Particle{
     private final float size;
     private final float alpha;
 
-    public ParticleBeam(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int maxAge, double rotationTime, float size, float alpha){
+    public ParticleBeam(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int maxAge, double rotationTime, float size, float alpha) {
         super(world, startX, startY, startZ);
         this.endX = endX;
         this.endY = endY;
@@ -42,14 +42,14 @@ public class ParticleBeam extends Particle{
     }
 
     @Override
-    public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ){
-        float ageRatio = (float)this.particleAge/(float)this.particleMaxAge;
-        float currAlpha = this.alpha-ageRatio*this.alpha;
-        AssetUtil.renderLaser(this.posX+0.5, this.posY+0.5, this.posZ+0.5, this.endX+0.5, this.endY+0.5, this.endZ+0.5, this.rotationTime, currAlpha, this.size, this.color);
+    public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+        float ageRatio = (float) this.particleAge / (float) this.particleMaxAge;
+        float currAlpha = this.alpha - ageRatio * this.alpha;
+        AssetUtil.renderLaser(this.posX + 0.5, this.posY + 0.5, this.posZ + 0.5, this.endX + 0.5, this.endY + 0.5, this.endZ + 0.5, this.rotationTime, currAlpha, this.size, this.color);
     }
 
     @Override
-    public int getFXLayer(){
+    public int getFXLayer() {
         return 3;
     }
 }

@@ -25,14 +25,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
-public class NetherWartFarmerBehavior implements IFarmerBehavior{
+public class NetherWartFarmerBehavior implements IFarmerBehavior {
 
     @Override
-    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer) {
         int use = 500;
-        if(farmer.getEnergy() >= use){
-            if(seed.getItem() == Items.NETHER_WART){
-                if(world.getBlockState(pos.down()).getBlock().canSustainPlant(world.getBlockState(pos.down()), world, pos.down(), EnumFacing.UP, (IPlantable) Items.NETHER_WART)){
+        if (farmer.getEnergy() >= use) {
+            if (seed.getItem() == Items.NETHER_WART) {
+                if (world.getBlockState(pos.down()).getBlock().canSustainPlant(world.getBlockState(pos.down()), world, pos.down(), EnumFacing.UP, (IPlantable) Items.NETHER_WART)) {
                     world.setBlockState(pos, Blocks.NETHER_WART.getDefaultState(), 2);
                     farmer.extractEnergy(use);
                     return FarmerResult.SUCCESS;
@@ -44,24 +44,23 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior{
     }
 
     @Override
-    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer){
+    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer) {
         int use = 500;
-        if(farmer.getEnergy() >= use){
+        if (farmer.getEnergy() >= use) {
             IBlockState state = world.getBlockState(pos);
-            if(state.getBlock() instanceof BlockNetherWart){
-                if(state.getValue(BlockNetherWart.AGE) >= 3){
+            if (state.getBlock() instanceof BlockNetherWart) {
+                if (state.getValue(BlockNetherWart.AGE) >= 3) {
                     NonNullList<ItemStack> drops = NonNullList.create();
                     state.getBlock().getDrops(drops, world, pos, state, 0);
-                    if(!drops.isEmpty()){
+                    if (!drops.isEmpty()) {
                         boolean toInput = farmer.canAddToSeeds(drops);
-                        if(toInput || farmer.canAddToOutput(drops)){
+                        if (toInput || farmer.canAddToOutput(drops)) {
                             world.playEvent(2001, pos, Block.getStateId(state));
                             world.setBlockToAir(pos);
 
-                            if(toInput){
+                            if (toInput) {
                                 farmer.addToSeeds(drops);
-                            }
-                            else{
+                            } else {
                                 farmer.addToOutput(drops);
                             }
 
@@ -77,7 +76,7 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior{
     }
 
     @Override
-    public int getPriority(){
+    public int getPriority() {
         return 3;
     }
 }

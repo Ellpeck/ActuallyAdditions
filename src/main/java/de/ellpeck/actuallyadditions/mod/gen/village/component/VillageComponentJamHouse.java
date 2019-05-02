@@ -10,12 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
+import java.util.List;
+import java.util.Random;
+
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockStairs;
+import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -28,10 +35,7 @@ import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
-import java.util.List;
-import java.util.Random;
-
-public class VillageComponentJamHouse extends StructureVillagePieces.House1{
+public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
 
     private static final int X_SIZE = 11;
     private static final int Y_SIZE = 8;
@@ -39,53 +43,50 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
 
     private int averageGroundLevel = -1;
 
-    public VillageComponentJamHouse(){
+    public VillageComponentJamHouse() {
 
     }
 
-    public VillageComponentJamHouse(StructureBoundingBox boundingBox, EnumFacing par5){
+    public VillageComponentJamHouse(StructureBoundingBox boundingBox, EnumFacing par5) {
         this.setCoordBaseMode(par5);
         this.boundingBox = boundingBox;
     }
 
-    public static VillageComponentJamHouse buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, EnumFacing p4){
+    public static VillageComponentJamHouse buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, EnumFacing p4) {
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
         return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentJamHouse(boundingBox, p4) : null;
     }
 
-    public static boolean generateCrate(World world, StructureBoundingBox box, int x, int y, int z, ResourceLocation loot){
+    public static boolean generateCrate(World world, StructureBoundingBox box, int x, int y, int z, ResourceLocation loot) {
         BlockPos pos = new BlockPos(x, y, z);
 
-        if(box.isVecInside(pos)){
+        if (box.isVecInside(pos)) {
             world.setBlockState(pos, InitBlocks.blockGiantChest.getDefaultState(), 2);
 
             TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof TileEntityGiantChest){
-                ((TileEntityGiantChest)tile).lootTable = loot;
+            if (tile instanceof TileEntityGiantChest) {
+                ((TileEntityGiantChest) tile).lootTable = loot;
             }
 
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
     @Override
-    public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb){
-        if(this.averageGroundLevel < 0){
+    public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
+        if (this.averageGroundLevel < 0) {
             this.averageGroundLevel = this.getAverageGroundLevel(world, sbb);
-            if(this.averageGroundLevel < 0){
-                return true;
-            }
-            this.boundingBox.offset(0, this.averageGroundLevel-this.boundingBox.maxY+Y_SIZE-1, 0);
+            if (this.averageGroundLevel < 0) { return true; }
+            this.boundingBox.offset(0, this.averageGroundLevel - this.boundingBox.maxY + Y_SIZE - 1, 0);
         }
 
-        this.fillWithBlocks(world, sbb, 0, 0, 0, X_SIZE-1, Y_SIZE-1, Z_SIZE-1, Blocks.AIR);
+        this.fillWithBlocks(world, sbb, 0, 0, 0, X_SIZE - 1, Y_SIZE - 1, Z_SIZE - 1, Blocks.AIR);
         this.spawnActualHouse(world, rand, sbb);
 
-        for(int i = 0; i < X_SIZE; i++){
-            for(int j = 0; j < Z_SIZE; j++){
+        for (int i = 0; i < X_SIZE; i++) {
+            for (int j = 0; j < Z_SIZE; j++) {
                 this.clearCurrentPositionBlocksUpwards(world, i, Y_SIZE, j, sbb);
                 this.replaceAirAndLiquidDownwards(world, Blocks.COBBLESTONE.getDefaultState(), i, -1, j, sbb);
             }
@@ -96,12 +97,12 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         return true;
     }
 
-    public void fillWithBlocks(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block block){
+    public void fillWithBlocks(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block block) {
         this.fillWithBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, block.getDefaultState(), block.getDefaultState(), false);
     }
 
     @SuppressWarnings("deprecation")
-    public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb){
+    public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb) {
         //Base
         this.fillWithBlocks(world, sbb, 1, 0, 8, 9, 0, 10, Blocks.GRASS);
         this.fillWithBlocks(world, sbb, 0, 0, 0, 1, 0, 7, Blocks.COBBLESTONE);
@@ -124,15 +125,15 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.fillWithBlocks(world, sbb, 1, 1, 11, 9, 1, 11, Blocks.OAK_FENCE);
 
         //Side Walls
-        for(int i = 0; i < 2; i++){
-            this.fillWithBlocks(world, sbb, 1+i*8, 1, 1, 1+i*8, 1, 7, Blocks.COBBLESTONE);
-            this.fillWithBlocks(world, sbb, 1+i*8, 1, 1, 1+i*8, 4, 1, Blocks.COBBLESTONE);
-            this.fillWithBlocks(world, sbb, 1+i*8, 1, 7, 1+i*8, 4, 7, Blocks.COBBLESTONE);
-            this.fillWithBlocks(world, sbb, 1+i*8, 4, 2, 1+i*8, 5, 6, Blocks.COBBLESTONE);
-            this.fillWithBlocks(world, sbb, 1+i*8, 3, 2, 1+i*8, 3, 6, Blocks.PLANKS);
-            this.setBlockState(world, Blocks.PLANKS.getStateFromMeta(0), 1+i*8, 2, 2, sbb);
-            this.setBlockState(world, Blocks.PLANKS.getStateFromMeta(0), 1+i*8, 2, 6, sbb);
-            this.fillWithBlocks(world, sbb, 1+i*8, 2, 3, 1+i*8, 2, 5, Blocks.GLASS_PANE);
+        for (int i = 0; i < 2; i++) {
+            this.fillWithBlocks(world, sbb, 1 + i * 8, 1, 1, 1 + i * 8, 1, 7, Blocks.COBBLESTONE);
+            this.fillWithBlocks(world, sbb, 1 + i * 8, 1, 1, 1 + i * 8, 4, 1, Blocks.COBBLESTONE);
+            this.fillWithBlocks(world, sbb, 1 + i * 8, 1, 7, 1 + i * 8, 4, 7, Blocks.COBBLESTONE);
+            this.fillWithBlocks(world, sbb, 1 + i * 8, 4, 2, 1 + i * 8, 5, 6, Blocks.COBBLESTONE);
+            this.fillWithBlocks(world, sbb, 1 + i * 8, 3, 2, 1 + i * 8, 3, 6, Blocks.PLANKS);
+            this.setBlockState(world, Blocks.PLANKS.getStateFromMeta(0), 1 + i * 8, 2, 2, sbb);
+            this.setBlockState(world, Blocks.PLANKS.getStateFromMeta(0), 1 + i * 8, 2, 6, sbb);
+            this.fillWithBlocks(world, sbb, 1 + i * 8, 2, 3, 1 + i * 8, 2, 5, Blocks.GLASS_PANE);
         }
 
         //Front Wall
@@ -144,7 +145,6 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.fillWithBlocks(world, sbb, 5, 3, 1, 5, 3, 1, Blocks.PLANKS);
         this.setBlockState(world, Blocks.SPRUCE_DOOR.getDefaultState(), 5, 1, 1, sbb);
         this.setBlockState(world, Blocks.SPRUCE_DOOR.getDefaultState().withProperty(BlockDoor.HALF, BlockDoor.EnumDoorHalf.UPPER), 5, 2, 1, sbb);
-
 
         //Back Wall
         this.fillWithBlocks(world, sbb, 2, 1, 7, 2, 4, 7, Blocks.COBBLESTONE);
@@ -210,7 +210,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
         this.fillWithBlocks(world, sbb, 3, 1, 4, 4, 1, 6, Blocks.CARPET.getStateFromMeta(10), Blocks.CARPET.getStateFromMeta(10), false);
 
         //Loot Chest
-        if(ConfigBoolValues.DUNGEON_LOOT.isEnabled()){
+        if (ConfigBoolValues.DUNGEON_LOOT.isEnabled()) {
             generateCrate(world, this.boundingBox, this.getXWithOffset(8, 6), this.getYWithOffset(1), this.getZWithOffset(8, 6), DungeonLoot.JAM_HOUSE);
         }
 
@@ -226,7 +226,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1{
     }
 
     @Override
-    protected VillagerProfession chooseForgeProfession(int count, VillagerProfession prof){
+    protected VillagerProfession chooseForgeProfession(int count, VillagerProfession prof) {
         return InitVillager.jamProfession;
     }
 }

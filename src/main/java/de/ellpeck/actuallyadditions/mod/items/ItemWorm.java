@@ -39,35 +39,35 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemWorm extends ItemBase{
+public class ItemWorm extends ItemBase {
 
-    public ItemWorm(String name){
+    public ItemWorm(String name) {
         super(name);
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        this.addPropertyOverride(new ResourceLocation(ActuallyAdditions.MODID, "snail"), new IItemPropertyGetter(){
+        this.addPropertyOverride(new ResourceLocation(ActuallyAdditions.MODID, "snail"), new IItemPropertyGetter() {
             @Override
             @SideOnly(Side.CLIENT)
-            public float apply(ItemStack stack, World world, EntityLivingBase entity){
+            public float apply(ItemStack stack, World world, EntityLivingBase entity) {
                 return "snail mail".equalsIgnoreCase(stack.getDisplayName()) ? 1F : 0F;
             }
         });
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float par8, float par9, float par10){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float par8, float par9, float par10) {
         ItemStack stack = player.getHeldItem(hand);
         IBlockState state = world.getBlockState(pos);
-        if(EntityWorm.canWormify(world, pos, state)){
-            List<EntityWorm> worms = world.getEntitiesWithinAABB(EntityWorm.class, new AxisAlignedBB(pos.getX()-1, pos.getY(), pos.getZ()-1, pos.getX()+2, pos.getY()+1, pos.getZ()+2));
-            if(worms == null || worms.isEmpty()){
-                if(!world.isRemote){
+        if (EntityWorm.canWormify(world, pos, state)) {
+            List<EntityWorm> worms = world.getEntitiesWithinAABB(EntityWorm.class, new AxisAlignedBB(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2));
+            if (worms == null || worms.isEmpty()) {
+                if (!world.isRemote) {
                     EntityWorm worm = new EntityWorm(world);
-                    worm.setPosition(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
+                    worm.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
                     worm.setCustomNameTag(stack.getDisplayName());
                     world.spawnEntity(worm);
-                    if(!player.capabilities.isCreativeMode) stack.shrink(1);
+                    if (!player.capabilities.isCreativeMode) stack.shrink(1);
                 }
                 return EnumActionResult.SUCCESS;
             }
@@ -76,16 +76,16 @@ public class ItemWorm extends ItemBase{
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onHoe(UseHoeEvent event){
-        if(ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Result.DENY){
+    public void onHoe(UseHoeEvent event) {
+        if (ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Result.DENY) {
             World world = event.getWorld();
-            if(!world.isRemote){
+            if (!world.isRemote) {
                 BlockPos pos = event.getPos();
-                if(world.isAirBlock(pos.up())){
+                if (world.isAirBlock(pos.up())) {
                     IBlockState state = world.getBlockState(pos);
-                    if(state.getBlock() instanceof BlockGrass && world.rand.nextFloat() >= 0.95F){
-                        ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2)+1);
-                        EntityItem item = new EntityItem(event.getWorld(), pos.getX()+0.5, pos.getY()+1, pos.getZ()+0.5, stack);
+                    if (state.getBlock() instanceof BlockGrass && world.rand.nextFloat() >= 0.95F) {
+                        ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2) + 1);
+                        EntityItem item = new EntityItem(event.getWorld(), pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
                         world.spawnEntity(item);
                     }
                 }
@@ -94,7 +94,7 @@ public class ItemWorm extends ItemBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.UNCOMMON;
     }
 }

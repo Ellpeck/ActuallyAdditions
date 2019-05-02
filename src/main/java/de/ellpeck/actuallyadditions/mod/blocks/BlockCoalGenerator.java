@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import java.util.Random;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
@@ -25,17 +26,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Random;
+public class BlockCoalGenerator extends BlockContainerBase {
 
-public class BlockCoalGenerator extends BlockContainerBase{
-
-    public BlockCoalGenerator(String name){
+    public BlockCoalGenerator(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -45,38 +48,38 @@ public class BlockCoalGenerator extends BlockContainerBase{
     }
 
     @Override
-    public boolean isFullCube(IBlockState state){
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityCoalGenerator();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand){
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
         TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileEntityCoalGenerator){
-            if(((TileEntityCoalGenerator)tile).currentBurnTime > 0){
-                for(int i = 0; i < 5; i++){
-                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double)pos.getX()+0.5F, (double)pos.getY()+1.0F, (double)pos.getZ()+0.5F, 0.0D, 0.0D, 0.0D);
+        if (tile instanceof TileEntityCoalGenerator) {
+            if (((TileEntityCoalGenerator) tile).currentBurnTime > 0) {
+                for (int i = 0; i < 5; i++) {
+                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) pos.getX() + 0.5F, (double) pos.getY() + 1.0F, (double) pos.getZ() + 0.5F, 0.0D, 0.0D, 0.0D);
                 }
             }
         }
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityCoalGenerator press = (TileEntityCoalGenerator)world.getTileEntity(pos);
-            if(press != null){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+        if (!world.isRemote) {
+            TileEntityCoalGenerator press = (TileEntityCoalGenerator) world.getTileEntity(pos);
+            if (press != null) {
                 player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.COAL_GENERATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
@@ -85,39 +88,39 @@ public class BlockCoalGenerator extends BlockContainerBase{
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
         world.setBlockState(pos, state.withProperty(BlockHorizontal.FACING, player.getHorizontalFacing().getOpposite()), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta){
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state){
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
     }
 
     @Override
-    protected BlockStateContainer createBlockState(){
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, BlockHorizontal.FACING);
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot){
+    public IBlockState withRotation(IBlockState state, Rotation rot) {
         return state.withProperty(BlockHorizontal.FACING, rot.rotate(state.getValue(BlockHorizontal.FACING)));
     }
 
     @Override
-    public IBlockState withMirror(IBlockState state, Mirror mirror){
+    public IBlockState withMirror(IBlockState state, Mirror mirror) {
         return this.withRotation(state, mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
     }
 }

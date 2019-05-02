@@ -10,7 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
 import com.google.common.collect.Lists;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.storage.loot.LootContext;
@@ -18,64 +24,55 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
 //This is stuff copied from somewhere in vanilla and changed so that it works properly
 //It's unpolished and vanilla-y, so don't look at it! O_O
-public final class AwfulUtil{
+public final class AwfulUtil {
 
-    public static void fillInventory(LootTable table, IItemHandlerModifiable inventory, Random rand, LootContext context){
+    public static void fillInventory(LootTable table, IItemHandlerModifiable inventory, Random rand, LootContext context) {
         List<ItemStack> list = table.generateLootForPools(rand, context);
         List<Integer> list1 = getEmptySlotsRandomized(inventory, rand);
         shuffleItems(list, list1.size(), rand);
 
-        for(ItemStack itemstack : list){
-            if(itemstack.isEmpty()){
-                inventory.setStackInSlot(list1.remove(list1.size()-1), ItemStack.EMPTY);
-            }
-            else{
-                inventory.setStackInSlot(list1.remove(list1.size()-1), itemstack);
+        for (ItemStack itemstack : list) {
+            if (itemstack.isEmpty()) {
+                inventory.setStackInSlot(list1.remove(list1.size() - 1), ItemStack.EMPTY);
+            } else {
+                inventory.setStackInSlot(list1.remove(list1.size() - 1), itemstack);
             }
         }
     }
 
-    private static void shuffleItems(List<ItemStack> stacks, int someInt, Random rand){
+    private static void shuffleItems(List<ItemStack> stacks, int someInt, Random rand) {
         List<ItemStack> list = Lists.newArrayList();
         Iterator<ItemStack> iterator = stacks.iterator();
 
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             ItemStack itemstack = iterator.next();
 
-            if(itemstack.isEmpty()){
+            if (itemstack.isEmpty()) {
                 iterator.remove();
-            }
-            else if(itemstack.getCount() > 1){
+            } else if (itemstack.getCount() > 1) {
                 list.add(itemstack);
                 iterator.remove();
             }
         }
 
-        someInt = someInt-stacks.size();
+        someInt = someInt - stacks.size();
 
-        while(someInt > 0 && list.size() > 0){
-            ItemStack itemstack2 = list.remove(MathHelper.getInt(rand, 0, list.size()-1));
-            int i = MathHelper.getInt(rand, 1, itemstack2.getCount()/2);
+        while (someInt > 0 && list.size() > 0) {
+            ItemStack itemstack2 = list.remove(MathHelper.getInt(rand, 0, list.size() - 1));
+            int i = MathHelper.getInt(rand, 1, itemstack2.getCount() / 2);
             ItemStack itemstack1 = itemstack2.splitStack(i);
 
-            if(itemstack2.getCount() > 1 && rand.nextBoolean()){
+            if (itemstack2.getCount() > 1 && rand.nextBoolean()) {
                 list.add(itemstack2);
-            }
-            else{
+            } else {
                 stacks.add(itemstack2);
             }
 
-            if(itemstack1.getCount() > 1 && rand.nextBoolean()){
+            if (itemstack1.getCount() > 1 && rand.nextBoolean()) {
                 list.add(itemstack1);
-            }
-            else{
+            } else {
                 stacks.add(itemstack1);
             }
         }
@@ -84,11 +81,11 @@ public final class AwfulUtil{
         Collections.shuffle(stacks, rand);
     }
 
-    private static List<Integer> getEmptySlotsRandomized(IItemHandlerModifiable inventory, Random rand){
+    private static List<Integer> getEmptySlotsRandomized(IItemHandlerModifiable inventory, Random rand) {
         List<Integer> list = Lists.newArrayList();
 
-        for(int i = 0; i < inventory.getSlots(); ++i){
-            if(inventory.getStackInSlot(i).isEmpty()){
+        for (int i = 0; i < inventory.getSlots(); ++i) {
+            if (inventory.getStackInSlot(i).isEmpty()) {
                 list.add(i);
             }
         }
@@ -100,7 +97,7 @@ public final class AwfulUtil{
     public static void callTheFuckinPolice(Object... stuff) {
         int i = 0;
         String error = "Actually Additions: Something is very wrong.  This method was provided with ";
-        for(Object k : stuff) {
+        for (Object k : stuff) {
             error += "\n" + i++ + ": " + (k == null ? "null" : k.getClass().getSimpleName() + " <- CLASS | INSTANCE -> " + k.toString() + ", ");
         }
         error += "\n" + "The current side is: " + FMLCommonHandler.instance().getEffectiveSide();

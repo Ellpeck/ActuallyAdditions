@@ -19,40 +19,40 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IRarity;
 
-public class BlockBase extends Block implements ItemBlockBase.ICustomRarity, IHasModel{
+public class BlockBase extends Block implements ItemBlockBase.ICustomRarity, IHasModel {
 
     private final String name;
 
-    public BlockBase(Material material, String name){
+    public BlockBase(Material material, String name) {
         super(material);
         this.name = name;
 
         this.register();
     }
 
-    private void register(){
+    private void register() {
         ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
     }
 
-    protected String getBaseName(){
+    protected String getBaseName() {
         return this.name;
     }
 
-    protected ItemBlockBase getItemBlock(){
+    protected ItemBlockBase getItemBlock() {
         return new ItemBlockBase(this);
     }
 
-    public boolean shouldAddCreative(){
+    public boolean shouldAddCreative() {
         return true;
     }
 
     @Override
-    public void registerRendering(){
+    public void registerRendering() {
         ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
     @Override
-    public IRarity getRarity(ItemStack stack){
+    public IRarity getRarity(ItemStack stack) {
         return EnumRarity.COMMON;
     }
 }

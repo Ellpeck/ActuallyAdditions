@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.api.misc;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
-public interface IDisplayStandItem{
+public interface IDisplayStandItem {
 
     boolean update(ItemStack stack, TileEntity tile, int elapsedTicks);
 

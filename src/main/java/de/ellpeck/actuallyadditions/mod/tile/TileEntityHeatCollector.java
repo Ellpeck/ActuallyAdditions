@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.ArrayList;
+
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockMagma;
@@ -21,9 +23,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.IEnergyStorage;
 
-import java.util.ArrayList;
-
-public class TileEntityHeatCollector extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay{
+public class TileEntityHeatCollector extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
@@ -31,54 +31,54 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     private int oldEnergy;
     private int disappearTime;
 
-    public TileEntityHeatCollector(){
+    public TileEntityHeatCollector() {
         super("heatCollector");
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         this.storage.writeToNBT(compound);
-        if(type == NBTType.SAVE_TILE){
+        if (type == NBTType.SAVE_TILE) {
             compound.setInteger("DisappearTime", this.disappearTime);
         }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         this.storage.readFromNBT(compound);
-        if(type == NBTType.SAVE_TILE){
+        if (type == NBTType.SAVE_TILE) {
             this.disappearTime = compound.getInteger("DisappearTime");
         }
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
-        if(!this.world.isRemote){
+        if (!this.world.isRemote) {
             ArrayList<Integer> blocksAround = new ArrayList<>();
-            if(ENERGY_PRODUCE <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
-                for(int i = 1; i <= 5; i++){
+            if (ENERGY_PRODUCE <= this.storage.getMaxEnergyStored() - this.storage.getEnergyStored()) {
+                for (int i = 1; i <= 5; i++) {
                     BlockPos coords = this.pos.offset(WorldUtil.getDirectionBySidesInOrder(i));
                     IBlockState state = this.world.getBlockState(coords);
                     Block block = state.getBlock();
-                    if(block != null && this.world.getBlockState(coords).getMaterial() == Material.LAVA && block.getMetaFromState(state) == 0 || this.world.getBlockState(coords).getBlock() instanceof BlockMagma){
+                    if (block != null && this.world.getBlockState(coords).getMaterial() == Material.LAVA && block.getMetaFromState(state) == 0 || this.world.getBlockState(coords).getBlock() instanceof BlockMagma) {
                         blocksAround.add(i);
                     }
                 }
 
-                if(blocksAround.size() >= BLOCKS_NEEDED){
+                if (blocksAround.size() >= BLOCKS_NEEDED) {
                     this.storage.receiveEnergyInternal(ENERGY_PRODUCE, false);
                     this.markDirty();
 
                     this.disappearTime++;
-                    if(this.disappearTime >= 1000){
+                    if (this.disappearTime >= 1000) {
                         this.disappearTime = 0;
 
-                        if(this.world.rand.nextInt(200) == 0){
+                        if (this.world.rand.nextInt(200) == 0) {
                             int randomSide = blocksAround.get(this.world.rand.nextInt(blocksAround.size()));
                             this.world.setBlockToAir(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(randomSide)));
                         }
@@ -86,44 +86,44 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                 }
             }
 
-            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+            if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
                 this.oldEnergy = this.storage.getEnergyStored();
             }
         }
     }
 
     @Override
-    public CustomEnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage() {
         return this.storage;
     }
 
     @Override
-    public boolean needsHoldShift(){
+    public boolean needsHoldShift() {
         return false;
     }
 
     @Override
-    public int getEnergyToSplitShare(){
+    public int getEnergyToSplitShare() {
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public boolean doesShareEnergy(){
+    public boolean doesShareEnergy() {
         return true;
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides(){
+    public EnumFacing[] getEnergyShareSides() {
         return EnumFacing.values();
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile){
+    public boolean canShareTo(TileEntity tile) {
         return true;
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
         return this.storage;
     }
 

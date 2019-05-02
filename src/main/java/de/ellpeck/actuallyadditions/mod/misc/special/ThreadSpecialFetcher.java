@@ -10,32 +10,31 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.special;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Properties;
 
-public class ThreadSpecialFetcher extends Thread{
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 
-    public ThreadSpecialFetcher(){
-        this.setName(ActuallyAdditions.NAME+" Special Fetcher");
+public class ThreadSpecialFetcher extends Thread {
+
+    public ThreadSpecialFetcher() {
+        this.setName(ActuallyAdditions.NAME + " Special Fetcher");
         this.setDaemon(true);
         this.start();
     }
 
     @Override
-    public void run(){
+    public void run() {
         ActuallyAdditions.LOGGER.info("Fetching Special People Stuff...");
-        try{
+        try {
             URL url = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/specialPeopleStuff.properties");
             Properties specialProperties = new Properties();
             specialProperties.load(new InputStreamReader(url.openStream()));
             SpecialRenderInit.parse(specialProperties);
 
             ActuallyAdditions.LOGGER.info("Fetching Special People Stuff done!");
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             ActuallyAdditions.LOGGER.error("Fetching Special People Stuff failed! (You can ignore this error technically.)", e);
         }
     }

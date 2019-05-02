@@ -23,14 +23,14 @@ import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PageCrusherRecipe extends BookletPage{
+public class PageCrusherRecipe extends BookletPage {
 
     private final CrusherRecipe recipe;
     private int counter = 0;
     private int rotate = 0;
     private final ItemStack[] stacks;
 
-    public PageCrusherRecipe(int localizationKey, CrusherRecipe recipe){
+    public PageCrusherRecipe(int localizationKey, CrusherRecipe recipe) {
         super(localizationKey);
         this.recipe = recipe;
         this.stacks = recipe.getInput().getMatchingStacks();
@@ -38,42 +38,42 @@ public class PageCrusherRecipe extends BookletPage{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
+    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
         gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
-        GuiUtils.drawTexturedModalRect(startX+38, startY+6, 136, 0, 52, 74, 0);
+        GuiUtils.drawTexturedModalRect(startX + 38, startY + 6, 136, 0, 52, 74, 0);
 
-        gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".crusherRecipe")+")", startX+36, startY+85, 0, false, gui.getMediumFontSize());
+        gui.renderScaledAsciiString("(" + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".crusherRecipe") + ")", startX + 36, startY + 85, 0, false, gui.getMediumFontSize());
 
-        PageTextOnly.renderTextToPage(gui, this, startX+6, startY+100);
+        PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 100);
 
-        if(this.counter++ % 50 == 0) gui.addOrModifyItemRenderer(this.stacks[this.rotate++ % this.stacks.length], startX+38+18, startY+6+1, 1F, true);
+        if (this.counter++ % 50 == 0) gui.addOrModifyItemRenderer(this.stacks[this.rotate++ % this.stacks.length], startX + 38 + 18, startY + 6 + 1, 1F, true);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void initGui(GuiBookletBase gui, int startX, int startY){
+    public void initGui(GuiBookletBase gui, int startX, int startY) {
         super.initGui(gui, startX, startY);
 
-        if(this.recipe != null){
-            gui.addOrModifyItemRenderer(this.stacks[this.rotate++ % this.stacks.length], startX+38+18, startY+6+1, 1F, true);
-            gui.addOrModifyItemRenderer(this.recipe.getOutputOne(), startX+38+4, startY+6+53, 1F, false);
+        if (this.recipe != null) {
+            gui.addOrModifyItemRenderer(this.stacks[this.rotate++ % this.stacks.length], startX + 38 + 18, startY + 6 + 1, 1F, true);
+            gui.addOrModifyItemRenderer(this.recipe.getOutputOne(), startX + 38 + 4, startY + 6 + 53, 1F, false);
 
-            if(StackUtil.isValid(this.recipe.getOutputTwo())){
-                gui.addOrModifyItemRenderer(this.recipe.getOutputTwo(), startX+38+30, startY+6+53, 1F, false);
+            if (StackUtil.isValid(this.recipe.getOutputTwo())) {
+                gui.addOrModifyItemRenderer(this.recipe.getOutputTwo(), startX + 38 + 30, startY + 6 + 53, 1F, false);
             }
         }
     }
 
     @Override
-    public void getItemStacksForPage(List<ItemStack> list){
+    public void getItemStacksForPage(List<ItemStack> list) {
         super.getItemStacksForPage(list);
 
-        if(this.recipe != null){
+        if (this.recipe != null) {
             list.add(this.recipe.getOutputOne());
 
-            if(StackUtil.isValid(this.recipe.getOutputTwo())){
+            if (StackUtil.isValid(this.recipe.getOutputTwo())) {
                 list.add(this.recipe.getOutputTwo());
             }
         }

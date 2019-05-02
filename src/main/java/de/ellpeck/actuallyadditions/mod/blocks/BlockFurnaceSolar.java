@@ -23,11 +23,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockFurnaceSolar extends BlockContainerBase{
+public class BlockFurnaceSolar extends BlockContainerBase {
 
-    private static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 6*0.0625, 1);
+    private static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 6 * 0.0625, 1);
 
-    public BlockFurnaceSolar(String name){
+    public BlockFurnaceSolar(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -36,28 +36,27 @@ public class BlockFurnaceSolar extends BlockContainerBase{
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return AABB;
     }
 
-
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityFurnaceSolar();
     }
 
     @Override
-    public boolean isFullCube(IBlockState state){
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.UNCOMMON;
     }
 }

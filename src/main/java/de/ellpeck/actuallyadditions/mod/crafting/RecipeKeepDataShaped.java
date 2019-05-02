@@ -18,11 +18,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-public class RecipeKeepDataShaped extends ShapedOreRecipe{
+public class RecipeKeepDataShaped extends ShapedOreRecipe {
 
     private final ItemStack nbtCopyStack;
 
-    public RecipeKeepDataShaped(ResourceLocation group, ItemStack result, ItemStack nbtCopyStack, Object... recipe){
+    public RecipeKeepDataShaped(ResourceLocation group, ItemStack result, ItemStack nbtCopyStack, Object... recipe) {
         super(group, result, recipe);
         this.nbtCopyStack = nbtCopyStack;
 
@@ -30,12 +30,12 @@ public class RecipeKeepDataShaped extends ShapedOreRecipe{
     }
 
     @Override
-    public ItemStack getCraftingResult(InventoryCrafting inventory){
+    public ItemStack getCraftingResult(InventoryCrafting inventory) {
         ItemStack stack = super.getCraftingResult(inventory);
-        if(StackUtil.isValid(stack)){
-            for(int i = 0; i < inventory.getSizeInventory(); i++){
+        if (StackUtil.isValid(stack)) {
+            for (int i = 0; i < inventory.getSizeInventory(); i++) {
                 ItemStack input = inventory.getStackInSlot(i);
-                if(ItemUtil.areItemsEqual(this.nbtCopyStack, input, true)){
+                if (ItemUtil.areItemsEqual(this.nbtCopyStack, input, true)) {
                     stack.setTagCompound(input.getTagCompound());
                     break;
                 }

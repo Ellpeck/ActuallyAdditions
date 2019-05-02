@@ -15,30 +15,29 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class SlotImmovable extends Slot{
+public class SlotImmovable extends Slot {
 
-    public SlotImmovable(IInventory inventory, int id, int x, int y){
+    public SlotImmovable(IInventory inventory, int id, int x, int y) {
         super(inventory, id, x, y);
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack){
+    public boolean isItemValid(ItemStack stack) {
         return false;
     }
 
     @Override
-    public void putStack(ItemStack stack){
+    public void putStack(ItemStack stack) {
 
     }
 
-
     @Override
-    public ItemStack decrStackSize(int i){
+    public ItemStack decrStackSize(int i) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean canTakeStack(EntityPlayer player){
+    public boolean canTakeStack(EntityPlayer player) {
         return false;
     }
 }

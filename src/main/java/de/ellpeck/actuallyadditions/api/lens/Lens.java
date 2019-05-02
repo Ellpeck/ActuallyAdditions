@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 /**
  * This is the base class for a Reconstructor Lens Type (NOT THE ITEM!)
  */
-public abstract class Lens{
+public abstract class Lens {
 
     /**
      * Invokes the lens type's behavior on a block
@@ -42,7 +42,7 @@ public abstract class Lens{
     /**
      * @return If the lens can be invoked at the current time
      */
-    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot){
+    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot) {
         return true;
     }
 }

@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -23,43 +22,43 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderReconstructorLens extends TileEntitySpecialRenderer<TileEntityAtomicReconstructor>{
+public class RenderReconstructorLens extends TileEntitySpecialRenderer<TileEntityAtomicReconstructor> {
 
     @Override
-    public void render(TileEntityAtomicReconstructor tile, double x, double y, double z, float par5, int par6, float f){
-        if(tile == null) return;
+    public void render(TileEntityAtomicReconstructor tile, double x, double y, double z, float par5, int par6, float f) {
+        if (tile == null) return;
 
         ItemStack stack = tile.inv.getStackInSlot(0);
 
-        if(StackUtil.isValid(stack) && stack.getItem() instanceof ILensItem){
+        if (StackUtil.isValid(stack) && stack.getItem() instanceof ILensItem) {
             GlStateManager.pushMatrix();
-            GlStateManager.translate((float)x+0.5F, (float)y-0.5F, (float)z+0.5F);
+            GlStateManager.translate((float) x + 0.5F, (float) y - 0.5F, (float) z + 0.5F);
             GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
 
             IBlockState state = tile.getWorld().getBlockState(tile.getPos());
             int meta = state.getBlock().getMetaFromState(state);
-            if(meta == 0){
+            if (meta == 0) {
                 GlStateManager.translate(0F, -0.5F, 0F);
                 GlStateManager.rotate(90F, 1F, 0F, 0F);
             }
-            if(meta == 1){
-                GlStateManager.translate(0F, -1.5F-0.5F/16F, 0F);
+            if (meta == 1) {
+                GlStateManager.translate(0F, -1.5F - 0.5F / 16F, 0F);
                 GlStateManager.rotate(90F, 1F, 0F, 0F);
             }
-            if(meta == 2){
+            if (meta == 2) {
                 GlStateManager.translate(0F, -1F, 0F);
                 GlStateManager.translate(0F, 0F, -0.5F);
             }
-            if(meta == 3){
+            if (meta == 3) {
                 GlStateManager.translate(0F, -1F, 0F);
-                GlStateManager.translate(0F, 0F, 0.5F+0.5F/16F);
+                GlStateManager.translate(0F, 0F, 0.5F + 0.5F / 16F);
             }
-            if(meta == 4){
+            if (meta == 4) {
                 GlStateManager.translate(0F, -1F, 0F);
-                GlStateManager.translate(0.5F+0.5F/16F, 0F, 0F);
+                GlStateManager.translate(0.5F + 0.5F / 16F, 0F, 0F);
                 GlStateManager.rotate(90F, 0F, 1F, 0F);
             }
-            if(meta == 5){
+            if (meta == 5) {
                 GlStateManager.translate(0F, -1F, 0F);
                 GlStateManager.translate(-0.5F, 0F, 0F);
                 GlStateManager.rotate(90F, 0F, 1F, 0F);

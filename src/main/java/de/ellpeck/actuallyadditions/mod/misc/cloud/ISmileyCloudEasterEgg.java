@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.cloud;
 
-public interface ISmileyCloudEasterEgg{
+public interface ISmileyCloudEasterEgg {
 
     /**
      * Extra rendering function

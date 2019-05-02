@@ -10,34 +10,33 @@
 
 package de.ellpeck.actuallyadditions.mod.util.compat;
 
+import org.cyclops.commoncapabilities.api.capability.itemhandler.DefaultSlotlessItemHandlerWrapper;
+import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
+
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.SlotlessItemHandlerInfo;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
-import org.cyclops.commoncapabilities.api.capability.itemhandler.DefaultSlotlessItemHandlerWrapper;
-import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
 
-public final class CommonCapsUtil{
+public final class CommonCapsUtil {
 
-    public static ISlotlessItemHandler createSlotlessItemViewerHandler(final TileEntityItemViewer tile, IItemHandler normalHandler){
-        return new DefaultSlotlessItemHandlerWrapper(normalHandler){
+    public static ISlotlessItemHandler createSlotlessItemViewerHandler(final TileEntityItemViewer tile, IItemHandler normalHandler) {
+        return new DefaultSlotlessItemHandlerWrapper(normalHandler) {
             @Override
-            public ItemStack insertItem(ItemStack stack, boolean simulate){
+            public ItemStack insertItem(ItemStack stack, boolean simulate) {
                 ItemStack remain = stack.copy();
-                for(SlotlessItemHandlerInfo handler : tile.slotlessInfos){
-                    if(handler.isLoaded() && tile.isWhitelisted(handler, stack, false)){
-                        if(handler.handler instanceof ISlotlessItemHandler){
-                            remain = ((ISlotlessItemHandler)handler.handler).insertItem(stack, simulate);
+                for (SlotlessItemHandlerInfo handler : tile.slotlessInfos) {
+                    if (handler.isLoaded() && tile.isWhitelisted(handler, stack, false)) {
+                        if (handler.handler instanceof ISlotlessItemHandler) {
+                            remain = ((ISlotlessItemHandler) handler.handler).insertItem(stack, simulate);
 
-                            if(!ItemStack.areItemStacksEqual(remain, stack) && !simulate){
+                            if (!ItemStack.areItemStacksEqual(remain, stack) && !simulate) {
                                 tile.markDirty();
                                 tile.doItemParticle(stack, handler.relayInQuestion.getPos(), tile.connectedRelay.getPos());
                             }
 
-                            if(!StackUtil.isValid(remain)){
-                                return StackUtil.getEmpty();
-                            }
+                            if (!StackUtil.isValid(remain)) { return StackUtil.getEmpty(); }
                         }
                     }
                 }
@@ -45,24 +44,23 @@ public final class CommonCapsUtil{
             }
 
             @Override
-            public ItemStack extractItem(int amount, boolean simulate){
-                for(SlotlessItemHandlerInfo handler : tile.slotlessInfos){
-                    if(handler.isLoaded()){
-                        if(handler.handler instanceof ISlotlessItemHandler){
-                            ISlotlessItemHandler slotless = (ISlotlessItemHandler)handler.handler;
+            public ItemStack extractItem(int amount, boolean simulate) {
+                for (SlotlessItemHandlerInfo handler : tile.slotlessInfos) {
+                    if (handler.isLoaded()) {
+                        if (handler.handler instanceof ISlotlessItemHandler) {
+                            ISlotlessItemHandler slotless = (ISlotlessItemHandler) handler.handler;
 
                             ItemStack would = slotless.extractItem(amount, true);
-                            if(StackUtil.isValid(would)){
-                                if(tile.isWhitelisted(handler, would, true)){
+                            if (StackUtil.isValid(would)) {
+                                if (tile.isWhitelisted(handler, would, true)) {
                                     ItemStack has;
-                                    if(simulate){
+                                    if (simulate) {
                                         has = would;
-                                    }
-                                    else{
+                                    } else {
                                         has = slotless.extractItem(amount, false);
                                     }
 
-                                    if(StackUtil.isValid(has) && !simulate){
+                                    if (StackUtil.isValid(has) && !simulate) {
                                         tile.markDirty();
                                         tile.doItemParticle(has, tile.connectedRelay.getPos(), handler.relayInQuestion.getPos());
                                     }
@@ -77,19 +75,18 @@ public final class CommonCapsUtil{
             }
 
             @Override
-            public ItemStack extractItem(ItemStack matchStack, int matchFlags, boolean simulate){
-                for(SlotlessItemHandlerInfo handler : tile.slotlessInfos){
-                    if(handler.isLoaded()){
-                        if(handler.handler instanceof ISlotlessItemHandler){
-                            ISlotlessItemHandler slotless = (ISlotlessItemHandler)handler.handler;
+            public ItemStack extractItem(ItemStack matchStack, int matchFlags, boolean simulate) {
+                for (SlotlessItemHandlerInfo handler : tile.slotlessInfos) {
+                    if (handler.isLoaded()) {
+                        if (handler.handler instanceof ISlotlessItemHandler) {
+                            ISlotlessItemHandler slotless = (ISlotlessItemHandler) handler.handler;
 
                             ItemStack would = slotless.extractItem(matchStack, matchFlags, true);
-                            if(StackUtil.isValid(would)){
-                                if(tile.isWhitelisted(handler, would, true)){
-                                    if(simulate){
+                            if (StackUtil.isValid(would)) {
+                                if (tile.isWhitelisted(handler, would, true)) {
+                                    if (simulate) {
                                         return would;
-                                    }
-                                    else{
+                                    } else {
                                         return slotless.extractItem(matchStack, matchFlags, false);
                                     }
                                 }

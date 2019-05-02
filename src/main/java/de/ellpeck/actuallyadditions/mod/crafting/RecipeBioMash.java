@@ -26,32 +26,29 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class RecipeBioMash extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe{
+public class RecipeBioMash extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
-    public RecipeBioMash(ResourceLocation location){
+    public RecipeBioMash(ResourceLocation location) {
         RecipeHelper.addRecipe(location.getPath(), this);
     }
 
     @Override
-    public boolean matches(InventoryCrafting inv, World world){
+    public boolean matches(InventoryCrafting inv, World world) {
         boolean foundFood = false;
         boolean hasKnife = false;
 
-        for(int i = 0; i < inv.getSizeInventory(); i++){
+        for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
-            if(StackUtil.isValid(stack)){
-                if(stack.getItem() instanceof ItemKnife){
-                    if(hasKnife){
+            if (StackUtil.isValid(stack)) {
+                if (stack.getItem() instanceof ItemKnife) {
+                    if (hasKnife) {
                         return false;
-                    }
-                    else{
+                    } else {
                         hasKnife = true;
                     }
-                }
-                else if(stack.getItem() instanceof ItemFood){
+                } else if (stack.getItem() instanceof ItemFood) {
                     foundFood = true;
-                }
-                else{
+                } else {
                     return false;
                 }
             }
@@ -61,42 +58,41 @@ public class RecipeBioMash extends IForgeRegistryEntry.Impl<IRecipe> implements 
     }
 
     @Override
-    public ItemStack getCraftingResult(InventoryCrafting inv){
+    public ItemStack getCraftingResult(InventoryCrafting inv) {
         int amount = 0;
 
-        for(int i = 0; i < inv.getSizeInventory(); i++){
+        for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
-            if(StackUtil.isValid(stack)){
-                if(stack.getItem() instanceof ItemFood){
-                    ItemFood food = (ItemFood)stack.getItem();
+            if (StackUtil.isValid(stack)) {
+                if (stack.getItem() instanceof ItemFood) {
+                    ItemFood food = (ItemFood) stack.getItem();
                     float heal = food.getHealAmount(stack);
                     float sat = food.getSaturationModifier(stack);
 
-                    amount += MathHelper.ceil(heal*sat);
+                    amount += MathHelper.ceil(heal * sat);
                 }
             }
         }
 
-        if(amount > 0 && amount <= 64){
+        if (amount > 0 && amount <= 64) {
             return new ItemStack(InitItems.itemMisc, amount, TheMiscItems.MASHED_FOOD.ordinal());
-        }
-        else{
+        } else {
             return StackUtil.getEmpty();
         }
     }
 
     @Override
-    public boolean canFit(int width, int height){
-        return width*height > 5;
+    public boolean canFit(int width, int height) {
+        return width * height > 5;
     }
 
     @Override
-    public ItemStack getRecipeOutput(){
+    public ItemStack getRecipeOutput() {
         return StackUtil.getEmpty();
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv){
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
         return ForgeHooks.defaultRecipeGetRemainingItems(inv);
     }
 }

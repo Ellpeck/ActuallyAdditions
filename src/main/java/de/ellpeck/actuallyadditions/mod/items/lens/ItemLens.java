@@ -16,24 +16,23 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class ItemLens extends ItemBase implements ILensItem{
+public class ItemLens extends ItemBase implements ILensItem {
 
     private final Lens type;
 
-    public ItemLens(String name, Lens type){
+    public ItemLens(String name, Lens type) {
         super(name);
         this.type = type;
         this.setMaxStackSize(1);
     }
 
-
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.UNCOMMON;
     }
 
     @Override
-    public Lens getLens(){
+    public Lens getLens() {
         return this.type;
     }
 }

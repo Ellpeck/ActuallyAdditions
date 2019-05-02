@@ -16,13 +16,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class BlockGeneric extends BlockBase{
+public class BlockGeneric extends BlockBase {
 
-    public BlockGeneric(String name){
+    public BlockGeneric(String name) {
         this(name, Material.ROCK, SoundType.STONE, 1.5F, 10.0F, "pickaxe", 0);
     }
 
-    public BlockGeneric(String name, Material material, SoundType sound, float hardness, float resistance, String harvestTool, int harvestLevel){
+    public BlockGeneric(String name, Material material, SoundType sound, float hardness, float resistance, String harvestTool, int harvestLevel) {
         super(material, name);
         this.setHarvestLevel(harvestTool, harvestLevel);
         this.setHardness(hardness);
@@ -31,7 +31,7 @@ public class BlockGeneric extends BlockBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.COMMON;
     }
 }

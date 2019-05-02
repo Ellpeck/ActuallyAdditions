@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.render.IHasModel;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -20,15 +19,15 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class BlockStair extends BlockStairs implements ItemBlockBase.ICustomRarity, IHasModel{
+public class BlockStair extends BlockStairs implements ItemBlockBase.ICustomRarity, IHasModel {
 
     private final String name;
 
-    public BlockStair(Block block, String name){
+    public BlockStair(Block block, String name) {
         this(block.getDefaultState(), name);
     }
 
-    public BlockStair(IBlockState state, String name){
+    public BlockStair(IBlockState state, String name) {
         super(state);
         this.name = name;
         this.setLightOpacity(0);
@@ -36,29 +35,29 @@ public class BlockStair extends BlockStairs implements ItemBlockBase.ICustomRari
         this.register();
     }
 
-    private void register(){
+    private void register() {
         ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
     }
 
-    protected String getBaseName(){
+    protected String getBaseName() {
         return this.name;
     }
 
-    protected ItemBlockBase getItemBlock(){
+    protected ItemBlockBase getItemBlock() {
         return new ItemBlockBase(this);
     }
 
-    public boolean shouldAddCreative(){
+    public boolean shouldAddCreative() {
         return true;
     }
 
     @Override
-    public void registerRendering(){
+    public void registerRendering() {
         ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.COMMON;
     }
 }

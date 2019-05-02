@@ -33,23 +33,23 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ItemHairyBall extends ItemBase{
+public class ItemHairyBall extends ItemBase {
 
     private final UUID KittyVanCatUUID = UUID.fromString("681d4e20-10ef-40c9-a0a5-ba2f1995ef44");
 
-    public ItemHairyBall(String name){
+    public ItemHairyBall(String name) {
         super(name);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
-    public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event){
+    public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
         //Ocelots dropping Hair Balls
-        if(ConfigBoolValues.DO_CAT_DROPS.isEnabled() && event.getEntityLiving() != null && event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote){
-            if(event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot)event.getEntityLiving()).isTamed() || event.getEntityLiving() instanceof EntityPlayer && event.getEntityLiving().getUniqueID().equals(this.KittyVanCatUUID)){
-                if(event.getEntityLiving().world.rand.nextInt(ConfigIntValues.FUR_CHANCE.getValue()) == 0){
-                    EntityItem item = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX+0.5, event.getEntityLiving().posY+0.5, event.getEntityLiving().posZ+0.5, new ItemStack(InitItems.itemHairyBall));
+        if (ConfigBoolValues.DO_CAT_DROPS.isEnabled() && event.getEntityLiving() != null && event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote) {
+            if (event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot) event.getEntityLiving()).isTamed() || event.getEntityLiving() instanceof EntityPlayer && event.getEntityLiving().getUniqueID().equals(this.KittyVanCatUUID)) {
+                if (event.getEntityLiving().world.rand.nextInt(ConfigIntValues.FUR_CHANCE.getValue()) == 0) {
+                    EntityItem item = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX + 0.5, event.getEntityLiving().posY + 0.5, event.getEntityLiving().posZ + 0.5, new ItemStack(InitItems.itemHairyBall));
                     event.getEntityLiving().world.spawnEntity(item);
                 }
             }
@@ -57,29 +57,28 @@ public class ItemHairyBall extends ItemBase{
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if(!world.isRemote){
+        if (!world.isRemote) {
             ItemStack returnItem = this.getRandomReturnItem(world.rand);
-            if(!player.inventory.addItemStackToInventory(returnItem)){
+            if (!player.inventory.addItemStackToInventory(returnItem)) {
                 EntityItem entityItem = new EntityItem(player.world, player.posX, player.posY, player.posZ, returnItem);
                 entityItem.setPickupDelay(0);
                 player.world.spawnEntity(entityItem);
             }
             stack.shrink(1);
 
-            world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, world.rand.nextFloat()*0.1F+0.9F);
+            world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, world.rand.nextFloat() * 0.1F + 0.9F);
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
-    public ItemStack getRandomReturnItem(Random rand){
+    public ItemStack getRandomReturnItem(Random rand) {
         return WeightedRandom.getRandomItem(rand, ActuallyAdditionsAPI.BALL_OF_FUR_RETURN_ITEMS).returnItem.copy();
     }
 
-
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 }

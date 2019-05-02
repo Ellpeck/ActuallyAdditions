@@ -27,11 +27,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockEnergizer extends BlockContainerBase{
+public class BlockEnergizer extends BlockContainerBase {
 
     private final boolean isEnergizer;
 
-    public BlockEnergizer(boolean isEnergizer, String name){
+    public BlockEnergizer(boolean isEnergizer, String name) {
         super(Material.ROCK, name);
         this.isEnergizer = isEnergizer;
         this.setHarvestLevel("pickaxe", 0);
@@ -40,24 +40,22 @@ public class BlockEnergizer extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
-
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return this.isEnergizer ? new TileEntityEnergizer() : new TileEntityEnervator();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            if(this.isEnergizer){
-                TileEntityEnergizer energizer = (TileEntityEnergizer)world.getTileEntity(pos);
-                if(energizer != null){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+        if (!world.isRemote) {
+            if (this.isEnergizer) {
+                TileEntityEnergizer energizer = (TileEntityEnergizer) world.getTileEntity(pos);
+                if (energizer != null) {
                     player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.ENERGIZER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
-            }
-            else{
-                TileEntityEnervator energizer = (TileEntityEnervator)world.getTileEntity(pos);
-                if(energizer != null){
+            } else {
+                TileEntityEnervator energizer = (TileEntityEnervator) world.getTileEntity(pos);
+                if (energizer != null) {
                     player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.ENERVATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
@@ -67,7 +65,7 @@ public class BlockEnergizer extends BlockContainerBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 }

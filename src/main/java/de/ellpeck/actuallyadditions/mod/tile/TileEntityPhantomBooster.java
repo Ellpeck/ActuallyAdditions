@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-public class TileEntityPhantomBooster extends TileEntityBase{
+public class TileEntityPhantomBooster extends TileEntityBase {
 
-    public TileEntityPhantomBooster(){
+    public TileEntityPhantomBooster() {
         super("phantomBooster");
     }
 }

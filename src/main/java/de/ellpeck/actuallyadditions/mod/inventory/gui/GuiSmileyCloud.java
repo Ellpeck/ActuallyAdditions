@@ -10,6 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import java.io.IOException;
+
+import org.lwjgl.input.Keyboard;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
@@ -27,12 +31,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
-
-import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
-public class GuiSmileyCloud extends GuiWtfMojang{
+public class GuiSmileyCloud extends GuiWtfMojang {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_smiley_cloud");
 
@@ -43,9 +44,9 @@ public class GuiSmileyCloud extends GuiWtfMojang{
     private final TileEntitySmileyCloud cloud;
     private GuiTextField nameField;
 
-    public GuiSmileyCloud(TileEntityBase tile, int x, int y, int z, World world){
+    public GuiSmileyCloud(TileEntityBase tile, int x, int y, int z, World world) {
         super(new ContainerSmileyCloud());
-        this.cloud = (TileEntitySmileyCloud)tile;
+        this.cloud = (TileEntitySmileyCloud) tile;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -55,24 +56,24 @@ public class GuiSmileyCloud extends GuiWtfMojang{
     }
 
     @Override
-    public void initGui(){
+    public void initGui() {
         super.initGui();
 
-        this.nameField = new GuiTextField(4000, this.fontRenderer, this.guiLeft+5, this.guiTop+6, 114, 8);
+        this.nameField = new GuiTextField(4000, this.fontRenderer, this.guiLeft + 5, this.guiTop + 6, 114, 8);
         this.nameField.setMaxStringLength(20);
         this.nameField.setEnableBackgroundDrawing(false);
         this.nameField.setFocused(true);
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y){
-        String name = this.cloud.name == null || this.cloud.name.isEmpty() ? "" : TextFormatting.GOLD+this.cloud.name+TextFormatting.RESET+" "+StringUtil.localize("info."+ActuallyAdditions.MODID+".gui.the")+" ";
-        String localizedName = name+StringUtil.localize("container."+ActuallyAdditions.MODID+".cloud.name");
-        this.fontRenderer.drawString(localizedName, this.xSize/2-this.fontRenderer.getStringWidth(localizedName)/2, -10, StringUtil.DECIMAL_COLOR_WHITE);
+    public void drawGuiContainerForegroundLayer(int x, int y) {
+        String name = this.cloud.name == null || this.cloud.name.isEmpty() ? "" : TextFormatting.GOLD + this.cloud.name + TextFormatting.RESET + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.the") + " ";
+        String localizedName = name + StringUtil.localize("container." + ActuallyAdditions.MODID + ".cloud.name");
+        this.fontRenderer.drawString(localizedName, this.xSize / 2 - this.fontRenderer.getStringWidth(localizedName) / 2, -10, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y){
+    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(RES_LOC);
@@ -82,38 +83,36 @@ public class GuiSmileyCloud extends GuiWtfMojang{
     }
 
     @Override
-    protected void mouseClicked(int par1, int par2, int par3) throws IOException{
+    protected void mouseClicked(int par1, int par2, int par3) throws IOException {
         this.nameField.mouseClicked(par1, par2, par3);
         super.mouseClicked(par1, par2, par3);
     }
 
     @Override
-    public void keyTyped(char theChar, int key) throws IOException{
-        if(key != 1 && this.nameField.isFocused()){
-            if(key == Keyboard.KEY_RETURN || key == Keyboard.KEY_NUMPADENTER){
+    public void keyTyped(char theChar, int key) throws IOException {
+        if (key != 1 && this.nameField.isFocused()) {
+            if (key == Keyboard.KEY_RETURN || key == Keyboard.KEY_NUMPADENTER) {
                 this.setVariable(this.nameField);
-            }
-            else{
+            } else {
                 this.nameField.textboxKeyTyped(theChar, key);
             }
-        }
-        else{
+        } else {
             super.keyTyped(theChar, key);
         }
     }
 
     @Override
-    public void updateScreen(){
+    public void updateScreen() {
         super.updateScreen();
         this.nameField.updateCursorCounter();
     }
 
-    public void setVariable(GuiTextField field){
+    public void setVariable(GuiTextField field) {
         this.sendPacket(field.getText(), 0);
         field.setText("");
     }
 
-    private void sendPacket(String text, int textID){
+    private void sendPacket(String text, int textID) {
         NBTTagCompound compound = new NBTTagCompound();
         compound.setInteger("X", this.x);
         compound.setInteger("Y", this.y);

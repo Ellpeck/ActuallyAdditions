@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items.metalists;
 
 import net.minecraft.item.EnumRarity;
 
-public enum TheJams{
+public enum TheJams {
 
     CU_BA_RA("cu_ba_ra", 6, 0.1F, EnumRarity.RARE, 5, 12, 12595273),
     GRA_KI_BA("gra_ki_ba", 6, 0.1F, EnumRarity.RARE, 16, 13, 5492820),
@@ -30,7 +30,7 @@ public enum TheJams{
     public final int secondEffectToGet;
     public final int color;
 
-    TheJams(String name, int healAmount, float saturation, EnumRarity rarity, int firstEffectID, int secondEffectID, int color){
+    TheJams(String name, int healAmount, float saturation, EnumRarity rarity, int firstEffectID, int secondEffectID, int color) {
         this.name = name;
         this.healAmount = healAmount;
         this.saturation = saturation;

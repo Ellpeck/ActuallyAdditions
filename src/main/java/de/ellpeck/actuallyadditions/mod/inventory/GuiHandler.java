@@ -52,20 +52,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-public class GuiHandler implements IGuiHandler{
+public class GuiHandler implements IGuiHandler {
 
-    public static void init(){
+    public static void init() {
         ActuallyAdditions.LOGGER.info("Initializing GuiHandler...");
         NetworkRegistry.INSTANCE.registerGuiHandler(ActuallyAdditions.INSTANCE, new GuiHandler());
     }
 
     @Override
-    public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z){
+    public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         TileEntityBase tile = null;
-        if(GuiTypes.values()[id].checkTileEntity){
-            tile = (TileEntityBase)world.getTileEntity(new BlockPos(x, y, z));
+        if (GuiTypes.values()[id].checkTileEntity) {
+            tile = (TileEntityBase) world.getTileEntity(new BlockPos(x, y, z));
         }
-        switch(GuiTypes.values()[id]){
+        switch (GuiTypes.values()[id]) {
         case FEEDER:
             return new ContainerFeeder(player.inventory, tile);
         case GIANT_CHEST:
@@ -142,12 +142,12 @@ public class GuiHandler implements IGuiHandler{
     }
 
     @Override
-    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z){
+    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         TileEntityBase tile = null;
-        if(GuiTypes.values()[id].checkTileEntity){
-            tile = (TileEntityBase)world.getTileEntity(new BlockPos(x, y, z));
+        if (GuiTypes.values()[id].checkTileEntity) {
+            tile = (TileEntityBase) world.getTileEntity(new BlockPos(x, y, z));
         }
-        switch(GuiTypes.values()[id]){
+        switch (GuiTypes.values()[id]) {
         case FEEDER:
             return new GuiFeeder(player.inventory, tile);
         case GIANT_CHEST:
@@ -201,17 +201,15 @@ public class GuiHandler implements IGuiHandler{
         case CLOUD:
             return new GuiSmileyCloud(tile, x, y, z, world);
         case BOOK:
-            if(ItemBooklet.forcedPage != null){
+            if (ItemBooklet.forcedPage != null) {
                 GuiBooklet gui = BookletUtils.createBookletGuiFromPage(null, ItemBooklet.forcedPage);
                 ItemBooklet.forcedPage = null;
                 return gui;
-            }
-            else{
+            } else {
                 PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
-                if(data.lastOpenBooklet != null){
+                if (data.lastOpenBooklet != null) {
                     return data.lastOpenBooklet;
-                }
-                else{
+                } else {
                     return new GuiMainPage(null);
                 }
             }
@@ -238,7 +236,7 @@ public class GuiHandler implements IGuiHandler{
         }
     }
 
-    public enum GuiTypes{
+    public enum GuiTypes {
         FEEDER,
         GIANT_CHEST,
         GIANT_CHEST_PAGE_2,
@@ -278,11 +276,11 @@ public class GuiHandler implements IGuiHandler{
 
         public final boolean checkTileEntity;
 
-        GuiTypes(){
+        GuiTypes() {
             this(true);
         }
 
-        GuiTypes(boolean checkTileEntity){
+        GuiTypes(boolean checkTileEntity) {
             this.checkTileEntity = checkTileEntity;
         }
     }

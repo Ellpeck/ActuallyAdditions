@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.api.booklet;
 
+import java.util.List;
+
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
-public interface IBookletEntry{
+public interface IBookletEntry {
 
     List<IBookletChapter> getAllChapters();
 

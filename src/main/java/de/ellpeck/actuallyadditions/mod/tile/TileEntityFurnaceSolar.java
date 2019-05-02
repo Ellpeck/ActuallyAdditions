@@ -17,60 +17,58 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay{
+public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
     public static final int PRODUCE = 8;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 0, 100);
     private int oldEnergy;
 
-    public TileEntityFurnaceSolar(){
+    public TileEntityFurnaceSolar() {
         super("solarPanel");
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
-        if(!this.world.isRemote){
+        if (!this.world.isRemote) {
             int power = this.getPowerToGenerate(PRODUCE);
-            if(this.world.isDaytime() && power > 0){
-                if(power <= this.storage.getMaxEnergyStored()-this.storage.getEnergyStored()){
+            if (this.world.isDaytime() && power > 0) {
+                if (power <= this.storage.getMaxEnergyStored() - this.storage.getEnergyStored()) {
                     this.storage.receiveEnergyInternal(power, false);
                     this.markDirty();
                 }
             }
 
-            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+            if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
                 this.oldEnergy = this.storage.getEnergyStored();
             }
         }
     }
 
-    public int getPowerToGenerate(int power){
-        for(int y = 1; y <= this.world.getHeight()-this.pos.getY(); y++){
-            if(power > 0){
+    public int getPowerToGenerate(int power) {
+        for (int y = 1; y <= this.world.getHeight() - this.pos.getY(); y++) {
+            if (power > 0) {
                 BlockPos pos = this.pos.up(y);
                 IBlockState state = this.world.getBlockState(pos);
 
-                if(state.getMaterial().isOpaque()){
+                if (state.getMaterial().isOpaque()) {
                     power = 0;
-                }
-                else if(!state.getBlock().isAir(state, this.world, pos)){
+                } else if (!state.getBlock().isAir(state, this.world, pos)) {
                     power--;
                 }
-            }
-            else{
+            } else {
                 break;
             }
         }
@@ -79,37 +77,37 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public CustomEnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage() {
         return this.storage;
     }
 
     @Override
-    public boolean needsHoldShift(){
+    public boolean needsHoldShift() {
         return false;
     }
 
     @Override
-    public int getEnergyToSplitShare(){
+    public int getEnergyToSplitShare() {
         return this.storage.getEnergyStored();
     }
 
     @Override
-    public boolean doesShareEnergy(){
+    public boolean doesShareEnergy() {
         return true;
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides(){
+    public EnumFacing[] getEnergyShareSides() {
         return EnumFacing.values();
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile){
+    public boolean canShareTo(TileEntity tile) {
         return true;
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
         return this.storage;
     }
 }

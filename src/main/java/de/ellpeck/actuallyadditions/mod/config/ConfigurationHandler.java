@@ -10,19 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.config;
 
+import java.io.File;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.io.File;
-
-public class ConfigurationHandler{
+public class ConfigurationHandler {
 
     public static Configuration config;
 
-    public ConfigurationHandler(File configFile){
+    public ConfigurationHandler(File configFile) {
         ActuallyAdditions.LOGGER.info("Grabbing Configurations...");
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -33,17 +33,17 @@ public class ConfigurationHandler{
         redefineConfigs();
     }
 
-    public static void redefineConfigs(){
+    public static void redefineConfigs() {
         ConfigValues.defineConfigValues(config);
 
-        if(config.hasChanged()){
+        if (config.hasChanged()) {
             config.save();
         }
     }
 
     @SubscribeEvent
-    public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event){
-        if(event.getModID().equalsIgnoreCase(ActuallyAdditions.MODID)){
+    public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
+        if (event.getModID().equalsIgnoreCase(ActuallyAdditions.MODID)) {
             redefineConfigs();
         }
     }

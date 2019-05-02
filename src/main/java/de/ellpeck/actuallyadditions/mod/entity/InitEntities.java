@@ -17,16 +17,16 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public final class InitEntities{
+public final class InitEntities {
 
-    public static void init(){
+    public static void init() {
         ActuallyAdditions.LOGGER.info("Initializing Entities...");
 
-        EntityRegistry.registerModEntity(new ResourceLocation(ActuallyAdditions.MODID, "worm"), EntityWorm.class, ActuallyAdditions.MODID+".worm", 0, ActuallyAdditions.INSTANCE, 64, 1, false);
+        EntityRegistry.registerModEntity(new ResourceLocation(ActuallyAdditions.MODID, "worm"), EntityWorm.class, ActuallyAdditions.MODID + ".worm", 0, ActuallyAdditions.INSTANCE, 64, 1, false);
     }
 
     @SideOnly(Side.CLIENT)
-    public static void initClient(){
+    public static void initClient() {
         RenderingRegistry.registerEntityRenderingHandler(EntityWorm.class, RenderWorm::new);
     }
 

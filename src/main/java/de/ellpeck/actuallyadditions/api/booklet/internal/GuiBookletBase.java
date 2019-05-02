@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.api.booklet.internal;
 
+import java.util.List;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 
-import java.util.List;
-
-public abstract class GuiBookletBase extends GuiScreen{
+public abstract class GuiBookletBase extends GuiScreen {
 
     public abstract void renderScaledAsciiString(String text, int x, int y, int color, boolean shadow, float scale);
 

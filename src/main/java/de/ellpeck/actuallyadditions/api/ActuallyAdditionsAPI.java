@@ -39,10 +39,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
-public final class ActuallyAdditionsAPI{
+public final class ActuallyAdditionsAPI {
 
     public static final String MOD_ID = "actuallyadditions";
-    public static final String API_ID = MOD_ID+"api";
+    public static final String API_ID = MOD_ID + "api";
     public static final String API_VERSION = "34";
 
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<>();
@@ -116,7 +116,7 @@ public final class ActuallyAdditionsAPI{
      * @param oreName The ore's name
      * @param weight  The ore's weight
      */
-    public static void addMiningLensStoneOre(String oreName, int weight){
+    public static void addMiningLensStoneOre(String oreName, int weight) {
         STONE_ORES.add(new WeightedOre(oreName, weight));
     }
 
@@ -127,7 +127,7 @@ public final class ActuallyAdditionsAPI{
      * @param oreName The ore's name
      * @param weight  The ore's weight
      */
-    public static void addMiningLensNetherOre(String oreName, int weight){
+    public static void addMiningLensNetherOre(String oreName, int weight) {
         NETHERRACK_ORES.add(new WeightedOre(oreName, weight));
     }
 
@@ -139,7 +139,7 @@ public final class ActuallyAdditionsAPI{
      * @param outputTwo       The second output as an ItemStack (can be ItemStack.EMPTY if there should be none)
      * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
      */
-    public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
+    public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance) {
         CRUSHER_RECIPES.add(new CrusherRecipe(Ingredient.fromStacks(input), outputOne, outputTwo.isEmpty() ? ItemStack.EMPTY : outputTwo, outputTwoChance));
     }
 
@@ -151,7 +151,7 @@ public final class ActuallyAdditionsAPI{
      * @param outputTwo       The second output as an ItemStack (can be ItemStack.EMPTY if there should be none)
      * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
      */
-    public static void addCrusherRecipe(Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance){
+    public static void addCrusherRecipe(Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance) {
         CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputTwo.isEmpty() ? ItemStack.EMPTY : outputTwo, outputTwoChance));
     }
 
@@ -166,13 +166,13 @@ public final class ActuallyAdditionsAPI{
      * @param outputTwoAmounts The amount of the second output, will be equal for all entries in the list
      * @param outputTwoChance  The chance of the second output (0 won't occur at all, 100 will all the time)
      */
-    public static boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance){
+    public static boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance) {
         return methodHandler.addCrusherRecipes(inputs, outputOnes, outputOneAmounts, outputTwos, outputTwoAmounts, outputTwoChance);
     }
 
     //Same thing as above, but with ItemStack outputs.
     @Deprecated //Use Ingredient
-    public static boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance){
+    public static boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance) {
         return methodHandler.addCrusherRecipes(inputs, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance);
     }
 
@@ -182,7 +182,7 @@ public final class ActuallyAdditionsAPI{
      * @param fluidName The name of the fluid to be consumed
      * @param genAmount The amount of energy generated per operation
      */
-    public static void addOilGenRecipe(String fluidName, int genAmount){
+    public static void addOilGenRecipe(String fluidName, int genAmount) {
         addOilGenRecipe(fluidName, genAmount, 100);
     }
 
@@ -192,7 +192,7 @@ public final class ActuallyAdditionsAPI{
      * @param fluidName The name of the fluid to be consumed
      * @param genAmount The amount of energy generated per operation
      */
-    public static void addOilGenRecipe(String fluidName, int genAmount, int genTime){
+    public static void addOilGenRecipe(String fluidName, int genAmount, int genTime) {
         OIL_GENERATOR_RECIPES.add(new OilGenRecipe(fluidName, genAmount, genTime));
     }
 
@@ -205,7 +205,7 @@ public final class ActuallyAdditionsAPI{
      * @param outputDisplay The block to display when there is output in the compost
      */
     @Deprecated
-    public static void addCompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay){
+    public static void addCompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay) {
         COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
     }
 
@@ -217,7 +217,7 @@ public final class ActuallyAdditionsAPI{
      * @param output        The itemstack to be output from the compost once conversion finishes
      * @param outputDisplay The state to display when there is output in the compost
      */
-    public static void addCompostRecipe(Ingredient input, IBlockState inputDisplay, ItemStack output, IBlockState outputDisplay){
+    public static void addCompostRecipe(Ingredient input, IBlockState inputDisplay, ItemStack output, IBlockState outputDisplay) {
         COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
     }
 
@@ -227,7 +227,7 @@ public final class ActuallyAdditionsAPI{
      * @param stack  The ItemStack to be returned
      * @param chance The chance (this is from WeightedRandom.Item)
      */
-    public static void addBallOfFurReturnItem(ItemStack stack, int chance){
+    public static void addBallOfFurReturnItem(ItemStack stack, int chance) {
         BALL_OF_FUR_RETURN_ITEMS.add(new BallOfFurReturn(stack, chance));
     }
 
@@ -239,16 +239,16 @@ public final class ActuallyAdditionsAPI{
      * @param minAmount The minimum stacksize of the returned stack
      * @param maxAmount The maximum stacksize of the returned stack
      */
-    public static void addTreasureChestLoot(ItemStack stack, int chance, int minAmount, int maxAmount){
+    public static void addTreasureChestLoot(ItemStack stack, int chance, int minAmount, int maxAmount) {
         TREASURE_CHEST_LOOT.add(new TreasureChestLoot(stack, chance, minAmount, maxAmount));
     }
 
     @Deprecated
-    public static void addEmpowererRecipe(ItemStack input, ItemStack output, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4, int energyPerStand, int time, float[] particleColor){
+    public static void addEmpowererRecipe(ItemStack input, ItemStack output, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4, int energyPerStand, int time, float[] particleColor) {
         EMPOWERER_RECIPES.add(new EmpowererRecipe(input, output, modifier1, modifier2, modifier3, modifier4, energyPerStand, time, particleColor));
     }
 
-    public static void addEmpowererRecipe(Ingredient input, ItemStack output, Ingredient modifier1, Ingredient modifier2, Ingredient modifier3, Ingredient modifier4, int energyPerStand, int time, float[] particleColor){
+    public static void addEmpowererRecipe(Ingredient input, ItemStack output, Ingredient modifier1, Ingredient modifier2, Ingredient modifier3, Ingredient modifier4, int energyPerStand, int time, float[] particleColor) {
         EMPOWERER_RECIPES.add(new EmpowererRecipe(input, output, modifier1, modifier2, modifier3, modifier4, energyPerStand, time, particleColor));
     }
 
@@ -263,12 +263,12 @@ public final class ActuallyAdditionsAPI{
      *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
      */
     @Deprecated
-    public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse, LensConversion type){
+    public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse, LensConversion type) {
         RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
     }
 
     @Deprecated
-    public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse){
+    public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse) {
         addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
     }
 
@@ -282,11 +282,11 @@ public final class ActuallyAdditionsAPI{
      * @param type      The type of lens used for the conversion. To use the default type, use method below.
      *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
      */
-    public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse, LensConversion type){
+    public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse, LensConversion type) {
         RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
     }
 
-    public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse){
+    public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse) {
         addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
     }
 
@@ -299,7 +299,7 @@ public final class ActuallyAdditionsAPI{
      * @param item    The item (or block's item) to add
      * @param changer The change mechanism
      */
-    public static void addReconstructorLensColorChangeItem(Item item, IColorLensChanger changer){
+    public static void addReconstructorLensColorChangeItem(Item item, IColorLensChanger changer) {
         RECONSTRUCTOR_LENS_COLOR_CHANGERS.put(item, changer);
     }
 
@@ -308,7 +308,7 @@ public final class ActuallyAdditionsAPI{
      *
      * @param ingredient The ingredient to add
      */
-    public static void addCoffeeMachineIngredient(CoffeeIngredient ingredient){
+    public static void addCoffeeMachineIngredient(CoffeeIngredient ingredient) {
         COFFEE_MACHINE_INGREDIENTS.add(ingredient);
     }
 
@@ -317,7 +317,7 @@ public final class ActuallyAdditionsAPI{
      *
      * @param entry The entry to add
      */
-    public static void addBookletEntry(IBookletEntry entry){
+    public static void addBookletEntry(IBookletEntry entry) {
         BOOKLET_ENTRIES.add(entry);
     }
 
@@ -326,7 +326,7 @@ public final class ActuallyAdditionsAPI{
      *
      * @param behavior The behavior to add
      */
-    public static void addFarmerBehavior(IFarmerBehavior behavior){
+    public static void addFarmerBehavior(IFarmerBehavior behavior) {
         FARMER_BEHAVIORS.add(behavior);
     }
 }

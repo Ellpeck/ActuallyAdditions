@@ -10,6 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import java.util.Random;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.gen.WorldGenLushCaves;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -37,15 +41,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.Random;
-
-public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlock, IColorProvidingItem{
+public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlock, IColorProvidingItem {
 
     private final TheCrystals crystal;
 
-    public BlockCrystalCluster(String name, TheCrystals crystal){
+    public BlockCrystalCluster(String name, TheCrystals crystal) {
         super(Material.GLASS, name);
         this.crystal = crystal;
 
@@ -57,89 +58,89 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     }
 
     @Override
-    public boolean isFullCube(IBlockState state){
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base){
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base) {
         return this.getStateFromMeta(side.ordinal());
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta){
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state){
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(BlockDirectional.FACING).getIndex();
     }
 
     @Override
-    protected BlockStateContainer createBlockState(){
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, BlockDirectional.FACING);
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot){
+    public IBlockState withRotation(IBlockState state, Rotation rot) {
         return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING)));
     }
 
     @Override
-    public IBlockState withMirror(IBlockState state, Mirror mirror){
+    public IBlockState withMirror(IBlockState state, Mirror mirror) {
         return this.withRotation(state, mirror.toRotation(state.getValue(BlockDirectional.FACING)));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IBlockColor getBlockColor(){
+    public IBlockColor getBlockColor() {
         return (state, world, pos, tintIndex) -> BlockCrystalCluster.this.crystal.clusterColor;
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer(){
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.TRANSLUCENT;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IItemColor getItemColor(){
+    public IItemColor getItemColor() {
         return (stack, tintIndex) -> BlockCrystalCluster.this.crystal.clusterColor;
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune){
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return InitItems.itemCrystalShard;
     }
 
     @Override
-    public int damageDropped(IBlockState state){
+    public int damageDropped(IBlockState state) {
         return ArrayUtils.indexOf(WorldGenLushCaves.CRYSTAL_CLUSTERS, this);
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player){
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(this);
     }
 
     @Override
-    public int quantityDropped(Random random){
-        return random.nextInt(5)+2;
+    public int quantityDropped(Random random) {
+        return random.nextInt(5) + 2;
     }
 
     @Override
-    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         return true;
     }
 }

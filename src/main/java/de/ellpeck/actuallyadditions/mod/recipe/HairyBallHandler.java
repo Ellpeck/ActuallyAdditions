@@ -16,9 +16,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public final class HairyBallHandler{
+public final class HairyBallHandler {
 
-    public static void init(){
+    public static void init() {
         ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.STRING), 100);
         ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.DIAMOND), 2);
         ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Items.NAME_TAG), 1);

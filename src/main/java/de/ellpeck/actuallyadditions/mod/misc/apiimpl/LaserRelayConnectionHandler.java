@@ -23,11 +23,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public final class LaserRelayConnectionHandler implements ILaserRelayConnectionHandler{
+public final class LaserRelayConnectionHandler implements ILaserRelayConnectionHandler {
 
-    public static NBTTagCompound writeNetworkToNBT(Network network){
+    public static NBTTagCompound writeNetworkToNBT(Network network) {
         NBTTagList list = new NBTTagList();
-        for(IConnectionPair pair : network.connections){
+        for (IConnectionPair pair : network.connections) {
             NBTTagCompound tag = new NBTTagCompound();
             pair.writeToNBT(tag);
             list.appendTag(tag);
@@ -37,10 +37,10 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
         return compound;
     }
 
-    public static Network readNetworkFromNBT(NBTTagCompound tag){
+    public static Network readNetworkFromNBT(NBTTagCompound tag) {
         NBTTagList list = tag.getTagList("Network", 10);
         Network network = new Network();
-        for(int i = 0; i < list.tagCount(); i++){
+        for (int i = 0; i < list.tagCount(); i++) {
             ConnectionPair pair = new ConnectionPair();
             pair.readFromNBT(list.getCompoundTagAt(i));
             network.connections.add(pair);
@@ -52,8 +52,8 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
      * Merges two laserRelayNetworks together
      * (Actually puts everything from the second network into the first one and removes the second one)
      */
-    private static void mergeNetworks(Network firstNetwork, Network secondNetwork, World world){
-        for(IConnectionPair secondPair : secondNetwork.connections){
+    private static void mergeNetworks(Network firstNetwork, Network secondNetwork, World world) {
+        for (IConnectionPair secondPair : secondNetwork.connections) {
             firstNetwork.connections.add(secondPair);
         }
 
@@ -68,11 +68,11 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
      * Gets all Connections for a Relay
      */
     @Override
-    public ConcurrentSet<IConnectionPair> getConnectionsFor(BlockPos relay, World world){
+    public ConcurrentSet<IConnectionPair> getConnectionsFor(BlockPos relay, World world) {
         ConcurrentSet<IConnectionPair> allPairs = new ConcurrentSet<>();
-        for(Network aNetwork : WorldData.get(world).laserRelayNetworks){
-            for(IConnectionPair pair : aNetwork.connections){
-                if(pair.contains(relay)){
+        for (Network aNetwork : WorldData.get(world).laserRelayNetworks) {
+            for (IConnectionPair pair : aNetwork.connections) {
+                if (pair.contains(relay)) {
                     allPairs.add(pair);
                 }
             }
@@ -84,17 +84,17 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
      * Removes a Relay from its Network
      */
     @Override
-    public void removeRelayFromNetwork(BlockPos relay, World world){
+    public void removeRelayFromNetwork(BlockPos relay, World world) {
         Network network = this.getNetworkFor(relay, world);
-        if(network != null){
+        if (network != null) {
             network.changeAmount++;
 
             //Setup new network (so that splitting a network will cause it to break into two)
             WorldData data = WorldData.get(world);
             data.laserRelayNetworks.remove(network);
             data.markDirty();
-            for(IConnectionPair pair : network.connections){
-                if(!pair.contains(relay)){
+            for (IConnectionPair pair : network.connections) {
+                if (!pair.contains(relay)) {
                     this.addConnection(pair.getPositions()[0], pair.getPositions()[1], pair.getType(), world, pair.doesSuppressRender());
                 }
             }
@@ -106,20 +106,17 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
      * Gets a Network for a Relay
      */
     @Override
-    public Network getNetworkFor(BlockPos relay, World world){
-        if(world != null)
-            for(Network aNetwork : WorldData.get(world).laserRelayNetworks){
-                for(IConnectionPair pair : aNetwork.connections){
-                    if(pair.contains(relay)){
-                        return aNetwork;
-                    }
-                }
+    public Network getNetworkFor(BlockPos relay, World world) {
+        if (world != null) for (Network aNetwork : WorldData.get(world).laserRelayNetworks) {
+            for (IConnectionPair pair : aNetwork.connections) {
+                if (pair.contains(relay)) { return aNetwork; }
             }
+        }
         return null;
     }
 
     @Override
-    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world){
+    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world) {
         return this.addConnection(firstRelay, secondRelay, type, world, false);
     }
 
@@ -128,50 +125,47 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
      * (Puts it into the correct network!)
      */
     @Override
-    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world, boolean suppressConnectionRender){
+    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world, boolean suppressConnectionRender) {
         return this.addConnection(firstRelay, secondRelay, type, world, suppressConnectionRender, false);
     }
 
     @Override
-    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world, boolean suppressConnectionRender, boolean removeIfConnected){
-        if(firstRelay == null || secondRelay == null || firstRelay == secondRelay || firstRelay.equals(secondRelay)){
-            return false;
-        }
+    public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world, boolean suppressConnectionRender, boolean removeIfConnected) {
+        if (firstRelay == null || secondRelay == null || firstRelay == secondRelay || firstRelay.equals(secondRelay)) { return false; }
         WorldData data = WorldData.get(world);
 
         Network firstNetwork = this.getNetworkFor(firstRelay, world);
         Network secondNetwork = this.getNetworkFor(secondRelay, world);
 
         //No Network exists
-        if(firstNetwork == null && secondNetwork == null){
+        if (firstNetwork == null && secondNetwork == null) {
             firstNetwork = new Network();
             data.laserRelayNetworks.add(firstNetwork);
             firstNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay, type, suppressConnectionRender));
             firstNetwork.changeAmount++;
         }
         //The same Network
-        else if(firstNetwork == secondNetwork){
-            if(removeIfConnected){
+        else if (firstNetwork == secondNetwork) {
+            if (removeIfConnected) {
                 this.removeConnection(world, firstRelay, secondRelay);
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         }
         //Both relays have laserRelayNetworks
-        else if(firstNetwork != null && secondNetwork != null){
+        else if (firstNetwork != null && secondNetwork != null) {
             mergeNetworks(firstNetwork, secondNetwork, world);
             firstNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay, type, suppressConnectionRender));
             firstNetwork.changeAmount++;
         }
         //Only first network exists
-        else if(firstNetwork != null){
+        else if (firstNetwork != null) {
             firstNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay, type, suppressConnectionRender));
             firstNetwork.changeAmount++;
         }
         //Only second network exists
-        else{
+        else {
             secondNetwork.connections.add(new ConnectionPair(firstRelay, secondRelay, type, suppressConnectionRender));
             secondNetwork.changeAmount++;
         }
@@ -183,19 +177,19 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
     }
 
     @Override
-    public void removeConnection(World world, BlockPos firstRelay, BlockPos secondRelay){
-        if(world != null && firstRelay != null && secondRelay != null){
+    public void removeConnection(World world, BlockPos firstRelay, BlockPos secondRelay) {
+        if (world != null && firstRelay != null && secondRelay != null) {
             Network network = this.getNetworkFor(firstRelay, world);
 
-            if(network != null){
+            if (network != null) {
                 network.changeAmount++;
 
                 WorldData data = WorldData.get(world);
                 data.laserRelayNetworks.remove(network);
                 data.markDirty();
 
-                for(IConnectionPair pair : network.connections){
-                    if(!pair.contains(firstRelay) || !pair.contains(secondRelay)){
+                for (IConnectionPair pair : network.connections) {
+                    if (!pair.contains(firstRelay) || !pair.contains(secondRelay)) {
                         this.addConnection(pair.getPositions()[0], pair.getPositions()[1], pair.getType(), world, pair.doesSuppressRender());
                     }
                 }
@@ -204,17 +198,16 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
     }
 
     @Override
-    public LaserType getTypeFromLaser(TileEntity tile){
-        if(tile instanceof TileEntityLaserRelay){
-            return ((TileEntityLaserRelay)tile).type;
-        }
-        else{
+    public LaserType getTypeFromLaser(TileEntity tile) {
+        if (tile instanceof TileEntityLaserRelay) {
+            return ((TileEntityLaserRelay) tile).type;
+        } else {
             return null;
         }
     }
 
     @Override
-    public LaserType getTypeFromLaser(BlockPos pos, World world){
+    public LaserType getTypeFromLaser(BlockPos pos, World world) {
         return this.getTypeFromLaser(world.getTileEntity(pos));
     }
 

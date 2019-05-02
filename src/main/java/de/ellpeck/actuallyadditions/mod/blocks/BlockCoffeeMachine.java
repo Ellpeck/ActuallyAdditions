@@ -34,11 +34,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockCoffeeMachine extends BlockContainerBase{
+public class BlockCoffeeMachine extends BlockContainerBase {
 
-    private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625, 0, 0.0625, 1-0.0625, 1-0.0625*2, 1-0.0625);
+    private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625, 0, 0.0625, 1 - 0.0625, 1 - 0.0625 * 2, 1 - 0.0625);
 
-    public BlockCoffeeMachine(String name){
+    public BlockCoffeeMachine(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -47,26 +47,26 @@ public class BlockCoffeeMachine extends BlockContainerBase{
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return AABB;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state){
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing f6, float f7, float f8, float f9){
-        if(!world.isRemote){
-            TileEntityCoffeeMachine machine = (TileEntityCoffeeMachine)world.getTileEntity(pos);
-            if(machine != null){
-                if(!this.tryUseItemOnTank(player, hand, machine.tank)){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing f6, float f7, float f8, float f9) {
+        if (!world.isRemote) {
+            TileEntityCoffeeMachine machine = (TileEntityCoffeeMachine) world.getTileEntity(pos);
+            if (machine != null) {
+                if (!this.tryUseItemOnTank(player, hand, machine.tank)) {
                     player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.COFFEE_MACHINE.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
@@ -75,31 +75,30 @@ public class BlockCoffeeMachine extends BlockContainerBase{
         return true;
     }
 
-
     @Override
-    public TileEntity createNewTileEntity(World world, int meta){
+    public TileEntity createNewTileEntity(World world, int meta) {
         return new TileEntityCoffeeMachine();
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
-        int rotation = MathHelper.floor(player.rotationYaw*4.0F/360.0F+0.5D) & 3;
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
+        int rotation = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
-        if(rotation == 0){
+        if (rotation == 0) {
             world.setBlockState(pos, this.getStateFromMeta(0), 2);
         }
-        if(rotation == 1){
+        if (rotation == 1) {
             world.setBlockState(pos, this.getStateFromMeta(3), 2);
         }
-        if(rotation == 2){
+        if (rotation == 2) {
             world.setBlockState(pos, this.getStateFromMeta(1), 2);
         }
-        if(rotation == 3){
+        if (rotation == 3) {
             world.setBlockState(pos, this.getStateFromMeta(2), 2);
         }
 
@@ -107,27 +106,27 @@ public class BlockCoffeeMachine extends BlockContainerBase{
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta){
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state){
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
     }
 
     @Override
-    protected BlockStateContainer createBlockState(){
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, BlockHorizontal.FACING);
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot){
+    public IBlockState withRotation(IBlockState state, Rotation rot) {
         return state.withProperty(BlockHorizontal.FACING, rot.rotate(state.getValue(BlockHorizontal.FACING)));
     }
 
     @Override
-    public IBlockState withMirror(IBlockState state, Mirror mirror){
+    public IBlockState withMirror(IBlockState state, Mirror mirror) {
         return this.withRotation(state, mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
     }
 }

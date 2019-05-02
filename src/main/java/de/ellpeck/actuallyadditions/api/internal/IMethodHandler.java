@@ -28,7 +28,7 @@ import net.minecraft.util.math.BlockPos;
  * Use ActuallyAdditionsAPI.methodHandler for calling
  * This is not supposed to be implemented.
  */
-public interface IMethodHandler{
+public interface IMethodHandler {
 
     boolean addEffectToStack(ItemStack stack, CoffeeIngredient ingredient);
 
@@ -43,6 +43,7 @@ public interface IMethodHandler{
     boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile);
 
     boolean invokeReconstructor(IAtomicReconstructor tile);
+
     boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance);
 
     @Deprecated //Use Ingredient input on AA API class

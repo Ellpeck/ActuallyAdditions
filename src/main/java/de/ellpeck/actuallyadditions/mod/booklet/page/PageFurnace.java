@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
+import java.util.List;
+import java.util.Map;
+
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
@@ -21,31 +24,26 @@ import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-import java.util.Map;
-
-public class PageFurnace extends BookletPage{
+public class PageFurnace extends BookletPage {
 
     private final ItemStack input;
     private final ItemStack output;
 
-    public PageFurnace(int localizationKey, ItemStack output){
+    public PageFurnace(int localizationKey, ItemStack output) {
         this(localizationKey, output, 0);
     }
 
-    public PageFurnace(int localizationKey, ItemStack output, int priority){
+    public PageFurnace(int localizationKey, ItemStack output, int priority) {
         super(localizationKey, priority);
         this.output = output;
         this.input = getInputForOutput(output);
     }
 
-    private static ItemStack getInputForOutput(ItemStack output){
-        for(Map.Entry<ItemStack, ItemStack> entry : FurnaceRecipes.instance().getSmeltingList().entrySet()){
+    private static ItemStack getInputForOutput(ItemStack output) {
+        for (Map.Entry<ItemStack, ItemStack> entry : FurnaceRecipes.instance().getSmeltingList().entrySet()) {
             ItemStack stack = entry.getValue();
-            if(StackUtil.isValid(stack)){
-                if(stack.isItemEqual(output)){
-                    return entry.getKey();
-                }
+            if (StackUtil.isValid(stack)) {
+                if (stack.isItemEqual(output)) { return entry.getKey(); }
             }
         }
         return ItemStack.EMPTY;
@@ -53,28 +51,28 @@ public class PageFurnace extends BookletPage{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks){
+    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
         gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
-        GuiUtils.drawTexturedModalRect(startX+23, startY+10, 0, 146, 80, 26, 0);
+        GuiUtils.drawTexturedModalRect(startX + 23, startY + 10, 0, 146, 80, 26, 0);
 
-        gui.renderScaledAsciiString("("+StringUtil.localize("booklet."+ActuallyAdditions.MODID+".furnaceRecipe")+")", startX+32, startY+42, 0, false, gui.getMediumFontSize());
+        gui.renderScaledAsciiString("(" + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".furnaceRecipe") + ")", startX + 32, startY + 42, 0, false, gui.getMediumFontSize());
 
-        PageTextOnly.renderTextToPage(gui, this, startX+6, startY+57);
+        PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 57);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void initGui(GuiBookletBase gui, int startX, int startY){
+    public void initGui(GuiBookletBase gui, int startX, int startY) {
         super.initGui(gui, startX, startY);
 
-        gui.addOrModifyItemRenderer(this.input, startX+23+1, startY+10+5, 1F, true);
-        gui.addOrModifyItemRenderer(this.output, startX+23+59, startY+10+5, 1F, false);
+        gui.addOrModifyItemRenderer(this.input, startX + 23 + 1, startY + 10 + 5, 1F, true);
+        gui.addOrModifyItemRenderer(this.output, startX + 23 + 59, startY + 10 + 5, 1F, false);
     }
 
     @Override
-    public void getItemStacksForPage(List<ItemStack> list){
+    public void getItemStacksForPage(List<ItemStack> list) {
         super.getItemStacksForPage(list);
 
         list.add(this.output);

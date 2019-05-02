@@ -26,9 +26,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockFermentingBarrel extends BlockContainerBase{
+public class BlockFermentingBarrel extends BlockContainerBase {
 
-    public BlockFermentingBarrel(String name){
+    public BlockFermentingBarrel(String name) {
         super(Material.WOOD, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
@@ -37,26 +37,26 @@ public class BlockFermentingBarrel extends BlockContainerBase{
     }
 
     @Override
-    public boolean isFullCube(IBlockState state){
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityFermentingBarrel();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityFermentingBarrel press = (TileEntityFermentingBarrel)world.getTileEntity(pos);
-            if(press != null){
-                if(!this.tryUseItemOnTank(player, hand, press.canolaTank) && !this.tryUseItemOnTank(player, hand, press.oilTank)){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+        if (!world.isRemote) {
+            TileEntityFermentingBarrel press = (TileEntityFermentingBarrel) world.getTileEntity(pos);
+            if (press != null) {
+                if (!this.tryUseItemOnTank(player, hand, press.canolaTank) && !this.tryUseItemOnTank(player, hand, press.oilTank)) {
                     player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FERMENTING_BARREL.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
@@ -66,7 +66,7 @@ public class BlockFermentingBarrel extends BlockContainerBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 }

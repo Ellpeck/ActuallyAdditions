@@ -37,9 +37,9 @@ import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 
-public class ItemCoffee extends ItemFoodBase{
+public class ItemCoffee extends ItemFoodBase {
 
-    public ItemCoffee(String name){
+    public ItemCoffee(String name) {
         super(8, 5.0F, false, name);
         this.setMaxDamage(3);
         this.setAlwaysEdible();
@@ -47,12 +47,12 @@ public class ItemCoffee extends ItemFoodBase{
         this.setNoRepair();
     }
 
-    public static void initIngredients(){
+    public static void initIngredients() {
         ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.fromItem(Items.MILK_BUCKET)));
         //Pam's Soy Milk (For Jemx because he's lactose intolerant. YER HAPPY NAO!?)
-        if(Loader.isModLoaded("harvestcraft")){
+        if (Loader.isModLoaded("harvestcraft")) {
             Item item = ItemUtil.getItemFromName("harvestcraft:soymilkitem");
-            if(item != null){
+            if (item != null) {
                 ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.fromItem(item)));
             }
         }
@@ -67,88 +67,85 @@ public class ItemCoffee extends ItemFoodBase{
     }
 
     @Nullable
-    public static CoffeeIngredient getIngredientFromStack(ItemStack stack){
-        for(CoffeeIngredient ingredient : ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS){
-            if(ingredient.getInput().apply(stack)) return ingredient;
+    public static CoffeeIngredient getIngredientFromStack(ItemStack stack) {
+        for (CoffeeIngredient ingredient : ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS) {
+            if (ingredient.getInput().apply(stack)) return ingredient;
         }
         return null;
     }
 
-    public static void applyPotionEffectsFromStack(ItemStack stack, EntityLivingBase player){
+    public static void applyPotionEffectsFromStack(ItemStack stack, EntityLivingBase player) {
         PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
-        if(effects != null && effects.length > 0){
-            for(PotionEffect effect : effects){
-                player.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration()*20, effect.getAmplifier()));
+        if (effects != null && effects.length > 0) {
+            for (PotionEffect effect : effects) {
+                player.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration() * 20, effect.getAmplifier()));
             }
         }
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player) {
         ItemStack theStack = stack.copy();
         super.onItemUseFinish(stack, world, player);
         applyPotionEffectsFromStack(stack, player);
-        theStack.setItemDamage(theStack.getItemDamage()+1);
-        if(theStack.getMaxDamage()-theStack.getItemDamage() < 0){
+        theStack.setItemDamage(theStack.getItemDamage() + 1);
+        if (theStack.getMaxDamage() - theStack.getItemDamage() < 0) {
             return new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal());
-        }
-        else{
+        } else {
             return theStack;
         }
     }
 
-
     @Override
-    public EnumAction getItemUseAction(ItemStack stack){
+    public EnumAction getItemUseAction(ItemStack stack) {
         return EnumAction.DRINK;
     }
 
     @Override
-    public int getMetadata(int damage){
+    public int getMetadata(int damage) {
         return damage;
     }
 
     @Override
-    public boolean getShareTag(){
+    public boolean getShareTag() {
         return true;
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced){
+    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
-        if(effects != null){
-            for(PotionEffect effect : effects){
-                tooltip.add(StringUtil.localize(effect.getEffectName())+" "+(effect.getAmplifier()+1)+", "+StringUtils.ticksToElapsedTime(effect.getDuration()*20));
+        if (effects != null) {
+            for (PotionEffect effect : effects) {
+                tooltip.add(StringUtil.localize(effect.getEffectName()) + " " + (effect.getAmplifier() + 1) + ", " + StringUtils.ticksToElapsedTime(effect.getDuration() * 20));
             }
-        }
-        else{
-            tooltip.add(StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".coffeeCup.noEffect"));
+        } else {
+            tooltip.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".coffeeCup.noEffect"));
         }
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 
-    public static class MilkIngredient extends CoffeeIngredient{
+    public static class MilkIngredient extends CoffeeIngredient {
 
-        public MilkIngredient(Ingredient ingredient){
+        public MilkIngredient(Ingredient ingredient) {
             super(ingredient, 0);
         }
 
         @Override
-        public boolean effect(ItemStack stack){
+        public boolean effect(ItemStack stack) {
             PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
             ArrayList<PotionEffect> effectsNew = new ArrayList<>();
-            if(effects != null && effects.length > 0){
-                for(PotionEffect effect : effects){
-                    if(effect.getAmplifier() > 0){
-                        effectsNew.add(new PotionEffect(effect.getPotion(), effect.getDuration()+120, effect.getAmplifier()-1));
+            if (effects != null && effects.length > 0) {
+                for (PotionEffect effect : effects) {
+                    if (effect.getAmplifier() > 0) {
+                        effectsNew.add(new PotionEffect(effect.getPotion(), effect.getDuration() + 120, effect.getAmplifier() - 1));
                     }
                 }
                 stack.setTagCompound(new NBTTagCompound());
-                if(effectsNew.size() > 0){
+                if (effectsNew.size() > 0) {
                     this.effects = effectsNew.toArray(new PotionEffect[effectsNew.size()]);
                     ActuallyAdditionsAPI.methodHandler.addEffectToStack(stack, this);
                 }
@@ -158,8 +155,8 @@ public class ItemCoffee extends ItemFoodBase{
         }
 
         @Override
-        public String getExtraText(){
-            return StringUtil.localize("container.nei."+ActuallyAdditions.MODID+".coffee.extra.milk");
+        public String getExtraText() {
+            return StringUtil.localize("container.nei." + ActuallyAdditions.MODID + ".coffee.extra.milk");
         }
     }
 }

@@ -30,37 +30,36 @@ import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemMisc extends ItemBase{
+public class ItemMisc extends ItemBase {
 
     public static final TheMiscItems[] ALL_MISC_ITEMS = TheMiscItems.values();
 
-    public ItemMisc(String name){
+    public ItemMisc(String name) {
         super(name);
         this.setHasSubtypes(true);
     }
 
     @Override
-    public int getMetadata(int damage){
+    public int getMetadata(int damage) {
         return damage;
     }
 
     @Override
-    public String getTranslationKey(ItemStack stack){
-        return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+ALL_MISC_ITEMS[stack.getItemDamage()].name;
+    public String getTranslationKey(ItemStack stack) {
+        return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + "_" + ALL_MISC_ITEMS[stack.getItemDamage()].name;
     }
 
-
     @Override
-    public IRarity getForgeRarity(ItemStack stack){
+    public IRarity getForgeRarity(ItemStack stack) {
         return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? EnumRarity.COMMON : ALL_MISC_ITEMS[stack.getItemDamage()].rarity;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list){
-        if(this.isInCreativeTab(tab)){
-            for(int j = 0; j < ALL_MISC_ITEMS.length; j++){
-                if(j != TheMiscItems.YOUTUBE_ICON.ordinal()){
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
+        if (this.isInCreativeTab(tab)) {
+            for (int j = 0; j < ALL_MISC_ITEMS.length; j++) {
+                if (j != TheMiscItems.YOUTUBE_ICON.ordinal()) {
                     list.add(new ItemStack(this, 1, j));
                 }
             }
@@ -68,27 +67,27 @@ public class ItemMisc extends ItemBase{
     }
 
     @Override
-    protected void registerRendering(){
-        for(int i = 0; i < ALL_MISC_ITEMS.length; i++){
-            String name = this.getRegistryName()+"_"+ALL_MISC_ITEMS[i].name;
+    protected void registerRendering() {
+        for (int i = 0; i < ALL_MISC_ITEMS.length; i++) {
+            String name = this.getRegistryName() + "_" + ALL_MISC_ITEMS[i].name;
             ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), new ResourceLocation(name), "inventory");
         }
     }
 
     @Override
-    public boolean onEntityItemUpdate(EntityItem entity){
-        if(!entity.world.isRemote){
+    public boolean onEntityItemUpdate(EntityItem entity) {
+        if (!entity.world.isRemote) {
             ItemStack stack = entity.getItem();
-            if(stack != null){
+            if (stack != null) {
                 boolean isEmpowered = stack.getItemDamage() == TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal();
-                if(stack.getItemDamage() == TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal() || isEmpowered){
+                if (stack.getItemDamage() == TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal() || isEmpowered) {
                     BlockPos pos = entity.getPosition();
                     IBlockState state = entity.world.getBlockState(pos);
                     Block block = state.getBlock();
 
-                    if(block instanceof IFluidBlock && block.getMetaFromState(state) == 0){
-                        Fluid fluid = ((IFluidBlock)block).getFluid();
-                        if(fluid != null && fluid == (isEmpowered ? InitFluids.fluidCrystalOil : InitFluids.fluidRefinedCanolaOil)){
+                    if (block instanceof IFluidBlock && block.getMetaFromState(state) == 0) {
+                        Fluid fluid = ((IFluidBlock) block).getFluid();
+                        if (fluid != null && fluid == (isEmpowered ? InitFluids.fluidCrystalOil : InitFluids.fluidRefinedCanolaOil)) {
                             entity.setDead();
                             entity.world.setBlockState(pos, (isEmpowered ? InitFluids.blockEmpoweredOil : InitFluids.blockCrystalOil).getDefaultState());
                         }
@@ -101,7 +100,7 @@ public class ItemMisc extends ItemBase{
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack){
+    public boolean hasEffect(ItemStack stack) {
         return stack.getItemDamage() == TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal();
     }
 
@@ -109,9 +108,9 @@ public class ItemMisc extends ItemBase{
     public int getItemBurnTime(ItemStack stack) {
         int k = stack.getMetadata();
 
-        if(k == TheMiscItems.TINY_CHAR.ordinal()) return 200;
-        if(k == TheMiscItems.TINY_COAL.ordinal()) return 200;
-        if(k == TheMiscItems.BIOCOAL.ordinal()) return 800;
+        if (k == TheMiscItems.TINY_CHAR.ordinal()) return 200;
+        if (k == TheMiscItems.TINY_COAL.ordinal()) return 200;
+        if (k == TheMiscItems.BIOCOAL.ordinal()) return 800;
 
         return super.getItemBurnTime(stack);
     }

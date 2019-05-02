@@ -28,9 +28,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockEmpowerer extends BlockContainerBase{
+public class BlockEmpowerer extends BlockContainerBase {
 
-    public BlockEmpowerer(String name){
+    public BlockEmpowerer(String name) {
         super(Material.ROCK, name);
 
         this.setHarvestLevel("pickaxe", 0);
@@ -40,33 +40,32 @@ public class BlockEmpowerer extends BlockContainerBase{
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta){
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityEmpowerer();
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return BlockSlabs.AABB_BOTTOM_HALF;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
         ItemStack heldItem = player.getHeldItem(hand);
-        if(!world.isRemote){
-            TileEntityEmpowerer empowerer = (TileEntityEmpowerer)world.getTileEntity(pos);
-            if(empowerer != null){
+        if (!world.isRemote) {
+            TileEntityEmpowerer empowerer = (TileEntityEmpowerer) world.getTileEntity(pos);
+            if (empowerer != null) {
                 ItemStack stackThere = empowerer.inv.getStackInSlot(0);
-                if(StackUtil.isValid(heldItem)){
-                    if(!StackUtil.isValid(stackThere) && TileEntityEmpowerer.isPossibleInput(heldItem)){
+                if (StackUtil.isValid(heldItem)) {
+                    if (!StackUtil.isValid(stackThere) && TileEntityEmpowerer.isPossibleInput(heldItem)) {
                         ItemStack toPut = heldItem.copy();
                         toPut.setCount(1);
                         empowerer.inv.setStackInSlot(0, toPut);
-                        if(!player.capabilities.isCreativeMode) heldItem.shrink(1);
+                        if (!player.capabilities.isCreativeMode) heldItem.shrink(1);
                         return true;
-                    }
-                    else if(ItemUtil.canBeStacked(heldItem, stackThere)){
-                        int maxTransfer = Math.min(stackThere.getCount(), heldItem.getMaxStackSize()-heldItem.getCount());
-                        if(maxTransfer > 0){
+                    } else if (ItemUtil.canBeStacked(heldItem, stackThere)) {
+                        int maxTransfer = Math.min(stackThere.getCount(), heldItem.getMaxStackSize() - heldItem.getCount());
+                        if (maxTransfer > 0) {
                             player.setHeldItem(hand, StackUtil.grow(heldItem, maxTransfer));
                             ItemStack newStackThere = stackThere.copy();
                             newStackThere = StackUtil.shrink(newStackThere, maxTransfer);
@@ -74,9 +73,8 @@ public class BlockEmpowerer extends BlockContainerBase{
                             return true;
                         }
                     }
-                }
-                else{
-                    if(StackUtil.isValid(stackThere)){
+                } else {
+                    if (StackUtil.isValid(stackThere)) {
                         player.setHeldItem(hand, stackThere.copy());
                         empowerer.inv.setStackInSlot(0, StackUtil.getEmpty());
                         return true;
@@ -84,19 +82,18 @@ public class BlockEmpowerer extends BlockContainerBase{
                 }
             }
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 }

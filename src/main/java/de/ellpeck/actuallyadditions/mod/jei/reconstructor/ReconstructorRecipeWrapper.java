@@ -50,7 +50,7 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-        minecraft.fontRenderer.drawString(this.theRecipe.getEnergyUsed() + " "+I18n.format("actuallyadditions.cf"), 55, 0, 0xFFFFFF, true);
+        minecraft.fontRenderer.drawString(this.theRecipe.getEnergyUsed() + " " + I18n.format("actuallyadditions.cf"), 55, 0, 0xFFFFFF, true);
         super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);
     }
 

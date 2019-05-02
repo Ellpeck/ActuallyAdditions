@@ -10,6 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.entry;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -25,22 +29,18 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-public class BookletEntry implements IBookletEntry{
+public class BookletEntry implements IBookletEntry {
 
     private final String identifier;
     private final int priority;
     private final List<IBookletChapter> chapters = new ArrayList<>();
     private TextFormatting color;
 
-    public BookletEntry(String identifier){
+    public BookletEntry(String identifier) {
         this(identifier, 0);
     }
 
-    public BookletEntry(String identifier, int prio){
+    public BookletEntry(String identifier, int prio) {
         this.identifier = identifier;
         this.priority = prio;
         ActuallyAdditionsAPI.addBookletEntry(this);
@@ -49,19 +49,17 @@ public class BookletEntry implements IBookletEntry{
     }
 
     @SideOnly(Side.CLIENT)
-    private static boolean fitsFilter(IBookletPage page, String searchBarText){
+    private static boolean fitsFilter(IBookletPage page, String searchBarText) {
         Minecraft mc = Minecraft.getMinecraft();
 
         List<ItemStack> items = new ArrayList<>();
         page.getItemStacksForPage(items);
-        if(!items.isEmpty()){
-            for(ItemStack stack : items){
-                if(StackUtil.isValid(stack)){
+        if (!items.isEmpty()) {
+            for (ItemStack stack : items) {
+                if (StackUtil.isValid(stack)) {
                     List<String> tooltip = stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
-                    for(String strg : tooltip){
-                        if(strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)){
-                            return true;
-                        }
+                    for (String strg : tooltip) {
+                        if (strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)) { return true; }
                     }
                 }
             }
@@ -69,13 +67,11 @@ public class BookletEntry implements IBookletEntry{
 
         List<FluidStack> fluids = new ArrayList<>();
         page.getFluidStacksForPage(fluids);
-        if(!fluids.isEmpty()){
-            for(FluidStack stack : fluids){
-                if(stack != null){
+        if (!fluids.isEmpty()) {
+            for (FluidStack stack : fluids) {
+                if (stack != null) {
                     String strg = stack.getLocalizedName();
-                    if(strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)){
-                        return true;
-                    }
+                    if (strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)) { return true; }
                 }
             }
         }
@@ -84,46 +80,45 @@ public class BookletEntry implements IBookletEntry{
     }
 
     @Override
-    public List<IBookletChapter> getAllChapters(){
+    public List<IBookletChapter> getAllChapters() {
         return this.chapters;
     }
 
     @Override
-    public String getIdentifier(){
+    public String getIdentifier() {
         return this.identifier;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public String getLocalizedName(){
-        return StringUtil.localize("booklet."+ActuallyAdditions.MODID+".indexEntry."+this.getIdentifier()+".name");
+    public String getLocalizedName() {
+        return StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".indexEntry." + this.getIdentifier() + ".name");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public String getLocalizedNameWithFormatting(){
-        return this.color+this.getLocalizedName();
+    public String getLocalizedNameWithFormatting() {
+        return this.color + this.getLocalizedName();
     }
 
     @Override
-    public void addChapter(IBookletChapter chapter){
+    public void addChapter(IBookletChapter chapter) {
         this.chapters.add(chapter);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public List<IBookletChapter> getChaptersForDisplay(String searchBarText){
-        if(searchBarText != null && !searchBarText.isEmpty()){
+    public List<IBookletChapter> getChaptersForDisplay(String searchBarText) {
+        if (searchBarText != null && !searchBarText.isEmpty()) {
             String search = searchBarText.toLowerCase(Locale.ROOT);
 
             List<IBookletChapter> fittingChapters = new ArrayList<>();
-            for(IBookletChapter chapter : this.getAllChapters()){
-                if(chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(search)){
+            for (IBookletChapter chapter : this.getAllChapters()) {
+                if (chapter.getLocalizedName().toLowerCase(Locale.ROOT).contains(search)) {
                     fittingChapters.add(chapter);
-                }
-                else{
-                    for(IBookletPage page : chapter.getAllPages()){
-                        if(fitsFilter(page, search)){
+                } else {
+                    for (IBookletPage page : chapter.getAllPages()) {
+                        if (fitsFilter(page, search)) {
                             fittingChapters.add(chapter);
                             break;
                         }
@@ -132,29 +127,28 @@ public class BookletEntry implements IBookletEntry{
             }
 
             return fittingChapters;
-        }
-        else{
+        } else {
             return this.getAllChapters();
         }
     }
 
     @Override
-    public int getSortingPriority(){
+    public int getSortingPriority() {
         return this.priority;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean visibleOnFrontPage(){
+    public boolean visibleOnFrontPage() {
         return true;
     }
 
-    public BookletEntry setImportant(){
+    public BookletEntry setImportant() {
         this.color = TextFormatting.DARK_GREEN;
         return this;
     }
 
-    public BookletEntry setSpecial(){
+    public BookletEntry setSpecial() {
         this.color = TextFormatting.DARK_PURPLE;
         return this;
     }

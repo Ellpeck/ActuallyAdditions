@@ -91,11 +91,11 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
-public final class InitBooklet{
+public final class InitBooklet {
 
     public static BookletChapter[] chaptersIntroduction = new BookletChapter[11];
 
-    public static void preInit(){
+    public static void preInit() {
         ActuallyAdditionsAPI.entryAllAndSearch = new BookletEntryAllItems("allAndSearch").setImportant();
         ActuallyAdditionsAPI.entryTrials = new BookletEntryTrials("trials");
 
@@ -111,19 +111,19 @@ public final class InitBooklet{
         ActuallyAdditionsAPI.entryUpdatesAndInfos = new BookletEntry("updatesAndInfos").setSpecial();
     }
 
-    public static void postInit(){
+    public static void postInit() {
         initChapters();
 
         int chapCount = 0;
         int pageCount = 0;
         int infoCount = 0;
-        for(IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES){
-            for(IBookletChapter chapter : entry.getAllChapters()){
-                if(!ActuallyAdditionsAPI.ALL_CHAPTERS.contains(chapter)){
+        for (IBookletEntry entry : ActuallyAdditionsAPI.BOOKLET_ENTRIES) {
+            for (IBookletChapter chapter : entry.getAllChapters()) {
+                if (!ActuallyAdditionsAPI.ALL_CHAPTERS.contains(chapter)) {
                     ActuallyAdditionsAPI.ALL_CHAPTERS.add(chapter);
                     chapCount++;
 
-                    for(IBookletPage page : chapter.getAllPages()){
+                    for (IBookletPage page : chapter.getAllPages()) {
                         pageCount++;
 
                         List<ItemStack> items = new ArrayList<>();
@@ -131,8 +131,8 @@ public final class InitBooklet{
                         List<FluidStack> fluids = new ArrayList<>();
                         page.getFluidStacksForPage(fluids);
 
-                        if(items != null && !items.isEmpty() || fluids != null && !fluids.isEmpty()){
-                            if(!ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.contains(page)){
+                        if (items != null && !items.isEmpty() || fluids != null && !fluids.isEmpty()) {
+                            if (!ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.contains(page)) {
                                 ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA.add(page);
                                 infoCount++;
                             }
@@ -158,31 +158,31 @@ public final class InitBooklet{
             return prio2.compareTo(prio1);
         });
 
-        ActuallyAdditions.LOGGER.info("Registered a total of "+chapCount+" booklet chapters, where "+infoCount+" out of "+pageCount+" booklet pages contain information about items or fluids!");
+        ActuallyAdditions.LOGGER.info("Registered a total of " + chapCount + " booklet chapters, where " + infoCount + " out of " + pageCount + " booklet pages contain information about items or fluids!");
     }
 
-    private static void initChapters(){
+    private static void initChapters() {
         //Getting Started
         chaptersIntroduction[0] = new BookletChapter("bookTutorial", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemBooklet), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3), new PageCrafting(4, ItemCrafting.recipeBook).setNoText());
         chaptersIntroduction[1] = new BookletChapter("videoGuide", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.YOUTUBE_ICON.ordinal()), new PageLinkButton(1, "https://www.youtube.com/watch?v=fhjz0Ew56pM"), new PageLinkButton(2, "https://www.youtube.com/playlist?list=PLJeFZ64pT89MrTRZYzD_rtHFajPVlt6cF")).setImportant();
         new BookletChapter("intro", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemBooklet), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3));
         ArrayList<BookletPage> crystalPages = new ArrayList<>();
         crystalPages.addAll(Arrays.asList(new PageTextOnly(1).addTextReplacement("<rf>", TileEntityAtomicReconstructor.ENERGY_USE), new PageTextOnly(2), new PageTextOnly(3), new PagePicture(4, "page_atomic_reconstructor", 0).setNoText(), new PageTextOnly(5), new PageCrafting(6, BlockCrafting.recipeAtomicReconstructor).setWildcard()));
-        for(int i = 0; i < LensRecipeHandler.MAIN_PAGE_RECIPES.size(); i++){
-            crystalPages.add(new PageReconstructor(7+i, LensRecipeHandler.MAIN_PAGE_RECIPES.get(i)).setNoText());
+        for (int i = 0; i < LensRecipeHandler.MAIN_PAGE_RECIPES.size(); i++) {
+            crystalPages.add(new PageReconstructor(7 + i, LensRecipeHandler.MAIN_PAGE_RECIPES.get(i)).setNoText());
         }
-        crystalPages.add(new PageCrafting(crystalPages.size()+1, MiscCrafting.RECIPES_CRYSTALS).setNoText());
-        crystalPages.add(new PageCrafting(crystalPages.size()+1, MiscCrafting.RECIPES_CRYSTAL_BLOCKS).setNoText());
+        crystalPages.add(new PageCrafting(crystalPages.size() + 1, MiscCrafting.RECIPES_CRYSTALS).setNoText());
+        crystalPages.add(new PageCrafting(crystalPages.size() + 1, MiscCrafting.RECIPES_CRYSTAL_BLOCKS).setNoText());
         chaptersIntroduction[2] = new BookletChapter("engineerHouse", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(Items.EMERALD), new PageTextOnly(1), new PagePicture(2, "page_engineer_house", 145));
         chaptersIntroduction[6] = new BookletChapter("crystals", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitBlocks.blockAtomicReconstructor), crystalPages.toArray(new BookletPage[crystalPages.size()])).setSpecial();
         chaptersIntroduction[5] = new BookletChapter("coalGen", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitBlocks.blockCoalGenerator), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityCoalGenerator.PRODUCE), new PageCrafting(2, BlockCrafting.recipeCoalGen).setWildcard().setNoText());
         ArrayList<BookletPage> empowererPages = new ArrayList<>();
         empowererPages.addAll(Arrays.asList(new PageTextOnly(1), new PagePicture(2, "page_empowerer", 137), new PageCrafting(3, BlockCrafting.recipeEmpowerer), new PageCrafting(4, BlockCrafting.recipeDisplayStand)));
-        for(int i = 0; i < EmpowererHandler.MAIN_PAGE_RECIPES.size(); i++){
-            empowererPages.add(new PageEmpowerer(7+i, EmpowererHandler.MAIN_PAGE_RECIPES.get(i)).setNoText());
+        for (int i = 0; i < EmpowererHandler.MAIN_PAGE_RECIPES.size(); i++) {
+            empowererPages.add(new PageEmpowerer(7 + i, EmpowererHandler.MAIN_PAGE_RECIPES.get(i)).setNoText());
         }
-        empowererPages.add(new PageCrafting(empowererPages.size()+1, MiscCrafting.RECIPES_EMPOWERED_CRYSTALS).setNoText());
-        empowererPages.add(new PageCrafting(empowererPages.size()+1, MiscCrafting.RECIPES_EMPOWERED_CRYSTAL_BLOCKS).setNoText());
+        empowererPages.add(new PageCrafting(empowererPages.size() + 1, MiscCrafting.RECIPES_EMPOWERED_CRYSTALS).setNoText());
+        empowererPages.add(new PageCrafting(empowererPages.size() + 1, MiscCrafting.RECIPES_EMPOWERED_CRYSTAL_BLOCKS).setNoText());
         new BookletChapter("empowerer", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitBlocks.blockEmpowerer), empowererPages.toArray(new BookletPage[empowererPages.size()])).setSpecial();
         new BookletChapter("craftingIngs", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeCoil).setNoText(), new PageCrafting(3, ItemCrafting.recipeCoilAdvanced).setNoText(), new PageCrafting(4, BlockCrafting.recipeCase).setNoText(), new PageCrafting(5, BlockCrafting.recipeEnderPearlBlock).setNoText(), new PageCrafting(6, BlockCrafting.recipeEnderCase).setNoText(), new PageCrafting(7, ItemCrafting.recipeRing).setNoText(), new PageCrafting(8, ItemCrafting.recipeKnifeHandle).setNoText(), new PageCrafting(9, ItemCrafting.recipeKnifeBlade).setNoText(), new PageCrafting(10, ItemCrafting.recipeKnife).setNoText(), new PageCrafting(11, ItemCrafting.recipeDough).setNoText(), new PageCrafting(12, ItemCrafting.recipeRiceDough).setNoText(), new PageCrafting(13, BlockCrafting.recipeIronCase).setNoText(), new PageCrafting(14, ItemCrafting.recipeLens).setNoText());
         chaptersIntroduction[4] = new BookletChapter("rf", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(Items.REDSTONE), new PageTextOnly(1), new PageTextOnly(2)).setImportant();
@@ -197,11 +197,11 @@ public final class InitBooklet{
         new BookletChapter("cloud", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitBlocks.blockSmileyCloud), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeSmileyCloud).setWildcard()).setSpecial();
         new BookletChapter("coalStuff", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeTinyCoal).setNoText(), new PageCrafting(3, ItemCrafting.recipeTinyChar).setNoText(), new PageCrafting(4, BlockCrafting.recipeBlockChar).setNoText());
         ArrayList<BookletPage> lampPages = new ArrayList<>();
-        lampPages.add(new PageTextOnly(lampPages.size()+1));
-        lampPages.add(new PageTextOnly(lampPages.size()+1));
-        lampPages.add(new PageCrafting(lampPages.size()+1, BlockCrafting.recipePowerer).setWildcard().setNoText());
-        for(IRecipe recipe : BlockCrafting.RECIPES_LAMPS){
-            lampPages.add(new PageCrafting(lampPages.size()+1, recipe).setNoText());
+        lampPages.add(new PageTextOnly(lampPages.size() + 1));
+        lampPages.add(new PageTextOnly(lampPages.size() + 1));
+        lampPages.add(new PageCrafting(lampPages.size() + 1, BlockCrafting.recipePowerer).setWildcard().setNoText());
+        for (IRecipe recipe : BlockCrafting.RECIPES_LAMPS) {
+            lampPages.add(new PageCrafting(lampPages.size() + 1, recipe).setNoText());
         }
         new BookletChapter("lamps", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitBlocks.blockColoredLampOn, 1, TheColoredLampColors.GREEN.ordinal()), lampPages.toArray(new BookletPage[lampPages.size()]));
         new BookletChapter("enderStar", ActuallyAdditionsAPI.entryMisc, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()), new PageCrafting(1, ItemCrafting.recipeEnderStar));
@@ -260,9 +260,9 @@ public final class InitBooklet{
         list.add(new PageTextOnly(1).addTextReplacement("<rf>", TileEntityGrinder.ENERGY_USE));
         list.add(new PageCrafting(2, BlockCrafting.recipeCrusher).setWildcard().setNoText());
         list.add(new PageCrafting(3, BlockCrafting.recipeDoubleCrusher).setWildcard().setNoText());
-        if(CrusherCrafting.recipeIronHorseArmor != null) list.add(new PageCrusherRecipe(4, CrusherCrafting.recipeIronHorseArmor).setNoText());
-        if(CrusherCrafting.recipeGoldHorseArmor != null) list.add(new PageCrusherRecipe(5, CrusherCrafting.recipeGoldHorseArmor).setNoText());
-        if(CrusherCrafting.recipeDiamondHorseArmor != null) list.add(new PageCrusherRecipe(6, CrusherCrafting.recipeDiamondHorseArmor).setNoText());
+        if (CrusherCrafting.recipeIronHorseArmor != null) list.add(new PageCrusherRecipe(4, CrusherCrafting.recipeIronHorseArmor).setNoText());
+        if (CrusherCrafting.recipeGoldHorseArmor != null) list.add(new PageCrusherRecipe(5, CrusherCrafting.recipeGoldHorseArmor).setNoText());
+        if (CrusherCrafting.recipeDiamondHorseArmor != null) list.add(new PageCrusherRecipe(6, CrusherCrafting.recipeDiamondHorseArmor).setNoText());
 
         new BookletChapterCrusher("crusher", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockGrinderDouble), list.toArray(new IBookletPage[0]));
         new BookletChapter("furnaceDouble", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(InitBlocks.blockFurnaceDouble), new PageCrafting(1, BlockCrafting.recipeFurnace).setWildcard().addTextReplacement("<rf>", TileEntityFurnaceDouble.ENERGY_USE));
@@ -284,23 +284,23 @@ public final class InitBooklet{
         //No RF Using Items
         chaptersIntroduction[9] = new BookletChapter("goggles", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemEngineerGoggles), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeGoggles).setNoText(), new PageCrafting(3, ItemCrafting.recipeGogglesAdvanced).setNoText()).setImportant();
         new BookletChapter("bags", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemBag), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeBag), new PageCrafting(3, ItemCrafting.recipeVoidBag).setNoText()).setImportant();
-        new BookletChapter("wings", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemWingsOfTheBats), new PageTextOnly(1).addItemsToPage(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BAT_WING.ordinal())).addTextReplacement("<secs>", ItemWingsOfTheBats.MAX_FLY_TIME/20), new PageCrafting(2, ItemCrafting.recipeWings).setNoText()).setSpecial();
+        new BookletChapter("wings", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemWingsOfTheBats), new PageTextOnly(1).addItemsToPage(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BAT_WING.ordinal())).addTextReplacement("<secs>", ItemWingsOfTheBats.MAX_FLY_TIME / 20), new PageCrafting(2, ItemCrafting.recipeWings).setNoText()).setSpecial();
         new BookletChapter("foods", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemFoods, 1, TheFoods.HAMBURGER.ordinal()), new PageCrafting(1, FoodCrafting.recipeBacon).setNoText(), new PageFurnace(2, new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE_BREAD.ordinal())).setNoText(), new PageCrafting(3, FoodCrafting.recipeHamburger).setNoText(), new PageCrafting(4, FoodCrafting.recipeBigCookie).setNoText(), new PageCrafting(5, FoodCrafting.recipeSubSandwich).setNoText(), new PageCrafting(6, FoodCrafting.recipeFrenchFry).setNoText(), new PageCrafting(7, FoodCrafting.recipeFrenchFries).setNoText(), new PageCrafting(8, FoodCrafting.recipeFishNChips).setNoText(), new PageCrafting(9, FoodCrafting.recipeCheese).setNoText(), new PageCrafting(10, FoodCrafting.recipePumpkinStew).setNoText(), new PageCrafting(11, FoodCrafting.recipeCarrotJuice).setNoText(), new PageCrafting(12, FoodCrafting.recipeSpaghetti).setNoText(), new PageCrafting(13, FoodCrafting.recipeNoodle).setNoText(), new PageCrafting(14, FoodCrafting.recipeChocolate).setNoText(), new PageCrafting(15, FoodCrafting.recipeChocolateCake).setNoText(), new PageCrafting(16, FoodCrafting.recipeToast).setNoText(), new PageFurnace(17, new ItemStack(InitItems.itemFoods, 1, TheFoods.BAGUETTE.ordinal())).setNoText(), new PageCrafting(18, FoodCrafting.recipeChocolateToast).setNoText(), new PageCrafting(1, FoodCrafting.recipePizza).setNoText());
         new BookletChapter("leafBlower", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemLeafBlowerAdvanced), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeLeafBlower).setNoText(), new PageCrafting(3, ItemCrafting.recipeLeafBlowerAdvanced).setNoText()).setImportant();
         new BookletChapter("playerProbe", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemPlayerProbe), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipePlayerProbe).setNoText()).setSpecial();
         ArrayList<BookletPage> aiotPages = new ArrayList<>();
-        aiotPages.add(new PageTextOnly(aiotPages.size()+1));
-        for(IRecipe recipe : ToolCrafting.RECIPES_PAXELS){
-            aiotPages.add(new PageCrafting(aiotPages.size()+1, recipe).setWildcard().setNoText());
+        aiotPages.add(new PageTextOnly(aiotPages.size() + 1));
+        for (IRecipe recipe : ToolCrafting.RECIPES_PAXELS) {
+            aiotPages.add(new PageCrafting(aiotPages.size() + 1, recipe).setWildcard().setNoText());
         }
         new BookletChapter("aiots", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.emeraldPaxel), aiotPages.toArray(new BookletPage[aiotPages.size()])).setImportant();
 
         new BookletChapter("jams", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemJams), new PageTextOnly(1).addItemsToPage(new ItemStack(InitItems.itemJams, 1, Util.WILDCARD)), new PagePicture(2, "page_jam_house", 150), new PageTextOnly(3));
 
         ArrayList<BookletPage> potionRingPages = new ArrayList<>();
-        potionRingPages.add(new PageTextOnly(potionRingPages.size()+1));
-        for(IRecipe recipe : ItemCrafting.RECIPES_POTION_RINGS){
-            potionRingPages.add(new PageCrafting(potionRingPages.size()+1, recipe).setNoText());
+        potionRingPages.add(new PageTextOnly(potionRingPages.size() + 1));
+        for (IRecipe recipe : ItemCrafting.RECIPES_POTION_RINGS) {
+            potionRingPages.add(new PageCrafting(potionRingPages.size() + 1, recipe).setNoText());
         }
         new BookletChapter("potionRings", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemPotionRing), potionRingPages.toArray(new BookletPage[potionRingPages.size()]));
         new BookletChapter("spawnerChanger", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(InitItems.itemSpawnerChanger), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeSpawnerChanger).setNoText());

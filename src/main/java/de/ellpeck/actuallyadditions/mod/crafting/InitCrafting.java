@@ -28,9 +28,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 
-public final class InitCrafting{
+public final class InitCrafting {
 
-    public static void init(){
+    public static void init() {
         ActuallyAdditions.LOGGER.info("Initializing Crafting Recipes...");
 
         ItemCrafting.init();

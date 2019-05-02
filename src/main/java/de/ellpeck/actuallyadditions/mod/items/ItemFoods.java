@@ -28,11 +28,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFoods extends ItemFoodBase{
+public class ItemFoods extends ItemFoodBase {
 
     public static final TheFoods[] ALL_FOODS = TheFoods.values();
 
-    public ItemFoods(String name){
+    public ItemFoods(String name) {
         super(0, 0.0F, false, name);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
@@ -40,12 +40,12 @@ public class ItemFoods extends ItemFoodBase{
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player){
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player) {
         ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
         ItemStack returnItem = stack.getItemDamage() >= ALL_FOODS.length ? null : ALL_FOODS[stack.getItemDamage()].returnItem;
-        if(StackUtil.isValid(returnItem) && player instanceof EntityPlayer){
-            if(!((EntityPlayer)player).inventory.addItemStackToInventory(returnItem.copy())){
-                if(!world.isRemote){
+        if (StackUtil.isValid(returnItem) && player instanceof EntityPlayer) {
+            if (!((EntityPlayer) player).inventory.addItemStackToInventory(returnItem.copy())) {
+                if (!world.isRemote) {
                     EntityItem entityItem = new EntityItem(player.world, player.posX, player.posY, player.posZ, returnItem.copy());
                     entityItem.setPickupDelay(0);
                     player.world.spawnEntity(entityItem);
@@ -56,56 +56,54 @@ public class ItemFoods extends ItemFoodBase{
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack stack){
+    public int getMaxItemUseDuration(ItemStack stack) {
         return stack.getItemDamage() >= ALL_FOODS.length ? 0 : ALL_FOODS[stack.getItemDamage()].useDuration;
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack){
+    public EnumAction getItemUseAction(ItemStack stack) {
         return stack.getItemDamage() >= ALL_FOODS.length ? EnumAction.EAT : ALL_FOODS[stack.getItemDamage()].getsDrunken ? EnumAction.DRINK : EnumAction.EAT;
     }
 
     @Override
-    public int getHealAmount(ItemStack stack){
+    public int getHealAmount(ItemStack stack) {
         return stack.getItemDamage() >= ALL_FOODS.length ? 0 : ALL_FOODS[stack.getItemDamage()].healAmount;
     }
 
     @Override
-    public float getSaturationModifier(ItemStack stack){
+    public float getSaturationModifier(ItemStack stack) {
         return stack.getItemDamage() >= ALL_FOODS.length ? 0 : ALL_FOODS[stack.getItemDamage()].saturation;
     }
 
     @Override
-    public int getMetadata(int damage){
+    public int getMetadata(int damage) {
         return damage;
     }
 
-
     @Override
-    public String getTranslationKey(ItemStack stack){
-        return stack.getItemDamage() >= ALL_FOODS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+ALL_FOODS[stack.getItemDamage()].name;
+    public String getTranslationKey(ItemStack stack) {
+        return stack.getItemDamage() >= ALL_FOODS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + "_" + ALL_FOODS[stack.getItemDamage()].name;
     }
 
-
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return stack.getItemDamage() >= ALL_FOODS.length ? EnumRarity.COMMON : ALL_FOODS[stack.getItemDamage()].rarity;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list){
-        if(this.isInCreativeTab(tab)){
-            for(int j = 0; j < ALL_FOODS.length; j++){
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
+        if (this.isInCreativeTab(tab)) {
+            for (int j = 0; j < ALL_FOODS.length; j++) {
                 list.add(new ItemStack(this, 1, j));
             }
         }
     }
 
     @Override
-    protected void registerRendering(){
-        for(int i = 0; i < ALL_FOODS.length; i++){
-            String name = this.getRegistryName()+"_"+ALL_FOODS[i].name;
+    protected void registerRendering() {
+        for (int i = 0; i < ALL_FOODS.length; i++) {
+            String name = this.getRegistryName() + "_" + ALL_FOODS[i].name;
             ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), new ModelResourceLocation(name), "inventory");
         }
     }

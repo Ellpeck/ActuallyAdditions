@@ -10,6 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.List;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -33,10 +37,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 public class ItemFillingWand extends ItemEnergy {
 

@@ -23,7 +23,7 @@ import net.minecraft.world.World;
  * The network system is built in a way that doesn't need the individual
  * positions to be Laser Relays, it relies only on BlockPos
  */
-public interface ILaserRelayConnectionHandler{
+public interface ILaserRelayConnectionHandler {
 
     ConcurrentSet<IConnectionPair> getConnectionsFor(BlockPos relay, World world);
 

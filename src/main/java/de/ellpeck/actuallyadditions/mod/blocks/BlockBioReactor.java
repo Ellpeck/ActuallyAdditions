@@ -26,9 +26,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockBioReactor extends BlockContainerBase{
+public class BlockBioReactor extends BlockContainerBase {
 
-    public BlockBioReactor(String name){
+    public BlockBioReactor(String name) {
         super(Material.ROCK, name);
 
         this.setHarvestLevel("pickaxe", 0);
@@ -38,14 +38,14 @@ public class BlockBioReactor extends BlockContainerBase{
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta){
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityBioReactor();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            if(world.getTileEntity(pos) instanceof TileEntityBioReactor){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+        if (!world.isRemote) {
+            if (world.getTileEntity(pos) instanceof TileEntityBioReactor) {
                 player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.BIO_REACTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
@@ -53,7 +53,7 @@ public class BlockBioReactor extends BlockContainerBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 }

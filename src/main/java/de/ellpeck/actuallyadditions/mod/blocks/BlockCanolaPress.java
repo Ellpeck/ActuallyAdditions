@@ -26,9 +26,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockCanolaPress extends BlockContainerBase{
+public class BlockCanolaPress extends BlockContainerBase {
 
-    public BlockCanolaPress(String name){
+    public BlockCanolaPress(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -37,26 +37,26 @@ public class BlockCanolaPress extends BlockContainerBase{
     }
 
     @Override
-    public boolean isFullCube(IBlockState state){
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityCanolaPress();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityCanolaPress press = (TileEntityCanolaPress)world.getTileEntity(pos);
-            if(press != null){
-                if(!this.tryUseItemOnTank(player, hand, press.tank)){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float par7, float par8, float par9) {
+        if (!world.isRemote) {
+            TileEntityCanolaPress press = (TileEntityCanolaPress) world.getTileEntity(pos);
+            if (press != null) {
+                if (!this.tryUseItemOnTank(player, hand, press.tank)) {
                     player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.CANOLA_PRESS.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
             }
@@ -66,7 +66,7 @@ public class BlockCanolaPress extends BlockContainerBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 }

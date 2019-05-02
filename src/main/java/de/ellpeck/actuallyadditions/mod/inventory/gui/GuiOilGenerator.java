@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiOilGenerator extends GuiWtfMojang{
+public class GuiOilGenerator extends GuiWtfMojang {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_oil_generator");
     private final TileEntityOilGenerator generator;
@@ -31,50 +31,50 @@ public class GuiOilGenerator extends GuiWtfMojang{
     private EnergyDisplay energy;
     private FluidDisplay fluid;
 
-    public GuiOilGenerator(InventoryPlayer inventory, TileEntityBase tile){
+    public GuiOilGenerator(InventoryPlayer inventory, TileEntityBase tile) {
         super(new ContainerOilGenerator(inventory, tile));
-        this.generator = (TileEntityOilGenerator)tile;
+        this.generator = (TileEntityOilGenerator) tile;
         this.xSize = 176;
-        this.ySize = 93+86;
+        this.ySize = 93 + 86;
     }
 
     @Override
-    public void initGui(){
+    public void initGui() {
         super.initGui();
-        this.energy = new EnergyDisplay(this.guiLeft+42, this.guiTop+5, this.generator.storage);
-        this.fluid = new FluidDisplay(this.guiLeft+116, this.guiTop+5, this.generator.tank);
+        this.energy = new EnergyDisplay(this.guiLeft + 42, this.guiTop + 5, this.generator.storage);
+        this.fluid = new FluidDisplay(this.guiLeft + 116, this.guiTop + 5, this.generator.tank);
     }
 
     @Override
-    public void drawScreen(int x, int y, float f){
+    public void drawScreen(int x, int y, float f) {
         super.drawScreen(x, y, f);
         this.energy.drawOverlay(x, y);
         this.fluid.drawOverlay(x, y);
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y){
+    public void drawGuiContainerForegroundLayer(int x, int y) {
         AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.generator);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y){
+    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop+93, 0, 0, 176, 86);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        if(this.generator.currentBurnTime > 0 && this.generator.maxBurnTime > 0){
+        if (this.generator.currentBurnTime > 0 && this.generator.maxBurnTime > 0) {
             int i = this.generator.getBurningScaled(13);
-            this.drawTexturedModalRect(this.guiLeft+72, this.guiTop+44+12-i, 176, 96-i, 14, i);
+            this.drawTexturedModalRect(this.guiLeft + 72, this.guiTop + 44 + 12 - i, 176, 96 - i, 14, i);
         }
 
-        if(this.generator.maxBurnTime > 0 && this.generator.currentEnergyProduce > 0){
-            this.drawCenteredString(this.fontRenderer, this.generator.currentEnergyProduce + " "+I18n.format("actuallyadditions.cft"), this.guiLeft + 87, this.guiTop + 65, 0xFFFFFF);
-            this.drawCenteredString(this.fontRenderer, "for "+ this.generator.maxBurnTime + " t", this.guiLeft + 87, this.guiTop + 75, 0xFFFFFF);
+        if (this.generator.maxBurnTime > 0 && this.generator.currentEnergyProduce > 0) {
+            this.drawCenteredString(this.fontRenderer, this.generator.currentEnergyProduce + " " + I18n.format("actuallyadditions.cft"), this.guiLeft + 87, this.guiTop + 65, 0xFFFFFF);
+            this.drawCenteredString(this.fontRenderer, "for " + this.generator.maxBurnTime + " t", this.guiLeft + 87, this.guiTop + 75, 0xFFFFFF);
             GlStateManager.pushMatrix();
             GlStateManager.scale(0.75, 0.75, 1);
             float xS = (this.guiLeft + 87) * 1.365F - this.fontRenderer.getStringWidth("(per 50 mB)") / 2F;

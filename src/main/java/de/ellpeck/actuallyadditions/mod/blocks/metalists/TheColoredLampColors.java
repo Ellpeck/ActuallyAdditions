@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 
 import net.minecraft.util.IStringSerializable;
 
-public enum TheColoredLampColors implements IStringSerializable{
+public enum TheColoredLampColors implements IStringSerializable {
 
     WHITE("White", "white"),
     ORANGE("Orange", "orange"),
@@ -34,20 +34,18 @@ public enum TheColoredLampColors implements IStringSerializable{
     public final String regName;
     public final String oreName;
 
-    TheColoredLampColors(String oreName, String regName){
+    TheColoredLampColors(String oreName, String regName) {
         this.oreName = oreName;
         this.regName = regName;
     }
 
-    public static TheColoredLampColors getColorFromDyeName(String color){
-        if(color.substring(0, 3).equals("dye")){
+    public static TheColoredLampColors getColorFromDyeName(String color) {
+        if (color.substring(0, 3).equals("dye")) {
             String actualName = color.substring(3);
-            for(int i = 0; i < values().length; i++){
+            for (int i = 0; i < values().length; i++) {
                 String aName = values()[i].oreName;
-                if(aName != null){
-                    if(aName.equalsIgnoreCase(actualName)){
-                        return values()[i];
-                    }
+                if (aName != null) {
+                    if (aName.equalsIgnoreCase(actualName)) { return values()[i]; }
                 }
             }
         }
@@ -55,7 +53,7 @@ public enum TheColoredLampColors implements IStringSerializable{
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return this.regName;
     }
 }

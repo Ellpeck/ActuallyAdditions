@@ -20,85 +20,82 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay{
+public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(80000, 1000, 0);
     private int oldEnergy;
 
-    public TileEntityDisplayStand(){
+    public TileEntityDisplayStand() {
         super(1, "displayStand");
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
 
-        if(!this.world.isRemote){
-            if(StackUtil.isValid(this.inv.getStackInSlot(0)) && !this.isRedstonePowered){
+        if (!this.world.isRemote) {
+            if (StackUtil.isValid(this.inv.getStackInSlot(0)) && !this.isRedstonePowered) {
                 IDisplayStandItem item = this.convertToDisplayStandItem(this.inv.getStackInSlot(0).getItem());
-                if(item != null){
+                if (item != null) {
                     int energy = item.getUsePerTick(this.inv.getStackInSlot(0), this, this.ticksElapsed);
-                    if(this.storage.getEnergyStored() >= energy){
-                        if(item.update(this.inv.getStackInSlot(0), this, this.ticksElapsed)){
+                    if (this.storage.getEnergyStored() >= energy) {
+                        if (item.update(this.inv.getStackInSlot(0), this, this.ticksElapsed)) {
                             this.storage.extractEnergyInternal(energy, false);
                         }
                     }
                 }
             }
 
-            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+            if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
                 this.oldEnergy = this.storage.getEnergyStored();
             }
         }
     }
 
     @Override
-    public boolean shouldSyncSlots(){
+    public boolean shouldSyncSlots() {
         return true;
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }
 
-    private IDisplayStandItem convertToDisplayStandItem(Item item){
-        if(item instanceof IDisplayStandItem){
-            return (IDisplayStandItem)item;
-        }
-        else if(item instanceof ItemBlock){
+    private IDisplayStandItem convertToDisplayStandItem(Item item) {
+        if (item instanceof IDisplayStandItem) {
+            return (IDisplayStandItem) item;
+        } else if (item instanceof ItemBlock) {
             Block block = Block.getBlockFromItem(item);
-            if(block instanceof IDisplayStandItem){
-                return (IDisplayStandItem)block;
-            }
+            if (block instanceof IDisplayStandItem) { return (IDisplayStandItem) block; }
         }
         return null;
     }
 
     @Override
-    public CustomEnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage() {
         return this.storage;
     }
 
     @Override
-    public boolean needsHoldShift(){
+    public boolean needsHoldShift() {
         return false;
     }
 
     @Override
-    public int getMaxStackSize(int slot){
+    public int getMaxStackSize(int slot) {
         return 1;
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
         return this.storage;
     }
 

@@ -26,9 +26,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockRangedCollector extends BlockContainerBase{
+public class BlockRangedCollector extends BlockContainerBase {
 
-    public BlockRangedCollector(String name){
+    public BlockRangedCollector(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -36,20 +36,17 @@ public class BlockRangedCollector extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
-
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityRangedCollector();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        if(this.tryToggleRedstone(world, pos, player)){
-            return true;
-        }
-        if(!world.isRemote){
-            TileEntityRangedCollector breaker = (TileEntityRangedCollector)world.getTileEntity(pos);
-            if(breaker != null){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+        if (this.tryToggleRedstone(world, pos, player)) { return true; }
+        if (!world.isRemote) {
+            TileEntityRangedCollector breaker = (TileEntityRangedCollector) world.getTileEntity(pos);
+            if (breaker != null) {
                 player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.RANGED_COLLECTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
@@ -58,7 +55,7 @@ public class BlockRangedCollector extends BlockContainerBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 }

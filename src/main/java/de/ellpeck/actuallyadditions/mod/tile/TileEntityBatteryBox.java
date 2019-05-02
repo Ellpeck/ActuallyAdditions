@@ -23,60 +23,58 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISharingEnergyProvider{
+public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISharingEnergyProvider {
 
     private int lastEnergyStored;
     private int lastCompare;
 
-    public TileEntityBatteryBox(){
+    public TileEntityBatteryBox() {
         super(1, "batteryBox");
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
         ItemStack stack = this.inv.getStackInSlot(0);
-        if(StackUtil.isValid(stack) && stack.getItem() instanceof ItemBattery){
-            if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
-                return stack.getCapability(CapabilityEnergy.ENERGY, null);
-            }
+        if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBattery) {
+            if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) { return stack.getCapability(CapabilityEnergy.ENERGY, null); }
         }
         return null;
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
 
-        if(!this.world.isRemote){
+        if (!this.world.isRemote) {
             int currStorage = 0;
 
             IEnergyStorage storage = this.getEnergyStorage(null);
-            if(storage != null){
+            if (storage != null) {
                 ItemStack stack = this.inv.getStackInSlot(0);
-                if(StackUtil.isValid(stack) && ItemUtil.isEnabled(stack)){
-                    if(storage.getEnergyStored() > 0){
+                if (StackUtil.isValid(stack) && ItemUtil.isEnabled(stack)) {
+                    if (storage.getEnergyStored() > 0) {
                         List<TileEntityBatteryBox> tiles = new ArrayList<>();
                         this.energyPushOffLoop(this, tiles);
 
-                        if(!tiles.isEmpty()){
+                        if (!tiles.isEmpty()) {
                             int amount = tiles.size();
 
-                            int energyPer = storage.getEnergyStored()/amount;
-                            if(energyPer <= 0){
+                            int energyPer = storage.getEnergyStored() / amount;
+                            if (energyPer <= 0) {
                                 energyPer = storage.getEnergyStored();
                             }
                             int maxPer = storage.extractEnergy(energyPer, true);
 
-                            for(TileEntityBatteryBox tile : tiles){
+                            for (TileEntityBatteryBox tile : tiles) {
                                 ItemStack battery = tile.inv.getStackInSlot(0);
-                                if(StackUtil.isValid(battery) && !ItemUtil.isEnabled(battery)){
-                                    if(tile.hasCapability(CapabilityEnergy.ENERGY, null)){
+                                if (StackUtil.isValid(battery) && !ItemUtil.isEnabled(battery)) {
+                                    if (tile.hasCapability(CapabilityEnergy.ENERGY, null)) {
                                         IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, null);
-                                        if(cap != null){
+                                        if (cap != null) {
                                             int received = cap.receiveEnergy(maxPer, false);
                                             storage.extractEnergy(received, false);
 
-                                            if(storage.getEnergyStored() <= 0){
+                                            if (storage.getEnergyStored() <= 0) {
                                                 break;
                                             }
                                         }
@@ -90,52 +88,49 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
                 currStorage = storage.getEnergyStored();
             }
 
-            if(this.lastCompare != this.getComparatorStrength()){
+            if (this.lastCompare != this.getComparatorStrength()) {
                 this.lastCompare = this.getComparatorStrength();
                 this.markDirty();
             }
 
-            if(this.lastEnergyStored != currStorage && this.sendUpdateWithInterval()){
+            if (this.lastEnergyStored != currStorage && this.sendUpdateWithInterval()) {
                 this.lastEnergyStored = currStorage;
             }
         }
     }
 
     @Override
-    public int getComparatorStrength(){
+    public int getComparatorStrength() {
         IEnergyStorage storage = this.getEnergyStorage(null);
-        if(storage != null){
-            float calc = (float)storage.getEnergyStored()/(float)storage.getMaxEnergyStored()*15F;
-            return (int)calc;
-        }
-        else{
+        if (storage != null) {
+            float calc = (float) storage.getEnergyStored() / (float) storage.getMaxEnergyStored() * 15F;
+            return (int) calc;
+        } else {
             return 0;
         }
     }
 
     @Override
-    public boolean respondsToPulses(){
+    public boolean respondsToPulses() {
         return true;
     }
 
     @Override
-    public void activateOnPulse(){
+    public void activateOnPulse() {
         ItemStack stack = this.inv.getStackInSlot(0);
-        if(StackUtil.isValid(stack)){
+        if (StackUtil.isValid(stack)) {
             ItemUtil.changeEnabled(stack);
             this.markDirty();
         }
     }
 
-    private void energyPushOffLoop(TileEntityBatteryBox startTile, List<TileEntityBatteryBox> pushOffTo){
-        if(pushOffTo.size() >= 15){
-            return;
-        }
+    private void energyPushOffLoop(TileEntityBatteryBox startTile, List<TileEntityBatteryBox> pushOffTo) {
+        if (pushOffTo.size() >= 15) { return; }
 
-        for(TileEntity tile : startTile.tilesAround){
-            if(tile instanceof TileEntityBatteryBox){
-                TileEntityBatteryBox box = (TileEntityBatteryBox)tile;
-                if(!pushOffTo.contains(box)){
+        for (TileEntity tile : startTile.tilesAround) {
+            if (tile instanceof TileEntityBatteryBox) {
+                TileEntityBatteryBox box = (TileEntityBatteryBox) tile;
+                if (!pushOffTo.contains(box)) {
                     pushOffTo.add(box);
 
                     this.energyPushOffLoop(box, pushOffTo);
@@ -145,38 +140,37 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public IAcceptor getAcceptor(){
+    public IAcceptor getAcceptor() {
         return (slot, stack, automation) -> stack.getItem() instanceof ItemBattery;
     }
 
     @Override
-    public boolean shouldSyncSlots(){
+    public boolean shouldSyncSlots() {
         return true;
     }
 
     @Override
-    public int getEnergyToSplitShare(){
+    public int getEnergyToSplitShare() {
         IEnergyStorage storage = this.getEnergyStorage(null);
-        if(storage != null){
+        if (storage != null) {
             return storage.getEnergyStored();
-        }
-        else{
+        } else {
             return 0;
         }
     }
 
     @Override
-    public boolean doesShareEnergy(){
+    public boolean doesShareEnergy() {
         return true;
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides(){
+    public EnumFacing[] getEnergyShareSides() {
         return EnumFacing.values();
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile){
+    public boolean canShareTo(TileEntity tile) {
         return !(tile instanceof TileEntityBatteryBox);
     }
 }

@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
@@ -28,49 +30,46 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
-import java.util.List;
+public class ItemLaserWrench extends ItemBase {
 
-public class ItemLaserWrench extends ItemBase{
-
-    public ItemLaserWrench(String name){
+    public ItemLaserWrench(String name) {
         super(name);
         this.setMaxStackSize(1);
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing par7, float par8, float par9, float par10){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing par7, float par8, float par9, float par10) {
         ItemStack stack = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileEntityLaserRelay){
-            TileEntityLaserRelay relay = (TileEntityLaserRelay)tile;
-            if(!world.isRemote){
-                if(ItemPhantomConnector.getStoredPosition(stack) == null){
+        if (tile instanceof TileEntityLaserRelay) {
+            TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
+            if (!world.isRemote) {
+                if (ItemPhantomConnector.getStoredPosition(stack) == null) {
                     ItemPhantomConnector.storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-                    player.sendStatusMessage(new TextComponentTranslation("tooltip."+ActuallyAdditions.MODID+".laser.stored.desc"), true);
-                }
-                else{
+                    player.sendStatusMessage(new TextComponentTranslation("tooltip." + ActuallyAdditions.MODID + ".laser.stored.desc"), true);
+                } else {
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
-                    if(savedPos != null){
+                    if (savedPos != null) {
                         TileEntity savedTile = world.getTileEntity(savedPos);
-                        if(savedTile instanceof TileEntityLaserRelay){
-                            int distanceSq = (int)savedPos.distanceSq(pos);
-                            TileEntityLaserRelay savedRelay = (TileEntityLaserRelay)savedTile;
+                        if (savedTile instanceof TileEntityLaserRelay) {
+                            int distanceSq = (int) savedPos.distanceSq(pos);
+                            TileEntityLaserRelay savedRelay = (TileEntityLaserRelay) savedTile;
 
                             int lowestRange = Math.min(relay.getMaxRange(), savedRelay.getMaxRange());
-                            int range = lowestRange*lowestRange;
-                            if(ItemPhantomConnector.getStoredWorld(stack) == world && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world, false, true)){
+                            int range = lowestRange * lowestRange;
+                            if (ItemPhantomConnector.getStoredWorld(stack) == world && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world, false, true)) {
                                 ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
 
-                                ((TileEntityLaserRelay)savedTile).sendUpdate();
+                                ((TileEntityLaserRelay) savedTile).sendUpdate();
                                 relay.sendUpdate();
 
-                                player.sendStatusMessage(new TextComponentTranslation("tooltip."+ActuallyAdditions.MODID+".laser.connected.desc"), true);
+                                player.sendStatusMessage(new TextComponentTranslation("tooltip." + ActuallyAdditions.MODID + ".laser.connected.desc"), true);
 
                                 return EnumActionResult.SUCCESS;
                             }
                         }
 
-                        player.sendMessage(new TextComponentTranslation("tooltip."+ActuallyAdditions.MODID+".laser.cantConnect.desc"));
+                        player.sendMessage(new TextComponentTranslation("tooltip." + ActuallyAdditions.MODID + ".laser.cantConnect.desc"));
                         ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
                     }
                 }
@@ -81,24 +80,24 @@ public class ItemLaserWrench extends ItemBase{
     }
 
     @Override
-    public boolean getShareTag(){
+    public boolean getShareTag() {
         return true;
     }
 
     @Override
-    public void addInformation(ItemStack stack, World playerIn, List<String> list, ITooltipFlag advanced){
+    public void addInformation(ItemStack stack, World playerIn, List<String> list, ITooltipFlag advanced) {
         BlockPos coords = ItemPhantomConnector.getStoredPosition(stack);
-        if(coords != null){
-            list.add(StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".boundTo.desc")+":");
-            list.add("X: "+coords.getX());
-            list.add("Y: "+coords.getY());
-            list.add("Z: "+coords.getZ());
-            list.add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".clearStorage.desc"));
+        if (coords != null) {
+            list.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc") + ":");
+            list.add("X: " + coords.getX());
+            list.add("Y: " + coords.getY());
+            list.add("Z: " + coords.getZ());
+            list.add(TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc"));
         }
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 }

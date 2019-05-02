@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.material;
 
+import java.util.Locale;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 
-import java.util.Locale;
-
-public final class InitToolMaterials{
+public final class InitToolMaterials {
 
     public static ToolMaterial toolMaterialEmerald;
     public static ToolMaterial toolMaterialObsidian;
@@ -29,7 +29,7 @@ public final class InitToolMaterials{
     public static ToolMaterial toolMaterialCrystalGreen;
     public static ToolMaterial toolMaterialCrystalWhite;
 
-    public static void init(){
+    public static void init() {
         ActuallyAdditions.LOGGER.info("Initializing Tool Materials...");
 
         toolMaterialEmerald = addToolMaterial("toolMaterialEmerald", 3, 2000, 9.0F, 5.0F, 15);
@@ -45,8 +45,8 @@ public final class InitToolMaterials{
 
     }
 
-    private static ToolMaterial addToolMaterial(String name, int harvestLevel, int maxUses, float efficiency, float damage, int enchantability){
-        return EnumHelper.addToolMaterial((ActuallyAdditions.MODID+"_"+name).toUpperCase(Locale.ROOT), harvestLevel, maxUses, efficiency, damage, enchantability);
+    private static ToolMaterial addToolMaterial(String name, int harvestLevel, int maxUses, float efficiency, float damage, int enchantability) {
+        return EnumHelper.addToolMaterial((ActuallyAdditions.MODID + "_" + name).toUpperCase(Locale.ROOT), harvestLevel, maxUses, efficiency, damage, enchantability);
     }
 
 }

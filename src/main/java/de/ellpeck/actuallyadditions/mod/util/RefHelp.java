@@ -16,7 +16,7 @@ import com.google.common.base.Preconditions;
 import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 
 public class RefHelp {
-    
+
     public static class UnableToFindMethodException extends RuntimeException {
         private static final long serialVersionUID = 1L;
 

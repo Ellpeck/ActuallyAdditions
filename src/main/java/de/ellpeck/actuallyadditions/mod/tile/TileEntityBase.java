@@ -36,7 +36,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public abstract class TileEntityBase extends TileEntity implements ITickable{
+public abstract class TileEntityBase extends TileEntity implements ITickable {
 
     public final String name;
     public boolean isRedstonePowered;
@@ -46,11 +46,11 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
     protected TileEntity[] tilesAround = new TileEntity[6];
     protected boolean hasSavedDataOnChangeOrWorldStart;
 
-    public TileEntityBase(String name){
+    public TileEntityBase(String name) {
         this.name = name;
     }
 
-    public static void init(){
+    public static void init() {
         ActuallyAdditions.LOGGER.info("Registering TileEntities...");
 
         register(TileEntityCompost.class);
@@ -112,59 +112,58 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         register(TileEntityBatteryBox.class);
     }
 
-    private static void register(Class<? extends TileEntityBase> tileClass){
-        try{
+    private static void register(Class<? extends TileEntityBase> tileClass) {
+        try {
             //This is hacky and dirty but it works so whatever
             ResourceLocation name = new ResourceLocation(ActuallyAdditions.MODID, tileClass.newInstance().name);
             GameRegistry.registerTileEntity(tileClass, name);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             ActuallyAdditions.LOGGER.fatal("Registering a TileEntity failed!", e);
         }
     }
 
     @Override
-    public final NBTTagCompound writeToNBT(NBTTagCompound compound){
+    public final NBTTagCompound writeToNBT(NBTTagCompound compound) {
         this.writeSyncableNBT(compound, NBTType.SAVE_TILE);
         return compound;
     }
 
     @Override
-    public final void readFromNBT(NBTTagCompound compound){
+    public final void readFromNBT(NBTTagCompound compound) {
         this.readSyncableNBT(compound, NBTType.SAVE_TILE);
     }
 
     @Override
-    public final SPacketUpdateTileEntity getUpdatePacket(){
+    public final SPacketUpdateTileEntity getUpdatePacket() {
         NBTTagCompound compound = new NBTTagCompound();
         this.writeSyncableNBT(compound, NBTType.SYNC);
         return new SPacketUpdateTileEntity(this.pos, -1, compound);
     }
 
     @Override
-    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
+    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
         this.readSyncableNBT(pkt.getNbtCompound(), NBTType.SYNC);
     }
 
     @Override
-    public final NBTTagCompound getUpdateTag(){
+    public final NBTTagCompound getUpdateTag() {
         NBTTagCompound compound = new NBTTagCompound();
         this.writeSyncableNBT(compound, NBTType.SYNC);
         return compound;
     }
 
     @Override
-    public final void handleUpdateTag(NBTTagCompound compound){
+    public final void handleUpdateTag(NBTTagCompound compound) {
         this.readSyncableNBT(compound, NBTType.SYNC);
     }
 
-    public final void sendUpdate(){
-        if(this.world != null && !this.world.isRemote) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
+    public final void sendUpdate() {
+        if (this.world != null && !this.world.isRemote) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
         /*
         if(this.world != null && !this.world.isRemote){
             NBTTagCompound compound = new NBTTagCompound();
             this.writeSyncableNBT(compound, NBTType.SYNC);
-
+        
             NBTTagCompound data = new NBTTagCompound();
             data.setTag("Data", compound);
             data.setInteger("X", this.pos.getX());
@@ -174,81 +173,79 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         }*/
     }
 
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
-        if(type != NBTType.SAVE_BLOCK) super.writeToNBT(compound);
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+        if (type != NBTType.SAVE_BLOCK) super.writeToNBT(compound);
 
-        if(type == NBTType.SAVE_TILE){
+        if (type == NBTType.SAVE_TILE) {
             compound.setBoolean("Redstone", this.isRedstonePowered);
             compound.setInteger("TicksElapsed", this.ticksElapsed);
             compound.setBoolean("StopDrop", this.stopFromDropping);
-        }
-        else if(type == NBTType.SYNC && this.stopFromDropping) compound.setBoolean("StopDrop", this.stopFromDropping);
+        } else if (type == NBTType.SYNC && this.stopFromDropping) compound.setBoolean("StopDrop", this.stopFromDropping);
 
-        if(this.isRedstoneToggle() && (type != NBTType.SAVE_BLOCK || this.isPulseMode)){
+        if (this.isRedstoneToggle() && (type != NBTType.SAVE_BLOCK || this.isPulseMode)) {
             compound.setBoolean("IsPulseMode", this.isPulseMode);
         }
     }
 
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
-        if(type != NBTType.SAVE_BLOCK) super.readFromNBT(compound);
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+        if (type != NBTType.SAVE_BLOCK) super.readFromNBT(compound);
 
-        if(type == NBTType.SAVE_TILE){
+        if (type == NBTType.SAVE_TILE) {
             this.isRedstonePowered = compound.getBoolean("Redstone");
             this.ticksElapsed = compound.getInteger("TicksElapsed");
             this.stopFromDropping = compound.getBoolean("StopDrop");
-        }
-        else if(type == NBTType.SYNC) this.stopFromDropping = compound.getBoolean("StopDrop");
+        } else if (type == NBTType.SYNC) this.stopFromDropping = compound.getBoolean("StopDrop");
 
-        if(this.isRedstoneToggle()){
+        if (this.isRedstoneToggle()) {
             this.isPulseMode = compound.getBoolean("IsPulseMode");
         }
     }
 
     @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState){
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
         return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
     }
 
-    public String getNameForTranslation(){
-        return "container."+ActuallyAdditions.MODID+"."+this.name+".name";
+    public String getNameForTranslation() {
+        return "container." + ActuallyAdditions.MODID + "." + this.name + ".name";
     }
 
     @Override
-    public ITextComponent getDisplayName(){
+    public ITextComponent getDisplayName() {
         return new TextComponentTranslation(this.getNameForTranslation());
     }
 
     @Override
-    public final void update(){
+    public final void update() {
         this.updateEntity();
     }
 
-    public int getComparatorStrength(){
+    public int getComparatorStrength() {
         return 0;
     }
 
     private boolean shareEnergy = this instanceof ISharingEnergyProvider;
     private boolean shareFluid = this instanceof ISharingFluidHandler;
 
-    public void updateEntity(){
+    public void updateEntity() {
         this.ticksElapsed++;
 
-        if(!this.world.isRemote){
-            if(this.shareEnergy){
-                ISharingEnergyProvider provider = (ISharingEnergyProvider)this;
-                if(provider.doesShareEnergy()){
+        if (!this.world.isRemote) {
+            if (this.shareEnergy) {
+                ISharingEnergyProvider provider = (ISharingEnergyProvider) this;
+                if (provider.doesShareEnergy()) {
                     int total = provider.getEnergyToSplitShare();
-                    if(total > 0){
+                    if (total > 0) {
                         EnumFacing[] sides = provider.getEnergyShareSides();
 
-                        int amount = total/sides.length;
-                        if(amount <= 0){
+                        int amount = total / sides.length;
+                        if (amount <= 0) {
                             amount = total;
                         }
 
-                        for(EnumFacing side : sides){
+                        for (EnumFacing side : sides) {
                             TileEntity tile = this.tilesAround[side.ordinal()];
-                            if(tile != null && provider.canShareTo(tile)){
+                            if (tile != null && provider.canShareTo(tile)) {
                                 WorldUtil.doEnergyInteraction(this, tile, side, amount);
                             }
                         }
@@ -256,21 +253,21 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                 }
             }
 
-            if(this.shareFluid){
-                ISharingFluidHandler handler = (ISharingFluidHandler)this;
-                if(handler.doesShareFluid()){
+            if (this.shareFluid) {
+                ISharingFluidHandler handler = (ISharingFluidHandler) this;
+                if (handler.doesShareFluid()) {
                     int total = handler.getMaxFluidAmountToSplitShare();
-                    if(total > 0){
+                    if (total > 0) {
                         EnumFacing[] sides = handler.getFluidShareSides();
 
-                        int amount = total/sides.length;
-                        if(amount <= 0){
+                        int amount = total / sides.length;
+                        if (amount <= 0) {
                             amount = total;
                         }
 
-                        for(EnumFacing side : sides){
+                        for (EnumFacing side : sides) {
                             TileEntity tile = this.tilesAround[side.ordinal()];
-                            if(tile != null){
+                            if (tile != null) {
                                 WorldUtil.doFluidInteraction(this, tile, side, amount);
                             }
                         }
@@ -278,8 +275,8 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
                 }
             }
 
-            if(!this.hasSavedDataOnChangeOrWorldStart){
-                if(this.shouldSaveDataOnChangeOrWorldStart()){
+            if (!this.hasSavedDataOnChangeOrWorldStart) {
+                if (this.shouldSaveDataOnChangeOrWorldStart()) {
                     this.saveDataOnChangeOrWorldStart();
                 }
 
@@ -288,88 +285,79 @@ public abstract class TileEntityBase extends TileEntity implements ITickable{
         }
     }
 
-    public void saveDataOnChangeOrWorldStart(){
-        for(EnumFacing side : EnumFacing.values()){
+    public void saveDataOnChangeOrWorldStart() {
+        for (EnumFacing side : EnumFacing.values()) {
             BlockPos pos = this.pos.offset(side);
-            if(this.world.isBlockLoaded(pos)){
+            if (this.world.isBlockLoaded(pos)) {
                 this.tilesAround[side.ordinal()] = this.world.getTileEntity(pos);
             }
         }
     }
 
-    public boolean shouldSaveDataOnChangeOrWorldStart(){
+    public boolean shouldSaveDataOnChangeOrWorldStart() {
         return this instanceof ISharingEnergyProvider || this instanceof ISharingFluidHandler;
     }
 
-    public void setRedstonePowered(boolean powered){
+    public void setRedstonePowered(boolean powered) {
         this.isRedstonePowered = powered;
         this.markDirty();
     }
 
-    public boolean canPlayerUse(EntityPlayer player){
-        return player.getDistanceSq(this.getPos().getX()+0.5D, this.pos.getY()+0.5D, this.pos.getZ()+0.5D) <= 64 && !this.isInvalid() && this.world.getTileEntity(this.pos) == this;
+    public boolean canPlayerUse(EntityPlayer player) {
+        return player.getDistanceSq(this.getPos().getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D) <= 64 && !this.isInvalid() && this.world.getTileEntity(this.pos) == this;
     }
 
-    protected boolean sendUpdateWithInterval(){
-        if(this.ticksElapsed%ConfigIntValues.TILE_ENTITY_UPDATE_INTERVAL.getValue() == 0){
+    protected boolean sendUpdateWithInterval() {
+        if (this.ticksElapsed % ConfigIntValues.TILE_ENTITY_UPDATE_INTERVAL.getValue() == 0) {
             this.sendUpdate();
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing){
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
         return this.getCapability(capability, facing) != null;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing){
-        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             IItemHandler handler = this.getItemHandler(facing);
-            if(handler != null){
-                return (T)handler;
-            }
-        }
-        else if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+            if (handler != null) { return (T) handler; }
+        } else if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             IFluidHandler tank = this.getFluidHandler(facing);
-            if(tank != null){
-                return (T)tank;
-            }
-        }
-        else if(capability == CapabilityEnergy.ENERGY){
+            if (tank != null) { return (T) tank; }
+        } else if (capability == CapabilityEnergy.ENERGY) {
             IEnergyStorage storage = this.getEnergyStorage(facing);
-            if(storage != null){
-                return (T)storage;
-            }
+            if (storage != null) { return (T) storage; }
         }
         return super.getCapability(capability, facing);
     }
 
-    public IFluidHandler getFluidHandler(EnumFacing facing){
+    public IFluidHandler getFluidHandler(EnumFacing facing) {
         return null;
     }
 
-    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
         return null;
     }
 
-    public IItemHandler getItemHandler(EnumFacing facing){
+    public IItemHandler getItemHandler(EnumFacing facing) {
         return null;
     }
 
-    public boolean isRedstoneToggle(){
+    public boolean isRedstoneToggle() {
         return false;
     }
 
-    public void activateOnPulse(){
+    public void activateOnPulse() {
 
     }
 
-    public boolean respondsToPulses(){
+    public boolean respondsToPulses() {
         return this.isRedstoneToggle() && this.isPulseMode;
     }
 

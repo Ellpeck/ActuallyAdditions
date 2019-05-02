@@ -50,8 +50,8 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton {
         for (ItemStack s : this.ingredient.getInput().getMatchingStacks())
             list.add(s);
         list.add(this.cup);
-        for(ItemStack s : TileEntityCoffeeMachine.COFFEE.getMatchingStacks())
-        list.add(s);
+        for (ItemStack s : TileEntityCoffeeMachine.COFFEE.getMatchingStacks())
+            list.add(s);
         ingredients.setInputs(VanillaTypes.ITEM, list);
 
         ingredients.setOutput(VanillaTypes.ITEM, this.theOutput);

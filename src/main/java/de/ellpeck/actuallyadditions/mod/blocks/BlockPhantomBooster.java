@@ -23,11 +23,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockPhantomBooster extends BlockContainerBase{
+public class BlockPhantomBooster extends BlockContainerBase {
 
-    private static final AxisAlignedBB AABB = new AxisAlignedBB(2*0.0625, 0, 2*0.0625, 1-2*0.0625, 1, 1-2*0.0625);
+    private static final AxisAlignedBB AABB = new AxisAlignedBB(2 * 0.0625, 0, 2 * 0.0625, 1 - 2 * 0.0625, 1, 1 - 2 * 0.0625);
 
-    public BlockPhantomBooster(String name){
+    public BlockPhantomBooster(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -36,28 +36,27 @@ public class BlockPhantomBooster extends BlockContainerBase{
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return AABB;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state){
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 
-
     @Override
-    public TileEntity createNewTileEntity(World world, int i){
+    public TileEntity createNewTileEntity(World world, int i) {
         return new TileEntityPhantomBooster();
     }
 }

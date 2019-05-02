@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -33,35 +32,34 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
-public class LensColor extends Lens{
+public class LensColor extends Lens {
 
     public static final int ENERGY_USE = 200;
     //Thanks to xdjackiexd for this, as I couldn't be bothered
-    public static final float[][] POSSIBLE_COLORS = {
-            {158F, 43F, 39F}, //Red
-            {234F, 126F, 53F}, //Orange
-            {194F, 181F, 28F}, //Yellow
-            {57F, 186F, 46F}, //Lime Green
-            {54F, 75F, 24F}, //Green
-            {99F, 135F, 210F}, //Light Blue
-            {38F, 113F, 145F}, //Cyan
-            {37F, 49F, 147F}, //Blue
-            {126F, 52F, 191F}, //Purple
-            {190F, 73F, 201F}, //Magenta
-            {217F, 129F, 153F}, //Pink
-            {86F, 51F, 28F}, //Brown
+    public static final float[][] POSSIBLE_COLORS = { { 158F, 43F, 39F }, //Red
+            { 234F, 126F, 53F }, //Orange
+            { 194F, 181F, 28F }, //Yellow
+            { 57F, 186F, 46F }, //Lime Green
+            { 54F, 75F, 24F }, //Green
+            { 99F, 135F, 210F }, //Light Blue
+            { 38F, 113F, 145F }, //Cyan
+            { 37F, 49F, 147F }, //Blue
+            { 126F, 52F, 191F }, //Purple
+            { 190F, 73F, 201F }, //Magenta
+            { 217F, 129F, 153F }, //Pink
+            { 86F, 51F, 28F }, //Brown
     };
     private final Random rand = new Random();
 
     @Override
-    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        if(hitBlock != null){
-            if(tile.getEnergy() >= ENERGY_USE){
+    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
+        if (hitBlock != null) {
+            if (tile.getEnergy() >= ENERGY_USE) {
                 IBlockState state = tile.getWorldObject().getBlockState(hitBlock);
                 Block block = state.getBlock();
                 int meta = block.getMetaFromState(state);
                 ItemStack returnStack = this.tryConvert(new ItemStack(block, 1, meta), hitState, hitBlock, tile);
-                if(returnStack != null && returnStack.getItem() instanceof ItemBlock){
+                if (returnStack != null && returnStack.getItem() instanceof ItemBlock) {
                     Block toPlace = Block.getBlockFromItem(returnStack.getItem());
                     IBlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, EnumFacing.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
                     tile.getWorldObject().setBlockState(hitBlock, state2Place, 2);
@@ -69,11 +67,11 @@ public class LensColor extends Lens{
                 }
             }
 
-            List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX()+1, hitBlock.getY()+1, hitBlock.getZ()+1));
-            for(EntityItem item : items){
-                if(!item.isDead && StackUtil.isValid(item.getItem()) && tile.getEnergy() >= ENERGY_USE){
+            List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
+            for (EntityItem item : items) {
+                if (!item.isDead && StackUtil.isValid(item.getItem()) && tile.getEnergy() >= ENERGY_USE) {
                     ItemStack newStack = this.tryConvert(item.getItem(), hitState, hitBlock, tile);
-                    if(StackUtil.isValid(newStack)){
+                    if (StackUtil.isValid(newStack)) {
                         item.setDead();
 
                         EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, newStack);
@@ -87,31 +85,29 @@ public class LensColor extends Lens{
         return false;
     }
 
-    private ItemStack tryConvert(ItemStack stack, IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        if(StackUtil.isValid(stack)){
+    private ItemStack tryConvert(ItemStack stack, IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
+        if (StackUtil.isValid(stack)) {
             Item item = stack.getItem();
-            for(Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_COLOR_CHANGERS.entrySet()){
-                if(item == changer.getKey()){
-                    return changer.getValue().modifyItem(stack, hitState, hitBlock, tile);
-                }
+            for (Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_COLOR_CHANGERS.entrySet()) {
+                if (item == changer.getKey()) { return changer.getValue().modifyItem(stack, hitState, hitBlock, tile); }
             }
         }
         return ItemStack.EMPTY;
     }
 
     @Override
-    public float[] getColor(){
+    public float[] getColor() {
         float[] colors = POSSIBLE_COLORS[this.rand.nextInt(POSSIBLE_COLORS.length)];
-        return new float[]{colors[0]/255F, colors[1]/255F, colors[2]/255F};
+        return new float[] { colors[0] / 255F, colors[1] / 255F, colors[2] / 255F };
     }
 
     @Override
-    public int getDistance(){
+    public int getDistance() {
         return 10;
     }
 
     @Override
-    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot){
-        return tile.getEnergy()-energyUsePerShot >= ENERGY_USE;
+    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot) {
+        return tile.getEnergy() - energyUsePerShot >= ENERGY_USE;
     }
 }

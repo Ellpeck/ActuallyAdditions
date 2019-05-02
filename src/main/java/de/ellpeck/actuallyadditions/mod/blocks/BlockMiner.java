@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -33,9 +32,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMiner extends BlockContainerBase implements IHudDisplay{
+public class BlockMiner extends BlockContainerBase implements IHudDisplay {
 
-    public BlockMiner(String name){
+    public BlockMiner(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(8F);
@@ -44,15 +43,15 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        if(!world.isRemote){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+        if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(pos);
-            if(tile instanceof TileEntityMiner){
+            if (tile instanceof TileEntityMiner) {
                 player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.MINER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
@@ -60,24 +59,23 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 
-
     @Override
-    public TileEntity createNewTileEntity(World world, int i){
+    public TileEntity createNewTileEntity(World world, int i) {
         return new TileEntityMiner();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
-        if(tile instanceof TileEntityMiner){
-            TileEntityMiner miner = (TileEntityMiner)tile;
-            String info = miner.checkY == 0 ? "Done Mining!" : miner.checkY == -1 ? "Calculating positions..." : "Mining at "+(miner.getPos().getX()+miner.checkX)+", "+miner.checkY+", "+(miner.getPos().getZ()+miner.checkZ)+".";
-            minecraft.fontRenderer.drawStringWithShadow(info, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2-20, StringUtil.DECIMAL_COLOR_WHITE);
+        if (tile instanceof TileEntityMiner) {
+            TileEntityMiner miner = (TileEntityMiner) tile;
+            String info = miner.checkY == 0 ? "Done Mining!" : miner.checkY == -1 ? "Calculating positions..." : "Mining at " + (miner.getPos().getX() + miner.checkX) + ", " + miner.checkY + ", " + (miner.getPos().getZ() + miner.checkZ) + ".";
+            minecraft.fontRenderer.drawStringWithShadow(info, resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 - 20, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 }

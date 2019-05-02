@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.util.crafting;
 
-public interface IRecipeGrouped{
+public interface IRecipeGrouped {
 
     String getRecipeGroup();
 

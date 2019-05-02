@@ -29,41 +29,41 @@ import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class ItemBattery extends ItemEnergy{
+public class ItemBattery extends ItemEnergy {
 
-    public ItemBattery(String name, int capacity, int transfer){
+    public ItemBattery(String name, int capacity, int transfer) {
         super(capacity, transfer, name);
         this.setMaxStackSize(1);
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack){
+    public boolean hasEffect(ItemStack stack) {
         return ItemUtil.isEnabled(stack);
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
-        if(!world.isRemote && entity instanceof EntityPlayer && ItemUtil.isEnabled(stack) && !isSelected){
-            EntityPlayer player = (EntityPlayer)entity;
-            for(int i = 0; i < player.inventory.getSizeInventory(); i++){
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+        if (!world.isRemote && entity instanceof EntityPlayer && ItemUtil.isEnabled(stack) && !isSelected) {
+            EntityPlayer player = (EntityPlayer) entity;
+            for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
                 ItemStack slot = player.inventory.getStackInSlot(i);
-                if(StackUtil.isValid(slot) && slot.getCount() == 1){
+                if (StackUtil.isValid(slot) && slot.getCount() == 1) {
                     int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
                     int received = 0;
 
-                    if(slot.hasCapability(CapabilityEnergy.ENERGY, null)){
+                    if (slot.hasCapability(CapabilityEnergy.ENERGY, null)) {
                         IEnergyStorage cap = slot.getCapability(CapabilityEnergy.ENERGY, null);
-                        if(cap != null){
+                        if (cap != null) {
                             received = cap.receiveEnergy(extractable, false);
                         }
                     }
 
-                    if(received > 0){
+                    if (received > 0) {
                         this.extractEnergy(stack, received, false);
                     }
                 }
@@ -72,8 +72,8 @@ public class ItemBattery extends ItemEnergy{
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand){
-        if(!worldIn.isRemote && player.isSneaking()){
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
+        if (!worldIn.isRemote && player.isSneaking()) {
             ItemUtil.changeEnabled(player, hand);
             return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
         }
@@ -81,9 +81,9 @@ public class ItemBattery extends ItemEnergy{
     }
 
     @Override
-    public void addInformation(ItemStack stack, World playerIn, List<String> list, ITooltipFlag advanced){
+    public void addInformation(ItemStack stack, World playerIn, List<String> list, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, list, advanced);
-        list.add(StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".battery."+(ItemUtil.isEnabled(stack) ? "discharge" : "noDischarge")));
-        list.add(StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".battery.changeMode"));
+        list.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".battery." + (ItemUtil.isEnabled(stack) ? "discharge" : "noDischarge")));
+        list.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".battery.changeMode"));
     }
 }

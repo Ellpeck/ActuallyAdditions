@@ -10,6 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
@@ -27,12 +31,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 @SideOnly(Side.CLIENT)
-public class GuiBag extends GuiWtfMojang{
+public class GuiBag extends GuiWtfMojang {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_bag");
     private static final ResourceLocation RES_LOC_VOID = AssetUtil.getGuiLocation("gui_void_bag");
@@ -42,30 +42,30 @@ public class GuiBag extends GuiWtfMojang{
     private FilterSettingsGui filter;
     private GuiButton buttonAutoInsert;
 
-    public GuiBag(ItemStack sack, InventoryPlayer inventory, boolean isVoid){
+    public GuiBag(ItemStack sack, InventoryPlayer inventory, boolean isVoid) {
         this(isVoid, new ContainerBag(sack, inventory, isVoid));
     }
 
-    private GuiBag(boolean isVoid, ContainerBag container){
+    private GuiBag(boolean isVoid, ContainerBag container) {
         super(container);
         this.xSize = 176;
-        this.ySize = 90+86;
+        this.ySize = 90 + 86;
         this.isVoid = isVoid;
         this.container = container;
     }
 
     @Override
-    public void initGui(){
+    public void initGui() {
         super.initGui();
 
-        this.filter = new FilterSettingsGui(this.container.filter, this.guiLeft+138, this.guiTop+10, this.buttonList);
+        this.filter = new FilterSettingsGui(this.container.filter, this.guiLeft + 138, this.guiTop + 10, this.buttonList);
 
-        this.buttonAutoInsert = new GuiButton(0, this.guiLeft-21, this.guiTop+8, 20, 20, (this.container.autoInsert ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"I");
+        this.buttonAutoInsert = new GuiButton(0, this.guiLeft - 21, this.guiTop + 8, 20, 20, (this.container.autoInsert ? TextFormatting.DARK_GREEN : TextFormatting.RED) + "I");
         this.buttonList.add(this.buttonAutoInsert);
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) throws IOException{
+    protected void actionPerformed(GuiButton button) throws IOException {
         NBTTagCompound data = new NBTTagCompound();
         data.setInteger("ButtonID", button.id);
         data.setInteger("PlayerID", Minecraft.getMinecraft().player.getEntityId());
@@ -74,39 +74,39 @@ public class GuiBag extends GuiWtfMojang{
     }
 
     @Override
-    public void updateScreen(){
+    public void updateScreen() {
         super.updateScreen();
         this.filter.update();
 
-        this.buttonAutoInsert.displayString = (this.container.autoInsert ? TextFormatting.DARK_GREEN : TextFormatting.RED)+"I";
+        this.buttonAutoInsert.displayString = (this.container.autoInsert ? TextFormatting.DARK_GREEN : TextFormatting.RED) + "I";
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y){
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container."+ActuallyAdditions.MODID+"."+(this.isVoid ? "voidBag" : "bag")+".name"));
+    public void drawGuiContainerForegroundLayer(int x, int y) {
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + "." + (this.isVoid ? "voidBag" : "bag") + ".name"));
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y){
+    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop+90, 0, 0, 176, 86);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 90, 0, 0, 176, 86);
 
         this.mc.getTextureManager().bindTexture(this.isVoid ? RES_LOC_VOID : RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 90);
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks){
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.filter.drawHover(mouseX, mouseY);
 
-        if(this.buttonAutoInsert.isMouseOver()){
+        if (this.buttonAutoInsert.isMouseOver()) {
             List<String> text = new ArrayList<>();
-            text.add(TextFormatting.BOLD+"Auto-Insert "+(this.container.autoInsert ? "On" : "Off"));
+            text.add(TextFormatting.BOLD + "Auto-Insert " + (this.container.autoInsert ? "On" : "Off"));
             text.addAll(this.mc.fontRenderer.listFormattedStringToWidth("Turn this on to make items that get picked up automatically go into the bag.", 200));
-            text.addAll(this.mc.fontRenderer.listFormattedStringToWidth(TextFormatting.GRAY+""+TextFormatting.ITALIC+"Note that this WON'T work when you are holding the bag in your hand.", 200));
+            text.addAll(this.mc.fontRenderer.listFormattedStringToWidth(TextFormatting.GRAY + "" + TextFormatting.ITALIC + "Note that this WON'T work when you are holding the bag in your hand.", 200));
             this.drawHoveringText(text, mouseX, mouseY);
         }
     }

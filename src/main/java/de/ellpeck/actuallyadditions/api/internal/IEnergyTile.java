@@ -17,7 +17,7 @@ import net.minecraft.world.World;
  * This is not supposed to be implemented.
  * Can be cast to TileEntity.
  */
-public interface IEnergyTile{
+public interface IEnergyTile {
 
     BlockPos getPosition();
 

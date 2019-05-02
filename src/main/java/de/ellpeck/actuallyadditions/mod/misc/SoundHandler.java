@@ -15,21 +15,21 @@ import de.ellpeck.actuallyadditions.mod.RegistryHandler;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
-public final class SoundHandler{
+public final class SoundHandler {
 
     public static SoundEvent duhDuhDuhDuuuh;
     public static SoundEvent coffeeMachine;
     public static SoundEvent reconstructor;
     public static SoundEvent crusher;
 
-    public static void init(){
+    public static void init() {
         duhDuhDuhDuuuh = registerSound("duh_duh_duh_duuuh");
         coffeeMachine = registerSound("coffee_machine");
         reconstructor = registerSound("reconstructor");
         crusher = registerSound("crusher");
     }
 
-    private static SoundEvent registerSound(String name){
+    private static SoundEvent registerSound(String name) {
         ResourceLocation resLoc = new ResourceLocation(ActuallyAdditions.MODID, name);
 
         SoundEvent event = new SoundEvent(resLoc);

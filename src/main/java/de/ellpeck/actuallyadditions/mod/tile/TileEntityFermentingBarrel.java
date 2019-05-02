@@ -21,23 +21,23 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerFluidMap;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler{
+public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler {
 
     private static final int PROCESS_TIME = 100;
-    public final FluidTank canolaTank = new FluidTank(2*Util.BUCKET){
+    public final FluidTank canolaTank = new FluidTank(2 * Util.BUCKET) {
         @Override
-        public boolean canDrain(){
+        public boolean canDrain() {
             return false;
         }
 
         @Override
-        public boolean canFillFluidType(FluidStack fluid){
+        public boolean canFillFluidType(FluidStack fluid) {
             return fluid.getFluid() == InitFluids.fluidCanolaOil;
         }
     };
-    public final FluidTank oilTank = new FluidTank(2*Util.BUCKET){
+    public final FluidTank oilTank = new FluidTank(2 * Util.BUCKET) {
         @Override
-        public boolean canFill(){
+        public boolean canFill() {
             return false;
         }
     };
@@ -49,7 +49,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     private int lastProcessTime;
     private int lastCompare;
 
-    public TileEntityFermentingBarrel(){
+    public TileEntityFermentingBarrel() {
         super("fermentingBarrel");
 
         this.handlerMap = new FluidHandlerFluidMap();
@@ -58,7 +58,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         compound.setInteger("ProcessTime", this.currentProcessTime);
         this.canolaTank.writeToNBT(compound);
         NBTTagCompound tag = new NBTTagCompound();
@@ -68,42 +68,41 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         this.currentProcessTime = compound.getInteger("ProcessTime");
         this.canolaTank.readFromNBT(compound);
         NBTTagCompound tag = compound.getCompoundTag("OilTank");
-        if(tag != null){
+        if (tag != null) {
             this.oilTank.readFromNBT(tag);
         }
         super.readSyncableNBT(compound, type);
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
-        if(!this.world.isRemote){
+        if (!this.world.isRemote) {
             int produce = 80;
-            if(this.canolaTank.getFluidAmount() >= produce && produce <= this.oilTank.getCapacity()-this.oilTank.getFluidAmount()){
+            if (this.canolaTank.getFluidAmount() >= produce && produce <= this.oilTank.getCapacity() - this.oilTank.getFluidAmount()) {
                 this.currentProcessTime++;
-                if(this.currentProcessTime >= PROCESS_TIME){
+                if (this.currentProcessTime >= PROCESS_TIME) {
                     this.currentProcessTime = 0;
 
                     this.oilTank.fillInternal(new FluidStack(InitFluids.fluidRefinedCanolaOil, produce), true);
                     this.canolaTank.drainInternal(produce, true);
                 }
-            }
-            else{
+            } else {
                 this.currentProcessTime = 0;
             }
 
             int compare = this.getComparatorStrength();
-            if(compare != this.lastCompare){
+            if (compare != this.lastCompare) {
                 this.lastCompare = compare;
 
                 this.markDirty();
             }
 
-            if((this.canolaTank.getFluidAmount() != this.lastCanola || this.oilTank.getFluidAmount() != this.lastOil || this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()){
+            if ((this.canolaTank.getFluidAmount() != this.lastCanola || this.oilTank.getFluidAmount() != this.lastOil || this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()) {
                 this.lastProcessTime = this.currentProcessTime;
                 this.lastCanola = this.canolaTank.getFluidAmount();
                 this.lastOil = this.oilTank.getFluidAmount();
@@ -112,43 +111,43 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     }
 
     @Override
-    public int getComparatorStrength(){
-        float calc = (float)this.oilTank.getFluidAmount()/(float)this.oilTank.getCapacity()*15F;
-        return (int)calc;
+    public int getComparatorStrength() {
+        float calc = (float) this.oilTank.getFluidAmount() / (float) this.oilTank.getCapacity() * 15F;
+        return (int) calc;
     }
 
     @SideOnly(Side.CLIENT)
-    public int getProcessScaled(int i){
-        return this.currentProcessTime*i/PROCESS_TIME;
+    public int getProcessScaled(int i) {
+        return this.currentProcessTime * i / PROCESS_TIME;
     }
 
     @SideOnly(Side.CLIENT)
-    public int getOilTankScaled(int i){
-        return this.oilTank.getFluidAmount()*i/this.oilTank.getCapacity();
+    public int getOilTankScaled(int i) {
+        return this.oilTank.getFluidAmount() * i / this.oilTank.getCapacity();
     }
 
     @SideOnly(Side.CLIENT)
-    public int getCanolaTankScaled(int i){
-        return this.canolaTank.getFluidAmount()*i/this.canolaTank.getCapacity();
+    public int getCanolaTankScaled(int i) {
+        return this.canolaTank.getFluidAmount() * i / this.canolaTank.getCapacity();
     }
 
     @Override
-    public IFluidHandler getFluidHandler(EnumFacing facing){
+    public IFluidHandler getFluidHandler(EnumFacing facing) {
         return this.handlerMap;
     }
 
     @Override
-    public int getMaxFluidAmountToSplitShare(){
+    public int getMaxFluidAmountToSplitShare() {
         return this.oilTank.getFluidAmount();
     }
 
     @Override
-    public boolean doesShareFluid(){
+    public boolean doesShareFluid() {
         return true;
     }
 
     @Override
-    public EnumFacing[] getFluidShareSides(){
+    public EnumFacing[] getFluidShareSides() {
         return EnumFacing.values();
     }
 }

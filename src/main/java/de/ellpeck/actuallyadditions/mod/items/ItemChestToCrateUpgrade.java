@@ -28,37 +28,36 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class ItemChestToCrateUpgrade extends ItemBase{
+public class ItemChestToCrateUpgrade extends ItemBase {
 
     private final Class<? extends TileEntity> start;
     private final IBlockState end;
 
-    public ItemChestToCrateUpgrade(String name, Class<? extends TileEntity> start, IBlockState end){
+    public ItemChestToCrateUpgrade(String name, Class<? extends TileEntity> start, IBlockState end) {
         super(name);
         this.start = start;
         this.end = end;
     }
 
     @Override
-    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand){
+    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         ItemStack heldStack = player.getHeldItem(hand);
-        if(player.isSneaking()){
+        if (player.isSneaking()) {
             TileEntity tileHit = world.getTileEntity(pos);
-            if(tileHit != null && this.start.isInstance(tileHit)){
-                if(!world.isRemote){
+            if (tileHit != null && this.start.isInstance(tileHit)) {
+                if (!world.isRemote) {
 
                     //Copy Slots
                     IItemHandlerModifiable chest = null;
-                    if(tileHit instanceof IInventory){
-                        chest = new InvWrapper((IInventory)tileHit);
-                    }
-                    else if(tileHit instanceof TileEntityInventoryBase){
-                        chest = ((TileEntityInventoryBase)tileHit).inv;
+                    if (tileHit instanceof IInventory) {
+                        chest = new InvWrapper((IInventory) tileHit);
+                    } else if (tileHit instanceof TileEntityInventoryBase) {
+                        chest = ((TileEntityInventoryBase) tileHit).inv;
                     }
 
-                    if(chest != null){
+                    if (chest != null) {
                         ItemStack[] stacks = new ItemStack[chest.getSlots()];
-                        for(int i = 0; i < stacks.length; i++){
+                        for (int i = 0; i < stacks.length; i++) {
                             ItemStack aStack = chest.getStackInSlot(i);
                             stacks[i] = aStack.copy();
                         }
@@ -68,17 +67,16 @@ public class ItemChestToCrateUpgrade extends ItemBase{
 
                         world.removeTileEntity(pos);
                         world.setBlockState(pos, this.end, 2);
-                        if(!player.capabilities.isCreativeMode)
-                            heldStack.shrink(1);
+                        if (!player.capabilities.isCreativeMode) heldStack.shrink(1);
 
                         //Copy Items into new Chest
                         TileEntity newTileHit = world.getTileEntity(pos);
-                        if(newTileHit instanceof TileEntityInventoryBase){
-                            IItemHandlerModifiable newChest = ((TileEntityInventoryBase)newTileHit).inv;
+                        if (newTileHit instanceof TileEntityInventoryBase) {
+                            IItemHandlerModifiable newChest = ((TileEntityInventoryBase) newTileHit).inv;
 
-                            for(int i = 0; i < stacks.length; i++){
-                                if(StackUtil.isValid(stacks[i])){
-                                    if(newChest.getSlots() > i){
+                            for (int i = 0; i < stacks.length; i++) {
+                                if (StackUtil.isValid(stacks[i])) {
+                                    if (newChest.getSlots() > i) {
                                         newChest.setStackInSlot(i, stacks[i].copy());
                                     }
                                 }
@@ -94,7 +92,7 @@ public class ItemChestToCrateUpgrade extends ItemBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 }

@@ -40,74 +40,70 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
-public class CommonEvents{
+public class CommonEvents {
 
     @SubscribeEvent
-    public void onBlockBreakEvent(BlockEvent.HarvestDropsEvent event){
+    public void onBlockBreakEvent(BlockEvent.HarvestDropsEvent event) {
         IBlockState state = event.getState();
-        if(state != null && state.getBlock() == Blocks.MOB_SPAWNER){
+        if (state != null && state.getBlock() == Blocks.MOB_SPAWNER) {
             event.getDrops().add(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.SPAWNER_SHARD.ordinal()));
         }
     }
 
     @SubscribeEvent
-    public void onItemPickup(EntityItemPickupEvent event){
-        if(event.isCanceled() || event.getResult() == Event.Result.ALLOW){
-            return;
-        }
+    public void onItemPickup(EntityItemPickupEvent event) {
+        if (event.isCanceled() || event.getResult() == Event.Result.ALLOW) { return; }
 
         EntityPlayer player = event.getEntityPlayer();
         EntityItem item = event.getItem();
-        if(item != null && !item.isDead){
+        if (item != null && !item.isDead) {
             ItemStack stack = item.getItem();
-            if(StackUtil.isValid(stack)){
-                for(int i = 0; i < player.inventory.getSizeInventory(); i++){
-                    if(i != player.inventory.currentItem){
+            if (StackUtil.isValid(stack)) {
+                for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+                    if (i != player.inventory.currentItem) {
 
                         ItemStack invStack = player.inventory.getStackInSlot(i);
-                        if(StackUtil.isValid(invStack) && invStack.getItem() instanceof ItemBag && invStack.hasTagCompound()){
-                            if(invStack.getTagCompound().getBoolean("AutoInsert")){
+                        if (StackUtil.isValid(invStack) && invStack.getItem() instanceof ItemBag && invStack.hasTagCompound()) {
+                            if (invStack.getTagCompound().getBoolean("AutoInsert")) {
                                 boolean changed = false;
 
-                                boolean isVoid = ((ItemBag)invStack.getItem()).isVoid;
+                                boolean isVoid = ((ItemBag) invStack.getItem()).isVoid;
                                 ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerBag.getSlotAmount(isVoid));
                                 ItemDrill.loadSlotsFromNBT(inv, invStack);
 
                                 FilterSettings filter = new FilterSettings(4, false, false, false, false, 0, 0);
                                 filter.readFromNBT(invStack.getTagCompound(), "Filter");
-                                if(filter.check(stack)){
-                                    if(isVoid){
+                                if (filter.check(stack)) {
+                                    if (isVoid) {
                                         stack.setCount(0);
                                         changed = true;
-                                    }
-                                    else{
-                                        for(int j = 0; j < inv.getSlots(); j++){
+                                    } else {
+                                        for (int j = 0; j < inv.getSlots(); j++) {
                                             ItemStack bagStack = inv.getStackInSlot(j);
-                                            if(StackUtil.isValid(bagStack)){
-                                                if(ItemUtil.canBeStacked(bagStack, stack)){
-                                                    int maxTransfer = Math.min(stack.getCount(), stack.getMaxStackSize()-bagStack.getCount());
-                                                    if(maxTransfer > 0){
+                                            if (StackUtil.isValid(bagStack)) {
+                                                if (ItemUtil.canBeStacked(bagStack, stack)) {
+                                                    int maxTransfer = Math.min(stack.getCount(), stack.getMaxStackSize() - bagStack.getCount());
+                                                    if (maxTransfer > 0) {
                                                         inv.setStackInSlot(j, StackUtil.grow(bagStack, maxTransfer));
                                                         stack.shrink(maxTransfer);
                                                         changed = true;
                                                     }
                                                 }
-                                            }
-                                            else{
+                                            } else {
                                                 inv.setStackInSlot(j, stack.copy());
                                                 stack.setCount(0);
                                                 changed = true;
                                             }
 
-                                            if(!StackUtil.isValid(stack)){
+                                            if (!StackUtil.isValid(stack)) {
                                                 break;
                                             }
                                         }
                                     }
                                 }
 
-                                if(changed){
-                                    if(!isVoid){
+                                if (changed) {
+                                    if (!isVoid) {
                                         ItemDrill.writeSlotsToNBT(inv, invStack);
                                     }
                                     event.setResult(Event.Result.ALLOW);
@@ -116,7 +112,7 @@ public class CommonEvents{
                         }
                     }
 
-                    if(!StackUtil.isValid(stack)){
+                    if (!StackUtil.isValid(stack)) {
                         break;
                     }
                 }
@@ -140,37 +136,37 @@ public class CommonEvents{
     }*/
 
     @SubscribeEvent
-    public void onEntityDropEvent(LivingDropsEvent event){
-        if(event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof EntityPlayer){
+    public void onEntityDropEvent(LivingDropsEvent event) {
+        if (event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof EntityPlayer) {
             //Drop Cobwebs from Spiders
-            if(ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof EntitySpider){
-                if(event.getEntityLiving().world.rand.nextInt(20) <= event.getLootingLevel()*2){
-                    event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(Blocks.WEB, event.getEntityLiving().world.rand.nextInt(2+event.getLootingLevel())+1)));
+            if (ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof EntitySpider) {
+                if (event.getEntityLiving().world.rand.nextInt(20) <= event.getLootingLevel() * 2) {
+                    event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(Blocks.WEB, event.getEntityLiving().world.rand.nextInt(2 + event.getLootingLevel()) + 1)));
                 }
             }
         }
     }
 
     @SubscribeEvent
-    public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event){
-        if(!event.player.world.isRemote && event.player instanceof EntityPlayerMP){
-            EntityPlayerMP player = (EntityPlayerMP)event.player;
+    public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!event.player.world.isRemote && event.player instanceof EntityPlayerMP) {
+            EntityPlayerMP player = (EntityPlayerMP) event.player;
             PacketHandlerHelper.syncPlayerData(player, true);
-            ActuallyAdditions.LOGGER.info("Sending Player Data to player "+player.getName()+" with UUID "+player.getUniqueID()+".");
+            ActuallyAdditions.LOGGER.info("Sending Player Data to player " + player.getName() + " with UUID " + player.getUniqueID() + ".");
         }
     }
 
     @SubscribeEvent
-    public void onCraftedEvent(PlayerEvent.ItemCraftedEvent event){
+    public void onCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
         //checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
-        if(ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()){
-            if(!event.player.world.isRemote && StackUtil.isValid(event.crafting) && event.crafting.getItem() != InitItems.itemBooklet){
+        if (ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()) {
+            if (!event.player.world.isRemote && StackUtil.isValid(event.crafting) && event.crafting.getItem() != InitItems.itemBooklet) {
 
                 String name = event.crafting.getItem().getRegistryName().toString();
-                if(name != null && name.toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)){
+                if (name != null && name.toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)) {
                     PlayerData.PlayerSave save = PlayerData.getDataFromPlayer(event.player);
-                    if(save != null && !save.bookGottenAlready){
+                    if (save != null && !save.bookGottenAlready) {
                         save.bookGottenAlready = true;
                         WorldData.get(event.player.getEntityWorld()).markDirty();
 
@@ -184,12 +180,12 @@ public class CommonEvents{
     }
 
     @SubscribeEvent
-    public void onSmeltedEvent(PlayerEvent.ItemSmeltedEvent event){
+    public void onSmeltedEvent(PlayerEvent.ItemSmeltedEvent event) {
         //checkAchievements(event.smelting, event.player, InitAchievements.Type.SMELTING);
     }
 
     @SubscribeEvent
-    public void onPickupEvent(EntityItemPickupEvent event){
+    public void onPickupEvent(EntityItemPickupEvent event) {
         //checkAchievements(event.getItem().getItem(), event.getEntityPlayer(), InitAchievements.Type.PICK_UP);
     }
 }

@@ -27,37 +27,35 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-public class LensDisruption extends Lens{
+public class LensDisruption extends Lens {
 
     private static final int ENERGY_USE = 150000;
 
     @Override
-    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        if(ConfigIntValues.ELEVEN.getValue() == 11 && tile.getEnergy() >= ENERGY_USE && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)){
+    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
+        if (ConfigIntValues.ELEVEN.getValue() == 11 && tile.getEnergy() >= ENERGY_USE && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)) {
             int range = 2;
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>)tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-range, hitBlock.getY()-range, hitBlock.getZ()-range, hitBlock.getX()+range, hitBlock.getY()+range, hitBlock.getZ()+range));
-            for(EntityItem item : items){
+            ArrayList<EntityItem> items = (ArrayList<EntityItem>) tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX() - range, hitBlock.getY() - range, hitBlock.getZ() - range, hitBlock.getX() + range, hitBlock.getY() + range, hitBlock.getZ() + range));
+            for (EntityItem item : items) {
                 ItemStack stack = item.getItem();
-                if(!item.isDead && StackUtil.isValid(stack)){
-                    if(!stack.hasTagCompound() || !stack.getTagCompound().getBoolean(ActuallyAdditions.MODID+"DisruptedAlready")){
+                if (!item.isDead && StackUtil.isValid(stack)) {
+                    if (!stack.hasTagCompound() || !stack.getTagCompound().getBoolean(ActuallyAdditions.MODID + "DisruptedAlready")) {
 
                         ItemStack newStack;
-                        do{
-                            if(tile.getWorldObject().rand.nextBoolean()){
+                        do {
+                            if (tile.getWorldObject().rand.nextBoolean()) {
                                 newStack = new ItemStack(Item.REGISTRY.getRandomObject(tile.getWorldObject().rand));
-                            }
-                            else{
+                            } else {
                                 newStack = new ItemStack(Block.REGISTRY.getRandomObject(tile.getWorldObject().rand));
                             }
-                        }
-                        while(!StackUtil.isValid(newStack));
+                        } while (!StackUtil.isValid(newStack));
 
                         newStack.setCount(stack.getCount());
 
-                        if(!newStack.hasTagCompound()){
+                        if (!newStack.hasTagCompound()) {
                             newStack.setTagCompound(new NBTTagCompound());
                         }
-                        newStack.getTagCompound().setBoolean(ActuallyAdditions.MODID+"DisruptedAlready", true);
+                        newStack.getTagCompound().setBoolean(ActuallyAdditions.MODID + "DisruptedAlready", true);
 
                         item.setDead();
 
@@ -74,17 +72,17 @@ public class LensDisruption extends Lens{
     }
 
     @Override
-    public float[] getColor(){
-        return new float[]{246F/255F, 255F/255F, 183F/255F};
+    public float[] getColor() {
+        return new float[] { 246F / 255F, 255F / 255F, 183F / 255F };
     }
 
     @Override
-    public int getDistance(){
+    public int getDistance() {
         return 3;
     }
 
     @Override
-    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot){
-        return tile.getEnergy()-energyUsePerShot >= ENERGY_USE;
+    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot) {
+        return tile.getEnergy() - energyUsePerShot >= ENERGY_USE;
     }
 }

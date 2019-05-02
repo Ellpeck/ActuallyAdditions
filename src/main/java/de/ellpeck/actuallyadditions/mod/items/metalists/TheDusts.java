@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items.metalists;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.EnumRarity;
 
-public enum TheDusts{
+public enum TheDusts {
 
     IRON("iron", 7826534, EnumRarity.COMMON),
     GOLD("gold", 14335744, EnumRarity.UNCOMMON),
@@ -28,11 +28,10 @@ public enum TheDusts{
     public final int color;
     public final EnumRarity rarity;
 
-    TheDusts(String name, int color, EnumRarity rarity){
+    TheDusts(String name, int color, EnumRarity rarity) {
         this.name = name;
         this.color = color;
         this.rarity = rarity;
     }
-
 
 }

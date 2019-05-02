@@ -19,26 +19,24 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class ItemResonantRice extends ItemBase{
+public class ItemResonantRice extends ItemBase {
 
-    public ItemResonantRice(String name){
+    public ItemResonantRice(String name) {
         super(name);
     }
 
-
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if(!world.isRemote){
+        if (!world.isRemote) {
             stack.shrink(1);
             world.createExplosion(null, player.posX, player.posY, player.posZ, 0.5F, true);
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
-
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 }

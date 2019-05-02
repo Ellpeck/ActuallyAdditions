@@ -30,9 +30,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockPlayerInterface extends BlockContainerBase implements IHudDisplay{
+public class BlockPlayerInterface extends BlockContainerBase implements IHudDisplay {
 
-    public BlockPlayerInterface(String name){
+    public BlockPlayerInterface(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(4.5F);
@@ -41,21 +41,21 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityPlayerInterface();
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.EPIC;
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack){
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
         TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileEntityPlayerInterface){
-            TileEntityPlayerInterface face = (TileEntityPlayerInterface)tile;
-            if(face.connectedPlayer == null){
+        if (tile instanceof TileEntityPlayerInterface) {
+            TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
+            if (face.connectedPlayer == null) {
                 face.connectedPlayer = player.getUniqueID();
                 face.playerName = player.getName();
                 face.markDirty();
@@ -68,14 +68,14 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution){
+    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
-        if(tile != null){
-            if(tile instanceof TileEntityPlayerInterface){
-                TileEntityPlayerInterface face = (TileEntityPlayerInterface)tile;
+        if (tile != null) {
+            if (tile instanceof TileEntityPlayerInterface) {
+                TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
                 String name = face.playerName == null ? "Unknown" : face.playerName;
-                minecraft.fontRenderer.drawStringWithShadow("Bound to: "+TextFormatting.RED+name, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
-                minecraft.fontRenderer.drawStringWithShadow("UUID: "+TextFormatting.DARK_GREEN+face.connectedPlayer, resolution.getScaledWidth()/2+5, resolution.getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
+                minecraft.fontRenderer.drawStringWithShadow("Bound to: " + TextFormatting.RED + name, resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 + 5, StringUtil.DECIMAL_COLOR_WHITE);
+                minecraft.fontRenderer.drawStringWithShadow("UUID: " + TextFormatting.DARK_GREEN + face.connectedPlayer, resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 + 15, StringUtil.DECIMAL_COLOR_WHITE);
             }
         }
     }

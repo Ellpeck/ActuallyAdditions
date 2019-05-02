@@ -23,59 +23,59 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiRangedCollector extends GuiWtfMojang{
+public class GuiRangedCollector extends GuiWtfMojang {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_ranged_collector");
     private final TileEntityRangedCollector collector;
 
     private FilterSettingsGui filter;
 
-    public GuiRangedCollector(InventoryPlayer inventory, TileEntityBase tile){
+    public GuiRangedCollector(InventoryPlayer inventory, TileEntityBase tile) {
         super(new ContainerRangedCollector(inventory, tile));
-        this.collector = (TileEntityRangedCollector)tile;
+        this.collector = (TileEntityRangedCollector) tile;
         this.xSize = 176;
-        this.ySize = 86+86;
+        this.ySize = 86 + 86;
     }
 
     @Override
-    public void initGui(){
+    public void initGui() {
         super.initGui();
 
-        this.filter = new FilterSettingsGui(this.collector.filter, this.guiLeft+3, this.guiTop+6, this.buttonList);
+        this.filter = new FilterSettingsGui(this.collector.filter, this.guiLeft + 3, this.guiTop + 6, this.buttonList);
     }
 
     @Override
-    public void drawScreen(int x, int y, float f){
+    public void drawScreen(int x, int y, float f) {
         super.drawScreen(x, y, f);
 
         this.filter.drawHover(x, y);
     }
 
     @Override
-    public void updateScreen(){
+    public void updateScreen() {
         super.updateScreen();
 
         this.filter.update();
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y){
+    public void drawGuiContainerForegroundLayer(int x, int y) {
         AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.collector);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y){
+    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop+86, 0, 0, 176, 86);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 86, 0, 0, 176, 86);
 
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 86);
     }
 
     @Override
-    public void actionPerformed(GuiButton button){
+    public void actionPerformed(GuiButton button) {
         PacketHandlerHelper.sendButtonPacket(this.collector, button.id);
     }
 }

@@ -49,122 +49,118 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 @SideOnly(Side.CLIENT)
-public class ClientEvents{
+public class ClientEvents {
 
-    private static final String ADVANCED_INFO_TEXT_PRE = TextFormatting.DARK_GRAY+"     ";
-    private static final String ADVANCED_INFO_HEADER_PRE = TextFormatting.GRAY+"  -";
+    private static final String ADVANCED_INFO_TEXT_PRE = TextFormatting.DARK_GRAY + "     ";
+    private static final String ADVANCED_INFO_HEADER_PRE = TextFormatting.GRAY + "  -";
 
     private static EnergyDisplay energyDisplay;
 
-    public ClientEvents(){
+    public ClientEvents() {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
-    public void onClientTick(ClientTickEvent event){
-        if(event.phase == Phase.END){
+    public void onClientTick(ClientTickEvent event) {
+        if (event.phase == Phase.END) {
             Minecraft mc = Minecraft.getMinecraft();
 
-            if(mc.world == null){
+            if (mc.world == null) {
                 WorldData.clear();
             }
         }
     }
 
     @SubscribeEvent
-    public void onTooltipEvent(ItemTooltipEvent event){
+    public void onTooltipEvent(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
-        if(StackUtil.isValid(stack)){
+        if (StackUtil.isValid(stack)) {
             //Be da bland
-            if(ConfigBoolValues.MOST_BLAND_PERSON_EVER.isEnabled()){
+            if (ConfigBoolValues.MOST_BLAND_PERSON_EVER.isEnabled()) {
                 ResourceLocation regName = stack.getItem().getRegistryName();
-                if(regName != null){
-                    if(regName.toString().toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)){
-                        if(event.getToolTip().size() > 0){
-                            event.getToolTip().set(0, TextFormatting.RESET+TextFormatting.WHITE.toString()+event.getToolTip().get(0));
+                if (regName != null) {
+                    if (regName.toString().toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)) {
+                        if (event.getToolTip().size() > 0) {
+                            event.getToolTip().set(0, TextFormatting.RESET + TextFormatting.WHITE.toString() + event.getToolTip().get(0));
                         }
                     }
                 }
             }
 
-            if(ItemWingsOfTheBats.THE_BAT_BAT.equalsIgnoreCase(stack.getDisplayName()) && stack.getItem() instanceof ItemSword){
-                event.getToolTip().set(0, TextFormatting.GOLD+event.getToolTip().get(0));
-                event.getToolTip().add(1, TextFormatting.RED.toString()+TextFormatting.ITALIC+"That's a really bat pun");
+            if (ItemWingsOfTheBats.THE_BAT_BAT.equalsIgnoreCase(stack.getDisplayName()) && stack.getItem() instanceof ItemSword) {
+                event.getToolTip().set(0, TextFormatting.GOLD + event.getToolTip().get(0));
+                event.getToolTip().add(1, TextFormatting.RED.toString() + TextFormatting.ITALIC + "That's a really bat pun");
             }
         }
 
         //Advanced Item Info
-        if(event.getFlags().isAdvanced() && StackUtil.isValid(event.getItemStack())){
-            if(ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()){
-                if(GuiScreen.isCtrlKeyDown()){
-                    event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".extraInfo.desc")+":");
+        if (event.getFlags().isAdvanced() && StackUtil.isValid(event.getItemStack())) {
+            if (ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()) {
+                if (GuiScreen.isCtrlKeyDown()) {
+                    event.getToolTip().add(TextFormatting.DARK_GRAY + "" + TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".extraInfo.desc") + ":");
 
                     //OreDict Names
                     int[] oreIDs = OreDictionary.getOreIDs(event.getItemStack());
-                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".oredictName.desc")+":");
-                    if(oreIDs.length > 0){
-                        for(int oreID : oreIDs){
-                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+OreDictionary.getOreName(oreID));
+                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".oredictName.desc") + ":");
+                    if (oreIDs.length > 0) {
+                        for (int oreID : oreIDs) {
+                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + OreDictionary.getOreName(oreID));
                         }
-                    }
-                    else{
-                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".noOredictNameAvail.desc"));
+                    } else {
+                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".noOredictNameAvail.desc"));
                     }
 
                     //Code Name
-                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".codeName.desc")+":");
-                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+Item.REGISTRY.getNameForObject(event.getItemStack().getItem()));
+                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".codeName.desc") + ":");
+                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + Item.REGISTRY.getNameForObject(event.getItemStack().getItem()));
 
                     //Base Item's Unlocalized Name
                     String baseName = event.getItemStack().getItem().getTranslationKey();
-                    if(baseName != null){
-                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".baseUnlocName.desc")+":");
-                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+baseName);
+                    if (baseName != null) {
+                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".baseUnlocName.desc") + ":");
+                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + baseName);
                     }
 
                     //Metadata
                     int meta = event.getItemStack().getItemDamage();
                     int max = event.getItemStack().getMaxDamage();
-                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".meta.desc")+":");
-                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+meta+(max > 0 ? "/"+max : ""));
+                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".meta.desc") + ":");
+                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + meta + (max > 0 ? "/" + max : ""));
 
                     //Unlocalized Name
                     String metaName = event.getItemStack().getItem().getTranslationKey(event.getItemStack());
-                    if(metaName != null && baseName != null && !metaName.equals(baseName)){
-                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".unlocName.desc")+":");
-                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+metaName);
+                    if (metaName != null && baseName != null && !metaName.equals(baseName)) {
+                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".unlocName.desc") + ":");
+                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + metaName);
                     }
 
                     //NBT
                     NBTTagCompound compound = event.getItemStack().getTagCompound();
-                    if(compound != null && !compound.isEmpty()){
-                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".nbt.desc")+":");
-                        if(GuiScreen.isShiftKeyDown()){
+                    if (compound != null && !compound.isEmpty()) {
+                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".nbt.desc") + ":");
+                        if (GuiScreen.isShiftKeyDown()) {
                             int limit = ConfigIntValues.CTRL_INFO_NBT_CHAR_LIMIT.getValue();
                             String compoundStrg = compound.toString();
                             int compoundStrgLength = compoundStrg.length();
 
                             String compoundDisplay;
-                            if(limit > 0 && compoundStrgLength > limit){
-                                compoundDisplay = compoundStrg.substring(0, limit)+TextFormatting.GRAY+" ("+(compoundStrgLength-limit)+" more characters...)";
-                            }
-                            else{
+                            if (limit > 0 && compoundStrgLength > limit) {
+                                compoundDisplay = compoundStrg.substring(0, limit) + TextFormatting.GRAY + " (" + (compoundStrgLength - limit) + " more characters...)";
+                            } else {
                                 compoundDisplay = compoundStrg;
                             }
-                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+compoundDisplay);
-                        }
-                        else{
-                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE+TextFormatting.ITALIC+"["+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".pressShift.desc")+"]");
+                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + compoundDisplay);
+                        } else {
+                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + TextFormatting.ITALIC + "[" + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".pressShift.desc") + "]");
                         }
                     }
 
                     //Disabling Info
-                    event.getToolTip().add(TextFormatting.ITALIC+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".disablingInfo.desc"));
+                    event.getToolTip().add(TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".disablingInfo.desc"));
 
-                }
-                else{
-                    if(ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()){
-                        event.getToolTip().add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+StringUtil.localize("tooltip."+ActuallyAdditions.MODID+".ctrlForMoreInfo.desc"));
+                } else {
+                    if (ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()) {
+                        event.getToolTip().add(TextFormatting.DARK_GRAY + "" + TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".ctrlForMoreInfo.desc"));
                     }
                 }
             }
@@ -172,52 +168,51 @@ public class ClientEvents{
     }
 
     @SubscribeEvent
-    public void onGameOverlay(RenderGameOverlayEvent.Post event){
-        if(event.getType() == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getMinecraft().currentScreen == null){
+    public void onGameOverlay(RenderGameOverlayEvent.Post event) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getMinecraft().currentScreen == null) {
             Minecraft minecraft = Minecraft.getMinecraft();
             EntityPlayer player = minecraft.player;
             RayTraceResult posHit = minecraft.objectMouseOver;
             FontRenderer font = minecraft.fontRenderer;
             ItemStack stack = player.getHeldItemMainhand();
 
-            if(StackUtil.isValid(stack)){
-                if(stack.getItem() instanceof IHudDisplay){
-                    ((IHudDisplay)stack.getItem()).displayHud(minecraft, player, stack, posHit, event.getResolution());
+            if (StackUtil.isValid(stack)) {
+                if (stack.getItem() instanceof IHudDisplay) {
+                    ((IHudDisplay) stack.getItem()).displayHud(minecraft, player, stack, posHit, event.getResolution());
                 }
             }
 
-            if(posHit != null && posHit.getBlockPos() != null){
+            if (posHit != null && posHit.getBlockPos() != null) {
                 Block blockHit = minecraft.world.getBlockState(posHit.getBlockPos()).getBlock();
                 TileEntity tileHit = minecraft.world.getTileEntity(posHit.getBlockPos());
 
-                if(blockHit instanceof IHudDisplay){
-                    ((IHudDisplay)blockHit).displayHud(minecraft, player, stack, posHit, event.getResolution());
+                if (blockHit instanceof IHudDisplay) {
+                    ((IHudDisplay) blockHit).displayHud(minecraft, player, stack, posHit, event.getResolution());
                 }
 
-                if(tileHit instanceof TileEntityBase){
-                    TileEntityBase base = (TileEntityBase)tileHit;
-                    if(base.isRedstoneToggle()){
-                        String strg = String.format("%s: %s", StringUtil.localize("info."+ActuallyAdditions.MODID+".redstoneMode.name"), TextFormatting.DARK_RED+StringUtil.localize("info."+ActuallyAdditions.MODID+".redstoneMode."+(base.isPulseMode ? "pulse" : "deactivation"))+TextFormatting.RESET);
-                        font.drawStringWithShadow(strg, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+5, StringUtil.DECIMAL_COLOR_WHITE);
+                if (tileHit instanceof TileEntityBase) {
+                    TileEntityBase base = (TileEntityBase) tileHit;
+                    if (base.isRedstoneToggle()) {
+                        String strg = String.format("%s: %s", StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.name"), TextFormatting.DARK_RED + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode ? "pulse" : "deactivation")) + TextFormatting.RESET);
+                        font.drawStringWithShadow(strg, event.getResolution().getScaledWidth() / 2 + 5, event.getResolution().getScaledHeight() / 2 + 5, StringUtil.DECIMAL_COLOR_WHITE);
 
                         String expl;
-                        if(StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator){
-                            expl = TextFormatting.GREEN+StringUtil.localize("info."+ActuallyAdditions.MODID+".redstoneMode.validItem");
+                        if (StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator) {
+                            expl = TextFormatting.GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem");
+                        } else {
+                            expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", StringUtil.localize(ConfigValues.itemRedstoneTorchConfigurator.getTranslationKey() + ".name"));
                         }
-                        else{
-                            expl = TextFormatting.GRAY.toString()+TextFormatting.ITALIC+StringUtil.localizeFormatted("info."+ActuallyAdditions.MODID+".redstoneMode.invalidItem", StringUtil.localize(ConfigValues.itemRedstoneTorchConfigurator.getTranslationKey()+".name"));
-                        }
-                        font.drawStringWithShadow(expl, event.getResolution().getScaledWidth()/2+5, event.getResolution().getScaledHeight()/2+15, StringUtil.DECIMAL_COLOR_WHITE);
+                        font.drawStringWithShadow(expl, event.getResolution().getScaledWidth() / 2 + 5, event.getResolution().getScaledHeight() / 2 + 15, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                 }
 
-                if(tileHit instanceof IEnergyDisplay){
-                    IEnergyDisplay display = (IEnergyDisplay)tileHit;
-                    if(!display.needsHoldShift() || player.isSneaking()){
-                        if(energyDisplay == null){
+                if (tileHit instanceof IEnergyDisplay) {
+                    IEnergyDisplay display = (IEnergyDisplay) tileHit;
+                    if (!display.needsHoldShift() || player.isSneaking()) {
+                        if (energyDisplay == null) {
                             energyDisplay = new EnergyDisplay(0, 0, null);
                         }
-                        energyDisplay.setData(2, event.getResolution().getScaledHeight()-96, display.getEnergyStorage(), true, true);
+                        energyDisplay.setData(2, event.getResolution().getScaledHeight() - 96, display.getEnergyStorage(), true, true);
 
                         GlStateManager.pushMatrix();
                         GlStateManager.color(1F, 1F, 1F, 1F);

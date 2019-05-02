@@ -16,22 +16,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements ISharingEnergyProvider{
+public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements ISharingEnergyProvider {
 
-    public TileEntityPhantomEnergyface(){
+    public TileEntityPhantomEnergyface() {
         super("energyface");
         this.type = BlockPhantom.Type.ENERGYFACE;
     }
 
     @Override
-    public boolean isBoundThingInRange(){
-        if(super.isBoundThingInRange()){
+    public boolean isBoundThingInRange() {
+        if (super.isBoundThingInRange()) {
             TileEntity tile = this.world.getTileEntity(this.boundPosition);
-            if(tile != null && !(tile instanceof TileEntityLaserRelayEnergy)){
-                for(EnumFacing facing : EnumFacing.values()){
-                    if(tile.hasCapability(CapabilityEnergy.ENERGY, facing)){
-                        return true;
-                    }
+            if (tile != null && !(tile instanceof TileEntityLaserRelayEnergy)) {
+                for (EnumFacing facing : EnumFacing.values()) {
+                    if (tile.hasCapability(CapabilityEnergy.ENERGY, facing)) { return true; }
                 }
             }
         }
@@ -39,27 +37,27 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     }
 
     @Override
-    protected boolean isCapabilitySupported(Capability<?> capability){
+    protected boolean isCapabilitySupported(Capability<?> capability) {
         return capability == CapabilityEnergy.ENERGY;
     }
 
     @Override
-    public int getEnergyToSplitShare(){
+    public int getEnergyToSplitShare() {
         return Integer.MAX_VALUE;
     }
 
     @Override
-    public boolean doesShareEnergy(){
+    public boolean doesShareEnergy() {
         return true;
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides(){
+    public EnumFacing[] getEnergyShareSides() {
         return EnumFacing.values();
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile){
+    public boolean canShareTo(TileEntity tile) {
         return true;
     }
 }

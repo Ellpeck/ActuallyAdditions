@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 /**
  * Extending this will cause a TileEntity to be able to be connected via a Phantom Connector
  */
-public interface IPhantomTile{
+public interface IPhantomTile {
 
     /**
      * @return If the Phantom Tile is currently bound to anything

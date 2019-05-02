@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
+import java.util.List;
+import java.util.Random;
+
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
@@ -22,10 +25,7 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 
-import java.util.List;
-import java.util.Random;
-
-public class VillageComponentCustomCropField extends StructureVillagePieces.House1{
+public class VillageComponentCustomCropField extends StructureVillagePieces.House1 {
 
     private static final int X_SIZE = 13;
     private static final int Y_SIZE = 4;
@@ -33,35 +33,33 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
 
     private int averageGroundLevel = -1;
 
-    public VillageComponentCustomCropField(){
+    public VillageComponentCustomCropField() {
 
     }
 
-    public VillageComponentCustomCropField(StructureBoundingBox boundingBox, EnumFacing par5){
+    public VillageComponentCustomCropField(StructureBoundingBox boundingBox, EnumFacing par5) {
         this.setCoordBaseMode(par5);
         this.boundingBox = boundingBox;
     }
 
-    public static VillageComponentCustomCropField buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, EnumFacing p4){
+    public static VillageComponentCustomCropField buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, EnumFacing p4) {
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
         return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentCustomCropField(boundingBox, p4) : null;
     }
 
     @Override
-    public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb){
-        if(this.averageGroundLevel < 0){
+    public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
+        if (this.averageGroundLevel < 0) {
             this.averageGroundLevel = this.getAverageGroundLevel(world, sbb);
-            if(this.averageGroundLevel < 0){
-                return true;
-            }
-            this.boundingBox.offset(0, this.averageGroundLevel-this.boundingBox.maxY+Y_SIZE-1, 0);
+            if (this.averageGroundLevel < 0) { return true; }
+            this.boundingBox.offset(0, this.averageGroundLevel - this.boundingBox.maxY + Y_SIZE - 1, 0);
         }
 
-        this.fillWithBlocks(world, sbb, 0, 0, 0, X_SIZE-1, Y_SIZE-1, Z_SIZE-1, Blocks.AIR);
+        this.fillWithBlocks(world, sbb, 0, 0, 0, X_SIZE - 1, Y_SIZE - 1, Z_SIZE - 1, Blocks.AIR);
         this.spawnActualHouse(world, rand, sbb);
 
-        for(int i = 0; i < X_SIZE; i++){
-            for(int j = 0; j < Z_SIZE; j++){
+        for (int i = 0; i < X_SIZE; i++) {
+            for (int j = 0; j < Z_SIZE; j++) {
                 this.clearCurrentPositionBlocksUpwards(world, i, Y_SIZE, j, sbb);
                 this.replaceAirAndLiquidDownwards(world, Blocks.DIRT.getDefaultState(), i, -1, j, sbb);
             }
@@ -70,11 +68,11 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
         return true;
     }
 
-    public void fillWithBlocks(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block block){
+    public void fillWithBlocks(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block block) {
         this.fillWithBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, block.getDefaultState(), block.getDefaultState(), false);
     }
 
-    public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb){
+    public void spawnActualHouse(World world, Random rand, StructureBoundingBox sbb) {
         this.fillWithBlocks(world, sbb, 1, 0, 1, 2, 0, 7, Blocks.FARMLAND);
         this.fillWithBlocks(world, sbb, 4, 0, 1, 5, 0, 7, Blocks.FARMLAND);
         this.fillWithBlocks(world, sbb, 7, 0, 1, 8, 0, 7, Blocks.FARMLAND);
@@ -87,7 +85,7 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
         this.fillWithBlocks(world, sbb, 3, 0, 1, 3, 0, 7, Blocks.WATER);
         this.fillWithBlocks(world, sbb, 9, 0, 1, 9, 0, 7, Blocks.WATER);
 
-        for(int i = 1; i <= 7; ++i){
+        for (int i = 1; i <= 7; ++i) {
             this.setBlockState(world, this.getRandomCropType(rand), 1, 1, i, sbb);
             this.setBlockState(world, this.getRandomCropType(rand), 2, 1, i, sbb);
             this.setBlockState(world, this.getRandomCropType(rand), 4, 1, i, sbb);
@@ -99,9 +97,9 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
         }
     }
 
-    private IBlockState getRandomCropType(Random rand){
+    private IBlockState getRandomCropType(Random rand) {
         int randomMeta = MathHelper.getInt(rand, 1, 7);
-        switch(rand.nextInt(4)){
+        switch (rand.nextInt(4)) {
         case 0:
             return InitBlocks.blockFlax.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
         case 1:

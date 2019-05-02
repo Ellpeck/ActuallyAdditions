@@ -16,7 +16,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public enum TheFoods{
+public enum TheFoods {
 
     CHEESE("cheese", 1, 0.05F, false, 3, EnumRarity.COMMON),
     PUMPKIN_STEW("pumpkin_stew", 6, 0.3F, true, 30, EnumRarity.COMMON),
@@ -48,7 +48,7 @@ public enum TheFoods{
     public final EnumRarity rarity;
     public ItemStack returnItem = StackUtil.getEmpty();
 
-    TheFoods(String name, int healAmount, float saturation, boolean getsDrunken, int useDuration, EnumRarity rarity){
+    TheFoods(String name, int healAmount, float saturation, boolean getsDrunken, int useDuration, EnumRarity rarity) {
         this.name = name;
         this.getsDrunken = getsDrunken;
         this.healAmount = healAmount;
@@ -57,7 +57,7 @@ public enum TheFoods{
         this.rarity = rarity;
     }
 
-    public static void setReturnItems(){
+    public static void setReturnItems() {
         SPAGHETTI.returnItem = new ItemStack(Items.BOWL);
         PUMPKIN_STEW.returnItem = new ItemStack(Items.BOWL);
         CARROT_JUICE.returnItem = new ItemStack(Items.GLASS_BOTTLE);

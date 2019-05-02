@@ -27,35 +27,35 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class ItemFilter extends ItemBase{
+public class ItemFilter extends ItemBase {
 
-    public ItemFilter(String name){
+    public ItemFilter(String name) {
         super(name);
         this.setMaxStackSize(1);
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.UNCOMMON;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
-        if(!world.isRemote && hand == EnumHand.MAIN_HAND){
-            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FILTER.ordinal(), world, (int)player.posX, (int)player.posY, (int)player.posZ);
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
+            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FILTER.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
         return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
 
     @Override
-    public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced){
+    public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, tooltip, advanced);
 
         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
         ItemDrill.loadSlotsFromNBT(inv, stack);
-        for(int i = 0; i < inv.getSlots(); i++){
+        for (int i = 0; i < inv.getSlots(); i++) {
             ItemStack slot = inv.getStackInSlot(i);
-            if(StackUtil.isValid(slot)){
+            if (StackUtil.isValid(slot)) {
                 tooltip.add(slot.getItem().getItemStackDisplayName(slot));
             }
         }

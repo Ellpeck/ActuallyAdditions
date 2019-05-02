@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.api.laser;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 
-public interface IConnectionPair{
+public interface IConnectionPair {
 
     void writeToNBT(NBTTagCompound compound);
 

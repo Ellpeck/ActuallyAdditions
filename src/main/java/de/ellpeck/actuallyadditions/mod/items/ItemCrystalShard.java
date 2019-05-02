@@ -24,24 +24,23 @@ import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCrystalShard extends ItemBase implements IColorProvidingItem{
+public class ItemCrystalShard extends ItemBase implements IColorProvidingItem {
 
-    public ItemCrystalShard(String name){
+    public ItemCrystalShard(String name) {
         super(name);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
     }
 
     @Override
-    public int getMetadata(int damage){
+    public int getMetadata(int damage) {
         return damage;
     }
 
     @Override
-    public String getTranslationKey(ItemStack stack){
-        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].name;
+    public String getTranslationKey(ItemStack stack) {
+        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + "_" + BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].name;
     }
-
 
     @Override
     public IRarity getForgeRarity(ItemStack stack) {
@@ -50,30 +49,29 @@ public class ItemCrystalShard extends ItemBase implements IColorProvidingItem{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list){
-        if(this.isInCreativeTab(tab)){
-            for(int j = 0; j < BlockCrystal.ALL_CRYSTALS.length; j++){
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
+        if (this.isInCreativeTab(tab)) {
+            for (int j = 0; j < BlockCrystal.ALL_CRYSTALS.length; j++) {
                 list.add(new ItemStack(this, 1, j));
             }
         }
     }
 
     @Override
-    protected void registerRendering(){
-        for(int i = 0; i < BlockCrystal.ALL_CRYSTALS.length; i++){
+    protected void registerRendering() {
+        for (int i = 0; i < BlockCrystal.ALL_CRYSTALS.length; i++) {
             ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), "inventory");
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IItemColor getItemColor(){
+    public IItemColor getItemColor() {
         return (stack, tintIndex) -> {
             int damage = stack.getItemDamage();
-            if(damage >= 0 && damage < BlockCrystal.ALL_CRYSTALS.length){
+            if (damage >= 0 && damage < BlockCrystal.ALL_CRYSTALS.length) {
                 return BlockCrystal.ALL_CRYSTALS[damage].clusterColor;
-            }
-            else{
+            } else {
                 return 0;
             }
         };

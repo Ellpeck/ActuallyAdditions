@@ -1,5 +1,8 @@
 package de.ellpeck.actuallyadditions.mod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.crafting.InitCrafting;
@@ -15,11 +18,8 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
-import java.util.ArrayList;
-import java.util.List;
-
 //Class to wrap around the trainwreck that is the new registry system
-public class RegistryHandler{
+public class RegistryHandler {
 
     public static final List<Block> BLOCKS_TO_REGISTER = new ArrayList<>();
     public static final List<Item> ITEMS_TO_REGISTER = new ArrayList<>();
@@ -27,19 +27,19 @@ public class RegistryHandler{
     public static final List<IRecipe> RECIPES_TO_REGISTER = new ArrayList<>();
 
     @SubscribeEvent
-    public void onBlockRegistry(Register<Block> event){
+    public void onBlockRegistry(Register<Block> event) {
         InitBlocks.init();
 
-        for(Block block : BLOCKS_TO_REGISTER){
+        for (Block block : BLOCKS_TO_REGISTER) {
             event.getRegistry().register(block);
         }
     }
 
     @SubscribeEvent
-    public void onItemRegistry(Register<Item> event){
+    public void onItemRegistry(Register<Item> event) {
         InitItems.init();
 
-        for(Item item : ITEMS_TO_REGISTER){
+        for (Item item : ITEMS_TO_REGISTER) {
             event.getRegistry().register(item);
         }
         ITEMS_TO_REGISTER.clear();
@@ -49,28 +49,28 @@ public class RegistryHandler{
     }
 
     @SubscribeEvent
-    public void onVillagerRegistry(Register<VillagerProfession> event){
+    public void onVillagerRegistry(Register<VillagerProfession> event) {
         InitVillager.init();
 
-        if(ConfigBoolValues.JAM_VILLAGER_EXISTS.isEnabled()) event.getRegistry().register(InitVillager.jamProfession);
-        if(ConfigBoolValues.ENGINEER_VILLAGER_EXISTS.isEnabled()) event.getRegistry().register(InitVillager.engineerProfession);
+        if (ConfigBoolValues.JAM_VILLAGER_EXISTS.isEnabled()) event.getRegistry().register(InitVillager.jamProfession);
+        if (ConfigBoolValues.ENGINEER_VILLAGER_EXISTS.isEnabled()) event.getRegistry().register(InitVillager.engineerProfession);
     }
 
     @SubscribeEvent
-    public void onCraftingRegistry(Register<IRecipe> event){
+    public void onCraftingRegistry(Register<IRecipe> event) {
         InitCrafting.init();
 
-        for(IRecipe recipe : RECIPES_TO_REGISTER){
+        for (IRecipe recipe : RECIPES_TO_REGISTER) {
             event.getRegistry().register(recipe);
         }
         RECIPES_TO_REGISTER.clear();
     }
 
     @SubscribeEvent
-    public void onSoundRegistry(Register<SoundEvent> event){
+    public void onSoundRegistry(Register<SoundEvent> event) {
         SoundHandler.init();
 
-        for(SoundEvent sound : SOUNDS_TO_REGISTER){
+        for (SoundEvent sound : SOUNDS_TO_REGISTER) {
             event.getRegistry().register(sound);
         }
         SOUNDS_TO_REGISTER.clear();

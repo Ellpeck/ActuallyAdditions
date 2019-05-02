@@ -10,14 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class TileEntityShockSuppressor extends TileEntityBase implements IEnergyDisplay{
+public class TileEntityShockSuppressor extends TileEntityBase implements IEnergyDisplay {
 
     public static final List<TileEntityShockSuppressor> SUPPRESSORS = new ArrayList<>();
 
@@ -27,67 +27,67 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     public CustomEnergyStorage storage = new CustomEnergyStorage(300000, 400, 0);
     private int oldEnergy;
 
-    public TileEntityShockSuppressor(){
+    public TileEntityShockSuppressor() {
         super("shockSuppressor");
     }
 
     @Override
-    public void onChunkUnload(){
+    public void onChunkUnload() {
         super.onChunkUnload();
 
-        if(!this.world.isRemote){
+        if (!this.world.isRemote) {
             SUPPRESSORS.remove(this);
         }
     }
 
     @Override
-    public void invalidate(){
+    public void invalidate() {
         super.invalidate();
 
-        if(!this.world.isRemote){
+        if (!this.world.isRemote) {
             SUPPRESSORS.remove(this);
         }
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
 
-        if(!this.world.isRemote){
-            if(!this.isInvalid() && !SUPPRESSORS.contains(this)){
+        if (!this.world.isRemote) {
+            if (!this.isInvalid() && !SUPPRESSORS.contains(this)) {
                 SUPPRESSORS.add(this);
             }
 
-            if(this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()){
+            if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
                 this.oldEnergy = this.storage.getEnergyStored();
             }
         }
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }
 
     @Override
-    public CustomEnergyStorage getEnergyStorage(){
+    public CustomEnergyStorage getEnergyStorage() {
         return this.storage;
     }
 
     @Override
-    public boolean needsHoldShift(){
+    public boolean needsHoldShift() {
         return false;
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
         return this.storage;
     }
 }

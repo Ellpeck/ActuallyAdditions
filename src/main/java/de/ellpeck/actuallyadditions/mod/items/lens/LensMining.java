@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
@@ -33,13 +35,11 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.List;
-
-public class LensMining extends Lens{
+public class LensMining extends Lens {
 
     public static final int ENERGY_USE = 60000;
 
-    public static void init(){
+    public static void init() {
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreCoal", 5000);
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherCoal", 5000);
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreIron", 3000);
@@ -100,58 +100,55 @@ public class LensMining extends Lens{
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreCobalt", 50);
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreArdite", 50);
 
-        for(String conf : ConfigStringListValues.MINING_LENS_EXTRA_WHITELIST.getValue()){
-            if(conf.contains("@")){
-                try{
+        for (String conf : ConfigStringListValues.MINING_LENS_EXTRA_WHITELIST.getValue()) {
+            if (conf.contains("@")) {
+                try {
                     String[] split = conf.split("@");
 
                     String ore = split[0];
                     int weight = Integer.parseInt(split[1]);
                     String dim = split[2];
 
-                    if("n".equals(dim)){
+                    if ("n".equals(dim)) {
                         ActuallyAdditionsAPI.addMiningLensNetherOre(ore, weight);
-                    }
-                    else if("s".equals(dim)){
+                    } else if ("s".equals(dim)) {
                         ActuallyAdditionsAPI.addMiningLensStoneOre(ore, weight);
                     }
-                }
-                catch(Exception e){
-                    ActuallyAdditions.LOGGER.warn("A config option appears to be incorrect: The entry "+conf+" can't be parsed!");
+                } catch (Exception e) {
+                    ActuallyAdditions.LOGGER.warn("A config option appears to be incorrect: The entry " + conf + " can't be parsed!");
                 }
             }
         }
     }
 
     @Override
-    public boolean invoke(IBlockState hitState, BlockPos hitPos, IAtomicReconstructor tile){
-        if(!tile.getWorldObject().isAirBlock(hitPos)){
-            if(tile.getEnergy() >= ENERGY_USE){
+    public boolean invoke(IBlockState hitState, BlockPos hitPos, IAtomicReconstructor tile) {
+        if (!tile.getWorldObject().isAirBlock(hitPos)) {
+            if (tile.getEnergy() >= ENERGY_USE) {
                 int adaptedUse = ENERGY_USE;
 
                 List<WeightedOre> ores = null;
                 Block hitBlock = hitState.getBlock();
-                if(hitBlock instanceof BlockStone){
+                if (hitBlock instanceof BlockStone) {
                     ores = ActuallyAdditionsAPI.STONE_ORES;
-                }
-                else if(hitBlock instanceof BlockNetherrack){
+                } else if (hitBlock instanceof BlockNetherrack) {
                     ores = ActuallyAdditionsAPI.NETHERRACK_ORES;
                     adaptedUse += 10000;
                 }
 
-                if(ores != null){
+                if (ores != null) {
                     int totalWeight = WeightedRandom.getTotalWeight(ores);
                     ItemStack stack = null;
 
                     boolean found = false;
-                    while(!found){
+                    while (!found) {
                         WeightedOre ore = WeightedRandom.getRandomItem(tile.getWorldObject().rand, ores, totalWeight);
-                        if(ore != null){
+                        if (ore != null) {
                             List<ItemStack> stacks = OreDictionary.getOres(ore.name, false);
-                            if(stacks != null && !stacks.isEmpty()){
-                                for(ItemStack aStack : stacks){
-                                    if(StackUtil.isValid(aStack) && !CrusherRecipeRegistry.hasBlacklistedOutput(aStack, ConfigStringListValues.MINING_LENS_BLACKLIST.getValue()) && aStack.getItem() instanceof ItemBlock){
-                                        adaptedUse += (totalWeight-ore.itemWeight)%40000;
+                            if (stacks != null && !stacks.isEmpty()) {
+                                for (ItemStack aStack : stacks) {
+                                    if (StackUtil.isValid(aStack) && !CrusherRecipeRegistry.hasBlacklistedOutput(aStack, ConfigStringListValues.MINING_LENS_BLACKLIST.getValue()) && aStack.getItem() instanceof ItemBlock) {
+                                        adaptedUse += (totalWeight - ore.itemWeight) % 40000;
 
                                         stack = aStack;
                                         found = true;
@@ -162,9 +159,9 @@ public class LensMining extends Lens{
                         }
                     }
 
-                    if(tile.getEnergy() >= adaptedUse){
+                    if (tile.getEnergy() >= adaptedUse) {
                         Block block = Block.getBlockFromItem(stack.getItem());
-                        if(block != Blocks.AIR){
+                        if (block != Blocks.AIR) {
                             IBlockState state = block.getStateForPlacement(tile.getWorldObject(), hitPos, EnumFacing.UP, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
                             tile.getWorldObject().setBlockState(hitPos, state, 2);
 
@@ -177,19 +174,18 @@ public class LensMining extends Lens{
             }
 
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
     @Override
-    public float[] getColor(){
-        return new float[]{76F/255F, 76F/255F, 76F/255F};
+    public float[] getColor() {
+        return new float[] { 76F / 255F, 76F / 255F, 76F / 255F };
     }
 
     @Override
-    public int getDistance(){
+    public int getDistance() {
         return 10;
     }
 }

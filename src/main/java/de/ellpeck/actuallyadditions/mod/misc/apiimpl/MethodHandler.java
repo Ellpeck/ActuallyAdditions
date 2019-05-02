@@ -51,23 +51,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
-public class MethodHandler implements IMethodHandler{
+public class MethodHandler implements IMethodHandler {
 
     @Override
-    public boolean addEffectToStack(ItemStack stack, CoffeeIngredient ingredient){
+    public boolean addEffectToStack(ItemStack stack, CoffeeIngredient ingredient) {
         boolean worked = false;
-        if(ingredient != null){
+        if (ingredient != null) {
             PotionEffect[] effects = ingredient.getEffects();
-            if(effects != null && effects.length > 0){
-                for(PotionEffect effect : effects){
+            if (effects != null && effects.length > 0) {
+                for (PotionEffect effect : effects) {
                     PotionEffect effectHas = this.getSameEffectFromStack(stack, effect);
-                    if(effectHas != null){
-                        if(effectHas.getAmplifier() < ingredient.getMaxAmplifier()-1){
+                    if (effectHas != null) {
+                        if (effectHas.getAmplifier() < ingredient.getMaxAmplifier() - 1) {
                             this.addEffectProperties(stack, effect, false, true);
                             worked = true;
                         }
-                    }
-                    else{
+                    } else {
                         this.addEffectToStack(stack, effect);
                         worked = true;
                     }
@@ -78,34 +77,32 @@ public class MethodHandler implements IMethodHandler{
     }
 
     @Override
-    public PotionEffect getSameEffectFromStack(ItemStack stack, PotionEffect effect){
+    public PotionEffect getSameEffectFromStack(ItemStack stack, PotionEffect effect) {
         PotionEffect[] effectsStack = this.getEffectsFromStack(stack);
-        if(effectsStack != null && effectsStack.length > 0){
-            for(PotionEffect effectStack : effectsStack){
-                if(effect.getPotion() == effectStack.getPotion()){
-                    return effectStack;
-                }
+        if (effectsStack != null && effectsStack.length > 0) {
+            for (PotionEffect effectStack : effectsStack) {
+                if (effect.getPotion() == effectStack.getPotion()) { return effectStack; }
             }
         }
         return null;
     }
 
     @Override
-    public void addEffectProperties(ItemStack stack, PotionEffect effect, boolean addDur, boolean addAmp){
+    public void addEffectProperties(ItemStack stack, PotionEffect effect, boolean addDur, boolean addAmp) {
         PotionEffect[] effects = this.getEffectsFromStack(stack);
         stack.setTagCompound(new NBTTagCompound());
-        for(int i = 0; i < effects.length; i++){
-            if(effects[i].getPotion() == effect.getPotion()){
-                effects[i] = new PotionEffect(effects[i].getPotion(), effects[i].getDuration()+(addDur ? effect.getDuration() : 0), effects[i].getAmplifier()+(addAmp ? effect.getAmplifier() > 0 ? effect.getAmplifier() : 1 : 0));
+        for (int i = 0; i < effects.length; i++) {
+            if (effects[i].getPotion() == effect.getPotion()) {
+                effects[i] = new PotionEffect(effects[i].getPotion(), effects[i].getDuration() + (addDur ? effect.getDuration() : 0), effects[i].getAmplifier() + (addAmp ? effect.getAmplifier() > 0 ? effect.getAmplifier() : 1 : 0));
             }
             this.addEffectToStack(stack, effects[i]);
         }
     }
 
     @Override
-    public void addEffectToStack(ItemStack stack, PotionEffect effect){
+    public void addEffectToStack(ItemStack stack, PotionEffect effect) {
         NBTTagCompound tag = stack.getTagCompound();
-        if(tag == null){
+        if (tag == null) {
             tag = new NBTTagCompound();
         }
 
@@ -115,21 +112,21 @@ public class MethodHandler implements IMethodHandler{
         compound.setInteger("Duration", effect.getDuration());
         compound.setInteger("Amplifier", effect.getAmplifier());
 
-        int counter = prevCounter+1;
-        tag.setTag(counter+"", compound);
+        int counter = prevCounter + 1;
+        tag.setTag(counter + "", compound);
         tag.setInteger("Counter", counter);
 
         stack.setTagCompound(tag);
     }
 
     @Override
-    public PotionEffect[] getEffectsFromStack(ItemStack stack){
+    public PotionEffect[] getEffectsFromStack(ItemStack stack) {
         ArrayList<PotionEffect> effects = new ArrayList<>();
         NBTTagCompound tag = stack.getTagCompound();
-        if(tag != null){
+        if (tag != null) {
             int counter = tag.getInteger("Counter");
-            while(counter > 0){
-                NBTTagCompound compound = (NBTTagCompound)tag.getTag(counter+"");
+            while (counter > 0) {
+                NBTTagCompound compound = (NBTTagCompound) tag.getTag(counter + "");
                 PotionEffect effect = new PotionEffect(Potion.getPotionById(compound.getInteger("ID")), compound.getInteger("Duration"), compound.getByte("Amplifier"));
                 effects.add(effect);
                 counter--;
@@ -139,50 +136,47 @@ public class MethodHandler implements IMethodHandler{
     }
 
     @Override
-    public boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile){
-        if(hitBlock != null){
+    public boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
+        if (hitBlock != null) {
             int range = 1;
             int rangeX = 0;
             int rangeY = 0;
             int rangeZ = 0;
 
             EnumFacing facing = tile.getOrientation();
-            if(facing != EnumFacing.UP && facing != EnumFacing.DOWN){
+            if (facing != EnumFacing.UP && facing != EnumFacing.DOWN) {
                 rangeY = range;
 
-                if(facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH){
+                if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
                     rangeX = range;
-                }
-                else{
+                } else {
                     rangeZ = range;
                 }
-            }
-            else{
+            } else {
                 rangeX = range;
                 rangeZ = range;
             }
 
             //Converting the Blocks
-            for(int reachX = -rangeX; reachX <= rangeX; reachX++){
-                for(int reachZ = -rangeZ; reachZ <= rangeZ; reachZ++){
-                    for(int reachY = -rangeY; reachY <= rangeY; reachY++){
-                        BlockPos pos = new BlockPos(hitBlock.getX()+reachX, hitBlock.getY()+reachY, hitBlock.getZ()+reachZ);
-                        if(!tile.getWorldObject().isAirBlock(pos)){
+            for (int reachX = -rangeX; reachX <= rangeX; reachX++) {
+                for (int reachZ = -rangeZ; reachZ <= rangeZ; reachZ++) {
+                    for (int reachY = -rangeY; reachY <= rangeY; reachY++) {
+                        BlockPos pos = new BlockPos(hitBlock.getX() + reachX, hitBlock.getY() + reachY, hitBlock.getZ() + reachZ);
+                        if (!tile.getWorldObject().isAirBlock(pos)) {
                             IBlockState state = tile.getWorldObject().getBlockState(pos);
-                            if(state.getBlock() instanceof BlockLaserRelay) continue;
+                            if (state.getBlock() instanceof BlockLaserRelay) continue;
                             LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), tile.getLens());
-                            if(recipe != null && tile.getEnergy() >= recipe.getEnergyUsed()){
+                            if (recipe != null && tile.getEnergy() >= recipe.getEnergyUsed()) {
                                 ItemStack output = recipe.getOutput();
-                                if(StackUtil.isValid(output)){
+                                if (StackUtil.isValid(output)) {
                                     tile.getWorldObject().playEvent(2001, pos, Block.getStateId(state));
                                     recipe.transformHook(ItemStack.EMPTY, state, pos, tile);
-                                    if(output.getItem() instanceof ItemBlock){
+                                    if (output.getItem() instanceof ItemBlock) {
                                         Block toPlace = Block.getBlockFromItem(output.getItem());
                                         IBlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
                                         tile.getWorldObject().setBlockState(pos, state2Place, 2);
-                                    }
-                                    else{
-                                        EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, output.copy());
+                                    } else {
+                                        EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output.copy());
                                         tile.getWorldObject().spawnEntity(item);
                                         tile.getWorldObject().setBlockToAir(pos);
                                     }
@@ -197,19 +191,19 @@ public class MethodHandler implements IMethodHandler{
             }
 
             //Converting the Items
-            List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX()-rangeX, hitBlock.getY()-rangeY, hitBlock.getZ()-rangeZ, hitBlock.getX()+1+rangeX, hitBlock.getY()+1+rangeY, hitBlock.getZ()+1+rangeZ));
-            for(EntityItem item : items){
+            List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX() - rangeX, hitBlock.getY() - rangeY, hitBlock.getZ() - rangeZ, hitBlock.getX() + 1 + rangeX, hitBlock.getY() + 1 + rangeY, hitBlock.getZ() + 1 + rangeZ));
+            for (EntityItem item : items) {
                 ItemStack stack = item.getItem();
-                if(!item.isDead && StackUtil.isValid(stack)){
+                if (!item.isDead && StackUtil.isValid(stack)) {
                     LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(stack, tile.getLens());
-                    if(recipe != null){
-                        int itemsPossible = Math.min(tile.getEnergy()/recipe.getEnergyUsed(), stack.getCount());
+                    if (recipe != null) {
+                        int itemsPossible = Math.min(tile.getEnergy() / recipe.getEnergyUsed(), stack.getCount());
 
-                        if(itemsPossible > 0){
+                        if (itemsPossible > 0) {
                             recipe.transformHook(item.getItem(), null, item.getPosition(), tile);
                             item.setDead();
 
-                            if(stack.getCount()-itemsPossible > 0){
+                            if (stack.getCount() - itemsPossible > 0) {
                                 ItemStack stackCopy = stack.copy();
                                 stackCopy.shrink(itemsPossible);
 
@@ -223,7 +217,7 @@ public class MethodHandler implements IMethodHandler{
                             EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
                             tile.getWorldObject().spawnEntity(newItem);
 
-                            tile.extractEnergy(recipe.getEnergyUsed()*itemsPossible);
+                            tile.extractEnergy(recipe.getEnergyUsed() * itemsPossible);
                             break;
                         }
                     }
@@ -235,18 +229,18 @@ public class MethodHandler implements IMethodHandler{
     }
 
     @Override
-    public boolean invokeReconstructor(IAtomicReconstructor tile){
-        if(tile.getEnergy() >= TileEntityAtomicReconstructor.ENERGY_USE){
+    public boolean invokeReconstructor(IAtomicReconstructor tile) {
+        if (tile.getEnergy() >= TileEntityAtomicReconstructor.ENERGY_USE) {
             EnumFacing sideToManipulate = tile.getOrientation();
             Lens currentLens = tile.getLens();
-            if(currentLens.canInvoke(tile, sideToManipulate, TileEntityAtomicReconstructor.ENERGY_USE)){
+            if (currentLens.canInvoke(tile, sideToManipulate, TileEntityAtomicReconstructor.ENERGY_USE)) {
                 tile.extractEnergy(TileEntityAtomicReconstructor.ENERGY_USE);
 
                 int distance = currentLens.getDistance();
-                for(int i = 0; i < distance; i++){
-                    BlockPos hitBlock = tile.getPosition().offset(sideToManipulate, i+1);
+                for (int i = 0; i < distance; i++) {
+                    BlockPos hitBlock = tile.getPosition().offset(sideToManipulate, i + 1);
 
-                    if(currentLens.invoke(tile.getWorldObject().getBlockState(hitBlock), hitBlock, tile) || i >= distance-1){
+                    if (currentLens.invoke(tile.getWorldObject().getBlockState(hitBlock), hitBlock, tile) || i >= distance - 1) {
                         TileEntityAtomicReconstructor.shootLaser(tile.getWorldObject(), tile.getX(), tile.getY(), tile.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
                         break;
                     }
@@ -259,22 +253,21 @@ public class MethodHandler implements IMethodHandler{
     }
 
     @Override
-    public boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance){
+    public boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance) {
         boolean hasWorkedOnce = false;
-        for(ItemStack input : inputs){
-            if(StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null){
-                for(ItemStack outputOne : outputOnes){
-                    if(StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
+        for (ItemStack input : inputs) {
+            if (StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null) {
+                for (ItemStack outputOne : outputOnes) {
+                    if (StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())) {
                         ItemStack outputOneCopy = outputOne.copy();
                         outputOneCopy.setCount(outputOneAmounts);
 
-                        if(outputTwos.isEmpty()){
+                        if (outputTwos.isEmpty()) {
                             ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getEmpty(), 0);
                             hasWorkedOnce = true;
-                        }
-                        else{
-                            for(ItemStack outputTwo : outputTwos){
-                                if(StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
+                        } else {
+                            for (ItemStack outputTwo : outputTwos) {
+                                if (StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())) {
                                     ItemStack outputTwoCopy = outputTwo.copy();
                                     outputTwoCopy.setCount(outputTwoAmounts);
 
@@ -291,19 +284,18 @@ public class MethodHandler implements IMethodHandler{
     }
 
     @Override
-    public boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance){
+    public boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance) {
         boolean hasWorkedOnce = false;
-        for(ItemStack input : inputs){
-            if(StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null){
-                if(StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
+        for (ItemStack input : inputs) {
+            if (StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null) {
+                if (StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())) {
                     ItemStack outputOneCopy = outputOne.copy();
                     outputOneCopy.setCount(outputOneAmount);
 
-                    if(!StackUtil.isValid(outputTwo)){
+                    if (!StackUtil.isValid(outputTwo)) {
                         ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getEmpty(), 0);
                         hasWorkedOnce = true;
-                    }
-                    else if(StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())){
+                    } else if (StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())) {
                         ItemStack outputTwoCopy = outputTwo.copy();
                         outputTwoCopy.setCount(outputTwoAmount);
 
@@ -317,57 +309,57 @@ public class MethodHandler implements IMethodHandler{
     }
 
     @Override
-    public IBookletPage generateTextPage(int id){
+    public IBookletPage generateTextPage(int id) {
         return this.generateTextPage(id, 0);
     }
 
     @Override
-    public IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY){
+    public IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY) {
         return this.generatePicturePage(id, resLoc, textStartY, 0);
     }
 
     @Override
-    public IBookletPage generateCraftingPage(int id, IRecipe... recipes){
+    public IBookletPage generateCraftingPage(int id, IRecipe... recipes) {
         return this.generateCraftingPage(id, 0, recipes);
     }
 
     @Override
-    public IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result){
+    public IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result) {
         return this.generateFurnacePage(id, input, result, 0);
     }
 
     @Override
-    public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages){
+    public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages) {
         return this.generateBookletChapter(identifier, entry, displayStack, 0, pages);
     }
 
     @Override
-    public IBookletPage generateTextPage(int id, int priority){
+    public IBookletPage generateTextPage(int id, int priority) {
         return new PageTextOnly(id, priority);
     }
 
     @Override
-    public IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY, int priority){
+    public IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY, int priority) {
         return new PagePicture(id, resLoc, textStartY, priority);
     }
 
     @Override
-    public IBookletPage generateCraftingPage(int id, int priority, IRecipe... recipes){
+    public IBookletPage generateCraftingPage(int id, int priority, IRecipe... recipes) {
         return new PageCrafting(id, priority, recipes);
     }
 
     @Override
-    public IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result, int priority){
+    public IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result, int priority) {
         return new PageFurnace(id, result, priority);
     }
 
     @Override
-    public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages){
+    public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages) {
         return new BookletChapter(identifier, entry, displayStack, priority, pages);
     }
 
     @Override
-    public IBookletChapter createTrial(String identifier, ItemStack displayStack, boolean textOnSecondPage){
+    public IBookletChapter createTrial(String identifier, ItemStack displayStack, boolean textOnSecondPage) {
         return new BookletChapterTrials(identifier, displayStack, textOnSecondPage);
     }
 }

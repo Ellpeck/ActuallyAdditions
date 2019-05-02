@@ -24,28 +24,28 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IRarity;
 
-public class ItemAxeAA extends ItemToolAA{
+public class ItemAxeAA extends ItemToolAA {
 
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.PLANKS, Blocks.BOOKSHELF, Blocks.LOG, Blocks.LOG2, Blocks.CHEST, Blocks.PUMPKIN, Blocks.LIT_PUMPKIN, Blocks.MELON_BLOCK, Blocks.LADDER, Blocks.WOODEN_BUTTON, Blocks.WOODEN_PRESSURE_PLATE);
 
-    public ItemAxeAA(Item.ToolMaterial material, String repairItem, String unlocalizedName, IRarity rarity){
+    public ItemAxeAA(Item.ToolMaterial material, String repairItem, String unlocalizedName, IRarity rarity) {
         super(6.0F, -3.0F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
         this.setHarvestLevel("axe", material.getHarvestLevel());
     }
 
-    public ItemAxeAA(Item.ToolMaterial material, ItemStack repairItem, String unlocalizedName, IRarity rarity){
+    public ItemAxeAA(Item.ToolMaterial material, ItemStack repairItem, String unlocalizedName, IRarity rarity) {
         super(6.0F, -3.0F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
         this.setHarvestLevel("axe", material.getHarvestLevel());
     }
 
     @Override
-    public float getDestroySpeed(ItemStack stack, IBlockState state){
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
         Material material = state.getMaterial();
         return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE ? super.getDestroySpeed(stack, state) : this.efficiency;
     }
 
     @Override
-    public Set<String> getToolClasses(ItemStack stack){
+    public Set<String> getToolClasses(ItemStack stack) {
         return Collections.singleton("axe");
     }
 }

@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
 
-public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
+public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
 
     public static final int MAX_DISTANCE = 15;
     public static final int MAX_DISTANCE_RANGED = 35;
@@ -39,21 +39,21 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
     private int changeAmountAtCaching = -1;
     private int lastRange;
 
-    public TileEntityLaserRelay(String name, LaserType type){
+    public TileEntityLaserRelay(String name, LaserType type) {
         super(1, name);
         this.type = type;
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
-        if(type == NBTType.SYNC){
+        if (type == NBTType.SYNC) {
             ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.world);
 
             NBTTagList list = compound.getTagList("Connections", 10);
-            if(!list.isEmpty()){
-                for(int i = 0; i < list.tagCount(); i++){
+            if (!list.isEmpty()) {
+                for (int i = 0; i < list.tagCount(); i++) {
                     ConnectionPair pair = new ConnectionPair();
                     pair.readFromNBT(list.getCompoundTagAt(i));
                     ActuallyAdditionsAPI.connectionHandler.addConnection(pair.getPositions()[0], pair.getPositions()[1], this.type, this.world, pair.doesSuppressRender());
@@ -63,15 +63,15 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
-        if(type == NBTType.SYNC){
+        if (type == NBTType.SYNC) {
             NBTTagList list = new NBTTagList();
 
             ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.world);
-            if(connections != null && !connections.isEmpty()){
-                for(IConnectionPair pair : connections){
+            if (connections != null && !connections.isEmpty()) {
+                for (IConnectionPair pair : connections) {
                     NBTTagCompound tag = new NBTTagCompound();
                     pair.writeToNBT(tag);
                     list.appendTag(tag);
@@ -83,16 +83,16 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
     }
 
     @Override
-    public void updateEntity(){
+    public void updateEntity() {
         super.updateEntity();
 
         int range = this.getMaxRange();
-        if(this.lastRange != range){
+        if (this.lastRange != range) {
             ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.world);
-            if(connections != null && !connections.isEmpty()){
-                for(IConnectionPair pair : connections){
-                    int distanceSq = (int)pair.getPositions()[0].distanceSq(pair.getPositions()[1]);
-                    if(distanceSq > range*range){
+            if (connections != null && !connections.isEmpty()) {
+                for (IConnectionPair pair : connections) {
+                    int distanceSq = (int) pair.getPositions()[0].distanceSq(pair.getPositions()[1]);
+                    if (distanceSq > range * range) {
                         ActuallyAdditionsAPI.connectionHandler.removeConnection(this.world, pair.getPositions()[0], pair.getPositions()[1]);
                     }
                 }
@@ -109,7 +109,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
             this.renderParticles();
         }
     }
-
+    
     @SideOnly(Side.CLIENT)
     public void renderParticles(){
         if(this.world.rand.nextInt(8) == 0){
@@ -134,14 +134,13 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
         }
     }*/
 
-    public Network getNetwork(){
-        if(this.cachedNetwork == null || this.cachedNetwork.changeAmount != this.changeAmountAtCaching){
+    public Network getNetwork() {
+        if (this.cachedNetwork == null || this.cachedNetwork.changeAmount != this.changeAmountAtCaching) {
             this.cachedNetwork = ActuallyAdditionsAPI.connectionHandler.getNetworkFor(this.pos, this.world);
 
-            if(this.cachedNetwork != null){
+            if (this.cachedNetwork != null) {
                 this.changeAmountAtCaching = this.cachedNetwork.changeAmount;
-            }
-            else{
+            } else {
                 this.changeAmountAtCaching = -1;
             }
         }
@@ -151,26 +150,25 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public AxisAlignedBB getRenderBoundingBox(){
+    public AxisAlignedBB getRenderBoundingBox() {
         return INFINITE_EXTENT_AABB;
     }
 
     @Override
-    public boolean shouldSyncSlots(){
+    public boolean shouldSyncSlots() {
         return true;
     }
 
     @Override
-    public IItemHandler getItemHandler(EnumFacing facing){
+    public IItemHandler getItemHandler(EnumFacing facing) {
         return null;
     }
 
-    public int getMaxRange(){
+    public int getMaxRange() {
         ItemStack upgrade = this.inv.getStackInSlot(0);
-        if(StackUtil.isValid(upgrade) && upgrade.getItem() == InitItems.itemLaserUpgradeRange){
+        if (StackUtil.isValid(upgrade) && upgrade.getItem() == InitItems.itemLaserUpgradeRange) {
             return MAX_DISTANCE_RANGED;
-        }
-        else{
+        } else {
             return MAX_DISTANCE;
         }
     }

@@ -46,22 +46,16 @@ import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
 
 @JEIPlugin
-public class JEIActuallyAdditionsPlugin implements IModPlugin{
+public class JEIActuallyAdditionsPlugin implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         IJeiHelpers helpers = registry.getJeiHelpers();
-        registry.addRecipeCategories(
-                new CoffeeMachineRecipeCategory(helpers.getGuiHelper()),
-                new CompostRecipeCategory(helpers.getGuiHelper()),
-                new CrusherRecipeCategory(helpers.getGuiHelper()),
-                new ReconstructorRecipeCategory(helpers.getGuiHelper()),
-                new EmpowererRecipeCategory(helpers.getGuiHelper()),
-                new BookletRecipeCategory(helpers.getGuiHelper()));
+        registry.addRecipeCategories(new CoffeeMachineRecipeCategory(helpers.getGuiHelper()), new CompostRecipeCategory(helpers.getGuiHelper()), new CrusherRecipeCategory(helpers.getGuiHelper()), new ReconstructorRecipeCategory(helpers.getGuiHelper()), new EmpowererRecipeCategory(helpers.getGuiHelper()), new BookletRecipeCategory(helpers.getGuiHelper()));
     }
 
     @Override
-    public void register(IModRegistry registry){
+    public void register(IModRegistry registry) {
         IJeiHelpers helpers = registry.getJeiHelpers();
 
         registry.handleRecipes(IBookletPage.class, BookletRecipeWrapper::new, BookletRecipeCategory.NAME);

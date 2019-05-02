@@ -18,40 +18,40 @@ import net.minecraft.block.SoundType;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
-public class BlockBushBase extends BlockBush implements ItemBlockBase.ICustomRarity, IHasModel{
+public class BlockBushBase extends BlockBush implements ItemBlockBase.ICustomRarity, IHasModel {
 
     private final String name;
 
-    public BlockBushBase(String name){
+    public BlockBushBase(String name) {
         this.name = name;
         this.setSoundType(SoundType.PLANT);
 
         this.register();
     }
 
-    private void register(){
+    private void register() {
         ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
     }
 
-    protected String getBaseName(){
+    protected String getBaseName() {
         return this.name;
     }
 
-    protected ItemBlockBase getItemBlock(){
+    protected ItemBlockBase getItemBlock() {
         return new ItemBlockBase(this);
     }
 
-    public boolean shouldAddCreative(){
+    public boolean shouldAddCreative() {
         return true;
     }
 
     @Override
-    public void registerRendering(){
+    public void registerRendering() {
         ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.COMMON;
     }
 }

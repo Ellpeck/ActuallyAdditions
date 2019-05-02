@@ -26,9 +26,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockFeeder extends BlockContainerBase{
+public class BlockFeeder extends BlockContainerBase {
 
-    public BlockFeeder(String name){
+    public BlockFeeder(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(0.5F);
@@ -36,17 +36,16 @@ public class BlockFeeder extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
-
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityFeeder();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9){
-        if(!world.isRemote){
-            TileEntityFeeder feeder = (TileEntityFeeder)world.getTileEntity(pos);
-            if(feeder != null){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+        if (!world.isRemote) {
+            TileEntityFeeder feeder = (TileEntityFeeder) world.getTileEntity(pos);
+            if (feeder != null) {
                 player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FEEDER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
@@ -55,7 +54,7 @@ public class BlockFeeder extends BlockContainerBase{
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.UNCOMMON;
     }
 }

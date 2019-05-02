@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.api.recipe;
 
-public class OilGenRecipe{
+public class OilGenRecipe {
 
     public final String fluidName;
     public final int genAmount;
@@ -22,7 +22,7 @@ public class OilGenRecipe{
      * @param genAmount The power generated, in CF/t
      * @param genTime The length the fluid burns for, in seconds
      */
-    public OilGenRecipe(String fluidName, int genAmount, int genTime){
+    public OilGenRecipe(String fluidName, int genAmount, int genTime) {
         this.fluidName = fluidName;
         this.genAmount = genAmount;
         this.genTime = genTime;

@@ -34,62 +34,62 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
+public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
     public static final int CAP = 1000;
     public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<>();
     private final IEnergyStorage[] energyStorages = new IEnergyStorage[6];
     private Mode mode = Mode.BOTH;
 
-    public TileEntityLaserRelayEnergy(String name){
+    public TileEntityLaserRelayEnergy(String name) {
         super(name, LaserType.ENERGY);
 
-        for(int i = 0; i < this.energyStorages.length; i++){
+        for (int i = 0; i < this.energyStorages.length; i++) {
             final EnumFacing facing = EnumFacing.values()[i];
-            this.energyStorages[i] = new IEnergyStorage(){
+            this.energyStorages[i] = new IEnergyStorage() {
 
                 @Override
-                public int receiveEnergy(int amount, boolean simulate){
+                public int receiveEnergy(int amount, boolean simulate) {
                     return TileEntityLaserRelayEnergy.this.transmitEnergy(facing, amount, simulate);
                 }
 
                 @Override
-                public int extractEnergy(int maxExtract, boolean simulate){
+                public int extractEnergy(int maxExtract, boolean simulate) {
                     return 0;
                 }
 
                 @Override
-                public int getEnergyStored(){
+                public int getEnergyStored() {
                     return 0;
                 }
 
                 @Override
-                public int getMaxEnergyStored(){
+                public int getMaxEnergyStored() {
                     return TileEntityLaserRelayEnergy.this.getEnergyCap();
                 }
 
                 @Override
-                public boolean canExtract(){
+                public boolean canExtract() {
                     return false;
                 }
 
                 @Override
-                public boolean canReceive(){
+                public boolean canReceive() {
                     return true;
                 }
             };
         }
     }
 
-    public TileEntityLaserRelayEnergy(){
+    public TileEntityLaserRelayEnergy() {
         this("laserRelay");
     }
 
-    private int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate){
+    private int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate) {
         int transmitted = 0;
-        if(maxTransmit > 0 && this.mode != Mode.OUTPUT_ONLY){
+        if (maxTransmit > 0 && this.mode != Mode.OUTPUT_ONLY) {
             Network network = this.getNetwork();
-            if(network != null){
+            if (network != null) {
                 transmitted = this.transferEnergyToReceiverInNeed(from, network, maxTransmit, simulate);
             }
         }
@@ -97,31 +97,31 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing){
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
         return this.energyStorages[facing == null ? 0 : facing.ordinal()];
     }
 
     @Override
-    public boolean shouldSaveDataOnChangeOrWorldStart(){
+    public boolean shouldSaveDataOnChangeOrWorldStart() {
         return true;
     }
 
     @Override
-    public void saveDataOnChangeOrWorldStart(){
+    public void saveDataOnChangeOrWorldStart() {
         Map<EnumFacing, TileEntity> old = new HashMap<>(this.receiversAround);
         boolean change = false;
 
         this.receiversAround.clear();
-        for(EnumFacing side : EnumFacing.values()){
+        for (EnumFacing side : EnumFacing.values()) {
             BlockPos pos = this.getPos().offset(side);
-            if(this.world.isBlockLoaded(pos)){
+            if (this.world.isBlockLoaded(pos)) {
                 TileEntity tile = this.world.getTileEntity(pos);
-                if(tile != null && !(tile instanceof TileEntityLaserRelay)){
-                    if(tile.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())){
+                if (tile != null && !(tile instanceof TileEntityLaserRelay)) {
+                    if (tile.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
                         this.receiversAround.put(side, tile);
 
                         TileEntity oldTile = old.get(side);
-                        if(oldTile == null || !tile.equals(oldTile)){
+                        if (oldTile == null || !tile.equals(oldTile)) {
                             change = true;
                         }
                     }
@@ -129,15 +129,15 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
             }
         }
 
-        if(change || old.size() != this.receiversAround.size()){
+        if (change || old.size() != this.receiversAround.size()) {
             Network network = this.getNetwork();
-            if(network != null){
+            if (network != null) {
                 network.changeAmount++;
             }
         }
     }
 
-    private int transferEnergyToReceiverInNeed(EnumFacing from, Network network, int maxTransfer, boolean simulate){
+    private int transferEnergyToReceiverInNeed(EnumFacing from, Network network, int maxTransfer, boolean simulate) {
         int transmitted = 0;
         //Keeps track of all the Laser Relays and Energy Acceptors that have been checked already to make nothing run multiple times
         Set<BlockPos> alreadyChecked = new ObjectOpenHashSet<>();
@@ -145,25 +145,25 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
         Set<TileEntityLaserRelayEnergy> relaysThatWork = new ObjectOpenHashSet<>();
         int totalReceiverAmount = 0;
 
-        for(IConnectionPair pair : network.connections){
-            for(BlockPos relay : pair.getPositions()){
-                if(relay != null && this.world.isBlockLoaded(relay) && !alreadyChecked.contains(relay)){
+        for (IConnectionPair pair : network.connections) {
+            for (BlockPos relay : pair.getPositions()) {
+                if (relay != null && this.world.isBlockLoaded(relay) && !alreadyChecked.contains(relay)) {
                     alreadyChecked.add(relay);
                     TileEntity relayTile = this.world.getTileEntity(relay);
-                    if(relayTile instanceof TileEntityLaserRelayEnergy){
-                        TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy)relayTile;
-                        if(theRelay.mode != Mode.INPUT_ONLY){
+                    if (relayTile instanceof TileEntityLaserRelayEnergy) {
+                        TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy) relayTile;
+                        if (theRelay.mode != Mode.INPUT_ONLY) {
                             boolean workedOnce = false;
 
-                            for(EnumFacing facing : theRelay.receiversAround.keySet()){
-                                if(theRelay != this || facing != from){
+                            for (EnumFacing facing : theRelay.receiversAround.keySet()) {
+                                if (theRelay != this || facing != from) {
                                     TileEntity tile = theRelay.receiversAround.get(facing);
 
                                     EnumFacing opp = facing.getOpposite();
-                                    if(tile != null){
-                                        if(tile.hasCapability(CapabilityEnergy.ENERGY, opp)){
+                                    if (tile != null) {
+                                        if (tile.hasCapability(CapabilityEnergy.ENERGY, opp)) {
                                             IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, opp);
-                                            if(cap != null && cap.receiveEnergy(maxTransfer, true) > 0){
+                                            if (cap != null && cap.receiveEnergy(maxTransfer, true) > 0) {
                                                 totalReceiverAmount++;
                                                 workedOnce = true;
                                             }
@@ -172,7 +172,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
                                 }
                             }
 
-                            if(workedOnce){
+                            if (workedOnce) {
                                 relaysThatWork.add(theRelay);
                             }
                         }
@@ -181,43 +181,41 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
             }
         }
 
-        if(totalReceiverAmount > 0 && !relaysThatWork.isEmpty()){
-            int amountPer = maxTransfer/totalReceiverAmount;
-            if(amountPer <= 0){
+        if (totalReceiverAmount > 0 && !relaysThatWork.isEmpty()) {
+            int amountPer = maxTransfer / totalReceiverAmount;
+            if (amountPer <= 0) {
                 amountPer = maxTransfer;
             }
 
-            for(TileEntityLaserRelayEnergy theRelay : relaysThatWork){
+            for (TileEntityLaserRelayEnergy theRelay : relaysThatWork) {
                 double highestLoss = Math.max(theRelay.getLossPercentage(), this.getLossPercentage());
                 int lowestCap = Math.min(theRelay.getEnergyCap(), this.getEnergyCap());
-                for(Map.Entry<EnumFacing, TileEntity> receiver : theRelay.receiversAround.entrySet()){
-                    if(receiver != null){
+                for (Map.Entry<EnumFacing, TileEntity> receiver : theRelay.receiversAround.entrySet()) {
+                    if (receiver != null) {
                         EnumFacing side = receiver.getKey();
                         EnumFacing opp = side.getOpposite();
                         TileEntity tile = receiver.getValue();
-                        if(!alreadyChecked.contains(tile.getPos())){
+                        if (!alreadyChecked.contains(tile.getPos())) {
                             alreadyChecked.add(tile.getPos());
-                            if(theRelay != this || side != from){
-                                if(tile.hasCapability(CapabilityEnergy.ENERGY, opp)){
+                            if (theRelay != this || side != from) {
+                                if (tile.hasCapability(CapabilityEnergy.ENERGY, opp)) {
                                     IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, opp);
-                                    if(cap != null){
+                                    if (cap != null) {
                                         int theoreticalReceived = cap.receiveEnergy(Math.min(amountPer, lowestCap), true);
-                                        if(theoreticalReceived > 0){
+                                        if (theoreticalReceived > 0) {
                                             int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
-                                            if(deduct >= theoreticalReceived){ //Happens with small numbers
+                                            if (deduct >= theoreticalReceived) { //Happens with small numbers
                                                 deduct = 0;
                                             }
 
-                                            transmitted += cap.receiveEnergy(theoreticalReceived-deduct, simulate);
+                                            transmitted += cap.receiveEnergy(theoreticalReceived - deduct, simulate);
                                             transmitted += deduct;
                                         }
                                     }
                                 }
 
                                 //If everything that could be transmitted was transmitted
-                                if(transmitted >= maxTransfer){
-                                    return transmitted;
-                                }
+                                if (transmitted >= maxTransfer) { return transmitted; }
                             }
                         }
                     }
@@ -228,71 +226,71 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay{
         return transmitted;
     }
 
-    private int calcDeduction(int theoreticalReceived, double highestLoss){
-        return ConfigBoolValues.LASER_RELAY_LOSS.isEnabled() ? MathHelper.ceil(theoreticalReceived*(highestLoss/100)) : 0;
+    private int calcDeduction(int theoreticalReceived, double highestLoss) {
+        return ConfigBoolValues.LASER_RELAY_LOSS.isEnabled() ? MathHelper.ceil(theoreticalReceived * (highestLoss / 100)) : 0;
     }
 
-    public int getEnergyCap(){
+    public int getEnergyCap() {
         return CAP;
     }
 
-    public double getLossPercentage(){
+    public double getLossPercentage() {
         return 5;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public String getExtraDisplayString(){
-        return StringUtil.localize("info."+ActuallyAdditions.MODID+".laserRelay.energy.extra")+": "+TextFormatting.DARK_RED+StringUtil.localize(this.mode.name)+TextFormatting.RESET;
+    public String getExtraDisplayString() {
+        return StringUtil.localize("info." + ActuallyAdditions.MODID + ".laserRelay.energy.extra") + ": " + TextFormatting.DARK_RED + StringUtil.localize(this.mode.name) + TextFormatting.RESET;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public String getCompassDisplayString(){
-        return TextFormatting.GREEN+StringUtil.localize("info."+ActuallyAdditions.MODID+".laserRelay.energy.display");
+    public String getCompassDisplayString() {
+        return TextFormatting.GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".laserRelay.energy.display");
     }
 
     @Override
-    public void onCompassAction(EntityPlayer player){
+    public void onCompassAction(EntityPlayer player) {
         this.mode = this.mode.getNext();
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
-        if(type != NBTType.SAVE_BLOCK){
+        if (type != NBTType.SAVE_BLOCK) {
             compound.setString("Mode", this.mode.toString());
         }
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type){
+    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
-        if(type != NBTType.SAVE_BLOCK){
+        if (type != NBTType.SAVE_BLOCK) {
             String modeStrg = compound.getString("Mode");
-            if(modeStrg != null && !modeStrg.isEmpty()){
+            if (modeStrg != null && !modeStrg.isEmpty()) {
                 this.mode = Mode.valueOf(modeStrg);
             }
         }
     }
 
-    public enum Mode{
-        BOTH("info."+ActuallyAdditions.MODID+".laserRelay.mode.both"),
-        OUTPUT_ONLY("info."+ActuallyAdditions.MODID+".laserRelay.mode.outputOnly"),
-        INPUT_ONLY("info."+ActuallyAdditions.MODID+".laserRelay.mode.inputOnly");
+    public enum Mode {
+        BOTH("info." + ActuallyAdditions.MODID + ".laserRelay.mode.both"),
+        OUTPUT_ONLY("info." + ActuallyAdditions.MODID + ".laserRelay.mode.outputOnly"),
+        INPUT_ONLY("info." + ActuallyAdditions.MODID + ".laserRelay.mode.inputOnly");
 
         public final String name;
 
-        Mode(String name){
+        Mode(String name) {
             this.name = name;
         }
 
-        public Mode getNext(){
-            int ordinal = this.ordinal()+1;
+        public Mode getNext() {
+            int ordinal = this.ordinal() + 1;
 
-            if(ordinal >= values().length){
+            if (ordinal >= values().length) {
                 ordinal = 0;
             }
 

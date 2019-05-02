@@ -22,7 +22,7 @@ import net.minecraft.util.math.BlockPos;
  * <p>
  * See ColorLensChangerByDyeMeta for reference.
  */
-public interface IColorLensChanger{
+public interface IColorLensChanger {
 
     /**
      * Modifies the given item.

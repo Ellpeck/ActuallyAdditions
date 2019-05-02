@@ -36,7 +36,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityChest;
 
-public final class InitItems{
+public final class InitItems {
 
     public static Item itemBooklet;
     public static Item itemFertilizer;
@@ -202,7 +202,7 @@ public final class InitItems{
     public static Item itemEngineerGogglesAdvanced;
     public static Item itemCrystalShard;
 
-    public static void init(){
+    public static void init() {
         ActuallyAdditions.LOGGER.info("Initializing Items...");
 
         itemCrystalShard = new ItemCrystalShard("item_crystal_shard");

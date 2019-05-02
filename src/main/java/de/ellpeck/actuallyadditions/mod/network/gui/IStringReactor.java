@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.network.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 
-public interface IStringReactor{
+public interface IStringReactor {
 
     /**
      * Called when a text gets received after typing it in in the GUI

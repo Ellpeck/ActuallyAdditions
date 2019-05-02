@@ -28,9 +28,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockBatteryBox extends BlockContainerBase{
+public class BlockBatteryBox extends BlockContainerBase {
 
-    public BlockBatteryBox(String name){
+    public BlockBatteryBox(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -39,32 +39,31 @@ public class BlockBatteryBox extends BlockContainerBase{
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return BlockSlabs.AABB_BOTTOM_HALF;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta){
+    public TileEntity createNewTileEntity(World world, int meta) {
         return new TileEntityBatteryBox();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TileEntityBatteryBox){
-            TileEntityBatteryBox box = (TileEntityBatteryBox)tile;
+        if (tile instanceof TileEntityBatteryBox) {
+            TileEntityBatteryBox box = (TileEntityBatteryBox) tile;
             ItemStack stack = player.getHeldItem(hand);
 
-            if(StackUtil.isValid(stack)){
-                if(stack.getItem() instanceof ItemBattery && !StackUtil.isValid(box.inv.getStackInSlot(0))){
+            if (StackUtil.isValid(stack)) {
+                if (stack.getItem() instanceof ItemBattery && !StackUtil.isValid(box.inv.getStackInSlot(0))) {
                     box.inv.setStackInSlot(0, stack.copy());
                     player.setHeldItem(hand, StackUtil.getEmpty());
                     return true;
                 }
-            }
-            else{
+            } else {
                 ItemStack inSlot = box.inv.getStackInSlot(0);
-                if(StackUtil.isValid(inSlot)){
+                if (StackUtil.isValid(inSlot)) {
                     player.setHeldItem(hand, inSlot.copy());
                     box.inv.setStackInSlot(0, StackUtil.getEmpty());
                     return true;
@@ -75,12 +74,12 @@ public class BlockBatteryBox extends BlockContainerBase{
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state){
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
     }
 }

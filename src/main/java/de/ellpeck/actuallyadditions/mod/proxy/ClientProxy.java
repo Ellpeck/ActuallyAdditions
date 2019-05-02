@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.proxy;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,13 +61,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-public class ClientProxy implements IProxy{
+public class ClientProxy implements IProxy {
 
     private static final List<Item> COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING = new ArrayList<>();
     private static final List<Block> COLOR_PRODIVIDING_BLOCKS_FOR_REGISTERING = new ArrayList<>();
 
     @Override
-    public void preInit(FMLPreInitializationEvent event){
+    public void preInit(FMLPreInitializationEvent event) {
         ActuallyAdditions.LOGGER.info("PreInitializing ClientProxy...");
 
         MinecraftForge.EVENT_BUS.register(new ClientRegistryHandler());
@@ -77,7 +76,7 @@ public class ClientProxy implements IProxy{
     }
 
     @Override
-    public void init(FMLInitializationEvent event){
+    public void init(FMLInitializationEvent event) {
         ActuallyAdditions.LOGGER.info("Initializing ClientProxy...");
 
         RenderWorm.fixItemStack();
@@ -99,18 +98,18 @@ public class ClientProxy implements IProxy{
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayItemWhitelist.class, laser);
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserRelayFluids.class, laser);
 
-        for(Item item : COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING){
-            if(item instanceof IColorProvidingItem){
-                Minecraft.getMinecraft().getItemColors().registerItemColorHandler(((IColorProvidingItem)item).getItemColor(), item);
+        for (Item item : COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING) {
+            if (item instanceof IColorProvidingItem) {
+                Minecraft.getMinecraft().getItemColors().registerItemColorHandler(((IColorProvidingItem) item).getItemColor(), item);
             }
         }
 
-        for(Block block : COLOR_PRODIVIDING_BLOCKS_FOR_REGISTERING){
-            if(block instanceof IColorProvidingBlock){
-                Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(((IColorProvidingBlock)block).getBlockColor(), block);
+        for (Block block : COLOR_PRODIVIDING_BLOCKS_FOR_REGISTERING) {
+            if (block instanceof IColorProvidingBlock) {
+                Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(((IColorProvidingBlock) block).getBlockColor(), block);
             }
-            if(block instanceof IColorProvidingItem){
-                Minecraft.getMinecraft().getItemColors().registerItemColorHandler(((IColorProvidingItem)block).getItemColor(), block);
+            if (block instanceof IColorProvidingItem) {
+                Minecraft.getMinecraft().getItemColors().registerItemColorHandler(((IColorProvidingItem) block).getItemColor(), block);
             }
         }
 
@@ -128,29 +127,29 @@ public class ClientProxy implements IProxy{
     }
 
     @Override
-    public void postInit(FMLPostInitializationEvent event){
+    public void postInit(FMLPostInitializationEvent event) {
         ActuallyAdditions.LOGGER.info("PostInitializing ClientProxy...");
 
         new SpecialRenderInit();
     }
 
     @Override
-    public void addRenderRegister(ItemStack stack, ResourceLocation location, String variant){
+    public void addRenderRegister(ItemStack stack, ResourceLocation location, String variant) {
         ClientRegistryHandler.MODEL_LOCATIONS_FOR_REGISTERING.put(stack, new ModelResourceLocation(location, variant));
     }
 
     @Override
-    public void addColoredItem(Item item){
+    public void addColoredItem(Item item) {
         COLOR_PRODIVIDING_ITEMS_FOR_REGISTERING.add(item);
     }
 
     @Override
-    public void addColoredBlock(Block block){
+    public void addColoredBlock(Block block) {
         COLOR_PRODIVIDING_BLOCKS_FOR_REGISTERING.add(block);
     }
 
     @Override
-    public EntityPlayer getCurrentPlayer(){
+    public EntityPlayer getCurrentPlayer() {
         return Minecraft.getMinecraft().player;
     }
 
@@ -158,7 +157,6 @@ public class ClientProxy implements IProxy{
     public void sendBreakPacket(BlockPos pos) {
         NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getConnection();
         assert netHandlerPlayClient != null;
-        netHandlerPlayClient.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft
-                .getMinecraft().objectMouseOver.sideHit));
+        netHandlerPlayClient.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft.getMinecraft().objectMouseOver.sideHit));
     }
 }

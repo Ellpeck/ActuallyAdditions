@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
@@ -36,46 +39,43 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public final class PacketHandler{
+public final class PacketHandler {
 
     public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<>();
-    public static final IDataHandler LASER_HANDLER = new IDataHandler(){
+    public static final IDataHandler LASER_HANDLER = new IDataHandler() {
         @Override
         @SideOnly(Side.CLIENT)
-        public void handleData(NBTTagCompound compound, MessageContext context){
-            AssetUtil.spawnLaserWithTimeClient(compound.getDouble("StartX"), compound.getDouble("StartY"), compound.getDouble("StartZ"), compound.getDouble("EndX"), compound.getDouble("EndY"), compound.getDouble("EndZ"), new float[]{compound.getFloat("Color1"), compound.getFloat("Color2"), compound.getFloat("Color3")}, compound.getInteger("MaxAge"), compound.getDouble("RotationTime"), compound.getFloat("Size"), compound.getFloat("Alpha"));
+        public void handleData(NBTTagCompound compound, MessageContext context) {
+            AssetUtil.spawnLaserWithTimeClient(compound.getDouble("StartX"), compound.getDouble("StartY"), compound.getDouble("StartZ"), compound.getDouble("EndX"), compound.getDouble("EndY"), compound.getDouble("EndZ"), new float[] { compound.getFloat("Color1"), compound.getFloat("Color2"), compound.getFloat("Color3") }, compound.getInteger("MaxAge"), compound.getDouble("RotationTime"), compound.getFloat("Size"), compound.getFloat("Alpha"));
         }
     };
-    public static final IDataHandler TILE_ENTITY_HANDLER = new IDataHandler(){
+    public static final IDataHandler TILE_ENTITY_HANDLER = new IDataHandler() {
         @Override
         @SideOnly(Side.CLIENT)
-        public void handleData(NBTTagCompound compound, MessageContext context){
+        public void handleData(NBTTagCompound compound, MessageContext context) {
             World world = Minecraft.getMinecraft().world;
-            if(world != null){
+            if (world != null) {
                 TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
-                if(tile instanceof TileEntityBase){
-                    ((TileEntityBase)tile).readSyncableNBT(compound.getCompoundTag("Data"), TileEntityBase.NBTType.SYNC);
+                if (tile instanceof TileEntityBase) {
+                    ((TileEntityBase) tile).readSyncableNBT(compound.getCompoundTag("Data"), TileEntityBase.NBTType.SYNC);
                 }
             }
         }
     };
-    public static final IDataHandler LASER_PARTICLE_HANDLER = new IDataHandler(){
+    public static final IDataHandler LASER_PARTICLE_HANDLER = new IDataHandler() {
         @Override
         @SideOnly(Side.CLIENT)
-        public void handleData(NBTTagCompound compound, MessageContext context){
+        public void handleData(NBTTagCompound compound, MessageContext context) {
             Minecraft mc = Minecraft.getMinecraft();
             ItemStack stack = new ItemStack(compound);
 
-            double inX = compound.getDouble("InX")+0.5;
-            double inY = compound.getDouble("InY")+0.78;
-            double inZ = compound.getDouble("InZ")+0.5;
+            double inX = compound.getDouble("InX") + 0.5;
+            double inY = compound.getDouble("InY") + 0.78;
+            double inZ = compound.getDouble("InZ") + 0.5;
 
-            double outX = compound.getDouble("OutX")+0.5;
-            double outY = compound.getDouble("OutY")+0.525;
-            double outZ = compound.getDouble("OutZ")+0.5;
+            double outX = compound.getDouble("OutX") + 0.5;
+            double outY = compound.getDouble("OutY") + 0.525;
+            double outZ = compound.getDouble("OutZ") + 0.5;
 
             Particle fx = new ParticleLaserItem(mc.world, outX, outY, outZ, stack, 0.025, inX, inY, inZ);
             mc.effectRenderer.addEffect(fx);
@@ -85,21 +85,21 @@ public final class PacketHandler{
         World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
         TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
 
-        if(tile instanceof IButtonReactor){
-            IButtonReactor reactor = (IButtonReactor)tile;
+        if (tile instanceof IButtonReactor) {
+            IButtonReactor reactor = (IButtonReactor) tile;
             Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
-            if(entity instanceof EntityPlayer){
-                reactor.onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)entity);
+            if (entity instanceof EntityPlayer) {
+                reactor.onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer) entity);
             }
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_CONTAINER_HANDLER = (compound, context) -> {
         World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
         Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
-        if(entity instanceof EntityPlayer){
-            Container container = ((EntityPlayer)entity).openContainer;
-            if(container instanceof IButtonReactor){
-                ((IButtonReactor)container).onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer)entity);
+        if (entity instanceof EntityPlayer) {
+            Container container = ((EntityPlayer) entity).openContainer;
+            if (container instanceof IButtonReactor) {
+                ((IButtonReactor) container).onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer) entity);
             }
         }
     };
@@ -107,35 +107,34 @@ public final class PacketHandler{
         World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
         TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
 
-        if(tile instanceof INumberReactor){
-            INumberReactor reactor = (INumberReactor)tile;
-            reactor.onNumberReceived(compound.getDouble("Number"), compound.getInteger("NumberID"), (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID")));
+        if (tile instanceof INumberReactor) {
+            INumberReactor reactor = (INumberReactor) tile;
+            reactor.onNumberReceived(compound.getDouble("Number"), compound.getInteger("NumberID"), (EntityPlayer) world.getEntityByID(compound.getInteger("PlayerID")));
         }
     };
     public static final IDataHandler GUI_STRING_TO_TILE_HANDLER = (compound, context) -> {
         World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
         TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
 
-        if(tile instanceof IStringReactor){
-            IStringReactor reactor = (IStringReactor)tile;
-            reactor.onTextReceived(compound.getString("Text"), compound.getInteger("TextID"), (EntityPlayer)world.getEntityByID(compound.getInteger("PlayerID")));
+        if (tile instanceof IStringReactor) {
+            IStringReactor reactor = (IStringReactor) tile;
+            reactor.onTextReceived(compound.getString("Text"), compound.getInteger("TextID"), (EntityPlayer) world.getEntityByID(compound.getInteger("PlayerID")));
         }
     };
-    public static final IDataHandler SYNC_PLAYER_DATA = new IDataHandler(){
+    public static final IDataHandler SYNC_PLAYER_DATA = new IDataHandler() {
         @Override
         @SideOnly(Side.CLIENT)
-        public void handleData(NBTTagCompound compound, MessageContext context){
+        public void handleData(NBTTagCompound compound, MessageContext context) {
             NBTTagCompound dataTag = compound.getCompoundTag("Data");
             EntityPlayer player = ActuallyAdditions.PROXY.getCurrentPlayer();
 
-            if(player != null){
+            if (player != null) {
                 PlayerData.getDataFromPlayer(player).readFromNBT(dataTag, false);
 
-                if(compound.getBoolean("Log")){
-                    ActuallyAdditions.LOGGER.info("Receiving (new or changed) Player Data for player "+player.getName()+".");
+                if (compound.getBoolean("Log")) {
+                    ActuallyAdditions.LOGGER.info("Receiving (new or changed) Player Data for player " + player.getName() + ".");
                 }
-            }
-            else{
+            } else {
                 ActuallyAdditions.LOGGER.error("Tried to receive Player Data for the current player, but he doesn't seem to be present!");
             }
         }
@@ -143,37 +142,34 @@ public final class PacketHandler{
     public static final IDataHandler PLAYER_DATA_TO_SERVER = (compound, context) -> {
         World world = DimensionManager.getWorld(compound.getInteger("World"));
         EntityPlayer player = world.getPlayerEntityByUUID(compound.getUniqueId("UUID"));
-        if(player != null){
+        if (player != null) {
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
 
             int type = compound.getInteger("Type");
-            if(type == 0){
+            if (type == 0) {
                 data.loadBookmarks(compound.getTagList("Bookmarks", 8));
-            }
-            else if(type == 1){
+            } else if (type == 1) {
                 data.didBookTutorial = compound.getBoolean("DidBookTutorial");
-            }
-            else if(type == 2){
+            } else if (type == 2) {
                 data.loadTrials(compound.getTagList("Trials", 8));
 
-                if(compound.getBoolean("Achievement")){
+                if (compound.getBoolean("Achievement")) {
                     //TheAchievements.COMPLETE_TRIALS.get(player);
                 }
             }
             WorldData.get(world).markDirty();
 
-            if(compound.getBoolean("Log")){
-                ActuallyAdditions.LOGGER.info("Receiving changed Player Data for player "+player.getName()+".");
+            if (compound.getBoolean("Log")) {
+                ActuallyAdditions.LOGGER.info("Receiving changed Player Data for player " + player.getName() + ".");
             }
-        }
-        else{
-            ActuallyAdditions.LOGGER.error("Tried to receive Player Data for UUID "+compound.getUniqueId("UUID")+", but he doesn't seem to be present!");
+        } else {
+            ActuallyAdditions.LOGGER.error("Tried to receive Player Data for UUID " + compound.getUniqueId("UUID") + ", but he doesn't seem to be present!");
         }
     };
 
     public static SimpleNetworkWrapper theNetwork;
 
-    public static void init(){
+    public static void init() {
         theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(ActuallyAdditions.MODID);
         theNetwork.registerMessage(PacketServerToClient.Handler.class, PacketServerToClient.class, 0, Side.CLIENT);
         theNetwork.registerMessage(PacketClientToServer.Handler.class, PacketClientToServer.class, 1, Side.SERVER);

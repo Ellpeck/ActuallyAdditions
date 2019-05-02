@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.particle;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
+
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -22,11 +25,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL14;
 
 @SideOnly(Side.CLIENT)
-public class ParticleLaserItem extends Particle{
+public class ParticleLaserItem extends Particle {
 
     private final double otherX;
     private final double otherY;
@@ -34,12 +35,12 @@ public class ParticleLaserItem extends Particle{
 
     private final ItemStack stack;
 
-    private ParticleLaserItem(World world, double posX, double posY, double posZ, ItemStack stack, double motionY){
+    private ParticleLaserItem(World world, double posX, double posY, double posZ, ItemStack stack, double motionY) {
         this(world, posX, posY, posZ, stack, motionY, 0, 0, 0);
     }
 
-    public ParticleLaserItem(World world, double posX, double posY, double posZ, ItemStack stack, double motionY, double otherX, double otherY, double otherZ){
-        super(world, posX+(world.rand.nextDouble()-0.5)/8, posY, posZ+(world.rand.nextDouble()-0.5)/8);
+    public ParticleLaserItem(World world, double posX, double posY, double posZ, ItemStack stack, double motionY, double otherX, double otherY, double otherZ) {
+        super(world, posX + (world.rand.nextDouble() - 0.5) / 8, posY, posZ + (world.rand.nextDouble() - 0.5) / 8);
         this.stack = stack;
         this.otherX = otherX;
         this.otherY = otherY;
@@ -54,31 +55,31 @@ public class ParticleLaserItem extends Particle{
     }
 
     @Override
-    public void setExpired(){
+    public void setExpired() {
         super.setExpired();
 
-        if(this.otherX != 0 || this.otherY != 0 || this.otherZ != 0){
+        if (this.otherX != 0 || this.otherY != 0 || this.otherZ != 0) {
             Particle fx = new ParticleLaserItem(this.world, this.otherX, this.otherY, this.otherZ, this.stack, -0.025);
             Minecraft.getMinecraft().effectRenderer.addEffect(fx);
         }
     }
 
     @Override
-    public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ){
+    public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
         GlStateManager.pushMatrix();
         RenderHelper.enableStandardItemLighting();
 
-        GlStateManager.translate(this.posX-TileEntityRendererDispatcher.staticPlayerX, this.posY-TileEntityRendererDispatcher.staticPlayerY, this.posZ-TileEntityRendererDispatcher.staticPlayerZ);
+        GlStateManager.translate(this.posX - TileEntityRendererDispatcher.staticPlayerX, this.posY - TileEntityRendererDispatcher.staticPlayerY, this.posZ - TileEntityRendererDispatcher.staticPlayerZ);
         GlStateManager.scale(0.3F, 0.3F, 0.3F);
 
-        double boop = Minecraft.getSystemTime()/600D;
-        GlStateManager.rotate((float)(boop*40D%360), 0, 1, 0);
+        double boop = Minecraft.getSystemTime() / 600D;
+        GlStateManager.rotate((float) (boop * 40D % 360), 0, 1, 0);
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_CONSTANT_COLOR, GlStateManager.SourceFactor.ONE.factor, GlStateManager.DestFactor.ZERO.factor);
 
-        float ageRatio = (float)this.particleAge/(float)this.particleMaxAge;
-        float color = this.motionY < 0 ? 1F-ageRatio : ageRatio;
+        float ageRatio = (float) this.particleAge / (float) this.particleMaxAge;
+        float color = this.motionY < 0 ? 1F - ageRatio : ageRatio;
         GL14.glBlendColor(color, color, color, color);
 
         AssetUtil.renderItemWithoutScrewingWithColors(this.stack);
@@ -88,7 +89,7 @@ public class ParticleLaserItem extends Particle{
     }
 
     @Override
-    public int getFXLayer(){
+    public int getFXLayer() {
         return 3;
     }
 }

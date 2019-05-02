@@ -26,34 +26,34 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class CreativeTab extends CreativeTabs{
+public class CreativeTab extends CreativeTabs {
 
     public static final CreativeTab INSTANCE = new CreativeTab();
     private NonNullList<ItemStack> list;
 
-    public CreativeTab(){
+    public CreativeTab() {
         super(ActuallyAdditions.MODID);
-        this.setBackgroundImageName(ActuallyAdditions.MODID+".png");
+        this.setBackgroundImageName(ActuallyAdditions.MODID + ".png");
     }
 
     @Override
-    public boolean hasSearchBar(){
+    public boolean hasSearchBar() {
         return true;
     }
 
     @Override
-    public int getSearchbarWidth(){
+    public int getSearchbarWidth() {
         return 70;
     }
 
     @Override
-    public ItemStack createIcon(){
+    public ItemStack createIcon() {
         return new ItemStack(InitItems.itemBooklet);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void displayAllRelevantItems(NonNullList<ItemStack> list){
+    public void displayAllRelevantItems(NonNullList<ItemStack> list) {
         this.list = list;
 
         this.add(InitItems.itemBooklet);
@@ -349,14 +349,14 @@ public class CreativeTab extends CreativeTabs{
         this.add(InitItems.itemBootsCrystalWhite);
     }
 
-    public void add(Item item){
-        if(item != null && (!(item instanceof IDisableableItem) || item instanceof IDisableableItem && !((IDisableableItem) item).isDisabled())){
+    public void add(Item item) {
+        if (item != null && (!(item instanceof IDisableableItem) || item instanceof IDisableableItem && !((IDisableableItem) item).isDisabled())) {
             item.getSubItems(INSTANCE, this.list);
         }
     }
 
-    public void add(Block block){
-        if(block != null){
+    public void add(Block block) {
+        if (block != null) {
             block.getSubBlocks(INSTANCE, this.list);
         }
     }

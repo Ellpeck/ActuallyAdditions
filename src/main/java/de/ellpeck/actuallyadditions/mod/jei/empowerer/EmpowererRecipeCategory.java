@@ -21,38 +21,38 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 
-public class EmpowererRecipeCategory implements IRecipeCategory<EmpowererRecipeWrapper>{
+public class EmpowererRecipeCategory implements IRecipeCategory<EmpowererRecipeWrapper> {
 
     public static final String NAME = "actuallyadditions.empowerer";
 
     private final IDrawable background;
 
-    public EmpowererRecipeCategory(IGuiHelper helper){
+    public EmpowererRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(AssetUtil.getGuiLocation("gui_nei_empowerer"), 0, 0, 135, 80);
     }
 
     @Override
-    public String getUid(){
+    public String getUid() {
         return NAME;
     }
 
     @Override
-    public String getTitle(){
-        return StringUtil.localize("container.nei."+NAME+".name");
+    public String getTitle() {
+        return StringUtil.localize("container.nei." + NAME + ".name");
     }
 
     @Override
-    public String getModName(){
+    public String getModName() {
         return ActuallyAdditions.NAME;
     }
 
     @Override
-    public IDrawable getBackground(){
+    public IDrawable getBackground() {
         return this.background;
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, EmpowererRecipeWrapper wrapper, IIngredients ingredients){
+    public void setRecipe(IRecipeLayout recipeLayout, EmpowererRecipeWrapper wrapper, IIngredients ingredients) {
         recipeLayout.getItemStacks().init(0, true, 31, 31);
         recipeLayout.getItemStacks().set(0, Arrays.asList(wrapper.theRecipe.getInput().getMatchingStacks()));
 

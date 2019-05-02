@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import net.minecraft.util.EnumFacing;
 
-public interface ISharingFluidHandler{
+public interface ISharingFluidHandler {
 
     int getMaxFluidAmountToSplitShare();
 

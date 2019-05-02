@@ -19,9 +19,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockHeatCollector extends BlockContainerBase{
+public class BlockHeatCollector extends BlockContainerBase {
 
-    public BlockHeatCollector(String name){
+    public BlockHeatCollector(String name) {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(2.5F);
@@ -29,14 +29,13 @@ public class BlockHeatCollector extends BlockContainerBase{
         this.setSoundType(SoundType.STONE);
     }
 
-
     @Override
-    public TileEntity createNewTileEntity(World world, int par2){
+    public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityHeatCollector();
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.UNCOMMON;
     }
 }

@@ -62,7 +62,7 @@ public class BlockDisplayStand extends BlockContainerBase {
                         ItemStack toPut = heldItem.copy();
                         toPut.setCount(1);
                         stand.inv.setStackInSlot(0, toPut);
-                        if(!player.capabilities.isCreativeMode) heldItem.shrink(1);
+                        if (!player.capabilities.isCreativeMode) heldItem.shrink(1);
                         return true;
                     } else if (ItemUtil.canBeStacked(heldItem, display)) {
                         int maxTransfer = Math.min(display.getCount(), heldItem.getMaxStackSize() - heldItem.getCount());
