@@ -23,9 +23,9 @@ if(hasProperty('buildnumber')){
 }
 
 minecraft {
-    version = "1.12.2-14.23.4.2760"
+    version = "1.12.2-14.23.5.2836"
     runDir = "run"
-    mappings = "snapshot_20180720"
+    mappings = "stable_39"
 	makeObfSourceJar = false
     replaceIn "ActuallyAdditions.java"
     replace "@VERSION@", project.version.toString()
@@ -33,7 +33,7 @@ minecraft {
 
 repositories {
     maven {
-        url "http://dvs1.progwml6.com/files/maven"
+        url "https://dvs1.progwml6.com/files/maven"
     }
 	maven {
 		url "http://tehnut.info/maven"
@@ -45,8 +45,8 @@ repositories {
 
 dependencies {
 	deobfCompile "mezz.jei:jei_1.12.2:+"
-	deobfCompile "mcp.mobius.waila:Hwyla:+"
-    deobfCompile "org.cyclops.commoncapabilities:CommonCapabilities:1.12.2-+"
+	deobfCompile "mcp.mobius.waila:Hwyla:1.8+"
+    deobfCompile ("org.cyclops.commoncapabilities:CommonCapabilities:1.12.2-+")
 }
 
 processResources {

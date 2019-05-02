@@ -62,10 +62,10 @@ public class ItemBag extends ItemBase {
                                     if (!ItemStack.areItemStacksEqual(remain, invStack)) {
                                         inv.setStackInSlot(j, remain.copy());
                                         changed = true;
-
                                         if (!StackUtil.isValid(remain)) {
                                             break;
                                         }
+                                        invStack = remain;
                                     }
                                 }
                             }
