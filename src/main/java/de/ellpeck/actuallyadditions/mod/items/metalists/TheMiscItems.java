@@ -12,8 +12,9 @@ package de.ellpeck.actuallyadditions.mod.items.metalists;
 
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.EnumRarity;
+import net.minecraftforge.common.IRarity;
 
-public enum TheMiscItems{
+public enum TheMiscItems {
 
     PAPER_CONE("paper_cone", EnumRarity.COMMON),
     MASHED_FOOD("mashed_food", EnumRarity.UNCOMMON),
@@ -43,9 +44,9 @@ public enum TheMiscItems{
     YOUTUBE_ICON("youtube_icon", Util.FALLBACK_RARITY);
 
     public final String name;
-    public final EnumRarity rarity;
+    public final IRarity rarity;
 
-    TheMiscItems(String name, EnumRarity rarity){
+    TheMiscItems(String name, IRarity rarity) {
         this.name = name;
         this.rarity = rarity;
     }

@@ -10,9 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
+import java.util.Arrays;
+import java.util.List;
+
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.util.RefHelp;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -23,14 +27,10 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class PageCrafting extends BookletPage{
 
@@ -152,8 +152,8 @@ public class PageCrafting extends BookletPage{
         else if(recipe instanceof ShapedOreRecipe){
             ShapedOreRecipe shaped = (ShapedOreRecipe)recipe;
             try{
-                width = ReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shaped, 4);
-                height = ReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shaped, 5);
+                width = RefHelp.getPrivateValue(ShapedOreRecipe.class, shaped, 4);
+                height = RefHelp.getPrivateValue(ShapedOreRecipe.class, shaped, 5);
             }
             catch(Exception e){
                 ActuallyAdditions.LOGGER.error("Something went wrong trying to get the Crafting Recipe in the booklet to display!", e);

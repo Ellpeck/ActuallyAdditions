@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.relauncher.Side;
@@ -50,7 +51,7 @@ public class ItemMisc extends ItemBase{
 
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public IRarity getForgeRarity(ItemStack stack){
         return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? EnumRarity.COMMON : ALL_MISC_ITEMS[stack.getItemDamage()].rarity;
     }
 

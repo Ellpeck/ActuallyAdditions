@@ -63,7 +63,7 @@ public class ItemDisplay{
 
             for(int k = 0; k < list.size(); ++k){
                 if(k == 0){
-                    list.set(k, this.stack.getRarity().color+list.get(k));
+                    list.set(k, this.stack.getItem().getForgeRarity(this.stack).getColor()+list.get(k));
                 }
                 else{
                     list.set(k, TextFormatting.GRAY+list.get(k));

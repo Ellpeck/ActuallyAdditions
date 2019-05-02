@@ -17,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.IRarity;
 
 public class BlockBase extends Block implements ItemBlockBase.ICustomRarity, IHasModel{
 
@@ -51,7 +52,7 @@ public class BlockBase extends Block implements ItemBlockBase.ICustomRarity, IHa
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public IRarity getRarity(ItemStack stack){
         return EnumRarity.COMMON;
     }
 }

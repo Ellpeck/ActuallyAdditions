@@ -24,17 +24,18 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrystal extends BlockBase{
+public class BlockCrystal extends BlockBase {
 
     public static final TheCrystals[] ALL_CRYSTALS = TheCrystals.values();
     private static final PropertyEnum<TheCrystals> TYPE = PropertyEnum.create("type", TheCrystals.class);
 
     private final boolean isEmpowered;
 
-    public BlockCrystal(String name, boolean isEmpowered){
+    public BlockCrystal(String name, boolean isEmpowered) {
         super(Material.ROCK, name);
         this.isEmpowered = isEmpowered;
         this.setHardness(1.5F);
@@ -43,66 +44,66 @@ public class BlockCrystal extends BlockBase{
     }
 
     @Override
-    public int damageDropped(IBlockState state){
+    public int damageDropped(IBlockState state) {
         return this.getMetaFromState(state);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list){
-        for(int j = 0; j < ALL_CRYSTALS.length; j++){
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
+        for (int j = 0; j < ALL_CRYSTALS.length; j++) {
             list.add(new ItemStack(this, 1, j));
         }
     }
 
     @Override
-    protected ItemBlockBase getItemBlock(){
+    protected ItemBlockBase getItemBlock() {
         return new TheItemBlock(this);
     }
 
     @Override
-    public void registerRendering(){
-        for(int i = 0; i < ALL_CRYSTALS.length; i++){
-            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName()+"="+ALL_CRYSTALS[i].name);
+    public void registerRendering() {
+        for (int i = 0; i < ALL_CRYSTALS.length; i++) {
+            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName() + "=" + ALL_CRYSTALS[i].name);
         }
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta){
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(TYPE, TheCrystals.values()[meta]);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state){
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(TYPE).ordinal();
     }
 
     @Override
-    protected BlockStateContainer createBlockState(){
+    protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, TYPE);
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack){
+    public IRarity getRarity(ItemStack stack) {
         return stack.getItemDamage() >= ALL_CRYSTALS.length ? EnumRarity.COMMON : ALL_CRYSTALS[stack.getItemDamage()].rarity;
     }
 
-    public static class TheItemBlock extends ItemBlockBase{
+    public static class TheItemBlock extends ItemBlockBase {
 
-        public TheItemBlock(Block block){
+        public TheItemBlock(Block block) {
             super(block);
             this.setHasSubtypes(true);
             this.setMaxDamage(0);
         }
 
         @Override
-        public String getTranslationKey(ItemStack stack){
-            return stack.getItemDamage() >= ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey()+"_"+ALL_CRYSTALS[stack.getItemDamage()].name;
+        public String getTranslationKey(ItemStack stack) {
+            return stack.getItemDamage() >= ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + "_" + ALL_CRYSTALS[stack.getItemDamage()].name;
         }
 
         @Override
-        public boolean hasEffect(ItemStack stack){
-            return this.block instanceof BlockCrystal && ((BlockCrystal)this.block).isEmpowered;
+        public boolean hasEffect(ItemStack stack) {
+            return this.block instanceof BlockCrystal && ((BlockCrystal) this.block).isEmpowered;
         }
     }
 }
