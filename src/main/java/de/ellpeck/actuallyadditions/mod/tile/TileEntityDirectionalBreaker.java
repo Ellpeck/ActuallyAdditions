@@ -85,7 +85,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
                 if (blockToBreak != null && !this.world.isAirBlock(coordsBlock) && this.world.getBlockState(coordsBlock).getBlockHardness(this.world, coordsBlock) > -1.0F) {
                     NonNullList<ItemStack> drops = NonNullList.create();
                     blockToBreak.getDrops(drops, this.world, coordsBlock, breakState, 0);
-                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.world, coordsBlock);
+                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.world, coordsBlock);
 
                     if (chance > 0 && this.world.rand.nextFloat() <= chance) {
                         if (StackUtil.canAddAll(this.inv, drops, false)) {

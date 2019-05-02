@@ -131,7 +131,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
                 if (block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
                     NonNullList<ItemStack> drops = NonNullList.create();
                     block.getDrops(drops, this.world, pos, state, 0);
-                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(drops, this.world, pos);
+                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.world, pos);
 
                     if (chance > 0 && this.world.rand.nextFloat() <= chance) {
                         if (StackUtil.canAddAll(this.inv, drops, false)) {

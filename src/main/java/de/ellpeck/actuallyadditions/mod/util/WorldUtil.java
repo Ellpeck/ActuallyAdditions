@@ -282,9 +282,11 @@ public final class WorldUtil {
     }
 
     //I think something is up with this, but I'm not entirely certain what.
-    public static float fireFakeHarvestEventsForDropChance(NonNullList<ItemStack> drops, World world, BlockPos pos) {
+    public static float fireFakeHarvestEventsForDropChance(TileEntity caller, NonNullList<ItemStack> drops, World world, BlockPos pos) {
         if (world instanceof WorldServer) {
             FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer) world);
+            BlockPos tePos = caller.getPos();
+            fake.setPosition(tePos.getX() + 0.5, tePos.getY() + 0.5, tePos.getZ() + 0.5);
             IBlockState state = world.getBlockState(pos);
 
             BreakEvent event = new BreakEvent(world, pos, state, fake);
