@@ -48,6 +48,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
@@ -192,7 +193,8 @@ public class MethodHandler implements IMethodHandler {
 
             //Converting the Items
             AxisAlignedBB aabb = new AxisAlignedBB(tile.getPosition().getX(), tile.getPosition().getY(), tile.getPosition().getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1);
-            aabb.grow(0.02, 0.02, 0.02);
+            Vec3i dir = tile.getOrientation().getDirectionVec();
+            aabb = aabb.grow(0.02, 0.02, 0.02).expand(dir.getX(), dir.getY(), dir.getZ());
             List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, aabb);
             for (EntityItem item : items) {
                 ItemStack stack = item.getItem();
