@@ -1,3 +1,6 @@
+# 1.12.2-r148
+* Fixed atomic reconstructor not hitting items on pressure plates.
+
 # 1.12.2-r147
 * Sacks should no longer duplicate items when used on multi-slot inventories with slot size limits.
 * Updated systems to use IForgeRarity instead of EnumRarity.
