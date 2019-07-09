@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -36,8 +37,6 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class LensMining extends Lens {
-
-    public static final int ENERGY_USE = 60000;
 
     public static void init() {
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreCoal", 5000);
@@ -124,8 +123,8 @@ public class LensMining extends Lens {
     @Override
     public boolean invoke(IBlockState hitState, BlockPos hitPos, IAtomicReconstructor tile) {
         if (!tile.getWorldObject().isAirBlock(hitPos)) {
-            if (tile.getEnergy() >= ENERGY_USE) {
-                int adaptedUse = ENERGY_USE;
+            if (tile.getEnergy() >= ConfigIntValues.MINING_LENS_USE.getValue()) {
+                int adaptedUse = ConfigIntValues.MINING_LENS_USE.getValue();
 
                 List<WeightedOre> ores = null;
                 Block hitBlock = hitState.getBlock();

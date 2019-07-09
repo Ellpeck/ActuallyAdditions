@@ -98,7 +98,14 @@ public enum ConfigIntValues {
             9,
             1,
             Integer.MAX_VALUE,
-            "The size of the farmer's farming area.  Default is 9x9, must be an odd number.");
+            "The size of the farmer's farming area.  Default is 9x9, must be an odd number."),
+    MINING_LENS_USE(
+            "Mining Lens Energy",
+            ConfigCategories.MACHINE_VALUES,
+            60000,
+            1,
+            Integer.MAX_VALUE,
+            "The energy use of the Atomic Reconstructor's Mining Lens.");
 
     public final String name;
     public final String category;
