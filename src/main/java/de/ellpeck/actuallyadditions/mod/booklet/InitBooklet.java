@@ -40,6 +40,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.page.PageLinkButton;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageReconstructor;
 import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.crafting.BlockCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
 import de.ellpeck.actuallyadditions.mod.crafting.FoodCrafting;
@@ -52,7 +53,6 @@ import de.ellpeck.actuallyadditions.mod.gen.WorldGenLushCaves;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemWingsOfTheBats;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensDisenchanting;
-import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
@@ -221,7 +221,7 @@ public final class InitBooklet {
         new BookletChapter("lensMoreDeath", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMoreDamageLens), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeLensMoreDeath).setNoText());
         new BookletChapter("lensDetonation", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemExplosionLens), new PageTextOnly(1), new PageReconstructor(2, LensRecipeHandler.recipeExplosionLens).setNoText());
         new BookletChapter("lensDisenchanting", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemDisenchantingLens), new PageTextOnly(1).addTextReplacement("<energy>", LensDisenchanting.ENERGY_USE), new PageCrafting(2, ItemCrafting.recipeDisenchantingLens).setNoText()).setSpecial();
-        new BookletChapter("lensMining", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMiningLens), new PageTextOnly(1).addTextReplacement("<energy>", LensMining.ENERGY_USE), new PageCrafting(2, ItemCrafting.recipeMiningLens).setNoText()).setImportant();
+        new BookletChapter("lensMining", ActuallyAdditionsAPI.entryReconstruction, new ItemStack(InitItems.itemMiningLens), new PageTextOnly(1).addTextReplacement("<energy>", ConfigIntValues.MINING_LENS_USE.getValue()), new PageCrafting(2, ItemCrafting.recipeMiningLens).setNoText()).setImportant();
 
         //Laser Relays
         chaptersIntroduction[8] = new BookletChapter("laserIntro", ActuallyAdditionsAPI.entryLaserRelays, new ItemStack(InitItems.itemLaserWrench), new PageTextOnly(1), new PageTextOnly(2).addTextReplacement("<range>", TileEntityLaserRelay.MAX_DISTANCE), new PageCrafting(3, ItemCrafting.recipeLaserWrench)).setImportant();

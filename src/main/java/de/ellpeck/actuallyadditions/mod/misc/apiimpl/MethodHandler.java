@@ -198,7 +198,7 @@ public class MethodHandler implements IMethodHandler {
             List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, aabb);
             for (EntityItem item : items) {
                 ItemStack stack = item.getItem();
-                if (!item.isDead && StackUtil.isValid(stack)) {
+                if (!item.isDead && StackUtil.isValid(stack) && !item.getEntityData().getBoolean("aa_cnv")) {
                     LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(stack, tile.getLens());
                     if (recipe != null) {
                         int itemsPossible = Math.min(tile.getEnergy() / recipe.getEnergyUsed(), stack.getCount());
@@ -219,6 +219,7 @@ public class MethodHandler implements IMethodHandler {
                             outputCopy.setCount(itemsPossible);
 
                             EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
+                            newItem.getEntityData().setBoolean("aa_cnv", true);
                             tile.getWorldObject().spawnEntity(newItem);
 
                             tile.extractEnergy(recipe.getEnergyUsed() * itemsPossible);
