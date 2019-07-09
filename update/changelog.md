@@ -1,3 +1,8 @@
+# 1.12.2-r149
+* Items can now be removed from the bio reactor.
+* Mining lens energy use is now a config.
+* Items converted by the atomic reconstructor can no longer be further converted until being picked up.
+
 # 1.12.2-r148
 * Fixed atomic reconstructor not hitting items on pressure plates.
 
