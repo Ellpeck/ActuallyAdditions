@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -133,7 +132,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
 
     @Override
     public IRemover getRemover() {
-        return ItemStackHandlerAA.REMOVE_FALSE;
+        return (slot, automation) -> !automation;
     }
 
     @Override
