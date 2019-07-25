@@ -143,7 +143,12 @@ public enum ConfigBoolValues {
             "Ore Gen Whitelist",
             ConfigCategories.WORLD_GEN,
             false,
-            "If true, the ore gen dimension blacklist will be treated as a whitelist.");
+            "If true, the ore gen dimension blacklist will be treated as a whitelist."),
+    MINING_LENS_ADAPTED_USE(
+            "Mining Lens Math",
+            ConfigCategories.MACHINE_VALUES,
+            true,
+            "If true, the mining lens uses some weird math to calculate energy costs.");
 
     public final String name;
     public final String category;

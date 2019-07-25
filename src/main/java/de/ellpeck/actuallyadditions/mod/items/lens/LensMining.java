@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
@@ -147,7 +148,7 @@ public class LensMining extends Lens {
                             if (stacks != null && !stacks.isEmpty()) {
                                 for (ItemStack aStack : stacks) {
                                     if (StackUtil.isValid(aStack) && !CrusherRecipeRegistry.hasBlacklistedOutput(aStack, ConfigStringListValues.MINING_LENS_BLACKLIST.getValue()) && aStack.getItem() instanceof ItemBlock) {
-                                        adaptedUse += (totalWeight - ore.itemWeight) % 40000;
+                                        if (ConfigBoolValues.MINING_LENS_ADAPTED_USE.isEnabled()) adaptedUse += (totalWeight - ore.itemWeight) % 40000;
 
                                         stack = aStack;
                                         found = true;
