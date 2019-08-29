@@ -76,7 +76,7 @@ public final class MiscCrafting {
         ItemCrafting.recipeKnifeBlade = RecipeUtil.lastIRecipe();
 
         //Ender Star
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()), new ItemStack(Items.NETHER_STAR), new ItemStack(Items.DRAGON_BREATH), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), new ItemStack(Items.PRISMARINE_SHARD));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()), new ItemStack(Items.NETHER_STAR), new ItemStack(Items.DRAGON_BREATH), "gemQuartzBlack", new ItemStack(Items.PRISMARINE_SHARD));
         ItemCrafting.recipeEnderStar = RecipeUtil.lastIRecipe();
 
         //Spawner Shard -> ingot

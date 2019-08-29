@@ -132,7 +132,7 @@ public final class ItemCrafting {
         recipeVoidBag = RecipeUtil.lastIRecipe();
 
         //Lens
-        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), "GGG", "GBG", "GGG", 'G', "blockGlass", 'B', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), "GGG", "GBG", "GGG", 'G', "blockGlass", 'B', "gemQuartzBlack");
         recipeLens = RecipeUtil.lastIRecipe();
 
         //Black Dye
@@ -164,7 +164,7 @@ public final class ItemCrafting {
         recipeDisenchantingLens = RecipeUtil.lastIRecipe();
 
         //Mining Lens
-        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMiningLens), "DGI", "CLB", "QPE", 'D', "gemDiamond", 'G', "ingotGold", 'I', "ingotIron", 'C', "coal", 'L', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 'B', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 'Q', "gemQuartz", 'P', "gemLapis", 'E', "gemEmerald");
+        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMiningLens), "DGI", "CLB", "QPE", 'D', "gemDiamond", 'G', "ingotGold", 'I', "ingotIron", 'C', "coal", 'L', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 'B', "gemQuartzBlack", 'Q', "gemQuartz", 'P', "gemLapis", 'E', "gemEmerald");
         recipeMiningLens = RecipeUtil.lastIRecipe();
 
         //Killer Lens
@@ -175,11 +175,11 @@ public final class ItemCrafting {
         recipeLensMoreDeath = RecipeUtil.lastIRecipe();
 
         //Filter
-        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemFilter), "III", "IQI", "III", 'I', new ItemStack(Blocks.IRON_BARS), 'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemFilter), "III", "IQI", "III", 'I', new ItemStack(Blocks.IRON_BARS), 'Q', "gemQuartzBlack");
         recipeFilter = RecipeUtil.lastIRecipe();
 
         //Crate Keeper
-        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemCrateKeeper), "WIW", "IQI", "WIW", 'I', "ingotIron", 'W', "plankWood", 'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemCrateKeeper), "WIW", "IQI", "WIW", 'I', "ingotIron", 'W', "plankWood", 'Q', "gemQuartzBlack");
         recipeCrateKeeper = RecipeUtil.lastIRecipe();
 
         //Spawner Changer
@@ -288,7 +288,7 @@ public final class ItemCrafting {
         recipeWings = RecipeUtil.lastIRecipe();
 
         //Coil
-        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()), " R ", "RIR", " R ", 'I', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()) : new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()));
+        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()), " R ", "RIR", " R ", 'I', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()) : "gemQuartzBlack", 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()));
         recipeCoil = RecipeUtil.lastIRecipe();
 
         //Cup

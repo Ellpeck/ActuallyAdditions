@@ -197,7 +197,7 @@ public final class BlockCrafting {
         recipeLaserRelayExtreme = RecipeUtil.lastIRecipe();
 
         //Whitelist Item Laser Relay
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockLaserRelayItemWhitelist), new ItemStack(InitBlocks.blockLaserRelayItem), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockLaserRelayItemWhitelist), new ItemStack(InitBlocks.blockLaserRelayItem), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()), "gemQuartzBlack", new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()));
         recipeLaserRelayItemWhitelist = RecipeUtil.lastIRecipe();
 
         //Item Interface
@@ -238,7 +238,7 @@ public final class BlockCrafting {
         recipeCase = RecipeUtil.lastIRecipe();
 
         //Iron Casing
-        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()), "WSW", "SQS", "WSW", 'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 'W', "ingotIron", 'S', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()) : "stickWood");
+        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()), "WSW", "SQS", "WSW", 'Q', "gemQuartzBlack", 'W', "ingotIron", 'S', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()) : "stickWood");
         recipeIronCase = RecipeUtil.lastIRecipe();
 
         //Ender Casing
@@ -335,7 +335,7 @@ public final class BlockCrafting {
         RecipeHandler.addShapelessOreDictRecipe(new ItemStack(Items.ENDER_PEARL, 4), new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()));
 
         //Quartz Block
-        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()), "QQ", "QQ", 'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()), "QQ", "QQ", 'Q', "gemQuartzBlack");
         recipeQuartzBlock = RecipeUtil.lastIRecipe();
 
         //Fishing Net
@@ -355,7 +355,7 @@ public final class BlockCrafting {
         recipeHeatCollector = RecipeUtil.lastIRecipe();
 
         //Quartz Pillar
-        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal()), "Q", "Q", 'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ_PILLAR.ordinal()), "Q", "Q", 'Q', "gemQuartzBlack");
         recipeQuartzPillar = RecipeUtil.lastIRecipe();
 
         //Chiseled Quartz
@@ -366,7 +366,7 @@ public final class BlockCrafting {
         RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockInputter), "WWW", "CHC", "WWW", 'W', "plankWood", 'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()), 'H', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()));
         recipeESD = RecipeUtil.lastIRecipe();
 
-        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockInputterAdvanced), InitBlocks.blockInputter, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()));
+        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockInputterAdvanced), InitBlocks.blockInputter, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()), "gemQuartzBlack", new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()));
         recipeAdvancedESD = RecipeUtil.lastIRecipe();
 
         //Crusher
@@ -412,7 +412,7 @@ public final class BlockCrafting {
         recipeDropper = RecipeUtil.lastIRecipe();
 
         for (int i = 0; i < BlockColoredLamp.ALL_LAMP_TYPES.length; i++) {
-            RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockColoredLamp, 6, i), "GCG", "DQD", "GCG", 'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), 'G', "glowstone", 'D', "dye" + BlockColoredLamp.ALL_LAMP_TYPES[i].oreName, 'Q', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()));
+            RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockColoredLamp, 6, i), "GCG", "DQD", "GCG", 'C', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), 'G', "glowstone", 'D', "dye" + BlockColoredLamp.ALL_LAMP_TYPES[i].oreName, 'Q', "gemQuartzBlack");
             RECIPES_LAMPS[i] = RecipeUtil.lastIRecipe();
         }
 

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.RecipeUtil;
 import de.ellpeck.actuallyadditions.mod.util.crafting.RecipeHandler;
 import net.minecraft.init.Blocks;
@@ -30,7 +29,7 @@ public final class ToolCrafting {
     public static void init() {
 
         addToolAndArmorRecipes(new ItemStack(Items.EMERALD), InitItems.itemPickaxeEmerald, InitItems.itemSwordEmerald, InitItems.itemAxeEmerald, InitItems.itemShovelEmerald, InitItems.itemHoeEmerald, InitItems.itemHelmEmerald, InitItems.itemChestEmerald, InitItems.itemPantsEmerald, InitItems.itemBootsEmerald);
-        addToolAndArmorRecipes(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), InitItems.itemPickaxeQuartz, InitItems.itemSwordQuartz, InitItems.itemAxeQuartz, InitItems.itemShovelQuartz, InitItems.itemHoeQuartz, InitItems.itemHelmQuartz, InitItems.itemChestQuartz, InitItems.itemPantsQuartz, InitItems.itemBootsQuartz);
+        addToolAndArmorRecipes("gemQuartzBlack", InitItems.itemPickaxeQuartz, InitItems.itemSwordQuartz, InitItems.itemAxeQuartz, InitItems.itemShovelQuartz, InitItems.itemHoeQuartz, InitItems.itemHelmQuartz, InitItems.itemChestQuartz, InitItems.itemPantsQuartz, InitItems.itemBootsQuartz);
         addToolAndArmorRecipes(new ItemStack(Blocks.OBSIDIAN), InitItems.itemPickaxeObsidian, InitItems.itemSwordObsidian, InitItems.itemAxeObsidian, InitItems.itemShovelObsidian, InitItems.itemHoeObsidian, InitItems.itemHelmObsidian, InitItems.itemChestObsidian, InitItems.itemPantsObsidian, InitItems.itemBootsObsidian);
 
         addToolAndArmorRecipes(new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), InitItems.itemPickaxeCrystalRed, InitItems.itemSwordCrystalRed, InitItems.itemAxeCrystalRed, InitItems.itemShovelCrystalRed, InitItems.itemHoeCrystalRed, InitItems.itemHelmCrystalRed, InitItems.itemChestCrystalRed, InitItems.itemPantsCrystalRed, InitItems.itemBootsCrystalRed);
@@ -72,7 +71,7 @@ public final class ToolCrafting {
         RECIPES_PAXELS.add(RecipeUtil.lastIRecipe());
     }
 
-    public static void addToolAndArmorRecipes(ItemStack base, Item pickaxe, Item sword, Item axe, Item shovel, Item hoe, Item helm, Item chest, Item pants, Item boots) {
+    public static void addToolAndArmorRecipes(Object base, Item pickaxe, Item sword, Item axe, Item shovel, Item hoe, Item helm, Item chest, Item pants, Item boots) {
         //Pickaxe
         RecipeHandler.addOreDictRecipe(new ItemStack(pickaxe), "EEE", " S ", " S ", 'E', base, 'S', new ItemStack(Items.STICK));
 
