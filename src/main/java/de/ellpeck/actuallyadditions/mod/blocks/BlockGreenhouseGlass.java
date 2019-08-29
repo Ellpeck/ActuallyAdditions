@@ -94,13 +94,13 @@ public class BlockGreenhouseGlass extends BlockBase {
         }
     }
 
-    public static Triple<BlockPos, IBlockState, IGrowable> firstBlock(World world, BlockPos glassPos) {
+    public Triple<BlockPos, IBlockState, IGrowable> firstBlock(World world, BlockPos glassPos) {
         BlockPos.MutableBlockPos mut = new BlockPos.MutableBlockPos(glassPos);
         while (true) {
             mut.setPos(mut.getX(), mut.getY() - 1, mut.getZ());
             if (mut.getY() < 0) return null;
             IBlockState state = world.getBlockState(mut);
-            if (state.isOpaqueCube() || state.getBlock() instanceof IGrowable) {
+            if (state.isOpaqueCube() || state.getBlock() instanceof IGrowable || state.getBlock() == this) {
                 if (state.getBlock() instanceof IGrowable) return Triple.of(mut.toImmutable(), state, (IGrowable) state.getBlock());
                 else return null;
             }
