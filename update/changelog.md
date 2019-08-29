@@ -1,4 +1,9 @@
 # 1.12.2-r149
+* Greenhouse glass does not stack.
+* Black Quartz is now oredicted in recipes.
+* Fixed a crash in the booklet.
+
+# 1.12.2-r149
 * Items can now be removed from the bio reactor.
 * Mining lens energy use is now a config.
 * Items converted by the atomic reconstructor can no longer be further converted until being picked up.
