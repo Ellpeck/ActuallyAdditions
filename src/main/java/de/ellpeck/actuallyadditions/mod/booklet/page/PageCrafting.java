@@ -69,7 +69,7 @@ public class PageCrafting extends BookletPage {
         gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX + 5, startY + 6, 20, 0, 116, 54, 0);
 
-        gui.renderScaledAsciiString("(" + StringUtil.localize(this.recipeTypeLocKey) + ")", startX + 6, startY + 65, 0, false, gui.getMediumFontSize());
+        if (recipeTypeLocKey != null) gui.renderScaledAsciiString("(" + StringUtil.localize(this.recipeTypeLocKey) + ")", startX + 6, startY + 65, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 80);
     }
