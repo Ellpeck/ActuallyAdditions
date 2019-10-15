@@ -103,9 +103,37 @@ public enum ConfigIntValues {
             "Mining Lens Energy",
             ConfigCategories.MACHINE_VALUES,
             60000,
+                    1,
+            Integer.MAX_VALUE,
+            "The energy use of the Atomic Reconstructor's Mining Lens."),
+    COAL_GENERATOR_CF_PRODUCTION(
+            "Coal Generator Energy Production",
+            ConfigCategories.MACHINE_VALUES,
+            30,
             1,
             Integer.MAX_VALUE,
-            "The energy use of the Atomic Reconstructor's Mining Lens.");
+            "The Coal Generator's Energy Production in CF/tick while burning."),
+    LEAF_GENERATOR_COOLDOWN(
+            "Leaf Generator Cooldown",
+            ConfigCategories.MACHINE_VALUES,
+            5,
+            0,
+            Integer.MAX_VALUE,
+            "The cooldown between two generation cycles of the Leaf Generator, in ticks"),
+    LEAF_GENERATOR_CF_PER_LEAF(
+            "Leaf Generator Energy Production",
+            ConfigCategories.MACHINE_VALUES,
+            300,
+            1,
+            Integer.MAX_VALUE,
+            "The Leaf Generator's Energy Production in CF/Leaf"),
+    LEAF_GENERATOR_AREA(
+            "Leaf Generator Area",
+            ConfigCategories.MACHINE_VALUES,
+            7,
+            1,
+            Integer.MAX_VALUE,
+            "The size of the Leaf Generator's harvesting area.  Default is 7x7x7, must be an odd number.");
 
     public final String name;
     public final String category;
