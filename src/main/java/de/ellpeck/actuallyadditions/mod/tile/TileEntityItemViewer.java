@@ -45,6 +45,7 @@ public class TileEntityItemViewer extends TileEntityBase {
     protected final SlotlessableItemHandlerWrapper itemHandler;
     public TileEntityLaserRelayItem connectedRelay;
     private int lastNetworkChangeAmount = -1;
+    private int slotCount;
 
     public TileEntityItemViewer(String name) {
         super(name);
@@ -52,21 +53,7 @@ public class TileEntityItemViewer extends TileEntityBase {
         IItemHandler normalHandler = new IItemHandler() {
             @Override
             public int getSlots() {
-                int size = 0;
-                List<GenericItemHandlerInfo> infos = TileEntityItemViewer.this.getItemHandlerInfos();
-                if (infos != null) {
-                    for (GenericItemHandlerInfo info : infos) {
-                        if (info.isLoaded()) {
-                            for (SlotlessableItemHandlerWrapper handler : info.handlers) {
-                                IItemHandler normalHandler = handler.getNormalHandler();
-                                if (normalHandler != null) {
-                                    size += normalHandler.getSlots();
-                                }
-                            }
-                        }
-                    }
-                }
-                return size;
+                return TileEntityItemViewer.this.getSlotCount();
             }
 
             @Override
@@ -147,9 +134,9 @@ public class TileEntityItemViewer extends TileEntityBase {
         return super.getCapability(capability, facing);
     }
 
-    private List<GenericItemHandlerInfo> getItemHandlerInfos() {
+    private int getSlotCount() {
         this.queryAndSaveData();
-        return this.genericInfos;
+        return this.slotCount;
     }
 
     public void doItemParticle(ItemStack stack, BlockPos input, BlockPos output) {
@@ -206,6 +193,7 @@ public class TileEntityItemViewer extends TileEntityBase {
                                 }
                             }
                         }
+                        this.slotCount = slotsQueried;
                     }
                     this.lastNetworkChangeAmount = network.changeAmount;
                 }
