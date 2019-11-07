@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[28,)"
+issueTrackerURL="http://github.com/Ellpeck/ActuallyAdditions/issues"
+displayURL="http://github.com/Ellpeck/ActuallyAdditions"
+logoFile="logo.png"
+credits="Author: Ellpeck; Textures and Models: BootyToast, GlenthorLP, canitzp"
+authors="Ellpeck"
+
+[[mods]]
+	modId="actuallyadditions"
+	version="${file.jarVersion}"
+	displayName="Actually Additions"
+	description="Do you want Automation? Wireless Transport? Better Machines? A cup o' Coffee? Chests? Better Hoppers? Leaf Blowers? Faster Growth? Plants? Well, Actually Additions has all that and a lot more!"
+	
+	[[dependencies.actuallyadditions]]
+	    modId="forge"
+	    mandatory=true
+	    versionRange="[28.1.86,)"
+	    ordering="NONE"
+	    side="BOTH"
+	
+	[[dependencies.actuallyadditions]]
+	    modId="minecraft"
+	    mandatory=true
+	    versionRange="[1.14.4]"
+	    ordering="NONE"
+	    side="BOTH"
