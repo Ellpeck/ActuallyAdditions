@@ -15,7 +15,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-version = "1.14.4-r0"
+version = "1.14.4-r151"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
