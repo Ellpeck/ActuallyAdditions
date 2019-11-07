@@ -68,7 +68,8 @@ repositories {
 
 dependencies {
 	minecraft "net.minecraftforge:forge:1.14.4-28.1.86"
-	//deobfCompile "mezz.jei:jei_1.12.2:+"
+	compileOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.24:api")
+  	runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.24")
 	//deobfCompile "mcp.mobius.waila:Hwyla:1.8+"
     //deobfCompile ("org.cyclops.commoncapabilities:CommonCapabilities:1.12.2-+")
 }
