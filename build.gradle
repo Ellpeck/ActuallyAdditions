@@ -74,14 +74,27 @@ dependencies {
     //deobfCompile ("org.cyclops.commoncapabilities:CommonCapabilities:1.12.2-+")
 }
 
+def normalManifest = {
+	attributes(
+		"Built-On": "1.14.4",
+		"Implementation-Title": "ActuallyAdditions",
+    	"Implementation-Version": project.version,
+        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+	)
+}
+
 jar {
-	
+	exclude(".cache")
+   	manifest normalManifest
 }
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     from sourceSets.main.java
     classifier = 'dev'
+    
+    exclude(".cache")
+   	manifest normalManifest
 }
 
 task apiJar(type: Jar) {
