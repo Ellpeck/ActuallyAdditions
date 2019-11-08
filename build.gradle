@@ -15,32 +15,26 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-version = "1.14.4-r151"
+version = "2.0.0"
 group = "de.ellpeck.actuallyadditions"
-archivesBaseName = "ActuallyAdditions"
+archivesBaseName = "ActuallyAdditions-1.14.4"
 
-if(hasProperty('buildnumber')){
-    version = "${version}-${this.properties['buildnumber']}"
-}
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
     mappings channel: "snapshot", version: "20191107-1.14.3"
 	runs {
         client = {
-            workingDirectory project.file("run/client").canonicalPath
-            mods {
-                actuallyadditions {
-                    source sourceSets.main
-				}
-			}
+            properties 'forge.logging.markers': ''
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('run').canonicalPath
+            source sourceSets.main
         }
         server = {
-            workingDirectory project.file("run/server").canonicalPath
-            mods {
-                actuallyadditions {
-                    source sourceSets.main
-				}
-			}
+            properties 'forge.logging.markers': ''
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('run').canonicalPath
+            source sourceSets.main
         }
         data = {
             workingDirectory project.file("run/data").canonicalPath
@@ -56,24 +50,34 @@ minecraft {
 
 repositories {
     maven {
-        url "https://dvs1.progwml6.com/files/maven"
+        url "http://dvs1.progwml6.com/files/maven"
     }
 	maven {
 		url "http://tehnut.info/maven"
 	}
-	maven {
-        url "https://dl.bintray.com/cyclopsmc/dev/"
-    }
 }
 
 dependencies {
-	minecraft "net.minecraftforge:forge:1.14.4-28.1.86"
-	compileOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.24:api")
-  	runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.24")
-	//deobfCompile "mcp.mobius.waila:Hwyla:1.8+"
-    //deobfCompile ("org.cyclops.commoncapabilities:CommonCapabilities:1.12.2-+")
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.86'
+	compile fg.deobf('mezz.jei:jei-1.14.4:+')
+	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10+')
+	compile fileTree(dir: 'libs', include: '*.jar')
 }
 
+
+jar {
+    manifest {
+        attributes(["Specification-Title": "actuallyadditions",
+                    "Specification-Vendor": "Ellpeck",
+                    "Specification-Version": "24.0",
+                    "Implementation-Title": project.name,
+                    "Implementation-Version": "${version}",
+                    "Implementation-Vendor" :"Ellpeck",
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
+    }
+}
+
+/*TODO: Re-evaluate
 def normalManifest = {
 	attributes(
 		"Built-On": "1.14.4",
@@ -136,3 +140,4 @@ publishing {
         }
     }
 }
+*/
