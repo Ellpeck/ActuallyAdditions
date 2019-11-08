@@ -33,7 +33,7 @@ minecraft {
         server = {
             properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run').canonicalPath
+            workingDirectory project.file('run/server').canonicalPath
             source sourceSets.main
         }
         data = {
@@ -50,17 +50,17 @@ minecraft {
 
 repositories {
     maven {
-        url "http://dvs1.progwml6.com/files/maven"
+        url "https://dvs1.progwml6.com/files/maven"
     }
 	maven {
-		url "http://tehnut.info/maven"
+		url "https://tehnut.info/maven"
 	}
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.14.4-28.1.86'
-	compile fg.deobf('mezz.jei:jei-1.14.4:+')
-	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10+')
+	compile fg.deobf('mezz.jei:jei-1.14.4:6.0.0.24')
+	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.6-B67_1.14.4')
 	compile fileTree(dir: 'libs', include: '*.jar')
 }
 
