@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,8 +25,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityLeafGenerator extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
-    public static final int RANGE = 7;
-    public static final int ENERGY_PRODUCED = 300;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(35000, 0, 450);
     private int nextUseCounter;
     private int oldEnergy;
@@ -52,15 +51,17 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
         if (!this.world.isRemote) {
             if (!this.isRedstonePowered) {
 
-                if (this.nextUseCounter >= 5) {
+                if (this.nextUseCounter >= ConfigIntValues.LEAF_GENERATOR_COOLDOWN.getValue()) {
                     this.nextUseCounter = 0;
 
-                    if (ENERGY_PRODUCED <= this.storage.getMaxEnergyStored() - this.storage.getEnergyStored()) {
+                    int energyProduced = ConfigIntValues.LEAF_GENERATOR_CF_PER_LEAF.getValue();
+                    if (energyProduced > 0 && energyProduced <= this.storage.getMaxEnergyStored() - this.storage.getEnergyStored()) {
                         List<BlockPos> breakPositions = new ArrayList<>();
 
-                        for (int reachX = -RANGE; reachX < RANGE + 1; reachX++) {
-                            for (int reachZ = -RANGE; reachZ < RANGE + 1; reachZ++) {
-                                for (int reachY = -RANGE; reachY < RANGE + 1; reachY++) {
+                        int range = ConfigIntValues.LEAF_GENERATOR_AREA.getValue();
+                        for (int reachX = -range; reachX < range + 1; reachX++) {
+                            for (int reachZ = -range; reachZ < range + 1; reachZ++) {
+                                for (int reachY = -range; reachY < range + 1; reachY++) {
                                     BlockPos pos = this.pos.add(reachX, reachY, reachZ);
                                     Block block = this.world.getBlockState(pos).getBlock();
                                     if (block != null && block.isLeaves(this.world.getBlockState(pos), this.world, pos)) {
@@ -78,7 +79,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
 
                             this.world.setBlockToAir(theCoord);
 
-                            this.storage.receiveEnergyInternal(ENERGY_PRODUCED, false);
+                            this.storage.receiveEnergyInternal(energyProduced, false);
 
                             AssetUtil.spawnLaserWithTimeServer(this.world, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[] { 62F / 255F, 163F / 255F, 74F / 255F }, 25, 0, 0.075F, 0.8F);
                         }
