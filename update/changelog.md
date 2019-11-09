@@ -1,3 +1,8 @@
+# 1.12.2-r151
+* TomyLobo: Improved performance of the item interface.
+* iTitus: Added configs for leaf and coal generators.
+* Disabled enchanting of Coffee Cups.
+
 # 1.12.2-r150
 * Greenhouse glass does not stack.
 * Black Quartz is now oredicted in recipes.
