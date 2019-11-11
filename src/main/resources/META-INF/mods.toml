@@ -25,3 +25,17 @@ authors="Ellpeck"
 	    versionRange="[1.14.4]"
 	    ordering="NONE"
 	    side="BOTH"
+	    
+	[[dependencies.actuallyadditions]]
+	    modId="craftingtweaks"
+	    mandatory=false
+	    versionRange="*"
+	    ordering="BEFORE"
+	    side="BOTH"
+	    
+	[[dependencies.actuallyadditions]]
+	    modId="fastbench"
+	    mandatory=false
+	    versionRange="*"
+	    ordering="AFTER"
+	    side="BOTH"
