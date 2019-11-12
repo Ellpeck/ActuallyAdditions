@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":  { "model": "actuallyadditions:block/black_quartz_pillar" },
+        "axis=z":   { "model": "actuallyadditions:block/black_quartz_pillar", "x": 90 },
+        "axis=x":   { "model": "actuallyadditions:block/black_quartz_pillar", "x": 90, "y": 90 }
+    }
+}

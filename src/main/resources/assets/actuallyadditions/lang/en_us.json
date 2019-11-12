@@ -1,11 +1,9 @@
 {
-	"testkey": "testvalue",
-
+	"itemGroup.actuallyadditions": "Actually Additions",
     "item.actuallyadditions.black_quartz": "Black Quartz",
-
-
-    "block.actuallyadditions.block_black_quartz": "Black Quarts Block",
-
-
-    "itemGroup.actuallyadditions": "Actually Additions"
+    "block.actuallyadditions.black_quartz_block": "Black Quartz Block",
+	"block.actuallyadditions.chiseled_black_quartz_block": "Chiseled Black Quartz Block",
+	"block.actuallyadditions.black_quartz_pillar": "Black Quartz Pillar",
+	"block.actuallyadditions.black_quartz_slab": "Black Quartz Slab",
+	"block.actuallyadditions.black_quartz_ore": "Black Quartz Ore"
 }

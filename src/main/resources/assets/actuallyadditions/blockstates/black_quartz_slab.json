@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=bottom": { "model": "actuallyadditions:block/black_quartz_slab" },
+        "type=top": { "model": "actuallyadditions:block/black_quartz_slab_top" },
+        "type=double": { "model": "actuallyadditions:block/black_quartz_block" }
+    }
+}

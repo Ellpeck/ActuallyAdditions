@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "actuallyadditions:black_quartz_block"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:black_quartz_pillar",
+	"count": 2
+  }
+}

@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab_top",
+    "textures": {
+        "bottom": "actuallyadditions:block/black_quartz",
+        "top": "actuallyadditions:block/black_quartz",
+        "side": "actuallyadditions:block/black_quartz"
+    }
+}

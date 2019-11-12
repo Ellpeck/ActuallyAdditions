@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "actuallyadditions:block/black_quartz_pillar",
+        "side": "actuallyadditions:block/black_quartz_pillar"
+    }
+}

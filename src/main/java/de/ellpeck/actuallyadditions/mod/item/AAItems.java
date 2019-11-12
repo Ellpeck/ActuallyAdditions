@@ -13,12 +13,15 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(ActuallyAdditions.MODID)
 public class AAItems {
 
-    @ObjectHolder(ActuallyAdditions.MODID + ":black_quartz")
-    public static Item black_quartz = new Item(new Properties().group(ActuallyAdditions.itemGroup)).setRegistryName("black_quartz");
-    
+	public static final Item BLACK_QUARTZ = null;
+
 	@SubscribeEvent
 	public static void register(Register<Item> e) {
-        e.getRegistry().register(black_quartz);
+		//Formatter::off
+		e.getRegistry().registerAll(
+        	new Item(new Properties().group(ActuallyAdditions.GROUP)).setRegistryName("black_quartz")
+		);
+		//Formatter::on
 	}
 
 }
