@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "actuallyadditions:block/block_black_quartz"
+  }
+}
