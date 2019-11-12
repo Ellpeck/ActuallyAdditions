@@ -10,28 +10,36 @@
 
 package de.ellpeck.actuallyadditions.mod;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.ellpeck.actuallyadditions.mod.item.AAItems;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(ActuallyAdditions.MODID)
 public class ActuallyAdditions {
 
 	public static final String MODID = "actuallyadditions";
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
+	
+	public static ItemGroup itemGroup = new ItemGroup("actuallyadditions") {
+        public ItemStack createIcon() {
+            return new ItemStack(AAItems.black_quartz);
+        }
+    };
 
 	public ActuallyAdditions() {
 		FMLJavaModLoadingContext ctx = FMLJavaModLoadingContext.get();
 		ctx.getModEventBus().register(this);
+		
 	}
 
 	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent e) {
-
+	
 	}
-
 }

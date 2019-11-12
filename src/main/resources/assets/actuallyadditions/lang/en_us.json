@@ -1,3 +1,11 @@
 {
-	"testkey": "testvalue"
+	"testkey": "testvalue",
+
+    "item.actuallyadditions.black_quartz": "Black Quartz",
+
+
+    "block.actuallyadditions.block_black_quartz": "Black Quarts Block",
+
+
+    "itemGroup.actuallyadditions": "Actually Additions"
 }
