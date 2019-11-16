@@ -24,8 +24,9 @@ public class AABlocks {
 	public static final Block CHISELED_BLACK_QUARTZ_BLOCK = null;
 	public static final Block BLACK_QUARTZ_PILLAR = null;
 	public static final Block BLACK_QUARTZ_SLAB = null;
-
-	@SubscribeEvent
+    public static final Block COLORED_LAMP_BLOCK = null;
+    
+    @SubscribeEvent
 	public static void register(Register<Block> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
@@ -33,8 +34,9 @@ public class AABlocks {
         	new Block(Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(0.8F)).setRegistryName("black_quartz_block"),
         	new Block(Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(0.8F)).setRegistryName("chiseled_black_quartz_block"),
         	new RotatedPillarBlock(Block.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(0.8F)).setRegistryName("black_quartz_pillar"),
-        	new SlabBlock(Block.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(0.8F)).setRegistryName("black_quartz_slab")
-		); 
+        	new SlabBlock(Block.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(0.8F)).setRegistryName("black_quartz_slab"),
+            new ColoredLampBlock().setRegistryName("colored_lamp_block")
+        );
 		//Formatter::on
 	}
 
@@ -46,8 +48,9 @@ public class AABlocks {
 			new BlockItem(BLACK_QUARTZ_BLOCK, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(BLACK_QUARTZ_BLOCK.getRegistryName()),
 			new BlockItem(CHISELED_BLACK_QUARTZ_BLOCK, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(CHISELED_BLACK_QUARTZ_BLOCK.getRegistryName()),
 			new BlockItem(BLACK_QUARTZ_PILLAR, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(BLACK_QUARTZ_PILLAR.getRegistryName()),
-			new BlockItem(BLACK_QUARTZ_SLAB, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(BLACK_QUARTZ_SLAB.getRegistryName())
-		);
+			new BlockItem(BLACK_QUARTZ_SLAB, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(BLACK_QUARTZ_SLAB.getRegistryName()),
+		    new BlockItem(COLORED_LAMP_BLOCK, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(COLORED_LAMP_BLOCK.getRegistryName())
+        );
 		//Formatter::on
 	}
 }

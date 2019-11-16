@@ -20,3 +20,11 @@
 .settings/org.eclipse.jdt.core.prefs
 *.prefs
 /run/
+.DS_Store
+src/.DS_Store
+src/main/.DS_Store
+src/main/java/.DS_Store
+src/main/java/de/.DS_Store
+src/main/java/de/ellpeck/.DS_Store
+src/main/java/de/ellpeck/actuallyadditions/.DS_Store
+src/main/java/de/ellpeck/actuallyadditions/mod/.DS_Store
