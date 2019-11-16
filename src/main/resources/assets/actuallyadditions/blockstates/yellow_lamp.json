@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "lit=true": { "model": "actuallyadditions:block/colored_lamp_block_on_yellow" },
+    "lit=false": { "model": "actuallyadditions:block/colored_lamp_block_yellow" }
+  }
+}

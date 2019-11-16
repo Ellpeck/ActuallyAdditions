@@ -6,5 +6,21 @@
 	"block.actuallyadditions.black_quartz_pillar": "Black Quartz Pillar",
 	"block.actuallyadditions.black_quartz_slab": "Black Quartz Slab",
 	"block.actuallyadditions.black_quartz_ore": "Black Quartz Ore",
-    "block.actuallyadditions.colored_lamp_block": "Colored Lamp"
+    "block.actuallyadditions.white_lamp": "White Lamp",
+	"block.actuallyadditions.orange_lamp": "Orange Lamp",
+	"block.actuallyadditions.magenta_lamp": "Magenta Lamp",
+	"block.actuallyadditions.light_blue_lamp": "Light Blue Lamp",
+	"block.actuallyadditions.yellow_lamp": "Yellow Lamp",
+	"block.actuallyadditions.lime_lamp": "Lime Lamp",
+	"block.actuallyadditions.pink_lamp": "Pink Lamp",
+	"block.actuallyadditions.gray_lamp": "Gray Lamp",
+	"block.actuallyadditions.light_gray_lamp": "Light Gray Lamp",
+	"block.actuallyadditions.cyan_lamp": "Cyan Lamp",
+	"block.actuallyadditions.purple_lamp": "Purple Lamp",
+	"block.actuallyadditions.blue_lamp": "Blue Lamp",
+	"block.actuallyadditions.brown_lamp": "Brown Lamp",
+	"block.actuallyadditions.green_lamp": "Green Lamp",
+	"block.actuallyadditions.red_lamp": "Red Lamp",
+	"block.actuallyadditions.black_lamp": "Black Lamp"
+
 }
