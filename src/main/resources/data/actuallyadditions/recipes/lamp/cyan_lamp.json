@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gpg",
+    "wbw",
+    "gpg"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:glowstone"
+    },
+    "p": {
+      "item": "actuallyadditions:crystal_blue"
+    },
+    "w": {
+      "tag": "forge:dyes/cyan"
+    },
+    "b": {
+      "item": "actuallyadditions:black_quartz"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:cyan_lamp",
+    "count": 6
+  }
+}

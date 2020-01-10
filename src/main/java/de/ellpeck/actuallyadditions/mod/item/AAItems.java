@@ -14,16 +14,14 @@ import net.minecraftforge.registries.ObjectHolder;
 public class AAItems {
 
   public static final Item BLACK_QUARTZ = null;
-  public static final Item PALIS_CRYSTAL = null;
 
   @SubscribeEvent
   public static void register(Register<Item> e) {
     //Formatter::off
     e.getRegistry().registerAll(
         new Item(new Properties().group(ActuallyAdditions.GROUP)).setRegistryName("black_quartz"),
-        new Item(new Properties().group(ActuallyAdditions.GROUP)).setRegistryName("palis_crystal")
+        new Item(new Properties().group(ActuallyAdditions.GROUP)).setRegistryName("crystal_blue")
     );
     //Formatter::on
   }
-
 }
