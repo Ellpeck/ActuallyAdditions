@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,7 +60,7 @@ public abstract class ItemEnergy extends ItemBase {
             IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
             if (storage != null) {
                 NumberFormat format = NumberFormat.getInstance();
-                tooltip.add(String.format("%s/%s Crystal Flux", format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored())));
+                tooltip.add(String.format("%s/%s "+I18n.format("actuallyadditions.cflong"), format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored())));
             }
         }
     }

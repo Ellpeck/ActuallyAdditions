@@ -14,7 +14,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'idea'
 
-version = "1.12.2-r151"
+version = "1.12.2-r152"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
@@ -36,7 +36,7 @@ repositories {
         url "https://dvs1.progwml6.com/files/maven"
     }
 	maven {
-		url "http://tehnut.info/maven"
+		url "http://maven.tehnut.info/"
 	}
 	maven {
         url "https://dl.bintray.com/cyclopsmc/dev/"
