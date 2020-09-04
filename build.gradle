@@ -22,18 +22,18 @@ archivesBaseName = "ActuallyAdditions-1.14.4"
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: "snapshot", version: "20191107-1.14.3"
-	runs {
+    mappings channel: "stable", version: "58-1.14.4"
+    runs {
         client = {
             properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run').canonicalPath
+            workingDirectory project.file('run/client')
             source sourceSets.main
         }
         server = {
             properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run/server').canonicalPath
+            workingDirectory project.file('run/server')
             source sourceSets.main
         }
         data = {
@@ -42,8 +42,8 @@ minecraft {
             mods {
                 actuallyadditions {
                     source sourceSets.main
-				}
-			}
+                }
+            }
         }
     }
 }
@@ -52,27 +52,26 @@ repositories {
     maven {
         url "https://dvs1.progwml6.com/files/maven"
     }
-	maven {
-		url "https://tehnut.info/maven"
-	}
+    //maven {
+    //	url "https://tehnut.info/maven"
+    //}
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.86'
-	compile fg.deobf('mezz.jei:jei-1.14.4:6.0.0.24')
-	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.6-B67_1.14.4')
-	compile fileTree(dir: 'libs', include: '*.jar')
+    minecraft 'net.minecraftforge:forge:1.14.4-28.2.0'
+    compile fg.deobf('mezz.jei:jei-1.14.4:6.0.1.30')
+    //compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.6-B67_1.14.4')
+    //compile fileTree(dir: 'libs', include: '*.jar')
 }
-
 
 jar {
     manifest {
-        attributes(["Specification-Title": "actuallyadditions",
-                    "Specification-Vendor": "Ellpeck",
-                    "Specification-Version": "24.0",
-                    "Implementation-Title": project.name,
-                    "Implementation-Version": "${version}",
-                    "Implementation-Vendor" :"Ellpeck",
+        attributes(["Specification-Title"     : "actuallyadditions",
+                    "Specification-Vendor"    : "Ellpeck",
+                    "Specification-Version"   : "24.0",
+                    "Implementation-Title"    : project.name,
+                    "Implementation-Version"  : "${version}",
+                    "Implementation-Vendor"   : "Ellpeck",
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
 }
