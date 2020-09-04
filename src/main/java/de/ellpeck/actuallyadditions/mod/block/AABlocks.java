@@ -40,6 +40,7 @@ public class AABlocks {
 	public static final ColoredLampBlock GREEN_LAMP = null;
 	public static final ColoredLampBlock RED_LAMP = null;
 	public static final ColoredLampBlock BLACK_LAMP = null;
+	public static final TinyTorchBlock TINY_TORCH = null;
 
 	@SubscribeEvent
 	public static void register(Register<Block> e) {
@@ -65,7 +66,8 @@ public class AABlocks {
             new ColoredLampBlock(LampColor.BROWN).setRegistryName("brown_lamp"),
             new ColoredLampBlock(LampColor.GREEN).setRegistryName("green_lamp"),
             new ColoredLampBlock(LampColor.RED).setRegistryName("red_lamp"),
-            new ColoredLampBlock(LampColor.BLACK).setRegistryName("black_lamp")
+            new ColoredLampBlock(LampColor.BLACK).setRegistryName("black_lamp"),
+			new TinyTorchBlock()
         );
 		//Formatter::on
 	}
@@ -78,7 +80,8 @@ public class AABlocks {
 			new BlockItem(BLACK_QUARTZ_BLOCK, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(BLACK_QUARTZ_BLOCK.getRegistryName()),
 			new BlockItem(CHISELED_BLACK_QUARTZ_BLOCK, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(CHISELED_BLACK_QUARTZ_BLOCK.getRegistryName()),
 			new BlockItem(BLACK_QUARTZ_PILLAR, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(BLACK_QUARTZ_PILLAR.getRegistryName()),
-			new BlockItem(BLACK_QUARTZ_SLAB, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(BLACK_QUARTZ_SLAB.getRegistryName())
+			new BlockItem(BLACK_QUARTZ_SLAB, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(BLACK_QUARTZ_SLAB.getRegistryName()),
+			new BlockItem(TINY_TORCH, new Item.Properties().group(ActuallyAdditions.GROUP)).setRegistryName(TINY_TORCH.getRegistryName())
         );
 		//Formatter::on
 		for (Block b : ColoredLampBlock.LAMPS.values()) {
