@@ -77,67 +77,47 @@ jar {
     }
 }
 
-/*TODO: Re-evaluate
-def normalManifest = {
-	attributes(
-		"Built-On": "1.14.4",
-		"Implementation-Title": "ActuallyAdditions",
-    	"Implementation-Version": project.version,
-        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-	)
-}
-
-jar {
-	exclude(".cache")
-   	manifest normalManifest
-}
-
 task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    from sourceSets.main.java
-    classifier = 'dev'
-    
-    exclude(".cache")
-   	manifest normalManifest
-}
-
-task apiJar(type: Jar) {
-    from sourceSets.main.output
-    from sourceSets.main.java
-    classifier = 'api'
-    include 'de/ellpeck/actuallyadditions/api/**'
-}
-
-javadoc {
-    include 'de/ellpeck/actuallyadditions/api/**'
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    from 'build/docs/javadoc'
-    classifier 'javadoc'
+    from(sourceSets.main.output)
+    archiveName = "${baseName}-${version}-deobf.${extension}"
 }
 
 task sourcesJar(type: Jar) {
-    from sourceSets.main.java
-    classifier = 'sources'
+    from(sourceSets.main.allSource)
+    archiveName = "${baseName}-${version}-sources.${extension}"
 }
 
-apply plugin: 'maven-publish'
+artifacts {
+    archives deobfJar
+    archives sourcesJar
+}
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact jar
-            artifact apiJar
-            artifact javadocJar
-            artifact sourcesJar
-            artifact deobfJar
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            from components.java
+
+            artifact deobfJar {
+                classifier 'deobf'
+            }
+
+            artifact sourcesJar {
+                classifier 'sources'
+            }
+
+            pom.withXml {
+                def node = asNode()
+                if (node.dependencies.size() > 0)
+                    node.remove(node.dependencies)
+            }
         }
     }
     repositories {
         maven {
-            url "file:///srv/nginx/maven"
+            url "file://" + System.getenv("local_maven")
         }
     }
 }
-*/
