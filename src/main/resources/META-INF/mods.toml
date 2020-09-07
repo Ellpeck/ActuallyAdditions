@@ -15,7 +15,7 @@ authors="Ellpeck, Shadows_of_Fire"
 	[[dependencies.actuallyadditions]]
 	    modId="forge"
 	    mandatory=true
-	    versionRange="[28.1.86,)"
+	    versionRange="[28.2,)"
 	    ordering="NONE"
 	    side="BOTH"
 	
