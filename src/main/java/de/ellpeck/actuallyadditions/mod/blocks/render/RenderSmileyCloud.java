@@ -1,7 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import java.util.Locale;
-
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.misc.cloud.ISmileyCloudEasterEgg;
 import de.ellpeck.actuallyadditions.mod.misc.cloud.SmileyCloudEasterEggs;
@@ -9,82 +8,87 @@ import de.ellpeck.actuallyadditions.mod.misc.special.RenderSpecial;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Quaternion;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.util.math.BlockPos;
 
-@SideOnly(Side.CLIENT)
-public class RenderSmileyCloud extends TileEntitySpecialRenderer<TileEntitySmileyCloud> {
+import java.util.Locale;
+
+// todo: migrate to client package
+public class RenderSmileyCloud extends TileEntityRenderer<TileEntitySmileyCloud> {
+
+    public RenderSmileyCloud(TileEntityRendererDispatcher rendererDispatcherIn) {
+        super(rendererDispatcherIn);
+    }
 
     @Override
-    public void render(TileEntitySmileyCloud theCloud, double x, double y, double z, float par5, int partial, float f) {
-        if (theCloud instanceof TileEntitySmileyCloud) {
+    public void render(TileEntitySmileyCloud theCloud, float partialTicks, MatrixStack matrices, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+        matrices.push();
+//        matrices.translate((float) x + 0.5F, (float) y - 0.5F, (float) z + 0.5F);
+        matrices.rotate(new Quaternion(180F, 0.0F, 0.0F, 1.0F));
+        matrices.translate(0.0F, -2F, 0.0F);
 
-            GlStateManager.pushMatrix();
-            GlStateManager.translate((float) x + 0.5F, (float) y - 0.5F, (float) z + 0.5F);
-            GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
-            GlStateManager.translate(0.0F, -2F, 0.0F);
+        if (theCloud.name != null && !theCloud.name.isEmpty()) {
+            boolean renderedEaster = false;
 
-            if (theCloud.name != null && !theCloud.name.isEmpty()) {
-                boolean renderedEaster = false;
+            easterEggs: for (ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.CLOUD_STUFF) {
+                for (String triggerName : cloud.getTriggerNames()) {
+                    if (triggerName != null && theCloud.name != null) {
+                        if (triggerName.equalsIgnoreCase(theCloud.name)) {
+                            matrices.push();
 
-                easterEggs: for (ISmileyCloudEasterEgg cloud : SmileyCloudEasterEggs.CLOUD_STUFF) {
-                    for (String triggerName : cloud.getTriggerNames()) {
-                        if (triggerName != null && theCloud.name != null) {
-                            if (triggerName.equalsIgnoreCase(theCloud.name)) {
-                                GlStateManager.pushMatrix();
-
-                                IBlockState state = theCloud.getWorld().getBlockState(theCloud.getPos());
-                                if (state.getBlock() == InitBlocks.blockSmileyCloud) {
-                                    switch (state.getValue(BlockHorizontal.FACING)) {
+                            BlockState state = theCloud.getWorld().getBlockState(theCloud.getPos());
+                            if (state.getBlock() == InitBlocks.blockSmileyCloud) {
+                                switch (state.get(HorizontalBlock.HORIZONTAL_FACING)) {
                                     case NORTH:
-                                        GlStateManager.rotate(180, 0, 1, 0);
+                                        matrices.rotate(new Quaternion(180, 0, 1, 0));
                                         break;
                                     case EAST:
-                                        GlStateManager.rotate(270, 0, 1, 0);
+                                        matrices.rotate(new Quaternion(270, 0, 1, 0));
                                         break;
                                     case WEST:
-                                        GlStateManager.rotate(90, 0, 1, 0);
+                                        matrices.rotate(new Quaternion(90, 0, 1, 0));
                                         break;
                                     default:
                                         break;
-                                    }
                                 }
-
-                                cloud.renderExtra(0.0625F);
-                                GlStateManager.popMatrix();
-
-                                renderedEaster = true;
-                                break easterEggs;
                             }
+
+                            cloud.renderExtra(0.0625F);
+                            matrices.pop();
+
+                            renderedEaster = true;
+                            break easterEggs;
                         }
                     }
                 }
+            }
 
-                String nameLower = theCloud.name.toLowerCase(Locale.ROOT);
-                if (SpecialRenderInit.SPECIAL_LIST.containsKey(nameLower)) {
-                    RenderSpecial render = SpecialRenderInit.SPECIAL_LIST.get(nameLower);
-                    if (render != null) {
-                        GlStateManager.pushMatrix();
-                        GlStateManager.translate(0F, renderedEaster ? 0.05F : 0.25F, 0F);
-                        GlStateManager.rotate(180F, 1.0F, 0.0F, 1.0F);
-                        GlStateManager.scale(0.75F, 0.75F, 0.75F);
-                        render.render();
-                        GlStateManager.popMatrix();
-                    }
+            String nameLower = theCloud.name.toLowerCase(Locale.ROOT);
+            if (SpecialRenderInit.SPECIAL_LIST.containsKey(nameLower)) {
+                RenderSpecial render = SpecialRenderInit.SPECIAL_LIST.get(nameLower);
+                if (render != null) {
+                    matrices.push();
+                    matrices.translate(0F, renderedEaster ? 0.05F : 0.25F, 0F);
+                    matrices.rotate(new Quaternion(180F, 1.0F, 0.0F, 1.0F));
+                    matrices.scale(0.75F, 0.75F, 0.75F);
+                    render.render();
+                    matrices.pop();
                 }
             }
-            GlStateManager.popMatrix();
+        }
+        matrices.pop();
 
-            Minecraft mc = Minecraft.getMinecraft();
-            if (theCloud.name != null && !theCloud.name.isEmpty() && !mc.gameSettings.hideGUI) {
-                if (mc.player.getDistanceSq(theCloud.getPos()) <= 36) {
-                    AssetUtil.renderNameTag(theCloud.name, x + 0.5F, y + 1.5F, z + 0.5F);
-                }
+        Minecraft mc = Minecraft.getInstance();
+        if (theCloud.name != null && !theCloud.name.isEmpty() && !mc.gameSettings.hideGUI) {
+            BlockPos pos = theCloud.getPos();
+            if (mc.player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) <= 36) {
+                AssetUtil.renderNameTag(theCloud.name, pos.getX() + 0.5F, pos.getY() + 1.5F, pos.getZ() + 0.5F);
             }
         }
     }

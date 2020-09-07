@@ -11,6 +11,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -34,7 +35,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public static boolean isWearing(EntityPlayer player) {
+    public static boolean isWearing(PlayerEntity player) {
         ItemStack face = player.inventory.armorInventory.get(3);
         return StackUtil.isValid(face) && face.getItem() instanceof IGoggles;
     }

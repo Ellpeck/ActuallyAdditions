@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import java.util.List;
 
+import net.minecraft.state.IProperty;
 import org.apache.commons.lang3.tuple.Pair;
 
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
@@ -187,7 +188,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay {
     public static CompostProperty COMPOST_PROP = new CompostProperty();
 
     @SuppressWarnings("rawtypes")
-    private static class CompostProperty implements IUnlistedProperty<Pair> {
+    private static class CompostProperty implements IProperty<Pair> {
 
         @Override
         public String getName() {

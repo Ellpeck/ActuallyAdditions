@@ -30,7 +30,7 @@ public enum TheColoredLampColors implements IStringSerializable {
     }
 
     public static TheColoredLampColors getColorFromDyeName(String color) {
-        if (color.substring(0, 3).equals("dye")) {
+        if (color.startsWith("dye")) {
             String actualName = color.substring(3);
             for (int i = 0; i < values().length; i++) {
                 String aName = values()[i].oreName;
