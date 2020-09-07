@@ -6,6 +6,7 @@ import de.ellpeck.actuallyadditions.mod.util.VanillaPacketDispatcher;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -163,7 +164,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
         }*/
     }
 
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) super.writeToNBT(compound);
 
         if (type == NBTType.SAVE_TILE) {
@@ -177,7 +178,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
         }
     }
 
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) super.readFromNBT(compound);
 
         if (type == NBTType.SAVE_TILE) {

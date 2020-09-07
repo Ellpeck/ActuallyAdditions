@@ -1,41 +1,25 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.IRarity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 
-public class ItemBlockBase extends ItemBlock {
+@Deprecated
+public class ItemBlockBase extends BlockItem {
 
-    public ItemBlockBase(Block block) {
-        super(block);
-        this.setHasSubtypes(false);
-        this.setMaxDamage(0);
+    public ItemBlockBase(Block block, Item.Properties properties) {
+        super(block, properties);
+//        this.setHasSubtypes(false);
+//        this.setMaxDamage(0);
     }
 
-    @Override
-    public String getTranslationKey(ItemStack stack) {
-        return this.getTranslationKey();
-    }
-
-    @Override
-    public int getMetadata(int damage) {
-        return damage;
-    }
-
-    @Override
-    public IRarity getForgeRarity(ItemStack stack) {
-        if (this.block instanceof ICustomRarity) {
-            return ((ICustomRarity) this.block).getRarity(stack);
-        } else {
-            return Util.FALLBACK_RARITY;
-        }
-    }
-
-    public interface ICustomRarity {
-
-        IRarity getRarity(ItemStack stack);
-
-    }
+//    @Override
+//    public String getTranslationKey(ItemStack stack) {
+//        return this.getTranslationKey();
+//    }
+//
+//    @Override
+//    public int getMetadata(int damage) {
+//        return damage;
+//    }
 }

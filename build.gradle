@@ -1,10 +1,8 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
+        mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
@@ -16,30 +14,40 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-version = "2.0.0"
+version = mod_version
 group = "de.ellpeck.actuallyadditions"
-archivesBaseName = "ActuallyAdditions-1.15.2"
+archivesBaseName = "actuallyadditions-${mc_version}"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: "stable", version: "60-1.15"
+    mappings channel: "snapshot", version: mcp_version
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
 	runs {
-        client = {
+        client {
             properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run').canonicalPath
-            source sourceSets.main
+            workingDirectory project.file('run')
+            mods {
+                actuallyadditions {
+                    source sourceSets.main
+                }
+            }
         }
-        server = {
+        server {
             properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run/server').canonicalPath
-            source sourceSets.main
+            workingDirectory project.file('run')
+            mods {
+                actuallyadditions {
+                    source sourceSets.main
+                }
+            }
         }
-        data = {
-            workingDirectory project.file("run/data").canonicalPath
-            args "--mod", "actuallyadditions", "--all", "--output", "\"" + file("src/generated/resources").toString() + "\"", "--validate", "--existing", "\"" + sourceSets.main.resources.srcDirs[0] + "\""
+        data {
+            workingDirectory project.file('run')
+            args "--mod", "actuallyadditions", "--all", "--output", file('src/generated/resources/'), "--existing", "\"" + sourceSets.main.resources.srcDirs[0] + "\""
             mods {
                 actuallyadditions {
                     source sourceSets.main
@@ -51,19 +59,18 @@ minecraft {
 
 repositories {
     maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
+        name = "Progwml6 maven / JEI Maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
     maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
+        name = "ModMaven / JEI Mirror"
         url = "https://modmaven.k-4u.nl"
     }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+
     // compile against the JEI API but do not include it at runtime
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
     // at runtime, use the full JEI jar
@@ -74,7 +81,7 @@ jar {
     manifest {
         attributes(["Specification-Title": "actuallyadditions",
                     "Specification-Vendor": "Ellpeck",
-                    "Specification-Version": "24.0",
+                    "Specification-Version": mod_version,
                     "Implementation-Title": project.name,
                     "Implementation-Version": "${version}",
                     "Implementation-Vendor" :"Ellpeck",
