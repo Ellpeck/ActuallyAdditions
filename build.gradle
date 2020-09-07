@@ -18,12 +18,12 @@ apply plugin: 'maven-publish'
 
 version = "2.0.0"
 group = "de.ellpeck.actuallyadditions"
-archivesBaseName = "ActuallyAdditions-1.14.4"
+archivesBaseName = "ActuallyAdditions-1.15.2"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: "snapshot", version: "20191107-1.14.3"
+    mappings channel: "stable", version: "60-1.15"
 	runs {
         client = {
             properties 'forge.logging.markers': ''
@@ -51,20 +51,24 @@ minecraft {
 
 repositories {
     maven {
-        url "https://dvs1.progwml6.com/files/maven"
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
     }
-	maven {
-		url "https://tehnut.info/maven"
-	}
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.86'
-	compile fg.deobf('mezz.jei:jei-1.14.4:6.0.0.24')
-	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.6-B67_1.14.4')
-	compile fileTree(dir: 'libs', include: '*.jar')
+    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+    // compile against the JEI API but do not include it at runtime
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
+    // at runtime, use the full JEI jar
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 }
-
 
 jar {
     manifest {
