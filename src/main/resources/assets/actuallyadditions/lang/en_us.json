@@ -1,6 +1,9 @@
 {
 	"itemGroup.actuallyadditions": "Actually Additions",
     "item.actuallyadditions.black_quartz": "Black Quartz",
+	"item.actuallyadditions.tiny_coal": "Tiny Coal",
+	"item.actuallyadditions.tiny_charcoal": "Tiny Charcoal",
+	"item.actuallyadditions.biocoal": "Biocoal",
     "block.actuallyadditions.black_quartz_block": "Black Quartz Block",
 	"block.actuallyadditions.chiseled_black_quartz_block": "Chiseled Black Quartz Block",
 	"block.actuallyadditions.black_quartz_pillar": "Black Quartz Pillar",
@@ -23,5 +26,4 @@
 	"block.actuallyadditions.red_lamp": "Red Lamp",
 	"block.actuallyadditions.black_lamp": "Black Lamp",
 	"block.actuallyadditions.tiny_torch": "Tiny Torch"
-
 }
