@@ -27,8 +27,13 @@ public interface IEnergyTile {
 
     int getZ();
 
-    //TODO: Rename to getWorld
+    /**
+     * @deprecated use {@link #getWorld()}
+     */
+    @Deprecated
     World getWorldObject();
+
+    World getWorld();
 
     void extractEnergy(int amount);
 

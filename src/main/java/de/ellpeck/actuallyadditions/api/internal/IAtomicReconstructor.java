@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.api.internal;
 
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 
 /**
  * This is a helper interface for Lens' invoke() method.
@@ -23,5 +23,5 @@ public interface IAtomicReconstructor extends IEnergyTile {
 
     Lens getLens();
 
-    EnumFacing getOrientation();
+    Direction getOrientation();
 }

@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.api.recipe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmpowererRecipe {
 
@@ -48,21 +48,21 @@ public class EmpowererRecipe {
     }
 
     public boolean matches(ItemStack base, ItemStack stand1, ItemStack stand2, ItemStack stand3, ItemStack stand4) {
-        if (!this.input.apply(base)) return false;
+        if (!this.input.test(base)) return false;
         List<Ingredient> matches = new ArrayList<>();
         ItemStack[] stacks = { stand1, stand2, stand3, stand4 };
         boolean[] unused = { true, true, true, true };
         for (ItemStack s : stacks) {
-            if (unused[0] && this.modifier1.apply(s)) {
+            if (unused[0] && this.modifier1.test(s)) {
                 matches.add(this.modifier1);
                 unused[0] = false;
-            } else if (unused[1] && this.modifier2.apply(s)) {
+            } else if (unused[1] && this.modifier2.test(s)) {
                 matches.add(this.modifier2);
                 unused[1] = false;
-            } else if (unused[2] && this.modifier3.apply(s)) {
+            } else if (unused[2] && this.modifier3.test(s)) {
                 matches.add(this.modifier3);
                 unused[2] = false;
-            } else if (unused[3] && this.modifier4.apply(s)) {
+            } else if (unused[3] && this.modifier4.test(s)) {
                 matches.add(this.modifier4);
                 unused[3] = false;
             }

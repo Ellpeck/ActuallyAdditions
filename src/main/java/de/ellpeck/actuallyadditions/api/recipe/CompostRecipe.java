@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.api.recipe;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
@@ -19,15 +19,15 @@ public class CompostRecipe {
 
     protected final Ingredient input;
     protected final ItemStack output;
-    protected final IBlockState inputDisplay;
-    protected final IBlockState outputDisplay;
+    protected final BlockState inputDisplay;
+    protected final BlockState outputDisplay;
 
     @Deprecated
     public CompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay) {
         this(Ingredient.fromStacks(input), inputDisplay.getDefaultState(), output, outputDisplay.getDefaultState());
     }
 
-    public CompostRecipe(Ingredient input, IBlockState inputDisplay, ItemStack output, IBlockState outputDisplay) {
+    public CompostRecipe(Ingredient input, BlockState inputDisplay, ItemStack output, BlockState outputDisplay) {
         this.input = input;
         this.output = output;
         this.inputDisplay = inputDisplay;
@@ -35,7 +35,7 @@ public class CompostRecipe {
     }
 
     public boolean matches(ItemStack stack) {
-        return this.input.apply(stack);
+        return this.input.test(stack);
     }
 
     public Ingredient getInput() {
@@ -46,11 +46,11 @@ public class CompostRecipe {
         return this.output;
     }
 
-    public IBlockState getInputDisplay() {
+    public BlockState getInputDisplay() {
         return this.inputDisplay;
     }
 
-    public IBlockState getOutputDisplay() {
+    public BlockState getOutputDisplay() {
         return this.outputDisplay;
     }
 

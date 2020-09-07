@@ -10,18 +10,18 @@
 
 package de.ellpeck.actuallyadditions.api.internal;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.List;
 
 /**
  * This is the internal method handler.
@@ -32,15 +32,15 @@ public interface IMethodHandler {
 
     boolean addEffectToStack(ItemStack stack, CoffeeIngredient ingredient);
 
-    PotionEffect getSameEffectFromStack(ItemStack stack, PotionEffect effect);
+    EffectInstance getSameEffectFromStack(ItemStack stack, EffectInstance effect);
 
-    void addEffectProperties(ItemStack stack, PotionEffect effect, boolean addDur, boolean addAmp);
+    void addEffectProperties(ItemStack stack, EffectInstance effect, boolean addDur, boolean addAmp);
 
-    void addEffectToStack(ItemStack stack, PotionEffect effect);
+    void addEffectToStack(ItemStack stack, EffectInstance effect);
 
-    PotionEffect[] getEffectsFromStack(ItemStack stack);
+    EffectInstance[] getEffectsFromStack(ItemStack stack);
 
-    boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile);
+    boolean invokeConversionLens(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile);
 
     boolean invokeReconstructor(IAtomicReconstructor tile);
 

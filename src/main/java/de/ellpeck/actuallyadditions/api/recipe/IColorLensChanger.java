@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.api.recipe;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 
@@ -35,6 +35,6 @@ public interface IColorLensChanger {
      * @param tile          the Reconstructor doing the color conversion
      * @return the modified stack. Please make sure to return a modified COPY of the input stack.
      */
-    ItemStack modifyItem(ItemStack stack, IBlockState hitBlockState, BlockPos hitBlock, IAtomicReconstructor tile);
+    ItemStack modifyItem(ItemStack stack, BlockState hitBlockState, BlockPos hitBlock, IAtomicReconstructor tile);
 
 }

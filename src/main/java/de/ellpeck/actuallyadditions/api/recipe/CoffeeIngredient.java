@@ -13,34 +13,34 @@ package de.ellpeck.actuallyadditions.api.recipe;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
 
 public class CoffeeIngredient {
 
     protected final Ingredient input;
     protected final int maxAmplifier;
-    protected PotionEffect[] effects;
+    protected EffectInstance[] effects;
 
     @Deprecated
-    public CoffeeIngredient(ItemStack input, PotionEffect[] effects, int maxAmplifier) {
+    public CoffeeIngredient(ItemStack input, EffectInstance[] effects, int maxAmplifier) {
         this(Ingredient.fromStacks(input), maxAmplifier, effects);
     }
 
-    public CoffeeIngredient(Ingredient input, int maxAmplifier, PotionEffect... effects) {
+    public CoffeeIngredient(Ingredient input, int maxAmplifier, EffectInstance... effects) {
         this.input = input;
         this.effects = effects;
         this.maxAmplifier = maxAmplifier;
     }
 
     public boolean matches(ItemStack stack) {
-        return this.input.apply(stack);
+        return this.input.test(stack);
     }
 
     public Ingredient getInput() {
         return this.input;
     }
 
-    public PotionEffect[] getEffects() {
+    public EffectInstance[] getEffects() {
         return this.effects;
     }
 

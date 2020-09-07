@@ -33,7 +33,7 @@ public class CrusherRecipe {
     }
 
     public boolean matches(ItemStack stack) {
-        return this.input.apply(stack);
+        return this.input.test(stack);
     }
 
     public ItemStack getOutputOne() {

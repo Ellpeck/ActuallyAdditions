@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.api.lens;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 
 /**
@@ -25,7 +25,7 @@ import net.minecraft.util.math.BlockPos;
 public class LensConversion extends Lens {
 
     @Override
-    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
+    public boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
         return ActuallyAdditionsAPI.methodHandler.invokeConversionLens(hitState, hitBlock, tile);
     }
 

@@ -10,14 +10,14 @@
 
 package de.ellpeck.actuallyadditions.api.booklet;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.awt.*;
+import java.util.List;
 
 public interface IBookletPage {
 
@@ -29,31 +29,32 @@ public interface IBookletPage {
 
     void setChapter(IBookletChapter chapter);
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     String getInfoText();
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     void mouseClicked(GuiBookletBase gui, int mouseX, int mouseY, int mouseButton);
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     void mouseReleased(GuiBookletBase gui, int mouseX, int mouseY, int state);
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     void mouseClickMove(GuiBookletBase gui, int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick);
 
-    @SideOnly(Side.CLIENT)
-    void actionPerformed(GuiBookletBase gui, GuiButton button);
+    // todo: this won't be needed anymore
+    @OnlyIn(Dist.CLIENT)
+    void actionPerformed(GuiBookletBase gui, Button button);
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     void initGui(GuiBookletBase gui, int startX, int startY);
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     void updateScreen(GuiBookletBase gui, int startX, int startY, int pageTimer);
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks);
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     void drawScreenPost(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks);
 
     boolean shouldBeOnLeftSide();
