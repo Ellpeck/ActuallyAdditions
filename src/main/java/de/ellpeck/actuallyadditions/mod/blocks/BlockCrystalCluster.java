@@ -2,6 +2,10 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Direction;
 import org.apache.commons.lang3.ArrayUtils;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
@@ -32,39 +36,38 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlock, IColorProvidingItem {
+public class BlockCrystalCluster extends Block implements IColorProvidingBlock, IColorProvidingItem {
 
     private final TheCrystals crystal;
 
-    public BlockCrystalCluster(String name, TheCrystals crystal) {
-        super(Material.GLASS, name);
+    public BlockCrystalCluster(TheCrystals crystal) {
+        super(Properties.create(Material.GLASS)
+                .hardnessAndResistance(0.25f, 1.0f)
+                .sound(SoundType.GLASS)
+                .lightValue(7));
+
         this.crystal = crystal;
 
-        this.setHardness(0.25F);
-        this.setResistance(1.0F);
-        this.setSoundType(SoundType.GLASS);
-        this.setLightOpacity(1);
-        this.setLightLevel(0.7F);
+//        this.setHardness(0.25F);
+//        this.setResistance(1.0F);
+//        this.setSoundType(SoundType.GLASS);
+//        this.setLightOpacity(1);
+//        this.setLightLevel(0.7F);
     }
 
-    @Override
-    public boolean isFullCube(IBlockState state) {
-        return false;
-    }
+//    @Override
+//    public boolean isFullCube(BlockState state) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean isOpaqueCube(BlockState state) {
+//        return false;
+//    }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-
-    @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base) {
+    public BlockState getStateForPlacement(World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, int meta, LivingEntity base) {
         return this.getStateFromMeta(side.ordinal());
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
     }
 
     @Override

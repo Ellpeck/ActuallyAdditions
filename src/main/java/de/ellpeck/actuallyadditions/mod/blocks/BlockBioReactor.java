@@ -15,16 +15,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 public class BlockBioReactor extends BlockContainerBase {
 
-    public BlockBioReactor(String name) {
-        super(Material.ROCK, name);
-
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(2.0F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+    public BlockBioReactor() {
+        super(Properties.create(Material.ROCK)
+                .hardnessAndResistance(2f, 10.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
     }
 
     @Override

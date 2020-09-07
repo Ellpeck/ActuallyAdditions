@@ -1,33 +1,32 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.TorchBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
+import java.util.Random;
+
 //Copied from BlockTorch.
 //I have no idea what all of this means.
-public class BlockTinyTorch extends BlockBase {
+public class BlockTinyTorch extends Block {
 
     //Thanks to xdjackiexd for these.
     //Man, I hate numbers.
@@ -37,14 +36,15 @@ public class BlockTinyTorch extends BlockBase {
     private static final AxisAlignedBB TORCH_WEST_AABB = new AxisAlignedBB(0.8125D, 0.25D, 0.4375D, 1.0D, 0.5625D, 0.5625D);
     private static final AxisAlignedBB TORCH_EAST_AABB = new AxisAlignedBB(0.0D, 0.25D, 0.4375D, 0.1875D, 0.5625D, 0.5625D);
 
-    public BlockTinyTorch(String name) {
-        super(Material.CIRCUITS, name);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(BlockTorch.FACING, EnumFacing.UP));
-        this.setTickRandomly(true);
+    public BlockTinyTorch() {
+        super(Properties.create(Material.MISCELLANEOUS)
+                .hardnessAndResistance(0.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .lightValue(8)
+                .sound(SoundType.WOOD)
+                .tickRandomly());
 
-        this.setHardness(0.0F);
-        this.setLightLevel(0.8F);
-        this.setSoundType(SoundType.WOOD);
+        this.setDefaultState(this.getDefaultState().with(BlockStateProperties.FACING, Direction.UP));
     }
 
     @Override

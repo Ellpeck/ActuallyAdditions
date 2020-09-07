@@ -16,26 +16,30 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
+
+import javax.annotation.Nullable;
 
 public class BlockBatteryBox extends BlockContainerBase {
 
-    public BlockBatteryBox(String name) {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+    public BlockBatteryBox() {
+        super(Properties.create(Material.ROCK)
+                .hardnessAndResistance(1.5f, 10.0f)
+                .harvestLevel(0)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
+
+//        this.setHarvestLevel("pickaxe", 0);
+//        this.setHardness(1.5F);
+//        this.setResistance(10.0F);
+//        this.setSoundType(SoundType.STONE);
     }
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return BlockSlabs.AABB_BOTTOM_HALF;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
-        return new TileEntityBatteryBox();
     }
 
     @Override
@@ -71,5 +75,11 @@ public class BlockBatteryBox extends BlockContainerBase {
     @Override
     public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+        return new TileEntityBatteryBox();
     }
 }

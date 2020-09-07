@@ -20,15 +20,15 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 public class BlockFarmer extends BlockContainerBase {
 
-    public BlockFarmer(String name) {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+    public BlockFarmer() {
+        super(Properties.create(Material.ROCK)
+                .hardnessAndResistance(1.5f, 10.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
     }
 
     @Override

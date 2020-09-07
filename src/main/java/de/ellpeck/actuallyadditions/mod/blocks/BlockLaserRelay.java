@@ -9,13 +9,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayFluids;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.BlockDirectional;
@@ -42,6 +36,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -61,15 +56,15 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
 
     private final Type type;
 
-    public BlockLaserRelay(String name, Type type) {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+    public BlockLaserRelay(Type type) {
+        super(Properties.create(Material.ROCK)
+                .hardnessAndResistance(1.5f, 10.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
 
         this.type = type;
 
+        // todo: migrate to better way of handling this...
         if (this.type.ordinal() == 0) {
             MinecraftForge.EVENT_BUS.register(this);
         }

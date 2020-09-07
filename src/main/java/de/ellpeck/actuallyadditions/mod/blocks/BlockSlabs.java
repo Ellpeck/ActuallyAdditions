@@ -5,6 +5,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -23,7 +24,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockSlabs extends BlockBase {
+public class BlockSlabs extends Block {
 
     public static final AxisAlignedBB AABB_BOTTOM_HALF = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
     private static final AxisAlignedBB AABB_TOP_HALF = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 1.0D, 1.0D, 1.0D);
@@ -34,7 +35,7 @@ public class BlockSlabs extends BlockBase {
         this(name, fullBlock.getDefaultState());
     }
 
-    public BlockSlabs(String name, IBlockState fullBlockState) {
+    public BlockSlabs(String name, BlockState fullBlockState) {
         super(fullBlockState.getMaterial(), name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);

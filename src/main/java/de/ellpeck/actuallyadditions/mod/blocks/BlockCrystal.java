@@ -6,6 +6,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -15,22 +16,24 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.IRarity;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrystal extends BlockBase {
+public class BlockCrystal extends Block {
 
     public static final TheCrystals[] ALL_CRYSTALS = TheCrystals.values();
     private static final PropertyEnum<TheCrystals> TYPE = PropertyEnum.create("type", TheCrystals.class);
 
     private final boolean isEmpowered;
 
-    public BlockCrystal(String name, boolean isEmpowered) {
-        super(Material.ROCK, name);
+    public BlockCrystal(boolean isEmpowered) {
+        super(Properties.create(Material.ROCK)
+                .hardnessAndResistance(1.5f, 10.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
+
         this.isEmpowered = isEmpowered;
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setHarvestLevel("pickaxe", 1);
     }
 
     @Override
@@ -71,11 +74,6 @@ public class BlockCrystal extends BlockBase {
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, TYPE);
-    }
-
-    @Override
-    public IRarity getRarity(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_CRYSTALS.length ? EnumRarity.COMMON : ALL_CRYSTALS[stack.getItemDamage()].rarity;
     }
 
     public static class TheItemBlock extends ItemBlockBase {

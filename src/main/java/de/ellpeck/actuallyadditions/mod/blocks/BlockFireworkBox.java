@@ -15,15 +15,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 public class BlockFireworkBox extends BlockContainerBase {
 
-    public BlockFireworkBox(String name) {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+    public BlockFireworkBox() {
+        super(Properties.create(Material.ROCK)
+                .hardnessAndResistance(1.5f, 10.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
     }
 
     @Override
@@ -42,10 +42,5 @@ public class BlockFireworkBox extends BlockContainerBase {
     @Override
     public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityFireworkBox();
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
     }
 }

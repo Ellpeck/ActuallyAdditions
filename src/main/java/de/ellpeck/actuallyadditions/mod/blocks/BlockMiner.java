@@ -19,17 +19,17 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMiner extends BlockContainerBase implements IHudDisplay {
 
-    public BlockMiner(String name) {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(8F);
-        this.setResistance(30F);
-        this.setSoundType(SoundType.STONE);
+    public BlockMiner() {
+        super(Properties.create(Material.ROCK)
+                .hardnessAndResistance(8f, 30f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
     }
 
     @Override
@@ -46,11 +46,6 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay {
             }
         }
         return true;
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
     }
 
     @Override

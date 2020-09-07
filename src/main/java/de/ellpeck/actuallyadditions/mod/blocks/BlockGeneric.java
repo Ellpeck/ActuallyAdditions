@@ -1,27 +1,21 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 
-public class BlockGeneric extends BlockBase {
+public class BlockGeneric extends Block {
 
-    public BlockGeneric(String name) {
-        this(name, Material.ROCK, SoundType.STONE, 1.5F, 10.0F, "pickaxe", 0);
+    public BlockGeneric() {
+        this(Material.ROCK, SoundType.STONE, 1.5F, 10.0F, ToolType.PICKAXE, 0);
     }
 
-    public BlockGeneric(String name, Material material, SoundType sound, float hardness, float resistance, String harvestTool, int harvestLevel) {
-        super(material, name);
-        this.setHarvestLevel(harvestTool, harvestLevel);
-        this.setHardness(hardness);
-        this.setResistance(resistance);
-        this.setSoundType(sound);
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.COMMON;
+    public BlockGeneric(Material material, SoundType sound, float hardness, float resistance, ToolType harvestTool, int harvestLevel) {
+        super(Properties.create(material)
+                .hardnessAndResistance(hardness, resistance)
+                .harvestTool(harvestTool)
+                .harvestLevel(harvestLevel)
+                .sound(sound));
     }
 }

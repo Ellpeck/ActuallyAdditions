@@ -17,27 +17,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockPlayerInterface extends BlockContainerBase implements IHudDisplay {
 
-    public BlockPlayerInterface(String name) {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(4.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+    public BlockPlayerInterface() {
+        super(Properties.create(Material.ROCK)
+                .hardnessAndResistance(4.5f, 10.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
     }
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2) {
         return new TileEntityPlayerInterface();
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
     }
 
     @Override

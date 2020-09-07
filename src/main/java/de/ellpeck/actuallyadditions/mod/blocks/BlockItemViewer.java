@@ -2,30 +2,27 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.IBlockReader;
+import net.minecraftforge.common.ToolType;
+
+import javax.annotation.Nullable;
 
 public class BlockItemViewer extends BlockContainerBase {
 
-    public BlockItemViewer(String name) {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+    public BlockItemViewer() {
+        super(Properties.create(Material.ROCK)
+                .harvestTool(ToolType.PICKAXE)
+                .hardnessAndResistance(1.5f, 10.0f)
+                .sound(SoundType.STONE));
     }
 
+    @Nullable
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityItemViewer();
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
     }
 }

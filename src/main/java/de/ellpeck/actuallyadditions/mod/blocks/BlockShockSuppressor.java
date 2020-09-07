@@ -1,9 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityShockSuppressor;
 import net.minecraft.block.SoundType;
@@ -15,19 +12,23 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+@Mod.EventBusSubscriber(modid = ActuallyAdditions.MODID)
 public class BlockShockSuppressor extends BlockContainerBase {
 
-    public BlockShockSuppressor(String name) {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(20.0F);
-        this.setResistance(2000.0F);
-        this.setSoundType(SoundType.STONE);
-
-        MinecraftForge.EVENT_BUS.register(this);
+    public BlockShockSuppressor() {
+        super(Properties.create(Material.ROCK)
+                .hardnessAndResistance(20.0f, 2000.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
     }
 
     @SubscribeEvent
@@ -80,11 +81,6 @@ public class BlockShockSuppressor extends BlockContainerBase {
                 }
             }
         }
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
     }
 
     @Override

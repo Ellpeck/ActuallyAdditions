@@ -1,7 +1,5 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -16,24 +14,23 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Random;
+
 public class BlockSmileyCloud extends BlockContainerBase {
 
-    public BlockSmileyCloud(String name) {
-        super(Material.CLOTH, name);
-        this.setHardness(0.5F);
-        this.setResistance(5.0F);
-        this.setSoundType(SoundType.CLOTH);
-        this.setTickRandomly(true);
+    public BlockSmileyCloud(S) {
+        super(Properties.create(Material.WOOL)
+                .hardnessAndResistance(0.5f, 5.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.CLOTH)
+                .tickRandomly());
     }
 
     @Override

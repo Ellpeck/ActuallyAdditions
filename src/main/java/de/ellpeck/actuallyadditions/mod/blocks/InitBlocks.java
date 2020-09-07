@@ -16,22 +16,22 @@ public final class InitBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MODID);
 
     public static final RegistryObject<Block> blockCrystalClusterRedstone
-            = BLOCKS.register("block_crystal_cluster_redstone", () -> new BlockCrystalCluster(TheCrystals.REDSTONE);
+            = BLOCKS.register("block_crystal_cluster_redstone", () -> new BlockCrystalCluster(TheCrystals.REDSTONE));
 
     public static final RegistryObject<Block> blockCrystalClusterLapis
-            = BLOCKS.register("block_crystal_cluster_lapis", () -> new BlockCrystalCluster(TheCrystals.LAPIS);
+            = BLOCKS.register("block_crystal_cluster_lapis", () -> new BlockCrystalCluster(TheCrystals.LAPIS));
 
     public static final RegistryObject<Block> blockCrystalClusterDiamond
-            = BLOCKS.register("block_crystal_cluster_diamond", () -> new BlockCrystalCluster(TheCrystals.DIAMOND);
+            = BLOCKS.register("block_crystal_cluster_diamond", () -> new BlockCrystalCluster(TheCrystals.DIAMOND));
 
     public static final RegistryObject<Block> blockCrystalClusterCoal
-            = BLOCKS.register("block_crystal_cluster_coal", () -> new BlockCrystalCluster(TheCrystals.COAL);
+            = BLOCKS.register("block_crystal_cluster_coal", () -> new BlockCrystalCluster(TheCrystals.COAL));
 
     public static final RegistryObject<Block> blockCrystalClusterEmerald
-            = BLOCKS.register("block_crystal_cluster_emerald", () -> new BlockCrystalCluster(TheCrystals.EMERALD);
+            = BLOCKS.register("block_crystal_cluster_emerald", () -> new BlockCrystalCluster(TheCrystals.EMERALD));
 
     public static final RegistryObject<Block> blockCrystalClusterIron
-            = BLOCKS.register("block_crystal_cluster_iron", () -> new BlockCrystalCluster(TheCrystals.IRON);
+            = BLOCKS.register("block_crystal_cluster_iron", () -> new BlockCrystalCluster(TheCrystals.IRON));
 
     public static final RegistryObject<Block> blockBatteryBox
             = BLOCKS.register("block_battery_box", BlockBatteryBox::new);
@@ -82,22 +82,22 @@ public final class InitBlocks {
             = BLOCKS.register("block_black_lotus", BlockBlackLotus::new);
 
     public static final RegistryObject<Block> blockLaserRelay
-            = BLOCKS.register("block_laser_relay", () -> new BlockLaserRelay(Type.ENERGY_BASIC));
+            = BLOCKS.register("block_laser_relay", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_BASIC));
 
     public static final RegistryObject<Block> blockLaserRelayAdvanced
-            = BLOCKS.register("block_laser_relay_advanced", () -> new BlockLaserRelay(Type.ENERGY_ADVANCED));
+            = BLOCKS.register("block_laser_relay_advanced", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_ADVANCED));
 
     public static final RegistryObject<Block> blockLaserRelayExtreme
-            = BLOCKS.register("block_laser_relay_extreme", () -> new BlockLaserRelay(Type.ENERGY_EXTREME));
+            = BLOCKS.register("block_laser_relay_extreme", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_EXTREME));
 
     public static final RegistryObject<Block> blockLaserRelayFluids
-            = BLOCKS.register("block_laser_relay_fluids", () -> new BlockLaserRelay(Type.FLUIDS));
+            = BLOCKS.register("block_laser_relay_fluids", () -> new BlockLaserRelay(BlockLaserRelay.Type.FLUIDS));
 
     public static final RegistryObject<Block> blockLaserRelayItem
-            = BLOCKS.register("block_laser_relay_item", () -> new BlockLaserRelay(Type.ITEM));
+            = BLOCKS.register("block_laser_relay_item", () -> new BlockLaserRelay(BlockLaserRelay.Type.ITEM));
 
     public static final RegistryObject<Block> blockLaserRelayItemWhitelist
-            = BLOCKS.register("block_laser_relay_item_whitelist", () -> new BlockLaserRelay(Type.ITEM_WHITELIST));
+            = BLOCKS.register("block_laser_relay_item_whitelist", () -> new BlockLaserRelay(BlockLaserRelay.Type.ITEM_WHITELIST));
 
     public static final RegistryObject<Block> blockRangedCollector
             = BLOCKS.register("block_ranged_collector", BlockRangedCollector::new);
@@ -127,16 +127,16 @@ public final class InitBlocks {
             = BLOCKS.register("block_testifi_bucks_white_stairs", () -> new StairsBlock(() -> blockTestifiBucksWhiteWall.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
 
     public static final RegistryObject<Block> blockTestifiBucksGreenSlab
-            = BLOCKS.register("block_testifi_bucks_green_slab", () -> new BlockSlabs("block_testifi_bucks_green_slab", blockTestifiBucksGreenWall);
+            = BLOCKS.register("block_testifi_bucks_green_slab", () -> new BlockSlabs(blockTestifiBucksGreenWall);
 
     public static final RegistryObject<Block> blockTestifiBucksWhiteSlab
-            = BLOCKS.register("block_testifi_bucks_white_slab", () -> new BlockSlabs("block_testifi_bucks_white_slab", blockTestifiBucksWhiteWall);
+            = BLOCKS.register("block_testifi_bucks_white_slab", () -> new BlockSlabs(blockTestifiBucksWhiteWall);
 
     public static final RegistryObject<Block> blockTestifiBucksGreenFence
-            = BLOCKS.register("block_testifi_bucks_green_fence", () -> new BlockWallAA("block_testifi_bucks_green_fence", blockTestifiBucksGreenWall);
+            = BLOCKS.register("block_testifi_bucks_green_fence", () -> new BlockWallAA(blockTestifiBucksGreenWall);
 
     public static final RegistryObject<Block> blockTestifiBucksWhiteFence
-            = BLOCKS.register("block_testifi_bucks_white_fence", () -> new BlockWallAA("block_testifi_bucks_white_fence", blockTestifiBucksWhiteWall);
+            = BLOCKS.register("block_testifi_bucks_white_fence", () -> new BlockWallAA(blockTestifiBucksWhiteWall);
 
     public static final RegistryObject<Block> blockColoredLamp
             = BLOCKS.register("block_colored_lamp", () -> new BlockColoredLamp(false));
