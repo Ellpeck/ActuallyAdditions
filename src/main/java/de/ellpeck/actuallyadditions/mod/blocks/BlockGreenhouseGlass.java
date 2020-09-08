@@ -1,10 +1,5 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.Random;
-
-import org.apache.commons.lang3.tuple.Triple;
-
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -17,18 +12,21 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.Triple;
 
-public class BlockGreenhouseGlass extends BlockBase {
+import java.util.Random;
 
-    public BlockGreenhouseGlass(String name) {
-        super(Material.GLASS, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(0.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.GLASS);
-        this.setTickRandomly(true);
+public class BlockGreenhouseGlass extends Block {
+
+    public BlockGreenhouseGlass() {
+        super(Block.Properties.create(Material.GLASS)
+                .hardnessAndResistance(0.5f, 10.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.GLASS)
+                .tickRandomly());
     }
 
     @Override

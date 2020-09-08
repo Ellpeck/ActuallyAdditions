@@ -29,9 +29,8 @@ public class BlockWildPlant extends BlockBushBase {
     public static final TheWildPlants[] ALL_WILD_PLANTS = TheWildPlants.values();
     public static final PropertyEnum<TheWildPlants> TYPE = PropertyEnum.create("type", TheWildPlants.class);
 
-    public BlockWildPlant(String name) {
-        super(name);
-        this.setSoundType(SoundType.PLANT);
+    public BlockWildPlant() {
+        super(Properties.create(Material.PLANTS));
     }
 
     @Override

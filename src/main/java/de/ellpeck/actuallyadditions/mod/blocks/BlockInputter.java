@@ -1,7 +1,5 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
@@ -22,6 +20,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
+
+import java.util.Random;
 
 public class BlockInputter extends BlockContainerBase {
 
@@ -29,13 +30,13 @@ public class BlockInputter extends BlockContainerBase {
 
     public final boolean isAdvanced;
 
-    public BlockInputter(boolean isAdvanced, String name) {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
-        this.setTickRandomly(true);
+    public BlockInputter(boolean isAdvanced) {
+        super(Block.Properties.create(Material.ROCK)
+                .hardnessAndResistance(1.5f, 10.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE)
+                .tickRandomly());
+
         this.isAdvanced = isAdvanced;
     }
 

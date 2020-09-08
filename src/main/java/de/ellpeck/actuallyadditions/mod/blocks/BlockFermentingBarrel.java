@@ -4,6 +4,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,15 +16,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 public class BlockFermentingBarrel extends BlockContainerBase {
 
-    public BlockFermentingBarrel(String name) {
-        super(Material.WOOD, name);
-        this.setHarvestLevel("axe", 0);
-        this.setHardness(0.5F);
-        this.setResistance(5.0F);
-        this.setSoundType(SoundType.WOOD);
+    public BlockFermentingBarrel() {
+        super(Block.Properties.create(Material.WOOD)
+                .hardnessAndResistance(0.5f, 5.0f)
+                .harvestTool(ToolType.AXE)
+                .sound(SoundType.WOOD));
     }
 
     @Override

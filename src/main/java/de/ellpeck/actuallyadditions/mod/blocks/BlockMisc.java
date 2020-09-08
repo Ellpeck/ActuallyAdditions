@@ -6,6 +6,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -14,17 +15,18 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.ToolType;
 
-public class BlockMisc extends BlockBase {
+public class BlockMisc extends Block {
 
     public static final TheMiscBlocks[] ALL_MISC_BLOCKS = TheMiscBlocks.values();
     public static final PropertyEnum<TheMiscBlocks> TYPE = PropertyEnum.create("type", TheMiscBlocks.class);
 
-    public BlockMisc(String name) {
-        super(Material.ROCK, name);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setHarvestLevel("pickaxe", 1);
+    public BlockMisc() {
+        super(Block.Properties.create(Material.ROCK)
+                .hardnessAndResistance(1.5f, 10.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
     }
 
     @Override

@@ -5,6 +5,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnergizer;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,18 +17,19 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 public class BlockEnergizer extends BlockContainerBase {
 
     private final boolean isEnergizer;
 
-    public BlockEnergizer(boolean isEnergizer, String name) {
-        super(Material.ROCK, name);
+    public BlockEnergizer(boolean isEnergizer) {
+        super(Block.Properties.create(Material.ROCK)
+                .hardnessAndResistance(2.0f, 100f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
+
         this.isEnergizer = isEnergizer;
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(2.0F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
     }
 
     @Override

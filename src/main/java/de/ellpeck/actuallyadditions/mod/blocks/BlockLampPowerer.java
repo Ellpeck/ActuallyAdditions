@@ -1,8 +1,5 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -19,15 +16,18 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
-public class BlockLampPowerer extends BlockBase {
+import java.util.ArrayList;
+import java.util.List;
 
-    public BlockLampPowerer(String name) {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+public class BlockLampPowerer extends Block {
+
+    public BlockLampPowerer() {
+        super(Block.Properties.create(Material.REDSTONE_LIGHT)
+                .hardnessAndResistance(1.5f, 10.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE));
     }
 
     @Override

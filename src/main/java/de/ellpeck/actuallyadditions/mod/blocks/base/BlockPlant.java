@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,17 +33,18 @@ import java.util.List;
 public class BlockPlant extends CropsBlock {// implements ItemBlockBase.ICustomRarity, IHasModel {
 
 //    private final String name;
-    private final int minDropAmount = 1;
-    private final int addDropAmount = 1;
+    private final int minDropAmount;
+    private final int addDropAmount;
     public Item seedItem;
     private Item returnItem;
     private int returnMeta;
 
-    public BlockPlant(Properties properties) {
-        super(properties);
+    // todo: find the correct properties for crops
+    public BlockPlant(int minDropAmount, int addDropAmount) {
+        super(Properties.create(Material.PLANTS));
 //        this.name = name;
-//        this.minDropAmount = minDropAmount;
-//        this.addDropAmount = addDropAmount;
+        this.minDropAmount = minDropAmount;
+        this.addDropAmount = addDropAmount;
 //        this.register();
     }
 

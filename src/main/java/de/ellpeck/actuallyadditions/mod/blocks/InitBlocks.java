@@ -127,16 +127,16 @@ public final class InitBlocks {
             = BLOCKS.register("block_testifi_bucks_white_stairs", () -> new StairsBlock(() -> blockTestifiBucksWhiteWall.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
 
     public static final RegistryObject<Block> blockTestifiBucksGreenSlab
-            = BLOCKS.register("block_testifi_bucks_green_slab", () -> new BlockSlabs(blockTestifiBucksGreenWall);
+            = BLOCKS.register("block_testifi_bucks_green_slab", () -> new BlockSlabs(blockTestifiBucksGreenWall.get()));
 
     public static final RegistryObject<Block> blockTestifiBucksWhiteSlab
-            = BLOCKS.register("block_testifi_bucks_white_slab", () -> new BlockSlabs(blockTestifiBucksWhiteWall);
+            = BLOCKS.register("block_testifi_bucks_white_slab", () -> new BlockSlabs(blockTestifiBucksWhiteWall.get()));
 
     public static final RegistryObject<Block> blockTestifiBucksGreenFence
-            = BLOCKS.register("block_testifi_bucks_green_fence", () -> new BlockWallAA(blockTestifiBucksGreenWall);
+            = BLOCKS.register("block_testifi_bucks_green_fence", () -> new BlockWallAA(blockTestifiBucksGreenWall.get()));
 
     public static final RegistryObject<Block> blockTestifiBucksWhiteFence
-            = BLOCKS.register("block_testifi_bucks_white_fence", () -> new BlockWallAA(blockTestifiBucksWhiteWall);
+            = BLOCKS.register("block_testifi_bucks_white_fence", () -> new BlockWallAA(blockTestifiBucksWhiteWall.get()));
 
     public static final RegistryObject<Block> blockColoredLamp
             = BLOCKS.register("block_colored_lamp", () -> new BlockColoredLamp(false));
@@ -210,14 +210,14 @@ public final class InitBlocks {
     public static final RegistryObject<Block> blockFeeder
             = BLOCKS.register("block_feeder", BlockFeeder::new);
 
-    public static final RegistryObject<Block> blockGiantChest
-            = BLOCKS.register("block_giant_chest", BlockGiantChest::new);
-
-    public static final RegistryObject<Block> blockGiantChestMedium
-            = BLOCKS.register("block_giant_chest_medium", BlockGiantChest::new);
-
-    public static final RegistryObject<Block> blockGiantChestLarge
-            = BLOCKS.register("block_giant_chest_large", BlockGiantChest::new);
+//    public static final RegistryObject<Block> blockGiantChest
+//            = BLOCKS.register("block_giant_chest", BlockGiantChest::new);
+//
+//    public static final RegistryObject<Block> blockGiantChestMedium
+//            = BLOCKS.register("block_giant_chest_medium", BlockGiantChest::new);
+//
+//    public static final RegistryObject<Block> blockGiantChestLarge
+//            = BLOCKS.register("block_giant_chest_large", BlockGiantChest::new);
 
     public static final RegistryObject<Block> blockGrinder
             = BLOCKS.register("block_grinder", () -> new BlockGrinder(false));
@@ -274,31 +274,31 @@ public final class InitBlocks {
             = BLOCKS.register("block_wild", BlockWildPlant::new);
 
     public static final RegistryObject<Block> blockQuartzWall
-            = BLOCKS.register("block_quartz_wall", () -> new BlockWallAA(blockMisc));
+            = BLOCKS.register("block_quartz_wall", () -> new BlockWallAA(blockMisc.get()));
 
     public static final RegistryObject<Block> blockChiseledQuartzWall
-            = BLOCKS.register("block_chiseled_quartz_wall", () -> new BlockWallAA(blockMisc));
+            = BLOCKS.register("block_chiseled_quartz_wall", () -> new BlockWallAA(blockMisc.get()));
 
     public static final RegistryObject<Block> blockPillarQuartzWall
-            = BLOCKS.register("block_pillar_quartz_wall", () -> new BlockWallAA(blockMisc));
+            = BLOCKS.register("block_pillar_quartz_wall", () -> new BlockWallAA(blockMisc.get()));
 
     public static final RegistryObject<Block> blockQuartzStair
-            = BLOCKS.register("block_quartz_stair", () -> new StairsBlock(blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ), Block.Properties.create(Material.ROCK)));
+            = BLOCKS.register("block_quartz_stair", () -> new StairsBlock(() -> blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ), Block.Properties.create(Material.ROCK)));
 
     public static final RegistryObject<Block> blockChiseledQuartzStair
-            = BLOCKS.register("block_chiseled_quartz_stair", () -> new StairsBlock(blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_CHISELED), Block.Properties.create(Material.ROCK)));
+            = BLOCKS.register("block_chiseled_quartz_stair", () -> new StairsBlock(() -> blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_CHISELED), Block.Properties.create(Material.ROCK)));
 
     public static final RegistryObject<Block> blockPillarQuartzStair
-            = BLOCKS.register("block_pillar_quartz_stair", () -> new StairsBlock(blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_PILLAR), Block.Properties.create(Material.ROCK)));
+            = BLOCKS.register("block_pillar_quartz_stair", () -> new StairsBlock(() -> blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_PILLAR), Block.Properties.create(Material.ROCK)));
 
     public static final RegistryObject<Block> blockQuartzSlab
-            = BLOCKS.register("block_quartz_slab", () -> new BlockSlabs(blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ), Block.Properties.create(Material.ROCK)));
+            = BLOCKS.register("block_quartz_slab", () -> new BlockSlabs(blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ)));
 
     public static final RegistryObject<Block> blockChiseledQuartzSlab
-            = BLOCKS.register("block_chiseled_quartz_slab", () -> new BlockSlabs(blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_CHISELED), Block.Properties.create(Material.ROCK)));
+            = BLOCKS.register("block_chiseled_quartz_slab", () -> new BlockSlabs(blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_CHISELED)));
 
     public static final RegistryObject<Block> blockPillarQuartzSlab
-            = BLOCKS.register("block_pillar_quartz_slab", () -> new BlockSlabs(blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_PILLAR), Block.Properties.create(Material.ROCK)));
+            = BLOCKS.register("block_pillar_quartz_slab", () -> new BlockSlabs(blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_PILLAR)));
 
     public static void init() {
         ActuallyAdditions.LOGGER.info("Initializing Blocks...");

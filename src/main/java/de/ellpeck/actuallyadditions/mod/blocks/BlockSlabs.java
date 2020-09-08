@@ -1,12 +1,12 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,6 +21,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,16 +30,18 @@ public class BlockSlabs extends Block {
     public static final AxisAlignedBB AABB_BOTTOM_HALF = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
     private static final AxisAlignedBB AABB_TOP_HALF = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 1.0D, 1.0D, 1.0D);
 
-    private final IBlockState fullBlockState;
+    private final BlockState fullBlockState;
 
-    public BlockSlabs(String name, Block fullBlock) {
-        this(name, fullBlock.getDefaultState());
+    public BlockSlabs(Block fullBlock) {
+        this(fullBlock.getDefaultState());
     }
 
-    public BlockSlabs(String name, BlockState fullBlockState) {
-        super(fullBlockState.getMaterial(), name);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
+    public BlockSlabs(BlockState fullBlockState) {
+        super(Properties.create(fullBlockState.getMaterial())
+                .harvestTool(fullBlockState.getHarvestTool())
+                .hardnessAndResistance(1.5f, 10.0f)
+                .sound(fullBlockState.getSoundType()));
+
         this.fullBlockState = fullBlockState;
     }
 

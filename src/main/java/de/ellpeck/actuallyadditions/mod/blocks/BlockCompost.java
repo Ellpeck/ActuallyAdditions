@@ -1,10 +1,5 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.List;
-
-import net.minecraft.state.IProperty;
-import org.apache.commons.lang3.tuple.Pair;
-
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
@@ -12,9 +7,9 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -23,6 +18,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.IProperty;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -33,11 +29,15 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.List;
 
 public class BlockCompost extends BlockContainerBase implements IHudDisplay {
 
@@ -48,12 +48,11 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay {
     protected static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625, 0, 0.0625, 1 - 0.0625, 11 * 0.0625, 1 - 0.0625);
 
-    public BlockCompost(String name) {
-        super(Material.WOOD, name);
-        this.setHarvestLevel("axe", 0);
-        this.setHardness(0.5F);
-        this.setResistance(5.0F);
-        this.setSoundType(SoundType.WOOD);
+    public BlockCompost() {
+        super(Block.Properties.create(Material.WOOD)
+                .hardnessAndResistance(0.5f, 5.0f)
+                .harvestTool(ToolType.AXE)
+                .sound(SoundType.WOOD));
     }
 
     @Override

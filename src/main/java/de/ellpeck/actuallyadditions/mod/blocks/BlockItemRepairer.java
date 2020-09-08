@@ -4,6 +4,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemRepairer;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,16 +17,16 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 public class BlockItemRepairer extends BlockContainerBase {
 
-    public BlockItemRepairer(String name) {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(20.0F);
-        this.setResistance(15.0F);
-        this.setSoundType(SoundType.STONE);
-        this.setTickRandomly(true);
+    public BlockItemRepairer() {
+        super(Block.Properties.create(Material.ROCK)
+                .hardnessAndResistance(20.0f, 15.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .sound(SoundType.STONE)
+                .tickRandomly());
     }
 
     @Override

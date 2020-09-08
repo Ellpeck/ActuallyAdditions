@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFishingNet;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -12,17 +13,17 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 
 public class BlockFishingNet extends BlockContainerBase {
 
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.0625, 1);
 
-    public BlockFishingNet(String name) {
-        super(Material.WOOD, name);
-        this.setHarvestLevel("axe", 0);
-        this.setHardness(0.5F);
-        this.setResistance(3.0F);
-        this.setSoundType(SoundType.WOOD);
+    public BlockFishingNet() {
+        super(Block.Properties.create(Material.WOOD)
+                .hardnessAndResistance(0.5f, 3.0f)
+                .harvestTool(ToolType.AXE)
+                .sound(SoundType.WOOD));
     }
 
     @Override

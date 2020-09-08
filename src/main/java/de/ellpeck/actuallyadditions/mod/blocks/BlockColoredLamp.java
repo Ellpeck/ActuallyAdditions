@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import java.util.Properties;
 import java.util.Random;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -25,21 +26,22 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class BlockColoredLamp extends BlockBase {
+public class BlockColoredLamp extends Block {
 
     public static final TheColoredLampColors[] ALL_LAMP_TYPES = TheColoredLampColors.values();
     public static final PropertyEnum<TheColoredLampColors> TYPE = PropertyEnum.create("type", TheColoredLampColors.class);
     public final boolean isOn;
 
-    public BlockColoredLamp(boolean isOn, String name) {
-        super(Material.REDSTONE_LIGHT, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(0.5F);
-        this.setResistance(3.0F);
+    public BlockColoredLamp(boolean isOn) {
+        super(Block.Properties.create(Material.REDSTONE_LIGHT)
+                .hardnessAndResistance(0.5f, 3.0f)
+                .harvestTool(ToolType.PICKAXE));
+
         this.isOn = isOn;
     }
 
