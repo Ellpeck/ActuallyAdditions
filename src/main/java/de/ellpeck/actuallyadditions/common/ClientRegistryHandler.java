@@ -1,8 +1,5 @@
 package de.ellpeck.actuallyadditions.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.ellpeck.actuallyadditions.common.blocks.render.ActualCompostModel;
 import de.ellpeck.actuallyadditions.common.blocks.render.CompostModel;
 import de.ellpeck.actuallyadditions.common.blocks.render.IHasModel;
@@ -10,7 +7,8 @@ import de.ellpeck.actuallyadditions.common.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.common.util.FluidStateMapper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -19,6 +17,9 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClientRegistryHandler {
 
