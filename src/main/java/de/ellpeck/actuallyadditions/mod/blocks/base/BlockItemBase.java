@@ -2,12 +2,12 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 
 public class BlockItemBase extends BlockItem {
 
-    public BlockItemBase(Block block) {
-        super(block, new Properties());
-        this.setRegistryName(block.getRegistryName());
+    public <T extends Block & IBaseBlock> BlockItemBase(T block , Item.Properties properties) {
+        super(block, properties.rarity(block.getRarity()));
     }
     
 }

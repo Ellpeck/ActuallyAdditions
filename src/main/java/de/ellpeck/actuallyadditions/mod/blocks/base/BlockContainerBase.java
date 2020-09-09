@@ -29,35 +29,12 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public abstract class BlockContainerBase extends Block {
+public abstract class BlockContainerBase extends BlockBase {
 
     public BlockContainerBase(Properties properties) {
         super(properties);
 
-//        this.register();
     }
-
-//    private void register() {
-//        ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
-//    }
-
-//    protected ItemBlockBase getItemBlock() {
-//        return new ItemBlockBase(this);
-//    }
-
-    public boolean shouldAddCreative() {
-        return true;
-    }
-
-//    @Override
-//    public void registerRendering() {
-//        ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
-//    }
-//
-//    @Override
-//    public EnumRarity getRarity(ItemStack stack) {
-//        return EnumRarity.COMMON;
-//    }
 
     private void dropInventory(World world, BlockPos position) {
         if (!world.isRemote) {

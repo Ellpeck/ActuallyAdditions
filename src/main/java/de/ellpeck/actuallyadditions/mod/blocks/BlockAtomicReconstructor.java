@@ -10,33 +10,35 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumRarity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.Rarity;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -51,16 +53,13 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                 .harvestTool(ToolType.PICKAXE)
                 .sound(SoundType.STONE));
     }
-
+    
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit){
         ItemStack heldItem = player.getHeldItem(hand);
-        if (this.tryToggleRedstone(world, pos, player)) { return true; }
+        if (this.tryToggleRedstone(world, pos, player)) {
+            return ActionResultType.SUCCESS;
+        }
         if (!world.isRemote) {
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor) world.getTileEntity(pos);
             if (reconstructor != null) {
@@ -73,7 +72,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
                     }
                     //Shush, don't tell anyone!
-                    else if (ConfigIntValues.ELEVEN.getValue() == 11 && item == Items.RECORD_11) {
+                    else if (ConfigIntValues.ELEVEN.getValue() == 11 && item == Items.MUSIC_DISC_11) {
                         reconstructor.counter++;
                         reconstructor.markDirty();
                     }
@@ -86,101 +85,86 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                 }
             }
         }
-        return true;
+        return ActionResultType.SUCCESS;
     }
-
+    
     @Override
-    public TileEntity createNewTileEntity(World world, int i) {
+    public TileEntity createTileEntity(BlockState state, IBlockReader world){
         return new TileEntityAtomicReconstructor();
     }
-
+    
     @Override
-    @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
-        TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
+    @OnlyIn(Dist.CLIENT)
+    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, BlockRayTraceResult posHit, MainWindow window) {
+        TileEntity tile = minecraft.world.getTileEntity(posHit.getPos());
         if (tile instanceof TileEntityAtomicReconstructor) {
             ItemStack slot = ((TileEntityAtomicReconstructor) tile).inv.getStackInSlot(0);
-            String strg;
+            ITextComponent displayString;
             if (!StackUtil.isValid(slot)) {
-                strg = StringUtil.localize("info." + ActuallyAdditions.MODID + ".noLens");
+                displayString = new TranslationTextComponent("info." + ActuallyAdditions.MODID + ".noLens");
             } else {
-                strg = slot.getItem().getItemStackDisplayName(slot);
+                displayString = slot.getItem().getDisplayName(slot);
 
-                AssetUtil.renderStackToGui(slot, resolution.getScaledWidth() / 2 + 15, resolution.getScaledHeight() / 2 - 19, 1F);
+                AssetUtil.renderStackToGui(slot, window.getScaledWidth() / 2 + 15, window.getScaledHeight() / 2 - 19, 1F);
             }
-            minecraft.fontRenderer.drawStringWithShadow(TextFormatting.YELLOW + "" + TextFormatting.ITALIC + strg, resolution.getScaledWidth() / 2 + 35, resolution.getScaledHeight() / 2 - 15, StringUtil.DECIMAL_COLOR_WHITE);
+            minecraft.fontRenderer.drawStringWithShadow(TextFormatting.YELLOW + "" + TextFormatting.ITALIC + displayString.getFormattedText(), window.getScaledWidth() / 2 + 35, window.getScaledHeight() / 2 - 15, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 
     @Override
     protected BlockItemBase getItemBlock() {
-        return new TheItemBlock(this);
+        return new BlockItem();
     }
-
+    
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
+    public Rarity getRarity(){
+        return Rarity.EPIC;
     }
-
+    
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
-        int rotation = EnumFacing.getDirectionFromEntityLiving(pos, player).ordinal();
-        world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
-
-        super.onBlockPlacedBy(world, pos, state, player, stack);
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
+        builder.add(BlockStateProperties.FACING);
     }
-
+    
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
+    public BlockState rotate(BlockState state, Rotation rot){
+        return state.with(BlockStateProperties.FACING, rot.rotate(state.get(BlockStateProperties.FACING)));
     }
-
+    
     @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(BlockDirectional.FACING).getIndex();
+    public BlockState mirror(BlockState state, Mirror mirrorIn){
+        return this.rotate(state, mirrorIn.toRotation(state.get(BlockStateProperties.FACING)));
     }
-
+    
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, BlockDirectional.FACING);
+    public boolean hasComparatorInputOverride(BlockState state){
+        return true;
     }
-
+    
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
-        return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING)));
+    public int getComparatorInputOverride(BlockState blockState, World world, BlockPos pos) {
+        TileEntity t = world.getTileEntity(pos);
+        int i = 0;
+        if (t instanceof TileEntityAtomicReconstructor) {
+            i = ((TileEntityAtomicReconstructor) t).getEnergy();
+        }
+        return MathHelper.clamp(i / 20000, 0, 15);
     }
-
-    @Override
-    public IBlockState withMirror(IBlockState state, Mirror mirror) {
-        return this.withRotation(state, mirror.toRotation(state.getValue(BlockDirectional.FACING)));
-    }
-
-    public static class TheItemBlock extends BlockItemBase {
-
+    
+    public class BlockItem extends BlockItemBase {
         private long lastSysTime;
         private int toPick1;
+    
         private int toPick2;
-
-        public TheItemBlock(Block block) {
-            super(block);
-            this.setHasSubtypes(false);
-            this.setMaxDamage(0);
+    
+        public BlockItem() {
+            super(BlockAtomicReconstructor.this, new Properties());
         }
-
+    
         @Override
-        public String getTranslationKey(ItemStack stack) {
-            return this.getTranslationKey();
-        }
-
-        @Override
-        public int getMetadata(int damage) {
-            return damage;
-        }
-
-        @Override
-        public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+        public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag){
             long sysTime = System.currentTimeMillis();
-
+    
             if (this.lastSysTime + 3000 < sysTime) {
                 this.lastSysTime = sysTime;
                 if (world != null) {
@@ -188,24 +172,10 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                     this.toPick2 = world.rand.nextInt(NAME_FLAVOR_AMOUNTS_2) + 1;
                 }
             }
-
-            String base = "tile." + ActuallyAdditions.MODID + "." + ((BlockAtomicReconstructor) this.block).getBaseName() + ".info.";
-            tooltip.add(StringUtil.localize(base + "1." + this.toPick1) + " " + StringUtil.localize(base + "2." + this.toPick2));
+    
+            String base = String.format("tile.%s.%s.info", ActuallyAdditions.MODID, BlockAtomicReconstructor.this.getRegistryName().getPath());
+            tooltip.add(new TranslationTextComponent(String.format("%s1.%s", base, this.toPick1)).appendSibling(new TranslationTextComponent(String.format("%s2.%s", base, this.toPick2))));
         }
-    }
 
-    @Override
-    public boolean hasComparatorInputOverride(IBlockState state) {
-        return true;
-    }
-
-    @Override
-    public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos) {
-        TileEntity t = world.getTileEntity(pos);
-        int i = 0;
-        if (t instanceof TileEntityAtomicReconstructor) {
-            i = ((TileEntityAtomicReconstructor) t).getEnergy();
-        }
-        return MathHelper.clamp(i / 20000, 0, 15);
     }
 }

@@ -1,42 +1,17 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 
-public class BlockBase extends Block {
-
-    private final String name;
-
-    public BlockBase(Properties properties, String name) {
+public class BlockBase extends Block implements IBaseBlock{
+    
+    public BlockBase(Properties properties) {
         super(properties);
-        this.name = name;
-
-        this.register();
     }
 
-    @Deprecated
-    private void register() {
-        //ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
-    }
-
-    protected String getBaseName() {
-        return this.name;
-    }
-
-    protected BlockItemBase getItemBlock() {
-        return new BlockItemBase(this);
-    }
-
-    public boolean shouldAddCreative() {
-        return true;
-    }
-
-    /*@Override
-    public void registerRendering() {
-        ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
+    @Override
+    public BlockItemBase getItemBlock() {
+        return new BlockItemBase(this, new Item.Properties());
     }
     
-    @Override
-    public Rarity getRarity(ItemStack stack) {
-        return EnumRarity.COMMON;
-    }*/
 }
