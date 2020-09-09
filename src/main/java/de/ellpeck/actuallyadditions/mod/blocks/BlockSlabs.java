@@ -1,12 +1,11 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,15 +18,15 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSlabs extends Block {
 
-    public static final AxisAlignedBB AABB_BOTTOM_HALF = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
+    public static final VoxelShape AABB_BOTTOM_HALF = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
     private static final AxisAlignedBB AABB_TOP_HALF = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 1.0D, 1.0D, 1.0D);
 
     private final BlockState fullBlockState;
@@ -68,7 +67,7 @@ public class BlockSlabs extends Block {
     }
 
     @Override
-    protected ItemBlockBase getItemBlock() {
+    protected BlockItemBase getItemBlock() {
         return new TheItemBlock(this);
     }
 
@@ -92,7 +91,7 @@ public class BlockSlabs extends Block {
         return new BlockStateContainer(this, BlockSlab.HALF);
     }
 
-    public static class TheItemBlock extends ItemBlockBase {
+    public static class TheItemBlock extends BlockItemBase {
 
         public TheItemBlock(Block block) {
             super(block);

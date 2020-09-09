@@ -2,7 +2,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputter;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputterAdvanced;
@@ -58,7 +58,7 @@ public class BlockInputter extends BlockContainerBase {
     }
 
     @Override
-    protected ItemBlockBase getItemBlock() {
+    protected BlockItemBase getItemBlock() {
         return new TheItemBlock(this);
     }
 
@@ -67,7 +67,7 @@ public class BlockInputter extends BlockContainerBase {
         return EnumRarity.EPIC;
     }
 
-    public static class TheItemBlock extends ItemBlockBase {
+    public static class TheItemBlock extends BlockItemBase {
 
         private final Random rand = new Random();
         private long lastSysTime;

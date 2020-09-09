@@ -1,11 +1,9 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.Properties;
 import java.util.Random;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -103,7 +101,7 @@ public class BlockColoredLamp extends Block {
     }
 
     @Override
-    protected ItemBlockBase getItemBlock() {
+    protected BlockItemBase getItemBlock() {
         return new TheItemBlock(this);
     }
 
@@ -134,7 +132,7 @@ public class BlockColoredLamp extends Block {
         return new BlockStateContainer(this, TYPE);
     }
 
-    public static class TheItemBlock extends ItemBlockBase {
+    public static class TheItemBlock extends BlockItemBase {
 
         public TheItemBlock(Block block) {
             super(block);

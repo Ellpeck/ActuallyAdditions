@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.mod.event;
 
 import java.util.Locale;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
@@ -17,30 +18,26 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.SwordItem;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class ClientEvents {
 
     private static final String ADVANCED_INFO_TEXT_PRE = TextFormatting.DARK_GRAY + "     ";
@@ -53,9 +50,9 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
-    public void onClientTick(ClientTickEvent event) {
-        if (event.phase == Phase.END) {
-            Minecraft mc = Minecraft.getMinecraft();
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            Minecraft mc = Minecraft.getInstance();
 
             if (mc.world == null) {
                 WorldData.clear();
@@ -79,7 +76,7 @@ public class ClientEvents {
                 }
             }
 
-            if (ItemWingsOfTheBats.THE_BAT_BAT.equalsIgnoreCase(stack.getDisplayName()) && stack.getItem() instanceof ItemSword) {
+            if (ItemWingsOfTheBats.THE_BAT_BAT.equalsIgnoreCase(stack.getDisplayName()) && stack.getItem() instanceof SwordItem) {
                 event.getToolTip().set(0, TextFormatting.GOLD + event.getToolTip().get(0));
                 event.getToolTip().add(1, TextFormatting.RED.toString() + TextFormatting.ITALIC + "That's a really bat pun");
             }
@@ -88,7 +85,7 @@ public class ClientEvents {
         //Advanced Item Info
         if (event.getFlags().isAdvanced() && StackUtil.isValid(event.getItemStack())) {
             if (ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()) {
-                if (GuiScreen.isCtrlKeyDown()) {
+                if (Screen.hasControlDown()) {
                     event.getToolTip().add(TextFormatting.DARK_GRAY + "" + TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".extraInfo.desc") + ":");
 
                     //OreDict Names
@@ -127,10 +124,10 @@ public class ClientEvents {
                     }
 
                     //NBT
-                    NBTTagCompound compound = event.getItemStack().getTagCompound();
+                    CompoundNBT compound = event.getItemStack().getTag();
                     if (compound != null && !compound.isEmpty()) {
                         event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".nbt.desc") + ":");
-                        if (GuiScreen.isShiftKeyDown()) {
+                        if (Screen.hasShiftDown()) {
                             int limit = ConfigIntValues.CTRL_INFO_NBT_CHAR_LIMIT.getValue();
                             String compoundStrg = compound.toString();
                             int compoundStrgLength = compoundStrg.length();
@@ -161,58 +158,63 @@ public class ClientEvents {
 
     @SubscribeEvent
     public void onGameOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getMinecraft().currentScreen == null) {
-            Minecraft minecraft = Minecraft.getMinecraft();
+        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getInstance().currentScreen == null) {
+            Minecraft minecraft = Minecraft.getInstance();
             PlayerEntity player = minecraft.player;
             RayTraceResult posHit = minecraft.objectMouseOver;
             FontRenderer font = minecraft.fontRenderer;
             ItemStack stack = player.getHeldItemMainhand();
 
-            if (StackUtil.isValid(stack)) {
-                if (stack.getItem() instanceof IHudDisplay) {
-                    ((IHudDisplay) stack.getItem()).displayHud(minecraft, player, stack, posHit, event.getResolution());
+            if(posHit instanceof BlockRayTraceResult){
+                BlockRayTraceResult blockRayTraceResult = ((BlockRayTraceResult) posHit);
+                if (StackUtil.isValid(stack)) {
+                    if (stack.getItem() instanceof IHudDisplay) {
+                        ((IHudDisplay) stack.getItem()).displayHud(minecraft, player, stack, blockRayTraceResult, event.getWindow());
+                    }
+                }
+                
+                if (blockRayTraceResult.getPos() != null) {
+                    Block blockHit = minecraft.world.getBlockState(blockRayTraceResult.getPos()).getBlock();
+                    TileEntity tileHit = minecraft.world.getTileEntity(blockRayTraceResult.getPos());
+        
+                    if (blockHit instanceof IHudDisplay) {
+                        ((IHudDisplay) blockHit).displayHud(minecraft, player, stack, blockRayTraceResult, event.getWindow());
+                    }
+        
+                    if (tileHit instanceof TileEntityBase) {
+                        TileEntityBase base = (TileEntityBase) tileHit;
+                        if (base.isRedstoneToggle()) {
+                            String strg = String.format("%s: %s", StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.name"), TextFormatting.DARK_RED + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode ? "pulse" : "deactivation")) + TextFormatting.RESET);
+                            font.drawStringWithShadow(strg, event.getWindow().getScaledWidth() / 2 + 5, event.getWindow().getScaledHeight() / 2 + 5, StringUtil.DECIMAL_COLOR_WHITE);
+                
+                            String expl;
+                            if (StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator) {
+                                expl = TextFormatting.GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem");
+                            } else {
+                                expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", StringUtil.localize(ConfigValues.itemRedstoneTorchConfigurator.getTranslationKey() + ".name"));
+                            }
+                            font.drawStringWithShadow(expl, event.getWindow().getScaledWidth() / 2 + 5, event.getWindow().getScaledHeight() / 2 + 15, StringUtil.DECIMAL_COLOR_WHITE);
+                        }
+                    }
+        
+                    if (tileHit instanceof IEnergyDisplay) {
+                        IEnergyDisplay display = (IEnergyDisplay) tileHit;
+                        if (!display.needsHoldShift() || player.isSneaking()) {
+                            if (energyDisplay == null) {
+                                energyDisplay = new EnergyDisplay(0, 0, null);
+                            }
+                            energyDisplay.setData(2, event.getWindow().getScaledHeight() - 96, display.getEnergyStorage(), true, true);
+                
+                            GlStateManager.pushMatrix();
+                            GlStateManager.color4f(1F, 1F, 1F, 1F);
+                            energyDisplay.draw();
+                            GlStateManager.popMatrix();
+                        }
+                    }
                 }
             }
 
-            if (posHit != null && posHit.getBlockPos() != null) {
-                Block blockHit = minecraft.world.getBlockState(posHit.getBlockPos()).getBlock();
-                TileEntity tileHit = minecraft.world.getTileEntity(posHit.getBlockPos());
-
-                if (blockHit instanceof IHudDisplay) {
-                    ((IHudDisplay) blockHit).displayHud(minecraft, player, stack, posHit, event.getResolution());
-                }
-
-                if (tileHit instanceof TileEntityBase) {
-                    TileEntityBase base = (TileEntityBase) tileHit;
-                    if (base.isRedstoneToggle()) {
-                        String strg = String.format("%s: %s", StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.name"), TextFormatting.DARK_RED + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode ? "pulse" : "deactivation")) + TextFormatting.RESET);
-                        font.drawStringWithShadow(strg, event.getResolution().getScaledWidth() / 2 + 5, event.getResolution().getScaledHeight() / 2 + 5, StringUtil.DECIMAL_COLOR_WHITE);
-
-                        String expl;
-                        if (StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator) {
-                            expl = TextFormatting.GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem");
-                        } else {
-                            expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", StringUtil.localize(ConfigValues.itemRedstoneTorchConfigurator.getTranslationKey() + ".name"));
-                        }
-                        font.drawStringWithShadow(expl, event.getResolution().getScaledWidth() / 2 + 5, event.getResolution().getScaledHeight() / 2 + 15, StringUtil.DECIMAL_COLOR_WHITE);
-                    }
-                }
-
-                if (tileHit instanceof IEnergyDisplay) {
-                    IEnergyDisplay display = (IEnergyDisplay) tileHit;
-                    if (!display.needsHoldShift() || player.isSneaking()) {
-                        if (energyDisplay == null) {
-                            energyDisplay = new EnergyDisplay(0, 0, null);
-                        }
-                        energyDisplay.setData(2, event.getResolution().getScaledHeight() - 96, display.getEnergyStorage(), true, true);
-
-                        GlStateManager.pushMatrix();
-                        GlStateManager.color(1F, 1F, 1F, 1F);
-                        energyDisplay.draw();
-                        GlStateManager.popMatrix();
-                    }
-                }
-            }
+            
         }
     }
 

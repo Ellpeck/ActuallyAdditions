@@ -5,7 +5,7 @@ import java.util.List;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.RegistryHandler;
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.compat.IMCHandler;
 import net.minecraft.block.Block;
@@ -25,7 +25,8 @@ public final class ItemUtil {
         return ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
     }
 
-    public static void registerBlock(Block block, ItemBlockBase itemBlock, String name, boolean addTab) {
+    @Deprecated // canitzp: should be removed
+    public static void registerBlock(Block block, BlockItemBase itemBlock, String name, boolean addTab) {
         block.setTranslationKey(ActuallyAdditions.MODID + "." + name);
 
         block.setRegistryName(ActuallyAdditions.MODID, name);
@@ -43,6 +44,7 @@ public final class ItemUtil {
         }
     }
 
+    @Deprecated // canitzp: should be removed
     public static void registerItem(Item item, String name, boolean addTab) {
         item.setTranslationKey(ActuallyAdditions.MODID + "." + name);
 
