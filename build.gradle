@@ -38,7 +38,7 @@ minecraft {
         server {
             properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run')
+            workingDirectory project.file('run/server')
             mods {
                 actuallyadditions {
                     source sourceSets.main
@@ -46,7 +46,7 @@ minecraft {
             }
         }
         data {
-            workingDirectory project.file('run')
+            workingDirectory project.file('run/data')
             args "--mod", "actuallyadditions", "--all", "--output", file('src/generated/resources/'), "--existing", "\"" + sourceSets.main.resources.srcDirs[0] + "\""
             mods {
                 actuallyadditions {
