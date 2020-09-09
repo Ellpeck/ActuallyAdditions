@@ -1,36 +1,35 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.common.IRarity;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.oredict.OreDictionary;
 
 public final class Util {
 
-    public static final int WILDCARD = OreDictionary.WILDCARD_VALUE;
-    public static final int BUCKET = Fluid.BUCKET_VOLUME;
+    @Deprecated // canitzp: Wildcards and Oredict not supported anymore -> Tags
+    public static final int WILDCARD = -1;//OreDictionary.WILDCARD_VALUE;
+    public static final int BUCKET = 1000;
 
-    public static final IRarity CRYSTAL_RED_RARITY = addRarity("crystalRed", TextFormatting.DARK_RED, ActuallyAdditions.NAME + " Red Crystal");
-    public static final IRarity CRYSTAL_BLUE_RARITY = addRarity("crystalBlue", TextFormatting.DARK_BLUE, ActuallyAdditions.NAME + " Blue Crystal");
-    public static final IRarity CRYSTAL_LIGHT_BLUE_RARITY = addRarity("crystalLightBlue", TextFormatting.BLUE, ActuallyAdditions.NAME + " Light Blue Crystal");
-    public static final IRarity CRYSTAL_BLACK_RARITY = addRarity("crystalBlack", TextFormatting.DARK_GRAY, ActuallyAdditions.NAME + " Black Crystal");
-    public static final IRarity CRYSTAL_GREEN_RARITY = addRarity("crystalGreen", TextFormatting.DARK_GREEN, ActuallyAdditions.NAME + " Green Crystal");
-    public static final IRarity CRYSTAL_WHITE_RARITY = addRarity("crystalWhite", TextFormatting.GRAY, ActuallyAdditions.NAME + " White Crystal");
+    public static final Rarity CRYSTAL_RED_RARITY = addRarity("crystalRed", TextFormatting.DARK_RED, ActuallyAdditions.NAME + " Red Crystal");
+    public static final Rarity CRYSTAL_BLUE_RARITY = addRarity("crystalBlue", TextFormatting.DARK_BLUE, ActuallyAdditions.NAME + " Blue Crystal");
+    public static final Rarity CRYSTAL_LIGHT_BLUE_RARITY = addRarity("crystalLightBlue", TextFormatting.BLUE, ActuallyAdditions.NAME + " Light Blue Crystal");
+    public static final Rarity CRYSTAL_BLACK_RARITY = addRarity("crystalBlack", TextFormatting.DARK_GRAY, ActuallyAdditions.NAME + " Black Crystal");
+    public static final Rarity CRYSTAL_GREEN_RARITY = addRarity("crystalGreen", TextFormatting.DARK_GREEN, ActuallyAdditions.NAME + " Green Crystal");
+    public static final Rarity CRYSTAL_WHITE_RARITY = addRarity("crystalWhite", TextFormatting.GRAY, ActuallyAdditions.NAME + " White Crystal");
 
-    public static final IRarity FALLBACK_RARITY = addRarity("fallback", TextFormatting.STRIKETHROUGH, ActuallyAdditions.NAME + " Fallback");
+    public static final Rarity FALLBACK_RARITY = addRarity("fallback", TextFormatting.STRIKETHROUGH, ActuallyAdditions.NAME + " Fallback");
 
-    private static IRarity addRarity(String name, TextFormatting color, String displayName) {
-        return new Rarity(color, displayName);
+    private static Rarity addRarity(String name, TextFormatting color, String displayName) {
+        return Rarity.create(displayName, color);
     }
 
     public static boolean isDevVersion() {
         return ActuallyAdditions.VERSION.equals("@VERSION@");
     }
 
+    @Deprecated // canitzp: should not be used and removed asap
     public static boolean isClient() {
-        return FMLCommonHandler.instance().getEffectiveSide().isClient();
+        return false;//FMLCommonHandler.instance().getEffectiveSide().isClient();
     }
 
     private static String[] splitVersion() {

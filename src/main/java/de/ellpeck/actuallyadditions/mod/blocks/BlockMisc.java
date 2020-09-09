@@ -1,8 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
@@ -42,7 +41,7 @@ public class BlockMisc extends Block {
     }
 
     @Override
-    protected ItemBlockBase getItemBlock() {
+    protected BlockItemBase getItemBlock() {
         return new TheItemBlock(this);
     }
 
@@ -73,7 +72,7 @@ public class BlockMisc extends Block {
         return new BlockStateContainer(this, TYPE);
     }
 
-    public static class TheItemBlock extends ItemBlockBase {
+    public static class TheItemBlock extends BlockItemBase {
 
         public TheItemBlock(Block block) {
             super(block);

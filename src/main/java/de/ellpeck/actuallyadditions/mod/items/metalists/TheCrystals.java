@@ -1,8 +1,8 @@
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.IStringSerializable;
-import net.minecraftforge.common.IRarity;
 
 public enum TheCrystals implements IStringSerializable {
 
@@ -14,11 +14,11 @@ public enum TheCrystals implements IStringSerializable {
     IRON("white", Util.CRYSTAL_WHITE_RARITY, 0xCEDDD4, 0.8F, 0.8F, 0.8F);
 
     public final String name;
-    public final IRarity rarity;
+    public final Rarity rarity;
     public final float[] conversionColorParticles;
     public final int clusterColor;
 
-    TheCrystals(String name, IRarity rarity, int clusterColor, float... conversionColorParticles) {
+    TheCrystals(String name, Rarity rarity, int clusterColor, float... conversionColorParticles) {
         this.name = name;
         this.rarity = rarity;
         this.conversionColorParticles = conversionColorParticles;

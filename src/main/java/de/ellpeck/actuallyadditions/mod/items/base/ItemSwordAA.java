@@ -2,7 +2,7 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -46,8 +46,8 @@ public class ItemSwordAA extends ItemSword implements IDisableableItem {
         ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
     }
 
-    protected Class<? extends ItemBlockBase> getItemBlock() {
-        return ItemBlockBase.class;
+    protected Class<? extends BlockItemBase> getItemBlock() {
+        return BlockItemBase.class;
     }
 
     @Override

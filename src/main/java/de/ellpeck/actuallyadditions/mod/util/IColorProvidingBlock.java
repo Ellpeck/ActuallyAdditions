@@ -1,12 +1,12 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public interface IColorProvidingBlock {
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     IBlockColor getBlockColor();
 
 }
