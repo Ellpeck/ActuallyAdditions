@@ -20,12 +20,14 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -161,7 +163,7 @@ public class ClientEvents {
     public void onGameOverlay(RenderGameOverlayEvent.Post event) {
         if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getMinecraft().currentScreen == null) {
             Minecraft minecraft = Minecraft.getMinecraft();
-            EntityPlayer player = minecraft.player;
+            PlayerEntity player = minecraft.player;
             RayTraceResult posHit = minecraft.objectMouseOver;
             FontRenderer font = minecraft.fontRenderer;
             ItemStack stack = player.getHeldItemMainhand();

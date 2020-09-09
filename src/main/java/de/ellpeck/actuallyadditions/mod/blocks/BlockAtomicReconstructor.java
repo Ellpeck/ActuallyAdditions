@@ -11,6 +11,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -20,24 +21,27 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlockAtomicReconstructor extends BlockContainerBase implements IHudDisplay {
@@ -52,15 +56,19 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                 .sound(SoundType.STONE));
     }
 
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
+//    @Override
+//    public boolean isOpaqueCube(IBlockState state) {
+//        return false;
+//    }
+
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         ItemStack heldItem = player.getHeldItem(hand);
-        if (this.tryToggleRedstone(world, pos, player)) { return true; }
+        if (this.tryToggleRedstone(world, pos, player)) {
+            return ActionResultType.SUCCESS;
+        }
+
         if (!world.isRemote) {
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor) world.getTileEntity(pos);
             if (reconstructor != null) {
@@ -73,7 +81,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
                     }
                     //Shush, don't tell anyone!
-                    else if (ConfigIntValues.ELEVEN.getValue() == 11 && item == Items.RECORD_11) {
+                    else if (ConfigIntValues.ELEVEN.getValue() == 11 && item == Items.MUSIC_DISC_11) {
                         reconstructor.counter++;
                         reconstructor.markDirty();
                     }
@@ -86,18 +94,19 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                 }
             }
         }
-        return true;
+        return ActionResultType.SUCCESS;
     }
 
+    @Nullable
     @Override
-    public TileEntity createNewTileEntity(World world, int i) {
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityAtomicReconstructor();
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
-        TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
+    @OnlyIn(Dist.CLIENT)
+    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, int scaledWidth, int scaledHeight) {
+        TileEntity tile = minecraft.world.getTileEntity(((BlockRayTraceResult) posHit).getPos());
         if (tile instanceof TileEntityAtomicReconstructor) {
             ItemStack slot = ((TileEntityAtomicReconstructor) tile).inv.getStackInSlot(0);
             String strg;

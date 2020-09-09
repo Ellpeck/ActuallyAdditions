@@ -2,9 +2,9 @@ package de.ellpeck.actuallyadditions.mod.recipe;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 public final class HairyBallHandler {
 

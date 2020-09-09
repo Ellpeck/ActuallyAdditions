@@ -27,13 +27,13 @@ public class ParticleBeam extends Particle {
         this.color = color;
         this.rotationTime = rotationTime;
         this.size = size;
-        this.particleMaxAge = maxAge;
+        this.maxAge = maxAge;
         this.alpha = alpha;
     }
 
     @Override
     public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-        float ageRatio = (float) this.particleAge / (float) this.particleMaxAge;
+        float ageRatio = (float) this.age / (float) this.maxAge;
         float currAlpha = this.alpha - ageRatio * this.alpha;
         AssetUtil.renderLaser(this.posX + 0.5, this.posY + 0.5, this.posZ + 0.5, this.endX + 0.5, this.endY + 0.5, this.endZ + 0.5, this.rotationTime, currAlpha, this.size, this.color);
     }
