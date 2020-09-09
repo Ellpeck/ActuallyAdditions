@@ -3,10 +3,7 @@ package de.ellpeck.actuallyadditions.common.blocks;
 import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.common.tile.TileEntityBioReactor;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Rarity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -14,15 +11,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
 
 public class BlockBioReactor extends BlockContainerBase {
 
     public BlockBioReactor() {
-        super(Properties.create(Material.ROCK)
-                .hardnessAndResistance(2f, 10.0f)
-                .harvestTool(ToolType.PICKAXE)
-                .sound(SoundType.STONE));
+        super(STONE_PROPS.hardnessAndResistance(2f, 10.0f));
     }
     
     @Override
@@ -38,10 +31,5 @@ public class BlockBioReactor extends BlockContainerBase {
             }
         }
         return ActionResultType.SUCCESS;
-    }
-    
-    @Override
-    public Rarity getRarity() {
-        return Rarity.EPIC;
     }
 }

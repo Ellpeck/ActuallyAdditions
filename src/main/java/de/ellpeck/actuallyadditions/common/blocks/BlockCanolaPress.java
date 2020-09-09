@@ -19,10 +19,7 @@ import net.minecraftforge.common.ToolType;
 public class BlockCanolaPress extends BlockContainerBase {
 
     public BlockCanolaPress() {
-        super(Block.Properties.create(Material.ROCK)
-                .hardnessAndResistance(1.5f, 10.0f)
-                .harvestTool(ToolType.PICKAXE)
-                .sound(SoundType.STONE));
+        super(STONE_PROPS);
     }
 
     @Override
