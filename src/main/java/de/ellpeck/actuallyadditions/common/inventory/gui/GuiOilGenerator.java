@@ -1,10 +1,10 @@
-package de.ellpeck.actuallyadditions.inventory.gui;
+package de.ellpeck.actuallyadditions.common.inventory.gui;
 
-import de.ellpeck.actuallyadditions.inventory.ContainerOilGenerator;
-import de.ellpeck.actuallyadditions.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.tile.TileEntityOilGenerator;
-import de.ellpeck.actuallyadditions.util.AssetUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.inventory.ContainerOilGenerator;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityOilGenerator;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;

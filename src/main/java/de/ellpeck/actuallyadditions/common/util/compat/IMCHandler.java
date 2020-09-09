@@ -1,15 +1,15 @@
-package de.ellpeck.actuallyadditions.util.compat;
+package de.ellpeck.actuallyadditions.common.util.compat;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import de.ellpeck.actuallyadditions.blocks.BlockGiantChest;
-import de.ellpeck.actuallyadditions.blocks.BlockItemViewer;
-import de.ellpeck.actuallyadditions.blocks.BlockItemViewerHopping;
-import de.ellpeck.actuallyadditions.blocks.BlockLaserRelay;
-import de.ellpeck.actuallyadditions.blocks.BlockPhantom;
-import de.ellpeck.actuallyadditions.blocks.BlockTinyTorch;
-import de.ellpeck.actuallyadditions.blocks.BlockWildPlant;
-import de.ellpeck.actuallyadditions.blocks.base.BlockPlant;
+import de.ellpeck.actuallyadditions.common.blocks.BlockGiantChest;
+import de.ellpeck.actuallyadditions.common.blocks.BlockItemViewer;
+import de.ellpeck.actuallyadditions.common.blocks.BlockItemViewerHopping;
+import de.ellpeck.actuallyadditions.common.blocks.BlockLaserRelay;
+import de.ellpeck.actuallyadditions.common.blocks.BlockPhantom;
+import de.ellpeck.actuallyadditions.common.blocks.BlockTinyTorch;
+import de.ellpeck.actuallyadditions.common.blocks.BlockWildPlant;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockPlant;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.event.FMLInterModComms;

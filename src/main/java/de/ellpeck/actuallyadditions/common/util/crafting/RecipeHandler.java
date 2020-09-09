@@ -8,7 +8,7 @@
  Original: https://github.com/Glitchfiend/BiomesOPlenty/blob/0f8be0526e01d918cf8f22d4904a3b74981dee6f/src/main/java/biomesoplenty/common/util/inventory/CraftingUtil.java
  (edited to work with multiple mods)
  */
-package de.ellpeck.actuallyadditions.util.crafting;
+package de.ellpeck.actuallyadditions.common.util.crafting;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;

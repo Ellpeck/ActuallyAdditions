@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.config;
+package de.ellpeck.actuallyadditions.common.config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.fml.client.config.GuiConfig;

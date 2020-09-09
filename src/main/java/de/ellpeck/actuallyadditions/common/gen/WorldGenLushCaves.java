@@ -1,14 +1,14 @@
-package de.ellpeck.actuallyadditions.gen;
+package de.ellpeck.actuallyadditions.common.gen;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.misc.DungeonLoot;
-import de.ellpeck.actuallyadditions.tile.TileEntityGiantChest;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.common.misc.DungeonLoot;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityGiantChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.state.IBlockState;

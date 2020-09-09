@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
-import de.ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.util.StackUtil;
-import de.ellpeck.actuallyadditions.util.WorldUtil;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.common.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;

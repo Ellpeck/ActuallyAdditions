@@ -1,6 +1,6 @@
-package de.ellpeck.actuallyadditions.particle;
+package de.ellpeck.actuallyadditions.common.particle;
 
-import de.ellpeck.actuallyadditions.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;

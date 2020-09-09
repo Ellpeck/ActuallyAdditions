@@ -1,17 +1,17 @@
-package de.ellpeck.actuallyadditions.crafting;
+package de.ellpeck.actuallyadditions.common.crafting;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.items.InitItems;
-import de.ellpeck.actuallyadditions.items.metalists.TheDusts;
-import de.ellpeck.actuallyadditions.items.metalists.TheFoods;
-import de.ellpeck.actuallyadditions.recipe.CrusherRecipeRegistry;
-import de.ellpeck.actuallyadditions.util.RecipeUtil;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheDusts;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheFoods;
+import de.ellpeck.actuallyadditions.common.recipe.CrusherRecipeRegistry;
+import de.ellpeck.actuallyadditions.common.util.RecipeUtil;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

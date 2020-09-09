@@ -1,6 +1,6 @@
-package de.ellpeck.actuallyadditions.misc;
+package de.ellpeck.actuallyadditions.common.misc;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;

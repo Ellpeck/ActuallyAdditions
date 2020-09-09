@@ -1,10 +1,10 @@
-package de.ellpeck.actuallyadditions.blocks.base;
+package de.ellpeck.actuallyadditions.common.blocks.base;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.config.ConfigValues;
-import de.ellpeck.actuallyadditions.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.config.ConfigValues;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityInventoryBase;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;

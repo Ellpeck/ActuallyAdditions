@@ -1,12 +1,12 @@
-package de.ellpeck.actuallyadditions.inventory.gui;
+package de.ellpeck.actuallyadditions.common.inventory.gui;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.tile.CustomEnergyStorage;
-import de.ellpeck.actuallyadditions.util.AssetUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.tile.CustomEnergyStorage;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;

@@ -1,10 +1,10 @@
-package de.ellpeck.actuallyadditions.config;
+package de.ellpeck.actuallyadditions.common.config;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.config.values.ConfigIntListValues;
-import de.ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigIntListValues;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigStringListValues;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

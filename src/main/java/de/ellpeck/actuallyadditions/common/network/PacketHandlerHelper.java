@@ -1,10 +1,10 @@
-package de.ellpeck.actuallyadditions.network;
+package de.ellpeck.actuallyadditions.common.network;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.booklet.chapter.BookletChapterTrials;
-import de.ellpeck.actuallyadditions.data.PlayerData;
-import de.ellpeck.actuallyadditions.data.PlayerData.PlayerSave;
+import de.ellpeck.actuallyadditions.common.data.PlayerData;
+import de.ellpeck.actuallyadditions.common.data.PlayerData.PlayerSave;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

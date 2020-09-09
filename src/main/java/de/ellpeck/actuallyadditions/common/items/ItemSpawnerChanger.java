@@ -1,12 +1,12 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.config.values.ConfigStringListValues;
-import de.ellpeck.actuallyadditions.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.util.StackUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.common.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityList;

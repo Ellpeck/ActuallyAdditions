@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.inventory.slot;
+package de.ellpeck.actuallyadditions.common.inventory.slot;
 
-import de.ellpeck.actuallyadditions.items.ItemFilter;
-import de.ellpeck.actuallyadditions.tile.FilterSettings;
-import de.ellpeck.actuallyadditions.util.ItemStackHandlerAA;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.items.ItemFilter;
+import de.ellpeck.actuallyadditions.common.tile.FilterSettings;
+import de.ellpeck.actuallyadditions.common.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;

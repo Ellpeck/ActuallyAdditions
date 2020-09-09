@@ -1,15 +1,15 @@
-package de.ellpeck.actuallyadditions.inventory.gui;
+package de.ellpeck.actuallyadditions.common.inventory.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.inventory.ContainerBag;
-import de.ellpeck.actuallyadditions.network.PacketClientToServer;
-import de.ellpeck.actuallyadditions.network.PacketHandler;
-import de.ellpeck.actuallyadditions.util.AssetUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.inventory.ContainerBag;
+import de.ellpeck.actuallyadditions.common.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.common.network.PacketHandler;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;

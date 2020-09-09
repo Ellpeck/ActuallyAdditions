@@ -21,4 +21,7 @@ public enum TheDusts {
     TheDusts(String name, int color, EnumRarity rarity) {
         this.name = name;
         this.color = color;
-        this.rarity = rarit
+        this.rarity = rarity;
+    }
+
+}

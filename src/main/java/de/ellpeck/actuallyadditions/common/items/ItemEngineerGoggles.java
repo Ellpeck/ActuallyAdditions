@@ -1,13 +1,13 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
 import java.util.List;
 import java.util.Set;
 
 import de.ellpeck.actuallyadditions.api.misc.IGoggles;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.items.base.ItemArmorAA;
-import de.ellpeck.actuallyadditions.material.InitArmorMaterials;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.items.base.ItemArmorAA;
+import de.ellpeck.actuallyadditions.common.material.InitArmorMaterials;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

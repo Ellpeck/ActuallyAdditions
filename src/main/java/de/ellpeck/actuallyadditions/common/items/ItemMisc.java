@@ -1,10 +1,10 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.fluids.InitFluids;
-import de.ellpeck.actuallyadditions.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.fluids.InitFluids;
+import de.ellpeck.actuallyadditions.common.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;

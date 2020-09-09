@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.blocks;
+package de.ellpeck.actuallyadditions.common.blocks;
 
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;

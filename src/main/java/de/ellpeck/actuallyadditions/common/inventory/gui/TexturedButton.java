@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.inventory.gui;
+package de.ellpeck.actuallyadditions.common.inventory.gui;
 
 import java.util.ArrayList;
 import java.util.List;

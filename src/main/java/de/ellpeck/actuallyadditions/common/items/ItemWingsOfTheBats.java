@@ -1,12 +1,12 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.data.PlayerData;
-import de.ellpeck.actuallyadditions.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.common.data.PlayerData;
+import de.ellpeck.actuallyadditions.common.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.common.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;

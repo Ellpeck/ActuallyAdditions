@@ -1,12 +1,12 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.tile.TileEntityLaserRelay;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityLaserRelay;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;

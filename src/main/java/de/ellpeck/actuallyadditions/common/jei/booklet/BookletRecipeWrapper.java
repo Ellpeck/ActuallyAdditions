@@ -1,13 +1,13 @@
-package de.ellpeck.actuallyadditions.jei.booklet;
+package de.ellpeck.actuallyadditions.common.jei.booklet;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.jei.RecipeWrapperWithButton;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.jei.RecipeWrapperWithButton;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;

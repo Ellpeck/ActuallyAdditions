@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.inventory;
+package de.ellpeck.actuallyadditions.common.inventory;
 
-import de.ellpeck.actuallyadditions.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.tile.TileEntityGiantChest;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.inventory.slot.SlotItemHandlerUnconditioned;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityGiantChest;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

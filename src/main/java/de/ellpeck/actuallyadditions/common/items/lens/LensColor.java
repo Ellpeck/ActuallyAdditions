@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.items.lens;
+package de.ellpeck.actuallyadditions.common.items.lens;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;

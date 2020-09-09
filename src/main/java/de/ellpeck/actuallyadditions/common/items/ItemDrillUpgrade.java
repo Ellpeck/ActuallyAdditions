@@ -1,6 +1,6 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
-import de.ellpeck.actuallyadditions.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.common.items.base.ItemBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

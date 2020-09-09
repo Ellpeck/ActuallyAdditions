@@ -1,11 +1,11 @@
-package de.ellpeck.actuallyadditions.items.base;
+package de.ellpeck.actuallyadditions.common.items.base;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.base.BlockItemBase;
-import de.ellpeck.actuallyadditions.config.ConfigurationHandler;
-import de.ellpeck.actuallyadditions.util.ItemUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockItemBase;
+import de.ellpeck.actuallyadditions.common.config.ConfigurationHandler;
+import de.ellpeck.actuallyadditions.common.util.ItemUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.IRarity;

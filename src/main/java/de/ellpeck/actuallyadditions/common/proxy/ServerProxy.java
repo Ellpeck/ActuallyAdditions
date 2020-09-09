@@ -44,4 +44,6 @@ public class ServerProxy implements IProxy {
 
     @Override
     public EntityPlayer getCurrentPlayer() {
-        return nul
+        return null;
+    }
+}

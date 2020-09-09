@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.misc.apiimpl.farmer.exu;
+package de.ellpeck.actuallyadditions.common.misc.apiimpl.farmer.exu;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;

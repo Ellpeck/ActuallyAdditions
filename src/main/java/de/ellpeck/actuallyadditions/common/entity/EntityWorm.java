@@ -1,7 +1,7 @@
-package de.ellpeck.actuallyadditions.entity;
+package de.ellpeck.actuallyadditions.common.entity;
 
-import de.ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.misc.apiimpl.farmer.DefaultFarmerBehavior;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.common.misc.apiimpl.farmer.DefaultFarmerBehavior;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockDirt;

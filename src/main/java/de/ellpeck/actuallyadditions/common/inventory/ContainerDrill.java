@@ -1,11 +1,11 @@
-package de.ellpeck.actuallyadditions.inventory;
+package de.ellpeck.actuallyadditions.common.inventory;
 
-import de.ellpeck.actuallyadditions.inventory.slot.SlotImmovable;
-import de.ellpeck.actuallyadditions.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.items.ItemDrill;
-import de.ellpeck.actuallyadditions.items.ItemDrillUpgrade;
-import de.ellpeck.actuallyadditions.util.ItemStackHandlerAA;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.inventory.slot.SlotImmovable;
+import de.ellpeck.actuallyadditions.common.inventory.slot.SlotItemHandlerUnconditioned;
+import de.ellpeck.actuallyadditions.common.items.ItemDrill;
+import de.ellpeck.actuallyadditions.common.items.ItemDrillUpgrade;
+import de.ellpeck.actuallyadditions.common.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;

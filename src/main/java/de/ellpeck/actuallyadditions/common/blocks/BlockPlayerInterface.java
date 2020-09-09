@@ -1,8 +1,8 @@
-package de.ellpeck.actuallyadditions.blocks;
+package de.ellpeck.actuallyadditions.common.blocks;
 
-import de.ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.tile.TileEntityPlayerInterface;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityPlayerInterface;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

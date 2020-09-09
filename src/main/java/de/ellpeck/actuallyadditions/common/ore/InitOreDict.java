@@ -1,12 +1,12 @@
-package de.ellpeck.actuallyadditions.ore;
+package de.ellpeck.actuallyadditions.common.ore;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
-import de.ellpeck.actuallyadditions.items.InitItems;
-import de.ellpeck.actuallyadditions.items.metalists.TheDusts;
-import de.ellpeck.actuallyadditions.items.metalists.TheFoods;
-import de.ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheDusts;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheFoods;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

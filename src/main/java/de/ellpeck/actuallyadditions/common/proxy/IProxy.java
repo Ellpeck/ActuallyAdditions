@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.proxy;
+package de.ellpeck.actuallyadditions.common.proxy;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

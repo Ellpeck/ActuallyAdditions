@@ -1,13 +1,13 @@
-package de.ellpeck.actuallyadditions.items.base;
+package de.ellpeck.actuallyadditions.common.items.base;
 
 import java.util.Set;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.config.ConfigurationHandler;
-import de.ellpeck.actuallyadditions.util.ItemUtil;
-import de.ellpeck.actuallyadditions.util.StackUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.config.ConfigurationHandler;
+import de.ellpeck.actuallyadditions.common.util.ItemUtil;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;

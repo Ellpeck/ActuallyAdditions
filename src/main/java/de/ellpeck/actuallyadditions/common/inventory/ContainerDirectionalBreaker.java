@@ -73,4 +73,6 @@ public class ContainerDirectionalBreaker extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.brea
+        return this.breaker.canPlayerUse(player);
+    }
+}

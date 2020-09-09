@@ -1,14 +1,14 @@
-package de.ellpeck.actuallyadditions.blocks;
+package de.ellpeck.actuallyadditions.common.blocks;
 
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.blocks.base.BlockItemBase;
-import de.ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.util.AssetUtil;
-import de.ellpeck.actuallyadditions.util.StackUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockItemBase;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityAtomicReconstructor;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;

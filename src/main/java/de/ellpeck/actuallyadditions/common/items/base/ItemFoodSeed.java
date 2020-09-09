@@ -1,8 +1,8 @@
-package de.ellpeck.actuallyadditions.items.base;
+package de.ellpeck.actuallyadditions.common.items.base;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.base.BlockPlant;
-import de.ellpeck.actuallyadditions.util.ItemUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockPlant;
+import de.ellpeck.actuallyadditions.common.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

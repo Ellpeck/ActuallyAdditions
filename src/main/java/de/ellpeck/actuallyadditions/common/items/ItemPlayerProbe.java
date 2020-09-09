@@ -1,15 +1,15 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.tile.TileEntityPlayerInterface;
-import de.ellpeck.actuallyadditions.util.StackUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityPlayerInterface;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

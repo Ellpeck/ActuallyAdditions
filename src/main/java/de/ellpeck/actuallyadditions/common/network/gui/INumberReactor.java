@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.network.gui;
+package de.ellpeck.actuallyadditions.common.network.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 

@@ -69,4 +69,6 @@ public class ItemHairyBall extends ItemBase {
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
-        return 
+        return EnumRarity.EPIC;
+    }
+}

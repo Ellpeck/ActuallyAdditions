@@ -1,8 +1,8 @@
-package de.ellpeck.actuallyadditions.common.booklet.chapter;
+package de.ellpeck.actuallyadditions.booklet.chapter;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.common.booklet.page.PageTrials;
+import de.ellpeck.actuallyadditions.booklet.page.PageTrials;
 import de.ellpeck.actuallyadditions.common.data.PlayerData;
 import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.client.Minecraft;

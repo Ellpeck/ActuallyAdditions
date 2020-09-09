@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
 import java.util.HashSet;
 import java.util.List;
@@ -6,17 +6,17 @@ import java.util.Set;
 
 import com.google.common.collect.Multimap;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
-import de.ellpeck.actuallyadditions.config.values.ConfigStringListValues;
-import de.ellpeck.actuallyadditions.inventory.ContainerDrill;
-import de.ellpeck.actuallyadditions.inventory.GuiHandler;
-import de.ellpeck.actuallyadditions.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.tile.TileEntityInventoryBase;
-import de.ellpeck.actuallyadditions.util.ItemStackHandlerAA;
-import de.ellpeck.actuallyadditions.util.ItemUtil;
-import de.ellpeck.actuallyadditions.util.StackUtil;
-import de.ellpeck.actuallyadditions.util.WorldUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.metalists.TheColoredLampColors;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.common.inventory.ContainerDrill;
+import de.ellpeck.actuallyadditions.common.inventory.GuiHandler;
+import de.ellpeck.actuallyadditions.common.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityInventoryBase;
+import de.ellpeck.actuallyadditions.common.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.common.util.ItemUtil;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

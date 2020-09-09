@@ -1,21 +1,21 @@
-package de.ellpeck.actuallyadditions.crafting;
+package de.ellpeck.actuallyadditions.common.crafting;
 
 import java.util.ArrayList;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.blocks.metalists.TheColoredLampColors;
-import de.ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
-import de.ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.items.InitItems;
-import de.ellpeck.actuallyadditions.items.metalists.TheCrystals;
-import de.ellpeck.actuallyadditions.items.metalists.TheDusts;
-import de.ellpeck.actuallyadditions.items.metalists.TheFoods;
-import de.ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.items.metalists.ThePotionRings;
-import de.ellpeck.actuallyadditions.util.RecipeUtil;
-import de.ellpeck.actuallyadditions.util.Util;
-import de.ellpeck.actuallyadditions.util.crafting.RecipeHandler;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.blocks.metalists.TheColoredLampColors;
+import de.ellpeck.actuallyadditions.common.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheCrystals;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheDusts;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheFoods;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.common.items.metalists.ThePotionRings;
+import de.ellpeck.actuallyadditions.common.util.RecipeUtil;
+import de.ellpeck.actuallyadditions.common.util.Util;
+import de.ellpeck.actuallyadditions.common.util.crafting.RecipeHandler;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;

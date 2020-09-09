@@ -8,7 +8,7 @@
  * Â© 2015-2017 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.common.booklet.gui;
+package de.ellpeck.actuallyadditions.booklet.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,8 +17,8 @@ import java.util.List;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.common.booklet.InitBooklet;
-import de.ellpeck.actuallyadditions.common.booklet.button.EntryButton;
+import de.ellpeck.actuallyadditions.booklet.InitBooklet;
+import de.ellpeck.actuallyadditions.booklet.button.EntryButton;
 import de.ellpeck.actuallyadditions.common.config.GuiConfiguration;
 import de.ellpeck.actuallyadditions.common.data.PlayerData;
 import de.ellpeck.actuallyadditions.common.data.PlayerData.PlayerSave;

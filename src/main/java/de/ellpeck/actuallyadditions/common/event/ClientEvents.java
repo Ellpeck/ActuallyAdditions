@@ -1,20 +1,20 @@
-package de.ellpeck.actuallyadditions.event;
+package de.ellpeck.actuallyadditions.common.event;
 
 import java.util.Locale;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.IHudDisplay;
-import de.ellpeck.actuallyadditions.config.ConfigValues;
-import de.ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.data.WorldData;
-import de.ellpeck.actuallyadditions.inventory.gui.EnergyDisplay;
-import de.ellpeck.actuallyadditions.items.ItemWingsOfTheBats;
-import de.ellpeck.actuallyadditions.tile.IEnergyDisplay;
-import de.ellpeck.actuallyadditions.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.util.StackUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.IHudDisplay;
+import de.ellpeck.actuallyadditions.common.config.ConfigValues;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.common.data.WorldData;
+import de.ellpeck.actuallyadditions.common.inventory.gui.EnergyDisplay;
+import de.ellpeck.actuallyadditions.common.items.ItemWingsOfTheBats;
+import de.ellpeck.actuallyadditions.common.tile.IEnergyDisplay;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

@@ -1,11 +1,11 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.inventory.ContainerBag;
-import de.ellpeck.actuallyadditions.inventory.GuiHandler.GuiTypes;
-import de.ellpeck.actuallyadditions.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.util.ItemStackHandlerAA;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.inventory.ContainerBag;
+import de.ellpeck.actuallyadditions.common.inventory.GuiHandler.GuiTypes;
+import de.ellpeck.actuallyadditions.common.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.common.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;

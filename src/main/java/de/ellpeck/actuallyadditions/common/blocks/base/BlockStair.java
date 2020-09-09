@@ -1,8 +1,8 @@
-//package de.ellpeck.actuallyadditions.blocks.base;
+//package de.ellpeck.actuallyadditions.common.blocks.base;
 //
-//import de.ellpeck.actuallyadditions.ActuallyAdditions;
-//import de.ellpeck.actuallyadditions.blocks.render.IHasModel;
-//import de.ellpeck.actuallyadditions.util.ItemUtil;
+//import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+//import de.ellpeck.actuallyadditions.common.blocks.render.IHasModel;
+//import de.ellpeck.actuallyadditions.common.util.ItemUtil;
 //import net.minecraft.block.Block;
 //import net.minecraft.block.BlockStairs;
 //import net.minecraft.block.BlockState;

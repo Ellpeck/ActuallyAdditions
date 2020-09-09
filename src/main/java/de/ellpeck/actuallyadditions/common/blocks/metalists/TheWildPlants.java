@@ -1,7 +1,7 @@
-package de.ellpeck.actuallyadditions.blocks.metalists;
+package de.ellpeck.actuallyadditions.common.blocks.metalists;
 
 import com.google.common.base.Preconditions;
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.IStringSerializable;

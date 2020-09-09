@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.inventory.gui;
+package de.ellpeck.actuallyadditions.common.inventory.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;

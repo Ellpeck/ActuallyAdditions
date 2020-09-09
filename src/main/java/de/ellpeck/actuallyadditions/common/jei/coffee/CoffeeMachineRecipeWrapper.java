@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.jei.coffee;
+package de.ellpeck.actuallyadditions.common.jei.coffee;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +8,14 @@ import com.google.common.base.Strings;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.booklet.misc.BookletUtils;
-import de.ellpeck.actuallyadditions.items.InitItems;
-import de.ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.jei.RecipeWrapperWithButton;
-import de.ellpeck.actuallyadditions.tile.TileEntityCoffeeMachine;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.common.jei.RecipeWrapperWithButton;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityCoffeeMachine;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;

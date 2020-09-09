@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.misc.apiimpl;
+package de.ellpeck.actuallyadditions.common.misc.apiimpl;
 
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;

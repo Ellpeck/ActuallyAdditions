@@ -1,10 +1,10 @@
-package de.ellpeck.actuallyadditions.items.lens;
+package de.ellpeck.actuallyadditions.common.items.lens;
 
 import java.util.ArrayList;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import de.ellpeck.actuallyadditions.misc.DamageSources;
+import de.ellpeck.actuallyadditions.common.misc.DamageSources;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.AxisAlignedBB;

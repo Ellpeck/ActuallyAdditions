@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.blocks;
+package de.ellpeck.actuallyadditions.common.blocks;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.inventory.GuiHandler;
-import de.ellpeck.actuallyadditions.tile.TileEntityCoffeeMachine;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.common.inventory.GuiHandler;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityCoffeeMachine;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;

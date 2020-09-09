@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.jei.reconstructor;
+package de.ellpeck.actuallyadditions.common.jei.reconstructor;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.util.AssetUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;

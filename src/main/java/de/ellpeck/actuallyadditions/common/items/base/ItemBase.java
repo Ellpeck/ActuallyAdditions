@@ -1,7 +1,7 @@
-package de.ellpeck.actuallyadditions.items.base;
+package de.ellpeck.actuallyadditions.common.items.base;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.util.ItemUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.util.ItemUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 

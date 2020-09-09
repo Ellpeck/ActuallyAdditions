@@ -1,11 +1,11 @@
-package de.ellpeck.actuallyadditions.blocks.render;
+package de.ellpeck.actuallyadditions.common.blocks.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.items.ItemBattery;
-import de.ellpeck.actuallyadditions.tile.TileEntityBatteryBox;
-import de.ellpeck.actuallyadditions.util.AssetUtil;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.items.ItemBattery;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityBatteryBox;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

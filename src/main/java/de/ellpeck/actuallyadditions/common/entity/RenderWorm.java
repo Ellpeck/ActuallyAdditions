@@ -1,7 +1,7 @@
-package de.ellpeck.actuallyadditions.entity;
+package de.ellpeck.actuallyadditions.common.entity;
 
-import de.ellpeck.actuallyadditions.items.InitItems;
-import de.ellpeck.actuallyadditions.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;

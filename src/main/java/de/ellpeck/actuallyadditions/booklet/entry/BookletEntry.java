@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.common.booklet.entry;
+package de.ellpeck.actuallyadditions.booklet.entry;
 
 import java.util.ArrayList;
 import java.util.List;

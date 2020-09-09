@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.misc;
+package de.ellpeck.actuallyadditions.common.misc;
 
 import java.util.Locale;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.items.InitItems;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.BannerPattern;
 import net.minecraftforge.common.util.EnumHelper;

@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.particle;
+package de.ellpeck.actuallyadditions.common.particle;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
-import de.ellpeck.actuallyadditions.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;

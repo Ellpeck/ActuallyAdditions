@@ -5,7 +5,7 @@ import java.util.Arrays;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.common.booklet.misc.BookletUtils;
+import de.ellpeck.actuallyadditions.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.common.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.common.recipe.EnchBookConversion;
 import mezz.jei.api.ingredients.IIngredients;
@@ -79,4 +79,8 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton {
         @Override
         public void getIngredients(IIngredients ingredients) {
             ingredients.setInput(VanillaTypes.ITEM, BOOK);
-            ingredients.setOutput(VanillaTypes.I
+            ingredients.setOutput(VanillaTypes.ITEM, OUT);
+        }
+
+    }
+}

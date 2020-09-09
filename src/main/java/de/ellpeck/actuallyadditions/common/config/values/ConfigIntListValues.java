@@ -1,6 +1,6 @@
-package de.ellpeck.actuallyadditions.config.values;
+package de.ellpeck.actuallyadditions.common.config.values;
 
-import de.ellpeck.actuallyadditions.config.ConfigCategories;
+import de.ellpeck.actuallyadditions.common.config.ConfigCategories;
 
 public enum ConfigIntListValues {
 

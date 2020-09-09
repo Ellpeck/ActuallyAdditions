@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.misc.cloud;
+package de.ellpeck.actuallyadditions.common.misc.cloud;
 
 public interface ISmileyCloudEasterEgg {
 

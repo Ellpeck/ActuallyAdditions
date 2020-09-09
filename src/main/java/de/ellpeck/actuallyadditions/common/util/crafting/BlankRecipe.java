@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.util.crafting;
+package de.ellpeck.actuallyadditions.common.util.crafting;
 
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;

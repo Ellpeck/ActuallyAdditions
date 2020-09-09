@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.blocks;
+package de.ellpeck.actuallyadditions.common.blocks;
 
-import de.ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.tile.TileEntityDisplayStand;
-import de.ellpeck.actuallyadditions.util.ItemUtil;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityDisplayStand;
+import de.ellpeck.actuallyadditions.common.util.ItemUtil;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;

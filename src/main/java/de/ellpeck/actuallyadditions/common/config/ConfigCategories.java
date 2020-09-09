@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.config;
+package de.ellpeck.actuallyadditions.common.config;
 
 import java.util.Locale;
 

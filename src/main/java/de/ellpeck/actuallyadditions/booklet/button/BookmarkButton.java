@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.common.booklet.button;
+package de.ellpeck.actuallyadditions.booklet.button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.common.booklet.gui.GuiBooklet;
-import de.ellpeck.actuallyadditions.common.booklet.gui.GuiPage;
-import de.ellpeck.actuallyadditions.common.booklet.misc.BookletUtils;
+import de.ellpeck.actuallyadditions.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.booklet.gui.GuiPage;
+import de.ellpeck.actuallyadditions.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.common.util.AssetUtil;
 import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import de.ellpeck.actuallyadditions.common.util.StringUtil;

@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.inventory;
+package de.ellpeck.actuallyadditions.common.inventory;
 
-import de.ellpeck.actuallyadditions.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.tile.TileEntityMiner;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.inventory.slot.SlotItemHandlerUnconditioned;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityMiner;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

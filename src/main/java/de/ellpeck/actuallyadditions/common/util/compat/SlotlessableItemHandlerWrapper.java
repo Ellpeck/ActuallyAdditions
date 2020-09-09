@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.util.compat;
+package de.ellpeck.actuallyadditions.common.util.compat;
 
 import net.minecraftforge.items.IItemHandler;
 

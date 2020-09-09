@@ -74,4 +74,6 @@ public class ItemBattery extends ItemEnergy {
     public void addInformation(ItemStack stack, World playerIn, List<String> list, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, list, advanced);
         list.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".battery." + (ItemUtil.isEnabled(stack) ? "discharge" : "noDischarge")));
-        list.add(StringUtil.localize("tooltip." + ActuallyAdditions.MO
+        list.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".battery.changeMode"));
+    }
+}

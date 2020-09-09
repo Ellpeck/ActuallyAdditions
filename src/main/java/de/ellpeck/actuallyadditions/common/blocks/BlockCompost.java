@@ -1,12 +1,12 @@
-package de.ellpeck.actuallyadditions.blocks;
+package de.ellpeck.actuallyadditions.common.blocks;
 
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
-import de.ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.tile.TileEntityCompost;
-import de.ellpeck.actuallyadditions.util.AssetUtil;
-import de.ellpeck.actuallyadditions.util.ItemUtil;
-import de.ellpeck.actuallyadditions.util.StackUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityCompost;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.util.ItemUtil;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

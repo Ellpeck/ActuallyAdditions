@@ -1,12 +1,12 @@
-package de.ellpeck.actuallyadditions.data;
+package de.ellpeck.actuallyadditions.common.data;
 
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import de.ellpeck.actuallyadditions.api.laser.Network;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.data.PlayerData.PlayerSave;
-import de.ellpeck.actuallyadditions.misc.apiimpl.LaserRelayConnectionHandler;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.data.PlayerData.PlayerSave;
+import de.ellpeck.actuallyadditions.common.misc.apiimpl.LaserRelayConnectionHandler;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

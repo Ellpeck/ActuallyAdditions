@@ -6,7 +6,7 @@ import java.util.List;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.common.booklet.misc.BookletUtils;
+import de.ellpeck.actuallyadditions.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.common.jei.RecipeWrapperWithButton;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
@@ -50,4 +50,6 @@ public class EmpowererRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public IBookletPage getPage() {
-        return BookletUtils.findFirstPageForStack(new ItemStack(InitBlocks.b
+        return BookletUtils.findFirstPageForStack(new ItemStack(InitBlocks.blockEmpowerer));
+    }
+}

@@ -1,8 +1,8 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
 import com.google.common.collect.Multimap;
 
-import de.ellpeck.actuallyadditions.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.common.items.base.ItemBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;

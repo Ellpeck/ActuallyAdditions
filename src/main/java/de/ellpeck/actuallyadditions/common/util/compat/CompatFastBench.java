@@ -25,3 +25,5 @@ public class CompatFastBench {
     public static Gui getFastBenchGui(EntityPlayer p, World world) {
         return new GuiFastBench(p.inventory, world, BlockPos.ORIGIN);
     }
+
+}

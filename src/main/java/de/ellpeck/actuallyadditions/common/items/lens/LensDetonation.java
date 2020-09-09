@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.items.lens;
+package de.ellpeck.actuallyadditions.common.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;

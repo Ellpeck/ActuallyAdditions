@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.misc;
+package de.ellpeck.actuallyadditions.common.misc;
 
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;

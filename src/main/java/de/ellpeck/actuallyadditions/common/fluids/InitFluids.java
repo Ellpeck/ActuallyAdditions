@@ -1,8 +1,8 @@
-package de.ellpeck.actuallyadditions.fluids;
+package de.ellpeck.actuallyadditions.common.fluids;
 
 import java.util.Locale;
 
-import de.ellpeck.actuallyadditions.blocks.base.BlockFluidFlowing;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockFluidFlowing;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;

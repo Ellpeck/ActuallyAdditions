@@ -1,11 +1,11 @@
-package de.ellpeck.actuallyadditions.crafting;
+package de.ellpeck.actuallyadditions.common.crafting;
 
 import java.util.ArrayList;
 
-import de.ellpeck.actuallyadditions.items.InitItems;
-import de.ellpeck.actuallyadditions.items.metalists.TheCrystals;
-import de.ellpeck.actuallyadditions.util.RecipeUtil;
-import de.ellpeck.actuallyadditions.util.crafting.RecipeHandler;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheCrystals;
+import de.ellpeck.actuallyadditions.common.util.RecipeUtil;
+import de.ellpeck.actuallyadditions.common.util.crafting.RecipeHandler;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

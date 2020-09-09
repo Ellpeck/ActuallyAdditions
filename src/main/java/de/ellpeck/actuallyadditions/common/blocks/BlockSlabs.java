@@ -1,7 +1,7 @@
-package de.ellpeck.actuallyadditions.blocks;
+package de.ellpeck.actuallyadditions.common.blocks;
 
-import de.ellpeck.actuallyadditions.blocks.base.BlockItemBase;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockItemBase;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockState;

@@ -1,13 +1,13 @@
-package de.ellpeck.actuallyadditions.jei.compost;
+package de.ellpeck.actuallyadditions.common.jei.compost;
 
 import java.util.Arrays;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.booklet.misc.BookletUtils;
-import de.ellpeck.actuallyadditions.jei.RecipeWrapperWithButton;
-import de.ellpeck.actuallyadditions.tile.TileEntityCompost;
+import de.ellpeck.actuallyadditions.common.jei.RecipeWrapperWithButton;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityCompost;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;

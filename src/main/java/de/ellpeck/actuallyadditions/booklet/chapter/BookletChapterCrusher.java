@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.common.booklet.chapter;
+package de.ellpeck.actuallyadditions.booklet.chapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import java.util.List;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.common.booklet.page.PageCrusherRecipe;
+import de.ellpeck.actuallyadditions.booklet.page.PageCrusherRecipe;
 import de.ellpeck.actuallyadditions.common.crafting.CrusherCrafting;
 import net.minecraft.item.ItemStack;
 

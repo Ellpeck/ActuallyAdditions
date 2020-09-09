@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.common.booklet.gui;
+package de.ellpeck.actuallyadditions.booklet.gui;
 
 import java.io.IOException;
 import java.util.List;
@@ -7,9 +7,9 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
-import de.ellpeck.actuallyadditions.common.booklet.button.EntryButton;
-import de.ellpeck.actuallyadditions.common.booklet.entry.BookletEntryTrials;
-import de.ellpeck.actuallyadditions.common.booklet.misc.BookletUtils;
+import de.ellpeck.actuallyadditions.booklet.button.EntryButton;
+import de.ellpeck.actuallyadditions.booklet.entry.BookletEntryTrials;
+import de.ellpeck.actuallyadditions.booklet.misc.BookletUtils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;

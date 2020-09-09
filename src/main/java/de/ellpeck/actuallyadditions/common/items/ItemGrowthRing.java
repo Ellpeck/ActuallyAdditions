@@ -1,10 +1,10 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;

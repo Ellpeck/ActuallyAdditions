@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.inventory.gui;
+package de.ellpeck.actuallyadditions.common.inventory.gui;
 
-import de.ellpeck.actuallyadditions.inventory.ContainerEnervator;
-import de.ellpeck.actuallyadditions.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.tile.TileEntityEnervator;
-import de.ellpeck.actuallyadditions.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.inventory.ContainerEnervator;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityEnervator;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;

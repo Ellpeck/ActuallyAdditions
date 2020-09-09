@@ -72,4 +72,6 @@ public class ContainerCoalGenerator extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return this.genera
+        return this.generator.canPlayerUse(player);
+    }
+}

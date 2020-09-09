@@ -1,11 +1,11 @@
-package de.ellpeck.actuallyadditions.crafting;
+package de.ellpeck.actuallyadditions.common.crafting;
 
-import de.ellpeck.actuallyadditions.items.InitItems;
-import de.ellpeck.actuallyadditions.items.metalists.TheFoods;
-import de.ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.util.RecipeUtil;
-import de.ellpeck.actuallyadditions.util.Util;
-import de.ellpeck.actuallyadditions.util.crafting.RecipeHandler;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheFoods;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.common.util.RecipeUtil;
+import de.ellpeck.actuallyadditions.common.util.Util;
+import de.ellpeck.actuallyadditions.common.util.crafting.RecipeHandler;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

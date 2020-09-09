@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.recipe;
+package de.ellpeck.actuallyadditions.common.recipe;
 
 import java.util.Map;
 

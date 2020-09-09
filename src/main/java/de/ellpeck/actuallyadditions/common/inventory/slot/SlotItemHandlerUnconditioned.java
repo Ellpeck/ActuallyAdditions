@@ -1,8 +1,8 @@
-package de.ellpeck.actuallyadditions.inventory.slot;
+package de.ellpeck.actuallyadditions.common.inventory.slot;
 
 import javax.annotation.Nonnull;
 
-import de.ellpeck.actuallyadditions.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.common.util.ItemStackHandlerAA;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;

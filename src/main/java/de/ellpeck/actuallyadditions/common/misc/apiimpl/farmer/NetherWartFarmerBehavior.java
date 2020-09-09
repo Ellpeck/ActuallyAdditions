@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.misc.apiimpl.farmer;
+package de.ellpeck.actuallyadditions.common.misc.apiimpl.farmer;
 
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;

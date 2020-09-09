@@ -8,9 +8,9 @@
 * © 2015-2017 Ellpeck
 */
 
-package de.ellpeck.actuallyadditions.blocks.base;
+package de.ellpeck.actuallyadditions.common.blocks.base;
 
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.block.material.Material;

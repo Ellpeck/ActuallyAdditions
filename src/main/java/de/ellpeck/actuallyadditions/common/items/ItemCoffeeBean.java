@@ -1,6 +1,6 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
-import de.ellpeck.actuallyadditions.items.base.ItemFoodBase;
+import de.ellpeck.actuallyadditions.common.items.base.ItemFoodBase;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 

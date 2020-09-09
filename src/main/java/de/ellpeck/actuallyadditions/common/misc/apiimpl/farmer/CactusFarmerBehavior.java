@@ -77,4 +77,5 @@ public class CactusFarmerBehavior implements IFarmerBehavior {
     @Override
     public int getPriority() {
         return 4;
-   
+    }
+}

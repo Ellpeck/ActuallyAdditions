@@ -1,6 +1,6 @@
-package de.ellpeck.actuallyadditions.network;
+package de.ellpeck.actuallyadditions.common.network;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;

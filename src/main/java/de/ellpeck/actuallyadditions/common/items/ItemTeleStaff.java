@@ -1,7 +1,7 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
-import de.ellpeck.actuallyadditions.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.util.WorldUtil;
+import de.ellpeck.actuallyadditions.common.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.common.util.WorldUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;

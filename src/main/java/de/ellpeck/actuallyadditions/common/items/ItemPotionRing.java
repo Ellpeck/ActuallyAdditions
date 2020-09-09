@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,13 +6,13 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.items.metalists.ThePotionRings;
-import de.ellpeck.actuallyadditions.util.IColorProvidingItem;
-import de.ellpeck.actuallyadditions.util.StackUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
-import de.ellpeck.actuallyadditions.util.Util;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.common.items.metalists.ThePotionRings;
+import de.ellpeck.actuallyadditions.common.util.IColorProvidingItem;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.util.Util;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;

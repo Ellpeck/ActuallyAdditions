@@ -1,22 +1,22 @@
-package de.ellpeck.actuallyadditions.inventory;
+package de.ellpeck.actuallyadditions.common.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.config.values.ConfigStringListValues;
-import de.ellpeck.actuallyadditions.inventory.slot.SlotDeletion;
-import de.ellpeck.actuallyadditions.inventory.slot.SlotFilter;
-import de.ellpeck.actuallyadditions.inventory.slot.SlotImmovable;
-import de.ellpeck.actuallyadditions.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.items.ItemBag;
-import de.ellpeck.actuallyadditions.items.ItemDrill;
-import de.ellpeck.actuallyadditions.network.gui.IButtonReactor;
-import de.ellpeck.actuallyadditions.tile.FilterSettings;
-import de.ellpeck.actuallyadditions.util.ItemStackHandlerAA;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.common.inventory.slot.SlotDeletion;
+import de.ellpeck.actuallyadditions.common.inventory.slot.SlotFilter;
+import de.ellpeck.actuallyadditions.common.inventory.slot.SlotImmovable;
+import de.ellpeck.actuallyadditions.common.inventory.slot.SlotItemHandlerUnconditioned;
+import de.ellpeck.actuallyadditions.common.items.ItemBag;
+import de.ellpeck.actuallyadditions.common.items.ItemDrill;
+import de.ellpeck.actuallyadditions.common.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.common.tile.FilterSettings;
+import de.ellpeck.actuallyadditions.common.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;

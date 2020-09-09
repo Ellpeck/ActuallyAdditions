@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.gen.village.component;
+package de.ellpeck.actuallyadditions.common.gen.village.component;
 
 import java.util.List;
 import java.util.Random;
 
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;

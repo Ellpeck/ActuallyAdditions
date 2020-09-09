@@ -1,8 +1,8 @@
-package de.ellpeck.actuallyadditions.blocks;
+package de.ellpeck.actuallyadditions.common.blocks;
 
-import de.ellpeck.actuallyadditions.items.metalists.TheCrystals;
-import de.ellpeck.actuallyadditions.util.IColorProvidingBlock;
-import de.ellpeck.actuallyadditions.util.IColorProvidingItem;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheCrystals;
+import de.ellpeck.actuallyadditions.common.util.IColorProvidingBlock;
+import de.ellpeck.actuallyadditions.common.util.IColorProvidingItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;

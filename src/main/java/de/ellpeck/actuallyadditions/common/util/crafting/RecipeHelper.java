@@ -1,10 +1,10 @@
-package de.ellpeck.actuallyadditions.util.crafting;
+package de.ellpeck.actuallyadditions.common.util.crafting;
 
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.RegistryHandler;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.RegistryHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

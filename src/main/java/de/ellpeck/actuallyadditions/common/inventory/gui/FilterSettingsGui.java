@@ -1,13 +1,13 @@
-package de.ellpeck.actuallyadditions.inventory.gui;
+package de.ellpeck.actuallyadditions.common.inventory.gui;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.inventory.gui.GuiInputter.SmallerButton;
-import de.ellpeck.actuallyadditions.tile.FilterSettings;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.inventory.gui.GuiInputter.SmallerButton;
+import de.ellpeck.actuallyadditions.common.tile.FilterSettings;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;

@@ -1,8 +1,8 @@
-package de.ellpeck.actuallyadditions.crafting;
+package de.ellpeck.actuallyadditions.common.crafting;
 
-import de.ellpeck.actuallyadditions.items.ItemPotionRing;
-import de.ellpeck.actuallyadditions.util.StackUtil;
-import de.ellpeck.actuallyadditions.util.crafting.RecipeHelper;
+import de.ellpeck.actuallyadditions.common.items.ItemPotionRing;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.crafting.RecipeHelper;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;

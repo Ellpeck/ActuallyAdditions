@@ -1,10 +1,10 @@
-package de.ellpeck.actuallyadditions.blocks;
+package de.ellpeck.actuallyadditions.common.blocks;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.inventory.GuiHandler;
-import de.ellpeck.actuallyadditions.tile.TileEntityFluidCollector;
-import de.ellpeck.actuallyadditions.tile.TileEntityFluidPlacer;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.common.inventory.GuiHandler;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityFluidCollector;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityFluidPlacer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;

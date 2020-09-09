@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.common.booklet.gui;
+package de.ellpeck.actuallyadditions.booklet.gui;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,8 +11,8 @@ import org.lwjgl.input.Mouse;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.common.booklet.button.BookmarkButton;
-import de.ellpeck.actuallyadditions.common.booklet.button.TrialsButton;
+import de.ellpeck.actuallyadditions.booklet.button.BookmarkButton;
+import de.ellpeck.actuallyadditions.booklet.button.TrialsButton;
 import de.ellpeck.actuallyadditions.common.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.common.data.PlayerData;
 import de.ellpeck.actuallyadditions.common.data.PlayerData.PlayerSave;

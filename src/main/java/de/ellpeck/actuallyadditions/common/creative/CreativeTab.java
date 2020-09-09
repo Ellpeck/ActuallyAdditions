@@ -1,11 +1,11 @@
 // todo: reimplement this the normal 1.14+
-//package de.ellpeck.actuallyadditions.creative;
+//package de.ellpeck.actuallyadditions.common.creative;
 //
 //import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
-//import de.ellpeck.actuallyadditions.ActuallyAdditions;
-//import de.ellpeck.actuallyadditions.blocks.InitBlocks;
-//import de.ellpeck.actuallyadditions.fluids.InitFluids;
-//import de.ellpeck.actuallyadditions.items.InitItems;
+//import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+//import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
+//import de.ellpeck.actuallyadditions.common.fluids.InitFluids;
+//import de.ellpeck.actuallyadditions.common.items.InitItems;
 //import net.minecraft.block.Block;
 //import net.minecraft.creativetab.CreativeTabs;
 //import net.minecraft.item.Item;

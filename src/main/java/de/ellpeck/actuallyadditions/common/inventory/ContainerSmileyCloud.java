@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.inventory;
+package de.ellpeck.actuallyadditions.common.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

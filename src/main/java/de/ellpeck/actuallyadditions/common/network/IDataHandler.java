@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.network;
+package de.ellpeck.actuallyadditions.common.network;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

@@ -1,6 +1,6 @@
-package de.ellpeck.actuallyadditions.blocks.render;
+package de.ellpeck.actuallyadditions.common.blocks.render;
 
-import de.ellpeck.actuallyadditions.blocks.BlockCompost;
+import de.ellpeck.actuallyadditions.common.blocks.BlockCompost;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.model.BakedQuad;
 import net.minecraft.client.renderer.model.IBakedModel;

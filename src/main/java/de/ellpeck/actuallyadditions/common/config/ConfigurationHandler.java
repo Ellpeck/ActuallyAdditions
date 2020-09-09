@@ -1,8 +1,8 @@
-package de.ellpeck.actuallyadditions.config;
+package de.ellpeck.actuallyadditions.common.config;
 
 import java.io.File;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;

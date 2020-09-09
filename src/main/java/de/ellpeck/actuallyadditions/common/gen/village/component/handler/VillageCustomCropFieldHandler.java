@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.gen.village.component.handler;
+package de.ellpeck.actuallyadditions.common.gen.village.component.handler;
 
 import java.util.List;
 import java.util.Random;
 
-import de.ellpeck.actuallyadditions.gen.village.component.VillageComponentCustomCropField;
+import de.ellpeck.actuallyadditions.common.gen.village.component.VillageComponentCustomCropField;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;

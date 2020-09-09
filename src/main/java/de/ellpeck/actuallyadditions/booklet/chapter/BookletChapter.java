@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.common.booklet.chapter;
+package de.ellpeck.actuallyadditions.booklet.chapter;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;

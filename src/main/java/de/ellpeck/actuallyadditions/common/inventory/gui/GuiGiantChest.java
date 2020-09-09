@@ -1,14 +1,14 @@
-package de.ellpeck.actuallyadditions.inventory.gui;
+package de.ellpeck.actuallyadditions.common.inventory.gui;
 
 import java.io.IOException;
 
-import de.ellpeck.actuallyadditions.inventory.ContainerGiantChest;
-import de.ellpeck.actuallyadditions.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.tile.TileEntityGiantChest;
-import de.ellpeck.actuallyadditions.tile.TileEntityGiantChestLarge;
-import de.ellpeck.actuallyadditions.tile.TileEntityGiantChestMedium;
-import de.ellpeck.actuallyadditions.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.inventory.ContainerGiantChest;
+import de.ellpeck.actuallyadditions.common.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityGiantChest;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityGiantChestLarge;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityGiantChestMedium;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;

@@ -1,6 +1,6 @@
-package de.ellpeck.actuallyadditions.fluids;
+package de.ellpeck.actuallyadditions.common.fluids;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 

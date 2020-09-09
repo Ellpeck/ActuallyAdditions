@@ -1,6 +1,6 @@
-package de.ellpeck.actuallyadditions.inventory.slot;
+package de.ellpeck.actuallyadditions.common.inventory.slot;
 
-import de.ellpeck.actuallyadditions.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.common.util.ItemStackHandlerAA;
 import net.minecraft.item.ItemStack;
 
 public class SlotDeletion extends SlotItemHandlerUnconditioned {

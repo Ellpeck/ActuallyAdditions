@@ -1,8 +1,8 @@
-package de.ellpeck.actuallyadditions.material;
+package de.ellpeck.actuallyadditions.common.material;
 
 import java.util.Locale;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 

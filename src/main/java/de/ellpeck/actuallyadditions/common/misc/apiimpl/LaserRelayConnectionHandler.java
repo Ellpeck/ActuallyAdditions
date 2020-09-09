@@ -1,11 +1,11 @@
-package de.ellpeck.actuallyadditions.misc.apiimpl;
+package de.ellpeck.actuallyadditions.common.misc.apiimpl;
 
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
-import de.ellpeck.actuallyadditions.data.WorldData;
-import de.ellpeck.actuallyadditions.tile.TileEntityLaserRelay;
+import de.ellpeck.actuallyadditions.common.data.WorldData;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityLaserRelay;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

@@ -1,6 +1,6 @@
-package de.ellpeck.actuallyadditions.items.metalists;
+package de.ellpeck.actuallyadditions.common.items.metalists;
 
-import de.ellpeck.actuallyadditions.util.Util;
+import de.ellpeck.actuallyadditions.common.util.Util;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.IStringSerializable;
 

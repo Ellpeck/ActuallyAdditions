@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.blocks.render;
+package de.ellpeck.actuallyadditions.common.blocks.render;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

@@ -1,7 +1,7 @@
-package de.ellpeck.actuallyadditions.items.metalists;
+package de.ellpeck.actuallyadditions.common.items.metalists;
 
-import de.ellpeck.actuallyadditions.items.InitItems;
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;

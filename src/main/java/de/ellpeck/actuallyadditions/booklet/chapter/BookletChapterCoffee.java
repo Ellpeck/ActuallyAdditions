@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.common.booklet.chapter;
+package de.ellpeck.actuallyadditions.booklet.chapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,8 +8,8 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
-import de.ellpeck.actuallyadditions.common.booklet.page.BookletPage;
-import de.ellpeck.actuallyadditions.common.booklet.page.PageCoffeeMachine;
+import de.ellpeck.actuallyadditions.booklet.page.BookletPage;
+import de.ellpeck.actuallyadditions.booklet.page.PageCoffeeMachine;
 import de.ellpeck.actuallyadditions.common.items.ItemCoffee;
 import net.minecraft.item.ItemStack;
 

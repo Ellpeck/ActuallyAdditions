@@ -1,13 +1,13 @@
-package de.ellpeck.actuallyadditions.misc;
+package de.ellpeck.actuallyadditions.common.misc;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
-import de.ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.items.InitItems;
-import de.ellpeck.actuallyadditions.items.metalists.TheCrystals;
-import de.ellpeck.actuallyadditions.items.metalists.TheJams;
-import de.ellpeck.actuallyadditions.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheCrystals;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheJams;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;

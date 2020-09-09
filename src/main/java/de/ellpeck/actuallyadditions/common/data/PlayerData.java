@@ -6,8 +6,8 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.common.booklet.gui.GuiBooklet;
-import de.ellpeck.actuallyadditions.common.booklet.misc.BookletUtils;
+import de.ellpeck.actuallyadditions.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.booklet.misc.BookletUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

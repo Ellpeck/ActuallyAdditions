@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.blocks.render;
+package de.ellpeck.actuallyadditions.common.blocks.render;
 
 @Deprecated
 public interface IHasModel {

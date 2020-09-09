@@ -1,13 +1,13 @@
-package de.ellpeck.actuallyadditions.items.base;
+package de.ellpeck.actuallyadditions.common.items.base;
 
 import java.text.NumberFormat;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.tile.CustomEnergyStorage;
-import de.ellpeck.actuallyadditions.util.AssetUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.tile.CustomEnergyStorage;
+import de.ellpeck.actuallyadditions.common.util.AssetUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;

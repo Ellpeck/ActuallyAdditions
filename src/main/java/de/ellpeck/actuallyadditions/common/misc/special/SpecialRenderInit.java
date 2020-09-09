@@ -1,10 +1,10 @@
-package de.ellpeck.actuallyadditions.misc.special;
+package de.ellpeck.actuallyadditions.common.misc.special;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Properties;
 
-import de.ellpeck.actuallyadditions.util.StackUtil;
+import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

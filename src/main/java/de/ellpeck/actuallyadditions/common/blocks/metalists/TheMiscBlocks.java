@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.blocks.metalists;
+package de.ellpeck.actuallyadditions.common.blocks.metalists;
 
 import net.minecraft.item.Rarity;
 import net.minecraft.util.IStringSerializable;

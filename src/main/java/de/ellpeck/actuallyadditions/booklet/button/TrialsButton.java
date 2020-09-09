@@ -1,7 +1,7 @@
-package de.ellpeck.actuallyadditions.common.booklet.button;
+package de.ellpeck.actuallyadditions.booklet.button;
 
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.common.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.common.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.client.Minecraft;

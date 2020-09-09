@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.items.metalists;
+package de.ellpeck.actuallyadditions.common.items.metalists;
 
 import net.minecraft.item.EnumRarity;
 

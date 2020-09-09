@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.common.booklet.button;
+package de.ellpeck.actuallyadditions.booklet.button;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.common.util.AssetUtil;

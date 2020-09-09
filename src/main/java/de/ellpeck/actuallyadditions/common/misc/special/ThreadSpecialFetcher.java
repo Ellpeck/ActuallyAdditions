@@ -1,10 +1,10 @@
-package de.ellpeck.actuallyadditions.misc.special;
+package de.ellpeck.actuallyadditions.common.misc.special;
 
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Properties;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 
 public class ThreadSpecialFetcher extends Thread {
 

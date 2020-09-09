@@ -1,20 +1,20 @@
-package de.ellpeck.actuallyadditions.gen;
+package de.ellpeck.actuallyadditions.common.gen;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import de.ellpeck.actuallyadditions.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.blocks.BlockMisc;
-import de.ellpeck.actuallyadditions.blocks.BlockWildPlant;
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.blocks.metalists.TheMiscBlocks;
-import de.ellpeck.actuallyadditions.blocks.metalists.TheWildPlants;
-import de.ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.config.values.ConfigIntListValues;
-import de.ellpeck.actuallyadditions.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.util.WorldUtil;
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.BlockMisc;
+import de.ellpeck.actuallyadditions.common.blocks.BlockWildPlant;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.common.blocks.metalists.TheWildPlants;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigIntListValues;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.common.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;

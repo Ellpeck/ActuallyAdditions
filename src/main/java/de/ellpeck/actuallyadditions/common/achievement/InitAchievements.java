@@ -1,8 +1,8 @@
 //TODO Achievements -> Advancements?
 /*
-package de.ellpeck.actuallyadditions.achievement;
-import de.ellpeck.actuallyadditions.util.ModUtil;
-import de.ellpeck.actuallyadditions.util.StringUtil;
+package de.ellpeck.actuallyadditions.common.achievement;
+import de.ellpeck.actuallyadditions.common.util.ModUtil;
+import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
 

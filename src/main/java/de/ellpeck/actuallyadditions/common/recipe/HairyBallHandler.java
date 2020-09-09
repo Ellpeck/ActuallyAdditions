@@ -1,7 +1,7 @@
-package de.ellpeck.actuallyadditions.recipe;
+package de.ellpeck.actuallyadditions.common.recipe;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.items.InitItems;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

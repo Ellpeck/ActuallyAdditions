@@ -1,9 +1,9 @@
-package de.ellpeck.actuallyadditions.items;
+package de.ellpeck.actuallyadditions.common.items;
 
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.util.ItemUtil;
+import de.ellpeck.actuallyadditions.common.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.common.util.ItemUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

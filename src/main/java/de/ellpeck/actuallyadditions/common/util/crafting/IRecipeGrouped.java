@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.util.crafting;
+package de.ellpeck.actuallyadditions.common.util.crafting;
 
 public interface IRecipeGrouped {
 

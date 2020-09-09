@@ -7,8 +7,8 @@ import javax.annotation.Nullable;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.common.booklet.gui.GuiBooklet;
-import de.ellpeck.actuallyadditions.common.booklet.misc.BookletUtils;
+import de.ellpeck.actuallyadditions.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.common.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import mezz.jei.api.recipe.IRecipeWrapper;

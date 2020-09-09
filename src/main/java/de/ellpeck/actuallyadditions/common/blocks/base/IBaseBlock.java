@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.blocks.base;
+package de.ellpeck.actuallyadditions.common.blocks.base;
 
 import net.minecraft.item.Rarity;
 

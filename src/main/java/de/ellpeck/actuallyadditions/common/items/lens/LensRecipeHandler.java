@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.items.lens;
+package de.ellpeck.actuallyadditions.common.items.lens;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +10,14 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.ColorLensChangerByDyeMeta;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.items.InitItems;
-import de.ellpeck.actuallyadditions.items.metalists.TheCrystals;
-import de.ellpeck.actuallyadditions.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.recipe.ColorLensRotator;
-import de.ellpeck.actuallyadditions.recipe.EnchBookConversion;
-import de.ellpeck.actuallyadditions.util.RecipeUtil;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheCrystals;
+import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.common.recipe.ColorLensRotator;
+import de.ellpeck.actuallyadditions.common.recipe.EnchBookConversion;
+import de.ellpeck.actuallyadditions.common.util.RecipeUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

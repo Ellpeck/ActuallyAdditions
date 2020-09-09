@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.common.booklet.entry;
+package de.ellpeck.actuallyadditions.booklet.entry;
 
 public class BookletEntryTrials extends BookletEntry {
 

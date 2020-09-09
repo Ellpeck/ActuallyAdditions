@@ -1,13 +1,13 @@
-package de.ellpeck.actuallyadditions.gen.village.component;
+package de.ellpeck.actuallyadditions.common.gen.village.component;
 
 import java.util.List;
 import java.util.Random;
 
-import de.ellpeck.actuallyadditions.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.gen.village.InitVillager;
-import de.ellpeck.actuallyadditions.misc.DungeonLoot;
-import de.ellpeck.actuallyadditions.tile.TileEntityGiantChest;
+import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.common.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.common.gen.village.InitVillager;
+import de.ellpeck.actuallyadditions.common.misc.DungeonLoot;
+import de.ellpeck.actuallyadditions.common.tile.TileEntityGiantChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockLeaves;
