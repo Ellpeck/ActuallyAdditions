@@ -30,7 +30,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.List;
 
-public class BlockPlant extends CropsBlock implements IBaseBlock {
+public class BlockPlant extends CropsBlock {
 
     private final int minDropAmount;
     private final int addDropAmount;
@@ -52,16 +52,7 @@ public class BlockPlant extends CropsBlock implements IBaseBlock {
         this.returnItem = returnItem;
         this.returnMeta = returnMeta;
     }
-    
-    @Override
-    public BlockItemBase getItemBlock(){
-        return new BlockItemBase(this, new Item.Properties());
-    }
-    
-    public boolean shouldAddCreative() {
-        return false;
-    }
-    
+
     @Override
     public PlantType getPlantType(IBlockReader world, BlockPos pos) {
         return PlantType.Crop;

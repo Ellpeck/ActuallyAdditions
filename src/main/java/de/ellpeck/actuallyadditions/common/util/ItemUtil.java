@@ -5,7 +5,6 @@ import java.util.List;
 
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.RegistryHandler;
-import de.ellpeck.actuallyadditions.common.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.common.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.common.util.compat.IMCHandler;
 import net.minecraft.block.Block;

@@ -3,7 +3,6 @@ package de.ellpeck.actuallyadditions.common.blocks;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.common.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.common.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.common.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.common.util.AssetUtil;
@@ -17,10 +16,7 @@ import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.Rarity;
+import net.minecraft.item.*;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -151,7 +147,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         return MathHelper.clamp(i / 20000, 0, 15);
     }
     
-    public class BlockItem extends BlockItemBase {
+    public class BlockItem extends net.minecraft.item.BlockItem {
         private long lastSysTime;
         private int toPick1;
     

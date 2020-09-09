@@ -3,7 +3,6 @@ package de.ellpeck.actuallyadditions.common.blocks;
 import java.util.Random;
 
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.common.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.common.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import de.ellpeck.actuallyadditions.common.util.StringUtil;
@@ -15,6 +14,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -132,7 +132,7 @@ public class BlockColoredLamp extends Block {
         return new BlockStateContainer(this, TYPE);
     }
 
-    public static class TheItemBlock extends BlockItemBase {
+    public static class TheItemBlock extends BlockItem {
 
         public TheItemBlock(Block block) {
             super(block);

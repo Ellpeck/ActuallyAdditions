@@ -3,7 +3,6 @@ package de.ellpeck.actuallyadditions.common.blocks;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.blocks.base.BlockBushBase;
 import de.ellpeck.actuallyadditions.common.blocks.base.BlockPlant;
-import de.ellpeck.actuallyadditions.common.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.common.blocks.metalists.TheWildPlants;
 import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.block.Block;
@@ -14,6 +13,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -101,7 +101,7 @@ public class BlockWildPlant extends BlockBushBase {
         return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? EnumRarity.COMMON : ALL_WILD_PLANTS[stack.getItemDamage()].getRarity();
     }
 
-    public static class TheItemBlock extends BlockItemBase {
+    public static class TheItemBlock extends BlockItem {
 
         public TheItemBlock(Block block) {
             super(block);

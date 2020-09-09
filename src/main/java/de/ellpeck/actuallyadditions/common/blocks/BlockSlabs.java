@@ -1,6 +1,5 @@
 package de.ellpeck.actuallyadditions.common.blocks;
 
-import de.ellpeck.actuallyadditions.common.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -10,6 +9,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -91,7 +91,7 @@ public class BlockSlabs extends Block {
         return new BlockStateContainer(this, BlockSlab.HALF);
     }
 
-    public static class TheItemBlock extends BlockItemBase {
+    public static class TheItemBlock extends BlockItem {
 
         public TheItemBlock(Block block) {
             super(block);

@@ -2,7 +2,6 @@ package de.ellpeck.actuallyadditions.common.items.base;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.common.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.common.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.common.util.ItemUtil;
 import de.ellpeck.actuallyadditions.common.util.StringUtil;

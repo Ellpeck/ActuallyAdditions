@@ -29,7 +29,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public abstract class BlockContainerBase extends BlockBase {
+public abstract class BlockContainerBase extends ActuallyBlockBase {
 
     public BlockContainerBase(Properties properties) {
         super(properties);

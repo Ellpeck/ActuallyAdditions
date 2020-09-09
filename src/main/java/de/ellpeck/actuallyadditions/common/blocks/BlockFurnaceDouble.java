@@ -2,7 +2,6 @@ package de.ellpeck.actuallyadditions.common.blocks;
 
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.common.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.common.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.common.tile.TileEntityFurnaceDouble;
 import de.ellpeck.actuallyadditions.common.util.StringUtil;
@@ -16,6 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -120,7 +120,7 @@ public class BlockFurnaceDouble extends BlockContainerBase {
         return new TheItemBlock(this);
     }
 
-    public static class TheItemBlock extends BlockItemBase {
+    public static class TheItemBlock extends BlockItem {
 
         public TheItemBlock(Block block) {
             super(block);

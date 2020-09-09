@@ -2,7 +2,6 @@ package de.ellpeck.actuallyadditions.common.blocks;
 
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.common.blocks.base.BlockItemBase;
 import de.ellpeck.actuallyadditions.common.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.common.tile.TileEntityInputter;
 import de.ellpeck.actuallyadditions.common.tile.TileEntityInputterAdvanced;
@@ -13,6 +12,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -67,7 +67,7 @@ public class BlockInputter extends BlockContainerBase {
         return EnumRarity.EPIC;
     }
 
-    public static class TheItemBlock extends BlockItemBase {
+    public static class TheItemBlock extends BlockItem {
 
         private final Random rand = new Random();
         private long lastSysTime;
