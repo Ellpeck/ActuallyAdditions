@@ -1,15 +1,20 @@
 package de.ellpeck.actuallyadditions.common.blocks;
 
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.base.ActuallyBlockBase;
 import de.ellpeck.actuallyadditions.common.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.common.blocks.metalists.TheMiscBlocks;
+import de.ellpeck.actuallyadditions.common.items.InitItems;
 import de.ellpeck.actuallyadditions.common.items.metalists.TheCrystals;
 import net.minecraft.block.Block;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.BlockItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
 
 public final class InitBlocks {
 
@@ -300,7 +305,21 @@ public final class InitBlocks {
     public static final RegistryObject<Block> blockPillarQuartzSlab
             = BLOCKS.register("block_pillar_quartz_slab", () -> new BlockSlabs(blockMisc.get().getDefaultState().with(BlockMisc.TYPE, TheMiscBlocks.QUARTZ_PILLAR)));
 
-    public static void init() {
-        ActuallyAdditions.LOGGER.info("Initializing Blocks...");
+    static {
+        for (RegistryObject<Block> entry : BLOCKS.getEntries()) {
+            if (!(entry.get() instanceof ActuallyBlockBase)) {
+                continue;
+            }
+
+            ActuallyBlockBase block = (ActuallyBlockBase) entry.get();
+            if (block.hasCustomBlockItem()) {
+                continue;
+            }
+
+            InitItems.ITEMS.register(
+                    Objects.requireNonNull(block.getRegistryName()).getPath(),
+                    () -> new BlockItem(block, block.getBlockItemProps())
+            );
+        }
     }
 }

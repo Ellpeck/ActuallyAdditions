@@ -10,13 +10,13 @@ import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import de.ellpeck.actuallyadditions.common.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -34,7 +34,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
 
 import java.util.List;
 
@@ -44,10 +43,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     public static final int NAME_FLAVOR_AMOUNTS_2 = 14;
 
     public BlockAtomicReconstructor() {
-        super(Properties.create(Material.ROCK)
-                .hardnessAndResistance(10f, 80f)
-                .harvestTool(ToolType.PICKAXE)
-                .sound(SoundType.STONE));
+        super(STONE_PROPS.hardnessAndResistance(10f, 80f));
     }
     
     @Override
@@ -107,16 +103,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         }
     }
 
-    @Override
-    protected BlockItemBase getItemBlock() {
-        return new BlockItem();
-    }
-    
-    @Override
-    public Rarity getRarity(){
-        return Rarity.EPIC;
-    }
-    
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
         builder.add(BlockStateProperties.FACING);
