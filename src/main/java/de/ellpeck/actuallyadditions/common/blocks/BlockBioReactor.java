@@ -27,7 +27,8 @@ public class BlockBioReactor extends BlockContainerBase {
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit){
         if (!world.isRemote) {
             if (world.getTileEntity(pos) instanceof TileEntityBioReactor) {
-                // todo open gui: player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.BIO_REACTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                // todo open gui:
+                //  player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.BIO_REACTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return ActionResultType.SUCCESS;
