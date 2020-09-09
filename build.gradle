@@ -20,6 +20,10 @@ archivesBaseName = "actuallyadditions-${mc_version}"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
+sourceSets {
+    main.resources.srcDirs += 'src/generated/resources'
+}
+
 minecraft {
     mappings channel: "snapshot", version: mcp_version
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -47,7 +51,7 @@ minecraft {
         }
         data {
             workingDirectory project.file('run/data')
-            args "--mod", "actuallyadditions", "--all", "--output", file('src/generated/resources/'), "--existing", "\"" + sourceSets.main.resources.srcDirs[0] + "\""
+            args "--mod", "actuallyadditions", "--all", "--output", file('src/generated/resources/'), "--existing", file('src/main/resources')
             mods {
                 actuallyadditions {
                     source sourceSets.main
