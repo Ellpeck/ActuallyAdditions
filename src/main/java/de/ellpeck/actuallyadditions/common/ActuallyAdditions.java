@@ -1,6 +1,7 @@
 package de.ellpeck.actuallyadditions.common;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.common.config.ConfigurationHandler;
@@ -45,6 +46,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -61,6 +66,8 @@ public class ActuallyAdditions {
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static ActuallyAdditions INSTANCE;
 
+    public static final IForgeRegistry<Lens> LENS_REGISTRY = new RegistryBuilder<Lens>().disableSync().disableSaving().disableOverrides().create();
+    
     public static boolean commonCapsLoaded = false;
 
     // Creative Tab
@@ -78,6 +85,8 @@ public class ActuallyAdditions {
 
         // Register registers
         InitBlocks.BLOCKS.register(bus);
+        // items
+        Lenses.LENSES.register(bus);
 
         bus.addListener(this::setup);
         bus.addListener(this::clientSetup);
@@ -126,7 +135,6 @@ public class ActuallyAdditions {
 
         ActuallyAdditionsAPI.methodHandler = new MethodHandler();
         ActuallyAdditionsAPI.connectionHandler = new LaserRelayConnectionHandler();
-        Lenses.init();
         InitBooklet.preInit();
         CompatUtil.registerCraftingTweaks();
 

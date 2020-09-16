@@ -4,11 +4,13 @@ import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 /**
  * This is the base class for a Reconstructor Lens Type (NOT THE ITEM!)
  */
-public abstract class Lens {
+public abstract class Lens extends ForgeRegistryEntry<Lens> {
 
     /**
      * Invokes the lens type's behavior on a block
