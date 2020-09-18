@@ -14,6 +14,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +27,9 @@ public final class ActuallyAdditionsAPI {
     public static final String MOD_ID = "actuallyadditions";
     public static final String API_ID = MOD_ID + "api";
     public static final String API_VERSION = "34";
-
+    
+    public static final IForgeRegistry<Lens> LENS_REGISTRY = new RegistryBuilder<Lens>().disableSync().disableSaving().disableOverrides().create();
+    
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<>();
     public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<>();

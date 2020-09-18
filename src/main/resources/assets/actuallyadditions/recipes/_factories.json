@@ -1,5 +1,6 @@
 {
   "recipes": {
-    "atomic_reconstructor": "de.ellpeck.actuallyadditions.recipes.AtomicReconstructorRecipeFactory"
+    "atomic_reconstructor": "de.ellpeck.actuallyadditions.recipes.AtomicReconstructorRecipeFactory",
+    "coffee_machine_ingredient": "de.ellpeck.actuallyadditions.recipes.CoffeeMachineIngredientFactory"
   }
 }

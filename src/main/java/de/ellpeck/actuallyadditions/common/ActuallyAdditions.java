@@ -65,8 +65,6 @@ public class ActuallyAdditions {
 
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static ActuallyAdditions INSTANCE;
-
-    public static final IForgeRegistry<Lens> LENS_REGISTRY = new RegistryBuilder<Lens>().disableSync().disableSaving().disableOverrides().create();
     
     public static boolean commonCapsLoaded = false;
 
