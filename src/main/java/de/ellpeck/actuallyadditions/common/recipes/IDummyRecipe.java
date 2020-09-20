@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.recipes;
+package de.ellpeck.actuallyadditions.common.recipes;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

@@ -1,7 +1,8 @@
-package de.ellpeck.actuallyadditions.recipes;
+package de.ellpeck.actuallyadditions.common.recipes;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.items.lens.Lenses;
@@ -30,8 +31,8 @@ public class AtomicReconstructorItemRecipeFactory extends ForgeRegistryEntry<IRe
         
         if(json.has("lens") && json.get("lens").isJsonObject()){
             ResourceLocation lensId = new ResourceLocation(json.get("lens").getAsString());
-            if(ActuallyAdditions.LENS_REGISTRY.containsKey(lensId)){
-                lens = ActuallyAdditions.LENS_REGISTRY.getValue(lensId);
+            if(ActuallyAdditionsAPI.LENS_REGISTRY.containsKey(lensId)){
+                lens = ActuallyAdditionsAPI.LENS_REGISTRY.getValue(lensId);
             } else {
                 throw new JsonSyntaxException(String.format("Lens type is given, but no lens could be found with id '%s'!", lensId));
             }
@@ -65,8 +66,8 @@ public class AtomicReconstructorItemRecipeFactory extends ForgeRegistryEntry<IRe
         int energyConsumption = buffer.readVarInt();
         
         Lens lens;
-        if(ActuallyAdditions.LENS_REGISTRY.containsKey(lensId)){
-            lens = ActuallyAdditions.LENS_REGISTRY.getValue(lensId);
+        if(ActuallyAdditionsAPI.LENS_REGISTRY.containsKey(lensId)){
+            lens = ActuallyAdditionsAPI.LENS_REGISTRY.getValue(lensId);
         } else {
             System.out.println(String.format("Lens is not possible to get while reading packet! '%s'", lensId));
             return null;

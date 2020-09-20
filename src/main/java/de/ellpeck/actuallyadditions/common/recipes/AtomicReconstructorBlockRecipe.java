@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.recipes;
+package de.ellpeck.actuallyadditions.common.recipes;
 
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import net.minecraft.block.BlockState;

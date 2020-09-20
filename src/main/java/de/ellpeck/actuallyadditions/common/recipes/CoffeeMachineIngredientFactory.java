@@ -1,4 +1,4 @@
-package de.ellpeck.actuallyadditions.recipes;
+package de.ellpeck.actuallyadditions.common.recipes;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
