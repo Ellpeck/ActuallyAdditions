@@ -1,5 +1,8 @@
 package de.ellpeck.actuallyadditions.common.particle;
 
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
@@ -16,7 +19,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
 public class ParticleLaserItem extends Particle {
 
     private final double otherX;
@@ -40,22 +42,12 @@ public class ParticleLaserItem extends Particle {
         this.motionY = motionY;
         this.motionZ = 0;
 
-        this.particleMaxAge = 10;
+        this.maxAge = 10;
         this.canCollide = false;
     }
 
     @Override
-    public void setExpired() {
-        super.setExpired();
-
-        if (this.otherX != 0 || this.otherY != 0 || this.otherZ != 0) {
-            Particle fx = new ParticleLaserItem(this.world, this.otherX, this.otherY, this.otherZ, this.stack, -0.025);
-            Minecraft.getMinecraft().effectRenderer.addEffect(fx);
-        }
-    }
-
-    @Override
-    public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+    public void renderParticle(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
         GlStateManager.pushMatrix();
         RenderHelper.enableStandardItemLighting();
 
@@ -79,7 +71,22 @@ public class ParticleLaserItem extends Particle {
     }
 
     @Override
-    public int getFXLayer() {
-        return 3;
+    public IParticleRenderType getRenderType() {
+        return IParticleRenderType.CUSTOM;
     }
+
+    @Override
+    public void setExpired() {
+        super.setExpired();
+
+        if (this.otherX != 0 || this.otherY != 0 || this.otherZ != 0) {
+            Particle fx = new ParticleLaserItem(this.world, this.otherX, this.otherY, this.otherZ, this.stack, -0.025);
+            Minecraft.getInstance().effectRenderer.addEffect(fx);
+        }
+    }
+
+//    @Override
+//    public int getFXLayer() {
+//        return 3;
+//    }
 }

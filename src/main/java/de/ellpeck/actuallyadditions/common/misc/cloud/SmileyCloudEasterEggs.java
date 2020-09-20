@@ -3,16 +3,16 @@ package de.ellpeck.actuallyadditions.common.misc.cloud;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.common.items.InitItems;
 import de.ellpeck.actuallyadditions.common.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.common.util.AssetUtil;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 public final class SmileyCloudEasterEggs {
 
@@ -28,8 +28,8 @@ public final class SmileyCloudEasterEggs {
 
             @Override
             public void renderExtra(float f) {
-                renderHoldingItem(true, new ItemStack(Items.DYE, 1, 2));
-                renderHeadBlock(InitBlocks.blockHeatCollector, 0, 5F);
+                renderHoldingItem(true, new ItemStack(Items.GREEN_DYE, 1));
+                renderHeadBlock(InitBlocks.blockHeatCollector.get(), 0, 5F);
             }
         });
         //Ellpeck
@@ -42,7 +42,7 @@ public final class SmileyCloudEasterEggs {
             @Override
             public void renderExtra(float f) {
                 renderHoldingItem(false, new ItemStack(InitItems.itemPhantomConnector));
-                renderHeadBlock(InitBlocks.blockPhantomLiquiface, 0, 25F);
+                renderHeadBlock(InitBlocks.blockPhantomLiquiface.get(), 0, 25F);
             }
         });
         //Tyrex
@@ -55,7 +55,7 @@ public final class SmileyCloudEasterEggs {
             @Override
             public void renderExtra(float f) {
                 renderHoldingItem(false, new ItemStack(Items.FISHING_ROD));
-                renderHoldingItem(true, new ItemStack(Items.FISH));
+                renderHoldingItem(true, new ItemStack(Items.TROPICAL_FISH));
             }
         });
         //Hose
@@ -67,7 +67,7 @@ public final class SmileyCloudEasterEggs {
 
             @Override
             public void renderExtra(float f) {
-                renderHoldingItem(false, new ItemStack(Items.REEDS));
+                renderHoldingItem(false, new ItemStack(Items.KELP));
                 renderHeadBlock(Blocks.TORCH, 0, 15F);
             }
         });
@@ -93,8 +93,8 @@ public final class SmileyCloudEasterEggs {
 
             @Override
             public void renderExtra(float f) {
-                renderHoldingItem(true, new ItemStack(Items.DYE, 1, 15));
-                renderHeadBlock(Blocks.RED_FLOWER, 5, 20F);
+                renderHoldingItem(true, new ItemStack(Items.BONE_MEAL, 1));
+                renderHeadBlock(Blocks.POPPY, 0, 20F);
             }
         });
         //Kitty
@@ -106,9 +106,9 @@ public final class SmileyCloudEasterEggs {
 
             @Override
             public void renderExtra(float f) {
-                renderHoldingItem(true, new ItemStack(Items.FISH));
+                renderHoldingItem(true, new ItemStack(Items.TROPICAL_FISH));
                 renderHoldingItem(false, new ItemStack(Items.MILK_BUCKET));
-                renderHeadBlock(Blocks.WOOL, 10, 15F);
+                renderHeadBlock(Blocks.PURPLE_WOOL, 0, 15F);
             }
         });
         //Canitzp
@@ -134,7 +134,7 @@ public final class SmileyCloudEasterEggs {
             @Override
             public void renderExtra(float f) {
                 renderHoldingItem(false, new ItemStack(Items.IRON_HELMET));
-                renderHeadBlock(InitBlocks.blockBlackLotus, 0, 28F);
+                renderHeadBlock(InitBlocks.blockBlackLotus.get(), 0, 28F);
             }
         });
         //RotesDing
@@ -147,8 +147,8 @@ public final class SmileyCloudEasterEggs {
             @Override
             public void renderExtra(float f) {
                 renderHoldingItem(false, new ItemStack(Items.MILK_BUCKET));
-                renderHoldingItem(true, new ItemStack(Items.DYE, 1, 1));
-                renderHeadBlock(Blocks.WOOL, 14, 18F);
+                renderHoldingItem(true, new ItemStack(Items.RED_DYE, 1));
+                renderHeadBlock(Blocks.RED_WOOL, 0, 18F);
             }
         });
         //Bande
@@ -161,7 +161,7 @@ public final class SmileyCloudEasterEggs {
             @Override
             public void renderExtra(float f) {
                 renderHoldingItem(false, new ItemStack(Items.DIAMOND_PICKAXE));
-                renderHeadBlock(Blocks.WOOL, 4, 18F);
+                renderHeadBlock(Blocks.YELLOW_WOOL, 0, 18F);
             }
         });
         //Wolle
@@ -174,7 +174,7 @@ public final class SmileyCloudEasterEggs {
             @Override
             public void renderExtra(float f) {
                 renderHoldingItem(false, new ItemStack(Items.STRING));
-                renderHeadBlock(Blocks.WOOL, 0, 18F);
+                renderHeadBlock(Blocks.WHITE_WOOL, 0, 18F);
             }
         });
         //Pakto
@@ -186,8 +186,8 @@ public final class SmileyCloudEasterEggs {
 
             @Override
             public void renderExtra(float f) {
-                renderHoldingItem(false, new ItemStack(Items.DYE, 1, 9));
-                renderHeadBlock(InitBlocks.blockColoredLampOn, 6, 18F);
+                renderHoldingItem(false, new ItemStack(Items.PINK_DYE, 1));
+                renderHeadBlock(InitBlocks.blockColoredLampOn.get(), 6, 18F);
             }
         });
         //Honka
@@ -199,7 +199,7 @@ public final class SmileyCloudEasterEggs {
 
             @Override
             public void renderExtra(float f) {
-                renderHoldingItem(false, new ItemStack(InitItems.itemLeafBlowerAdvanced, 1, 9));
+                renderHoldingItem(false, new ItemStack(InitItems.itemLeafBlowerAdvanced, 1));
                 renderHeadBlock(Blocks.HAY_BLOCK, 0, 74F);
             }
         });
@@ -212,7 +212,8 @@ public final class SmileyCloudEasterEggs {
 
             @Override
             public void renderExtra(float f) {
-                renderHoldingItem(false, new ItemStack(InitItems.itemFoods, 1, TheFoods.PIZZA.ordinal()));
+                // todo: replace with proper item name
+                renderHoldingItem(false, new ItemStack(InitItems.itemFoods, 1));
                 renderHeadBlock(Blocks.BOOKSHELF, 0, 27F);
             }
         });
@@ -226,7 +227,7 @@ public final class SmileyCloudEasterEggs {
             @Override
             public void renderExtra(float f) {
                 renderHoldingItem(false, new ItemStack(Items.WRITTEN_BOOK));
-                renderHeadBlock(Blocks.WEB, 0, 56F);
+                renderHeadBlock(Blocks.COBWEB, 0, 56F);
             }
         });
         //ShadowNinjaCat
@@ -305,7 +306,8 @@ public final class SmileyCloudEasterEggs {
 
             @Override
             public void renderExtra(float f) {
-                renderHoldingItem(false, new ItemStack(InitItems.itemMisc, 1, TheMiscItems.DRILL_CORE.ordinal()));
+                // todo: replace this with the right thing
+                renderHoldingItem(false, new ItemStack(InitItems.itemMisc, 1));// TheMiscItems.DRILL_CORE.ordinal()));
                 renderHeadBlock(Blocks.REDSTONE_ORE, 0, 80F);
             }
         });
@@ -319,7 +321,7 @@ public final class SmileyCloudEasterEggs {
             @Override
             public void renderExtra(float f) {
                 renderHoldingItem(false, new ItemStack(Items.ENCHANTED_BOOK));
-                renderHeadBlock(InitBlocks.blockDirectionalBreaker, 0, 40F);
+                renderHeadBlock(InitBlocks.blockDirectionalBreaker.get(), 0, 40F);
             }
         });
         //Little Lampi (I still can't get over it)
@@ -332,7 +334,7 @@ public final class SmileyCloudEasterEggs {
             @Override
             public void renderExtra(float f) {
                 renderHoldingItem(false, new ItemStack(Items.GLOWSTONE_DUST));
-                renderHeadBlock(InitBlocks.blockColoredLampOn, 4, 40F);
+                renderHeadBlock(InitBlocks.blockColoredLampOn.get(), 4, 40F);// todo: fix meta
             }
         });
         //AtomSponge
@@ -358,7 +360,7 @@ public final class SmileyCloudEasterEggs {
             @Override
             public void renderExtra(float f) {
                 renderHoldingItem(false, new ItemStack(InitItems.itemSwordEmerald));
-                renderHeadBlock(InitBlocks.blockCoffeeMachine, 0, 35F);
+                renderHeadBlock(InitBlocks.blockCoffeeMachine.get(), 0, 35F);
             }
         });
         //Etho
@@ -396,7 +398,7 @@ public final class SmileyCloudEasterEggs {
 
             @Override
             public void renderExtra(float f) {
-                renderHeadBlock(InitBlocks.blockLaserRelayItem, 0, 27F);
+                renderHeadBlock(InitBlocks.blockLaserRelayItem.get(), 0, 27F);
                 renderHoldingItem(false, new ItemStack(InitItems.itemLaserWrench));
             }
         });
@@ -448,7 +450,7 @@ public final class SmileyCloudEasterEggs {
             @Override
             public void renderExtra(float f) {
                 renderHoldingItem(false, new ItemStack(InitItems.itemBooklet));
-                renderHeadBlock(InitBlocks.blockSmileyCloud, 0, 13F);
+                renderHeadBlock(InitBlocks.blockSmileyCloud.get(), 0, 13F);
             }
         });
         //MattaBase
@@ -460,7 +462,7 @@ public final class SmileyCloudEasterEggs {
 
             @Override
             public void renderExtra(float f) {
-                renderHeadBlock(Blocks.WOOL, 13, 35F);
+                renderHeadBlock(Blocks.GREEN_WOOL, 0, 35F);
                 renderHoldingItem(false, new ItemStack(InitItems.itemSwordQuartz));
                 renderHoldingItem(true, new ItemStack(Items.SHIELD));
             }
@@ -485,12 +487,13 @@ public final class SmileyCloudEasterEggs {
         CLOUD_STUFF.add(egg);
     }
 
+    // todo: migrate to matrix
     private static void renderHoldingItem(boolean leftHand, ItemStack stack) {
         GlStateManager.pushMatrix();
-        GlStateManager.rotate(180F, 0F, 0F, 1F);
-        GlStateManager.rotate(90, 0, 1, 0);
-        GlStateManager.translate(-0.15, -1F, leftHand ? -0.525F : 0.525F);
-        GlStateManager.scale(0.75F, 0.75F, 0.75F);
+        GlStateManager.rotatef(180F, 0F, 0F, 1F);
+        GlStateManager.rotatef(90, 0, 1, 0);
+        GlStateManager.translatef(-0.15f, -1F, leftHand ? -0.525F : 0.525F);
+        GlStateManager.scalef(0.75F, 0.75F, 0.75F);
 
         AssetUtil.renderItemInWorld(stack);
 
@@ -500,10 +503,10 @@ public final class SmileyCloudEasterEggs {
     private static void renderHeadBlock(Block block, int meta, float rotation) {
         GlStateManager.pushMatrix();
         GlStateManager.disableLighting();
-        GlStateManager.translate(-0.015F, 0.625F, 0.04F);
-        GlStateManager.scale(0.5F, 0.5F, 0.5F);
-        GlStateManager.rotate(180F, 1F, 0F, 0F);
-        GlStateManager.rotate(rotation, 0F, 1F, 0F);
+        GlStateManager.translatef(-0.015F, 0.625F, 0.04F);
+        GlStateManager.scalef(0.5F, 0.5F, 0.5F);
+        GlStateManager.rotatef(180F, 1F, 0F, 0F);
+        GlStateManager.rotatef(rotation, 0F, 1F, 0F);
 
         AssetUtil.renderBlockInWorld(block, meta);
 
