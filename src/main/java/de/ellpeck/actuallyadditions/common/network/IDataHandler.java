@@ -1,10 +1,10 @@
 package de.ellpeck.actuallyadditions.common.network;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 public interface IDataHandler {
 
-    void handleData(NBTTagCompound compound, MessageContext context);
+    void handleData(CompoundNBT compound, NetworkEvent.Context context);
 
 }

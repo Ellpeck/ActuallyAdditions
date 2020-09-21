@@ -7,32 +7,32 @@ import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.common.data.WorldData;
 import de.ellpeck.actuallyadditions.common.tile.TileEntityLaserRelay;
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public final class LaserRelayConnectionHandler implements ILaserRelayConnectionHandler {
 
-    public static NBTTagCompound writeNetworkToNBT(Network network) {
-        NBTTagList list = new NBTTagList();
+    public static CompoundNBT writeNetworkToNBT(Network network) {
+        ListNBT list = new ListNBT();
         for (IConnectionPair pair : network.connections) {
-            NBTTagCompound tag = new NBTTagCompound();
+            CompoundNBT tag = new CompoundNBT();
             pair.writeToNBT(tag);
-            list.appendTag(tag);
+            list.add(tag);
         }
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setTag("Network", list);
+        CompoundNBT compound = new CompoundNBT();
+        compound.put("Network", list);
         return compound;
     }
 
-    public static Network readNetworkFromNBT(NBTTagCompound tag) {
-        NBTTagList list = tag.getTagList("Network", 10);
+    public static Network readNetworkFromNBT(CompoundNBT tag) {
+        ListNBT list = tag.getList("Network", 10);
         Network network = new Network();
-        for (int i = 0; i < list.tagCount(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             ConnectionPair pair = new ConnectionPair();
-            pair.readFromNBT(list.getCompoundTagAt(i));
+            pair.readFromNBT(list.getCompound(i));
             network.connections.add(pair);
         }
         return network;

@@ -137,7 +137,7 @@ public final class PacketHandler {
 
             int type = compound.getInteger("Type");
             if (type == 0) {
-                data.loadBookmarks(compound.getTagList("Bookmarks", 8));
+                data.loadBookmarks(compound.getList("Bookmarks", 8));
             } else if (type == 1) {
                 data.didBookTutorial = compound.getBoolean("DidBookTutorial");
             } else if (type == 2) {

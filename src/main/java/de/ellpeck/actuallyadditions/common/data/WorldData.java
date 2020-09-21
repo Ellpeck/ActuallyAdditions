@@ -8,8 +8,8 @@ import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.common.misc.apiimpl.LaserRelayConnectionHandler;
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldSavedData;
 
@@ -65,21 +65,21 @@ public class WorldData extends WorldSavedData {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void read(CompoundNBT compound) {
         this.laserRelayNetworks.clear();
-        NBTTagList networkList = compound.getTagList("Networks", 10);
-        for (int i = 0; i < networkList.tagCount(); i++) {
-            Network network = LaserRelayConnectionHandler.readNetworkFromNBT(networkList.getCompoundTagAt(i));
+        ListNBT networkList = compound.getList("Networks", 10);
+        for (int i = 0; i < networkList.size(); i++) {
+            Network network = LaserRelayConnectionHandler.readNetworkFromNBT(networkList.getCompound(i));
             this.laserRelayNetworks.add(network);
         }
 
         this.playerSaveData.clear();
-        NBTTagList playerList = compound.getTagList("PlayerData", 10);
-        for (int i = 0; i < playerList.tagCount(); i++) {
-            NBTTagCompound player = playerList.getCompoundTagAt(i);
+        ListNBT playerList = compound.getList("PlayerData", 10);
+        for (int i = 0; i < playerList.size(); i++) {
+            CompoundNBT player = playerList.getCompound(i);
 
             UUID id = player.getUniqueId("UUID");
-            NBTTagCompound data = player.getCompoundTag("Data");
+            CompoundNBT data = player.getCompound("Data");
 
             PlayerSave save = new PlayerSave(id);
             save.readFromNBT(data, true);
@@ -88,27 +88,27 @@ public class WorldData extends WorldSavedData {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public CompoundNBT write(CompoundNBT compound) {
         //Laser World Data
-        NBTTagList networkList = new NBTTagList();
+        ListNBT networkList = new ListNBT();
         for (Network network : this.laserRelayNetworks) {
-            networkList.appendTag(LaserRelayConnectionHandler.writeNetworkToNBT(network));
+            networkList.add(LaserRelayConnectionHandler.writeNetworkToNBT(network));
         }
-        compound.setTag("Networks", networkList);
+        compound.put("Networks", networkList);
 
         //Player Data
-        NBTTagList playerList = new NBTTagList();
+        ListNBT playerList = new ListNBT();
         for (PlayerSave save : this.playerSaveData.values()) {
-            NBTTagCompound player = new NBTTagCompound();
-            player.setUniqueId("UUID", save.id);
+            CompoundNBT player = new CompoundNBT();
+            player.putUniqueId("UUID", save.id);
 
-            NBTTagCompound data = new NBTTagCompound();
+            CompoundNBT data = new CompoundNBT();
             save.writeToNBT(data, true);
-            player.setTag("Data", data);
+            player.put("Data", data);
 
-            playerList.appendTag(player);
+            playerList.add(player);
         }
-        compound.setTag("PlayerData", playerList);
+        compound.put("PlayerData", playerList);
 
         return compound;
     }
