@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
+@Deprecated
 public class CompostRecipe {
 
     protected final Ingredient input;
