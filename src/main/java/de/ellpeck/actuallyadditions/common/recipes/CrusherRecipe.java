@@ -1,16 +1,21 @@
 package de.ellpeck.actuallyadditions.common.recipes;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
 public class CrusherRecipe implements IDummyRecipe {
     
-    public static final IRecipeType<CrusherRecipe> CRUSHER_RECIPE_TYPE = IRecipeType.register("actuallyadditions:crusher");
+    public static final IRecipeType<CrusherRecipe> RECIPE_TYPE = IRecipeType.register("actuallyadditions:crusher");
+    public static final CrusherRecipeFactory FACTORY = IRecipeSerializer.register("actuallyadditions:crusher", new CrusherRecipeFactory());
     
     @Nonnull private final ResourceLocation recipeId;
     
@@ -55,12 +60,57 @@ public class CrusherRecipe implements IDummyRecipe {
     @Nonnull
     @Override
     public IRecipeSerializer<?> getSerializer(){
-        return CrusherRecipeFactory.INSTANCE;
+        return FACTORY;
     }
     
     @Nonnull
     @Override
     public IRecipeType<?> getType(){
-        return CRUSHER_RECIPE_TYPE;
+        return RECIPE_TYPE;
     }
+    
+    static class CrusherRecipeFactory extends RecipeFactoryBase<CrusherRecipe> {
+        
+        @Nonnull
+        @Override
+        public CrusherRecipe read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json){
+            Ingredient input = this.readIngredient(json, "input");
+            ItemStack firstOutput = this.readItemStack(json, "output");
+            ItemStack secondOutput = ItemStack.EMPTY;
+            int secondaryOutputChance = 0;
+            
+            if(json.has("secondary")){ // Optional
+                JsonElement secondaryElement = json.get("secondary");
+                if(secondaryElement.isJsonObject()){
+                    JsonObject secondary = secondaryElement.getAsJsonObject();
+                    secondOutput = this.readItemStack(secondary, "output", ItemStack.EMPTY);
+                    secondaryOutputChance = this.readInt(secondary, "chance", 0);
+                } else {
+                    throw new JsonSyntaxException("Secondary is not valid!");
+                }
+            }
+            
+            return new CrusherRecipe(recipeId, input, firstOutput, secondOutput, secondaryOutputChance);
+        }
+        
+        @Nonnull
+        @Override
+        public CrusherRecipe read(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer){
+            Ingredient input = Ingredient.read(buffer);
+            ItemStack output = buffer.readItemStack();
+            ItemStack secondaryOutput = buffer.readItemStack();
+            int chance = buffer.readVarInt();
+            
+            return new CrusherRecipe(recipeId, input, output, secondaryOutput, chance);
+        }
+        
+        @Override
+        public void write(@Nonnull PacketBuffer buffer, @Nonnull CrusherRecipe recipe){
+            recipe.getInput().write(buffer);
+            buffer.writeItemStack(recipe.getOutput());
+            buffer.writeItemStack(recipe.getSecondaryOutput());
+            buffer.writeVarInt(recipe.getOutputChance());
+        }
+    }
+    
 }
