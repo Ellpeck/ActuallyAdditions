@@ -4,7 +4,6 @@ import java.util.List;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
-import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.common.items.InitItems;
 import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;

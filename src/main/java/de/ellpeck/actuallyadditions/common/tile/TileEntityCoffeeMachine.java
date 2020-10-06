@@ -1,6 +1,5 @@
 package de.ellpeck.actuallyadditions.common.tile;
 
-import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.common.items.InitItems;
 import de.ellpeck.actuallyadditions.common.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;

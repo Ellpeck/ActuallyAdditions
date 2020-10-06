@@ -7,7 +7,6 @@ import java.util.List;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.booklet.page.BookletPage;
 import de.ellpeck.actuallyadditions.booklet.page.PageCoffeeMachine;
 import de.ellpeck.actuallyadditions.common.items.ItemCoffee;

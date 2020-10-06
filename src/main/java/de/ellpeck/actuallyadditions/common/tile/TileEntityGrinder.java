@@ -1,6 +1,5 @@
 package de.ellpeck.actuallyadditions.common.tile;
 
-import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.common.blocks.BlockFurnaceDouble;
 import de.ellpeck.actuallyadditions.common.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.common.network.gui.IButtonReactor;

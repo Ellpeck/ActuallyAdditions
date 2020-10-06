@@ -3,7 +3,6 @@ package de.ellpeck.actuallyadditions.booklet.page;
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
-import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.common.util.StackUtil;

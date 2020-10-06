@@ -1,6 +1,5 @@
 package de.ellpeck.actuallyadditions.common.blocks;
 
-import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.common.tile.TileEntityCompost;
 import de.ellpeck.actuallyadditions.common.util.AssetUtil;
