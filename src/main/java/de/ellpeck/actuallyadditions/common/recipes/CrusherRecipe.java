@@ -12,16 +12,20 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class CrusherRecipe implements IDummyRecipe {
+public class CrusherRecipe implements IDummyRecipe<CrusherRecipe> {
     
     public static final IRecipeType<CrusherRecipe> RECIPE_TYPE = IRecipeType.register("actuallyadditions:crusher");
     public static final CrusherRecipeFactory FACTORY = IRecipeSerializer.register("actuallyadditions:crusher", new CrusherRecipeFactory());
     
-    @Nonnull private final ResourceLocation recipeId;
+    @Nonnull
+    private final ResourceLocation recipeId;
     
-    @Nonnull private final Ingredient input;
-    @Nonnull private final ItemStack output;
-    @Nonnull private final ItemStack secondaryOutput;
+    @Nonnull
+    private final Ingredient input;
+    @Nonnull
+    private final ItemStack output;
+    @Nonnull
+    private final ItemStack secondaryOutput;
     private final int outputChance;
     
     public CrusherRecipe(@Nonnull ResourceLocation recipeId, @Nonnull Ingredient input, @Nonnull ItemStack output, @Nonnull ItemStack secondaryOutput, int outputChance){
@@ -30,6 +34,10 @@ public class CrusherRecipe implements IDummyRecipe {
         this.output = output;
         this.secondaryOutput = secondaryOutput;
         this.outputChance = outputChance;
+    }
+    
+    public CrusherRecipe(@Nonnull ResourceLocation recipeId, @Nonnull Ingredient input, @Nonnull ItemStack output){
+        this(recipeId, input, output, ItemStack.EMPTY, 0);
     }
     
     @Nonnull
@@ -59,7 +67,7 @@ public class CrusherRecipe implements IDummyRecipe {
     
     @Nonnull
     @Override
-    public IRecipeSerializer<?> getSerializer(){
+    public IRecipeSerializer<CrusherRecipe> getSerializer(){
         return FACTORY;
     }
     
@@ -89,10 +97,21 @@ public class CrusherRecipe implements IDummyRecipe {
                     throw new JsonSyntaxException("Secondary is not valid!");
                 }
             }
-            
+    
             return new CrusherRecipe(recipeId, input, firstOutput, secondOutput, secondaryOutputChance);
         }
-        
+    
+        @Override
+        public void write(@Nonnull JsonObject json, @Nonnull CrusherRecipe recipe){
+            json.add("input", recipe.getInput().serialize());
+            json.add("output", this.writeItemStack(recipe.getOutput()));
+            if(!recipe.getSecondaryOutput().isEmpty() && recipe.getOutputChance() > 0){
+                JsonObject secondary = new JsonObject();
+                secondary.add("output", this.writeItemStack(recipe.getSecondaryOutput()));
+                secondary.addProperty("chance", recipe.getOutputChance());
+            }
+        }
+    
         @Nonnull
         @Override
         public CrusherRecipe read(@Nonnull ResourceLocation recipeId, @Nonnull PacketBuffer buffer){
@@ -100,10 +119,10 @@ public class CrusherRecipe implements IDummyRecipe {
             ItemStack output = buffer.readItemStack();
             ItemStack secondaryOutput = buffer.readItemStack();
             int chance = buffer.readVarInt();
-            
+        
             return new CrusherRecipe(recipeId, input, output, secondaryOutput, chance);
         }
-        
+    
         @Override
         public void write(@Nonnull PacketBuffer buffer, @Nonnull CrusherRecipe recipe){
             recipe.getInput().write(buffer);

@@ -1,16 +1,19 @@
 package de.ellpeck.actuallyadditions.common.recipes;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public abstract class RecipeFactoryBase<T extends IDummyRecipe> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
+public abstract class RecipeFactoryBase<T extends IDummyRecipe<T>> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
+    
+    public abstract void write(JsonObject json, T recipe);
     
     protected Ingredient readIngredient(JsonObject json, String key){
         if(json.has(key)){
@@ -31,7 +34,7 @@ public abstract class RecipeFactoryBase<T extends IDummyRecipe> extends ForgeReg
     protected ItemStack readItemStack(JsonObject json, String key){
         if(json.has(key)){
             if(json.get(key).isJsonObject()){
-                return ShapedRecipe.deserializeItem(json.get(key).getAsJsonObject());
+                return CraftingHelper.getItemStack(json.get(key).getAsJsonObject(), true);
             } else if(json.get(key).isJsonPrimitive()){
                 ResourceLocation itemKey = new ResourceLocation(json.get(key).getAsString());
                 if(ForgeRegistries.ITEMS.containsKey(itemKey)){
@@ -45,6 +48,16 @@ public abstract class RecipeFactoryBase<T extends IDummyRecipe> extends ForgeReg
         } else {
             throw new JsonSyntaxException(String.format("Json element does not contain any element with the key: '%s'!", key));
         }
+    }
+    
+    protected JsonObject writeItemStack(ItemStack stack){
+        JsonObject json = new JsonObject();
+        json.addProperty("item", stack.getItem().getRegistryName().toString());
+        json.addProperty("count", stack.getCount());
+        if(stack.hasTag()){
+            json.add("nbt", new JsonParser().parse(stack.getTag().toString()));
+        }
+        return json;
     }
     
     protected ItemStack readItemStack(JsonObject json, String key, ItemStack alternative){
