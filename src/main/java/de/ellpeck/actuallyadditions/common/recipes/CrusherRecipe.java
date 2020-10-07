@@ -109,6 +109,7 @@ public class CrusherRecipe implements IDummyRecipe<CrusherRecipe> {
                 JsonObject secondary = new JsonObject();
                 secondary.add("output", this.writeItemStack(recipe.getSecondaryOutput()));
                 secondary.addProperty("chance", recipe.getOutputChance());
+                json.add("secondary", secondary);
             }
         }
     
