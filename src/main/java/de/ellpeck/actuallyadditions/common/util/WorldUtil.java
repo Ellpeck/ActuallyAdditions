@@ -7,10 +7,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.network.play.server.SChangeBlockPacket;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -20,13 +23,13 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fluids.FluidStack;
@@ -64,24 +67,24 @@ public final class WorldUtil {
 
         if (ActuallyAdditions.commonCapsLoaded) {
             Object handler = extractWrapper.getSlotlessHandler();
-            if (handler instanceof ISlotlessItemHandler) {
-                ISlotlessItemHandler slotless = (ISlotlessItemHandler) handler;
-
-                if (filter == null || !filter.needsCheck()) {
-                    extracted = slotless.extractItem(maxExtract, simulate);
-                    return extracted;
-                } else {
-                    ItemStack would = slotless.extractItem(maxExtract, true);
-                    if (filter.check(would)) {
-                        if (simulate) {
-                            extracted = would;
-                        } else {
-                            extracted = slotless.extractItem(maxExtract, false);
-                        }
-                    }
-                    //Leave the possibility to fall back to vanilla when there is a filter
-                }
-            }
+//            if (handler instanceof ISlotlessItemHandler) {
+//                ISlotlessItemHandler slotless = (ISlotlessItemHandler) handler;
+//
+//                if (filter == null || !filter.needsCheck()) {
+//                    extracted = slotless.extractItem(maxExtract, simulate);
+//                    return extracted;
+//                } else {
+//                    ItemStack would = slotless.extractItem(maxExtract, true);
+//                    if (filter.check(would)) {
+//                        if (simulate) {
+//                            extracted = would;
+//                        } else {
+//                            extracted = slotless.extractItem(maxExtract, false);
+//                        }
+//                    }
+//                    //Leave the possibility to fall back to vanilla when there is a filter
+//                }
+//            }
         }
 
         if (!StackUtil.isValid(extracted)) {
@@ -105,30 +108,23 @@ public final class WorldUtil {
     public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
             Direction opp = sideTo == null ? null : sideTo.getOpposite();
-            IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
-            IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, opp);
-            if (handlerFrom != null && handlerTo != null) {
+            tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo).ifPresent(handlerFrom -> tileTo.getCapability(CapabilityEnergy.ENERGY, opp).ifPresent(handlerTo -> {
                 int drain = handlerFrom.extractEnergy(maxTransfer, true);
                 if (drain > 0) {
                     int filled = handlerTo.receiveEnergy(drain, false);
                     handlerFrom.extractEnergy(filled, false);
-                    return;
                 }
-            }
+            }));
         }
     }
 
     public static void doFluidInteraction(TileEntity tileFrom, TileEntity tileTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
-            if (tileFrom.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo) && tileTo.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite())) {
-                IFluidHandler handlerFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo);
-                IFluidHandler handlerTo = tileTo.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite());
-                FluidStack drain = handlerFrom.drain(maxTransfer, false);
-                if (drain != null) {
-                    int filled = handlerTo.fill(drain.copy(), true);
-                    handlerFrom.drain(filled, true);
-                }
-            }
+            tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo).ifPresent(handlerFrom -> tileTo.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite()).ifPresent(handlerTo -> {
+                FluidStack drain = handlerFrom.drain(maxTransfer, IFluidHandler.FluidAction.SIMULATE);
+                int filled = handlerTo.fill(drain.copy(), IFluidHandler.FluidAction.EXECUTE);
+                handlerFrom.drain(filled, IFluidHandler.FluidAction.EXECUTE);
+            }));
         }
     }
 
@@ -137,24 +133,22 @@ public final class WorldUtil {
      *
      * @param positions The Positions, an array of {x, y, z} arrays containing Positions
      * @param block     The Block
-     * @param meta      The Meta
      * @param world     The World
      * @return Is every block present?
      */
-    public static boolean hasBlocksInPlacesGiven(BlockPos[] positions, Block block, int meta, World world) {
+    public static boolean hasBlocksInPlacesGiven(BlockPos[] positions, Block block, World world) {
         for (BlockPos pos : positions) {
-            IBlockState state = world.getBlockState(pos);
-            if (!(state.getBlock() == block && block.getMetaFromState(state) == meta)) { return false; }
+            BlockState state = world.getBlockState(pos);
+            if (!(state.getBlock() == block)) { return false; }
         }
         return true;
     }
 
     public static ItemStack useItemAtSide(Direction side, World world, BlockPos pos, ItemStack stack) {
-        if (world instanceof WorldServer && StackUtil.isValid(stack) && pos != null) {
+        if (world instanceof ServerWorld && StackUtil.isValid(stack) && pos != null) {
             BlockPos offsetPos = pos.offset(side);
-            IBlockState state = world.getBlockState(offsetPos);
-            Block block = state.getBlock();
-            boolean replaceable = block.isReplaceable(world, offsetPos);
+            BlockState state = world.getBlockState(offsetPos);
+            boolean replaceable = state.getMaterial().isReplaceable();
 
             //Redstone
             if (replaceable && stack.getItem() == Items.REDSTONE) {
@@ -164,23 +158,23 @@ public final class WorldUtil {
 
             //Plants
             if (replaceable && stack.getItem() instanceof IPlantable) {
-                if (((IPlantable) stack.getItem()).getPlant(world, offsetPos).getBlock().canPlaceBlockAt(world, offsetPos)) {
+                if (((IPlantable) stack.getItem()).getPlant(world, offsetPos).isValidPosition(world, offsetPos)) {
                     if (world.setBlockState(offsetPos, ((IPlantable) stack.getItem()).getPlant(world, offsetPos), 2)) return StackUtil.shrink(stack, 1);
                 }
             }
 
             //Everything else
             try {
-                FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer) world);
+                FakePlayer fake = FakePlayerFactory.getMinecraft((ServerWorld) world);
                 if (fake.connection == null) fake.connection = new NetHandlerSpaghettiServer(fake);
                 ItemStack heldBefore = fake.getHeldItemMainhand();
-                setHandItemWithoutAnnoyingSound(fake, EnumHand.MAIN_HAND, stack.copy());
-                fake.interactionManager.processRightClickBlock(fake, world, fake.getHeldItemMainhand(), EnumHand.MAIN_HAND, offsetPos, side.getOpposite(), 0.5F, 0.5F, 0.5F);
-                ItemStack result = fake.getHeldItem(EnumHand.MAIN_HAND);
-                setHandItemWithoutAnnoyingSound(fake, EnumHand.MAIN_HAND, heldBefore);
+                setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, stack.copy());
+                fake.interactionManager.processRightClick(fake, world, fake.getHeldItemMainhand(), Hand.MAIN_HAND);
+                ItemStack result = fake.getHeldItem(Hand.MAIN_HAND);
+                setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, heldBefore);
                 return result;
             } catch (Exception e) {
-                ActuallyAdditions.LOGGER.error("Something that places Blocks at " + offsetPos.getX() + ", " + offsetPos.getY() + ", " + offsetPos.getZ() + " in World " + world.provider.getDimension() + " threw an Exception! Don't let that happen again!", e);
+                ActuallyAdditions.LOGGER.error("Something that places Blocks at " + offsetPos.getX() + ", " + offsetPos.getY() + ", " + offsetPos.getZ() + " in World " + world.getDimension() + " threw an Exception! Don't let that happen again!", e);
             }
         }
         return stack;
@@ -189,12 +183,10 @@ public final class WorldUtil {
     public static boolean dropItemAtSide(Direction side, World world, BlockPos pos, ItemStack stack) {
         BlockPos coords = pos.offset(side);
         if (world.isBlockLoaded(coords)) {
-            EntityItem item = new EntityItem(world, coords.getX() + 0.5, coords.getY() + 0.5, coords.getZ() + 0.5, stack);
-            item.motionX = 0;
-            item.motionY = 0;
-            item.motionZ = 0;
+            ItemEntity item = new ItemEntity(world, coords.getX() + 0.5, coords.getY() + 0.5, coords.getZ() + 0.5, stack);
+            item.setMotion(0, 0, 0);
 
-            return world.spawnEntity(item);
+            return world.addEntity(item);
         }
         return false;
     }
@@ -216,8 +208,8 @@ public final class WorldUtil {
         }
     }
 
-    public static Direction getDirectionByPistonRotation(IBlockState state) {
-        return state.getValue(BlockDirectional.FACING);
+    public static Direction getDirectionByPistonRotation(BlockState state) {
+        return state.get(BlockStateProperties.FACING);
     }
 
     public static ArrayList<Material> getMaterialsAround(World world, BlockPos pos) {
@@ -229,16 +221,18 @@ public final class WorldUtil {
         return blocks;
     }
 
-    public static RayTraceResult getNearestPositionWithAir(World world, EntityPlayer player, int reach) {
+    public static RayTraceResult getNearestPositionWithAir(World world, PlayerEntity player, int reach) {
         return getMovingObjectPosWithReachDistance(world, player, reach, false, false, true);
     }
 
-    private static RayTraceResult getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance, boolean p1, boolean p2, boolean p3) {
+    // todo: migrate to standard rayTrace
+    @Deprecated
+    private static RayTraceResult getMovingObjectPosWithReachDistance(World world, PlayerEntity player, double distance, boolean p1, boolean p2, boolean p3) {
         float f = player.rotationPitch;
         float f1 = player.rotationYaw;
-        double d0 = player.posX;
-        double d1 = player.posY + player.getEyeHeight();
-        double d2 = player.posZ;
+        double d0 = player.getPosX();
+        double d1 = player.getPosY() + player.getEyeHeight();
+        double d2 = player.getPosZ();
         Vec3d vec3 = new Vec3d(d0, d1, d2);
         float f2 = MathHelper.cos(-f1 * 0.017453292F - (float) Math.PI);
         float f3 = MathHelper.sin(-f1 * 0.017453292F - (float) Math.PI);
@@ -247,15 +241,15 @@ public final class WorldUtil {
         float f6 = f3 * f4;
         float f7 = f2 * f4;
         Vec3d vec31 = vec3.add(f6 * distance, f5 * distance, f7 * distance);
-        return world.rayTraceBlocks(vec3, vec31, p1, p2, p3);
+        return null; // world.rayTraceBlocks(vec3, vec31, p1, p2, p3);
     }
 
     public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, PlayerEntity player) {
         return getNearestBlockWithDefaultReachDistance(world, player, false, true, false);
     }
 
-    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, EntityPlayer player, boolean stopOnLiquids, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
-        return getMovingObjectPosWithReachDistance(world, player, player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue(), stopOnLiquids, ignoreBlockWithoutBoundingBox, returnLastUncollidableBlock);
+    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, PlayerEntity player, boolean stopOnLiquids, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
+        return getMovingObjectPosWithReachDistance(world, player, player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue(), stopOnLiquids, ignoreBlockWithoutBoundingBox, returnLastUncollidableBlock);
     }
 
     public static void setHandItemWithoutAnnoyingSound(PlayerEntity player, Hand hand, ItemStack stack) {
@@ -268,11 +262,11 @@ public final class WorldUtil {
 
     //I think something is up with this, but I'm not entirely certain what.
     public static float fireFakeHarvestEventsForDropChance(TileEntity caller, NonNullList<ItemStack> drops, World world, BlockPos pos) {
-        if (world instanceof WorldServer) {
-            FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer) world);
+        if (world instanceof ServerWorld) {
+            FakePlayer fake = FakePlayerFactory.getMinecraft((ServerWorld) world);
             BlockPos tePos = caller.getPos();
             fake.setPosition(tePos.getX() + 0.5, tePos.getY() + 0.5, tePos.getZ() + 0.5);
-            IBlockState state = world.getBlockState(pos);
+            BlockState state = world.getBlockState(pos);
 
             BreakEvent event = new BreakEvent(world, pos, state, fake);
             if (!MinecraftForge.EVENT_BUS.post(event)) { return ForgeEventFactory.fireBlockHarvesting(drops, world, pos, state, 0, 1, false, fake); }
@@ -299,7 +293,7 @@ public final class WorldUtil {
 
             // send update to client
             if (!world.isRemote) {
-                ((ServerPlayerEntity) player).connection.sendPacket(new SPacketBlockChange(world, pos));
+                ((ServerPlayerEntity) player).connection.sendPacket(new SChangeBlockPacket(world, pos));
             }
             return true;
         }
@@ -321,7 +315,7 @@ public final class WorldUtil {
             }
 
             // always send block update to client
-            ((ServerPlayerEntity) player).connection.sendPacket(new SPacketBlockChange(world, pos));
+            ((ServerPlayerEntity) player).connection.sendPacket(new SChangeBlockPacket(world, pos));
             return true;
         }
         // client sided handling

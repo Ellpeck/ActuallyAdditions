@@ -6,6 +6,7 @@ import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraft.network.play.client.CPacketClickWindow;
@@ -40,7 +41,7 @@ import net.minecraft.network.play.server.SPacketPlayerPosLook.EnumFlags;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class NetHandlerSpaghettiServer extends NetHandlerPlayServer {
+public class NetHandlerSpaghettiServer extends ServerPlayNetHandler {
 
     public NetHandlerSpaghettiServer(FakePlayer player) {
         super(null, new NetworkManager(EnumPacketDirection.CLIENTBOUND), player);
