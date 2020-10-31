@@ -1,12 +1,13 @@
 package de.ellpeck.actuallyadditions.common.util;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import de.ellpeck.actuallyadditions.common.recipes.CrusherRecipe;
 import de.ellpeck.actuallyadditions.common.util.crafting.RecipeHandler;
 import net.minecraft.item.crafting.IRecipe;
+
+import java.util.List;
 
 public final class RecipeUtil {
 

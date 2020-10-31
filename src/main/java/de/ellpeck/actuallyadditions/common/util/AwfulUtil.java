@@ -12,6 +12,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 //This is stuff copied from somewhere in vanilla and changed so that it works properly
@@ -52,7 +53,7 @@ public final class AwfulUtil {
         while (someInt > 0 && list.size() > 0) {
             ItemStack itemstack2 = list.remove(MathHelper.getInt(rand, 0, list.size() - 1));
             int i = MathHelper.getInt(rand, 1, itemstack2.getCount() / 2);
-            ItemStack itemstack1 = itemstack2.splitStack(i);
+            ItemStack itemstack1 = itemstack2.split(i);
 
             if (itemstack2.getCount() > 1 && rand.nextBoolean()) {
                 list.add(itemstack2);
@@ -90,7 +91,7 @@ public final class AwfulUtil {
         for (Object k : stuff) {
             error += "\n" + i++ + ": " + (k == null ? "null" : k.getClass().getSimpleName() + " <- CLASS | INSTANCE -> " + k.toString() + ", ");
         }
-        error += "\n" + "The current side is: " + FMLCommonHandler.instance().getEffectiveSide();
+        error += "\n" + "The current side is: " + FMLLoader.getDist();
         error += "\n" + "Report this to https://github.com/Ellpeck/ActuallyAdditions/issues";
         throw new IllegalStateException(error);
     }

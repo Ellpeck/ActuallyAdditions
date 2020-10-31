@@ -24,7 +24,7 @@ public final class Util {
     }
 
     public static boolean isDevVersion() {
-        return ActuallyAdditions.VERSION.equals("@VERSION@");
+        return false; // ActuallyAdditions.VERSION.equals("@VERSION@"); //todo: reimplement
     }
 
     @Deprecated // canitzp: should not be used and removed asap
@@ -33,7 +33,7 @@ public final class Util {
     }
 
     private static String[] splitVersion() {
-        return ActuallyAdditions.VERSION.split("-");
+        return "1-1".split("-"); // ActuallyAdditions.VERSION.split("-"); todo: implement
     }
 
     public static String getMcVersion() {

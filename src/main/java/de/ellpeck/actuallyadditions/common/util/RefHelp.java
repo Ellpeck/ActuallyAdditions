@@ -1,19 +1,16 @@
 package de.ellpeck.actuallyadditions.common.util;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.StringJoiner;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Preconditions;
-
-import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 
 public class RefHelp {
 
@@ -86,7 +83,7 @@ public class RefHelp {
         Preconditions.checkNotNull(clazz);
         Preconditions.checkArgument(StringUtils.isNotEmpty(fieldName), "Field name cannot be empty");
 
-        String nameToFind = FMLLaunchHandler.isDeobfuscatedEnvironment() ? fieldName : MoreObjects.firstNonNull(fieldObfName, fieldName);
+        String nameToFind = !FMLEnvironment.production ? fieldName : MoreObjects.firstNonNull(fieldObfName, fieldName);
 
         try {
             Field f = clazz.getDeclaredField(nameToFind);
@@ -184,7 +181,7 @@ public class RefHelp {
         Preconditions.checkNotNull(clazz);
         Preconditions.checkArgument(StringUtils.isNotEmpty(methodName), "Method name cannot be empty");
 
-        String nameToFind = FMLLaunchHandler.isDeobfuscatedEnvironment() ? methodName : MoreObjects.firstNonNull(methodObfName, methodName);
+        String nameToFind = !FMLEnvironment.production ? methodName : MoreObjects.firstNonNull(methodObfName, methodName);
 
         try {
             Method m = clazz.getDeclaredMethod(nameToFind, parameterTypes);

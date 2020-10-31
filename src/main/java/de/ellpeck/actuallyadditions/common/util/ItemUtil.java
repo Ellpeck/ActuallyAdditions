@@ -1,22 +1,17 @@
 package de.ellpeck.actuallyadditions.common.util;
 
-import java.util.Arrays;
-import java.util.List;
-
-import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.common.RegistryHandler;
-import de.ellpeck.actuallyadditions.common.creative.CreativeTab;
-import de.ellpeck.actuallyadditions.common.util.compat.IMCHandler;
-import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public final class ItemUtil {
 
@@ -24,40 +19,40 @@ public final class ItemUtil {
         return ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
     }
 
-    @Deprecated // canitzp: should be removed
-    public static void registerBlock(Block block, BlockItemBase itemBlock, String name, boolean addTab) {
-        block.setTranslationKey(ActuallyAdditions.MODID + "." + name);
+//    @Deprecated // canitzp: should be removed
+//    public static void registerBlock(Block block, BlockAtomicReconstructor.BlockItem itemBlock, String name, boolean addTab) {
+//        block.setTranslationKey(ActuallyAdditions.MODID + "." + name);
+//
+//        block.setRegistryName(ActuallyAdditions.MODID, name);
+//        RegistryHandler.BLOCKS_TO_REGISTER.add(block);
+//
+//        itemBlock.setRegistryName(block.getRegistryName());
+//        RegistryHandler.ITEMS_TO_REGISTER.add(itemBlock);
+//
+//        block.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
+//
+//        IMCHandler.doBlockIMC(block);
+//
+//        if (block instanceof IColorProvidingBlock) {
+//            ActuallyAdditions.PROXY.addColoredBlock(block);
+//        }
+//    }
 
-        block.setRegistryName(ActuallyAdditions.MODID, name);
-        RegistryHandler.BLOCKS_TO_REGISTER.add(block);
-
-        itemBlock.setRegistryName(block.getRegistryName());
-        RegistryHandler.ITEMS_TO_REGISTER.add(itemBlock);
-
-        block.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
-
-        IMCHandler.doBlockIMC(block);
-
-        if (block instanceof IColorProvidingBlock) {
-            ActuallyAdditions.PROXY.addColoredBlock(block);
-        }
-    }
-
-    @Deprecated // canitzp: should be removed
-    public static void registerItem(Item item, String name, boolean addTab) {
-        item.setTranslationKey(ActuallyAdditions.MODID + "." + name);
-
-        item.setRegistryName(ActuallyAdditions.MODID, name);
-        RegistryHandler.ITEMS_TO_REGISTER.add(item);
-
-        item.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
-
-        IMCHandler.doItemIMC(item);
-
-        if (item instanceof IColorProvidingItem) {
-            ActuallyAdditions.PROXY.addColoredItem(item);
-        }
-    }
+//    @Deprecated // canitzp: should be removed
+//    public static void registerItem(Item item, String name, boolean addTab) {
+//        item.setTranslationKey(ActuallyAdditions.MODID + "." + name);
+//
+//        item.setRegistryName(ActuallyAdditions.MODID, name);
+//        RegistryHandler.ITEMS_TO_REGISTER.add(item);
+//
+//        item.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
+//
+//        IMCHandler.doItemIMC(item);
+//
+//        if (item instanceof IColorProvidingItem) {
+//            ActuallyAdditions.PROXY.addColoredItem(item);
+//        }
+//    }
 
     public static boolean contains(ItemStack[] array, ItemStack stack, boolean checkWildcard) {
         return getPlaceAt(array, stack, checkWildcard) != -1;
@@ -77,7 +72,8 @@ public final class ItemUtil {
     }
 
     public static boolean areItemsEqual(ItemStack stack1, ItemStack stack2, boolean checkWildcard) {
-        return StackUtil.isValid(stack1) && StackUtil.isValid(stack2) && (stack1.isItemEqual(stack2) || checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD));
+        // todo: fix wildcard
+        return StackUtil.isValid(stack1) && StackUtil.isValid(stack2) && (stack1.isItemEqual(stack2) || checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getDamage() == Util.WILDCARD || stack2.getDamage() == Util.WILDCARD));
     }
 
     /**
@@ -94,29 +90,14 @@ public final class ItemUtil {
     }
 
     public static boolean hasEnchantment(ItemStack stack, Enchantment e) {
-        NBTTagList ench = stack.getEnchantmentTagList();
-        if (ench != null) {
-            for (int i = 0; i < ench.tagCount(); i++) {
-                short id = ench.getCompoundTagAt(i).getShort("id");
-                if (id == Enchantment.getEnchantmentID(e)) { return true; }
-            }
-        }
-        return false;
+        return EnchantmentHelper.getEnchantments(stack).containsKey(e);
     }
 
     public static void removeEnchantment(ItemStack stack, Enchantment e) {
-        NBTTagList ench = stack.getEnchantmentTagList();
-        if (ench != null) {
-            for (int i = 0; i < ench.tagCount(); i++) {
-                short id = ench.getCompoundTagAt(i).getShort("id");
-                if (id == Enchantment.getEnchantmentID(e)) {
-                    ench.removeTag(i);
-                }
-            }
-            if (ench.isEmpty() && stack.hasTagCompound()) {
-                stack.getTagCompound().removeTag("ench");
-            }
-        }
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+        enchantments.remove(e);
+
+        EnchantmentHelper.setEnchantments(enchantments, stack);
     }
 
     public static boolean canBeStacked(ItemStack stack1, ItemStack stack2) {
@@ -124,19 +105,15 @@ public final class ItemUtil {
     }
 
     public static boolean isEnabled(ItemStack stack) {
-        return stack.hasTagCompound() && stack.getTagCompound().getBoolean("IsEnabled");
+        return stack.getOrCreateTag().getBoolean("IsEnabled");
     }
 
-    public static void changeEnabled(EntityPlayer player, EnumHand hand) {
+    public static void changeEnabled(PlayerEntity player, Hand hand) {
         changeEnabled(player.getHeldItem(hand));
     }
 
     public static void changeEnabled(ItemStack stack) {
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
         boolean isEnabled = isEnabled(stack);
-        stack.getTagCompound().setBoolean("IsEnabled", !isEnabled);
+        stack.getOrCreateTag().putBoolean("IsEnabled", !isEnabled);
     }
 }

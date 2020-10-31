@@ -1,10 +1,5 @@
 package de.ellpeck.actuallyadditions.common.util;
 
-import java.util.Collection;
-import java.util.List;
-
-import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
-
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.util.compat.SlotlessableItemHandlerWrapper;
@@ -12,6 +7,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.Collection;
+import java.util.List;
 
 public final class StackUtil {
 
@@ -183,10 +181,11 @@ public final class StackUtil {
 
         if (ActuallyAdditions.commonCapsLoaded) {
             Object handler = wrapper.getSlotlessHandler();
-            if (handler instanceof ISlotlessItemHandler) {
-                remain = ((ISlotlessItemHandler) handler).insertItem(remain, simulate);
-                if (!ItemStack.areItemStacksEqual(remain, stack)) return remain;
-            }
+            // todo: reimplement?
+//            if (handler instanceof ISlotlessItemHandler) {
+//                remain = ((ISlotlessItemHandler) handler).insertItem(remain, simulate);
+//                if (!ItemStack.areItemStacksEqual(remain, stack)) return remain;
+//            }
         }
 
         IItemHandler handler = wrapper.getNormalHandler();
