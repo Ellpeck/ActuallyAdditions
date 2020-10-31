@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.common.items.metalists.TheMiscItems;

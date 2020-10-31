@@ -7,7 +7,6 @@ import com.google.common.base.Strings;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.booklet.misc.BookletUtils;

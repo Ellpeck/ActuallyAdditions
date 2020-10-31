@@ -1,7 +1,6 @@
 package de.ellpeck.actuallyadditions.common.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.common.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.common.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.common.util.ItemUtil;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.items.InitItems;
 import de.ellpeck.actuallyadditions.common.items.metalists.TheDusts;

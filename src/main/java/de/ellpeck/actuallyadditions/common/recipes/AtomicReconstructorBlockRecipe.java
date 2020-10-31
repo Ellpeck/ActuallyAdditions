@@ -6,10 +6,12 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
+
 /**
  * Recipe class for the AtomicReconstructor when hitting a items stack
  */
-public class AtomicReconstructorBlockRecipe implements IDummyRecipe {
+public class AtomicReconstructorBlockRecipe implements IDummyRecipe<AtomicReconstructorBlockRecipe> {
     
     public static final IRecipeType<AtomicReconstructorBlockRecipe> ATOMIC_RECONSTRUCTOR_BLOCK_RECIPE_TYPE = IRecipeType.register("actuallyadditions:atomic_reconstructor_block");
     
@@ -44,16 +46,19 @@ public class AtomicReconstructorBlockRecipe implements IDummyRecipe {
         return energyConsumption;
     }
     
+    @Nonnull
     @Override
     public ResourceLocation getId(){
         return this.recipeId;
     }
     
+    @Nonnull
     @Override
-    public IRecipeSerializer<?> getSerializer(){
+    public IRecipeSerializer<AtomicReconstructorBlockRecipe> getSerializer(){
         return AtomicReconstructorBlockRecipeFactory.INSTANCE;
     }
     
+    @Nonnull
     @Override
     public IRecipeType<?> getType(){
         return ATOMIC_RECONSTRUCTOR_BLOCK_RECIPE_TYPE;

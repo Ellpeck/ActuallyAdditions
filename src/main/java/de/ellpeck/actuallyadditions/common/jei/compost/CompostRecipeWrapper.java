@@ -3,7 +3,6 @@ package de.ellpeck.actuallyadditions.common.jei.compost;
 import java.util.Arrays;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.common.jei.RecipeWrapperWithButton;

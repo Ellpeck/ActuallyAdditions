@@ -7,21 +7,23 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
+
 /**
  * Recipe class for the AtomicReconstructor when hitting a items stack
  */
-public class AtomicReconstructorItemRecipe implements IDummyRecipe {
+public class AtomicReconstructorItemRecipe implements IDummyRecipe<AtomicReconstructorItemRecipe> {
     
     public static final IRecipeType<AtomicReconstructorItemRecipe> ATOMIC_RECONSTRUCTOR_ITEM_RECIPE_TYPE = IRecipeType.register("actuallyadditions:atomic_reconstructor_item");
     
-    private final ResourceLocation recipeId;
+    @Nonnull private final ResourceLocation recipeId;
     
-    private final Lens lens;
-    private final Ingredient input;
-    private final ItemStack output;
+    @Nonnull private final Lens lens;
+    @Nonnull private final Ingredient input;
+    @Nonnull private final ItemStack output;
     private final int energyConsumption;
     
-    public AtomicReconstructorItemRecipe(ResourceLocation recipeId, Lens lens, Ingredient input, ItemStack output, int energyConsumption){
+    public AtomicReconstructorItemRecipe(@Nonnull ResourceLocation recipeId, @Nonnull Lens lens, @Nonnull Ingredient input, @Nonnull ItemStack output, int energyConsumption){
         this.recipeId = recipeId;
         this.lens = lens;
         this.input = input;
@@ -29,14 +31,17 @@ public class AtomicReconstructorItemRecipe implements IDummyRecipe {
         this.energyConsumption = energyConsumption;
     }
     
+    @Nonnull
     public Lens getLens(){
         return lens;
     }
     
+    @Nonnull
     public Ingredient getInput(){
         return input;
     }
     
+    @Nonnull
     public ItemStack getOutput(){
         return output;
     }
@@ -45,16 +50,19 @@ public class AtomicReconstructorItemRecipe implements IDummyRecipe {
         return energyConsumption;
     }
     
+    @Nonnull
     @Override
     public ResourceLocation getId(){
         return this.recipeId;
     }
     
+    @Nonnull
     @Override
-    public IRecipeSerializer<?> getSerializer(){
+    public IRecipeSerializer<AtomicReconstructorItemRecipe> getSerializer(){
         return AtomicReconstructorItemRecipeFactory.INSTANCE;
     }
     
+    @Nonnull
     @Override
     public IRecipeType<?> getType(){
         return ATOMIC_RECONSTRUCTOR_ITEM_RECIPE_TYPE;

@@ -1,8 +1,0 @@
-{
-  "recipes": {
-    "atomic_reconstructor": "de.ellpeck.actuallyadditions.common.recipes.AtomicReconstructorRecipeFactory",
-    "ball_of_fur": "de.ellpeck.actuallyadditions.common.recipes.BallOfFurRecipeFactory",
-    "coffee_machine_ingredient": "de.ellpeck.actuallyadditions.common.recipes.CoffeeMachineIngredientFactory",
-    "compost": "de.ellpeck.actuallyadditions.common.recipes.CompostRecipeFactory"
-  }
-}

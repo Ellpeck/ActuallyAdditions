@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.common.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.common.jei.RecipeWrapperWithButton;
