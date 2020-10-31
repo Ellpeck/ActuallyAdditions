@@ -4,30 +4,28 @@ import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.common.util.VanillaPacketDispatcher;
 import de.ellpeck.actuallyadditions.common.util.WorldUtil;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public abstract class TileEntityBase extends TileEntity implements ITickable {
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public abstract class TileEntityBase<T extends TileEntity> extends TileEntity implements ITickableTileEntity {
 
     public final String name;
     public boolean isRedstonePowered;
@@ -37,125 +35,129 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     protected TileEntity[] tilesAround = new TileEntity[6];
     protected boolean hasSavedDataOnChangeOrWorldStart;
 
-    public TileEntityBase(String name) {
+    public TileEntityBase(TileEntityType<T> type, String name) {
+        super(type);
         this.name = name;
     }
 
-    public static void init() {
-        ActuallyAdditions.LOGGER.info("Registering TileEntities...");
+//    public static void init() {
+//        ActuallyAdditions.LOGGER.info("Registering TileEntities...");
+//
+//        register(TileEntityCompost.class);
+//        register(TileEntityFeeder.class);
+//        register(TileEntityGiantChest.class);
+//        register(TileEntityGiantChestMedium.class);
+//        register(TileEntityGiantChestLarge.class);
+//        register(TileEntityGrinder.class);
+//        register(TileEntityFurnaceDouble.class);
+//        register(TileEntityInputter.class);
+//        register(TileEntityFishingNet.class);
+//        register(TileEntityFurnaceSolar.class);
+//        register(TileEntityHeatCollector.class);
+//        register(TileEntityItemRepairer.class);
+//        register(TileEntityBreaker.class);
+//        register(TileEntityDropper.class);
+//        register(TileEntityInputterAdvanced.class);
+//        register(TileEntityPlacer.class);
+//        register(TileEntityGrinderDouble.class);
+//        register(TileEntityCanolaPress.class);
+//        register(TileEntityFermentingBarrel.class);
+//        register(TileEntityOilGenerator.class);
+//        register(TileEntityCoalGenerator.class);
+//        register(TileEntityPhantomItemface.class);
+//        register(TileEntityPhantomLiquiface.class);
+//        register(TileEntityPhantomEnergyface.class);
+//        register(TileEntityPlayerInterface.class);
+//        register(TileEntityPhantomPlacer.class);
+//        register(TileEntityPhantomBreaker.class);
+//        register(TileEntityFluidCollector.class);
+//        register(TileEntityFluidPlacer.class);
+//        register(TileEntityLavaFactoryController.class);
+//        register(TileEntityCoffeeMachine.class);
+//        register(TileEntityPhantomBooster.class);
+//        register(TileEntityEnergizer.class);
+//        register(TileEntityEnervator.class);
+//        register(TileEntityXPSolidifier.class);
+//        register(TileEntitySmileyCloud.class);
+//        register(TileEntityLeafGenerator.class);
+//        register(TileEntityDirectionalBreaker.class);
+//        register(TileEntityRangedCollector.class);
+//        register(TileEntityAtomicReconstructor.class);
+//        register(TileEntityMiner.class);
+//        register(TileEntityFireworkBox.class);
+//        register(TileEntityPhantomRedstoneface.class);
+//        register(TileEntityLaserRelayItem.class);
+//        register(TileEntityLaserRelayEnergy.class);
+//        register(TileEntityLaserRelayEnergyAdvanced.class);
+//        register(TileEntityLaserRelayEnergyExtreme.class);
+//        register(TileEntityLaserRelayItemWhitelist.class);
+//        register(TileEntityItemViewer.class);
+//        register(TileEntityDisplayStand.class);
+//        register(TileEntityShockSuppressor.class);
+//        register(TileEntityEmpowerer.class);
+//        register(TileEntityLaserRelayFluids.class);
+//        register(TileEntityBioReactor.class);
+//        register(TileEntityFarmer.class);
+//        register(TileEntityItemViewerHopping.class);
+//        register(TileEntityBatteryBox.class);
+//    }
 
-        register(TileEntityCompost.class);
-        register(TileEntityFeeder.class);
-        register(TileEntityGiantChest.class);
-        register(TileEntityGiantChestMedium.class);
-        register(TileEntityGiantChestLarge.class);
-        register(TileEntityGrinder.class);
-        register(TileEntityFurnaceDouble.class);
-        register(TileEntityInputter.class);
-        register(TileEntityFishingNet.class);
-        register(TileEntityFurnaceSolar.class);
-        register(TileEntityHeatCollector.class);
-        register(TileEntityItemRepairer.class);
-        register(TileEntityBreaker.class);
-        register(TileEntityDropper.class);
-        register(TileEntityInputterAdvanced.class);
-        register(TileEntityPlacer.class);
-        register(TileEntityGrinderDouble.class);
-        register(TileEntityCanolaPress.class);
-        register(TileEntityFermentingBarrel.class);
-        register(TileEntityOilGenerator.class);
-        register(TileEntityCoalGenerator.class);
-        register(TileEntityPhantomItemface.class);
-        register(TileEntityPhantomLiquiface.class);
-        register(TileEntityPhantomEnergyface.class);
-        register(TileEntityPlayerInterface.class);
-        register(TileEntityPhantomPlacer.class);
-        register(TileEntityPhantomBreaker.class);
-        register(TileEntityFluidCollector.class);
-        register(TileEntityFluidPlacer.class);
-        register(TileEntityLavaFactoryController.class);
-        register(TileEntityCoffeeMachine.class);
-        register(TileEntityPhantomBooster.class);
-        register(TileEntityEnergizer.class);
-        register(TileEntityEnervator.class);
-        register(TileEntityXPSolidifier.class);
-        register(TileEntitySmileyCloud.class);
-        register(TileEntityLeafGenerator.class);
-        register(TileEntityDirectionalBreaker.class);
-        register(TileEntityRangedCollector.class);
-        register(TileEntityAtomicReconstructor.class);
-        register(TileEntityMiner.class);
-        register(TileEntityFireworkBox.class);
-        register(TileEntityPhantomRedstoneface.class);
-        register(TileEntityLaserRelayItem.class);
-        register(TileEntityLaserRelayEnergy.class);
-        register(TileEntityLaserRelayEnergyAdvanced.class);
-        register(TileEntityLaserRelayEnergyExtreme.class);
-        register(TileEntityLaserRelayItemWhitelist.class);
-        register(TileEntityItemViewer.class);
-        register(TileEntityDisplayStand.class);
-        register(TileEntityShockSuppressor.class);
-        register(TileEntityEmpowerer.class);
-        register(TileEntityLaserRelayFluids.class);
-        register(TileEntityBioReactor.class);
-        register(TileEntityFarmer.class);
-        register(TileEntityItemViewerHopping.class);
-        register(TileEntityBatteryBox.class);
-    }
+//    private static void register(Class<? extends TileEntityBase> tileClass) {
+//        try {
+//            //This is hacky and dirty but it works so whatever
+//            ResourceLocation name = new ResourceLocation(ActuallyAdditions.MODID, tileClass.newInstance().name);
+//            GameRegistry.registerTileEntity(tileClass, name);
+//        } catch (Exception e) {
+//            ActuallyAdditions.LOGGER.fatal("Registering a TileEntity failed!", e);
+//        }
+//    }
 
-    private static void register(Class<? extends TileEntityBase> tileClass) {
-        try {
-            //This is hacky and dirty but it works so whatever
-            ResourceLocation name = new ResourceLocation(ActuallyAdditions.MODID, tileClass.newInstance().name);
-            GameRegistry.registerTileEntity(tileClass, name);
-        } catch (Exception e) {
-            ActuallyAdditions.LOGGER.fatal("Registering a TileEntity failed!", e);
-        }
-    }
 
     @Override
-    public final NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public CompoundNBT write(CompoundNBT compound) {
         this.writeSyncableNBT(compound, NBTType.SAVE_TILE);
         return compound;
     }
 
     @Override
-    public final void readFromNBT(NBTTagCompound compound) {
+    public void read(CompoundNBT compound) {
         this.readSyncableNBT(compound, NBTType.SAVE_TILE);
     }
 
+    @Nullable
     @Override
-    public final SPacketUpdateTileEntity getUpdatePacket() {
-        NBTTagCompound compound = new NBTTagCompound();
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        CompoundNBT compound = new CompoundNBT();
         this.writeSyncableNBT(compound, NBTType.SYNC);
-        return new SPacketUpdateTileEntity(this.pos, -1, compound);
+        return new SUpdateTileEntityPacket(this.pos, -1, compound);
     }
 
     @Override
-    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    public final void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         this.readSyncableNBT(pkt.getNbtCompound(), NBTType.SYNC);
     }
 
     @Override
-    public final NBTTagCompound getUpdateTag() {
-        NBTTagCompound compound = new NBTTagCompound();
+    public final CompoundNBT getUpdateTag() {
+        CompoundNBT compound = new CompoundNBT();
         this.writeSyncableNBT(compound, NBTType.SYNC);
         return compound;
     }
 
     @Override
-    public final void handleUpdateTag(NBTTagCompound compound) {
+    public final void handleUpdateTag(CompoundNBT compound) {
         this.readSyncableNBT(compound, NBTType.SYNC);
     }
 
     public final void sendUpdate() {
         if (this.world != null && !this.world.isRemote) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
         /*
+        todo: this wan't me
         if(this.world != null && !this.world.isRemote){
-            NBTTagCompound compound = new NBTTagCompound();
+            CompoundNBT compound = new CompoundNBT();
             this.writeSyncableNBT(compound, NBTType.SYNC);
 
-            NBTTagCompound data = new NBTTagCompound();
+            CompoundNBT data = new CompoundNBT();
             data.setTag("Data", compound);
             data.setInteger("X", this.pos.getX());
             data.setInteger("Y", this.pos.getY());
@@ -165,25 +167,25 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     }
 
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
-        if (type != NBTType.SAVE_BLOCK) super.writeToNBT(compound);
+        if (type != NBTType.SAVE_BLOCK) super.write(compound);
 
         if (type == NBTType.SAVE_TILE) {
-            compound.setBoolean("Redstone", this.isRedstonePowered);
-            compound.setInteger("TicksElapsed", this.ticksElapsed);
-            compound.setBoolean("StopDrop", this.stopFromDropping);
-        } else if (type == NBTType.SYNC && this.stopFromDropping) compound.setBoolean("StopDrop", this.stopFromDropping);
+            compound.putBoolean("Redstone", this.isRedstonePowered);
+            compound.putInt("TicksElapsed", this.ticksElapsed);
+            compound.putBoolean("StopDrop", this.stopFromDropping);
+        } else if (type == NBTType.SYNC && this.stopFromDropping) compound.putBoolean("StopDrop", this.stopFromDropping);
 
         if (this.isRedstoneToggle() && (type != NBTType.SAVE_BLOCK || this.isPulseMode)) {
-            compound.setBoolean("IsPulseMode", this.isPulseMode);
+            compound.putBoolean("IsPulseMode", this.isPulseMode);
         }
     }
 
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
-        if (type != NBTType.SAVE_BLOCK) super.readFromNBT(compound);
+        if (type != NBTType.SAVE_BLOCK) super.read(compound);
 
         if (type == NBTType.SAVE_TILE) {
             this.isRedstonePowered = compound.getBoolean("Redstone");
-            this.ticksElapsed = compound.getInteger("TicksElapsed");
+            this.ticksElapsed = compound.getInt("TicksElapsed");
             this.stopFromDropping = compound.getBoolean("StopDrop");
         } else if (type == NBTType.SYNC) this.stopFromDropping = compound.getBoolean("StopDrop");
 
@@ -192,22 +194,18 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
         }
     }
 
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
-        return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
-    }
+// todo: re-eval
+//    @Override
+//    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+//        return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
+//    }
 
     public String getNameForTranslation() {
         return "container." + ActuallyAdditions.MODID + "." + this.name + ".name";
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TextComponentTranslation(this.getNameForTranslation());
-    }
-
-    @Override
-    public final void update() {
+    public void tick() {
         this.updateEntity();
     }
 
@@ -227,14 +225,14 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
                 if (provider.doesShareEnergy()) {
                     int total = provider.getEnergyToSplitShare();
                     if (total > 0) {
-                        EnumFacing[] sides = provider.getEnergyShareSides();
+                        Direction[] sides = provider.getEnergyShareSides();
 
                         int amount = total / sides.length;
                         if (amount <= 0) {
                             amount = total;
                         }
 
-                        for (EnumFacing side : sides) {
+                        for (Direction side : sides) {
                             TileEntity tile = this.tilesAround[side.ordinal()];
                             if (tile != null && provider.canShareTo(tile)) {
                                 WorldUtil.doEnergyInteraction(this, tile, side, amount);
@@ -249,14 +247,14 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
                 if (handler.doesShareFluid()) {
                     int total = handler.getMaxFluidAmountToSplitShare();
                     if (total > 0) {
-                        EnumFacing[] sides = handler.getFluidShareSides();
+                        Direction[] sides = handler.getFluidShareSides();
 
                         int amount = total / sides.length;
                         if (amount <= 0) {
                             amount = total;
                         }
 
-                        for (EnumFacing side : sides) {
+                        for (Direction side : sides) {
                             TileEntity tile = this.tilesAround[side.ordinal()];
                             if (tile != null) {
                                 WorldUtil.doFluidInteraction(this, tile, side, amount);
@@ -277,7 +275,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     }
 
     public void saveDataOnChangeOrWorldStart() {
-        for (EnumFacing side : EnumFacing.values()) {
+        for (Direction side : Direction.values()) {
             BlockPos pos = this.pos.offset(side);
             if (this.world.isBlockLoaded(pos)) {
                 this.tilesAround[side.ordinal()] = this.world.getTileEntity(pos);
@@ -294,8 +292,8 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
         this.markDirty();
     }
 
-    public boolean canPlayerUse(EntityPlayer player) {
-        return player.getDistanceSq(this.getPos().getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D) <= 64 && !this.isInvalid() && this.world.getTileEntity(this.pos) == this;
+    public boolean canPlayerUse(PlayerEntity player) {
+        return player.getDistanceSq(this.getPos().getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D) <= 64 && !this.isRemoved() && this.world.getTileEntity(this.pos) == this;
     }
 
     protected boolean sendUpdateWithInterval() {
@@ -307,36 +305,33 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
         }
     }
 
+    @Nonnull
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        return this.getCapability(capability, facing) != null;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            IItemHandler handler = this.getItemHandler(facing);
-            if (handler != null) { return (T) handler; }
-        } else if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            IFluidHandler tank = this.getFluidHandler(facing);
-            if (tank != null) { return (T) tank; }
-        } else if (capability == CapabilityEnergy.ENERGY) {
-            IEnergyStorage storage = this.getEnergyStorage(facing);
-            if (storage != null) { return (T) storage; }
+    public <CAP> LazyOptional<CAP> getCapability(@Nonnull Capability<CAP> cap, @Nullable Direction side) {
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return this.getItemHandler(side).cast();
         }
-        return super.getCapability(capability, facing);
+
+        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+            return this.getFluidHandler(side).cast();
+        }
+
+        if (cap == CapabilityEnergy.ENERGY) {
+            return this.getEnergyStorage(side).cast();
+        }
+
+        return super.getCapability(cap, side);
     }
 
-    public IFluidHandler getFluidHandler(EnumFacing facing) {
+    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
         return null;
     }
 
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
         return null;
     }
 
-    public IItemHandler getItemHandler(EnumFacing facing) {
+    public LazyOptional<IItemHandler> getItemHandler(Direction facing) {
         return null;
     }
 

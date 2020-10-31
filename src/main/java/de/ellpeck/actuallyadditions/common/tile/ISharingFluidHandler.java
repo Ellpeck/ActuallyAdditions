@@ -1,6 +1,6 @@
 package de.ellpeck.actuallyadditions.common.tile;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 
 public interface ISharingFluidHandler {
 
@@ -8,6 +8,6 @@ public interface ISharingFluidHandler {
 
     boolean doesShareFluid();
 
-    EnumFacing[] getFluidShareSides();
+    Direction[] getFluidShareSides();
 
 }

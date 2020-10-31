@@ -1,33 +1,25 @@
 package de.ellpeck.actuallyadditions.common.util;
 
-import java.util.ArrayList;
-
-import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
-
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.common.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SPacketBlockChange;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.MinecraftForge;
@@ -41,6 +33,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.ArrayList;
 
 public final class WorldUtil {
 
@@ -108,9 +102,9 @@ public final class WorldUtil {
         return extracted;
     }
 
-    public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer) {
+    public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
-            EnumFacing opp = sideTo == null ? null : sideTo.getOpposite();
+            Direction opp = sideTo == null ? null : sideTo.getOpposite();
             IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
             IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, opp);
             if (handlerFrom != null && handlerTo != null) {
@@ -124,7 +118,7 @@ public final class WorldUtil {
         }
     }
 
-    public static void doFluidInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer) {
+    public static void doFluidInteraction(TileEntity tileFrom, TileEntity tileTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
             if (tileFrom.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo) && tileTo.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite())) {
                 IFluidHandler handlerFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo);
@@ -155,7 +149,7 @@ public final class WorldUtil {
         return true;
     }
 
-    public static ItemStack useItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack) {
+    public static ItemStack useItemAtSide(Direction side, World world, BlockPos pos, ItemStack stack) {
         if (world instanceof WorldServer && StackUtil.isValid(stack) && pos != null) {
             BlockPos offsetPos = pos.offset(side);
             IBlockState state = world.getBlockState(offsetPos);
@@ -192,7 +186,7 @@ public final class WorldUtil {
         return stack;
     }
 
-    public static boolean dropItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack) {
+    public static boolean dropItemAtSide(Direction side, World world, BlockPos pos, ItemStack stack) {
         BlockPos coords = pos.offset(side);
         if (world.isBlockLoaded(coords)) {
             EntityItem item = new EntityItem(world, coords.getX() + 0.5, coords.getY() + 0.5, coords.getZ() + 0.5, stack);
@@ -205,33 +199,33 @@ public final class WorldUtil {
         return false;
     }
 
-    public static EnumFacing getDirectionBySidesInOrder(int side) {
+    public static Direction getDirectionBySidesInOrder(int side) {
         switch (side) {
         case 0:
-            return EnumFacing.UP;
+            return Direction.UP;
         case 1:
-            return EnumFacing.DOWN;
+            return Direction.DOWN;
         case 2:
-            return EnumFacing.NORTH;
+            return Direction.NORTH;
         case 3:
-            return EnumFacing.EAST;
+            return Direction.EAST;
         case 4:
-            return EnumFacing.SOUTH;
+            return Direction.SOUTH;
         default:
-            return EnumFacing.WEST;
+            return Direction.WEST;
         }
     }
 
-    public static EnumFacing getDirectionByPistonRotation(IBlockState state) {
+    public static Direction getDirectionByPistonRotation(IBlockState state) {
         return state.getValue(BlockDirectional.FACING);
     }
 
     public static ArrayList<Material> getMaterialsAround(World world, BlockPos pos) {
         ArrayList<Material> blocks = new ArrayList<>();
-        blocks.add(world.getBlockState(pos.offset(EnumFacing.NORTH)).getMaterial());
-        blocks.add(world.getBlockState(pos.offset(EnumFacing.EAST)).getMaterial());
-        blocks.add(world.getBlockState(pos.offset(EnumFacing.SOUTH)).getMaterial());
-        blocks.add(world.getBlockState(pos.offset(EnumFacing.WEST)).getMaterial());
+        blocks.add(world.getBlockState(pos.offset(Direction.NORTH)).getMaterial());
+        blocks.add(world.getBlockState(pos.offset(Direction.EAST)).getMaterial());
+        blocks.add(world.getBlockState(pos.offset(Direction.SOUTH)).getMaterial());
+        blocks.add(world.getBlockState(pos.offset(Direction.WEST)).getMaterial());
         return blocks;
     }
 
@@ -256,7 +250,7 @@ public final class WorldUtil {
         return world.rayTraceBlocks(vec3, vec31, p1, p2, p3);
     }
 
-    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, EntityPlayer player) {
+    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, PlayerEntity player) {
         return getNearestBlockWithDefaultReachDistance(world, player, false, true, false);
     }
 
@@ -264,10 +258,10 @@ public final class WorldUtil {
         return getMovingObjectPosWithReachDistance(world, player, player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue(), stopOnLiquids, ignoreBlockWithoutBoundingBox, returnLastUncollidableBlock);
     }
 
-    public static void setHandItemWithoutAnnoyingSound(EntityPlayer player, EnumHand hand, ItemStack stack) {
-        if (hand == EnumHand.MAIN_HAND) {
+    public static void setHandItemWithoutAnnoyingSound(PlayerEntity player, Hand hand, ItemStack stack) {
+        if (hand == Hand.MAIN_HAND) {
             player.inventory.mainInventory.set(player.inventory.currentItem, stack);
-        } else if (hand == EnumHand.OFF_HAND) {
+        } else if (hand == Hand.OFF_HAND) {
             player.inventory.offHandInventory.set(0, stack);
         }
     }
@@ -294,18 +288,18 @@ public final class WorldUtil {
      * @param pos The pos to break.
      * @return If the break was successful.
      */
-    public static boolean breakExtraBlock(ItemStack stack, World world, EntityPlayer player, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
+    public static boolean breakExtraBlock(ItemStack stack, World world, PlayerEntity player, BlockPos pos) {
+        BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        if (player.capabilities.isCreativeMode) {
-            if (block.removedByPlayer(state, world, pos, player, false)) {
+        if (player.isCreative()) {
+            if (block.removedByPlayer(state, world, pos, player, false, world.getFluidState(pos))) {
                 block.onPlayerDestroy(world, pos, state);
             }
 
             // send update to client
             if (!world.isRemote) {
-                ((EntityPlayerMP) player).connection.sendPacket(new SPacketBlockChange(world, pos));
+                ((ServerPlayerEntity) player).connection.sendPacket(new SPacketBlockChange(world, pos));
             }
             return true;
         }
@@ -316,18 +310,18 @@ public final class WorldUtil {
         // server sided handling
         if (!world.isRemote) {
             // send the blockbreak event
-            int xp = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP) player).interactionManager.getGameType(), (EntityPlayerMP) player, pos);
+            int xp = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayerEntity) player).interactionManager.getGameType(), (ServerPlayerEntity) player, pos);
             if (xp == -1) return false;
 
             TileEntity tileEntity = world.getTileEntity(pos);
-            if (block.removedByPlayer(state, world, pos, player, true)) { // boolean is if block can be harvested, checked above
+            if (block.removedByPlayer(state, world, pos, player, true, world.getFluidState(pos))) { // boolean is if block can be harvested, checked above
                 block.onPlayerDestroy(world, pos, state);
                 block.harvestBlock(world, player, pos, state, tileEntity, stack);
                 block.dropXpOnBlockBreak(world, pos, xp);
             }
 
             // always send block update to client
-            ((EntityPlayerMP) player).connection.sendPacket(new SPacketBlockChange(world, pos));
+            ((ServerPlayerEntity) player).connection.sendPacket(new SPacketBlockChange(world, pos));
             return true;
         }
         // client sided handling
@@ -337,7 +331,7 @@ public final class WorldUtil {
 
             // following code can be found in PlayerControllerMP.onPlayerDestroyBlock
             world.playEvent(2001, pos, Block.getStateId(state));
-            if (block.removedByPlayer(state, world, pos, player, true)) {
+            if (block.removedByPlayer(state, world, pos, player, true, world.getFluidState(pos))) {
                 block.onPlayerDestroy(world, pos, state);
             }
             // callback to the tool

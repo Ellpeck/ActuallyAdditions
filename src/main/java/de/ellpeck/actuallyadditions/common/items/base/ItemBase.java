@@ -9,7 +9,8 @@ public class ItemBase extends Item {
 
     private final String name;
 
-    public ItemBase(String name) {
+    public ItemBase(Properties properties, String name) {
+        super(properties);
         this.name = name;
 
         this.register();

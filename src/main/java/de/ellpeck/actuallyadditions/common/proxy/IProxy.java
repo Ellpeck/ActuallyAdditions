@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.common.proxy;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -24,7 +25,7 @@ public interface IProxy {
 
     void addColoredBlock(Block block);
 
-    EntityPlayer getCurrentPlayer();
+    PlayerEntity getCurrentPlayer();
 
     default void sendBreakPacket(BlockPos pos) {
     };

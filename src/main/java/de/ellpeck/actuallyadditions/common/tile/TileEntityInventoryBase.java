@@ -5,49 +5,54 @@ import de.ellpeck.actuallyadditions.common.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.common.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.common.util.StackUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public abstract class TileEntityInventoryBase extends TileEntityBase {
+public abstract class TileEntityInventoryBase<T extends TileEntity> extends TileEntityBase {
 
     public final ItemStackHandlerAA inv;
+    private final LazyOptional<ItemStackHandlerAA> lazyInv;
 
-    public TileEntityInventoryBase(int slots, String name) {
-        super(name);
+    public TileEntityInventoryBase(TileEntityType<T> type, int slots, String name) {
+        super(type, name);
         this.inv = new TileStackHandler(slots);
+        this.lazyInv = LazyOptional.of(() -> this.inv);
     }
 
-    public static void saveSlots(IItemHandler slots, NBTTagCompound compound) {
+    public static void saveSlots(IItemHandler slots, CompoundNBT compound) {
         if (slots != null && slots.getSlots() > 0) {
-            NBTTagList tagList = new NBTTagList();
+            ListNBT tagList = new ListNBT();
             for (int i = 0; i < slots.getSlots(); i++) {
                 ItemStack slot = slots.getStackInSlot(i);
-                NBTTagCompound tagCompound = new NBTTagCompound();
+                CompoundNBT tagCompound = new CompoundNBT();
                 if (StackUtil.isValid(slot)) {
-                    slot.writeToNBT(tagCompound);
+                    slot.write(tagCompound);
                 }
-                tagList.appendTag(tagCompound);
+                tagList.add(tagCompound);
             }
-            compound.setTag("Items", tagList);
+            compound.put("Items", tagList);
         }
     }
 
-    public static void loadSlots(IItemHandlerModifiable slots, NBTTagCompound compound) {
+    public static void loadSlots(IItemHandlerModifiable slots, CompoundNBT compound) {
         if (slots != null && slots.getSlots() > 0) {
-            NBTTagList tagList = compound.getTagList("Items", 10);
+            ListNBT tagList = compound.getList("Items", 10);
             for (int i = 0; i < slots.getSlots(); i++) {
-                NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                slots.setStackInSlot(i, tagCompound != null && tagCompound.hasKey("id") ? new ItemStack(tagCompound) : StackUtil.getEmpty());
+                CompoundNBT tagCompound = tagList.getCompound(i);
+                slots.setStackInSlot(i, tagCompound.contains("id") ? ItemStack.read(tagCompound) : StackUtil.getEmpty());
             }
         }
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type == NBTType.SAVE_TILE || type == NBTType.SYNC && this.shouldSyncSlots()) {
             saveSlots(this.inv, compound);
@@ -55,8 +60,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
     }
 
     @Override
-    public IItemHandler getItemHandler(EnumFacing facing) {
-        return this.inv;
+    public LazyOptional<ItemStackHandlerAA> getItemHandler(Direction facing) {
+        return this.lazyInv;
     }
 
     public IAcceptor getAcceptor() {
@@ -90,7 +95,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type == NBTType.SAVE_TILE || type == NBTType.SYNC && this.shouldSyncSlots()) {
             loadSlots(this.inv, compound);
