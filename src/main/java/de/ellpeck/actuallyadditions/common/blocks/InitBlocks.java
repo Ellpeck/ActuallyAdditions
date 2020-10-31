@@ -206,8 +206,9 @@ public final class InitBlocks {
     public static final RegistryObject<Block> blockCoffee
             = BLOCKS.register("block_coffee", () -> new BlockPlant(2, 2));
 
-    public static final RegistryObject<Block> blockCompost
-            = BLOCKS.register("block_compost", BlockCompost::new);
+// this isn't needed any more
+//    public static final RegistryObject<Block> blockCompost
+//            = BLOCKS.register("block_compost", BlockCompost::new);
 
     public static final RegistryObject<Block> blockMisc
             = BLOCKS.register("block_misc", BlockMisc::new);
@@ -215,6 +216,7 @@ public final class InitBlocks {
     public static final RegistryObject<Block> blockFeeder
             = BLOCKS.register("block_feeder", BlockFeeder::new);
 
+// this isn't needed anymore
 //    public static final RegistryObject<Block> blockGiantChest
 //            = BLOCKS.register("block_giant_chest", BlockGiantChest::new);
 //

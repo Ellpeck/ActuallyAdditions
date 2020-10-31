@@ -5,6 +5,7 @@ import de.ellpeck.actuallyadditions.common.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.common.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.common.tile.TileEntitySmileyCloud;
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -16,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,12 +27,17 @@ import java.util.Random;
 
 public class BlockSmileyCloud extends BlockContainerBase {
 
-    public BlockSmileyCloud(S) {
+    public BlockSmileyCloud() {
         super(Properties.create(Material.WOOL)
                 .hardnessAndResistance(0.5f, 5.0f)
                 .harvestTool(ToolType.PICKAXE)
                 .sound(SoundType.CLOTH)
                 .tickRandomly());
+    }
+
+    @Override
+    public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return super.isNormalCube(state, worldIn, pos);
     }
 
     @Override
