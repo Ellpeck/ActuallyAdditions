@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "actuallyadditions:block/lava_factory_controller_block"
+  }
+}

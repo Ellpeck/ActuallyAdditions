@@ -1,0 +1,6 @@
+{
+  "parent": "block/fence_post",
+  "textures": {
+    "texture": "actuallyadditions:block/white_wall_block"
+  }
+}

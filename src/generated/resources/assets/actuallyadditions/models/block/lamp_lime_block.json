@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "actuallyadditions:block/lamp_lime_on_block"
+  }
+}

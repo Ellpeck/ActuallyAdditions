@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "actuallyadditions:block/heat_collector_block"
+    }
+  }
+}

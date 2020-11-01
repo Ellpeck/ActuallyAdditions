@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "actuallyadditions:block/item_repairer_block"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "actuallyadditions:block/tiny_torch_block"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "actuallyadditions:block/player_interface_block"
+    }
+  }
+}

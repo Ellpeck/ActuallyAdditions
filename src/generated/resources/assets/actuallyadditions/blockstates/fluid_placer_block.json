@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "actuallyadditions:block/fluid_placer_block"
+    }
+  }
+}
