@@ -1,5 +1,5 @@
 {
-  "parent": "block/slab_top",
+  "parent": "minecraft:block/slab_top",
   "textures": {
     "side": "actuallyadditions:block/black_quartz_chiseled_block",
     "bottom": "actuallyadditions:block/black_quartz_chiseled_block",

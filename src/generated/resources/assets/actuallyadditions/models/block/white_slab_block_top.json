@@ -1,5 +1,5 @@
 {
-  "parent": "block/slab_top",
+  "parent": "minecraft:block/slab_top",
   "textures": {
     "side": "actuallyadditions:block/white_wall_block",
     "bottom": "actuallyadditions:block/white_wall_block",

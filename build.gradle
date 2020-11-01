@@ -83,7 +83,7 @@ dependencies {
     // at runtime, use the full JEI jar
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 
-    compile "curse.maven:fastworkbench:3003114"
+//    compile "curse.maven:fastworkbench:3003114"
 }
 
 jar {

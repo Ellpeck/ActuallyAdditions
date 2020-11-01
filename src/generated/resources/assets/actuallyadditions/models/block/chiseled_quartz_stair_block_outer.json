@@ -1,5 +1,5 @@
 {
-  "parent": "block/outer_stairs",
+  "parent": "minecraft:block/outer_stairs",
   "textures": {
     "side": "actuallyadditions:block/black_quartz_chiseled_block",
     "bottom": "actuallyadditions:block/black_quartz_chiseled_block",
