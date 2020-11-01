@@ -18,6 +18,9 @@ version = mod_version
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "actuallyadditions-${mc_version}"
 
+if (System.getenv('BUILD_NUMBER') != null) {
+    version += "." + System.getenv('BUILD_NUMBER')
+}
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 sourceSets {
