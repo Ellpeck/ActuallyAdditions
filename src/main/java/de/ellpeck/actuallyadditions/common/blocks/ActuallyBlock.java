@@ -1,14 +1,13 @@
 package de.ellpeck.actuallyadditions.common.blocks;
 
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 
-public class PlantBlock extends CropsBlock implements IActuallyBlock  {
-    public PlantBlock(int minDropAmount, int maxDropAmount) {
-        super(Properties.create(Material.ROCK));
+public class ActuallyBlock extends Block implements IActuallyBlock {
+    public ActuallyBlock(Properties properties) {
+        super(properties);
     }
 
     @Override

@@ -6,10 +6,18 @@ import de.ellpeck.actuallyadditions.common.blocks.types.LaserRelays;
 import de.ellpeck.actuallyadditions.common.blocks.types.PhantomType;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Objects;
+
+@EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ActuallyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MOD_ID);
 
@@ -390,4 +398,19 @@ public class ActuallyBlocks {
 
     public static final RegistryObject<Block> blockPillarQuartzSlab
             = BLOCKS.register("pillar_quartz_slab_block", () -> new SlabBlock(Block.Properties.create(Material.ROCK)));
+
+    @SubscribeEvent
+    public static void registerBlockItems(RegistryEvent.Register<Item> event) {
+        for(RegistryObject<Block> entry : BLOCKS.getEntries()) {
+            if (!(entry.get() instanceof IActuallyBlock)) {
+                continue;
+            }
+
+            event.getRegistry().register(
+                    ((IActuallyBlock) entry.get())
+                            .createBlockItem()
+                            .setRegistryName(Objects.requireNonNull(entry.get().getRegistryName()).getPath())
+            );
+        }
+    }
 }

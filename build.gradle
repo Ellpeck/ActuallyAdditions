@@ -21,6 +21,7 @@ archivesBaseName = "actuallyadditions-${mc_version}"
 if (System.getenv('BUILD_NUMBER') != null) {
     version += "." + System.getenv('BUILD_NUMBER')
 }
+
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 sourceSets {
@@ -82,9 +83,9 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
     // compile against the JEI API but do not include it at runtime
-    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
-    // at runtime, use the full JEI jar
-    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+//    compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
+//    // at runtime, use the full JEI jar
+//    runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
 //    compile "curse.maven:fastworkbench:3003114"
 }

@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[34,)"
+loaderVersion="[35,)"
 issueTrackerURL="http://github.com/Ellpeck/ActuallyAdditions/issues"
 displayURL="http://github.com/Ellpeck/ActuallyAdditions"
 logoFile="logo.png"
@@ -16,6 +16,6 @@ license="MIT"
 [[dependencies.actuallyadditions]]
     modId="forge"
     mandatory=true
-    versionRange="[34,)"
+    versionRange="[35,)"
     ordering="NONE"
     side="BOTH"

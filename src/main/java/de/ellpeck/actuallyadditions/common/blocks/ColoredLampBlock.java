@@ -11,9 +11,10 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class ColoredLampBlock extends Block {
+public class ColoredLampBlock extends ActuallyBlock {
     private static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public ColoredLampBlock() {
@@ -32,5 +33,10 @@ public class ColoredLampBlock extends Block {
             worldIn.setBlockState(pos, state.getBlock().getDefaultState().with(LIT, true));
         }
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+    }
+
+    @Override
+    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+        return state.get(LIT) ? 15 : 0;
     }
 }
