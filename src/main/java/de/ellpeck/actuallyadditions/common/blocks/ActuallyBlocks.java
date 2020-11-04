@@ -373,13 +373,13 @@ public class ActuallyBlocks {
 //            = BLOCKS.register();("wild_block", WildPlantBlock::new);
 
     public static final RegistryObject<Block> blockQuartzWall
-            = BLOCKS.register("quartz_wall_block", () -> new WallBlock(Block.Properties.create(Material.ROCK)));
+            = BLOCKS.register("quartz_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTS.get())));
 
     public static final RegistryObject<Block> blockChiseledQuartzWall
-            = BLOCKS.register("chiseled_quartz_wall_block", () -> new WallBlock(Block.Properties.create(Material.ROCK)));
+            = BLOCKS.register("chiseled_quartz_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTS_CHISELED.get())));
 
     public static final RegistryObject<Block> blockPillarQuartzWall
-            = BLOCKS.register("pillar_quartz_wall_block", () -> new WallBlock(Block.Properties.create(Material.ROCK)));
+            = BLOCKS.register("pillar_quartz_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTS_PILLAR.get())));
 
     public static final RegistryObject<Block> blockQuartzStair
             = BLOCKS.register("quartz_stair_block", () -> new StairsBlock(() -> blockBlackLotus.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
