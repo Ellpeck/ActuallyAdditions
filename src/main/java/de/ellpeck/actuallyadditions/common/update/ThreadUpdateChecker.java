@@ -20,7 +20,7 @@ public class ThreadUpdateChecker extends Thread {
     public void run() {
         ActuallyAdditions.LOGGER.info("Starting Update Check...");
         try {
-            URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/update/updateVersions.properties");
+            URL newestURL = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/main/update/updateVersions.properties");
             Properties updateProperties = new Properties();
             updateProperties.load(new InputStreamReader(newestURL.openStream()));
 
