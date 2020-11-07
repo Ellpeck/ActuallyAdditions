@@ -18,8 +18,8 @@ version = "1.12.2-r151"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
-if(hasProperty('buildnumber')){
-    version = "${version}-${this.properties['buildnumber']}"
+if (System.getenv('BUILD_NUMBER') != null) {
+    version += "." + System.getenv('BUILD_NUMBER')
 }
 
 minecraft {

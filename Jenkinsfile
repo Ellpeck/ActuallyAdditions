@@ -20,6 +20,9 @@ pipeline {
     }
 
     stage('Publish') {
+      when {
+        branch '1.12.2'
+      }
       steps {
         sh './gradlew publish --no-daemon'
       }
