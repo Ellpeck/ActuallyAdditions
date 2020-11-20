@@ -1,3 +1,6 @@
+# 1.12.2-r152
+* CrankySupertoon: Fixed Crystal Flux Localization
+
 # 1.12.2-r151
 * TomyLobo: Improved performance of the item interface.
 * iTitus: Added configs for leaf and coal generators.

@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -94,6 +95,6 @@ public class EnergyDisplay extends Gui {
 
     private String getOverlayText() {
         NumberFormat format = NumberFormat.getInstance();
-        return String.format("%s/%s Crystal Flux", format.format(this.rfReference.getEnergyStored()), format.format(this.rfReference.getMaxEnergyStored()));
+        return String.format("%s/%s %s", format.format(this.rfReference.getEnergyStored()), format.format(this.rfReference.getMaxEnergyStored()), I18n.format("actuallyadditions.cflong"));
     }
 }

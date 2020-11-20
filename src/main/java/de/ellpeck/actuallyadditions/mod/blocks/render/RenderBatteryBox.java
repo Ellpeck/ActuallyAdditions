@@ -21,6 +21,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -53,7 +54,7 @@ public class RenderBatteryBox extends TileEntitySpecialRenderer<TileEntityBatter
 
                 String s = format.format(cap.getEnergyStored()) + "/" + format.format(cap.getMaxEnergyStored());
                 float lengthS = -font.getStringWidth(s) / 2F;
-                String s2 = "Crystal Flux";
+                String s2 = I18n.format("actuallyadditions.cflong");
                 float lengthS2 = -font.getStringWidth(s2) / 2F;
 
                 for (int i = 0; i < 4; i++) {
