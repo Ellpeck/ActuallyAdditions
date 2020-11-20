@@ -5,4 +5,4 @@ For more information, visit the main CurseForge Page by [clicking here](http://m
 Jenkins: [Click here](https://ci.ellpeck.de/blue/organizations/jenkins/ActuallyAdditions/)      
 Maven: [Click here](https://maven.ellpeck.de/de/ellpeck/actuallyadditions/)
 
-![](https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/master/pics/logo.png)
+![](https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/main/pics/logo.png)
