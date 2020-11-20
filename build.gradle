@@ -25,9 +25,11 @@ if (System.getenv('BUILD_NUMBER') != null) {
 
 minecraft {
     version = "1.12.2-14.23.5.2836"
-    runDir = "run"
     mappings = "stable_39"
+
+    runDir = "run"
 	makeObfSourceJar = false
+
     replaceIn "ActuallyAdditions.java"
     replace "@VERSION@", project.version.toString()
 }
@@ -56,7 +58,6 @@ processResources {
 
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-
         expand 'version': project.version, 'mcversion': project.minecraft.version
     }
 
@@ -65,24 +66,19 @@ processResources {
     }
 }
 
-jar {
+jar {}
 
-}
 task deobfJar(type: Jar) {
-    from(sourceSets.main.output)
-    archiveName = "${baseName}-${version}-deobf.${extension}"
-}
-
-task sourcesJar(type: Jar) {
-    from(sourceSets.main.allSource)
-    archiveName = "${baseName}-${version}-sources.${extension}"
+    from sourceSets.main.output
+    from sourceSets.main.java
+    classifier = 'dev'
 }
 
 task apiJar(type: Jar) {
-    from(sourceSets.main.output)
-    from(sourceSets.main.java)
-    include("de/ellpeck/actuallyadditions/api/**")
-    archiveName = "${baseName}-${version}-api.${extension}"
+    from sourceSets.main.output
+    from sourceSets.main.java
+    classifier = 'api'
+    include 'de/ellpeck/actuallyadditions/api/**'
 }
 
 javadoc {
@@ -94,12 +90,19 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier 'javadoc'
 }
 
+task sourcesJar(type: Jar) {
+    from sourceSets.main.java
+    classifier = 'sources'
+}
+
 artifacts {
     archives deobfJar
     archives sourcesJar
     archives apiJar
     archives javadocJar
 }
+
+apply plugin: 'maven-publish'
 
 publishing {
     publications {
@@ -109,21 +112,11 @@ publishing {
             version project.version
             from components.java
 
-            artifact deobfJar {
-                classifier 'deobf'
-            }
-            artifact sourcesJar {
-                classifier 'sources'
-            }
-            artifact apiJar {
-                classifier 'api'
-            }
-
-            pom.withXml {
-                def node = asNode()
-                if (node.dependencies.size() > 0)
-                    node.remove(node.dependencies)
-            }
+            artifact jar
+            artifact apiJar
+            artifact javadocJar
+            artifact sourcesJar
+            artifact deobfJar
         }
     }
     repositories {
