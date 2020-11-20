@@ -21,6 +21,7 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
@@ -31,7 +32,7 @@ public class EntityWorm extends Entity {
 
     public EntityWorm(World world) {
         super(world);
-        this.setEntityBoundingBox(null);
+        this.setEntityBoundingBox(new AxisAlignedBB(0, 0, 0, 0, 0, 0));
     }
 
     public static boolean canWormify(World world, BlockPos pos, IBlockState state) {
