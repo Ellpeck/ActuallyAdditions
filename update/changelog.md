@@ -1,5 +1,7 @@
 # 1.12.2-r152
 * CrankySupertoon: Fixed Crystal Flux Localization
+* Falcion: Updated russian translation
+* Jammehcow: Fixed a rare NPE with other mods on the worm entity
 
 # 1.12.2-r151
 * TomyLobo: Improved performance of the item interface.

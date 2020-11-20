@@ -13,6 +13,7 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'idea'
+apply plugin: 'maven-publish'
 
 version = "1.12.2-r152"
 group = "de.ellpeck.actuallyadditions"
@@ -67,18 +68,21 @@ processResources {
 jar {
 
 }
-
 task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    from sourceSets.main.java
-    classifier = 'dev'
+    from(sourceSets.main.output)
+    archiveName = "${baseName}-${version}-deobf.${extension}"
+}
+
+task sourcesJar(type: Jar) {
+    from(sourceSets.main.allSource)
+    archiveName = "${baseName}-${version}-sources.${extension}"
 }
 
 task apiJar(type: Jar) {
-    from sourceSets.main.output
-    from sourceSets.main.java
-    classifier = 'api'
-    include 'de/ellpeck/actuallyadditions/api/**'
+    from(sourceSets.main.output)
+    from(sourceSets.main.java)
+    include("de/ellpeck/actuallyadditions/api/**")
+    archiveName = "${baseName}-${version}-api.${extension}"
 }
 
 javadoc {
@@ -90,21 +94,36 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier 'javadoc'
 }
 
-task sourcesJar(type: Jar) {
-    from sourceSets.main.java
-    classifier = 'sources'
+artifacts {
+    archives deobfJar
+    archives sourcesJar
+    archives apiJar
+    archives javadocJar
 }
-
-apply plugin: 'maven-publish'
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact jar
-            artifact apiJar
-            artifact javadocJar
-            artifact sourcesJar
-            artifact deobfJar
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            from components.java
+
+            artifact deobfJar {
+                classifier 'deobf'
+            }
+            artifact sourcesJar {
+                classifier 'sources'
+            }
+            artifact apiJar {
+                classifier 'api'
+            }
+
+            pom.withXml {
+                def node = asNode()
+                if (node.dependencies.size() > 0)
+                    node.remove(node.dependencies)
+            }
         }
     }
     repositories {
