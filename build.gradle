@@ -100,25 +100,11 @@ apply plugin: 'maven-publish'
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId project.group
-            artifactId project.archivesBaseName
-            version project.version
-            from components.java
-
-            artifact deobfJar {
-                classifier 'deobf'
-            }
-            artifact sourcesJar {
-                classifier 'sources'
-            }
-            artifact apiJar {
-                classifier 'api'
-            }
-            artifact javadocJar {
-                classifier 'docs'
-            }
-
             artifact jar
+            artifact apiJar
+            artifact javadocJar
+            artifact sourcesJar
+            artifact deobfJar
         }
     }
     repositories {
