@@ -13,7 +13,6 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'idea'
-apply plugin: 'maven-publish'
 
 version = "1.12.2-r152"
 group = "de.ellpeck.actuallyadditions"
@@ -25,11 +24,9 @@ if (System.getenv('BUILD_NUMBER') != null) {
 
 minecraft {
     version = "1.12.2-14.23.5.2836"
-    mappings = "stable_39"
-
     runDir = "run"
-	makeObfSourceJar = false
-
+    mappings = "stable_39"
+    makeObfSourceJar = false
     replaceIn "ActuallyAdditions.java"
     replace "@VERSION@", project.version.toString()
 }
@@ -38,17 +35,17 @@ repositories {
     maven {
         url "https://dvs1.progwml6.com/files/maven"
     }
-	maven {
-		url "https://maven.tehnut.info"
-	}
-	maven {
+    maven {
+        url "https://maven.tehnut.info"
+    }
+    maven {
         url "https://dl.bintray.com/cyclopsmc/dev/"
     }
 }
 
 dependencies {
-	deobfCompile "mezz.jei:jei_1.12.2:+"
-	deobfCompile "mcp.mobius.waila:Hwyla:1.8+"
+    deobfCompile "mezz.jei:jei_1.12.2:+"
+    deobfCompile "mcp.mobius.waila:Hwyla:1.8+"
     deobfCompile ("org.cyclops.commoncapabilities:CommonCapabilities:1.12.2-+")
 }
 
@@ -58,6 +55,7 @@ processResources {
 
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
+
         expand 'version': project.version, 'mcversion': project.minecraft.version
     }
 
@@ -66,7 +64,9 @@ processResources {
     }
 }
 
-jar {}
+jar {
+
+}
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
@@ -93,13 +93,6 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 task sourcesJar(type: Jar) {
     from sourceSets.main.java
     classifier = 'sources'
-}
-
-artifacts {
-    archives deobfJar
-    archives sourcesJar
-    archives apiJar
-    archives javadocJar
 }
 
 apply plugin: 'maven-publish'
