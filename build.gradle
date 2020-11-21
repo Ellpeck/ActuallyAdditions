@@ -18,6 +18,9 @@ version = "1.12.2-r152"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
+// Store the mod version instead of publishing with the build number side the mod
+def modVersion = version
+
 if (System.getenv('BUILD_NUMBER') != null) {
     version += "." + System.getenv('BUILD_NUMBER')
 }
@@ -28,7 +31,7 @@ minecraft {
     mappings = "stable_39"
     makeObfSourceJar = false
     replaceIn "ActuallyAdditions.java"
-    replace "@VERSION@", project.version.toString()
+    replace "@VERSION@", modVersion.toString()
 }
 
 repositories {
@@ -97,14 +100,30 @@ task sourcesJar(type: Jar) {
 
 apply plugin: 'maven-publish'
 
+artifacts {
+    archives deobfJar, sourcesJar, apiJar, javadocJar
+}
+
 publishing {
+    tasks.publish.dependsOn build
     publications {
         mavenJava(MavenPublication) {
-            artifact jar
+            groupId = group
+            artifactId = archivesBaseName
+            version = version
+
+            from components.java
+
+            artifact deobfJar
+            artifact sourcesJar
             artifact apiJar
             artifact javadocJar
-            artifact sourcesJar
-            artifact deobfJar
+
+            pom.withXml {
+                def node = asNode()
+                if (node.dependencies.size() > 0)
+                    node.remove(node.dependencies)
+            }
         }
     }
     repositories {
