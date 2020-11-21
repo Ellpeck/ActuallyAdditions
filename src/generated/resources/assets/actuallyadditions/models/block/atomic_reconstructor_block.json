@@ -1,6 +1,8 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/orientable",
   "textures": {
-    "all": "actuallyadditions:block/atomic_reconstructor_block"
+    "side": "actuallyadditions:block/atomic_reconstructor_block",
+    "front": "actuallyadditions:block/atomic_reconstructor_block_front",
+    "top": "actuallyadditions:block/atomic_reconstructor_block_top"
   }
 }

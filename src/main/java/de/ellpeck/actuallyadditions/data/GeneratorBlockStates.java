@@ -2,7 +2,10 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.blocks.ActuallyBlocks;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.block.WallBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ResourceLocation;
@@ -19,6 +22,8 @@ public class GeneratorBlockStates extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        fullyDirectionalBlock(ActuallyBlocks.ATOMIC_RECONSTRUCTOR);
+
         buildCubeAll(ActuallyBlocks.CRYSTAL_CLUSTER_RESTONIA);
         buildCubeAll(ActuallyBlocks.CRYSTAL_CLUSTER_PALIS);
         buildCubeAll(ActuallyBlocks.CRYSTAL_CLUSTER_DIAMATINE);
@@ -37,7 +42,6 @@ public class GeneratorBlockStates extends BlockStateProvider {
         buildCubeAll(ActuallyBlocks.ITEM_INTERFACE);
         buildCubeAll(ActuallyBlocks.FIREWORK_BOX);
         buildCubeAll(ActuallyBlocks.MINER);
-        buildCubeAll(ActuallyBlocks.ATOMIC_RECONSTRUCTOR);
         buildCubeAll(ActuallyBlocks.CRYSTAL_RESTONIA);
         buildCubeAll(ActuallyBlocks.CRYSTAL_PALIS);
         buildCubeAll(ActuallyBlocks.CRYSTAL_DIAMATINE);
@@ -160,4 +164,17 @@ public class GeneratorBlockStates extends BlockStateProvider {
             .partialState().with(BlockStateProperties.LIT, true)
                 .addModels(ConfiguredModel.builder().modelFile(models().cubeAll(name.toString(), modLoc("block/" + name.getPath().replace("_block", "_on_block")))).build());
     }
+
+    private void fullyDirectionalBlock(Supplier<Block> block) {
+        ResourceLocation name = block.get().getRegistryName();
+
+        assert name != null;
+        directionalBlock(block.get(), models().orientable(
+                name.toString(),
+                modLoc(String.format("block/%s", name.getPath())),
+                modLoc(String.format("block/%s_front", name.getPath())),
+                modLoc(String.format("block/%s_top", name.getPath()))
+        ));
+    }
+
 }
