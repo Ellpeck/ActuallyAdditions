@@ -1,5 +1,6 @@
-package de.ellpeck.actuallyadditions.common.items;
+package de.ellpeck.actuallyadditions.common.materials;
 
+import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
@@ -8,7 +9,7 @@ import net.minecraft.util.LazyValue;
 import java.util.function.Supplier;
 
 // Mostly a copy of the ItemTier enum because... Lazy
-public enum  ActuallyToolsTiers implements IItemTier {
+public enum ToolMaterials implements IItemTier {
     EMERALD(3, 2000, 9.0f, 5.0f, 15, () -> Ingredient.fromItems(Items.EMERALD)),
     OBSIDIAN(3, 8000, 4.0f, 2.0f, 15, () -> Ingredient.fromItems(Items.OBSIDIAN)),
 
@@ -28,7 +29,7 @@ public enum  ActuallyToolsTiers implements IItemTier {
     private final int enchantability;
     private final LazyValue<Ingredient> repairMaterial;
 
-    ActuallyToolsTiers(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
+    ToolMaterials(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
         this.harvestLevel = harvestLevelIn;
         this.maxUses = maxUsesIn;
         this.efficiency = efficiencyIn;
