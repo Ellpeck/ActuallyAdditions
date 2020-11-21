@@ -35,7 +35,7 @@ public final class ToolSet {
         this.hoe = Pair.of("hoe", new HoeItem(tier, 1, ToolMaterials.RESTONIA.getAttackDamage() + 1.f, props.get()));
         this.helmet = Pair.of("helmet", new ArmorItem(armorTier, EquipmentSlotType.HEAD, props.get()));
         this.chest = Pair.of("chest", new ArmorItem(armorTier, EquipmentSlotType.CHEST, props.get()));
-        this.leggins = Pair.of("leggins", new ArmorItem(armorTier, EquipmentSlotType.LEGS, props.get()));
+        this.leggins = Pair.of("leggings", new ArmorItem(armorTier, EquipmentSlotType.LEGS, props.get()));
         this.boots = Pair.of("boots", new ArmorItem(armorTier, EquipmentSlotType.FEET, props.get()));
 
         this.items = ImmutableSet.of(pickaxe, axe, shovel, sword, hoe, helmet, chest, leggins, boots);

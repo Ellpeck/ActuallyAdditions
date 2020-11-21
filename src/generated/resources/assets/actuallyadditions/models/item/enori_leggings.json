@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "actuallyadditions:item/void_leggins"
+    "layer0": "actuallyadditions:item/enori_leggings"
   }
 }

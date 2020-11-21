@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "actuallyadditions:item/quartz_leggins"
+    "layer0": "actuallyadditions:item/emerald_leggings"
   }
 }
