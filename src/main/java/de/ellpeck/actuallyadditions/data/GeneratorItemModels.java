@@ -3,6 +3,7 @@ package de.ellpeck.actuallyadditions.data;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
+import de.ellpeck.actuallyadditions.common.items.ToolSet;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
@@ -11,6 +12,7 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.util.Collection;
 import java.util.function.Supplier;
 
 public class GeneratorItemModels extends ItemModelProvider {
@@ -21,6 +23,13 @@ public class GeneratorItemModels extends ItemModelProvider {
     @Override
     protected void registerModels() {
         ActuallyItems.SIMPLE_ITEMS.forEach(this::simpleItem);
+
+        // Toolsets
+        ActuallyItems.ALL_TOOL_SETS.stream()
+                .map(ToolSet::getItemGroup)
+                .flatMap(Collection::stream)
+                .forEach(item -> simpleItem(() -> item));
+
         ActuallyBlocks.BLOCKS.getEntries().forEach(this::registerBlockModel);
     }
 
