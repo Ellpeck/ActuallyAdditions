@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "actuallyadditions:block/energy_laser_relay_block"
+    }
+  }
+}

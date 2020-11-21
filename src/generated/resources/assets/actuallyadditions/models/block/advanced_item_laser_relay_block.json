@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "actuallyadditions:block/advanced_item_laser_relay_block"
+  }
+}

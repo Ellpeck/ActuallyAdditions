@@ -82,6 +82,11 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> FLUID_COLLECTOR = BLOCKS.register("fluid_collector_block", () -> new FluidCollectorBlock(false));
     public static final RegistryObject<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine_block", CoffeeMachineBlock::new);
     public static final RegistryObject<Block> PHANTOM_BOOSTER = BLOCKS.register("phantom_booster_block", PhantomBoosterBlock::new);
+    public static final RegistryObject<Block> RANGED_COLLECTOR = BLOCKS.register("ranged_collector_block", RangedCollectorBlock::new);
+    public static final RegistryObject<Block> DIRECTIONAL_BREAKER = BLOCKS.register("directional_breaker_block", DirectionalBreakerBlock::new);
+    public static final RegistryObject<Block> LEAF_GENERATOR = BLOCKS.register("leaf_generator_block", LeafGeneratorBlock::new);
+    public static final RegistryObject<Block> SMILEY_CLOUD = BLOCKS.register("smiley_cloud_block", SmileyCloudBlock::new);
+    public static final RegistryObject<Block> XP_SOLIDIFIER = BLOCKS.register("xp_solidifier_block", XPSolidifierBlock::new);
 
     // CRYSTALS
     public static final RegistryObject<Block> CRYSTAL_QUARTS = BLOCKS.register("crystal_quarts_block", () -> new CrystalBlock(false));
@@ -91,12 +96,12 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> CRYSTAL_VOID = BLOCKS.register("crystal_void_block", () -> new CrystalBlock(false));
     public static final RegistryObject<Block> CRYSTAL_EMERADIC = BLOCKS.register("crystal_emeradic_block", () -> new CrystalBlock(false));
     
-    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_QUARTS = BLOCKS.register("crystal_empowered_quarts_block", () -> new CrystalBlock(true));
-    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_RESTONIA = BLOCKS.register("crystal_empowered_restonia_block", () -> new CrystalBlock(true));
-    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_PALIS = BLOCKS.register("crystal_empowered_palis_block", () -> new CrystalBlock(true));
-    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_DIAMATINE = BLOCKS.register("crystal_empowered_diamatine_block", () -> new CrystalBlock(true));
-    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_VOID = BLOCKS.register("crystal_empowered_void_block", () -> new CrystalBlock(true));
-    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_EMERADIC = BLOCKS.register("crystal_empowered_emeradic_block", () -> new CrystalBlock(true));
+    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_QUARTS = BLOCKS.register("crystal_quarts_empowered_block", () -> new CrystalBlock(true));
+    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_RESTONIA = BLOCKS.register("crystal_restonia_empowered_block", () -> new CrystalBlock(true));
+    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_PALIS = BLOCKS.register("crystal_palis_empowered_block", () -> new CrystalBlock(true));
+    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_DIAMATINE = BLOCKS.register("crystal_diamatine_empowered_block", () -> new CrystalBlock(true));
+    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_VOID = BLOCKS.register("crystal_void_empowered_block", () -> new CrystalBlock(true));
+    public static final RegistryObject<Block> CRYSTAL_EMPOWERED_EMERADIC = BLOCKS.register("crystal_emeradic_empowered_block", () -> new CrystalBlock(true));
 
     public static final RegistryObject<Block> CRYSTAL_CLUSTER_RESTONIA = BLOCKS.register("crystal_cluster_restonia_block", () -> new CrystalClusterBlock(Crystals.REDSTONE));
     public static final RegistryObject<Block> CRYSTAL_CLUSTER_PALIS = BLOCKS.register("crystal_cluster_palis_block", () -> new CrystalClusterBlock(Crystals.LAPIS));
@@ -112,11 +117,6 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> FLUIDS_LASER_RELAY = BLOCKS.register("fluids_laser_relay_block", () -> new LaserRelayBlock(LaserRelays.FLUIDS));
     public static final RegistryObject<Block> ITEM_LASER_RELAY = BLOCKS.register("item_laser_relay_block", () -> new LaserRelayBlock(LaserRelays.ITEM));
     public static final RegistryObject<Block> ADVANCED_ITEM_LASER_RELAY = BLOCKS.register("advanced_item_laser_relay_block", () -> new LaserRelayBlock(LaserRelays.ITEM_WHITELIST));
-    public static final RegistryObject<Block> RANGED_COLLECTOR = BLOCKS.register("ranged_collector_block", RangedCollectorBlock::new);
-    public static final RegistryObject<Block> DIRECTIONAL_BREAKER = BLOCKS.register("directional_breaker_block", DirectionalBreakerBlock::new);
-    public static final RegistryObject<Block> LEAF_GENERATOR = BLOCKS.register("leaf_generator_block", LeafGeneratorBlock::new);
-    public static final RegistryObject<Block> SMILEY_CLOUD = BLOCKS.register("smiley_cloud_block", SmileyCloudBlock::new);
-    public static final RegistryObject<Block> XP_SOLIDIFIER = BLOCKS.register("xp_solidifier_block", XPSolidifierBlock::new);
 
     // BUILDING BLOCKS
     public static final RegistryObject<Block> GREEN_WALL = BLOCKS.register("green_wall_block", GenericBlock::new);
@@ -165,7 +165,7 @@ public class ActuallyBlocks {
     // MISC BLOCKS
     public static final RegistryObject<Block> ENDERPEARL = BLOCKS.register("enderpearl_block", () -> new Block(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> CHARCOAL = BLOCKS.register("charcoal_block", () -> new Block(Block.Properties.create(Material.ROCK)));
-    public static final RegistryObject<Block> ORE_BLACK_QUARTS = BLOCKS.register("ore_black_quarts_block", () -> new Block(Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> ORE_BLACK_QUARTS = BLOCKS.register("ore_black_quartz_block", () -> new Block(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> ENDER_CASING = BLOCKS.register("ender_casing_block", () -> new Block(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> IRON_CASING = BLOCKS.register("iron_casing_block", () -> new Block(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> IRON_CASING_SNOW = BLOCKS.register("iron_casing_snow_block", () -> new Block(Block.Properties.create(Material.ROCK)));

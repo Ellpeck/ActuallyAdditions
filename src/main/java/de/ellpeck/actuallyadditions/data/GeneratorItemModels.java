@@ -22,6 +22,8 @@ public class GeneratorItemModels extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        simpleItem(ActuallyItems.BOOKLET); // will require complex I think
+
         ActuallyItems.SIMPLE_ITEMS.forEach(this::simpleItem);
 
         // Toolsets
