@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/outer_stairs",
   "textures": {
-    "side": "actuallyadditions:block/white_wall_block",
-    "bottom": "actuallyadditions:block/white_wall_block",
-    "top": "actuallyadditions:block/white_wall_block"
+    "side": "actuallyadditions:block/white_block",
+    "bottom": "actuallyadditions:block/white_block",
+    "top": "actuallyadditions:block/white_block"
   }
 }

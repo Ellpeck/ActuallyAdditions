@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "actuallyadditions:block/crystal_quarts_block"
+    "all": "actuallyadditions:block/white_block"
   }
 }

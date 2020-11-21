@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "actuallyadditions:white_wall_block",
+    "actuallyadditions:green_wall_block",
+    "actuallyadditions:black_quartz_wall_block",
+    "actuallyadditions:black_pillar_quartz_wall_block",
+    "actuallyadditions:black_chiseled_quartz_wall_block"
+  ]
+}

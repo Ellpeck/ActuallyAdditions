@@ -7,7 +7,7 @@
       "model": "actuallyadditions:block/white_slab_block"
     },
     "type=double": {
-      "model": "actuallyadditions:block/white_wall_block"
+      "model": "actuallyadditions:block/white_block"
     }
   }
 }
