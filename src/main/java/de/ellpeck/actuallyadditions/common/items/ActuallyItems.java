@@ -17,15 +17,15 @@ public class ActuallyItems {
 
     // tools
     // If these ever need registry object referencing then I might be shit out of luck but it shouldn't be that complex to fix.
-    public static final ToolSet EMERALD_SET =      new ToolSet("emerald", ToolMaterials.EMERALD, ArmorMaterials.EMERALD, ActuallyItems::defaultProps);
-    public static final ToolSet OBSIDIAN_SET =     new ToolSet("obsidian", ToolMaterials.OBSIDIAN, ArmorMaterials.OBSIDIAN, ActuallyItems::defaultProps);
-    public static final ToolSet QUARTZ_SET =       new ToolSet("quartz", ToolMaterials.QUARTZ, ArmorMaterials.QUARTZ, ActuallyItems::defaultProps);
-    public static final ToolSet ENORI_SET =        new ToolSet("enori", ToolMaterials.ENORI, ArmorMaterials.ENORI, ActuallyItems::defaultProps);
-    public static final ToolSet EMERADIC_SET =     new ToolSet("emeradic", ToolMaterials.EMERADIC, ArmorMaterials.EMERADIC, ActuallyItems::defaultProps);
-    public static final ToolSet VOID_SET =         new ToolSet("void", ToolMaterials.VOID, ArmorMaterials.VOID, ActuallyItems::defaultProps);
-    public static final ToolSet DIAMATINE_SET =    new ToolSet("diamatine", ToolMaterials.DIAMATINE, ArmorMaterials.DIAMATINE, ActuallyItems::defaultProps);
-    public static final ToolSet PALIS_SET =        new ToolSet("palis", ToolMaterials.PALIS, ArmorMaterials.PALIS, ActuallyItems::defaultProps);
-    public static final ToolSet RESTONIA_SET =     new ToolSet("restonia", ToolMaterials.RESTONIA, ArmorMaterials.RESTONIA, ActuallyItems::defaultProps);
+    public static final ToolSet EMERALD_SET = new ToolSet("emerald", ToolMaterials.EMERALD, ArmorMaterials.EMERALD, ActuallyItems::defaultProps);
+    public static final ToolSet OBSIDIAN_SET = new ToolSet("obsidian", ToolMaterials.OBSIDIAN, ArmorMaterials.OBSIDIAN, ActuallyItems::defaultProps);
+    public static final ToolSet QUARTZ_SET = new ToolSet("quartz", ToolMaterials.QUARTZ, ArmorMaterials.QUARTZ, ActuallyItems::defaultProps);
+    public static final ToolSet ENORI_SET = new ToolSet("enori", ToolMaterials.ENORI, ArmorMaterials.ENORI, ActuallyItems::defaultProps);
+    public static final ToolSet EMERADIC_SET = new ToolSet("emeradic", ToolMaterials.EMERADIC, ArmorMaterials.EMERADIC, ActuallyItems::defaultProps);
+    public static final ToolSet VOID_SET = new ToolSet("void", ToolMaterials.VOID, ArmorMaterials.VOID, ActuallyItems::defaultProps);
+    public static final ToolSet DIAMATINE_SET = new ToolSet("diamatine", ToolMaterials.DIAMATINE, ArmorMaterials.DIAMATINE, ActuallyItems::defaultProps);
+    public static final ToolSet PALIS_SET = new ToolSet("palis", ToolMaterials.PALIS, ArmorMaterials.PALIS, ActuallyItems::defaultProps);
+    public static final ToolSet RESTONIA_SET = new ToolSet("restonia", ToolMaterials.RESTONIA, ArmorMaterials.RESTONIA, ActuallyItems::defaultProps);
 
     public static final Set<ToolSet> ALL_TOOL_SETS = ImmutableSet.of(EMERALD_SET, OBSIDIAN_SET, QUARTZ_SET, ENORI_SET, EMERADIC_SET, VOID_SET, DIAMATINE_SET, PALIS_SET, RESTONIA_SET);
 
