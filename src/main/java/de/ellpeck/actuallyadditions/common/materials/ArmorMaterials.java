@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.common.materials;
 
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
@@ -39,7 +40,7 @@ public enum ArmorMaterials implements IArmorMaterial {
     private final LazyValue<Ingredient> repairMaterial;
 
     ArmorMaterials(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {
-        this.name = name;
+        this.name = String.format("%s:%s", ActuallyAdditions.MOD_ID, name);
         this.maxDamageFactor = maxDamageFactor;
         this.damageReductionAmountArray = damageReductionAmountArray;
         this.enchantability = enchantability;
