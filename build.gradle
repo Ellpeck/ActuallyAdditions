@@ -18,9 +18,6 @@ version = "1.12.2-r152"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions"
 
-// Store the mod version instead of publishing with the build number side the mod
-def modVersion = version
-
 if (System.getenv('BUILD_NUMBER') != null) {
     version += "." + System.getenv('BUILD_NUMBER')
 }
@@ -31,7 +28,7 @@ minecraft {
     mappings = "stable_39"
     makeObfSourceJar = false
     replaceIn "ActuallyAdditions.java"
-    replace "@VERSION@", modVersion.toString()
+    replace "@VERSION@", version.toString()
 }
 
 repositories {
