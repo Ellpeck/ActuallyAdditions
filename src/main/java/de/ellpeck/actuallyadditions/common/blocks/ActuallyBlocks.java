@@ -1,6 +1,14 @@
 package de.ellpeck.actuallyadditions.common.blocks;
 
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.common.blocks.building.CrystalBlock;
+import de.ellpeck.actuallyadditions.common.blocks.building.CrystalClusterBlock;
+import de.ellpeck.actuallyadditions.common.blocks.building.FenceBlock;
+import de.ellpeck.actuallyadditions.common.blocks.building.WallBlock;
+import de.ellpeck.actuallyadditions.common.blocks.functional.*;
+import de.ellpeck.actuallyadditions.common.blocks.misc.TinyTorchBlock;
+import de.ellpeck.actuallyadditions.common.blocks.plant.BlackLotusBlock;
+import de.ellpeck.actuallyadditions.common.blocks.plant.PlantBlock;
 import de.ellpeck.actuallyadditions.common.blocks.types.Crystals;
 import de.ellpeck.actuallyadditions.common.blocks.types.LaserRelays;
 import de.ellpeck.actuallyadditions.common.blocks.types.PhantomType;
@@ -117,15 +125,15 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> WHITE_STAIRS = BLOCKS.register("white_stairs_block", () -> new StairsBlock(() -> WHITE_WALL.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> GREEN_SLAB = BLOCKS.register("green_slab_block", () -> new SlabBlock(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> WHITE_SLAB = BLOCKS.register("white_slab_block", () -> new SlabBlock(Block.Properties.create(Material.ROCK)));
-    public static final RegistryObject<Block> GREEN_FENCE = BLOCKS.register("green_fence_block", () -> new FenceBlock(Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> GREEN_FENCE = BLOCKS.register("green_fence_block", () -> new de.ellpeck.actuallyadditions.common.blocks.building.FenceBlock(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> WHITE_FENCE = BLOCKS.register("white_fence_block", () -> new FenceBlock(Block.Properties.create(Material.ROCK)));
 
     public static final RegistryObject<Block> BLACK_QUARTZ = BLOCKS.register("black_quartz_block", () -> new Block(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> BLACK_QUARTZ_CHISELED = BLOCKS.register("black_quartz_chiseled_block", () -> new Block(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR = BLOCKS.register("black_quartz_pillar_block", () -> new Block(Block.Properties.create(Material.ROCK)));
 
-    public static final RegistryObject<Block> BLACK_QUARTZ_WALL = BLOCKS.register("black_quartz_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ.get())));
-    public static final RegistryObject<Block> BLACK_CHISELED_QUARTZ_WALL = BLOCKS.register("black_chiseled_quartz_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_CHISELED.get())));
+    public static final RegistryObject<Block> BLACK_QUARTZ_WALL = BLOCKS.register("black_quartz_wall_block", () -> new de.ellpeck.actuallyadditions.common.blocks.building.WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ.get())));
+    public static final RegistryObject<Block> BLACK_CHISELED_QUARTZ_WALL = BLOCKS.register("black_chiseled_quartz_wall_block", () -> new de.ellpeck.actuallyadditions.common.blocks.building.WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_CHISELED.get())));
     public static final RegistryObject<Block> BLACK_PILLAR_QUARTZ_WALL = BLOCKS.register("black_pillar_quartz_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_PILLAR.get())));
     public static final RegistryObject<Block> BLACK_QUARTZ_STAIR = BLOCKS.register("black_quartz_stair_block", () -> new StairsBlock(() -> BLACK_QUARTZ.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> BLACK_CHISELED_QUARTZ_STAIR = BLOCKS.register("black_chiseled_quartz_stair_block", () -> new StairsBlock(() -> BLACK_QUARTZ.get().getDefaultState(), Block.Properties.create(Material.ROCK)));

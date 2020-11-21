@@ -22,7 +22,7 @@ public class ActuallyAdditions {
     public static final ItemGroup ACTUALLY_GROUP = new ItemGroup(MOD_ID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ActuallyBlocks.blockEmpowerer.get());
+            return new ItemStack(ActuallyItems.BOOKLET.get());
         }
     };
 

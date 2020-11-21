@@ -38,6 +38,8 @@ public class ActuallyItems {
     public static final RegistryObject<Item> EMERADIC_CRYSTAL = ITEMS.register("emeradic_crystal", basicItem());
     public static final RegistryObject<Item> ENORI_CRYSTAL = ITEMS.register("enori_crystal", basicItem());
 
+    public static final RegistryObject<Item> BOOKLET = ITEMS.register("booklet", basicItem());
+
     public static final Set<RegistryObject<Item>> SIMPLE_ITEMS = ImmutableSet.of(
             BLACK_QUARTS, RESTONIA_CRYSTAL, PALIS_CRYSTAL, DIAMATINE_CRYSTAL,
             VOID_CRYSTAL, EMERADIC_CRYSTAL, ENORI_CRYSTAL
