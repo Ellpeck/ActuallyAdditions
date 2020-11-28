@@ -5,50 +5,73 @@ import de.ellpeck.actuallyadditions.common.materials.ToolMaterials;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.registries.DeferredRegister;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public final class ToolSet {
-    public final Pair<String, Item> pickaxe;
-    public final Pair<String, Item> axe;
-    public final Pair<String, Item> shovel;
-    public final Pair<String, Item> sword;
-    public final Pair<String, Item> hoe;
-    public final Pair<String, Item> helmet;
-    public final Pair<String, Item> chest;
-    public final Pair<String, Item> leggins;
-    public final Pair<String, Item> boots;
+    public final NamedItem pickaxe;
+    public final NamedItem axe;
+    public final NamedItem shovel;
+    public final NamedItem sword;
+    public final NamedItem hoe;
+    public final NamedItem helmet;
+    public final NamedItem chest;
+    public final NamedItem leggings;
+    public final NamedItem boots;
 
-    public final Set<Pair<String, Item>> items;
+    public final Set<NamedItem> items;
 
     public final IItemTier tier;
     public final String name;
 
     public ToolSet(String name, IItemTier tier, IArmorMaterial armorTier, Supplier<Item.Properties> props) {
-        this.pickaxe = Pair.of("pickaxe", new PickaxeItem(tier, 1, -2.8f, props.get()));
-        this.axe = Pair.of("axe", new AxeItem(tier, 6, -3.0f, props.get()));
-        this.shovel = Pair.of("shovel", new ShovelItem(tier, 1, -3.0f, props.get()));
-        this.sword = Pair.of("sword", new SwordItem(tier, 1, ToolMaterials.RESTONIA.getAttackDamage() + 1.f, props.get()));
-        this.hoe = Pair.of("hoe", new HoeItem(tier, 1, ToolMaterials.RESTONIA.getAttackDamage() + 1.f, props.get()));
-        this.helmet = Pair.of("helmet", new ArmorItem(armorTier, EquipmentSlotType.HEAD, props.get()));
-        this.chest = Pair.of("chest", new ArmorItem(armorTier, EquipmentSlotType.CHEST, props.get()));
-        this.leggins = Pair.of("leggings", new ArmorItem(armorTier, EquipmentSlotType.LEGS, props.get()));
-        this.boots = Pair.of("boots", new ArmorItem(armorTier, EquipmentSlotType.FEET, props.get()));
+        this.pickaxe = new NamedItem("pickaxe", "Pickaxe", new PickaxeItem(tier, 1, -2.8f, props.get()));
+        this.axe = new NamedItem("axe", "Axe", new AxeItem(tier, 6, -3.0f, props.get()));
+        this.shovel = new NamedItem("shovel", "Shovel", new ShovelItem(tier, 1, -3.0f, props.get()));
+        this.sword = new NamedItem("sword", "Sword", new SwordItem(tier, 1, ToolMaterials.RESTONIA.getAttackDamage() + 1.f, props.get()));
+        this.hoe = new NamedItem("hoe", "Hoe", new HoeItem(tier, 1, ToolMaterials.RESTONIA.getAttackDamage() + 1.f, props.get()));
+        this.helmet = new NamedItem("helmet", "Helmet", new ArmorItem(armorTier, EquipmentSlotType.HEAD, props.get()));
+        this.chest = new NamedItem("chest", "Chestplate", new ArmorItem(armorTier, EquipmentSlotType.CHEST, props.get()));
+        this.leggings = new NamedItem("leggings", "Leggings", new ArmorItem(armorTier, EquipmentSlotType.LEGS, props.get()));
+        this.boots = new NamedItem("boots", "Boots", new ArmorItem(armorTier, EquipmentSlotType.FEET, props.get()));
 
-        this.items = ImmutableSet.of(pickaxe, axe, shovel, sword, hoe, helmet, chest, leggins, boots);
+        this.items = ImmutableSet.of(pickaxe, axe, shovel, sword, hoe, helmet, chest, leggings, boots);
 
         this.name = name;
         this.tier = tier;
     }
 
     public void register(DeferredRegister<Item> register) {
-        this.items.forEach(item -> register.register(String.format("%s_%s", this.name, item.getKey()), item::getValue));
+        this.items.forEach(item -> register.register(String.format("%s_%s", this.name, item.getInternal()), item::getItem));
     }
 
     public Set<Item> getItemGroup() {
-        return this.items.stream().map(Pair::getValue).collect(Collectors.toSet());
+        return this.items.stream().map(NamedItem::getItem).collect(Collectors.toSet());
+    }
+
+    public static final class NamedItem {
+        private final String internal;
+        private final String pretty;
+        private final Item item;
+
+        public NamedItem(String internal, String pretty, Item item) {
+            this.internal = internal;
+            this.pretty = pretty;
+            this.item = item;
+        }
+
+        public String getInternal() {
+            return internal;
+        }
+
+        public String getPretty() {
+            return pretty;
+        }
+
+        public Item getItem() {
+            return item;
+        }
     }
 }
