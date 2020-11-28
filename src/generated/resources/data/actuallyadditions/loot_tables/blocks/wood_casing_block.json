@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "actuallyadditions:wood_casing_block"
         }
       ],
       "conditions": [
