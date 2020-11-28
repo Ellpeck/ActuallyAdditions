@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.items.useables.AllInOneTool;
 import de.ellpeck.actuallyadditions.common.items.useables.ManualItem;
+import de.ellpeck.actuallyadditions.common.items.useables.TeleportStaffItem;
 import de.ellpeck.actuallyadditions.common.materials.ArmorMaterials;
 import de.ellpeck.actuallyadditions.common.materials.ToolMaterials;
 import net.minecraft.item.Item;
@@ -95,7 +96,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> LENS_OF_DISENCHANTING = ITEMS.register("lens_of_disenchanting", basicItem());
     public static final RegistryObject<Item> LENS_OF_THE_MINER = ITEMS.register("lens_of_the_miner", basicItem());
     public static final RegistryObject<Item> LASER_WRENCH = ITEMS.register("laser_wrench", basicItem());
-    public static final RegistryObject<Item> TELEPORT_STAFF = ITEMS.register("teleport_staff", basicItem());
+    public static final RegistryObject<Item> TELEPORT_STAFF = ITEMS.register("teleport_staff", TeleportStaffItem::new);
     public static final RegistryObject<Item> WINGS_OF_THE_BATS = ITEMS.register("wings_of_the_bats", basicItem());
     public static final RegistryObject<Item> SINGLE_BATTERY = ITEMS.register("single_battery", basicItem());
     public static final RegistryObject<Item> DOUBLE_BATTERY = ITEMS.register("double_battery", basicItem());
