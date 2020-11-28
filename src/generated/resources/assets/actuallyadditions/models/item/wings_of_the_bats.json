@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "actuallyadditions:item/wings_of_the_bats"
+  }
+}

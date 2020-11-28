@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "actuallyadditions:item/crafting_table_on_a_stick"
+  }
+}
