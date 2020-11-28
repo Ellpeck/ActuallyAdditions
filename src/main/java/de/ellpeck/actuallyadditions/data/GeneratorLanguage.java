@@ -167,8 +167,11 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ActuallyItems.EMERADIC_CRYSTAL, "Emeradic Crystal");
         addItem(ActuallyItems.ENORI_CRYSTAL, "Enori Crystal");
 
-        // Misc
-        addItem(ActuallyItems.BOOKLET, "Booklet");
+        // Booklet
+        addItem(ActuallyItems.BOOKLET, "Actually Additions Manual");
+        addPrefixed("tooltip.booklet.manual.one", "Or \"Booklet\", if you will");
+        addPrefixed("tooltip.booklet.manual.two", "This book guides you through all of the feature Actually Additions has to over.");
+        addPrefixed("tooltip.booklet.manual.three", "Use while holding to open.");
 
         add("itemGroup.actuallyadditions", "Actually Additions");
 

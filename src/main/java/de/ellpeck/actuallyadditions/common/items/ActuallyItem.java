@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.common.items;
 
+import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import net.minecraft.item.Item;
 
 /**
@@ -9,5 +10,9 @@ import net.minecraft.item.Item;
 public abstract class ActuallyItem extends Item implements IActuallyItem {
     public ActuallyItem(Properties properties) {
         super(properties);
+    }
+
+    protected static Item.Properties baseProps() {
+        return new Item.Properties().group(ActuallyAdditions.ACTUALLY_GROUP);
     }
 }

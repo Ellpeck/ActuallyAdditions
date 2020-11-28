@@ -26,6 +26,7 @@ public class GeneratorItemModels extends ItemModelProvider {
 
         ActuallyItems.SIMPLE_ITEMS.forEach(this::simpleItem);
 
+
         // Toolsets
         ActuallyItems.ALL_TOOL_SETS.stream()
                 .map(ToolSet::getItemGroup)

@@ -3,6 +3,7 @@ package de.ellpeck.actuallyadditions.common.items;
 import com.google.common.collect.ImmutableSet;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.items.useables.AllInOneTool;
+import de.ellpeck.actuallyadditions.common.items.useables.ManualItem;
 import de.ellpeck.actuallyadditions.common.materials.ArmorMaterials;
 import de.ellpeck.actuallyadditions.common.materials.ToolMaterials;
 import net.minecraft.item.*;
@@ -13,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class ActuallyItems {
+public final class ActuallyItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ActuallyAdditions.MOD_ID);
 
     // tools
@@ -52,7 +53,7 @@ public class ActuallyItems {
     public static final RegistryObject<Item> EMERADIC_CRYSTAL = ITEMS.register("emeradic_crystal", basicItem());
     public static final RegistryObject<Item> ENORI_CRYSTAL = ITEMS.register("enori_crystal", basicItem());
 
-    public static final RegistryObject<Item> BOOKLET = ITEMS.register("booklet", basicItem());
+    public static final RegistryObject<Item> BOOKLET = ITEMS.register("booklet", ManualItem::new);
 
     public static final Set<RegistryObject<Item>> SIMPLE_ITEMS = ImmutableSet.of(
             // Crystals
