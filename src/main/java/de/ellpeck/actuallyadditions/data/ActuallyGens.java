@@ -14,13 +14,17 @@ public final class ActuallyGens {
     public static void runGenerator(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
 
-        if( event.includeClient() ) {
+        if (event.includeClient()) {
             ExistingFileHelper helper = event.getExistingFileHelper();
 
             generator.addProvider(new GeneratorBlockStates(generator, helper));
             generator.addProvider(new GeneratorItemModels(generator, helper));
             generator.addProvider(new GeneratorLanguage(generator));
             generator.addProvider(new GeneratorBlockTags(generator, helper));
+        }
+
+        if (event.includeServer()) {
+            generator.addProvider(new GeneratorLoot(generator));
         }
     }
 }

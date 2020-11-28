@@ -1,4 +1,7 @@
 {
+  "actuallyadditions.tooltip.booklet.manual.one": "Or \"Booklet\", if you will",
+  "actuallyadditions.tooltip.booklet.manual.three": "Use while holding to open.",
+  "actuallyadditions.tooltip.booklet.manual.two": "This book guides you through all of the feature Actually Additions has to over.",
   "block.actuallyadditions.advanced_item_laser_relay_block": "Advanced Item Laser Relay",
   "block.actuallyadditions.atomic_reconstructor_block": "Atomic Reconstructor",
   "block.actuallyadditions.battery_box_block": "Battery Box",
@@ -123,7 +126,7 @@
   "block.actuallyadditions.wood_casing_block": "Wood Casing",
   "block.actuallyadditions.xp_solidifier_block": "XP Solidifier",
   "item.actuallyadditions.black_quartz": "Black Quarts",
-  "item.actuallyadditions.booklet": "Booklet",
+  "item.actuallyadditions.booklet": "Actually Additions Manual",
   "item.actuallyadditions.diamatine_axe": "Diamatine Axe",
   "item.actuallyadditions.diamatine_boots": "Diamatine Boots",
   "item.actuallyadditions.diamatine_chest": "Diamatine Chestplate",
