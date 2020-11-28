@@ -125,8 +125,8 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR = BLOCKS.register("black_quartz_pillar_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
 
     public static final RegistryObject<Block> BLACK_QUARTZ_WALL = BLOCKS.register("black_quartz_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ.get())));
-    public static final RegistryObject<Block> BLACK_CHISELED_QUARTZ_WALL = BLOCKS.register("black_chiseled_quartz_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_CHISELED.get())));
-    public static final RegistryObject<Block> BLACK_PILLAR_QUARTZ_WALL = BLOCKS.register("black_pillar_quartz_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_PILLAR.get())));
+    public static final RegistryObject<Block> BLACK_CHISELED_QUARTZ_WALL = BLOCKS.register("black_quartz_chiseled_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_CHISELED.get())));
+    public static final RegistryObject<Block> BLACK_PILLAR_QUARTZ_WALL = BLOCKS.register("black_quartz_pillar_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_PILLAR.get())));
     public static final RegistryObject<Block> BLACK_QUARTZ_STAIR = BLOCKS.register("black_quartz_stair_block", () -> new StairsBlock(() -> BLACK_QUARTZ.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> BLACK_CHISELED_QUARTZ_STAIR = BLOCKS.register("black_chiseled_quartz_stair_block", () -> new StairsBlock(() -> BLACK_QUARTZ.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> BLACK_PILLAR_QUARTZ_STAIR = BLOCKS.register("black_pillar_quartz_stair_block", () -> new StairsBlock(() -> BLACK_QUARTZ.get().getDefaultState(), Block.Properties.create(Material.ROCK)));

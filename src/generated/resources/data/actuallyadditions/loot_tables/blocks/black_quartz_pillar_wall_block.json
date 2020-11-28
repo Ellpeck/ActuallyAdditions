@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "actuallyadditions:solar_panel_block"
+          "name": "actuallyadditions:black_quartz_pillar_wall_block"
         }
       ],
       "conditions": [

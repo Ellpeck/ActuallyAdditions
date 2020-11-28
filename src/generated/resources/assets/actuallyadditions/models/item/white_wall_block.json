@@ -1,3 +1,6 @@
 {
-  "parent": "actuallyadditions:block/white_wall_block"
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "actuallyadditions:block/white_block"
+  }
 }
