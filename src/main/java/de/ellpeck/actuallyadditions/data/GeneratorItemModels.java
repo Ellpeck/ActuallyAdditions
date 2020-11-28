@@ -27,6 +27,7 @@ public class GeneratorItemModels extends ItemModelProvider {
         // Items
         simpleItem(ActuallyItems.BOOKLET); // will require complex I think
 
+        // All items?
         ActuallyItems.SIMPLE_ITEMS.forEach(this::simpleItem);
 
         // Toolsets
