@@ -2,6 +2,8 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
+import de.ellpeck.actuallyadditions.common.items.ToolSet;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 
@@ -137,6 +139,37 @@ public class GeneratorLanguage extends LanguageProvider {
         addBlock(ActuallyBlocks.LAVA_FACTORY_CASE, "Casing");
         addBlock(ActuallyBlocks.WOOD_CASING, "Wood Casing");
 
+        // -- Items
+        // Tools
+        ActuallyItems.ALL_TOOL_SETS.forEach(this::addToolSet);
+
+        // Paxels
+        addItem(ActuallyItems.WOODEN_PAXEL, "Wooden Paxel");
+        addItem(ActuallyItems.STONE_PAXEL, "Stone Paxel");
+        addItem(ActuallyItems.IRON_PAXEL, "Iron Paxel");
+        addItem(ActuallyItems.GOLD_PAXEL, "Gold Paxel");
+        addItem(ActuallyItems.DIAMOND_PAXEL, "Diamond Paxel");
+        addItem(ActuallyItems.NETHERITE_PAXEL, "Netherite Paxel");
+        addItem(ActuallyItems.QUARTZ_PAXEL, "Quartz Paxel");
+        addItem(ActuallyItems.ENORI_PAXEL, "Enori Paxel");
+        addItem(ActuallyItems.EMERADIC_PAXEL, "Emeradic Paxel");
+        addItem(ActuallyItems.VOID_PAXEL, "Void Paxel");
+        addItem(ActuallyItems.DIAMATINE_PAXEL, "Diamatine Paxel");
+        addItem(ActuallyItems.PALIS_PAXEL, "Palis Paxel");
+        addItem(ActuallyItems.RESTONIA_PAXEL, "Restonia Paxel");
+
+        // Crystals
+        addItem(ActuallyItems.BLACK_QUARTS, "Black Quarts");
+        addItem(ActuallyItems.RESTONIA_CRYSTAL, "Restonia Crystal");
+        addItem(ActuallyItems.PALIS_CRYSTAL, "Palis Crystal");
+        addItem(ActuallyItems.DIAMATINE_CRYSTAL, "Diamatine Crystal");
+        addItem(ActuallyItems.VOID_CRYSTAL, "Void Crystal");
+        addItem(ActuallyItems.EMERADIC_CRYSTAL, "Emeradic Crystal");
+        addItem(ActuallyItems.ENORI_CRYSTAL, "Enori Crystal");
+
+        // Misc
+        addItem(ActuallyItems.BOOKLET, "Booklet");
+
         add("itemGroup.actuallyadditions", "Actually Additions");
 
         // Mics
@@ -149,5 +182,9 @@ public class GeneratorLanguage extends LanguageProvider {
      */
     private void addPrefixed(String key, String text) {
         add(String.format("%s.%s", ActuallyAdditions.MOD_ID, key), text);
+    }
+
+    private void addToolSet(ToolSet set) {
+        set.items.forEach(e -> addItem(e::getItem, String.format("%s %s", set.name.substring(0, 1).toUpperCase() + set.name.substring(1), e.getPretty())));
     }
 }
