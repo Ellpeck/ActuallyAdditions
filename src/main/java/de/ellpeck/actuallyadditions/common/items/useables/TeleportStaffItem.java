@@ -74,6 +74,6 @@ public class TeleportStaffItem extends ActuallyItem implements IUseItem {
 
     @Override
     public boolean canUse(ItemStack stack) {
-        return true;
+        return true; // todo: add energy logic
     }
 }

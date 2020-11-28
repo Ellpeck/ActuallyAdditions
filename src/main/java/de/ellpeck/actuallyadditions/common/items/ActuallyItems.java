@@ -3,6 +3,7 @@ package de.ellpeck.actuallyadditions.common.items;
 import com.google.common.collect.ImmutableSet;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.items.useables.AllInOneTool;
+import de.ellpeck.actuallyadditions.common.items.useables.LeafBlowerItem;
 import de.ellpeck.actuallyadditions.common.items.useables.ManualItem;
 import de.ellpeck.actuallyadditions.common.items.useables.TeleportStaffItem;
 import de.ellpeck.actuallyadditions.common.materials.ArmorMaterials;
@@ -171,8 +172,8 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> CRUSHED_COAL = ITEMS.register("crushed_coal", basicItem());
     public static final RegistryObject<Item> CRUSHED_BLACK_QUARTZ = ITEMS.register("crushed_black_quartz", basicItem());
     public static final RegistryObject<Item> SOLIDIFIED_EXPERIENCE = ITEMS.register("solidified_experience", basicItem());
-    public static final RegistryObject<Item> LEAF_BLOWER = ITEMS.register("leaf_blower", basicItem());
-    public static final RegistryObject<Item> ADVANCED_LEAF_BLOWER = ITEMS.register("advanced_leaf_blower", basicItem());
+    public static final RegistryObject<Item> LEAF_BLOWER = ITEMS.register("leaf_blower", () -> new LeafBlowerItem(false));
+    public static final RegistryObject<Item> ADVANCED_LEAF_BLOWER = ITEMS.register("advanced_leaf_blower", () -> new LeafBlowerItem(true));
     public static final RegistryObject<Item> RING_OF_GROWTH = ITEMS.register("ring_of_growth", basicItem());
     public static final RegistryObject<Item> RING_OF_MAGNETIZING = ITEMS.register("ring_of_magnetizing", basicItem());
     public static final RegistryObject<Item> RING_OF_SPEED = ITEMS.register("ring_of_speed", basicItem());
