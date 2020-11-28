@@ -47,7 +47,6 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> FIREWORK_BOX = BLOCKS.register("firework_box_block", FireworkBoxBlock::new);
     public static final RegistryObject<Block> MINER = BLOCKS.register("miner_block", MinerBlock::new);
     public static final RegistryObject<Block> ATOMIC_RECONSTRUCTOR = BLOCKS.register("atomic_reconstructor_block", AtomicReconstructorBlock::new);
-    public static final RegistryObject<Block> TREASURE_CHEST = BLOCKS.register("treasure_chest_block", TreasureChestBlock::new);
     public static final RegistryObject<Block> ENERGIZER = BLOCKS.register("energizer_block", () -> new EnergizerBlock(true));
     public static final RegistryObject<Block> ENERVATOR = BLOCKS.register("enervator_block", () -> new EnergizerBlock(false));
     public static final RegistryObject<Block> LAVA_FACTORY_CONTROLLER = BLOCKS.register("lava_factory_controller_block", LavaFactoryControllerBlock::new);
@@ -67,10 +66,7 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> POWERED_FURNACE = BLOCKS.register("powered_furnace_block", FurnaceDoubleBlock::new);
     public static final RegistryObject<Block> ESD = BLOCKS.register("esd_block", () -> new InputterBlock(false));
     public static final RegistryObject<Block> ESD_ADVANCED = BLOCKS.register("esd_advanced_block", () -> new InputterBlock(true));
-    public static final RegistryObject<Block> FISHING_NET = BLOCKS.register("fishing_net_block", FishingNetBlock::new);
-    public static final RegistryObject<Block> SOLAR_PANEL = BLOCKS.register("solar_panel_block", FurnaceSolarBlock::new);
     public static final RegistryObject<Block> HEAT_COLLECTOR = BLOCKS.register("heat_collector_block", HeatCollectorBlock::new);
-    public static final RegistryObject<Block> ITEM_REPAIRER = BLOCKS.register("item_repairer_block", ItemRepairerBlock::new);
     public static final RegistryObject<Block> GREENHOUSE_GLASS = BLOCKS.register("greenhouse_glass_block", GreenhouseGlassBlock::new);
     public static final RegistryObject<Block> BREAKER = BLOCKS.register("breaker_block", () -> new BreakerBlock(false));
     public static final RegistryObject<Block> PLACER = BLOCKS.register("placer_block", () -> new BreakerBlock(true));
@@ -82,7 +78,6 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> RANGED_COLLECTOR = BLOCKS.register("ranged_collector_block", RangedCollectorBlock::new);
     public static final RegistryObject<Block> DIRECTIONAL_BREAKER = BLOCKS.register("directional_breaker_block", DirectionalBreakerBlock::new);
     public static final RegistryObject<Block> LEAF_GENERATOR = BLOCKS.register("leaf_generator_block", LeafGeneratorBlock::new);
-    public static final RegistryObject<Block> SMILEY_CLOUD = BLOCKS.register("smiley_cloud_block", SmileyCloudBlock::new);
     public static final RegistryObject<Block> XP_SOLIDIFIER = BLOCKS.register("xp_solidifier_block", XPSolidifierBlock::new);
 
     // CRYSTALS

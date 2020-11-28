@@ -63,7 +63,6 @@ public class GeneratorBlockStates extends BlockStateProvider {
         buildCubeAll(ActuallyBlocks.RANGED_COLLECTOR);
         buildCubeAll(ActuallyBlocks.DIRECTIONAL_BREAKER);
         buildCubeAll(ActuallyBlocks.LEAF_GENERATOR);
-        buildCubeAll(ActuallyBlocks.SMILEY_CLOUD);
         buildCubeAll(ActuallyBlocks.XP_SOLIDIFIER);
         buildCubeAll(ActuallyBlocks.GREEN_BLOCK);
         buildCubeAll(ActuallyBlocks.WHITE_BLOCK);
@@ -90,7 +89,6 @@ public class GeneratorBlockStates extends BlockStateProvider {
         buildLitState(ActuallyBlocks.LAMP_RED);
         buildLitState(ActuallyBlocks.LAMP_BLACK);
         buildCubeAll(ActuallyBlocks.LAMP_CONTROLLER);
-        buildCubeAll(ActuallyBlocks.TREASURE_CHEST);
         buildCubeAll(ActuallyBlocks.ENERGIZER);
         buildCubeAll(ActuallyBlocks.ENERVATOR);
         buildCubeAll(ActuallyBlocks.LAVA_FACTORY_CONTROLLER);
@@ -125,10 +123,7 @@ public class GeneratorBlockStates extends BlockStateProvider {
         buildCubeAll(ActuallyBlocks.POWERED_FURNACE);
         buildCubeAll(ActuallyBlocks.ESD);
         buildCubeAll(ActuallyBlocks.ESD_ADVANCED);
-        buildCubeAll(ActuallyBlocks.FISHING_NET);
-        buildCubeAll(ActuallyBlocks.SOLAR_PANEL);
         buildCubeAll(ActuallyBlocks.HEAT_COLLECTOR);
-        buildCubeAll(ActuallyBlocks.ITEM_REPAIRER);
         buildCubeAll(ActuallyBlocks.GREENHOUSE_GLASS);
         buildCubeAll(ActuallyBlocks.BREAKER);
         buildCubeAll(ActuallyBlocks.PLACER);

@@ -32,7 +32,6 @@ public class GeneratorLanguage extends LanguageProvider {
         addBlock(ActuallyBlocks.FIREWORK_BOX, "Firework Box");
         addBlock(ActuallyBlocks.MINER, "Miner");
         addBlock(ActuallyBlocks.ATOMIC_RECONSTRUCTOR, "Atomic Reconstructor");
-        addBlock(ActuallyBlocks.TREASURE_CHEST, "Treasure Chest");
         addBlock(ActuallyBlocks.ENERGIZER, "Energizer");
         addBlock(ActuallyBlocks.ENERVATOR, "Enervator");
         addBlock(ActuallyBlocks.LAVA_FACTORY_CONTROLLER, "Lava Factory Controller");
@@ -52,10 +51,7 @@ public class GeneratorLanguage extends LanguageProvider {
         addBlock(ActuallyBlocks.POWERED_FURNACE, "Powered Furnace");
         addBlock(ActuallyBlocks.ESD, "ESD");
         addBlock(ActuallyBlocks.ESD_ADVANCED, "Advanced ASD");
-        addBlock(ActuallyBlocks.FISHING_NET, "Fishing Net");
-        addBlock(ActuallyBlocks.SOLAR_PANEL, "Solar Panel");
         addBlock(ActuallyBlocks.HEAT_COLLECTOR, "Heat Collector");
-        addBlock(ActuallyBlocks.ITEM_REPAIRER, "Item Repairer");
         addBlock(ActuallyBlocks.GREENHOUSE_GLASS, "Greenhouse Glass");
         addBlock(ActuallyBlocks.BREAKER, "Auto-Breaker");
         addBlock(ActuallyBlocks.PLACER, "Auto-Placer");
@@ -91,7 +87,6 @@ public class GeneratorLanguage extends LanguageProvider {
         addBlock(ActuallyBlocks.RANGED_COLLECTOR, "Ranged Collector");
         addBlock(ActuallyBlocks.DIRECTIONAL_BREAKER, "Directional Breaker");
         addBlock(ActuallyBlocks.LEAF_GENERATOR, "Leaf Generator");
-        addBlock(ActuallyBlocks.SMILEY_CLOUD, "Smiley Cloud");
         addBlock(ActuallyBlocks.XP_SOLIDIFIER, "XP Solidifier");
         addBlock(ActuallyBlocks.GREEN_BLOCK, "Ethentic Green Wall");
         addBlock(ActuallyBlocks.WHITE_BLOCK, "Ethentic Quartz Wall");

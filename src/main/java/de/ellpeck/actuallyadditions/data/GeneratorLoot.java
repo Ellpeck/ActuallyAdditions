@@ -53,7 +53,6 @@ public class GeneratorLoot extends LootTableProvider {
             this.registerDropSelfLootTable(ActuallyBlocks.FIREWORK_BOX.get());
             this.registerDropSelfLootTable(ActuallyBlocks.MINER.get());
             this.registerDropSelfLootTable(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get());
-            this.registerDropSelfLootTable(ActuallyBlocks.TREASURE_CHEST.get());
             this.registerDropSelfLootTable(ActuallyBlocks.ENERGIZER.get());
             this.registerDropSelfLootTable(ActuallyBlocks.ENERVATOR.get());
             this.registerDropSelfLootTable(ActuallyBlocks.LAVA_FACTORY_CONTROLLER.get());
@@ -73,10 +72,7 @@ public class GeneratorLoot extends LootTableProvider {
             this.registerDropSelfLootTable(ActuallyBlocks.POWERED_FURNACE.get());
             this.registerDropSelfLootTable(ActuallyBlocks.ESD.get());
             this.registerDropSelfLootTable(ActuallyBlocks.ESD_ADVANCED.get());
-            this.registerDropSelfLootTable(ActuallyBlocks.FISHING_NET.get());
-            this.registerDropSelfLootTable(ActuallyBlocks.SOLAR_PANEL.get());
             this.registerDropSelfLootTable(ActuallyBlocks.HEAT_COLLECTOR.get());
-            this.registerDropSelfLootTable(ActuallyBlocks.ITEM_REPAIRER.get());
             this.registerDropSelfLootTable(ActuallyBlocks.GREENHOUSE_GLASS.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BREAKER.get());
             this.registerDropSelfLootTable(ActuallyBlocks.PLACER.get());
@@ -88,7 +84,6 @@ public class GeneratorLoot extends LootTableProvider {
             this.registerDropSelfLootTable(ActuallyBlocks.RANGED_COLLECTOR.get());
             this.registerDropSelfLootTable(ActuallyBlocks.DIRECTIONAL_BREAKER.get());
             this.registerDropSelfLootTable(ActuallyBlocks.LEAF_GENERATOR.get());
-            this.registerDropSelfLootTable(ActuallyBlocks.SMILEY_CLOUD.get());
             this.registerDropSelfLootTable(ActuallyBlocks.XP_SOLIDIFIER.get());
 
             this.registerDropSelfLootTable(ActuallyBlocks.ENERGY_LASER_RELAY.get());
