@@ -54,7 +54,6 @@ public class GeneratorBlockStates extends BlockStateProvider {
         buildCubeAll(ActuallyBlocks.CRYSTAL_EMPOWERED_VOID);
         buildCubeAll(ActuallyBlocks.CRYSTAL_EMPOWERED_EMERADIC);
         buildCubeAll(ActuallyBlocks.CRYSTAL_EMPOWERED_ENORI);
-        buildCubeAll(ActuallyBlocks.BLACK_LOTUS);
         buildCubeAll(ActuallyBlocks.ENERGY_LASER_RELAY);
         buildCubeAll(ActuallyBlocks.ENERGY_LASER_RELAY_ADVANCED);
         buildCubeAll(ActuallyBlocks.ENERGY_LASER_RELAY_EXTREME);

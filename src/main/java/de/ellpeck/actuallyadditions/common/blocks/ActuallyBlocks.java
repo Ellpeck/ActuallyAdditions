@@ -6,7 +6,6 @@ import de.ellpeck.actuallyadditions.common.blocks.building.CrystalClusterBlock;
 import de.ellpeck.actuallyadditions.common.blocks.building.WallBlock;
 import de.ellpeck.actuallyadditions.common.blocks.functional.*;
 import de.ellpeck.actuallyadditions.common.blocks.misc.TinyTorchBlock;
-import de.ellpeck.actuallyadditions.common.blocks.plant.BlackLotusBlock;
 import de.ellpeck.actuallyadditions.common.blocks.plant.PlantBlock;
 import de.ellpeck.actuallyadditions.common.blocks.types.Crystals;
 import de.ellpeck.actuallyadditions.common.blocks.types.LaserRelays;
@@ -29,7 +28,6 @@ public class ActuallyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MOD_ID);
 
     // Plant!
-    public static final RegistryObject<Block> BLACK_LOTUS = BLOCKS.register("black_lotus_block", BlackLotusBlock::new);
     public static final RegistryObject<Block> RICE = BLOCKS.register("rice_block", () -> new PlantBlock(1, 2));
     public static final RegistryObject<Block> CANOLA = BLOCKS.register("canola_block", () -> new PlantBlock(2, 3));
     public static final RegistryObject<Block> FLAX = BLOCKS.register("flax_block", () -> new PlantBlock(2, 4));

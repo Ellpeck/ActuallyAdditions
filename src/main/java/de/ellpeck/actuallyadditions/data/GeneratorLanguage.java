@@ -13,7 +13,6 @@ public class GeneratorLanguage extends LanguageProvider {
     @Override
     protected void addTranslations() {
         // Blocks (kill me)
-        addBlock(ActuallyBlocks.BLACK_LOTUS, "Black lotus");
         addBlock(ActuallyBlocks.RICE, "Rice");
         addBlock(ActuallyBlocks.CANOLA, "Canola");
         addBlock(ActuallyBlocks.FLAX, "Flax");
