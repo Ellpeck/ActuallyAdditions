@@ -4,7 +4,6 @@ import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
@@ -14,12 +13,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
-// Mostly a copy of the ItemTier enum because... Lazy
+/**
+ * Complete copy paste from {@link net.minecraft.item.ArmorMaterial}
+ *
+ * todo validate all values refect correctly
+ */
 public enum ArmorMaterials implements IArmorMaterial {
-    EMERALD("emerald_armor_material", 30,  new int[] { 5, 8, 9, 4 }, 15, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2, 0f, () -> Ingredient.fromItems(Items.EMERALD)),
-    OBSIDIAN("obsidian_armor_material", 28, new int[] { 1, 3, 4, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1, 0f, () -> Ingredient.fromItems(Items.OBSIDIAN)),
+//    EMERALD("emerald_armor_material", 30,  new int[] { 5, 8, 9, 4 }, 15, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2, 0f, () -> Ingredient.fromItems(Items.EMERALD)),
+//    OBSIDIAN("obsidian_armor_material", 28, new int[] { 1, 3, 4, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1, 0f, () -> Ingredient.fromItems(Items.OBSIDIAN)),
 
-    // Custom resources
     QUARTZ("quartz_armor_material", 15, new int[] { 3, 5, 6, 3 }, 8, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1, 0f, () -> Ingredient.fromItems(ActuallyItems.BLACK_QUARTS.get())),
     RESTONIA("restonia_armor_material", 18, new int[] { 3, 6, 7, 3 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.fromItems(ActuallyItems.RESTONIA_CRYSTAL.get())),
     PALIS("palis_armor_material", 10, new int[] { 3, 6, 7, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.fromItems(ActuallyItems.PALIS_CRYSTAL.get())),

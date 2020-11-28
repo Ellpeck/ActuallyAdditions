@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "actuallyadditions:item/obsidian_leggings"
+    "layer0": "actuallyadditions:item/gold_paxel"
   }
 }

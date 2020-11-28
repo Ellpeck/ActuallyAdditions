@@ -2,18 +2,17 @@ package de.ellpeck.actuallyadditions.common.materials;
 
 import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
 import net.minecraft.item.IItemTier;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 
 import java.util.function.Supplier;
 
-// Mostly a copy of the ItemTier enum because... Lazy
+/**
+ * Complete copy paste from {@link net.minecraft.item.ItemTier}
+ *
+ * todo: review to ensure all values act as intended
+ */
 public enum ToolMaterials implements IItemTier {
-    EMERALD(3, 2000, 9.0f, 5.0f, 15, () -> Ingredient.fromItems(Items.EMERALD)),
-    OBSIDIAN(3, 8000, 4.0f, 2.0f, 15, () -> Ingredient.fromItems(Items.OBSIDIAN)),
-
-    // Custom resources
     QUARTZ(2, 280, 6.5f, 2.0f, 10, () -> Ingredient.fromItems(ActuallyItems.BLACK_QUARTS.get())),
     RESTONIA(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.fromItems(ActuallyItems.RESTONIA_CRYSTAL.get())),
     PALIS(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.fromItems(ActuallyItems.PALIS_CRYSTAL.get())),

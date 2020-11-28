@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "actuallyadditions:item/emerald_shovel"
+    "layer0": "actuallyadditions:item/void_paxel"
   }
 }

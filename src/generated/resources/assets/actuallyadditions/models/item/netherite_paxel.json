@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "actuallyadditions:item/obsidian_helmet"
+    "layer0": "actuallyadditions:item/netherite_paxel"
   }
 }

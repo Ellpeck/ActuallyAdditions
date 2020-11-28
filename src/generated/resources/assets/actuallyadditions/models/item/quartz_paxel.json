@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "actuallyadditions:item/emerald_chest"
+    "layer0": "actuallyadditions:item/quartz_paxel"
   }
 }

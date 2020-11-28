@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "actuallyadditions:block/black_lotus_block"
-  }
-}
