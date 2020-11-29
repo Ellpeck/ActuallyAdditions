@@ -2,11 +2,9 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.common.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.RecipeProvider;
-import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.*;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
@@ -47,5 +45,10 @@ public class GeneratorRecipes extends RecipeProvider {
                 .key('p', Items.PISTON).key('c', ActuallyItems.ADVANCED_COIL.get())
                 .patternLine(" f ").patternLine("ip ").patternLine("ic ")
                 .addCriterion("has_diamatine", hasItem(ActuallyItems.DIAMATINE_CRYSTAL.get())).build(consumer);
+
+
+
+        // Hot stuff
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ActuallyBlocks.ORE_BLACK_QUARTZ.get()), ActuallyItems.BLACK_QUARTS.get(), 0.7F, 100).addCriterion("has_black_quartz_ore", hasItem(ActuallyBlocks.ORE_BLACK_QUARTZ.get())).build(consumer);
     }
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:black_quartz"
+    ]
+  },
+  "criteria": {
+    "has_black_quartz_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:ore_black_quartz_block"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:black_quartz"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_black_quartz_ore",
+      "has_the_recipe"
+    ]
+  ]
+}
