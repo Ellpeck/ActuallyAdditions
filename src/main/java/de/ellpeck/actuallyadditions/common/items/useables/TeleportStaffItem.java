@@ -37,7 +37,7 @@ public class TeleportStaffItem extends CrystalFluxItem {
         Vector3f centerOfHit = new Vector3f(toPos.getX(), toPos.getY(), toPos.getZ());
         centerOfHit.add(.5f, (blockTrace.getFace().getAxis() == Direction.Axis.Y ? .5f : 0), .5f);
 
-        int energyCost = BASE_COST_PER_USE + (int) (BASE_COST_PER_USE * player.getDistanceSq(toPos.getX(), toPos.getY(), toPos.getZ()));
+        int energyCost = BASE_COST_PER_USE + (int) (BASE_COST_PER_USE * (player.getDistanceSq(toPos.getX(), toPos.getY(), toPos.getZ()) / 100));
         boolean canUse = stack.getCapability(CapabilityEnergy.ENERGY).map(e -> e.getEnergyStored() >= energyCost).orElse(false);
 
         if (!canUse) {
