@@ -4,11 +4,16 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import de.ellpeck.actuallyadditions.common.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Item;
 import net.minecraft.loot.*;
+import net.minecraft.loot.functions.ApplyBonus;
+import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -150,25 +155,33 @@ public class GeneratorLoot extends LootTableProvider {
             this.registerDropSelfLootTable(ActuallyBlocks.CRYSTAL_EMPOWERED_VOID.get());
             this.registerDropSelfLootTable(ActuallyBlocks.CRYSTAL_EMPOWERED_EMERADIC.get());
 
-            // Special
-            // CRYSTAL_CLUSTER_RESTONIA
-            // CRYSTAL_CLUSTER_PALIS
-            // CRYSTAL_CLUSTER_DIAMATINE
-            // CRYSTAL_CLUSTER_VOID
-            // CRYSTAL_CLUSTER_EMERADIC
-            // CRYSTAL_CLUSTER_ENORI
-            // ORE_BLACK_QUARTZ
+            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_RESTONIA, ActuallyItems.RED_CRYSTAL_SHARD);
+            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_PALIS, ActuallyItems.BLUE_CRYSTAL_SHARD);
+            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_DIAMATINE, ActuallyItems.LIGHT_BLUE_CRYSTAL_SHARD);
+            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_VOID, ActuallyItems.BLACK_CRYSTAL_SHARD);
+            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_EMERADIC, ActuallyItems.GREEN_CRYSTAL_SHARD);
+            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_ENORI, ActuallyItems.WHITE_CRYSTAL_SHARD);
+
+            this.registerLootTable(ActuallyBlocks.ORE_BLACK_QUARTZ.get(), ore -> droppingItemWithFortune(ore, ActuallyItems.BLACK_QUARTS.get()));
+        }
+
+        // This isn't quite right :cry: fortune doesn't change it
+        private void registerCrystal(RegistryObject<Block> crystalCluster, RegistryObject<Item> crystalShard) {
+            this.registerLootTable(crystalCluster.get(), (crystal) ->
+                    droppingWithSilkTouch(crystal,
+                            withExplosionDecay(crystal, ItemLootEntry.builder(crystalShard.get())
+                                    .acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE))
+                                    .acceptFunction(SetCount.builder(RandomValueRange.of(2f, 8f)))
+                            )
+                    )
+            );
         }
 
         @Nonnull
         @Override
         protected Iterable<Block> getKnownBlocks() {
             final Set<Block> ignoreForNow = ImmutableSet.of(
-                    ActuallyBlocks.RICE.get(), ActuallyBlocks.CANOLA.get(), ActuallyBlocks.FLAX.get(),
-                    ActuallyBlocks.COFFEE.get(), ActuallyBlocks.CRYSTAL_CLUSTER_RESTONIA.get(),
-                    ActuallyBlocks.CRYSTAL_CLUSTER_PALIS.get(), ActuallyBlocks.CRYSTAL_CLUSTER_DIAMATINE.get(),
-                    ActuallyBlocks.CRYSTAL_CLUSTER_VOID.get(), ActuallyBlocks.CRYSTAL_CLUSTER_EMERADIC.get(),
-                    ActuallyBlocks.CRYSTAL_CLUSTER_ENORI.get(), ActuallyBlocks.ORE_BLACK_QUARTZ.get()
+                    ActuallyBlocks.RICE.get(), ActuallyBlocks.CANOLA.get(), ActuallyBlocks.FLAX.get(), ActuallyBlocks.COFFEE.get()
             );
 
             return ActuallyBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).filter(e -> !ignoreForNow.contains(e)).collect(Collectors.toList());
