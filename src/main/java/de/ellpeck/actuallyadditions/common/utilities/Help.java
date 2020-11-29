@@ -16,4 +16,20 @@ public class Help {
     public static TranslationTextComponent trans(String key, Object... args) {
         return new TranslationTextComponent(String.format("%s.%s", ActuallyAdditions.MOD_ID, key), args);
     }
+
+    /**
+     * Pretty values, turns numbers like 100000000 into 100M
+     *
+     * @param value value you need prettified
+     * @return a pretty string
+     */
+    public static String compressedValue(int value) {
+        if (value < 1000)
+            return String.valueOf(value);
+
+        int exp = (int) (Math.log(value) / Math.log(1000));
+        return String.format("%,d%c",
+                (int) (value / Math.pow(1000, exp)),
+                "KMGTPE_____".charAt(exp - 1));
+    }
 }

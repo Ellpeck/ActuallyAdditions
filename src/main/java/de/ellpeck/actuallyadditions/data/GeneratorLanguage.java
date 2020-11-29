@@ -316,6 +316,9 @@ public class GeneratorLanguage extends LanguageProvider {
         addPrefixed("tooltip.booklet.manual.two", "This book guides you through all of the feature Actually Additions has to over.");
         addPrefixed("tooltip.booklet.manual.three", "Use while holding to open.");
 
+        // Storage
+        addPrefixed("storage.crystal-flux", "%s/%s Crystal Flux");
+
         add("itemGroup.actuallyadditions", "Actually Additions");
 
         // Mics
