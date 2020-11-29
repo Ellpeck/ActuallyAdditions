@@ -1,7 +1,6 @@
 package de.ellpeck.actuallyadditions.common.items.useables;
 
 import de.ellpeck.actuallyadditions.common.items.ActuallyItem;
-import de.ellpeck.actuallyadditions.common.items.IUseItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.LeavesBlock;
@@ -18,7 +17,7 @@ import net.minecraftforge.common.IForgeShearable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class LeafBlowerItem extends ActuallyItem implements IUseItem {
+public class LeafBlowerItem extends ActuallyItem {
     private final boolean isAdvanced;
 
     public LeafBlowerItem(boolean isAdvanced) {
@@ -80,10 +79,5 @@ public class LeafBlowerItem extends ActuallyItem implements IUseItem {
     @Override
     public int getUseDuration(ItemStack stack) {
         return Integer.MAX_VALUE;
-    }
-
-    @Override
-    public boolean canUse(ItemStack stack) {
-        return true; // todo: add energy logic
     }
 }
