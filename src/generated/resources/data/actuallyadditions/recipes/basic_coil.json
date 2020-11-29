@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " r ",
+    "rbr",
+    " r "
+  ],
+  "key": {
+    "r": {
+      "item": "actuallyadditions:restonia_crystal"
+    },
+    "b": {
+      "item": "actuallyadditions:black_quartz"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:basic_coil"
+  }
+}

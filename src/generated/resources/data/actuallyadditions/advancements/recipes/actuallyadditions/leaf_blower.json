@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:leaf_blower"
+    ]
+  },
+  "criteria": {
+    "has_coil": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:advanced_coil"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:leaf_blower"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_coil",
+      "has_the_recipe"
+    ]
+  ]
+}

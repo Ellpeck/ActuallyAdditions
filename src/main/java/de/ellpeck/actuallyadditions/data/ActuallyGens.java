@@ -25,6 +25,7 @@ public final class ActuallyGens {
 
         if (event.includeServer()) {
             generator.addProvider(new GeneratorLoot(generator));
+            generator.addProvider(new GeneratorRecipes(generator));
         }
     }
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:basic_coil"
+    ]
+  },
+  "criteria": {
+    "has_restonia": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:restonia_crystal"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:basic_coil"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_restonia",
+      "has_the_recipe"
+    ]
+  ]
+}

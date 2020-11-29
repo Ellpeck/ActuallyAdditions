@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:enderpearl_block"
+    ]
+  },
+  "criteria": {
+    "has_enderpearl": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ender_pearls"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:enderpearl_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_enderpearl",
+      "has_the_recipe"
+    ]
+  ]
+}

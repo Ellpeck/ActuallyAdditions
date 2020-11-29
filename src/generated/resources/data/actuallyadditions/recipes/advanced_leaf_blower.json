@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " f ",
+    "ip ",
+    "ic "
+  ],
+  "key": {
+    "f": {
+      "item": "minecraft:flint"
+    },
+    "i": {
+      "item": "actuallyadditions:diamatine_crystal"
+    },
+    "p": {
+      "item": "minecraft:piston"
+    },
+    "c": {
+      "item": "actuallyadditions:advanced_coil"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:advanced_leaf_blower"
+  }
+}

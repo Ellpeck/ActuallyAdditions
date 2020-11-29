@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "gcg",
+    "ggg"
+  ],
+  "key": {
+    "g": {
+      "tag": "forge:nuggets/gold"
+    },
+    "c": {
+      "item": "actuallyadditions:basic_coil"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:advanced_coil"
+  }
+}
