@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "actuallyadditions:item/diamond_paxel"
+    "layer0": "actuallyadditions:item/emeradic_aiot"
   }
 }

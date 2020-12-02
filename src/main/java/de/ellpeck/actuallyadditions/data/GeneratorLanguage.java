@@ -137,20 +137,20 @@ public class GeneratorLanguage extends LanguageProvider {
         // Tools
         ActuallyItems.ALL_TOOL_SETS.forEach(this::addToolSet);
 
-        // Paxels
-        addItem(ActuallyItems.WOODEN_PAXEL, "Wooden Paxel");
-        addItem(ActuallyItems.STONE_PAXEL, "Stone Paxel");
-        addItem(ActuallyItems.IRON_PAXEL, "Iron Paxel");
-        addItem(ActuallyItems.GOLD_PAXEL, "Gold Paxel");
-        addItem(ActuallyItems.DIAMOND_PAXEL, "Diamond Paxel");
-        addItem(ActuallyItems.NETHERITE_PAXEL, "Netherite Paxel");
-        addItem(ActuallyItems.QUARTZ_PAXEL, "Quartz Paxel");
-        addItem(ActuallyItems.ENORI_PAXEL, "Enori Paxel");
-        addItem(ActuallyItems.EMERADIC_PAXEL, "Emeradic Paxel");
-        addItem(ActuallyItems.VOID_PAXEL, "Void Paxel");
-        addItem(ActuallyItems.DIAMATINE_PAXEL, "Diamatine Paxel");
-        addItem(ActuallyItems.PALIS_PAXEL, "Palis Paxel");
-        addItem(ActuallyItems.RESTONIA_PAXEL, "Restonia Paxel");
+        // AIOT's
+        addItem(ActuallyItems.WOODEN_AIOT, "Wooden AIOT");
+        addItem(ActuallyItems.STONE_AIOT, "Stone AIOT");
+        addItem(ActuallyItems.IRON_AIOT, "Iron AIOT");
+        addItem(ActuallyItems.GOLD_AIOT, "Gold AIOT");
+        addItem(ActuallyItems.DIAMOND_AIOT, "Diamond AIOT");
+        addItem(ActuallyItems.NETHERITE_AIOT, "Netherite AIOT");
+        addItem(ActuallyItems.QUARTZ_AIOT, "Quartz AIOT");
+        addItem(ActuallyItems.ENORI_AIOT, "Enori AIOT");
+        addItem(ActuallyItems.EMERADIC_AIOT, "Emeradic AIOT");
+        addItem(ActuallyItems.VOID_AIOT, "Void AIOT");
+        addItem(ActuallyItems.DIAMATINE_AIOT, "Diamatine AIOT");
+        addItem(ActuallyItems.PALIS_AIOT, "Palis AIOT");
+        addItem(ActuallyItems.RESTONIA_AIOT, "Restonia AIOT");
         addItem(ActuallyItems.BLACK_QUARTS, "Black Quarts");
 
         // Crystals

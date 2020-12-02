@@ -31,19 +31,19 @@ public final class ActuallyItems {
     public static final ToolSet RESTONIA_SET = new ToolSet("restonia", ToolMaterials.RESTONIA, ArmorMaterials.RESTONIA, ActuallyItems::defaultProps);
 
     // Paxels :D
-    public static final RegistryObject<Item> WOODEN_PAXEL = ITEMS.register("wooden_paxel", () -> new AllInOneTool(ItemTier.WOOD));
-    public static final RegistryObject<Item> STONE_PAXEL = ITEMS.register("stone_paxel", () -> new AllInOneTool(ItemTier.STONE));
-    public static final RegistryObject<Item> IRON_PAXEL = ITEMS.register("iron_paxel", () -> new AllInOneTool(ItemTier.IRON));
-    public static final RegistryObject<Item> GOLD_PAXEL = ITEMS.register("gold_paxel", () -> new AllInOneTool(ItemTier.GOLD));
-    public static final RegistryObject<Item> DIAMOND_PAXEL = ITEMS.register("diamond_paxel", () -> new AllInOneTool(ItemTier.DIAMOND));
-    public static final RegistryObject<Item> NETHERITE_PAXEL = ITEMS.register("netherite_paxel", () -> new AllInOneTool(ItemTier.NETHERITE));
-    public static final RegistryObject<Item> QUARTZ_PAXEL = ITEMS.register("quartz_paxel", () -> new AllInOneTool(ToolMaterials.QUARTZ));
-    public static final RegistryObject<Item> ENORI_PAXEL = ITEMS.register("enori_paxel", () -> new AllInOneTool(ToolMaterials.ENORI));
-    public static final RegistryObject<Item> EMERADIC_PAXEL = ITEMS.register("emeradic_paxel", () -> new AllInOneTool(ToolMaterials.EMERADIC));
-    public static final RegistryObject<Item> VOID_PAXEL = ITEMS.register("void_paxel", () -> new AllInOneTool(ToolMaterials.VOID));
-    public static final RegistryObject<Item> DIAMATINE_PAXEL = ITEMS.register("diamatine_paxel", () -> new AllInOneTool(ToolMaterials.DIAMATINE));
-    public static final RegistryObject<Item> PALIS_PAXEL = ITEMS.register("palis_paxel", () -> new AllInOneTool(ToolMaterials.PALIS));
-    public static final RegistryObject<Item> RESTONIA_PAXEL = ITEMS.register("restonia_paxel", () -> new AllInOneTool(ToolMaterials.RESTONIA));
+    public static final RegistryObject<Item> WOODEN_AIOT = ITEMS.register("wooden_aiot", () -> new AllInOneTool(ItemTier.WOOD));
+    public static final RegistryObject<Item> STONE_AIOT = ITEMS.register("stone_aiot", () -> new AllInOneTool(ItemTier.STONE));
+    public static final RegistryObject<Item> IRON_AIOT = ITEMS.register("iron_aiot", () -> new AllInOneTool(ItemTier.IRON));
+    public static final RegistryObject<Item> GOLD_AIOT = ITEMS.register("gold_aiot", () -> new AllInOneTool(ItemTier.GOLD));
+    public static final RegistryObject<Item> DIAMOND_AIOT = ITEMS.register("diamond_aiot", () -> new AllInOneTool(ItemTier.DIAMOND));
+    public static final RegistryObject<Item> NETHERITE_AIOT = ITEMS.register("netherite_aiot", () -> new AllInOneTool(ItemTier.NETHERITE));
+    public static final RegistryObject<Item> QUARTZ_AIOT = ITEMS.register("quartz_aiot", () -> new AllInOneTool(ToolMaterials.QUARTZ));
+    public static final RegistryObject<Item> ENORI_AIOT = ITEMS.register("enori_aiot", () -> new AllInOneTool(ToolMaterials.ENORI));
+    public static final RegistryObject<Item> EMERADIC_AIOT = ITEMS.register("emeradic_aiot", () -> new AllInOneTool(ToolMaterials.EMERADIC));
+    public static final RegistryObject<Item> VOID_AIOT = ITEMS.register("void_aiot", () -> new AllInOneTool(ToolMaterials.VOID));
+    public static final RegistryObject<Item> DIAMATINE_AIOT = ITEMS.register("diamatine_aiot", () -> new AllInOneTool(ToolMaterials.DIAMATINE));
+    public static final RegistryObject<Item> PALIS_AIOT = ITEMS.register("palis_aiot", () -> new AllInOneTool(ToolMaterials.PALIS));
+    public static final RegistryObject<Item> RESTONIA_AIOT = ITEMS.register("restonia_aiot", () -> new AllInOneTool(ToolMaterials.RESTONIA));
 
     public static final Set<ToolSet> ALL_TOOL_SETS = ImmutableSet.of(QUARTZ_SET, ENORI_SET, EMERADIC_SET, VOID_SET, DIAMATINE_SET, PALIS_SET, RESTONIA_SET);
 
@@ -220,8 +220,8 @@ public final class ActuallyItems {
             PALIS_EMPOWERED_CRYSTAL, DIAMATINE_EMPOWERED_CRYSTAL, VOID_EMPOWERED_CRYSTAL, EMERADIC_EMPOWERED_CRYSTAL,
             ENORI_EMPOWERED_CRYSTAL,
             // All in one tools
-            WOODEN_PAXEL, STONE_PAXEL, IRON_PAXEL, GOLD_PAXEL, DIAMOND_PAXEL, NETHERITE_PAXEL, QUARTZ_PAXEL, ENORI_PAXEL,
-            EMERADIC_PAXEL, VOID_PAXEL, DIAMATINE_PAXEL, PALIS_PAXEL, RESTONIA_PAXEL,
+            WOODEN_AIOT, STONE_AIOT, IRON_AIOT, GOLD_AIOT, DIAMOND_AIOT, NETHERITE_AIOT, QUARTZ_AIOT, ENORI_AIOT,
+            EMERADIC_AIOT, VOID_AIOT, DIAMATINE_AIOT, PALIS_AIOT, RESTONIA_AIOT,
             // The rest?
             RED_CRYSTAL_SHARD, BLUE_CRYSTAL_SHARD, LIGHT_BLUE_CRYSTAL_SHARD, BLACK_CRYSTAL_SHARD, GREEN_CRYSTAL_SHARD,
             WHITE_CRYSTAL_SHARD, ENGINEERS_GOGGLES, ENGINEERS_GOGGLES_INFRARED, LASER_RELAY_MODIFIER_RANGE, LASER_RELAY_MODIFIER_INVISIBILITY,
