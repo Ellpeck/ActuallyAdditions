@@ -8,6 +8,7 @@ import net.minecraft.block.StairsBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -162,13 +163,21 @@ public class GeneratorBlockStates extends BlockStateProvider {
     private void fullyDirectionalBlock(Supplier<Block> block) {
         ResourceLocation name = block.get().getRegistryName();
 
+        // Todo: come back and fix this, it's still not right
         assert name != null;
-        directionalBlock(block.get(), models().orientable(
-                name.toString(),
-                modLoc(String.format("block/%s", name.getPath())),
-                modLoc(String.format("block/%s_front", name.getPath())),
-                modLoc(String.format("block/%s_top", name.getPath()))
-        ));
+        getVariantBuilder(block.get())
+                .forAllStates(state -> {
+                    Direction dir = state.get(BlockStateProperties.FACING);
+                    System.out.println(dir);
+                    return ConfiguredModel.builder()
+                            .modelFile(models().withExistingParent(name.toString(), "block/orientable")
+                                    .texture("side", modLoc(String.format("block/%s", name.getPath())))
+                                    .texture("front", modLoc(String.format("block/%s_front", name.getPath())))
+                                    .texture("top", modLoc(String.format("block/%s_top", name.getPath()))))
+                            .rotationX(dir == Direction.DOWN ? 90 : (dir == Direction.UP ? 270 : 0))
+                            .rotationY(dir.getAxis().isVertical() ? 0 : dir.getHorizontalIndex() * 90)
+                            .build();
+                });
     }
 
 }

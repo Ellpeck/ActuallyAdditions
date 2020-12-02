@@ -22,7 +22,7 @@ public class FullyDirectionalBlock extends ActuallyBlock {
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
