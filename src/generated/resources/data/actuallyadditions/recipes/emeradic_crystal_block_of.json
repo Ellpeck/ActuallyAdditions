@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:crystal_emeradic_block"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:emeradic_crystal",
+    "count": 9
+  }
+}

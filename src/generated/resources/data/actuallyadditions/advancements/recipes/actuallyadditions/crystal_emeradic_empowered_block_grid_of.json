@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:crystal_emeradic_empowered_block_grid_of"
+    ]
+  },
+  "criteria": {
+    "has_emeradic_empowered_crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:emeradic_empowered_crystal"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:crystal_emeradic_empowered_block_grid_of"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_emeradic_empowered_crystal",
+      "has_the_recipe"
+    ]
+  ]
+}

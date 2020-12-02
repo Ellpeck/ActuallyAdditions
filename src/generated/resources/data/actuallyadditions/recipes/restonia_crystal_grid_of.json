@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "iii",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "actuallyadditions:red_crystal_shard"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:restonia_crystal"
+  }
+}

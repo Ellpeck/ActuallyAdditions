@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "iii",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "actuallyadditions:light_blue_crystal_shard"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:diamatine_crystal"
+  }
+}

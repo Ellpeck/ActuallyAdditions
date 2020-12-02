@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:lamp_green_block"
+    ]
+  },
+  "criteria": {
+    "has_palis": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:palis_crystal"
+          }
+        ]
+      }
+    },
+    "has_color_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dyes/green"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:lamp_green_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_palis",
+      "has_color_item",
+      "has_the_recipe"
+    ]
+  ]
+}

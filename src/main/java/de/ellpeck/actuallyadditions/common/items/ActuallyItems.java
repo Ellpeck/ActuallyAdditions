@@ -49,12 +49,20 @@ public final class ActuallyItems {
 
     // Resources
     public static final RegistryObject<Item> BLACK_QUARTS = ITEMS.register("black_quartz", basicItem());
+
     public static final RegistryObject<Item> RESTONIA_CRYSTAL = ITEMS.register("restonia_crystal", basicItem());
     public static final RegistryObject<Item> PALIS_CRYSTAL = ITEMS.register("palis_crystal", basicItem());
     public static final RegistryObject<Item> DIAMATINE_CRYSTAL = ITEMS.register("diamatine_crystal", basicItem());
     public static final RegistryObject<Item> VOID_CRYSTAL = ITEMS.register("void_crystal", basicItem());
     public static final RegistryObject<Item> EMERADIC_CRYSTAL = ITEMS.register("emeradic_crystal", basicItem());
     public static final RegistryObject<Item> ENORI_CRYSTAL = ITEMS.register("enori_crystal", basicItem());
+
+    public static final RegistryObject<Item> RESTONIA_EMPOWERED_CRYSTAL = ITEMS.register("restonia_empowered_crystal", basicItem());
+    public static final RegistryObject<Item> PALIS_EMPOWERED_CRYSTAL = ITEMS.register("palis_empowered_crystal", basicItem());
+    public static final RegistryObject<Item> DIAMATINE_EMPOWERED_CRYSTAL = ITEMS.register("diamatine_empowered_crystal", basicItem());
+    public static final RegistryObject<Item> VOID_EMPOWERED_CRYSTAL = ITEMS.register("void_empowered_crystal", basicItem());
+    public static final RegistryObject<Item> EMERADIC_EMPOWERED_CRYSTAL = ITEMS.register("emeradic_empowered_crystal", basicItem());
+    public static final RegistryObject<Item> ENORI_EMPOWERED_CRYSTAL = ITEMS.register("enori_empowered_crystal", basicItem());
 
     public static final RegistryObject<Item> RED_CRYSTAL_SHARD = ITEMS.register("red_crystal_shard", basicItem());
     public static final RegistryObject<Item> BLUE_CRYSTAL_SHARD = ITEMS.register("blue_crystal_shard", basicItem());
@@ -208,7 +216,9 @@ public final class ActuallyItems {
     public static final Set<RegistryObject<Item>> SIMPLE_ITEMS = ImmutableSet.of(
             // Crystals
             BLACK_QUARTS, RESTONIA_CRYSTAL, PALIS_CRYSTAL, DIAMATINE_CRYSTAL,
-            VOID_CRYSTAL, EMERADIC_CRYSTAL, ENORI_CRYSTAL,
+            VOID_CRYSTAL, EMERADIC_CRYSTAL, ENORI_CRYSTAL, RESTONIA_EMPOWERED_CRYSTAL,
+            PALIS_EMPOWERED_CRYSTAL, DIAMATINE_EMPOWERED_CRYSTAL, VOID_EMPOWERED_CRYSTAL, EMERADIC_EMPOWERED_CRYSTAL,
+            ENORI_EMPOWERED_CRYSTAL,
             // All in one tools
             WOODEN_PAXEL, STONE_PAXEL, IRON_PAXEL, GOLD_PAXEL, DIAMOND_PAXEL, NETHERITE_PAXEL, QUARTZ_PAXEL, ENORI_PAXEL,
             EMERADIC_PAXEL, VOID_PAXEL, DIAMATINE_PAXEL, PALIS_PAXEL, RESTONIA_PAXEL,

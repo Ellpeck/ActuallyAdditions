@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:crystal_enori_block_grid_of"
+    ]
+  },
+  "criteria": {
+    "has_enori_crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:enori_crystal"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:crystal_enori_block_grid_of"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_enori_crystal",
+      "has_the_recipe"
+    ]
+  ]
+}

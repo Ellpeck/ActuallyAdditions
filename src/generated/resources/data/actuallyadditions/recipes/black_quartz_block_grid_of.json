@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ii ",
+    "ii ",
+    "   "
+  ],
+  "key": {
+    "i": {
+      "item": "actuallyadditions:black_quartz"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:black_quartz_block"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gcg",
+    "bqb",
+    "gcg"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:glowstone"
+    },
+    "b": {
+      "tag": "forge:dyes/green"
+    },
+    "c": {
+      "item": "actuallyadditions:palis_crystal"
+    },
+    "q": {
+      "item": "actuallyadditions:black_quartz"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:lamp_green_block"
+  }
+}

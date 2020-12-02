@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:crystal_void_block"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:void_crystal",
+    "count": 9
+  }
+}

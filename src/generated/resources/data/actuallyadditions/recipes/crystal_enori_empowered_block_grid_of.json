@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "iii",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "actuallyadditions:enori_empowered_crystal"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:crystal_enori_empowered_block"
+  }
+}

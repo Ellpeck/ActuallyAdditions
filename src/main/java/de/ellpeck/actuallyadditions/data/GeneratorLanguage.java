@@ -152,15 +152,22 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ActuallyItems.DIAMATINE_PAXEL, "Diamatine Paxel");
         addItem(ActuallyItems.PALIS_PAXEL, "Palis Paxel");
         addItem(ActuallyItems.RESTONIA_PAXEL, "Restonia Paxel");
+        addItem(ActuallyItems.BLACK_QUARTS, "Black Quarts");
 
         // Crystals
-        addItem(ActuallyItems.BLACK_QUARTS, "Black Quarts");
         addItem(ActuallyItems.RESTONIA_CRYSTAL, "Restonia Crystal");
         addItem(ActuallyItems.PALIS_CRYSTAL, "Palis Crystal");
         addItem(ActuallyItems.DIAMATINE_CRYSTAL, "Diamatine Crystal");
         addItem(ActuallyItems.VOID_CRYSTAL, "Void Crystal");
         addItem(ActuallyItems.EMERADIC_CRYSTAL, "Emeradic Crystal");
         addItem(ActuallyItems.ENORI_CRYSTAL, "Enori Crystal");
+
+        addItem(ActuallyItems.RESTONIA_EMPOWERED_CRYSTAL, "Empowered Restonia Crystal");
+        addItem(ActuallyItems.PALIS_EMPOWERED_CRYSTAL, "Empowered Palis Crystal");
+        addItem(ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL, "Empowered Diamatine Crystal");
+        addItem(ActuallyItems.VOID_EMPOWERED_CRYSTAL, "Empowered Void Crystal");
+        addItem(ActuallyItems.EMERADIC_EMPOWERED_CRYSTAL, "Empowered Emeradic Crystal");
+        addItem(ActuallyItems.ENORI_EMPOWERED_CRYSTAL, "Empowered Enori Crystal");
 
         // Remaining Items?
         addItem(ActuallyItems.RED_CRYSTAL_SHARD, "Red Crystal Shard");

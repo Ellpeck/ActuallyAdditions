@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:diamatine_crystal_grid_of"
+    ]
+  },
+  "criteria": {
+    "has_light_blue_crystal_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:light_blue_crystal_shard"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:diamatine_crystal_grid_of"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_light_blue_crystal_shard",
+      "has_the_recipe"
+    ]
+  ]
+}

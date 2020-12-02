@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:crystal_palis_block"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:palis_crystal",
+    "count": 9
+  }
+}
