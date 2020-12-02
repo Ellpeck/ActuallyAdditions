@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "actuallyadditions:crystal_enori_block"
+    },
+    "b": {
+      "item": "actuallyadditions:basic_coil"
+    },
+    "c": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_core"
+  }
+}

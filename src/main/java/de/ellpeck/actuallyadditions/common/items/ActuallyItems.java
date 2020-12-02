@@ -112,13 +112,13 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> TRIPLE_BATTERY = ITEMS.register("triple_battery", basicItem());
     public static final RegistryObject<Item> QUADRUPLE_BATTERY = ITEMS.register("quadruple_battery", basicItem());
     public static final RegistryObject<Item> QUINTUPLE_BATTERY = ITEMS.register("quintuple_battery", basicItem());
+    public static final RegistryObject<Item> DRILL_MAIN = ITEMS.register("drill_light_blue", basicItem());
     public static final RegistryObject<Item> DRILL_BLACK = ITEMS.register("drill_black", basicItem());
     public static final RegistryObject<Item> DRILL_BLUE = ITEMS.register("drill_blue", basicItem());
     public static final RegistryObject<Item> DRILL_BROWN = ITEMS.register("drill_brown", basicItem());
     public static final RegistryObject<Item> DRILL_CYAN = ITEMS.register("drill_cyan", basicItem());
     public static final RegistryObject<Item> DRILL_GRAY = ITEMS.register("drill_gray", basicItem());
     public static final RegistryObject<Item> DRILL_GREEN = ITEMS.register("drill_green", basicItem());
-    public static final RegistryObject<Item> DRILL_LIGHT_BLUE = ITEMS.register("drill_light_blue", basicItem());
     public static final RegistryObject<Item> DRILL_LIGHT_GRAY = ITEMS.register("drill_light_gray", basicItem());
     public static final RegistryObject<Item> DRILL_LIME = ITEMS.register("drill_lime", basicItem());
     public static final RegistryObject<Item> DRILL_MAGENTA = ITEMS.register("drill_magenta", basicItem());
@@ -230,7 +230,7 @@ public final class ActuallyItems {
             BATS_WING, DRILL_CORE, LENS, ENDER_STAR, CRYSTALLIZED_CANOLA_SEED, EMPOWERED_CANOLA_SEED, LENS_OF_COLOR,
             LENS_OF_DETONATION, LENS_OF_CERTAIN_DEATH, LENS_OF_THE_KILLER, LENS_OF_DISENCHANTING, LENS_OF_THE_MINER, LASER_WRENCH,
             TELEPORT_STAFF, WINGS_OF_THE_BATS, SINGLE_BATTERY, DOUBLE_BATTERY, TRIPLE_BATTERY, QUADRUPLE_BATTERY, QUINTUPLE_BATTERY,
-            DRILL_BLACK, DRILL_BLUE, DRILL_BROWN, DRILL_CYAN, DRILL_GRAY, DRILL_GREEN, DRILL_LIGHT_BLUE, DRILL_LIGHT_GRAY,
+            DRILL_BLACK, DRILL_BLUE, DRILL_BROWN, DRILL_CYAN, DRILL_GRAY, DRILL_GREEN, DRILL_MAIN, DRILL_LIGHT_GRAY,
             DRILL_LIME, DRILL_MAGENTA, DRILL_ORANGE, DRILL_PINK, DRILL_PURPLE, DRILL_RED, DRILL_WHITE, DRILL_YELLOW, DRILL_SPEED_AUGMENT_I,
             DRILL_SPEED_AUGMENT_II, DRILL_SPEED_AUGMENT_III, DRILL_SILK_TOUCH_AUGMENT, DRILL_FORTUNE_AUGMENT_I, DRILL_FORTUNE_AUGMENT_II,
             DRILL_MINING_AUGMENT_I, DRILL_MINING_AUGMENT_II, DRILL_BLOCK_PLACING_AUGMENT, FERTILIZER, CUP_WITH_COFFEE, PHANTOM_CONNECTOR,

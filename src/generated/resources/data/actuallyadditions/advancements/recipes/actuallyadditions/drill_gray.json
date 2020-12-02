@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:drill_gray"
+    ]
+  },
+  "criteria": {
+    "has_drill": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:drill_light_blue"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:drill_gray"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_drill",
+      "has_the_recipe"
+    ]
+  ]
+}

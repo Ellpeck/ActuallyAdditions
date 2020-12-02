@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ede",
+    "dqd",
+    "ede"
+  ],
+  "key": {
+    "e": {
+      "tag": "forge:ender_pearls"
+    },
+    "d": {
+      "item": "actuallyadditions:diamatine_empowered_crystal"
+    },
+    "q": {
+      "item": "actuallyadditions:black_quartz_block"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:ender_casing_block"
+  }
+}

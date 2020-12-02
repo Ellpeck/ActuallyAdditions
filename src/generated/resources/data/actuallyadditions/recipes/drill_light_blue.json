@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aaa",
+    "bcb",
+    "ddd"
+  ],
+  "key": {
+    "a": {
+      "item": "actuallyadditions:diamatine_crystal"
+    },
+    "b": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "c": {
+      "item": "actuallyadditions:drill_core"
+    },
+    "d": {
+      "item": "actuallyadditions:crystal_enori_block"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_light_blue"
+  }
+}

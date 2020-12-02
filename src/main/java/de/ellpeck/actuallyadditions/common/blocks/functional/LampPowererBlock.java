@@ -7,4 +7,6 @@ public class LampPowererBlock extends ActuallyBlock {
     public LampPowererBlock() {
         super(Properties.create(Material.ROCK));
     }
+
+
 }

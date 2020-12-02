@@ -28,8 +28,21 @@ public class GeneratorRecipes extends RecipeProvider {
                 .patternLine("ee ").patternLine("ee ")
                 .addCriterion("has_enderpearl", hasItem(Tags.Items.ENDER_PEARLS)).build(consumer);
 
-//        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.ENDER_CASING.get())
-//                .key('e', Tags.Items.ENDER_PEARLS).key('d', ActuallyItems.DIAMATINE)
+        // Castings
+        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.ENDER_CASING.get())
+                .key('e', Tags.Items.ENDER_PEARLS).key('d', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
+                .key('q', ActuallyBlocks.BLACK_QUARTZ.get())
+                .patternLine("ede").patternLine("dqd").patternLine("ede")
+                .addCriterion("has_enderpearl", hasItem(Tags.Items.ENDER_PEARLS))
+                .addCriterion("has_empowered_diamatine", hasItem(ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get()))
+                .build(consumer);
+
+        // Batteries
+        battery(ActuallyItems.SINGLE_BATTERY, ActuallyItems.RESTONIA_CRYSTAL, ActuallyItems.ENORI_CRYSTAL).build(consumer);
+        battery(ActuallyItems.DOUBLE_BATTERY, ActuallyItems.SINGLE_BATTERY, ActuallyItems.ENORI_CRYSTAL).build(consumer);
+        battery(ActuallyItems.TRIPLE_BATTERY, ActuallyItems.DOUBLE_BATTERY, ActuallyItems.ENORI_EMPOWERED_CRYSTAL).build(consumer);
+        battery(ActuallyItems.QUADRUPLE_BATTERY, ActuallyItems.TRIPLE_BATTERY, ActuallyItems.ENORI_EMPOWERED_CRYSTAL).build(consumer);
+        battery(ActuallyItems.QUINTUPLE_BATTERY, ActuallyItems.QUADRUPLE_BATTERY, ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL).build(consumer);
 
         ShapedRecipeBuilder.shapedRecipe(ActuallyItems.BASIC_COIL.get())
                 .key('r', ActuallyItems.RESTONIA_CRYSTAL.get()).key('b', ActuallyItems.BLACK_QUARTS.get())
@@ -41,6 +54,7 @@ public class GeneratorRecipes extends RecipeProvider {
                 .patternLine("ggg").patternLine("gcg").patternLine("ggg")
                 .addCriterion("has_basic_coil", hasItem(ActuallyItems.BASIC_COIL.get())).build(consumer);
 
+        // Functional Items
         ShapedRecipeBuilder.shapedRecipe(ActuallyItems.LEAF_BLOWER.get())
                 .key('f', Items.FLINT).key('i', ActuallyItems.ENORI_CRYSTAL.get())
                 .key('p', Items.PISTON).key('c', ActuallyItems.ADVANCED_COIL.get())
@@ -52,6 +66,43 @@ public class GeneratorRecipes extends RecipeProvider {
                 .key('p', Items.PISTON).key('c', ActuallyItems.ADVANCED_COIL.get())
                 .patternLine(" f ").patternLine("ip ").patternLine("ic ")
                 .addCriterion("has_diamatine", hasItem(ActuallyItems.DIAMATINE_CRYSTAL.get())).build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.TELEPORT_STAFF.get())
+                .key('a', ActuallyItems.DIAMATINE_CRYSTAL.get()).key('b', ActuallyBlocks.ENDERPEARL.get())
+                .key('c', ActuallyBlocks.ENDER_CASING.get()).key('d', ActuallyItems.SINGLE_BATTERY.get())
+                .patternLine(" ab").patternLine(" c ").patternLine("cd ")
+                .addCriterion("has_battery", hasItem(ActuallyItems.SINGLE_BATTERY.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_CORE.get())
+                .key('a', ActuallyBlocks.CRYSTAL_ENORI.get()).key('b', ActuallyItems.BASIC_COIL.get())
+                .key('c', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .patternLine("aba").patternLine("bcb").patternLine("aba")
+                .addCriterion("has_basic_coil", hasItem(ActuallyItems.BASIC_COIL.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_MAIN.get())
+                .key('a', ActuallyItems.DIAMATINE_CRYSTAL.get()).key('b', ActuallyItems.ADVANCED_COIL.get())
+                .key('c', ActuallyItems.DRILL_CORE.get()).key('d', ActuallyBlocks.CRYSTAL_ENORI.get())
+                .patternLine("aaa").patternLine("bcb").patternLine("ddd")
+                .addCriterion("has_core", hasItem(ActuallyItems.DRILL_CORE.get()))
+                .build(consumer);
+
+        drillColor(ActuallyItems.DRILL_BLACK, Tags.Items.DYES_BLACK).build(consumer);
+        drillColor(ActuallyItems.DRILL_BLUE, Tags.Items.DYES_BLUE).build(consumer);
+        drillColor(ActuallyItems.DRILL_BROWN, Tags.Items.DYES_BROWN).build(consumer);
+        drillColor(ActuallyItems.DRILL_CYAN, Tags.Items.DYES_CYAN).build(consumer);
+        drillColor(ActuallyItems.DRILL_GRAY, Tags.Items.DYES_GRAY).build(consumer);
+        drillColor(ActuallyItems.DRILL_GREEN, Tags.Items.DYES_GREEN).build(consumer);
+        drillColor(ActuallyItems.DRILL_LIGHT_GRAY, Tags.Items.DYES_LIGHT_GRAY).build(consumer);
+        drillColor(ActuallyItems.DRILL_LIME, Tags.Items.DYES_LIME).build(consumer);
+        drillColor(ActuallyItems.DRILL_MAGENTA, Tags.Items.DYES_MAGENTA).build(consumer);
+        drillColor(ActuallyItems.DRILL_ORANGE, Tags.Items.DYES_ORANGE).build(consumer);
+        drillColor(ActuallyItems.DRILL_PINK, Tags.Items.DYES_PINK).build(consumer);
+        drillColor(ActuallyItems.DRILL_PURPLE, Tags.Items.DYES_PURPLE).build(consumer);
+        drillColor(ActuallyItems.DRILL_RED, Tags.Items.DYES_RED).build(consumer);
+        drillColor(ActuallyItems.DRILL_WHITE, Tags.Items.DYES_WHITE).build(consumer);
+        drillColor(ActuallyItems.DRILL_YELLOW, Tags.Items.DYES_YELLOW).build(consumer);
 
         // Blocks of: Crystals & back again
         blockOfToItem(ActuallyBlocks.CRYSTAL_ENORI, ActuallyItems.ENORI_CRYSTAL, 9, consumer);
@@ -140,5 +191,21 @@ public class GeneratorRecipes extends RecipeProvider {
                 .addCriterion("has_palis", hasItem(ActuallyItems.PALIS_CRYSTAL.get()))
                 .addCriterion("has_color_item", hasItem(color))
                 .build(consumer);
+    }
+
+    private ShapedRecipeBuilder battery(Supplier<Item> result, Supplier<Item> special, Supplier<Item> base) {
+        return ShapedRecipeBuilder.shapedRecipe(result.get())
+                .key('c', special.get()).key('a', ActuallyItems.ADVANCED_COIL.get())
+                .key('b', base.get())
+                .patternLine(" c ").patternLine("bab").patternLine("bbb")
+                .addCriterion("has_base", hasItem(base.get()))
+                .addCriterion("has_coil", hasItem(ActuallyItems.ADVANCED_COIL.get()));
+    }
+
+    private ShapelessRecipeBuilder drillColor(Supplier<Item> result, ITag<Item> color) {
+        return ShapelessRecipeBuilder.shapelessRecipe(result.get())
+                .addIngredient(ActuallyItems.DRILL_MAIN.get())
+                .addIngredient(color)
+                .addCriterion("has_drill", hasItem(ActuallyItems.DRILL_MAIN.get()));
     }
 }

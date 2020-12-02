@@ -218,13 +218,13 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ActuallyItems.TRIPLE_BATTERY, "Triple Battery");
         addItem(ActuallyItems.QUADRUPLE_BATTERY, "Quadruple Battery");
         addItem(ActuallyItems.QUINTUPLE_BATTERY, "Quintuple Battery");
+        addItem(ActuallyItems.DRILL_MAIN, "Drill");
         addItem(ActuallyItems.DRILL_BLACK, "Black Drill");
         addItem(ActuallyItems.DRILL_BLUE, "Blue Drill");
         addItem(ActuallyItems.DRILL_BROWN, "Brown Drill");
         addItem(ActuallyItems.DRILL_CYAN, "Cyan Drill");
         addItem(ActuallyItems.DRILL_GRAY, "Gray Drill");
         addItem(ActuallyItems.DRILL_GREEN, "Green Drill");
-        addItem(ActuallyItems.DRILL_LIGHT_BLUE, "Light Blue Drill");
         addItem(ActuallyItems.DRILL_LIGHT_GRAY, "Light Gray Drill");
         addItem(ActuallyItems.DRILL_LIME, "Lime Drill");
         addItem(ActuallyItems.DRILL_MAGENTA, "Magenta Drill");

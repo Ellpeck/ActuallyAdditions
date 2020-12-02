@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " ab",
+    " c ",
+    "cd "
+  ],
+  "key": {
+    "a": {
+      "item": "actuallyadditions:diamatine_crystal"
+    },
+    "b": {
+      "item": "actuallyadditions:enderpearl_block"
+    },
+    "c": {
+      "item": "actuallyadditions:ender_casing_block"
+    },
+    "d": {
+      "item": "actuallyadditions:single_battery"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:teleport_staff"
+  }
+}
