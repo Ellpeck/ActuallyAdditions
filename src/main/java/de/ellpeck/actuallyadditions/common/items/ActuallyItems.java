@@ -2,10 +2,7 @@ package de.ellpeck.actuallyadditions.common.items;
 
 import com.google.common.collect.ImmutableSet;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.common.items.useables.AllInOneTool;
-import de.ellpeck.actuallyadditions.common.items.useables.LeafBlowerItem;
-import de.ellpeck.actuallyadditions.common.items.useables.ManualItem;
-import de.ellpeck.actuallyadditions.common.items.useables.TeleportStaffItem;
+import de.ellpeck.actuallyadditions.common.items.useables.*;
 import de.ellpeck.actuallyadditions.common.materials.ArmorMaterials;
 import de.ellpeck.actuallyadditions.common.materials.ToolMaterials;
 import net.minecraft.item.Item;
@@ -107,11 +104,14 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> LASER_WRENCH = ITEMS.register("laser_wrench", basicItem());
     public static final RegistryObject<Item> TELEPORT_STAFF = ITEMS.register("teleport_staff", TeleportStaffItem::new);
     public static final RegistryObject<Item> WINGS_OF_THE_BATS = ITEMS.register("wings_of_the_bats", basicItem());
-    public static final RegistryObject<Item> SINGLE_BATTERY = ITEMS.register("single_battery", basicItem());
-    public static final RegistryObject<Item> DOUBLE_BATTERY = ITEMS.register("double_battery", basicItem());
-    public static final RegistryObject<Item> TRIPLE_BATTERY = ITEMS.register("triple_battery", basicItem());
-    public static final RegistryObject<Item> QUADRUPLE_BATTERY = ITEMS.register("quadruple_battery", basicItem());
-    public static final RegistryObject<Item> QUINTUPLE_BATTERY = ITEMS.register("quintuple_battery", basicItem());
+
+    // Batteries
+    public static final RegistryObject<Item> SINGLE_BATTERY = ITEMS.register("single_battery", () -> new BatteryItem(() -> 200000, 1000));
+    public static final RegistryObject<Item> DOUBLE_BATTERY = ITEMS.register("double_battery", () -> new BatteryItem(() -> 350000, 5000));
+    public static final RegistryObject<Item> TRIPLE_BATTERY = ITEMS.register("triple_battery", () -> new BatteryItem(() -> 600000, 10000));
+    public static final RegistryObject<Item> QUADRUPLE_BATTERY = ITEMS.register("quadruple_battery", () -> new BatteryItem(() -> 1000000, 30000));
+    public static final RegistryObject<Item> QUINTUPLE_BATTERY = ITEMS.register("quintuple_battery", () -> new BatteryItem(() -> 2000000, 100000));
+
     public static final RegistryObject<Item> DRILL_MAIN = ITEMS.register("drill_light_blue", basicItem());
     public static final RegistryObject<Item> DRILL_BLACK = ITEMS.register("drill_black", basicItem());
     public static final RegistryObject<Item> DRILL_BLUE = ITEMS.register("drill_blue", basicItem());

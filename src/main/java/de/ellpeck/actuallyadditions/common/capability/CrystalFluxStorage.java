@@ -12,8 +12,8 @@ public class CrystalFluxStorage extends EnergyStorage {
     public static final String NBT_TAG = "crystal-flux";
     private final ItemStack stack;
 
-    public CrystalFluxStorage(ItemStack stack, int capacity) {
-        super(capacity, Integer.MAX_VALUE, Integer.MAX_VALUE);
+    public CrystalFluxStorage(ItemStack stack, int capacity, int transfer) {
+        super(capacity, transfer, transfer);
 
         this.stack = stack;
 

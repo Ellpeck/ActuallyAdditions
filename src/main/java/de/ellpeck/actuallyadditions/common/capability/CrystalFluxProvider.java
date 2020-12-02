@@ -14,11 +14,20 @@ import javax.annotation.Nullable;
 public class CrystalFluxProvider implements ICapabilityProvider {
     private ItemStack stack;
     private int energy;
-    private LazyOptional<IEnergyStorage> capability = LazyOptional.of(() -> new CrystalFluxStorage(stack, energy));
+    private int transfer;
+
+    private LazyOptional<IEnergyStorage> capability = LazyOptional.of(() -> new CrystalFluxStorage(stack, energy, transfer));
 
     public CrystalFluxProvider(ItemStack stack, int energy) {
         this.stack = stack;
         this.energy = energy;
+        this.transfer = Integer.MAX_VALUE;
+    }
+
+    public CrystalFluxProvider(ItemStack stack, int energy, int transfer) {
+        this.stack = stack;
+        this.energy = energy;
+        this.transfer = transfer;
     }
 
     @Nonnull

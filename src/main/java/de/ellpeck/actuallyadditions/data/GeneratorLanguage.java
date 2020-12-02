@@ -322,6 +322,11 @@ public class GeneratorLanguage extends LanguageProvider {
         addPrefixed("tooltip.booklet.manual.two", "This book guides you through all of the feature Actually Additions has to over.");
         addPrefixed("tooltip.booklet.manual.three", "Use while holding to open.");
 
+        // Battery
+        addPrefixed("tooltip.battery.not-charging", "Not charging other items in inventory");
+        addPrefixed("tooltip.battery.charging", "Charging other item in inventory");
+        addPrefixed("tooltip.battery.charge-help", "Sneak-right-click to toggle");
+
         // Storage
         addPrefixed("storage.crystal-flux", "%s/%s Crystal Flux");
 

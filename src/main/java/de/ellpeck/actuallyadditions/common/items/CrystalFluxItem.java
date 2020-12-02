@@ -35,6 +35,7 @@ public abstract class CrystalFluxItem extends ActuallyItem {
             alt ? NumberFormat.getIntegerInstance().format(value) : Help.compressedValue(value);
 
     private final Supplier<Integer> maxFlux;
+    private final int transfer;
 
     /**
      * We use a supplier here to allow for config values to be passed around so we are able to
@@ -46,12 +47,24 @@ public abstract class CrystalFluxItem extends ActuallyItem {
         super(properties);
 
         this.maxFlux = maxFlux;
+        this.transfer = Integer.MAX_VALUE;
+    }
+
+    /**
+     * Allows for granular control over the transfer rate
+     * @param maxFlux max energy this item can store
+     * @param transfer max transfer rate for energy
+     */
+    public CrystalFluxItem(Properties properties, Supplier<Integer> maxFlux, int transfer) {
+        super(properties);
+        this.maxFlux = maxFlux;
+        this.transfer = transfer;
     }
 
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-        return new CrystalFluxProvider(stack, maxFlux.get());
+        return new CrystalFluxProvider(stack, maxFlux.get(), this.transfer);
     }
 
     @OnlyIn(Dist.CLIENT)
