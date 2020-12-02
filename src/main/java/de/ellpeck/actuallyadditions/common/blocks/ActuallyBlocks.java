@@ -135,22 +135,22 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> BLACK_PILLAR_QUARTZ_SLAB = BLOCKS.register("black_pillar_quartz_slab_block", () -> new SlabBlock(Block.Properties.create(Material.ROCK)));
 
     // LAMPS! SO MANY LAMPS
-    public static final RegistryObject<Block> LAMP_WHITE = BLOCKS.register("lamp_white_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_ORANGE = BLOCKS.register("lamp_orange_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_MAGENTA = BLOCKS.register("lamp_magenta_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_LIGHT_BLUE = BLOCKS.register("lamp_light_blue_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_YELLOW = BLOCKS.register("lamp_yellow_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_LIME = BLOCKS.register("lamp_lime_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_PINK = BLOCKS.register("lamp_pink_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_GRAY = BLOCKS.register("lamp_gray_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_LIGHT_GRAY = BLOCKS.register("lamp_light_gray_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_CYAN = BLOCKS.register("lamp_cyan_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_PURPLE = BLOCKS.register("lamp_purple_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_BLUE = BLOCKS.register("lamp_blue_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_BROWN = BLOCKS.register("lamp_brown_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_GREEN = BLOCKS.register("lamp_green_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_RED = BLOCKS.register("lamp_red_block", ColoredLampBlock::new);
-    public static final RegistryObject<Block> LAMP_BLACK = BLOCKS.register("lamp_black_block", ColoredLampBlock::new);
+    public static final RegistryObject<Block> LAMP_WHITE = BLOCKS.register("lamp_white_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_ORANGE = BLOCKS.register("lamp_orange_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_MAGENTA = BLOCKS.register("lamp_magenta_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_LIGHT_BLUE = BLOCKS.register("lamp_light_blue_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_YELLOW = BLOCKS.register("lamp_yellow_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_LIME = BLOCKS.register("lamp_lime_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_PINK = BLOCKS.register("lamp_pink_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_GRAY = BLOCKS.register("lamp_gray_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_LIGHT_GRAY = BLOCKS.register("lamp_light_gray_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_CYAN = BLOCKS.register("lamp_cyan_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_PURPLE = BLOCKS.register("lamp_purple_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_BLUE = BLOCKS.register("lamp_blue_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_BROWN = BLOCKS.register("lamp_brown_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_GREEN = BLOCKS.register("lamp_green_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_RED = BLOCKS.register("lamp_red_block", LampBlock::new);
+    public static final RegistryObject<Block> LAMP_BLACK = BLOCKS.register("lamp_black_block", LampBlock::new);
 
     public static final RegistryObject<Block> LAMP_CONTROLLER = BLOCKS.register("lamp_controller_block", LampPowererBlock::new);
 

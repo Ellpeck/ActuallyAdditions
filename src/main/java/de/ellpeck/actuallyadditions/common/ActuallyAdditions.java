@@ -3,7 +3,6 @@ package de.ellpeck.actuallyadditions.common;
 import de.ellpeck.actuallyadditions.common.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.common.config.Config;
 import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -50,6 +49,6 @@ public class ActuallyAdditions {
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
-        ActuallyBlocks.BLOCKS.getEntries().forEach(e -> LOGGER.debug(I18n.format(e.get().getTranslatedName().getString())));
+
     }
 }
