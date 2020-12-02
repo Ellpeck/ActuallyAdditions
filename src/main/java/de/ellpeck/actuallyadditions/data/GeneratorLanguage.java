@@ -14,7 +14,7 @@ public class GeneratorLanguage extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        // Blocks (kill me)
+        // Blocks
         addBlock(ActuallyBlocks.RICE, "Rice");
         addBlock(ActuallyBlocks.CANOLA, "Canola");
         addBlock(ActuallyBlocks.FLAX, "Flax");
@@ -130,7 +130,6 @@ public class GeneratorLanguage extends LanguageProvider {
         addBlock(ActuallyBlocks.ORE_BLACK_QUARTZ, "Black Quartz Ore");
         addBlock(ActuallyBlocks.ENDER_CASING, "Ender Casing");
         addBlock(ActuallyBlocks.IRON_CASING, "Iron Casing");
-        addBlock(ActuallyBlocks.IRON_CASING_SNOW, "?");
         addBlock(ActuallyBlocks.LAVA_FACTORY_CASE, "Casing");
         addBlock(ActuallyBlocks.WOOD_CASING, "Wood Casing");
 
@@ -169,7 +168,7 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ActuallyItems.EMERADIC_EMPOWERED_CRYSTAL, "Empowered Emeradic Crystal");
         addItem(ActuallyItems.ENORI_EMPOWERED_CRYSTAL, "Empowered Enori Crystal");
 
-        // Remaining Items?
+        // Remaining Items
         addItem(ActuallyItems.RED_CRYSTAL_SHARD, "Red Crystal Shard");
         addItem(ActuallyItems.BLUE_CRYSTAL_SHARD, "Blue Crystal Shard");
         addItem(ActuallyItems.LIGHT_BLUE_CRYSTAL_SHARD, "Light Blue Crystal");

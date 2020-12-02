@@ -160,7 +160,6 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> ORE_BLACK_QUARTZ = BLOCKS.register("ore_black_quartz_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> ENDER_CASING = BLOCKS.register("ender_casing_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> IRON_CASING = BLOCKS.register("iron_casing_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
-    public static final RegistryObject<Block> IRON_CASING_SNOW = BLOCKS.register("iron_casing_snow_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> LAVA_FACTORY_CASE = BLOCKS.register("lava_factory_case_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> WOOD_CASING = BLOCKS.register("wood_casing_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
 

@@ -138,7 +138,6 @@ public class GeneratorLoot extends LootTableProvider {
             this.registerDropSelfLootTable(ActuallyBlocks.CHARCOAL.get());
             this.registerDropSelfLootTable(ActuallyBlocks.ENDER_CASING.get());
             this.registerDropSelfLootTable(ActuallyBlocks.IRON_CASING.get());
-            this.registerDropSelfLootTable(ActuallyBlocks.IRON_CASING_SNOW.get());
             this.registerDropSelfLootTable(ActuallyBlocks.LAVA_FACTORY_CASE.get());
             this.registerDropSelfLootTable(ActuallyBlocks.WOOD_CASING.get());
 

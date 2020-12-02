@@ -114,7 +114,6 @@ public class GeneratorBlockStates extends BlockStateProvider {
         buildCubeAll(ActuallyBlocks.ENDER_CASING);
         buildCubeAll(ActuallyBlocks.ENDERPEARL);
         buildCubeAll(ActuallyBlocks.IRON_CASING);
-        buildCubeAll(ActuallyBlocks.IRON_CASING_SNOW);
         buildCubeAll(ActuallyBlocks.LAVA_FACTORY_CASE);
         buildCubeAll(ActuallyBlocks.ORE_BLACK_QUARTZ);
         buildCubeAll(ActuallyBlocks.WOOD_CASING);
@@ -143,6 +142,8 @@ public class GeneratorBlockStates extends BlockStateProvider {
         slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_SLAB.get(), modLoc("block/black_quartz_block"), modLoc("block/black_quartz_block"));
         slabBlock((SlabBlock) ActuallyBlocks.BLACK_CHISELED_QUARTZ_SLAB.get(), modLoc("block/black_quartz_chiseled_block"), modLoc("block/black_quartz_chiseled_block"));
         slabBlock((SlabBlock) ActuallyBlocks.BLACK_PILLAR_QUARTZ_SLAB.get(), modLoc("block/black_quartz_pillar_block"), modLoc("block/black_quartz_pillar_block"));
+
+
     }
 
     private void buildCubeAll(Supplier<Block> block) {
