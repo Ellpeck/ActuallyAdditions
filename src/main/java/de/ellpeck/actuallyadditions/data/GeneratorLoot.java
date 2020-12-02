@@ -161,7 +161,7 @@ public class GeneratorLoot extends LootTableProvider {
             this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_EMERADIC, ActuallyItems.GREEN_CRYSTAL_SHARD);
             this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_ENORI, ActuallyItems.WHITE_CRYSTAL_SHARD);
 
-            this.registerLootTable(ActuallyBlocks.ORE_BLACK_QUARTZ.get(), ore -> droppingItemWithFortune(ore, ActuallyItems.BLACK_QUARTS.get()));
+            this.registerLootTable(ActuallyBlocks.ORE_BLACK_QUARTZ.get(), ore -> droppingItemWithFortune(ore, ActuallyItems.BLACK_QUARTZ.get()));
         }
 
         // This isn't quite right :cry: fortune doesn't change it

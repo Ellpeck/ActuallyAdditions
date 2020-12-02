@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "actuallyadditions:black_chiseled_quartz_slab_block"
         }
       ],
       "conditions": [

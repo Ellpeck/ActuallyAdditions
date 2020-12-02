@@ -48,7 +48,7 @@ public final class ActuallyItems {
     public static final Set<ToolSet> ALL_TOOL_SETS = ImmutableSet.of(QUARTZ_SET, ENORI_SET, EMERADIC_SET, VOID_SET, DIAMATINE_SET, PALIS_SET, RESTONIA_SET);
 
     // Resources
-    public static final RegistryObject<Item> BLACK_QUARTS = ITEMS.register("black_quartz", basicItem());
+    public static final RegistryObject<Item> BLACK_QUARTZ = ITEMS.register("black_quartz", basicItem());
 
     public static final RegistryObject<Item> RESTONIA_CRYSTAL = ITEMS.register("restonia_crystal", basicItem());
     public static final RegistryObject<Item> PALIS_CRYSTAL = ITEMS.register("palis_crystal", basicItem());
@@ -215,7 +215,7 @@ public final class ActuallyItems {
 
     public static final Set<RegistryObject<Item>> SIMPLE_ITEMS = ImmutableSet.of(
             // Crystals
-            BLACK_QUARTS, RESTONIA_CRYSTAL, PALIS_CRYSTAL, DIAMATINE_CRYSTAL,
+            BLACK_QUARTZ, RESTONIA_CRYSTAL, PALIS_CRYSTAL, DIAMATINE_CRYSTAL,
             VOID_CRYSTAL, EMERADIC_CRYSTAL, ENORI_CRYSTAL, RESTONIA_EMPOWERED_CRYSTAL,
             PALIS_EMPOWERED_CRYSTAL, DIAMATINE_EMPOWERED_CRYSTAL, VOID_EMPOWERED_CRYSTAL, EMERADIC_EMPOWERED_CRYSTAL,
             ENORI_EMPOWERED_CRYSTAL,

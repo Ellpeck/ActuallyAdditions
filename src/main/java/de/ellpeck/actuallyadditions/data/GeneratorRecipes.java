@@ -45,7 +45,7 @@ public class GeneratorRecipes extends RecipeProvider {
         battery(ActuallyItems.QUINTUPLE_BATTERY, ActuallyItems.QUADRUPLE_BATTERY, ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL).build(consumer);
 
         ShapedRecipeBuilder.shapedRecipe(ActuallyItems.BASIC_COIL.get())
-                .key('r', ActuallyItems.RESTONIA_CRYSTAL.get()).key('b', ActuallyItems.BLACK_QUARTS.get())
+                .key('r', ActuallyItems.RESTONIA_CRYSTAL.get()).key('b', ActuallyItems.BLACK_QUARTZ.get())
                 .patternLine(" r ").patternLine("rbr").patternLine(" r ")
                 .addCriterion("has_restonia", hasItem(ActuallyItems.RESTONIA_CRYSTAL.get())).build(consumer);
 
@@ -141,7 +141,7 @@ public class GeneratorRecipes extends RecipeProvider {
         gridOfToResult(ActuallyItems.RED_CRYSTAL_SHARD.get(), ActuallyItems.RESTONIA_CRYSTAL.get(), true, consumer);
 
         // Misc
-        gridOfToResult(ActuallyItems.BLACK_QUARTS.get(), ActuallyBlocks.BLACK_QUARTZ.get(), false, consumer);
+        gridOfToResult(ActuallyItems.BLACK_QUARTZ.get(), ActuallyBlocks.BLACK_QUARTZ.get(), false, consumer);
 
         lamp(ActuallyBlocks.LAMP_WHITE, Tags.Items.DYES_WHITE, consumer);
         lamp(ActuallyBlocks.LAMP_ORANGE, Tags.Items.DYES_ORANGE, consumer);
@@ -161,7 +161,7 @@ public class GeneratorRecipes extends RecipeProvider {
         lamp(ActuallyBlocks.LAMP_BLACK, Tags.Items.DYES_BLACK, consumer);
 
         // Hot stuff
-        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ActuallyBlocks.ORE_BLACK_QUARTZ.get()), ActuallyItems.BLACK_QUARTS.get(), 0.7F, 100).addCriterion("has_black_quartz_ore", hasItem(ActuallyBlocks.ORE_BLACK_QUARTZ.get())).build(consumer);
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ActuallyBlocks.ORE_BLACK_QUARTZ.get()), ActuallyItems.BLACK_QUARTZ.get(), 0.7F, 100).addCriterion("has_black_quartz_ore", hasItem(ActuallyBlocks.ORE_BLACK_QUARTZ.get())).build(consumer);
     }
 
     private void blockOfToItem(Supplier<Block> blockOf, Supplier<Item> result, int count, Consumer<IFinishedRecipe> consumer) {
@@ -184,7 +184,7 @@ public class GeneratorRecipes extends RecipeProvider {
     private void lamp(Supplier<Block> result, ITag<Item> color, Consumer<IFinishedRecipe> consumer) {
         ShapedRecipeBuilder.shapedRecipe(result.get())
                 .key('g', Blocks.GLOWSTONE).key('b', color)
-                .key('c', ActuallyItems.PALIS_CRYSTAL.get()).key('q', ActuallyItems.BLACK_QUARTS.get())
+                .key('c', ActuallyItems.PALIS_CRYSTAL.get()).key('q', ActuallyItems.BLACK_QUARTZ.get())
                 .patternLine("gcg")
                 .patternLine("bqb")
                 .patternLine("gcg")

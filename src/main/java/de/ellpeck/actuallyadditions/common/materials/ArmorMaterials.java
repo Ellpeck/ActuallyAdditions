@@ -22,7 +22,7 @@ public enum ArmorMaterials implements IArmorMaterial {
 //    EMERALD("emerald_armor_material", 30,  new int[] { 5, 8, 9, 4 }, 15, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2, 0f, () -> Ingredient.fromItems(Items.EMERALD)),
 //    OBSIDIAN("obsidian_armor_material", 28, new int[] { 1, 3, 4, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1, 0f, () -> Ingredient.fromItems(Items.OBSIDIAN)),
 
-    QUARTZ("quartz_armor_material", 15, new int[] { 3, 5, 6, 3 }, 8, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1, 0f, () -> Ingredient.fromItems(ActuallyItems.BLACK_QUARTS.get())),
+    QUARTZ("quartz_armor_material", 15, new int[] { 3, 5, 6, 3 }, 8, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1, 0f, () -> Ingredient.fromItems(ActuallyItems.BLACK_QUARTZ.get())),
     RESTONIA("restonia_armor_material", 18, new int[] { 3, 6, 7, 3 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.fromItems(ActuallyItems.RESTONIA_CRYSTAL.get())),
     PALIS("palis_armor_material", 10, new int[] { 3, 6, 7, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.fromItems(ActuallyItems.PALIS_CRYSTAL.get())),
     DIAMATINE("diamatine_armor_material", 36, new int[] { 4, 7, 8, 4 }, 12, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3, 0f, () -> Ingredient.fromItems(ActuallyItems.DIAMATINE_CRYSTAL.get())),

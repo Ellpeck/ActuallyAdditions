@@ -144,14 +144,14 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ActuallyItems.GOLD_AIOT, "Gold AIOT");
         addItem(ActuallyItems.DIAMOND_AIOT, "Diamond AIOT");
         addItem(ActuallyItems.NETHERITE_AIOT, "Netherite AIOT");
-        addItem(ActuallyItems.QUARTZ_AIOT, "Quartz AIOT");
+        addItem(ActuallyItems.QUARTZ_AIOT, "Black Quartz AIOT");
         addItem(ActuallyItems.ENORI_AIOT, "Enori AIOT");
         addItem(ActuallyItems.EMERADIC_AIOT, "Emeradic AIOT");
         addItem(ActuallyItems.VOID_AIOT, "Void AIOT");
         addItem(ActuallyItems.DIAMATINE_AIOT, "Diamatine AIOT");
         addItem(ActuallyItems.PALIS_AIOT, "Palis AIOT");
         addItem(ActuallyItems.RESTONIA_AIOT, "Restonia AIOT");
-        addItem(ActuallyItems.BLACK_QUARTS, "Black Quarts");
+        addItem(ActuallyItems.BLACK_QUARTZ, "Black Quartz");
 
         // Crystals
         addItem(ActuallyItems.RESTONIA_CRYSTAL, "Restonia Crystal");
