@@ -6,6 +6,7 @@ import static net.minecraftforge.common.ForgeConfigSpec.IntValue;
 public class ItemConfig {
     public final IntValue teleportStaffCost;
     public final IntValue teleportStaffMaxEnergy;
+    public final IntValue drillMaxEnergy;
 
     public ItemConfig() {
         COMMON_BUILDER.comment("Item Config Options").push("items");
@@ -20,5 +21,9 @@ public class ItemConfig {
         teleportStaffMaxEnergy = COMMON_BUILDER
                 .comment("The max amount of Crystal Flux stored in the Teleport Staff")
                 .defineInRange("Teleport Staff Max Energy", 250000, 0, 1000000);
+
+        drillMaxEnergy = COMMON_BUILDER
+                .comment("The max energy amount for the drill")
+                .defineInRange("Drill Max Energy", 250000, 0, 1000000);
     }
 }
