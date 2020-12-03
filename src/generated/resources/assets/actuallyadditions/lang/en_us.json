@@ -1,4 +1,5 @@
 {
+  "actuallyadditions.gui.name.drill": "Drill",
   "actuallyadditions.storage.crystal-flux": "%s/%s Crystal Flux",
   "actuallyadditions.tooltip.battery.charge-help": "Sneak-right-click to toggle",
   "actuallyadditions.tooltip.battery.charging": "Charging other item in inventory",

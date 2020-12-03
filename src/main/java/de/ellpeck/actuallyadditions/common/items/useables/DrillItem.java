@@ -3,13 +3,13 @@ package de.ellpeck.actuallyadditions.common.items.useables;
 import de.ellpeck.actuallyadditions.common.config.Config;
 import de.ellpeck.actuallyadditions.common.container.DrillContainer;
 import de.ellpeck.actuallyadditions.common.items.CrystalFluxItem;
+import de.ellpeck.actuallyadditions.common.utilities.Help;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -32,7 +32,7 @@ public class DrillItem extends CrystalFluxItem {
         if (player.isSneaking() && !worldIn.isRemote && handIn == Hand.MAIN_HAND) {
             NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider(
                     (windowId, playerInv, playerEntity) -> new DrillContainer(windowId, playerInv),
-                    StringTextComponent.EMPTY
+                    Help.trans("gui.name.drill")
             ));
         }
 

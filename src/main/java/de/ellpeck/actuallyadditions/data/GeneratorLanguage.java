@@ -327,6 +327,9 @@ public class GeneratorLanguage extends LanguageProvider {
         addPrefixed("tooltip.battery.charging", "Charging other item in inventory");
         addPrefixed("tooltip.battery.charge-help", "Sneak-right-click to toggle");
 
+        // Screen names
+        addPrefixed("gui.name.drill", "Drill");
+
         // Storage
         addPrefixed("storage.crystal-flux", "%s/%s Crystal Flux");
 
