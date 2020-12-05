@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.items.ItemStackHandler;
@@ -60,6 +61,7 @@ public class DrillContainer extends Container {
     @Nonnull
     @Override
     public ItemStack slotClick(int slotId, int dragType, @Nonnull ClickType clickTypeIn, @Nonnull PlayerEntity player) {
+        // Don't let the user pickup, throw or swap the drill, any drill
         if ((clickTypeIn == ClickType.SWAP || clickTypeIn == ClickType.THROW || clickTypeIn == ClickType.PICKUP)
                 && slotId >= 0
                 && slotId <= this.inventorySlots.size()
@@ -68,6 +70,31 @@ public class DrillContainer extends Container {
         }
 
         return super.slotClick(slotId, dragType, clickTypeIn, player);
+    }
+
+    @Override
+    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+        Slot fromSlot = this.inventorySlots.get(index);
+
+        if (fromSlot == null || !fromSlot.getHasStack()) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack fromStack = fromSlot.getStack();
+
+        // Moves items from the Drill to the players inventory
+        if (index > ContainerHelper.PLAYER_INVENTORY_END_SLOT) {
+            if (!this.mergeItemStack(fromStack, 0, ContainerHelper.PLAYER_INVENTORY_END_SLOT, false)) {
+                return ItemStack.EMPTY;
+            }
+        } else {
+            // Moves the item from the players inventory to the drill
+            if (!this.mergeItemStack(fromStack, ContainerHelper.PLAYER_INVENTORY_END_SLOT + 1, ContainerHelper.PLAYER_INVENTORY_END_SLOT + 6, false)) {
+                return ItemStack.EMPTY;
+            }
+        }
+
+        return fromStack;
     }
 
     @Override
