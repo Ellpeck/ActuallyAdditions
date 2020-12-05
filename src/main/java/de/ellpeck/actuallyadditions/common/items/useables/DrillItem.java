@@ -29,13 +29,18 @@ public class DrillItem extends CrystalFluxItem {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
-        if (player.isSneaking() && !worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+        ItemStack stack = player.getHeldItem(handIn);
+        if (worldIn.isRemote()) {
+            return ActionResult.resultPass(stack);
+        }
+
+        if (player.isSneaking() && handIn == Hand.MAIN_HAND) {
             NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider(
-                    (windowId, playerInv, playerEntity) -> new DrillContainer(windowId, playerInv),
+                    (windowId, playerInv, playerEntity) -> new DrillContainer(windowId, playerInv, stack),
                     Help.trans("gui.name.drill")
             ));
         }
 
-        return super.onItemRightClick(worldIn, player, handIn);
+        return ActionResult.resultSuccess(stack);
     }
 }

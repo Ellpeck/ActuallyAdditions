@@ -16,7 +16,7 @@ public class CrystalFluxProvider implements ICapabilityProvider {
     private int energy;
     private int transfer;
 
-    private LazyOptional<IEnergyStorage> capability = LazyOptional.of(() -> new CrystalFluxStorage(stack, energy, transfer));
+    private final LazyOptional<IEnergyStorage> capability = LazyOptional.of(() -> new CrystalFluxStorage(stack, energy, transfer));
 
     public CrystalFluxProvider(ItemStack stack, int energy) {
         this.stack = stack;

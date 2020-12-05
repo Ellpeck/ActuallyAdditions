@@ -11,5 +11,5 @@ public final class ActuallyContainers {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, ActuallyAdditions.MOD_ID);
 
     public static final RegistryObject<ContainerType<DrillContainer>> DRILL_CONTAINER
-            = CONTAINERS.register("drill_container", () -> IForgeContainerType.create(DrillContainer::new));
+            = CONTAINERS.register("drill_container", () -> IForgeContainerType.create(DrillContainer::fromNetwork));
 }
