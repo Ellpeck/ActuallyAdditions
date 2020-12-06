@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "actuallyadditions:emeradic_empowered_crystal"
+    },
+    "b": {
+      "item": "actuallyadditions:diamatine_crystal"
+    },
+    "c": {
+      "item": "actuallyadditions:advanced_coil"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_silk_touch_augment"
+  }
+}

@@ -74,6 +74,7 @@ public class GeneratorRecipes extends RecipeProvider {
                 .addCriterion("has_battery", hasItem(ActuallyItems.SINGLE_BATTERY.get()))
                 .build(consumer);
 
+        // Drills
         ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_CORE.get())
                 .key('a', ActuallyBlocks.CRYSTAL_ENORI.get()).key('b', ActuallyItems.BASIC_COIL.get())
                 .key('c', ActuallyItems.RESTONIA_CRYSTAL.get())
@@ -103,6 +104,70 @@ public class GeneratorRecipes extends RecipeProvider {
         drillColor(ActuallyItems.DRILL_RED, Tags.Items.DYES_RED).build(consumer);
         drillColor(ActuallyItems.DRILL_WHITE, Tags.Items.DYES_WHITE).build(consumer);
         drillColor(ActuallyItems.DRILL_YELLOW, Tags.Items.DYES_YELLOW).build(consumer);
+
+        // Drill augments
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_SPEED_AUGMENT_I.get())
+                .key('a', ActuallyItems.ENORI_CRYSTAL.get()).key('b', Items.SUGAR)
+                .key('c', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .patternLine("aba").patternLine("bcb").patternLine("aba")
+                .addCriterion("has_restonia", hasItem(ActuallyItems.RESTONIA_CRYSTAL.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_SPEED_AUGMENT_II.get())
+                .key('a', ActuallyItems.ENORI_CRYSTAL.get()).key('b', Items.SUGAR)
+                .key('c', Items.CAKE)
+                .patternLine("aba").patternLine("bcb").patternLine("aba")
+                .addCriterion("has_cake", hasItem(Items.CAKE))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_SPEED_AUGMENT_III.get())
+                .key('a', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get()).key('b', Items.SUGAR)
+                .key('c', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
+                .patternLine("aba").patternLine("bcb").patternLine("aba")
+                .addCriterion("has_empowered_diamatine", hasItem(ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_SILK_TOUCH_AUGMENT.get())
+                .key('a', ActuallyItems.EMERADIC_EMPOWERED_CRYSTAL.get()).key('b', ActuallyItems.DIAMATINE_CRYSTAL.get())
+                .key('c', ActuallyItems.ADVANCED_COIL.get())
+                .patternLine("aba").patternLine("bcb").patternLine("aba")
+                .addCriterion("has_empowered_emeradic", hasItem(ActuallyItems.EMERADIC_EMPOWERED_CRYSTAL.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_FORTUNE_AUGMENT_I.get())
+                .key('a', Blocks.GLOWSTONE).key('b', Tags.Items.DUSTS_REDSTONE)
+                .key('c', ActuallyBlocks.CRYSTAL_EMPOWERED_EMERADIC.get())
+                .patternLine("aba").patternLine("bcb").patternLine("aba")
+                .addCriterion("has_empowered_diamatine", hasItem(ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_FORTUNE_AUGMENT_II.get())
+                .key('a', Blocks.GLOWSTONE).key('b', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .key('c', ActuallyBlocks.ENDER_CASING.get())
+                .patternLine("aba").patternLine("bcb").patternLine("aba")
+                .addCriterion("has_enercasing", hasItem(ActuallyBlocks.ENDER_CASING.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_MINING_AUGMENT_I.get())
+                .key('a', ActuallyItems.DIAMATINE_CRYSTAL.get()).key('b', ActuallyItems.ENORI_CRYSTAL.get())
+                .key('c', ActuallyItems.BASIC_COIL.get())
+                .patternLine("aba").patternLine("bcb").patternLine("aba")
+                .addCriterion("has_diamatine", hasItem(ActuallyItems.DIAMATINE_CRYSTAL.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_MINING_AUGMENT_II.get())
+                .key('a', ActuallyItems.DIAMATINE_CRYSTAL.get()).key('b', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
+                .key('c', ActuallyItems.ADVANCED_COIL.get())
+                .patternLine("aba").patternLine("bcb").patternLine("aba")
+                .addCriterion("has_empowered_enori", hasItem(ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(ActuallyItems.DRILL_BLOCK_PLACING_AUGMENT.get())
+                .key('a', Tags.Items.COBBLESTONE).key('b', Items.PAPER)
+                .key('c', ActuallyItems.BASIC_COIL.get()).key('d', ActuallyItems.ENORI_CRYSTAL.get())
+                .patternLine("aba").patternLine("dcd").patternLine("aba")
+                .addCriterion("has_basic_coil", hasItem(ActuallyItems.BASIC_COIL.get()))
+                .build(consumer);
 
         // Blocks of: Crystals & back again
         blockOfToItem(ActuallyBlocks.CRYSTAL_ENORI, ActuallyItems.ENORI_CRYSTAL, 9, consumer);

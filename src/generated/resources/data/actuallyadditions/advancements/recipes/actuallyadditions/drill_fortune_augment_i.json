@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:drill_fortune_augment_i"
+    ]
+  },
+  "criteria": {
+    "has_empowered_diamatine": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:diamatine_empowered_crystal"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:drill_fortune_augment_i"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_empowered_diamatine",
+      "has_the_recipe"
+    ]
+  ]
+}

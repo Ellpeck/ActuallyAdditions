@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:drill_speed_augment_ii"
+    ]
+  },
+  "criteria": {
+    "has_cake": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:cake"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:drill_speed_augment_ii"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_cake",
+      "has_the_recipe"
+    ]
+  ]
+}

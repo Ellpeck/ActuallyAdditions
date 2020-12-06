@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:drill_silk_touch_augment"
+    ]
+  },
+  "criteria": {
+    "has_empowered_emeradic": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:emeradic_empowered_crystal"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:drill_silk_touch_augment"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_empowered_emeradic",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:drill_fortune_augment_ii"
+    ]
+  },
+  "criteria": {
+    "has_enercasing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:ender_casing_block"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:drill_fortune_augment_ii"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_enercasing",
+      "has_the_recipe"
+    ]
+  ]
+}

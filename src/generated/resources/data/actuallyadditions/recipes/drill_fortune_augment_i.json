@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:glowstone"
+    },
+    "b": {
+      "tag": "forge:dusts/redstone"
+    },
+    "c": {
+      "item": "actuallyadditions:crystal_emeradic_empowered_block"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_fortune_augment_i"
+  }
+}

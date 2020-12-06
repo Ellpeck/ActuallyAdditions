@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "actuallyadditions:diamatine_crystal"
+    },
+    "b": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "c": {
+      "item": "actuallyadditions:basic_coil"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_mining_augment_i"
+  }
+}

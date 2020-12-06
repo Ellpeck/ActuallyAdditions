@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "actuallyadditions:drill_mining_augment_ii"
+    ]
+  },
+  "criteria": {
+    "has_empowered_enori": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:enori_empowered_crystal"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "actuallyadditions:drill_mining_augment_ii"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_empowered_enori",
+      "has_the_recipe"
+    ]
+  ]
+}
