@@ -48,7 +48,7 @@ import static de.ellpeck.actuallyadditions.common.items.misc.DrillAugmentItem.Au
 /**
  * @implNote The augment system might be made more abstract as I think other things might use it.
  *
- * todo: Still need to support the placement augment. Tired out after all the AOE crap 
+ * todo: Still need to support the placement augment. Tired out after all the AOE crap
  */
 public class DrillItem extends CrystalFluxItem {
     public static final String NBT_AUGMENT_TAG = "augments";
