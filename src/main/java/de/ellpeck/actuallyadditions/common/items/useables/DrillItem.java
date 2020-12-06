@@ -10,6 +10,7 @@ import de.ellpeck.actuallyadditions.common.items.misc.DrillAugmentItem;
 import de.ellpeck.actuallyadditions.common.utilities.Help;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -19,7 +20,8 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.network.play.client.CPlayerDiggingPacket;
+import net.minecraft.network.play.server.SChangeBlockPacket;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -39,6 +41,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import static de.ellpeck.actuallyadditions.common.items.misc.DrillAugmentItem.AugmentType;
 
@@ -71,8 +74,22 @@ public class DrillItem extends CrystalFluxItem {
         return map;
     }
 
+    /**
+     * Works out what enchants we should have and handles how many blocks it should break
+     *
+     * todo: add hardness check for other blocks so it doesn't instant break blocks a lot harder than the target
+     */
     @Override
     public boolean onBlockStartBreak(ItemStack stack, BlockPos posIn, PlayerEntity player) {
+        // Fail nice and early
+        double distance = Objects.requireNonNull(player.getAttribute(ForgeMod.REACH_DISTANCE.get())).getValue();
+        RayTraceResult trace = player.pick(player.isCreative() ? distance : distance - 0.5D, 1F, false);
+        if (trace.getType() != RayTraceResult.Type.BLOCK) {
+            return true;
+        }
+
+        BlockRayTraceResult pick = (BlockRayTraceResult) trace;
+
         int crystalFlux = getCrystalFlux(stack).map(IEnergyStorage::getEnergyStored).orElse(0);
         int fluxPerBlock = this.getFluxPerBlock(stack);
 
@@ -92,22 +109,27 @@ public class DrillItem extends CrystalFluxItem {
             drill.addEnchantment(Enchantments.FORTUNE, hasAugment(augments, AugmentType.FORTUNE_AUGMENT_I) ? 1 : 3);
         }
 
-        if ((hasAugment(augments, AugmentType.MINING_AUGMENT_I) || hasAugment(augments, AugmentType.MINING_AUGMENT_II))) {
-            return this.breakBlocksWithAoe(player, player.world, stack, drill, fluxPerBlock, hasAugment(augments, AugmentType.MINING_AUGMENT_I) ? 1 : 2);
+        if ((hasAugment(augments, AugmentType.MINING_AUGMENT_I) || hasAugment(augments, AugmentType.MINING_AUGMENT_II)) && !player.isSneaking()) {
+            return this.breakBlocksWithAoe(pick, player, player.world, stack, drill, fluxPerBlock, hasAugment(augments, AugmentType.MINING_AUGMENT_I) ? 1 : 2);
         } else {
-            return this.destroyBlock(posIn, player, player.world, stack, drill, fluxPerBlock);
+            return this.destroyBlock(posIn, pick.getFace(), player, player.world, stack, drill, fluxPerBlock, (cost) -> getCrystalFlux(drill).ifPresent(a -> a.extractEnergy(cost, false)));
         }
     }
 
-    private boolean breakBlocksWithAoe(PlayerEntity player, World world, ItemStack drill, ItemStack drillEnchanted, int fluxPerBlock, int radius) {
-        double distance = Objects.requireNonNull(player.getAttribute(ForgeMod.REACH_DISTANCE.get())).getValue();
-        RayTraceResult trace = player.pick(player.isCreative() ? distance : distance - 0.5D, 1F, false);
-        if (trace.getType() != RayTraceResult.Type.BLOCK) {
-            return false;
-        }
-
-        BlockRayTraceResult pick = (BlockRayTraceResult) trace;
-
+    /**
+     * Breaks an AOE from a single point. Requires a rayTrace to figure out it's facing direction. Still MC
+     *
+     * @param pick BlockRayTrace for facing
+     * @param player The Player Duh
+     * @param world The players world
+     * @param drill The non-enchanted current item stack
+     * @param drillEnchanted A cloned stack with enchantments
+     * @param fluxPerBlock How much each block will cost to break
+     * @param radius How many blocks to break (uses 1+(n2)) so 3x3 = 1, 5x5 = 2
+     *
+     * @return if the block was destroyed, this method will only return false if the center block fails to break.
+     */
+    private boolean breakBlocksWithAoe(BlockRayTraceResult pick, PlayerEntity player, World world, ItemStack drill, ItemStack drillEnchanted, int fluxPerBlock, int radius) {
         BlockPos pos = pick.getPos();
         Direction.Axis axis = pick.getFace().getAxis();
 
@@ -130,7 +152,7 @@ public class DrillItem extends CrystalFluxItem {
 
         Set<BlockPos> failed = new HashSet<>();
         posSet.forEach(e -> {
-            if (!destroyBlock(e, player, world, drill, drillEnchanted, fluxPerBlock)) {
+            if (!destroyBlock(e, pick.getFace(), player, world, drill, drillEnchanted, fluxPerBlock, (cost) -> getCrystalFlux(drill).ifPresent(x -> x.extractEnergy(cost, false)))) {
                 failed.add(e);
             }
         });
@@ -138,35 +160,85 @@ public class DrillItem extends CrystalFluxItem {
         return failed.contains(pick.getPos());
     }
 
-    private boolean destroyBlock(BlockPos pos, PlayerEntity player, World world, ItemStack drill, ItemStack drillEnchanted, int fluxPerBlock) {
+    /**
+     * Handles destroying blocks on both the CLIENT & SERVER sides. Would not recommend using this on
+     * Server only / Client classes. Also, thanks to all the mods and Ell for helping me
+     * piecing this together, hopefully it doesn't fuck up.
+     *
+     * @param player The Player Duh
+     * @param face The blocks face
+     * @param world The players world
+     * @param drill The non-enchanted current item stack
+     * @param drillEnchanted A cloned stack with enchantments
+     * @param fluxPerBlock How much each block will cost to break
+     * @param onBreak Call back to do something once the block breaks
+     *
+     * @return returns false if the block gets blocked by another mod
+     */
+    // Todo: if we ever need this again, move to world helper
+    private boolean destroyBlock(BlockPos pos, Direction face, PlayerEntity player, World world, ItemStack drill, ItemStack drillEnchanted, int fluxPerBlock, Consumer<Integer> onBreak) {
         BlockState state = world.getBlockState(pos);
         int flux = this.getCrystalFlux(drill).map(IEnergyStorage::getEnergyStored).orElse(0);
 
-        if (!ForgeHooks.canHarvestBlock(state, player, world, pos) || flux < fluxPerBlock) {
+        if (world.isAirBlock(pos)
+                || flux < fluxPerBlock
+                || state.getBlockHardness(world, pos) <= 0f
+                || !ForgeHooks.canHarvestBlock(state, player, world, pos)) {
             return false;
         }
 
+        Block block = state.getBlock();
+
+        // Handle what we do when in creative
+        if (player.isCreative()) {
+            block.onBlockHarvested(world, pos, state, player);
+
+            if (block.removedByPlayer(state, world, pos, player, false, world.getFluidState(pos))) {
+                block.onPlayerDestroy(world, pos, state);
+            }
+
+            if (!world.isRemote && player instanceof ServerPlayerEntity) {
+                // Honestly not super sure what this does but it's everywhere else so it's important for sure!
+                ((ServerPlayerEntity) player).connection.sendPacket(new SChangeBlockPacket(world, pos));
+            }
+
+            onBreak.accept(fluxPerBlock);
+            return true;
+        }
+
+        // Fire this for some stats and stuffs
+        drill.onBlockDestroyed(world, state, pos, player);
+        boolean removed = block.removedByPlayer(state, world, pos, player, true, world.getFluidState(pos));
+        if (removed) {
+            block.onPlayerDestroy(world, pos, state);
+        }
+
+        // Only server code
         if (!world.isRemote) {
+            // event will return the XP to drop if it does not get cancelled
             int event = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayerEntity) player).interactionManager.getGameType(), (ServerPlayerEntity) player, pos);
             if (event == -1) {
+                // Rip
                 return false;
             }
 
-            TileEntity tileEntity = world.getTileEntity(pos);
-            state.getBlock().onPlayerDestroy(world, pos, state);
-            state.getBlock().harvestBlock(world, player, pos, state, tileEntity, drillEnchanted);
-            state.getBlock().dropXpOnBlockBreak((ServerWorld) world, pos, event);
+            if (removed) {
+                block.onPlayerDestroy(world, pos, state);
+
+                // Pass drill enchanted to ensure the fortune and silk are applied
+                block.harvestBlock(world, player, pos, state, world.getTileEntity(pos), drillEnchanted);
+                block.dropXpOnBlockBreak((ServerWorld) world, pos, event);
+            }
+
+            ((ServerPlayerEntity) player).connection.sendPacket(new SChangeBlockPacket(world, pos));
+            onBreak.accept(fluxPerBlock);
+            return true;
         }
 
-        // Old Ell Code :cry:, I mean, it's perfect!
-        // Client code
-        world.playEvent(2001, pos, Block.getStateId(state));
-        if (state.getBlock().removedByPlayer(state, world, pos, player, true, world.getFluidState(pos))) {
-            state.getBlock().onPlayerDestroy(world, pos, state);
-        }
+        // All this is client only code
+        Objects.requireNonNull(Minecraft.getInstance().getConnection())
+                .sendPacket(new CPlayerDiggingPacket(CPlayerDiggingPacket.Action.STOP_DESTROY_BLOCK, pos, face));
 
-        // callback to the tool
-        drill.onBlockDestroyed(world, state, pos, player);
         return true;
     }
 
