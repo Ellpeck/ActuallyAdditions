@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -72,7 +73,7 @@ public abstract class CrystalFluxItem extends ActuallyItem {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
 
-        stack.getCapability(CapabilityEnergy.ENERGY).ifPresent(energy ->
+        getCrystalFlux(stack).ifPresent(energy ->
                 tooltip.add(this.getEnergyPretty(energy, Screen.hasShiftDown()).mergeStyle(TextFormatting.GRAY)));
     }
 
@@ -120,8 +121,12 @@ public abstract class CrystalFluxItem extends ActuallyItem {
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
-        return stack.getCapability(CapabilityEnergy.ENERGY)
+        return getCrystalFlux(stack)
                 .map(energy -> 1D - (energy.getEnergyStored() / (double) energy.getMaxEnergyStored()))
                 .orElse(0D);
+    }
+
+    public LazyOptional<IEnergyStorage> getCrystalFlux(ItemStack stack) {
+        return stack.getCapability(CapabilityEnergy.ENERGY);
     }
 }

@@ -1,5 +1,10 @@
 package de.ellpeck.actuallyadditions.common.config;
 
+import com.google.common.collect.ImmutableList;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+
+import java.util.List;
+
 import static de.ellpeck.actuallyadditions.common.config.Config.COMMON_BUILDER;
 import static net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
@@ -7,6 +12,7 @@ public class ItemConfig {
     public final IntValue teleportStaffCost;
     public final IntValue teleportStaffMaxEnergy;
     public final IntValue drillMaxEnergy;
+    public final ConfigValue<List<String>> drillSpecialBlockWhitelist;
 
     public ItemConfig() {
         COMMON_BUILDER.comment("Item Config Options").push("items");
@@ -25,5 +31,9 @@ public class ItemConfig {
         drillMaxEnergy = COMMON_BUILDER
                 .comment("The max energy amount for the drill")
                 .defineInRange("Drill Max Energy", 250000, 0, 1000000);
+
+        drillSpecialBlockWhitelist = COMMON_BUILDER
+                .comment("By default, the Drill can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.")
+                .define("Drill special block whitelist", ImmutableList.of("examplemod:block_one"));
     }
 }

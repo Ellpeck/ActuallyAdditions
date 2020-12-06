@@ -17,7 +17,14 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import javax.annotation.Nonnull;
 
 public class DrillContainer extends Container {
-    private final ItemStackHandler handler;
+    public static final int AUGMENT_SLOT_COUNT = 3;
+    private final ItemStackHandler handler = new ItemStackHandler(AUGMENT_SLOT_COUNT) {
+        @Override
+        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+            return stack.getItem() instanceof DrillAugmentItem;
+        }
+    };
+
     private final PlayerInventory inv;
     private final ItemStack stack;
 
@@ -34,15 +41,7 @@ public class DrillContainer extends Container {
 
         ContainerHelper.setupPlayerInventory(new InvWrapper(inv), 0, ContainerHelper.DEFAULT_SLOTS_X, 116, this::addSlot);
 
-        this.handler = new ItemStackHandler(5) {
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem() instanceof DrillAugmentItem;
-            }
-        };
-
-        this.handler.deserializeNBT(this.stack.getOrCreateChildTag("augments"));
-
+        this.handler.deserializeNBT(this.stack.getOrCreateChildTag(DrillItem.NBT_AUGMENT_TAG));
         this.addContainerSlots();
     }
 
@@ -53,7 +52,7 @@ public class DrillContainer extends Container {
     }
 
     protected void addContainerSlots() {
-        for (int i = 0; i < 5; i ++) {
+        for (int i = 0; i < AUGMENT_SLOT_COUNT; i ++) {
             addSlot(new SlotItemHandler(handler, i, 44 +  (i * ContainerHelper.SLOT_SPACING), 19));
         }
     }
@@ -89,7 +88,7 @@ public class DrillContainer extends Container {
             }
         } else {
             // Moves the item from the players inventory to the drill
-            if (!this.mergeItemStack(fromStack, ContainerHelper.PLAYER_INVENTORY_END_SLOT + 1, ContainerHelper.PLAYER_INVENTORY_END_SLOT + 6, false)) {
+            if (!this.mergeItemStack(fromStack, ContainerHelper.PLAYER_INVENTORY_END_SLOT + 1, ContainerHelper.PLAYER_INVENTORY_END_SLOT + (AUGMENT_SLOT_COUNT + 1), false)) {
                 return ItemStack.EMPTY;
             }
         }
@@ -101,6 +100,6 @@ public class DrillContainer extends Container {
     public void onContainerClosed(@Nonnull PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
 
-        this.stack.getOrCreateTag().put("augments", this.handler.serializeNBT());
+        this.stack.getOrCreateTag().put(DrillItem.NBT_AUGMENT_TAG, this.handler.serializeNBT());
     }
 }

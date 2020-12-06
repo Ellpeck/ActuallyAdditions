@@ -15,14 +15,24 @@ public class DrillAugmentItem extends ActuallyItem {
     }
 
     public enum AugmentType {
-        SPEED_AUGMENT_I,
-        SPEED_AUGMENT_II,
-        SPEED_AUGMENT_III,
-        SILK_TOUCH_AUGMENT,
-        FORTUNE_AUGMENT_I,
-        FORTUNE_AUGMENT_II,
-        MINING_AUGMENT_I,
-        MINING_AUGMENT_II,
-        BLOCK_PLACING_AUGMENT
+        SPEED_AUGMENT_I(50),
+        SPEED_AUGMENT_II(75),
+        SPEED_AUGMENT_III(175),
+        SILK_TOUCH_AUGMENT(100),
+        FORTUNE_AUGMENT_I(40),
+        FORTUNE_AUGMENT_II(80),
+        MINING_AUGMENT_I(10),
+        MINING_AUGMENT_II(30),
+        BLOCK_PLACING_AUGMENT(0);
+
+        int energyCost;
+
+        AugmentType(int energyCost) {
+            this.energyCost = energyCost;
+        }
+
+        public int getEnergyCost() {
+            return energyCost;
+        }
     }
 }
