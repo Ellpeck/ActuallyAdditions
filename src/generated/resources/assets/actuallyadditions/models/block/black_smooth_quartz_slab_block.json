@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "side": "actuallyadditions:block/black_quartz_smooth_block",
+    "bottom": "actuallyadditions:block/black_quartz_smooth_block",
+    "top": "actuallyadditions:block/black_quartz_smooth_block"
+  }
+}

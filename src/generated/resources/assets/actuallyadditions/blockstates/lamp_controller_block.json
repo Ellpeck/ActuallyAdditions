@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "actuallyadditions:block/lamp_controller_block"
+    },
+    "facing=south": {
+      "model": "actuallyadditions:block/lamp_controller_block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "actuallyadditions:block/lamp_controller_block",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "actuallyadditions:block/lamp_controller_block",
+      "y": 90
     }
   }
 }

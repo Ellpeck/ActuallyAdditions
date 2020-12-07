@@ -50,8 +50,8 @@ public class GeneratorLanguage extends LanguageProvider {
         addBlock(ActuallyBlocks.CRUSHER_DOUBLE, "Double Crusher");
         addBlock(ActuallyBlocks.POWERED_FURNACE, "Powered Furnace");
         addBlock(ActuallyBlocks.DOUBLE_POWERED_FURNACE, "Double Powered Furnace");
-        //addBlock(ActuallyBlocks.ESD, "ESD");
-        //addBlock(ActuallyBlocks.ESD_ADVANCED, "Advanced ASD");
+        // addBlock(ActuallyBlocks.ESD, "ESD");
+        // addBlock(ActuallyBlocks.ESD_ADVANCED, "Advanced ASD");
         addBlock(ActuallyBlocks.HEAT_COLLECTOR, "Heat Collector");
         addBlock(ActuallyBlocks.GREENHOUSE_GLASS, "Greenhouse Glass");
         addBlock(ActuallyBlocks.BREAKER, "Auto-Breaker");
@@ -161,10 +161,9 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ActuallyItems.DIAMATINE_AIOT, "Diamatine AIOT");
         addItem(ActuallyItems.PALIS_AIOT, "Palis AIOT");
         addItem(ActuallyItems.RESTONIA_AIOT, "Restonia AIOT");
-        addItem(ActuallyItems.BLACK_QUARTZ, "Black Quartz");
 
         // Crystals
-        addItem(ActuallyItems.BLACK_QUARTS, "Black Quarts");
+        addItem(ActuallyItems.BLACK_QUARTZ, "Black Quartz");
         addItem(ActuallyItems.RESTONIA_CRYSTAL, "Restonia Crystal");
         addItem(ActuallyItems.PALIS_CRYSTAL, "Palis Crystal");
         addItem(ActuallyItems.DIAMATINE_CRYSTAL, "Diamatine Crystal");
