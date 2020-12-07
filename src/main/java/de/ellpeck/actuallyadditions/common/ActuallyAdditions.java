@@ -2,11 +2,13 @@ package de.ellpeck.actuallyadditions.common;
 
 import de.ellpeck.actuallyadditions.client.ClientSetup;
 import de.ellpeck.actuallyadditions.common.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.common.commands.DebugCommand;
 import de.ellpeck.actuallyadditions.common.config.Config;
 import de.ellpeck.actuallyadditions.common.container.ActuallyContainers;
 import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.command.Commands;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,6 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,13 +50,17 @@ public class ActuallyAdditions {
         eventBus.addListener(this::setup);
         eventBus.addListener(this::clientSetup);
 
+        MinecraftForge.EVENT_BUS.addListener(this::serverLoad);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(FMLCommonSetupEvent event) {
+
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
+        ClientSetup.setup();
+
         RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_VOID.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_ENORI.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_RESTONIA.get(), RenderType.getTranslucent());
@@ -61,5 +68,12 @@ public class ActuallyAdditions {
         RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_DIAMATINE.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_EMERADIC.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(ActuallyBlocks.GREENHOUSE_GLASS.get(), RenderType.getCutout());
+    }
+
+    private void serverLoad(FMLServerStartingEvent event) {
+        event.getServer().getCommandManager().getDispatcher().register(
+                Commands.literal(MOD_ID)
+                        .then(DebugCommand.register())
+        );
     }
 }
