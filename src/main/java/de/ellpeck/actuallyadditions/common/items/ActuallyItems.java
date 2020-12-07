@@ -2,9 +2,10 @@ package de.ellpeck.actuallyadditions.common.items;
 
 import com.google.common.collect.ImmutableSet;
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.common.items.misc.DrillAugmentItem;
-import de.ellpeck.actuallyadditions.common.items.misc.YummyItem;
-import de.ellpeck.actuallyadditions.common.items.useables.*;
+import de.ellpeck.actuallyadditions.common.items.useables.AllInOneTool;
+import de.ellpeck.actuallyadditions.common.items.useables.LeafBlowerItem;
+import de.ellpeck.actuallyadditions.common.items.useables.ManualItem;
+import de.ellpeck.actuallyadditions.common.items.useables.TeleportStaffItem;
 import de.ellpeck.actuallyadditions.common.materials.ArmorMaterials;
 import de.ellpeck.actuallyadditions.common.materials.ToolMaterials;
 import net.minecraft.item.Item;
@@ -30,38 +31,30 @@ public final class ActuallyItems {
     public static final ToolSet RESTONIA_SET = new ToolSet("restonia", ToolMaterials.RESTONIA, ArmorMaterials.RESTONIA, ActuallyItems::defaultProps);
 
     // Paxels :D
-    public static final RegistryObject<Item> WOODEN_AIOT = ITEMS.register("wooden_aiot", () -> new AllInOneTool(ItemTier.WOOD));
-    public static final RegistryObject<Item> STONE_AIOT = ITEMS.register("stone_aiot", () -> new AllInOneTool(ItemTier.STONE));
-    public static final RegistryObject<Item> IRON_AIOT = ITEMS.register("iron_aiot", () -> new AllInOneTool(ItemTier.IRON));
-    public static final RegistryObject<Item> GOLD_AIOT = ITEMS.register("gold_aiot", () -> new AllInOneTool(ItemTier.GOLD));
-    public static final RegistryObject<Item> DIAMOND_AIOT = ITEMS.register("diamond_aiot", () -> new AllInOneTool(ItemTier.DIAMOND));
-    public static final RegistryObject<Item> NETHERITE_AIOT = ITEMS.register("netherite_aiot", () -> new AllInOneTool(ItemTier.NETHERITE));
-    public static final RegistryObject<Item> QUARTZ_AIOT = ITEMS.register("quartz_aiot", () -> new AllInOneTool(ToolMaterials.QUARTZ));
-    public static final RegistryObject<Item> ENORI_AIOT = ITEMS.register("enori_aiot", () -> new AllInOneTool(ToolMaterials.ENORI));
-    public static final RegistryObject<Item> EMERADIC_AIOT = ITEMS.register("emeradic_aiot", () -> new AllInOneTool(ToolMaterials.EMERADIC));
-    public static final RegistryObject<Item> VOID_AIOT = ITEMS.register("void_aiot", () -> new AllInOneTool(ToolMaterials.VOID));
-    public static final RegistryObject<Item> DIAMATINE_AIOT = ITEMS.register("diamatine_aiot", () -> new AllInOneTool(ToolMaterials.DIAMATINE));
-    public static final RegistryObject<Item> PALIS_AIOT = ITEMS.register("palis_aiot", () -> new AllInOneTool(ToolMaterials.PALIS));
-    public static final RegistryObject<Item> RESTONIA_AIOT = ITEMS.register("restonia_aiot", () -> new AllInOneTool(ToolMaterials.RESTONIA));
+    public static final RegistryObject<Item> WOODEN_PAXEL = ITEMS.register("wooden_paxel", () -> new AllInOneTool(ItemTier.WOOD));
+    public static final RegistryObject<Item> STONE_PAXEL = ITEMS.register("stone_paxel", () -> new AllInOneTool(ItemTier.STONE));
+    public static final RegistryObject<Item> IRON_PAXEL = ITEMS.register("iron_paxel", () -> new AllInOneTool(ItemTier.IRON));
+    public static final RegistryObject<Item> GOLD_PAXEL = ITEMS.register("gold_paxel", () -> new AllInOneTool(ItemTier.GOLD));
+    public static final RegistryObject<Item> DIAMOND_PAXEL = ITEMS.register("diamond_paxel", () -> new AllInOneTool(ItemTier.DIAMOND));
+    public static final RegistryObject<Item> NETHERITE_PAXEL = ITEMS.register("netherite_paxel", () -> new AllInOneTool(ItemTier.NETHERITE));
+    public static final RegistryObject<Item> QUARTZ_PAXEL = ITEMS.register("quartz_paxel", () -> new AllInOneTool(ToolMaterials.QUARTZ));
+    public static final RegistryObject<Item> ENORI_PAXEL = ITEMS.register("enori_paxel", () -> new AllInOneTool(ToolMaterials.ENORI));
+    public static final RegistryObject<Item> EMERADIC_PAXEL = ITEMS.register("emeradic_paxel", () -> new AllInOneTool(ToolMaterials.EMERADIC));
+    public static final RegistryObject<Item> VOID_PAXEL = ITEMS.register("void_paxel", () -> new AllInOneTool(ToolMaterials.VOID));
+    public static final RegistryObject<Item> DIAMATINE_PAXEL = ITEMS.register("diamatine_paxel", () -> new AllInOneTool(ToolMaterials.DIAMATINE));
+    public static final RegistryObject<Item> PALIS_PAXEL = ITEMS.register("palis_paxel", () -> new AllInOneTool(ToolMaterials.PALIS));
+    public static final RegistryObject<Item> RESTONIA_PAXEL = ITEMS.register("restonia_paxel", () -> new AllInOneTool(ToolMaterials.RESTONIA));
 
     public static final Set<ToolSet> ALL_TOOL_SETS = ImmutableSet.of(QUARTZ_SET, ENORI_SET, EMERADIC_SET, VOID_SET, DIAMATINE_SET, PALIS_SET, RESTONIA_SET);
 
     // Resources
-    public static final RegistryObject<Item> BLACK_QUARTZ = ITEMS.register("black_quartz", basicItem());
-
+    public static final RegistryObject<Item> BLACK_QUARTS = ITEMS.register("black_quartz", basicItem());
     public static final RegistryObject<Item> RESTONIA_CRYSTAL = ITEMS.register("restonia_crystal", basicItem());
     public static final RegistryObject<Item> PALIS_CRYSTAL = ITEMS.register("palis_crystal", basicItem());
     public static final RegistryObject<Item> DIAMATINE_CRYSTAL = ITEMS.register("diamatine_crystal", basicItem());
     public static final RegistryObject<Item> VOID_CRYSTAL = ITEMS.register("void_crystal", basicItem());
     public static final RegistryObject<Item> EMERADIC_CRYSTAL = ITEMS.register("emeradic_crystal", basicItem());
     public static final RegistryObject<Item> ENORI_CRYSTAL = ITEMS.register("enori_crystal", basicItem());
-
-    public static final RegistryObject<Item> RESTONIA_EMPOWERED_CRYSTAL = ITEMS.register("restonia_empowered_crystal", basicItem());
-    public static final RegistryObject<Item> PALIS_EMPOWERED_CRYSTAL = ITEMS.register("palis_empowered_crystal", basicItem());
-    public static final RegistryObject<Item> DIAMATINE_EMPOWERED_CRYSTAL = ITEMS.register("diamatine_empowered_crystal", basicItem());
-    public static final RegistryObject<Item> VOID_EMPOWERED_CRYSTAL = ITEMS.register("void_empowered_crystal", basicItem());
-    public static final RegistryObject<Item> EMERADIC_EMPOWERED_CRYSTAL = ITEMS.register("emeradic_empowered_crystal", basicItem());
-    public static final RegistryObject<Item> ENORI_EMPOWERED_CRYSTAL = ITEMS.register("enori_empowered_crystal", basicItem());
 
     public static final RegistryObject<Item> RED_CRYSTAL_SHARD = ITEMS.register("red_crystal_shard", basicItem());
     public static final RegistryObject<Item> BLUE_CRYSTAL_SHARD = ITEMS.register("blue_crystal_shard", basicItem());
@@ -103,70 +96,65 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> LENS_OF_THE_KILLER = ITEMS.register("lens_of_the_killer", basicItem());
     public static final RegistryObject<Item> LENS_OF_DISENCHANTING = ITEMS.register("lens_of_disenchanting", basicItem());
     public static final RegistryObject<Item> LENS_OF_THE_MINER = ITEMS.register("lens_of_the_miner", basicItem());
+    public static final RegistryObject<Item> LENS_OF_CONVERSION = ITEMS.register("lens_of_conversion", basicItem());
     public static final RegistryObject<Item> LASER_WRENCH = ITEMS.register("laser_wrench", basicItem());
     public static final RegistryObject<Item> TELEPORT_STAFF = ITEMS.register("teleport_staff", TeleportStaffItem::new);
     public static final RegistryObject<Item> WINGS_OF_THE_BATS = ITEMS.register("wings_of_the_bats", basicItem());
-
-    // Batteries
-    public static final RegistryObject<Item> SINGLE_BATTERY = ITEMS.register("single_battery", () -> new BatteryItem(() -> 200000, 1000));
-    public static final RegistryObject<Item> DOUBLE_BATTERY = ITEMS.register("double_battery", () -> new BatteryItem(() -> 350000, 5000));
-    public static final RegistryObject<Item> TRIPLE_BATTERY = ITEMS.register("triple_battery", () -> new BatteryItem(() -> 600000, 10000));
-    public static final RegistryObject<Item> QUADRUPLE_BATTERY = ITEMS.register("quadruple_battery", () -> new BatteryItem(() -> 1000000, 30000));
-    public static final RegistryObject<Item> QUINTUPLE_BATTERY = ITEMS.register("quintuple_battery", () -> new BatteryItem(() -> 2000000, 100000));
-
-    public static final RegistryObject<Item> DRILL_MAIN = ITEMS.register("drill_light_blue", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_BLACK = ITEMS.register("drill_black", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_BLUE = ITEMS.register("drill_blue", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_BROWN = ITEMS.register("drill_brown", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_CYAN = ITEMS.register("drill_cyan", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_GRAY = ITEMS.register("drill_gray", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_GREEN = ITEMS.register("drill_green", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_LIGHT_GRAY = ITEMS.register("drill_light_gray", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_LIME = ITEMS.register("drill_lime", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_MAGENTA = ITEMS.register("drill_magenta", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_ORANGE = ITEMS.register("drill_orange", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_PINK = ITEMS.register("drill_pink", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_PURPLE = ITEMS.register("drill_purple", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_RED = ITEMS.register("drill_red", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_WHITE = ITEMS.register("drill_white", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_YELLOW = ITEMS.register("drill_yellow", DrillItem::new);
-    public static final RegistryObject<Item> DRILL_SPEED_AUGMENT_I = ITEMS.register("drill_speed_augment_i", () -> new DrillAugmentItem(DrillAugmentItem.AugmentType.SPEED_AUGMENT_I));
-    public static final RegistryObject<Item> DRILL_SPEED_AUGMENT_II = ITEMS.register("drill_speed_augment_ii", () -> new DrillAugmentItem(DrillAugmentItem.AugmentType.SPEED_AUGMENT_II));
-    public static final RegistryObject<Item> DRILL_SPEED_AUGMENT_III = ITEMS.register("drill_speed_augment_iii", () -> new DrillAugmentItem(DrillAugmentItem.AugmentType.SPEED_AUGMENT_III));
-    public static final RegistryObject<Item> DRILL_SILK_TOUCH_AUGMENT = ITEMS.register("drill_silk_touch_augment", () -> new DrillAugmentItem(DrillAugmentItem.AugmentType.SILK_TOUCH_AUGMENT));
-    public static final RegistryObject<Item> DRILL_FORTUNE_AUGMENT_I = ITEMS.register("drill_fortune_augment_i", () -> new DrillAugmentItem(DrillAugmentItem.AugmentType.FORTUNE_AUGMENT_I));
-    public static final RegistryObject<Item> DRILL_FORTUNE_AUGMENT_II = ITEMS.register("drill_fortune_augment_ii", () -> new DrillAugmentItem(DrillAugmentItem.AugmentType.FORTUNE_AUGMENT_II));
-    public static final RegistryObject<Item> DRILL_MINING_AUGMENT_I = ITEMS.register("drill_mining_augment_i", () -> new DrillAugmentItem(DrillAugmentItem.AugmentType.MINING_AUGMENT_I));
-    public static final RegistryObject<Item> DRILL_MINING_AUGMENT_II = ITEMS.register("drill_mining_augment_ii", () -> new DrillAugmentItem(DrillAugmentItem.AugmentType.MINING_AUGMENT_II));
-    public static final RegistryObject<Item> DRILL_BLOCK_PLACING_AUGMENT = ITEMS.register("drill_block_placing_augment", () -> new DrillAugmentItem(DrillAugmentItem.AugmentType.BLOCK_PLACING_AUGMENT));
+    public static final RegistryObject<Item> SINGLE_BATTERY = ITEMS.register("single_battery", basicItem());
+    public static final RegistryObject<Item> DOUBLE_BATTERY = ITEMS.register("double_battery", basicItem());
+    public static final RegistryObject<Item> TRIPLE_BATTERY = ITEMS.register("triple_battery", basicItem());
+    public static final RegistryObject<Item> QUADRUPLE_BATTERY = ITEMS.register("quadruple_battery", basicItem());
+    public static final RegistryObject<Item> QUINTUPLE_BATTERY = ITEMS.register("quintuple_battery", basicItem());
+    public static final RegistryObject<Item> DRILL_BLACK = ITEMS.register("drill_black", basicItem());
+    public static final RegistryObject<Item> DRILL_BLUE = ITEMS.register("drill_blue", basicItem());
+    public static final RegistryObject<Item> DRILL_BROWN = ITEMS.register("drill_brown", basicItem());
+    public static final RegistryObject<Item> DRILL_CYAN = ITEMS.register("drill_cyan", basicItem());
+    public static final RegistryObject<Item> DRILL_GRAY = ITEMS.register("drill_gray", basicItem());
+    public static final RegistryObject<Item> DRILL_GREEN = ITEMS.register("drill_green", basicItem());
+    public static final RegistryObject<Item> DRILL_LIGHT_BLUE = ITEMS.register("drill_light_blue", basicItem());
+    public static final RegistryObject<Item> DRILL_LIGHT_GRAY = ITEMS.register("drill_light_gray", basicItem());
+    public static final RegistryObject<Item> DRILL_LIME = ITEMS.register("drill_lime", basicItem());
+    public static final RegistryObject<Item> DRILL_MAGENTA = ITEMS.register("drill_magenta", basicItem());
+    public static final RegistryObject<Item> DRILL_ORANGE = ITEMS.register("drill_orange", basicItem());
+    public static final RegistryObject<Item> DRILL_PINK = ITEMS.register("drill_pink", basicItem());
+    public static final RegistryObject<Item> DRILL_PURPLE = ITEMS.register("drill_purple", basicItem());
+    public static final RegistryObject<Item> DRILL_RED = ITEMS.register("drill_red", basicItem());
+    public static final RegistryObject<Item> DRILL_WHITE = ITEMS.register("drill_white", basicItem());
+    public static final RegistryObject<Item> DRILL_YELLOW = ITEMS.register("drill_yellow", basicItem());
+    public static final RegistryObject<Item> DRILL_SPEED_AUGMENT_I = ITEMS.register("drill_speed_augment_i", basicItem());
+    public static final RegistryObject<Item> DRILL_SPEED_AUGMENT_II = ITEMS.register("drill_speed_augment_ii", basicItem());
+    public static final RegistryObject<Item> DRILL_SPEED_AUGMENT_III = ITEMS.register("drill_speed_augment_iii", basicItem());
+    public static final RegistryObject<Item> DRILL_SILK_TOUCH_AUGMENT = ITEMS.register("drill_silk_touch_augment", basicItem());
+    public static final RegistryObject<Item> DRILL_FORTUNE_AUGMENT_I = ITEMS.register("drill_fortune_augment_i", basicItem());
+    public static final RegistryObject<Item> DRILL_FORTUNE_AUGMENT_II = ITEMS.register("drill_fortune_augment_ii", basicItem());
+    public static final RegistryObject<Item> DRILL_MINING_AUGMENT_I = ITEMS.register("drill_mining_augment_i", basicItem());
+    public static final RegistryObject<Item> DRILL_MINING_AUGMENT_II = ITEMS.register("drill_mining_augment_ii", basicItem());
+    public static final RegistryObject<Item> DRILL_BLOCK_PLACING_AUGMENT = ITEMS.register("drill_block_placing_augment", basicItem());
     public static final RegistryObject<Item> FERTILIZER = ITEMS.register("fertilizer", basicItem());
     public static final RegistryObject<Item> CUP_WITH_COFFEE = ITEMS.register("cup_with_coffee", basicItem());
     public static final RegistryObject<Item> PHANTOM_CONNECTOR = ITEMS.register("phantom_connector", basicItem());
     public static final RegistryObject<Item> RESONANT_RICE = ITEMS.register("resonant_rice", basicItem());
-
-    // Foods! :D
-    public static final RegistryObject<Item> FOOD_CHEESE = ITEMS.register("food_cheese", () -> new YummyItem(YummyItem.Foods.CHEESE));
-    public static final RegistryObject<Item> FOOD_PUMPKIN_STEW = ITEMS.register("food_pumpkin_stew", () -> new YummyItem(YummyItem.Foods.PUMPKIN_STEW));
-    public static final RegistryObject<Item> FOOD_CARROT_JUICE = ITEMS.register("food_carrot_juice", () -> new YummyItem(YummyItem.Foods.CARROT_JUICE));
-    public static final RegistryObject<Item> FOOD_FISH_N_CHIPS = ITEMS.register("food_fish_n_chips", () -> new YummyItem(YummyItem.Foods.FISH_N_CHIPS));
-    public static final RegistryObject<Item> FOOD_FRENCH_FRIES = ITEMS.register("food_french_fries", () -> new YummyItem(YummyItem.Foods.FRENCH_FRIES));
-    public static final RegistryObject<Item> FOOD_FRENCH_FRY = ITEMS.register("food_french_fry", () -> new YummyItem(YummyItem.Foods.FRENCH_FRY));
-    public static final RegistryObject<Item> FOOD_SPAGHETTI = ITEMS.register("food_spaghetti", () -> new YummyItem(YummyItem.Foods.SPAGHETTI));
-    public static final RegistryObject<Item> FOOD_NOODLE = ITEMS.register("food_noodle", () -> new YummyItem(YummyItem.Foods.NOODLE));
-    public static final RegistryObject<Item> FOOD_CHOCOLATE_CAKE = ITEMS.register("food_chocolate_cake", () -> new YummyItem(YummyItem.Foods.CHOCOLATE_CAKE));
-    public static final RegistryObject<Item> FOOD_CHOCOLATE = ITEMS.register("food_chocolate", () -> new YummyItem(YummyItem.Foods.CHOCOLATE));
-    public static final RegistryObject<Item> FOOD_TOAST = ITEMS.register("food_toast", () -> new YummyItem(YummyItem.Foods.TOAST));
-    public static final RegistryObject<Item> FOOD_SUBMARINE_SANDWICH = ITEMS.register("food_submarine_sandwich", () -> new YummyItem(YummyItem.Foods.SUBMARINE_SANDWICH));
-    public static final RegistryObject<Item> FOOD_BIG_COOKIE = ITEMS.register("food_big_cookie", () -> new YummyItem(YummyItem.Foods.BIG_COOKIE));
-    public static final RegistryObject<Item> FOOD_HAMBURGER = ITEMS.register("food_hamburger", () -> new YummyItem(YummyItem.Foods.HAMBURGER));
-    public static final RegistryObject<Item> FOOD_PIZZA = ITEMS.register("food_pizza", () -> new YummyItem(YummyItem.Foods.PIZZA));
-    public static final RegistryObject<Item> FOOD_BAGUETTE = ITEMS.register("food_baguette", () -> new YummyItem(YummyItem.Foods.BAGUETTE));
-    public static final RegistryObject<Item> FOOD_RICE = ITEMS.register("food_rice", () -> new YummyItem(YummyItem.Foods.RICE));
-    public static final RegistryObject<Item> FOOD_RICE_BREAD = ITEMS.register("food_rice_bread", () -> new YummyItem(YummyItem.Foods.RICE_BREAD));
-    public static final RegistryObject<Item> FOOD_DOUGHNUT = ITEMS.register("food_doughnut", () -> new YummyItem(YummyItem.Foods.DOUGHNUT));
-    public static final RegistryObject<Item> FOOD_TOAST_O_CHOCOLATE = ITEMS.register("food_toast_o_chocolate", () -> new YummyItem(YummyItem.Foods.CHOCOLATE_TOAST));
-    public static final RegistryObject<Item> FOOD_BACON = ITEMS.register("food_bacon", () -> new YummyItem(YummyItem.Foods.BACON));
-
+    public static final RegistryObject<Item> FOOD_CHEESE = ITEMS.register("food_cheese", basicItem());
+    public static final RegistryObject<Item> FOOD_PUMPKIN_STEW = ITEMS.register("food_pumpkin_stew", basicItem());
+    public static final RegistryObject<Item> FOOD_CARROT_JUICE = ITEMS.register("food_carrot_juice", basicItem());
+    public static final RegistryObject<Item> FOOD_FISH_N_CHIPS = ITEMS.register("food_fish_n_chips", basicItem());
+    public static final RegistryObject<Item> FOOD_FRENCH_FRIES = ITEMS.register("food_french_fries", basicItem());
+    public static final RegistryObject<Item> FOOD_FRENCH_FRY = ITEMS.register("food_french_fry", basicItem());
+    public static final RegistryObject<Item> FOOD_SPAGHETTI = ITEMS.register("food_spaghetti", basicItem());
+    public static final RegistryObject<Item> FOOD_NOODLE = ITEMS.register("food_noodle", basicItem());
+    public static final RegistryObject<Item> FOOD_CHOCOLATE_CAKE = ITEMS.register("food_chocolate_cake", basicItem());
+    public static final RegistryObject<Item> FOOD_CHOCOLATE = ITEMS.register("food_chocolate", basicItem());
+    public static final RegistryObject<Item> FOOD_TOAST = ITEMS.register("food_toast", basicItem());
+    public static final RegistryObject<Item> FOOD_SUBMARINE_SANDWICH = ITEMS.register("food_submarine_sandwich", basicItem());
+    public static final RegistryObject<Item> FOOD_BIG_COOKIE = ITEMS.register("food_big_cookie", basicItem());
+    public static final RegistryObject<Item> FOOD_HAMBURGER = ITEMS.register("food_hamburger", basicItem());
+    public static final RegistryObject<Item> FOOD_PIZZA = ITEMS.register("food_pizza", basicItem());
+    public static final RegistryObject<Item> FOOD_BAGUETTE = ITEMS.register("food_baguette", basicItem());
+    public static final RegistryObject<Item> FOOD_RICE = ITEMS.register("food_rice", basicItem());
+    public static final RegistryObject<Item> FOOD_RICE_BREAD = ITEMS.register("food_rice_bread", basicItem());
+    public static final RegistryObject<Item> FOOD_DOUGHNUT = ITEMS.register("food_doughnut", basicItem());
+    public static final RegistryObject<Item> FOOD_TOAST_O_CHOCOLATE = ITEMS.register("food_toast_o_chocolate", basicItem());
+    public static final RegistryObject<Item> FOOD_BACON = ITEMS.register("food_bacon", basicItem());
     public static final RegistryObject<Item> CU_BA_RA_JAM = ITEMS.register("jam_cu_ba_ra", basicItem());
     public static final RegistryObject<Item> GRA_KI_BA_JAM = ITEMS.register("jam_gra_ki_ba", basicItem());
     public static final RegistryObject<Item> PL_AP_LE_JAM = ITEMS.register("jam_pl_ap_le", basicItem());
@@ -220,22 +208,20 @@ public final class ActuallyItems {
 
     public static final Set<RegistryObject<Item>> SIMPLE_ITEMS = ImmutableSet.of(
             // Crystals
-            BLACK_QUARTZ, RESTONIA_CRYSTAL, PALIS_CRYSTAL, DIAMATINE_CRYSTAL,
-            VOID_CRYSTAL, EMERADIC_CRYSTAL, ENORI_CRYSTAL, RESTONIA_EMPOWERED_CRYSTAL,
-            PALIS_EMPOWERED_CRYSTAL, DIAMATINE_EMPOWERED_CRYSTAL, VOID_EMPOWERED_CRYSTAL, EMERADIC_EMPOWERED_CRYSTAL,
-            ENORI_EMPOWERED_CRYSTAL,
+            BLACK_QUARTS, RESTONIA_CRYSTAL, PALIS_CRYSTAL, DIAMATINE_CRYSTAL,
+            VOID_CRYSTAL, EMERADIC_CRYSTAL, ENORI_CRYSTAL,
             // All in one tools
-            WOODEN_AIOT, STONE_AIOT, IRON_AIOT, GOLD_AIOT, DIAMOND_AIOT, NETHERITE_AIOT, QUARTZ_AIOT, ENORI_AIOT,
-            EMERADIC_AIOT, VOID_AIOT, DIAMATINE_AIOT, PALIS_AIOT, RESTONIA_AIOT,
+            WOODEN_PAXEL, STONE_PAXEL, IRON_PAXEL, GOLD_PAXEL, DIAMOND_PAXEL, NETHERITE_PAXEL, QUARTZ_PAXEL, ENORI_PAXEL,
+            EMERADIC_PAXEL, VOID_PAXEL, DIAMATINE_PAXEL, PALIS_PAXEL, RESTONIA_PAXEL,
             // The rest?
             RED_CRYSTAL_SHARD, BLUE_CRYSTAL_SHARD, LIGHT_BLUE_CRYSTAL_SHARD, BLACK_CRYSTAL_SHARD, GREEN_CRYSTAL_SHARD,
             WHITE_CRYSTAL_SHARD, ENGINEERS_GOGGLES, ENGINEERS_GOGGLES_INFRARED, LASER_RELAY_MODIFIER_RANGE, LASER_RELAY_MODIFIER_INVISIBILITY,
             HANDHELD_FILLER, TRAVELERS_SACK, VOID_SACK, WORM, PLAYER_PROBE, ITEM_FILTER, BOWL_OF_WATER, PAPER_CONE, DOUGH,
             RING, BASIC_COIL, ADVANCED_COIL, RICE_DOUGH, TINY_COAL, TINY_CHARCOAL, RICE_SLIMEBALL, CANOLA, EMPTY_CUP,
             BATS_WING, DRILL_CORE, LENS, ENDER_STAR, CRYSTALLIZED_CANOLA_SEED, EMPOWERED_CANOLA_SEED, LENS_OF_COLOR,
-            LENS_OF_DETONATION, LENS_OF_CERTAIN_DEATH, LENS_OF_THE_KILLER, LENS_OF_DISENCHANTING, LENS_OF_THE_MINER, LASER_WRENCH,
+            LENS_OF_DETONATION, LENS_OF_CERTAIN_DEATH, LENS_OF_THE_KILLER, LENS_OF_DISENCHANTING, LENS_OF_THE_MINER, LENS_OF_CONVERSION,LASER_WRENCH,
             TELEPORT_STAFF, WINGS_OF_THE_BATS, SINGLE_BATTERY, DOUBLE_BATTERY, TRIPLE_BATTERY, QUADRUPLE_BATTERY, QUINTUPLE_BATTERY,
-            DRILL_BLACK, DRILL_BLUE, DRILL_BROWN, DRILL_CYAN, DRILL_GRAY, DRILL_GREEN, DRILL_MAIN, DRILL_LIGHT_GRAY,
+            DRILL_BLACK, DRILL_BLUE, DRILL_BROWN, DRILL_CYAN, DRILL_GRAY, DRILL_GREEN, DRILL_LIGHT_BLUE, DRILL_LIGHT_GRAY,
             DRILL_LIME, DRILL_MAGENTA, DRILL_ORANGE, DRILL_PINK, DRILL_PURPLE, DRILL_RED, DRILL_WHITE, DRILL_YELLOW, DRILL_SPEED_AUGMENT_I,
             DRILL_SPEED_AUGMENT_II, DRILL_SPEED_AUGMENT_III, DRILL_SILK_TOUCH_AUGMENT, DRILL_FORTUNE_AUGMENT_I, DRILL_FORTUNE_AUGMENT_II,
             DRILL_MINING_AUGMENT_I, DRILL_MINING_AUGMENT_II, DRILL_BLOCK_PLACING_AUGMENT, FERTILIZER, CUP_WITH_COFFEE, PHANTOM_CONNECTOR,

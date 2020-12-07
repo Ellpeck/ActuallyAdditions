@@ -1,10 +1,10 @@
 package de.ellpeck.actuallyadditions.common;
 
-import de.ellpeck.actuallyadditions.client.ClientSetup;
 import de.ellpeck.actuallyadditions.common.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.common.config.Config;
-import de.ellpeck.actuallyadditions.common.container.ActuallyContainers;
 import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -40,7 +40,6 @@ public class ActuallyAdditions {
 
         ActuallyBlocks.BLOCKS.register(eventBus);
         ActuallyItems.ITEMS.register(eventBus);
-        ActuallyContainers.CONTAINERS.register(eventBus);
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::clientSetup);
@@ -49,9 +48,16 @@ public class ActuallyAdditions {
     }
 
     private void setup(FMLCommonSetupEvent event) {
+
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
-        ClientSetup.setup();
+        RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_VOID.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_ENORI.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_RESTONIA.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_PALIS.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_DIAMATINE.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_EMERADIC.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(ActuallyBlocks.GREENHOUSE_GLASS.get(), RenderType.getCutout());
     }
 }

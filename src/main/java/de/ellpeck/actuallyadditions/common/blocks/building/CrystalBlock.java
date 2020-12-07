@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ToolType;
 
 public class CrystalBlock extends ActuallyBlock {
-    private final boolean isEmpowered;
+    private boolean isEmpowered;
 
     public CrystalBlock(boolean isEmpowered) {
         super(Properties.create(Material.ROCK)

@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "actuallyadditions:green_stairs_block"
+          "name": "minecraft:air"
         }
       ],
       "conditions": [

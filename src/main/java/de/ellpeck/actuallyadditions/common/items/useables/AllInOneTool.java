@@ -9,7 +9,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraftforge.common.ToolType;
 
 public class AllInOneTool extends ToolItem implements IActuallyItem {
-    private final IItemTier tier;
+    private IItemTier tier;
 
     public AllInOneTool(IItemTier tier) {
         super(

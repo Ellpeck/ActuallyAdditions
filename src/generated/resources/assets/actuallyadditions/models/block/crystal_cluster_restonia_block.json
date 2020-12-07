@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "actuallyadditions:block/crystal_cluster_restonia_block"
-  }
-}

@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * todo: review to ensure all values act as intended
  */
 public enum ToolMaterials implements IItemTier {
-    QUARTZ(2, 280, 6.5f, 2.0f, 10, () -> Ingredient.fromItems(ActuallyItems.BLACK_QUARTZ.get())),
+    QUARTZ(2, 280, 6.5f, 2.0f, 10, () -> Ingredient.fromItems(ActuallyItems.BLACK_QUARTS.get())),
     RESTONIA(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.fromItems(ActuallyItems.RESTONIA_CRYSTAL.get())),
     PALIS(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.fromItems(ActuallyItems.PALIS_CRYSTAL.get())),
     DIAMATINE(3, 1600, 9.0f, 4.0f, 14, () -> Ingredient.fromItems(ActuallyItems.DIAMATINE_CRYSTAL.get())),

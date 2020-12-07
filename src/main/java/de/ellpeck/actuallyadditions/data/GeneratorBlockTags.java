@@ -22,8 +22,10 @@ public class GeneratorBlockTags extends BlockTagsProvider {
                 ActuallyBlocks.WHITE_WALL.get(),
                 ActuallyBlocks.GREEN_WALL.get(),
                 ActuallyBlocks.BLACK_QUARTZ_WALL.get(),
+                ActuallyBlocks.BLACK_SMOOTH_QUARTZ_WALL.get(),
                 ActuallyBlocks.BLACK_PILLAR_QUARTZ_WALL.get(),
-                ActuallyBlocks.BLACK_CHISELED_QUARTZ_WALL.get()
+                ActuallyBlocks.BLACK_CHISELED_QUARTZ_WALL.get(),
+                ActuallyBlocks.BLACK_BRICK_QUARTZ_WALL.get()
         );
     }
 

@@ -20,7 +20,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -36,7 +35,6 @@ public abstract class CrystalFluxItem extends ActuallyItem {
             alt ? NumberFormat.getIntegerInstance().format(value) : Help.compressedValue(value);
 
     private final Supplier<Integer> maxFlux;
-    private final int transfer;
 
     /**
      * We use a supplier here to allow for config values to be passed around so we are able to
@@ -48,24 +46,12 @@ public abstract class CrystalFluxItem extends ActuallyItem {
         super(properties);
 
         this.maxFlux = maxFlux;
-        this.transfer = Integer.MAX_VALUE;
-    }
-
-    /**
-     * Allows for granular control over the transfer rate
-     * @param maxFlux max energy this item can store
-     * @param transfer max transfer rate for energy
-     */
-    public CrystalFluxItem(Properties properties, Supplier<Integer> maxFlux, int transfer) {
-        super(properties);
-        this.maxFlux = maxFlux;
-        this.transfer = transfer;
     }
 
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-        return new CrystalFluxProvider(stack, maxFlux.get(), this.transfer);
+        return new CrystalFluxProvider(stack, maxFlux.get());
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -73,7 +59,7 @@ public abstract class CrystalFluxItem extends ActuallyItem {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
 
-        getCrystalFlux(stack).ifPresent(energy ->
+        stack.getCapability(CapabilityEnergy.ENERGY).ifPresent(energy ->
                 tooltip.add(this.getEnergyPretty(energy, Screen.hasShiftDown()).mergeStyle(TextFormatting.GRAY)));
     }
 
@@ -121,12 +107,8 @@ public abstract class CrystalFluxItem extends ActuallyItem {
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
-        return getCrystalFlux(stack)
+        return stack.getCapability(CapabilityEnergy.ENERGY)
                 .map(energy -> 1D - (energy.getEnergyStored() / (double) energy.getMaxEnergyStored()))
                 .orElse(0D);
-    }
-
-    public LazyOptional<IEnergyStorage> getCrystalFlux(ItemStack stack) {
-        return stack.getCapability(CapabilityEnergy.ENERGY);
     }
 }

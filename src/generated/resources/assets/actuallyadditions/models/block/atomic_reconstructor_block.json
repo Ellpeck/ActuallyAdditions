@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "side": "actuallyadditions:block/atomic_reconstructor_block",
-    "front": "actuallyadditions:block/atomic_reconstructor_block_front",
-    "top": "actuallyadditions:block/atomic_reconstructor_block_top"
-  }
-}

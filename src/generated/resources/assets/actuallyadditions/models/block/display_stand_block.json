@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "actuallyadditions:block/display_stand_block"
-  }
-}

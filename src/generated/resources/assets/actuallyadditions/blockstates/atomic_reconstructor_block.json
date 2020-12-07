@@ -2,26 +2,29 @@
   "variants": {
     "facing=down": {
       "model": "actuallyadditions:block/atomic_reconstructor_block",
-      "x": 90
+      "x": 180
     },
     "facing=up": {
-      "model": "actuallyadditions:block/atomic_reconstructor_block",
-      "x": 270
+      "model": "actuallyadditions:block/atomic_reconstructor_block"
     },
     "facing=north": {
       "model": "actuallyadditions:block/atomic_reconstructor_block",
-      "y": 180
+      "x": 90
     },
     "facing=south": {
-      "model": "actuallyadditions:block/atomic_reconstructor_block"
+      "model": "actuallyadditions:block/atomic_reconstructor_block",
+      "x": 90,
+      "y": 180
     },
     "facing=west": {
       "model": "actuallyadditions:block/atomic_reconstructor_block",
-      "y": 90
+      "x": 90,
+      "y": 270
     },
     "facing=east": {
       "model": "actuallyadditions:block/atomic_reconstructor_block",
-      "y": 270
+      "x": 90,
+      "y": 90
     }
   }
 }
