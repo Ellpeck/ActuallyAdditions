@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.common.blocks.functional.AtomicReconstructorBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
@@ -12,6 +13,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.function.Supplier;
@@ -23,56 +25,82 @@ public class GeneratorBlockStates extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        // Fully Directional Blocks
         fullyDirectionalBlock(ActuallyBlocks.ATOMIC_RECONSTRUCTOR);
+        fullyDirectionalBlock(ActuallyBlocks.BREAKER);
+        fullyDirectionalBlock(ActuallyBlocks.PLACER);
+        fullyDirectionalBlock(ActuallyBlocks.DROPPER);
+        fullyDirectionalBlock(ActuallyBlocks.FLUID_PLACER);
+        fullyDirectionalBlock(ActuallyBlocks.FLUID_COLLECTOR);
+        fullyDirectionalBlock(ActuallyBlocks.DIRECTIONAL_BREAKER);
 
-        buildCubeAll(ActuallyBlocks.CRYSTAL_CLUSTER_RESTONIA);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_CLUSTER_PALIS);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_CLUSTER_DIAMATINE);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_CLUSTER_VOID);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_CLUSTER_EMERADIC);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_CLUSTER_ENORI);
-        buildCubeAll(ActuallyBlocks.BATTERY_BOX);
-        buildCubeAll(ActuallyBlocks.HOPPING_ITEM_INTERFACE);
-        buildCubeAll(ActuallyBlocks.FARMER);
-        buildCubeAll(ActuallyBlocks.BIO_REACTOR);
-        buildCubeAll(ActuallyBlocks.EMPOWERER);
-        buildCubeAll(ActuallyBlocks.TINY_TORCH);
-        buildCubeAll(ActuallyBlocks.SHOCK_SUPPRESSOR);
-        buildCubeAll(ActuallyBlocks.DISPLAY_STAND);
-        buildCubeAll(ActuallyBlocks.PLAYER_INTERFACE);
-        buildCubeAll(ActuallyBlocks.ITEM_INTERFACE);
-        buildCubeAll(ActuallyBlocks.FIREWORK_BOX);
-        buildCubeAll(ActuallyBlocks.MINER);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_RESTONIA);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_PALIS);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_DIAMATINE);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_VOID);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_EMERADIC);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_ENORI);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_EMPOWERED_RESTONIA);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_EMPOWERED_PALIS);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_EMPOWERED_DIAMATINE);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_EMPOWERED_VOID);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_EMPOWERED_EMERADIC);
-        buildCubeAll(ActuallyBlocks.CRYSTAL_EMPOWERED_ENORI);
-        buildCubeAll(ActuallyBlocks.ENERGY_LASER_RELAY);
-        buildCubeAll(ActuallyBlocks.ENERGY_LASER_RELAY_ADVANCED);
-        buildCubeAll(ActuallyBlocks.ENERGY_LASER_RELAY_EXTREME);
-        buildCubeAll(ActuallyBlocks.FLUIDS_LASER_RELAY);
-        buildCubeAll(ActuallyBlocks.ITEM_LASER_RELAY);
-        buildCubeAll(ActuallyBlocks.ADVANCED_ITEM_LASER_RELAY);
-        buildCubeAll(ActuallyBlocks.RANGED_COLLECTOR);
-        buildCubeAll(ActuallyBlocks.DIRECTIONAL_BREAKER);
-        buildCubeAll(ActuallyBlocks.LEAF_GENERATOR);
-        buildCubeAll(ActuallyBlocks.XP_SOLIDIFIER);
-        buildCubeAll(ActuallyBlocks.GREEN_BLOCK);
-        buildCubeAll(ActuallyBlocks.WHITE_BLOCK);
-        stairsBlock((StairsBlock) ActuallyBlocks.GREEN_STAIRS.get(), modLoc("block/green_block"));
-        stairsBlock((StairsBlock) ActuallyBlocks.WHITE_STAIRS.get(), modLoc("block/white_block"));
-        slabBlock((SlabBlock) ActuallyBlocks.GREEN_SLAB.get(), modLoc("block/green_block"), modLoc("block/green_block"));
-        slabBlock((SlabBlock) ActuallyBlocks.WHITE_SLAB.get(), modLoc("block/white_block"), modLoc("block/white_block"));
-        wallBlock((WallBlock) ActuallyBlocks.GREEN_WALL.get(), modLoc("block/green_block"));
-        wallBlock((WallBlock) ActuallyBlocks.WHITE_WALL.get(), modLoc("block/white_block"));
+        // Horizontal Directional Blocks
+        horizontallyDirectionalBlock(ActuallyBlocks.FARMER);
+        horizontallyDirectionalBlock(ActuallyBlocks.BIO_REACTOR);
+        horizontallyDirectionalBlock(ActuallyBlocks.MINER);
+        horizontallyDirectionalBlock(ActuallyBlocks.LEAF_GENERATOR);
+        horizontallyDirectionalBlock(ActuallyBlocks.COFFEE_MACHINE);
+        horizontallyDirectionalBlock(ActuallyBlocks.CRUSHER);
+        horizontallyDirectionalBlock(ActuallyBlocks.CRUSHER_DOUBLE);
+        horizontallyDirectionalBlock(ActuallyBlocks.POWERED_FURNACE);
+        horizontallyDirectionalBlock(ActuallyBlocks.DOUBLE_POWERED_FURNACE);
+        horizontallyDirectionalBlock(ActuallyBlocks.COAL_GENERATOR);
+        horizontallyDirectionalBlock(ActuallyBlocks.OIL_GENERATOR);
+        horizontallyDirectionalBlock(ActuallyBlocks.LAMP_CONTROLLER);
+        horizontallyDirectionalBlock(ActuallyBlocks.LAVA_FACTORY_CONTROLLER);
+
+        // Standard Block
+        standardBlock(ActuallyBlocks.CRYSTAL_CLUSTER_RESTONIA);
+        standardBlock(ActuallyBlocks.CRYSTAL_CLUSTER_PALIS);
+        standardBlock(ActuallyBlocks.CRYSTAL_CLUSTER_DIAMATINE);
+        standardBlock(ActuallyBlocks.CRYSTAL_CLUSTER_VOID);
+        standardBlock(ActuallyBlocks.CRYSTAL_CLUSTER_EMERADIC);
+        standardBlock(ActuallyBlocks.CRYSTAL_CLUSTER_ENORI);
+        standardBlock(ActuallyBlocks.BATTERY_BOX);
+        standardBlock(ActuallyBlocks.HOPPING_ITEM_INTERFACE);
+        standardBlock(ActuallyBlocks.EMPOWERER);
+        standardBlock(ActuallyBlocks.TINY_TORCH);
+        standardBlock(ActuallyBlocks.SHOCK_SUPPRESSOR);
+        standardBlock(ActuallyBlocks.DISPLAY_STAND);
+        standardBlock(ActuallyBlocks.PLAYER_INTERFACE);
+        standardBlock(ActuallyBlocks.ITEM_INTERFACE);
+        standardBlock(ActuallyBlocks.FIREWORK_BOX);
+        standardBlock(ActuallyBlocks.CRYSTAL_RESTONIA);
+        standardBlock(ActuallyBlocks.CRYSTAL_PALIS);
+        standardBlock(ActuallyBlocks.CRYSTAL_DIAMATINE);
+        standardBlock(ActuallyBlocks.CRYSTAL_VOID);
+        standardBlock(ActuallyBlocks.CRYSTAL_EMERADIC);
+        standardBlock(ActuallyBlocks.CRYSTAL_ENORI);
+        standardBlock(ActuallyBlocks.CRYSTAL_EMPOWERED_RESTONIA);
+        standardBlock(ActuallyBlocks.CRYSTAL_EMPOWERED_PALIS);
+        standardBlock(ActuallyBlocks.CRYSTAL_EMPOWERED_DIAMATINE);
+        standardBlock(ActuallyBlocks.CRYSTAL_EMPOWERED_VOID);
+        standardBlock(ActuallyBlocks.CRYSTAL_EMPOWERED_EMERADIC);
+        standardBlock(ActuallyBlocks.CRYSTAL_EMPOWERED_ENORI);
+        standardBlock(ActuallyBlocks.ENERGY_LASER_RELAY);
+        standardBlock(ActuallyBlocks.ENERGY_LASER_RELAY_ADVANCED);
+        standardBlock(ActuallyBlocks.ENERGY_LASER_RELAY_EXTREME);
+        standardBlock(ActuallyBlocks.FLUIDS_LASER_RELAY);
+        standardBlock(ActuallyBlocks.ITEM_LASER_RELAY);
+        standardBlock(ActuallyBlocks.ADVANCED_ITEM_LASER_RELAY);
+        standardBlock(ActuallyBlocks.RANGED_COLLECTOR);
+        standardBlock(ActuallyBlocks.XP_SOLIDIFIER);
+        standardBlock(ActuallyBlocks.ENERGIZER);
+        standardBlock(ActuallyBlocks.ENERVATOR);
+        standardBlock(ActuallyBlocks.CANOLA_PRESS);
+        standardBlock(ActuallyBlocks.PHANTOMFACE);
+        standardBlock(ActuallyBlocks.PHANTOM_PLACER);
+        standardBlock(ActuallyBlocks.PHANTOM_LIQUIFACE);
+        standardBlock(ActuallyBlocks.PHANTOM_ENERGYFACE);
+        standardBlock(ActuallyBlocks.PHANTOM_REDSTONEFACE);
+        standardBlock(ActuallyBlocks.PHANTOM_BREAKER);
+        standardBlock(ActuallyBlocks.FERMENTING_BARREL);
+        standardBlock(ActuallyBlocks.FEEDER);
+        standardBlock(ActuallyBlocks.HEAT_COLLECTOR);
+        standardBlock(ActuallyBlocks.GREENHOUSE_GLASS);
+        standardBlock(ActuallyBlocks.PHANTOM_BOOSTER);
+
+        // Lamps
         buildLitState(ActuallyBlocks.LAMP_WHITE);
         buildLitState(ActuallyBlocks.LAMP_ORANGE);
         buildLitState(ActuallyBlocks.LAMP_MAGENTA);
@@ -89,65 +117,76 @@ public class GeneratorBlockStates extends BlockStateProvider {
         buildLitState(ActuallyBlocks.LAMP_GREEN);
         buildLitState(ActuallyBlocks.LAMP_RED);
         buildLitState(ActuallyBlocks.LAMP_BLACK);
-        buildCubeAll(ActuallyBlocks.LAMP_CONTROLLER);
-        buildCubeAll(ActuallyBlocks.ENERGIZER);
-        buildCubeAll(ActuallyBlocks.ENERVATOR);
-        buildCubeAll(ActuallyBlocks.LAVA_FACTORY_CONTROLLER);
-        buildCubeAll(ActuallyBlocks.CANOLA_PRESS);
-        buildCubeAll(ActuallyBlocks.PHANTOMFACE);
-        buildCubeAll(ActuallyBlocks.PHANTOM_PLACER);
-        buildCubeAll(ActuallyBlocks.PHANTOM_LIQUIFACE);
-        buildCubeAll(ActuallyBlocks.PHANTOM_ENERGYFACE);
-        buildCubeAll(ActuallyBlocks.PHANTOM_REDSTONEFACE);
-        buildCubeAll(ActuallyBlocks.PHANTOM_BREAKER);
-        buildCubeAll(ActuallyBlocks.COAL_GENERATOR);
-        buildCubeAll(ActuallyBlocks.OIL_GENERATOR);
-        buildCubeAll(ActuallyBlocks.FERMENTING_BARREL);
+
+        // TO BE SORTED
         buildCubeAll(ActuallyBlocks.RICE);
         buildCubeAll(ActuallyBlocks.CANOLA);
         buildCubeAll(ActuallyBlocks.FLAX);
         buildCubeAll(ActuallyBlocks.COFFEE);
-        buildCubeAll(ActuallyBlocks.BLACK_QUARTZ);
-        buildCubeAll(ActuallyBlocks.BLACK_QUARTZ_CHISELED);
-        buildCubeAll(ActuallyBlocks.BLACK_QUARTZ_PILLAR);
+
         buildCubeAll(ActuallyBlocks.CHARCOAL);
         buildCubeAll(ActuallyBlocks.ENDER_CASING);
         buildCubeAll(ActuallyBlocks.ENDERPEARL);
         buildCubeAll(ActuallyBlocks.IRON_CASING);
-        buildCubeAll(ActuallyBlocks.LAVA_FACTORY_CASE);
+        standardBlock(ActuallyBlocks.LAVA_FACTORY_CASE);
         buildCubeAll(ActuallyBlocks.ORE_BLACK_QUARTZ);
         buildCubeAll(ActuallyBlocks.WOOD_CASING);
-        buildCubeAll(ActuallyBlocks.FEEDER);
-        buildCubeAll(ActuallyBlocks.CRUSHER);
-        buildCubeAll(ActuallyBlocks.CRUSHER_DOUBLE);
-        buildCubeAll(ActuallyBlocks.POWERED_FURNACE);
-        buildCubeAll(ActuallyBlocks.ESD);
-        buildCubeAll(ActuallyBlocks.ESD_ADVANCED);
-        buildCubeAll(ActuallyBlocks.HEAT_COLLECTOR);
-        buildCubeAll(ActuallyBlocks.GREENHOUSE_GLASS);
-        buildCubeAll(ActuallyBlocks.BREAKER);
-        buildCubeAll(ActuallyBlocks.PLACER);
-        buildCubeAll(ActuallyBlocks.DROPPER);
-        buildCubeAll(ActuallyBlocks.FLUID_PLACER);
-        buildCubeAll(ActuallyBlocks.FLUID_COLLECTOR);
-        buildCubeAll(ActuallyBlocks.COFFEE_MACHINE);
-        buildCubeAll(ActuallyBlocks.PHANTOM_BOOSTER);
-//        buildCubeAll(ActuallyBlocks.WildPlant);
+
+        // Quartz
+        standardBlock(ActuallyBlocks.BLACK_QUARTZ);
+        buildCubeAll(ActuallyBlocks.BLACK_QUARTZ_SMOOTH);
+        standardBlock(ActuallyBlocks.BLACK_QUARTZ_CHISELED);
+        standardBlock(ActuallyBlocks.BLACK_QUARTZ_PILLAR);
+        buildCubeAll(ActuallyBlocks.BLACK_QUARTZ_BRICK);
+        buildCubeAll(ActuallyBlocks.GREEN_BLOCK);
+        buildCubeAll(ActuallyBlocks.WHITE_BLOCK);
+
+        // Walls
         wallBlock((WallBlock) ActuallyBlocks.BLACK_QUARTZ_WALL.get(), modLoc("block/black_quartz_block"));
+        wallBlock((WallBlock) ActuallyBlocks.BLACK_SMOOTH_QUARTZ_WALL.get(), modLoc("block/black_quartz_smooth_block"));
         wallBlock((WallBlock) ActuallyBlocks.BLACK_CHISELED_QUARTZ_WALL.get(), modLoc("block/black_quartz_chiseled_block"));
         wallBlock((WallBlock) ActuallyBlocks.BLACK_PILLAR_QUARTZ_WALL.get(), modLoc("block/black_quartz_pillar_block"));
+        wallBlock((WallBlock) ActuallyBlocks.BLACK_BRICK_QUARTZ_WALL.get(), modLoc("block/black_quartz_brick_block"));
+
+        wallBlock((WallBlock) ActuallyBlocks.GREEN_WALL.get(), modLoc("block/green_block"));
+        wallBlock((WallBlock) ActuallyBlocks.WHITE_WALL.get(), modLoc("block/white_block"));
+
+        // Stairs
         stairsBlock((StairsBlock) ActuallyBlocks.BLACK_QUARTZ_STAIR.get(), modLoc("block/black_quartz_block"));
+        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_SMOOTH_QUARTZ_STAIR.get(), modLoc("block/black_quartz_smooth_block"));
         stairsBlock((StairsBlock) ActuallyBlocks.BLACK_CHISELED_QUARTZ_STAIR.get(), modLoc("block/black_quartz_chiseled_block"));
         stairsBlock((StairsBlock) ActuallyBlocks.BLACK_PILLAR_QUARTZ_STAIR.get(), modLoc("block/black_quartz_pillar_block"));
+        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_BRICK_QUARTZ_STAIR.get(), modLoc("block/black_quartz_brick_block"));
+
+        stairsBlock((StairsBlock) ActuallyBlocks.GREEN_STAIRS.get(), modLoc("block/green_block"));
+        stairsBlock((StairsBlock) ActuallyBlocks.WHITE_STAIRS.get(), modLoc("block/white_block"));
+
+        // Slabs
         slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_SLAB.get(), modLoc("block/black_quartz_block"), modLoc("block/black_quartz_block"));
+        slabBlock((SlabBlock) ActuallyBlocks.BLACK_SMOOTH_QUARTZ_SLAB.get(), modLoc("block/black_quartz_smooth_block"), modLoc("block/black_quartz_smooth_block"));
         slabBlock((SlabBlock) ActuallyBlocks.BLACK_CHISELED_QUARTZ_SLAB.get(), modLoc("block/black_quartz_chiseled_block"), modLoc("block/black_quartz_chiseled_block"));
         slabBlock((SlabBlock) ActuallyBlocks.BLACK_PILLAR_QUARTZ_SLAB.get(), modLoc("block/black_quartz_pillar_block"), modLoc("block/black_quartz_pillar_block"));
+        slabBlock((SlabBlock) ActuallyBlocks.BLACK_BRICK_QUARTZ_SLAB.get(), modLoc("block/black_quartz_brick_block"), modLoc("block/black_quartz_brick_block"));
 
+        slabBlock((SlabBlock) ActuallyBlocks.GREEN_SLAB.get(), modLoc("block/green_block"), modLoc("block/green_block"));
+        slabBlock((SlabBlock) ActuallyBlocks.WHITE_SLAB.get(), modLoc("block/white_block"), modLoc("block/white_block"));
 
+        //buildCubeAll(ActuallyBlocks.ESD);
+        //buildCubeAll(ActuallyBlocks.ESD_ADVANCED);
+        //buildCubeAll(ActuallyBlocks.WildPlant);
+        //buildCubeAll(ActuallyBlocks.IRON_CASING_SNOW);
     }
 
     private void buildCubeAll(Supplier<Block> block) {
         simpleBlock(block.get());
+    }
+
+    private void standardBlock(Supplier<Block> block) {
+        ResourceLocation name = block.get().getRegistryName();
+        ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.toString().split(":")[1]));
+
+        assert name != null;
+        simpleBlock(block.get(), model);
     }
 
     private void buildLitState(Supplier<Block> block) {
@@ -163,22 +202,19 @@ public class GeneratorBlockStates extends BlockStateProvider {
 
     private void fullyDirectionalBlock(Supplier<Block> block) {
         ResourceLocation name = block.get().getRegistryName();
+        ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.toString().split(":")[1]));
+        ModelFile verModel = new ModelFile.UncheckedModelFile(modLoc("block/" + name.toString().split(":")[1] + "_ver"));
 
-        // Todo: come back and fix this, it's still not right
         assert name != null;
-        getVariantBuilder(block.get())
-                .forAllStates(state -> {
-                    Direction dir = state.get(BlockStateProperties.FACING);
-                    System.out.println(dir);
-                    return ConfiguredModel.builder()
-                            .modelFile(models().withExistingParent(name.toString(), "block/orientable")
-                                    .texture("side", modLoc(String.format("block/%s", name.getPath())))
-                                    .texture("front", modLoc(String.format("block/%s_front", name.getPath())))
-                                    .texture("top", modLoc(String.format("block/%s_top", name.getPath()))))
-                            .rotationX(dir == Direction.DOWN ? 90 : (dir == Direction.UP ? 270 : 0))
-                            .rotationY(dir.getAxis().isVertical() ? 0 : dir.getHorizontalIndex() * 90)
-                            .build();
-                });
+        directionalBlock(block.get(), model);
+    }
+
+    private void horizontallyDirectionalBlock(Supplier<Block> block) {
+        ResourceLocation name = block.get().getRegistryName();
+        ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.toString().split(":")[1]));
+
+        assert name != null;
+        horizontalBlock(block.get(), model);
     }
 
 }

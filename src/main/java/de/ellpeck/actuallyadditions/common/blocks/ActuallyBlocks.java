@@ -5,6 +5,7 @@ import de.ellpeck.actuallyadditions.common.blocks.building.CrystalBlock;
 import de.ellpeck.actuallyadditions.common.blocks.building.CrystalClusterBlock;
 import de.ellpeck.actuallyadditions.common.blocks.building.WallBlock;
 import de.ellpeck.actuallyadditions.common.blocks.functional.*;
+import de.ellpeck.actuallyadditions.common.blocks.functional.DropperBlock;
 import de.ellpeck.actuallyadditions.common.blocks.misc.TinyTorchBlock;
 import de.ellpeck.actuallyadditions.common.blocks.plant.PlantBlock;
 import de.ellpeck.actuallyadditions.common.blocks.types.Crystals;
@@ -63,14 +64,13 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> FEEDER = BLOCKS.register("feeder_block", FeederBlock::new);
     public static final RegistryObject<Block> CRUSHER = BLOCKS.register("crusher_block", () -> new GrinderBlock(false));
     public static final RegistryObject<Block> CRUSHER_DOUBLE = BLOCKS.register("crusher_double_block", () -> new GrinderBlock(true));
-    public static final RegistryObject<Block> POWERED_FURNACE = BLOCKS.register("powered_furnace_block", FurnaceDoubleBlock::new);
-    public static final RegistryObject<Block> ESD = BLOCKS.register("esd_block", () -> new InputterBlock(false));
-    public static final RegistryObject<Block> ESD_ADVANCED = BLOCKS.register("esd_advanced_block", () -> new InputterBlock(true));
+    public static final RegistryObject<Block> POWERED_FURNACE = BLOCKS.register("powered_furnace_block", FurnaceSingleBlock::new);
+    public static final RegistryObject<Block> DOUBLE_POWERED_FURNACE = BLOCKS.register("double_powered_furnace_block", FurnaceDoubleBlock::new);
     public static final RegistryObject<Block> HEAT_COLLECTOR = BLOCKS.register("heat_collector_block", HeatCollectorBlock::new);
     public static final RegistryObject<Block> GREENHOUSE_GLASS = BLOCKS.register("greenhouse_glass_block", GreenhouseGlassBlock::new);
     public static final RegistryObject<Block> BREAKER = BLOCKS.register("breaker_block", () -> new BreakerBlock(false));
     public static final RegistryObject<Block> PLACER = BLOCKS.register("placer_block", () -> new BreakerBlock(true));
-    public static final RegistryObject<Block> DROPPER = BLOCKS.register("dropper_block", () -> new DropperBlock(Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> DROPPER = BLOCKS.register("dropper_block", DropperBlock::new);
     public static final RegistryObject<Block> FLUID_PLACER = BLOCKS.register("fluid_placer_block", () -> new FluidCollectorBlock(true));
     public static final RegistryObject<Block> FLUID_COLLECTOR = BLOCKS.register("fluid_collector_block", () -> new FluidCollectorBlock(false));
     public static final RegistryObject<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine_block", CoffeeMachineBlock::new);
@@ -113,26 +113,39 @@ public class ActuallyBlocks {
     // BUILDING BLOCKS
     public static final RegistryObject<Block> GREEN_BLOCK = BLOCKS.register("green_block", GenericBlock::new);
     public static final RegistryObject<Block> WHITE_BLOCK = BLOCKS.register("white_block", GenericBlock::new);
+
     public static final RegistryObject<Block> GREEN_STAIRS = BLOCKS.register("green_stairs_block", () -> new ActuallyBlock.Stairs(() -> GREEN_BLOCK.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> WHITE_STAIRS = BLOCKS.register("white_stairs_block", () -> new ActuallyBlock.Stairs(() -> WHITE_BLOCK.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
+
     public static final RegistryObject<Block> GREEN_SLAB = BLOCKS.register("green_slab_block", () -> new ActuallyBlock.Slabs(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> WHITE_SLAB = BLOCKS.register("white_slab_block", () -> new ActuallyBlock.Slabs(Block.Properties.create(Material.ROCK)));
+
     public static final RegistryObject<Block> GREEN_WALL = BLOCKS.register("green_wall_block", () -> new WallBlock(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> WHITE_WALL = BLOCKS.register("white_wall_block", () -> new WallBlock(Block.Properties.create(Material.ROCK)));
 
     public static final RegistryObject<Block> BLACK_QUARTZ = BLOCKS.register("black_quartz_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> BLACK_QUARTZ_SMOOTH = BLOCKS.register("black_quartz_smooth_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> BLACK_QUARTZ_CHISELED = BLOCKS.register("black_quartz_chiseled_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR = BLOCKS.register("black_quartz_pillar_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> BLACK_QUARTZ_BRICK = BLOCKS.register("black_quartz_brick_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
 
     public static final RegistryObject<Block> BLACK_QUARTZ_WALL = BLOCKS.register("black_quartz_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ.get())));
+    public static final RegistryObject<Block> BLACK_SMOOTH_QUARTZ_WALL = BLOCKS.register("black_quartz_smooth_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_SMOOTH.get())));
     public static final RegistryObject<Block> BLACK_CHISELED_QUARTZ_WALL = BLOCKS.register("black_quartz_chiseled_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_CHISELED.get())));
     public static final RegistryObject<Block> BLACK_PILLAR_QUARTZ_WALL = BLOCKS.register("black_quartz_pillar_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_PILLAR.get())));
+    public static final RegistryObject<Block> BLACK_BRICK_QUARTZ_WALL = BLOCKS.register("black_quartz_brick_wall_block", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_BRICK.get())));
+
     public static final RegistryObject<Block> BLACK_QUARTZ_STAIR = BLOCKS.register("black_quartz_stair_block", () -> new ActuallyBlock.Stairs(() -> BLACK_QUARTZ.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
-    public static final RegistryObject<Block> BLACK_CHISELED_QUARTZ_STAIR = BLOCKS.register("black_chiseled_quartz_stair_block", () -> new ActuallyBlock.Stairs(() -> BLACK_QUARTZ.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
-    public static final RegistryObject<Block> BLACK_PILLAR_QUARTZ_STAIR = BLOCKS.register("black_pillar_quartz_stair_block", () -> new ActuallyBlock.Stairs(() -> BLACK_QUARTZ.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> BLACK_SMOOTH_QUARTZ_STAIR = BLOCKS.register("black_smooth_quartz_stair_block", () -> new ActuallyBlock.Stairs(() -> BLACK_QUARTZ_SMOOTH.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> BLACK_CHISELED_QUARTZ_STAIR = BLOCKS.register("black_chiseled_quartz_stair_block", () -> new ActuallyBlock.Stairs(() -> BLACK_QUARTZ_CHISELED.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> BLACK_PILLAR_QUARTZ_STAIR = BLOCKS.register("black_pillar_quartz_stair_block", () -> new ActuallyBlock.Stairs(() -> BLACK_QUARTZ_PILLAR.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> BLACK_BRICK_QUARTZ_STAIR = BLOCKS.register("black_brick_quartz_stair_block", () -> new ActuallyBlock.Stairs(() -> BLACK_QUARTZ_PILLAR.get().getDefaultState(), Block.Properties.create(Material.ROCK)));
+
     public static final RegistryObject<Block> BLACK_QUARTZ_SLAB = BLOCKS.register("black_quartz_slab_block", () -> new ActuallyBlock.Slabs(Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> BLACK_SMOOTH_QUARTZ_SLAB = BLOCKS.register("black_smooth_quartz_slab_block", () -> new ActuallyBlock.Slabs(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> BLACK_CHISELED_QUARTZ_SLAB = BLOCKS.register("black_chiseled_quartz_slab_block", () -> new ActuallyBlock.Slabs(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> BLACK_PILLAR_QUARTZ_SLAB = BLOCKS.register("black_pillar_quartz_slab_block", () -> new ActuallyBlock.Slabs(Block.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> BLACK_BRICK_QUARTZ_SLAB = BLOCKS.register("black_brick_quartz_slab_block", () -> new ActuallyBlock.Slabs(Block.Properties.create(Material.ROCK)));
 
     // LAMPS! SO MANY LAMPS
     public static final RegistryObject<Block> LAMP_WHITE = BLOCKS.register("lamp_white_block", LampBlock::new);
@@ -162,6 +175,11 @@ public class ActuallyBlocks {
     public static final RegistryObject<Block> IRON_CASING = BLOCKS.register("iron_casing_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> LAVA_FACTORY_CASE = BLOCKS.register("lava_factory_case_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> WOOD_CASING = BLOCKS.register("wood_casing_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
+
+    //public static final RegistryObject<Block> ESD = BLOCKS.register("esd_block", () -> new InputterBlock(false));
+    //public static final RegistryObject<Block> ESD_ADVANCED = BLOCKS.register("esd_advanced_block", () -> new InputterBlock(true));
+    //public static final RegistryObject<Block> IRON_CASING_SNOW = BLOCKS.register("iron_casing_snow_block", () -> new ActuallyBlock(Block.Properties.create(Material.ROCK)));
+
 
 // I don't know what this is :cry:
 //    public static final RegistryObject<Block> WildPlant

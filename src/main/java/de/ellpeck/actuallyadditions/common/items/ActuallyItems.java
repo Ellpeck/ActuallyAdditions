@@ -103,6 +103,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> LENS_OF_THE_KILLER = ITEMS.register("lens_of_the_killer", basicItem());
     public static final RegistryObject<Item> LENS_OF_DISENCHANTING = ITEMS.register("lens_of_disenchanting", basicItem());
     public static final RegistryObject<Item> LENS_OF_THE_MINER = ITEMS.register("lens_of_the_miner", basicItem());
+    public static final RegistryObject<Item> LENS_OF_CONVERSION = ITEMS.register("lens_of_conversion", basicItem());
     public static final RegistryObject<Item> LASER_WRENCH = ITEMS.register("laser_wrench", basicItem());
     public static final RegistryObject<Item> TELEPORT_STAFF = ITEMS.register("teleport_staff", TeleportStaffItem::new);
     public static final RegistryObject<Item> WINGS_OF_THE_BATS = ITEMS.register("wings_of_the_bats", basicItem());

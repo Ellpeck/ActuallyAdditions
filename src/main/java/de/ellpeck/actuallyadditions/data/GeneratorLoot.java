@@ -75,8 +75,9 @@ public class GeneratorLoot extends LootTableProvider {
             this.registerDropSelfLootTable(ActuallyBlocks.CRUSHER.get());
             this.registerDropSelfLootTable(ActuallyBlocks.CRUSHER_DOUBLE.get());
             this.registerDropSelfLootTable(ActuallyBlocks.POWERED_FURNACE.get());
-            this.registerDropSelfLootTable(ActuallyBlocks.ESD.get());
-            this.registerDropSelfLootTable(ActuallyBlocks.ESD_ADVANCED.get());
+            this.registerDropSelfLootTable(ActuallyBlocks.DOUBLE_POWERED_FURNACE.get());
+            //this.registerDropSelfLootTable(ActuallyBlocks.ESD.get());
+            //this.registerDropSelfLootTable(ActuallyBlocks.ESD_ADVANCED.get());
             this.registerDropSelfLootTable(ActuallyBlocks.HEAT_COLLECTOR.get());
             this.registerDropSelfLootTable(ActuallyBlocks.GREENHOUSE_GLASS.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BREAKER.get());
@@ -106,17 +107,25 @@ public class GeneratorLoot extends LootTableProvider {
             this.registerDropSelfLootTable(ActuallyBlocks.GREEN_WALL.get());
             this.registerDropSelfLootTable(ActuallyBlocks.WHITE_WALL.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_QUARTZ.get());
+            this.registerDropSelfLootTable(ActuallyBlocks.BLACK_QUARTZ_SMOOTH.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_QUARTZ_CHISELED.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_QUARTZ_PILLAR.get());
+            this.registerDropSelfLootTable(ActuallyBlocks.BLACK_QUARTZ_BRICK.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_QUARTZ_WALL.get());
+            this.registerDropSelfLootTable(ActuallyBlocks.BLACK_SMOOTH_QUARTZ_WALL.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_CHISELED_QUARTZ_WALL.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_PILLAR_QUARTZ_WALL.get());
+            this.registerDropSelfLootTable(ActuallyBlocks.BLACK_BRICK_QUARTZ_WALL.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_QUARTZ_STAIR.get());
+            this.registerDropSelfLootTable(ActuallyBlocks.BLACK_SMOOTH_QUARTZ_STAIR.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_CHISELED_QUARTZ_STAIR.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_PILLAR_QUARTZ_STAIR.get());
+            this.registerDropSelfLootTable(ActuallyBlocks.BLACK_BRICK_QUARTZ_STAIR.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_QUARTZ_SLAB.get());
+            this.registerDropSelfLootTable(ActuallyBlocks.BLACK_SMOOTH_QUARTZ_SLAB.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_CHISELED_QUARTZ_SLAB.get());
             this.registerDropSelfLootTable(ActuallyBlocks.BLACK_PILLAR_QUARTZ_SLAB.get());
+            this.registerDropSelfLootTable(ActuallyBlocks.BLACK_BRICK_QUARTZ_SLAB.get());
             this.registerDropSelfLootTable(ActuallyBlocks.LAMP_WHITE.get());
             this.registerDropSelfLootTable(ActuallyBlocks.LAMP_ORANGE.get());
             this.registerDropSelfLootTable(ActuallyBlocks.LAMP_MAGENTA.get());
@@ -138,6 +147,7 @@ public class GeneratorLoot extends LootTableProvider {
             this.registerDropSelfLootTable(ActuallyBlocks.CHARCOAL.get());
             this.registerDropSelfLootTable(ActuallyBlocks.ENDER_CASING.get());
             this.registerDropSelfLootTable(ActuallyBlocks.IRON_CASING.get());
+            //this.registerDropSelfLootTable(ActuallyBlocks.IRON_CASING_SNOW.get());
             this.registerDropSelfLootTable(ActuallyBlocks.LAVA_FACTORY_CASE.get());
             this.registerDropSelfLootTable(ActuallyBlocks.WOOD_CASING.get());
 

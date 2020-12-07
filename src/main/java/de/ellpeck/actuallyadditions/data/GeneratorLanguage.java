@@ -49,8 +49,9 @@ public class GeneratorLanguage extends LanguageProvider {
         addBlock(ActuallyBlocks.CRUSHER, "Crusher");
         addBlock(ActuallyBlocks.CRUSHER_DOUBLE, "Double Crusher");
         addBlock(ActuallyBlocks.POWERED_FURNACE, "Powered Furnace");
-        addBlock(ActuallyBlocks.ESD, "ESD");
-        addBlock(ActuallyBlocks.ESD_ADVANCED, "Advanced ASD");
+        addBlock(ActuallyBlocks.DOUBLE_POWERED_FURNACE, "Double Powered Furnace");
+        //addBlock(ActuallyBlocks.ESD, "ESD");
+        //addBlock(ActuallyBlocks.ESD_ADVANCED, "Advanced ASD");
         addBlock(ActuallyBlocks.HEAT_COLLECTOR, "Heat Collector");
         addBlock(ActuallyBlocks.GREENHOUSE_GLASS, "Greenhouse Glass");
         addBlock(ActuallyBlocks.BREAKER, "Auto-Breaker");
@@ -97,17 +98,25 @@ public class GeneratorLanguage extends LanguageProvider {
         addBlock(ActuallyBlocks.GREEN_WALL, "Ethentic Green Wall");
         addBlock(ActuallyBlocks.WHITE_WALL, "Ethentic Quartz Wall");
         addBlock(ActuallyBlocks.BLACK_QUARTZ, "Block of Black Quartz");
-        addBlock(ActuallyBlocks.BLACK_QUARTZ_CHISELED, "Chiseled Black Quartz");
+        addBlock(ActuallyBlocks.BLACK_QUARTZ_SMOOTH, "Smooth Black Quartz Block");
+        addBlock(ActuallyBlocks.BLACK_QUARTZ_CHISELED, "Chiseled Black Quartz Block");
         addBlock(ActuallyBlocks.BLACK_QUARTZ_PILLAR, "Black Quartz Pillar");
+        addBlock(ActuallyBlocks.BLACK_QUARTZ_BRICK, "Black Quartz Bricks");
         addBlock(ActuallyBlocks.BLACK_QUARTZ_WALL, "Black Quartz Wall");
+        addBlock(ActuallyBlocks.BLACK_SMOOTH_QUARTZ_WALL, "Smooth Black Quartz Wall");
         addBlock(ActuallyBlocks.BLACK_CHISELED_QUARTZ_WALL, "Chiseled Black Quartz Wall");
-        addBlock(ActuallyBlocks.BLACK_PILLAR_QUARTZ_WALL, "Black Quartz Wall Pillar");
+        addBlock(ActuallyBlocks.BLACK_PILLAR_QUARTZ_WALL, "Black Quartz Pillar Wall");
+        addBlock(ActuallyBlocks.BLACK_BRICK_QUARTZ_WALL, "Black Quartz Brick Wall");
         addBlock(ActuallyBlocks.BLACK_QUARTZ_STAIR, "Black Quartz Stairs");
+        addBlock(ActuallyBlocks.BLACK_SMOOTH_QUARTZ_STAIR, "Smooth Black Quartz Stairs");
         addBlock(ActuallyBlocks.BLACK_CHISELED_QUARTZ_STAIR, "Chiseled Black Quartz Stairs");
         addBlock(ActuallyBlocks.BLACK_PILLAR_QUARTZ_STAIR, "Black Quartz Pillar Stairs");
+        addBlock(ActuallyBlocks.BLACK_BRICK_QUARTZ_STAIR, "Black Quartz Brick Stairs");
         addBlock(ActuallyBlocks.BLACK_QUARTZ_SLAB, "Black Quartz Slab");
+        addBlock(ActuallyBlocks.BLACK_SMOOTH_QUARTZ_SLAB, "Smooth Black Quartz Slab");
         addBlock(ActuallyBlocks.BLACK_CHISELED_QUARTZ_SLAB, "Chiseled Black Quartz Slab");
         addBlock(ActuallyBlocks.BLACK_PILLAR_QUARTZ_SLAB, "Black Quartz Pillar Slab");
+        addBlock(ActuallyBlocks.BLACK_BRICK_QUARTZ_SLAB, "Black Quartz Brick Slab");
         addBlock(ActuallyBlocks.LAMP_WHITE, "White Lamp");
         addBlock(ActuallyBlocks.LAMP_ORANGE, "Orange Lamp");
         addBlock(ActuallyBlocks.LAMP_MAGENTA, "Magenta Lamp");
@@ -130,6 +139,7 @@ public class GeneratorLanguage extends LanguageProvider {
         addBlock(ActuallyBlocks.ORE_BLACK_QUARTZ, "Black Quartz Ore");
         addBlock(ActuallyBlocks.ENDER_CASING, "Ender Casing");
         addBlock(ActuallyBlocks.IRON_CASING, "Iron Casing");
+        //addBlock(ActuallyBlocks.IRON_CASING_SNOW, "?");
         addBlock(ActuallyBlocks.LAVA_FACTORY_CASE, "Casing");
         addBlock(ActuallyBlocks.WOOD_CASING, "Wood Casing");
 
@@ -154,6 +164,7 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ActuallyItems.BLACK_QUARTZ, "Black Quartz");
 
         // Crystals
+        addItem(ActuallyItems.BLACK_QUARTS, "Black Quarts");
         addItem(ActuallyItems.RESTONIA_CRYSTAL, "Restonia Crystal");
         addItem(ActuallyItems.PALIS_CRYSTAL, "Palis Crystal");
         addItem(ActuallyItems.DIAMATINE_CRYSTAL, "Diamatine Crystal");
@@ -209,6 +220,7 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ActuallyItems.LENS_OF_THE_KILLER, "Lens of the Killer");
         addItem(ActuallyItems.LENS_OF_DISENCHANTING, "Lens of Disenchanting");
         addItem(ActuallyItems.LENS_OF_THE_MINER, "Lens of the Miner");
+        addItem(ActuallyItems.LENS_OF_CONVERSION, "Lens of Conversion");
         addItem(ActuallyItems.LASER_WRENCH, "Laser Wrench");
         addItem(ActuallyItems.TELEPORT_STAFF, "Teleport Staff");
         addItem(ActuallyItems.WINGS_OF_THE_BATS, "Wings Of The Bats");
