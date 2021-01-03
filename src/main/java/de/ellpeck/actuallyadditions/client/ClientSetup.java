@@ -1,6 +1,7 @@
 package de.ellpeck.actuallyadditions.client;
 
 import de.ellpeck.actuallyadditions.client.screens.DrillScreen;
+import de.ellpeck.actuallyadditions.client.screens.FeederScreen;
 import de.ellpeck.actuallyadditions.common.container.ActuallyContainers;
 import net.minecraft.client.gui.ScreenManager;
 
@@ -11,5 +12,6 @@ public class ClientSetup {
 
     private static void setupScreens() {
         ScreenManager.registerFactory(ActuallyContainers.DRILL_CONTAINER.get(), DrillScreen::new);
+        ScreenManager.registerFactory(ActuallyContainers.FEEDER_CONTAINER.get(), FeederScreen::new);
     }
 }

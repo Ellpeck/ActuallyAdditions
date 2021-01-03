@@ -12,4 +12,7 @@ public final class ActuallyContainers {
 
     public static final RegistryObject<ContainerType<DrillContainer>> DRILL_CONTAINER
             = CONTAINERS.register("drill_container", () -> IForgeContainerType.create(DrillContainer::fromNetwork));
+
+    public static final RegistryObject<ContainerType<FeederContainer>> FEEDER_CONTAINER
+            = CONTAINERS.register("feeder_container", () -> IForgeContainerType.create(FeederContainer::fromNetwork));
 }

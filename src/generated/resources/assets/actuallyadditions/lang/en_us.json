@@ -1,5 +1,9 @@
 {
   "actuallyadditions.gui.name.drill": "Drill",
+  "actuallyadditions.info.gui.animals": "%s Animals",
+  "actuallyadditions.info.gui.enoughToBreed": "Enough to breed!",
+  "actuallyadditions.info.gui.notEnough": "Not enough to breed!",
+  "actuallyadditions.info.gui.tooMany": "Too many to breed!",
   "actuallyadditions.storage.crystal-flux": "%s/%s Crystal Flux",
   "actuallyadditions.tooltip.battery.charge-help": "Sneak-right-click to toggle",
   "actuallyadditions.tooltip.battery.charging": "Charging other item in inventory",

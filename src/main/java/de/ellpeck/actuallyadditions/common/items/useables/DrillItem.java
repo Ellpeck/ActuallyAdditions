@@ -56,15 +56,13 @@ public class DrillItem extends CrystalFluxItem {
     private static final int BASE_ENERGY_USE = 100;
 
     public DrillItem() {
-        super(
-                baseProps()
+        super(baseProps()
                     .maxDamage(0)
                     .setNoRepair()
                     .addToolType(ToolType.PICKAXE, 4)
                     .addToolType(ToolType.SHOVEL, 4),
                 Config.ITEM_CONFIG.drillMaxEnergy::get,
-                1000
-        );
+                1000);
     }
 
     @Override
@@ -98,7 +96,7 @@ public class DrillItem extends CrystalFluxItem {
         int crystalFlux = getCrystalFlux(stack).map(IEnergyStorage::getEnergyStored).orElse(0);
         int fluxPerBlock = this.getFluxPerBlock(stack);
 
-        if (crystalFlux < fluxPerBlock) {
+        if (crystalFlux < fluxPerBlock && !player.isCreative()) {
             return false;
         }
 
@@ -140,9 +138,10 @@ public class DrillItem extends CrystalFluxItem {
 
         Set<BlockPos> posSet = new HashSet<>();
 
+        int y = radius == 2 ? pos.getY() + 1 : pos.getY();
         // Uses the facing axis to move around the X,Y,Z to allow for multiple faces in 2 for loops
-        int a = axis != Direction.Axis.X ? pos.getX() : pos.getY(); // Z & Y plane both use X
-        int b = axis != Direction.Axis.Z ? pos.getZ() : pos.getY(); // X & Y plane both use Z
+        int a = axis != Direction.Axis.X ? pos.getX() : y; // Z & Y plane both use X
+        int b = axis != Direction.Axis.Z ? pos.getZ() : y; // X & Y plane both use Z
 
         for (int i = (a - radius); i < (a + radius) + 1; i++) {
             for (int j = (b - radius); j < (b + radius) + 1; j++) {
@@ -156,11 +155,11 @@ public class DrillItem extends CrystalFluxItem {
         }
 
         Set<BlockPos> failed = new HashSet<>();
-        posSet.forEach(e -> {
+        for (BlockPos e : posSet) {
             if (!destroyBlock(e, pick.getFace(), player, world, drill, drillEnchanted, fluxPerBlock, (cost) -> getCrystalFlux(drill).ifPresent(x -> x.extractEnergy(cost, false)))) {
                 failed.add(e);
             }
-        });
+        }
 
         return failed.contains(pick.getPos());
     }
@@ -180,14 +179,14 @@ public class DrillItem extends CrystalFluxItem {
      *
      * @return returns false if the block gets blocked by another mod
      */
-    // Todo: if we ever need this again, move to world helper
+    // TODO: if we ever need this again, move to world helper
     private boolean destroyBlock(BlockPos pos, Direction face, PlayerEntity player, World world, ItemStack drill, ItemStack drillEnchanted, int fluxPerBlock, Consumer<Integer> onBreak) {
         BlockState state = world.getBlockState(pos);
         int flux = this.getCrystalFlux(drill).map(IEnergyStorage::getEnergyStored).orElse(0);
 
         if (world.isAirBlock(pos)
-                || flux < fluxPerBlock
-                || state.getBlockHardness(world, pos) <= 0f
+                || (flux < fluxPerBlock && !player.isCreative())
+                || state.getBlockHardness(world, pos) <= 0
                 || !ForgeHooks.canHarvestBlock(state, player, world, pos)) {
             return false;
         }
@@ -207,7 +206,6 @@ public class DrillItem extends CrystalFluxItem {
                 ((ServerPlayerEntity) player).connection.sendPacket(new SChangeBlockPacket(world, pos));
             }
 
-            onBreak.accept(fluxPerBlock);
             return true;
         }
 

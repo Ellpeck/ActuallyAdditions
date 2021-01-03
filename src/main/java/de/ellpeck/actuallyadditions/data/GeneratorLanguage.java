@@ -341,6 +341,11 @@ public class GeneratorLanguage extends LanguageProvider {
         // Screen names
         addPrefixed("gui.name.drill", "Drill");
 
+        addPrefixed("info.gui.animals","%s Animals");
+        addPrefixed("info.gui.enoughToBreed","Enough to breed!");
+        addPrefixed("info.gui.tooMany","Too many to breed!");
+        addPrefixed("info.gui.notEnough","Not enough to breed!");
+
         // Storage
         addPrefixed("storage.crystal-flux", "%s/%s Crystal Flux");
 

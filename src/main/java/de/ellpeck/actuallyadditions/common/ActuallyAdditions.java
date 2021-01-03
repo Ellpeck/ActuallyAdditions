@@ -6,6 +6,7 @@ import de.ellpeck.actuallyadditions.common.commands.DebugCommand;
 import de.ellpeck.actuallyadditions.common.config.Config;
 import de.ellpeck.actuallyadditions.common.container.ActuallyContainers;
 import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
+import de.ellpeck.actuallyadditions.common.tiles.ActuallyTiles;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.command.Commands;
@@ -46,6 +47,7 @@ public class ActuallyAdditions {
         ActuallyBlocks.BLOCKS.register(eventBus);
         ActuallyItems.ITEMS.register(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
+        ActuallyTiles.TILES.register(eventBus);
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::clientSetup);
