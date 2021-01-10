@@ -19,4 +19,4 @@ PLEASE DO NOT SUBMIT A FEATURE REQUEST FOR THE FOLLOWING:
 <!--- Thoroughly explain why you would like to see it in the mod. For example, will it improve quality of life, integrate well into the existing dimension, or something to expand on an existing idea? Pitch it like you mean it. -->
 
 **Additional context**
-<!--- Add any notes, such as whether it was discussed on the Gaia Dimension Discord, some screenshots for proof-of-concept, or even any code examples if you're after that edge. -->
+<!--- Add any notes, such as whether it was discussed on the Discord, some screenshots for proof-of-concept, or even any code examples if you're after that edge. -->
