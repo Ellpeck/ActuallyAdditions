@@ -4,6 +4,7 @@ import de.ellpeck.actuallyadditions.common.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.common.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.common.items.ToolSet;
+import de.ellpeck.actuallyadditions.common.utilities.Help;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 
@@ -346,8 +347,11 @@ public class GeneratorLanguage extends LanguageProvider {
         addPrefixed("info.gui.tooMany","Too many to breed!");
         addPrefixed("info.gui.notEnough","Not enough to breed!");
 
-        // Storage
-        addPrefixed("storage.crystal-flux", "%s/%s Crystal Flux");
+        // Storage / energy text
+        addPrefixed("energy.crystal-flux-double", "%s / %s Crystal Flux");
+        addPrefixed("energy.crystal-flux-single", "%s Crystal Flux");
+        addPrefixed("energy.crystal-flux-long", "Crystal Flux");
+        addPrefixed("energy.crystal-flux-short", "CF");
 
         add("itemGroup.actuallyadditions", "Actually Additions");
 
@@ -360,7 +364,7 @@ public class GeneratorLanguage extends LanguageProvider {
      * having to input it manually
      */
     private void addPrefixed(String key, String text) {
-        add(String.format("%s.%s", ActuallyAdditions.MOD_ID, key), text);
+        add(Help.prefixActuallyId(key), text);
     }
 
     private void addToolSet(ToolSet set) {
