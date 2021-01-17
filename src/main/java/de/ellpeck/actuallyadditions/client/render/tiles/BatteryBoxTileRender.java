@@ -12,15 +12,11 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.energy.CapabilityEnergy;
-
-import java.text.NumberFormat;
 
 public class BatteryBoxTileRender extends TileEntityRenderer<BatteryBoxTile> {
     public BatteryBoxTileRender(TileEntityRendererDispatcher rendererDispatcherIn) {

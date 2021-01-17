@@ -15,8 +15,11 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nullable;
+import java.io.Console;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -74,13 +77,25 @@ public abstract class FunctionalBlock extends ActuallyBlock {
     }
 
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
-        System.out.println("Hello");
-
-        if (newState != state && this.dropsInventory(worldIn, pos)) {
-            System.out.println("Should have dropped");
+    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (newState.getBlock() != this && this.dropsInventory(world, pos)) {
+            this.getTile(world, pos).ifPresent(tile -> tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(inv -> {
+                for (int i = 0; i < inv.getSlots(); i++) {
+                    net.minecraft.inventory.InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), inv.getStackInSlot(i));
+                }
+            }));
         }
+
+        super.onReplaced(state, world, pos, newState, isMoving);
+    }
+
+    public Optional<TileEntity> getTile(World world, BlockPos pos) {
+        TileEntity entity = world.getTileEntity(pos);
+        if (entity == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(entity);
     }
 
     public static class ActivatedContext {
