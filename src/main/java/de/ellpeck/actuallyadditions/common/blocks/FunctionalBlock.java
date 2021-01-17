@@ -25,12 +25,10 @@ import java.util.function.Supplier;
  */
 public abstract class FunctionalBlock extends ActuallyBlock {
     private final Supplier<TileEntity> createTile;
-    private final Class<? extends TileEntity> tileClass;
 
-    public FunctionalBlock(Properties properties, Supplier<TileEntity> tile, Class<? extends TileEntity> tileClass) {
+    public FunctionalBlock(Properties properties, Supplier<TileEntity> tile) {
         super(properties);
         this.createTile = tile;
-        this.tileClass = tileClass;
     }
 
     /**
@@ -41,7 +39,7 @@ public abstract class FunctionalBlock extends ActuallyBlock {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         // We should always have a tile
         TileEntity tile = worldIn.getTileEntity(pos);
-        if (tile == null || !tile.getClass().isInstance(this.tileClass)) {
+        if (tile == null) {
             return ActionResultType.FAIL;
         }
 
@@ -67,6 +65,14 @@ public abstract class FunctionalBlock extends ActuallyBlock {
         return this.createTile.get();
     }
 
+    /**
+     * Controls if the tile drops items when being broken. By default we'll try and drop anything in and inv cap
+     * unless told not to.
+     */
+    public boolean dropsInventory(World world, BlockPos pos) {
+        return true;
+    }
+
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         super.onReplaced(state, worldIn, pos, newState, isMoving);
@@ -75,14 +81,6 @@ public abstract class FunctionalBlock extends ActuallyBlock {
         if (newState != state && this.dropsInventory(worldIn, pos)) {
             System.out.println("Should have dropped");
         }
-    }
-
-    /**
-     * Controls if the tile drops items when being broken. By default we'll try and drop anything in and inv cap
-     * unless told not to.
-     */
-    public boolean dropsInventory(World world, BlockPos pos) {
-        return true;
     }
 
     public static class ActivatedContext {

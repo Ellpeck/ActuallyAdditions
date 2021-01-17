@@ -11,4 +11,6 @@ public final class ActuallyTiles {
     public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ActuallyAdditions.MOD_ID);
 
     public static final RegistryObject<TileEntityType<FeederTileEntity>> FEEDER_TILE = TILES.register("feeder_tile", () -> TileEntityType.Builder.create(FeederTileEntity::new, ActuallyBlocks.FEEDER.get()).build(null));
+    public static final RegistryObject<TileEntityType<BatteryBoxTile>> BATTERY_BOX_TILE = TILES.register("battery_bot_tile", () -> TileEntityType.Builder.create(BatteryBoxTile::new, ActuallyBlocks.BATTERY_BOX.get()).build(null));
+
 }

@@ -33,7 +33,7 @@ import java.util.function.Supplier;
 public abstract class CrystalFluxItem extends ActuallyItem {
     // Handles modifying an int to a string of either alt ? 100,000 : 100K
     private static final BiFunction<Integer, Boolean, String> PRETTY = (value, alt) ->
-            alt ? NumberFormat.getIntegerInstance().format(value) : Help.compressedValue(value);
+            alt ? NumberFormat.getIntegerInstance().format(value) : Help.humanReadableValue(value);
 
     private final Supplier<Integer> maxFlux;
     private final int transfer;
@@ -97,9 +97,8 @@ public abstract class CrystalFluxItem extends ActuallyItem {
      */
     private TranslationTextComponent getEnergyPretty(IEnergyStorage energy, boolean showCompressed) {
         return Help.trans(
-                "storage.crystal-flux",
-                PRETTY.apply(energy.getEnergyStored(), showCompressed),
-                PRETTY.apply(energy.getMaxEnergyStored(), showCompressed)
+                "energy.crystal-flux-single",
+                Help.cleanEnergyValues(energy, showCompressed)
         );
     }
 

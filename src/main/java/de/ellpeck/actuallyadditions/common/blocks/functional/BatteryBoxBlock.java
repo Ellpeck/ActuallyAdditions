@@ -15,7 +15,7 @@ import net.minecraft.world.IBlockReader;
 
 public class BatteryBoxBlock extends FunctionalBlock {
     public BatteryBoxBlock() {
-        super(Properties.create(Material.ROCK), BatteryBoxTile::new, BatteryBoxTile.class);
+        super(Properties.create(Material.ROCK), BatteryBoxTile::new);
     }
 
     @Override

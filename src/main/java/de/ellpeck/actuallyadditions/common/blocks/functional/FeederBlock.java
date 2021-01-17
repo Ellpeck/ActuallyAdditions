@@ -16,7 +16,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class FeederBlock extends FunctionalBlock {
 
     public FeederBlock() {
-        super(Properties.create(Material.ROCK), FeederTileEntity::new, FeederTileEntity.class);
+        super(Properties.create(Material.ROCK), FeederTileEntity::new);
     }
 
     @Override
