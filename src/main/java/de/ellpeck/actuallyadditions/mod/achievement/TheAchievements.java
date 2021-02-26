@@ -18,8 +18,8 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import de.ellpeck.actuallyadditions.mod.util.ModUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
@@ -96,11 +96,11 @@ public enum TheAchievements{
         this(name, x, y, displayStack, hasToHaveBefore, type, false, 0, specialItemsToBeGotten);
     }
 
-    public void get(EntityPlayer player){
+    public void get(PlayerEntity player){
         this.get(player, 1);
     }
 
-    public void get(EntityPlayer player, int amount){
+    public void get(PlayerEntity player, int amount){
         if(this.progressToReach > 0){
             this.updateStatus(player, amount);
         }
@@ -109,10 +109,10 @@ public enum TheAchievements{
         }
     }
 
-    private void updateStatus(EntityPlayer player, int amount){
-        if(player instanceof EntityPlayerMP){
+    private void updateStatus(PlayerEntity player, int amount){
+        if(player instanceof ServerPlayerEntity){
 
-            StatisticsManager manager = ((EntityPlayerMP)player).getStatFile();
+            StatisticsManager manager = ((ServerPlayerEntity)player).getStatFile();
             if(manager != null && !manager.hasAchievementUnlocked(this.chieve) && manager.canUnlockAchievement(this.chieve)){
 
                 JsonSerializableSet data = manager.getProgress(this.chieve);

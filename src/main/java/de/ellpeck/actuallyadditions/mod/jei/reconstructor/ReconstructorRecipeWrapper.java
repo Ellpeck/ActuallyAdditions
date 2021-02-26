@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
-import java.util.Arrays;
-
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
@@ -25,14 +23,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.NBTTagString;
+
+import java.util.Arrays;
 
 public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton {
 
     public static final IRecipeWrapperFactory<LensConversionRecipe> FACTORY = (recipe) -> {
-        if (recipe instanceof EnchBookConversion) return new EnchBookWrapper((EnchBookConversion) recipe);
+        if (recipe instanceof EnchBookConversion) {
+            return new EnchBookWrapper((EnchBookConversion) recipe);
+        }
         return new ReconstructorRecipeWrapper(recipe);
     };
 
@@ -76,8 +78,8 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton {
 
         static {
             OUT.setStackDisplayName("Split Book");
-            NBTTagCompound t = OUT.getTagCompound().getCompoundTag("display");
-            NBTTagList l = new NBTTagList();
+            CompoundNBT t = OUT.getTagCompound().getCompoundTag("display");
+            ListNBT l = new ListNBT();
             l.appendTag(new NBTTagString("Book will be split based on enchantments!"));
             t.setTag("Lore", l);
         }

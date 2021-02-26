@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
@@ -20,19 +18,21 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinderDouble;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.util.Random;
 
 public class BlockGrinder extends BlockContainerBase {
 
@@ -50,12 +50,14 @@ public class BlockGrinder extends BlockContainerBase {
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2) {
-        return this.isDouble ? new TileEntityGrinderDouble() : new TileEntityGrinder();
+        return this.isDouble
+            ? new TileEntityGrinderDouble()
+            : new TileEntityGrinder();
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+    @OnlyIn(Dist.CLIENT)
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rand) {
         if (state.getValue(BlockFurnaceDouble.IS_ON)) {
             for (int i = 0; i < 5; i++) {
                 double xRand = rand.nextDouble() / 0.75D - 0.5D;
@@ -67,11 +69,13 @@ public class BlockGrinder extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
         if (!world.isRemote) {
             TileEntityGrinder grinder = (TileEntityGrinder) world.getTileEntity(pos);
             if (grinder != null) {
-                player.openGui(ActuallyAdditions.INSTANCE, this.isDouble ? GuiHandler.GuiTypes.GRINDER_DOUBLE.ordinal() : GuiHandler.GuiTypes.GRINDER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, this.isDouble
+                    ? GuiHandler.GuiTypes.GRINDER_DOUBLE.ordinal()
+                    : GuiHandler.GuiTypes.GRINDER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }
@@ -79,12 +83,14 @@ public class BlockGrinder extends BlockContainerBase {
     }
 
     @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-        return this.getMetaFromState(state) == 1 ? 12 : 0;
+    public int getLightValue(BlockState state, IBlockAccess world, BlockPos pos) {
+        return this.getMetaFromState(state) == 1
+            ? 12
+            : 0;
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
+    public int damageDropped(BlockState state) {
         return 0;
     }
 
@@ -94,14 +100,16 @@ public class BlockGrinder extends BlockContainerBase {
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         boolean isOn = meta == 1;
         return this.getDefaultState().withProperty(BlockFurnaceDouble.IS_ON, isOn);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(BlockFurnaceDouble.IS_ON) ? 1 : 0;
+    public int getMetaFromState(BlockState state) {
+        return state.getValue(BlockFurnaceDouble.IS_ON)
+            ? 1
+            : 0;
     }
 
     @Override

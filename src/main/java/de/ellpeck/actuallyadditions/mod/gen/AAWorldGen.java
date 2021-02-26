@@ -28,7 +28,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -93,7 +93,7 @@ public class AAWorldGen implements IWorldGenerator {
         }
     }
 
-    public void addOreSpawn(IBlockState state, Block blockIn, World world, Random random, int blockXPos, int blockZPos, int maxVeinSize, int chancesToSpawn, int minY, int maxY) {
+    public void addOreSpawn(BlockState state, Block blockIn, World world, Random random, int blockXPos, int blockZPos, int maxVeinSize, int chancesToSpawn, int minY, int maxY) {
         for (int i = 0; i < chancesToSpawn; i++) {
             int posX = blockXPos + random.nextInt(16);
             int posY = minY + random.nextInt(maxY - minY);
@@ -108,7 +108,7 @@ public class AAWorldGen implements IWorldGenerator {
             if (event.getType() == EventType.FLOWERS) {
                 if (!ArrayUtils.contains(ConfigIntListValues.PLANT_DIMENSION_BLACKLIST.getValue(), event.getWorld().provider.getDimension())) {
                     this.generateRice(event);
-                    IBlockState plantDefault = InitBlocks.blockWildPlant.getDefaultState();
+                    BlockState plantDefault = InitBlocks.blockWildPlant.getDefaultState();
                     this.genPlantNormally(plantDefault.withProperty(BlockWildPlant.TYPE, TheWildPlants.CANOLA), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.GRASS, event);
                     this.genPlantNormally(plantDefault.withProperty(BlockWildPlant.TYPE, TheWildPlants.FLAX), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.GRASS, event);
                     this.genPlantNormally(plantDefault.withProperty(BlockWildPlant.TYPE, TheWildPlants.COFFEE), ConfigIntValues.COFFEE_AMOUNT.getValue(), ConfigBoolValues.DO_COFFEE_GEN.isEnabled(), Material.GRASS, event);
@@ -159,7 +159,7 @@ public class AAWorldGen implements IWorldGenerator {
         }
     }
 
-    private void genPlantNormally(IBlockState plant, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event) {
+    private void genPlantNormally(BlockState plant, int amount, boolean doIt, Material blockBelow, DecorateBiomeEvent event) {
         if (doIt) {
             for (int i = 0; i < amount; i++) {
                 if (event.getRand().nextInt(100) == 0) {

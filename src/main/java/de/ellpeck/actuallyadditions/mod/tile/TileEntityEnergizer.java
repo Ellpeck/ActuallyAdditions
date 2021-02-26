@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -29,13 +29,13 @@ public class TileEntityEnergizer extends TileEntityInventoryBase {
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         this.storage.writeToNBT(compound);
         super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         this.storage.readFromNBT(compound);
         super.readSyncableNBT(compound, type);
     }

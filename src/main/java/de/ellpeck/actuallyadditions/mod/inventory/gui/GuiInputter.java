@@ -28,9 +28,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiInputter extends GuiWtfMojang {
 
     public static final int OFFSET_ADVANCED = 12 + 36;
@@ -230,7 +230,7 @@ public class GuiInputter extends GuiWtfMojang {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static class SmallerButton extends GuiButton {
 
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("gui_inputter");
@@ -272,7 +272,7 @@ public class GuiInputter extends GuiWtfMojang {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static class TinyButton extends GuiButton {
 
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("gui_inputter");

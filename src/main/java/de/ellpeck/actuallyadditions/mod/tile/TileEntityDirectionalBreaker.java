@@ -14,9 +14,9 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -35,7 +35,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -44,7 +44,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -75,12 +75,12 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
 
     private void doWork() {
         if (this.storage.getEnergyStored() >= ENERGY_USE * RANGE) {
-            IBlockState state = this.world.getBlockState(this.pos);
+            BlockState state = this.world.getBlockState(this.pos);
             EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
 
             for (int i = 0; i < RANGE; i++) {
                 BlockPos coordsBlock = this.pos.offset(sideToManipulate, i + 1);
-                IBlockState breakState = this.world.getBlockState(coordsBlock);
+                BlockState breakState = this.world.getBlockState(coordsBlock);
                 Block blockToBreak = breakState.getBlock();
                 if (blockToBreak != null && !this.world.isAirBlock(coordsBlock) && this.world.getBlockState(coordsBlock).getBlockHardness(this.world, coordsBlock) > -1.0F) {
                     NonNullList<ItemStack> drops = NonNullList.create();

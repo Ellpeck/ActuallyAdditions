@@ -10,13 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.WorldServer;
@@ -24,6 +22,8 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.List;
 
 public class TileEntityFishingNet extends TileEntityBase {
 
@@ -34,7 +34,7 @@ public class TileEntityFishingNet extends TileEntityBase {
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("TimeUntilNextDrop", this.timeUntilNextDrop);
@@ -42,7 +42,7 @@ public class TileEntityFishingNet extends TileEntityBase {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.timeUntilNextDrop = compound.getInteger("TimeUntilNextDrop");
@@ -88,7 +88,9 @@ public class TileEntityFishingNet extends TileEntityBase {
                         for (int i = 0; i < cap.getSlots(); i++) {
                             stack = cap.insertItem(i, stack, false);
 
-                            if (!StackUtil.isValid(stack)) { return StackUtil.getEmpty(); }
+                            if (!StackUtil.isValid(stack)) {
+                                return StackUtil.getEmpty();
+                            }
                         }
                     }
                 }

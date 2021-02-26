@@ -24,20 +24,20 @@ import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class RenderLaserRelay extends TileEntitySpecialRenderer<TileEntityLaserRelay> {
 
-    private static final float[] COLOR = new float[] { 1F, 0F, 0F };
-    private static final float[] COLOR_ITEM = new float[] { 0F, 124F / 255F, 16F / 255F };
-    private static final float[] COLOR_FLUIDS = new float[] { 0F, 97F / 255F, 198F / 255F };
-    private static final float[] COLOR_INFRARED = new float[] { 209F / 255F, 179F / 255F, 239F / 255F };
+    private static final float[] COLOR = new float[]{1F, 0F, 0F};
+    private static final float[] COLOR_ITEM = new float[]{0F, 124F / 255F, 16F / 255F};
+    private static final float[] COLOR_FLUIDS = new float[]{0F, 97F / 255F, 198F / 255F};
+    private static final float[] COLOR_INFRARED = new float[]{209F / 255F, 179F / 255F, 239F / 255F};
 
     @Override
     public void render(TileEntityLaserRelay tile, double x, double y, double z, float par5, int par6, float f) {
@@ -45,7 +45,7 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer<TileEntityLaserR
             TileEntityLaserRelay relay = tile;
             boolean hasInvis = false;
 
-            EntityPlayer player = Minecraft.getMinecraft().player;
+            PlayerEntity player = Minecraft.getInstance().player;
             boolean hasGoggles = ItemEngineerGoggles.isWearing(player);
 
             ItemStack upgrade = relay.inv.getStackInSlot(0);
@@ -58,7 +58,9 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer<TileEntityLaserR
                 if (hasGoggles || StackUtil.isValid(hand) && (hand.getItem() == ConfigValues.itemCompassConfigurator || hand.getItem() instanceof ItemLaserWrench) || "themattabase".equals(player.getName())) {
                     GlStateManager.pushMatrix();
 
-                    float yTrans = tile.getBlockMetadata() == 0 ? 0.2F : 0.8F;
+                    float yTrans = tile.getBlockMetadata() == 0
+                        ? 0.2F
+                        : 0.8F;
                     GlStateManager.translate((float) x + 0.5F, (float) y + yTrans, (float) z + 0.5F);
                     GlStateManager.scale(0.2F, 0.2F, 0.2F);
 
@@ -84,9 +86,17 @@ public class RenderLaserRelay extends TileEntitySpecialRenderer<TileEntityLaserR
                             boolean otherInvis = StackUtil.isValid(secondUpgrade) && secondUpgrade.getItem() == InitItems.itemLaserUpgradeInvisibility;
 
                             if (hasGoggles || !hasInvis || !otherInvis) {
-                                float[] color = hasInvis && otherInvis ? COLOR_INFRARED : relay.type == LaserType.ITEM ? COLOR_ITEM : relay.type == LaserType.FLUID ? COLOR_FLUIDS : COLOR;
+                                float[] color = hasInvis && otherInvis
+                                    ? COLOR_INFRARED
+                                    : relay.type == LaserType.ITEM
+                                        ? COLOR_ITEM
+                                        : relay.type == LaserType.FLUID
+                                            ? COLOR_FLUIDS
+                                            : COLOR;
 
-                                AssetUtil.renderLaser(first.getX() + 0.5, first.getY() + 0.5, first.getZ() + 0.5, second.getX() + 0.5, second.getY() + 0.5, second.getZ() + 0.5, 120, hasInvis && otherInvis ? 0.1F : 0.35F, 0.05, color);
+                                AssetUtil.renderLaser(first.getX() + 0.5, first.getY() + 0.5, first.getZ() + 0.5, second.getX() + 0.5, second.getY() + 0.5, second.getZ() + 0.5, 120, hasInvis && otherInvis
+                                    ? 0.1F
+                                    : 0.35F, 0.05, color);
                             }
                         }
                     }

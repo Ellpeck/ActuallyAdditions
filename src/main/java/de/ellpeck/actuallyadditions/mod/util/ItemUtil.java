@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import java.util.Arrays;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.RegistryHandler;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
@@ -20,14 +17,17 @@ import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import de.ellpeck.actuallyadditions.mod.util.compat.IMCHandler;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumHand;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import java.util.Arrays;
+import java.util.List;
 
 public final class ItemUtil {
 
@@ -44,7 +44,9 @@ public final class ItemUtil {
         itemBlock.setRegistryName(block.getRegistryName());
         RegistryHandler.ITEMS_TO_REGISTER.add(itemBlock);
 
-        block.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
+        block.setCreativeTab(addTab
+            ? CreativeTab.INSTANCE
+            : null);
 
         IMCHandler.doBlockIMC(block);
 
@@ -59,7 +61,9 @@ public final class ItemUtil {
         item.setRegistryName(ActuallyAdditions.MODID, name);
         RegistryHandler.ITEMS_TO_REGISTER.add(item);
 
-        item.setCreativeTab(addTab ? CreativeTab.INSTANCE : null);
+        item.setCreativeTab(addTab
+            ? CreativeTab.INSTANCE
+            : null);
 
         IMCHandler.doItemIMC(item);
 
@@ -79,7 +83,9 @@ public final class ItemUtil {
     public static int getPlaceAt(List<ItemStack> list, ItemStack stack, boolean checkWildcard) {
         if (list != null && list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                if (!StackUtil.isValid(stack) && !StackUtil.isValid(list.get(i)) || areItemsEqual(stack, list.get(i), checkWildcard)) { return i; }
+                if (!StackUtil.isValid(stack) && !StackUtil.isValid(list.get(i)) || areItemsEqual(stack, list.get(i), checkWildcard)) {
+                    return i;
+                }
             }
         }
         return -1;
@@ -103,21 +109,23 @@ public final class ItemUtil {
     }
 
     public static boolean hasEnchantment(ItemStack stack, Enchantment e) {
-        NBTTagList ench = stack.getEnchantmentTagList();
+        ListNBT ench = stack.getEnchantmentTagList();
         if (ench != null) {
-            for (int i = 0; i < ench.tagCount(); i++) {
-                short id = ench.getCompoundTagAt(i).getShort("id");
-                if (id == Enchantment.getEnchantmentID(e)) { return true; }
+            for (int i = 0; i < ench.size(); i++) {
+                short id = ench.getCompound(i).getShort("id");
+                if (id == Enchantment.getEnchantmentID(e)) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     public static void removeEnchantment(ItemStack stack, Enchantment e) {
-        NBTTagList ench = stack.getEnchantmentTagList();
+        ListNBT ench = stack.getEnchantmentTagList();
         if (ench != null) {
-            for (int i = 0; i < ench.tagCount(); i++) {
-                short id = ench.getCompoundTagAt(i).getShort("id");
+            for (int i = 0; i < ench.size(); i++) {
+                short id = ench.getCompound(i).getShort("id");
                 if (id == Enchantment.getEnchantmentID(e)) {
                     ench.removeTag(i);
                 }
@@ -136,13 +144,13 @@ public final class ItemUtil {
         return stack.hasTagCompound() && stack.getTagCompound().getBoolean("IsEnabled");
     }
 
-    public static void changeEnabled(EntityPlayer player, EnumHand hand) {
+    public static void changeEnabled(PlayerEntity player, Hand hand) {
         changeEnabled(player.getHeldItem(hand));
     }
 
     public static void changeEnabled(ItemStack stack) {
         if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new CompoundNBT());
         }
 
         boolean isEnabled = isEnabled(stack);

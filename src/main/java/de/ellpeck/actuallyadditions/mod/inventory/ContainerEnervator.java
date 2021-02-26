@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -24,13 +24,13 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class ContainerEnervator extends Container {
 
     private final TileEntityEnervator enervator;
 
-    public ContainerEnervator(final EntityPlayer player, TileEntityBase tile) {
+    public ContainerEnervator(final PlayerEntity player, TileEntityBase tile) {
         this.enervator = (TileEntityEnervator) tile;
         InventoryPlayer inventory = player.inventory;
 
@@ -60,7 +60,7 @@ public class ContainerEnervator extends Container {
                 }
 
                 @Override
-                @SideOnly(Side.CLIENT)
+                @OnlyIn(Dist.CLIENT)
                 public String getSlotTexture() {
                     return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
                 }
@@ -69,7 +69,7 @@ public class ContainerEnervator extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
         int inventoryStart = 2;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -114,7 +114,7 @@ public class ContainerEnervator extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(PlayerEntity player) {
         return this.enervator.canPlayerUse(player);
     }
 }

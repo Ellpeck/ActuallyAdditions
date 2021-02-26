@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -29,10 +26,12 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+import java.util.ArrayList;
+import java.util.List;
+
+@OnlyIn(Dist.CLIENT)
 public class BookmarkButton extends GuiButton {
 
     private final GuiBooklet booklet;
@@ -49,7 +48,7 @@ public class BookmarkButton extends GuiButton {
                 this.assignedPage = null;
             } else if (!(this.booklet instanceof GuiPage) || ((GuiPage) this.booklet).pages[0] != this.assignedPage) {
                 GuiPage gui = BookletUtils.createPageGui(this.booklet.previousScreen, this.booklet, this.assignedPage);
-                Minecraft.getMinecraft().displayGuiScreen(gui);
+                Minecraft.getInstance().displayGuiScreen(gui);
             }
         } else {
             if (this.booklet instanceof GuiPage) {
@@ -73,7 +72,9 @@ public class BookmarkButton extends GuiButton {
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GlStateManager.blendFunc(770, 771);
             int renderHeight = 25;
-            this.drawTexturedModalRect(this.x, this.y, 224 + (this.assignedPage == null ? 0 : 16), 14 - renderHeight + k * renderHeight, this.width, renderHeight);
+            this.drawTexturedModalRect(this.x, this.y, 224 + (this.assignedPage == null
+                ? 0
+                : 16), 14 - renderHeight + k * renderHeight, this.width, renderHeight);
             this.mouseDragged(minecraft, x, y);
 
             if (this.assignedPage != null) {
@@ -107,7 +108,7 @@ public class BookmarkButton extends GuiButton {
                 }
             }
 
-            Minecraft mc = Minecraft.getMinecraft();
+            Minecraft mc = Minecraft.getInstance();
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
     }

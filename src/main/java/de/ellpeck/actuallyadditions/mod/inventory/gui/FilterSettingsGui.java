@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
@@ -23,10 +19,13 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+@OnlyIn(Dist.CLIENT)
 public class FilterSettingsGui extends Gui {
 
     private final FilterSettings theSettings;
@@ -59,35 +58,59 @@ public class FilterSettingsGui extends Gui {
     }
 
     public void update() {
-        this.whitelistButton.displayString = (this.theSettings.isWhitelist ? TextFormatting.DARK_GREEN : TextFormatting.RED) + "WH";
-        this.metaButton.displayString = (this.theSettings.respectMeta ? TextFormatting.DARK_GREEN : TextFormatting.RED) + "ME";
-        this.nbtButton.displayString = (this.theSettings.respectNBT ? TextFormatting.DARK_GREEN : TextFormatting.RED) + "NB";
-        this.modButton.displayString = (this.theSettings.respectMod ? TextFormatting.DARK_GREEN : TextFormatting.RED) + "MO";
-        this.oredictButton.displayString = (this.theSettings.respectOredict == 0 ? TextFormatting.RED : this.theSettings.respectOredict == 1 ? TextFormatting.GREEN : TextFormatting.DARK_GREEN) + "OR";
+        this.whitelistButton.displayString = (this.theSettings.isWhitelist
+            ? TextFormatting.DARK_GREEN
+            : TextFormatting.RED) + "WH";
+        this.metaButton.displayString = (this.theSettings.respectMeta
+            ? TextFormatting.DARK_GREEN
+            : TextFormatting.RED) + "ME";
+        this.nbtButton.displayString = (this.theSettings.respectNBT
+            ? TextFormatting.DARK_GREEN
+            : TextFormatting.RED) + "NB";
+        this.modButton.displayString = (this.theSettings.respectMod
+            ? TextFormatting.DARK_GREEN
+            : TextFormatting.RED) + "MO";
+        this.oredictButton.displayString = (this.theSettings.respectOredict == 0
+            ? TextFormatting.RED
+            : this.theSettings.respectOredict == 1
+                ? TextFormatting.GREEN
+                : TextFormatting.DARK_GREEN) + "OR";
     }
 
     public void drawHover(int mouseX, int mouseY) {
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
 
         if (this.whitelistButton.isMouseOver()) {
             List<String> list = new ArrayList<>();
-            list.add(TextFormatting.BOLD + (this.theSettings.isWhitelist ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.whitelist") : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.blacklist")));
+            list.add(TextFormatting.BOLD + (this.theSettings.isWhitelist
+                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.whitelist")
+                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.blacklist")));
             list.addAll(mc.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".gui.whitelistInfo"), 200));
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         } else if (this.metaButton.isMouseOver()) {
-            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.theSettings.respectMeta ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectMeta") : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ignoreMeta"))), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
+            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.theSettings.respectMeta
+                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectMeta")
+                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ignoreMeta"))), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         } else if (this.nbtButton.isMouseOver()) {
-            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.theSettings.respectNBT ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectNBT") : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ignoreNBT"))), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
+            GuiUtils.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.theSettings.respectNBT
+                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectNBT")
+                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ignoreNBT"))), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         } else if (this.modButton.isMouseOver()) {
             List<String> list = new ArrayList<>();
-            list.add(TextFormatting.BOLD + (this.theSettings.respectMod ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectMod") : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ignoreMod")));
+            list.add(TextFormatting.BOLD + (this.theSettings.respectMod
+                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectMod")
+                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ignoreMod")));
 
             list.addAll(mc.fontRenderer.listFormattedStringToWidth(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectModInfo"), 200));
 
             GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         } else if (this.oredictButton.isMouseOver()) {
             List<String> list = new ArrayList<>();
-            list.add(TextFormatting.BOLD + (this.theSettings.respectOredict == 0 ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ignoreOredict") : this.theSettings.respectOredict == 1 ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectOredictSoft") : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectOredictHard")));
+            list.add(TextFormatting.BOLD + (this.theSettings.respectOredict == 0
+                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ignoreOredict")
+                : this.theSettings.respectOredict == 1
+                    ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectOredictSoft")
+                    : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectOredictHard")));
 
             String type = null;
             if (this.theSettings.respectOredict == 1) {

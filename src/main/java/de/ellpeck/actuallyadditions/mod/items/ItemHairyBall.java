@@ -10,28 +10,24 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.Random;
-import java.util.UUID;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.Random;
+import java.util.UUID;
 
 public class ItemHairyBall extends ItemBase {
 
@@ -47,7 +43,7 @@ public class ItemHairyBall extends ItemBase {
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
         //Ocelots dropping Hair Balls
         if (ConfigBoolValues.DO_CAT_DROPS.isEnabled() && event.getEntityLiving() != null && event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote) {
-            if (event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot) event.getEntityLiving()).isTamed() || event.getEntityLiving() instanceof EntityPlayer && event.getEntityLiving().getUniqueID().equals(this.KittyVanCatUUID)) {
+            if (event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot) event.getEntityLiving()).isTamed() || event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().getUniqueID().equals(this.KittyVanCatUUID)) {
                 if (event.getEntityLiving().world.rand.nextInt(ConfigIntValues.FUR_CHANCE.getValue()) == 0) {
                     EntityItem item = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX + 0.5, event.getEntityLiving().posY + 0.5, event.getEntityLiving().posZ + 0.5, new ItemStack(InitItems.itemHairyBall));
                     event.getEntityLiving().world.spawnEntity(item);
@@ -57,7 +53,7 @@ public class ItemHairyBall extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote) {
             ItemStack returnItem = this.getRandomReturnItem(world.rand);

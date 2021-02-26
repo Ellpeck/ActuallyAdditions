@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -73,7 +73,7 @@ public class ItemFoodSeed extends ItemSeedFood {
     }
 
     @Override
-    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
+    public BlockState getPlant(IBlockAccess world, BlockPos pos) {
         return this.plant.getDefaultState();
     }
 }

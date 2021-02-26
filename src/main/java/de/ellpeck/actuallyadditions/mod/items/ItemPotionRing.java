@@ -10,11 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
@@ -28,10 +23,10 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
@@ -39,8 +34,11 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 
 public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDisplayStandItem {
 
@@ -67,7 +65,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     public static void setStoredBlaze(ItemStack stack, int amount) {
         if (StackUtil.isValid(stack)) {
             if (!stack.hasTagCompound()) {
-                stack.setTagCompound(new NBTTagCompound());
+                stack.setTagCompound(new CompoundNBT());
             }
             stack.getTagCompound().setInteger("Blaze", amount);
         }
@@ -92,7 +90,9 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     public String getTranslationKey(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_RINGS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + ALL_RINGS[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_RINGS.length
+            ? StringUtil.BUGGED_ITEM_NAME
+            : this.getTranslationKey() + ALL_RINGS[stack.getItemDamage()].name;
     }
 
     @Override
@@ -105,8 +105,8 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         super.onUpdate(stack, world, player, par4, par5);
 
         if (!world.isRemote && stack.getItemDamage() < ALL_RINGS.length) {
-            if (player instanceof EntityPlayer) {
-                EntityPlayer thePlayer = (EntityPlayer) player;
+            if (player instanceof PlayerEntity) {
+                PlayerEntity thePlayer = (PlayerEntity) player;
 
                 int storedBlaze = getStoredBlaze(stack);
                 if (storedBlaze > 0) {
@@ -148,11 +148,13 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_RINGS.length ? EnumRarity.COMMON : ALL_RINGS[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_RINGS.length
+            ? EnumRarity.COMMON
+            : ALL_RINGS[stack.getItemDamage()].rarity;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab)) {
             for (int j = 0; j < ALL_RINGS.length; j++) {
@@ -173,15 +175,19 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public IItemColor getItemColor() {
-        return (stack, tintIndex) -> stack.getItemDamage() >= ALL_RINGS.length ? 0xFFFFFF : ALL_RINGS[stack.getItemDamage()].color;
+        return (stack, tintIndex) -> stack.getItemDamage() >= ALL_RINGS.length
+            ? 0xFFFFFF
+            : ALL_RINGS[stack.getItemDamage()].color;
     }
 
     @Override
     public boolean update(ItemStack stack, TileEntity tile, int elapsedTicks) {
         boolean advanced = ((ItemPotionRing) stack.getItem()).isAdvanced;
-        int range = advanced ? 48 : 16;
+        int range = advanced
+            ? 48
+            : 16;
         List<EntityLivingBase> entities = tile.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(tile.getPos().getX() - range, tile.getPos().getY() - range, tile.getPos().getZ() - range, tile.getPos().getX() + range, tile.getPos().getY() + range, tile.getPos().getZ() + range));
         if (entities != null && !entities.isEmpty()) {
             if (advanced) {

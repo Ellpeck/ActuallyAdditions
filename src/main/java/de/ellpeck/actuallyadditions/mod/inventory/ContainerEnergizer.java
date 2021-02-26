@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnergizer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -25,14 +25,14 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class ContainerEnergizer extends Container {
 
     public static final EntityEquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
     private final TileEntityEnergizer energizer;
 
-    public ContainerEnergizer(final EntityPlayer player, TileEntityBase tile) {
+    public ContainerEnergizer(final PlayerEntity player, TileEntityBase tile) {
         this.energizer = (TileEntityEnergizer) tile;
         InventoryPlayer inventory = player.inventory;
 
@@ -67,13 +67,13 @@ public class ContainerEnergizer extends Container {
                 }
 
                 @Override
-                public boolean canTakeStack(EntityPlayer player) {
+                public boolean canTakeStack(PlayerEntity player) {
                     ItemStack itemstack = this.getStack();
                     return !itemstack.isEmpty() && !player.isCreative() && EnchantmentHelper.hasBindingCurse(itemstack) ? false : super.canTakeStack(player);
                 }
 
                 @Override
-                @SideOnly(Side.CLIENT)
+                @OnlyIn(Dist.CLIENT)
                 public String getSlotTexture() {
                     return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
                 }
@@ -82,7 +82,7 @@ public class ContainerEnergizer extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
         int inventoryStart = 2;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -127,7 +127,7 @@ public class ContainerEnergizer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(PlayerEntity player) {
         return this.energizer.canPlayerUse(player);
     }
 }

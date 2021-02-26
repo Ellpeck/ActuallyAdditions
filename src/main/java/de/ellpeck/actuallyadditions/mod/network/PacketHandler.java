@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
@@ -25,10 +22,10 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -36,24 +33,27 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class PacketHandler {
 
     public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<>();
     public static final IDataHandler LASER_HANDLER = new IDataHandler() {
         @Override
-        @SideOnly(Side.CLIENT)
-        public void handleData(NBTTagCompound compound, MessageContext context) {
-            AssetUtil.spawnLaserWithTimeClient(compound.getDouble("StartX"), compound.getDouble("StartY"), compound.getDouble("StartZ"), compound.getDouble("EndX"), compound.getDouble("EndY"), compound.getDouble("EndZ"), new float[] { compound.getFloat("Color1"), compound.getFloat("Color2"), compound.getFloat("Color3") }, compound.getInteger("MaxAge"), compound.getDouble("RotationTime"), compound.getFloat("Size"), compound.getFloat("Alpha"));
+        @OnlyIn(Dist.CLIENT)
+        public void handleData(CompoundNBT compound, MessageContext context) {
+            AssetUtil.spawnLaserWithTimeClient(compound.getDouble("StartX"), compound.getDouble("StartY"), compound.getDouble("StartZ"), compound.getDouble("EndX"), compound.getDouble("EndY"), compound.getDouble("EndZ"), new float[]{compound.getFloat("Color1"), compound.getFloat("Color2"), compound.getFloat("Color3")}, compound.getInteger("MaxAge"), compound.getDouble("RotationTime"), compound.getFloat("Size"), compound.getFloat("Alpha"));
         }
     };
     public static final IDataHandler TILE_ENTITY_HANDLER = new IDataHandler() {
         @Override
-        @SideOnly(Side.CLIENT)
-        public void handleData(NBTTagCompound compound, MessageContext context) {
-            World world = Minecraft.getMinecraft().world;
+        @OnlyIn(Dist.CLIENT)
+        public void handleData(CompoundNBT compound, MessageContext context) {
+            World world = Minecraft.getInstance().world;
             if (world != null) {
                 TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
                 if (tile instanceof TileEntityBase) {
@@ -64,9 +64,9 @@ public final class PacketHandler {
     };
     public static final IDataHandler LASER_PARTICLE_HANDLER = new IDataHandler() {
         @Override
-        @SideOnly(Side.CLIENT)
-        public void handleData(NBTTagCompound compound, MessageContext context) {
-            Minecraft mc = Minecraft.getMinecraft();
+        @OnlyIn(Dist.CLIENT)
+        public void handleData(CompoundNBT compound, MessageContext context) {
+            Minecraft mc = Minecraft.getInstance();
             ItemStack stack = new ItemStack(compound);
 
             double inX = compound.getDouble("InX") + 0.5;
@@ -88,18 +88,18 @@ public final class PacketHandler {
         if (tile instanceof IButtonReactor) {
             IButtonReactor reactor = (IButtonReactor) tile;
             Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
-            if (entity instanceof EntityPlayer) {
-                reactor.onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer) entity);
+            if (entity instanceof PlayerEntity) {
+                reactor.onButtonPressed(compound.getInteger("ButtonID"), (PlayerEntity) entity);
             }
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_CONTAINER_HANDLER = (compound, context) -> {
         World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
         Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
-        if (entity instanceof EntityPlayer) {
-            Container container = ((EntityPlayer) entity).openContainer;
+        if (entity instanceof PlayerEntity) {
+            Container container = ((PlayerEntity) entity).openContainer;
             if (container instanceof IButtonReactor) {
-                ((IButtonReactor) container).onButtonPressed(compound.getInteger("ButtonID"), (EntityPlayer) entity);
+                ((IButtonReactor) container).onButtonPressed(compound.getInteger("ButtonID"), (PlayerEntity) entity);
             }
         }
     };
@@ -109,7 +109,7 @@ public final class PacketHandler {
 
         if (tile instanceof INumberReactor) {
             INumberReactor reactor = (INumberReactor) tile;
-            reactor.onNumberReceived(compound.getDouble("Number"), compound.getInteger("NumberID"), (EntityPlayer) world.getEntityByID(compound.getInteger("PlayerID")));
+            reactor.onNumberReceived(compound.getDouble("Number"), compound.getInteger("NumberID"), (PlayerEntity) world.getEntityByID(compound.getInteger("PlayerID")));
         }
     };
     public static final IDataHandler GUI_STRING_TO_TILE_HANDLER = (compound, context) -> {
@@ -118,15 +118,15 @@ public final class PacketHandler {
 
         if (tile instanceof IStringReactor) {
             IStringReactor reactor = (IStringReactor) tile;
-            reactor.onTextReceived(compound.getString("Text"), compound.getInteger("TextID"), (EntityPlayer) world.getEntityByID(compound.getInteger("PlayerID")));
+            reactor.onTextReceived(compound.getString("Text"), compound.getInteger("TextID"), (PlayerEntity) world.getEntityByID(compound.getInteger("PlayerID")));
         }
     };
     public static final IDataHandler SYNC_PLAYER_DATA = new IDataHandler() {
         @Override
-        @SideOnly(Side.CLIENT)
-        public void handleData(NBTTagCompound compound, MessageContext context) {
-            NBTTagCompound dataTag = compound.getCompoundTag("Data");
-            EntityPlayer player = ActuallyAdditions.PROXY.getCurrentPlayer();
+        @OnlyIn(Dist.CLIENT)
+        public void handleData(CompoundNBT compound, MessageContext context) {
+            CompoundNBT dataTag = compound.getCompoundTag("Data");
+            PlayerEntity player = ActuallyAdditions.PROXY.getCurrentPlayer();
 
             if (player != null) {
                 PlayerData.getDataFromPlayer(player).readFromNBT(dataTag, false);
@@ -141,17 +141,17 @@ public final class PacketHandler {
     };
     public static final IDataHandler PLAYER_DATA_TO_SERVER = (compound, context) -> {
         World world = DimensionManager.getWorld(compound.getInteger("World"));
-        EntityPlayer player = world.getPlayerEntityByUUID(compound.getUniqueId("UUID"));
+        PlayerEntity player = world.getPlayerEntityByUUID(compound.getUniqueId("UUID"));
         if (player != null) {
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
 
             int type = compound.getInteger("Type");
             if (type == 0) {
-                data.loadBookmarks(compound.getTagList("Bookmarks", 8));
+                data.loadBookmarks(compound.getList("Bookmarks", 8));
             } else if (type == 1) {
                 data.didBookTutorial = compound.getBoolean("DidBookTutorial");
             } else if (type == 2) {
-                data.loadTrials(compound.getTagList("Trials", 8));
+                data.loadTrials(compound.getList("Trials", 8));
 
                 if (compound.getBoolean("Achievement")) {
                     //TheAchievements.COMPLETE_TRIALS.get(player);

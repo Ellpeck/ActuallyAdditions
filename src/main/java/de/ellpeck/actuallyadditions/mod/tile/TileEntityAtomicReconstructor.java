@@ -21,9 +21,9 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.item.Item;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -52,7 +52,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("CurrentTime", this.currentTime);
@@ -67,7 +67,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.currentTime = compound.getInteger("CurrentTime");
@@ -102,13 +102,17 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     @Override
     public Lens getLens() {
         Item item = this.inv.getStackInSlot(0).getItem();
-        if (item instanceof ILensItem) return ((ILensItem) item).getLens();
-        return this.counter >= 500 ? ActuallyAdditionsAPI.lensDisruption : ActuallyAdditionsAPI.lensDefaultConversion;
+        if (item instanceof ILensItem) {
+            return ((ILensItem) item).getLens();
+        }
+        return this.counter >= 500
+            ? ActuallyAdditionsAPI.lensDisruption
+            : ActuallyAdditionsAPI.lensDefaultConversion;
     }
 
     @Override
     public EnumFacing getOrientation() {
-        IBlockState state = this.world.getBlockState(this.pos);
+        BlockState state = this.world.getBlockState(this.pos);
         return WorldUtil.getDirectionByPistonRotation(state);
     }
 

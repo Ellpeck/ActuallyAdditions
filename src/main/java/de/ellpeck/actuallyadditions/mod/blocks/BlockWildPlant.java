@@ -22,9 +22,9 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -45,15 +45,15 @@ public class BlockWildPlant extends BlockBushBase {
     }
 
     @Override
-    public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
+    public boolean canBlockStay(World world, BlockPos pos, BlockState state) {
         BlockPos offset = pos.down();
-        IBlockState offsetState = world.getBlockState(offset);
+        BlockState offsetState = world.getBlockState(offset);
         Block offsetBlock = offsetState.getBlock();
         return state.getValue(TYPE) == TheWildPlants.RICE ? offsetState.getMaterial() == Material.WATER : offsetBlock.canSustainPlant(offsetState, world, offset, EnumFacing.UP, this);
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(BlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
         BlockPlant normal = (BlockPlant) state.getValue(TYPE).getNormalVersion();
         return new ItemStack(normal.seedItem);
     }
@@ -66,13 +66,13 @@ public class BlockWildPlant extends BlockBushBase {
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
         Block normal = state.getValue(TYPE).getNormalVersion();
         normal.getDrops(drops, world, pos, normal.getDefaultState().withProperty(BlockCrops.AGE, 7), fortune);
     }
 
     @Override
-    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+    public boolean canSilkHarvest(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         return false;
     }
 
@@ -94,12 +94,12 @@ public class BlockWildPlant extends BlockBushBase {
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(TYPE, TheWildPlants.values()[meta]);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return state.getValue(TYPE).ordinal();
     }
 

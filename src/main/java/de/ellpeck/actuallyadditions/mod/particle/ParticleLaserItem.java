@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.particle;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL14;
-
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -23,10 +20,11 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class ParticleLaserItem extends Particle {
 
     private final double otherX;
@@ -60,7 +58,7 @@ public class ParticleLaserItem extends Particle {
 
         if (this.otherX != 0 || this.otherY != 0 || this.otherZ != 0) {
             Particle fx = new ParticleLaserItem(this.world, this.otherX, this.otherY, this.otherZ, this.stack, -0.025);
-            Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+            Minecraft.getInstance().effectRenderer.addEffect(fx);
         }
     }
 
@@ -79,7 +77,9 @@ public class ParticleLaserItem extends Particle {
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_CONSTANT_COLOR, GlStateManager.SourceFactor.ONE.factor, GlStateManager.DestFactor.ZERO.factor);
 
         float ageRatio = (float) this.particleAge / (float) this.particleMaxAge;
-        float color = this.motionY < 0 ? 1F - ageRatio : ageRatio;
+        float color = this.motionY < 0
+            ? 1F - ageRatio
+            : ageRatio;
         GL14.glBlendColor(color, color, color, color);
 
         AssetUtil.renderItemWithoutScrewingWithColors(this.stack);

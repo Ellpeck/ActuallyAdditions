@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -28,7 +28,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
 
@@ -57,7 +57,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab)) {
             for (int j = 0; j < ALL_JAMS.length; j++) {
@@ -70,7 +70,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player) {
         ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
 
-        if (player instanceof EntityPlayer && !world.isRemote && stack.getItemDamage() < ALL_JAMS.length) {
+        if (player instanceof PlayerEntity && !world.isRemote && stack.getItemDamage() < ALL_JAMS.length) {
             PotionEffect firstEffectToGet = new PotionEffect(Potion.getPotionById(ALL_JAMS[stack.getItemDamage()].firstEffectToGet), 200);
             player.addPotionEffect(firstEffectToGet);
 
@@ -78,7 +78,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
             player.addPotionEffect(secondEffectToGet);
 
             ItemStack returnItem = new ItemStack(Items.GLASS_BOTTLE);
-            if (!((EntityPlayer) player).inventory.addItemStackToInventory(returnItem.copy())) {
+            if (!((PlayerEntity) player).inventory.addItemStackToInventory(returnItem.copy())) {
                 EntityItem entityItem = new EntityItem(player.world, player.posX, player.posY, player.posZ, returnItem.copy());
                 entityItem.setPickupDelay(0);
                 player.world.spawnEntity(entityItem);
@@ -105,7 +105,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public IItemColor getItemColor() {
         return (stack, pass) -> pass > 0 ? stack.getItemDamage() >= ALL_JAMS.length ? 0xFFFFFF : ALL_JAMS[stack.getItemDamage()].color : 0xFFFFFF;
     }

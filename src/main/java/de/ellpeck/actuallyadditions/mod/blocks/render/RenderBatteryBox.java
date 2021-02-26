@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import java.text.NumberFormat;
-
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
@@ -19,38 +19,42 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Util;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
-public class RenderBatteryBox extends TileEntitySpecialRenderer<TileEntityBatteryBox> {
+import java.text.NumberFormat;
 
+@OnlyIn(Dist.CLIENT)
+public class RenderBatteryBox extends TileEntityRenderer<TileEntityBatteryBox> {
+    public RenderBatteryBox(TileEntityRendererDispatcher rendererDispatcherIn) {
+        super(rendererDispatcherIn);
+    }
+
+    // TODO: [port] migrate to matric (see cleanstart)
     @Override
-    public void render(TileEntityBatteryBox tile, double x, double y, double z, float par5, int par6, float f) {
-        if (!(tile instanceof TileEntityBatteryBox)) { return; }
-
+    public void render(TileEntityBatteryBox tile, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         ItemStack stack = tile.inv.getStackInSlot(0);
         if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBattery) {
-            GlStateManager.pushMatrix();
-            GlStateManager.translate((float) x + 0.5F, (float) y + 1F, (float) z + 0.5F);
+            RenderSystem.pushMatrix();
+            RenderSystem.translatef(0.5F, 1F, 0.5F);
 
-            GlStateManager.pushMatrix();
+            RenderSystem.pushMatrix();
 
-            GlStateManager.scale(0.0075F, 0.0075F, 0.0075F);
-            GlStateManager.rotate(180F, 1F, 0F, 0F);
-            GlStateManager.translate(0F, 0F, -50F);
+            RenderSystem.scalef(0.0075F, 0.0075F, 0.0075F);
+            RenderSystem.rotatef(180F, 1F, 0F, 0F);
+            RenderSystem.translatef(0F, 0F, -50F);
 
-            if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-                IEnergyStorage cap = stack.getCapability(CapabilityEnergy.ENERGY, null);
+            stack.getCapability(CapabilityEnergy.ENERGY).ifPresent(cap -> {
                 NumberFormat format = NumberFormat.getInstance();
-                FontRenderer font = Minecraft.getMinecraft().fontRenderer;
+                FontRenderer font = Minecraft.getInstance().fontRenderer;
 
                 String s = format.format(cap.getEnergyStored()) + "/" + format.format(cap.getMaxEnergyStored());
                 float lengthS = -font.getStringWidth(s) / 2F;
@@ -58,29 +62,31 @@ public class RenderBatteryBox extends TileEntitySpecialRenderer<TileEntityBatter
                 float lengthS2 = -font.getStringWidth(s2) / 2F;
 
                 for (int i = 0; i < 4; i++) {
-                    font.drawString(s, lengthS, 10F, 0xFFFFFF, false);
-                    font.drawString(s2, lengthS2, 20F, 0xFFFFFF, false);
+                    font.drawString(matrixStackIn, s, lengthS, 10F, 0xFFFFFF);
+                    font.drawString(matrixStackIn, s2, lengthS2, 20F, 0xFFFFFF);
 
-                    GlStateManager.translate(-50F, 0F, 50F);
-                    GlStateManager.rotate(90F, 0F, 1F, 0F);
+                    RenderSystem.translatef(-50F, 0F, 50F);
+                    RenderSystem.rotatef(90F, 0F, 1F, 0F);
                 }
-            }
+            });
 
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
 
-            double boop = Minecraft.getSystemTime() / 800D;
-            GlStateManager.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
-            GlStateManager.rotate((float) (boop * 40D % 360), 0, 1, 0);
+            double boop = Util.milliTime();
+            RenderSystem.translated(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
+            RenderSystem.rotatef((float) (boop * 40D % 360), 0, 1, 0);
 
-            float scale = stack.getItem() instanceof ItemBlock ? 0.85F : 0.65F;
-            GlStateManager.scale(scale, scale, scale);
+            float scale = stack.getItem() instanceof BlockItem
+                ? 0.85F
+                : 0.65F;
+            RenderSystem.scalef(scale, scale, scale);
             try {
                 AssetUtil.renderItemInWorld(stack);
             } catch (Exception e) {
                 ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a battery box! The item is " + stack.getItem().getRegistryName() + "!", e);
             }
 
-            GlStateManager.popMatrix();
+            RenderSystem.popMatrix();
         }
     }
 }

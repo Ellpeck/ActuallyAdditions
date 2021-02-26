@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
@@ -21,7 +21,7 @@ public class LensDetonation extends Lens {
     private static final int ENERGY_USE = 250000;
 
     @Override
-    public boolean invoke(IBlockState state, BlockPos hitBlock, IAtomicReconstructor tile) {
+    public boolean invoke(BlockState state, BlockPos hitBlock, IAtomicReconstructor tile) {
         if (hitBlock != null && !state.getBlock().isAir(state, tile.getWorldObject(), hitBlock)) {
             if (tile.getEnergy() >= ENERGY_USE) {
                 tile.getWorldObject().newExplosion(null, hitBlock.getX() + 0.5, hitBlock.getY() + 0.5, hitBlock.getZ() + 0.5, 10F, true, true);

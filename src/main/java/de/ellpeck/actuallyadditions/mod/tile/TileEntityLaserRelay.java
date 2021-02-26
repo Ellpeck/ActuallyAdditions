@@ -18,14 +18,13 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.ConnectionPair;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
 
 public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
@@ -45,17 +44,17 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         if (type == NBTType.SYNC) {
             ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.pos, this.world);
 
-            NBTTagList list = compound.getTagList("Connections", 10);
+            ListNBT list = compound.getList("Connections", 10);
             if (!list.isEmpty()) {
-                for (int i = 0; i < list.tagCount(); i++) {
+                for (int i = 0; i < list.size(); i++) {
                     ConnectionPair pair = new ConnectionPair();
-                    pair.readFromNBT(list.getCompoundTagAt(i));
+                    pair.readFromNBT(list.getCompound(i));
                     ActuallyAdditionsAPI.connectionHandler.addConnection(pair.getPositions()[0], pair.getPositions()[1], this.type, this.world, pair.doesSuppressRender());
                 }
             }
@@ -63,16 +62,16 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         if (type == NBTType.SYNC) {
-            NBTTagList list = new NBTTagList();
+            ListNBT list = new ListNBT();
 
             ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.pos, this.world);
             if (connections != null && !connections.isEmpty()) {
                 for (IConnectionPair pair : connections) {
-                    NBTTagCompound tag = new NBTTagCompound();
+                    CompoundNBT tag = new CompoundNBT();
                     pair.writeToNBT(tag);
                     list.appendTag(tag);
                 }
@@ -110,10 +109,10 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void renderParticles(){
         if(this.world.rand.nextInt(8) == 0){
-            EntityPlayer player = Minecraft.getMinecraft().player;
+            PlayerEntity player = Minecraft.getInstance().player;
             if(player != null){
                 PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
                 WrenchMode mode = WrenchMode.values()[data.theCompound.getInteger("LaserWrenchMode")];
@@ -149,7 +148,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
         return INFINITE_EXTENT_AABB;
     }
@@ -173,11 +172,11 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public abstract String getExtraDisplayString();
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public abstract String getCompassDisplayString();
 
-    public abstract void onCompassAction(EntityPlayer player);
+    public abstract void onCompassAction(PlayerEntity player);
 }

@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
@@ -24,13 +20,17 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.IEnergyStorage;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer {
 
@@ -48,7 +48,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("WaitTime", this.waitTime);
@@ -61,7 +61,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.waitTime = compound.getInteger("WaitTime");
@@ -83,10 +83,12 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
                     if (this.waitTime <= 0) {
                         int area = ConfigIntValues.FARMER_AREA.getValue();
-                        if (area % 2 == 0) area++;
+                        if (area % 2 == 0) {
+                            area++;
+                        }
                         int radius = area / 2;
 
-                        IBlockState state = this.world.getBlockState(this.pos);
+                        BlockState state = this.world.getBlockState(this.pos);
                         BlockPos center = this.pos.offset(state.getValue(BlockHorizontal.FACING), radius + 1);
 
                         BlockPos query = center.add(this.checkX, 0, this.checkY);
@@ -122,20 +124,26 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     private void checkBehaviors(BlockPos query) {
 
-        if (!sorted) sort();
+        if (!sorted) {
+            sort();
+        }
 
         for (IFarmerBehavior behavior : SORTED_FARMER_BEHAVIORS) {
             FarmerResult harvestResult = behavior.tryHarvestPlant(this.world, query, this);
-            if (harvestResult == FarmerResult.STOP_PROCESSING) return;
+            if (harvestResult == FarmerResult.STOP_PROCESSING) {
+                return;
+            }
             for (int i = 0; i < 6; i++) { //Process seed slots only
                 ItemStack stack = this.inv.getStackInSlot(i);
-                IBlockState state = this.world.getBlockState(query);
+                BlockState state = this.world.getBlockState(query);
                 if (StackUtil.isValid(stack) && state.getBlock().isReplaceable(this.world, query)) {
                     FarmerResult plantResult = behavior.tryPlantSeed(stack, this.world, query, this);
                     if (plantResult == FarmerResult.SUCCESS) {
                         this.inv.getStackInSlot(i).shrink(1);
                         return;
-                    } else if (plantResult == FarmerResult.STOP_PROCESSING) return;
+                    } else if (plantResult == FarmerResult.STOP_PROCESSING) {
+                        return;
+                    }
                 }
             }
 
@@ -159,7 +167,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     @Override
     public EnumFacing getOrientation() {
-        IBlockState state = this.world.getBlockState(this.pos);
+        BlockState state = this.world.getBlockState(this.pos);
         return WorldUtil.getDirectionByPistonRotation(state);
     }
 

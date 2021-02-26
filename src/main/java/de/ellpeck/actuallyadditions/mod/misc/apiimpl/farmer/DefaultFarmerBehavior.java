@@ -23,8 +23,8 @@ import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -43,7 +43,7 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 
 public class DefaultFarmerBehavior implements IFarmerBehavior {
 
-    public static boolean defaultPlant(World world, BlockPos pos, IBlockState toPlant, IFarmer farmer, int use) {
+    public static boolean defaultPlant(World world, BlockPos pos, BlockState toPlant, IFarmer farmer, int use) {
         if (toPlant != null) {
             BlockPos farmland = pos.down();
             Block farmlandBlock = world.getBlockState(farmland).getBlock();
@@ -62,7 +62,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return false;
     }
 
-    private static boolean tryPlant(IBlockState toPlant, World world, BlockPos pos) {
+    private static boolean tryPlant(BlockState toPlant, World world, BlockPos pos) {
         if (toPlant.getBlock().canPlaceBlockAt(world, pos)) {
             world.setBlockState(pos, toPlant);
             return true;
@@ -83,7 +83,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer) {
         int use = 250;
         if (farmer.getEnergy() >= use) {
-            IBlockState state = world.getBlockState(pos);
+            BlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
 
             if (block instanceof BlockCrops) {
@@ -95,7 +95,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return FarmerResult.FAIL;
     }
 
-    private FarmerResult doFarmerStuff(IBlockState state, World world, BlockPos pos, IFarmer farmer) {
+    private FarmerResult doFarmerStuff(BlockState state, World world, BlockPos pos, IFarmer farmer) {
         List<ItemStack> seeds = new ArrayList<>();
         List<ItemStack> other = new ArrayList<>();
         NonNullList<ItemStack> drops = NonNullList.create();
@@ -135,11 +135,11 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return 0;
     }
 
-    private IBlockState getPlantablePlantFromStack(ItemStack stack, World world, BlockPos pos) {
+    private BlockState getPlantablePlantFromStack(ItemStack stack, World world, BlockPos pos) {
         if (StackUtil.isValid(stack)) {
             IPlantable plantable = this.getPlantableFromStack(stack);
             if (plantable != null) {
-                IBlockState state = plantable.getPlant(world, pos);
+                BlockState state = plantable.getPlant(world, pos);
                 if (state != null && state.getBlock() instanceof IGrowable) return state;
             }
         }
@@ -166,7 +166,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
 
     public static EnumActionResult useHoeAt(World world, BlockPos pos) {
 
-        EntityPlayer player = FakePlayerFactory.getMinecraft((WorldServer) world);
+        PlayerEntity player = FakePlayerFactory.getMinecraft((WorldServer) world);
 
         ItemStack itemstack = getHoeStack();
 
@@ -176,7 +176,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);
             if (hook != 0) return hook > 0 ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
 
-            IBlockState iblockstate = world.getBlockState(pos);
+            BlockState iblockstate = world.getBlockState(pos);
             Block block = iblockstate.getBlock();
 
             if (world.isAirBlock(pos.up())) {

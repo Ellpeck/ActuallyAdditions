@@ -12,16 +12,16 @@ package de.ellpeck.actuallyadditions.api.booklet;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public interface IBookletChapter {
 
     IBookletPage[] getAllPages();
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     String getLocalizedName();
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     String getLocalizedNameWithFormatting();
 
     IBookletEntry getEntry();

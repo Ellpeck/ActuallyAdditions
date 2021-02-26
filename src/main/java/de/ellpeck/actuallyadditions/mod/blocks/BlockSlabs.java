@@ -17,34 +17,34 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BlockSlabs extends BlockBase {
 
     public static final AxisAlignedBB AABB_BOTTOM_HALF = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
     private static final AxisAlignedBB AABB_TOP_HALF = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 1.0D, 1.0D, 1.0D);
 
-    private final IBlockState fullBlockState;
+    private final BlockState fullBlockState;
 
     public BlockSlabs(String name, Block fullBlock) {
         this(name, fullBlock.getDefaultState());
     }
 
-    public BlockSlabs(String name, IBlockState fullBlockState) {
+    public BlockSlabs(String name, BlockState fullBlockState) {
         super(fullBlockState.getMaterial(), name);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
@@ -52,25 +52,31 @@ public class BlockSlabs extends BlockBase {
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        if (facing.ordinal() == 1) { return this.getStateFromMeta(meta); }
-        if (facing.ordinal() == 0 || hitY >= 0.5F) { return this.getStateFromMeta(meta + 1); }
+    public BlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        if (facing.ordinal() == 1) {
+            return this.getStateFromMeta(meta);
+        }
+        if (facing.ordinal() == 0 || hitY >= 0.5F) {
+            return this.getStateFromMeta(meta + 1);
+        }
         return this.getStateFromMeta(meta);
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP ? AABB_TOP_HALF : AABB_BOTTOM_HALF;
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
+        return state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP
+            ? AABB_TOP_HALF
+            : AABB_BOTTOM_HALF;
     }
 
     @Override
@@ -84,13 +90,17 @@ public class BlockSlabs extends BlockBase {
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockSlab.HALF, meta == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
+    public BlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(BlockSlab.HALF, meta == 0
+            ? BlockSlab.EnumBlockHalf.BOTTOM
+            : BlockSlab.EnumBlockHalf.TOP);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM ? 0 : 1;
+    public int getMetaFromState(BlockState state) {
+        return state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM
+            ? 0
+            : 1;
     }
 
     @Override
@@ -107,15 +117,15 @@ public class BlockSlabs extends BlockBase {
         }
 
         @Override
-        public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
             ItemStack stack = player.getHeldItem(hand);
             if (StackUtil.isValid(stack) && player.canPlayerEdit(pos.offset(facing), facing, stack)) {
-                IBlockState state = world.getBlockState(pos);
+                BlockState state = world.getBlockState(pos);
 
                 if (state.getBlock() == this.block) {
                     BlockSlabs theBlock = (BlockSlabs) this.block;
                     if (facing == EnumFacing.UP && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM || facing == EnumFacing.DOWN && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP) {
-                        IBlockState newState = theBlock.fullBlockState;
+                        BlockState newState = theBlock.fullBlockState;
                         AxisAlignedBB bound = newState.getCollisionBoundingBox(world, pos);
 
                         if (bound != Block.NULL_AABB && world.checkNoEntityCollision(bound.offset(pos)) && world.setBlockState(pos, newState, 11)) {
@@ -128,30 +138,34 @@ public class BlockSlabs extends BlockBase {
                     }
                 }
 
-                return this.tryPlace(player, stack, hand, world, pos.offset(facing)) ? EnumActionResult.SUCCESS : super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+                return this.tryPlace(player, stack, hand, world, pos.offset(facing))
+                    ? EnumActionResult.SUCCESS
+                    : super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
             } else {
                 return EnumActionResult.FAIL;
             }
         }
 
         @Override
-        @SideOnly(Side.CLIENT)
-        public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack) {
-            IBlockState state = worldIn.getBlockState(pos);
+        @OnlyIn(Dist.CLIENT)
+        public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, PlayerEntity player, ItemStack stack) {
+            BlockState state = worldIn.getBlockState(pos);
 
             if (state.getBlock() == this.block) {
-                if (side == EnumFacing.UP && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM || side == EnumFacing.DOWN && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP) { return true; }
+                if (side == EnumFacing.UP && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM || side == EnumFacing.DOWN && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP) {
+                    return true;
+                }
             }
 
             return worldIn.getBlockState(pos.offset(side)).getBlock() == this.block || super.canPlaceBlockOnSide(worldIn, pos, side, player, stack);
         }
 
-        private boolean tryPlace(EntityPlayer player, ItemStack stack, EnumHand hand, World world, BlockPos pos) {
-            IBlockState iblockstate = world.getBlockState(pos);
+        private boolean tryPlace(PlayerEntity player, ItemStack stack, Hand hand, World world, BlockPos pos) {
+            BlockState iblockstate = world.getBlockState(pos);
 
             if (iblockstate.getBlock() == this.block) {
                 BlockSlabs theBlock = (BlockSlabs) this.block;
-                IBlockState newState = theBlock.fullBlockState;
+                BlockState newState = theBlock.fullBlockState;
                 AxisAlignedBB bound = newState.getCollisionBoundingBox(world, pos);
 
                 if (bound != Block.NULL_AABB && world.checkNoEntityCollision(bound.offset(pos)) && world.setBlockState(pos, newState, 11)) {

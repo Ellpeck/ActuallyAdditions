@@ -15,19 +15,19 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiEnervator extends GuiWtfMojang {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_energizer");
     private final TileEntityEnervator enervator;
     private EnergyDisplay energy;
 
-    public GuiEnervator(EntityPlayer inventory, TileEntityBase tile) {
+    public GuiEnervator(PlayerEntity inventory, TileEntityBase tile) {
         super(new ContainerEnervator(inventory, tile));
         this.enervator = (TileEntityEnervator) tile;
         this.xSize = 176;

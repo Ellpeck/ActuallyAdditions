@@ -11,12 +11,12 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 public class ItemDrillUpgrade extends ItemBase {
@@ -30,13 +30,15 @@ public class ItemDrillUpgrade extends ItemBase {
     }
 
     public static int getSlotToPlaceFrom(ItemStack stack) {
-        NBTTagCompound compound = stack.getTagCompound();
-        if (compound != null) { return compound.getInteger("SlotToPlaceFrom") - 1; }
+        CompoundNBT compound = stack.getTagCompound();
+        if (compound != null) {
+            return compound.getInteger("SlotToPlaceFrom") - 1;
+        }
         return -1;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote && this.type == UpgradeType.PLACER) {
             this.setSlotToPlaceFrom(stack, player.inventory.currentItem);
@@ -46,9 +48,9 @@ public class ItemDrillUpgrade extends ItemBase {
     }
 
     public void setSlotToPlaceFrom(ItemStack stack, int slot) {
-        NBTTagCompound compound = stack.getTagCompound();
+        CompoundNBT compound = stack.getTagCompound();
         if (compound == null) {
-            compound = new NBTTagCompound();
+            compound = new CompoundNBT();
         }
 
         compound.setInteger("SlotToPlaceFrom", slot + 1);

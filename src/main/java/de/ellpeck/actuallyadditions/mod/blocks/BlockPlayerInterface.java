@@ -15,11 +15,11 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -28,7 +28,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BlockPlayerInterface extends BlockContainerBase implements IHudDisplay {
 
@@ -51,7 +51,7 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
+    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, EntityLivingBase player, ItemStack stack) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileEntityPlayerInterface) {
             TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
@@ -67,8 +67,8 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
+    @OnlyIn(Dist.CLIENT)
+    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if (tile != null) {
             if (tile instanceof TileEntityPlayerInterface) {

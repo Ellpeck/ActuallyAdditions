@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -22,10 +18,13 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+@OnlyIn(Dist.CLIENT)
 public class EnergyDisplay extends Gui {
 
     private CustomEnergyStorage rfReference;
@@ -51,7 +50,7 @@ public class EnergyDisplay extends Gui {
     }
 
     public void draw() {
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
 
         int barX = this.x;
@@ -81,7 +80,7 @@ public class EnergyDisplay extends Gui {
 
     public void drawOverlay(int mouseX, int mouseY) {
         if (this.isMouseOver(mouseX, mouseY)) {
-            Minecraft mc = Minecraft.getMinecraft();
+            Minecraft mc = Minecraft.getInstance();
 
             List<String> text = new ArrayList<>();
             text.add(this.getOverlayText());
@@ -90,7 +89,11 @@ public class EnergyDisplay extends Gui {
     }
 
     private boolean isMouseOver(int mouseX, int mouseY) {
-        return mouseX >= this.x && mouseY >= this.y && mouseX < this.x + (this.outline ? 26 : 18) && mouseY < this.y + (this.outline ? 93 : 85);
+        return mouseX >= this.x && mouseY >= this.y && mouseX < this.x + (this.outline
+            ? 26
+            : 18) && mouseY < this.y + (this.outline
+            ? 93
+            : 85);
     }
 
     private String getOverlayText() {

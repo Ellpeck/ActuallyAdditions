@@ -34,7 +34,7 @@ import de.ellpeck.actuallyadditions.api.recipe.OilGenRecipe;
 import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -217,7 +217,7 @@ public final class ActuallyAdditionsAPI {
      * @param output        The itemstack to be output from the compost once conversion finishes
      * @param outputDisplay The state to display when there is output in the compost
      */
-    public static void addCompostRecipe(Ingredient input, IBlockState inputDisplay, ItemStack output, IBlockState outputDisplay) {
+    public static void addCompostRecipe(Ingredient input, BlockState inputDisplay, ItemStack output, BlockState outputDisplay) {
         COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
     }
 

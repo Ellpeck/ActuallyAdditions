@@ -17,21 +17,18 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -58,7 +55,7 @@ public class ItemWaterBowl extends ItemBase {
                     ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(event.getEntityPlayer(), event.getWorld(), event.getItemStack(), trace);
                     if (result == null && trace != null && trace.getBlockPos() != null) {
                         if (event.getEntityPlayer().canPlayerEdit(trace.getBlockPos().offset(trace.sideHit), trace.sideHit, event.getItemStack())) {
-                            IBlockState state = event.getWorld().getBlockState(trace.getBlockPos());
+                            BlockState state = event.getWorld().getBlockState(trace.getBlockPos());
                             Block block = state.getBlock();
 
                             if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && state.getValue(BlockLiquid.LEVEL) == 0) {
@@ -86,12 +83,14 @@ public class ItemWaterBowl extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
 
         RayTraceResult trace = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
         ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(player, world, stack, trace);
-        if (result != null) { return result; }
+        if (result != null) {
+            return result;
+        }
 
         if (trace == null) {
             return new ActionResult<>(EnumActionResult.PASS, stack);
@@ -103,12 +102,16 @@ public class ItemWaterBowl extends ItemBase {
             if (!world.isBlockModifiable(player, pos)) {
                 return new ActionResult<>(EnumActionResult.FAIL, stack);
             } else {
-                BlockPos pos1 = world.getBlockState(pos).getBlock().isReplaceable(world, pos) && trace.sideHit == EnumFacing.UP ? pos : pos.offset(trace.sideHit);
+                BlockPos pos1 = world.getBlockState(pos).getBlock().isReplaceable(world, pos) && trace.sideHit == EnumFacing.UP
+                    ? pos
+                    : pos.offset(trace.sideHit);
 
                 if (!player.canPlayerEdit(pos1, trace.sideHit, stack)) {
                     return new ActionResult<>(EnumActionResult.FAIL, stack);
                 } else if (this.tryPlaceContainedLiquid(player, world, pos1, false)) {
-                    return !player.capabilities.isCreativeMode ? new ActionResult<>(EnumActionResult.SUCCESS, new ItemStack(Items.BOWL)) : new ActionResult<>(EnumActionResult.SUCCESS, stack);
+                    return !player.capabilities.isCreativeMode
+                        ? new ActionResult<>(EnumActionResult.SUCCESS, new ItemStack(Items.BOWL))
+                        : new ActionResult<>(EnumActionResult.SUCCESS, stack);
                 } else {
                     return new ActionResult<>(EnumActionResult.FAIL, stack);
                 }
@@ -125,7 +128,7 @@ public class ItemWaterBowl extends ItemBase {
                     int lastY = 0;
 
                     if (stack.hasTagCompound()) {
-                        NBTTagCompound compound = stack.getTagCompound();
+                        CompoundNBT compound = stack.getTagCompound();
                         lastX = compound.getInteger("lastX");
                         lastY = compound.getInteger("lastY");
                     }
@@ -133,8 +136,8 @@ public class ItemWaterBowl extends ItemBase {
                     boolean change = false;
                     if (lastX != 0 && lastX != (int) entity.posX || lastY != 0 && lastY != (int) entity.posY) {
                         if (!entity.isSneaking()) {
-                            if (entity instanceof EntityPlayer) {
-                                EntityPlayer player = (EntityPlayer) entity;
+                            if (entity instanceof PlayerEntity) {
+                                PlayerEntity player = (PlayerEntity) entity;
                                 if (this.tryPlaceContainedLiquid(player, world, player.getPosition(), true)) {
                                     this.checkReplace(player, stack, new ItemStack(Items.BOWL), itemSlot);
                                 }
@@ -145,10 +148,10 @@ public class ItemWaterBowl extends ItemBase {
 
                     if (change || lastX == 0 || lastY == 0) {
                         if (!stack.hasTagCompound()) {
-                            stack.setTagCompound(new NBTTagCompound());
+                            stack.setTagCompound(new CompoundNBT());
                         }
 
-                        NBTTagCompound compound = stack.getTagCompound();
+                        CompoundNBT compound = stack.getTagCompound();
                         compound.setInteger("lastX", (int) entity.posX);
                         compound.setInteger("lastY", (int) entity.posY);
                     }
@@ -157,9 +160,12 @@ public class ItemWaterBowl extends ItemBase {
         }
     }
 
-    private void checkReplace(EntityPlayer player, ItemStack old, ItemStack stack, int slot) {
-        if (player.inventory.getStackInSlot(slot) == old) player.inventory.setInventorySlotContents(slot, stack);
-        else if (player.inventory.offHandInventory.get(slot) == old) player.inventory.offHandInventory.set(slot, stack);
+    private void checkReplace(PlayerEntity player, ItemStack old, ItemStack stack, int slot) {
+        if (player.inventory.getStackInSlot(slot) == old) {
+            player.inventory.setInventorySlotContents(slot, stack);
+        } else if (player.inventory.offHandInventory.get(slot) == old) {
+            player.inventory.offHandInventory.set(slot, stack);
+        }
     }
 
     @Override
@@ -167,8 +173,8 @@ public class ItemWaterBowl extends ItemBase {
         return !ItemStack.areItemsEqual(oldStack, newStack);
     }
 
-    public boolean tryPlaceContainedLiquid(EntityPlayer player, World world, BlockPos pos, boolean finite) {
-        IBlockState state = world.getBlockState(pos);
+    public boolean tryPlaceContainedLiquid(PlayerEntity player, World world, BlockPos pos, boolean finite) {
+        BlockState state = world.getBlockState(pos);
         Material material = state.getMaterial();
         boolean nonSolid = !material.isSolid();
         boolean replaceable = state.getBlock().isReplaceable(world, pos);
@@ -189,7 +195,7 @@ public class ItemWaterBowl extends ItemBase {
 
                 world.playSound(player, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
-                IBlockState placeState;
+                BlockState placeState;
                 if (finite) {
                     placeState = Blocks.FLOWING_WATER.getDefaultState();
                 } else {

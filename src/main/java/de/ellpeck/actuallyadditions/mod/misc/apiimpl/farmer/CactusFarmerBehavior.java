@@ -14,10 +14,10 @@ import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCactus;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -30,11 +30,11 @@ public class CactusFarmerBehavior implements IFarmerBehavior {
         int use = 250;
         if (farmer.getEnergy() >= use) {
             Item item = seed.getItem();
-            if (item instanceof ItemBlock) {
+            if (item instanceof BlockItem) {
                 Block block = Block.getBlockFromItem(item);
-                if (block instanceof BlockCactus) {
+                if (block == Blocks.CACTUS) {
                     if (block.canPlaceBlockAt(world, pos)) {
-                        IBlockState state = block.getDefaultState();
+                        BlockState state = block.getDefaultState();
                         world.setBlockState(pos, state, 2);
                         world.playEvent(2001, pos, Block.getStateId(state));
 
@@ -52,22 +52,22 @@ public class CactusFarmerBehavior implements IFarmerBehavior {
     public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer) {
         int use = 250;
         if (farmer.getEnergy() >= use) {
-            IBlockState state = world.getBlockState(pos);
-            if (state.getBlock() instanceof BlockCactus) {
+            BlockState state = world.getBlockState(pos);
+            if (state.getBlock() == Blocks.CACTUS) {
                 FarmerResult result = FarmerResult.STOP_PROCESSING;
 
                 for (int i = 2; i >= 1; i--) {
                     if (farmer.getEnergy() >= use) {
                         BlockPos up = pos.up(i);
-                        IBlockState upState = world.getBlockState(up);
-                        if (upState.getBlock() instanceof BlockCactus) {
+                        BlockState upState = world.getBlockState(up);
+                        if (upState.getBlock() == Blocks.CACTUS) {
                             NonNullList<ItemStack> drops = NonNullList.create();
                             upState.getBlock().getDrops(drops, world, up, upState, 0);
 
                             if (!drops.isEmpty()) {
                                 if (farmer.canAddToOutput(drops)) {
                                     world.playEvent(2001, up, Block.getStateId(upState));
-                                    world.setBlockToAir(up);
+                                    world.setBlockState(up, Blocks.AIR.getDefaultState());
 
                                     farmer.extractEnergy(use);
                                     farmer.addToOutput(drops);

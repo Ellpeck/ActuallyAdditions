@@ -19,10 +19,10 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -57,7 +57,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("FirstCrushTime", this.firstCrushTime);
             compound.setInteger("SecondCrushTime", this.secondCrushTime);
@@ -68,7 +68,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.firstCrushTime = compound.getInteger("FirstCrushTime");
             this.secondCrushTime = compound.getInteger("SecondCrushTime");
@@ -132,15 +132,21 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                 }
             }
 
-            IBlockState currState = this.world.getBlockState(this.pos);
+            BlockState currState = this.world.getBlockState(this.pos);
             boolean current = currState.getValue(BlockFurnaceDouble.IS_ON);
             boolean changeTo = current;
-            if (lastCrushed != crushed) changeTo = crushed;
-            if (this.isRedstonePowered) changeTo = true;
-            if (!crushed && !this.isRedstonePowered) changeTo = false;
+            if (this.lastCrushed != crushed) {
+                changeTo = crushed;
+            }
+            if (this.isRedstonePowered) {
+                changeTo = true;
+            }
+            if (!crushed && !this.isRedstonePowered) {
+                changeTo = false;
+            }
 
             if (changeTo != current) {
-                world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, changeTo));
+                this.world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, changeTo));
             }
 
             this.lastCrushed = crushed;
@@ -171,7 +177,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput) {
         if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
             CrusherRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));
-            if (recipe == null) return false;
+            if (recipe == null) {
+                return false;
+            }
             ItemStack outputOne = recipe.getOutputOne();
             ItemStack outputTwo = recipe.getOutputTwo();
             if (StackUtil.isValid(outputOne)) {
@@ -181,19 +189,25 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                 if (StackUtil.isValid(outputTwo) && outputTwo.getItemDamage() == Util.WILDCARD) {
                     outputTwo.setItemDamage(0);
                 }
-                if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).isItemEqual(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).isItemEqual(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) { return true; }
+                if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).isItemEqual(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).isItemEqual(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     private int getMaxCrushTime() {
-        return this.isDouble ? 150 : 100;
+        return this.isDouble
+            ? 150
+            : 100;
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput) {
         CrusherRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));
-        if (recipe == null) return;
+        if (recipe == null) {
+            return;
+        }
         ItemStack outputOne = recipe.getOutputOne();
         if (StackUtil.isValid(outputOne)) {
             if (outputOne.getItemDamage() == Util.WILDCARD) {
@@ -237,7 +251,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     }
 
     @Override
-    public void onButtonPressed(int buttonID, EntityPlayer player) {
+    public void onButtonPressed(int buttonID, PlayerEntity player) {
         if (buttonID == 0) {
             this.isAutoSplit = !this.isAutoSplit;
             this.markDirty();

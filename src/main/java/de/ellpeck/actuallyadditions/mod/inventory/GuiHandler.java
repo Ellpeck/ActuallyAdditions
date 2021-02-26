@@ -46,7 +46,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.items.ItemBooklet;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -60,7 +60,7 @@ public class GuiHandler implements IGuiHandler {
     }
 
     @Override
-    public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getServerGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
         TileEntityBase tile = null;
         if (GuiTypes.values()[id].checkTileEntity) {
             tile = (TileEntityBase) world.getTileEntity(new BlockPos(x, y, z));
@@ -142,7 +142,7 @@ public class GuiHandler implements IGuiHandler {
     }
 
     @Override
-    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
         TileEntityBase tile = null;
         if (GuiTypes.values()[id].checkTileEntity) {
             tile = (TileEntityBase) world.getTileEntity(new BlockPos(x, y, z));

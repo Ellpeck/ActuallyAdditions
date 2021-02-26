@@ -20,7 +20,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.block.BlockHopper;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -113,7 +113,7 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer {
             this.handlerToPullFrom = new SlotlessableItemHandlerWrapper(normal, slotless);
         }
 
-        IBlockState state = this.world.getBlockState(this.pos);
+        BlockState state = this.world.getBlockState(this.pos);
         EnumFacing facing = state.getValue(BlockHopper.FACING);
 
         BlockPos toPos = this.pos.offset(facing);

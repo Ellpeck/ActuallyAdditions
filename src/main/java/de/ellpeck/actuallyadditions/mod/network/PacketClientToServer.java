@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.network;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -21,14 +21,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketClientToServer implements IMessage {
 
-    private NBTTagCompound data;
+    private CompoundNBT data;
     private IDataHandler handler;
 
     public PacketClientToServer() {
 
     }
 
-    public PacketClientToServer(NBTTagCompound data, IDataHandler handler) {
+    public PacketClientToServer(CompoundNBT data, IDataHandler handler) {
         this.data = data;
         this.handler = handler;
     }
@@ -59,7 +59,7 @@ public class PacketClientToServer implements IMessage {
     public static class Handler implements IMessageHandler<PacketClientToServer, IMessage> {
 
         @Override
-        public IMessage onMessage(final PacketClientToServer message, final MessageContext ctx) {
+        public IMessage onMessage(PacketClientToServer message, MessageContext ctx) {
             FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
                 if (message.data != null && message.handler != null) {
                     message.handler.handleData(message.data, ctx);

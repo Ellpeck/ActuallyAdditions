@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.api.booklet;
 import java.util.List;
 
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public interface IBookletEntry {
 
@@ -21,19 +21,19 @@ public interface IBookletEntry {
 
     String getIdentifier();
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     String getLocalizedName();
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     String getLocalizedNameWithFormatting();
 
     void addChapter(IBookletChapter chapter);
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     List<IBookletChapter> getChaptersForDisplay(String searchBarText);
 
     int getSortingPriority();
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     boolean visibleOnFrontPage();
 }

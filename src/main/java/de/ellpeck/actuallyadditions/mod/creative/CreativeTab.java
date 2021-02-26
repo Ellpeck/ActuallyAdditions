@@ -24,7 +24,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class CreativeTab extends CreativeTabs {
 
@@ -52,7 +52,7 @@ public class CreativeTab extends CreativeTabs {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void displayAllRelevantItems(NonNullList<ItemStack> list) {
         this.list = list;
 

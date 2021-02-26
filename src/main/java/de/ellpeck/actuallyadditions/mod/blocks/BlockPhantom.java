@@ -13,26 +13,21 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomBreaker;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomEnergyface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomItemface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomLiquiface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomRedstoneface;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -41,7 +36,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
 
@@ -57,24 +52,28 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public boolean canProvidePower(IBlockState state) {
+    public boolean canProvidePower(BlockState state) {
         return this.type == Type.REDSTONEFACE;
     }
 
     @Override
-    public int getWeakPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+    public int getWeakPower(BlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         if (this.type == Type.REDSTONEFACE) {
             TileEntity tile = world.getTileEntity(pos);
-            if (tile instanceof TileEntityPhantomRedstoneface) { return ((TileEntityPhantomRedstoneface) tile).providesWeak[side.ordinal()]; }
+            if (tile instanceof TileEntityPhantomRedstoneface) {
+                return ((TileEntityPhantomRedstoneface) tile).providesWeak[side.ordinal()];
+            }
         }
         return 0;
     }
 
     @Override
-    public int getStrongPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+    public int getStrongPower(BlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         if (this.type == Type.REDSTONEFACE) {
             TileEntity tile = world.getTileEntity(pos);
-            if (tile instanceof TileEntityPhantomRedstoneface) { return ((TileEntityPhantomRedstoneface) tile).providesStrong[side.ordinal()]; }
+            if (tile instanceof TileEntityPhantomRedstoneface) {
+                return ((TileEntityPhantomRedstoneface) tile).providesStrong[side.ordinal()];
+            }
         }
         return 0;
     }
@@ -87,24 +86,26 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     @Override
     public TileEntity createNewTileEntity(World world, int par2) {
         switch (this.type) {
-        case PLACER:
-            return new TileEntityPhantomPlacer();
-        case BREAKER:
-            return new TileEntityPhantomBreaker();
-        case LIQUIFACE:
-            return new TileEntityPhantomLiquiface();
-        case ENERGYFACE:
-            return new TileEntityPhantomEnergyface();
-        case REDSTONEFACE:
-            return new TileEntityPhantomRedstoneface();
-        default:
-            return new TileEntityPhantomItemface();
+            case PLACER:
+                return new TileEntityPhantomPlacer();
+            case BREAKER:
+                return new TileEntityPhantomBreaker();
+            case LIQUIFACE:
+                return new TileEntityPhantomLiquiface();
+            case ENERGYFACE:
+                return new TileEntityPhantomEnergyface();
+            case REDSTONEFACE:
+                return new TileEntityPhantomRedstoneface();
+            default:
+                return new TileEntityPhantomItemface();
         }
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (this.tryToggleRedstone(world, pos, player)) { return true; }
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (this.tryToggleRedstone(world, pos, player)) {
+            return true;
+        }
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof IPhantomTile && ((IPhantomTile) tile).getGuiID() != -1) {
@@ -120,8 +121,8 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
+    @OnlyIn(Dist.CLIENT)
+    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if (tile != null) {
             if (tile instanceof IPhantomTile) {
@@ -129,10 +130,12 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
                 minecraft.fontRenderer.drawStringWithShadow(TextFormatting.GOLD + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".blockPhantomRange.desc") + ": " + phantom.getRange(), resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 - 40, StringUtil.DECIMAL_COLOR_WHITE);
                 if (phantom.hasBoundPosition()) {
                     int distance = MathHelper.ceil(new Vec3d(posHit.getBlockPos()).distanceTo(new Vec3d(phantom.getBoundPosition())));
-                    IBlockState state = minecraft.world.getBlockState(phantom.getBoundPosition());
+                    BlockState state = minecraft.world.getBlockState(phantom.getBoundPosition());
                     Block block = state.getBlock();
                     Item item = Item.getItemFromBlock(block);
-                    String name = item == null ? "Something Unrecognizable" : item.getItemStackDisplayName(new ItemStack(block, 1, block.getMetaFromState(state)));
+                    String name = item == null
+                        ? "Something Unrecognizable"
+                        : item.getItemStackDisplayName(new ItemStack(block, 1, block.getMetaFromState(state)));
                     StringUtil.drawSplitString(minecraft.fontRenderer, StringUtil.localizeFormatted("tooltip." + ActuallyAdditions.MODID + ".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 - 30, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
 
                     if (phantom.isBoundThingInRange()) {

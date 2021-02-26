@@ -11,13 +11,13 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public interface IEnergyDisplay {
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     CustomEnergyStorage getEnergyStorage();
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     boolean needsHoldShift();
 }

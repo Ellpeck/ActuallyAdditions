@@ -14,10 +14,10 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
@@ -67,11 +67,11 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     }
 
     private void doWork() {
-        IBlockState state = this.world.getBlockState(this.pos);
+        BlockState state = this.world.getBlockState(this.pos);
         EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
         BlockPos coordsBlock = this.pos.offset(sideToManipulate);
 
-        IBlockState stateToBreak = this.world.getBlockState(coordsBlock);
+        BlockState stateToBreak = this.world.getBlockState(coordsBlock);
         Block blockToBreak = stateToBreak.getBlock();
         if (!this.isPlacer && blockToBreak != null && blockToBreak.getMetaFromState(stateToBreak) == 0 && Util.BUCKET <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
             if (blockToBreak instanceof IFluidBlock && ((IFluidBlock) blockToBreak).getFluid() != null) {
@@ -129,7 +129,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("CurrentTime", this.currentTime);
@@ -138,7 +138,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.currentTime = compound.getInteger("CurrentTime");

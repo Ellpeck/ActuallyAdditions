@@ -10,11 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -32,11 +27,15 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemCoffee extends ItemFoodBase {
 
@@ -70,7 +69,9 @@ public class ItemCoffee extends ItemFoodBase {
     @Nullable
     public static CoffeeIngredient getIngredientFromStack(ItemStack stack) {
         for (CoffeeIngredient ingredient : ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS) {
-            if (ingredient.getInput().apply(stack)) return ingredient;
+            if (ingredient.getInput().apply(stack)) {
+                return ingredient;
+            }
         }
         return null;
     }
@@ -123,12 +124,12 @@ public class ItemCoffee extends ItemFoodBase {
             tooltip.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".coffeeCup.noEffect"));
         }
     }
-    
+
     @Override
     public boolean isEnchantable(ItemStack stack) {
         return false;
     }
-    
+
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         return false;
@@ -155,7 +156,7 @@ public class ItemCoffee extends ItemFoodBase {
                         effectsNew.add(new PotionEffect(effect.getPotion(), effect.getDuration() + 120, effect.getAmplifier() - 1));
                     }
                 }
-                stack.setTagCompound(new NBTTagCompound());
+                stack.setTagCompound(new CompoundNBT());
                 if (effectsNew.size() > 0) {
                     this.effects = effectsNew.toArray(new PotionEffect[effectsNew.size()]);
                     ActuallyAdditionsAPI.methodHandler.addEffectToStack(stack, this);

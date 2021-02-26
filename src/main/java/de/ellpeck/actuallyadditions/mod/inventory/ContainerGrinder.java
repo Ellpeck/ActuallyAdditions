@@ -16,10 +16,10 @@ import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerGrinder extends Container {
@@ -27,13 +27,19 @@ public class ContainerGrinder extends Container {
     public final TileEntityGrinder tileGrinder;
     private final boolean isDouble;
 
-    public ContainerGrinder(InventoryPlayer inventory, TileEntityBase tile, boolean isDouble) {
+    public ContainerGrinder(PlayerInventory inventory, TileEntityBase tile, boolean isDouble) {
         this.tileGrinder = (TileEntityGrinder) tile;
         this.isDouble = isDouble;
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityGrinder.SLOT_INPUT_1, this.isDouble ? 51 : 80, 21));
-        this.addSlotToContainer(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_1_1, this.isDouble ? 37 : 66, 69));
-        this.addSlotToContainer(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_1_2, this.isDouble ? 64 : 92, 69));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityGrinder.SLOT_INPUT_1, this.isDouble
+            ? 51
+            : 80, 21));
+        this.addSlotToContainer(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_1_1, this.isDouble
+            ? 37
+            : 66, 69));
+        this.addSlotToContainer(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_1_2, this.isDouble
+            ? 64
+            : 92, 69));
         if (this.isDouble) {
             this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityGrinder.SLOT_INPUT_2, 109, 21));
             this.addSlotToContainer(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_2_1, 96, 69));
@@ -51,8 +57,10 @@ public class ContainerGrinder extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-        int inventoryStart = this.isDouble ? 6 : 3;
+    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
+        int inventoryStart = this.isDouble
+            ? 6
+            : 3;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
         int hotbarEnd = hotbarStart + 8;
@@ -65,7 +73,9 @@ public class ContainerGrinder extends Container {
 
             //Slots in Inventory to shift from
             if (slot == TileEntityGrinder.SLOT_OUTPUT_1_1 || slot == TileEntityGrinder.SLOT_OUTPUT_1_2 || this.isDouble && (slot == TileEntityGrinder.SLOT_OUTPUT_2_1 || slot == TileEntityGrinder.SLOT_OUTPUT_2_2)) {
-                if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, true)) { return StackUtil.getEmpty(); }
+                if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, true)) {
+                    return StackUtil.getEmpty();
+                }
                 theSlot.onSlotChange(newStack, currentStack);
             }
             //Other Slots in Inventory excluded
@@ -74,7 +84,9 @@ public class ContainerGrinder extends Container {
                 if (CrusherRecipeRegistry.getRecipeFromInput(newStack) != null) {
                     if (!this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_1, TileEntityGrinder.SLOT_INPUT_1 + 1, false)) {
                         if (this.isDouble) {
-                            if (!this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_2, TileEntityGrinder.SLOT_INPUT_2 + 1, false)) { return StackUtil.getEmpty(); }
+                            if (!this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_2, TileEntityGrinder.SLOT_INPUT_2 + 1, false)) {
+                                return StackUtil.getEmpty();
+                            }
                         } else {
                             return StackUtil.getEmpty();
                         }
@@ -83,9 +95,15 @@ public class ContainerGrinder extends Container {
                 //
 
                 else if (slot >= inventoryStart && slot <= inventoryEnd) {
-                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
-                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) { return StackUtil.getEmpty(); }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
+                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                        return StackUtil.getEmpty();
+                    }
+                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                    return StackUtil.getEmpty();
+                }
+            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+                return StackUtil.getEmpty();
+            }
 
             if (!StackUtil.isValid(newStack)) {
                 theSlot.putStack(StackUtil.getEmpty());
@@ -93,7 +111,9 @@ public class ContainerGrinder extends Container {
                 theSlot.onSlotChanged();
             }
 
-            if (newStack.getCount() == currentStack.getCount()) { return StackUtil.getEmpty(); }
+            if (newStack.getCount() == currentStack.getCount()) {
+                return StackUtil.getEmpty();
+            }
             theSlot.onTake(player, newStack);
 
             return currentStack;
@@ -102,7 +122,7 @@ public class ContainerGrinder extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(PlayerEntity player) {
         return this.tileGrinder.canPlayerUse(player);
     }
 }

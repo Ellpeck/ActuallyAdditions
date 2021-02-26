@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.slot;
 import javax.annotation.Nonnull;
 
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -64,7 +64,7 @@ public class SlotItemHandlerUnconditioned extends SlotItemHandler {
     }
 
     @Override
-    public boolean canTakeStack(EntityPlayer playerIn) {
+    public boolean canTakeStack(PlayerEntity playerIn) {
         return !this.inv.extractItem(this.getSlotIndex(), 1, true, false).isEmpty();
     }
 

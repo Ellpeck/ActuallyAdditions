@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.misc.DamageSources;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 public class LensDeath extends Lens {
 
     @Override
-    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
+    public boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
         ArrayList<EntityLivingBase> entities = (ArrayList<EntityLivingBase>) tile.getWorldObject().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
         for (EntityLivingBase entity : entities) {
             int use = this.getUsePerEntity();

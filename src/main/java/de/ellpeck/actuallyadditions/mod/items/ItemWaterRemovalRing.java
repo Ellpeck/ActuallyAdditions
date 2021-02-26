@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -30,9 +30,9 @@ public class ItemWaterRemovalRing extends ItemEnergy {
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
-        if (!(entity instanceof EntityPlayer) || world.isRemote || entity.isSneaking()) { return; }
+        if (!(entity instanceof PlayerEntity) || world.isRemote || entity.isSneaking()) { return; }
 
-        EntityPlayer player = (EntityPlayer) entity;
+        PlayerEntity player = (PlayerEntity) entity;
         ItemStack equipped = player.getHeldItemMainhand();
 
         int energyUse = 150;

@@ -10,25 +10,24 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.Collections;
-import java.util.Set;
-
 import com.google.common.collect.Sets;
-
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IRarity;
+
+import java.util.Collections;
+import java.util.Set;
 
 public class ItemShovelAA extends ItemToolAA {
 
@@ -45,13 +44,13 @@ public class ItemShovelAA extends ItemToolAA {
     }
 
     @Override
-    public boolean canHarvestBlock(IBlockState blockIn) {
+    public boolean canHarvestBlock(BlockState blockIn) {
         Block block = blockIn.getBlock();
         return block == Blocks.SNOW_LAYER || block == Blocks.SNOW;
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(PlayerEntity playerIn, World worldIn, BlockPos pos, Hand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         return Items.IRON_SHOVEL.onItemUse(playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
     }
 

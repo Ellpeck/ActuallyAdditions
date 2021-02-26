@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
@@ -19,12 +19,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 /**
  * (Excerpted from Tinkers' Construct with permission, thanks guys!)
  */
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinition {
 
     public final Fluid fluid;
@@ -37,7 +37,7 @@ public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinit
     }
 
     @Override
-    protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+    protected ModelResourceLocation getModelResourceLocation(BlockState state) {
         return this.location;
     }
 

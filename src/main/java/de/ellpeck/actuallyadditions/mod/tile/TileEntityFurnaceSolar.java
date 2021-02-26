@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -28,13 +28,13 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }
@@ -61,7 +61,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
         for (int y = 1; y <= this.world.getHeight() - this.pos.getY(); y++) {
             if (power > 0) {
                 BlockPos pos = this.pos.up(y);
-                IBlockState state = this.world.getBlockState(pos);
+                BlockState state = this.world.getBlockState(pos);
 
                 if (state.getMaterial().isOpaque()) {
                     power = 0;

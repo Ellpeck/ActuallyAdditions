@@ -14,9 +14,9 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -36,7 +36,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -45,7 +45,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -76,14 +76,18 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
 
     public int isMultiblock() {
         BlockPos thisPos = this.pos;
-        BlockPos[] positions = new BlockPos[] { thisPos.add(1, 1, 0), thisPos.add(-1, 1, 0), thisPos.add(0, 1, 1), thisPos.add(0, 1, -1) };
+        BlockPos[] positions = new BlockPos[]{thisPos.add(1, 1, 0), thisPos.add(-1, 1, 0), thisPos.add(0, 1, 1), thisPos.add(0, 1, -1)};
 
         if (WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), this.world)) {
             BlockPos pos = thisPos.up();
-            IBlockState state = this.world.getBlockState(pos);
+            BlockState state = this.world.getBlockState(pos);
             Block block = state.getBlock();
-            if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) { return HAS_LAVA; }
-            if (block == null || this.world.isAirBlock(pos)) { return HAS_AIR; }
+            if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) {
+                return HAS_LAVA;
+            }
+            if (block == null || this.world.isAirBlock(pos)) {
+                return HAS_AIR;
+            }
         }
         return NOT_MULTI;
     }

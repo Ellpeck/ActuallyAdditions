@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.proxy;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -53,7 +53,7 @@ public class ServerProxy implements IProxy {
     }
 
     @Override
-    public EntityPlayer getCurrentPlayer() {
+    public PlayerEntity getCurrentPlayer() {
         return null;
     }
 }

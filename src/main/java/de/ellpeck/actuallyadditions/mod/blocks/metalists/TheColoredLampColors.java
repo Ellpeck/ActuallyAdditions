@@ -45,7 +45,9 @@ public enum TheColoredLampColors implements IStringSerializable {
             for (int i = 0; i < values().length; i++) {
                 String aName = values()[i].oreName;
                 if (aName != null) {
-                    if (aName.equalsIgnoreCase(actualName)) { return values()[i]; }
+                    if (aName.equalsIgnoreCase(actualName)) {
+                        return values()[i];
+                    }
                 }
             }
         }
@@ -53,7 +55,7 @@ public enum TheColoredLampColors implements IStringSerializable {
     }
 
     @Override
-    public String getName() {
+    public String getString() {
         return this.regName;
     }
 }

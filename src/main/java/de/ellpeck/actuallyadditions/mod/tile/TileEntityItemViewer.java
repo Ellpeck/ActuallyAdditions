@@ -10,15 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
-import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
-
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
@@ -27,15 +18,19 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.CommonCapsUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.IItemHandler;
+import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
+import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
+
+import java.util.*;
 
 public class TileEntityItemViewer extends TileEntityBase {
 
@@ -59,7 +54,9 @@ public class TileEntityItemViewer extends TileEntityBase {
             @Override
             public ItemStack getStackInSlot(int slot) {
                 IItemHandlerInfo handler = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
-                if (handler != null && handler.isLoaded()) { return handler.handler.getStackInSlot(handler.switchedIndex); }
+                if (handler != null && handler.isLoaded()) {
+                    return handler.handler.getStackInSlot(handler.switchedIndex);
+                }
                 return StackUtil.getEmpty();
             }
 
@@ -128,7 +125,9 @@ public class TileEntityItemViewer extends TileEntityBase {
         if (ActuallyAdditions.commonCapsLoaded) {
             if (capability == SlotlessItemHandlerConfig.CAPABILITY) {
                 Object handler = this.itemHandler.getSlotlessHandler();
-                if (handler != null) { return (T) handler; }
+                if (handler != null) {
+                    return (T) handler;
+                }
             }
         }
         return super.getCapability(capability, facing);
@@ -141,7 +140,7 @@ public class TileEntityItemViewer extends TileEntityBase {
 
     public void doItemParticle(ItemStack stack, BlockPos input, BlockPos output) {
         if (!this.world.isRemote) {
-            NBTTagCompound compound = new NBTTagCompound();
+            CompoundNBT compound = new CompoundNBT();
             stack.writeToNBT(compound);
 
             compound.setDouble("InX", input.getX());
@@ -153,10 +152,10 @@ public class TileEntityItemViewer extends TileEntityBase {
             compound.setDouble("OutZ", output.getZ());
 
             int rangeSq = 16 * 16;
-            for (EntityPlayer player : this.world.playerEntities) {
-                if (player instanceof EntityPlayerMP) {
+            for (PlayerEntity player : this.world.playerEntities) {
+                if (player instanceof ServerPlayerEntity) {
                     if (player.getDistanceSq(input) <= rangeSq || player.getDistanceSq(output) <= rangeSq) {
-                        PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), (EntityPlayerMP) player);
+                        PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), (ServerPlayerEntity) player);
                     }
                 }
             }

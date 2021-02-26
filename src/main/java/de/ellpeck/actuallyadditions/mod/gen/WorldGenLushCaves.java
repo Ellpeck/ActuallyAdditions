@@ -21,7 +21,7 @@ import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -78,8 +78,8 @@ public class WorldGenLushCaves {
                                 BlockPos posSide = pos.offset(side);
 
                                 if (!this.checkIndestructable(world, posSide)) {
-                                    IBlockState state = world.getBlockState(pos);
-                                    IBlockState stateSide = world.getBlockState(posSide);
+                                    BlockState state = world.getBlockState(pos);
+                                    BlockState stateSide = world.getBlockState(posSide);
 
                                     if (state.getBlock().isAir(state, world, pos) && stateSide.isSideSolid(world, posSide, side.getOpposite())) {
                                         Block block = CRYSTAL_CLUSTERS[rand.nextInt(CRYSTAL_CLUSTERS.length)];
@@ -118,7 +118,7 @@ public class WorldGenLushCaves {
                     if (ConfigBoolValues.DUNGEON_LOOT.isEnabled() && !crateGenDone && genCrate) {
                         BlockPos cratePos = pos.add(MathHelper.getInt(rand, -2, 2), MathHelper.getInt(rand, 3, 8), MathHelper.getInt(rand, -2, 2));
 
-                        IBlockState state = world.getBlockState(cratePos);
+                        BlockState state = world.getBlockState(cratePos);
                         if (state != null && state.getBlock().isLeaves(state, world, cratePos)) {
                             world.setBlockState(cratePos, InitBlocks.blockGiantChest.getDefaultState(), 2);
 
@@ -157,11 +157,11 @@ public class WorldGenLushCaves {
                 for (double y = -radius; y <= -3; y++) {
                     BlockPos pos = center.add(x, y, z);
                     if (boundingBox.isVecInside(pos) && !this.checkIndestructable(world, pos)) {
-                        IBlockState state = world.getBlockState(pos);
+                        BlockState state = world.getBlockState(pos);
                         BlockPos posUp = pos.up();
 
                         if (!this.checkIndestructable(world, posUp)) {
-                            IBlockState stateUp = world.getBlockState(posUp);
+                            BlockState stateUp = world.getBlockState(posUp);
                             if (!state.getBlock().isAir(state, world, pos) && stateUp.getBlock().isAir(stateUp, world, posUp)) {
                                 world.setBlockState(pos, Blocks.GRASS.getDefaultState(), 2);
                             }
@@ -177,7 +177,7 @@ public class WorldGenLushCaves {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof ILootContainer) { return true; }
 
-        IBlockState state = world.getBlockState(pos);
+        BlockState state = world.getBlockState(pos);
         if (state != null) {
             Block block = state.getBlock();
             //check if it's tree or grass that is generated here

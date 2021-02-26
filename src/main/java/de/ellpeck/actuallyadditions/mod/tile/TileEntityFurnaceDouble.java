@@ -17,11 +17,11 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -76,7 +76,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
@@ -87,7 +87,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
@@ -138,15 +138,21 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 this.secondSmeltTime = 0;
             }
 
-            IBlockState currState = this.world.getBlockState(this.pos);
+            BlockState currState = this.world.getBlockState(this.pos);
             boolean current = currState.getValue(BlockFurnaceDouble.IS_ON);
             boolean changeTo = current;
-            if (lastSmelted != smelted) changeTo = smelted;
-            if (this.isRedstonePowered) changeTo = true;
-            if (!smelted && !this.isRedstonePowered) changeTo = false;
+            if (this.lastSmelted != smelted) {
+                changeTo = smelted;
+            }
+            if (this.isRedstonePowered) {
+                changeTo = true;
+            }
+            if (!smelted && !this.isRedstonePowered) {
+                changeTo = false;
+            }
 
             if (changeTo != current) {
-                world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, changeTo));
+                this.world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, changeTo));
             }
 
             this.lastSmelted = smelted;
@@ -174,7 +180,9 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
             ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.inv.getStackInSlot(theInput));
             if (StackUtil.isValid(output)) {
-                if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || this.inv.getStackInSlot(theOutput).isItemEqual(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount()) { return true; }
+                if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || this.inv.getStackInSlot(theOutput).isItemEqual(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount()) {
+                    return true;
+                }
             }
 
         }
@@ -201,7 +209,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void onButtonPressed(int buttonID, EntityPlayer player) {
+    public void onButtonPressed(int buttonID, PlayerEntity player) {
         if (buttonID == 0) {
             this.isAutoSplit = !this.isAutoSplit;
             this.markDirty();

@@ -17,11 +17,11 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityBat;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -51,7 +51,7 @@ public class ItemWingsOfTheBats extends ItemBase {
      * @param player The Player
      * @return The Wings
      */
-    public static ItemStack getWingItem(EntityPlayer player) {
+    public static ItemStack getWingItem(PlayerEntity player) {
         for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
             if (StackUtil.isValid(player.inventory.getStackInSlot(i)) && player.inventory.getStackInSlot(i).getItem() instanceof ItemWingsOfTheBats) { return player.inventory.getStackInSlot(i); }
         }
@@ -65,7 +65,7 @@ public class ItemWingsOfTheBats extends ItemBase {
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
-        EntityPlayer player = ActuallyAdditions.PROXY.getCurrentPlayer();
+        PlayerEntity player = ActuallyAdditions.PROXY.getCurrentPlayer();
         if (player != null) {
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if (data != null) {
@@ -78,7 +78,7 @@ public class ItemWingsOfTheBats extends ItemBase {
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
-        EntityPlayer player = ActuallyAdditions.PROXY.getCurrentPlayer();
+        PlayerEntity player = ActuallyAdditions.PROXY.getCurrentPlayer();
         if (player != null) {
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             if (data != null) {
@@ -93,7 +93,7 @@ public class ItemWingsOfTheBats extends ItemBase {
     public void onEntityDropEvent(LivingDropsEvent event) {
         Entity source = event.getSource().getTrueSource();
 
-        if (event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && source instanceof EntityPlayer) {
+        if (event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && source instanceof PlayerEntity) {
             //Drop Wings from Bats
             if (ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntityLiving() instanceof EntityBat) {
                 int looting = event.getLootingLevel();
@@ -115,8 +115,8 @@ public class ItemWingsOfTheBats extends ItemBase {
 
     @SubscribeEvent
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
-        if (event.getEntityLiving() instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+        if (event.getEntityLiving() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 
             if (!player.capabilities.isCreativeMode && !player.isSpectator()) {
                 PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
@@ -166,7 +166,7 @@ public class ItemWingsOfTheBats extends ItemBase {
                             deductTime = 2;
                         } else {
                             BlockPos pos = new BlockPos(player.posX, player.posY + player.height, player.posZ);
-                            IBlockState state = player.world.getBlockState(pos);
+                            BlockState state = player.world.getBlockState(pos);
                             if (state != null && state.isSideSolid(player.world, pos, EnumFacing.DOWN)) {
                                 deductTime = 10;
                             }

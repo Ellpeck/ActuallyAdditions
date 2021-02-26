@@ -27,7 +27,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class ItemDisplay {
 
@@ -47,12 +47,12 @@ public class ItemDisplay {
         this.page = shouldTryTransfer ? BookletUtils.findFirstPageForStack(stack) : null;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void drawPre() {
         AssetUtil.renderStackToGui(this.stack, this.x, this.y, this.scale);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void drawPost(int mouseX, int mouseY) {
         if (this.isHovered(mouseX, mouseY)) {
             Minecraft mc = this.gui.mc;

@@ -16,7 +16,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -58,13 +58,13 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }
@@ -74,7 +74,9 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
             return (IDisplayStandItem) item;
         } else if (item instanceof ItemBlock) {
             Block block = Block.getBlockFromItem(item);
-            if (block instanceof IDisplayStandItem) { return (IDisplayStandItem) block; }
+            if (block instanceof IDisplayStandItem) {
+                return (IDisplayStandItem) block;
+            }
         }
         return null;
     }

@@ -17,9 +17,9 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor {
@@ -38,11 +38,13 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
 
     @Override
     public boolean isWhitelisted(ItemStack stack, boolean output) {
-        return output ? this.rightFilter.check(stack) : this.leftFilter.check(stack);
+        return output
+            ? this.rightFilter.check(stack)
+            : this.leftFilter.check(stack);
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         this.leftFilter.writeToNBT(compound, "LeftFilter");
@@ -50,7 +52,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         this.leftFilter.readFromNBT(compound, "LeftFilter");
@@ -58,7 +60,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     }
 
     @Override
-    public void onButtonPressed(int buttonID, EntityPlayer player) {
+    public void onButtonPressed(int buttonID, PlayerEntity player) {
         this.leftFilter.onButtonPressed(buttonID);
         this.rightFilter.onButtonPressed(buttonID);
         if (buttonID == 2) {
@@ -83,7 +85,9 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     }
 
     private void addWhitelistSmart(boolean output, ItemStack stack) {
-        FilterSettings usedSettings = output ? this.rightFilter : this.leftFilter;
+        FilterSettings usedSettings = output
+            ? this.rightFilter
+            : this.leftFilter;
         ItemStack copy = stack.copy();
         copy.setCount(1);
 

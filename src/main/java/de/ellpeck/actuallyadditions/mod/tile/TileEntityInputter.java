@@ -10,11 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
@@ -23,14 +18,18 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor {
 
@@ -64,7 +63,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public void onNumberReceived(double number, int textID, EntityPlayer player) {
+    public void onNumberReceived(double number, int textID, PlayerEntity player) {
         int text = (int) number;
 
         if (text != -1) {
@@ -87,7 +86,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     private boolean newPulling() {
         for (EnumFacing side : this.placeToPull.keySet()) {
-            WorldUtil.doItemInteraction(this.placeToPull.get(side), this.wrapper, Integer.MAX_VALUE, this.slotToPullStart, this.slotToPullEnd, 0, 1, !this.isAdvanced ? null : this.leftFilter);
+            WorldUtil.doItemInteraction(this.placeToPull.get(side), this.wrapper, Integer.MAX_VALUE, this.slotToPullStart, this.slotToPullEnd, 0, 1, !this.isAdvanced
+                ? null
+                : this.leftFilter);
 
             if (this.placeToPull instanceof TileEntityItemViewer) {
                 break;
@@ -132,8 +133,9 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 if (tile != null) {
                     for (EnumFacing facing : EnumFacing.values()) {
                         IItemHandler normal = null;
-                        if (tile.getClass() == TileEntityFurnace.class) normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                        else if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
+                        if (tile.getClass() == TileEntityFurnace.class) {
+                            normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+                        } else if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
                             normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
                         }
 
@@ -197,7 +199,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public void onButtonPressed(int buttonID, EntityPlayer player) {
+    public void onButtonPressed(int buttonID, PlayerEntity player) {
         this.leftFilter.onButtonPressed(buttonID);
         this.rightFilter.onButtonPressed(buttonID);
 
@@ -240,7 +242,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("SideToPut", this.sideToPut);
@@ -256,7 +258,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.sideToPut = compound.getInteger("SideToPut");
             this.slotToPutStart = compound.getInteger("SlotToPut");

@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
@@ -23,21 +21,23 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.Random;
 
 public class BlockColoredLamp extends BlockBase {
 
@@ -54,21 +54,23 @@ public class BlockColoredLamp extends BlockBase {
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int par3) {
+    public Item getItemDropped(BlockState state, Random rand, int par3) {
         return Item.getItemFromBlock(InitBlocks.blockColoredLamp);
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
+    public int damageDropped(BlockState state) {
         return this.getMetaFromState(state);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         //Turning On
-        if (hand == EnumHand.MAIN_HAND && stack.isEmpty()) {
-            world.setBlockState(pos, (this.isOn ? InitBlocks.blockColoredLamp : InitBlocks.blockColoredLampOn).getDefaultState().withProperty(TYPE, state.getValue(TYPE)), 2);
+        if (hand == Hand.MAIN_HAND && stack.isEmpty()) {
+            world.setBlockState(pos, (this.isOn
+                ? InitBlocks.blockColoredLamp
+                : InitBlocks.blockColoredLampOn).getDefaultState().withProperty(TYPE, state.getValue(TYPE)), 2);
             world.notifyLightSet(pos);
             return true;
         }
@@ -98,7 +100,7 @@ public class BlockColoredLamp extends BlockBase {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
         for (int j = 0; j < ALL_LAMP_TYPES.length; j++) {
             list.add(new ItemStack(this, 1, j));
@@ -106,8 +108,10 @@ public class BlockColoredLamp extends BlockBase {
     }
 
     @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-        return this.isOn ? 15 : 0;
+    public int getLightValue(BlockState state, IBlockAccess world, BlockPos pos) {
+        return this.isOn
+            ? 15
+            : 0;
     }
 
     @Override
@@ -128,12 +132,12 @@ public class BlockColoredLamp extends BlockBase {
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(TYPE, TheColoredLampColors.values()[meta]);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return state.getValue(TYPE).ordinal();
     }
 
@@ -152,9 +156,16 @@ public class BlockColoredLamp extends BlockBase {
 
         @Override
         public String getItemStackDisplayName(ItemStack stack) {
-            if (stack.getItemDamage() >= ALL_LAMP_TYPES.length) { return StringUtil.BUGGED_ITEM_NAME; }
-            if (Util.isClient()) return super.getItemStackDisplayName(stack) + (((BlockColoredLamp) this.block).isOn ? " (" + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".onSuffix.desc") + ")" : "");
-            else return super.getItemStackDisplayName(stack);
+            if (stack.getItemDamage() >= ALL_LAMP_TYPES.length) {
+                return StringUtil.BUGGED_ITEM_NAME;
+            }
+            if (Util.isClient()) {
+                return super.getItemStackDisplayName(stack) + (((BlockColoredLamp) this.block).isOn
+                    ? " (" + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".onSuffix.desc") + ")"
+                    : "");
+            } else {
+                return super.getItemStackDisplayName(stack);
+            }
         }
 
         @Override

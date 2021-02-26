@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -29,7 +29,7 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
         this(inv.filterInventory, slot, x, y);
     }
 
-    public static boolean checkFilter(Container container, int slotId, EntityPlayer player) {
+    public static boolean checkFilter(Container container, int slotId, PlayerEntity player) {
         if (slotId >= 0 && slotId < container.inventorySlots.size()) {
             Slot slot = container.getSlot(slotId);
             if (slot instanceof SlotFilter) {
@@ -44,7 +44,7 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
         return StackUtil.isValid(stack) && stack.getItem() instanceof ItemFilter;
     }
 
-    private void slotClick(EntityPlayer player) {
+    private void slotClick(PlayerEntity player) {
         ItemStack heldStack = player.inventory.getItemStack();
         ItemStack stackInSlot = this.getStack();
 
@@ -78,7 +78,7 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
     }
 
     @Override
-    public boolean canTakeStack(EntityPlayer player) {
+    public boolean canTakeStack(PlayerEntity player) {
         return false;
     }
 }

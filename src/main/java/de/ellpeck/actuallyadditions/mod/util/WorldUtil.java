@@ -10,27 +10,23 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import java.util.ArrayList;
-
-import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -51,6 +47,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
+
+import java.util.ArrayList;
 
 public final class WorldUtil {
 
@@ -120,7 +119,9 @@ public final class WorldUtil {
 
     public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
-            EnumFacing opp = sideTo == null ? null : sideTo.getOpposite();
+            EnumFacing opp = sideTo == null
+                ? null
+                : sideTo.getOpposite();
             IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
             IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, opp);
             if (handlerFrom != null && handlerTo != null) {
@@ -155,12 +156,15 @@ public final class WorldUtil {
      * @param block     The Block
      * @param meta      The Meta
      * @param world     The World
+     *
      * @return Is every block present?
      */
     public static boolean hasBlocksInPlacesGiven(BlockPos[] positions, Block block, int meta, World world) {
         for (BlockPos pos : positions) {
-            IBlockState state = world.getBlockState(pos);
-            if (!(state.getBlock() == block && block.getMetaFromState(state) == meta)) { return false; }
+            BlockState state = world.getBlockState(pos);
+            if (!(state.getBlock() == block && block.getMetaFromState(state) == meta)) {
+                return false;
+            }
         }
         return true;
     }
@@ -168,7 +172,7 @@ public final class WorldUtil {
     public static ItemStack useItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack) {
         if (world instanceof WorldServer && StackUtil.isValid(stack) && pos != null) {
             BlockPos offsetPos = pos.offset(side);
-            IBlockState state = world.getBlockState(offsetPos);
+            BlockState state = world.getBlockState(offsetPos);
             Block block = state.getBlock();
             boolean replaceable = block.isReplaceable(world, offsetPos);
 
@@ -181,19 +185,23 @@ public final class WorldUtil {
             //Plants
             if (replaceable && stack.getItem() instanceof IPlantable) {
                 if (((IPlantable) stack.getItem()).getPlant(world, offsetPos).getBlock().canPlaceBlockAt(world, offsetPos)) {
-                    if (world.setBlockState(offsetPos, ((IPlantable) stack.getItem()).getPlant(world, offsetPos), 2)) return StackUtil.shrink(stack, 1);
+                    if (world.setBlockState(offsetPos, ((IPlantable) stack.getItem()).getPlant(world, offsetPos), 2)) {
+                        return StackUtil.shrink(stack, 1);
+                    }
                 }
             }
 
             //Everything else
             try {
                 FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer) world);
-                if (fake.connection == null) fake.connection = new NetHandlerSpaghettiServer(fake);
+                if (fake.connection == null) {
+                    fake.connection = new NetHandlerSpaghettiServer(fake);
+                }
                 ItemStack heldBefore = fake.getHeldItemMainhand();
-                setHandItemWithoutAnnoyingSound(fake, EnumHand.MAIN_HAND, stack.copy());
-                fake.interactionManager.processRightClickBlock(fake, world, fake.getHeldItemMainhand(), EnumHand.MAIN_HAND, offsetPos, side.getOpposite(), 0.5F, 0.5F, 0.5F);
-                ItemStack result = fake.getHeldItem(EnumHand.MAIN_HAND);
-                setHandItemWithoutAnnoyingSound(fake, EnumHand.MAIN_HAND, heldBefore);
+                setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, stack.copy());
+                fake.interactionManager.processRightClickBlock(fake, world, fake.getHeldItemMainhand(), Hand.MAIN_HAND, offsetPos, side.getOpposite(), 0.5F, 0.5F, 0.5F);
+                ItemStack result = fake.getHeldItem(Hand.MAIN_HAND);
+                setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, heldBefore);
                 return result;
             } catch (Exception e) {
                 ActuallyAdditions.LOGGER.error("Something that places Blocks at " + offsetPos.getX() + ", " + offsetPos.getY() + ", " + offsetPos.getZ() + " in World " + world.provider.getDimension() + " threw an Exception! Don't let that happen again!", e);
@@ -217,22 +225,22 @@ public final class WorldUtil {
 
     public static EnumFacing getDirectionBySidesInOrder(int side) {
         switch (side) {
-        case 0:
-            return EnumFacing.UP;
-        case 1:
-            return EnumFacing.DOWN;
-        case 2:
-            return EnumFacing.NORTH;
-        case 3:
-            return EnumFacing.EAST;
-        case 4:
-            return EnumFacing.SOUTH;
-        default:
-            return EnumFacing.WEST;
+            case 0:
+                return EnumFacing.UP;
+            case 1:
+                return EnumFacing.DOWN;
+            case 2:
+                return EnumFacing.NORTH;
+            case 3:
+                return EnumFacing.EAST;
+            case 4:
+                return EnumFacing.SOUTH;
+            default:
+                return EnumFacing.WEST;
         }
     }
 
-    public static EnumFacing getDirectionByPistonRotation(IBlockState state) {
+    public static EnumFacing getDirectionByPistonRotation(BlockState state) {
         return state.getValue(BlockDirectional.FACING);
     }
 
@@ -245,11 +253,11 @@ public final class WorldUtil {
         return blocks;
     }
 
-    public static RayTraceResult getNearestPositionWithAir(World world, EntityPlayer player, int reach) {
+    public static RayTraceResult getNearestPositionWithAir(World world, PlayerEntity player, int reach) {
         return getMovingObjectPosWithReachDistance(world, player, reach, false, false, true);
     }
 
-    private static RayTraceResult getMovingObjectPosWithReachDistance(World world, EntityPlayer player, double distance, boolean p1, boolean p2, boolean p3) {
+    private static RayTraceResult getMovingObjectPosWithReachDistance(World world, PlayerEntity player, double distance, boolean p1, boolean p2, boolean p3) {
         float f = player.rotationPitch;
         float f1 = player.rotationYaw;
         double d0 = player.posX;
@@ -266,18 +274,18 @@ public final class WorldUtil {
         return world.rayTraceBlocks(vec3, vec31, p1, p2, p3);
     }
 
-    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, EntityPlayer player) {
+    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, PlayerEntity player) {
         return getNearestBlockWithDefaultReachDistance(world, player, false, true, false);
     }
 
-    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, EntityPlayer player, boolean stopOnLiquids, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
-        return getMovingObjectPosWithReachDistance(world, player, player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue(), stopOnLiquids, ignoreBlockWithoutBoundingBox, returnLastUncollidableBlock);
+    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, PlayerEntity player, boolean stopOnLiquids, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
+        return getMovingObjectPosWithReachDistance(world, player, player.getEntityAttribute(PlayerEntity.REACH_DISTANCE).getAttributeValue(), stopOnLiquids, ignoreBlockWithoutBoundingBox, returnLastUncollidableBlock);
     }
 
-    public static void setHandItemWithoutAnnoyingSound(EntityPlayer player, EnumHand hand, ItemStack stack) {
-        if (hand == EnumHand.MAIN_HAND) {
+    public static void setHandItemWithoutAnnoyingSound(PlayerEntity player, Hand hand, ItemStack stack) {
+        if (hand == Hand.MAIN_HAND) {
             player.inventory.mainInventory.set(player.inventory.currentItem, stack);
-        } else if (hand == EnumHand.OFF_HAND) {
+        } else if (hand == Hand.OFF_HAND) {
             player.inventory.offHandInventory.set(0, stack);
         }
     }
@@ -288,24 +296,28 @@ public final class WorldUtil {
             FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer) world);
             BlockPos tePos = caller.getPos();
             fake.setPosition(tePos.getX() + 0.5, tePos.getY() + 0.5, tePos.getZ() + 0.5);
-            IBlockState state = world.getBlockState(pos);
+            BlockState state = world.getBlockState(pos);
 
             BreakEvent event = new BreakEvent(world, pos, state, fake);
-            if (!MinecraftForge.EVENT_BUS.post(event)) { return ForgeEventFactory.fireBlockHarvesting(drops, world, pos, state, 0, 1, false, fake); }
+            if (!MinecraftForge.EVENT_BUS.post(event)) {
+                return ForgeEventFactory.fireBlockHarvesting(drops, world, pos, state, 0, 1, false, fake);
+            }
         }
         return 0F;
     }
 
     /**
      * Tries to break a block as if this player had broken it.  This is a complex operation.
-     * @param stack The player's current held stack, main hand.
-     * @param world The player's world.
+     *
+     * @param stack  The player's current held stack, main hand.
+     * @param world  The player's world.
      * @param player The player that is breaking this block.
-     * @param pos The pos to break.
+     * @param pos    The pos to break.
+     *
      * @return If the break was successful.
      */
-    public static boolean breakExtraBlock(ItemStack stack, World world, EntityPlayer player, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
+    public static boolean breakExtraBlock(ItemStack stack, World world, PlayerEntity player, BlockPos pos) {
+        BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
         if (player.capabilities.isCreativeMode) {
@@ -315,7 +327,7 @@ public final class WorldUtil {
 
             // send update to client
             if (!world.isRemote) {
-                ((EntityPlayerMP) player).connection.sendPacket(new SPacketBlockChange(world, pos));
+                ((ServerPlayerEntity) player).connection.sendPacket(new SPacketBlockChange(world, pos));
             }
             return true;
         }
@@ -326,8 +338,10 @@ public final class WorldUtil {
         // server sided handling
         if (!world.isRemote) {
             // send the blockbreak event
-            int xp = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP) player).interactionManager.getGameType(), (EntityPlayerMP) player, pos);
-            if (xp == -1) return false;
+            int xp = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayerEntity) player).interactionManager.getGameType(), (ServerPlayerEntity) player, pos);
+            if (xp == -1) {
+                return false;
+            }
 
             TileEntity tileEntity = world.getTileEntity(pos);
             if (block.removedByPlayer(state, world, pos, player, true)) { // boolean is if block can be harvested, checked above
@@ -337,7 +351,7 @@ public final class WorldUtil {
             }
 
             // always send block update to client
-            ((EntityPlayerMP) player).connection.sendPacket(new SPacketBlockChange(world, pos));
+            ((ServerPlayerEntity) player).connection.sendPacket(new SPacketBlockChange(world, pos));
             return true;
         }
         // client sided handling

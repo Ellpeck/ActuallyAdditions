@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditio
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -24,9 +24,9 @@ import net.minecraft.item.ItemStack;
 public class ContainerDropper extends Container {
 
     private final TileEntityDropper dropper;
-    EntityPlayer player;
+    PlayerEntity player;
 
-    public ContainerDropper(EntityPlayer player, TileEntityBase tile) {
+    public ContainerDropper(PlayerEntity player, TileEntityBase tile) {
         this.dropper = (TileEntityDropper) tile;
         this.player = player;
         InventoryPlayer inventory = player.inventory;
@@ -47,7 +47,7 @@ public class ContainerDropper extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
         int inventoryStart = 9;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -85,12 +85,12 @@ public class ContainerDropper extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(PlayerEntity player) {
         return this.dropper.canPlayerUse(player);
     }
 
     @Override
-    public void onContainerClosed(EntityPlayer playerIn) {
+    public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
         if (!this.player.isSpectator()) this.dropper.getWorld().notifyNeighborsOfStateChange(this.dropper.getPos(), InitBlocks.blockDropper, false);
     }

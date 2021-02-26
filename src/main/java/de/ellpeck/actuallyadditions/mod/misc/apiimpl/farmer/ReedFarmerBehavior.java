@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -45,14 +45,14 @@ public class ReedFarmerBehavior implements IFarmerBehavior {
     public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer) {
         int use = 250;
         if (farmer.getEnergy() >= use) {
-            IBlockState state = world.getBlockState(pos);
+            BlockState state = world.getBlockState(pos);
             if (state.getBlock() instanceof BlockReed) {
                 FarmerResult result = FarmerResult.STOP_PROCESSING;
 
                 for (int i = 2; i >= 1; --i) {
                     if (farmer.getEnergy() >= use) {
                         BlockPos up = pos.up(i);
-                        IBlockState upState = world.getBlockState(up);
+                        BlockState upState = world.getBlockState(up);
                         if (upState.getBlock() instanceof BlockReed) {
                             NonNullList<ItemStack> drops = NonNullList.create();
                             upState.getBlock().getDrops(drops, world, pos, state, 0);

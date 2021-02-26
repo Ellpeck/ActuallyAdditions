@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.io.IOException;
-
-import org.lwjgl.input.Keyboard;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerSmileyCloud;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
@@ -25,14 +21,16 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
+import org.lwjgl.input.Keyboard;
 
-@SideOnly(Side.CLIENT)
+import java.io.IOException;
+
+@OnlyIn(Dist.CLIENT)
 public class GuiSmileyCloud extends GuiWtfMojang {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_smiley_cloud");
@@ -67,7 +65,9 @@ public class GuiSmileyCloud extends GuiWtfMojang {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        String name = this.cloud.name == null || this.cloud.name.isEmpty() ? "" : TextFormatting.GOLD + this.cloud.name + TextFormatting.RESET + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.the") + " ";
+        String name = this.cloud.name == null || this.cloud.name.isEmpty()
+            ? ""
+            : TextFormatting.GOLD + this.cloud.name + TextFormatting.RESET + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.the") + " ";
         String localizedName = name + StringUtil.localize("container." + ActuallyAdditions.MODID + ".cloud.name");
         this.fontRenderer.drawString(localizedName, this.xSize / 2 - this.fontRenderer.getStringWidth(localizedName) / 2, -10, StringUtil.DECIMAL_COLOR_WHITE);
     }
@@ -113,12 +113,12 @@ public class GuiSmileyCloud extends GuiWtfMojang {
     }
 
     private void sendPacket(String text, int textID) {
-        NBTTagCompound compound = new NBTTagCompound();
+        CompoundNBT compound = new CompoundNBT();
         compound.setInteger("X", this.x);
         compound.setInteger("Y", this.y);
         compound.setInteger("Z", this.z);
         compound.setInteger("WorldID", this.world.provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getMinecraft().player.getEntityId());
+        compound.setInteger("PlayerID", Minecraft.getInstance().player.getEntityId());
         compound.setInteger("TextID", textID);
         compound.setString("Text", text);
         PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_STRING_TO_TILE_HANDLER));

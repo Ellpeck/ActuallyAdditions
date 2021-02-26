@@ -14,8 +14,8 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
@@ -28,15 +28,19 @@ public class RenderSpecial {
         this.theThingToRender = stack;
     }
 
-    public void render(EntityPlayer player, float partialTicks) {
-        if (player.isInvisible() || !player.isWearing(EnumPlayerModelParts.CAPE) || player.isElytraFlying()) { return; }
+    public void render(PlayerEntity player, float partialTicks) {
+        if (player.isInvisible() || !player.isWearing(EnumPlayerModelParts.CAPE) || player.isElytraFlying()) {
+            return;
+        }
 
         GlStateManager.pushMatrix();
 
-        Vec3d currentPos = Minecraft.getMinecraft().player.getPositionEyes(partialTicks);
+        Vec3d currentPos = Minecraft.getInstance().player.getPositionEyes(partialTicks);
         Vec3d playerPos = player.getPositionEyes(partialTicks);
         GlStateManager.translate(playerPos.x - currentPos.x, playerPos.y - currentPos.y, playerPos.z - currentPos.z);
-        GlStateManager.translate(0D, 2.575D - (player.isSneaking() ? 0.125D : 0D), 0D);
+        GlStateManager.translate(0D, 2.575D - (player.isSneaking()
+            ? 0.125D
+            : 0D), 0D);
 
         this.render();
         GlStateManager.popMatrix();
@@ -53,7 +57,9 @@ public class RenderSpecial {
             }
             GlStateManager.rotate(180F, 1.0F, 0.0F, 1.0F);
 
-            float size = isBlock ? 0.5F : 0.4F;
+            float size = isBlock
+                ? 0.5F
+                : 0.4F;
             GlStateManager.scale(size, size, size);
 
             //Make the floaty stuff look nice using sine waves \o/ -xdjackiexd

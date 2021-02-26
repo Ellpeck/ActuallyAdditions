@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -35,22 +32,25 @@ import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MethodHandler implements IMethodHandler {
 
@@ -82,7 +82,9 @@ public class MethodHandler implements IMethodHandler {
         PotionEffect[] effectsStack = this.getEffectsFromStack(stack);
         if (effectsStack != null && effectsStack.length > 0) {
             for (PotionEffect effectStack : effectsStack) {
-                if (effect.getPotion() == effectStack.getPotion()) { return effectStack; }
+                if (effect.getPotion() == effectStack.getPotion()) {
+                    return effectStack;
+                }
             }
         }
         return null;
@@ -91,10 +93,16 @@ public class MethodHandler implements IMethodHandler {
     @Override
     public void addEffectProperties(ItemStack stack, PotionEffect effect, boolean addDur, boolean addAmp) {
         PotionEffect[] effects = this.getEffectsFromStack(stack);
-        stack.setTagCompound(new NBTTagCompound());
+        stack.setTagCompound(new CompoundNBT());
         for (int i = 0; i < effects.length; i++) {
             if (effects[i].getPotion() == effect.getPotion()) {
-                effects[i] = new PotionEffect(effects[i].getPotion(), effects[i].getDuration() + (addDur ? effect.getDuration() : 0), effects[i].getAmplifier() + (addAmp ? effect.getAmplifier() > 0 ? effect.getAmplifier() : 1 : 0));
+                effects[i] = new PotionEffect(effects[i].getPotion(), effects[i].getDuration() + (addDur
+                    ? effect.getDuration()
+                    : 0), effects[i].getAmplifier() + (addAmp
+                    ? effect.getAmplifier() > 0
+                    ? effect.getAmplifier()
+                    : 1
+                    : 0));
             }
             this.addEffectToStack(stack, effects[i]);
         }
@@ -102,13 +110,13 @@ public class MethodHandler implements IMethodHandler {
 
     @Override
     public void addEffectToStack(ItemStack stack, PotionEffect effect) {
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         if (tag == null) {
-            tag = new NBTTagCompound();
+            tag = new CompoundNBT();
         }
 
         int prevCounter = tag.getInteger("Counter");
-        NBTTagCompound compound = new NBTTagCompound();
+        CompoundNBT compound = new CompoundNBT();
         compound.setInteger("ID", Potion.getIdFromPotion(effect.getPotion()));
         compound.setInteger("Duration", effect.getDuration());
         compound.setInteger("Amplifier", effect.getAmplifier());
@@ -123,21 +131,23 @@ public class MethodHandler implements IMethodHandler {
     @Override
     public PotionEffect[] getEffectsFromStack(ItemStack stack) {
         ArrayList<PotionEffect> effects = new ArrayList<>();
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         if (tag != null) {
             int counter = tag.getInteger("Counter");
             while (counter > 0) {
-                NBTTagCompound compound = (NBTTagCompound) tag.getTag(counter + "");
+                CompoundNBT compound = (CompoundNBT) tag.getTag(counter + "");
                 PotionEffect effect = new PotionEffect(Potion.getPotionById(compound.getInteger("ID")), compound.getInteger("Duration"), compound.getByte("Amplifier"));
                 effects.add(effect);
                 counter--;
             }
         }
-        return effects.size() > 0 ? effects.toArray(new PotionEffect[effects.size()]) : null;
+        return effects.size() > 0
+            ? effects.toArray(new PotionEffect[effects.size()])
+            : null;
     }
 
     @Override
-    public boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
+    public boolean invokeConversionLens(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
         if (hitBlock != null) {
             int range = 1;
             int rangeX = 0;
@@ -164,8 +174,10 @@ public class MethodHandler implements IMethodHandler {
                     for (int reachY = -rangeY; reachY <= rangeY; reachY++) {
                         BlockPos pos = new BlockPos(hitBlock.getX() + reachX, hitBlock.getY() + reachY, hitBlock.getZ() + reachZ);
                         if (!tile.getWorldObject().isAirBlock(pos)) {
-                            IBlockState state = tile.getWorldObject().getBlockState(pos);
-                            if (state.getBlock() instanceof BlockLaserRelay) continue;
+                            BlockState state = tile.getWorldObject().getBlockState(pos);
+                            if (state.getBlock() instanceof BlockLaserRelay) {
+                                continue;
+                            }
                             LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), tile.getLens());
                             if (recipe != null && tile.getEnergy() >= recipe.getEnergyUsed()) {
                                 ItemStack output = recipe.getOutput();
@@ -174,7 +186,7 @@ public class MethodHandler implements IMethodHandler {
                                     recipe.transformHook(ItemStack.EMPTY, state, pos, tile);
                                     if (output.getItem() instanceof ItemBlock) {
                                         Block toPlace = Block.getBlockFromItem(output.getItem());
-                                        IBlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
+                                        BlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
                                         tile.getWorldObject().setBlockState(pos, state2Place, 2);
                                     } else {
                                         EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output.copy());

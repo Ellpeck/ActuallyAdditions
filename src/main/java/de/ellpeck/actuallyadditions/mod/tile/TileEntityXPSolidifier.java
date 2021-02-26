@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
@@ -19,11 +17,13 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
+
+import java.util.List;
 
 public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor {
 
@@ -35,7 +35,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         }
     }
 
-    private final int[] buttonAmounts = new int[] { 1, 5, 10, 20, 30, 40, 50, 64, -999 };
+    private final int[] buttonAmounts = new int[]{1, 5, 10, 20, 30, 40, 50, 64, -999};
     public int amount;
     private int lastAmount;
     private int singlePointAmount;
@@ -49,8 +49,12 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
      */
 
     public static int getExperienceForLevel(int level) {
-        if (level >= 0 && level < XP_MAP.length) { return XP_MAP[level]; }
-        if (level >= 21863) { return Integer.MAX_VALUE; }
+        if (level >= 0 && level < XP_MAP.length) {
+            return XP_MAP[level];
+        }
+        if (level >= 21863) {
+            return Integer.MAX_VALUE;
+        }
         return getExperienceForLevelImpl(level);
     }
 
@@ -58,7 +62,9 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         int res = 0;
         for (int i = 0; i < level; i++) {
             res += getXpBarCapacity(i);
-            if (res < 0) { return Integer.MAX_VALUE; }
+            if (res < 0) {
+                return Integer.MAX_VALUE;
+            }
         }
         return res;
     }
@@ -66,13 +72,17 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     public static int getXpBarCapacity(int level) {
         if (level >= 30) {
             return 112 + (level - 30) * 9;
-        } else if (level >= 15) { return 37 + (level - 15) * 5; }
+        } else if (level >= 15) {
+            return 37 + (level - 15) * 5;
+        }
         return 7 + level * 2;
     }
 
     public static int getLevelForExperience(int experience) {
         for (int i = 0; i < XP_MAP.length; i++) {
-            if (XP_MAP[i] > experience) { return i - 1; }
+            if (XP_MAP[i] > experience) {
+                return i - 1;
+            }
         }
         int i = XP_MAP.length;
         while (getExperienceForLevel(i) <= experience) {
@@ -81,11 +91,11 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         return i - 1;
     }
 
-    public static int getPlayerXP(EntityPlayer player) {
+    public static int getPlayerXP(PlayerEntity player) {
         return (int) (getExperienceForLevel(player.experienceLevel) + player.experience * player.xpBarCap());
     }
 
-    public static void addPlayerXP(EntityPlayer player, int amount) {
+    public static void addPlayerXP(PlayerEntity player, int amount) {
         int experience = Math.max(0, getPlayerXP(player) + amount);
         player.experienceTotal = experience;
         player.experienceLevel = getLevelForExperience(experience);
@@ -94,14 +104,14 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         compound.setInteger("Amount", this.amount);
         compound.setInteger("SinglePointAmount", this.singlePointAmount);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.amount = compound.getInteger("Amount");
         this.singlePointAmount = compound.getInteger("SinglePointAmount");
@@ -114,7 +124,9 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
             if (this.amount > 0) {
                 ItemStack stack = this.inv.getStackInSlot(0);
                 if (stack.isEmpty()) {
-                    int toSet = this.amount > 64 ? 64 : this.amount;
+                    int toSet = this.amount > 64
+                        ? 64
+                        : this.amount;
                     this.inv.setStackInSlot(0, new ItemStack(InitItems.itemSolidifiedExperience, toSet));
                     this.amount -= toSet;
                     this.markDirty();
@@ -169,16 +181,20 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
     @Override
     public void markDirty() {
-        if (this.amount < 0) this.amount = Integer.MAX_VALUE; //don't u go negative on me weird number
+        if (this.amount < 0) {
+            this.amount = Integer.MAX_VALUE; //don't u go negative on me weird number
+        }
         super.markDirty();
     }
 
     @Override
-    public void onButtonPressed(int buttonID, EntityPlayer player) {
+    public void onButtonPressed(int buttonID, PlayerEntity player) {
         if (buttonID < this.buttonAmounts.length) {
             int playerXP = getPlayerXP(player);
             if (playerXP > 0) {
-                int xp = this.buttonAmounts[buttonID] == -999 ? playerXP / ItemSolidifiedExperience.SOLID_XP_AMOUNT : this.buttonAmounts[buttonID];
+                int xp = this.buttonAmounts[buttonID] == -999
+                    ? playerXP / ItemSolidifiedExperience.SOLID_XP_AMOUNT
+                    : this.buttonAmounts[buttonID];
                 if (this.amount < Integer.MAX_VALUE - xp && playerXP >= ItemSolidifiedExperience.SOLID_XP_AMOUNT * xp) {
                     addPlayerXP(player, -(ItemSolidifiedExperience.SOLID_XP_AMOUNT * xp));
                     if (!this.world.isRemote) {

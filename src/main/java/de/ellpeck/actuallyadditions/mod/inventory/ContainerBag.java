@@ -10,11 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotDeletion;
@@ -27,19 +22,23 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContainerBag extends Container implements IButtonReactor {
 
@@ -98,7 +97,7 @@ public class ContainerBag extends Container implements IButtonReactor {
         if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBag) {
             ItemDrill.loadSlotsFromNBT(this.bagInventory, inventory.getCurrentItem());
             if (stack.hasTagCompound()) {
-                NBTTagCompound compound = stack.getTagCompound();
+                CompoundNBT compound = stack.getTagCompound();
                 this.filter.readFromNBT(compound, "Filter");
                 this.autoInsert = compound.getBoolean("AutoInsert");
             }
@@ -106,7 +105,9 @@ public class ContainerBag extends Container implements IButtonReactor {
     }
 
     public static int getSlotAmount(boolean isVoid) {
-        return isVoid ? 1 : 28;
+        return isVoid
+            ? 1
+            : 28;
     }
 
     @Override
@@ -115,12 +116,22 @@ public class ContainerBag extends Container implements IButtonReactor {
 
         if (this.filter.needsUpdateSend() || this.autoInsert != this.oldAutoInsert) {
             for (IContainerListener listener : this.listeners) {
-                listener.sendWindowProperty(this, 0, this.filter.isWhitelist ? 1 : 0);
-                listener.sendWindowProperty(this, 1, this.filter.respectMeta ? 1 : 0);
-                listener.sendWindowProperty(this, 2, this.filter.respectNBT ? 1 : 0);
+                listener.sendWindowProperty(this, 0, this.filter.isWhitelist
+                    ? 1
+                    : 0);
+                listener.sendWindowProperty(this, 1, this.filter.respectMeta
+                    ? 1
+                    : 0);
+                listener.sendWindowProperty(this, 2, this.filter.respectNBT
+                    ? 1
+                    : 0);
                 listener.sendWindowProperty(this, 3, this.filter.respectOredict);
-                listener.sendWindowProperty(this, 4, this.autoInsert ? 1 : 0);
-                listener.sendWindowProperty(this, 5, this.filter.respectMod ? 1 : 0);
+                listener.sendWindowProperty(this, 4, this.autoInsert
+                    ? 1
+                    : 0);
+                listener.sendWindowProperty(this, 5, this.filter.respectMod
+                    ? 1
+                    : 0);
             }
             this.filter.updateLasts();
             this.oldAutoInsert = this.autoInsert;
@@ -128,7 +139,7 @@ public class ContainerBag extends Container implements IButtonReactor {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void updateProgressBar(int id, int data) {
         if (id == 0) {
             this.filter.isWhitelist = data == 1;
@@ -146,7 +157,7 @@ public class ContainerBag extends Container implements IButtonReactor {
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
         int inventoryStart = this.bagInventory.getSlots() + 4;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -163,12 +174,18 @@ public class ContainerBag extends Container implements IButtonReactor {
                 //Shift from Inventory
                 if (this.isVoid || !this.filter.check(newStack) || !this.mergeItemStack(newStack, 4, 32, false)) {
                     if (slot >= inventoryStart && slot <= inventoryEnd) {
-                        if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
-                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) { return StackUtil.getEmpty(); }
+                        if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                            return StackUtil.getEmpty();
+                        }
+                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                        return StackUtil.getEmpty();
+                    }
                 }
                 //
 
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
+            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+                return StackUtil.getEmpty();
+            }
 
             if (!StackUtil.isValid(newStack)) {
                 theSlot.putStack(StackUtil.getEmpty());
@@ -176,7 +193,9 @@ public class ContainerBag extends Container implements IButtonReactor {
                 theSlot.onSlotChanged();
             }
 
-            if (newStack.getCount() == currentStack.getCount()) { return StackUtil.getEmpty(); }
+            if (newStack.getCount() == currentStack.getCount()) {
+                return StackUtil.getEmpty();
+            }
             theSlot.onTake(player, newStack);
 
             return currentStack;
@@ -185,7 +204,7 @@ public class ContainerBag extends Container implements IButtonReactor {
     }
 
     @Override
-    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
         if (SlotFilter.checkFilter(this, slotId, player)) {
             return StackUtil.getEmpty();
         } else if (clickTypeIn == ClickType.SWAP && dragType == this.inventory.currentItem) {
@@ -196,11 +215,11 @@ public class ContainerBag extends Container implements IButtonReactor {
     }
 
     @Override
-    public void onContainerClosed(EntityPlayer player) {
+    public void onContainerClosed(PlayerEntity player) {
         ItemStack stack = this.inventory.getCurrentItem();
         if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBag) {
             ItemDrill.writeSlotsToNBT(this.bagInventory, this.inventory.getCurrentItem());
-            NBTTagCompound compound = stack.getTagCompound();
+            CompoundNBT compound = stack.getTagCompound();
             this.filter.writeToNBT(compound, "Filter");
             compound.setBoolean("AutoInsert", this.autoInsert);
         }
@@ -208,12 +227,12 @@ public class ContainerBag extends Container implements IButtonReactor {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(PlayerEntity player) {
         return !this.sack.isEmpty() && player.getHeldItemMainhand() == this.sack;
     }
 
     @Override
-    public void onButtonPressed(int buttonID, EntityPlayer player) {
+    public void onButtonPressed(int buttonID, PlayerEntity player) {
         if (buttonID == 0) {
             this.autoInsert = !this.autoInsert;
         } else {
@@ -235,8 +254,9 @@ public class ContainerBag extends Container implements IButtonReactor {
                     ActuallyAdditions.LOGGER.error("Invalid item in sack blacklist: " + s);
                     continue;
                 }
-                if (split.length == 1) BLACKLIST.add(Pair.of(item, 0));
-                else if (split.length == 2) {
+                if (split.length == 1) {
+                    BLACKLIST.add(Pair.of(item, 0));
+                } else if (split.length == 2) {
                     BLACKLIST.add(Pair.of(item, Integer.parseInt(split[1])));
                 }
             }

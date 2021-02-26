@@ -21,7 +21,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class ItemDust extends ItemBase implements IColorProvidingItem {
 
@@ -48,7 +48,7 @@ public class ItemDust extends ItemBase implements IColorProvidingItem {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab)) {
             for (int j = 0; j < ALL_DUSTS.length; j++) {
@@ -64,7 +64,7 @@ public class ItemDust extends ItemBase implements IColorProvidingItem {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public IItemColor getItemColor() {
         return (stack, pass) -> stack.getItemDamage() >= ALL_DUSTS.length ? 0xFFFFFF : ALL_DUSTS[stack.getItemDamage()].color;

@@ -19,7 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BookletChapter implements IBookletChapter {
 
@@ -55,13 +55,13 @@ public class BookletChapter implements IBookletChapter {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public String getLocalizedName() {
         return StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".chapter." + this.getIdentifier() + ".name");
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public String getLocalizedNameWithFormatting() {
         return this.color + this.getLocalizedName();
     }

@@ -10,11 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.List;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
@@ -23,16 +18,20 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.UUID;
 
 public class ItemPlayerProbe extends ItemBase {
 
@@ -45,10 +44,10 @@ public class ItemPlayerProbe extends ItemBase {
     public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
         if (!world.isRemote) {
             if (stack.hasTagCompound()) {
-                NBTTagCompound compound = stack.getTagCompound();
+                CompoundNBT compound = stack.getTagCompound();
                 if (compound.hasKey("UUIDMost")) {
                     UUID id = compound.getUniqueId("UUID");
-                    EntityPlayer player = world.getPlayerEntityByUUID(id);
+                    PlayerEntity player = world.getPlayerEntityByUUID(id);
                     if (player != null) {
                         if (player.isSneaking()) {
                             ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
@@ -66,12 +65,12 @@ public class ItemPlayerProbe extends ItemBase {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileEntityPlayerInterface) {
             if (stack.hasTagCompound()) {
-                NBTTagCompound compound = stack.getTagCompound();
+                CompoundNBT compound = stack.getTagCompound();
                 if (compound.hasKey("UUIDMost")) {
                     if (!world.isRemote) {
                         TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
@@ -90,19 +89,19 @@ public class ItemPlayerProbe extends ItemBase {
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack aStack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+    public boolean itemInteractionForEntity(ItemStack aStack, PlayerEntity player, EntityLivingBase entity, Hand hand) {
         if (!player.world.isRemote) {
             ItemStack stack = player.getHeldItemMainhand();
             if (StackUtil.isValid(stack) && stack.getItem() == this) {
-                if (entity instanceof EntityPlayer) {
-                    EntityPlayer playerHit = (EntityPlayer) entity;
+                if (entity instanceof PlayerEntity) {
+                    PlayerEntity playerHit = (PlayerEntity) entity;
 
                     if (!playerHit.isSneaking()) {
                         if (!stack.hasTagCompound()) {
-                            stack.setTagCompound(new NBTTagCompound());
+                            stack.setTagCompound(new CompoundNBT());
                         }
 
-                        NBTTagCompound compound = stack.getTagCompound();
+                        CompoundNBT compound = stack.getTagCompound();
                         compound.setString("Name", playerHit.getName());
                         compound.setUniqueId("UUID", playerHit.getUniqueID());
                         return true;

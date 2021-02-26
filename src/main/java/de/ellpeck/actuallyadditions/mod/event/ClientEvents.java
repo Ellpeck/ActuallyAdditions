@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import java.util.Locale;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
@@ -29,11 +27,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
@@ -44,11 +42,12 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 import net.minecraftforge.oredict.OreDictionary;
 
-@SideOnly(Side.CLIENT)
+import java.util.Locale;
+
+@OnlyIn(Dist.CLIENT)
 public class ClientEvents {
 
     private static final String ADVANCED_INFO_TEXT_PRE = TextFormatting.DARK_GRAY + "     ";
@@ -63,7 +62,7 @@ public class ClientEvents {
     @SubscribeEvent
     public void onClientTick(ClientTickEvent event) {
         if (event.phase == Phase.END) {
-            Minecraft mc = Minecraft.getMinecraft();
+            Minecraft mc = Minecraft.getInstance();
 
             if (mc.world == null) {
                 WorldData.clear();
@@ -125,7 +124,9 @@ public class ClientEvents {
                     int meta = event.getItemStack().getItemDamage();
                     int max = event.getItemStack().getMaxDamage();
                     event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".meta.desc") + ":");
-                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + meta + (max > 0 ? "/" + max : ""));
+                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + meta + (max > 0
+                        ? "/" + max
+                        : ""));
 
                     //Unlocalized Name
                     String metaName = event.getItemStack().getItem().getTranslationKey(event.getItemStack());
@@ -135,7 +136,7 @@ public class ClientEvents {
                     }
 
                     //NBT
-                    NBTTagCompound compound = event.getItemStack().getTagCompound();
+                    CompoundNBT compound = event.getItemStack().getTagCompound();
                     if (compound != null && !compound.isEmpty()) {
                         event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".nbt.desc") + ":");
                         if (GuiScreen.isShiftKeyDown()) {
@@ -169,9 +170,9 @@ public class ClientEvents {
 
     @SubscribeEvent
     public void onGameOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getMinecraft().currentScreen == null) {
-            Minecraft minecraft = Minecraft.getMinecraft();
-            EntityPlayer player = minecraft.player;
+        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && Minecraft.getInstance().currentScreen == null) {
+            Minecraft minecraft = Minecraft.getInstance();
+            PlayerEntity player = minecraft.player;
             RayTraceResult posHit = minecraft.objectMouseOver;
             FontRenderer font = minecraft.fontRenderer;
             ItemStack stack = player.getHeldItemMainhand();
@@ -193,7 +194,9 @@ public class ClientEvents {
                 if (tileHit instanceof TileEntityBase) {
                     TileEntityBase base = (TileEntityBase) tileHit;
                     if (base.isRedstoneToggle()) {
-                        String strg = String.format("%s: %s", StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.name"), TextFormatting.DARK_RED + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode ? "pulse" : "deactivation")) + TextFormatting.RESET);
+                        String strg = String.format("%s: %s", StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.name"), TextFormatting.DARK_RED + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode
+                            ? "pulse"
+                            : "deactivation")) + TextFormatting.RESET);
                         font.drawStringWithShadow(strg, event.getResolution().getScaledWidth() / 2 + 5, event.getResolution().getScaledHeight() / 2 + 5, StringUtil.DECIMAL_COLOR_WHITE);
 
                         String expl;

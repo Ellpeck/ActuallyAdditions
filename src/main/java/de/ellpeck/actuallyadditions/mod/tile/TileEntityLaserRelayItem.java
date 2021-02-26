@@ -10,15 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
-
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
@@ -27,17 +18,20 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer.GenericItemHan
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
 
@@ -139,7 +133,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("Priority", this.priority);
@@ -147,19 +141,19 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public String getExtraDisplayString() {
         return StringUtil.localize("info." + ActuallyAdditions.MODID + ".laserRelay.item.extra") + ": " + TextFormatting.DARK_RED + this.getPriority() + TextFormatting.RESET;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public String getCompassDisplayString() {
         return TextFormatting.GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".laserRelay.item.display.1") + "\n" + StringUtil.localize("info." + ActuallyAdditions.MODID + ".laserRelay.item.display.2");
     }
 
     @Override
-    public void onCompassAction(EntityPlayer player) {
+    public void onCompassAction(PlayerEntity player) {
         if (player.isSneaking()) {
             this.priority--;
         } else {
@@ -168,7 +162,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.priority = compound.getInteger("Priority");

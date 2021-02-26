@@ -10,30 +10,30 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemSpawnerChanger extends ItemBase {
 
@@ -43,7 +43,7 @@ public class ItemSpawnerChanger extends ItemBase {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             ItemStack stack = player.getHeldItemMainhand();
             if (player.canPlayerEdit(pos.offset(facing), facing, stack)) {
@@ -55,7 +55,7 @@ public class ItemSpawnerChanger extends ItemBase {
 
                         //This is a hacky way to remove the spawn potentials that make the spawner reset from time to time
                         //Don't judge, there isn't a method for it and it's better than Reflection hackiness
-                        NBTTagCompound compound = new NBTTagCompound();
+                        CompoundNBT compound = new CompoundNBT();
                         logic.writeToNBT(compound);
                         compound.removeTag("SpawnPotentials");
                         compound.removeTag("SpawnData");
@@ -65,7 +65,7 @@ public class ItemSpawnerChanger extends ItemBase {
 
                         tile.markDirty();
 
-                        IBlockState state = world.getBlockState(pos);
+                        BlockState state = world.getBlockState(pos);
                         world.notifyBlockUpdate(pos, state, state, 3);
 
                         ItemPhantomConnector.clearStorage(stack, "Entity");
@@ -83,7 +83,7 @@ public class ItemSpawnerChanger extends ItemBase {
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack aStack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+    public boolean itemInteractionForEntity(ItemStack aStack, PlayerEntity player, EntityLivingBase entity, Hand hand) {
         if (!player.world.isRemote) {
             ItemStack stack = player.getHeldItemMainhand();
             if (this.getStoredEntity(stack) == null) {
@@ -98,16 +98,18 @@ public class ItemSpawnerChanger extends ItemBase {
 
     private boolean storeClickedEntity(ItemStack stack, EntityLivingBase entity) {
         if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new CompoundNBT());
         }
 
-        if (!(entity instanceof EntityPlayer) && entity.isNonBoss()) {
+        if (!(entity instanceof PlayerEntity) && entity.isNonBoss()) {
             ResourceLocation entityLoc = EntityList.getKey(entity.getClass());
             if (entityLoc != null) {
                 String entityName = entityLoc.toString();
                 if (entityName != null && !entityName.isEmpty()) {
                     for (String name : ConfigStringListValues.SPAWNER_CHANGER_BLACKLIST.getValue()) {
-                        if (entityName.equals(name)) { return false; }
+                        if (entityName.equals(name)) {
+                            return false;
+                        }
                     }
 
                     stack.getTagCompound().setString("Entity", entityName);
@@ -121,7 +123,9 @@ public class ItemSpawnerChanger extends ItemBase {
     private String getStoredEntity(ItemStack stack) {
         if (stack.hasTagCompound()) {
             String entity = stack.getTagCompound().getString("Entity");
-            if (entity != null && !entity.isEmpty()) { return entity; }
+            if (entity != null && !entity.isEmpty()) {
+                return entity;
+            }
         }
         return null;
     }

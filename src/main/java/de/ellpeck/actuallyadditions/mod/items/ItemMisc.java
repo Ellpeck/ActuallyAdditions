@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.EnumRarity;
@@ -28,7 +28,7 @@ import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class ItemMisc extends ItemBase {
 
@@ -55,7 +55,7 @@ public class ItemMisc extends ItemBase {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab)) {
             for (int j = 0; j < ALL_MISC_ITEMS.length; j++) {
@@ -82,7 +82,7 @@ public class ItemMisc extends ItemBase {
                 boolean isEmpowered = stack.getItemDamage() == TheMiscItems.EMPOWERED_CANOLA_SEED.ordinal();
                 if (stack.getItemDamage() == TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal() || isEmpowered) {
                     BlockPos pos = entity.getPosition();
-                    IBlockState state = entity.world.getBlockState(pos);
+                    BlockState state = entity.world.getBlockState(pos);
                     Block block = state.getBlock();
 
                     if (block instanceof IFluidBlock && block.getMetaFromState(state) == 0) {

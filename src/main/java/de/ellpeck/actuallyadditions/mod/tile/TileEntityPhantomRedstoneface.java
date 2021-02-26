@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import java.util.Arrays;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 
@@ -33,7 +33,7 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface {
     public void updateEntity() {
         if (!this.world.isRemote) {
             if (this.isBoundThingInRange()) {
-                IBlockState boundState = this.world.getBlockState(this.boundPosition);
+                BlockState boundState = this.world.getBlockState(this.boundPosition);
                 if (boundState != null) {
                     Block boundBlock = boundState.getBlock();
                     if (boundBlock != null) {

@@ -22,7 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class ItemCrystalShard extends ItemBase implements IColorProvidingItem {
 
@@ -48,7 +48,7 @@ public class ItemCrystalShard extends ItemBase implements IColorProvidingItem {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab)) {
             for (int j = 0; j < BlockCrystal.ALL_CRYSTALS.length; j++) {
@@ -65,7 +65,7 @@ public class ItemCrystalShard extends ItemBase implements IColorProvidingItem {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public IItemColor getItemColor() {
         return (stack, tintIndex) -> {
             int damage = stack.getItemDamage();

@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
@@ -19,8 +17,9 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class FilterSettings {
 
@@ -68,9 +67,13 @@ public class FilterSettings {
                         ItemDrill.loadSlotsFromNBT(inv, slot);
                         for (int k = 0; k < inv.getSlots(); k++) {
                             ItemStack filterSlot = inv.getStackInSlot(k);
-                            if (StackUtil.isValid(filterSlot) && areEqualEnough(filterSlot, stack, meta, nbt, mod, oredict)) { return whitelist; }
+                            if (StackUtil.isValid(filterSlot) && areEqualEnough(filterSlot, stack, meta, nbt, mod, oredict)) {
+                                return whitelist;
+                            }
                         }
-                    } else if (areEqualEnough(slot, stack, meta, nbt, mod, oredict)) { return whitelist; }
+                    } else if (areEqualEnough(slot, stack, meta, nbt, mod, oredict)) {
+                        return whitelist;
+                    }
                 }
             }
         }
@@ -80,7 +83,9 @@ public class FilterSettings {
     private static boolean areEqualEnough(ItemStack first, ItemStack second, boolean meta, boolean nbt, boolean mod, int oredict) {
         Item firstItem = first.getItem();
         Item secondItem = second.getItem();
-        if (mod && firstItem.getRegistryName().getNamespace().equals(secondItem.getRegistryName().getNamespace())) return true;
+        if (mod && firstItem.getRegistryName().getNamespace().equals(secondItem.getRegistryName().getNamespace())) {
+            return true;
+        }
 
         if (oredict != 0) {
             int[] firstIds = OreDictionary.getOreIDs(first);
@@ -99,10 +104,14 @@ public class FilterSettings {
                 for (int id : firstIds) {
                     if (ArrayUtils.contains(secondIds, id)) {
                         //Needs to match only one id, so return true on first match
-                        if (oredict == 1) { return true; }
+                        if (oredict == 1) {
+                            return true;
+                        }
                     }
                     //Needs to match every id, so just return false when no match
-                    else if (oredict == 2) { return false; }
+                    else if (oredict == 2) {
+                        return false;
+                    }
 
                 }
                 //If oredict mode 1, this will fail because nothing matched
@@ -111,16 +120,20 @@ public class FilterSettings {
             }
         }
 
-        if (firstItem != secondItem) return false;
+        if (firstItem != secondItem) {
+            return false;
+        }
 
         boolean metaFine = !meta || first.getItemDamage() == second.getItemDamage();
         boolean nbtFine = !nbt || ItemStack.areItemStackTagsEqual(first, second);
-        if (metaFine && nbtFine) return true;
+        if (metaFine && nbtFine) {
+            return true;
+        }
         return false;
     }
 
-    public void writeToNBT(NBTTagCompound tag, String name) {
-        NBTTagCompound compound = new NBTTagCompound();
+    public void writeToNBT(CompoundNBT tag, String name) {
+        CompoundNBT compound = new CompoundNBT();
         compound.setBoolean("Whitelist", this.isWhitelist);
         compound.setBoolean("Meta", this.respectMeta);
         compound.setBoolean("NBT", this.respectNBT);
@@ -130,8 +143,8 @@ public class FilterSettings {
         tag.setTag(name, compound);
     }
 
-    public void readFromNBT(NBTTagCompound tag, String name) {
-        NBTTagCompound compound = tag.getCompoundTag(name);
+    public void readFromNBT(CompoundNBT tag, String name) {
+        CompoundNBT compound = tag.getCompoundTag(name);
         this.isWhitelist = compound.getBoolean("Whitelist");
         this.respectMeta = compound.getBoolean("Meta");
         this.respectNBT = compound.getBoolean("NBT");
@@ -182,7 +195,9 @@ public class FilterSettings {
 
     public boolean needsCheck() {
         for (int i = 0; i < this.filterInventory.getSlots(); i++) {
-            if (StackUtil.isValid(this.filterInventory.getStackInSlot(i))) { return true; }
+            if (StackUtil.isValid(this.filterInventory.getStackInSlot(i))) {
+                return true;
+            }
         }
         return this.isWhitelist;
     }

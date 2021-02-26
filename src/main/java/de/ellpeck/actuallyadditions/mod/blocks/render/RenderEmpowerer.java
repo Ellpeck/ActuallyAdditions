@@ -23,15 +23,17 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class RenderEmpowerer extends TileEntitySpecialRenderer<TileEntityEmpowerer> {
 
     @Override
     public void render(TileEntityEmpowerer tile, double x, double y, double z, float par5, int par6, float f) {
-        if (!(tile instanceof TileEntityEmpowerer)) { return; }
+        if (!(tile instanceof TileEntityEmpowerer)) {
+            return;
+        }
 
         ItemStack stack = tile.inv.getStackInSlot(0);
         if (StackUtil.isValid(stack)) {
@@ -42,7 +44,9 @@ public class RenderEmpowerer extends TileEntitySpecialRenderer<TileEntityEmpower
             GlStateManager.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
             GlStateManager.rotate((float) (boop * 40D % 360), 0, 1, 0);
 
-            float scale = stack.getItem() instanceof ItemBlock ? 0.85F : 0.65F;
+            float scale = stack.getItem() instanceof ItemBlock
+                ? 0.85F
+                : 0.65F;
             GlStateManager.scale(scale, scale, scale);
             try {
                 AssetUtil.renderItemInWorld(stack);

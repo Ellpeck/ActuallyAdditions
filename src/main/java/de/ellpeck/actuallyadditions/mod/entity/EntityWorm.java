@@ -12,15 +12,10 @@ package de.ellpeck.actuallyadditions.mod.entity;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockFarmland;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.*;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -35,12 +30,12 @@ public class EntityWorm extends Entity {
         this.setEntityBoundingBox(new AxisAlignedBB(0, 0, 0, 0, 0, 0));
     }
 
-    public static boolean canWormify(World world, BlockPos pos, IBlockState state) {
+    public static boolean canWormify(World world, BlockPos pos, BlockState state) {
         Block block = state.getBlock();
         boolean rightBlock = block instanceof BlockFarmland || block instanceof BlockDirt || block instanceof BlockGrass;
         if (rightBlock) {
             BlockPos posUp = pos.up();
-            IBlockState stateUp = world.getBlockState(posUp);
+            BlockState stateUp = world.getBlockState(posUp);
             Block blockUp = stateUp.getBlock();
             return blockUp instanceof IPlantable || blockUp instanceof BlockBush || blockUp.isReplaceable(world, posUp);
         } else {
@@ -54,12 +49,12 @@ public class EntityWorm extends Entity {
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound compound) {
+    protected void readEntityFromNBT(CompoundNBT compound) {
         this.timer = compound.getInteger("Timer");
     }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound compound) {
+    protected void writeEntityToNBT(CompoundNBT compound) {
         compound.setInteger("Timer", this.timer);
     }
 
@@ -77,7 +72,7 @@ public class EntityWorm extends Entity {
                 for (int x = -1; x <= 1; x++) {
                     for (int z = -1; z <= 1; z++) {
                         BlockPos pos = new BlockPos(this.posX + x, this.posY, this.posZ + z);
-                        IBlockState state = this.world.getBlockState(pos);
+                        BlockState state = this.world.getBlockState(pos);
                         Block block = state.getBlock();
                         boolean isMiddlePose = x == 0 && z == 0;
 
@@ -87,24 +82,28 @@ public class EntityWorm extends Entity {
                             if (!isFarmland || state.getValue(BlockFarmland.MOISTURE) < 7) {
                                 if (isMiddlePose || this.world.rand.nextFloat() >= 0.45F) {
 
-                                    if (!isFarmland) DefaultFarmerBehavior.useHoeAt(this.world, pos);
+                                    if (!isFarmland) {
+                                        DefaultFarmerBehavior.useHoeAt(this.world, pos);
+                                    }
                                     state = this.world.getBlockState(pos);
                                     isFarmland = state.getBlock() instanceof BlockFarmland;
 
-                                    if (isFarmland) this.world.setBlockState(pos, state.withProperty(BlockFarmland.MOISTURE, 7), 2);
+                                    if (isFarmland) {
+                                        this.world.setBlockState(pos, state.withProperty(BlockFarmland.MOISTURE, 7), 2);
+                                    }
                                 }
                             }
 
                             if (isFarmland && this.world.rand.nextFloat() >= 0.95F) {
                                 BlockPos plant = pos.up();
                                 if (!this.world.isAirBlock(plant)) {
-                                    IBlockState plantState = this.world.getBlockState(plant);
+                                    BlockState plantState = this.world.getBlockState(plant);
                                     Block plantBlock = plantState.getBlock();
 
                                     if ((plantBlock instanceof IGrowable || plantBlock instanceof IPlantable) && !(plantBlock instanceof BlockGrass)) {
                                         plantBlock.updateTick(this.world, plant, plantState, this.world.rand);
 
-                                        IBlockState newState = this.world.getBlockState(plant);
+                                        BlockState newState = this.world.getBlockState(plant);
                                         if (newState != plantState) {
                                             this.world.playEvent(2005, plant, 0);
                                         }

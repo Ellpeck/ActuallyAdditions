@@ -15,13 +15,12 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements ISharingEnergyProvider {
 
@@ -39,18 +38,18 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
         super(1, "coalGenerator");
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public int getEnergyScaled(int i) {
         return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public int getBurningScaled(int i) {
         return this.currentBurnTime * i / this.maxBurnTime;
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("BurnTime", this.currentBurnTime);
             compound.setInteger("MaxBurnTime", this.maxBurnTime);
@@ -60,7 +59,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.currentBurnTime = compound.getInteger("BurnTime");
             this.maxBurnTime = compound.getInteger("MaxBurnTime");
@@ -125,7 +124,9 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public IRemover getRemover() {
         return (slot, automation) -> {
-            if (!automation) return true;
+            if (!automation) {
+                return true;
+            }
             return TileEntityFurnace.getItemBurnTime(this.inv.getStackInSlot(0)) <= 0;
         };
     }

@@ -19,10 +19,10 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -55,7 +55,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -69,7 +69,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -120,11 +120,13 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     }
 
     private boolean mine() {
-        int actualUse = ENERGY_USE_PER_BLOCK * (this.onlyMineOres ? 3 : 1);
+        int actualUse = ENERGY_USE_PER_BLOCK * (this.onlyMineOres
+            ? 3
+            : 1);
         if (this.storage.getEnergyStored() >= actualUse) {
             BlockPos pos = new BlockPos(this.pos.getX() + this.checkX, this.checkY, this.pos.getZ() + this.checkZ);
 
-            IBlockState state = this.world.getBlockState(pos);
+            BlockState state = this.world.getBlockState(pos);
             Block block = state.getBlock();
             ItemStack stack = block.getPickBlock(state, new RayTraceResult(Type.BLOCK, new Vec3d(0, 0, 0), EnumFacing.DOWN, pos), this.world, pos, FakePlayerFactory.getMinecraft((WorldServer) this.world));
             if (!block.isAir(this.world.getBlockState(pos), this.world, pos)) {
@@ -164,13 +166,17 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
                         int[] ids = OreDictionary.getOreIDs(stack);
                         for (int id : ids) {
                             String name = OreDictionary.getOreName(id);
-                            if (name.startsWith("ore") || name.startsWith("denseore")) { return true; }
+                            if (name.startsWith("ore") || name.startsWith("denseore")) {
+                                return true;
+                            }
                         }
 
                         String reg = block.getRegistryName().toString();
                         if (!reg.isEmpty()) {
                             for (String string : ConfigStringListValues.MINER_EXTRA_WHITELIST.getValue()) {
-                                if (reg.equals(string)) { return true; }
+                                if (reg.equals(string)) {
+                                    return true;
+                                }
                             }
                         }
                     }
@@ -182,14 +188,16 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     }
 
     private void shootParticles(int endX, int endY, int endZ) {
-        AssetUtil.spawnLaserWithTimeServer(this.world, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[] { 65F / 255F, 150F / 255F, 2F / 255F }, 10, 120, 0.1F, 0.8F);
+        AssetUtil.spawnLaserWithTimeServer(this.world, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{65F / 255F, 150F / 255F, 2F / 255F}, 10, 120, 0.1F, 0.8F);
     }
 
     private boolean isBlacklisted(Block block) {
         String reg = block.getRegistryName().toString();
         if (!reg.isEmpty()) {
             for (String string : ConfigStringListValues.MINER_BLACKLIST.getValue()) {
-                if (reg.equals(string)) { return true; }
+                if (reg.equals(string)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -201,7 +209,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     }
 
     @Override
-    public void onButtonPressed(int buttonID, EntityPlayer player) {
+    public void onButtonPressed(int buttonID, PlayerEntity player) {
         if (buttonID == 0) {
             this.onlyMineOres = !this.onlyMineOres;
             this.sendUpdate();

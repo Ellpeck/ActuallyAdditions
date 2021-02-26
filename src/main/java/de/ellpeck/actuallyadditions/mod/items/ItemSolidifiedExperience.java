@@ -16,12 +16,12 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
@@ -41,7 +41,7 @@ public class ItemSolidifiedExperience extends ItemBase {
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event) {
         if (ConfigBoolValues.DO_XP_DROPS.isEnabled()) {
-            if (event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof EntityPlayer && event.getEntityLiving().world.getGameRules().getBoolean("doMobLoot")) {
+            if (event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof PlayerEntity && event.getEntityLiving().world.getGameRules().getBoolean("doMobLoot")) {
                 //Drop Solidified XP
                 if (event.getEntityLiving() instanceof EntityCreature) {
                     if (event.getEntityLiving().world.rand.nextInt(10) <= event.getLootingLevel() * 2) {
@@ -53,7 +53,7 @@ public class ItemSolidifiedExperience extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote) {
             int amount;
@@ -73,7 +73,9 @@ public class ItemSolidifiedExperience extends ItemBase {
                 EntityXPOrb orb = new EntityXPOrb(world, player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, amount);
                 orb.getEntityData().setBoolean(ActuallyAdditions.MODID + "FromSolidified", true);
                 world.spawnEntity(orb);
-            } else player.addExperience(amount);
+            } else {
+                player.addExperience(amount);
+            }
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }

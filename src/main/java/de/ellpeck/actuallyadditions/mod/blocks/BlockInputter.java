@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
@@ -23,15 +21,17 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class BlockInputter extends BlockContainerBase {
 
@@ -51,15 +51,19 @@ public class BlockInputter extends BlockContainerBase {
 
     @Override
     public TileEntity createNewTileEntity(World world, int par2) {
-        return this.isAdvanced ? new TileEntityInputterAdvanced() : new TileEntityInputter();
+        return this.isAdvanced
+            ? new TileEntityInputterAdvanced()
+            : new TileEntityInputter();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
         if (!world.isRemote) {
             TileEntityInputter inputter = (TileEntityInputter) world.getTileEntity(pos);
             if (inputter != null) {
-                player.openGui(ActuallyAdditions.INSTANCE, this.isAdvanced ? GuiHandler.GuiTypes.INPUTTER_ADVANCED.ordinal() : GuiHandler.GuiTypes.INPUTTER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(ActuallyAdditions.INSTANCE, this.isAdvanced
+                    ? GuiHandler.GuiTypes.INPUTTER_ADVANCED.ordinal()
+                    : GuiHandler.GuiTypes.INPUTTER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;
         }
@@ -109,7 +113,9 @@ public class BlockInputter extends BlockContainerBase {
                 }
 
                 return StringUtil.localize(this.getTranslationKey() + ".name") + " (" + StringUtil.localize("tile." + ActuallyAdditions.MODID + ".block_inputter.add." + this.toPick + ".name") + ")";
-            } else return super.getItemStackDisplayName(stack);
+            } else {
+                return super.getItemStackDisplayName(stack);
+            }
         }
     }
 }

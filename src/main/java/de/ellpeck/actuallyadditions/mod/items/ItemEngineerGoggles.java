@@ -20,7 +20,7 @@ import de.ellpeck.actuallyadditions.mod.material.InitArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -28,7 +28,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
 
@@ -44,15 +44,15 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public static boolean isWearing(EntityPlayer player) {
+    public static boolean isWearing(PlayerEntity player) {
         ItemStack face = player.inventory.armorInventory.get(3);
         return StackUtil.isValid(face) && face.getItem() instanceof IGoggles;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onClientTick(ClientTickEvent event) {
-        EntityPlayer player = ActuallyAdditions.PROXY.getCurrentPlayer();
+        PlayerEntity player = ActuallyAdditions.PROXY.getCurrentPlayer();
         if (player != null && isWearing(player)) {
             ItemStack face = player.inventory.armorInventory.get(3);
             if (((IGoggles) face.getItem()).displaySpectralMobs()) {

@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.entry;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
@@ -26,8 +22,11 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class BookletEntry implements IBookletEntry {
 
@@ -48,18 +47,22 @@ public class BookletEntry implements IBookletEntry {
         this.color = TextFormatting.RESET;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static boolean fitsFilter(IBookletPage page, String searchBarText) {
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
 
         List<ItemStack> items = new ArrayList<>();
         page.getItemStacksForPage(items);
         if (!items.isEmpty()) {
             for (ItemStack stack : items) {
                 if (StackUtil.isValid(stack)) {
-                    List<String> tooltip = stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
+                    List<String> tooltip = stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips
+                        ? ITooltipFlag.TooltipFlags.ADVANCED
+                        : ITooltipFlag.TooltipFlags.NORMAL);
                     for (String strg : tooltip) {
-                        if (strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)) { return true; }
+                        if (strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -71,7 +74,9 @@ public class BookletEntry implements IBookletEntry {
             for (FluidStack stack : fluids) {
                 if (stack != null) {
                     String strg = stack.getLocalizedName();
-                    if (strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)) { return true; }
+                    if (strg != null && strg.toLowerCase(Locale.ROOT).contains(searchBarText)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -90,13 +95,13 @@ public class BookletEntry implements IBookletEntry {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public String getLocalizedName() {
         return StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".indexEntry." + this.getIdentifier() + ".name");
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public String getLocalizedNameWithFormatting() {
         return this.color + this.getLocalizedName();
     }
@@ -107,7 +112,7 @@ public class BookletEntry implements IBookletEntry {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public List<IBookletChapter> getChaptersForDisplay(String searchBarText) {
         if (searchBarText != null && !searchBarText.isEmpty()) {
             String search = searchBarText.toLowerCase(Locale.ROOT);
@@ -138,7 +143,7 @@ public class BookletEntry implements IBookletEntry {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public boolean visibleOnFrontPage() {
         return true;
     }

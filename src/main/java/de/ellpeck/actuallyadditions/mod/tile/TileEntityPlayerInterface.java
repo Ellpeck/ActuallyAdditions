@@ -10,17 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.UUID;
-
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
+
+import java.util.UUID;
 
 public class TileEntityPlayerInterface extends TileEntityBase implements IEnergyDisplay {
 
@@ -29,7 +29,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     public UUID connectedPlayer;
     public String playerName;
     private IItemHandler playerHandler;
-    private EntityPlayer oldPlayer;
+    private PlayerEntity oldPlayer;
     private int oldEnergy;
     private int range;
 
@@ -37,11 +37,13 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
         super("playerInterface");
     }
 
-    private EntityPlayer getPlayer() {
+    private PlayerEntity getPlayer() {
         if (this.connectedPlayer != null) {
-            EntityPlayer player = this.world.getPlayerEntityByUUID(this.connectedPlayer);
+            PlayerEntity player = this.world.getPlayerEntityByUUID(this.connectedPlayer);
             if (player != null) {
-                if (player.getDistance(this.pos.getX(), this.pos.getY(), this.pos.getZ()) <= this.range) { return player; }
+                if (player.getDistance(this.pos.getX(), this.pos.getY(), this.pos.getZ()) <= this.range) {
+                    return player;
+                }
             }
         }
         return null;
@@ -49,12 +51,14 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
 
     @Override
     public IItemHandler getItemHandler(EnumFacing facing) {
-        EntityPlayer player = this.getPlayer();
+        PlayerEntity player = this.getPlayer();
 
         if (this.oldPlayer != player) {
             this.oldPlayer = player;
 
-            this.playerHandler = player == null ? null : new PlayerInvWrapper(player.inventory);
+            this.playerHandler = player == null
+                ? null
+                : new PlayerInvWrapper(player.inventory);
         }
 
         return this.playerHandler;
@@ -68,7 +72,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
 
             this.range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.world, this.pos);
 
-            EntityPlayer player = this.getPlayer();
+            PlayerEntity player = this.getPlayer();
             if (player != null) {
                 for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
                     if (this.storage.getEnergyStored() > 0) {
@@ -105,7 +109,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         this.storage.writeToNBT(compound);
@@ -116,7 +120,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         this.storage.readFromNBT(compound);

@@ -12,14 +12,13 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerFluidMap;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler {
 
@@ -58,20 +57,20 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         compound.setInteger("ProcessTime", this.currentProcessTime);
         this.canolaTank.writeToNBT(compound);
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         this.oilTank.writeToNBT(tag);
         compound.setTag("OilTank", tag);
         super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         this.currentProcessTime = compound.getInteger("ProcessTime");
         this.canolaTank.readFromNBT(compound);
-        NBTTagCompound tag = compound.getCompoundTag("OilTank");
+        CompoundNBT tag = compound.getCompoundTag("OilTank");
         if (tag != null) {
             this.oilTank.readFromNBT(tag);
         }
@@ -116,17 +115,17 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
         return (int) calc;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public int getProcessScaled(int i) {
         return this.currentProcessTime * i / PROCESS_TIME;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public int getOilTankScaled(int i) {
         return this.oilTank.getFluidAmount() * i / this.oilTank.getCapacity();
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public int getCanolaTankScaled(int i) {
         return this.canolaTank.getFluidAmount() * i / this.canolaTank.getCapacity();
     }

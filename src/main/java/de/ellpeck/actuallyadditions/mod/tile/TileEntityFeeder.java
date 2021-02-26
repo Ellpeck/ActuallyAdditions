@@ -10,19 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.List;
-import java.util.Optional;
-
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
+
+import java.util.List;
+import java.util.Optional;
 
 public class TileEntityFeeder extends TileEntityInventoryBase {
 
@@ -42,7 +42,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase {
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         compound.setInteger("Timer", this.currentTimer);
         if (type == NBTType.SYNC) {
@@ -51,7 +51,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.currentTimer = compound.getInteger("Timer");
         if (type == NBTType.SYNC) {
@@ -63,7 +63,9 @@ public class TileEntityFeeder extends TileEntityInventoryBase {
     public void updateEntity() {
         super.updateEntity();
         this.currentTimer = MathHelper.clamp(++this.currentTimer, 0, 100);
-        if (this.world.isRemote) return;
+        if (this.world.isRemote) {
+            return;
+        }
         int range = 5;
         ItemStack stack = this.inv.getStackInSlot(0);
         if (!stack.isEmpty() && this.currentTimer >= TIME) {

@@ -18,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class PageLinkButton extends BookletPage {
 
@@ -36,7 +36,7 @@ public class PageLinkButton extends BookletPage {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void initGui(GuiBookletBase gui, int startX, int startY) {
         super.initGui(gui, startX, startY);
 
@@ -44,14 +44,14 @@ public class PageLinkButton extends BookletPage {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
         PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 5);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void actionPerformed(GuiBookletBase gui, GuiButton button) {
         if (button.id == this.buttonId) {
             if (Desktop.isDesktopSupported()) {

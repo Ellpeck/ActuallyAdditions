@@ -10,23 +10,23 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import net.minecraft.entity.item.EntityFireworkRocket;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.IEnergyStorage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisplay, INumberReactor {
 
@@ -52,7 +52,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
 
@@ -73,7 +73,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
 
@@ -94,44 +94,44 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     @Override
-    public void onNumberReceived(double number, int id, EntityPlayer player) {
+    public void onNumberReceived(double number, int id, PlayerEntity player) {
         switch (id) {
-        case 0:
-            this.intValuePlay = (int) number;
-            break;
-        case 1:
-            this.chargeAmount = (int) number;
-            break;
-        case 2:
-            this.flightTime = (int) number;
-            break;
-        case 3:
-            this.trailOrFlickerChance = (float) number;
-            break;
-        case 4:
-            this.flickerChance = (float) number;
-            break;
-        case 5:
-            this.colorAmount = (int) number;
-            break;
-        case 6:
-            this.typeChance0 = (float) number;
-            break;
-        case 7:
-            this.typeChance1 = (float) number;
-            break;
-        case 8:
-            this.typeChance2 = (float) number;
-            break;
-        case 9:
-            this.typeChance3 = (float) number;
-            break;
-        case 10:
-            this.typeChance4 = (float) number;
-            break;
-        case 11:
-            this.areaOfEffect = (int) number;
-            break;
+            case 0:
+                this.intValuePlay = (int) number;
+                break;
+            case 1:
+                this.chargeAmount = (int) number;
+                break;
+            case 2:
+                this.flightTime = (int) number;
+                break;
+            case 3:
+                this.trailOrFlickerChance = (float) number;
+                break;
+            case 4:
+                this.flickerChance = (float) number;
+                break;
+            case 5:
+                this.colorAmount = (int) number;
+                break;
+            case 6:
+                this.typeChance0 = (float) number;
+                break;
+            case 7:
+                this.typeChance1 = (float) number;
+                break;
+            case 8:
+                this.typeChance2 = (float) number;
+                break;
+            case 9:
+                this.typeChance3 = (float) number;
+                break;
+            case 10:
+                this.typeChance4 = (float) number;
+                break;
+            case 11:
+                this.areaOfEffect = (int) number;
+                break;
         }
 
         this.sendUpdate();
@@ -158,16 +158,16 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     private ItemStack makeFirework() {
-        NBTTagList list = new NBTTagList();
+        ListNBT list = new ListNBT();
         for (int i = 0; i < this.getRandomWithPlay(this.chargeAmount); i++) {
             list.appendTag(this.makeFireworkCharge());
         }
 
-        NBTTagCompound compound1 = new NBTTagCompound();
+        CompoundNBT compound1 = new CompoundNBT();
         compound1.setTag("Explosions", list);
         compound1.setByte("Flight", (byte) this.getRandomWithPlay(this.flightTime));
 
-        NBTTagCompound compound = new NBTTagCompound();
+        CompoundNBT compound = new CompoundNBT();
         compound.setTag("Fireworks", compound1);
 
         ItemStack firework = new ItemStack(Items.FIREWORKS);
@@ -176,8 +176,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         return firework;
     }
 
-    private NBTTagCompound makeFireworkCharge() {
-        NBTTagCompound compound = new NBTTagCompound();
+    private CompoundNBT makeFireworkCharge() {
+        CompoundNBT compound = new CompoundNBT();
 
         if (this.world.rand.nextFloat() <= this.trailOrFlickerChance) {
             if (this.world.rand.nextFloat() <= this.flickerChance) {

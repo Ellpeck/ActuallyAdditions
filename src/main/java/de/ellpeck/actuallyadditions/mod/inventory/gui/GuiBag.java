@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
@@ -25,13 +21,16 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+@OnlyIn(Dist.CLIENT)
 public class GuiBag extends GuiWtfMojang {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_bag");
@@ -60,16 +59,18 @@ public class GuiBag extends GuiWtfMojang {
 
         this.filter = new FilterSettingsGui(this.container.filter, this.guiLeft + 138, this.guiTop + 10, this.buttonList);
 
-        this.buttonAutoInsert = new GuiButton(0, this.guiLeft - 21, this.guiTop + 8, 20, 20, (this.container.autoInsert ? TextFormatting.DARK_GREEN : TextFormatting.RED) + "I");
+        this.buttonAutoInsert = new GuiButton(0, this.guiLeft - 21, this.guiTop + 8, 20, 20, (this.container.autoInsert
+            ? TextFormatting.DARK_GREEN
+            : TextFormatting.RED) + "I");
         this.buttonList.add(this.buttonAutoInsert);
     }
 
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
-        NBTTagCompound data = new NBTTagCompound();
+        CompoundNBT data = new CompoundNBT();
         data.setInteger("ButtonID", button.id);
-        data.setInteger("PlayerID", Minecraft.getMinecraft().player.getEntityId());
-        data.setInteger("WorldID", Minecraft.getMinecraft().world.provider.getDimension());
+        data.setInteger("PlayerID", Minecraft.getInstance().player.getEntityId());
+        data.setInteger("WorldID", Minecraft.getInstance().world.provider.getDimension());
         PacketHandler.theNetwork.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
     }
 
@@ -78,12 +79,16 @@ public class GuiBag extends GuiWtfMojang {
         super.updateScreen();
         this.filter.update();
 
-        this.buttonAutoInsert.displayString = (this.container.autoInsert ? TextFormatting.DARK_GREEN : TextFormatting.RED) + "I";
+        this.buttonAutoInsert.displayString = (this.container.autoInsert
+            ? TextFormatting.DARK_GREEN
+            : TextFormatting.RED) + "I";
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + "." + (this.isVoid ? "voidBag" : "bag") + ".name"));
+        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + "." + (this.isVoid
+            ? "voidBag"
+            : "bag") + ".name"));
     }
 
     @Override
@@ -93,7 +98,9 @@ public class GuiBag extends GuiWtfMojang {
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop + 90, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(this.isVoid ? RES_LOC_VOID : RES_LOC);
+        this.mc.getTextureManager().bindTexture(this.isVoid
+            ? RES_LOC_VOID
+            : RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 90);
     }
 
@@ -104,7 +111,9 @@ public class GuiBag extends GuiWtfMojang {
 
         if (this.buttonAutoInsert.isMouseOver()) {
             List<String> text = new ArrayList<>();
-            text.add(TextFormatting.BOLD + "Auto-Insert " + (this.container.autoInsert ? "On" : "Off"));
+            text.add(TextFormatting.BOLD + "Auto-Insert " + (this.container.autoInsert
+                ? "On"
+                : "Off"));
             text.addAll(this.mc.fontRenderer.listFormattedStringToWidth("Turn this on to make items that get picked up automatically go into the bag.", 200));
             text.addAll(this.mc.fontRenderer.listFormattedStringToWidth(TextFormatting.GRAY + "" + TextFormatting.ITALIC + "Note that this WON'T work when you are holding the bag in your hand.", 200));
             this.drawHoveringText(text, mouseX, mouseY);

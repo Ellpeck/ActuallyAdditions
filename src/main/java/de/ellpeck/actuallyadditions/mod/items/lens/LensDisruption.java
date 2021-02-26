@@ -10,29 +10,29 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import java.util.ArrayList;
-
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.ArrayList;
 
 public class LensDisruption extends Lens {
 
     private static final int ENERGY_USE = 150000;
 
     @Override
-    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
+    public boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
         if (ConfigIntValues.ELEVEN.getValue() == 11 && tile.getEnergy() >= ENERGY_USE && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)) {
             int range = 2;
             ArrayList<EntityItem> items = (ArrayList<EntityItem>) tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX() - range, hitBlock.getY() - range, hitBlock.getZ() - range, hitBlock.getX() + range, hitBlock.getY() + range, hitBlock.getZ() + range));
@@ -53,7 +53,7 @@ public class LensDisruption extends Lens {
                         newStack.setCount(stack.getCount());
 
                         if (!newStack.hasTagCompound()) {
-                            newStack.setTagCompound(new NBTTagCompound());
+                            newStack.setTagCompound(new CompoundNBT());
                         }
                         newStack.getTagCompound().setBoolean(ActuallyAdditions.MODID + "DisruptedAlready", true);
 
@@ -73,7 +73,7 @@ public class LensDisruption extends Lens {
 
     @Override
     public float[] getColor() {
-        return new float[] { 246F / 255F, 255F / 255F, 183F / 255F };
+        return new float[]{246F / 255F, 255F / 255F, 183F / 255F};
     }
 
     @Override

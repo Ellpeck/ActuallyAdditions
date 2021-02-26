@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.network.gui;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 
 public interface IButtonReactor {
 
@@ -21,5 +21,5 @@ public interface IButtonReactor {
      * @param buttonID The button's ID
      * @param player   The Player pressing it
      */
-    void onButtonPressed(int buttonID, EntityPlayer player);
+    void onButtonPressed(int buttonID, PlayerEntity player);
 }

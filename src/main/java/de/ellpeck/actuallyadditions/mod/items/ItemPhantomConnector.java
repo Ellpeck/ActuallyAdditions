@@ -10,29 +10,28 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemPhantomConnector extends ItemBase {
 
@@ -42,25 +41,29 @@ public class ItemPhantomConnector extends ItemBase {
     }
 
     public static World getStoredWorld(ItemStack stack) {
-        NBTTagCompound tag = stack.getTagCompound();
-        if (tag != null) { return DimensionManager.getWorld(tag.getInteger("WorldOfTileStored")); }
+        CompoundNBT tag = stack.getTagCompound();
+        if (tag != null) {
+            return DimensionManager.getWorld(tag.getInteger("WorldOfTileStored"));
+        }
         return null;
     }
 
     public static BlockPos getStoredPosition(ItemStack stack) {
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         if (tag != null) {
             int x = tag.getInteger("XCoordOfTileStored");
             int y = tag.getInteger("YCoordOfTileStored");
             int z = tag.getInteger("ZCoordOfTileStored");
-            if (!(x == 0 && y == 0 && z == 0)) { return new BlockPos(x, y, z); }
+            if (!(x == 0 && y == 0 && z == 0)) {
+                return new BlockPos(x, y, z);
+            }
         }
         return null;
     }
 
     public static void clearStorage(ItemStack stack, String... keys) {
         if (stack.hasTagCompound()) {
-            NBTTagCompound compound = stack.getTagCompound();
+            CompoundNBT compound = stack.getTagCompound();
             for (String key : keys) {
                 compound.removeTag(key);
             }
@@ -68,9 +71,9 @@ public class ItemPhantomConnector extends ItemBase {
     }
 
     public static void storeConnection(ItemStack stack, int x, int y, int z, World world) {
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         if (tag == null) {
-            tag = new NBTTagCompound();
+            tag = new CompoundNBT();
         }
 
         tag.setInteger("XCoordOfTileStored", x);
@@ -82,7 +85,7 @@ public class ItemPhantomConnector extends ItemBase {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing par7, float par8, float par9, float par10) {
+    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, EnumFacing par7, float par8, float par9, float par10) {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote) {
             //Passing Data to Phantoms

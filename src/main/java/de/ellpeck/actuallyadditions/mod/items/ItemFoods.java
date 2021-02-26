@@ -19,14 +19,14 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class ItemFoods extends ItemFoodBase {
 
@@ -43,8 +43,8 @@ public class ItemFoods extends ItemFoodBase {
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player) {
         ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
         ItemStack returnItem = stack.getItemDamage() >= ALL_FOODS.length ? null : ALL_FOODS[stack.getItemDamage()].returnItem;
-        if (StackUtil.isValid(returnItem) && player instanceof EntityPlayer) {
-            if (!((EntityPlayer) player).inventory.addItemStackToInventory(returnItem.copy())) {
+        if (StackUtil.isValid(returnItem) && player instanceof PlayerEntity) {
+            if (!((PlayerEntity) player).inventory.addItemStackToInventory(returnItem.copy())) {
                 if (!world.isRemote) {
                     EntityItem entityItem = new EntityItem(player.world, player.posX, player.posY, player.posZ, returnItem.copy());
                     entityItem.setPickupDelay(0);
@@ -91,7 +91,7 @@ public class ItemFoods extends ItemFoodBase {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab)) {
             for (int j = 0; j < ALL_FOODS.length; j++) {

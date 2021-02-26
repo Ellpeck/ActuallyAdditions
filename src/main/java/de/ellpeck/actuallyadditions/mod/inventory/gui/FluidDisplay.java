@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.text.NumberFormat;
-import java.util.Collections;
-
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
@@ -23,10 +20,12 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+import java.text.NumberFormat;
+import java.util.Collections;
+
+@OnlyIn(Dist.CLIENT)
 public class FluidDisplay extends Gui {
 
     private FluidTank fluidReference;
@@ -57,7 +56,7 @@ public class FluidDisplay extends Gui {
     }
 
     public void draw() {
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
 
         int barX = this.x;
@@ -72,7 +71,9 @@ public class FluidDisplay extends Gui {
         this.drawTexturedModalRect(barX, barY, 0, 171, 18, 85);
 
         FluidStack stack = this.fluidReference.getFluid();
-        Fluid fluid = stack == null ? null : stack.getFluid();
+        Fluid fluid = stack == null
+            ? null
+            : stack.getFluid();
 
         if (this.resLoc == null || this.oldFluid != fluid) {
             this.oldFluid = fluid;
@@ -102,8 +103,12 @@ public class FluidDisplay extends Gui {
     }
 
     public void drawOverlay(int mouseX, int mouseY) {
-        if (mouseX >= this.x && mouseY >= this.y && mouseX < this.x + (this.outline ? 26 : 18) && mouseY < this.y + (this.outline ? 93 : 85)) {
-            Minecraft mc = Minecraft.getMinecraft();
+        if (mouseX >= this.x && mouseY >= this.y && mouseX < this.x + (this.outline
+            ? 26
+            : 18) && mouseY < this.y + (this.outline
+            ? 93
+            : 85)) {
+            Minecraft mc = Minecraft.getInstance();
             GuiUtils.drawHoveringText(Collections.singletonList(this.getOverlayText()), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
     }
@@ -112,6 +117,8 @@ public class FluidDisplay extends Gui {
         NumberFormat format = NumberFormat.getInstance();
         FluidStack stack = this.fluidReference.getFluid();
         String cap = format.format(this.fluidReference.getCapacity());
-        return stack == null || stack.getFluid() == null ? "0/" + cap + " mB" : format.format(this.fluidReference.getFluidAmount()) + "/" + cap + " mB " + stack.getLocalizedName();
+        return stack == null || stack.getFluid() == null
+            ? "0/" + cap + " mB"
+            : format.format(this.fluidReference.getFluidAmount()) + "/" + cap + " mB " + stack.getLocalizedName();
     }
 }

@@ -1,6 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -14,15 +14,20 @@ public final class VanillaPacketDispatcher {
         WorldServer world = (WorldServer) tile.getWorld();
         PlayerChunkMapEntry entry = world.getPlayerChunkMap().getEntry(tile.getPos().getX() >> 4, tile.getPos().getZ() >> 4);
 
-        if (entry == null) return;
+        if (entry == null) {
+            return;
+        }
 
-        for (EntityPlayerMP player : entry.getWatchingPlayers())
+        for (ServerPlayerEntity player : entry.getWatchingPlayers()) {
             player.connection.sendPacket(tile.getUpdatePacket());
+        }
 
     }
 
     public static void dispatchTEToNearbyPlayers(World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile != null) dispatchTEToNearbyPlayers(tile);
+        if (tile != null) {
+            dispatchTEToNearbyPlayers(tile);
+        }
     }
 }

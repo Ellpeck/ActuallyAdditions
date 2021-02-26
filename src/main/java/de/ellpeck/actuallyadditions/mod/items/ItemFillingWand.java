@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -21,22 +17,25 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.List;
 
 public class ItemFillingWand extends ItemEnergy {
 
@@ -44,7 +43,7 @@ public class ItemFillingWand extends ItemEnergy {
         super(500000, 1000, name);
     }
 
-    private static boolean removeFittingItem(IBlockState state, EntityPlayer player) {
+    private static boolean removeFittingItem(BlockState state, PlayerEntity player) {
         Block block = state.getBlock();
         ItemStack stack = new ItemStack(block, 1, block.damageDropped(state));
 
@@ -65,32 +64,36 @@ public class ItemFillingWand extends ItemEnergy {
         return false;
     }
 
-    private static void saveData(ItemStack pickBlock, IBlockState state, ItemStack wand) {
-        if (!wand.hasTagCompound()) wand.setTagCompound(new NBTTagCompound());
+    private static void saveData(ItemStack pickBlock, BlockState state, ItemStack wand) {
+        if (!wand.hasTagCompound()) {
+            wand.setTagCompound(new CompoundNBT());
+        }
         wand.getTagCompound().setInteger("state", Block.getStateId(state));
         wand.getTagCompound().setString("name", pickBlock.getDisplayName());
 
     }
 
-    private static Pair<IBlockState, String> loadData(ItemStack stack) {
-        if (stack.hasTagCompound()) return Pair.of(Block.getStateById(stack.getTagCompound().getInteger("state")), stack.getTagCompound().getString("name"));
+    private static Pair<BlockState, String> loadData(ItemStack stack) {
+        if (stack.hasTagCompound()) {
+            return Pair.of(Block.getStateById(stack.getTagCompound().getInteger("state")), stack.getTagCompound().getString("name"));
+        }
         return null;
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote && player.getItemInUseCount() <= 0) {
             if (player.isSneaking()) {
-                IBlockState state = world.getBlockState(pos);
+                BlockState state = world.getBlockState(pos);
                 ItemStack pick = state.getBlock().getPickBlock(state, world.rayTraceBlocks(player.getPositionVector(), new Vec3d(pos.getX() + hitX, pos.getY() + hitY, pos.getZ() + hitZ)), world, pos, player);
                 saveData(pick, state, stack);
                 return EnumActionResult.SUCCESS;
             } else if (loadData(stack) != null) {
                 if (!stack.hasTagCompound()) {
-                    stack.setTagCompound(new NBTTagCompound());
+                    stack.setTagCompound(new CompoundNBT());
                 }
-                NBTTagCompound compound = stack.getTagCompound();
+                CompoundNBT compound = stack.getTagCompound();
 
                 if (compound.getInteger("CurrX") == 0 && compound.getInteger("CurrY") == 0 && compound.getInteger("CurrZ") == 0) {
                     compound.setInteger("FirstX", pos.getX());
@@ -109,13 +112,13 @@ public class ItemFillingWand extends ItemEnergy {
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entity, int timeLeft) {
         if (!world.isRemote) {
             boolean clear = true;
-            if (entity instanceof EntityPlayer) {
-                RayTraceResult result = WorldUtil.getNearestBlockWithDefaultReachDistance(world, (EntityPlayer) entity);
+            if (entity instanceof PlayerEntity) {
+                RayTraceResult result = WorldUtil.getNearestBlockWithDefaultReachDistance(world, (PlayerEntity) entity);
                 if (result != null && result.getBlockPos() != null) {
                     if (!stack.hasTagCompound()) {
-                        stack.setTagCompound(new NBTTagCompound());
+                        stack.setTagCompound(new CompoundNBT());
                     }
-                    NBTTagCompound compound = stack.getTagCompound();
+                    CompoundNBT compound = stack.getTagCompound();
 
                     BlockPos pos = result.getBlockPos();
                     compound.setInteger("SecondX", pos.getX());
@@ -142,11 +145,11 @@ public class ItemFillingWand extends ItemEnergy {
             boolean shouldClear = false;
 
             if (isSelected) {
-                if (entity instanceof EntityPlayer && stack.hasTagCompound()) {
-                    EntityPlayer player = (EntityPlayer) entity;
+                if (entity instanceof PlayerEntity && stack.hasTagCompound()) {
+                    PlayerEntity player = (PlayerEntity) entity;
                     boolean creative = player.capabilities.isCreativeMode;
 
-                    NBTTagCompound compound = stack.getTagCompound();
+                    CompoundNBT compound = stack.getTagCompound();
 
                     BlockPos firstPos = new BlockPos(compound.getInteger("FirstX"), compound.getInteger("FirstY"), compound.getInteger("FirstZ"));
                     BlockPos secondPos = new BlockPos(compound.getInteger("SecondX"), compound.getInteger("SecondY"), compound.getInteger("SecondZ"));
@@ -154,9 +157,9 @@ public class ItemFillingWand extends ItemEnergy {
                     if (!BlockPos.ORIGIN.equals(firstPos) && !BlockPos.ORIGIN.equals(secondPos)) {
                         int energyUse = 1500;
 
-                        Pair<IBlockState, String> data = loadData(stack);
+                        Pair<BlockState, String> data = loadData(stack);
                         if (data != null && (creative || this.getEnergyStored(stack) >= energyUse)) {
-                            IBlockState replaceState = data.getLeft();
+                            BlockState replaceState = data.getLeft();
                             int lowestX = Math.min(firstPos.getX(), secondPos.getX());
                             int lowestY = Math.min(firstPos.getY(), secondPos.getY());
                             int lowestZ = Math.min(firstPos.getZ(), secondPos.getZ());
@@ -166,7 +169,7 @@ public class ItemFillingWand extends ItemEnergy {
                             int currZ = compound.getInteger("CurrZ");
 
                             BlockPos pos = new BlockPos(lowestX + currX, lowestY + currY, lowestZ + currZ);
-                            IBlockState state = world.getBlockState(pos);
+                            BlockState state = world.getBlockState(pos);
 
                             if (state.getBlock().isReplaceable(world, pos) && replaceState.getBlock().canPlaceBlockAt(world, pos)) {
                                 if (creative || removeFittingItem(replaceState, player)) {
@@ -226,7 +229,7 @@ public class ItemFillingWand extends ItemEnergy {
 
         String display = StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".item_filling_wand.selectedBlock.none");
 
-        Pair<IBlockState, String> data = loadData(stack);
+        Pair<BlockState, String> data = loadData(stack);
         if (data != null) {
             display = data.getRight();
         }

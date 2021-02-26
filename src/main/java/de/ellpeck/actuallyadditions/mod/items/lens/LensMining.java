@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
@@ -25,17 +23,19 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.BlockStone;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.List;
 
 public class LensMining extends Lens {
 
@@ -122,7 +122,7 @@ public class LensMining extends Lens {
     }
 
     @Override
-    public boolean invoke(IBlockState hitState, BlockPos hitPos, IAtomicReconstructor tile) {
+    public boolean invoke(BlockState hitState, BlockPos hitPos, IAtomicReconstructor tile) {
         if (!tile.getWorldObject().isAirBlock(hitPos)) {
             if (tile.getEnergy() >= ConfigIntValues.MINING_LENS_USE.getValue()) {
                 int adaptedUse = ConfigIntValues.MINING_LENS_USE.getValue();
@@ -148,7 +148,9 @@ public class LensMining extends Lens {
                             if (stacks != null && !stacks.isEmpty()) {
                                 for (ItemStack aStack : stacks) {
                                     if (StackUtil.isValid(aStack) && !CrusherRecipeRegistry.hasBlacklistedOutput(aStack, ConfigStringListValues.MINING_LENS_BLACKLIST.getValue()) && aStack.getItem() instanceof ItemBlock) {
-                                        if (ConfigBoolValues.MINING_LENS_ADAPTED_USE.isEnabled()) adaptedUse += (totalWeight - ore.itemWeight) % 40000;
+                                        if (ConfigBoolValues.MINING_LENS_ADAPTED_USE.isEnabled()) {
+                                            adaptedUse += (totalWeight - ore.itemWeight) % 40000;
+                                        }
 
                                         stack = aStack;
                                         found = true;
@@ -162,7 +164,7 @@ public class LensMining extends Lens {
                     if (tile.getEnergy() >= adaptedUse) {
                         Block block = Block.getBlockFromItem(stack.getItem());
                         if (block != Blocks.AIR) {
-                            IBlockState state = block.getStateForPlacement(tile.getWorldObject(), hitPos, EnumFacing.UP, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
+                            BlockState state = block.getStateForPlacement(tile.getWorldObject(), hitPos, EnumFacing.UP, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
                             tile.getWorldObject().setBlockState(hitPos, state, 2);
 
                             tile.getWorldObject().playEvent(2001, hitPos, Block.getStateId(state));
@@ -181,7 +183,7 @@ public class LensMining extends Lens {
 
     @Override
     public float[] getColor() {
-        return new float[] { 76F / 255F, 76F / 255F, 76F / 255F };
+        return new float[]{76F / 255F, 76F / 255F, 76F / 255F};
     }
 
     @Override

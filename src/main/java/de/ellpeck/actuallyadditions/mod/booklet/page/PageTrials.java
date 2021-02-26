@@ -18,15 +18,14 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class PageTrials extends BookletPage {
 
     private final int buttonId;
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private GuiButton button;
 
     public PageTrials(int localizationKey, boolean button, boolean text) {
@@ -45,7 +44,7 @@ public class PageTrials extends BookletPage {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void initGui(GuiBookletBase gui, int startX, int startY) {
         super.initGui(gui, startX, startY);
 
@@ -57,23 +56,23 @@ public class PageTrials extends BookletPage {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
         PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 5);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     protected String getLocalizationKey() {
         return "booklet." + ActuallyAdditions.MODID + ".trials." + this.chapter.getIdentifier() + ".text." + this.localizationKey;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void actionPerformed(GuiBookletBase gui, GuiButton button) {
         if (this.buttonId >= 0 && button.id == this.buttonId) {
-            EntityPlayer player = Minecraft.getMinecraft().player;
+            PlayerEntity player = Minecraft.getInstance().player;
             PlayerSave data = PlayerData.getDataFromPlayer(player);
             String id = this.chapter.getIdentifier();
 
@@ -91,10 +90,10 @@ public class PageTrials extends BookletPage {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private void updateButton() {
         if (this.buttonId >= 0 && this.button != null) {
-            EntityPlayer player = Minecraft.getMinecraft().player;
+            PlayerEntity player = Minecraft.getInstance().player;
             PlayerSave data = PlayerData.getDataFromPlayer(player);
 
             boolean completed = data.completedTrials.contains(this.chapter.getIdentifier());

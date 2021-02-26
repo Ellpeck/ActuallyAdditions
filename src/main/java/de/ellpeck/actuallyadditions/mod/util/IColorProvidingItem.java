@@ -12,11 +12,11 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public interface IColorProvidingItem {
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     IItemColor getItemColor();
 
 }

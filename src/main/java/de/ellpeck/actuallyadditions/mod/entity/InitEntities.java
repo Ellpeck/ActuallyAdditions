@@ -15,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public final class InitEntities {
 
@@ -25,7 +25,7 @@ public final class InitEntities {
         EntityRegistry.registerModEntity(new ResourceLocation(ActuallyAdditions.MODID, "worm"), EntityWorm.class, ActuallyAdditions.MODID + ".worm", 0, ActuallyAdditions.INSTANCE, 64, 1, false);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void initClient() {
         RenderingRegistry.registerEntityRenderingHandler(EntityWorm.class, RenderWorm::new);
     }

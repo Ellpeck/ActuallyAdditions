@@ -10,14 +10,14 @@
 
 package de.ellpeck.actuallyadditions.api.laser;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 
 public interface IConnectionPair {
 
-    void writeToNBT(NBTTagCompound compound);
+    void writeToNBT(CompoundNBT compound);
 
-    void readFromNBT(NBTTagCompound compound);
+    void readFromNBT(CompoundNBT compound);
 
     BlockPos[] getPositions();
 

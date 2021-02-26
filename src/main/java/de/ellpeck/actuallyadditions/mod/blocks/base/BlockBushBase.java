@@ -11,26 +11,17 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.render.IHasModel;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import net.minecraft.block.BlockBush;
+import net.minecraft.block.BushBlock;
 import net.minecraft.block.SoundType;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.Item;
 
-public class BlockBushBase extends BlockBush implements ItemBlockBase.ICustomRarity, IHasModel {
+public class BlockBushBase extends BushBlock {
 
     private final String name;
 
-    public BlockBushBase(String name) {
+    public BlockBushBase(Properties properties, String name) {
+        super(properties.sound(SoundType.PLANT));
         this.name = name;
-        this.setSoundType(SoundType.PLANT);
-
-        this.register();
-    }
-
-    private void register() {
-        ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
     }
 
     protected String getBaseName() {
@@ -38,20 +29,10 @@ public class BlockBushBase extends BlockBush implements ItemBlockBase.ICustomRar
     }
 
     protected ItemBlockBase getItemBlock() {
-        return new ItemBlockBase(this);
+        return new ItemBlockBase(this, new Item.Properties().group(ActuallyAdditions.GROUP));
     }
 
     public boolean shouldAddCreative() {
         return true;
-    }
-
-    @Override
-    public void registerRendering() {
-        ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.COMMON;
     }
 }

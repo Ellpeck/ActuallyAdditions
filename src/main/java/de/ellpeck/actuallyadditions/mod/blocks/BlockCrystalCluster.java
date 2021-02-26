@@ -24,11 +24,11 @@ import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,7 +40,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlock, IColorProvidingItem {
 
@@ -58,17 +58,17 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base) {
+    public BlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base) {
         return this.getStateFromMeta(side.ordinal());
     }
 
@@ -78,12 +78,12 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return state.getValue(BlockDirectional.FACING).getIndex();
     }
 
@@ -93,17 +93,17 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
+    public BlockState withRotation(BlockState state, Rotation rot) {
         return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING)));
     }
 
     @Override
-    public IBlockState withMirror(IBlockState state, Mirror mirror) {
+    public BlockState withMirror(BlockState state, Mirror mirror) {
         return this.withRotation(state, mirror.toRotation(state.getValue(BlockDirectional.FACING)));
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public IBlockColor getBlockColor() {
         return (state, world, pos, tintIndex) -> BlockCrystalCluster.this.crystal.clusterColor;
     }
@@ -114,23 +114,23 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public IItemColor getItemColor() {
         return (stack, tintIndex) -> BlockCrystalCluster.this.crystal.clusterColor;
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    public Item getItemDropped(BlockState state, Random rand, int fortune) {
         return InitItems.itemCrystalShard;
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
+    public int damageDropped(BlockState state) {
         return ArrayUtils.indexOf(WorldGenLushCaves.CRYSTAL_CLUSTERS, this);
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(BlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
         return new ItemStack(this);
     }
 
@@ -140,7 +140,7 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     }
 
     @Override
-    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+    public boolean canSilkHarvest(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         return true;
     }
 }

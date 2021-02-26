@@ -11,11 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.render.IHasModel;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
@@ -27,7 +26,7 @@ public class BlockStair extends BlockStairs implements ItemBlockBase.ICustomRari
         this(block.getDefaultState(), name);
     }
 
-    public BlockStair(IBlockState state, String name) {
+    public BlockStair(BlockState state, String name) {
         super(state);
         this.name = name;
         this.setLightOpacity(0);

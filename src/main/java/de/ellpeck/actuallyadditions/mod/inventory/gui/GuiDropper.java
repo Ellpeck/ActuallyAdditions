@@ -15,18 +15,18 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiDropper extends GuiWtfMojang {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityDropper dropper;
 
-    public GuiDropper(EntityPlayer player, TileEntityBase tile) {
+    public GuiDropper(PlayerEntity player, TileEntityBase tile) {
         super(new ContainerDropper(player, tile));
         this.dropper = (TileEntityDropper) tile;
         this.xSize = 176;

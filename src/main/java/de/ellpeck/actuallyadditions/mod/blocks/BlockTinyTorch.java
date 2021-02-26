@@ -21,7 +21,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -33,7 +33,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 //Copied from BlockTorch.
 //I have no idea what all of this means.
@@ -58,7 +58,7 @@ public class BlockTinyTorch extends BlockBase {
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         switch (state.getValue(BlockTorch.FACING)) {
         case EAST:
             return TORCH_EAST_AABB;
@@ -75,32 +75,32 @@ public class BlockTinyTorch extends BlockBase {
 
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(BlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         return NULL_AABB;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state) {
+    public boolean isNormalCube(BlockState state) {
         return false;
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing facing) {
+    public BlockFaceShape getBlockFaceShape(IBlockAccess world, BlockState state, BlockPos pos, EnumFacing facing) {
         return BlockFaceShape.UNDEFINED;
     }
 
     private boolean canPlaceOn(World worldIn, BlockPos pos) {
-        IBlockState state = worldIn.getBlockState(pos);
+        BlockState state = worldIn.getBlockState(pos);
         return state.isSideSolid(worldIn, pos, EnumFacing.UP) || state.getBlock().canPlaceTorchOnTop(state, worldIn, pos);
     }
 
@@ -120,7 +120,7 @@ public class BlockTinyTorch extends BlockBase {
     }
 
     @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    public BlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         if (this.canPlaceAt(worldIn, pos, facing)) {
             return this.getDefaultState().withProperty(BlockTorch.FACING, facing);
         } else {
@@ -133,16 +133,16 @@ public class BlockTinyTorch extends BlockBase {
     }
 
     @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+    public void onBlockAdded(World worldIn, BlockPos pos, BlockState state) {
         this.checkForDrop(worldIn, pos, state);
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos otherPos) {
+    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos otherPos) {
         this.onNeighborChangeInternal(worldIn, pos, state);
     }
 
-    protected boolean onNeighborChangeInternal(World worldIn, BlockPos pos, IBlockState state) {
+    protected boolean onNeighborChangeInternal(World worldIn, BlockPos pos, BlockState state) {
         if (!this.checkForDrop(worldIn, pos, state)) {
             return true;
         } else {
@@ -167,7 +167,7 @@ public class BlockTinyTorch extends BlockBase {
         }
     }
 
-    protected boolean checkForDrop(World worldIn, BlockPos pos, IBlockState state) {
+    protected boolean checkForDrop(World worldIn, BlockPos pos, BlockState state) {
         if (state.getBlock() == this && this.canPlaceAt(worldIn, pos, state.getValue(BlockTorch.FACING))) {
             return true;
         } else {
@@ -181,8 +181,8 @@ public class BlockTinyTorch extends BlockBase {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+    @OnlyIn(Dist.CLIENT)
+    public void randomDisplayTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         if (rand.nextBoolean()) {
             EnumFacing enumfacing = stateIn.getValue(BlockTorch.FACING);
             double d0 = pos.getX() + 0.5D;
@@ -201,8 +201,8 @@ public class BlockTinyTorch extends BlockBase {
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        IBlockState iblockstate = this.getDefaultState();
+    public BlockState getStateFromMeta(int meta) {
+        BlockState iblockstate = this.getDefaultState();
 
         switch (meta) {
         case 1:
@@ -231,7 +231,7 @@ public class BlockTinyTorch extends BlockBase {
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         int i = 0;
 
         switch (state.getValue(BlockTorch.FACING)) {
@@ -257,12 +257,12 @@ public class BlockTinyTorch extends BlockBase {
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
+    public BlockState withRotation(BlockState state, Rotation rot) {
         return state.withProperty(BlockTorch.FACING, rot.rotate(state.getValue(BlockTorch.FACING)));
     }
 
     @Override
-    public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+    public BlockState withMirror(BlockState state, Mirror mirrorIn) {
         return state.withRotation(mirrorIn.toRotation(state.getValue(BlockTorch.FACING)));
     }
 

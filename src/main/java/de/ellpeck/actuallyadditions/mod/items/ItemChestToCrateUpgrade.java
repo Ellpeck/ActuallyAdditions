@@ -14,15 +14,15 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -31,16 +31,16 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 public class ItemChestToCrateUpgrade extends ItemBase {
 
     private final Class<? extends TileEntity> start;
-    private final IBlockState end;
+    private final BlockState end;
 
-    public ItemChestToCrateUpgrade(String name, Class<? extends TileEntity> start, IBlockState end) {
+    public ItemChestToCrateUpgrade(String name, Class<? extends TileEntity> start, BlockState end) {
         super(name);
         this.start = start;
         this.end = end;
     }
 
     @Override
-    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+    public EnumActionResult onItemUseFirst(PlayerEntity player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, Hand hand) {
         ItemStack heldStack = player.getHeldItem(hand);
         if (player.isSneaking()) {
             TileEntity tileHit = world.getTileEntity(pos);
@@ -67,7 +67,9 @@ public class ItemChestToCrateUpgrade extends ItemBase {
 
                         world.removeTileEntity(pos);
                         world.setBlockState(pos, this.end, 2);
-                        if (!player.capabilities.isCreativeMode) heldStack.shrink(1);
+                        if (!player.capabilities.isCreativeMode) {
+                            heldStack.shrink(1);
+                        }
 
                         //Copy Items into new Chest
                         TileEntity newTileHit = world.getTileEntity(pos);

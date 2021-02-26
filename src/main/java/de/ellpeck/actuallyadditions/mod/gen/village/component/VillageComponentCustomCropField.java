@@ -16,7 +16,7 @@ import java.util.Random;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
@@ -97,7 +97,7 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
         }
     }
 
-    private IBlockState getRandomCropType(Random rand) {
+    private BlockState getRandomCropType(Random rand) {
         int randomMeta = MathHelper.getInt(rand, 1, 7);
         switch (rand.nextInt(4)) {
         case 0:

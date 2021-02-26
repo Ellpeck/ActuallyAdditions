@@ -19,13 +19,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayFluids;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.BlockDirectional;
@@ -33,16 +27,16 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -56,7 +50,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
 
@@ -87,13 +81,13 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
 
     @SubscribeEvent
     public void onBlockRightClick(PlayerInteractEvent.RightClickBlock event) {
-        EntityPlayer player = event.getEntityPlayer();
+        PlayerEntity player = event.getEntityPlayer();
         World world = event.getWorld();
         ItemStack stack = event.getItemStack();
         BlockPos pos = event.getPos();
 
         if (player != null && world != null && StackUtil.isValid(stack) && pos != null) {
-            IBlockState state = event.getWorld().getBlockState(pos);
+            BlockState state = event.getWorld().getBlockState(pos);
             if (state != null && state.getBlock() instanceof BlockLaserRelay) {
                 if (player.isSneaking()) {
                     event.setUseBlock(Event.Result.ALLOW);
@@ -103,35 +97,35 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
         switch (this.getMetaFromState(state)) {
-        case 1:
-            return AABB_UP;
-        case 2:
-            return AABB_NORTH;
-        case 3:
-            return AABB_SOUTH;
-        case 4:
-            return AABB_WEST;
-        case 5:
-            return AABB_EAST;
-        default:
-            return AABB_DOWN;
+            case 1:
+                return AABB_UP;
+            case 2:
+                return AABB_NORTH;
+            case 3:
+                return AABB_SOUTH;
+            case 4:
+                return AABB_WEST;
+            case 5:
+                return AABB_EAST;
+            default:
+                return AABB_DOWN;
         }
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(BlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(BlockState state) {
         return false;
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base) {
+    public BlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base) {
         return this.getStateFromMeta(side.ordinal());
     }
 
@@ -141,12 +135,12 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(BlockState state) {
         return state.getValue(BlockDirectional.FACING).getIndex();
     }
 
@@ -156,17 +150,17 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
+    public BlockState withRotation(BlockState state, Rotation rot) {
         return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING)));
     }
 
     @Override
-    public IBlockState withMirror(IBlockState state, Mirror mirror) {
+    public BlockState withMirror(BlockState state, Mirror mirror) {
         return this.withRotation(state, mirror.toRotation(state.getValue(BlockDirectional.FACING)));
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
         ItemStack stack = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileEntityLaserRelay) {
@@ -234,24 +228,24 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
     @Override
     public TileEntity createNewTileEntity(World world, int i) {
         switch (this.type) {
-        case ITEM:
-            return new TileEntityLaserRelayItem();
-        case ITEM_WHITELIST:
-            return new TileEntityLaserRelayItemWhitelist();
-        case ENERGY_ADVANCED:
-            return new TileEntityLaserRelayEnergyAdvanced();
-        case ENERGY_EXTREME:
-            return new TileEntityLaserRelayEnergyExtreme();
-        case FLUIDS:
-            return new TileEntityLaserRelayFluids();
-        default:
-            return new TileEntityLaserRelayEnergy();
+            case ITEM:
+                return new TileEntityLaserRelayItem();
+            case ITEM_WHITELIST:
+                return new TileEntityLaserRelayItemWhitelist();
+            case ENERGY_ADVANCED:
+                return new TileEntityLaserRelayEnergyAdvanced();
+            case ENERGY_EXTREME:
+                return new TileEntityLaserRelayEnergyExtreme();
+            case FLUIDS:
+                return new TileEntityLaserRelayFluids();
+            default:
+                return new TileEntityLaserRelayEnergy();
         }
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void displayHud(Minecraft minecraft, EntityPlayer player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
+    @OnlyIn(Dist.CLIENT)
+    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
         if (posHit != null && posHit.getBlockPos() != null && minecraft.world != null) {
             boolean wearing = ItemEngineerGoggles.isWearing(player);
             if (wearing || StackUtil.isValid(stack)) {
@@ -279,14 +273,14 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+    public void breakBlock(World world, BlockPos pos, BlockState state) {
         super.breakBlock(world, pos, state);
 
         ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(pos, world);
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }
 

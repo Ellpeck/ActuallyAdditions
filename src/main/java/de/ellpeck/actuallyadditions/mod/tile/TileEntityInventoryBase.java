@@ -15,8 +15,8 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -31,12 +31,12 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
         this.inv = new TileStackHandler(slots);
     }
 
-    public static void saveSlots(IItemHandler slots, NBTTagCompound compound) {
+    public static void saveSlots(IItemHandler slots, CompoundNBT compound) {
         if (slots != null && slots.getSlots() > 0) {
-            NBTTagList tagList = new NBTTagList();
+            ListNBT tagList = new ListNBT();
             for (int i = 0; i < slots.getSlots(); i++) {
                 ItemStack slot = slots.getStackInSlot(i);
-                NBTTagCompound tagCompound = new NBTTagCompound();
+                CompoundNBT tagCompound = new CompoundNBT();
                 if (StackUtil.isValid(slot)) {
                     slot.writeToNBT(tagCompound);
                 }
@@ -46,18 +46,20 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
         }
     }
 
-    public static void loadSlots(IItemHandlerModifiable slots, NBTTagCompound compound) {
+    public static void loadSlots(IItemHandlerModifiable slots, CompoundNBT compound) {
         if (slots != null && slots.getSlots() > 0) {
-            NBTTagList tagList = compound.getTagList("Items", 10);
+            ListNBT tagList = compound.getList("Items", 10);
             for (int i = 0; i < slots.getSlots(); i++) {
-                NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-                slots.setStackInSlot(i, tagCompound != null && tagCompound.hasKey("id") ? new ItemStack(tagCompound) : StackUtil.getEmpty());
+                CompoundNBT tagCompound = tagList.getCompound(i);
+                slots.setStackInSlot(i, tagCompound != null && tagCompound.hasKey("id")
+                    ? new ItemStack(tagCompound)
+                    : StackUtil.getEmpty());
             }
         }
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type == NBTType.SAVE_TILE || type == NBTType.SYNC && this.shouldSyncSlots()) {
             saveSlots(this.inv, compound);
@@ -100,7 +102,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type == NBTType.SAVE_TILE || type == NBTType.SYNC && this.shouldSyncSlots()) {
             loadSlots(this.inv, compound);
@@ -133,5 +135,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
             super.onContentsChanged(slot);
             TileEntityInventoryBase.this.markDirty();
         }
-    };
+    }
+
+    ;
 }

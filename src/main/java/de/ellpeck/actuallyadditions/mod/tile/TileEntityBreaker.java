@@ -15,10 +15,10 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -39,7 +39,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("CurrentTime", this.currentTime);
@@ -47,7 +47,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.currentTime = compound.getInteger("CurrentTime");
@@ -79,7 +79,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
     private void doWork() {
         EnumFacing side = WorldUtil.getDirectionByPistonRotation(this.world.getBlockState(this.pos));
         BlockPos breakCoords = this.pos.offset(side);
-        IBlockState stateToBreak = this.world.getBlockState(breakCoords);
+        BlockState stateToBreak = this.world.getBlockState(breakCoords);
         Block blockToBreak = stateToBreak.getBlock();
 
         if (!this.isPlacer && blockToBreak != Blocks.AIR && !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && stateToBreak.getBlockHardness(this.world, breakCoords) >= 0.0F) {
@@ -96,7 +96,9 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
             }
         } else if (this.isPlacer) {
             int slot = StackUtil.findFirstFilled(this.inv);
-            if (slot == -1) return;
+            if (slot == -1) {
+                return;
+            }
             this.inv.setStackInSlot(slot, WorldUtil.useItemAtSide(side, this.world, this.pos, this.inv.getStackInSlot(slot)));
         }
     }

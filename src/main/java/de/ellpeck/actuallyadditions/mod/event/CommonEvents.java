@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import java.util.Locale;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
@@ -26,11 +24,11 @@ import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -40,11 +38,13 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
+import java.util.Locale;
+
 public class CommonEvents {
 
     @SubscribeEvent
     public void onBlockBreakEvent(BlockEvent.HarvestDropsEvent event) {
-        IBlockState state = event.getState();
+        BlockState state = event.getState();
         if (state != null && state.getBlock() == Blocks.MOB_SPAWNER) {
             event.getDrops().add(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.SPAWNER_SHARD.ordinal()));
         }
@@ -52,9 +52,11 @@ public class CommonEvents {
 
     @SubscribeEvent
     public void onItemPickup(EntityItemPickupEvent event) {
-        if (event.isCanceled() || event.getResult() == Event.Result.ALLOW) { return; }
+        if (event.isCanceled() || event.getResult() == Event.Result.ALLOW) {
+            return;
+        }
 
-        EntityPlayer player = event.getEntityPlayer();
+        PlayerEntity player = event.getEntityPlayer();
         EntityItem item = event.getItem();
         if (item != null && !item.isDead) {
             ItemStack stack = item.getItem();
@@ -123,7 +125,7 @@ public class CommonEvents {
     }
 
     //TODO Checking Achievements?
-    /*public static void checkAchievements(ItemStack gotten, EntityPlayer player, InitAchievements.Type type){
+    /*public static void checkAchievements(ItemStack gotten, PlayerEntity player, InitAchievements.Type type){
         if(gotten != null && player != null){
             for(TheAchievements ach : TheAchievements.values()){
                 if(ach.type == type){
@@ -137,7 +139,7 @@ public class CommonEvents {
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event) {
-        if (event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof EntityPlayer) {
+        if (event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof PlayerEntity) {
             //Drop Cobwebs from Spiders
             if (ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof EntitySpider) {
                 if (event.getEntityLiving().world.rand.nextInt(20) <= event.getLootingLevel() * 2) {
@@ -149,8 +151,8 @@ public class CommonEvents {
 
     @SubscribeEvent
     public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!event.player.world.isRemote && event.player instanceof EntityPlayerMP) {
-            EntityPlayerMP player = (EntityPlayerMP) event.player;
+        if (!event.player.world.isRemote && event.player instanceof ServerPlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity) event.player;
             PacketHandlerHelper.syncPlayerData(player, true);
             ActuallyAdditions.LOGGER.info("Sending Player Data to player " + player.getName() + " with UUID " + player.getUniqueID() + ".");
         }

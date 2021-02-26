@@ -1,35 +1,34 @@
 /*
-* This file ("BlockPlant.java") is part of the Actually Additions mod for Minecraft.
-* It is created and owned by Ellpeck and distributed
-* under the Actually Additions License to be found at
-* http://ellpeck.de/actaddlicense
-* View the source code at https://github.com/Ellpeck/ActuallyAdditions
-*
-* © 2015-2017 Ellpeck
-*/
+ * This file ("BlockPlant.java") is part of the Actually Additions mod for Minecraft.
+ * It is created and owned by Ellpeck and distributed
+ * under the Actually Additions License to be found at
+ * http://ellpeck.de/actaddlicense
+ * View the source code at https://github.com/Ellpeck/ActuallyAdditions
+ *
+ * © 2015-2017 Ellpeck
+ */
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.render.IHasModel;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.items.ItemHandlerHelper;
+
+import java.util.Random;
 
 public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarity, IHasModel {
 
@@ -85,12 +84,14 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
-        return this.getMetaFromState(state) >= 7 ? this.returnMeta : 0;
+    public int damageDropped(BlockState state) {
+        return this.getMetaFromState(state) >= 7
+            ? this.returnMeta
+            : 0;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (this.getMetaFromState(state) >= 7) {
             if (!world.isRemote) {
 
@@ -122,8 +123,10 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
     }
 
     @Override
-    public int quantityDropped(IBlockState state, int fortune, Random random) {
-        return this.getMetaFromState(state) >= 7 ? random.nextInt(this.addDropAmount) + this.minDropAmount : super.quantityDropped(state, fortune, random);
+    public int quantityDropped(BlockState state, int fortune, Random random) {
+        return this.getMetaFromState(state) >= 7
+            ? random.nextInt(this.addDropAmount) + this.minDropAmount
+            : super.quantityDropped(state, fortune, random);
     }
 
     @Override
@@ -132,8 +135,10 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int par3) {
-        return this.getMetaFromState(state) >= 7 ? this.getCrop() : this.getSeed();
+    public Item getItemDropped(BlockState state, Random rand, int par3) {
+        return this.getMetaFromState(state) >= 7
+            ? this.getCrop()
+            : this.getSeed();
     }
 
 }

@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class PageTextOnly extends BookletPage {
 
@@ -24,7 +24,7 @@ public class PageTextOnly extends BookletPage {
         super(localizationKey);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void renderTextToPage(GuiBookletBase gui, BookletPage page, int x, int y) {
         String text = page.getInfoText();
         if (text != null && !text.isEmpty()) {
@@ -33,7 +33,7 @@ public class PageTextOnly extends BookletPage {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
         renderTextToPage(gui, this, startX + 6, startY + 5);

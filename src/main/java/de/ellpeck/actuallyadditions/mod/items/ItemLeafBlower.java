@@ -10,16 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
@@ -27,12 +24,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
 
@@ -45,7 +45,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         player.setActiveHand(hand);
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
@@ -63,7 +63,9 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
-        return this.isAdvanced ? EnumRarity.EPIC : EnumRarity.RARE;
+        return this.isAdvanced
+            ? EnumRarity.EPIC
+            : EnumRarity.RARE;
     }
 
     @Override
@@ -99,7 +101,11 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
         int rangeUp = 1;
         for (int reachX = -rangeSides; reachX < rangeSides + 1; reachX++) {
             for (int reachZ = -rangeSides; reachZ < rangeSides + 1; reachZ++) {
-                for (int reachY = this.isAdvanced ? -rangeSides : -rangeUp; reachY < (this.isAdvanced ? rangeSides : rangeUp) + 1; reachY++) {
+                for (int reachY = this.isAdvanced
+                    ? -rangeSides
+                    : -rangeUp; reachY < (this.isAdvanced
+                    ? rangeSides
+                    : rangeUp) + 1; reachY++) {
                     //The current Block to break
                     BlockPos pos = new BlockPos(x + reachX, y + reachY, z + reachZ);
                     Block block = world.getBlockState(pos).getBlock();
@@ -115,7 +121,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
             Collections.shuffle(breakPositions);
 
             BlockPos theCoord = breakPositions.get(0);
-            IBlockState theState = world.getBlockState(theCoord);
+            BlockState theState = world.getBlockState(theCoord);
 
             theState.getBlock().dropBlockAsItem(world, theCoord, theState, 0);
             //Plays the Breaking Sound

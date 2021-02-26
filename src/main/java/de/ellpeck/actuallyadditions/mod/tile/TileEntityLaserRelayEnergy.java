@@ -10,11 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
@@ -22,8 +17,8 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -31,8 +26,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
@@ -45,7 +44,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
         super(name, LaserType.ENERGY);
 
         for (int i = 0; i < this.energyStorages.length; i++) {
-            final EnumFacing facing = EnumFacing.values()[i];
+            EnumFacing facing = EnumFacing.values()[i];
             this.energyStorages[i] = new IEnergyStorage() {
 
                 @Override
@@ -98,7 +97,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
     @Override
     public IEnergyStorage getEnergyStorage(EnumFacing facing) {
-        return this.energyStorages[facing == null ? 0 : facing.ordinal()];
+        return this.energyStorages[facing == null
+            ? 0
+            : facing.ordinal()];
     }
 
     @Override
@@ -215,7 +216,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
                                 }
 
                                 //If everything that could be transmitted was transmitted
-                                if (transmitted >= maxTransfer) { return transmitted; }
+                                if (transmitted >= maxTransfer) {
+                                    return transmitted;
+                                }
                             }
                         }
                     }
@@ -227,7 +230,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     private int calcDeduction(int theoreticalReceived, double highestLoss) {
-        return ConfigBoolValues.LASER_RELAY_LOSS.isEnabled() ? MathHelper.ceil(theoreticalReceived * (highestLoss / 100)) : 0;
+        return ConfigBoolValues.LASER_RELAY_LOSS.isEnabled()
+            ? MathHelper.ceil(theoreticalReceived * (highestLoss / 100))
+            : 0;
     }
 
     public int getEnergyCap() {
@@ -239,24 +244,24 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public String getExtraDisplayString() {
         return StringUtil.localize("info." + ActuallyAdditions.MODID + ".laserRelay.energy.extra") + ": " + TextFormatting.DARK_RED + StringUtil.localize(this.mode.name) + TextFormatting.RESET;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public String getCompassDisplayString() {
         return TextFormatting.GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".laserRelay.energy.display");
     }
 
     @Override
-    public void onCompassAction(EntityPlayer player) {
+    public void onCompassAction(PlayerEntity player) {
         this.mode = this.mode.getNext();
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         if (type != NBTType.SAVE_BLOCK) {
@@ -265,7 +270,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         if (type != NBTType.SAVE_BLOCK) {

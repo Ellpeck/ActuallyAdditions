@@ -16,49 +16,48 @@ import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterTrials;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public final class PacketHandlerHelper {
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void sendButtonPacket(TileEntity tile, int buttonId) {
-        NBTTagCompound compound = new NBTTagCompound();
+        CompoundNBT compound = new CompoundNBT();
         BlockPos pos = tile.getPos();
         compound.setInteger("X", pos.getX());
         compound.setInteger("Y", pos.getY());
         compound.setInteger("Z", pos.getZ());
         compound.setInteger("WorldID", tile.getWorld().provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getMinecraft().player.getEntityId());
+        compound.setInteger("PlayerID", Minecraft.getInstance().player.getEntityId());
         compound.setInteger("ButtonID", buttonId);
         PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }
 
-    public static void syncPlayerData(EntityPlayer player, boolean log) {
-        NBTTagCompound compound = new NBTTagCompound();
+    public static void syncPlayerData(PlayerEntity player, boolean log) {
+        CompoundNBT compound = new CompoundNBT();
         compound.setBoolean("Log", log);
 
-        NBTTagCompound data = new NBTTagCompound();
+        CompoundNBT data = new CompoundNBT();
         PlayerData.getDataFromPlayer(player).writeToNBT(data, false);
         compound.setTag("Data", data);
 
-        if (player instanceof EntityPlayerMP) {
-            PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.SYNC_PLAYER_DATA), (EntityPlayerMP) player);
+        if (player instanceof ServerPlayerEntity) {
+            PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.SYNC_PLAYER_DATA), (ServerPlayerEntity) player);
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void sendPlayerDataToServer(boolean log, int type) {
-        NBTTagCompound compound = new NBTTagCompound();
+        CompoundNBT compound = new CompoundNBT();
         compound.setBoolean("Log", log);
         compound.setInteger("Type", type);
 
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        PlayerEntity player = Minecraft.getInstance().player;
         if (player != null) {
             compound.setInteger("World", player.world.provider.getDimension());
             compound.setUniqueId("UUID", player.getUniqueID());
@@ -88,14 +87,14 @@ public final class PacketHandlerHelper {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void sendNumberPacket(TileEntity tile, double number, int id) {
-        NBTTagCompound compound = new NBTTagCompound();
+        CompoundNBT compound = new CompoundNBT();
         compound.setInteger("X", tile.getPos().getX());
         compound.setInteger("Y", tile.getPos().getY());
         compound.setInteger("Z", tile.getPos().getZ());
         compound.setInteger("WorldID", tile.getWorld().provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getMinecraft().player.getEntityId());
+        compound.setInteger("PlayerID", Minecraft.getInstance().player.getEntityId());
         compound.setInteger("NumberID", id);
         compound.setDouble("Number", number);
         PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));

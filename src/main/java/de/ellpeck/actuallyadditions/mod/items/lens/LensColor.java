@@ -20,13 +20,13 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
@@ -52,16 +52,16 @@ public class LensColor extends Lens {
     private final Random rand = new Random();
 
     @Override
-    public boolean invoke(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
+    public boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
         if (hitBlock != null) {
             if (tile.getEnergy() >= ENERGY_USE) {
-                IBlockState state = tile.getWorldObject().getBlockState(hitBlock);
+                BlockState state = tile.getWorldObject().getBlockState(hitBlock);
                 Block block = state.getBlock();
                 int meta = block.getMetaFromState(state);
                 ItemStack returnStack = this.tryConvert(new ItemStack(block, 1, meta), hitState, hitBlock, tile);
                 if (returnStack != null && returnStack.getItem() instanceof ItemBlock) {
                     Block toPlace = Block.getBlockFromItem(returnStack.getItem());
-                    IBlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, EnumFacing.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), EnumHand.MAIN_HAND);
+                    BlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, EnumFacing.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
                     tile.getWorldObject().setBlockState(hitBlock, state2Place, 2);
                     tile.extractEnergy(ENERGY_USE);
                 }
@@ -85,7 +85,7 @@ public class LensColor extends Lens {
         return false;
     }
 
-    private ItemStack tryConvert(ItemStack stack, IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
+    private ItemStack tryConvert(ItemStack stack, BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
         if (StackUtil.isValid(stack)) {
             Item item = stack.getItem();
             for (Map.Entry<Item, IColorLensChanger> changer : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_COLOR_CHANGERS.entrySet()) {

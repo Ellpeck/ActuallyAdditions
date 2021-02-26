@@ -24,7 +24,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public final class BookletUtils {
 
@@ -41,7 +41,7 @@ public final class BookletUtils {
         return null;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static GuiPage createBookletGuiFromPage(GuiScreen previousScreen, IBookletPage page) {
         GuiMainPage mainPage = new GuiMainPage(previousScreen);
 
@@ -51,7 +51,7 @@ public final class BookletUtils {
         return createPageGui(previousScreen, entry, page);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static GuiPage createPageGui(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletPage page) {
         IBookletChapter chapter = page.getChapter();
 

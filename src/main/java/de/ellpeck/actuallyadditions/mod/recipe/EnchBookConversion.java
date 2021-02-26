@@ -8,7 +8,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
@@ -23,7 +23,7 @@ public class EnchBookConversion extends LensConversionRecipe {
     }
 
     @Override
-    public void transformHook(ItemStack stack, IBlockState state, BlockPos pos, IAtomicReconstructor tile) {
+    public void transformHook(ItemStack stack, BlockState state, BlockPos pos, IAtomicReconstructor tile) {
         for (Map.Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
             ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
             Map<Enchantment, Integer> ench = ImmutableMap.of(e.getKey(), e.getValue());

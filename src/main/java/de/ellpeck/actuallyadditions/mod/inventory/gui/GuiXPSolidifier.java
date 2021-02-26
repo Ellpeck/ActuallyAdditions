@@ -21,10 +21,9 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiXPSolidifier extends GuiWtfMojang {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_xp_solidifier");
@@ -84,6 +83,6 @@ public class GuiXPSolidifier extends GuiWtfMojang {
     public void actionPerformed(GuiButton button) {
         PacketHandlerHelper.sendButtonPacket(this.solidifier, button.id);
 
-        this.solidifier.onButtonPressed(button.id, Minecraft.getMinecraft().player);
+        this.solidifier.onButtonPressed(button.id, Minecraft.getInstance().player);
     }
 }

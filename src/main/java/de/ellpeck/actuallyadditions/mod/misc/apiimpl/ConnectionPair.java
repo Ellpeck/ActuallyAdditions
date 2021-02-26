@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.misc.apiimpl;
 
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 
 public class ConnectionPair implements IConnectionPair {
@@ -33,12 +33,12 @@ public class ConnectionPair implements IConnectionPair {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(CompoundNBT compound) {
         if (compound != null) {
             for (int i = 0; i < this.positions.length; i++) {
-                int anX = compound.getInteger("x" + i);
-                int aY = compound.getInteger("y" + i);
-                int aZ = compound.getInteger("z" + i);
+                int anX = compound.getInt("x" + i);
+                int aY = compound.getInt("y" + i);
+                int aZ = compound.getInt("z" + i);
                 this.positions[i] = new BlockPos(anX, aY, aZ);
             }
             this.suppressConnectionRender = compound.getBoolean("SuppressRender");
@@ -68,28 +68,34 @@ public class ConnectionPair implements IConnectionPair {
     @Override
     public boolean contains(BlockPos relay) {
         for (BlockPos position : this.positions) {
-            if (position != null && position.equals(relay)) { return true; }
+            if (position != null && position.equals(relay)) {
+                return true;
+            }
         }
         return false;
     }
 
     @Override
     public String toString() {
-        return (this.positions[0] == null ? "-" : this.positions[0].toString()) + " | " + (this.positions[1] == null ? "-" : this.positions[1].toString());
+        return (this.positions[0] == null
+            ? "-"
+            : this.positions[0].toString()) + " | " + (this.positions[1] == null
+            ? "-"
+            : this.positions[1].toString());
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound) {
+    public void writeToNBT(CompoundNBT compound) {
         for (int i = 0; i < this.positions.length; i++) {
             BlockPos relay = this.positions[i];
-            compound.setInteger("x" + i, relay.getX());
-            compound.setInteger("y" + i, relay.getY());
-            compound.setInteger("z" + i, relay.getZ());
+            compound.putInt("x" + i, relay.getX());
+            compound.putInt("y" + i, relay.getY());
+            compound.putInt("z" + i, relay.getZ());
         }
         if (this.type != null) {
-            compound.setString("Type", this.type.name());
+            compound.putString("Type", this.type.name());
         }
-        compound.setBoolean("SuppressRender", this.suppressConnectionRender);
+        compound.putBoolean("SuppressRender", this.suppressConnectionRender);
     }
 
     @Override
@@ -97,7 +103,9 @@ public class ConnectionPair implements IConnectionPair {
         if (obj instanceof ConnectionPair) {
             ConnectionPair pair = (ConnectionPair) obj;
             for (int i = 0; i < this.positions.length; i++) {
-                if (this.positions[i] == pair.positions[i] || this.positions[i] != null && this.positions[i].equals(pair.positions[i])) { return true; }
+                if (this.positions[i] == pair.positions[i] || this.positions[i] != null && this.positions[i].equals(pair.positions[i])) {
+                    return true;
+                }
             }
         }
         return super.equals(obj);

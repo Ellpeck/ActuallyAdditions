@@ -23,7 +23,7 @@ import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockTorch;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -166,8 +166,8 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
 
         //Roof
         this.fillWithBlocks(world, sbb, 1, 6, 3, 9, 6, 5, Blocks.PLANKS);
-        IBlockState stairSouth = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH);
-        IBlockState stairNorth = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.NORTH);
+        BlockState stairSouth = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH);
+        BlockState stairNorth = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.NORTH);
         this.fillWithBlocks(world, sbb, 0, 4, 0, 10, 4, 0, stairNorth, stairNorth, false);
         this.fillWithBlocks(world, sbb, 0, 5, 1, 10, 5, 1, stairNorth, stairNorth, false);
         this.fillWithBlocks(world, sbb, 0, 6, 2, 10, 6, 2, stairNorth, stairNorth, false);
@@ -204,7 +204,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
         this.setBlockState(world, Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false), 8, 2, 2, sbb);
         this.setBlockState(world, Blocks.OAK_FENCE.getDefaultState(), 2, 1, 6, sbb);
         this.setBlockState(world, Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false), 2, 2, 6, sbb);
-        IBlockState stairWest = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST);
+        BlockState stairWest = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST);
         this.fillWithBlocks(world, sbb, 2, 1, 3, 2, 1, 5, stairWest, stairWest, false);
         this.fillWithBlocks(world, sbb, 3, 1, 2, 5, 1, 3, Blocks.CARPET.getStateFromMeta(10), Blocks.CARPET.getStateFromMeta(10), false);
         this.fillWithBlocks(world, sbb, 3, 1, 4, 4, 1, 6, Blocks.CARPET.getStateFromMeta(10), Blocks.CARPET.getStateFromMeta(10), false);

@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.api.recipe;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
@@ -56,6 +56,6 @@ public class LensConversionRecipe {
         return this.type;
     }
 
-    public void transformHook(ItemStack stack, IBlockState state, BlockPos pos, IAtomicReconstructor tile) {
+    public void transformHook(ItemStack stack, BlockState state, BlockPos pos, IAtomicReconstructor tile) {
     }
 }

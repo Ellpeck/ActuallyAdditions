@@ -12,9 +12,9 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TileEntityDropper extends TileEntityInventoryBase {
 
@@ -25,7 +25,7 @@ public class TileEntityDropper extends TileEntityInventoryBase {
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("CurrentTime", this.currentTime);
@@ -33,7 +33,7 @@ public class TileEntityDropper extends TileEntityInventoryBase {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.currentTime = compound.getInteger("CurrentTime");
@@ -60,7 +60,7 @@ public class TileEntityDropper extends TileEntityInventoryBase {
     private void doWork() {
         ItemStack theoreticalRemove = this.removeFromInventory(false);
         if (StackUtil.isValid(theoreticalRemove)) {
-            IBlockState state = this.world.getBlockState(this.pos);
+            BlockState state = this.world.getBlockState(this.pos);
             ItemStack drop = theoreticalRemove.copy();
             drop.setCount(1);
             WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state), this.world, this.pos, drop);

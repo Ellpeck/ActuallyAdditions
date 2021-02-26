@@ -10,33 +10,32 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.google.common.collect.Sets;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem {
 
@@ -70,20 +69,38 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (!playerIn.isSneaking()) return Items.IRON_HOE.onItemUse(playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
+    public EnumActionResult onItemUse(PlayerEntity playerIn, World worldIn, BlockPos pos, Hand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (!playerIn.isSneaking()) {
+            return Items.IRON_HOE.onItemUse(playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
+        }
         return Items.IRON_SHOVEL.onItemUse(playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
     }
 
     @Override
-    public boolean canHarvestBlock(IBlockState state, ItemStack stack) {
-        return this.hasExtraWhitelist(state.getBlock()) || state.getMaterial().isToolNotRequired() || state.getBlock() == Blocks.SNOW_LAYER || state.getBlock() == Blocks.SNOW || (state.getBlock() == Blocks.OBSIDIAN ? this.toolMaterial.getHarvestLevel() >= 3 : state.getBlock() != Blocks.DIAMOND_BLOCK && state.getBlock() != Blocks.DIAMOND_ORE ? state.getBlock() != Blocks.EMERALD_ORE && state.getBlock() != Blocks.EMERALD_BLOCK ? state.getBlock() != Blocks.GOLD_BLOCK && state.getBlock() != Blocks.GOLD_ORE ? state.getBlock() != Blocks.IRON_BLOCK && state.getBlock() != Blocks.IRON_ORE ? state.getBlock() != Blocks.LAPIS_BLOCK && state.getBlock() != Blocks.LAPIS_ORE ? state.getBlock() != Blocks.REDSTONE_ORE && state.getBlock() != Blocks.LIT_REDSTONE_ORE ? state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON || state.getMaterial() == Material.ANVIL : this.toolMaterial.getHarvestLevel() >= 2 : this.toolMaterial.getHarvestLevel() >= 1 : this.toolMaterial.getHarvestLevel() >= 1 : this.toolMaterial.getHarvestLevel() >= 2 : this.toolMaterial.getHarvestLevel() >= 2 : this.toolMaterial.getHarvestLevel() >= 2);
+    public boolean canHarvestBlock(BlockState state, ItemStack stack) {
+        return this.hasExtraWhitelist(state.getBlock()) || state.getMaterial().isToolNotRequired() || state.getBlock() == Blocks.SNOW_LAYER || state.getBlock() == Blocks.SNOW || (state.getBlock() == Blocks.OBSIDIAN
+            ? this.toolMaterial.getHarvestLevel() >= 3
+            : state.getBlock() != Blocks.DIAMOND_BLOCK && state.getBlock() != Blocks.DIAMOND_ORE
+                ? state.getBlock() != Blocks.EMERALD_ORE && state.getBlock() != Blocks.EMERALD_BLOCK
+                ? state.getBlock() != Blocks.GOLD_BLOCK && state.getBlock() != Blocks.GOLD_ORE
+                ? state.getBlock() != Blocks.IRON_BLOCK && state.getBlock() != Blocks.IRON_ORE
+                ? state.getBlock() != Blocks.LAPIS_BLOCK && state.getBlock() != Blocks.LAPIS_ORE
+                ? state.getBlock() != Blocks.REDSTONE_ORE && state.getBlock() != Blocks.LIT_REDSTONE_ORE
+                ? state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON || state.getMaterial() == Material.ANVIL
+                : this.toolMaterial.getHarvestLevel() >= 2
+                : this.toolMaterial.getHarvestLevel() >= 1
+                : this.toolMaterial.getHarvestLevel() >= 1
+                : this.toolMaterial.getHarvestLevel() >= 2
+                : this.toolMaterial.getHarvestLevel() >= 2
+                : this.toolMaterial.getHarvestLevel() >= 2);
     }
 
     private boolean hasExtraWhitelist(Block block) {
         String name = block.getRegistryName().toString();
         for (String list : ConfigStringListValues.PAXEL_EXTRA_MINING_WHITELIST.getValue()) {
-            if (list.equals(name)) { return true; }
+            if (list.equals(name)) {
+                return true;
+            }
         }
         return false;
     }
@@ -94,18 +111,22 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem {
     }
 
     @Override
-    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
         if (state.getBlock() == Blocks.WEB) {
             return 15.0F;
         } else {
-            return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state)) ? this.efficiency : 1.0F;
+            return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state))
+                ? this.efficiency
+                : 1.0F;
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public IItemColor getItemColor() {
-        return (stack, pass) -> pass > 0 ? ItemAllToolAA.this.color : 0xFFFFFF;
+        return (stack, pass) -> pass > 0
+            ? ItemAllToolAA.this.color
+            : 0xFFFFFF;
     }
 
     @Override

@@ -14,16 +14,15 @@ import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public abstract class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile {
 
@@ -54,7 +53,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("Range", this.range);
@@ -67,7 +66,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             int x = compound.getInteger("xOfTileStored");
@@ -115,7 +114,9 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     protected void onUpdateSent() {
         this.rangeBefore = this.range;
         this.boundPosBefore = this.boundPosition;
-        this.boundBlockBefore = this.boundPosition == null ? null : this.world.getBlockState(this.boundPosition).getBlock();
+        this.boundBlockBefore = this.boundPosition == null
+            ? null
+            : this.world.getBlockState(this.boundPosition).getBlock();
 
         if (this.boundPosition != null) {
             this.world.notifyNeighborsOfStateChange(this.pos, this.world.getBlockState(this.boundPosition).getBlock(), false);
@@ -137,7 +138,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
         return false;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void renderParticles() {
         if (this.world.rand.nextInt(2) == 0) {
             double d1 = this.boundPosition.getY() + this.world.rand.nextFloat();
@@ -183,7 +184,9 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
         if (this.isBoundThingInRange() && this.isCapabilitySupported(capability)) {
             TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
-            if (tile != null) { return tile.hasCapability(capability, facing); }
+            if (tile != null) {
+                return tile.hasCapability(capability, facing);
+            }
         }
         return super.hasCapability(capability, facing);
     }
@@ -192,7 +195,9 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if (this.isBoundThingInRange() && this.isCapabilitySupported(capability)) {
             TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
-            if (tile != null) { return tile.getCapability(capability, facing); }
+            if (tile != null) {
+                return tile.getCapability(capability, facing);
+            }
         }
         return super.getCapability(capability, facing);
     }
@@ -201,9 +206,11 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     public int getComparatorStrength() {
         if (this.isBoundThingInRange()) {
             BlockPos pos = this.getBoundPosition();
-            IBlockState state = this.world.getBlockState(pos);
+            BlockState state = this.world.getBlockState(pos);
 
-            if (state.hasComparatorInputOverride()) { return state.getComparatorInputOverride(this.world, pos); }
+            if (state.hasComparatorInputOverride()) {
+                return state.getComparatorInputOverride(this.world, pos);
+            }
         }
         return 0;
     }

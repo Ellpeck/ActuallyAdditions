@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.network.gui;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 
 public interface INumberReactor {
 
@@ -21,5 +21,5 @@ public interface INumberReactor {
      * @param id     The ID (meaning the place in the GUI) of the number typed in
      * @param player The Player doing it
      */
-    void onNumberReceived(double number, int id, EntityPlayer player);
+    void onNumberReceived(double number, int id, PlayerEntity player);
 }

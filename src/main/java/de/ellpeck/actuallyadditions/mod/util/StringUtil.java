@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.translation.LanguageMap;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public final class StringUtil {
 
@@ -32,7 +32,7 @@ public final class StringUtil {
     /**
      * Localizes a given String
      */
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static String localize(String text) {
         return I18n.format(text);
     }
@@ -40,7 +40,7 @@ public final class StringUtil {
     /**
      * Localizes a given formatted String with the given Replacements
      */
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static String localizeFormatted(String text, Object... replace) {
         return I18n.format(text, replace);
     }
@@ -50,7 +50,7 @@ public final class StringUtil {
         return net.minecraft.util.text.translation.I18n.translateToLocal(langKey);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void drawSplitString(FontRenderer renderer, String strg, int x, int y, int width, int color, boolean shadow) {
         List<String> list = renderer.listFormattedStringToWidth(strg, width);
         for (int i = 0; i < list.size(); i++) {
@@ -59,7 +59,7 @@ public final class StringUtil {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void renderScaledAsciiString(FontRenderer font, String text, float x, float y, int color, boolean shadow, float scale) {
         GlStateManager.pushMatrix();
         GlStateManager.scale(scale, scale, scale);
@@ -72,7 +72,7 @@ public final class StringUtil {
         GlStateManager.popMatrix();
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void renderSplitScaledAsciiString(FontRenderer font, String text, int x, int y, int color, boolean shadow, float scale, int length) {
         List<String> lines = font.listFormattedStringToWidth(text, (int) (length / scale));
         for (int i = 0; i < lines.size(); i++) {

@@ -16,10 +16,10 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TileEntityCompost extends TileEntityInventoryBase {
 
@@ -35,14 +35,16 @@ public class TileEntityCompost extends TileEntityInventoryBase {
     public static CompostRecipe getRecipeForInput(ItemStack input) {
         if (StackUtil.isValid(input)) {
             for (CompostRecipe recipe : ActuallyAdditionsAPI.COMPOST_RECIPES) {
-                if (recipe.matches(input)) return recipe;
+                if (recipe.matches(input)) {
+                    return recipe;
+                }
             }
         }
         return null;
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("ConversionTime", this.conversionTime);
@@ -55,12 +57,14 @@ public class TileEntityCompost extends TileEntityInventoryBase {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.conversionTime = compound.getInteger("ConversionTime");
         }
-        if (type == NBTType.SYNC) this.world.markBlockRangeForRenderUpdate(this.pos, this.pos.up());
+        if (type == NBTType.SYNC) {
+            this.world.markBlockRangeForRenderUpdate(this.pos, this.pos.up());
+        }
     }
 
     @Override
@@ -70,7 +74,9 @@ public class TileEntityCompost extends TileEntityInventoryBase {
             boolean theFlag = this.conversionTime > 0;
             ItemStack input = this.inv.getStackInSlot(0);
             if (StackUtil.isValid(input)) {
-                if (this.recipe == null || !this.recipe.matches(input)) this.recipe = getRecipeForInput(input);
+                if (this.recipe == null || !this.recipe.matches(input)) {
+                    this.recipe = getRecipeForInput(input);
+                }
                 if (this.recipe != null) {
                     this.conversionTime++;
                     if (this.conversionTime >= COMPOST_TIME_TICKS) {
@@ -101,23 +107,34 @@ public class TileEntityCompost extends TileEntityInventoryBase {
         return (slot, automation) -> getRecipeForInput(this.inv.getStackInSlot(slot)) == null;
     }
 
-    public IBlockState getCurrentDisplay() {
+    public BlockState getCurrentDisplay() {
         ItemStack input = this.inv.getStackInSlot(0);
         CompostRecipe displayRecipe = this.recipe;
-        if (displayRecipe == null || !displayRecipe.matches(input)) displayRecipe = getRecipeForInput(input);
-
-        if (displayRecipe == null) for (CompostRecipe r : ActuallyAdditionsAPI.COMPOST_RECIPES) {
-            if (ItemUtil.areItemsEqual(input, r.getOutput(), true)) return r.getOutputDisplay();
-            else if (r.getInput().apply(input)) return r.getInputDisplay();
+        if (displayRecipe == null || !displayRecipe.matches(input)) {
+            displayRecipe = getRecipeForInput(input);
         }
 
-        if (displayRecipe != null) return displayRecipe.getInputDisplay();
+        if (displayRecipe == null) {
+            for (CompostRecipe r : ActuallyAdditionsAPI.COMPOST_RECIPES) {
+                if (ItemUtil.areItemsEqual(input, r.getOutput(), true)) {
+                    return r.getOutputDisplay();
+                } else if (r.getInput().apply(input)) {
+                    return r.getInputDisplay();
+                }
+            }
+        }
+
+        if (displayRecipe != null) {
+            return displayRecipe.getInputDisplay();
+        }
         return Blocks.AIR.getDefaultState();
     }
 
     public float getHeight() {
         ItemStack input = this.inv.getStackInSlot(0);
-        if (input.isEmpty()) return 0;
+        if (input.isEmpty()) {
+            return 0;
+        }
         return (float) input.getCount() / input.getMaxStackSize();
     }
 }

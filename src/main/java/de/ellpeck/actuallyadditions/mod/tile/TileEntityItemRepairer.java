@@ -10,11 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -22,13 +17,16 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityItemRepairer extends TileEntityInventoryBase {
 
@@ -53,7 +51,9 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase {
                     String reg = item.getRegistryName().toString();
                     if (reg != null) {
                         for (String strg : ConfigStringListValues.REPAIRER_EXTRA_WHITELIST.getValue()) {
-                            if (reg.equals(strg)) { return true; }
+                            if (reg.equals(strg)) {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -63,7 +63,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase {
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.setInteger("NextRepairTick", this.nextRepairTick);
         }
@@ -72,7 +72,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase {
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.nextRepairTick = compound.getInteger("NextRepairTick");
         }
@@ -101,7 +101,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase {
                             if (input.hasTagCompound()) {
                                 //TiCon un-break tools
                                 if ("tconstruct".equalsIgnoreCase(input.getItem().getRegistryName().getNamespace())) {
-                                    NBTTagCompound stats = input.getTagCompound().getCompoundTag("Stats");
+                                    CompoundNBT stats = input.getTagCompound().getCompoundTag("Stats");
                                     stats.removeTag("Broken");
                                 }
                             }
@@ -118,13 +118,15 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public int getEnergyScaled(int i) {
         return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
     public int getItemDamageToScale(int i) {
-        if (StackUtil.isValid(this.inv.getStackInSlot(SLOT_INPUT))) { return (this.inv.getStackInSlot(SLOT_INPUT).getMaxDamage() - this.inv.getStackInSlot(SLOT_INPUT).getItemDamage()) * i / this.inv.getStackInSlot(SLOT_INPUT).getMaxDamage(); }
+        if (StackUtil.isValid(this.inv.getStackInSlot(SLOT_INPUT))) {
+            return (this.inv.getStackInSlot(SLOT_INPUT).getMaxDamage() - this.inv.getStackInSlot(SLOT_INPUT).getItemDamage()) * i / this.inv.getStackInSlot(SLOT_INPUT).getMaxDamage();
+        }
         return 0;
     }
 
@@ -157,8 +159,9 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase {
                     ActuallyAdditions.LOGGER.error("Invalid item in repair blacklist: " + s);
                     continue;
                 }
-                if (split.length == 1) BLACKLIST.add(Pair.of(item, 0));
-                else if (split.length == 2) {
+                if (split.length == 1) {
+                    BLACKLIST.add(Pair.of(item, 0));
+                } else if (split.length == 2) {
                     BLACKLIST.add(Pair.of(item, Integer.parseInt(split[1])));
                 }
             }

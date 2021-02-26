@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
@@ -40,7 +40,7 @@ public interface IMethodHandler {
 
     PotionEffect[] getEffectsFromStack(ItemStack stack);
 
-    boolean invokeConversionLens(IBlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile);
+    boolean invokeConversionLens(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile);
 
     boolean invokeReconstructor(IAtomicReconstructor tile);
 

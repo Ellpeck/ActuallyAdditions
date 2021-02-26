@@ -14,8 +14,8 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AwfulUtil;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.ILootContainer;
@@ -35,7 +35,7 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
     }
 
     @Override
-    public void writeSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         if (this.lootTable != null) {
@@ -44,7 +44,7 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
     }
 
     @Override
-    public void readSyncableNBT(NBTTagCompound compound, NBTType type) {
+    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         if (compound.hasKey("LootTable")) {
@@ -53,7 +53,7 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
     }
 
     @Override
-    public void onButtonPressed(int buttonID, EntityPlayer player) {
+    public void onButtonPressed(int buttonID, PlayerEntity player) {
         if (player != null && this.pos != null) {
             GuiHandler.GuiTypes type;
 
@@ -74,7 +74,7 @@ public class TileEntityGiantChest extends TileEntityInventoryBase implements IBu
         return this.lootTable;
     }
 
-    public void fillWithLoot(EntityPlayer player) {
+    public void fillWithLoot(PlayerEntity player) {
         if (this.lootTable != null && !this.world.isRemote && this.world instanceof WorldServer) {
             LootTable table = this.world.getLootTableManager().getLootTableFromLocation(this.lootTable);
             this.lootTable = null;

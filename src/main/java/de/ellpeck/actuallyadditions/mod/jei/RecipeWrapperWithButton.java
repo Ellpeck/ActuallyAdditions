@@ -10,11 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.jei;
 
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
@@ -23,6 +18,10 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class RecipeWrapperWithButton implements IRecipeWrapper {
 
@@ -43,7 +42,7 @@ public abstract class RecipeWrapperWithButton implements IRecipeWrapper {
 
             IBookletPage page = this.getPage();
             if (page != null) {
-                Minecraft.getMinecraft().displayGuiScreen(BookletUtils.createBookletGuiFromPage(Minecraft.getMinecraft().currentScreen, page));
+                Minecraft.getInstance().displayGuiScreen(BookletUtils.createBookletGuiFromPage(Minecraft.getInstance().currentScreen, page));
                 return true;
             }
         }

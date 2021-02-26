@@ -19,7 +19,7 @@ import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.stats.StatisticsManager;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.OnlyIn;
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * (Partially excerpted from Botania by Vazkii with permission, thanks!)
  *
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiAAAchievements extends GuiAchievements{
 
     public GuiAAAchievements(GuiScreen screen, StatisticsManager statistics){

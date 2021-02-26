@@ -18,9 +18,9 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -36,9 +36,9 @@ public class ItemGrowthRing extends ItemEnergy {
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
-        if (!(entity instanceof EntityPlayer) || world.isRemote || entity.isSneaking()) { return; }
+        if (!(entity instanceof PlayerEntity) || world.isRemote || entity.isSneaking()) { return; }
 
-        EntityPlayer player = (EntityPlayer) entity;
+        PlayerEntity player = (PlayerEntity) entity;
         ItemStack equipped = player.getHeldItemMainhand();
 
         int energyUse = 300;
@@ -69,13 +69,13 @@ public class ItemGrowthRing extends ItemEnergy {
                         if (this.getEnergyStored(stack) >= energyUse) {
                             BlockPos pos = blocks.get(world.rand.nextInt(blocks.size()));
 
-                            IBlockState state = world.getBlockState(pos);
+                            BlockState state = world.getBlockState(pos);
                             Block block = state.getBlock();
                             int metaBefore = block.getMetaFromState(state);
                             block.updateTick(world, pos, world.getBlockState(pos), world.rand);
 
                             //Show Particles if Metadata changed
-                            IBlockState newState = world.getBlockState(pos);
+                            BlockState newState = world.getBlockState(pos);
                             if (newState.getBlock().getMetaFromState(newState) != metaBefore) {
                                 world.playEvent(2005, pos, 0);
                             }
