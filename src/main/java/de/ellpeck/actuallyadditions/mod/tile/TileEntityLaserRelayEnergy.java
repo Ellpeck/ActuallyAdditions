@@ -20,7 +20,7 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
     public static final int CAP = 1000;
-    public final ConcurrentHashMap<EnumFacing, TileEntity> receiversAround = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<Direction, TileEntity> receiversAround = new ConcurrentHashMap<>();
     private final IEnergyStorage[] energyStorages = new IEnergyStorage[6];
     private Mode mode = Mode.BOTH;
 
@@ -44,7 +44,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
         super(name, LaserType.ENERGY);
 
         for (int i = 0; i < this.energyStorages.length; i++) {
-            EnumFacing facing = EnumFacing.values()[i];
+            Direction facing = Direction.values()[i];
             this.energyStorages[i] = new IEnergyStorage() {
 
                 @Override
@@ -84,7 +84,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
         this("laserRelay");
     }
 
-    private int transmitEnergy(EnumFacing from, int maxTransmit, boolean simulate) {
+    private int transmitEnergy(Direction from, int maxTransmit, boolean simulate) {
         int transmitted = 0;
         if (maxTransmit > 0 && this.mode != Mode.OUTPUT_ONLY) {
             Network network = this.getNetwork();
@@ -96,7 +96,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.energyStorages[facing == null
             ? 0
             : facing.ordinal()];
@@ -109,11 +109,11 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
     @Override
     public void saveDataOnChangeOrWorldStart() {
-        Map<EnumFacing, TileEntity> old = new HashMap<>(this.receiversAround);
+        Map<Direction, TileEntity> old = new HashMap<>(this.receiversAround);
         boolean change = false;
 
         this.receiversAround.clear();
-        for (EnumFacing side : EnumFacing.values()) {
+        for (Direction side : Direction.values()) {
             BlockPos pos = this.getPos().offset(side);
             if (this.world.isBlockLoaded(pos)) {
                 TileEntity tile = this.world.getTileEntity(pos);
@@ -138,7 +138,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
         }
     }
 
-    private int transferEnergyToReceiverInNeed(EnumFacing from, Network network, int maxTransfer, boolean simulate) {
+    private int transferEnergyToReceiverInNeed(Direction from, Network network, int maxTransfer, boolean simulate) {
         int transmitted = 0;
         //Keeps track of all the Laser Relays and Energy Acceptors that have been checked already to make nothing run multiple times
         Set<BlockPos> alreadyChecked = new ObjectOpenHashSet<>();
@@ -156,11 +156,11 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
                         if (theRelay.mode != Mode.INPUT_ONLY) {
                             boolean workedOnce = false;
 
-                            for (EnumFacing facing : theRelay.receiversAround.keySet()) {
+                            for (Direction facing : theRelay.receiversAround.keySet()) {
                                 if (theRelay != this || facing != from) {
                                     TileEntity tile = theRelay.receiversAround.get(facing);
 
-                                    EnumFacing opp = facing.getOpposite();
+                                    Direction opp = facing.getOpposite();
                                     if (tile != null) {
                                         if (tile.hasCapability(CapabilityEnergy.ENERGY, opp)) {
                                             IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, opp);
@@ -191,10 +191,10 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
             for (TileEntityLaserRelayEnergy theRelay : relaysThatWork) {
                 double highestLoss = Math.max(theRelay.getLossPercentage(), this.getLossPercentage());
                 int lowestCap = Math.min(theRelay.getEnergyCap(), this.getEnergyCap());
-                for (Map.Entry<EnumFacing, TileEntity> receiver : theRelay.receiversAround.entrySet()) {
+                for (Map.Entry<Direction, TileEntity> receiver : theRelay.receiversAround.entrySet()) {
                     if (receiver != null) {
-                        EnumFacing side = receiver.getKey();
-                        EnumFacing opp = side.getOpposite();
+                        Direction side = receiver.getKey();
+                        Direction opp = side.getOpposite();
                         TileEntity tile = receiver.getValue();
                         if (!alreadyChecked.contains(tile.getPos())) {
                             alreadyChecked.add(tile.getPos());

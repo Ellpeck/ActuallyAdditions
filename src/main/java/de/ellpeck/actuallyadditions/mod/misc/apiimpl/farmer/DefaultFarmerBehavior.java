@@ -32,7 +32,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -170,7 +170,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
 
         ItemStack itemstack = getHoeStack();
 
-        if (!player.canPlayerEdit(pos.offset(EnumFacing.UP), EnumFacing.UP, itemstack)) {
+        if (!player.canPlayerEdit(pos.offset(Direction.UP), Direction.UP, itemstack)) {
             return EnumActionResult.FAIL;
         } else {
             int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);

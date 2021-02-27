@@ -22,7 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -85,7 +85,7 @@ public class ItemPhantomConnector extends ItemBase {
     }
 
     @Override
-    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, EnumFacing par7, float par8, float par9, float par10) {
+    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction par7, float par8, float par9, float par10) {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote) {
             //Passing Data to Phantoms

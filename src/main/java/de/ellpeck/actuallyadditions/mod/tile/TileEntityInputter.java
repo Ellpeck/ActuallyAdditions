@@ -22,7 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -38,11 +38,11 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public int sideToPut = -1;
     public int slotToPutStart;
     public int slotToPutEnd;
-    public Map<EnumFacing, SlotlessableItemHandlerWrapper> placeToPut = new ConcurrentHashMap<>();
+    public Map<Direction, SlotlessableItemHandlerWrapper> placeToPut = new ConcurrentHashMap<>();
     public int sideToPull = -1;
     public int slotToPullStart;
     public int slotToPullEnd;
-    public Map<EnumFacing, SlotlessableItemHandlerWrapper> placeToPull = new ConcurrentHashMap<>();
+    public Map<Direction, SlotlessableItemHandlerWrapper> placeToPull = new ConcurrentHashMap<>();
     public boolean isAdvanced;
     public FilterSettings leftFilter = new FilterSettings(12, true, true, false, false, 0, -1000);
     public FilterSettings rightFilter = new FilterSettings(12, true, true, false, false, 0, -2000);
@@ -58,7 +58,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     public TileEntityInputter() {
-        super(1, "inputter");
+        super(ActuallyTiles.INPUTTER_TILE.get(), 1);
         this.isAdvanced = false;
     }
 
@@ -85,7 +85,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     }
 
     private boolean newPulling() {
-        for (EnumFacing side : this.placeToPull.keySet()) {
+        for (Direction side : this.placeToPull.keySet()) {
             WorldUtil.doItemInteraction(this.placeToPull.get(side), this.wrapper, Integer.MAX_VALUE, this.slotToPullStart, this.slotToPullEnd, 0, 1, !this.isAdvanced
                 ? null
                 : this.leftFilter);
@@ -99,7 +99,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
     private boolean newPutting() {
         if (!this.isAdvanced || this.rightFilter.check(this.inv.getStackInSlot(0))) {
-            for (EnumFacing side : this.placeToPut.keySet()) {
+            for (Direction side : this.placeToPut.keySet()) {
                 WorldUtil.doItemInteraction(this.wrapper, this.placeToPut.get(side), Integer.MAX_VALUE, 0, 1, this.slotToPutStart, this.slotToPutEnd, null);
 
                 if (this.placeToPut instanceof TileEntityItemViewer) {
@@ -124,14 +124,14 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         this.placeToPut.clear();
 
         if (this.sideToPull != -1) {
-            EnumFacing side = WorldUtil.getDirectionBySidesInOrder(this.sideToPull);
+            Direction side = WorldUtil.getDirectionBySidesInOrder(this.sideToPull);
             BlockPos offset = this.pos.offset(side);
 
             if (this.world.isBlockLoaded(offset)) {
                 TileEntity tile = this.world.getTileEntity(offset);
 
                 if (tile != null) {
-                    for (EnumFacing facing : EnumFacing.values()) {
+                    for (Direction facing : Direction.values()) {
                         IItemHandler normal = null;
                         if (tile.getClass() == TileEntityFurnace.class) {
                             normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
@@ -162,14 +162,14 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
         }
 
         if (this.sideToPut != -1) {
-            EnumFacing side = WorldUtil.getDirectionBySidesInOrder(this.sideToPut);
+            Direction side = WorldUtil.getDirectionBySidesInOrder(this.sideToPut);
             BlockPos offset = this.pos.offset(side);
 
             if (this.world.isBlockLoaded(offset)) {
                 TileEntity tile = this.world.getTileEntity(offset);
 
                 if (tile != null) {
-                    for (EnumFacing facing : EnumFacing.values()) {
+                    for (Direction facing : Direction.values()) {
                         IItemHandler normal = null;
                         if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
                             normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);

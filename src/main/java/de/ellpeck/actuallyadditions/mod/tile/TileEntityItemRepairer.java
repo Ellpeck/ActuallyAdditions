@@ -18,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -131,7 +131,7 @@ public class TileEntityItemRepairer extends TileEntityInventoryBase {
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 

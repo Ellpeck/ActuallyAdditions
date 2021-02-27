@@ -27,8 +27,8 @@ public class BlockFishingNet extends BlockContainerBase {
 
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.0625, 1);
 
-    public BlockFishingNet(String name) {
-        super(Material.WOOD, name);
+    public BlockFishingNet() {
+        super(Material.WOOD, this.name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(3.0F);

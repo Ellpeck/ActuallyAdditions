@@ -19,7 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -33,7 +33,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         ItemStack stack = this.inv.getStackInSlot(0);
         if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBattery) {
             if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) { return stack.getCapability(CapabilityEnergy.ENERGY, null); }
@@ -165,8 +165,8 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides() {
-        return EnumFacing.values();
+    public Direction[] getEnergyShareSides() {
+        return Direction.values();
     }
 
     @Override

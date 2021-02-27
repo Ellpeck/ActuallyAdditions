@@ -21,7 +21,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -29,8 +29,8 @@ import net.minecraft.world.World;
 
 public class BlockItemRepairer extends BlockContainerBase {
 
-    public BlockItemRepairer(String name) {
-        super(Material.ROCK, name);
+    public BlockItemRepairer() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(20.0F);
         this.setResistance(15.0F);
@@ -44,7 +44,7 @@ public class BlockItemRepairer extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
         if (!world.isRemote) {
             TileEntityItemRepairer repairer = (TileEntityItemRepairer) world.getTileEntity(pos);
             if (repairer != null) {

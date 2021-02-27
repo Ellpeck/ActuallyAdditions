@@ -18,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
@@ -132,8 +132,8 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     private TileEntityDisplayStand[] getNearbyStands() {
         TileEntityDisplayStand[] stands = new TileEntityDisplayStand[4];
 
-        for (int i = 0; i < EnumFacing.HORIZONTALS.length; i++) {
-            EnumFacing facing = EnumFacing.HORIZONTALS[i];
+        for (int i = 0; i < Direction.HORIZONTALS.length; i++) {
+            Direction facing = Direction.HORIZONTALS[i];
             BlockPos offset = this.pos.offset(facing, 3);
             TileEntity tile = this.world.getTileEntity(offset);
             if (tile instanceof TileEntityDisplayStand) {

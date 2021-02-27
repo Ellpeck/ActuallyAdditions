@@ -20,7 +20,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
 
-    public final ConcurrentHashMap<EnumFacing, TileEntity> handlersAround = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<Direction, TileEntity> handlersAround = new ConcurrentHashMap<>();
     private final IFluidHandler[] fluidHandlers = new IFluidHandler[6];
     private Mode mode = Mode.BOTH;
 
@@ -45,7 +45,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
         super("laserRelayFluids", LaserType.FLUID);
 
         for (int i = 0; i < this.fluidHandlers.length; i++) {
-            EnumFacing facing = EnumFacing.values()[i];
+            Direction facing = Direction.values()[i];
             this.fluidHandlers[i] = new IFluidHandler() {
                 @Override
                 public IFluidTankProperties[] getTankProperties() {
@@ -76,7 +76,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
 
         if (!this.world.isRemote) {
             if (this.mode == Mode.INPUT_ONLY) {
-                for (EnumFacing side : this.handlersAround.keySet()) {
+                for (Direction side : this.handlersAround.keySet()) {
                     WorldUtil.doFluidInteraction(this.handlersAround.get(side), this, side.getOpposite(), Integer.MAX_VALUE);
                 }
             }
@@ -90,11 +90,11 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
 
     @Override
     public void saveDataOnChangeOrWorldStart() {
-        Map<EnumFacing, TileEntity> old = new HashMap<>(this.handlersAround);
+        Map<Direction, TileEntity> old = new HashMap<>(this.handlersAround);
         boolean change = false;
 
         this.handlersAround.clear();
-        for (EnumFacing side : EnumFacing.values()) {
+        for (Direction side : Direction.values()) {
             BlockPos pos = this.getPos().offset(side);
             if (this.world.isBlockLoaded(pos)) {
                 TileEntity tile = this.world.getTileEntity(pos);
@@ -120,13 +120,13 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
     }
 
     @Override
-    public IFluidHandler getFluidHandler(EnumFacing facing) {
+    public IFluidHandler getFluidHandler(Direction facing) {
         return this.fluidHandlers[facing == null
             ? 0
             : facing.ordinal()];
     }
 
-    private int transmitFluid(EnumFacing from, FluidStack stack, boolean doFill) {
+    private int transmitFluid(Direction from, FluidStack stack, boolean doFill) {
         int transmitted = 0;
         if (stack != null && this.mode != Mode.OUTPUT_ONLY) {
             Network network = this.getNetwork();
@@ -137,7 +137,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
         return transmitted;
     }
 
-    private int transferFluidToReceiverInNeed(EnumFacing from, Network network, FluidStack stack, boolean doFill) {
+    private int transferFluidToReceiverInNeed(Direction from, Network network, FluidStack stack, boolean doFill) {
         int transmitted = 0;
         //Keeps track of all the Laser Relays and Energy Acceptors that have been checked already to make nothing run multiple times
         Set<BlockPos> alreadyChecked = new HashSet<>();
@@ -155,11 +155,11 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
                         if (theRelay.mode != Mode.INPUT_ONLY) {
                             boolean workedOnce = false;
 
-                            for (EnumFacing facing : theRelay.handlersAround.keySet()) {
+                            for (Direction facing : theRelay.handlersAround.keySet()) {
                                 if (theRelay != this || facing != from) {
                                     TileEntity tile = theRelay.handlersAround.get(facing);
 
-                                    EnumFacing opp = facing.getOpposite();
+                                    Direction opp = facing.getOpposite();
                                     if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp)) {
                                         IFluidHandler cap = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp);
                                         if (cap != null && cap.fill(stack, false) > 0) {
@@ -186,10 +186,10 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
             }
 
             for (TileEntityLaserRelayFluids theRelay : relaysThatWork) {
-                for (Map.Entry<EnumFacing, TileEntity> receiver : theRelay.handlersAround.entrySet()) {
+                for (Map.Entry<Direction, TileEntity> receiver : theRelay.handlersAround.entrySet()) {
                     if (receiver != null) {
-                        EnumFacing side = receiver.getKey();
-                        EnumFacing opp = side.getOpposite();
+                        Direction side = receiver.getKey();
+                        Direction opp = side.getOpposite();
                         TileEntity tile = receiver.getValue();
                         if (!alreadyChecked.contains(tile.getPos())) {
                             alreadyChecked.add(tile.getPos());

@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
@@ -28,7 +28,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
         if (super.isBoundThingInRange()) {
             TileEntity tile = this.world.getTileEntity(this.boundPosition);
             if (tile != null && !(tile instanceof TileEntityLaserRelayFluids)) {
-                for (EnumFacing facing : EnumFacing.values()) {
+                for (Direction facing : Direction.values()) {
                     if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) { return true; }
                 }
             }
@@ -52,7 +52,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
     }
 
     @Override
-    public EnumFacing[] getFluidShareSides() {
-        return EnumFacing.values();
+    public Direction[] getFluidShareSides() {
+        return Direction.values();
     }
 }

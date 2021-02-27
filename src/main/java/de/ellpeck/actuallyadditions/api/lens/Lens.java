@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.api.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import net.minecraft.block.state.BlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
 /**
@@ -42,7 +42,7 @@ public abstract class Lens {
     /**
      * @return If the lens can be invoked at the current time
      */
-    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot) {
+    public boolean canInvoke(IAtomicReconstructor tile, Direction sideToShootTo, int energyUsePerShot) {
         return true;
     }
 }

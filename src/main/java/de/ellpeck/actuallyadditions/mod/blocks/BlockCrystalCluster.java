@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.Random;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.gen.WorldGenLushCaves;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
@@ -23,8 +19,8 @@ import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,20 +29,23 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.Random;
 
 public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlock, IColorProvidingItem {
 
     private final TheCrystals crystal;
 
-    public BlockCrystalCluster(String name, TheCrystals crystal) {
+    public BlockCrystalCluster(TheCrystals crystal) {
         super(Material.GLASS, name);
         this.crystal = crystal;
 
@@ -68,7 +67,7 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
     }
 
     @Override
-    public BlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base) {
+    public BlockState getStateForPlacement(World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base) {
         return this.getStateFromMeta(side.ordinal());
     }
 
@@ -79,7 +78,7 @@ public class BlockCrystalCluster extends BlockBase implements IColorProvidingBlo
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
+        return this.getDefaultState().withProperty(BlockDirectional.FACING, Direction.byIndex(meta));
     }
 
     @Override

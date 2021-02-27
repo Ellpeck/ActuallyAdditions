@@ -18,8 +18,8 @@ import net.minecraft.item.ItemStack;
 
 public class BlockGeneric extends BlockBase {
 
-    public BlockGeneric(String name) {
-        this(name, Material.ROCK, SoundType.STONE, 1.5F, 10.0F, "pickaxe", 0);
+    public BlockGeneric() {
+        this(Material.ROCK, SoundType.STONE, 1.5F, 10.0F, "pickaxe", 0);
     }
 
     public BlockGeneric(String name, Material material, SoundType sound, float hardness, float resistance, String harvestTool, int harvestLevel) {

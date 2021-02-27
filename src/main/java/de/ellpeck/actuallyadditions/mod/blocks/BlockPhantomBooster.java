@@ -27,8 +27,8 @@ public class BlockPhantomBooster extends BlockContainerBase {
 
     private static final AxisAlignedBB AABB = new AxisAlignedBB(2 * 0.0625, 0, 2 * 0.0625, 1 - 2 * 0.0625, 1, 1 - 2 * 0.0625);
 
-    public BlockPhantomBooster(String name) {
-        super(Material.ROCK, name);
+    public BlockPhantomBooster() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);

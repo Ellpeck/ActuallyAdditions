@@ -24,18 +24,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BlockMiner extends BlockContainerBase implements IHudDisplay {
 
-    public BlockMiner(String name) {
-        super(Material.ROCK, name);
+    public BlockMiner() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(8F);
         this.setResistance(30F);
@@ -48,7 +48,7 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileEntityMiner) {

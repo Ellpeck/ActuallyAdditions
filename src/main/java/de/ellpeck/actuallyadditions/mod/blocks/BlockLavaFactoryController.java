@@ -24,13 +24,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BlockLavaFactoryController extends BlockContainerBase implements IHudDisplay {
 
-    public BlockLavaFactoryController(String name) {
-        super(Material.ROCK, name);
+    public BlockLavaFactoryController() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(4.5F);
         this.setResistance(20.0F);

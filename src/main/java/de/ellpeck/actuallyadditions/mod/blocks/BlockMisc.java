@@ -18,8 +18,8 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -30,8 +30,8 @@ public class BlockMisc extends BlockBase {
     public static final TheMiscBlocks[] ALL_MISC_BLOCKS = TheMiscBlocks.values();
     public static final PropertyEnum<TheMiscBlocks> TYPE = PropertyEnum.create("type", TheMiscBlocks.class);
 
-    public BlockMisc(String name) {
-        super(Material.ROCK, name);
+    public BlockMisc() {
+        super(Material.ROCK);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setHarvestLevel("pickaxe", 1);
@@ -63,7 +63,9 @@ public class BlockMisc extends BlockBase {
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_MISC_BLOCKS.length ? EnumRarity.COMMON : ALL_MISC_BLOCKS[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_MISC_BLOCKS.length
+            ? EnumRarity.COMMON
+            : ALL_MISC_BLOCKS[stack.getItemDamage()].rarity;
     }
 
     @Override
@@ -91,12 +93,16 @@ public class BlockMisc extends BlockBase {
 
         @Override
         public String getTranslationKey(ItemStack stack) {
-            return stack.getItemDamage() >= ALL_MISC_BLOCKS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + "_" + ALL_MISC_BLOCKS[stack.getItemDamage()].name;
+            return stack.getItemDamage() >= ALL_MISC_BLOCKS.length
+                ? StringUtil.BUGGED_ITEM_NAME
+                : this.getTranslationKey() + "_" + ALL_MISC_BLOCKS[stack.getItemDamage()].name;
         }
 
         @Override
         public int getItemBurnTime(ItemStack stack) {
-            if (stack.getMetadata() == TheMiscBlocks.CHARCOAL_BLOCK.ordinal()) return 16000;
+            if (stack.getMetadata() == TheMiscBlocks.CHARCOAL_BLOCK.ordinal()) {
+                return 16000;
+            }
             return super.getItemBurnTime(stack);
         }
     }

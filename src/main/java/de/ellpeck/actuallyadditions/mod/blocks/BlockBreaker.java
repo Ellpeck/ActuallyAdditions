@@ -18,14 +18,14 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlacer;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -36,8 +36,8 @@ public class BlockBreaker extends BlockContainerBase {
 
     private final boolean isPlacer;
 
-    public BlockBreaker(boolean isPlacer, String name) {
-        super(Material.ROCK, name);
+    public BlockBreaker(boolean isPlacer) {
+        super(Material.ROCK, this.name);
         this.isPlacer = isPlacer;
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -53,7 +53,7 @@ public class BlockBreaker extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
         if (this.tryToggleRedstone(world, pos, player)) {
             return true;
         }
@@ -74,7 +74,7 @@ public class BlockBreaker extends BlockContainerBase {
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, EntityLivingBase player, ItemStack stack) {
-        int rotation = EnumFacing.getDirectionFromEntityLiving(pos, player).ordinal();
+        int rotation = Direction.getDirectionFromEntityLiving(pos, player).ordinal();
         world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
@@ -82,7 +82,7 @@ public class BlockBreaker extends BlockContainerBase {
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
+        return this.getDefaultState().withProperty(BlockDirectional.FACING, Direction.byIndex(meta));
     }
 
     @Override

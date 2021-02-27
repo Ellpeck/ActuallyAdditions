@@ -15,16 +15,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
 public class BlockBase extends Block {
-
-    private final String name;
-
-    public BlockBase(Properties properties, String name) {
+    public BlockBase(Properties properties) {
         super(properties);
-        this.name = name;
-    }
-
-    protected String getBaseName() {
-        return this.name;
     }
 
     protected ItemBlockBase getItemBlock() {

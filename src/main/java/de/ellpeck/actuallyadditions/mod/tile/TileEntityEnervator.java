@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -99,8 +99,8 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides() {
-        return EnumFacing.values();
+    public Direction[] getEnergyShareSides() {
+        return Direction.values();
     }
 
     @Override
@@ -109,7 +109,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 }

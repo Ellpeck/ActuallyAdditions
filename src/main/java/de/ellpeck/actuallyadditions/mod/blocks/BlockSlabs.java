@@ -23,7 +23,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -62,7 +62,7 @@ public class BlockSlabs extends BlockBase {
     }
 
     @Override
-    public BlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    public BlockState getStateForPlacement(World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         if (facing.ordinal() == 1) {
             return this.getStateFromMeta(meta);
         }
@@ -117,14 +117,14 @@ public class BlockSlabs extends BlockBase {
         }
 
         @Override
-        public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
             ItemStack stack = player.getHeldItem(hand);
             if (StackUtil.isValid(stack) && player.canPlayerEdit(pos.offset(facing), facing, stack)) {
                 BlockState state = world.getBlockState(pos);
 
                 if (state.getBlock() == this.block) {
                     BlockSlabs theBlock = (BlockSlabs) this.block;
-                    if (facing == EnumFacing.UP && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM || facing == EnumFacing.DOWN && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP) {
+                    if (facing == Direction.UP && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM || facing == Direction.DOWN && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP) {
                         BlockState newState = theBlock.fullBlockState;
                         AxisAlignedBB bound = newState.getCollisionBoundingBox(world, pos);
 
@@ -148,11 +148,11 @@ public class BlockSlabs extends BlockBase {
 
         @Override
         @OnlyIn(Dist.CLIENT)
-        public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, PlayerEntity player, ItemStack stack) {
+        public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, Direction side, PlayerEntity player, ItemStack stack) {
             BlockState state = worldIn.getBlockState(pos);
 
             if (state.getBlock() == this.block) {
-                if (side == EnumFacing.UP && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM || side == EnumFacing.DOWN && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP) {
+                if (side == Direction.UP && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM || side == Direction.DOWN && state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP) {
                     return true;
                 }
             }

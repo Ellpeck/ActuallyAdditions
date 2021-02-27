@@ -16,13 +16,12 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,14 +29,14 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.util.Random;
 
 public class BlockTreasureChest extends BlockBase {
 
-    public BlockTreasureChest(String name) {
+    public BlockTreasureChest() {
         super(Material.WOOD, name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(300.0F);
@@ -64,7 +63,7 @@ public class BlockTreasureChest extends BlockBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
         if (!world.isRemote) {
             world.playSound(null, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.2F, world.rand.nextFloat() * 0.1F + 0.9F);
             this.dropItems(world, pos);
@@ -112,7 +111,7 @@ public class BlockTreasureChest extends BlockBase {
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
+        return this.getDefaultState().withProperty(BlockHorizontal.FACING, Direction.byHorizontalIndex(meta));
     }
 
     @Override

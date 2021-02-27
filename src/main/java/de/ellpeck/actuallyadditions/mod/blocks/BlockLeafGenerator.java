@@ -21,8 +21,8 @@ import net.minecraft.world.World;
 
 public class BlockLeafGenerator extends BlockContainerBase {
 
-    public BlockLeafGenerator(String name) {
-        super(Material.IRON, name);
+    public BlockLeafGenerator() {
+        super(Material.IRON, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(5.0F);
         this.setResistance(10.0F);

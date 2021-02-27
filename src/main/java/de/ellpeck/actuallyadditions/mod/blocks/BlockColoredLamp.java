@@ -20,20 +20,20 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -45,7 +45,7 @@ public class BlockColoredLamp extends BlockBase {
     public static final PropertyEnum<TheColoredLampColors> TYPE = PropertyEnum.create("type", TheColoredLampColors.class);
     public final boolean isOn;
 
-    public BlockColoredLamp(boolean isOn, String name) {
+    public BlockColoredLamp(boolean isOn) {
         super(Material.REDSTONE_LIGHT, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(0.5F);
@@ -64,7 +64,7 @@ public class BlockColoredLamp extends BlockBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         //Turning On
         if (hand == Hand.MAIN_HAND && stack.isEmpty()) {

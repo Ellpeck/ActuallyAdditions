@@ -22,7 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
@@ -159,7 +159,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
     @Override
-    public IItemHandler getItemHandler(EnumFacing facing) {
+    public IItemHandler getItemHandler(Direction facing) {
         return null;
     }
 

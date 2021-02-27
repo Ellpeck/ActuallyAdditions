@@ -17,7 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay {
@@ -97,7 +97,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 

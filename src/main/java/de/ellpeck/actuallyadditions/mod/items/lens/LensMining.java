@@ -27,7 +27,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
@@ -164,7 +164,7 @@ public class LensMining extends Lens {
                     if (tile.getEnergy() >= adaptedUse) {
                         Block block = Block.getBlockFromItem(stack.getItem());
                         if (block != Blocks.AIR) {
-                            BlockState state = block.getStateForPlacement(tile.getWorldObject(), hitPos, EnumFacing.UP, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
+                            BlockState state = block.getStateForPlacement(tile.getWorldObject(), hitPos, Direction.UP, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
                             tile.getWorldObject().setBlockState(hitPos, state, 2);
 
                             tile.getWorldObject().playEvent(2001, hitPos, Block.getStateId(state));

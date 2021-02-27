@@ -24,7 +24,7 @@ import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -73,8 +73,8 @@ public class WorldGenLushCaves {
                             }
                         } else {
                             if (ConfigBoolValues.DO_CRYSTAL_CLUSTERS.isEnabled() && rand.nextInt(20) == 0) {
-                                EnumFacing[] values = EnumFacing.values();
-                                EnumFacing side = values[rand.nextInt(values.length)];
+                                Direction[] values = Direction.values();
+                                Direction side = values[rand.nextInt(values.length)];
                                 BlockPos posSide = pos.offset(side);
 
                                 if (!this.checkIndestructable(world, posSide)) {

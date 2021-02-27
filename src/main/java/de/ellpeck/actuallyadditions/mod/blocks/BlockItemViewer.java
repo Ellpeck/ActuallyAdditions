@@ -21,8 +21,8 @@ import net.minecraft.world.World;
 
 public class BlockItemViewer extends BlockContainerBase {
 
-    public BlockItemViewer(String name) {
-        super(Material.ROCK, name);
+    public BlockItemViewer() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);

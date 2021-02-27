@@ -26,7 +26,7 @@ import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -47,12 +47,12 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
 
     }
 
-    public VillageComponentJamHouse(StructureBoundingBox boundingBox, EnumFacing par5) {
+    public VillageComponentJamHouse(StructureBoundingBox boundingBox, Direction par5) {
         this.setCoordBaseMode(par5);
         this.boundingBox = boundingBox;
     }
 
-    public static VillageComponentJamHouse buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, EnumFacing p4) {
+    public static VillageComponentJamHouse buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, Direction p4) {
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
         return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentJamHouse(boundingBox, p4) : null;
     }
@@ -155,8 +155,8 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
         this.fillWithBlocks(world, sbb, 6, 1, 7, 8, 1, 7, Blocks.COBBLESTONE);
         this.fillWithBlocks(world, sbb, 6, 2, 7, 7, 2, 7, Blocks.GLASS_PANE);
         this.setBlockState(world, Blocks.PLANKS.getStateFromMeta(0), 8, 2, 7, sbb);
-        this.setBlockState(world, Blocks.SPRUCE_DOOR.getDefaultState().withProperty(BlockDoor.FACING, EnumFacing.SOUTH), 4, 1, 7, sbb);
-        this.setBlockState(world, Blocks.SPRUCE_DOOR.getDefaultState().withProperty(BlockDoor.FACING, EnumFacing.SOUTH).withProperty(BlockDoor.HALF, BlockDoor.EnumDoorHalf.UPPER), 4, 2, 7, sbb);
+        this.setBlockState(world, Blocks.SPRUCE_DOOR.getDefaultState().withProperty(BlockDoor.FACING, Direction.SOUTH), 4, 1, 7, sbb);
+        this.setBlockState(world, Blocks.SPRUCE_DOOR.getDefaultState().withProperty(BlockDoor.FACING, Direction.SOUTH).withProperty(BlockDoor.HALF, BlockDoor.EnumDoorHalf.UPPER), 4, 2, 7, sbb);
 
         //FENCE Supports
         this.fillWithBlocks(world, sbb, 0, 1, 8, 0, 3, 8, Blocks.OAK_FENCE);
@@ -166,8 +166,8 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
 
         //Roof
         this.fillWithBlocks(world, sbb, 1, 6, 3, 9, 6, 5, Blocks.PLANKS);
-        BlockState stairSouth = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH);
-        BlockState stairNorth = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.NORTH);
+        BlockState stairSouth = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, Direction.SOUTH);
+        BlockState stairNorth = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, Direction.NORTH);
         this.fillWithBlocks(world, sbb, 0, 4, 0, 10, 4, 0, stairNorth, stairNorth, false);
         this.fillWithBlocks(world, sbb, 0, 5, 1, 10, 5, 1, stairNorth, stairNorth, false);
         this.fillWithBlocks(world, sbb, 0, 6, 2, 10, 6, 2, stairNorth, stairNorth, false);
@@ -204,7 +204,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
         this.setBlockState(world, Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false), 8, 2, 2, sbb);
         this.setBlockState(world, Blocks.OAK_FENCE.getDefaultState(), 2, 1, 6, sbb);
         this.setBlockState(world, Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false), 2, 2, 6, sbb);
-        BlockState stairWest = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST);
+        BlockState stairWest = Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, Direction.WEST);
         this.fillWithBlocks(world, sbb, 2, 1, 3, 2, 1, 5, stairWest, stairWest, false);
         this.fillWithBlocks(world, sbb, 3, 1, 2, 5, 1, 3, Blocks.CARPET.getStateFromMeta(10), Blocks.CARPET.getStateFromMeta(10), false);
         this.fillWithBlocks(world, sbb, 3, 1, 4, 4, 1, 6, Blocks.CARPET.getStateFromMeta(10), Blocks.CARPET.getStateFromMeta(10), false);
@@ -215,14 +215,14 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
         }
 
         //Torches
-        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.SOUTH), 6, 2, 0, sbb);
-        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.SOUTH), 4, 2, 0, sbb);
-        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.NORTH), 5, 2, 8, sbb);
-        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.NORTH), 3, 2, 8, sbb);
-        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.EAST), 2, 3, 2, sbb);
-        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.EAST), 2, 3, 6, sbb);
-        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.WEST), 8, 3, 2, sbb);
-        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.WEST), 8, 3, 6, sbb);
+        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, Direction.SOUTH), 6, 2, 0, sbb);
+        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, Direction.SOUTH), 4, 2, 0, sbb);
+        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, Direction.NORTH), 5, 2, 8, sbb);
+        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, Direction.NORTH), 3, 2, 8, sbb);
+        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, Direction.EAST), 2, 3, 2, sbb);
+        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, Direction.EAST), 2, 3, 6, sbb);
+        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, Direction.WEST), 8, 3, 2, sbb);
+        this.setBlockState(world, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, Direction.WEST), 8, 3, 6, sbb);
     }
 
     @Override

@@ -14,31 +14,30 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.VanillaPacketDispatcher;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public abstract class TileEntityBase extends TileEntity implements ITickable {
 
-    public final String name;
     public boolean isRedstonePowered;
     public boolean isPulseMode;
     public boolean stopFromDropping;
@@ -46,102 +45,59 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     protected TileEntity[] tilesAround = new TileEntity[6];
     protected boolean hasSavedDataOnChangeOrWorldStart;
 
-    public TileEntityBase(String name) {
-        this.name = name;
+    public TileEntityBase(TileEntityType<?> type) {
+        super(type);
     }
 
     public static void init() {
         ActuallyAdditions.LOGGER.info("Registering TileEntities...");
-
-        register(TileEntityCompost.class);
-        register(TileEntityFeeder.class);
-        register(TileEntityGiantChest.class);
-        register(TileEntityGiantChestMedium.class);
-        register(TileEntityGiantChestLarge.class);
-        register(TileEntityGrinder.class);
-        register(TileEntityFurnaceDouble.class);
-        register(TileEntityInputter.class);
-        register(TileEntityFishingNet.class);
-        register(TileEntityFurnaceSolar.class);
-        register(TileEntityHeatCollector.class);
-        register(TileEntityItemRepairer.class);
-        register(TileEntityBreaker.class);
-        register(TileEntityDropper.class);
-        register(TileEntityInputterAdvanced.class);
-        register(TileEntityPlacer.class);
-        register(TileEntityGrinderDouble.class);
-        register(TileEntityCanolaPress.class);
-        register(TileEntityFermentingBarrel.class);
-        register(TileEntityOilGenerator.class);
-        register(TileEntityCoalGenerator.class);
-        register(TileEntityPhantomItemface.class);
-        register(TileEntityPhantomLiquiface.class);
-        register(TileEntityPhantomEnergyface.class);
-        register(TileEntityPlayerInterface.class);
-        register(TileEntityPhantomPlacer.class);
-        register(TileEntityPhantomBreaker.class);
-        register(TileEntityFluidCollector.class);
-        register(TileEntityFluidPlacer.class);
-        register(TileEntityLavaFactoryController.class);
-        register(TileEntityCoffeeMachine.class);
-        register(TileEntityPhantomBooster.class);
-        register(TileEntityEnergizer.class);
-        register(TileEntityEnervator.class);
-        register(TileEntityXPSolidifier.class);
-        register(TileEntitySmileyCloud.class);
-        register(TileEntityLeafGenerator.class);
-        register(TileEntityDirectionalBreaker.class);
-        register(TileEntityRangedCollector.class);
-        register(TileEntityAtomicReconstructor.class);
-        register(TileEntityMiner.class);
-        register(TileEntityFireworkBox.class);
-        register(TileEntityPhantomRedstoneface.class);
-        register(TileEntityLaserRelayItem.class);
-        register(TileEntityLaserRelayEnergy.class);
-        register(TileEntityLaserRelayEnergyAdvanced.class);
-        register(TileEntityLaserRelayEnergyExtreme.class);
-        register(TileEntityLaserRelayItemWhitelist.class);
-        register(TileEntityItemViewer.class);
-        register(TileEntityDisplayStand.class);
-        register(TileEntityShockSuppressor.class);
-        register(TileEntityEmpowerer.class);
-        register(TileEntityLaserRelayFluids.class);
-        register(TileEntityBioReactor.class);
-        register(TileEntityFarmer.class);
-        register(TileEntityItemViewerHopping.class);
-        register(TileEntityBatteryBox.class);
     }
 
     private static void register(Class<? extends TileEntityBase> tileClass) {
-        try {
-            //This is hacky and dirty but it works so whatever
-            ResourceLocation name = new ResourceLocation(ActuallyAdditions.MODID, tileClass.newInstance().name);
-            GameRegistry.registerTileEntity(tileClass, name);
-        } catch (Exception e) {
-            ActuallyAdditions.LOGGER.fatal("Registering a TileEntity failed!", e);
-        }
+        // TODO: [port] migrate to register system.
+        //        try {
+        //            //This is hacky and dirty but it works so whatever
+        //            ResourceLocation name = new ResourceLocation(ActuallyAdditions.MODID, tileClass.newInstance().name);
+        //            GameRegistry.registerTileEntity(tileClass, name);
+        //        } catch (Exception e) {
+        //            ActuallyAdditions.LOGGER.fatal("Registering a TileEntity failed!", e);
+        //        }
     }
 
     @Override
-    public final CompoundNBT writeToNBT(CompoundNBT compound) {
+    public CompoundNBT write(CompoundNBT compound) {
         this.writeSyncableNBT(compound, NBTType.SAVE_TILE);
         return compound;
     }
 
+    // TODO: [port] remove if the above is correct
+    //    @Override
+    //    public final CompoundNBT writeToNBT(CompoundNBT compound) {
+    //        this.writeSyncableNBT(compound, NBTType.SAVE_TILE);
+    //        return compound;
+    //    }
+
     @Override
-    public final void readFromNBT(CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         this.readSyncableNBT(compound, NBTType.SAVE_TILE);
     }
 
+    // TODO: [port] remove if the above is correct
+    //    @Override
+    //    public final void readFromNBT(CompoundNBT compound) {
+    //        this.readSyncableNBT(compound, NBTType.SAVE_TILE);
+    //    }
+
+    @Nullable
     @Override
-    public final SPacketUpdateTileEntity getUpdatePacket() {
+    public SUpdateTileEntityPacket getUpdatePacket() {
         CompoundNBT compound = new CompoundNBT();
         this.writeSyncableNBT(compound, NBTType.SYNC);
-        return new SPacketUpdateTileEntity(this.pos, -1, compound);
+        return new SUpdateTileEntityPacket(this.pos, -1, compound);
     }
 
     @Override
-    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         this.readSyncableNBT(pkt.getNbtCompound(), NBTType.SYNC);
     }
 
@@ -153,8 +109,8 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     }
 
     @Override
-    public final void handleUpdateTag(CompoundNBT compound) {
-        this.readSyncableNBT(compound, NBTType.SYNC);
+    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+        this.readSyncableNBT(tag, NBTType.SYNC);
     }
 
     public final void sendUpdate() {
@@ -177,30 +133,30 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
 
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            super.writeToNBT(compound);
+            super.write(compound);
         }
 
         if (type == NBTType.SAVE_TILE) {
-            compound.setBoolean("Redstone", this.isRedstonePowered);
-            compound.setInteger("TicksElapsed", this.ticksElapsed);
-            compound.setBoolean("StopDrop", this.stopFromDropping);
+            compound.putBoolean("Redstone", this.isRedstonePowered);
+            compound.putInt("TicksElapsed", this.ticksElapsed);
+            compound.putBoolean("StopDrop", this.stopFromDropping);
         } else if (type == NBTType.SYNC && this.stopFromDropping) {
-            compound.setBoolean("StopDrop", this.stopFromDropping);
+            compound.putBoolean("StopDrop", this.stopFromDropping);
         }
 
         if (this.isRedstoneToggle() && (type != NBTType.SAVE_BLOCK || this.isPulseMode)) {
-            compound.setBoolean("IsPulseMode", this.isPulseMode);
+            compound.putBoolean("IsPulseMode", this.isPulseMode);
         }
     }
 
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            super.readFromNBT(compound);
+            super.read(null, compound); // FIXME: [port] flag as possible crash source
         }
 
         if (type == NBTType.SAVE_TILE) {
             this.isRedstonePowered = compound.getBoolean("Redstone");
-            this.ticksElapsed = compound.getInteger("TicksElapsed");
+            this.ticksElapsed = compound.getInt("TicksElapsed");
             this.stopFromDropping = compound.getBoolean("StopDrop");
         } else if (type == NBTType.SYNC) {
             this.stopFromDropping = compound.getBoolean("StopDrop");
@@ -211,22 +167,24 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
         }
     }
 
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, BlockState oldState, BlockState newState) {
-        return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
-    }
+    // TODO: [port] eval if still required in some way
+    //    @Override
+    //    public boolean shouldRefresh(World world, BlockPos pos, BlockState oldState, BlockState newState) {
+    //        return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
+    //    }
 
     public String getNameForTranslation() {
-        return "container." + ActuallyAdditions.MODID + "." + this.name + ".name";
+        return "removeme";// "container." + ActuallyAdditions.MODID + "." + this.name + ".name";
     }
 
-    @Override
-    public ITextComponent getDisplayName() {
-        return new TextComponentTranslation(this.getNameForTranslation());
-    }
+    //    @Override
+    //    public ITextComponent getDisplayName() {
+    //        return new TextComponentTranslation(this.getNameForTranslation());
+    //    }
+
 
     @Override
-    public final void update() {
+    public void tick() {
         this.updateEntity();
     }
 
@@ -246,14 +204,14 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
                 if (provider.doesShareEnergy()) {
                     int total = provider.getEnergyToSplitShare();
                     if (total > 0) {
-                        EnumFacing[] sides = provider.getEnergyShareSides();
+                        Direction[] sides = provider.getEnergyShareSides();
 
                         int amount = total / sides.length;
                         if (amount <= 0) {
                             amount = total;
                         }
 
-                        for (EnumFacing side : sides) {
+                        for (Direction side : sides) {
                             TileEntity tile = this.tilesAround[side.ordinal()];
                             if (tile != null && provider.canShareTo(tile)) {
                                 WorldUtil.doEnergyInteraction(this, tile, side, amount);
@@ -268,14 +226,14 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
                 if (handler.doesShareFluid()) {
                     int total = handler.getMaxFluidAmountToSplitShare();
                     if (total > 0) {
-                        EnumFacing[] sides = handler.getFluidShareSides();
+                        Direction[] sides = handler.getFluidShareSides();
 
                         int amount = total / sides.length;
                         if (amount <= 0) {
                             amount = total;
                         }
 
-                        for (EnumFacing side : sides) {
+                        for (Direction side : sides) {
                             TileEntity tile = this.tilesAround[side.ordinal()];
                             if (tile != null) {
                                 WorldUtil.doFluidInteraction(this, tile, side, amount);
@@ -296,7 +254,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     }
 
     public void saveDataOnChangeOrWorldStart() {
-        for (EnumFacing side : EnumFacing.values()) {
+        for (Direction side : Direction.values()) {
             BlockPos pos = this.pos.offset(side);
             if (this.world.isBlockLoaded(pos)) {
                 this.tilesAround[side.ordinal()] = this.world.getTileEntity(pos);
@@ -314,7 +272,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     }
 
     public boolean canPlayerUse(PlayerEntity player) {
-        return player.getDistanceSq(this.getPos().getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D) <= 64 && !this.isInvalid() && this.world.getTileEntity(this.pos) == this;
+        return player.getDistanceSq(this.getPos().getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D) <= 64 && !this.isRemoved() && this.world.getTileEntity(this.pos) == this;
     }
 
     protected boolean sendUpdateWithInterval() {
@@ -326,43 +284,29 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
         }
     }
 
+    @Nonnull
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        return this.getCapability(capability, facing) != null;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            IItemHandler handler = this.getItemHandler(facing);
-            if (handler != null) {
-                return (T) handler;
-            }
+            return this.getItemHandler(side).cast();
         } else if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            IFluidHandler tank = this.getFluidHandler(facing);
-            if (tank != null) {
-                return (T) tank;
-            }
+            return this.getFluidHandler(side).cast();
         } else if (capability == CapabilityEnergy.ENERGY) {
-            IEnergyStorage storage = this.getEnergyStorage(facing);
-            if (storage != null) {
-                return (T) storage;
-            }
+            return this.getEnergyStorage(side).cast();
         }
-        return super.getCapability(capability, facing);
+        return LazyOptional.empty();
     }
 
-    public IFluidHandler getFluidHandler(EnumFacing facing) {
-        return null;
+    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
+        return LazyOptional.empty();
     }
 
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
-        return null;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return LazyOptional.empty();
     }
 
-    public IItemHandler getItemHandler(EnumFacing facing) {
-        return null;
+    public LazyOptional<IItemHandler> getItemHandler(Direction facing) {
+        return LazyOptional.empty();
     }
 
     public boolean isRedstoneToggle() {

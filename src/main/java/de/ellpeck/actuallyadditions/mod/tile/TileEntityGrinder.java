@@ -19,12 +19,14 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityGrinder extends TileEntityInventoryBase implements IButtonReactor {
@@ -37,6 +39,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     public static final int SLOT_OUTPUT_2_2 = 5;
     public static final int ENERGY_USE = 40;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 100, 0);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public int firstCrushTime;
     public int secondCrushTime;
     public boolean isDouble;
@@ -47,21 +50,21 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     private boolean lastAutoSplit;
     private boolean lastCrushed;
 
-    public TileEntityGrinder(int slots, String name) {
-        super(slots, name);
+    public TileEntityGrinder(TileEntityType<?> type, int slots) {
+        super(type, slots);
     }
 
     public TileEntityGrinder() {
-        super(3, "grinder");
+        super(ActuallyTiles.GRINDER_TILE.get(), 3);
         this.isDouble = false;
     }
 
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("FirstCrushTime", this.firstCrushTime);
-            compound.setInteger("SecondCrushTime", this.secondCrushTime);
-            compound.setBoolean("IsAutoSplit", this.isAutoSplit);
+            compound.putInt("FirstCrushTime", this.firstCrushTime);
+            compound.putInt("SecondCrushTime", this.secondCrushTime);
+            compound.putBoolean("IsAutoSplit", this.isAutoSplit);
         }
         this.storage.writeToNBT(compound);
         super.writeSyncableNBT(compound, type);
@@ -70,8 +73,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     @Override
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            this.firstCrushTime = compound.getInteger("FirstCrushTime");
-            this.secondCrushTime = compound.getInteger("SecondCrushTime");
+            this.firstCrushTime = compound.getInt("FirstCrushTime");
+            this.secondCrushTime = compound.getInt("SecondCrushTime");
             this.isAutoSplit = compound.getBoolean("IsAutoSplit");
         }
         this.storage.readFromNBT(compound);
@@ -133,7 +136,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
             }
 
             BlockState currState = this.world.getBlockState(this.pos);
-            boolean current = currState.getValue(BlockFurnaceDouble.IS_ON);
+            boolean current = currState.get(BlockFurnaceDouble.IS_ON);
             boolean changeTo = current;
             if (this.lastCrushed != crushed) {
                 changeTo = crushed;
@@ -146,7 +149,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
             }
 
             if (changeTo != current) {
-                this.world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, changeTo));
+                this.world.setBlockState(this.pos, currState.with(BlockFurnaceDouble.IS_ON, changeTo));
             }
 
             this.lastCrushed = crushed;
@@ -183,11 +186,11 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
             ItemStack outputOne = recipe.getOutputOne();
             ItemStack outputTwo = recipe.getOutputTwo();
             if (StackUtil.isValid(outputOne)) {
-                if (outputOne.getItemDamage() == Util.WILDCARD) {
-                    outputOne.setItemDamage(0);
+                if (outputOne.getDamage() == Util.WILDCARD) {
+                    outputOne.setDamage(0);
                 }
-                if (StackUtil.isValid(outputTwo) && outputTwo.getItemDamage() == Util.WILDCARD) {
-                    outputTwo.setItemDamage(0);
+                if (StackUtil.isValid(outputTwo) && outputTwo.getDamage() == Util.WILDCARD) {
+                    outputTwo.setDamage(0);
                 }
                 if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).isItemEqual(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).isItemEqual(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) {
                     return true;
@@ -210,8 +213,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
         }
         ItemStack outputOne = recipe.getOutputOne();
         if (StackUtil.isValid(outputOne)) {
-            if (outputOne.getItemDamage() == Util.WILDCARD) {
-                outputOne.setItemDamage(0);
+            if (outputOne.getDamage() == Util.WILDCARD) {
+                outputOne.setDamage(0);
             }
             if (!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput))) {
                 this.inv.setStackInSlot(theFirstOutput, outputOne.copy());
@@ -222,8 +225,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
 
         ItemStack outputTwo = recipe.getOutputTwo();
         if (StackUtil.isValid(outputTwo)) {
-            if (outputTwo.getItemDamage() == Util.WILDCARD) {
-                outputTwo.setItemDamage(0);
+            if (outputTwo.getDamage() == Util.WILDCARD) {
+                outputTwo.setDamage(0);
             }
             int rand = this.world.rand.nextInt(100) + 1;
             if (rand <= recipe.getSecondChance()) {
@@ -259,7 +262,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

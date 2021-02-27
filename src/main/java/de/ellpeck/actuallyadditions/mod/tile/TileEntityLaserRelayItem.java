@@ -22,7 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.OnlyIn;
@@ -66,7 +66,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
 
         this.handlersAround.clear();
         for (int i = 0; i <= 5; i++) {
-            EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
+            Direction side = WorldUtil.getDirectionBySidesInOrder(i);
             BlockPos pos = this.getPos().offset(side);
             if (this.world.isBlockLoaded(pos)) {
                 TileEntity tile = this.world.getTileEntity(pos);

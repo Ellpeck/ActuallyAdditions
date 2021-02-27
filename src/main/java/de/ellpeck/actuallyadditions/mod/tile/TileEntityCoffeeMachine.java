@@ -23,7 +23,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -191,7 +191,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public FluidTank getFluidHandler(EnumFacing facing) {
+    public FluidTank getFluidHandler(Direction facing) {
         return this.tank;
     }
 
@@ -206,12 +206,12 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public EnumFacing[] getFluidShareSides() {
+    public Direction[] getFluidShareSides() {
         return null;
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 }

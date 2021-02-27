@@ -17,14 +17,14 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -33,8 +33,8 @@ import net.minecraft.world.World;
 
 public class BlockXPSolidifier extends BlockContainerBase {
 
-    public BlockXPSolidifier(String name) {
-        super(Material.ROCK, name);
+    public BlockXPSolidifier() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(2.5F);
         this.setResistance(10.0F);
@@ -47,7 +47,7 @@ public class BlockXPSolidifier extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
         if (!world.isRemote) {
             TileEntityXPSolidifier solidifier = (TileEntityXPSolidifier) world.getTileEntity(pos);
             if (solidifier != null) {
@@ -72,7 +72,7 @@ public class BlockXPSolidifier extends BlockContainerBase {
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
+        return this.getDefaultState().withProperty(BlockHorizontal.FACING, Direction.byHorizontalIndex(meta));
     }
 
     @Override

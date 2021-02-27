@@ -10,30 +10,30 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewerHopping;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.util.List;
 
 //Most of this is just copied from BlockHopper, no credit taken. Or clue what it is.
 public class BlockItemViewerHopping extends BlockItemViewer {
 
-    public static final PropertyDirection FACING = PropertyDirection.create("facing", facing -> facing != EnumFacing.UP);
+    public static final PropertyDirection FACING = PropertyDirection.create("facing", facing -> facing != Direction.UP);
 
     private static final AxisAlignedBB BASE_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D);
     private static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);
@@ -41,8 +41,8 @@ public class BlockItemViewerHopping extends BlockItemViewer {
     private static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.875D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
     private static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
 
-    public BlockItemViewerHopping(String name) {
-        super(name);
+    public BlockItemViewerHopping() {
+        super(this.name);
     }
 
     @Override
@@ -53,11 +53,11 @@ public class BlockItemViewerHopping extends BlockItemViewer {
     @Override
     @Deprecated
     public void addCollisionBoxToList(BlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean someBool) {
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, BASE_AABB);
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_AABB);
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_AABB);
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, SOUTH_AABB);
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, NORTH_AABB);
+        this.addCollisionBoxToList(pos, entityBox, collidingBoxes, BASE_AABB);
+        this.addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_AABB);
+        this.addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_AABB);
+        this.addCollisionBoxToList(pos, entityBox, collidingBoxes, SOUTH_AABB);
+        this.addCollisionBoxToList(pos, entityBox, collidingBoxes, NORTH_AABB);
     }
 
     @Override
@@ -66,9 +66,11 @@ public class BlockItemViewerHopping extends BlockItemViewer {
     }
 
     @Override
-    public BlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        EnumFacing opp = facing.getOpposite();
-        return this.getDefaultState().withProperty(FACING, opp == EnumFacing.UP ? EnumFacing.DOWN : opp);
+    public BlockState getStateForPlacement(World worldIn, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        Direction opp = facing.getOpposite();
+        return this.getDefaultState().withProperty(FACING, opp == Direction.UP
+            ? Direction.DOWN
+            : opp);
     }
 
     @Override //was isFullyOpaque, not sure if correct change.
@@ -88,7 +90,7 @@ public class BlockItemViewerHopping extends BlockItemViewer {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean shouldSideBeRendered(BlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+    public boolean shouldSideBeRendered(BlockState blockState, IBlockAccess blockAccess, BlockPos pos, Direction side) {
         return true;
     }
 
@@ -99,7 +101,7 @@ public class BlockItemViewerHopping extends BlockItemViewer {
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta));
+        return this.getDefaultState().withProperty(FACING, Direction.byIndex(meta));
     }
 
     @Override

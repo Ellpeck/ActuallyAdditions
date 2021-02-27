@@ -20,8 +20,8 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.Entity;
@@ -30,7 +30,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -38,10 +38,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -56,8 +56,8 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay {
     protected static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625, 0, 0.0625, 1 - 0.0625, 11 * 0.0625, 1 - 0.0625);
 
-    public BlockCompost(String name) {
-        super(Material.WOOD, name);
+    public BlockCompost() {
+        super(Material.WOOD);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(5.0F);
@@ -90,7 +90,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing f6, float f7, float f8, float f9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction f6, float f7, float f8, float f9) {
         ItemStack stackPlayer = player.getHeldItem(hand);
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(pos);

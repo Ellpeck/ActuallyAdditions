@@ -25,7 +25,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -117,9 +117,9 @@ public final class WorldUtil {
         return extracted;
     }
 
-    public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer) {
+    public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
-            EnumFacing opp = sideTo == null
+            Direction opp = sideTo == null
                 ? null
                 : sideTo.getOpposite();
             IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
@@ -135,7 +135,7 @@ public final class WorldUtil {
         }
     }
 
-    public static void doFluidInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer) {
+    public static void doFluidInteraction(TileEntity tileFrom, TileEntity tileTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
             if (tileFrom.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo) && tileTo.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite())) {
                 IFluidHandler handlerFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo);
@@ -169,7 +169,7 @@ public final class WorldUtil {
         return true;
     }
 
-    public static ItemStack useItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack) {
+    public static ItemStack useItemAtSide(Direction side, World world, BlockPos pos, ItemStack stack) {
         if (world instanceof WorldServer && StackUtil.isValid(stack) && pos != null) {
             BlockPos offsetPos = pos.offset(side);
             BlockState state = world.getBlockState(offsetPos);
@@ -210,7 +210,7 @@ public final class WorldUtil {
         return stack;
     }
 
-    public static boolean dropItemAtSide(EnumFacing side, World world, BlockPos pos, ItemStack stack) {
+    public static boolean dropItemAtSide(Direction side, World world, BlockPos pos, ItemStack stack) {
         BlockPos coords = pos.offset(side);
         if (world.isBlockLoaded(coords)) {
             EntityItem item = new EntityItem(world, coords.getX() + 0.5, coords.getY() + 0.5, coords.getZ() + 0.5, stack);
@@ -223,33 +223,33 @@ public final class WorldUtil {
         return false;
     }
 
-    public static EnumFacing getDirectionBySidesInOrder(int side) {
+    public static Direction getDirectionBySidesInOrder(int side) {
         switch (side) {
             case 0:
-                return EnumFacing.UP;
+                return Direction.UP;
             case 1:
-                return EnumFacing.DOWN;
+                return Direction.DOWN;
             case 2:
-                return EnumFacing.NORTH;
+                return Direction.NORTH;
             case 3:
-                return EnumFacing.EAST;
+                return Direction.EAST;
             case 4:
-                return EnumFacing.SOUTH;
+                return Direction.SOUTH;
             default:
-                return EnumFacing.WEST;
+                return Direction.WEST;
         }
     }
 
-    public static EnumFacing getDirectionByPistonRotation(BlockState state) {
+    public static Direction getDirectionByPistonRotation(BlockState state) {
         return state.getValue(BlockDirectional.FACING);
     }
 
     public static ArrayList<Material> getMaterialsAround(World world, BlockPos pos) {
         ArrayList<Material> blocks = new ArrayList<>();
-        blocks.add(world.getBlockState(pos.offset(EnumFacing.NORTH)).getMaterial());
-        blocks.add(world.getBlockState(pos.offset(EnumFacing.EAST)).getMaterial());
-        blocks.add(world.getBlockState(pos.offset(EnumFacing.SOUTH)).getMaterial());
-        blocks.add(world.getBlockState(pos.offset(EnumFacing.WEST)).getMaterial());
+        blocks.add(world.getBlockState(pos.offset(Direction.NORTH)).getMaterial());
+        blocks.add(world.getBlockState(pos.offset(Direction.EAST)).getMaterial());
+        blocks.add(world.getBlockState(pos.offset(Direction.SOUTH)).getMaterial());
+        blocks.add(world.getBlockState(pos.offset(Direction.WEST)).getMaterial());
         return blocks;
     }
 

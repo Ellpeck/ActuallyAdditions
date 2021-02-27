@@ -25,7 +25,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -61,7 +61,7 @@ public class LensColor extends Lens {
                 ItemStack returnStack = this.tryConvert(new ItemStack(block, 1, meta), hitState, hitBlock, tile);
                 if (returnStack != null && returnStack.getItem() instanceof ItemBlock) {
                     Block toPlace = Block.getBlockFromItem(returnStack.getItem());
-                    BlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, EnumFacing.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
+                    BlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, Direction.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
                     tile.getWorldObject().setBlockState(hitBlock, state2Place, 2);
                     tile.extractEnergy(ENERGY_USE);
                 }
@@ -107,7 +107,7 @@ public class LensColor extends Lens {
     }
 
     @Override
-    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot) {
+    public boolean canInvoke(IAtomicReconstructor tile, Direction sideToShootTo, int energyUsePerShot) {
         return tile.getEnergy() - energyUsePerShot >= ENERGY_USE;
     }
 }

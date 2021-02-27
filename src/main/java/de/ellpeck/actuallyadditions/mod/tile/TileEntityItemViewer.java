@@ -23,7 +23,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.IItemHandler;
@@ -115,13 +115,13 @@ public class TileEntityItemViewer extends TileEntityBase {
     }
 
     @Override
-    public IItemHandler getItemHandler(EnumFacing facing) {
+    public IItemHandler getItemHandler(Direction facing) {
         return this.itemHandler.getNormalHandler();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability(Capability<T> capability, Direction facing) {
         if (ActuallyAdditions.commonCapsLoaded) {
             if (capability == SlotlessItemHandlerConfig.CAPABILITY) {
                 Object handler = this.itemHandler.getSlotlessHandler();
@@ -234,7 +234,7 @@ public class TileEntityItemViewer extends TileEntityBase {
         TileEntityLaserRelayItem tileFound = null;
         if (this.world != null) { //Why is that even possible..?
             for (int i = 0; i <= 5; i++) {
-                EnumFacing side = WorldUtil.getDirectionBySidesInOrder(i);
+                Direction side = WorldUtil.getDirectionBySidesInOrder(i);
                 BlockPos pos = this.getPos().offset(side);
 
                 if (this.world.isBlockLoaded(pos)) {

@@ -40,7 +40,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -70,12 +70,12 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
 
     }
 
-    public VillageComponentEngineerHouse(StructureBoundingBox boundingBox, EnumFacing par5) {
+    public VillageComponentEngineerHouse(StructureBoundingBox boundingBox, Direction par5) {
         this.setCoordBaseMode(par5);
         this.boundingBox = boundingBox;
     }
 
-    public static VillageComponentEngineerHouse buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, EnumFacing p4) {
+    public static VillageComponentEngineerHouse buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, Direction p4) {
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
         return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentEngineerHouse(boundingBox, p4) : null;
     }
@@ -185,17 +185,17 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
         MinecraftServer server = world.getMinecraftServer();
 
         if (manager != null && server != null) {
-            EnumFacing facing = this.getCoordBaseMode();
+            Direction facing = this.getCoordBaseMode();
 
             Mirror mirror;
             Rotation rotation;
-            if (facing == EnumFacing.SOUTH) {
+            if (facing == Direction.SOUTH) {
                 mirror = Mirror.NONE;
                 rotation = Rotation.NONE;
-            } else if (facing == EnumFacing.WEST) {
+            } else if (facing == Direction.WEST) {
                 mirror = Mirror.NONE;
                 rotation = Rotation.CLOCKWISE_90;
-            } else if (facing == EnumFacing.EAST) {
+            } else if (facing == Direction.EAST) {
                 mirror = Mirror.LEFT_RIGHT;
                 rotation = Rotation.CLOCKWISE_90;
             } else {

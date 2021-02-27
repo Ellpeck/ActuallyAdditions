@@ -24,7 +24,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -96,17 +96,17 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer {
         this.handlerToPullFrom = null;
         this.handlerToPushTo = null;
 
-        TileEntity from = this.world.getTileEntity(this.pos.offset(EnumFacing.UP));
+        TileEntity from = this.world.getTileEntity(this.pos.offset(Direction.UP));
         if (from != null && !(from instanceof TileEntityItemViewer)) {
             IItemHandler normal = null;
-            if (from.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
-                normal = from.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+            if (from.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN)) {
+                normal = from.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN);
             }
 
             Object slotless = null;
             if (ActuallyAdditions.commonCapsLoaded) {
-                if (from.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, EnumFacing.DOWN)) {
-                    slotless = from.getCapability(SlotlessItemHandlerConfig.CAPABILITY, EnumFacing.DOWN);
+                if (from.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, Direction.DOWN)) {
+                    slotless = from.getCapability(SlotlessItemHandlerConfig.CAPABILITY, Direction.DOWN);
                 }
             }
 
@@ -114,7 +114,7 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer {
         }
 
         BlockState state = this.world.getBlockState(this.pos);
-        EnumFacing facing = state.getValue(BlockHopper.FACING);
+        Direction facing = state.getValue(BlockHopper.FACING);
 
         BlockPos toPos = this.pos.offset(facing);
         if (this.world.isBlockLoaded(toPos)) {

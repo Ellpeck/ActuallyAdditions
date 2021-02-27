@@ -35,7 +35,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -54,8 +54,8 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     public static final int NAME_FLAVOR_AMOUNTS_1 = 12;
     public static final int NAME_FLAVOR_AMOUNTS_2 = 14;
 
-    public BlockAtomicReconstructor(String name) {
-        super(Material.ROCK, name);
+    public BlockAtomicReconstructor() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(10F);
         this.setResistance(80F);
@@ -68,7 +68,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
         ItemStack heldItem = player.getHeldItem(hand);
         if (this.tryToggleRedstone(world, pos, player)) {
             return true;
@@ -136,7 +136,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, EntityLivingBase player, ItemStack stack) {
-        int rotation = EnumFacing.getDirectionFromEntityLiving(pos, player).ordinal();
+        int rotation = Direction.getDirectionFromEntityLiving(pos, player).ordinal();
         world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
@@ -144,7 +144,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
+        return this.getDefaultState().withProperty(BlockDirectional.FACING, Direction.byIndex(meta));
     }
 
     @Override

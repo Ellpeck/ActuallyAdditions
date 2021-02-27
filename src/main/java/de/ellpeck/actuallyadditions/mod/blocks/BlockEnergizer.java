@@ -22,7 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -31,8 +31,8 @@ public class BlockEnergizer extends BlockContainerBase {
 
     private final boolean isEnergizer;
 
-    public BlockEnergizer(boolean isEnergizer, String name) {
-        super(Material.ROCK, name);
+    public BlockEnergizer(boolean isEnergizer) {
+        super(Material.ROCK, this.name);
         this.isEnergizer = isEnergizer;
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(2.0F);
@@ -48,7 +48,7 @@ public class BlockEnergizer extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
         if (!world.isRemote) {
             if (this.isEnergizer) {
                 TileEntityEnergizer energizer = (TileEntityEnergizer) world.getTileEntity(pos);

@@ -102,7 +102,7 @@ public class ItemWaterBowl extends ItemBase {
             if (!world.isBlockModifiable(player, pos)) {
                 return new ActionResult<>(EnumActionResult.FAIL, stack);
             } else {
-                BlockPos pos1 = world.getBlockState(pos).getBlock().isReplaceable(world, pos) && trace.sideHit == EnumFacing.UP
+                BlockPos pos1 = world.getBlockState(pos).getBlock().isReplaceable(world, pos) && trace.sideHit == Direction.UP
                     ? pos
                     : pos.offset(trace.sideHit);
 

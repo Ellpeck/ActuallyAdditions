@@ -31,7 +31,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -127,7 +127,7 @@ public class AAWorldGen implements IWorldGenerator {
                             if (randomPos.getY() >= 25 && randomPos.getY() <= 45) {
                                 if (event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER) {
                                     if (event.getWorld().getBlockState(randomPos.down()).getMaterial().isSolid()) {
-                                        event.getWorld().setBlockState(randomPos, InitBlocks.blockTreasureChest.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(event.getRand().nextInt(4))), 2);
+                                        event.getWorld().setBlockState(randomPos, InitBlocks.blockTreasureChest.getDefaultState().withProperty(BlockHorizontal.FACING, Direction.byHorizontalIndex(event.getRand().nextInt(4))), 2);
                                     }
                                 }
                             }

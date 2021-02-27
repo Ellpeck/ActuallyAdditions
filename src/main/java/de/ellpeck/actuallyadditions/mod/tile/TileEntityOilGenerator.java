@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -158,7 +158,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public IFluidHandler getFluidHandler(EnumFacing facing) {
+    public IFluidHandler getFluidHandler(Direction facing) {
         return this.tank;
     }
 
@@ -173,7 +173,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public EnumFacing[] getFluidShareSides() {
+    public Direction[] getFluidShareSides() {
         return null;
     }
 
@@ -188,8 +188,8 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides() {
-        return EnumFacing.values();
+    public Direction[] getEnergyShareSides() {
+        return Direction.values();
     }
 
     @Override
@@ -198,7 +198,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 }

@@ -26,8 +26,8 @@ import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,7 +35,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -45,11 +45,11 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
@@ -65,8 +65,8 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
 
     private final Type type;
 
-    public BlockLaserRelay(String name, Type type) {
-        super(Material.ROCK, name);
+    public BlockLaserRelay(Type type) {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
@@ -125,7 +125,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public BlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base) {
+    public BlockState getStateForPlacement(World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase base) {
         return this.getStateFromMeta(side.ordinal());
     }
 
@@ -136,7 +136,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
+        return this.getDefaultState().withProperty(BlockDirectional.FACING, Direction.byIndex(meta));
     }
 
     @Override
@@ -160,7 +160,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
         ItemStack stack = player.getHeldItem(hand);
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileEntityLaserRelay) {
@@ -280,7 +280,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, EnumFacing face) {
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face) {
         return BlockFaceShape.UNDEFINED;
     }
 

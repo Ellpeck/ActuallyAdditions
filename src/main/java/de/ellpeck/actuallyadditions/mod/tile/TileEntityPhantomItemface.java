@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 
@@ -35,7 +35,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface {
         if (super.isBoundThingInRange()) {
             TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
             if (tile != null) {
-                for (EnumFacing facing : EnumFacing.values()) {
+                for (Direction facing : Direction.values()) {
                     if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) { return true; }
                 }
             }

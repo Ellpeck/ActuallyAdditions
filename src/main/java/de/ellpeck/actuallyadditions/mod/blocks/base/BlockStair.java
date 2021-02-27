@@ -22,8 +22,8 @@ public class BlockStair extends BlockStairs implements ItemBlockBase.ICustomRari
 
     private final String name;
 
-    public BlockStair(Block block, String name) {
-        this(block.getDefaultState(), name);
+    public BlockStair(Block block) {
+        this(block.getDefaultState(), this.name);
     }
 
     public BlockStair(BlockState state, String name) {

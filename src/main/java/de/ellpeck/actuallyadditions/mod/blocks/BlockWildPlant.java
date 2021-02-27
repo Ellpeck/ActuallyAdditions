@@ -21,13 +21,13 @@ import net.minecraft.block.BlockCrops;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -39,8 +39,8 @@ public class BlockWildPlant extends BlockBushBase {
     public static final TheWildPlants[] ALL_WILD_PLANTS = TheWildPlants.values();
     public static final PropertyEnum<TheWildPlants> TYPE = PropertyEnum.create("type", TheWildPlants.class);
 
-    public BlockWildPlant(String name) {
-        super(name);
+    public BlockWildPlant() {
+        super(this.name);
         this.setSoundType(SoundType.PLANT);
     }
 
@@ -49,7 +49,9 @@ public class BlockWildPlant extends BlockBushBase {
         BlockPos offset = pos.down();
         BlockState offsetState = world.getBlockState(offset);
         Block offsetBlock = offsetState.getBlock();
-        return state.getValue(TYPE) == TheWildPlants.RICE ? offsetState.getMaterial() == Material.WATER : offsetBlock.canSustainPlant(offsetState, world, offset, EnumFacing.UP, this);
+        return state.getValue(TYPE) == TheWildPlants.RICE
+            ? offsetState.getMaterial() == Material.WATER
+            : offsetBlock.canSustainPlant(offsetState, world, offset, Direction.UP, this);
     }
 
     @Override
@@ -110,7 +112,9 @@ public class BlockWildPlant extends BlockBushBase {
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? EnumRarity.COMMON : ALL_WILD_PLANTS[stack.getItemDamage()].getRarity();
+        return stack.getItemDamage() >= ALL_WILD_PLANTS.length
+            ? EnumRarity.COMMON
+            : ALL_WILD_PLANTS[stack.getItemDamage()].getRarity();
     }
 
     public static class TheItemBlock extends ItemBlockBase {
@@ -123,7 +127,9 @@ public class BlockWildPlant extends BlockBushBase {
 
         @Override
         public String getTranslationKey(ItemStack stack) {
-            return stack.getItemDamage() >= ALL_WILD_PLANTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + "_" + ALL_WILD_PLANTS[stack.getItemDamage()].getName();
+            return stack.getItemDamage() >= ALL_WILD_PLANTS.length
+                ? StringUtil.BUGGED_ITEM_NAME
+                : this.getTranslationKey() + "_" + ALL_WILD_PLANTS[stack.getItemDamage()].getName();
         }
     }
 }

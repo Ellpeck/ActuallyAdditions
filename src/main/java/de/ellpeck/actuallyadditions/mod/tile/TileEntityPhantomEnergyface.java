@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
@@ -28,7 +28,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
         if (super.isBoundThingInRange()) {
             TileEntity tile = this.world.getTileEntity(this.boundPosition);
             if (tile != null && !(tile instanceof TileEntityLaserRelayEnergy)) {
-                for (EnumFacing facing : EnumFacing.values()) {
+                for (Direction facing : Direction.values()) {
                     if (tile.hasCapability(CapabilityEnergy.ENERGY, facing)) { return true; }
                 }
             }
@@ -52,8 +52,8 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides() {
-        return EnumFacing.values();
+    public Direction[] getEnergyShareSides() {
+        return Direction.values();
     }
 
     @Override

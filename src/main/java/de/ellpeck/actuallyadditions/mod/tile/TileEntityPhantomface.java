@@ -14,10 +14,10 @@ import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -181,7 +181,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     protected abstract boolean isCapabilitySupported(Capability<?> capability);
 
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+    public boolean hasCapability(Capability<?> capability, Direction facing) {
         if (this.isBoundThingInRange() && this.isCapabilitySupported(capability)) {
             TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
             if (tile != null) {
@@ -192,7 +192,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     }
 
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability(Capability<T> capability, Direction facing) {
         if (this.isBoundThingInRange() && this.isCapabilitySupported(capability)) {
             TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
             if (tile != null) {

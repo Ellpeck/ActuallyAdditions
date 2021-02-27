@@ -13,13 +13,13 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.BlockCrops;
+import net.minecraft.block.CropsBlock;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -30,7 +30,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.Random;
 
-public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarity, IHasModel {
+public class BlockPlant extends CropsBlock implements ItemBlockBase.ICustomRarity, IHasModel {
 
     private final String name;
     private final int minDropAmount;
@@ -39,8 +39,8 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
     private Item returnItem;
     private int returnMeta;
 
-    public BlockPlant(String name, int minDropAmount, int addDropAmount) {
-        this.name = name;
+    public BlockPlant(int minDropAmount, int addDropAmount) {
+        this.name = this.name;
         this.minDropAmount = minDropAmount;
         this.addDropAmount = addDropAmount;
         this.register();
@@ -91,7 +91,7 @@ public class BlockPlant extends BlockCrops implements ItemBlockBase.ICustomRarit
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         if (this.getMetaFromState(state) >= 7) {
             if (!world.isRemote) {
 

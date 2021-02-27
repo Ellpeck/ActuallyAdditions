@@ -21,7 +21,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
@@ -61,8 +61,8 @@ public class RenderEmpowerer extends TileEntitySpecialRenderer<TileEntityEmpower
         if (index >= 0 && ActuallyAdditionsAPI.EMPOWERER_RECIPES.size() > index) {
             EmpowererRecipe recipe = ActuallyAdditionsAPI.EMPOWERER_RECIPES.get(index);
             if (recipe != null) {
-                for (int i = 0; i < EnumFacing.HORIZONTALS.length; i++) {
-                    EnumFacing facing = EnumFacing.HORIZONTALS[i];
+                for (int i = 0; i < Direction.HORIZONTALS.length; i++) {
+                    Direction facing = Direction.HORIZONTALS[i];
                     BlockPos offset = tile.getPos().offset(facing, 3);
 
                     AssetUtil.renderLaser(tile.getPos().getX() + 0.5, tile.getPos().getY() + 0.5, tile.getPos().getZ() + 0.5, offset.getX() + 0.5, offset.getY() + 0.95, offset.getZ() + 0.5, 80, 1F, 0.1F, recipe.getParticleColors());

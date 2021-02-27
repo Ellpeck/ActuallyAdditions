@@ -14,11 +14,11 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -68,7 +68,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
 
     private void doWork() {
         BlockState state = this.world.getBlockState(this.pos);
-        EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
+        Direction sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
         BlockPos coordsBlock = this.pos.offset(sideToManipulate);
 
         BlockState stateToBreak = this.world.getBlockState(coordsBlock);
@@ -124,7 +124,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     }
 
     @Override
-    public IFluidHandler getFluidHandler(EnumFacing facing) {
+    public IFluidHandler getFluidHandler(Direction facing) {
         return this.tank;
     }
 
@@ -184,7 +184,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     }
 
     @Override
-    public EnumFacing[] getFluidShareSides() {
-        return EnumFacing.values();
+    public Direction[] getFluidShareSides() {
+        return Direction.values();
     }
 }

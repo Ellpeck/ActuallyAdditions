@@ -27,13 +27,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BlockPlayerInterface extends BlockContainerBase implements IHudDisplay {
 
-    public BlockPlayerInterface(String name) {
-        super(Material.ROCK, name);
+    public BlockPlayerInterface() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(4.5F);
         this.setResistance(10.0F);
@@ -73,7 +73,9 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
         if (tile != null) {
             if (tile instanceof TileEntityPlayerInterface) {
                 TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
-                String name = face.playerName == null ? "Unknown" : face.playerName;
+                String name = face.playerName == null
+                    ? "Unknown"
+                    : face.playerName;
                 minecraft.fontRenderer.drawStringWithShadow("Bound to: " + TextFormatting.RED + name, resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 + 5, StringUtil.DECIMAL_COLOR_WHITE);
                 minecraft.fontRenderer.drawStringWithShadow("UUID: " + TextFormatting.DARK_GREEN + face.connectedPlayer, resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 + 15, StringUtil.DECIMAL_COLOR_WHITE);
             }

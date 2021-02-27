@@ -19,7 +19,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -216,13 +216,13 @@ public abstract class ItemEnergy extends ItemBase {
         }
 
         @Override
-        public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+        public boolean hasCapability(Capability<?> capability, Direction facing) {
             return this.getCapability(capability, facing) != null;
         }
 
         @Nullable
         @Override
-        public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+        public <T> T getCapability(Capability<T> capability, Direction facing) {
             if (capability == CapabilityEnergy.ENERGY) {
                 return CapabilityEnergy.ENERGY.cast(this.storage);
             }

@@ -40,7 +40,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -154,11 +154,11 @@ public class MethodHandler implements IMethodHandler {
             int rangeY = 0;
             int rangeZ = 0;
 
-            EnumFacing facing = tile.getOrientation();
-            if (facing != EnumFacing.UP && facing != EnumFacing.DOWN) {
+            Direction facing = tile.getOrientation();
+            if (facing != Direction.UP && facing != Direction.DOWN) {
                 rangeY = range;
 
-                if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
+                if (facing == Direction.NORTH || facing == Direction.SOUTH) {
                     rangeX = range;
                 } else {
                     rangeZ = range;
@@ -248,7 +248,7 @@ public class MethodHandler implements IMethodHandler {
     @Override
     public boolean invokeReconstructor(IAtomicReconstructor tile) {
         if (tile.getEnergy() >= TileEntityAtomicReconstructor.ENERGY_USE) {
-            EnumFacing sideToManipulate = tile.getOrientation();
+            Direction sideToManipulate = tile.getOrientation();
             Lens currentLens = tile.getLens();
             if (currentLens.canInvoke(tile, sideToManipulate, TileEntityAtomicReconstructor.ENERGY_USE)) {
                 tile.extractEnergy(TileEntityAtomicReconstructor.ENERGY_USE);

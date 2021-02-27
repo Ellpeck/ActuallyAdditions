@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
@@ -50,7 +50,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public IItemHandler getItemHandler(EnumFacing facing) {
+    public IItemHandler getItemHandler(Direction facing) {
         PlayerEntity player = this.getPlayer();
 
         if (this.oldPlayer != player) {
@@ -141,7 +141,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 }

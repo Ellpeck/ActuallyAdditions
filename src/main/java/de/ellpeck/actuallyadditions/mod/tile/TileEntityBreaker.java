@@ -19,7 +19,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -42,7 +42,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("CurrentTime", this.currentTime);
+            compound.putInt("CurrentTime", this.currentTime);
         }
     }
 
@@ -50,7 +50,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            this.currentTime = compound.getInteger("CurrentTime");
+            this.currentTime = compound.getInt("CurrentTime");
         }
     }
 
@@ -77,7 +77,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
     }
 
     private void doWork() {
-        EnumFacing side = WorldUtil.getDirectionByPistonRotation(this.world.getBlockState(this.pos));
+        Direction side = WorldUtil.getDirectionByPistonRotation(this.world.getBlockState(this.pos));
         BlockPos breakCoords = this.pos.offset(side);
         BlockState stateToBreak = this.world.getBlockState(breakCoords);
         Block blockToBreak = stateToBreak.getBlock();

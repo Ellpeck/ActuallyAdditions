@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -116,8 +116,8 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides() {
-        return EnumFacing.values();
+    public Direction[] getEnergyShareSides() {
+        return Direction.values();
     }
 
     @Override
@@ -126,7 +126,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 }

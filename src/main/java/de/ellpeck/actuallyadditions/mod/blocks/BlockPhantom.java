@@ -26,7 +26,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -35,15 +35,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
 
     public final Type type;
 
-    public BlockPhantom(Type type, String name) {
-        super(Material.ROCK, name);
+    public BlockPhantom(Type type) {
+        super(Material.ROCK, this.name);
         this.type = type;
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(4.5F);
@@ -57,7 +57,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public int getWeakPower(BlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+    public int getWeakPower(BlockState state, IBlockAccess world, BlockPos pos, Direction side) {
         if (this.type == Type.REDSTONEFACE) {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileEntityPhantomRedstoneface) {
@@ -68,7 +68,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public int getStrongPower(BlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+    public int getStrongPower(BlockState state, IBlockAccess world, BlockPos pos, Direction side) {
         if (this.type == Type.REDSTONEFACE) {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileEntityPhantomRedstoneface) {
@@ -102,7 +102,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
         if (this.tryToggleRedstone(world, pos, player)) {
             return true;
         }

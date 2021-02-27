@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -29,7 +29,7 @@ public class TileEntityCompost extends TileEntityInventoryBase {
     protected CompostRecipe recipe;
 
     public TileEntityCompost() {
-        super(1, "compost");
+        super(ActuallyTiles.COMPOST_TILE.get(), 1);
     }
 
     public static CompostRecipe getRecipeForInput(ItemStack input) {

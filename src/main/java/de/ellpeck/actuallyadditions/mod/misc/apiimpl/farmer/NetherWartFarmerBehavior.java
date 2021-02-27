@@ -19,7 +19,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -32,7 +32,7 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior {
         int use = 500;
         if (farmer.getEnergy() >= use) {
             if (seed.getItem() == Items.NETHER_WART) {
-                if (world.getBlockState(pos.down()).getBlock().canSustainPlant(world.getBlockState(pos.down()), world, pos.down(), EnumFacing.UP, (IPlantable) Items.NETHER_WART)) {
+                if (world.getBlockState(pos.down()).getBlock().canSustainPlant(world.getBlockState(pos.down()), world, pos.down(), Direction.UP, (IPlantable) Items.NETHER_WART)) {
                     world.setBlockState(pos, Blocks.NETHER_WART.getDefaultState(), 2);
                     farmer.extractEnergy(use);
                     return FarmerResult.SUCCESS;

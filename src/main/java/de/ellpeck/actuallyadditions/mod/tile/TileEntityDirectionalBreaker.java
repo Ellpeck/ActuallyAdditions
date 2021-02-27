@@ -14,10 +14,10 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -76,7 +76,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
     private void doWork() {
         if (this.storage.getEnergyStored() >= ENERGY_USE * RANGE) {
             BlockState state = this.world.getBlockState(this.pos);
-            EnumFacing sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
+            Direction sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
 
             for (int i = 0; i < RANGE; i++) {
                 BlockPos coordsBlock = this.pos.offset(sideToManipulate, i + 1);
@@ -121,7 +121,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 }

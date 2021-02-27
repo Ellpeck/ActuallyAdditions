@@ -10,29 +10,29 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BlockLampPowerer extends BlockBase {
 
-    public BlockLampPowerer(String name) {
+    public BlockLampPowerer() {
         super(Material.ROCK, name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -52,7 +52,7 @@ public class BlockLampPowerer extends BlockBase {
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, EntityLivingBase player, ItemStack stack) {
-        int rotation = EnumFacing.getDirectionFromEntityLiving(pos, player).ordinal();
+        int rotation = Direction.getDirectionFromEntityLiving(pos, player).ordinal();
         world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
 
         super.onBlockPlacedBy(world, pos, state, player, stack);
@@ -86,7 +86,7 @@ public class BlockLampPowerer extends BlockBase {
     }
 
     private void updateSurrounding(World world, BlockPos pos, boolean powered, List<BlockPos> updatedAlready) {
-        for (EnumFacing side : EnumFacing.values()) {
+        for (Direction side : Direction.values()) {
             BlockPos offset = pos.offset(side);
             if (!updatedAlready.contains(offset)) {
                 updatedAlready.add(pos);
@@ -102,7 +102,7 @@ public class BlockLampPowerer extends BlockBase {
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
+        return this.getDefaultState().withProperty(BlockDirectional.FACING, Direction.byIndex(meta));
     }
 
     @Override

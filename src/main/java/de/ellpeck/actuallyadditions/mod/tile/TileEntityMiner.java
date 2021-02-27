@@ -19,11 +19,11 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -128,7 +128,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
 
             BlockState state = this.world.getBlockState(pos);
             Block block = state.getBlock();
-            ItemStack stack = block.getPickBlock(state, new RayTraceResult(Type.BLOCK, new Vec3d(0, 0, 0), EnumFacing.DOWN, pos), this.world, pos, FakePlayerFactory.getMinecraft((WorldServer) this.world));
+            ItemStack stack = block.getPickBlock(state, new RayTraceResult(Type.BLOCK, new Vec3d(0, 0, 0), Direction.DOWN, pos), this.world, pos, FakePlayerFactory.getMinecraft((WorldServer) this.world));
             if (!block.isAir(this.world.getBlockState(pos), this.world, pos)) {
                 if (block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
                     NonNullList<ItemStack> drops = NonNullList.create();
@@ -231,7 +231,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 }

@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -131,7 +131,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     }
 
     @Override
-    public IFluidHandler getFluidHandler(EnumFacing facing) {
+    public IFluidHandler getFluidHandler(Direction facing) {
         return this.handlerMap;
     }
 
@@ -146,7 +146,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     }
 
     @Override
-    public EnumFacing[] getFluidShareSides() {
-        return EnumFacing.values();
+    public Direction[] getFluidShareSides() {
+        return Direction.values();
     }
 }

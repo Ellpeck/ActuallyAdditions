@@ -17,7 +17,9 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -25,10 +27,12 @@ import net.minecraftforge.items.ItemHandlerHelper;
 public abstract class TileEntityInventoryBase extends TileEntityBase {
 
     public final ItemStackHandlerAA inv;
+    public final LazyOptional<IItemHandler> lazyInv;
 
-    public TileEntityInventoryBase(int slots, String name) {
-        super(name);
+    public TileEntityInventoryBase(TileEntityType<?> type, int slots) {
+        super(type);
         this.inv = new TileStackHandler(slots);
+        this.lazyInv = LazyOptional.of(() -> this.inv);
     }
 
     public static void saveSlots(IItemHandler slots, CompoundNBT compound) {
@@ -38,11 +42,11 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
                 ItemStack slot = slots.getStackInSlot(i);
                 CompoundNBT tagCompound = new CompoundNBT();
                 if (StackUtil.isValid(slot)) {
-                    slot.writeToNBT(tagCompound);
+                    slot.write(tagCompound);
                 }
-                tagList.appendTag(tagCompound);
+                tagList.add(tagCompound);
             }
-            compound.setTag("Items", tagList);
+            compound.put("Items", tagList);
         }
     }
 
@@ -51,8 +55,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
             ListNBT tagList = compound.getList("Items", 10);
             for (int i = 0; i < slots.getSlots(); i++) {
                 CompoundNBT tagCompound = tagList.getCompound(i);
-                slots.setStackInSlot(i, tagCompound != null && tagCompound.hasKey("id")
-                    ? new ItemStack(tagCompound)
+                slots.setStackInSlot(i, tagCompound.contains("id")
+                    ? ItemStack.read(tagCompound)
                     : StackUtil.getEmpty());
             }
         }
@@ -67,8 +71,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
     }
 
     @Override
-    public IItemHandler getItemHandler(EnumFacing facing) {
-        return this.inv;
+    public LazyOptional<IItemHandler> getItemHandler(Direction facing) {
+        return this.lazyInv;
     }
 
     public IAcceptor getAcceptor() {
@@ -136,6 +140,4 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
             TileEntityInventoryBase.this.markDirty();
         }
     }
-
-    ;
 }

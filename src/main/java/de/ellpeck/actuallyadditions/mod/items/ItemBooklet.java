@@ -29,7 +29,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -53,7 +53,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
     }
 
     @Override
-    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, EnumFacing face, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction face, float hitX, float hitY, float hitZ) {
         if (player.isSneaking()) {
             BlockState state = world.getBlockState(pos);
             Block block = state.getBlock();

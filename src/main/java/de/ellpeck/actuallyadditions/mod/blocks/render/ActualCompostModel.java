@@ -14,7 +14,7 @@
 //import net.minecraft.client.renderer.block.model.IBakedModel;
 //import net.minecraft.client.renderer.block.model.ItemOverrideList;
 //import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-//import net.minecraft.util.EnumFacing;
+//import net.minecraft.util.Direction;
 //import net.minecraftforge.common.property.IExtendedBlockState;
 //
 //public class ActualCompostModel implements IBakedModel {
@@ -23,7 +23,7 @@
 //
 //    @SuppressWarnings("unchecked")
 //    @Override
-//    public List<BakedQuad> getQuads(BlockState state, EnumFacing side, long rand) {
+//    public List<BakedQuad> getQuads(BlockState state, Direction side, long rand) {
 //        if (state instanceof IExtendedBlockState) {
 //            Pair<BlockState, Float> data = ((IExtendedBlockState) state).getValue(BlockCompost.COMPOST_PROP);
 //            if (data == null || data.getRight() <= 0) return CompostModel.compostBase.getQuads(state, side, rand);

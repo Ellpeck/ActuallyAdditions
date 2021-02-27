@@ -21,7 +21,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -30,8 +30,8 @@ import net.minecraft.world.World;
 
 public class BlockBatteryBox extends BlockContainerBase {
 
-    public BlockBatteryBox(String name) {
-        super(Material.ROCK, name);
+    public BlockBatteryBox() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
@@ -49,7 +49,7 @@ public class BlockBatteryBox extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileEntityBatteryBox) {
             TileEntityBatteryBox box = (TileEntityBatteryBox) tile;

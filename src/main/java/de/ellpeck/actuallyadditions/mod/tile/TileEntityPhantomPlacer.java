@@ -22,7 +22,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -213,7 +213,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
 
     @Override
     public void onButtonPressed(int buttonID, PlayerEntity player) {
-        if (this.side + 1 >= EnumFacing.values().length) {
+        if (this.side + 1 >= Direction.values().length) {
             this.side = 0;
         } else {
             this.side++;

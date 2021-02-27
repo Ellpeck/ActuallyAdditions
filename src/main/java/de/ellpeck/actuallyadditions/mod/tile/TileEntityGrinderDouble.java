@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 public class TileEntityGrinderDouble extends TileEntityGrinder {
 
     public TileEntityGrinderDouble() {
-        super(6, "grinderDouble");
+        super(ActuallyTiles.GRINDER_DOUBLE_TILE.get(), 6);
         this.isDouble = true;
     }
 

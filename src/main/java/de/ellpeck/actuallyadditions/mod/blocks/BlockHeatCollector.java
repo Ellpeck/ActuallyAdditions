@@ -21,8 +21,8 @@ import net.minecraft.world.World;
 
 public class BlockHeatCollector extends BlockContainerBase {
 
-    public BlockHeatCollector(String name) {
-        super(Material.ROCK, name);
+    public BlockHeatCollector() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(2.5F);
         this.setResistance(10.0F);

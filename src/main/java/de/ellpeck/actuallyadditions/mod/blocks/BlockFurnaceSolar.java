@@ -27,8 +27,8 @@ public class BlockFurnaceSolar extends BlockContainerBase {
 
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 6 * 0.0625, 1);
 
-    public BlockFurnaceSolar(String name) {
-        super(Material.ROCK, name);
+    public BlockFurnaceSolar() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);

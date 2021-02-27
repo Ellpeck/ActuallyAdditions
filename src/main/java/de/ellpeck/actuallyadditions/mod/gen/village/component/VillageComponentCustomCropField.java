@@ -18,7 +18,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
@@ -37,12 +37,12 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
 
     }
 
-    public VillageComponentCustomCropField(StructureBoundingBox boundingBox, EnumFacing par5) {
+    public VillageComponentCustomCropField(StructureBoundingBox boundingBox, Direction par5) {
         this.setCoordBaseMode(par5);
         this.boundingBox = boundingBox;
     }
 
-    public static VillageComponentCustomCropField buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, EnumFacing p4) {
+    public static VillageComponentCustomCropField buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, Direction p4) {
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
         return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentCustomCropField(boundingBox, p4) : null;
     }

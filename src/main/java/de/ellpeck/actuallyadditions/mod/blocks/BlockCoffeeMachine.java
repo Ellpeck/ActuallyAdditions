@@ -17,14 +17,14 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -38,8 +38,8 @@ public class BlockCoffeeMachine extends BlockContainerBase {
 
     private static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625, 0, 0.0625, 1 - 0.0625, 1 - 0.0625 * 2, 1 - 0.0625);
 
-    public BlockCoffeeMachine(String name) {
-        super(Material.ROCK, name);
+    public BlockCoffeeMachine() {
+        super(Material.ROCK, this.name);
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
         this.setResistance(10.0F);
@@ -62,7 +62,7 @@ public class BlockCoffeeMachine extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing f6, float f7, float f8, float f9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction f6, float f7, float f8, float f9) {
         if (!world.isRemote) {
             TileEntityCoffeeMachine machine = (TileEntityCoffeeMachine) world.getTileEntity(pos);
             if (machine != null) {
@@ -107,7 +107,7 @@ public class BlockCoffeeMachine extends BlockContainerBase {
 
     @Override
     public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
+        return this.getDefaultState().withProperty(BlockHorizontal.FACING, Direction.byHorizontalIndex(meta));
     }
 
     @Override

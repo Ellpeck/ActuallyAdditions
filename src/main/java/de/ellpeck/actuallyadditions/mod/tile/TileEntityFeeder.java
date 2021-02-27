@@ -34,7 +34,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase {
     private int lastTimer;
 
     public TileEntityFeeder() {
-        super(1, "feeder");
+        super(ActuallyTiles.FEEDER_TILE.get(), 1);
     }
 
     public int getCurrentTimerToScale(int i) {

@@ -14,13 +14,13 @@ import java.util.Arrays;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 
 public class TileEntityPhantomRedstoneface extends TileEntityPhantomface {
 
-    public final int[] providesStrong = new int[EnumFacing.values().length];
-    public final int[] providesWeak = new int[EnumFacing.values().length];
+    public final int[] providesStrong = new int[Direction.values().length];
+    public final int[] providesWeak = new int[Direction.values().length];
 
     private final int[] lastProvidesStrong = new int[this.providesStrong.length];
     private final int[] lastProvidesWeak = new int[this.providesWeak.length];
@@ -37,8 +37,8 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface {
                 if (boundState != null) {
                     Block boundBlock = boundState.getBlock();
                     if (boundBlock != null) {
-                        for (int i = 0; i < EnumFacing.values().length; i++) {
-                            EnumFacing facing = EnumFacing.values()[i];
+                        for (int i = 0; i < Direction.values().length; i++) {
+                            Direction facing = Direction.values()[i];
                             this.providesWeak[i] = boundState.getWeakPower(this.world, this.boundPosition, facing);
                             this.providesStrong[i] = boundState.getStrongPower(this.world, this.boundPosition, facing);
                         }

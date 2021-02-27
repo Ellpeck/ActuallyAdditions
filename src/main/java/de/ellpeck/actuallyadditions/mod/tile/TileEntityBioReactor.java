@@ -21,7 +21,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -148,8 +148,8 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public EnumFacing[] getEnergyShareSides() {
-        return EnumFacing.values();
+    public Direction[] getEnergyShareSides() {
+        return Direction.values();
     }
 
     @Override
@@ -158,7 +158,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 

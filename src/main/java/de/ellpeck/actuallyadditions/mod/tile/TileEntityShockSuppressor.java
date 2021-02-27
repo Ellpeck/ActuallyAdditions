@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 }

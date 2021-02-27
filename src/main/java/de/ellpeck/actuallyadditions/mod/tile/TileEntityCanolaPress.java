@@ -19,7 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -125,7 +125,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     }
 
     @Override
-    public FluidTank getFluidHandler(EnumFacing facing) {
+    public FluidTank getFluidHandler(Direction facing) {
         return this.tank;
     }
 
@@ -140,12 +140,12 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     }
 
     @Override
-    public EnumFacing[] getFluidShareSides() {
-        return EnumFacing.values();
+    public Direction[] getFluidShareSides() {
+        return Direction.values();
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.storage;
     }
 }

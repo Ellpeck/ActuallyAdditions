@@ -17,12 +17,14 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
+import net.minecraft.util.datafix.fixes.FurnaceRecipes;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IButtonReactor {
@@ -34,6 +36,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public static final int ENERGY_USE = 25;
     private static final int SMELT_TIME = 80;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 150, 0);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public int firstSmeltTime;
     public int secondSmeltTime;
     public boolean isAutoSplit;
@@ -44,7 +47,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     private boolean lastSmelted;
 
     public TileEntityFurnaceDouble() {
-        super(4, "furnaceDouble");
+        super(ActuallyTiles.FURNACE_DOUBLE_TILE.get(), 4);
     }
 
     public static void autoSplit(ItemStackHandlerAA inv, int slot1, int slot2) {
@@ -68,7 +71,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
 
             if (StackUtil.isValid(toSplit)) {
                 ItemStack splitFirst = toSplit.copy();
-                ItemStack secondSplit = splitFirst.splitStack(splitFirst.getCount() / 2);
+                ItemStack secondSplit = splitFirst.split(splitFirst.getCount() / 2);
                 inv.setStackInSlot(slot1, splitFirst);
                 inv.setStackInSlot(slot2, secondSplit);
             }
@@ -79,9 +82,9 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("FirstSmeltTime", this.firstSmeltTime);
-            compound.setInteger("SecondSmeltTime", this.secondSmeltTime);
-            compound.setBoolean("IsAutoSplit", this.isAutoSplit);
+            compound.putInt("FirstSmeltTime", this.firstSmeltTime);
+            compound.putInt("SecondSmeltTime", this.secondSmeltTime);
+            compound.putBoolean("IsAutoSplit", this.isAutoSplit);
         }
         this.storage.writeToNBT(compound);
     }
@@ -90,8 +93,8 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            this.firstSmeltTime = compound.getInteger("FirstSmeltTime");
-            this.secondSmeltTime = compound.getInteger("SecondSmeltTime");
+            this.firstSmeltTime = compound.getInt("FirstSmeltTime");
+            this.secondSmeltTime = compound.getInt("SecondSmeltTime");
             this.isAutoSplit = compound.getBoolean("IsAutoSplit");
         }
         this.storage.readFromNBT(compound);
@@ -139,7 +142,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             }
 
             BlockState currState = this.world.getBlockState(this.pos);
-            boolean current = currState.getValue(BlockFurnaceDouble.IS_ON);
+            boolean current = currState.get(BlockFurnaceDouble.IS_ON);
             boolean changeTo = current;
             if (this.lastSmelted != smelted) {
                 changeTo = smelted;
@@ -152,7 +155,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             }
 
             if (changeTo != current) {
-                this.world.setBlockState(this.pos, currState.withProperty(BlockFurnaceDouble.IS_ON, changeTo));
+                this.world.setBlockState(this.pos, currState.with(BlockFurnaceDouble.IS_ON, changeTo));
             }
 
             this.lastSmelted = smelted;
@@ -190,7 +193,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     public void finishBurning(int theInput, int theOutput) {
-        ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.inv.getStackInSlot(theInput));
+        ItemStack output = FurnaceRecipe.instance().getSmeltingResult(this.inv.getStackInSlot(theInput));
         if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput))) {
             this.inv.setStackInSlot(theOutput, output.copy());
         } else if (this.inv.getStackInSlot(theOutput).getItem() == output.getItem()) {
@@ -217,7 +220,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

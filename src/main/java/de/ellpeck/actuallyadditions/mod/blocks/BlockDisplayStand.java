@@ -22,7 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -31,8 +31,8 @@ import net.minecraft.world.World;
 
 public class BlockDisplayStand extends BlockContainerBase {
 
-    public BlockDisplayStand(String name) {
-        super(Material.ROCK, name);
+    public BlockDisplayStand() {
+        super(Material.ROCK, this.name);
 
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -51,7 +51,7 @@ public class BlockDisplayStand extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
         ItemStack heldItem = player.getHeldItem(hand);
         if (!world.isRemote) {
             TileEntityDisplayStand stand = (TileEntityDisplayStand) world.getTileEntity(pos);
@@ -101,8 +101,8 @@ public class BlockDisplayStand extends BlockContainerBase {
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess world, BlockState state, BlockPos pos, EnumFacing face) {
-        if (face == EnumFacing.DOWN) {
+    public BlockFaceShape getBlockFaceShape(IBlockAccess world, BlockState state, BlockPos pos, Direction face) {
+        if (face == Direction.DOWN) {
             return BlockFaceShape.SOLID;
         }
         return BlockFaceShape.UNDEFINED;

@@ -21,15 +21,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockFermentingBarrel extends BlockContainerBase {
 
-    public BlockFermentingBarrel(String name) {
-        super(Material.WOOD, name);
+    public BlockFermentingBarrel() {
+        super(Material.WOOD, this.name);
         this.setHarvestLevel("axe", 0);
         this.setHardness(0.5F);
         this.setResistance(5.0F);
@@ -52,7 +52,7 @@ public class BlockFermentingBarrel extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
         if (!world.isRemote) {
             TileEntityFermentingBarrel press = (TileEntityFermentingBarrel) world.getTileEntity(pos);
             if (press != null) {

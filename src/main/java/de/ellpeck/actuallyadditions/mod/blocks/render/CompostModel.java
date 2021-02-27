@@ -18,14 +18,14 @@
 //import net.minecraft.client.renderer.block.model.IBakedModel;
 //import net.minecraft.client.renderer.block.model.ItemOverrideList;
 //import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-//import net.minecraft.util.EnumFacing;
+//import net.minecraft.util.Direction;
 //import net.minecraftforge.common.model.TRSRTransformation;
 //
 //public class CompostModel implements IBakedModel {
 //    public static IBakedModel compostBase;
 //    private final IBakedModel display;
 //    private final ImmutableList<BakedQuad> general;
-//    private final ImmutableMap<EnumFacing, ImmutableList<BakedQuad>> faces;
+//    private final ImmutableMap<Direction, ImmutableList<BakedQuad>> faces;
 //
 //    public CompostModel(BlockState flowerState, float height) {
 //        this.display = Minecraft.getInstance().getBlockRendererDispatcher().getModelForState(flowerState);
@@ -33,9 +33,9 @@
 //        TRSRTransformation transform = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(new Vector3f(0, -.218F, 0), null, new Vector3f(0.75F, height / 1.81F, 0.75F), null));
 //
 //        ImmutableList.Builder<BakedQuad> builder;
-//        EnumMap<EnumFacing, ImmutableList<BakedQuad>> faces = new EnumMap<>(EnumFacing.class);
+//        EnumMap<Direction, ImmutableList<BakedQuad>> faces = new EnumMap<>(Direction.class);
 //
-//        for (EnumFacing face : EnumFacing.values()) {
+//        for (Direction face : Direction.values()) {
 //            builder = ImmutableList.builder();
 //            if (!this.display.isBuiltInRenderer()) {
 //                for (BakedQuad quad : this.display.getQuads(flowerState, face, 0)) {
@@ -63,7 +63,7 @@
 //    }
 //
 //    @Override
-//    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable EnumFacing side, long rand) {
+//    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, long rand) {
 //        if (side == null) return this.general;
 //        return this.faces.get(side);
 //    }

@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import net.minecraft.block.state.BlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
 public class LensDetonation extends Lens {
@@ -43,7 +43,7 @@ public class LensDetonation extends Lens {
     }
 
     @Override
-    public boolean canInvoke(IAtomicReconstructor tile, EnumFacing sideToShootTo, int energyUsePerShot) {
+    public boolean canInvoke(IAtomicReconstructor tile, Direction sideToShootTo, int energyUsePerShot) {
         return tile.getEnergy() - energyUsePerShot >= ENERGY_USE;
     }
 }

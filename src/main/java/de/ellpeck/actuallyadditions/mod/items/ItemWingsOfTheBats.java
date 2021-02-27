@@ -25,7 +25,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -167,7 +167,7 @@ public class ItemWingsOfTheBats extends ItemBase {
                         } else {
                             BlockPos pos = new BlockPos(player.posX, player.posY + player.height, player.posZ);
                             BlockState state = player.world.getBlockState(pos);
-                            if (state != null && state.isSideSolid(player.world, pos, EnumFacing.DOWN)) {
+                            if (state != null && state.isSideSolid(player.world, pos, Direction.DOWN)) {
                                 deductTime = 10;
                             }
                         }

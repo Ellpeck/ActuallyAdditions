@@ -17,19 +17,19 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinderDouble;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.util.Random;
@@ -38,8 +38,8 @@ public class BlockGrinder extends BlockContainerBase {
 
     private final boolean isDouble;
 
-    public BlockGrinder(boolean isDouble, String name) {
-        super(Material.ROCK, name);
+    public BlockGrinder(boolean isDouble) {
+        super(Material.ROCK, this.name);
         this.isDouble = isDouble;
         this.setHarvestLevel("pickaxe", 0);
         this.setHardness(1.5F);
@@ -69,7 +69,7 @@ public class BlockGrinder extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, EnumFacing par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
         if (!world.isRemote) {
             TileEntityGrinder grinder = (TileEntityGrinder) world.getTileEntity(pos);
             if (grinder != null) {

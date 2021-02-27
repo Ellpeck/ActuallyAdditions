@@ -12,16 +12,16 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraft.util.Direction;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
 
@@ -30,14 +30,14 @@ public class TileEntityFishingNet extends TileEntityBase {
     public int timeUntilNextDrop;
 
     public TileEntityFishingNet() {
-        super("fishingNet");
+        super(ActuallyTiles.FISHINGNET_TILE.get());
     }
 
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("TimeUntilNextDrop", this.timeUntilNextDrop);
+            compound.putInt("TimeUntilNextDrop", this.timeUntilNextDrop);
         }
     }
 
@@ -45,27 +45,29 @@ public class TileEntityFishingNet extends TileEntityBase {
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            this.timeUntilNextDrop = compound.getInteger("TimeUntilNextDrop");
+            this.timeUntilNextDrop = compound.getInt("TimeUntilNextDrop");
         }
     }
 
     @Override
     public void updateEntity() {
         super.updateEntity();
+
         if (!this.world.isRemote) {
             if (!this.isRedstonePowered) {
                 if (this.world.getBlockState(this.pos.down()).getMaterial() == Material.WATER) {
                     if (this.timeUntilNextDrop > 0) {
                         this.timeUntilNextDrop--;
                         if (this.timeUntilNextDrop <= 0) {
-                            LootContext.Builder builder = new LootContext.Builder((WorldServer) this.world);
-                            List<ItemStack> fishables = this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(this.world.rand, builder.build());
+                            // TODO: [port] come back to this as the loot table may be wrong
+                            LootContext.Builder builder = new LootContext.Builder((ServerWorld) this.world);
+                            List<ItemStack> fishables = this.world.getServer().getLootTableManager().getLootTableFromLocation(LootTables.GAMEPLAY_FISHING).generate(builder.build(LootParameterSets.FISHING));
                             for (ItemStack fishable : fishables) {
                                 ItemStack leftover = this.storeInContainer(fishable);
                                 if (StackUtil.isValid(leftover)) {
-                                    EntityItem item = new EntityItem(this.world, this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5, leftover.copy());
+                                    ItemEntity item = new ItemEntity(this.world, this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5, leftover.copy());
                                     item.lifespan = 2000;
-                                    this.world.spawnEntity(item);
+                                    this.world.addEntity(item);
                                 }
                             }
                         }
@@ -79,21 +81,22 @@ public class TileEntityFishingNet extends TileEntityBase {
     }
 
     private ItemStack storeInContainer(ItemStack stack) {
-        for (EnumFacing side : EnumFacing.values()) {
+        for (Direction side : Direction.values()) {
             TileEntity tile = this.tilesAround[side.ordinal()];
             if (tile != null) {
-                if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
-                    IItemHandler cap = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                    if (cap != null) {
-                        for (int i = 0; i < cap.getSlots(); i++) {
-                            stack = cap.insertItem(i, stack, false);
+                // TODO: [port] come back and make sure this works
+                ItemStack copyStack = stack.copy();
+                stack = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite()).map(cap -> {
+                    ItemStack localStack = ItemStack.EMPTY;
+                    for (int i = 0; i < cap.getSlots(); i++) {
+                        localStack = cap.insertItem(i, copyStack, false);
 
-                            if (!StackUtil.isValid(stack)) {
-                                return StackUtil.getEmpty();
-                            }
+                        if (!StackUtil.isValid(localStack)) {
+                            return ItemStack.EMPTY;
                         }
                     }
-                }
+                    return localStack;
+                }).orElse(ItemStack.EMPTY);
             }
         }
         return stack;
