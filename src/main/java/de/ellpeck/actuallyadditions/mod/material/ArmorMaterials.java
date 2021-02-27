@@ -28,8 +28,9 @@ public enum ArmorMaterials implements IArmorMaterial {
     DIAMATINE("diamatine_armor_material", 36, new int[]{4, 7, 8, 4}, 12, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3, 0f, () -> Ingredient.fromItems(InitItems.DIAMATINE_CRYSTAL.get())),
     VOID("void_armor_material", 23, new int[]{1, 3, 4, 1}, 13, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.fromItems(InitItems.VOID_CRYSTAL.get())),
     EMERADIC("emeradic_armor_material", 32, new int[]{6, 9, 9, 4}, 18, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3, 0f, () -> Ingredient.fromItems(InitItems.EMERADIC_CRYSTAL.get())),
-    ENORI("enori_armor_material", 24, new int[]{3, 6, 6, 3}, 11, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.fromItems(InitItems.ENORI_CRYSTAL.get()));
-
+    ENORI("enori_armor_material", 24, new int[]{3, 6, 6, 3}, 11, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.fromItems(InitItems.ENORI_CRYSTAL.get())),
+    GOGGLES("goggles_armor_material", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.EMPTY);
+    
     // HMMM Tasty stolen code from MC, how lovely.
     private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
     private final String name;

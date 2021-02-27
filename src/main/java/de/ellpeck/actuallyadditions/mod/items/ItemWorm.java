@@ -10,93 +10,76 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
-import net.minecraftforge.fml.common.eventhandler.Event.Result;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.List;
 
 public class ItemWorm extends ItemBase {
 
-    public ItemWorm(String name) {
-        super(name);
-
+    public ItemWorm() {
+        super();
         MinecraftForge.EVENT_BUS.register(this);
 
-        this.addPropertyOverride(new ResourceLocation(ActuallyAdditions.MODID, "snail"), new IItemPropertyGetter() {
-            @Override
-            @OnlyIn(Dist.CLIENT)
-            public float apply(ItemStack stack, World world, EntityLivingBase entity) {
-                return "snail mail".equalsIgnoreCase(stack.getDisplayName())
-                    ? 1F
-                    : 0F;
-            }
-        });
+        // TODO: [port] Not sure what this does
+        //        this.addPropertyOverride(new ResourceLocation(ActuallyAdditions.MODID, "snail"), (IItemPropertyGetter) (stack, world, entity) -> "snail mail".equalsIgnoreCase(stack.getDisplayName().getString())
+        //            ? 1F
+        //            : 0F);
     }
 
     @Override
-    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction side, float par8, float par9, float par10) {
-        ItemStack stack = player.getHeldItem(hand);
-        BlockState state = world.getBlockState(pos);
-        if (EntityWorm.canWormify(world, pos, state)) {
-            List<EntityWorm> worms = world.getEntitiesWithinAABB(EntityWorm.class, new AxisAlignedBB(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2));
-            if (worms == null || worms.isEmpty()) {
-                if (!world.isRemote) {
-                    EntityWorm worm = new EntityWorm(world);
+    public ActionResultType onItemUse(ItemUseContext context) {
+        BlockPos pos = context.getPos();
+        ItemStack stack = context.getPlayer().getHeldItem(context.getHand());
+        BlockState state = context.getWorld().getBlockState(pos);
+        if (EntityWorm.canWormify(context.getWorld(), context.getPos(), state)) {
+            List<EntityWorm> worms = context.getWorld().getEntitiesWithinAABB(EntityWorm.class, new AxisAlignedBB(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2));
+            if (worms.isEmpty()) {
+                if (!context.getWorld().isRemote) {
+                    EntityWorm worm = new EntityWorm(context.getWorld());
                     worm.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-                    worm.setCustomNameTag(stack.getDisplayName());
-                    world.spawnEntity(worm);
-                    if (!player.capabilities.isCreativeMode) {
+                    worm.setCustomName(stack.getDisplayName()); // TODO: WHAT DOES THIS EVEN DO?
+                    context.getWorld().addEntity(worm);
+                    if (!context.getPlayer().isCreative()) {
                         stack.shrink(1);
                     }
                 }
-                return EnumActionResult.SUCCESS;
+                return ActionResultType.SUCCESS;
             }
         }
-        return super.onItemUse(player, world, pos, hand, side, par8, par9, par10);
+        return super.onItemUse(context);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onHoe(UseHoeEvent event) {
-        if (ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Result.DENY) {
-            World world = event.getWorld();
+        if (ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Event.Result.DENY) {
+            World world = event.getEntity().world;
             if (!world.isRemote) {
-                BlockPos pos = event.getPos();
+                BlockPos pos = event.getContext().getPos();
                 if (world.isAirBlock(pos.up())) {
                     BlockState state = world.getBlockState(pos);
-                    if (state.getBlock() instanceof BlockGrass && world.rand.nextFloat() >= 0.95F) {
-                        ItemStack stack = new ItemStack(InitItems.itemWorm, world.rand.nextInt(2) + 1);
-                        EntityItem item = new EntityItem(event.getWorld(), pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
-                        world.spawnEntity(item);
+                    if (state.getBlock() == Blocks.GRASS && world.rand.nextFloat() >= 0.95F) {
+                        ItemStack stack = new ItemStack(InitItems.itemWorm.get(), world.rand.nextInt(2) + 1);
+                        ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
+                        world.addEntity(item);
                     }
                 }
             }
         }
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.UNCOMMON;
     }
 }

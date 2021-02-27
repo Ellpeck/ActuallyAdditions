@@ -26,8 +26,6 @@ import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
-import de.ellpeck.actuallyadditions.mod.material.InitArmorMaterials;
-import de.ellpeck.actuallyadditions.mod.material.InitToolMaterials;
 import de.ellpeck.actuallyadditions.mod.misc.BannerHelper;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
@@ -70,7 +68,7 @@ public class ActuallyAdditions {
     public static final ItemGroup GROUP = new ItemGroup(MODID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(InitItems.itemBooklet);
+            return new ItemStack(InitItems.itemBooklet.get());
         }
     };
 
@@ -112,8 +110,6 @@ public class ActuallyAdditions {
 
         commonCapsLoaded = false; // Loader.isModLoaded("commoncapabilities");
 
-        InitToolMaterials.init();
-        InitArmorMaterials.init();
         InitFluids.init();
         new UpdateChecker();
         BannerHelper.init();

@@ -10,21 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
-import java.util.Locale;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.BannerPattern;
 import net.minecraftforge.common.util.EnumHelper;
 
+import java.util.Locale;
+
 public final class BannerHelper {
 
     public static void init() {
-        addCraftingPattern("drill", new ItemStack(InitItems.itemDrill, 1, 3));
-        addCraftingPattern("leaf_blo", new ItemStack(InitItems.itemLeafBlower));
-        addCraftingPattern("phan_con", new ItemStack(InitItems.itemPhantomConnector));
-        addCraftingPattern("book", new ItemStack(InitItems.itemBooklet));
+        addCraftingPattern("drill", new ItemStack(InitItems.itemDrill.get(), 1, 3));
+        addCraftingPattern("leaf_blo", new ItemStack(InitItems.itemLeafBlower.get()));
+        addCraftingPattern("phan_con", new ItemStack(InitItems.itemPhantomConnector.get()));
+        addCraftingPattern("book", new ItemStack(InitItems.itemBooklet.get()));
     }
 
     /**
@@ -45,8 +45,8 @@ public final class BannerHelper {
      *                      pattern.
      */
     public static void addCraftingPattern(String name, ItemStack craftingStack) {
-        Class<?>[] paramTypes = { String.class, String.class, ItemStack.class };
-        Object[] paramValues = { ActuallyAdditions.MODID + "_" + name, ActuallyAdditions.MODID + "_" + name, craftingStack };
+        Class<?>[] paramTypes = {String.class, String.class, ItemStack.class};
+        Object[] paramValues = {ActuallyAdditions.MODID + "_" + name, ActuallyAdditions.MODID + "_" + name, craftingStack};
         EnumHelper.addEnum(BannerPattern.class, (ActuallyAdditions.MODID + "_" + name).toUpperCase(Locale.ROOT), paramTypes, paramValues);
     }
 

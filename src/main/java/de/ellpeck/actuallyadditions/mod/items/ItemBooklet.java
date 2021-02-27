@@ -26,18 +26,16 @@ import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -47,28 +45,26 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
     @OnlyIn(Dist.CLIENT)
     public static IBookletPage forcedPage;
 
-    public ItemBooklet(String name) {
-        super(name);
-        this.setMaxStackSize(1);
-        this.setMaxDamage(0);
+    public ItemBooklet() {
+        super(InitItems.defaultProps().maxStackSize(1));
     }
 
     @Override
-    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction face, float hitX, float hitY, float hitZ) {
-        if (player.isSneaking()) {
-            BlockState state = world.getBlockState(pos);
+    public ActionResultType onItemUse(ItemUseContext context) {
+        if (context.getPlayer().isSneaking()) {
+            BlockState state = context.getWorld().getBlockState(context.getPos());
             Block block = state.getBlock();
-            ItemStack blockStack = new ItemStack(block, 1, block.damageDropped(state));
+            ItemStack blockStack = new ItemStack(block);
             IBookletPage page = BookletUtils.findFirstPageForStack(blockStack);
             if (page != null) {
-                if (world.isRemote) {
+                if (context.getWorld().isRemote) {
                     forcedPage = page;
                 }
-                this.onItemRightClick(world, player, hand);
-                return EnumActionResult.SUCCESS;
+                this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand());
+                return ActionResultType.SUCCESS;
             }
         }
-        return EnumActionResult.FAIL;
+        return ActionResultType.FAIL;
     }
 
     @Override
@@ -95,11 +91,6 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
-    }
-
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
         if (rayCast != null && rayCast.getBlockPos() != null) {
@@ -117,7 +108,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
 
                         AssetUtil.renderStackToGui(StackUtil.isValid(page.getChapter().getDisplayItemStack())
                             ? page.getChapter().getDisplayItemStack()
-                            : new ItemStack(InitItems.itemBooklet), resolution.getScaledWidth() / 2 - 10, height + 41, 1F);
+                            : new ItemStack(InitItems.itemBooklet.get()), resolution.getScaledWidth() / 2 - 10, height + 41, 1F);
                         minecraft.fontRenderer.drawStringWithShadow(TextFormatting.YELLOW + "" + TextFormatting.ITALIC + strg1, resolution.getScaledWidth() / 2 - minecraft.fontRenderer.getStringWidth(strg1) / 2, height + 20, StringUtil.DECIMAL_COLOR_WHITE);
                         minecraft.fontRenderer.drawStringWithShadow(TextFormatting.YELLOW + "" + TextFormatting.ITALIC + strg2, resolution.getScaledWidth() / 2 - minecraft.fontRenderer.getStringWidth(strg2) / 2, height + 30, StringUtil.DECIMAL_COLOR_WHITE);
                         minecraft.fontRenderer.drawStringWithShadow(TextFormatting.GOLD + strg3, resolution.getScaledWidth() / 2 - minecraft.fontRenderer.getStringWidth(strg3) / 2, height + 60, StringUtil.DECIMAL_COLOR_WHITE);

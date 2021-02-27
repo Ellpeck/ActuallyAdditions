@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.api.recipe;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 

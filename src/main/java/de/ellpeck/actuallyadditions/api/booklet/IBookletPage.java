@@ -10,14 +10,14 @@
 
 package de.ellpeck.actuallyadditions.api.booklet;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.util.List;
 
 public interface IBookletPage {
 
@@ -42,7 +42,7 @@ public interface IBookletPage {
     void mouseClickMove(GuiBookletBase gui, int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick);
 
     @OnlyIn(Dist.CLIENT)
-    void actionPerformed(GuiBookletBase gui, GuiButton button);
+    void actionPerformed(GuiBookletBase gui, Button button);
 
     @OnlyIn(Dist.CLIENT)
     void initGui(GuiBookletBase gui, int startX, int startY);

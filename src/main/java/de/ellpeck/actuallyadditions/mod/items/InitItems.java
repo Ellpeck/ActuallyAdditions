@@ -19,14 +19,8 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.material.ArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.material.ToolMaterials;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestMedium;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemTier;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -47,51 +41,47 @@ public final class InitItems {
     public static final RegistryObject<Item> ENORI_CRYSTAL_SHARD = ITEMS.register("item_enori_crystal_shard", ItemBase::new);
 
     // CRYSTALS
-    public static final RegistryObject<Item> RESTONIA_CRYSTAL = ITEMS.register("restonia_crystal", ItemBase::new);
-    public static final RegistryObject<Item> PALIS_CRYSTAL = ITEMS.register("palis_crystal", ItemBase::new);
-    public static final RegistryObject<Item> DIAMATINE_CRYSTAL = ITEMS.register("diamatine_crystal", ItemBase::new);
-    public static final RegistryObject<Item> VOID_CRYSTAL = ITEMS.register("void_crystal", ItemBase::new);
-    public static final RegistryObject<Item> EMERADIC_CRYSTAL = ITEMS.register("emeradic_crystal", ItemBase::new);
-    public static final RegistryObject<Item> ENORI_CRYSTAL = ITEMS.register("enori_crystal", ItemBase::new);
+    public static final RegistryObject<Item> RESTONIA_CRYSTAL = ITEMS.register("restonia_crystal", ItemCrystal::new);
+    public static final RegistryObject<Item> PALIS_CRYSTAL = ITEMS.register("palis_crystal", ItemCrystal::new);
+    public static final RegistryObject<Item> DIAMATINE_CRYSTAL = ITEMS.register("diamatine_crystal", ItemCrystal::new);
+    public static final RegistryObject<Item> VOID_CRYSTAL = ITEMS.register("void_crystal", ItemCrystal::new);
+    public static final RegistryObject<Item> EMERADIC_CRYSTAL = ITEMS.register("emeradic_crystal", ItemCrystal::new);
+    public static final RegistryObject<Item> ENORI_CRYSTAL = ITEMS.register("enori_crystal", ItemCrystal::new);
 
-    public static final RegistryObject<Item> RESTONIA_EMPOWERED_CRYSTAL = ITEMS.register("restonia_empowered_crystal", ItemBase::new);
-    public static final RegistryObject<Item> PALIS_EMPOWERED_CRYSTAL = ITEMS.register("palis_empowered_crystal", ItemBase::new);
-    public static final RegistryObject<Item> DIAMATINE_EMPOWERED_CRYSTAL = ITEMS.register("diamatine_empowered_crystal", ItemBase::new);
-    public static final RegistryObject<Item> VOID_EMPOWERED_CRYSTAL = ITEMS.register("void_empowered_crystal", ItemBase::new);
-    public static final RegistryObject<Item> EMERADIC_EMPOWERED_CRYSTAL = ITEMS.register("emeradic_empowered_crystal", ItemBase::new);
-    public static final RegistryObject<Item> ENORI_EMPOWERED_CRYSTAL = ITEMS.register("enori_empowered_crystal", ItemBase::new);
+    public static final RegistryObject<Item> RESTONIA_EMPOWERED_CRYSTAL = ITEMS.register("restonia_empowered_crystal", () -> new ItemCrystal(true));
+    public static final RegistryObject<Item> PALIS_EMPOWERED_CRYSTAL = ITEMS.register("palis_empowered_crystal", () -> new ItemCrystal(true));
+    public static final RegistryObject<Item> DIAMATINE_EMPOWERED_CRYSTAL = ITEMS.register("diamatine_empowered_crystal", () -> new ItemCrystal(true));
+    public static final RegistryObject<Item> VOID_EMPOWERED_CRYSTAL = ITEMS.register("void_empowered_crystal", () -> new ItemCrystal(true));
+    public static final RegistryObject<Item> EMERADIC_EMPOWERED_CRYSTAL = ITEMS.register("emeradic_empowered_crystal", () -> new ItemCrystal(true));
+    public static final RegistryObject<Item> ENORI_EMPOWERED_CRYSTAL = ITEMS.register("enori_empowered_crystal", () -> new ItemCrystal(true));
 
     // BLACK QUARTZ
-    public static final RegistryObject<Item> BLACK_QUARTZ = ITEMS.register("black_quartz", ItemBase::new));
+    public static final RegistryObject<Item> BLACK_QUARTZ = ITEMS.register("black_quartz", ItemBase::new);
 
-    @Deprecated
-    public static final RegistryObject<Item> itemCrystal = ITEMS.register("", new ItemCrystal("item_crystal", false));
-    @Deprecated
-    public static final RegistryObject<Item> itemCrystalEmpowered = ITEMS.register("", new ItemCrystal("item_crystal_empowered", true));
 
-    public static final RegistryObject<Item> itemEngineerGogglesAdvanced = ITEMS.register("", new ItemEngineerGoggles("item_engineer_goggles_advanced", true));
-    public static final RegistryObject<Item> itemEngineerGoggles = ITEMS.register("", new ItemEngineerGoggles("item_engineer_goggles", false));
-    public static final RegistryObject<Item> itemLaserUpgradeRange = ITEMS.register("item_laser_upgrade_range", ItemLaserRelayUpgrade::new);
-    public static final RegistryObject<Item> itemLaserUpgradeInvisibility = ITEMS.register("item_laser_upgrade_invisibility", ItemLaserRelayUpgrade::new);
+    public static final RegistryObject<Item> itemEngineerGogglesAdvanced = ITEMS.register("item_engineer_goggles_advanced", () -> new ItemEngineerGoggles(true));
+    public static final RegistryObject<Item> itemEngineerGoggles = ITEMS.register("item_engineer_goggles", () -> new ItemEngineerGoggles(false));
+    public static final RegistryObject<Item> itemLaserUpgradeRange = ITEMS.register("item_laser_upgrade_range", ItemBase::new);
+    public static final RegistryObject<Item> itemLaserUpgradeInvisibility = ITEMS.register("item_laser_upgrade_invisibility", ItemBase::new);
     public static final RegistryObject<Item> itemFillingWand = ITEMS.register("item_filling_wand", ItemFillingWand::new);
-    public static final RegistryObject<Item> itemBag = ITEMS.register("", new ItemBag("item_bag", false));
-    public static final RegistryObject<Item> itemVoidBag = ITEMS.register("", new ItemBag("item_void_bag", true));
+    public static final RegistryObject<Item> itemBag = ITEMS.register("item_bag", () -> new ItemBag(false));
+    public static final RegistryObject<Item> itemVoidBag = ITEMS.register("item_void_bag", () -> new ItemBag(true));
     public static final RegistryObject<Item> itemWorm = ITEMS.register("item_worm", ItemWorm::new);
     public static final RegistryObject<Item> itemPlayerProbe = ITEMS.register("item_player_probe", ItemPlayerProbe::new);
     public static final RegistryObject<Item> itemFilter = ITEMS.register("item_filter", ItemFilter::new);
     public static final RegistryObject<Item> itemWaterBowl = ITEMS.register("item_water_bowl", ItemWaterBowl::new);
     public static final RegistryObject<Item> itemSpawnerChanger = ITEMS.register("item_spawner_changer", ItemSpawnerChanger::new);
-    public static final RegistryObject<Item> itemCrateKeeper = ITEMS.register("item_crate_keeper", ItemGeneric::new.setMaxStackSize(1));
-    public static final RegistryObject<Item> itemColorLens = ITEMS.register("", new ItemLens("item_color_lens", ActuallyAdditionsAPI.lensColor));
-    public static final RegistryObject<Item> itemExplosionLens = ITEMS.register("", new ItemLens("item_explosion_lens", ActuallyAdditionsAPI.lensDetonation));
-    public static final RegistryObject<Item> itemDamageLens = ITEMS.register("", new ItemLens("item_damage_lens", ActuallyAdditionsAPI.lensDeath));
-    public static final RegistryObject<Item> itemMoreDamageLens = ITEMS.register("", new ItemLens("item_more_damage_lens", ActuallyAdditionsAPI.lensEvenMoarDeath));
-    public static final RegistryObject<Item> itemDisenchantingLens = ITEMS.register("", new ItemLens("item_disenchanting_lens", ActuallyAdditionsAPI.lensDisenchanting));
-    public static final RegistryObject<Item> itemMiningLens = ITEMS.register("", new ItemLens("item_mining_lens", ActuallyAdditionsAPI.lensMining));
+    public static final RegistryObject<Item> itemCrateKeeper = ITEMS.register("item_crate_keeper", () -> new ItemGeneric(defaultProps().maxStackSize(1)));
+    public static final RegistryObject<Item> itemColorLens = ITEMS.register("item_color_lens", () -> new ItemLens(ActuallyAdditionsAPI.lensColor));
+    public static final RegistryObject<Item> itemExplosionLens = ITEMS.register("item_explosion_lens", () -> new ItemLens(ActuallyAdditionsAPI.lensDetonation));
+    public static final RegistryObject<Item> itemDamageLens = ITEMS.register("item_damage_lens", () -> new ItemLens(ActuallyAdditionsAPI.lensDeath));
+    public static final RegistryObject<Item> itemMoreDamageLens = ITEMS.register("item_more_damage_lens", () -> new ItemLens(ActuallyAdditionsAPI.lensEvenMoarDeath));
+    public static final RegistryObject<Item> itemDisenchantingLens = ITEMS.register("item_disenchanting_lens", () -> new ItemLens(ActuallyAdditionsAPI.lensDisenchanting));
+    public static final RegistryObject<Item> itemMiningLens = ITEMS.register("item_mining_lens", () -> new ItemLens(ActuallyAdditionsAPI.lensMining));
     public static final RegistryObject<Item> itemLaserWrench = ITEMS.register("item_laser_wrench", ItemLaserWrench::new);
-    public static final RegistryObject<Item> itemChestToCrateUpgrade = ITEMS.register("", new ItemChestToCrateUpgrade("item_chest_to_crate_upgrade", TileEntityChest.class, InitBlocks.blockGiantChest.getDefaultState()));
-    public static final RegistryObject<Item> itemSmallToMediumCrateUpgrade = ITEMS.register("", new ItemChestToCrateUpgrade("item_small_to_medium_crate_upgrade", TileEntityGiantChest.class, InitBlocks.blockGiantChestMedium.getDefaultState()));
-    public static final RegistryObject<Item> itemMediumToLargeCrateUpgrade = ITEMS.register("", new ItemChestToCrateUpgrade("item_medium_to_large_crate_upgrade", TileEntityGiantChestMedium.class, InitBlocks.blockGiantChestLarge.getDefaultState()));
+    //    public static final RegistryObject<Item> itemChestToCrateUpgrade = ITEMS.register("", new ItemChestToCrateUpgrade("item_chest_to_crate_upgrade", TileEntityChest.class, InitBlocks.blockGiantChest.getDefaultState()));
+    //    public static final RegistryObject<Item> itemSmallToMediumCrateUpgrade = ITEMS.register("", new ItemChestToCrateUpgrade("item_small_to_medium_crate_upgrade", TileEntityGiantChest.class, InitBlocks.blockGiantChestMedium.getDefaultState()));
+    //    public static final RegistryObject<Item> itemMediumToLargeCrateUpgrade = ITEMS.register("", new ItemChestToCrateUpgrade("item_medium_to_large_crate_upgrade", TileEntityGiantChestMedium.class, InitBlocks.blockGiantChestLarge.getDefaultState()));
     public static final RegistryObject<Item> itemBooklet = ITEMS.register("item_booklet", ItemBooklet::new);
     public static final RegistryObject<Item> itemGrowthRing = ITEMS.register("item_growth_ring", ItemGrowthRing::new);
     public static final RegistryObject<Item> itemMagnetRing = ITEMS.register("item_suction_ring", ItemMagnetRing::new);

@@ -50,7 +50,7 @@ public class RenderLaserRelay extends TileEntityRenderer<TileEntityLaserRelay> {
 
             ItemStack upgrade = relay.inv.getStackInSlot(0);
             if (StackUtil.isValid(upgrade)) {
-                if (upgrade.getItem() == InitItems.itemLaserUpgradeInvisibility) {
+                if (upgrade.getItem() == InitItems.itemLaserUpgradeInvisibility.get()) {
                     hasInvis = true;
                 }
 
@@ -83,7 +83,7 @@ public class RenderLaserRelay extends TileEntityRenderer<TileEntityLaserRelay> {
                         TileEntity secondTile = tile.getWorld().getTileEntity(second);
                         if (secondTile instanceof TileEntityLaserRelay) {
                             ItemStack secondUpgrade = ((TileEntityLaserRelay) secondTile).inv.getStackInSlot(0);
-                            boolean otherInvis = StackUtil.isValid(secondUpgrade) && secondUpgrade.getItem() == InitItems.itemLaserUpgradeInvisibility;
+                            boolean otherInvis = StackUtil.isValid(secondUpgrade) && secondUpgrade.getItem() == InitItems.itemLaserUpgradeInvisibility.get();
 
                             if (hasGoggles || !hasInvis || !otherInvis) {
                                 float[] color = hasInvis && otherInvis

@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.proxy;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.Item;
 
 import java.util.ArrayList;
@@ -82,7 +82,7 @@ public class ClientProxy {
     //    }
 
     @Deprecated
-    public PlayerEntity getCurrentPlayer() {
+    public static ClientPlayerEntity getCurrentPlayer() {
         return Minecraft.getInstance().player;
     }
 }

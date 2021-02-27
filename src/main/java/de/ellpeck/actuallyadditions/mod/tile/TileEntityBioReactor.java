@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -184,6 +185,6 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements INa
     @Nullable
     @Override
     public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new;
+        return new ContainerBioReactor(windowId, playerInventory, this);
     }
 }

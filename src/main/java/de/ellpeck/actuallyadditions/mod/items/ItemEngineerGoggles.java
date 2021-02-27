@@ -10,25 +10,25 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.List;
-import java.util.Set;
-
 import de.ellpeck.actuallyadditions.api.misc.IGoggles;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemArmorAA;
-import de.ellpeck.actuallyadditions.mod.material.InitArmorMaterials;
+import de.ellpeck.actuallyadditions.mod.material.ArmorMaterials;
+import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.List;
+import java.util.Set;
 
 public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
 
@@ -36,10 +36,9 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
 
     private final boolean displayMobs;
 
-    public ItemEngineerGoggles(String name, boolean displayMobs) {
-        super(name, InitArmorMaterials.armorMaterialGoggles, 0, StackUtil.getEmpty());
+    public ItemEngineerGoggles(boolean displayMobs) {
+        super(ArmorMaterials.GOGGLES, EquipmentSlotType.HEAD, InitItems.defaultProps().setNoRepair().maxDamage(0));
         this.displayMobs = displayMobs;
-        this.setMaxDamage(0);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -51,13 +50,13 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public void onClientTick(ClientTickEvent event) {
-        PlayerEntity player = ActuallyAdditions.PROXY.getCurrentPlayer();
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null && isWearing(player)) {
             ItemStack face = player.inventory.armorInventory.get(3);
             if (((IGoggles) face.getItem()).displaySpectralMobs()) {
                 double range = 8;
-                AxisAlignedBB aabb = new AxisAlignedBB(player.posX - range, player.posY - range, player.posZ - range, player.posX + range, player.posY + range, player.posZ + range);
+                AxisAlignedBB aabb = new AxisAlignedBB(player.getPosX() - range, player.getPosY() - range, player.getPosZ() - range, player.getPosX() + range, player.getPosY() + range, player.getPosZ() + range);
                 List<Entity> entities = player.world.getEntitiesWithinAABB(Entity.class, aabb);
                 if (entities != null && !entities.isEmpty()) {
                     this.cachedGlowingEntities.addAll(entities);
@@ -65,7 +64,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
 
                 if (!this.cachedGlowingEntities.isEmpty()) {
                     for (Entity entity : this.cachedGlowingEntities) {
-                        if (entity.isDead || entity.getDistanceSq(player.posX, player.posY, player.posZ) > range * range) {
+                        if (!entity.isAlive() || entity.getDistanceSq(player.getPosX(), player.getPosY(), player.getPosZ()) > range * range) {
                             entity.setGlowing(false);
 
                             this.cachedGlowingEntities.remove(entity);
@@ -81,17 +80,12 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
 
         if (!this.cachedGlowingEntities.isEmpty()) {
             for (Entity entity : this.cachedGlowingEntities) {
-                if (!entity.isDead) {
+                if (entity.isAlive()) {
                     entity.setGlowing(false);
                 }
             }
             this.cachedGlowingEntities.clear();
         }
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
     }
 
     @Override

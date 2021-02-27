@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
@@ -28,7 +28,7 @@ public class RenderWorm extends Render<EntityWorm> {
     private static ItemStack stack = ItemStack.EMPTY;
 
     public static void fixItemStack() {
-        stack = new ItemStack(InitItems.itemWorm);
+        stack = new ItemStack(InitItems.itemWorm.get());
     }
 
     protected RenderWorm(RenderManager renderManager) {

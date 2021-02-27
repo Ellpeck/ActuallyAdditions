@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -37,7 +38,7 @@ public final class ActuallyAdditionsAPI {
 
     public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<>();
-    public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<>();
+    //    public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<>();
     public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<>();
     public static final List<EmpowererRecipe> EMPOWERER_RECIPES = new ArrayList<>();
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<>();
@@ -46,7 +47,7 @@ public final class ActuallyAdditionsAPI {
      */
     public static final List<IFarmerBehavior> FARMER_BEHAVIORS = new ArrayList<>();
     public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<>();
-    public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<>();
+    //    public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<>();
     public static final List<OilGenRecipe> OIL_GENERATOR_RECIPES = new ArrayList<>();
     public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<>();
     //This is added to automatically, you don't need to add anything to this list
@@ -200,7 +201,7 @@ public final class ActuallyAdditionsAPI {
      */
     @Deprecated
     public static void addCompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay) {
-        COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
+        //        COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
     }
 
     /**
@@ -212,7 +213,7 @@ public final class ActuallyAdditionsAPI {
      * @param outputDisplay The state to display when there is output in the compost
      */
     public static void addCompostRecipe(Ingredient input, BlockState inputDisplay, ItemStack output, BlockState outputDisplay) {
-        COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
+        //        COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
     }
 
     /**
@@ -234,7 +235,7 @@ public final class ActuallyAdditionsAPI {
      * @param maxAmount The maximum stacksize of the returned stack
      */
     public static void addTreasureChestLoot(ItemStack stack, int chance, int minAmount, int maxAmount) {
-        TREASURE_CHEST_LOOT.add(new TreasureChestLoot(stack, chance, minAmount, maxAmount));
+        //        TREASURE_CHEST_LOOT.add(new TreasureChestLoot(stack, chance, minAmount, maxAmount));
     }
 
     @Deprecated

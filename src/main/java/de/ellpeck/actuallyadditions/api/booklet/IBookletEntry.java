@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.api.booklet;
 
-import java.util.List;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import java.util.List;
 
 public interface IBookletEntry {
 

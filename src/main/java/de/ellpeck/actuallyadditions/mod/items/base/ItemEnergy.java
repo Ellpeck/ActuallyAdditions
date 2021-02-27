@@ -10,25 +10,30 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.resources.I18n;
+import de.ellpeck.actuallyadditions.mod.util.Help;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.text.NumberFormat;
 import java.util.List;
@@ -38,29 +43,32 @@ public abstract class ItemEnergy extends ItemBase {
     private final int maxPower;
     private final int transfer;
 
-    public ItemEnergy(int maxPower, int transfer, String name) {
-        super(name);
+    public ItemEnergy(int maxPower, int transfer) {
+        super(InitItems.defaultProps().maxStackSize(1));
         this.maxPower = maxPower;
         this.transfer = transfer;
-
-        this.setHasSubtypes(true);
-        this.setMaxStackSize(1);
     }
 
+    // TODO: [port] make sure this is right
+    @Nullable
     @Override
-    public boolean getShareTag() {
-        return true;
+    public CompoundNBT getShareTag(ItemStack stack) {
+        return new CompoundNBT();
     }
 
+    //    @Override
+    //    public boolean getShareTag() {
+    //        return true;
+    //    }
+
+
     @Override
-    public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
-        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-            if (storage != null) {
-                NumberFormat format = NumberFormat.getInstance();
-                tooltip.add(String.format("%s/%s %s", format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored()), I18n.format("actuallyadditions.cflong")));
-            }
-        }
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        stack.getCapability(CapabilityEnergy.ENERGY, null).ifPresent(storage -> {
+            NumberFormat format = NumberFormat.getInstance();
+            tooltip.add(Help.Trans("misc", "power_long", format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored())));
+        });
     }
 
     @Override
@@ -70,21 +78,15 @@ public abstract class ItemEnergy extends ItemBase {
     }
 
     @Override
-    public void getSubItems(CreativeTabs tabs, NonNullList<ItemStack> list) {
-        if (this.isInCreativeTab(tabs)) {
-            ItemStack stackFull = new ItemStack(this);
-            if (stackFull.hasCapability(CapabilityEnergy.ENERGY, null)) {
-                IEnergyStorage storage = stackFull.getCapability(CapabilityEnergy.ENERGY, null);
-                if (storage != null) {
-                    this.setEnergy(stackFull, storage.getMaxEnergyStored());
-                    list.add(stackFull);
-                }
-            }
-
-            ItemStack stackEmpty = new ItemStack(this);
-            this.setEnergy(stackEmpty, 0);
-            list.add(stackEmpty);
+    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+        super.fillItemGroup(group, items);
+        if (!this.isInGroup(group)) {
+            return;
         }
+
+        ItemStack charged = new ItemStack(this);
+        charged.getOrCreateTag().putDouble("Energy", this.getMaxEnergyStored(charged));
+        items.add(charged);
     }
 
     @Override
@@ -94,94 +96,79 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
-        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-            if (storage != null) {
-                double maxAmount = storage.getMaxEnergyStored();
-                double energyDif = maxAmount - storage.getEnergyStored();
+        return stack.getCapability(CapabilityEnergy.ENERGY, null)
+            .map(cap -> {
+                double maxAmount = cap.getMaxEnergyStored();
+                double energyDif = maxAmount - cap.getEnergyStored();
                 return energyDif / maxAmount;
-            }
-        }
-        return super.getDurabilityForDisplay(stack);
+            })
+            .orElse(super.getDurabilityForDisplay(stack));
     }
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
-        PlayerEntity player = ActuallyAdditions.PROXY.getCurrentPlayer();
+        PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null && player.world != null) {
-            float[] color = AssetUtil.getWheelColor(player.world.getTotalWorldTime() % 256);
+            float[] color = AssetUtil.getWheelColor(player.world.getGameTime() % 256);
             return MathHelper.rgb(color[0] / 255F, color[1] / 255F, color[2] / 255F);
         }
         return super.getRGBDurabilityForDisplay(stack);
     }
 
     public void setEnergy(ItemStack stack, int energy) {
-        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-            if (storage instanceof CustomEnergyStorage) {
-                ((CustomEnergyStorage) storage).setEnergyStored(energy);
+        stack.getCapability(CapabilityEnergy.ENERGY, null).ifPresent(cap -> {
+            if (cap instanceof CustomEnergyStorage) {
+                ((CustomEnergyStorage) cap).setEnergyStored(energy);
             }
-        }
+        });
     }
 
+    @Deprecated
     public int receiveEnergyInternal(ItemStack stack, int maxReceive, boolean simulate) {
-        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-            if (storage instanceof CustomEnergyStorage) {
-                ((CustomEnergyStorage) storage).receiveEnergyInternal(maxReceive, simulate);
-            }
-        }
+        //        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
+        //            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+        //            if (storage instanceof CustomEnergyStorage) {
+        //                ((CustomEnergyStorage) storage).receiveEnergyInternal(maxReceive, simulate);
+        //            }
+        //        }
         return 0;
     }
 
     public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate) {
-        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-            if (storage instanceof CustomEnergyStorage) {
-                ((CustomEnergyStorage) storage).extractEnergyInternal(maxExtract, simulate);
-            }
-        }
-        return 0;
+        return stack.getCapability(CapabilityEnergy.ENERGY)
+            .map(cap -> cap instanceof CustomEnergyStorage
+                ? ((CustomEnergyStorage) cap).extractEnergyInternal(maxExtract, simulate)
+                : 0)
+            .orElse(0);
     }
 
+    @Deprecated
     public int receiveEnergy(ItemStack stack, int maxReceive, boolean simulate) {
-        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-            if (storage != null) {
-                return storage.receiveEnergy(maxReceive, simulate);
-            }
-        }
+        //        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
+        //            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
+        //            if (storage != null) {
+        //                return storage.receiveEnergy(maxReceive, simulate);
+        //            }
+        //        }
         return 0;
     }
 
     public int extractEnergy(ItemStack stack, int maxExtract, boolean simulate) {
-        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-            if (storage != null) {
-                return storage.extractEnergy(maxExtract, simulate);
-            }
-        }
-        return 0;
+        return stack.getCapability(CapabilityEnergy.ENERGY)
+            .map(cap -> cap.extractEnergy(maxExtract, simulate))
+            .orElse(0);
     }
 
     public int getEnergyStored(ItemStack stack) {
-        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-            if (storage != null) {
-                return storage.getEnergyStored();
-            }
-        }
-        return 0;
+        return stack.getCapability(CapabilityEnergy.ENERGY, null)
+            .map(IEnergyStorage::getEnergyStored)
+            .orElse(0);
     }
 
     public int getMaxEnergyStored(ItemStack stack) {
-        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-            if (storage != null) {
-                return storage.getMaxEnergyStored();
-            }
-        }
-        return 0;
+        return stack.getCapability(CapabilityEnergy.ENERGY, null)
+            .map(IEnergyStorage::getMaxEnergyStored)
+            .orElse(0);
     }
 
     @Override
@@ -192,41 +179,30 @@ public abstract class ItemEnergy extends ItemBase {
     private static class EnergyCapabilityProvider implements ICapabilityProvider {
 
         public final CustomEnergyStorage storage;
+        private final LazyOptional<CustomEnergyStorage> energyCapability;
 
         public EnergyCapabilityProvider(ItemStack stack, ItemEnergy item) {
             this.storage = new CustomEnergyStorage(item.maxPower, item.transfer, item.transfer) {
                 @Override
                 public int getEnergyStored() {
-                    if (stack.hasTagCompound()) {
-                        return stack.getTagCompound().getInteger("Energy");
-                    } else {
-                        return 0;
-                    }
+                    return stack.getOrCreateTag().getInt("Energy");
                 }
 
                 @Override
                 public void setEnergyStored(int energy) {
-                    if (!stack.hasTagCompound()) {
-                        stack.setTagCompound(new CompoundNBT());
-                    }
-
-                    stack.getTagCompound().setInteger("Energy", energy);
+                    stack.getOrCreateTag().putInt("Energy", energy);
                 }
             };
+            this.energyCapability = LazyOptional.of(() -> this.storage);
         }
 
+        @Nonnull
         @Override
-        public boolean hasCapability(Capability<?> capability, Direction facing) {
-            return this.getCapability(capability, facing) != null;
-        }
-
-        @Nullable
-        @Override
-        public <T> T getCapability(Capability<T> capability, Direction facing) {
-            if (capability == CapabilityEnergy.ENERGY) {
-                return CapabilityEnergy.ENERGY.cast(this.storage);
+        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+            if (cap == CapabilityEnergy.ENERGY) {
+                return this.energyCapability.cast();
             }
-            return null;
+            return LazyOptional.empty();
         }
     }
 }

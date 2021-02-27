@@ -6,6 +6,7 @@ tooltip.actuallyadditions.disabled=Disabled Object
 actuallyadditions.cft=CF/t
 actuallyadditions.cf=CF
 actuallyadditions.cflong=Crystal Flux
+misc.actuallyadditions.power_long=%s/%s Crystal Flux
 
 #Fluids
 fluid.actuallyadditions.refinedcanolaoil=Refined Canola Oil
@@ -586,7 +587,7 @@ tooltip.actuallyadditions.battery.changeMode=Sneak-right-click to toggle.
 tooltip.actuallyadditions.previouslyDoubleFurnace=Previously "Double Furnace"
 tooltip.actuallyadditions.previouslyBag=Previously "Bag"
 tooltip.actuallyadditions.previouslyVoidBag=Previously "Void Bag"
-tooltip.actuallyadditions.item_filling_wand.selectedBlock=Selected Block
+tooltip.actuallyadditions.item_filling_wand.selectedBlock=Selected Block:
 tooltip.actuallyadditions.item_filling_wand.selectedBlock.none=None
 tooltip.actuallyadditions.coffeeCup.noEffect=No Effects
 
