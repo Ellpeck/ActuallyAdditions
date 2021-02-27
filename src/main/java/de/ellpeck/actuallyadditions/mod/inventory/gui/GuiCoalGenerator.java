@@ -15,9 +15,8 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
@@ -27,7 +26,7 @@ public class GuiCoalGenerator extends GuiWtfMojang {
     private final TileEntityCoalGenerator generator;
     private EnergyDisplay energy;
 
-    public GuiCoalGenerator(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiCoalGenerator(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerCoalGenerator(inventory, tile));
         this.generator = (TileEntityCoalGenerator) tile;
         this.xSize = 176;

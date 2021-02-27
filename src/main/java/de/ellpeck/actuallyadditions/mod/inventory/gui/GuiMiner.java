@@ -18,9 +18,8 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
@@ -29,7 +28,7 @@ public class GuiMiner extends GuiWtfMojang {
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityMiner miner;
 
-    public GuiMiner(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiMiner(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerMiner(inventory, tile));
         this.miner = (TileEntityMiner) tile;
         this.xSize = 176;
@@ -62,7 +61,9 @@ public class GuiMiner extends GuiWtfMojang {
         this.mc.getTextureManager().bindTexture(RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        String mining = this.miner.onlyMineOres ? "Only Mining Ores" : "Mining Everything";
+        String mining = this.miner.onlyMineOres
+            ? "Only Mining Ores"
+            : "Mining Everything";
         this.fontRenderer.drawString(mining, this.guiLeft + this.xSize / 2 - this.fontRenderer.getStringWidth(mining) / 2, this.guiTop + 8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
     }
 

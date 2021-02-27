@@ -15,9 +15,8 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
@@ -28,7 +27,7 @@ public class GuiCanolaPress extends GuiWtfMojang {
     private EnergyDisplay energy;
     private FluidDisplay fluid;
 
-    public GuiCanolaPress(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiCanolaPress(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerCanolaPress(inventory, tile));
         this.press = (TileEntityCanolaPress) tile;
         this.xSize = 176;

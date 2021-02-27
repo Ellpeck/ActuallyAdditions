@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import java.util.Set;
-
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
@@ -20,11 +18,13 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
+import net.minecraft.item.ToolItem;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ItemToolAA extends ItemTool implements IDisableableItem {
+import java.util.Set;
+
+public class ItemToolAA extends ToolItem implements IDisableableItem {
 
     private final String name;
     private final IRarity rarity;
@@ -44,7 +44,9 @@ public class ItemToolAA extends ItemTool implements IDisableableItem {
         this.name = unlocalizedName;
         this.rarity = rarity;
         this.disabled = ConfigurationHandler.config.getBoolean("Disable: " + StringUtil.badTranslate(unlocalizedName), "Tool Control", false, "This will disable the " + StringUtil.badTranslate(unlocalizedName) + ". It will not be registered.");
-        if (!this.disabled) this.register();
+        if (!this.disabled) {
+            this.register();
+        }
     }
 
     private void register() {
@@ -77,7 +79,9 @@ public class ItemToolAA extends ItemTool implements IDisableableItem {
         } else if (this.repairOredict != null) {
             int[] idsStack = OreDictionary.getOreIDs(stack);
             for (int id : idsStack) {
-                if (OreDictionary.getOreName(id).equals(this.repairOredict)) { return true; }
+                if (OreDictionary.getOreName(id).equals(this.repairOredict)) {
+                    return true;
+                }
             }
         }
         return false;

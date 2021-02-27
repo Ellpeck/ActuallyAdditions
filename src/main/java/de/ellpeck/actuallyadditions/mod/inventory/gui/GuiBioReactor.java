@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiBioReactor extends GuiWtfMojang {
@@ -25,7 +25,7 @@ public class GuiBioReactor extends GuiWtfMojang {
     private final TileEntityBioReactor tile;
     private EnergyDisplay energy;
 
-    public GuiBioReactor(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiBioReactor(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerBioReactor(inventory, tile));
         this.tile = (TileEntityBioReactor) tile;
         this.xSize = 176;

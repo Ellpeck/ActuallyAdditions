@@ -19,7 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
@@ -29,7 +29,7 @@ public class GuiXPSolidifier extends GuiWtfMojang {
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_xp_solidifier");
     private final TileEntityXPSolidifier solidifier;
 
-    public GuiXPSolidifier(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiXPSolidifier(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerXPSolidifier(inventory, tile));
         this.solidifier = (TileEntityXPSolidifier) tile;
         this.xSize = 176;

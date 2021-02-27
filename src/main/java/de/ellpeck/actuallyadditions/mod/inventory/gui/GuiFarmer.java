@@ -15,9 +15,8 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFarmer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
@@ -28,7 +27,7 @@ public class GuiFarmer extends GuiWtfMojang {
 
     private EnergyDisplay energy;
 
-    public GuiFarmer(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiFarmer(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerFarmer(inventory, tile));
         this.farmer = (TileEntityFarmer) tile;
         this.xSize = 176;

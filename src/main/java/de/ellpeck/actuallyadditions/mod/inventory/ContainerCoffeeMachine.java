@@ -19,8 +19,8 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -29,7 +29,7 @@ public class ContainerCoffeeMachine extends Container {
 
     private final TileEntityCoffeeMachine machine;
 
-    public ContainerCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile) {
+    public ContainerCoffeeMachine(PlayerInventory inventory, TileEntityBase tile) {
         this.machine = (TileEntityCoffeeMachine) tile;
 
         this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.inv, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, 37, 6));

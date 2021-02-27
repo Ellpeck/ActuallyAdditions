@@ -17,29 +17,27 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnergizer;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IRarity;
 
-public class ItemArmorAA extends ItemArmor implements IDisableableItem {
+public class ItemArmorAA extends ArmorItem implements IDisableableItem {
 
     private final ItemStack repairItem;
     private final String name;
     private final IRarity rarity;
     private final boolean disabled;
 
-    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem) {
-        this(name, material, type, repairItem, EnumRarity.RARE);
-    }
-
-    public ItemArmorAA(String name, ArmorMaterial material, int type, ItemStack repairItem, IRarity rarity) {
+    public ItemArmorAA(IArmorMaterial material, int type) {
         super(material, 0, ContainerEnergizer.VALID_EQUIPMENT_SLOTS[type]);
-        this.repairItem = repairItem;
-        this.name = name;
-        this.rarity = rarity;
-        this.disabled = ConfigurationHandler.config.getBoolean("Disable: " + StringUtil.badTranslate(name), "Tool Control", false, "This will disable the " + StringUtil.badTranslate(name) + ". It will not be registered.");
-        if (!this.disabled) this.register();
+        this.repairItem = this.repairItem;
+        this.name = this.name;
+        this.rarity = this.rarity;
+        this.disabled = ConfigurationHandler.config.getBoolean("Disable: " + StringUtil.badTranslate(this.name), "Tool Control", false, "This will disable the " + StringUtil.badTranslate(this.name) + ". It will not be registered.");
+        if (!this.disabled) {
+            this.register();
+        }
     }
 
     private void register() {

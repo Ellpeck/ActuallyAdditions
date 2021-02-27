@@ -10,19 +10,22 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Container;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.util.text.StringTextComponent;
 
-public abstract class GuiWtfMojang extends GuiContainer {
+public abstract class GuiWtfMojang<T extends Container> extends ContainerScreen<T> {
 
-    public GuiWtfMojang(Container inventorySlotsIn) {
-        super(inventorySlotsIn);
+    public GuiWtfMojang(T inventorySlotsIn, PlayerInventory inventory) {
+        super(inventorySlotsIn, inventory, StringTextComponent.EMPTY);
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.drawDefaultBackground();
-        super.drawScreen(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 }

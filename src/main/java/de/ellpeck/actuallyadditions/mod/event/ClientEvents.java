@@ -34,7 +34,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -46,10 +45,6 @@ public class ClientEvents {
     private static final ITextComponent ADVANCED_INFO_HEADER_PRE = new StringTextComponent("  -").mergeStyle(TextFormatting.GRAY);
 
     private static EnergyDisplay energyDisplay;
-
-    public ClientEvents() {
-        MinecraftForge.EVENT_BUS.register(this);
-    }
 
     // TODO: [port] the fuck?
     @SubscribeEvent
@@ -179,7 +174,7 @@ public class ClientEvents {
 
             if (StackUtil.isValid(stack)) {
                 if (stack.getItem() instanceof IHudDisplay) {
-                    ((IHudDisplay) stack.getItem()).displayHud(minecraft, player, stack, posHit, event.getWindow());
+                    ((IHudDisplay) stack.getItem()).displayHud(event.getMatrixStack(), minecraft, player, stack, posHit, event.getWindow());
                 }
             }
 
@@ -189,7 +184,7 @@ public class ClientEvents {
                 TileEntity tileHit = minecraft.world.getTileEntity(rayCast.getPos());
 
                 if (blockHit instanceof IHudDisplay) {
-                    ((IHudDisplay) blockHit).displayHud(minecraft, player, stack, posHit, event.getWindow());
+                    ((IHudDisplay) blockHit).displayHud(event.getMatrixStack(), minecraft, player, stack, posHit, event.getWindow());
                 }
 
                 if (tileHit instanceof TileEntityBase) {

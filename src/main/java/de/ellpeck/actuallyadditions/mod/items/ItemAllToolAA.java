@@ -16,12 +16,14 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EnumActionResult;
@@ -29,7 +31,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IRarity;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.util.HashSet;
@@ -39,17 +41,9 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem {
 
     public final int color;
 
-    public ItemAllToolAA(ToolMaterial toolMat, String repairItem, String unlocalizedName, IRarity rarity, int color) {
-        super(4.0F, -2F, toolMat, repairItem, unlocalizedName, rarity, new HashSet<>());
-        this.color = color;
-
-        this.setMaxDamage(toolMat.getMaxUses() * 4);
-        this.setHarvestLevels(toolMat.getHarvestLevel());
-    }
-
-    public ItemAllToolAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, IRarity rarity, int color) {
-        super(4.0F, -2F, toolMat, repairItem, unlocalizedName, rarity, new HashSet<>());
-        this.color = color;
+    public ItemAllToolAA(IItemTier toolMat) {
+        super(4.0F, -2F, toolMat, this.repairItem, unlocalizedName, this.rarity, new HashSet<>());
+        this.color = this.color;
 
         this.setMaxDamage(toolMat.getMaxUses() * 4);
         this.setHarvestLevels(toolMat.getHarvestLevel());

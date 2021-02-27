@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -25,7 +25,7 @@ public class ContainerCoalGenerator extends Container {
 
     private final TileEntityCoalGenerator generator;
 
-    public ContainerCoalGenerator(InventoryPlayer inventory, TileEntityBase tile) {
+    public ContainerCoalGenerator(PlayerInventory inventory, TileEntityBase tile) {
         this.generator = (TileEntityCoalGenerator) tile;
 
         this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.generator.inv, 0, 87, 43));
@@ -57,14 +57,22 @@ public class ContainerCoalGenerator extends Container {
             if (slot >= inventoryStart) {
                 //Shift from Inventory
                 if (TileEntityFurnace.getItemBurnTime(newStack) > 0) {
-                    if (!this.mergeItemStack(newStack, 0, 1, false)) { return StackUtil.getEmpty(); }
+                    if (!this.mergeItemStack(newStack, 0, 1, false)) {
+                        return StackUtil.getEmpty();
+                    }
                 }
                 //
 
                 else if (slot >= inventoryStart && slot <= inventoryEnd) {
-                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
-                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) { return StackUtil.getEmpty(); }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
+                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                        return StackUtil.getEmpty();
+                    }
+                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                    return StackUtil.getEmpty();
+                }
+            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+                return StackUtil.getEmpty();
+            }
 
             if (!StackUtil.isValid(newStack)) {
                 theSlot.putStack(StackUtil.getEmpty());
@@ -72,7 +80,9 @@ public class ContainerCoalGenerator extends Container {
                 theSlot.onSlotChanged();
             }
 
-            if (newStack.getCount() == currentStack.getCount()) { return StackUtil.getEmpty(); }
+            if (newStack.getCount() == currentStack.getCount()) {
+                return StackUtil.getEmpty();
+            }
             theSlot.onTake(player, newStack);
 
             return currentStack;

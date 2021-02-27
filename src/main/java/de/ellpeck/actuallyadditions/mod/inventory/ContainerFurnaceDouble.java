@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -26,7 +26,7 @@ public class ContainerFurnaceDouble extends Container {
 
     private final TileEntityFurnaceDouble tileFurnace;
 
-    public ContainerFurnaceDouble(InventoryPlayer inventory, TileEntityBase tile) {
+    public ContainerFurnaceDouble(PlayerInventory inventory, TileEntityBase tile) {
         this.tileFurnace = (TileEntityFurnaceDouble) tile;
 
         this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileFurnace.inv, TileEntityFurnaceDouble.SLOT_INPUT_1, 51, 21));
@@ -59,7 +59,9 @@ public class ContainerFurnaceDouble extends Container {
 
             //Slots in Inventory to shift from
             if (slot == TileEntityFurnaceDouble.SLOT_OUTPUT_1 || slot == TileEntityFurnaceDouble.SLOT_OUTPUT_2) {
-                if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, true)) { return StackUtil.getEmpty(); }
+                if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, true)) {
+                    return StackUtil.getEmpty();
+                }
                 theSlot.onSlotChange(newStack, currentStack);
             }
             //Other Slots in Inventory excluded
@@ -67,15 +69,23 @@ public class ContainerFurnaceDouble extends Container {
                 //Shift from Inventory
                 if (StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(newStack))) {
                     if (!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1 + 1, false)) {
-                        if (!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2 + 1, false)) { return StackUtil.getEmpty(); }
+                        if (!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2 + 1, false)) {
+                            return StackUtil.getEmpty();
+                        }
                     }
                 }
                 //
 
                 else if (slot >= inventoryStart && slot <= inventoryEnd) {
-                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
-                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) { return StackUtil.getEmpty(); }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
+                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                        return StackUtil.getEmpty();
+                    }
+                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                    return StackUtil.getEmpty();
+                }
+            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+                return StackUtil.getEmpty();
+            }
 
             if (!StackUtil.isValid(newStack)) {
                 theSlot.putStack(StackUtil.getEmpty());
@@ -83,7 +93,9 @@ public class ContainerFurnaceDouble extends Container {
                 theSlot.onSlotChanged();
             }
 
-            if (newStack.getCount() == currentStack.getCount()) { return StackUtil.getEmpty(); }
+            if (newStack.getCount() == currentStack.getCount()) {
+                return StackUtil.getEmpty();
+            }
             theSlot.onTake(player, newStack);
 
             return currentStack;

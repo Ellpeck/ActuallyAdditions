@@ -15,9 +15,8 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidCollector;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
@@ -27,7 +26,7 @@ public class GuiFluidCollector extends GuiWtfMojang {
     private final TileEntityFluidCollector collector;
     private FluidDisplay fluid;
 
-    public GuiFluidCollector(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiFluidCollector(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerFluidCollector(inventory, tile));
         this.collector = (TileEntityFluidCollector) tile;
         this.xSize = 176;

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -67,8 +68,8 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, MainWindow resolution) {
-        TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
+    public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
+        TileEntity tile = minecraft.world.getTileEntity(rayCast.getBlockPos());
         if (tile != null) {
             if (tile instanceof TileEntityPlayerInterface) {
                 TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -244,13 +245,13 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, MainWindow resolution) {
-        if (posHit != null && posHit.getBlockPos() != null && minecraft.world != null) {
+    public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
+        if (rayCast != null && rayCast.getBlockPos() != null && minecraft.world != null) {
             boolean wearing = ItemEngineerGoggles.isWearing(player);
             if (wearing || StackUtil.isValid(stack)) {
                 boolean compass = stack.getItem() == ConfigValues.itemCompassConfigurator;
                 if (wearing || compass || stack.getItem() instanceof ItemLaserWrench) {
-                    TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
+                    TileEntity tile = minecraft.world.getTileEntity(rayCast.getBlockPos());
                     if (tile instanceof TileEntityLaserRelay) {
                         TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
 

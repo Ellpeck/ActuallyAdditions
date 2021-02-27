@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.io.IOException;
-
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGiantChest;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
@@ -21,10 +19,11 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChestMedium;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.io.IOException;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiGiantChest extends GuiWtfMojang {
@@ -34,7 +33,7 @@ public class GuiGiantChest extends GuiWtfMojang {
     private final TileEntityGiantChest chest;
     private final int page;
 
-    public GuiGiantChest(InventoryPlayer inventory, TileEntityBase tile, int page) {
+    public GuiGiantChest(PlayerInventory inventory, TileEntityBase tile, int page) {
         super(new ContainerGiantChest(inventory, tile, page));
         this.chest = (TileEntityGiantChest) tile;
         this.page = page;

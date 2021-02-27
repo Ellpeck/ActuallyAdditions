@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -26,7 +26,7 @@ public class ContainerGiantChest extends Container {
 
     public final TileEntityGiantChest tileChest;
 
-    public ContainerGiantChest(InventoryPlayer inventory, TileEntityBase tile, int page) {
+    public ContainerGiantChest(PlayerInventory inventory, TileEntityBase tile, int page) {
         this.tileChest = (TileEntityGiantChest) tile;
 
         for (int i = 0; i < 9; i++) {
@@ -64,10 +64,16 @@ public class ContainerGiantChest extends Container {
                 if (!this.mergeItemStack(newStack, 0, 117, false)) {
                     //
                     if (slot >= inventoryStart && slot <= inventoryEnd) {
-                        if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
-                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) { return StackUtil.getEmpty(); }
+                        if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                            return StackUtil.getEmpty();
+                        }
+                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                        return StackUtil.getEmpty();
+                    }
                 }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, true)) { return StackUtil.getEmpty(); }
+            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, true)) {
+                return StackUtil.getEmpty();
+            }
 
             if (!StackUtil.isValid(newStack)) {
                 theSlot.putStack(StackUtil.getEmpty());
@@ -75,7 +81,9 @@ public class ContainerGiantChest extends Container {
                 theSlot.onSlotChanged();
             }
 
-            if (newStack.getCount() == currentStack.getCount()) { return StackUtil.getEmpty(); }
+            if (newStack.getCount() == currentStack.getCount()) {
+                return StackUtil.getEmpty();
+            }
             theSlot.onTake(player, newStack);
 
             return currentStack;

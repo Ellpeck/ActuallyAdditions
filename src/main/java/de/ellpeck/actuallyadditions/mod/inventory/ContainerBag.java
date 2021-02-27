@@ -31,6 +31,7 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -44,24 +45,30 @@ public class ContainerBag extends Container implements IButtonReactor {
 
     public final FilterSettings filter = new FilterSettings(4, false, true, false, false, 0, -1000);
     private final ItemStackHandlerAA bagInventory;
-    private final InventoryPlayer inventory;
-    private final boolean isVoid;
+    private final PlayerInventory inventory;
+    public final boolean isVoid;
     public boolean autoInsert;
     private boolean oldAutoInsert;
     private final ItemStack sack;
-    
-    public ContainerBag(ItemStack sack, PlayerInventory inventory, boolean isVoid) {
+
+    public static ContainerBag fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerBag(windowId, inv, data.readItemStack(), data.readBoolean());
+    }
+
+    public ContainerBag(int windowId, PlayerInventory inventory, ItemStack sack, boolean isVoid) {
+        super(ActuallyContainers.BAG_CONTAINER.get(), windowId);
+
         this.inventory = inventory;
         this.bagInventory = new ItemStackHandlerAA(getSlotAmount(isVoid), (slot, stack, automation) -> !isBlacklisted(stack), ItemStackHandlerAA.REMOVE_TRUE);
         this.isVoid = isVoid;
         this.sack = sack;
 
         for (int i = 0; i < 4; i++) {
-            this.addSlotToContainer(new SlotFilter(this.filter, i, 155, 10 + i * 18));
+            this.addSlot(new SlotFilter(this.filter, i, 155, 10 + i * 18));
         }
 
         if (this.isVoid) {
-            this.addSlotToContainer(new SlotDeletion(this.bagInventory, 0, 64, 65) {
+            this.addSlot(new SlotDeletion(this.bagInventory, 0, 64, 65) {
                 @Override
                 public boolean isItemValid(ItemStack stack) {
                     return ContainerBag.this.filter.check(stack);
@@ -70,7 +77,7 @@ public class ContainerBag extends Container implements IButtonReactor {
         } else {
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 7; j++) {
-                    this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.bagInventory, j + i * 7, 10 + j * 18, 10 + i * 18) {
+                    this.addSlot(new SlotItemHandlerUnconditioned(this.bagInventory, j + i * 7, 10 + j * 18, 10 + i * 18) {
                         @Override
                         public boolean isItemValid(ItemStack stack) {
                             return !isBlacklisted(stack) && ContainerBag.this.filter.check(stack);
@@ -82,22 +89,22 @@ public class ContainerBag extends Container implements IButtonReactor {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 94 + i * 18));
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 94 + i * 18));
             }
         }
         for (int i = 0; i < 9; i++) {
             if (i == inventory.currentItem) {
-                this.addSlotToContainer(new SlotImmovable(inventory, i, 8 + i * 18, 152));
+                this.addSlot(new SlotImmovable(inventory, i, 8 + i * 18, 152));
             } else {
-                this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 152));
+                this.addSlot(new Slot(inventory, i, 8 + i * 18, 152));
             }
         }
 
         ItemStack stack = inventory.getCurrentItem();
         if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBag) {
             ItemDrill.loadSlotsFromNBT(this.bagInventory, inventory.getCurrentItem());
-            if (stack.hasTagCompound()) {
-                CompoundNBT compound = stack.getTagCompound();
+            if (stack.hasTag()) {
+                CompoundNBT compound = stack.getOrCreateTag();
                 this.filter.readFromNBT(compound, "Filter");
                 this.autoInsert = compound.getBoolean("AutoInsert");
             }
@@ -219,7 +226,7 @@ public class ContainerBag extends Container implements IButtonReactor {
         ItemStack stack = this.inventory.getCurrentItem();
         if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBag) {
             ItemDrill.writeSlotsToNBT(this.bagInventory, this.inventory.getCurrentItem());
-            CompoundNBT compound = stack.getTagCompound();
+            CompoundNBT compound = stack.getOrCreateTag();
             this.filter.writeToNBT(compound, "Filter");
             compound.putBoolean("AutoInsert", this.autoInsert);
         }
@@ -244,6 +251,7 @@ public class ContainerBag extends Container implements IButtonReactor {
 
     private static boolean runOnce = false;
 
+    // TODO: [port] FIX THIS
     public static boolean isBlacklisted(ItemStack stack) {
         if (!runOnce) {
             runOnce = true;
@@ -261,6 +269,6 @@ public class ContainerBag extends Container implements IButtonReactor {
                 }
             }
         }
-        return BLACKLIST.contains(Pair.of(stack.getItem(), stack.getMetadata()));
+        return BLACKLIST.contains(Pair.of(stack.getItem(), 0));
     }
 }

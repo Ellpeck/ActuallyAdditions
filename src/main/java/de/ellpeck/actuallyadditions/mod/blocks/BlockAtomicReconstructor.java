@@ -10,12 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.Help;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
@@ -40,6 +41,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -116,19 +118,23 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, MainWindow resolution) {
-        TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
+    public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
+        if (!(rayCast instanceof BlockRayTraceResult) || minecraft.world == null) {
+            return;
+        }
+        
+        TileEntity tile = minecraft.world.getTileEntity(((BlockRayTraceResult) rayCast).getPos());
         if (tile instanceof TileEntityAtomicReconstructor) {
             ItemStack slot = ((TileEntityAtomicReconstructor) tile).inv.getStackInSlot(0);
-            String strg;
+            ITextComponent strg;
             if (!StackUtil.isValid(slot)) {
-                strg = StringUtil.localize("info." + ActuallyAdditions.MODID + ".noLens");
+                strg = Help.Trans("info", "nolens");
             } else {
-                strg = slot.getItem().getItemStackDisplayName(slot);
+                strg = slot.getItem().getDisplayName(slot);
 
                 AssetUtil.renderStackToGui(slot, resolution.getScaledWidth() / 2 + 15, resolution.getScaledHeight() / 2 - 19, 1F);
             }
-            minecraft.fontRenderer.drawStringWithShadow(TextFormatting.YELLOW + "" + TextFormatting.ITALIC + strg, resolution.getScaledWidth() / 2 + 35, resolution.getScaledHeight() / 2 - 15, StringUtil.DECIMAL_COLOR_WHITE);
+            minecraft.fontRenderer.drawStringWithShadow(matrices, strg.copyRaw().mergeStyle(TextFormatting.YELLOW).mergeStyle(TextFormatting.ITALIC).getString(), resolution.getScaledWidth() / 2 + 35, resolution.getScaledHeight() / 2f - 15, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 

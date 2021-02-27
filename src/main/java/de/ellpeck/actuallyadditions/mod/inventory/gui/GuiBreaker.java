@@ -15,9 +15,8 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
@@ -26,7 +25,7 @@ public class GuiBreaker extends GuiWtfMojang {
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityBreaker breaker;
 
-    public GuiBreaker(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiBreaker(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerBreaker(inventory, tile));
         this.breaker = (TileEntityBreaker) tile;
         this.xSize = 176;

@@ -13,11 +13,11 @@ package de.ellpeck.actuallyadditions.mod.items;
 import com.google.common.collect.Sets;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.IRarity;
 
 import java.util.Collections;
 import java.util.Set;
@@ -26,13 +26,8 @@ public class ItemPickaxeAA extends ItemToolAA {
 
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE);
 
-    public ItemPickaxeAA(Item.ToolMaterial material, String repairItem, String unlocalizedName, IRarity rarity) {
-        super(1.0F, -2.8F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
-        this.setHarvestLevel("pickaxe", material.getHarvestLevel());
-    }
-
-    public ItemPickaxeAA(Item.ToolMaterial material, ItemStack repairItem, String unlocalizedName, IRarity rarity) {
-        super(1.0F, -2.8F, material, repairItem, unlocalizedName, rarity, EFFECTIVE_ON);
+    public ItemPickaxeAA(IItemTier material) {
+        super(1.0F, -2.8F, material, this.repairItem, unlocalizedName, this.rarity, EFFECTIVE_ON);
         this.setHarvestLevel("pickaxe", material.getHarvestLevel());
     }
 

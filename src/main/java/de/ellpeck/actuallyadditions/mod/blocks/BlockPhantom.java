@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
@@ -121,14 +122,14 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, MainWindow resolution) {
-        TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
+    public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
+        TileEntity tile = minecraft.world.getTileEntity(rayCast.getBlockPos());
         if (tile != null) {
             if (tile instanceof IPhantomTile) {
                 IPhantomTile phantom = (IPhantomTile) tile;
                 minecraft.fontRenderer.drawStringWithShadow(TextFormatting.GOLD + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".blockPhantomRange.desc") + ": " + phantom.getRange(), resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 - 40, StringUtil.DECIMAL_COLOR_WHITE);
                 if (phantom.hasBoundPosition()) {
-                    int distance = MathHelper.ceil(new Vec3d(posHit.getBlockPos()).distanceTo(new Vec3d(phantom.getBoundPosition())));
+                    int distance = MathHelper.ceil(new Vec3d(rayCast.getBlockPos()).distanceTo(new Vec3d(phantom.getBoundPosition())));
                     BlockState state = minecraft.world.getBlockState(phantom.getBoundPosition());
                     Block block = state.getBlock();
                     Item item = Item.getItemFromBlock(block);

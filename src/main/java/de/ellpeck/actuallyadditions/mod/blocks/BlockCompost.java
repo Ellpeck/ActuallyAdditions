@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
@@ -157,8 +158,8 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, MainWindow resolution) {
-        TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
+    public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
+        TileEntity tile = minecraft.world.getTileEntity(rayCast.getBlockPos());
         if (tile instanceof TileEntityCompost) {
             ItemStack slot = ((TileEntityCompost) tile).inv.getStackInSlot(0);
             String strg;

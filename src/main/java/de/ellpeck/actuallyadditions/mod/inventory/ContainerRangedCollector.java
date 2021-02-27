@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -26,7 +26,7 @@ public class ContainerRangedCollector extends Container {
 
     private final TileEntityRangedCollector collector;
 
-    public ContainerRangedCollector(InventoryPlayer inventory, TileEntityBase tile) {
+    public ContainerRangedCollector(PlayerInventory inventory, TileEntityBase tile) {
         this.collector = (TileEntityRangedCollector) tile;
 
         for (int i = 0; i < 2; i++) {
@@ -69,10 +69,16 @@ public class ContainerRangedCollector extends Container {
                 if (!this.mergeItemStack(newStack, 0, 6, false)) {
                     //
                     if (slot >= inventoryStart && slot <= inventoryEnd) {
-                        if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
-                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) { return StackUtil.getEmpty(); }
+                        if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                            return StackUtil.getEmpty();
+                        }
+                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                        return StackUtil.getEmpty();
+                    }
                 }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
+            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+                return StackUtil.getEmpty();
+            }
 
             if (!StackUtil.isValid(newStack)) {
                 theSlot.putStack(StackUtil.getEmpty());
@@ -80,7 +86,9 @@ public class ContainerRangedCollector extends Container {
                 theSlot.onSlotChanged();
             }
 
-            if (newStack.getCount() == currentStack.getCount()) { return StackUtil.getEmpty(); }
+            if (newStack.getCount() == currentStack.getCount()) {
+                return StackUtil.getEmpty();
+            }
             theSlot.onTake(player, newStack);
 
             return currentStack;

@@ -17,9 +17,8 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
@@ -31,7 +30,7 @@ public class GuiOilGenerator extends GuiWtfMojang {
     private EnergyDisplay energy;
     private FluidDisplay fluid;
 
-    public GuiOilGenerator(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiOilGenerator(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerOilGenerator(inventory, tile));
         this.generator = (TileEntityOilGenerator) tile;
         this.xSize = 176;

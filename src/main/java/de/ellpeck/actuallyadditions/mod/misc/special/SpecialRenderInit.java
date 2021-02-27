@@ -10,19 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.special;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Properties;
-
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Properties;
 
 public class SpecialRenderInit {
 
@@ -30,7 +29,6 @@ public class SpecialRenderInit {
 
     public SpecialRenderInit() {
         new ThreadSpecialFetcher();
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     public static void parse(Properties properties) {
@@ -73,10 +71,14 @@ public class SpecialRenderInit {
     private static ItemStack findItem(ResourceLocation resLoc, int meta) {
         if (Item.REGISTRY.containsKey(resLoc)) {
             Item item = Item.REGISTRY.getObject(resLoc);
-            if (item != null) { return new ItemStack(item, 1, meta); }
+            if (item != null) {
+                return new ItemStack(item, 1, meta);
+            }
         } else if (Block.REGISTRY.containsKey(resLoc)) {
             Block block = Block.REGISTRY.getObject(resLoc);
-            if (block != null) { return new ItemStack(block, 1, meta); }
+            if (block != null) {
+                return new ItemStack(block, 1, meta);
+            }
         }
         return StackUtil.getEmpty();
     }

@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.io.IOException;
-import java.util.Collections;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
@@ -22,11 +19,13 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.io.IOException;
+import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiFurnaceDouble extends GuiWtfMojang {
@@ -37,7 +36,7 @@ public class GuiFurnaceDouble extends GuiWtfMojang {
 
     private GuiButton buttonAutoSplit;
 
-    public GuiFurnaceDouble(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiFurnaceDouble(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerFurnaceDouble(inventory, tile));
         this.tileFurnace = (TileEntityFurnaceDouble) tile;
         this.xSize = 176;
@@ -50,7 +49,9 @@ public class GuiFurnaceDouble extends GuiWtfMojang {
         this.energy.drawOverlay(x, y);
 
         if (this.buttonAutoSplit.isMouseOver()) {
-            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.tileFurnace.isAutoSplit ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on") : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off"))), x, y);
+            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.tileFurnace.isAutoSplit
+                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on")
+                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off"))), x, y);
         }
     }
 
@@ -67,7 +68,9 @@ public class GuiFurnaceDouble extends GuiWtfMojang {
     public void updateScreen() {
         super.updateScreen();
 
-        this.buttonAutoSplit.displayString = (this.tileFurnace.isAutoSplit ? TextFormatting.DARK_GREEN : TextFormatting.RED) + "S";
+        this.buttonAutoSplit.displayString = (this.tileFurnace.isAutoSplit
+            ? TextFormatting.DARK_GREEN
+            : TextFormatting.RED) + "S";
     }
 
     @Override

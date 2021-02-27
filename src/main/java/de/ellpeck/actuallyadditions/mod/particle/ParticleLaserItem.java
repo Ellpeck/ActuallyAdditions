@@ -10,34 +10,33 @@
 
 package de.ellpeck.actuallyadditions.mod.particle;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.entity.Entity;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.OnlyIn;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.vector.Vector3d;
 import org.lwjgl.opengl.GL14;
 
-@OnlyIn(Dist.CLIENT)
 public class ParticleLaserItem extends Particle {
-
     private final double otherX;
     private final double otherY;
     private final double otherZ;
 
     private final ItemStack stack;
 
-    private ParticleLaserItem(World world, double posX, double posY, double posZ, ItemStack stack, double motionY) {
+    private ParticleLaserItem(ClientWorld world, double posX, double posY, double posZ, ItemStack stack, double motionY) {
         this(world, posX, posY, posZ, stack, motionY, 0, 0, 0);
     }
 
-    public ParticleLaserItem(World world, double posX, double posY, double posZ, ItemStack stack, double motionY, double otherX, double otherY, double otherZ) {
+    public ParticleLaserItem(ClientWorld world, double posX, double posY, double posZ, ItemStack stack, double motionY, double otherX, double otherY, double otherZ) {
         super(world, posX + (world.rand.nextDouble() - 0.5) / 8, posY, posZ + (world.rand.nextDouble() - 0.5) / 8);
         this.stack = stack;
         this.otherX = otherX;
@@ -48,7 +47,7 @@ public class ParticleLaserItem extends Particle {
         this.motionY = motionY;
         this.motionZ = 0;
 
-        this.particleMaxAge = 10;
+        this.maxAge = 10;
         this.canCollide = false;
     }
 
@@ -58,25 +57,26 @@ public class ParticleLaserItem extends Particle {
 
         if (this.otherX != 0 || this.otherY != 0 || this.otherZ != 0) {
             Particle fx = new ParticleLaserItem(this.world, this.otherX, this.otherY, this.otherZ, this.stack, -0.025);
-            Minecraft.getInstance().effectRenderer.addEffect(fx);
+            Minecraft.getInstance().particles.addEffect(fx);
         }
     }
 
     @Override
-    public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-        GlStateManager.pushMatrix();
+    public void renderParticle(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
+        RenderSystem.pushMatrix();
         RenderHelper.enableStandardItemLighting();
 
-        GlStateManager.translate(this.posX - TileEntityRendererDispatcher.staticPlayerX, this.posY - TileEntityRendererDispatcher.staticPlayerY, this.posZ - TileEntityRendererDispatcher.staticPlayerZ);
-        GlStateManager.scale(0.3F, 0.3F, 0.3F);
+        Vector3d cam = renderInfo.getProjectedView();
+        RenderSystem.translated(this.posX - cam.getX(), this.posY - cam.getY(), this.posZ - cam.getZ());
+        RenderSystem.scalef(0.3F, 0.3F, 0.3F);
 
-        double boop = Minecraft.getSystemTime() / 600D;
-        GlStateManager.rotate((float) (boop * 40D % 360), 0, 1, 0);
+        double boop = Util.milliTime();
+        RenderSystem.rotatef((float) (boop * 40D % 360), 0, 1, 0);
 
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_CONSTANT_COLOR, GlStateManager.SourceFactor.ONE.factor, GlStateManager.DestFactor.ZERO.factor);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param, GlStateManager.SourceFactor.ONE.param, GlStateManager.DestFactor.ZERO.param);
 
-        float ageRatio = (float) this.particleAge / (float) this.particleMaxAge;
+        float ageRatio = (float) this.age / (float) this.maxAge;
         float color = this.motionY < 0
             ? 1F - ageRatio
             : ageRatio;
@@ -85,11 +85,11 @@ public class ParticleLaserItem extends Particle {
         AssetUtil.renderItemWithoutScrewingWithColors(this.stack);
 
         RenderHelper.disableStandardItemLighting();
-        GlStateManager.popMatrix();
+        RenderSystem.popMatrix();
     }
 
     @Override
-    public int getFXLayer() {
-        return 3;
+    public IParticleRenderType getRenderType() {
+        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 }

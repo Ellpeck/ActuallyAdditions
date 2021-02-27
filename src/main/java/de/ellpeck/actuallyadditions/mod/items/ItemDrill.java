@@ -95,7 +95,7 @@ public class ItemDrill extends ItemEnergy {
         ItemStack upgrade = this.getHasUpgradeAsStack(stack, ItemDrillUpgrade.UpgradeType.PLACER);
         if (StackUtil.isValid(upgrade)) {
             int slot = ItemDrillUpgrade.getSlotToPlaceFrom(upgrade);
-            if (slot >= 0 && slot < InventoryPlayer.getHotbarSize()) {
+            if (slot >= 0 && slot < PlayerInventory.getHotbarSize()) {
                 ItemStack equip = player.inventory.getStackInSlot(slot);
                 if (StackUtil.isValid(equip) && equip != stack) {
                     ItemStack toPlaceStack = equip.copy();

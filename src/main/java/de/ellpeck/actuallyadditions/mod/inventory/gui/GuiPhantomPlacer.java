@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
@@ -23,11 +19,14 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiPhantomPlacer extends GuiWtfMojang {
@@ -35,7 +34,7 @@ public class GuiPhantomPlacer extends GuiWtfMojang {
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityPhantomPlacer placer;
 
-    public GuiPhantomPlacer(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiPhantomPlacer(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerPhantomPlacer(inventory, tile));
         this.placer = (TileEntityPhantomPlacer) tile;
         this.xSize = 176;

@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
@@ -23,11 +20,13 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiLaserRelayItemWhitelist extends GuiWtfMojang {
@@ -41,7 +40,7 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang {
     private GuiButton buttonSmartWhitelistLeft;
     private GuiButton buttonSmartWhitelistRight;
 
-    public GuiLaserRelayItemWhitelist(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiLaserRelayItemWhitelist(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerLaserRelayItemWhitelist(inventory, tile));
         this.tile = (TileEntityLaserRelayItemWhitelist) tile;
         this.xSize = 176;

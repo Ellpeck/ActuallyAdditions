@@ -17,7 +17,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -26,7 +26,7 @@ public class ContainerXPSolidifier extends Container {
 
     private final TileEntityXPSolidifier solidifier;
 
-    public ContainerXPSolidifier(InventoryPlayer inventory, TileEntityBase tile) {
+    public ContainerXPSolidifier(PlayerInventory inventory, TileEntityBase tile) {
         this.solidifier = (TileEntityXPSolidifier) tile;
 
         this.addSlotToContainer(new SlotOutput(this.solidifier.inv, 0, 95, 8));
@@ -58,11 +58,19 @@ public class ContainerXPSolidifier extends Container {
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 if (newStack.getItem() instanceof ItemSolidifiedExperience) {
-                    if (!this.mergeItemStack(newStack, 1, 2, false)) { return StackUtil.getEmpty(); }
+                    if (!this.mergeItemStack(newStack, 1, 2, false)) {
+                        return StackUtil.getEmpty();
+                    }
                 } else if (slot >= inventoryStart && slot <= inventoryEnd) {
-                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
-                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) { return StackUtil.getEmpty(); }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
+                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                        return StackUtil.getEmpty();
+                    }
+                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                    return StackUtil.getEmpty();
+                }
+            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+                return StackUtil.getEmpty();
+            }
 
             if (!StackUtil.isValid(newStack)) {
                 theSlot.putStack(StackUtil.getEmpty());
@@ -70,7 +78,9 @@ public class ContainerXPSolidifier extends Container {
                 theSlot.onSlotChanged();
             }
 
-            if (newStack.getCount() == currentStack.getCount()) { return StackUtil.getEmpty(); }
+            if (newStack.getCount() == currentStack.getCount()) {
+                return StackUtil.getEmpty();
+            }
             theSlot.onTake(player, newStack);
 
             return currentStack;

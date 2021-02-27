@@ -17,7 +17,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputter;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -29,17 +29,21 @@ public class ContainerInputter extends Container {
 
     private final boolean isAdvanced;
 
-    public ContainerInputter(InventoryPlayer inventory, TileEntityBase tile, boolean isAdvanced) {
+    public ContainerInputter(PlayerInventory inventory, TileEntityBase tile, boolean isAdvanced) {
         this.tileInputter = (TileEntityInputter) tile;
         this.isAdvanced = isAdvanced;
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileInputter.inv, 0, 80, 21 + (isAdvanced ? 12 : 0)));
+        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileInputter.inv, 0, 80, 21 + (isAdvanced
+            ? 12
+            : 0)));
 
         if (isAdvanced) {
             for (int i = 0; i < 2; i++) {
                 for (int x = 0; x < 3; x++) {
                     for (int y = 0; y < 4; y++) {
-                        this.addSlotToContainer(new SlotFilter(i == 0 ? this.tileInputter.leftFilter : this.tileInputter.rightFilter, y + x * 4, 20 + i * 84 + x * 18, 6 + y * 18));
+                        this.addSlotToContainer(new SlotFilter(i == 0
+                            ? this.tileInputter.leftFilter
+                            : this.tileInputter.rightFilter, y + x * 4, 20 + i * 84 + x * 18, 6 + y * 18));
                     }
                 }
             }
@@ -47,17 +51,23 @@ public class ContainerInputter extends Container {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 101 + i * 18 + (isAdvanced ? GuiInputter.OFFSET_ADVANCED : 0)));
+                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 101 + i * 18 + (isAdvanced
+                    ? GuiInputter.OFFSET_ADVANCED
+                    : 0)));
             }
         }
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 159 + (isAdvanced ? GuiInputter.OFFSET_ADVANCED : 0)));
+            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 159 + (isAdvanced
+                ? GuiInputter.OFFSET_ADVANCED
+                : 0)));
         }
     }
 
     @Override
     public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
-        int inventoryStart = this.isAdvanced ? 25 : 1;
+        int inventoryStart = this.isAdvanced
+            ? 25
+            : 1;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
         int hotbarEnd = hotbarStart + 8;
@@ -74,10 +84,16 @@ public class ContainerInputter extends Container {
                 if (!this.mergeItemStack(newStack, 0, 1, false)) {
                     //
                     if (slot >= inventoryStart && slot <= inventoryEnd) {
-                        if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
-                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) { return StackUtil.getEmpty(); }
+                        if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                            return StackUtil.getEmpty();
+                        }
+                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                        return StackUtil.getEmpty();
+                    }
                 }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
+            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+                return StackUtil.getEmpty();
+            }
 
             if (!StackUtil.isValid(newStack)) {
                 theSlot.putStack(StackUtil.getEmpty());
@@ -85,7 +101,9 @@ public class ContainerInputter extends Container {
                 theSlot.onSlotChanged();
             }
 
-            if (newStack.getCount() == currentStack.getCount()) { return StackUtil.getEmpty(); }
+            if (newStack.getCount() == currentStack.getCount()) {
+                return StackUtil.getEmpty();
+            }
             theSlot.onTake(player, newStack);
 
             return currentStack;

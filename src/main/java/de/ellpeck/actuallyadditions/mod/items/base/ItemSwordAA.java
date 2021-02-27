@@ -16,26 +16,29 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
+import net.minecraft.item.SwordItem;
 import net.minecraftforge.common.IRarity;
 
-public class ItemSwordAA extends ItemSword implements IDisableableItem {
+public class ItemSwordAA extends SwordItem implements IDisableableItem {
 
     private final String name;
     private final IRarity rarity;
     private final ItemStack repairItem;
     private final boolean disabled;
 
-    public ItemSwordAA(ToolMaterial toolMat, ItemStack repairItem, String unlocalizedName, IRarity rarity) {
+    public ItemSwordAA(IItemTier toolMat) {
         super(toolMat);
 
-        this.repairItem = repairItem;
+        this.repairItem = this.repairItem;
         this.name = unlocalizedName;
-        this.rarity = rarity;
+        this.rarity = this.rarity;
 
         this.disabled = ConfigurationHandler.config.getBoolean("Disable: " + StringUtil.badTranslate(this.name), "Tool Control", false, "This will disable the " + StringUtil.badTranslate(this.name) + ". It will not be registered.");
-        if (!this.disabled) this.register();
+        if (!this.disabled) {
+            this.register();
+        }
     }
 
     private void register() {

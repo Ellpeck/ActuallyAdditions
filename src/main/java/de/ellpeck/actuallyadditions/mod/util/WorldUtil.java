@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditionsClient;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.block.Block;
@@ -362,7 +363,8 @@ public final class WorldUtil {
             stack.onBlockDestroyed(world, state, pos, player);
 
             // send an update to the server, so we get an update back
-            ActuallyAdditions.PROXY.sendBreakPacket(pos);
+
+            ActuallyAdditionsClient.sendBreakPacket(pos);
             return true;
         }
     }

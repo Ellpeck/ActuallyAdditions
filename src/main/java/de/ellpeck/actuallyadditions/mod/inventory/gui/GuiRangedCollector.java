@@ -17,9 +17,8 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
@@ -30,7 +29,7 @@ public class GuiRangedCollector extends GuiWtfMojang {
 
     private FilterSettingsGui filter;
 
-    public GuiRangedCollector(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiRangedCollector(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerRangedCollector(inventory, tile));
         this.collector = (TileEntityRangedCollector) tile;
         this.xSize = 176;

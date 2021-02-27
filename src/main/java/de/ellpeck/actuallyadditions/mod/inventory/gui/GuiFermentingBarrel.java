@@ -15,9 +15,8 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
@@ -28,7 +27,7 @@ public class GuiFermentingBarrel extends GuiWtfMojang {
     private FluidDisplay input;
     private FluidDisplay output;
 
-    public GuiFermentingBarrel(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiFermentingBarrel(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerFermentingBarrel(inventory, tile));
         this.press = (TileEntityFermentingBarrel) tile;
         this.xSize = 176;

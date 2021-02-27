@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
@@ -17,39 +19,31 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
-public class GuiBag extends GuiWtfMojang {
-
+public class GuiBag extends GuiWtfMojang<ContainerBag> {
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_bag");
     private static final ResourceLocation RES_LOC_VOID = AssetUtil.getGuiLocation("gui_void_bag");
 
     private final ContainerBag container;
     private final boolean isVoid;
     private FilterSettingsGui filter;
-    private GuiButton buttonAutoInsert;
+    private Button buttonAutoInsert;
 
-    public GuiBag(ItemStack sack, InventoryPlayer inventory, boolean isVoid) {
-        this(isVoid, new ContainerBag(sack, inventory, isVoid));
-    }
-
-    private GuiBag(boolean isVoid, ContainerBag container) {
-        super(container);
+    public GuiBag(ContainerBag container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
         this.xSize = 176;
         this.ySize = 90 + 86;
-        this.isVoid = isVoid;
+        this.isVoid = container.isVoid;
         this.container = container;
     }
 
@@ -86,27 +80,14 @@ public class GuiBag extends GuiWtfMojang {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + "." + (this.isVoid
+        AssetUtil.displayNameString(this.font, this.xSize, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + "." + (this.isVoid
             ? "voidBag"
             : "bag") + ".name"));
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 90, 0, 0, 176, 86);
-
-        this.mc.getTextureManager().bindTexture(this.isVoid
-            ? RES_LOC_VOID
-            : RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 90);
-    }
-
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        super.drawScreen(mouseX, mouseY, partialTicks);
+    public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+        super.render(stack, mouseX, mouseY, partialTicks);
         this.filter.drawHover(mouseX, mouseY);
 
         if (this.buttonAutoInsert.isMouseOver()) {
@@ -114,9 +95,22 @@ public class GuiBag extends GuiWtfMojang {
             text.add(TextFormatting.BOLD + "Auto-Insert " + (this.container.autoInsert
                 ? "On"
                 : "Off"));
-            text.addAll(this.mc.fontRenderer.listFormattedStringToWidth("Turn this on to make items that get picked up automatically go into the bag.", 200));
-            text.addAll(this.mc.fontRenderer.listFormattedStringToWidth(TextFormatting.GRAY + "" + TextFormatting.ITALIC + "Note that this WON'T work when you are holding the bag in your hand.", 200));
-            this.drawHoveringText(text, mouseX, mouseY);
+            text.addAll(this.font.listFormattedStringToWidth("Turn this on to make items that get picked up automatically go into the bag.", 200));
+            text.addAll(this.font.listFormattedStringToWidth(TextFormatting.GRAY + "" + TextFormatting.ITALIC + "Note that this WON'T work when you are holding the bag in your hand.", 200));
+            this.renderToolTip(stack, text, mouseX, mouseY, this.getMinecraft().fontRenderer);
         }
+    }
+
+    @Override
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrixStack, this.guiLeft, this.guiTop + 90, 0, 0, 176, 86);
+
+        this.getMinecraft().getTextureManager().bindTexture(this.isVoid
+            ? RES_LOC_VOID
+            : RES_LOC);
+        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, 176, 90);
     }
 }

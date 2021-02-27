@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -29,7 +29,7 @@ public class ContainerDropper extends Container {
     public ContainerDropper(PlayerEntity player, TileEntityBase tile) {
         this.dropper = (TileEntityDropper) tile;
         this.player = player;
-        InventoryPlayer inventory = player.inventory;
+        PlayerInventory inventory = player.inventory;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.dropper.inv, j + i * 3, 62 + j * 18, 21 + i * 18));
@@ -65,10 +65,16 @@ public class ContainerDropper extends Container {
                 if (!this.mergeItemStack(newStack, 0, 9, false)) {
                     //
                     if (slot >= inventoryStart && slot <= inventoryEnd) {
-                        if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
-                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) { return StackUtil.getEmpty(); }
+                        if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                            return StackUtil.getEmpty();
+                        }
+                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                        return StackUtil.getEmpty();
+                    }
                 }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
+            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+                return StackUtil.getEmpty();
+            }
 
             if (!StackUtil.isValid(newStack)) {
                 theSlot.putStack(StackUtil.getEmpty());
@@ -76,7 +82,9 @@ public class ContainerDropper extends Container {
                 theSlot.onSlotChanged();
             }
 
-            if (newStack.getCount() == currentStack.getCount()) { return StackUtil.getEmpty(); }
+            if (newStack.getCount() == currentStack.getCount()) {
+                return StackUtil.getEmpty();
+            }
             theSlot.onTake(player, newStack);
 
             return currentStack;
@@ -92,6 +100,8 @@ public class ContainerDropper extends Container {
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
-        if (!this.player.isSpectator()) this.dropper.getWorld().notifyNeighborsOfStateChange(this.dropper.getPos(), InitBlocks.blockDropper, false);
+        if (!this.player.isSpectator()) {
+            this.dropper.getWorld().notifyNeighborsOfStateChange(this.dropper.getPos(), InitBlocks.blockDropper, false);
+        }
     }
 }

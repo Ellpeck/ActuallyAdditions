@@ -16,28 +16,24 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.CactusFarmerBehavior;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.MelonPumpkinFarmerBehavior;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.NetherWartFarmerBehavior;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.ReedFarmerBehavior;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.exu.EnderlillyFarmerBehavior;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.exu.RedOrchidFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 
+// TODO: [port] MOVE TO DATA_GENERATOR
+@Deprecated
 public final class InitCrafting {
 
     public static void init() {
         ActuallyAdditions.LOGGER.info("Initializing Crafting Recipes...");
 
-        ItemCrafting.init();
-        BlockCrafting.init();
-        MiscCrafting.init();
-        FoodCrafting.init();
-        ToolCrafting.init();
+        //        ItemCrafting.init();
+        //        BlockCrafting.init();
+        //        MiscCrafting.init();
+        //        FoodCrafting.init();
+        //        ToolCrafting.init();
 
         ActuallyAdditionsAPI.addCompostRecipe(Ingredient.fromStacks(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.MASHED_FOOD.ordinal())), Blocks.LEAVES.getDefaultState(), new ItemStack(InitItems.itemFertilizer), Blocks.DIRT.getDefaultState());
         ActuallyAdditionsAPI.addCompostRecipe(Ingredient.fromItems(InitItems.itemCanolaSeed), Blocks.DIRT.getDefaultState(), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BIOMASS.ordinal()), Blocks.SOUL_SAND.getDefaultState());
@@ -54,8 +50,8 @@ public final class InitCrafting {
         ActuallyAdditionsAPI.addFarmerBehavior(new NetherWartFarmerBehavior());
         ActuallyAdditionsAPI.addFarmerBehavior(new ReedFarmerBehavior());
         ActuallyAdditionsAPI.addFarmerBehavior(new MelonPumpkinFarmerBehavior());
-        ActuallyAdditionsAPI.addFarmerBehavior(new EnderlillyFarmerBehavior());
-        ActuallyAdditionsAPI.addFarmerBehavior(new RedOrchidFarmerBehavior());
+        //        ActuallyAdditionsAPI.addFarmerBehavior(new EnderlillyFarmerBehavior());
+        //        ActuallyAdditionsAPI.addFarmerBehavior(new RedOrchidFarmerBehavior());
 
         new RecipePotionRingCharging(new ResourceLocation(ActuallyAdditions.MODID, "potion_ring_charging"));
         new RecipeBioMash(new ResourceLocation(ActuallyAdditions.MODID, "bio_mash"));

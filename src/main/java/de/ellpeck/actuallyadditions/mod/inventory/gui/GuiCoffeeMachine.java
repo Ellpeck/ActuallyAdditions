@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.util.Collections;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
@@ -21,10 +19,11 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiCoffeeMachine extends GuiWtfMojang {
@@ -35,7 +34,7 @@ public class GuiCoffeeMachine extends GuiWtfMojang {
     private EnergyDisplay energy;
     private FluidDisplay fluid;
 
-    public GuiCoffeeMachine(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiCoffeeMachine(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerCoffeeMachine(inventory, tile));
         this.machine = (TileEntityCoffeeMachine) tile;
         this.xSize = 176;

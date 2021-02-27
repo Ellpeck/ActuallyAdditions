@@ -15,9 +15,8 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemRepairer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
@@ -27,7 +26,7 @@ public class GuiRepairer extends GuiWtfMojang {
     private final TileEntityItemRepairer tileRepairer;
     private EnergyDisplay energy;
 
-    public GuiRepairer(InventoryPlayer inventory, TileEntityBase tile) {
+    public GuiRepairer(PlayerInventory inventory, TileEntityBase tile) {
         super(new ContainerRepairer(inventory, tile));
         this.tileRepairer = (TileEntityItemRepairer) tile;
         this.xSize = 176;

@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.io.IOException;
-
-import org.lwjgl.input.Keyboard;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerInputter;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
@@ -25,16 +21,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
+import org.lwjgl.input.Keyboard;
+
+import java.io.IOException;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiInputter extends GuiWtfMojang {
 
     public static final int OFFSET_ADVANCED = 12 + 36;
-    public static final String[] SIDES = new String[] { StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.disabled"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.up"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.down"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.north"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.east"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.south"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.west") };
+    public static final String[] SIDES = new String[]{StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.disabled"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.up"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.down"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.north"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.east"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.south"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.west")};
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_inputter");
     private static final ResourceLocation RES_LOC_ADVANCED = AssetUtil.getGuiLocation("gui_inputter_advanced");
     public final TileEntityInputter tileInputter;
@@ -47,11 +45,13 @@ public class GuiInputter extends GuiWtfMojang {
     private FilterSettingsGui leftFilter;
     private FilterSettingsGui rightFilter;
 
-    public GuiInputter(InventoryPlayer inventory, TileEntityBase tile, boolean isAdvanced) {
+    public GuiInputter(PlayerInventory inventory, TileEntityBase tile, boolean isAdvanced) {
         super(new ContainerInputter(inventory, tile, isAdvanced));
         this.tileInputter = (TileEntityInputter) tile;
         this.xSize = 176;
-        this.ySize = 97 + 86 + (isAdvanced ? OFFSET_ADVANCED : 0);
+        this.ySize = 97 + 86 + (isAdvanced
+            ? OFFSET_ADVANCED
+            : 0);
         this.isAdvanced = isAdvanced;
     }
 
@@ -64,39 +64,59 @@ public class GuiInputter extends GuiWtfMojang {
             this.rightFilter = new FilterSettingsGui(this.tileInputter.rightFilter, this.guiLeft + 157, this.guiTop + 6, this.buttonList);
         }
 
-        this.fieldPullStart = new GuiTextField(3000, this.fontRenderer, this.guiLeft + 6, this.guiTop + 80 + (this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPullStart = new GuiTextField(3000, this.fontRenderer, this.guiLeft + 6, this.guiTop + 80 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), 34, 8);
         this.fieldPullStart.setMaxStringLength(5);
         this.fieldPullStart.setEnableBackgroundDrawing(false);
-        this.fieldPullEnd = new GuiTextField(3001, this.fontRenderer, this.guiLeft + 50, this.guiTop + 80 + (this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPullEnd = new GuiTextField(3001, this.fontRenderer, this.guiLeft + 50, this.guiTop + 80 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), 34, 8);
         this.fieldPullEnd.setMaxStringLength(5);
         this.fieldPullEnd.setEnableBackgroundDrawing(false);
 
-        this.fieldPutStart = new GuiTextField(3002, this.fontRenderer, this.guiLeft + 91, this.guiTop + 80 + (this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPutStart = new GuiTextField(3002, this.fontRenderer, this.guiLeft + 91, this.guiTop + 80 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), 34, 8);
         this.fieldPutStart.setMaxStringLength(5);
         this.fieldPutStart.setEnableBackgroundDrawing(false);
-        this.fieldPutEnd = new GuiTextField(3004, this.fontRenderer, this.guiLeft + 135, this.guiTop + 80 + (this.isAdvanced ? OFFSET_ADVANCED : 0), 34, 8);
+        this.fieldPutEnd = new GuiTextField(3004, this.fontRenderer, this.guiLeft + 135, this.guiTop + 80 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), 34, 8);
         this.fieldPutEnd.setMaxStringLength(5);
         this.fieldPutEnd.setEnableBackgroundDrawing(false);
 
-        SmallerButton buttonSidePutP = new SmallerButton(0, this.guiLeft + 155, this.guiTop + 43 + (this.isAdvanced ? OFFSET_ADVANCED : 0), ">");
-        SmallerButton buttonSidePutM = new SmallerButton(1, this.guiLeft + 90, this.guiTop + 43 + (this.isAdvanced ? OFFSET_ADVANCED : 0), "<");
+        SmallerButton buttonSidePutP = new SmallerButton(0, this.guiLeft + 155, this.guiTop + 43 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), ">");
+        SmallerButton buttonSidePutM = new SmallerButton(1, this.guiLeft + 90, this.guiTop + 43 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), "<");
 
-        SmallerButton buttonSidePullP = new SmallerButton(2, this.guiLeft + 70, this.guiTop + 43 + (this.isAdvanced ? OFFSET_ADVANCED : 0), ">");
-        SmallerButton buttonSidePullM = new SmallerButton(3, this.guiLeft + 5, this.guiTop + 43 + (this.isAdvanced ? OFFSET_ADVANCED : 0), "<");
+        SmallerButton buttonSidePullP = new SmallerButton(2, this.guiLeft + 70, this.guiTop + 43 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), ">");
+        SmallerButton buttonSidePullM = new SmallerButton(3, this.guiLeft + 5, this.guiTop + 43 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), "<");
 
         this.buttonList.add(buttonSidePutP);
         this.buttonList.add(buttonSidePullP);
         this.buttonList.add(buttonSidePutM);
         this.buttonList.add(buttonSidePullM);
 
-        this.buttonList.add(new TinyButton(TileEntityInputter.OKAY_BUTTON_ID, this.guiLeft + 84, this.guiTop + 91 + (this.isAdvanced ? OFFSET_ADVANCED : 0)));
+        this.buttonList.add(new TinyButton(TileEntityInputter.OKAY_BUTTON_ID, this.guiLeft + 84, this.guiTop + 91 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0)));
     }
 
     @Override
     public void drawScreen(int x, int y, float f) {
         super.drawScreen(x, y, f);
 
-        int newTopOffset = this.guiTop + (this.isAdvanced ? OFFSET_ADVANCED : 0);
+        int newTopOffset = this.guiTop + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0);
         //Info Mode on!
         if (x >= this.guiLeft + 4 && y >= newTopOffset + 65 && x <= this.guiLeft + 4 + 38 && y <= newTopOffset + 65 + 12) {
             this.drawHoveringText(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".inputter.info.1").replace("<p>", StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.pull")), 200), x, y);
@@ -127,21 +147,43 @@ public class GuiInputter extends GuiWtfMojang {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 97 + (this.isAdvanced ? OFFSET_ADVANCED : 0), 0, 0, 176, 86);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 97 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(this.isAdvanced ? RES_LOC_ADVANCED : RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 97 + (this.isAdvanced ? OFFSET_ADVANCED : 0));
+        this.mc.getTextureManager().bindTexture(this.isAdvanced
+            ? RES_LOC_ADVANCED
+            : RES_LOC);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 97 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0));
 
-        this.fontRenderer.drawString(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.inbound"), this.guiLeft + 23 + 3, this.guiTop + 32 + (this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRenderer.drawString(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.outbound"), this.guiLeft + 104 + 3, this.guiTop + 32 + (this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRenderer.drawString(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.inbound"), this.guiLeft + 23 + 3, this.guiTop + 32 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRenderer.drawString(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.outbound"), this.guiLeft + 104 + 3, this.guiTop + 32 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
-        this.fontRenderer.drawString(SIDES[this.tileInputter.sideToPull + 1], this.guiLeft + 24 + 1, this.guiTop + 45 + 3 + (this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRenderer.drawString(SIDES[this.tileInputter.sideToPut + 1], this.guiLeft + 109 + 1, this.guiTop + 45 + 3 + (this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRenderer.drawString(SIDES[this.tileInputter.sideToPull + 1], this.guiLeft + 24 + 1, this.guiTop + 45 + 3 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.fontRenderer.drawString(SIDES[this.tileInputter.sideToPut + 1], this.guiLeft + 109 + 1, this.guiTop + 45 + 3 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
-        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPutStart), this.guiLeft + 92, this.guiTop + 67 + (this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPutEnd), this.guiLeft + 136, this.guiTop + 67 + (this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPullStart), this.guiLeft + 7, this.guiTop + 67 + (this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPullEnd), this.guiLeft + 51, this.guiTop + 67 + (this.isAdvanced ? OFFSET_ADVANCED : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPutStart), this.guiLeft + 92, this.guiTop + 67 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPutEnd), this.guiLeft + 136, this.guiTop + 67 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPullStart), this.guiLeft + 7, this.guiTop + 67 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPullEnd), this.guiLeft + 51, this.guiTop + 67 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_WHITE);
 
         this.fieldPutStart.drawTextBox();
         this.fieldPutEnd.drawTextBox();
@@ -241,7 +283,9 @@ public class GuiInputter extends GuiWtfMojang {
         }
 
         public SmallerButton(int id, int x, int y, String display, boolean smaller) {
-            super(id, x, y, 16, smaller ? 12 : 16, display);
+            super(id, x, y, 16, smaller
+                ? 12
+                : 16, display);
             this.smaller = smaller;
         }
 
@@ -255,7 +299,9 @@ public class GuiInputter extends GuiWtfMojang {
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 GlStateManager.blendFunc(770, 771);
-                this.drawTexturedModalRect(this.x, this.y, this.smaller ? 200 : 176, k * this.height, this.width, this.height);
+                this.drawTexturedModalRect(this.x, this.y, this.smaller
+                    ? 200
+                    : 176, k * this.height, this.width, this.height);
                 this.mouseDragged(mc, x, y);
 
                 int color = 14737632;

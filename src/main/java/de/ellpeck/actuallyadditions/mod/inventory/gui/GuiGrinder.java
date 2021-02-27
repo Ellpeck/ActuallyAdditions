@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import java.io.IOException;
-import java.util.Collections;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
@@ -22,11 +19,13 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.io.IOException;
+import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiGrinder extends GuiWtfMojang {
@@ -39,11 +38,11 @@ public class GuiGrinder extends GuiWtfMojang {
 
     private GuiButton buttonAutoSplit;
 
-    public GuiGrinder(InventoryPlayer inventoryPlayer, TileEntityBase tile) {
+    public GuiGrinder(PlayerInventory inventoryPlayer, TileEntityBase tile) {
         this(inventoryPlayer, tile, false);
     }
 
-    private GuiGrinder(InventoryPlayer inventory, TileEntityBase tile, boolean isDouble) {
+    private GuiGrinder(PlayerInventory inventory, TileEntityBase tile, boolean isDouble) {
         super(new ContainerGrinder(inventory, tile, isDouble));
         this.tileGrinder = (TileEntityGrinder) tile;
         this.isDouble = isDouble;
@@ -54,7 +53,9 @@ public class GuiGrinder extends GuiWtfMojang {
     @Override
     public void initGui() {
         super.initGui();
-        this.energy = new EnergyDisplay(this.guiLeft + (this.isDouble ? 13 : 42), this.guiTop + 5, this.tileGrinder.storage);
+        this.energy = new EnergyDisplay(this.guiLeft + (this.isDouble
+            ? 13
+            : 42), this.guiTop + 5, this.tileGrinder.storage);
 
         if (this.isDouble) {
             this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.guiLeft - 10, this.guiTop, "S");
@@ -74,7 +75,9 @@ public class GuiGrinder extends GuiWtfMojang {
         super.updateScreen();
 
         if (this.isDouble) {
-            this.buttonAutoSplit.displayString = (this.tileGrinder.isAutoSplit ? TextFormatting.DARK_GREEN : TextFormatting.RED) + "S";
+            this.buttonAutoSplit.displayString = (this.tileGrinder.isAutoSplit
+                ? TextFormatting.DARK_GREEN
+                : TextFormatting.RED) + "S";
         }
     }
 
@@ -85,7 +88,9 @@ public class GuiGrinder extends GuiWtfMojang {
 
         if (this.isDouble && this.buttonAutoSplit.isMouseOver()) {
 
-            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.tileGrinder.isAutoSplit ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on") : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off"))), x, y);
+            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.tileGrinder.isAutoSplit
+                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on")
+                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off"))), x, y);
         }
     }
 
@@ -101,12 +106,16 @@ public class GuiGrinder extends GuiWtfMojang {
         this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(this.isDouble ? RES_LOC_DOUBLE : RES_LOC);
+        this.mc.getTextureManager().bindTexture(this.isDouble
+            ? RES_LOC_DOUBLE
+            : RES_LOC);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if (this.tileGrinder.firstCrushTime > 0) {
             int i = this.tileGrinder.getFirstTimeToScale(23);
-            this.drawTexturedModalRect(this.guiLeft + (this.isDouble ? 51 : 80), this.guiTop + 40, 176, 0, 24, i);
+            this.drawTexturedModalRect(this.guiLeft + (this.isDouble
+                ? 51
+                : 80), this.guiTop + 40, 176, 0, 24, i);
         }
         if (this.isDouble) {
             if (this.tileGrinder.secondCrushTime > 0) {
@@ -120,7 +129,7 @@ public class GuiGrinder extends GuiWtfMojang {
 
     public static class GuiGrinderDouble extends GuiGrinder {
 
-        public GuiGrinderDouble(InventoryPlayer inventory, TileEntityBase tile) {
+        public GuiGrinderDouble(PlayerInventory inventory, TileEntityBase tile) {
             super(inventory, tile, true);
         }
     }

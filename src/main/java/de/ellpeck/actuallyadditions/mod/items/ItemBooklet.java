@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
@@ -20,6 +21,7 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -34,6 +36,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import javax.annotation.Nullable;
@@ -98,11 +101,11 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, MainWindow resolution) {
-        if (posHit != null && posHit.getBlockPos() != null) {
-            BlockState state = minecraft.world.getBlockState(posHit.getBlockPos());
+    public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
+        if (rayCast != null && rayCast.getBlockPos() != null) {
+            BlockState state = minecraft.world.getBlockState(rayCast.getBlockPos());
             Block block = state.getBlock();
-            if (block != null && !block.isAir(minecraft.world.getBlockState(posHit.getBlockPos()), minecraft.world, posHit.getBlockPos())) {
+            if (block != null && !block.isAir(minecraft.world.getBlockState(rayCast.getBlockPos()), minecraft.world, rayCast.getBlockPos())) {
                 ItemStack blockStack = new ItemStack(block, 1, block.getMetaFromState(state));
                 int height = resolution.getScaledHeight() / 5 * 3;
                 if (player.isSneaking()) {

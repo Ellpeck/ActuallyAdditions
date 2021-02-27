@@ -11,18 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
 
 public class ItemGeneric extends ItemBase {
-
-    public ItemGeneric(String name) {
-        super(name);
-        this.setMaxDamage(0);
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.UNCOMMON;
+    public ItemGeneric(Properties props) {
+        super(props.maxDamage(0));
     }
 }

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.common.IRarity;
 
+@Deprecated
 public enum TheCrystals implements IStringSerializable {
 
     REDSTONE("red", Util.CRYSTAL_RED_RARITY, 0xFF2F21, 158F / 255F, 43F / 255F, 39F / 255F),

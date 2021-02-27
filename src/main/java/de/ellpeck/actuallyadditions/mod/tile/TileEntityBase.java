@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.VanillaPacketDispatcher;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -47,10 +46,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
 
     public TileEntityBase(TileEntityType<?> type) {
         super(type);
-    }
-
-    public static void init() {
-        ActuallyAdditions.LOGGER.info("Registering TileEntities...");
     }
 
     private static void register(Class<? extends TileEntityBase> tileClass) {

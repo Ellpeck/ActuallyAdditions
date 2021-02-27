@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -25,13 +25,15 @@ public class ContainerLaserRelayItemWhitelist extends Container {
 
     private final TileEntityLaserRelayItemWhitelist tile;
 
-    public ContainerLaserRelayItemWhitelist(InventoryPlayer inventory, TileEntityBase tile) {
+    public ContainerLaserRelayItemWhitelist(PlayerInventory inventory, TileEntityBase tile) {
         this.tile = (TileEntityLaserRelayItemWhitelist) tile;
 
         for (int i = 0; i < 2; i++) {
             for (int x = 0; x < 3; x++) {
                 for (int y = 0; y < 4; y++) {
-                    this.addSlotToContainer(new SlotFilter(i == 0 ? this.tile.leftFilter : this.tile.rightFilter, y + x * 4, 20 + i * 84 + x * 18, 6 + y * 18));
+                    this.addSlotToContainer(new SlotFilter(i == 0
+                        ? this.tile.leftFilter
+                        : this.tile.rightFilter, y + x * 4, 20 + i * 84 + x * 18, 6 + y * 18));
                 }
             }
         }
@@ -62,9 +64,15 @@ public class ContainerLaserRelayItemWhitelist extends Container {
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 if (slot >= inventoryStart && slot <= inventoryEnd) {
-                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
-                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) { return StackUtil.getEmpty(); }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) { return StackUtil.getEmpty(); }
+                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                        return StackUtil.getEmpty();
+                    }
+                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                    return StackUtil.getEmpty();
+                }
+            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+                return StackUtil.getEmpty();
+            }
 
             if (!StackUtil.isValid(newStack)) {
                 theSlot.putStack(StackUtil.getEmpty());
@@ -72,7 +80,9 @@ public class ContainerLaserRelayItemWhitelist extends Container {
                 theSlot.onSlotChanged();
             }
 
-            if (newStack.getCount() == currentStack.getCount()) { return StackUtil.getEmpty(); }
+            if (newStack.getCount() == currentStack.getCount()) {
+                return StackUtil.getEmpty();
+            }
             theSlot.onTake(player, newStack);
 
             return currentStack;
