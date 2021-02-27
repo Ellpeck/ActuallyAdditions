@@ -27,8 +27,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
@@ -244,7 +244,7 @@ public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
+    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, MainWindow resolution) {
         if (posHit != null && posHit.getBlockPos() != null && minecraft.world != null) {
             boolean wearing = ItemEngineerGoggles.isWearing(player);
             if (wearing || StackUtil.isValid(stack)) {

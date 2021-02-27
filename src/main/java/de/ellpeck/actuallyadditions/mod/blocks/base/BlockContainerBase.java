@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -23,7 +22,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -41,30 +39,8 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public abstract class BlockContainerBase extends ContainerBlock {
-
-    private final String name;
-
-    public BlockContainerBase(Properties properties, String name) {
+    public BlockContainerBase(Properties properties) {
         super(properties);
-        this.name = name;
-
-        this.register();
-    }
-
-    private void register() {
-        ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
-    }
-
-    protected String getBaseName() {
-        return this.name;
-    }
-
-    protected ItemBlockBase getItemBlock() {
-        return new ItemBlockBase(this, new Item.Properties().group(ActuallyAdditions.GROUP));
-    }
-
-    public boolean shouldAddCreative() {
-        return true;
     }
 
     private void dropInventory(World world, BlockPos position) {

@@ -13,64 +13,58 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumRarity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ToolType;
 
-import java.util.List;
+import javax.annotation.Nullable;
 
 public class BlockAtomicReconstructor extends BlockContainerBase implements IHudDisplay {
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public static final int NAME_FLAVOR_AMOUNTS_1 = 12;
     public static final int NAME_FLAVOR_AMOUNTS_2 = 14;
 
     public BlockAtomicReconstructor() {
-        super(Material.ROCK, this.name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(10F);
-        this.setResistance(80F);
-        this.setSoundType(SoundType.STONE);
+        super(Properties.create(Material.ROCK).harvestTool(ToolType.PICKAXE).hardnessAndResistance(10F, 80F).sound(SoundType.STONE));
+        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
 
     @Override
-    public boolean isOpaqueCube(BlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         ItemStack heldItem = player.getHeldItem(hand);
         if (this.tryToggleRedstone(world, pos, player)) {
-            return true;
+            return ActionResultType.PASS;
         }
         if (!world.isRemote) {
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor) world.getTileEntity(pos);
@@ -84,7 +78,7 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
                     }
                     //Shush, don't tell anyone!
-                    else if (ConfigIntValues.ELEVEN.getValue() == 11 && item == Items.RECORD_11) {
+                    else if (ConfigIntValues.ELEVEN.getValue() == 11 && item == Items.MUSIC_DISC_11) {
                         reconstructor.counter++;
                         reconstructor.markDirty();
                     }
@@ -97,17 +91,32 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
                 }
             }
         }
-        return true;
+        return ActionResultType.PASS;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+        return new TileEntityAtomicReconstructor();
+    }
+
+    public BlockState getBaseConstructorState() {
+        return this.stateContainer.getBaseState().with(FACING, Direction.NORTH);
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int i) {
-        return new TileEntityAtomicReconstructor();
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
+    }
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
+    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, MainWindow resolution) {
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if (tile instanceof TileEntityAtomicReconstructor) {
             ItemStack slot = ((TileEntityAtomicReconstructor) tile).inv.getStackInSlot(0);
@@ -123,87 +132,43 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         }
     }
 
-    @Override
-    protected ItemBlockBase getItemBlock() {
-        return new TheItemBlock(this);
-    }
 
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
-    }
+    //    @Override
+    //    public BlockState withRotation(BlockState state, Rotation rot) {
+    //        return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING)));
+    //    }
+    //
+    //    @Override
+    //    public BlockState withMirror(BlockState state, Mirror mirror) {
+    //        return this.withRotation(state, mirror.toRotation(state.getValue(BlockDirectional.FACING)));
+    //    }
 
-    @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, EntityLivingBase player, ItemStack stack) {
-        int rotation = Direction.getDirectionFromEntityLiving(pos, player).ordinal();
-        world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
-
-        super.onBlockPlacedBy(world, pos, state, player, stack);
-    }
-
-    @Override
-    public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, Direction.byIndex(meta));
-    }
-
-    @Override
-    public int getMetaFromState(BlockState state) {
-        return state.getValue(BlockDirectional.FACING).getIndex();
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, BlockDirectional.FACING);
-    }
-
-    @Override
-    public BlockState withRotation(BlockState state, Rotation rot) {
-        return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING)));
-    }
-
-    @Override
-    public BlockState withMirror(BlockState state, Mirror mirror) {
-        return this.withRotation(state, mirror.toRotation(state.getValue(BlockDirectional.FACING)));
-    }
-
-    public static class TheItemBlock extends ItemBlockBase {
-
-        private long lastSysTime;
-        private int toPick1;
-        private int toPick2;
-
-        public TheItemBlock(Block block) {
-            super(block);
-            this.setHasSubtypes(false);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getTranslationKey(ItemStack stack) {
-            return this.getTranslationKey();
-        }
-
-        @Override
-        public int getMetadata(int damage) {
-            return damage;
-        }
-
-        @Override
-        public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-            long sysTime = System.currentTimeMillis();
-
-            if (this.lastSysTime + 3000 < sysTime) {
-                this.lastSysTime = sysTime;
-                if (world != null) {
-                    this.toPick1 = world.rand.nextInt(NAME_FLAVOR_AMOUNTS_1) + 1;
-                    this.toPick2 = world.rand.nextInt(NAME_FLAVOR_AMOUNTS_2) + 1;
-                }
-            }
-
-            String base = "tile." + ActuallyAdditions.MODID + "." + ((BlockAtomicReconstructor) this.block).getBaseName() + ".info.";
-            tooltip.add(StringUtil.localize(base + "1." + this.toPick1) + " " + StringUtil.localize(base + "2." + this.toPick2));
-        }
-    }
+    //    public static class TheItemBlock extends ItemBlockBase {
+    //
+    //        private long lastSysTime;
+    //        private int toPick1;
+    //        private int toPick2;
+    //
+    //        public TheItemBlock(Block block) {
+    //            super(block, new Item.Properties().group(ActuallyAdditions.GROUP).setNoRepair());
+    //        }
+    //
+    //        @Override
+    //        public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    //            long sysTime = System.currentTimeMillis();
+    //
+    //            if (this.lastSysTime + 3000 < sysTime) {
+    //                this.lastSysTime = sysTime;
+    //                if (Minecraft.getInstance().world != null) {
+    //                    this.toPick1 = Minecraft.getInstance().world.rand.nextInt(NAME_FLAVOR_AMOUNTS_1) + 1;
+    //                    this.toPick2 = Minecraft.getInstance().world.rand.nextInt(NAME_FLAVOR_AMOUNTS_2) + 1;
+    //                }
+    //            }
+    //
+    //            String base = "tile." + ActuallyAdditions.MODID + "." + ((BlockAtomicReconstructor) this.block).getBaseName() + ".info.";
+    //            tooltip.add(StringUtil.localize(base + "1." + this.toPick1) + " " + StringUtil.localize(base + "2." + this.toPick2));
+    //        }
+    //    }
 
     @Override
     public boolean hasComparatorInputOverride(BlockState state) {

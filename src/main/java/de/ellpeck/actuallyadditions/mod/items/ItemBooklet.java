@@ -20,8 +20,8 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
@@ -98,7 +98,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
+    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, MainWindow resolution) {
         if (posHit != null && posHit.getBlockPos() != null) {
             BlockState state = minecraft.world.getBlockState(posHit.getBlockPos());
             Block block = state.getBlock();

@@ -22,19 +22,19 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.IContainerListener;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -49,8 +49,8 @@ public class ContainerBag extends Container implements IButtonReactor {
     public boolean autoInsert;
     private boolean oldAutoInsert;
     private final ItemStack sack;
-
-    public ContainerBag(ItemStack sack, InventoryPlayer inventory, boolean isVoid) {
+    
+    public ContainerBag(ItemStack sack, PlayerInventory inventory, boolean isVoid) {
         this.inventory = inventory;
         this.bagInventory = new ItemStackHandlerAA(getSlotAmount(isVoid), (slot, stack, automation) -> !isBlacklisted(stack), ItemStackHandlerAA.REMOVE_TRUE);
         this.isVoid = isVoid;

@@ -17,8 +17,8 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -69,7 +69,7 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
+    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, MainWindow resolution) {
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if (tile instanceof TileEntityMiner) {
             TileEntityMiner miner = (TileEntityMiner) tile;

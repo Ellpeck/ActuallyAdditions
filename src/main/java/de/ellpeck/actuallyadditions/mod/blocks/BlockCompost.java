@@ -21,8 +21,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
@@ -157,7 +157,7 @@ public class BlockCompost extends BlockContainerBase implements IHudDisplay {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, ScaledResolution resolution) {
+    public void displayHud(Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult posHit, MainWindow resolution) {
         TileEntity tile = minecraft.world.getTileEntity(posHit.getBlockPos());
         if (tile instanceof TileEntityCompost) {
             ItemStack slot = ((TileEntityCompost) tile).inv.getStackInSlot(0);

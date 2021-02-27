@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.misc;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class DamageSources extends DamageSource {
 
@@ -28,8 +28,8 @@ public class DamageSources extends DamageSource {
     }
 
     @Override
-    public ITextComponent getDeathMessage(EntityLivingBase entity) {
+    public ITextComponent getDeathMessage(LivingEntity entity) {
         String locTag = "death." + ActuallyAdditions.MODID + "." + this.damageType + "." + (entity.world.rand.nextInt(this.messageCount) + 1);
-        return new TextComponentTranslation(locTag, entity.getName());
+        return new TranslationTextComponent(locTag, entity.getName());
     }
 }

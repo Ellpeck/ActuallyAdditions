@@ -10,19 +10,24 @@
 
 package de.ellpeck.actuallyadditions.mod.fluids;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockFluidFlowing;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.Fluid;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
 public final class InitFluids {
+    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, ActuallyAdditions.MODID);
 
-    public static Fluid fluidCanolaOil;
-    public static Fluid fluidRefinedCanolaOil;
-    public static Fluid fluidCrystalOil;
-    public static Fluid fluidEmpoweredOil;
+    public static final RegistryObject<Fluid> fluidCanolaOil = FLUIDS.register("canolaoil", () -> registerFluid("block_canola_oil"));
+    public static final RegistryObject<Fluid> fluidRefinedCanolaOil = FLUIDS.register("refinedcanolaoil", () -> registerFluid("block_refined_canola_oil"));
+    public static final RegistryObject<Fluid> fluidCrystalOil = FLUIDS.register("crystaloil", () -> registerFluid("block_crystal_oil"));
+    public static final RegistryObject<Fluid> fluidEmpoweredOil = FLUIDS.register("empoweredoil", () -> registerFluid("block_empowered_oil"));
 
     public static Block blockCanolaOil;
     public static Block blockRefinedCanolaOil;
@@ -41,12 +46,12 @@ public final class InitFluids {
         blockEmpoweredOil = registerFluidBlock(fluidEmpoweredOil, Material.WATER, "block_empowered_oil");
     }
 
-    private static Fluid registerFluid(String fluidName, String fluidTextureName, EnumRarity rarity) {
-        Fluid fluid = new FluidAA(fluidName.toLowerCase(Locale.ROOT), fluidTextureName).setRarity(rarity);
-        FluidRegistry.registerFluid(fluid);
-        FluidRegistry.addBucketForFluid(fluid);
+    private static Fluid registerFluid(String fluidName, String fluidTextureName) {
+        Fluid fluid = new FluidAA(fluidName.toLowerCase(Locale.ROOT), fluidTextureName);
+        //        FluidRegistry.registerFluid(fluid);
+        //        FluidRegistry.addBucketForFluid(fluid);
 
-        return FluidRegistry.getFluid(fluid.getName());
+        return fluid;
     }
 
     private static Block registerFluidBlock(Fluid fluid, Material material, String name) {

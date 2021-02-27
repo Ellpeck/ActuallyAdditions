@@ -11,8 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.fluids;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.Fluid;
 
 public class FluidAA extends Fluid {
 

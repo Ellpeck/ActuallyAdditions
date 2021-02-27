@@ -10,15 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.special;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3d;
 
 public class RenderSpecial {
 
