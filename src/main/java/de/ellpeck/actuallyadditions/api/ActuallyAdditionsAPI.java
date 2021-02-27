@@ -10,11 +10,6 @@
 
 package de.ellpeck.actuallyadditions.api;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
@@ -23,21 +18,16 @@ import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
-import de.ellpeck.actuallyadditions.api.recipe.BallOfFurReturn;
-import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
-import de.ellpeck.actuallyadditions.api.recipe.CompostRecipe;
-import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
-import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
-import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
-import de.ellpeck.actuallyadditions.api.recipe.OilGenRecipe;
-import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
-import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
+import de.ellpeck.actuallyadditions.api.recipe.*;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class ActuallyAdditionsAPI {
 
@@ -140,7 +130,9 @@ public final class ActuallyAdditionsAPI {
      * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
      */
     public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance) {
-        CRUSHER_RECIPES.add(new CrusherRecipe(Ingredient.fromStacks(input), outputOne, outputTwo.isEmpty() ? ItemStack.EMPTY : outputTwo, outputTwoChance));
+        CRUSHER_RECIPES.add(new CrusherRecipe(Ingredient.fromStacks(input), outputOne, outputTwo.isEmpty()
+            ? ItemStack.EMPTY
+            : outputTwo, outputTwoChance));
     }
 
     /**
@@ -152,7 +144,9 @@ public final class ActuallyAdditionsAPI {
      * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
      */
     public static void addCrusherRecipe(Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance) {
-        CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputTwo.isEmpty() ? ItemStack.EMPTY : outputTwo, outputTwoChance));
+        CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputTwo.isEmpty()
+            ? ItemStack.EMPTY
+            : outputTwo, outputTwoChance));
     }
 
     /**

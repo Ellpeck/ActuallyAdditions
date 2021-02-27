@@ -70,7 +70,7 @@ public final class PlayerData {
             this.didBookTutorial = compound.getBoolean("DidTutorial");
 
             this.hasBatWings = compound.getBoolean("HasBatWings");
-            this.batWingsFlyTime = compound.getInteger("BatWingsFlyTime");
+            this.batWingsFlyTime = compound.getInt("BatWingsFlyTime");
 
             ListNBT bookmarks = compound.getList("Bookmarks", 8);
             this.loadBookmarks(bookmarks);
@@ -84,17 +84,17 @@ public final class PlayerData {
         }
 
         public void writeToNBT(CompoundNBT compound, boolean savingToFile) {
-            compound.setBoolean("BookGotten", this.bookGottenAlready);
-            compound.setBoolean("DidTutorial", this.didBookTutorial);
+            compound.putBoolean("BookGotten", this.bookGottenAlready);
+            compound.putBoolean("DidTutorial", this.didBookTutorial);
 
-            compound.setBoolean("HasBatWings", this.hasBatWings);
-            compound.setInteger("BatWingsFlyTime", this.batWingsFlyTime);
+            compound.putBoolean("HasBatWings", this.hasBatWings);
+            compound.putInt("BatWingsFlyTime", this.batWingsFlyTime);
 
             compound.setTag("Bookmarks", this.saveBookmarks());
             compound.setTag("Trials", this.saveTrials());
 
             if (!savingToFile) {
-                compound.setBoolean("ShouldDisableWings", this.shouldDisableBatWings);
+                compound.putBoolean("ShouldDisableWings", this.shouldDisableBatWings);
             }
         }
 

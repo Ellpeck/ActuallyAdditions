@@ -21,14 +21,14 @@ public class TileEntityDropper extends TileEntityInventoryBase {
     private int currentTime;
 
     public TileEntityDropper() {
-        super(9, "dropper");
+        super(ActuallyTiles.DROPPER_TILE.get(), 9);
     }
 
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("CurrentTime", this.currentTime);
+            compound.putInt("CurrentTime", this.currentTime);
         }
     }
 
@@ -36,7 +36,7 @@ public class TileEntityDropper extends TileEntityInventoryBase {
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            this.currentTime = compound.getInteger("CurrentTime");
+            this.currentTime = compound.getInt("CurrentTime");
         }
     }
 

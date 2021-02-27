@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.api.recipe;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 

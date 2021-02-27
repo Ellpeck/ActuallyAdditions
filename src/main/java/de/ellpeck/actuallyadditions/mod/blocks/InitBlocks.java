@@ -23,6 +23,7 @@ public final class InitBlocks {
 
     public static final RegistryObject<Block> blockCompost = BLOCKS.register("block_compost", BlockCompost::new);
     public static final RegistryObject<Block> blockMisc = BLOCKS.register("block_misc", BlockMisc::new);
+    public static final RegistryObject<Block> blockLavaCasing = BLOCKS.register("block_misc", BlockMisc::new);
     public static final RegistryObject<Block> blockWildPlant = BLOCKS.register("block_wild", BlockWildPlant::new);
     public static final RegistryObject<Block> blockFeeder = BLOCKS.register("block_feeder", BlockFeeder::new);
     //    public static final RegistryObject<Block> blockGiantChest = BLOCKS.register("", );

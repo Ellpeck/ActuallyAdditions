@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.Particle;
@@ -233,7 +232,7 @@ public final class AssetUtil {
             data.setFloat("Size", size);
             data.setInteger("MaxAge", maxAge);
             data.setFloat("Alpha", alpha);
-            PacketHandler.theNetwork.sendToAllAround(new PacketServerToClient(data, PacketHandler.LASER_HANDLER), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 96));
+            PacketHandler.THE_NETWORK.sendToAllAround(new PacketServerToClient(data, PacketHandler.LASER_HANDLER), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 96));
         }
     }
 

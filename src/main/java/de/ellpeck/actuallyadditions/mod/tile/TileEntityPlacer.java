@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 public class TileEntityPlacer extends TileEntityBreaker {
 
     public TileEntityPlacer() {
-        super(9, "placer");
+        super(ActuallyTiles.PLACER_TILE.get(), 9);
         this.isPlacer = true;
     }
 

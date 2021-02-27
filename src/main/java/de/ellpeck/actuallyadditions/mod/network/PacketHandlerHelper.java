@@ -29,37 +29,37 @@ public final class PacketHandlerHelper {
     public static void sendButtonPacket(TileEntity tile, int buttonId) {
         CompoundNBT compound = new CompoundNBT();
         BlockPos pos = tile.getPos();
-        compound.setInteger("X", pos.getX());
-        compound.setInteger("Y", pos.getY());
-        compound.setInteger("Z", pos.getZ());
-        compound.setInteger("WorldID", tile.getWorld().provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getInstance().player.getEntityId());
-        compound.setInteger("ButtonID", buttonId);
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        compound.putInt("X", pos.getX());
+        compound.putInt("Y", pos.getY());
+        compound.putInt("Z", pos.getZ());
+        compound.putInt("WorldID", tile.getWorld().provider.getDimension());
+        compound.putInt("PlayerID", Minecraft.getInstance().player.getEntityId());
+        compound.putInt("ButtonID", buttonId);
+        PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }
 
     public static void syncPlayerData(PlayerEntity player, boolean log) {
         CompoundNBT compound = new CompoundNBT();
-        compound.setBoolean("Log", log);
+        compound.putBoolean("Log", log);
 
         CompoundNBT data = new CompoundNBT();
         PlayerData.getDataFromPlayer(player).writeToNBT(data, false);
         compound.setTag("Data", data);
 
         if (player instanceof ServerPlayerEntity) {
-            PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.SYNC_PLAYER_DATA), (ServerPlayerEntity) player);
+            PacketHandler.THE_NETWORK.sendTo(new PacketServerToClient(compound, PacketHandler.SYNC_PLAYER_DATA), (ServerPlayerEntity) player);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void sendPlayerDataToServer(boolean log, int type) {
         CompoundNBT compound = new CompoundNBT();
-        compound.setBoolean("Log", log);
-        compound.setInteger("Type", type);
+        compound.putBoolean("Log", log);
+        compound.putInt("Type", type);
 
         PlayerEntity player = Minecraft.getInstance().player;
         if (player != null) {
-            compound.setInteger("World", player.world.provider.getDimension());
+            compound.putInt("World", player.world.provider.getDimension());
             compound.setUniqueId("UUID", player.getUniqueID());
 
             PlayerSave data = PlayerData.getDataFromPlayer(player);
@@ -67,7 +67,7 @@ public final class PacketHandlerHelper {
             if (type == 0) {
                 compound.setTag("Bookmarks", data.saveBookmarks());
             } else if (type == 1) {
-                compound.setBoolean("DidBookTutorial", data.didBookTutorial);
+                compound.putBoolean("DidBookTutorial", data.didBookTutorial);
             } else if (type == 2) {
                 compound.setTag("Trials", data.saveTrials());
 
@@ -79,24 +79,24 @@ public final class PacketHandlerHelper {
                 }
 
                 if (data.completedTrials.size() >= total) {
-                    compound.setBoolean("Achievement", true);
+                    compound.putBoolean("Achievement", true);
                 }
             }
 
-            PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.PLAYER_DATA_TO_SERVER));
+            PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.PLAYER_DATA_TO_SERVER));
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void sendNumberPacket(TileEntity tile, double number, int id) {
         CompoundNBT compound = new CompoundNBT();
-        compound.setInteger("X", tile.getPos().getX());
-        compound.setInteger("Y", tile.getPos().getY());
-        compound.setInteger("Z", tile.getPos().getZ());
-        compound.setInteger("WorldID", tile.getWorld().provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getInstance().player.getEntityId());
-        compound.setInteger("NumberID", id);
+        compound.putInt("X", tile.getPos().getX());
+        compound.putInt("Y", tile.getPos().getY());
+        compound.putInt("Z", tile.getPos().getZ());
+        compound.putInt("WorldID", tile.getWorld().provider.getDimension());
+        compound.putInt("PlayerID", Minecraft.getInstance().player.getEntityId());
+        compound.putInt("NumberID", id);
         compound.setDouble("Number", number);
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));
+        PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));
     }
 }

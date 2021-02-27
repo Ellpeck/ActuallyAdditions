@@ -15,14 +15,14 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
@@ -31,6 +31,7 @@ import java.util.List;
 public class TileEntityBioReactor extends TileEntityInventoryBase implements ISharingEnergyProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 0, 800);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
 
     public int burnTime;
     public int maxBurnTime;
@@ -40,15 +41,15 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     private int lastProducePerTick;
 
     public TileEntityBioReactor() {
-        super(8, "bioReactor");
+        super(ActuallyTiles.BIOREACTOR_TILE.get(), 8);
     }
 
     public static boolean isValidItem(ItemStack stack) {
         if (StackUtil.isValid(stack)) {
             Item item = stack.getItem();
-            if (isValid(item)) {
+            if (item.isFood()) {
                 return true;
-            } else if (item instanceof ItemBlock) {
+            } else if (item instanceof BlockItem) {
                 return isValid(Block.getBlockFromItem(item));
             }
         }
@@ -56,7 +57,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     }
 
     private static boolean isValid(Object o) {
-        return o instanceof IPlantable || o instanceof IGrowable || o instanceof ItemFood;
+        return o instanceof IPlantable || o instanceof IGrowable;
     }
 
     @Override
@@ -112,9 +113,9 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
         super.writeSyncableNBT(compound, type);
 
         this.storage.writeToNBT(compound);
-        compound.setInteger("BurnTime", this.burnTime);
-        compound.setInteger("MaxBurnTime", this.maxBurnTime);
-        compound.setInteger("ProducePerTick", this.producePerTick);
+        compound.putInt("BurnTime", this.burnTime);
+        compound.putInt("MaxBurnTime", this.maxBurnTime);
+        compound.putInt("ProducePerTick", this.producePerTick);
     }
 
     @Override
@@ -122,9 +123,9 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
         super.readSyncableNBT(compound, type);
 
         this.storage.readFromNBT(compound);
-        this.burnTime = compound.getInteger("BurnTime");
-        this.maxBurnTime = compound.getInteger("MaxBurnTime");
-        this.producePerTick = compound.getInteger("ProducePerTick");
+        this.burnTime = compound.getInt("BurnTime");
+        this.maxBurnTime = compound.getInt("MaxBurnTime");
+        this.producePerTick = compound.getInt("ProducePerTick");
     }
 
     @Override
@@ -158,8 +159,8 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 
     @Override

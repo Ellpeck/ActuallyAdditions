@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -67,7 +66,7 @@ public class BlockTreasureChest extends BlockBase {
         if (!world.isRemote) {
             world.playSound(null, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.2F, world.rand.nextFloat() * 0.1F + 0.9F);
             this.dropItems(world, pos);
-            world.setBlockToAir(pos);
+            world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
             //TheAchievements.OPEN_TREASURE_CHEST.get(player);
         }

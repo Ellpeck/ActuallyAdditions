@@ -13,13 +13,13 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     public FilterSettings filter = new FilterSettings(12, true, true, false, false, 0, -1000);
 
     public TileEntityRangedCollector() {
-        super(6, "rangedCollector");
+        super(ActuallyTiles.RANGEDCOLLECTOR_TILE.get(), 6);
     }
 
     @Override
@@ -54,18 +54,18 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
 
     @Override
     public void activateOnPulse() {
-        List<EntityItem> items = this.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.pos.getX() - RANGE, this.pos.getY() - RANGE, this.pos.getZ() - RANGE, this.pos.getX() + RANGE, this.pos.getY() + RANGE, this.pos.getZ() + RANGE));
+        List<ItemEntity> items = this.world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(this.pos.getX() - RANGE, this.pos.getY() - RANGE, this.pos.getZ() - RANGE, this.pos.getX() + RANGE, this.pos.getY() + RANGE, this.pos.getZ() + RANGE));
         if (!items.isEmpty()) {
-            for (EntityItem item : items) {
-                if (!item.isDead && !item.cannotPickup() && StackUtil.isValid(item.getItem())) {
+            for (ItemEntity item : items) {
+                if (item.isAlive() && !item.cannotPickup() && StackUtil.isValid(item.getItem())) {
                     ItemStack toAdd = item.getItem().copy();
                     if (this.filter.check(toAdd)) {
                         ArrayList<ItemStack> checkList = new ArrayList<>();
                         checkList.add(toAdd);
                         if (StackUtil.canAddAll(this.inv, checkList, false)) {
                             StackUtil.addAll(this.inv, checkList, false);
-                            ((WorldServer) this.world).spawnParticle(EnumParticleTypes.CLOUD, false, item.posX, item.posY + 0.45F, item.posZ, 5, 0, 0, 0, 0.03D);
-                            item.setDead();
+                            ((ServerWorld) this.world).spawnParticle(ParticleTypes.CLOUD, item.getPosX(), item.getPosY() + 0.45F, item.getPosZ(), 5, 0, 0, 0, 0.03D);
+                            item.remove();
                         }
                     }
                 }

@@ -11,14 +11,14 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
-import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyDisplay {
@@ -28,11 +28,13 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public static final int HAS_AIR = 2;
     public static final int ENERGY_USE = 150000;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 2000, 0);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
+
     private int currentWorkTime;
     private int oldEnergy;
 
     public TileEntityLavaFactoryController() {
-        super("lavaFactory");
+        super(ActuallyTiles.LAVAFACTORYCONTROLLER_TILE.get());
     }
 
     @Override
@@ -40,7 +42,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("WorkTime", this.currentWorkTime);
+            compound.putInt("WorkTime", this.currentWorkTime);
         }
     }
 
@@ -49,7 +51,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
-            this.currentWorkTime = compound.getInteger("WorkTime");
+            this.currentWorkTime = compound.getInt("WorkTime");
         }
     }
 
@@ -78,14 +80,14 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
         BlockPos thisPos = this.pos;
         BlockPos[] positions = new BlockPos[]{thisPos.add(1, 1, 0), thisPos.add(-1, 1, 0), thisPos.add(0, 1, 1), thisPos.add(0, 1, -1)};
 
-        if (WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockMisc, TheMiscBlocks.LAVA_FACTORY_CASE.ordinal(), this.world)) {
+        if (this.world != null && WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockLavaCasing.get(), this.world)) {
             BlockPos pos = thisPos.up();
             BlockState state = this.world.getBlockState(pos);
             Block block = state.getBlock();
-            if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) {
+            if (block == Blocks.LAVA) {
                 return HAS_LAVA;
             }
-            if (block == null || this.world.isAirBlock(pos)) {
+            if (this.world.isAirBlock(pos)) {
                 return HAS_AIR;
             }
         }
@@ -103,7 +105,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

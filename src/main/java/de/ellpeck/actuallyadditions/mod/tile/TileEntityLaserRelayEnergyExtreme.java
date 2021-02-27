@@ -15,7 +15,7 @@ public class TileEntityLaserRelayEnergyExtreme extends TileEntityLaserRelayEnerg
     public static final int CAP = 100000;
 
     public TileEntityLaserRelayEnergyExtreme() {
-        super("laserRelayExtreme");
+        super(ActuallyTiles.LASERRELAYENERGYEXTREME_TILE.get());
     }
 
     @Override

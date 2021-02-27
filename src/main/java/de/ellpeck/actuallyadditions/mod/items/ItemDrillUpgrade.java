@@ -32,7 +32,7 @@ public class ItemDrillUpgrade extends ItemBase {
     public static int getSlotToPlaceFrom(ItemStack stack) {
         CompoundNBT compound = stack.getTagCompound();
         if (compound != null) {
-            return compound.getInteger("SlotToPlaceFrom") - 1;
+            return compound.getInt("SlotToPlaceFrom") - 1;
         }
         return -1;
     }
@@ -53,7 +53,7 @@ public class ItemDrillUpgrade extends ItemBase {
             compound = new CompoundNBT();
         }
 
-        compound.setInteger("SlotToPlaceFrom", slot + 1);
+        compound.putInt("SlotToPlaceFrom", slot + 1);
 
         stack.setTagCompound(compound);
     }

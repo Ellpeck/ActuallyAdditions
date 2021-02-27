@@ -19,7 +19,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements ISharingFluidHandler {
 
     public TileEntityPhantomLiquiface() {
-        super("liquiface");
+        super(ActuallyTiles.PHANTOMLIQUIFACE_TILE.get());
         this.type = BlockPhantom.Type.LIQUIFACE;
     }
 
@@ -29,7 +29,9 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
             TileEntity tile = this.world.getTileEntity(this.boundPosition);
             if (tile != null && !(tile instanceof TileEntityLaserRelayFluids)) {
                 for (Direction facing : Direction.values()) {
-                    if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) { return true; }
+                    if (tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing).isPresent()) {
+                        return true;
+                    }
                 }
             }
         }

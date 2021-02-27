@@ -71,7 +71,7 @@ public class ItemSolidifiedExperience extends ItemBase {
 
             if (ConfigBoolValues.SOLID_XP_ALWAYS_ORBS.currentValue || player instanceof FakePlayer) {
                 EntityXPOrb orb = new EntityXPOrb(world, player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, amount);
-                orb.getEntityData().setBoolean(ActuallyAdditions.MODID + "FromSolidified", true);
+                orb.getEntityData().putBoolean(ActuallyAdditions.MODID + "FromSolidified", true);
                 world.spawnEntity(orb);
             } else {
                 player.addExperience(amount);

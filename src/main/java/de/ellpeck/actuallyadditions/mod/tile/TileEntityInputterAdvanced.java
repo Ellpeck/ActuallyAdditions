@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 public class TileEntityInputterAdvanced extends TileEntityInputter {
 
     public TileEntityInputterAdvanced() {
-        super(1, "inputterAdvanced");
+        super(ActuallyTiles.INPUTTERADVANCED_TILE.get(), 1);
         this.isAdvanced = true;
     }
 

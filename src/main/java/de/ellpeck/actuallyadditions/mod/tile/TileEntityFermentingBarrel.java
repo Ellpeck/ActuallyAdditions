@@ -14,11 +14,11 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidHandlerFluidMap;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler {
 
@@ -49,7 +49,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     private int lastCompare;
 
     public TileEntityFermentingBarrel() {
-        super("fermentingBarrel");
+        super(ActuallyTiles.FERMENTINGBARREL_TILE.get());
 
         this.handlerMap = new FluidHandlerFluidMap();
         this.handlerMap.addHandler(InitFluids.fluidCanolaOil, this.canolaTank);
@@ -58,7 +58,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
-        compound.setInteger("ProcessTime", this.currentProcessTime);
+        compound.putInt("ProcessTime", this.currentProcessTime);
         this.canolaTank.writeToNBT(compound);
         CompoundNBT tag = new CompoundNBT();
         this.oilTank.writeToNBT(tag);
@@ -68,7 +68,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     @Override
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
-        this.currentProcessTime = compound.getInteger("ProcessTime");
+        this.currentProcessTime = compound.getInt("ProcessTime");
         this.canolaTank.readFromNBT(compound);
         CompoundNBT tag = compound.getCompoundTag("OilTank");
         if (tag != null) {

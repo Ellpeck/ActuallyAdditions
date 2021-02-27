@@ -15,16 +15,18 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
     public static final int PRODUCE = 8;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 0, 100);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int oldEnergy;
 
     public TileEntityFurnaceSolar() {
-        super("solarPanel");
+        super(ActuallyTiles.SOLAR_TILE.get());
     }
 
     @Override
@@ -107,7 +109,7 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

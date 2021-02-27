@@ -114,13 +114,13 @@ public class GuiSmileyCloud extends GuiWtfMojang {
 
     private void sendPacket(String text, int textID) {
         CompoundNBT compound = new CompoundNBT();
-        compound.setInteger("X", this.x);
-        compound.setInteger("Y", this.y);
-        compound.setInteger("Z", this.z);
-        compound.setInteger("WorldID", this.world.provider.getDimension());
-        compound.setInteger("PlayerID", Minecraft.getInstance().player.getEntityId());
-        compound.setInteger("TextID", textID);
+        compound.putInt("X", this.x);
+        compound.putInt("Y", this.y);
+        compound.putInt("Z", this.z);
+        compound.putInt("WorldID", this.world.provider.getDimension());
+        compound.putInt("PlayerID", Minecraft.getInstance().player.getEntityId());
+        compound.putInt("TextID", textID);
         compound.setString("Text", text);
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_STRING_TO_TILE_HANDLER));
+        PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_STRING_TO_TILE_HANDLER));
     }
 }

@@ -17,7 +17,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 public class TileEntityPhantomBreaker extends TileEntityPhantomPlacer {
 
     public TileEntityPhantomBreaker() {
-        super(9, "phantomBreaker");
+        super(ActuallyTiles.PHANTOMBREAKER_TILE.get(), 9);
         this.isBreaker = true;
     }
 

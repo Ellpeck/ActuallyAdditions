@@ -71,7 +71,7 @@ public class GuiBag extends GuiWtfMojang {
         data.setInteger("ButtonID", button.id);
         data.setInteger("PlayerID", Minecraft.getInstance().player.getEntityId());
         data.setInteger("WorldID", Minecraft.getInstance().world.provider.getDimension());
-        PacketHandler.theNetwork.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
+        PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
     }
 
     @Override

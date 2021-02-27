@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -20,10 +19,13 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements ISharingFluidHandler {
 
@@ -31,19 +33,24 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(40000, 100, 0);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
+
     public final FluidTank tank = new FluidTank(2 * Util.BUCKET) {
+        // TODO: [port] ensure this is the correct replacement for canFill
         @Override
-        public boolean canFill() {
+        public boolean isFluidValid(FluidStack stack) {
             return false;
         }
     };
+    public final LazyOptional<IFluidHandler> lazyFluid = LazyOptional.of(() -> this.tank);
+
     public int currentProcessTime;
     private int lastEnergyStored;
     private int lastTankAmount;
     private int lastProcessTime;
 
     public TileEntityCanolaPress() {
-        super(1, "canolaPress");
+        super(ActuallyTiles.CANOLAPRESS_TILE.get(), 1);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -64,7 +71,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("ProcessTime", this.currentProcessTime);
+            compound.putInt("ProcessTime", this.currentProcessTime);
         }
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
@@ -74,7 +81,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     @Override
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            this.currentProcessTime = compound.getInteger("ProcessTime");
+            this.currentProcessTime = compound.getInt("ProcessTime");
         }
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
@@ -94,7 +101,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
 
                         this.inv.setStackInSlot(0, StackUtil.shrink(this.inv.getStackInSlot(0), 1));
 
-                        this.tank.fillInternal(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), true);
+                        this.tank.fill(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), IFluidHandler.FluidAction.EXECUTE);
                         this.markDirty();
                     }
                 }
@@ -116,7 +123,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     }
 
     public static boolean isCanola(ItemStack stack) {
-        return stack.getItem() == InitItems.itemMisc && stack.getMetadata() == TheMiscItems.CANOLA.ordinal();
+        return stack.getItem() == InitItems.itemCanola;
     }
 
     @Override
@@ -125,8 +132,8 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     }
 
     @Override
-    public FluidTank getFluidHandler(Direction facing) {
-        return this.tank;
+    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
+        return this.lazyFluid;
     }
 
     @Override
@@ -145,7 +152,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

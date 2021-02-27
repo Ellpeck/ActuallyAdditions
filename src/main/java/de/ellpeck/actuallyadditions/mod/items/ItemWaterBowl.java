@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.PlayerEntity;
@@ -129,8 +128,8 @@ public class ItemWaterBowl extends ItemBase {
 
                     if (stack.hasTagCompound()) {
                         CompoundNBT compound = stack.getTagCompound();
-                        lastX = compound.getInteger("lastX");
-                        lastY = compound.getInteger("lastY");
+                        lastX = compound.getInt("lastX");
+                        lastY = compound.getInt("lastY");
                     }
 
                     boolean change = false;
@@ -152,8 +151,8 @@ public class ItemWaterBowl extends ItemBase {
                         }
 
                         CompoundNBT compound = stack.getTagCompound();
-                        compound.setInteger("lastX", (int) entity.posX);
-                        compound.setInteger("lastY", (int) entity.posY);
+                        compound.putInt("lastX", (int) entity.posX);
+                        compound.putInt("lastY", (int) entity.posY);
                     }
                 }
             }

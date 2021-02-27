@@ -32,7 +32,6 @@ import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -117,9 +116,9 @@ public class MethodHandler implements IMethodHandler {
 
         int prevCounter = tag.getInteger("Counter");
         CompoundNBT compound = new CompoundNBT();
-        compound.setInteger("ID", Potion.getIdFromPotion(effect.getPotion()));
-        compound.setInteger("Duration", effect.getDuration());
-        compound.setInteger("Amplifier", effect.getAmplifier());
+        compound.putInt("ID", Potion.getIdFromPotion(effect.getPotion()));
+        compound.putInt("Duration", effect.getDuration());
+        compound.putInt("Amplifier", effect.getAmplifier());
 
         int counter = prevCounter + 1;
         tag.setTag(counter + "", compound);
@@ -136,7 +135,7 @@ public class MethodHandler implements IMethodHandler {
             int counter = tag.getInteger("Counter");
             while (counter > 0) {
                 CompoundNBT compound = (CompoundNBT) tag.getTag(counter + "");
-                PotionEffect effect = new PotionEffect(Potion.getPotionById(compound.getInteger("ID")), compound.getInteger("Duration"), compound.getByte("Amplifier"));
+                PotionEffect effect = new PotionEffect(Potion.getPotionById(compound.getInt("ID")), compound.getInt("Duration"), compound.getByte("Amplifier"));
                 effects.add(effect);
                 counter--;
             }
@@ -191,7 +190,7 @@ public class MethodHandler implements IMethodHandler {
                                     } else {
                                         EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output.copy());
                                         tile.getWorldObject().spawnEntity(item);
-                                        tile.getWorldObject().setBlockToAir(pos);
+                                        tile.getWorldObject().setBlockState(pos, Blocks.AIR.getDefaultState());
                                     }
 
                                     tile.extractEnergy(recipe.getEnergyUsed());
@@ -231,7 +230,7 @@ public class MethodHandler implements IMethodHandler {
                             outputCopy.setCount(itemsPossible);
 
                             EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
-                            newItem.getEntityData().setBoolean("aa_cnv", true);
+                            newItem.getEntityData().putBoolean("aa_cnv", true);
                             tile.getWorldObject().spawnEntity(newItem);
 
                             tile.extractEnergy(recipe.getEnergyUsed() * itemsPossible);

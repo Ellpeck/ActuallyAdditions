@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -35,8 +34,12 @@ public class MelonPumpkinFarmerBehavior implements IFarmerBehavior {
                 boolean isPumpkin = seedItem == Items.PUMPKIN_SEEDS;
                 if (isPumpkin || seedItem == Items.MELON_SEEDS) {
                     if (pos.getX() % 2 == 0 == (pos.getZ() % 2 == 0)) {
-                        BlockState toPlant = (isPumpkin ? Blocks.PUMPKIN_STEM : Blocks.MELON_STEM).getDefaultState();
-                        if (DefaultFarmerBehavior.defaultPlant(world, pos, toPlant, farmer, use)) return FarmerResult.SUCCESS;
+                        BlockState toPlant = (isPumpkin
+                            ? Blocks.PUMPKIN_STEM
+                            : Blocks.MELON_STEM).getDefaultState();
+                        if (DefaultFarmerBehavior.defaultPlant(world, pos, toPlant, farmer, use)) {
+                            return FarmerResult.SUCCESS;
+                        }
                     }
                     return FarmerResult.STOP_PROCESSING;
                 }
@@ -58,7 +61,7 @@ public class MelonPumpkinFarmerBehavior implements IFarmerBehavior {
                 if (!drops.isEmpty()) {
                     if (farmer.canAddToOutput(drops)) {
                         world.playEvent(2001, pos, Block.getStateId(state));
-                        world.setBlockToAir(pos);
+                        world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
                         farmer.extractEnergy(use);
                         farmer.addToOutput(drops);

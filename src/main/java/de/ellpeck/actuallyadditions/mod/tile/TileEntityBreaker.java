@@ -14,27 +14,29 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fluids.IFluidBlock;
+
+import java.util.List;
 
 public class TileEntityBreaker extends TileEntityInventoryBase {
 
     public boolean isPlacer;
     private int currentTime;
 
-    public TileEntityBreaker(int slots, String name) {
-        super(slots, name);
+    public TileEntityBreaker(TileEntityType<?> type, int slots) {
+        super(type, slots);
     }
 
     public TileEntityBreaker() {
-        super(9, "breaker");
+        super(ActuallyTiles.BREAKER_TILE.get(), 9);
         this.isPlacer = false;
     }
 
@@ -82,9 +84,8 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
         BlockState stateToBreak = this.world.getBlockState(breakCoords);
         Block blockToBreak = stateToBreak.getBlock();
 
-        if (!this.isPlacer && blockToBreak != Blocks.AIR && !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && stateToBreak.getBlockHardness(this.world, breakCoords) >= 0.0F) {
-            NonNullList<ItemStack> drops = NonNullList.create();
-            blockToBreak.getDrops(drops, this.world, breakCoords, stateToBreak, 0);
+        if (!this.isPlacer && blockToBreak != Blocks.AIR && !(blockToBreak instanceof IFluidBlock) && stateToBreak.getBlockHardness(this.world, breakCoords) >= 0.0F) {
+            List<ItemStack> drops = Block.getDrops(stateToBreak, (ServerWorld) this.world, breakCoords, this.world.getTileEntity(breakCoords));
             float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.world, breakCoords);
 
             if (chance > 0 && this.world.rand.nextFloat() <= chance) {

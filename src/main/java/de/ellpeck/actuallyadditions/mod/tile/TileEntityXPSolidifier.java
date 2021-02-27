@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -41,7 +41,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     private int singlePointAmount;
 
     public TileEntityXPSolidifier() {
-        super(2, "xpSolidifier");
+        super(ActuallyTiles.XPSOLIDIFIER_TILE.get(), 2);
     }
 
     /*
@@ -106,15 +106,15 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
-        compound.setInteger("Amount", this.amount);
-        compound.setInteger("SinglePointAmount", this.singlePointAmount);
+        compound.putInt("Amount", this.amount);
+        compound.putInt("SinglePointAmount", this.singlePointAmount);
     }
 
     @Override
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
-        this.amount = compound.getInteger("Amount");
-        this.singlePointAmount = compound.getInteger("SinglePointAmount");
+        this.amount = compound.getInt("Amount");
+        this.singlePointAmount = compound.getInt("SinglePointAmount");
     }
 
     @Override
@@ -141,12 +141,13 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
             if (!this.isRedstonePowered) {
                 int range = 5;
-                List<EntityXPOrb> orbs = this.world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.pos.getX() - range, this.pos.getY() - range, this.pos.getZ() - range, this.pos.getX() + 1 + range, this.pos.getY() + 1 + range, this.pos.getZ() + 1 + range));
+                List<ExperienceOrbEntity> orbs = this.world.getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(this.pos.getX() - range, this.pos.getY() - range, this.pos.getZ() - range, this.pos.getX() + 1 + range, this.pos.getY() + 1 + range, this.pos.getZ() + 1 + range));
                 if (orbs != null && !orbs.isEmpty()) {
-                    for (EntityXPOrb orb : orbs) {
-                        if (orb != null && !orb.isDead && !orb.getEntityData().getBoolean(ActuallyAdditions.MODID + "FromSolidified")) {
+                    for (ExperienceOrbEntity orb : orbs) {
+                        // TODO: [port] validate the getPersistentData is correct
+                        if (orb != null && orb.isAlive() && !orb.getPersistentData().getBoolean(ActuallyAdditions.MODID + "FromSolidified")) {
                             this.singlePointAmount += orb.getXpValue();
-                            orb.setDead();
+                            orb.remove();
 
                             if (this.singlePointAmount >= ItemSolidifiedExperience.SOLID_XP_AMOUNT) {
                                 this.amount += this.singlePointAmount / ItemSolidifiedExperience.SOLID_XP_AMOUNT;

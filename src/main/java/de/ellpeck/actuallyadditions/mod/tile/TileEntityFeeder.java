@@ -11,13 +11,13 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.init.Items;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 
@@ -44,18 +44,18 @@ public class TileEntityFeeder extends TileEntityInventoryBase {
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
-        compound.setInteger("Timer", this.currentTimer);
+        compound.putInt("Timer", this.currentTimer);
         if (type == NBTType.SYNC) {
-            compound.setInteger("Animals", this.currentAnimalAmount);
+            compound.putInt("Animals", this.currentAnimalAmount);
         }
     }
 
     @Override
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
-        this.currentTimer = compound.getInteger("Timer");
+        this.currentTimer = compound.getInt("Timer");
         if (type == NBTType.SYNC) {
-            this.currentAnimalAmount = compound.getInteger("Animals");
+            this.currentAnimalAmount = compound.getInt("Animals");
         }
     }
 
@@ -69,10 +69,10 @@ public class TileEntityFeeder extends TileEntityInventoryBase {
         int range = 5;
         ItemStack stack = this.inv.getStackInSlot(0);
         if (!stack.isEmpty() && this.currentTimer >= TIME) {
-            List<EntityAnimal> animals = this.world.getEntitiesWithinAABB(EntityAnimal.class, new AxisAlignedBB(this.pos.getX() - range, this.pos.getY() - range, this.pos.getZ() - range, this.pos.getX() + range, this.pos.getY() + range, this.pos.getZ() + range));
+            List<AnimalEntity> animals = this.world.getEntitiesWithinAABB(AnimalEntity.class, new AxisAlignedBB(this.pos.getX() - range, this.pos.getY() - range, this.pos.getZ() - range, this.pos.getX() + range, this.pos.getY() + range, this.pos.getZ() + range));
             this.currentAnimalAmount = animals.size();
             if (this.currentAnimalAmount >= 2 && this.currentAnimalAmount < THRESHOLD) {
-                Optional<EntityAnimal> opt = animals.stream().filter((e) -> canBeFed(stack, e)).findAny();
+                Optional<AnimalEntity> opt = animals.stream().filter((e) -> canBeFed(stack, e)).findAny();
                 if (opt.isPresent()) {
                     feedAnimal(opt.get());
                     stack.shrink(1);
@@ -92,18 +92,18 @@ public class TileEntityFeeder extends TileEntityInventoryBase {
         return (slot, automation) -> !automation;
     }
 
-    private static void feedAnimal(EntityAnimal animal) {
+    private static void feedAnimal(AnimalEntity animal) {
         animal.setInLove(null);
         for (int i = 0; i < 7; i++) {
             double d = animal.world.rand.nextGaussian() * 0.02D;
             double d1 = animal.world.rand.nextGaussian() * 0.02D;
             double d2 = animal.world.rand.nextGaussian() * 0.02D;
-            animal.world.spawnParticle(EnumParticleTypes.HEART, animal.posX + animal.world.rand.nextFloat() * animal.width * 2.0F - animal.width, animal.posY + 0.5D + animal.world.rand.nextFloat() * animal.height, animal.posZ + animal.world.rand.nextFloat() * animal.width * 2.0F - animal.width, d, d1, d2);
+            animal.world.addParticle(ParticleTypes.HEART, animal.getPosX() + animal.world.rand.nextFloat() * animal.getWidth() * 2.0F - animal.getWidth(), animal.getPosY() + 0.5D + animal.world.rand.nextFloat() * animal.getHeight(), animal.getPosZ() + animal.world.rand.nextFloat() * animal.getWidth() * 2.0F - animal.getWidth(), d, d1, d2);
         }
     }
 
-    private static boolean canBeFed(ItemStack stack, EntityAnimal animal) {
-        if (animal instanceof EntityHorse && ((EntityHorse) animal).isTame()) {
+    private static boolean canBeFed(ItemStack stack, AnimalEntity animal) {
+        if (animal instanceof HorseEntity && ((HorseEntity) animal).isTame()) {
             Item item = stack.getItem();
             return animal.getGrowingAge() == 0 && !animal.isInLove() && (item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT);
         }

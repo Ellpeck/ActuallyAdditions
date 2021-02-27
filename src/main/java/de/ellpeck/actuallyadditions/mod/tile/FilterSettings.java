@@ -134,11 +134,11 @@ public class FilterSettings {
 
     public void writeToNBT(CompoundNBT tag, String name) {
         CompoundNBT compound = new CompoundNBT();
-        compound.setBoolean("Whitelist", this.isWhitelist);
-        compound.setBoolean("Meta", this.respectMeta);
-        compound.setBoolean("NBT", this.respectNBT);
-        compound.setBoolean("Mod", this.respectMod);
-        compound.setInteger("Oredict", this.respectOredict);
+        compound.putBoolean("Whitelist", this.isWhitelist);
+        compound.putBoolean("Meta", this.respectMeta);
+        compound.putBoolean("NBT", this.respectNBT);
+        compound.putBoolean("Mod", this.respectMod);
+        compound.putInt("Oredict", this.respectOredict);
         TileEntityInventoryBase.saveSlots(this.filterInventory, compound);
         tag.setTag(name, compound);
     }
@@ -149,7 +149,7 @@ public class FilterSettings {
         this.respectMeta = compound.getBoolean("Meta");
         this.respectNBT = compound.getBoolean("NBT");
         this.respectMod = compound.getBoolean("Mod");
-        this.respectOredict = compound.getInteger("Oredict");
+        this.respectOredict = compound.getInt("Oredict");
         TileEntityInventoryBase.loadSlots(this.filterInventory, compound);
     }
 

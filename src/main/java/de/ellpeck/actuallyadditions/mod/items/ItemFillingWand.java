@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,8 +24,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Direction;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -95,10 +94,10 @@ public class ItemFillingWand extends ItemEnergy {
                 }
                 CompoundNBT compound = stack.getTagCompound();
 
-                if (compound.getInteger("CurrX") == 0 && compound.getInteger("CurrY") == 0 && compound.getInteger("CurrZ") == 0) {
-                    compound.setInteger("FirstX", pos.getX());
-                    compound.setInteger("FirstY", pos.getY());
-                    compound.setInteger("FirstZ", pos.getZ());
+                if (compound.getInt("CurrX") == 0 && compound.getInt("CurrY") == 0 && compound.getInt("CurrZ") == 0) {
+                    compound.putInt("FirstX", pos.getX());
+                    compound.putInt("FirstY", pos.getY());
+                    compound.putInt("FirstZ", pos.getZ());
 
                     player.setActiveHand(hand);
                     return EnumActionResult.SUCCESS;
@@ -121,9 +120,9 @@ public class ItemFillingWand extends ItemEnergy {
                     CompoundNBT compound = stack.getTagCompound();
 
                     BlockPos pos = result.getBlockPos();
-                    compound.setInteger("SecondX", pos.getX());
-                    compound.setInteger("SecondY", pos.getY());
-                    compound.setInteger("SecondZ", pos.getZ());
+                    compound.putInt("SecondX", pos.getX());
+                    compound.putInt("SecondY", pos.getY());
+                    compound.putInt("SecondZ", pos.getZ());
 
                     clear = false;
                 }
@@ -151,8 +150,8 @@ public class ItemFillingWand extends ItemEnergy {
 
                     CompoundNBT compound = stack.getTagCompound();
 
-                    BlockPos firstPos = new BlockPos(compound.getInteger("FirstX"), compound.getInteger("FirstY"), compound.getInteger("FirstZ"));
-                    BlockPos secondPos = new BlockPos(compound.getInteger("SecondX"), compound.getInteger("SecondY"), compound.getInteger("SecondZ"));
+                    BlockPos firstPos = new BlockPos(compound.getInt("FirstX"), compound.getInt("FirstY"), compound.getInt("FirstZ"));
+                    BlockPos secondPos = new BlockPos(compound.getInt("SecondX"), compound.getInt("SecondY"), compound.getInt("SecondZ"));
 
                     if (!BlockPos.ORIGIN.equals(firstPos) && !BlockPos.ORIGIN.equals(secondPos)) {
                         int energyUse = 1500;
@@ -164,9 +163,9 @@ public class ItemFillingWand extends ItemEnergy {
                             int lowestY = Math.min(firstPos.getY(), secondPos.getY());
                             int lowestZ = Math.min(firstPos.getZ(), secondPos.getZ());
 
-                            int currX = compound.getInteger("CurrX");
-                            int currY = compound.getInteger("CurrY");
-                            int currZ = compound.getInteger("CurrZ");
+                            int currX = compound.getInt("CurrX");
+                            int currY = compound.getInt("CurrY");
+                            int currZ = compound.getInt("CurrZ");
 
                             BlockPos pos = new BlockPos(lowestX + currX, lowestY + currY, lowestZ + currZ);
                             BlockState state = world.getBlockState(pos);
@@ -204,9 +203,9 @@ public class ItemFillingWand extends ItemEnergy {
                             }
 
                             if (!shouldClear) {
-                                compound.setInteger("CurrX", currX);
-                                compound.setInteger("CurrY", currY);
-                                compound.setInteger("CurrZ", currZ);
+                                compound.putInt("CurrX", currX);
+                                compound.putInt("CurrY", currY);
+                                compound.putInt("CurrZ", currZ);
                             }
                         } else {
                             shouldClear = true;

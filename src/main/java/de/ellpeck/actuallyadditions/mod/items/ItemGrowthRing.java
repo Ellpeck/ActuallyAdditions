@@ -10,15 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
@@ -28,6 +24,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ItemGrowthRing extends ItemEnergy {
 
     public ItemGrowthRing(String name) {
@@ -36,7 +35,9 @@ public class ItemGrowthRing extends ItemEnergy {
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
-        if (!(entity instanceof PlayerEntity) || world.isRemote || entity.isSneaking()) { return; }
+        if (!(entity instanceof PlayerEntity) || world.isRemote || entity.isSneaking()) {
+            return;
+        }
 
         PlayerEntity player = (PlayerEntity) entity;
         ItemStack equipped = player.getHeldItemMainhand();

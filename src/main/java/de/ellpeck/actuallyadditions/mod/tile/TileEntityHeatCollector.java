@@ -12,13 +12,15 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockMagma;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.MagmaBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
@@ -28,11 +30,12 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 0, 80);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int oldEnergy;
     private int disappearTime;
 
     public TileEntityHeatCollector() {
-        super("heatCollector");
+        super(ActuallyTiles.HEATCOLLECTOR_TILE.get());
     }
 
     @Override
@@ -41,7 +44,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
 
         this.storage.writeToNBT(compound);
         if (type == NBTType.SAVE_TILE) {
-            compound.setInteger("DisappearTime", this.disappearTime);
+            compound.putInt("DisappearTime", this.disappearTime);
         }
     }
 
@@ -51,7 +54,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
 
         this.storage.readFromNBT(compound);
         if (type == NBTType.SAVE_TILE) {
-            this.disappearTime = compound.getInteger("DisappearTime");
+            this.disappearTime = compound.getInt("DisappearTime");
         }
     }
 
@@ -65,7 +68,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                     BlockPos coords = this.pos.offset(WorldUtil.getDirectionBySidesInOrder(i));
                     BlockState state = this.world.getBlockState(coords);
                     Block block = state.getBlock();
-                    if (block != null && this.world.getBlockState(coords).getMaterial() == Material.LAVA && block.getMetaFromState(state) == 0 || this.world.getBlockState(coords).getBlock() instanceof BlockMagma) {
+                    if (block != null && this.world.getBlockState(coords).getMaterial() == Material.LAVA || this.world.getBlockState(coords).getBlock() instanceof MagmaBlock) {
                         blocksAround.add(i);
                     }
                 }
@@ -80,7 +83,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
 
                         if (this.world.rand.nextInt(200) == 0) {
                             int randomSide = blocksAround.get(this.world.rand.nextInt(blocksAround.size()));
-                            this.world.setBlockToAir(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(randomSide)));
+                            this.world.setBlockState(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(randomSide)), Blocks.AIR.getDefaultState());
                         }
                     }
                 }
@@ -123,8 +126,8 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 
 }

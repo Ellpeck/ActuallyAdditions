@@ -10,14 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-import java.util.List;
-import java.util.Map;
-
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -29,6 +25,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.List;
+import java.util.Map;
 
 public class LensDisenchanting extends Lens {
 
@@ -105,7 +104,7 @@ public class LensDisenchanting extends Lens {
 
     @Override
     public float[] getColor() {
-        return new float[] { 234F / 255F, 173F / 255F, 255F / 255F };
+        return new float[]{234F / 255F, 173F / 255F, 255F / 255F};
     }
 
     @Override

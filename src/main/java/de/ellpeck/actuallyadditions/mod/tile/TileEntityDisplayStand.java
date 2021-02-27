@@ -13,20 +13,22 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(80000, 1000, 0);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int oldEnergy;
 
     public TileEntityDisplayStand() {
-        super(1, "displayStand");
+        super(ActuallyTiles.DISPLAYSTAND_TILE.get(), 1);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     private IDisplayStandItem convertToDisplayStandItem(Item item) {
         if (item instanceof IDisplayStandItem) {
             return (IDisplayStandItem) item;
-        } else if (item instanceof ItemBlock) {
+        } else if (item instanceof BlockItem) {
             Block block = Block.getBlockFromItem(item);
             if (block instanceof IDisplayStandItem) {
                 return (IDisplayStandItem) block;
@@ -97,8 +99,8 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 
     public ItemStack getStack() {

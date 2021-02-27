@@ -10,19 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import java.util.Collections;
-import java.util.Set;
-
 import com.google.common.collect.Sets;
-
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IRarity;
+
+import java.util.Collections;
+import java.util.Set;
 
 public class ItemAxeAA extends ItemToolAA {
 
@@ -41,7 +39,9 @@ public class ItemAxeAA extends ItemToolAA {
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         Material material = state.getMaterial();
-        return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE ? super.getDestroySpeed(stack, state) : this.efficiency;
+        return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE
+            ? super.getDestroySpeed(stack, state)
+            : this.efficiency;
     }
 
     @Override

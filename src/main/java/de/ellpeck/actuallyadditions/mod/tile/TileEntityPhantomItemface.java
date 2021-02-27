@@ -21,7 +21,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public class TileEntityPhantomItemface extends TileEntityPhantomface {
 
     public TileEntityPhantomItemface() {
-        super("phantomface");
+        super(ActuallyTiles.PHANTOMITEMFACE_TILE.get());
         this.type = BlockPhantom.Type.FACE;
     }
 
@@ -36,7 +36,9 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface {
             TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
             if (tile != null) {
                 for (Direction facing : Direction.values()) {
-                    if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) { return true; }
+                    if (tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).isPresent()) {
+                        return true;
+                    }
                 }
             }
         }

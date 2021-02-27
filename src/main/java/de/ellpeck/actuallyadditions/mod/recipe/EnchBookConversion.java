@@ -1,20 +1,18 @@
 package de.ellpeck.actuallyadditions.mod.recipe;
 
-import java.util.Map;
-
 import com.google.common.collect.ImmutableMap;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.Map;
 
 public class EnchBookConversion extends LensConversionRecipe {
 

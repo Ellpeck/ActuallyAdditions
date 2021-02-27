@@ -19,7 +19,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements ISharingEnergyProvider {
 
     public TileEntityPhantomEnergyface() {
-        super("energyface");
+        super(ActuallyTiles.PHANTOMENERGYFACE_TILE.get());
         this.type = BlockPhantom.Type.ENERGYFACE;
     }
 
@@ -29,7 +29,9 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
             TileEntity tile = this.world.getTileEntity(this.boundPosition);
             if (tile != null && !(tile instanceof TileEntityLaserRelayEnergy)) {
                 for (Direction facing : Direction.values()) {
-                    if (tile.hasCapability(CapabilityEnergy.ENERGY, facing)) { return true; }
+                    if (tile.getCapability(CapabilityEnergy.ENERGY, facing).isPresent()) {
+                        return true;
+                    }
                 }
             }
         }

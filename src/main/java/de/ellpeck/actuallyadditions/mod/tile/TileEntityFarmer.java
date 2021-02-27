@@ -22,9 +22,11 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     private static final List<IFarmerBehavior> SORTED_FARMER_BEHAVIORS = new ArrayList<>();
     public final CustomEnergyStorage storage = new CustomEnergyStorage(100000, 1000, 0);
-
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int waitTime;
     private int checkX;
     private int checkY;
@@ -43,18 +45,18 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     private int lastEnergy;
 
     public TileEntityFarmer() {
-        super(12, "farmer");
+        super(ActuallyTiles.FARMER_TILE.get(), 12);
     }
 
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("WaitTime", this.waitTime);
+            compound.putInt("WaitTime", this.waitTime);
         }
         if (type == NBTType.SAVE_TILE) {
-            compound.setInteger("CheckX", this.checkX);
-            compound.setInteger("CheckY", this.checkY);
+            compound.putInt("CheckX", this.checkX);
+            compound.putInt("CheckY", this.checkY);
         }
         this.storage.writeToNBT(compound);
     }
@@ -63,11 +65,11 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            this.waitTime = compound.getInteger("WaitTime");
+            this.waitTime = compound.getInt("WaitTime");
         }
         if (type == NBTType.SAVE_TILE) {
-            this.checkX = compound.getInteger("CheckX");
-            this.checkY = compound.getInteger("CheckY");
+            this.checkX = compound.getInt("CheckX");
+            this.checkY = compound.getInt("CheckY");
         }
         this.storage.readFromNBT(compound);
     }
@@ -88,7 +90,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
                         int radius = area / 2;
 
                         BlockState state = this.world.getBlockState(this.pos);
-                        BlockPos center = this.pos.offset(state.getValue(BlockHorizontal.FACING), radius + 1);
+                        BlockPos center = this.pos.offset(state.get(BlockStateProperties.HORIZONTAL_FACING), radius + 1);
 
                         BlockPos query = center.add(this.checkX, 0, this.checkY);
                         this.checkBehaviors(query);
@@ -122,7 +124,6 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     private void checkBehaviors(BlockPos query) {
-
         if (!sorted) {
             sort();
         }
@@ -135,7 +136,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
             for (int i = 0; i < 6; i++) { //Process seed slots only
                 ItemStack stack = this.inv.getStackInSlot(i);
                 BlockState state = this.world.getBlockState(query);
-                if (StackUtil.isValid(stack) && state.getBlock().isReplaceable(this.world, query)) {
+                if (StackUtil.isValid(stack) && state.getMaterial().isReplaceable()) {
                     FarmerResult plantResult = behavior.tryPlantSeed(stack, this.world, query, this);
                     if (plantResult == FarmerResult.SUCCESS) {
                         this.inv.getStackInSlot(i).shrink(1);
@@ -160,8 +161,8 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 
     @Override

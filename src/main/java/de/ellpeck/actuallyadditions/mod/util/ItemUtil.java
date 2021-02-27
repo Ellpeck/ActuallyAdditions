@@ -154,6 +154,6 @@ public final class ItemUtil {
         }
 
         boolean isEnabled = isEnabled(stack);
-        stack.getTagCompound().setBoolean("IsEnabled", !isEnabled);
+        stack.getTagCompound().putBoolean("IsEnabled", !isEnabled);
     }
 }

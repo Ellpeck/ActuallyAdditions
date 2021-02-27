@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -20,8 +17,12 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISharingEnergyProvider {
 
@@ -29,16 +30,16 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     private int lastCompare;
 
     public TileEntityBatteryBox() {
-        super(1, "batteryBox");
+        super(ActuallyTiles.BATTERYBOX_TILE.get(), 1);
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
         ItemStack stack = this.inv.getStackInSlot(0);
         if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBattery) {
-            if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) { return stack.getCapability(CapabilityEnergy.ENERGY, null); }
+            return stack.getCapability(CapabilityEnergy.ENERGY, null);
         }
-        return null;
+        return LazyOptional.empty();
     }
 
     @Override
@@ -46,10 +47,8 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
         super.updateEntity();
 
         if (!this.world.isRemote) {
-            int currStorage = 0;
-
-            IEnergyStorage storage = this.getEnergyStorage(null);
-            if (storage != null) {
+            LazyOptional<IEnergyStorage> cap = this.getEnergyStorage(null);
+            int currStorage = cap.map(storage -> {
                 ItemStack stack = this.inv.getStackInSlot(0);
                 if (StackUtil.isValid(stack) && ItemUtil.isEnabled(stack)) {
                     if (storage.getEnergyStored() > 0) {
@@ -68,25 +67,19 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
                             for (TileEntityBatteryBox tile : tiles) {
                                 ItemStack battery = tile.inv.getStackInSlot(0);
                                 if (StackUtil.isValid(battery) && !ItemUtil.isEnabled(battery)) {
-                                    if (tile.hasCapability(CapabilityEnergy.ENERGY, null)) {
-                                        IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, null);
-                                        if (cap != null) {
-                                            int received = cap.receiveEnergy(maxPer, false);
-                                            storage.extractEnergy(received, false);
+                                    int received = tile.getCapability(CapabilityEnergy.ENERGY, null).map(e -> e.receiveEnergy(maxPer, false)).orElse(0);
+                                    storage.extractEnergy(received, false);
 
-                                            if (storage.getEnergyStored() <= 0) {
-                                                break;
-                                            }
-                                        }
+                                    if (storage.getEnergyStored() <= 0) {
+                                        break;
                                     }
                                 }
                             }
                         }
                     }
                 }
-
-                currStorage = storage.getEnergyStored();
-            }
+                return storage.getEnergyStored();
+            }).orElse(0);
 
             if (this.lastCompare != this.getComparatorStrength()) {
                 this.lastCompare = this.getComparatorStrength();
@@ -101,13 +94,9 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
 
     @Override
     public int getComparatorStrength() {
-        IEnergyStorage storage = this.getEnergyStorage(null);
-        if (storage != null) {
-            float calc = (float) storage.getEnergyStored() / (float) storage.getMaxEnergyStored() * 15F;
-            return (int) calc;
-        } else {
-            return 0;
-        }
+        return this.getEnergyStorage(null)
+            .map(cap -> (int) ((float) cap.getEnergyStored() / (float) cap.getMaxEnergyStored() * 15F))
+            .orElse(0);
     }
 
     @Override
@@ -125,7 +114,9 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     }
 
     private void energyPushOffLoop(TileEntityBatteryBox startTile, List<TileEntityBatteryBox> pushOffTo) {
-        if (pushOffTo.size() >= 15) { return; }
+        if (pushOffTo.size() >= 15) {
+            return;
+        }
 
         for (TileEntity tile : startTile.tilesAround) {
             if (tile instanceof TileEntityBatteryBox) {
@@ -151,12 +142,9 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
 
     @Override
     public int getEnergyToSplitShare() {
-        IEnergyStorage storage = this.getEnergyStorage(null);
-        if (storage != null) {
-            return storage.getEnergyStored();
-        } else {
-            return 0;
-        }
+        return this.getEnergyStorage(null)
+            .map(IEnergyStorage::getEnergyStored)
+            .orElse(0);
     }
 
     @Override

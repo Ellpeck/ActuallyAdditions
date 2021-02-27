@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -20,13 +19,14 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,7 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor {
 
     public static final int OKAY_BUTTON_ID = 133;
-    private final SlotlessableItemHandlerWrapper wrapper = new SlotlessableItemHandlerWrapper(this.inv, null);
+    private final SlotlessableItemHandlerWrapper wrapper = new SlotlessableItemHandlerWrapper(this.lazyInv, null);
     public int sideToPut = -1;
     public int slotToPutStart;
     public int slotToPutEnd;
@@ -53,8 +53,8 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     private int lastPullStart;
     private int lastPullEnd;
 
-    public TileEntityInputter(int slots, String name) {
-        super(slots, name);
+    public TileEntityInputter(TileEntityType<?> type, int slots) {
+        super(type, slots);
     }
 
     public TileEntityInputter() {
@@ -132,30 +132,28 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
                 if (tile != null) {
                     for (Direction facing : Direction.values()) {
-                        IItemHandler normal = null;
-                        if (tile.getClass() == TileEntityFurnace.class) {
+                        LazyOptional<IItemHandler> normal;
+                        if (tile instanceof AbstractFurnaceTileEntity) {
                             normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                        } else if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
+                        } else {
                             normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
                         }
 
+
+                        // TODO: [port] add support for this back eventually.
                         Object slotless = null;
-                        if (ActuallyAdditions.commonCapsLoaded) {
-                            if (tile.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, facing)) {
-                                slotless = tile.getCapability(SlotlessItemHandlerConfig.CAPABILITY, facing);
-                            }
-                        }
+                        //                        if (ActuallyAdditions.commonCapsLoaded) {
+                        //                            if (tile.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, facing)) {
+                        //                                slotless = tile.getCapability(SlotlessItemHandlerConfig.CAPABILITY, facing);
+                        //                            }
+                        //                        }
 
                         this.placeToPull.put(facing.getOpposite(), new SlotlessableItemHandlerWrapper(normal, slotless));
                     }
 
                     if (this.slotToPullEnd <= 0) {
-                        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
-                            IItemHandler cap = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                            if (cap != null) {
-                                this.slotToPullEnd = cap.getSlots();
-                            }
-                        }
+                        tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)
+                            .ifPresent(cap -> this.slotToPullEnd = cap.getSlots());
                     }
                 }
             }
@@ -170,28 +168,22 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
                 if (tile != null) {
                     for (Direction facing : Direction.values()) {
-                        IItemHandler normal = null;
-                        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
-                            normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
-                        }
+                        LazyOptional<IItemHandler> normal = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
 
+                        // TODO: [port] add support for this back eventually.
                         Object slotless = null;
-                        if (ActuallyAdditions.commonCapsLoaded) {
-                            if (tile.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, facing)) {
-                                slotless = tile.getCapability(SlotlessItemHandlerConfig.CAPABILITY, facing);
-                            }
-                        }
+                        //                        if (ActuallyAdditions.commonCapsLoaded) {
+                        //                            if (tile.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, facing)) {
+                        //                                slotless = tile.getCapability(SlotlessItemHandlerConfig.CAPABILITY, facing);
+                        //                            }
+                        //                        }
 
                         this.placeToPut.put(facing.getOpposite(), new SlotlessableItemHandlerWrapper(normal, slotless));
                     }
 
                     if (this.slotToPutEnd <= 0) {
-                        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
-                            IItemHandler cap = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-                            if (cap != null) {
-                                this.slotToPutEnd = cap.getSlots();
-                            }
-                        }
+                        tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)
+                            .ifPresent(cap -> this.slotToPutEnd = cap.getSlots());
                     }
                 }
             }
@@ -245,12 +237,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("SideToPut", this.sideToPut);
-            compound.setInteger("SlotToPut", this.slotToPutStart);
-            compound.setInteger("SlotToPutEnd", this.slotToPutEnd);
-            compound.setInteger("SideToPull", this.sideToPull);
-            compound.setInteger("SlotToPull", this.slotToPullStart);
-            compound.setInteger("SlotToPullEnd", this.slotToPullEnd);
+            compound.putInt("SideToPut", this.sideToPut);
+            compound.putInt("SlotToPut", this.slotToPutStart);
+            compound.putInt("SlotToPutEnd", this.slotToPutEnd);
+            compound.putInt("SideToPull", this.sideToPull);
+            compound.putInt("SlotToPull", this.slotToPullStart);
+            compound.putInt("SlotToPullEnd", this.slotToPullEnd);
         }
 
         this.leftFilter.writeToNBT(compound, "LeftFilter");
@@ -260,12 +252,12 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            this.sideToPut = compound.getInteger("SideToPut");
-            this.slotToPutStart = compound.getInteger("SlotToPut");
-            this.slotToPutEnd = compound.getInteger("SlotToPutEnd");
-            this.sideToPull = compound.getInteger("SideToPull");
-            this.slotToPullStart = compound.getInteger("SlotToPull");
-            this.slotToPullEnd = compound.getInteger("SlotToPullEnd");
+            this.sideToPut = compound.getInt("SideToPut");
+            this.slotToPutStart = compound.getInt("SlotToPut");
+            this.slotToPutEnd = compound.getInt("SlotToPutEnd");
+            this.sideToPull = compound.getInt("SideToPull");
+            this.slotToPullStart = compound.getInt("SlotToPull");
+            this.slotToPullEnd = compound.getInt("SlotToPullEnd");
         }
 
         this.leftFilter.readFromNBT(compound, "LeftFilter");

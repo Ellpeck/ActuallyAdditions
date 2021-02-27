@@ -14,26 +14,21 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SPacketBlockChange;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.MinecraftForge;
@@ -47,9 +42,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
-import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public final class WorldUtil {
 
@@ -154,15 +149,14 @@ public final class WorldUtil {
      *
      * @param positions The Positions, an array of {x, y, z} arrays containing Positions
      * @param block     The Block
-     * @param meta      The Meta
      * @param world     The World
      *
      * @return Is every block present?
      */
-    public static boolean hasBlocksInPlacesGiven(BlockPos[] positions, Block block, int meta, World world) {
+    public static boolean hasBlocksInPlacesGiven(BlockPos[] positions, Block block, World world) {
         for (BlockPos pos : positions) {
             BlockState state = world.getBlockState(pos);
-            if (!(state.getBlock() == block && block.getMetaFromState(state) == meta)) {
+            if (!(state.getBlock() == block)) {
                 return false;
             }
         }
@@ -291,9 +285,9 @@ public final class WorldUtil {
     }
 
     //I think something is up with this, but I'm not entirely certain what.
-    public static float fireFakeHarvestEventsForDropChance(TileEntity caller, NonNullList<ItemStack> drops, World world, BlockPos pos) {
-        if (world instanceof WorldServer) {
-            FakePlayer fake = FakePlayerFactory.getMinecraft((WorldServer) world);
+    public static float fireFakeHarvestEventsForDropChance(TileEntity caller, List<ItemStack> drops, World world, BlockPos pos) {
+        if (world instanceof ServerWorld) {
+            FakePlayer fake = FakePlayerFactory.getMinecraft((ServerWorld) world);
             BlockPos tePos = caller.getPos();
             fake.setPosition(tePos.getX() + 0.5, tePos.getY() + 0.5, tePos.getZ() + 0.5);
             BlockState state = world.getBlockState(pos);

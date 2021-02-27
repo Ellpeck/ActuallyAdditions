@@ -10,18 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -35,9 +29,14 @@ import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.storage.loot.ILootContainer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public class WorldGenLushCaves {
 
-    public static final Block[] CRYSTAL_CLUSTERS = new Block[] { InitBlocks.blockCrystalClusterRedstone, InitBlocks.blockCrystalClusterLapis, InitBlocks.blockCrystalClusterDiamond, InitBlocks.blockCrystalClusterCoal, InitBlocks.blockCrystalClusterEmerald, InitBlocks.blockCrystalClusterIron };
+    public static final Block[] CRYSTAL_CLUSTERS = new Block[]{InitBlocks.blockCrystalClusterRedstone, InitBlocks.blockCrystalClusterLapis, InitBlocks.blockCrystalClusterDiamond, InitBlocks.blockCrystalClusterCoal, InitBlocks.blockCrystalClusterEmerald, InitBlocks.blockCrystalClusterIron};
 
     public boolean generate(World world, Random rand, BlockPos position, StructureBoundingBox blockRegion) {
         this.generateCave(world, position, rand, blockRegion);
@@ -145,7 +144,7 @@ public class WorldGenLushCaves {
                         BlockPos pos = center.add(x, y, z);
                         //Note: order matters, checkIndestructable will generate chunks if order is reversed
                         if (boundingBox.isVecInside(pos) && !this.checkIndestructable(world, pos)) {
-                            world.setBlockToAir(pos);
+                            world.setBlockState(pos, Blocks.AIR.getDefaultState());
                         }
                     }
                 }
@@ -175,14 +174,20 @@ public class WorldGenLushCaves {
     private boolean checkIndestructable(World world, BlockPos pos) {
         //If this isn't checked, the game crashes because it tries to destroy a chest that doesn't have any loot yet :v
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof ILootContainer) { return true; }
+        if (tile instanceof ILootContainer) {
+            return true;
+        }
 
         BlockState state = world.getBlockState(pos);
         if (state != null) {
             Block block = state.getBlock();
             //check if it's tree or grass that is generated here
-            if (block == Blocks.LOG || block == Blocks.LEAVES || block == Blocks.TALLGRASS) { return true; }
-            if (block != null && (block.isAir(state, world, pos) || block.getHarvestLevel(state) >= 0F)) { return false; }
+            if (block == Blocks.LOG || block == Blocks.LEAVES || block == Blocks.TALLGRASS) {
+                return true;
+            }
+            if (block != null && (block.isAir(state, world, pos) || block.getHarvestLevel(state) >= 0F)) {
+                return false;
+            }
         }
         return true;
     }

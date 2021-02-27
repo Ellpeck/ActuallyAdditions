@@ -16,16 +16,18 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, 1000);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int lastEnergy;
 
     public TileEntityEnervator() {
-        super(2, "enervator");
+        super(ActuallyTiles.ENERVATOR_TILE.get(), 2);
     }
 
     @Override
@@ -46,17 +48,12 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
         if (!this.world.isRemote) {
             if (StackUtil.isValid(this.inv.getStackInSlot(0)) && !StackUtil.isValid(this.inv.getStackInSlot(1))) {
                 if (this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()) {
-                    int extracted = 0;
-                    boolean canTakeUp = false;
+                    LazyOptional<IEnergyStorage> capability = this.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null);
 
                     int maxExtract = this.storage.getMaxEnergyStored() - this.storage.getEnergyStored();
-                    if (this.inv.getStackInSlot(0).hasCapability(CapabilityEnergy.ENERGY, null)) {
-                        IEnergyStorage cap = this.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null);
-                        if (cap != null) {
-                            extracted = cap.extractEnergy(maxExtract, false);
-                            canTakeUp = cap.getEnergyStored() <= 0;
-                        }
-                    }
+                    int extracted = capability.map(cap -> cap.extractEnergy(maxExtract, false)).orElse(0);
+                    boolean canTakeUp = capability.map(cap -> cap.getEnergyStored() <= 0).orElse(false);
+
                     if (extracted > 0) {
                         this.storage.receiveEnergyInternal(extracted, false);
                     }
@@ -76,7 +73,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot == 0 && stack.hasCapability(CapabilityEnergy.ENERGY, null);
+        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
     }
 
     @Override
@@ -109,7 +106,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

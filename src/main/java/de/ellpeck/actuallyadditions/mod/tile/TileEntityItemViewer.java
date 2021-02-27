@@ -11,25 +11,25 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.laser.Network;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import de.ellpeck.actuallyadditions.mod.util.compat.CommonCapsUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
-import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
-import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class TileEntityItemViewer extends TileEntityBase {
@@ -38,12 +38,13 @@ public class TileEntityItemViewer extends TileEntityBase {
     public final Map<Integer, IItemHandlerInfo> itemHandlerInfos = new HashMap<>();
     public final List<SlotlessItemHandlerInfo> slotlessInfos = new ArrayList<>();
     protected final SlotlessableItemHandlerWrapper itemHandler;
+    private final LazyOptional<IItemHandler> lazyHandlers;
     public TileEntityLaserRelayItem connectedRelay;
     private int lastNetworkChangeAmount = -1;
     private int slotCount;
 
-    public TileEntityItemViewer(String name) {
-        super(name);
+    public TileEntityItemViewer(TileEntityType<?> type) {
+        super(type);
 
         IItemHandler normalHandler = new IItemHandler() {
             @Override
@@ -100,38 +101,51 @@ public class TileEntityItemViewer extends TileEntityBase {
                     return 0;
                 }
             }
+
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                return true;
+            }
         };
 
         Object slotlessHandler = null;
-        if (ActuallyAdditions.commonCapsLoaded) {
-            slotlessHandler = CommonCapsUtil.createSlotlessItemViewerHandler(this, normalHandler);
-        }
+        //        if (ActuallyAdditions.commonCapsLoaded) {
+        //            slotlessHandler = CommonCapsUtil.createSlotlessItemViewerHandler(this, normalHandler);
+        //        }
 
-        this.itemHandler = new SlotlessableItemHandlerWrapper(normalHandler, slotlessHandler);
+        this.lazyHandlers = LazyOptional.of(() -> normalHandler);
+        this.itemHandler = new SlotlessableItemHandlerWrapper(this.lazyHandlers, slotlessHandler);
     }
 
     public TileEntityItemViewer() {
-        this("itemViewer");
+        this(ActuallyTiles.ITEMVIEWER_TILE.get());
     }
 
     @Override
-    public IItemHandler getItemHandler(Direction facing) {
+    public LazyOptional<IItemHandler> getItemHandler(Direction facing) {
         return this.itemHandler.getNormalHandler();
     }
 
-    @SuppressWarnings("unchecked")
+    @Nonnull
     @Override
-    public <T> T getCapability(Capability<T> capability, Direction facing) {
-        if (ActuallyAdditions.commonCapsLoaded) {
-            if (capability == SlotlessItemHandlerConfig.CAPABILITY) {
-                Object handler = this.itemHandler.getSlotlessHandler();
-                if (handler != null) {
-                    return (T) handler;
-                }
-            }
-        }
-        return super.getCapability(capability, facing);
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
+        return super.getCapability(capability, side);
     }
+
+    //    TODO: [port] Maybe add back
+    //    @SuppressWarnings("unchecked")
+    //    @Override
+    //    public <T> T getCapability(Capability<T> capability, Direction facing) {
+    //        if (ActuallyAdditions.commonCapsLoaded) {
+    //            if (capability == SlotlessItemHandlerConfig.CAPABILITY) {
+    //                Object handler = this.itemHandler.getSlotlessHandler();
+    //                if (handler != null) {
+    //                    return (T) handler;
+    //                }
+    //            }
+    //        }
+    //        return super.getCapability(capability, facing);
+    //    }
 
     private int getSlotCount() {
         this.queryAndSaveData();
@@ -141,21 +155,21 @@ public class TileEntityItemViewer extends TileEntityBase {
     public void doItemParticle(ItemStack stack, BlockPos input, BlockPos output) {
         if (!this.world.isRemote) {
             CompoundNBT compound = new CompoundNBT();
-            stack.writeToNBT(compound);
+            stack.write(compound);
 
-            compound.setDouble("InX", input.getX());
-            compound.setDouble("InY", input.getY());
-            compound.setDouble("InZ", input.getZ());
+            compound.putDouble("InX", input.getX());
+            compound.putDouble("InY", input.getY());
+            compound.putDouble("InZ", input.getZ());
 
-            compound.setDouble("OutX", output.getX());
-            compound.setDouble("OutY", output.getY());
-            compound.setDouble("OutZ", output.getZ());
+            compound.putDouble("OutX", output.getX());
+            compound.putDouble("OutY", output.getY());
+            compound.putDouble("OutZ", output.getZ());
 
             int rangeSq = 16 * 16;
-            for (PlayerEntity player : this.world.playerEntities) {
+            for (PlayerEntity player : this.world.getPlayers()) {
                 if (player instanceof ServerPlayerEntity) {
-                    if (player.getDistanceSq(input) <= rangeSq || player.getDistanceSq(output) <= rangeSq) {
-                        PacketHandler.theNetwork.sendTo(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), (ServerPlayerEntity) player);
+                    if (player.getDistanceSq(input.getX(), input.getY(), input.getZ()) <= rangeSq || player.getDistanceSq(output.getX(), output.getY(), output.getZ()) <= rangeSq) {
+                        PacketHandler.sendTo(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), (ServerPlayerEntity) player);
                     }
                 }
             }
@@ -176,20 +190,23 @@ public class TileEntityItemViewer extends TileEntityBase {
                         int slotsQueried = 0;
                         for (GenericItemHandlerInfo info : this.genericInfos) {
                             for (SlotlessableItemHandlerWrapper handler : info.handlers) {
-                                IItemHandler normalHandler = handler.getNormalHandler();
-                                if (normalHandler != null) {
-                                    for (int i = 0; i < normalHandler.getSlots(); i++) {
-                                        this.itemHandlerInfos.put(slotsQueried, new IItemHandlerInfo(normalHandler, i, info.relayInQuestion));
-                                        slotsQueried++;
+                                LazyOptional<IItemHandler> normalHandler = handler.getNormalHandler();
+                                slotsQueried += normalHandler.map(cap -> {
+                                    int queried = 0;
+                                    for (int i = 0; i < cap.getSlots(); i++) {
+                                        this.itemHandlerInfos.put(queried, new IItemHandlerInfo(cap, i, info.relayInQuestion));
+                                        queried++;
                                     }
-                                }
+                                    return queried;
+                                }).orElse(0);
+                                // TODO: [port] add back
 
-                                if (ActuallyAdditions.commonCapsLoaded) {
-                                    Object slotlessHandler = handler.getSlotlessHandler();
-                                    if (slotlessHandler instanceof ISlotlessItemHandler) {
-                                        this.slotlessInfos.add(new SlotlessItemHandlerInfo(slotlessHandler, info.relayInQuestion));
-                                    }
-                                }
+                                //                                if (ActuallyAdditions.commonCapsLoaded) {
+                                //                                    Object slotlessHandler = handler.getSlotlessHandler();
+                                //                                    if (slotlessHandler instanceof ISlotlessItemHandler) {
+                                //                                        this.slotlessInfos.add(new SlotlessItemHandlerInfo(slotlessHandler, info.relayInQuestion));
+                                //                                    }
+                                //                                }
                             }
                         }
                         this.slotCount = slotsQueried;

@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherWart;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -56,7 +55,7 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior {
                         boolean toInput = farmer.canAddToSeeds(drops);
                         if (toInput || farmer.canAddToOutput(drops)) {
                             world.playEvent(2001, pos, Block.getStateId(state));
-                            world.setBlockToAir(pos);
+                            world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
                             if (toInput) {
                                 farmer.addToSeeds(drops);

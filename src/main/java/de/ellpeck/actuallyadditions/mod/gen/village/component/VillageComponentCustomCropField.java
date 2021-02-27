@@ -10,13 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
-import java.util.List;
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -24,6 +20,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
+
+import java.util.List;
+import java.util.Random;
 
 public class VillageComponentCustomCropField extends StructureVillagePieces.House1 {
 
@@ -44,14 +43,18 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
 
     public static VillageComponentCustomCropField buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, Direction p4) {
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
-        return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentCustomCropField(boundingBox, p4) : null;
+        return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null
+            ? new VillageComponentCustomCropField(boundingBox, p4)
+            : null;
     }
 
     @Override
     public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
         if (this.averageGroundLevel < 0) {
             this.averageGroundLevel = this.getAverageGroundLevel(world, sbb);
-            if (this.averageGroundLevel < 0) { return true; }
+            if (this.averageGroundLevel < 0) {
+                return true;
+            }
             this.boundingBox.offset(0, this.averageGroundLevel - this.boundingBox.maxY + Y_SIZE - 1, 0);
         }
 
@@ -100,14 +103,14 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
     private BlockState getRandomCropType(Random rand) {
         int randomMeta = MathHelper.getInt(rand, 1, 7);
         switch (rand.nextInt(4)) {
-        case 0:
-            return InitBlocks.blockFlax.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
-        case 1:
-            return InitBlocks.blockCoffee.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
-        case 2:
-            return InitBlocks.blockRice.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
-        default:
-            return InitBlocks.blockCanola.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+            case 0:
+                return InitBlocks.blockFlax.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+            case 1:
+                return InitBlocks.blockCoffee.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+            case 2:
+                return InitBlocks.blockRice.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+            default:
+                return InitBlocks.blockCanola.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
         }
     }
 }

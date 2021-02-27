@@ -22,13 +22,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import org.cyclops.commoncapabilities.capability.itemhandler.SlotlessItemHandlerConfig;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,12 +40,12 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
     public final Map<BlockPos, SlotlessableItemHandlerWrapper> handlersAround = new ConcurrentHashMap<>();
     public int priority;
 
-    public TileEntityLaserRelayItem(String name) {
-        super(name, LaserType.ITEM);
+    public TileEntityLaserRelayItem(TileEntityType<?> type) {
+        super(type, LaserType.ITEM);
     }
 
     public TileEntityLaserRelayItem() {
-        this("laserRelayItem");
+        this(ActuallyTiles.LASERRELAYITEM_TILE.get());
     }
 
     public int getPriority() {
@@ -71,26 +73,23 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
             if (this.world.isBlockLoaded(pos)) {
                 TileEntity tile = this.world.getTileEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityItemViewer) && !(tile instanceof TileEntityLaserRelay)) {
-                    IItemHandler itemHandler = null;
-                    if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite())) {
-                        itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                    }
+                    LazyOptional<IItemHandler> itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
 
                     Object slotlessHandler = null;
-                    if (ActuallyAdditions.commonCapsLoaded) {
-                        if (tile.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, side.getOpposite())) {
-                            slotlessHandler = tile.getCapability(SlotlessItemHandlerConfig.CAPABILITY, side.getOpposite());
-                        }
-                    }
+                    // TODO: [port] add this back maybe?
 
-                    if (itemHandler != null || slotlessHandler != null) {
-                        SlotlessableItemHandlerWrapper handler = new SlotlessableItemHandlerWrapper(itemHandler, slotlessHandler);
-                        this.handlersAround.put(pos, handler);
+                    //                    if (ActuallyAdditions.commonCapsLoaded) {
+                    //                        if (tile.hasCapability(SlotlessItemHandlerConfig.CAPABILITY, side.getOpposite())) {
+                    //                            slotlessHandler = tile.getCapability(SlotlessItemHandlerConfig.CAPABILITY, side.getOpposite());
+                    //                        }
+                    //                    }
 
-                        SlotlessableItemHandlerWrapper oldHandler = old.get(pos);
-                        if (oldHandler == null || !handler.equals(oldHandler)) {
-                            change = true;
-                        }
+                    SlotlessableItemHandlerWrapper handler = new SlotlessableItemHandlerWrapper(itemHandler, slotlessHandler);
+                    this.handlersAround.put(pos, handler);
+
+                    SlotlessableItemHandlerWrapper oldHandler = old.get(pos);
+                    if (!handler.equals(oldHandler)) {
+                        change = true;
                     }
                 }
             }
@@ -136,7 +135,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("Priority", this.priority);
+            compound.putInt("Priority", this.priority);
         }
     }
 
@@ -165,7 +164,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            this.priority = compound.getInteger("Priority");
+            this.priority = compound.getInt("Priority");
         }
     }
 }

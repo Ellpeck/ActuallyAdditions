@@ -17,14 +17,17 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.Direction;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements ISharingEnergyProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 0, 80);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public int maxBurnTime;
     public int currentBurnTime;
     private int lastEnergy;
@@ -35,7 +38,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     private int curBurn = -1;
 
     public TileEntityCoalGenerator() {
-        super(1, "coalGenerator");
+        super(ActuallyTiles.COALGENERATOR_TILE.get(), 1);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -51,8 +54,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("BurnTime", this.currentBurnTime);
-            compound.setInteger("MaxBurnTime", this.maxBurnTime);
+            compound.putInt("BurnTime", this.currentBurnTime);
+            compound.putInt("MaxBurnTime", this.maxBurnTime);
         }
         this.storage.writeToNBT(compound);
         super.writeSyncableNBT(compound, type);
@@ -61,8 +64,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            this.currentBurnTime = compound.getInteger("BurnTime");
-            this.maxBurnTime = compound.getInteger("MaxBurnTime");
+            this.currentBurnTime = compound.getInt("BurnTime");
+            this.maxBurnTime = compound.getInt("MaxBurnTime");
         }
         this.storage.readFromNBT(compound);
         super.readSyncableNBT(compound, type);
@@ -85,7 +88,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             ItemStack stack = this.inv.getStackInSlot(0);
             if (!stack.isEmpty() && stack != this.curStack) {
                 this.curStack = stack;
-                this.curBurn = TileEntityFurnace.getItemBurnTime(stack);
+                this.curBurn = ForgeHooks.getBurnTime(stack);
             } else if (stack.isEmpty()) {
                 this.curStack = ItemStack.EMPTY;
                 this.curBurn = -1;
@@ -118,7 +121,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> TileEntityFurnace.getItemBurnTime(stack) > 0;
+        return (slot, stack, automation) -> ForgeHooks.getBurnTime(stack) > 0;
     }
 
     @Override
@@ -127,7 +130,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             if (!automation) {
                 return true;
             }
-            return TileEntityFurnace.getItemBurnTime(this.inv.getStackInSlot(0)) <= 0;
+            return ForgeHooks.getBurnTime(this.inv.getStackInSlot(0)) <= 0;
         };
     }
 
@@ -152,7 +155,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

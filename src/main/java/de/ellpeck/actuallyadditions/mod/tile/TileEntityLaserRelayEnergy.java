@@ -20,13 +20,16 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,13 +43,12 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     private final IEnergyStorage[] energyStorages = new IEnergyStorage[6];
     private Mode mode = Mode.BOTH;
 
-    public TileEntityLaserRelayEnergy(String name) {
-        super(name, LaserType.ENERGY);
+    public TileEntityLaserRelayEnergy(TileEntityType<?> type) {
+        super(type, LaserType.ENERGY);
 
         for (int i = 0; i < this.energyStorages.length; i++) {
             Direction facing = Direction.values()[i];
             this.energyStorages[i] = new IEnergyStorage() {
-
                 @Override
                 public int receiveEnergy(int amount, boolean simulate) {
                     return TileEntityLaserRelayEnergy.this.transmitEnergy(facing, amount, simulate);
@@ -81,7 +83,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     public TileEntityLaserRelayEnergy() {
-        this("laserRelay");
+        this(ActuallyTiles.LASERRELAYENERGY_TILE.get());
     }
 
     private int transmitEnergy(Direction from, int maxTransmit, boolean simulate) {
@@ -95,11 +97,12 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
         return transmitted;
     }
 
+    // TODO: [port] this is super hacky, review and fix up 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.energyStorages[facing == null
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return LazyOptional.of(() -> this.energyStorages[facing == null
             ? 0
-            : facing.ordinal()];
+            : facing.ordinal()]);
     }
 
     @Override
@@ -118,7 +121,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
             if (this.world.isBlockLoaded(pos)) {
                 TileEntity tile = this.world.getTileEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityLaserRelay)) {
-                    if (tile.hasCapability(CapabilityEnergy.ENERGY, side.getOpposite())) {
+                    if (tile.getCapability(CapabilityEnergy.ENERGY, side.getOpposite()).isPresent()) {
                         this.receiversAround.put(side, tile);
 
                         TileEntity oldTile = old.get(side);
@@ -162,12 +165,10 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
                                     Direction opp = facing.getOpposite();
                                     if (tile != null) {
-                                        if (tile.hasCapability(CapabilityEnergy.ENERGY, opp)) {
-                                            IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, opp);
-                                            if (cap != null && cap.receiveEnergy(maxTransfer, true) > 0) {
-                                                totalReceiverAmount++;
-                                                workedOnce = true;
-                                            }
+                                        Boolean received = tile.getCapability(CapabilityEnergy.ENERGY, opp).map(cap -> cap.receiveEnergy(maxTransfer, true) > 0).orElse(false);
+                                        if (received) {
+                                            totalReceiverAmount++;
+                                            workedOnce = true;
                                         }
                                     }
                                 }
@@ -183,10 +184,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
         }
 
         if (totalReceiverAmount > 0 && !relaysThatWork.isEmpty()) {
-            int amountPer = maxTransfer / totalReceiverAmount;
-            if (amountPer <= 0) {
-                amountPer = maxTransfer;
-            }
+            int amountPer = maxTransfer / totalReceiverAmount <= 0
+                ? maxTransfer / totalReceiverAmount
+                : maxTransfer;
 
             for (TileEntityLaserRelayEnergy theRelay : relaysThatWork) {
                 double highestLoss = Math.max(theRelay.getLossPercentage(), this.getLossPercentage());
@@ -199,21 +199,21 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
                         if (!alreadyChecked.contains(tile.getPos())) {
                             alreadyChecked.add(tile.getPos());
                             if (theRelay != this || side != from) {
-                                if (tile.hasCapability(CapabilityEnergy.ENERGY, opp)) {
-                                    IEnergyStorage cap = tile.getCapability(CapabilityEnergy.ENERGY, opp);
-                                    if (cap != null) {
-                                        int theoreticalReceived = cap.receiveEnergy(Math.min(amountPer, lowestCap), true);
-                                        if (theoreticalReceived > 0) {
-                                            int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
-                                            if (deduct >= theoreticalReceived) { //Happens with small numbers
-                                                deduct = 0;
-                                            }
-
-                                            transmitted += cap.receiveEnergy(theoreticalReceived - deduct, simulate);
-                                            transmitted += deduct;
+                                transmitted += tile.getCapability(CapabilityEnergy.ENERGY, opp).map(cap -> {
+                                    int trans = 0;
+                                    int theoreticalReceived = cap.receiveEnergy(Math.min(amountPer, lowestCap), true);
+                                    if (theoreticalReceived > 0) {
+                                        int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
+                                        if (deduct >= theoreticalReceived) { //Happens with small numbers
+                                            deduct = 0;
                                         }
+
+                                        trans += cap.receiveEnergy(theoreticalReceived - deduct, simulate);
+                                        trans += deduct;
                                     }
-                                }
+
+                                    return trans;
+                                }).orElse(0);
 
                                 //If everything that could be transmitted was transmitted
                                 if (transmitted >= maxTransfer) {
@@ -265,7 +265,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
         super.writeSyncableNBT(compound, type);
 
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setString("Mode", this.mode.toString());
+            compound.putString("Mode", this.mode.toString());
         }
     }
 

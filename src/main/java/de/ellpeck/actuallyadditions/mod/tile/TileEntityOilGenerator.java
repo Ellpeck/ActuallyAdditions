@@ -14,25 +14,37 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.OilGenRecipe;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler {
 
     int[] i = ConfigIntListValues.OIL_POWER.getValue();
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, Math.max(Math.max(this.i[0], this.i[1]), Math.max(this.i[2], this.i[3])) + 20);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public final FluidTank tank = new FluidTank(2 * Util.BUCKET) {
+        @Nonnull
         @Override
-        public boolean canDrain() {
-            return false;
+        public FluidStack drain(FluidStack resource, FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+
+        @Nonnull
+        @Override
+        public FluidStack drain(int maxDrain, FluidAction action) {
+            return FluidStack.EMPTY;
         }
 
         @Override
@@ -43,6 +55,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
             return fluid != null && getRecipeForFluid(fluid.getName()) != null;
         }
     };
+    public final LazyOptional<IFluidHandler> lazyTank = LazyOptional.of(() -> this.tank);
     public int currentEnergyProduce;
     public int currentBurnTime;
     public int maxBurnTime;
@@ -54,7 +67,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     private int lastCompare;
 
     public TileEntityOilGenerator() {
-        super("oilGenerator");
+        super(ActuallyTiles.OILGENERATOR_TILE.get());
     }
 
     private static OilGenRecipe getRecipeForFluid(String fluidName) {
@@ -87,9 +100,9 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("BurnTime", this.currentBurnTime);
-            compound.setInteger("CurrentEnergy", this.currentEnergyProduce);
-            compound.setInteger("MaxBurnTime", this.maxBurnTime);
+            compound.putInt("BurnTime", this.currentBurnTime);
+            compound.putInt("CurrentEnergy", this.currentEnergyProduce);
+            compound.putInt("MaxBurnTime", this.maxBurnTime);
         }
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
@@ -99,9 +112,9 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     @Override
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            this.currentBurnTime = compound.getInteger("BurnTime");
-            this.currentEnergyProduce = compound.getInteger("CurrentEnergy");
-            this.maxBurnTime = compound.getInteger("MaxBurnTime");
+            this.currentBurnTime = compound.getInt("BurnTime");
+            this.currentEnergyProduce = compound.getInt("CurrentEnergy");
+            this.maxBurnTime = compound.getInt("MaxBurnTime");
         }
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
@@ -127,7 +140,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
                     this.maxBurnTime = recipe.genTime;
                     this.currentBurnTime = this.maxBurnTime;
 
-                    this.tank.drainInternal(fuelUsed, true);
+                    this.tank.drain(fuelUsed, IFluidHandler.FluidAction.EXECUTE);
                 } else {
                     this.currentEnergyProduce = 0;
                     this.currentBurnTime = 0;
@@ -158,8 +171,8 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public IFluidHandler getFluidHandler(Direction facing) {
-        return this.tank;
+    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
+        return this.lazyTank;
     }
 
     @Override
@@ -198,7 +211,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

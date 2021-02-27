@@ -15,6 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
@@ -26,6 +27,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
 
     public static final int DEFAULT_RANGE = 32;
     private final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 50, 0);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public UUID connectedPlayer;
     public String playerName;
     private IItemHandler playerHandler;
@@ -34,14 +36,14 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     private int range;
 
     public TileEntityPlayerInterface() {
-        super("playerInterface");
+        super(ActuallyTiles.PLAYERINTERFACE_TILE.get());
     }
 
     private PlayerEntity getPlayer() {
-        if (this.connectedPlayer != null) {
-            PlayerEntity player = this.world.getPlayerEntityByUUID(this.connectedPlayer);
+        if (this.connectedPlayer != null && this.world != null) {
+            PlayerEntity player = this.world.getPlayerByUuid(this.connectedPlayer);
             if (player != null) {
-                if (player.getDistance(this.pos.getX(), this.pos.getY(), this.pos.getZ()) <= this.range) {
+                if (player.getDistanceSq(this.pos.getX(), this.pos.getY(), this.pos.getZ()) <= this.range) {
                     return player;
                 }
             }
@@ -49,8 +51,9 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
         return null;
     }
 
+    // TODO: [port] this might not be a stable way of doing this.
     @Override
-    public IItemHandler getItemHandler(Direction facing) {
+    public LazyOptional<IItemHandler> getItemHandler(Direction facing) {
         PlayerEntity player = this.getPlayer();
 
         if (this.oldPlayer != player) {
@@ -61,7 +64,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
                 : new PlayerInvWrapper(player.inventory);
         }
 
-        return this.playerHandler;
+        return LazyOptional.of(() -> this.playerHandler);
     }
 
     @Override
@@ -79,14 +82,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
                         ItemStack slot = player.inventory.getStackInSlot(i);
                         if (StackUtil.isValid(slot) && slot.getCount() == 1) {
 
-                            int received = 0;
-                            if (slot.hasCapability(CapabilityEnergy.ENERGY, null)) {
-                                IEnergyStorage cap = slot.getCapability(CapabilityEnergy.ENERGY, null);
-                                if (cap != null) {
-                                    received = cap.receiveEnergy(this.storage.getEnergyStored(), false);
-                                }
-                            }
-
+                            int received = slot.getCapability(CapabilityEnergy.ENERGY).map(cap -> cap.receiveEnergy(this.storage.getEnergyStored(), false)).orElse(0);
                             if (received > 0) {
                                 this.storage.extractEnergyInternal(received, false);
                             }
@@ -114,8 +110,8 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
 
         this.storage.writeToNBT(compound);
         if (this.connectedPlayer != null && type != NBTType.SAVE_BLOCK) {
-            compound.setUniqueId("Player", this.connectedPlayer);
-            compound.setString("PlayerName", this.playerName);
+            compound.putUniqueId("Player", this.connectedPlayer);
+            compound.putString("PlayerName", this.playerName);
         }
     }
 
@@ -124,7 +120,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
         super.readSyncableNBT(compound, type);
 
         this.storage.readFromNBT(compound);
-        if (compound.hasKey("PlayerLeast") && type != NBTType.SAVE_BLOCK) {
+        if (compound.contains("PlayerLeast") && type != NBTType.SAVE_BLOCK) {
             this.connectedPlayer = compound.getUniqueId("Player");
             this.playerName = compound.getString("PlayerName");
         }
@@ -141,7 +137,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

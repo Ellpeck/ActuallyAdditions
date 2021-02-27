@@ -19,13 +19,17 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
+
+import java.util.List;
 
 public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IButtonReactor {
 
@@ -37,12 +41,12 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public int side;
     private int oldRange;
 
-    public TileEntityPhantomPlacer(int slots, String name) {
-        super(slots, name);
+    public TileEntityPhantomPlacer(TileEntityType<?> type, int slots) {
+        super(type, slots);
     }
 
     public TileEntityPhantomPlacer() {
-        super(9, "phantomPlacer");
+        super(ActuallyTiles.PHANTOMPLACER_TILE.get(), 9);
         this.isBreaker = false;
     }
 
@@ -50,14 +54,14 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("Range", this.range);
+            compound.putInt("Range", this.range);
             if (this.boundPosition != null) {
-                compound.setInteger("xOfTileStored", this.boundPosition.getX());
-                compound.setInteger("yOfTileStored", this.boundPosition.getY());
-                compound.setInteger("zOfTileStored", this.boundPosition.getZ());
+                compound.putInt("xOfTileStored", this.boundPosition.getX());
+                compound.putInt("yOfTileStored", this.boundPosition.getY());
+                compound.putInt("zOfTileStored", this.boundPosition.getZ());
             }
             if (!this.isBreaker) {
-                compound.setInteger("Side", this.side);
+                compound.putInt("Side", this.side);
             }
         }
     }
@@ -66,16 +70,16 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            int x = compound.getInteger("xOfTileStored");
-            int y = compound.getInteger("yOfTileStored");
-            int z = compound.getInteger("zOfTileStored");
-            this.range = compound.getInteger("Range");
+            int x = compound.getInt("xOfTileStored");
+            int y = compound.getInt("yOfTileStored");
+            int z = compound.getInt("zOfTileStored");
+            this.range = compound.getInt("Range");
             if (!(x == 0 && y == 0 && z == 0)) {
                 this.boundPosition = new BlockPos(x, y, z);
                 this.markDirty();
             }
             if (!this.isBreaker) {
-                this.side = compound.getInteger("Side");
+                this.side = compound.getInt("Side");
             }
         }
     }
@@ -115,14 +119,15 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         }
     }
 
+    // TODO: [port] I have no clue what the cowboy logic is trying to do here. Confirm this still works
     @Override
     public boolean hasBoundPosition() {
         if (this.boundPosition != null) {
-            if (this.world.getTileEntity(this.boundPosition) instanceof IPhantomTile || this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ() && this.world.provider.getDimension() == this.world.provider.getDimension()) {
+            if (this.world.getTileEntity(this.boundPosition) instanceof IPhantomTile || this.getPos().getX() == this.boundPosition.getX() && this.getPos().getY() == this.boundPosition.getY() && this.getPos().getZ() == this.boundPosition.getZ() && this.world.getDimensionType() == this.world.getDimensionType()) {
                 this.boundPosition = null;
                 return false;
             }
-            return this.world.provider.getDimension() == this.world.provider.getDimension();
+            return this.world.getDimensionType() == this.world.getDimensionType();
         }
         return false;
     }
@@ -132,12 +137,11 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             if (this.isBreaker) {
                 Block blockToBreak = this.world.getBlockState(this.boundPosition).getBlock();
                 if (blockToBreak != null && this.world.getBlockState(this.boundPosition).getBlockHardness(this.world, this.boundPosition) > -1.0F) {
-                    NonNullList<ItemStack> drops = NonNullList.create();
-                    blockToBreak.getDrops(drops, this.world, this.pos, this.world.getBlockState(this.boundPosition), 0);
+                    List<ItemStack> drops = Block.getDrops(this.world.getBlockState(this.boundPosition), (ServerWorld) this.world, this.pos, this.world.getTileEntity(this.pos));
 
                     if (StackUtil.canAddAll(this.inv, drops, false)) {
                         this.world.playEvent(2001, this.boundPosition, Block.getStateId(this.world.getBlockState(this.boundPosition)));
-                        this.world.setBlockToAir(this.boundPosition);
+                        this.world.setBlockState(this.boundPosition, Blocks.AIR.getDefaultState());
                         StackUtil.addAll(this.inv, drops, false);
                         this.markDirty();
                     }
@@ -162,7 +166,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             double d5 = this.world.rand.nextFloat() * 1.0F * j1;
             double d0 = this.boundPosition.getX() + 0.5D + 0.25D * i1;
             double d3 = this.world.rand.nextFloat() * 1.0F * i1;
-            this.world.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
+            this.world.addParticle(ParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
     }
 

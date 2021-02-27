@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.EnumRarity;
@@ -27,7 +26,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class ItemMisc extends ItemBase {
@@ -46,12 +44,16 @@ public class ItemMisc extends ItemBase {
 
     @Override
     public String getTranslationKey(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + "_" + ALL_MISC_ITEMS[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_MISC_ITEMS.length
+            ? StringUtil.BUGGED_ITEM_NAME
+            : this.getTranslationKey() + "_" + ALL_MISC_ITEMS[stack.getItemDamage()].name;
     }
 
     @Override
     public IRarity getForgeRarity(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_MISC_ITEMS.length ? EnumRarity.COMMON : ALL_MISC_ITEMS[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_MISC_ITEMS.length
+            ? EnumRarity.COMMON
+            : ALL_MISC_ITEMS[stack.getItemDamage()].rarity;
     }
 
     @Override
@@ -87,9 +89,13 @@ public class ItemMisc extends ItemBase {
 
                     if (block instanceof IFluidBlock && block.getMetaFromState(state) == 0) {
                         Fluid fluid = ((IFluidBlock) block).getFluid();
-                        if (fluid != null && fluid == (isEmpowered ? InitFluids.fluidCrystalOil : InitFluids.fluidRefinedCanolaOil)) {
+                        if (fluid != null && fluid == (isEmpowered
+                            ? InitFluids.fluidCrystalOil
+                            : InitFluids.fluidRefinedCanolaOil)) {
                             entity.setDead();
-                            entity.world.setBlockState(pos, (isEmpowered ? InitFluids.blockEmpoweredOil : InitFluids.blockCrystalOil).getDefaultState());
+                            entity.world.setBlockState(pos, (isEmpowered
+                                ? InitFluids.blockEmpoweredOil
+                                : InitFluids.blockCrystalOil).getDefaultState());
                         }
                     }
                 }
@@ -108,9 +114,15 @@ public class ItemMisc extends ItemBase {
     public int getItemBurnTime(ItemStack stack) {
         int k = stack.getMetadata();
 
-        if (k == TheMiscItems.TINY_CHAR.ordinal()) return 200;
-        if (k == TheMiscItems.TINY_COAL.ordinal()) return 200;
-        if (k == TheMiscItems.BIOCOAL.ordinal()) return 800;
+        if (k == TheMiscItems.TINY_CHAR.ordinal()) {
+            return 200;
+        }
+        if (k == TheMiscItems.TINY_COAL.ordinal()) {
+            return 200;
+        }
+        if (k == TheMiscItems.BIOCOAL.ordinal()) {
+            return 800;
+        }
 
         return super.getItemBurnTime(stack);
     }

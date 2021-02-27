@@ -221,7 +221,7 @@ public class ContainerBag extends Container implements IButtonReactor {
             ItemDrill.writeSlotsToNBT(this.bagInventory, this.inventory.getCurrentItem());
             CompoundNBT compound = stack.getTagCompound();
             this.filter.writeToNBT(compound, "Filter");
-            compound.setBoolean("AutoInsert", this.autoInsert);
+            compound.putBoolean("AutoInsert", this.autoInsert);
         }
         super.onContainerClosed(player);
     }

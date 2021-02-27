@@ -16,16 +16,18 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityEnergizer extends TileEntityInventoryBase {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 1000, 0);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int lastEnergy;
 
     public TileEntityEnergizer() {
-        super(2, "energizer");
+        super(ActuallyTiles.ENERGIZER_TILE.get(), 2);
     }
 
     @Override
@@ -46,16 +48,9 @@ public class TileEntityEnergizer extends TileEntityInventoryBase {
         if (!this.world.isRemote) {
             if (StackUtil.isValid(this.inv.getStackInSlot(0)) && !StackUtil.isValid(this.inv.getStackInSlot(1))) {
                 if (this.storage.getEnergyStored() > 0) {
-                    int received = 0;
-                    boolean canTakeUp = false;
+                    int received = this.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null).map(cap -> cap.receiveEnergy(this.storage.getEnergyStored(), false)).orElse(0);
+                    boolean canTakeUp = this.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null).map(cap -> cap.getEnergyStored() >= cap.getMaxEnergyStored()).orElse(false);
 
-                    if (this.inv.getStackInSlot(0).hasCapability(CapabilityEnergy.ENERGY, null)) {
-                        IEnergyStorage cap = this.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null);
-                        if (cap != null) {
-                            received = cap.receiveEnergy(this.storage.getEnergyStored(), false);
-                            canTakeUp = cap.getEnergyStored() >= cap.getMaxEnergyStored();
-                        }
-                    }
                     if (received > 0) {
                         this.storage.extractEnergyInternal(received, false);
                     }
@@ -75,7 +70,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase {
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot == 0 && stack.hasCapability(CapabilityEnergy.ENERGY, null);
+        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
     }
 
     @Override
@@ -88,7 +83,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase {
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

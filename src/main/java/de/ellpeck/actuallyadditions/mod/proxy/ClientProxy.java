@@ -22,7 +22,6 @@ import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingBlock;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

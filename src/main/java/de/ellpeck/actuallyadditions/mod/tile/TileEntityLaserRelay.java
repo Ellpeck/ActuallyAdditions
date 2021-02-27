@@ -22,9 +22,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 
 public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
@@ -38,8 +41,8 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     private int changeAmountAtCaching = -1;
     private int lastRange;
 
-    public TileEntityLaserRelay(String name, LaserType type) {
-        super(1, name);
+    public TileEntityLaserRelay(TileEntityType<?> tileType, LaserType type) {
+        super(tileType, 1);
         this.type = type;
     }
 
@@ -73,11 +76,11 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
                 for (IConnectionPair pair : connections) {
                     CompoundNBT tag = new CompoundNBT();
                     pair.writeToNBT(tag);
-                    list.appendTag(tag);
+                    list.add(tag);
                 }
             }
 
-            compound.setTag("Connections", list);
+            compound.put("Connections", list);
         }
     }
 
@@ -159,8 +162,8 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
     @Override
-    public IItemHandler getItemHandler(Direction facing) {
-        return null;
+    public LazyOptional<IItemHandler> getItemHandler(Direction facing) {
+        return LazyOptional.empty();
     }
 
     public int getMaxRange() {

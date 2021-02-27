@@ -12,8 +12,9 @@ package de.ellpeck.actuallyadditions.mod.entity;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
-import net.minecraft.block.*;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.IGrowable;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -50,12 +51,12 @@ public class EntityWorm extends Entity {
 
     @Override
     protected void readEntityFromNBT(CompoundNBT compound) {
-        this.timer = compound.getInteger("Timer");
+        this.timer = compound.getInt("Timer");
     }
 
     @Override
     protected void writeEntityToNBT(CompoundNBT compound) {
-        compound.setInteger("Timer", this.timer);
+        compound.putInt("Timer", this.timer);
     }
 
     @Override

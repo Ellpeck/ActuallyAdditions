@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -60,7 +59,7 @@ public class ReedFarmerBehavior implements IFarmerBehavior {
                             if (!drops.isEmpty()) {
                                 if (farmer.canAddToOutput(drops)) {
                                     world.playEvent(2001, up, Block.getStateId(upState));
-                                    world.setBlockToAir(up);
+                                    world.setBlockState(up, Blocks.AIR.getDefaultState());
 
                                     farmer.extractEnergy(use);
                                     farmer.addToOutput(drops);

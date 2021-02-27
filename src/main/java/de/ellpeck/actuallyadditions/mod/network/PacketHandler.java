@@ -23,18 +23,21 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.OnlyIn;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +49,7 @@ public final class PacketHandler {
         @Override
         @OnlyIn(Dist.CLIENT)
         public void handleData(CompoundNBT compound, MessageContext context) {
-            AssetUtil.spawnLaserWithTimeClient(compound.getDouble("StartX"), compound.getDouble("StartY"), compound.getDouble("StartZ"), compound.getDouble("EndX"), compound.getDouble("EndY"), compound.getDouble("EndZ"), new float[]{compound.getFloat("Color1"), compound.getFloat("Color2"), compound.getFloat("Color3")}, compound.getInteger("MaxAge"), compound.getDouble("RotationTime"), compound.getFloat("Size"), compound.getFloat("Alpha"));
+            AssetUtil.spawnLaserWithTimeClient(compound.getDouble("StartX"), compound.getDouble("StartY"), compound.getDouble("StartZ"), compound.getDouble("EndX"), compound.getDouble("EndY"), compound.getDouble("EndZ"), new float[]{compound.getFloat("Color1"), compound.getFloat("Color2"), compound.getFloat("Color3")}, compound.getInt("MaxAge"), compound.getDouble("RotationTime"), compound.getFloat("Size"), compound.getFloat("Alpha"));
         }
     };
     public static final IDataHandler TILE_ENTITY_HANDLER = new IDataHandler() {
@@ -55,7 +58,7 @@ public final class PacketHandler {
         public void handleData(CompoundNBT compound, MessageContext context) {
             World world = Minecraft.getInstance().world;
             if (world != null) {
-                TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
+                TileEntity tile = world.getTileEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
                 if (tile instanceof TileEntityBase) {
                     ((TileEntityBase) tile).readSyncableNBT(compound.getCompoundTag("Data"), TileEntityBase.NBTType.SYNC);
                 }
@@ -82,43 +85,43 @@ public final class PacketHandler {
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_TILE_HANDLER = (compound, context) -> {
-        World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
-        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
+        World world = DimensionManager.getWorld(compound.getInt("WorldID"));
+        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
         if (tile instanceof IButtonReactor) {
             IButtonReactor reactor = (IButtonReactor) tile;
-            Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
+            Entity entity = world.getEntityByID(compound.getInt("PlayerID"));
             if (entity instanceof PlayerEntity) {
-                reactor.onButtonPressed(compound.getInteger("ButtonID"), (PlayerEntity) entity);
+                reactor.onButtonPressed(compound.getInt("ButtonID"), (PlayerEntity) entity);
             }
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_CONTAINER_HANDLER = (compound, context) -> {
-        World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
-        Entity entity = world.getEntityByID(compound.getInteger("PlayerID"));
+        World world = DimensionManager.getWorld(compound.getInt("WorldID"));
+        Entity entity = world.getEntityByID(compound.getInt("PlayerID"));
         if (entity instanceof PlayerEntity) {
             Container container = ((PlayerEntity) entity).openContainer;
             if (container instanceof IButtonReactor) {
-                ((IButtonReactor) container).onButtonPressed(compound.getInteger("ButtonID"), (PlayerEntity) entity);
+                ((IButtonReactor) container).onButtonPressed(compound.getInt("ButtonID"), (PlayerEntity) entity);
             }
         }
     };
     public static final IDataHandler GUI_NUMBER_TO_TILE_HANDLER = (compound, context) -> {
-        World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
-        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
+        World world = DimensionManager.getWorld(compound.getInt("WorldID"));
+        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
         if (tile instanceof INumberReactor) {
             INumberReactor reactor = (INumberReactor) tile;
-            reactor.onNumberReceived(compound.getDouble("Number"), compound.getInteger("NumberID"), (PlayerEntity) world.getEntityByID(compound.getInteger("PlayerID")));
+            reactor.onNumberReceived(compound.getDouble("Number"), compound.getInt("NumberID"), (PlayerEntity) world.getEntityByID(compound.getInt("PlayerID")));
         }
     };
     public static final IDataHandler GUI_STRING_TO_TILE_HANDLER = (compound, context) -> {
-        World world = DimensionManager.getWorld(compound.getInteger("WorldID"));
-        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
+        World world = DimensionManager.getWorld(compound.getInt("WorldID"));
+        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
         if (tile instanceof IStringReactor) {
             IStringReactor reactor = (IStringReactor) tile;
-            reactor.onTextReceived(compound.getString("Text"), compound.getInteger("TextID"), (PlayerEntity) world.getEntityByID(compound.getInteger("PlayerID")));
+            reactor.onTextReceived(compound.getString("Text"), compound.getInt("TextID"), (PlayerEntity) world.getEntityByID(compound.getInt("PlayerID")));
         }
     };
     public static final IDataHandler SYNC_PLAYER_DATA = new IDataHandler() {
@@ -140,12 +143,12 @@ public final class PacketHandler {
         }
     };
     public static final IDataHandler PLAYER_DATA_TO_SERVER = (compound, context) -> {
-        World world = DimensionManager.getWorld(compound.getInteger("World"));
+        World world = DimensionManager.getWorld(compound.getInt("World"));
         PlayerEntity player = world.getPlayerEntityByUUID(compound.getUniqueId("UUID"));
         if (player != null) {
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
 
-            int type = compound.getInteger("Type");
+            int type = compound.getInt("Type");
             if (type == 0) {
                 data.loadBookmarks(compound.getList("Bookmarks", 8));
             } else if (type == 1) {
@@ -167,12 +170,17 @@ public final class PacketHandler {
         }
     };
 
-    public static SimpleNetworkWrapper theNetwork;
+    private static final String PROTOCOL_VERSION = Integer.toString(4);
+    public static final SimpleChannel THE_NETWORK = NetworkRegistry.newSimpleChannel(
+        new ResourceLocation(ActuallyAdditions.MODID, "main"),
+        () -> PROTOCOL_VERSION,
+        PROTOCOL_VERSION::equals,
+        PROTOCOL_VERSION::equals
+    );
 
     public static void init() {
-        theNetwork = NetworkRegistry.INSTANCE.newSimpleChannel(ActuallyAdditions.MODID);
-        theNetwork.registerMessage(PacketServerToClient.Handler.class, PacketServerToClient.class, 0, Side.CLIENT);
-        theNetwork.registerMessage(PacketClientToServer.Handler.class, PacketClientToServer.class, 1, Side.SERVER);
+        THE_NETWORK.registerMessage(PacketServerToClient.Handler.class, PacketServerToClient.class, 0, Side.CLIENT);
+        THE_NETWORK.registerMessage(PacketClientToServer.Handler.class, PacketClientToServer.class, 1, Side.SERVER);
 
         DATA_HANDLERS.add(LASER_HANDLER);
         DATA_HANDLERS.add(TILE_ENTITY_HANDLER);
@@ -183,5 +191,19 @@ public final class PacketHandler {
         DATA_HANDLERS.add(GUI_BUTTON_TO_CONTAINER_HANDLER);
         DATA_HANDLERS.add(LASER_PARTICLE_HANDLER);
         DATA_HANDLERS.add(PLAYER_DATA_TO_SERVER);
+    }
+
+    public static void sendTo(Object msg, ServerPlayerEntity player) {
+        if (!(player instanceof FakePlayer)) {
+            THE_NETWORK.sendTo(msg, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+        }
+    }
+
+    public static void sendToServer(Object msg) {
+        THE_NETWORK.sendToServer(msg);
+    }
+
+    public static void send(Object msg, PacketDistributor.PacketTarget target) {
+        THE_NETWORK.send(target, msg);
     }
 }

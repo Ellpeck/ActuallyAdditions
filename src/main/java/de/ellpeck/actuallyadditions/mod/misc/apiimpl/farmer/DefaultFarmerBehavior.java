@@ -10,29 +10,22 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.block.BlockStem;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Direction;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -41,6 +34,9 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DefaultFarmerBehavior implements IFarmerBehavior {
 
     public static boolean defaultPlant(World world, BlockPos pos, BlockState toPlant, IFarmer farmer, int use) {
@@ -48,7 +44,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             BlockPos farmland = pos.down();
             Block farmlandBlock = world.getBlockState(farmland).getBlock();
             if (farmlandBlock instanceof BlockDirt || farmlandBlock instanceof BlockGrass) {
-                world.setBlockToAir(pos);
+                world.setBlockState(pos, Blocks.AIR.getDefaultState());
                 useHoeAt(world, farmland);
                 world.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 farmer.extractEnergy(use);
@@ -74,7 +70,9 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer) {
         int use = 350;
         if (farmer.getEnergy() >= use * 2) {
-            if (defaultPlant(world, pos, this.getPlantablePlantFromStack(seed, world, pos), farmer, use)) return FarmerResult.SUCCESS;
+            if (defaultPlant(world, pos, this.getPlantablePlantFromStack(seed, world, pos), farmer, use)) {
+                return FarmerResult.SUCCESS;
+            }
         }
         return FarmerResult.FAIL;
     }
@@ -87,9 +85,13 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             Block block = state.getBlock();
 
             if (block instanceof BlockCrops) {
-                if (((BlockCrops) block).isMaxAge(state)) { return this.doFarmerStuff(state, world, pos, farmer); }
+                if (((BlockCrops) block).isMaxAge(state)) {
+                    return this.doFarmerStuff(state, world, pos, farmer);
+                }
             } else if (BlockCrops.AGE.equals(block.getBlockState().getProperty("age"))) {
-                if (state.getValue(BlockCrops.AGE) >= 7 && !(block instanceof BlockStem)) return this.doFarmerStuff(state, world, pos, farmer);
+                if (state.getValue(BlockCrops.AGE) >= 7 && !(block instanceof BlockStem)) {
+                    return this.doFarmerStuff(state, world, pos, farmer);
+                }
             }
         }
         return FarmerResult.FAIL;
@@ -122,7 +124,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             }
 
             world.playEvent(2001, pos, Block.getStateId(state));
-            world.setBlockToAir(pos);
+            world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
             farmer.extractEnergy(250);
             return FarmerResult.SUCCESS;
@@ -140,7 +142,9 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             IPlantable plantable = this.getPlantableFromStack(stack);
             if (plantable != null) {
                 BlockState state = plantable.getPlant(world, pos);
-                if (state != null && state.getBlock() instanceof IGrowable) return state;
+                if (state != null && state.getBlock() instanceof IGrowable) {
+                    return state;
+                }
             }
         }
         return null;
@@ -152,7 +156,9 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             return (IPlantable) item;
         } else if (item instanceof ItemBlock) {
             Block block = Block.getBlockFromItem(item);
-            if (block instanceof IPlantable) return (IPlantable) block;
+            if (block instanceof IPlantable) {
+                return (IPlantable) block;
+            }
         }
         return null;
     }
@@ -160,7 +166,9 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     private static ItemStack hoe = ItemStack.EMPTY;
 
     private static ItemStack getHoeStack() {
-        if (hoe.isEmpty()) hoe = new ItemStack(Items.DIAMOND_HOE);
+        if (hoe.isEmpty()) {
+            hoe = new ItemStack(Items.DIAMOND_HOE);
+        }
         return hoe;
     }
 
@@ -174,7 +182,11 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             return EnumActionResult.FAIL;
         } else {
             int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);
-            if (hook != 0) return hook > 0 ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+            if (hook != 0) {
+                return hook > 0
+                    ? EnumActionResult.SUCCESS
+                    : EnumActionResult.FAIL;
+            }
 
             BlockState iblockstate = world.getBlockState(pos);
             Block block = iblockstate.getBlock();
@@ -187,13 +199,13 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
 
                 if (block == Blocks.DIRT) {
                     switch (iblockstate.getValue(BlockDirt.VARIANT)) {
-                    case DIRT:
-                        world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
-                        return EnumActionResult.SUCCESS;
-                    case COARSE_DIRT:
-                        world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT));
-                        return EnumActionResult.SUCCESS;
-                    default:
+                        case DIRT:
+                            world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
+                            return EnumActionResult.SUCCESS;
+                        case COARSE_DIRT:
+                            world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT));
+                            return EnumActionResult.SUCCESS;
+                        default:
                     }
                 }
             }

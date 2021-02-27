@@ -17,11 +17,11 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -34,15 +34,16 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     private int lastRecipe;
 
     public TileEntityEmpowerer() {
-        super(1, "empowerer");
+        super(ActuallyTiles.EMPOWERER_TILE.get(), 1);
     }
 
     @Deprecated //Use findMatchingRecipe
     public static List<EmpowererRecipe> getRecipesForInput(ItemStack input) {
         List<EmpowererRecipe> recipesThatWork = new ArrayList<>();
         if (StackUtil.isValid(input)) {
+            // TODO: [port] VALIDATOR OR REMOVE
             for (EmpowererRecipe recipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
-                if (recipe.getInput().apply(input)) {
+                if (recipe.getInput().test(input)) {
                     recipesThatWork.add(recipe);
                 }
             }
@@ -52,7 +53,8 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
     public static boolean isPossibleInput(ItemStack stack) {
         for (EmpowererRecipe r : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
-            if (r.getInput().apply(stack)) {
+            // TODO: [port] move to proper recipe system
+            if (r.getInput().test(stack)) {
                 return true;
             }
         }
@@ -102,12 +104,12 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
                             }
                         }
 
-                        if (this.processTime % 5 == 0 && this.world instanceof WorldServer) {
-                            ((WorldServer) this.world).spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, false, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 2, 0, 0, 0, 0.1D);
+                        if (this.processTime % 5 == 0 && this.world instanceof ServerWorld) {
+                            ((ServerWorld) this.world).spawnParticle(ParticleTypes.FIREWORK, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 2, 0, 0, 0, 0.1D);
                         }
 
                         if (done) {
-                            ((WorldServer) this.world).spawnParticle(EnumParticleTypes.END_ROD, false, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 100, 0, 0, 0, 0.25D);
+                            ((ServerWorld) this.world).spawnParticle(ParticleTypes.END_ROD, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 100, 0, 0, 0, 0.25D);
 
                             this.inv.setStackInSlot(0, recipe.getOutput().copy());
                             this.markDirty();
@@ -132,8 +134,9 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     private TileEntityDisplayStand[] getNearbyStands() {
         TileEntityDisplayStand[] stands = new TileEntityDisplayStand[4];
 
-        for (int i = 0; i < Direction.HORIZONTALS.length; i++) {
-            Direction facing = Direction.HORIZONTALS[i];
+        // TODO: [port] validate this
+        for (int i = 0; i < 3; i++) {
+            Direction facing = Direction.byHorizontalIndex(i);
             BlockPos offset = this.pos.offset(facing, 3);
             TileEntity tile = this.world.getTileEntity(offset);
             if (tile instanceof TileEntityDisplayStand) {
@@ -150,10 +153,10 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type == NBTType.SAVE_TILE) {
-            compound.setInteger("ProcessTime", this.processTime);
+            compound.putInt("ProcessTime", this.processTime);
         }
         if (type == NBTType.SYNC) {
-            compound.setInteger("RenderIndex", this.recipeForRenderIndex);
+            compound.putInt("RenderIndex", this.recipeForRenderIndex);
         }
     }
 
@@ -161,10 +164,10 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type == NBTType.SAVE_TILE) {
-            this.processTime = compound.getInteger("ProcessTime");
+            this.processTime = compound.getInt("ProcessTime");
         }
         if (type == NBTType.SYNC) {
-            this.recipeForRenderIndex = compound.getInteger("RenderIndex");
+            this.recipeForRenderIndex = compound.getInt("RenderIndex");
         }
     }
 

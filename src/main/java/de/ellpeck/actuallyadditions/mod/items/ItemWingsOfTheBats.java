@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityBat;
@@ -49,11 +48,14 @@ public class ItemWingsOfTheBats extends ItemBase {
      * Checks if the Player has Wings in its Inventory
      *
      * @param player The Player
+     *
      * @return The Wings
      */
     public static ItemStack getWingItem(PlayerEntity player) {
         for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-            if (StackUtil.isValid(player.inventory.getStackInSlot(i)) && player.inventory.getStackInSlot(i).getItem() instanceof ItemWingsOfTheBats) { return player.inventory.getStackInSlot(i); }
+            if (StackUtil.isValid(player.inventory.getStackInSlot(i)) && player.inventory.getStackInSlot(i).getItem() instanceof ItemWingsOfTheBats) {
+                return player.inventory.getStackInSlot(i);
+            }
         }
         return StackUtil.getEmpty();
     }

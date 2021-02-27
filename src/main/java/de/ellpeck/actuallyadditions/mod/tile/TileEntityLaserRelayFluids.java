@@ -23,12 +23,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -42,29 +44,49 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
     private Mode mode = Mode.BOTH;
 
     public TileEntityLaserRelayFluids() {
-        super("laserRelayFluids", LaserType.FLUID);
+        super(ActuallyTiles.LASERRELAYFLUIDS_TILE.get(), LaserType.FLUID);
 
         for (int i = 0; i < this.fluidHandlers.length; i++) {
             Direction facing = Direction.values()[i];
+
+            // TODO: [port] this might just not work due to the new contract
             this.fluidHandlers[i] = new IFluidHandler() {
                 @Override
-                public IFluidTankProperties[] getTankProperties() {
-                    return new IFluidTankProperties[0];
+                public int getTanks() {
+                    return 0;
+                }
+
+                @Nonnull
+                @Override
+                public FluidStack getFluidInTank(int tank) {
+                    return FluidStack.EMPTY;
                 }
 
                 @Override
-                public int fill(FluidStack resource, boolean doFill) {
-                    return TileEntityLaserRelayFluids.this.transmitFluid(facing, resource, doFill);
+                public int getTankCapacity(int tank) {
+                    return 0;
                 }
 
                 @Override
-                public FluidStack drain(FluidStack resource, boolean doDrain) {
-                    return null;
+                public boolean isFluidValid(int tank, @Nonnull FluidStack stack) {
+                    return false;
                 }
 
                 @Override
-                public FluidStack drain(int maxDrain, boolean doDrain) {
-                    return null;
+                public int fill(FluidStack resource, FluidAction action) {
+                    return TileEntityLaserRelayFluids.this.transmitFluid(facing, resource, action);
+                }
+
+                @Nonnull
+                @Override
+                public FluidStack drain(FluidStack resource, FluidAction action) {
+                    return FluidStack.EMPTY;
+                }
+
+                @Nonnull
+                @Override
+                public FluidStack drain(int maxDrain, FluidAction action) {
+                    return FluidStack.EMPTY;
                 }
             };
         }
@@ -99,7 +121,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
             if (this.world.isBlockLoaded(pos)) {
                 TileEntity tile = this.world.getTileEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityLaserRelay)) {
-                    if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite())) {
+                    if (tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite()).isPresent()) {
                         this.handlersAround.put(side, tile);
 
                         TileEntity oldTile = old.get(side);
@@ -119,25 +141,26 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
         }
     }
 
+    // TODO: [port] super hacky, find better way of handling this.
     @Override
-    public IFluidHandler getFluidHandler(Direction facing) {
-        return this.fluidHandlers[facing == null
+    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
+        return LazyOptional.of(() -> this.fluidHandlers[facing == null
             ? 0
-            : facing.ordinal()];
+            : facing.ordinal()]);
     }
 
-    private int transmitFluid(Direction from, FluidStack stack, boolean doFill) {
+    private int transmitFluid(Direction from, FluidStack stack, IFluidHandler.FluidAction action) {
         int transmitted = 0;
         if (stack != null && this.mode != Mode.OUTPUT_ONLY) {
             Network network = this.getNetwork();
             if (network != null) {
-                transmitted = this.transferFluidToReceiverInNeed(from, network, stack, doFill);
+                transmitted = this.transferFluidToReceiverInNeed(from, network, stack, action);
             }
         }
         return transmitted;
     }
 
-    private int transferFluidToReceiverInNeed(Direction from, Network network, FluidStack stack, boolean doFill) {
+    private int transferFluidToReceiverInNeed(Direction from, Network network, FluidStack stack, IFluidHandler.FluidAction action) {
         int transmitted = 0;
         //Keeps track of all the Laser Relays and Energy Acceptors that have been checked already to make nothing run multiple times
         Set<BlockPos> alreadyChecked = new HashSet<>();
@@ -158,14 +181,12 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
                             for (Direction facing : theRelay.handlersAround.keySet()) {
                                 if (theRelay != this || facing != from) {
                                     TileEntity tile = theRelay.handlersAround.get(facing);
-
                                     Direction opp = facing.getOpposite();
-                                    if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp)) {
-                                        IFluidHandler cap = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp);
-                                        if (cap != null && cap.fill(stack, false) > 0) {
-                                            totalReceiverAmount++;
-                                            workedOnce = true;
-                                        }
+
+                                    boolean received = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp).map(cap -> cap.fill(stack, IFluidHandler.FluidAction.SIMULATE) > 0).orElse(false);
+                                    if (received) {
+                                        totalReceiverAmount++;
+                                        workedOnce = true;
                                     }
                                 }
                             }
@@ -180,10 +201,9 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
         }
 
         if (totalReceiverAmount > 0 && !relaysThatWork.isEmpty()) {
-            int amountPer = stack.amount / totalReceiverAmount;
-            if (amountPer <= 0) {
-                amountPer = stack.amount;
-            }
+            int amountPer = stack.getAmount() / totalReceiverAmount <= 0
+                ? stack.getAmount() / totalReceiverAmount
+                : stack.getAmount();
 
             for (TileEntityLaserRelayFluids theRelay : relaysThatWork) {
                 for (Map.Entry<Direction, TileEntity> receiver : theRelay.handlersAround.entrySet()) {
@@ -194,17 +214,16 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
                         if (!alreadyChecked.contains(tile.getPos())) {
                             alreadyChecked.add(tile.getPos());
                             if (theRelay != this || side != from) {
-                                if (tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp)) {
-                                    IFluidHandler cap = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp);
-                                    if (cap != null) {
-                                        FluidStack copy = stack.copy();
-                                        copy.amount = amountPer;
-                                        transmitted += cap.fill(copy, doFill);
-                                    }
-                                }
+                                transmitted += tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp).map(cap -> {
+                                    int trans = 0;
+                                    FluidStack copy = stack.copy();
+                                    copy.setAmount(amountPer);
+                                    trans += cap.fill(copy, action);
+                                    return trans;
+                                }).orElse(0);
 
                                 //If everything that could be transmitted was transmitted
-                                if (transmitted >= stack.amount) {
+                                if (transmitted >= stack.getAmount()) {
                                     return transmitted;
                                 }
                             }
@@ -239,7 +258,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
         super.writeSyncableNBT(compound, type);
 
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setString("Mode", this.mode.toString());
+            compound.putString("Mode", this.mode.toString());
         }
     }
 

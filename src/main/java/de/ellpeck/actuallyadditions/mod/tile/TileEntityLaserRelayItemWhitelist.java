@@ -28,7 +28,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     public FilterSettings rightFilter = new FilterSettings(12, true, true, false, false, 0, -2000);
 
     public TileEntityLaserRelayItemWhitelist() {
-        super("laserRelayItemWhitelist");
+        super(ActuallyTiles.LASERRELAYITEMWHITELIST_TILE.get());
     }
 
     @Override

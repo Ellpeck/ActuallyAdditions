@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.api.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
@@ -25,6 +24,7 @@ public abstract class Lens {
      *
      * @param hitBlock The block that was hit
      * @param tile     The tile the lens was invoked from
+     *
      * @return If the Reconstructor should stop continuing (return false if you want it to go through blocks)
      */
     public abstract boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile);

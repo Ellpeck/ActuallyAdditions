@@ -16,7 +16,6 @@ import net.minecraft.block.BlockTorch;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.Direction;
@@ -160,7 +159,7 @@ public class BlockTinyTorch extends BlockBase {
 
             if (flag) {
                 this.dropBlockAsItem(worldIn, pos, state, 0);
-                worldIn.setBlockToAir(pos);
+                worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
                 return true;
             } else {
                 return false;
@@ -174,7 +173,7 @@ public class BlockTinyTorch extends BlockBase {
         } else {
             if (worldIn.getBlockState(pos).getBlock() == this) {
                 this.dropBlockAsItem(worldIn, pos, state, 0);
-                worldIn.setBlockToAir(pos);
+                worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
             }
 
             return false;

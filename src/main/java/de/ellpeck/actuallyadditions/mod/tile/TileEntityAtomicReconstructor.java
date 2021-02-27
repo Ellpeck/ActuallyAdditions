@@ -29,21 +29,24 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyDisplay, IAtomicReconstructor {
 
     public static final int ENERGY_USE = 1000;
     public final CustomEnergyStorage storage;
+    public final LazyOptional<IEnergyStorage> lazyEnergy;
     public int counter;
     private int currentTime;
     private int oldEnergy;
 
     public TileEntityAtomicReconstructor() {
-        super(1, "reconstructor");
+        super(ActuallyTiles.ATOMICRECONSTRUCTOR_TILE.get(), 1);
         int power = ConfigIntValues.RECONSTRUCTOR_POWER.getValue();
         int recieve = MathHelper.ceil(power * 0.016666F);
         this.storage = new CustomEnergyStorage(power, recieve, 0);
+        this.lazyEnergy = LazyOptional.of(() -> this.storage);
     }
 
     public static void shootLaser(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens) {
@@ -55,8 +58,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("CurrentTime", this.currentTime);
-            compound.setInteger("Counter", this.counter);
+            compound.putInt("CurrentTime", this.currentTime);
+            compound.putInt("Counter", this.counter);
         }
         this.storage.writeToNBT(compound);
     }
@@ -70,8 +73,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            this.currentTime = compound.getInteger("CurrentTime");
-            this.counter = compound.getInteger("Counter");
+            this.currentTime = compound.getInt("CurrentTime");
+            this.counter = compound.getInt("Counter");
         }
         this.storage.readFromNBT(compound);
     }
@@ -93,7 +96,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
             if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
                 this.oldEnergy = this.storage.getEnergyStored();
-                this.world.updateComparatorOutputLevel(this.pos, InitBlocks.blockAtomicReconstructor);
+                this.world.updateComparatorOutputLevel(this.pos, InitBlocks.blockAtomicReconstructor.get());
             }
         }
 
@@ -177,7 +180,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

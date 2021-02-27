@@ -13,10 +13,13 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
@@ -26,11 +29,12 @@ import java.util.List;
 public class TileEntityLeafGenerator extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(35000, 0, 450);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int nextUseCounter;
     private int oldEnergy;
 
     public TileEntityLeafGenerator() {
-        super("leafGenerator");
+        super(ActuallyTiles.LEAFGENERATOR_TILE.get());
     }
 
     @Override
@@ -64,7 +68,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
                                 for (int reachY = -range; reachY < range + 1; reachY++) {
                                     BlockPos pos = this.pos.add(reachX, reachY, reachZ);
                                     Block block = this.world.getBlockState(pos).getBlock();
-                                    if (block != null && block.isLeaves(this.world.getBlockState(pos), this.world, pos)) {
+                                    if (block instanceof LeavesBlock) { // TODO: [port] validate this is a good way of checking if something is a leaf
                                         breakPositions.add(pos);
                                     }
                                 }
@@ -77,7 +81,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
 
                             this.world.playEvent(2001, theCoord, Block.getStateId(this.world.getBlockState(theCoord)));
 
-                            this.world.setBlockToAir(theCoord);
+                            this.world.setBlockState(theCoord, Blocks.AIR.getDefaultState());
 
                             this.storage.receiveEnergyInternal(energyProduced, false);
 
@@ -126,7 +130,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

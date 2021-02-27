@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
@@ -21,16 +22,20 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fml.relauncher.OnlyIn;
-import net.minecraftforge.oredict.OreIngredient;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, ISharingFluidHandler {
 
@@ -42,19 +47,30 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public static final int WATER_USE = 500;
     public static final int COFFEE_CACHE_MAX_AMOUNT = 300;
     public static final int TIME_USED = 500;
-    public static final OreIngredient COFFEE = new OreIngredient("cropCoffee");
+
     public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 250, 0);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
+
     public final FluidTank tank = new FluidTank(4 * Util.BUCKET) {
+        @Nonnull
         @Override
-        public boolean canDrain() {
-            return false;
+        public FluidStack drain(int maxDrain, FluidAction action) {
+            return FluidStack.EMPTY;
         }
 
+        @Nonnull
         @Override
-        public boolean canFillFluidType(FluidStack fluid) {
-            return fluid.getFluid() == FluidRegistry.WATER;
+        public FluidStack drain(FluidStack resource, FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+        
+        @Override
+        public boolean isFluidValid(FluidStack fluid) {
+            return fluid.getFluid() == Fluids.WATER;
         }
     };
+    public final LazyOptional<IFluidHandler> lazyTank = LazyOptional.of(() -> this.tank);
+
     public int coffeeCacheAmount;
     public int brewTime;
     private int lastEnergy;
@@ -63,7 +79,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     private int lastBrewTime;
 
     public TileEntityCoffeeMachine() {
-        super(11, "coffeeMachine");
+        super(ActuallyTiles.COFFEEMACHINE_TILE.get(), 11);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -91,9 +107,9 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
-        compound.setInteger("Cache", this.coffeeCacheAmount);
+        compound.putInt("Cache", this.coffeeCacheAmount);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("Time", this.brewTime);
+            compound.putInt("Time", this.brewTime);
         }
     }
 
@@ -102,9 +118,9 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
-        this.coffeeCacheAmount = compound.getInteger("Cache");
+        this.coffeeCacheAmount = compound.getInt("Cache");
         if (type != NBTType.SAVE_BLOCK) {
-            this.brewTime = compound.getInteger("Time");
+            this.brewTime = compound.getInt("Time");
         }
     }
 
@@ -129,7 +145,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null || slot == SLOT_COFFEE_BEANS && COFFEE.apply(stack) || slot == SLOT_INPUT && stack.getItem() == InitItems.itemMisc && stack.getItemDamage() == TheMiscItems.CUP.ordinal();
+        return (slot, stack, automation) -> !automation || slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null || slot == SLOT_COFFEE_BEANS && ActuallyTags.Items.COFFEE_BEANS.contains(stack.getItem()) || slot == SLOT_INPUT && stack.getItem() == InitItems.itemCoffeeCup;
     }
 
     @Override
@@ -138,7 +154,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     public void storeCoffee() {
-        if (StackUtil.isValid(this.inv.getStackInSlot(SLOT_COFFEE_BEANS)) && COFFEE.apply(this.inv.getStackInSlot(SLOT_COFFEE_BEANS))) {
+        if (StackUtil.isValid(this.inv.getStackInSlot(SLOT_COFFEE_BEANS)) && ActuallyTags.Items.COFFEE_BEANS.contains(this.inv.getStackInSlot(SLOT_COFFEE_BEANS).getItem())) {
             int toAdd = 2;
             if (toAdd <= COFFEE_CACHE_MAX_AMOUNT - this.coffeeCacheAmount) {
                 this.inv.setStackInSlot(SLOT_COFFEE_BEANS, StackUtil.shrink(this.inv.getStackInSlot(SLOT_COFFEE_BEANS), 1));
@@ -148,38 +164,40 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     public void brew() {
-        if (!this.world.isRemote) {
-            ItemStack input = this.inv.getStackInSlot(SLOT_INPUT);
-            if (StackUtil.isValid(input) && input.getItem() == InitItems.itemMisc && input.getItemDamage() == TheMiscItems.CUP.ordinal() && !StackUtil.isValid(this.inv.getStackInSlot(SLOT_OUTPUT)) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid() != null && this.tank.getFluid().getFluid() == FluidRegistry.WATER && this.tank.getFluidAmount() >= WATER_USE) {
-                if (this.storage.getEnergyStored() >= ENERGY_USED) {
-                    if (this.brewTime % 30 == 0) {
-                        this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.1F, 1.0F);
-                    }
+        if (this.world.isRemote) {
+            return;
+        }
 
-                    this.brewTime++;
-                    this.storage.extractEnergyInternal(ENERGY_USED, false);
-                    if (this.brewTime >= TIME_USED) {
-                        this.brewTime = 0;
-                        ItemStack output = new ItemStack(InitItems.itemCoffee);
-                        for (int i = 3; i < this.inv.getSlots(); i++) {
-                            if (StackUtil.isValid(this.inv.getStackInSlot(i))) {
-                                CoffeeIngredient ingredient = ItemCoffee.getIngredientFromStack(this.inv.getStackInSlot(i));
-                                if (ingredient != null) {
-                                    if (ingredient.effect(output)) {
-                                        this.inv.setStackInSlot(i, StackUtil.shrinkForContainer(this.inv.getStackInSlot(i), 1));
-                                    }
+        ItemStack input = this.inv.getStackInSlot(SLOT_INPUT);
+        if (StackUtil.isValid(input) && input.getItem() == InitItems.itemMisc && input.getDamage() == TheMiscItems.CUP.ordinal() && !StackUtil.isValid(this.inv.getStackInSlot(SLOT_OUTPUT)) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid().getFluid() == Fluids.WATER && this.tank.getFluidAmount() >= WATER_USE) {
+            if (this.storage.getEnergyStored() >= ENERGY_USED) {
+                if (this.brewTime % 30 == 0) {
+                    this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.1F, 1.0F);
+                }
+
+                this.brewTime++;
+                this.storage.extractEnergyInternal(ENERGY_USED, false);
+                if (this.brewTime >= TIME_USED) {
+                    this.brewTime = 0;
+                    ItemStack output = new ItemStack(InitItems.itemCoffee);
+                    for (int i = 3; i < this.inv.getSlots(); i++) {
+                        if (StackUtil.isValid(this.inv.getStackInSlot(i))) {
+                            CoffeeIngredient ingredient = ItemCoffee.getIngredientFromStack(this.inv.getStackInSlot(i));
+                            if (ingredient != null) {
+                                if (ingredient.effect(output)) {
+                                    this.inv.setStackInSlot(i, StackUtil.shrinkForContainer(this.inv.getStackInSlot(i), 1));
                                 }
                             }
                         }
-                        this.inv.setStackInSlot(SLOT_OUTPUT, output.copy());
-                        this.inv.getStackInSlot(SLOT_INPUT).shrink(1);
-                        this.coffeeCacheAmount -= CACHE_USE;
-                        this.tank.drainInternal(WATER_USE, true);
                     }
+                    this.inv.setStackInSlot(SLOT_OUTPUT, output.copy());
+                    this.inv.getStackInSlot(SLOT_INPUT).shrink(1);
+                    this.coffeeCacheAmount -= CACHE_USE;
+                    this.tank.drain(WATER_USE, IFluidHandler.FluidAction.EXECUTE);
                 }
-            } else {
-                this.brewTime = 0;
             }
+        } else {
+            this.brewTime = 0;
         }
     }
 
@@ -191,8 +209,8 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public FluidTank getFluidHandler(Direction facing) {
-        return this.tank;
+    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
+        return this.lazyTank;
     }
 
     @Override
@@ -211,7 +229,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

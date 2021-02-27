@@ -15,23 +15,28 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
+
+import java.util.List;
 
 public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(10000, 20, 0);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int lastEnergy;
     private int currentTime;
 
     public TileEntityDirectionalBreaker() {
-        super(9, "directionalBreaker");
+        super(ActuallyTiles.DIRECTIONALBREAKER_TILE.get(), 9);
     }
 
     @Override
@@ -39,7 +44,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("CurrentTime", this.currentTime);
+            compound.putInt("CurrentTime", this.currentTime);
         }
     }
 
@@ -48,7 +53,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
-            this.currentTime = compound.getInteger("CurrentTime");
+            this.currentTime = compound.getInt("CurrentTime");
         }
     }
 
@@ -83,14 +88,13 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
                 BlockState breakState = this.world.getBlockState(coordsBlock);
                 Block blockToBreak = breakState.getBlock();
                 if (blockToBreak != null && !this.world.isAirBlock(coordsBlock) && this.world.getBlockState(coordsBlock).getBlockHardness(this.world, coordsBlock) > -1.0F) {
-                    NonNullList<ItemStack> drops = NonNullList.create();
-                    blockToBreak.getDrops(drops, this.world, coordsBlock, breakState, 0);
+                    List<ItemStack> drops = Block.getDrops(breakState, (ServerWorld) this.world, coordsBlock, this.world.getTileEntity(coordsBlock));
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.world, coordsBlock);
 
                     if (chance > 0 && this.world.rand.nextFloat() <= chance) {
                         if (StackUtil.canAddAll(this.inv, drops, false)) {
                             this.world.playEvent(2001, coordsBlock, Block.getStateId(this.world.getBlockState(coordsBlock)));
-                            this.world.setBlockToAir(coordsBlock);
+                            this.world.setBlockState(coordsBlock, Blocks.AIR.getDefaultState());
                             StackUtil.addAll(this.inv, drops, false);
                             this.storage.extractEnergyInternal(ENERGY_USE, false);
                             this.markDirty();
@@ -121,7 +125,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

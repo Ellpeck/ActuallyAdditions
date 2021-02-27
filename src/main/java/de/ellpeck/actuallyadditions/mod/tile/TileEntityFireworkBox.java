@@ -11,11 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
-import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemDye;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Direction;
@@ -23,6 +23,7 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
 
     public static final int USE_PER_SHOT = 500;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(20000, 200, 0);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public int intValuePlay = 2;
     public int chargeAmount = 2;
     public int flightTime = 2;
@@ -48,7 +50,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     private int oldEnergy;
 
     public TileEntityFireworkBox() {
-        super("fireworkBox");
+        super(ActuallyTiles.FIREWORKBOX_TILE.get());
     }
 
     @Override
@@ -57,18 +59,18 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         this.storage.writeToNBT(compound);
 
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("Play", this.intValuePlay);
-            compound.setInteger("ChargeAmount", this.chargeAmount);
-            compound.setInteger("FlightTime", this.flightTime);
-            compound.setFloat("TrailFlickerChance", this.trailOrFlickerChance);
-            compound.setFloat("FlickerChance", this.flickerChance);
-            compound.setInteger("ColorAmount", this.colorAmount);
-            compound.setFloat("TypeChance0", this.typeChance0);
-            compound.setFloat("TypeChance1", this.typeChance1);
-            compound.setFloat("TypeChance2", this.typeChance2);
-            compound.setFloat("TypeChance3", this.typeChance3);
-            compound.setFloat("TypeChance4", this.typeChance4);
-            compound.setInteger("Area", this.areaOfEffect);
+            compound.putInt("Play", this.intValuePlay);
+            compound.putInt("ChargeAmount", this.chargeAmount);
+            compound.putInt("FlightTime", this.flightTime);
+            compound.putFloat("TrailFlickerChance", this.trailOrFlickerChance);
+            compound.putFloat("FlickerChance", this.flickerChance);
+            compound.putInt("ColorAmount", this.colorAmount);
+            compound.putFloat("TypeChance0", this.typeChance0);
+            compound.putFloat("TypeChance1", this.typeChance1);
+            compound.putFloat("TypeChance2", this.typeChance2);
+            compound.putFloat("TypeChance3", this.typeChance3);
+            compound.putFloat("TypeChance4", this.typeChance4);
+            compound.putInt("Area", this.areaOfEffect);
         }
     }
 
@@ -78,18 +80,18 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         this.storage.readFromNBT(compound);
 
         if (type != NBTType.SAVE_BLOCK) {
-            this.intValuePlay = compound.getInteger("Play");
-            this.chargeAmount = compound.getInteger("ChargeAmount");
-            this.flightTime = compound.getInteger("FlightTime");
+            this.intValuePlay = compound.getInt("Play");
+            this.chargeAmount = compound.getInt("ChargeAmount");
+            this.flightTime = compound.getInt("FlightTime");
             this.trailOrFlickerChance = compound.getFloat("TrailFlickerChance");
             this.flickerChance = compound.getFloat("FlickerChance");
-            this.colorAmount = compound.getInteger("ColorAmount");
+            this.colorAmount = compound.getInt("ColorAmount");
             this.typeChance0 = compound.getFloat("TypeChance0");
             this.typeChance1 = compound.getFloat("TypeChance1");
             this.typeChance2 = compound.getFloat("TypeChance2");
             this.typeChance3 = compound.getFloat("TypeChance3");
             this.typeChance4 = compound.getFloat("TypeChance4");
-            this.areaOfEffect = compound.getInteger("Area");
+            this.areaOfEffect = compound.getInt("Area");
         }
     }
 
@@ -144,8 +146,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         double newZ = z + this.getRandomAoe();
 
         if (world.isBlockLoaded(new BlockPos(newX, y, newZ))) {
-            EntityFireworkRocket rocket = new EntityFireworkRocket(world, newX, y + 1, newZ, firework);
-            world.spawnEntity(rocket);
+            FireworkRocketEntity rocket = new FireworkRocketEntity(world, newX, y + 1, newZ, firework);
+            world.addEntity(rocket);
         }
     }
 
@@ -160,18 +162,18 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     private ItemStack makeFirework() {
         ListNBT list = new ListNBT();
         for (int i = 0; i < this.getRandomWithPlay(this.chargeAmount); i++) {
-            list.appendTag(this.makeFireworkCharge());
+            list.add(this.makeFireworkCharge());
         }
 
         CompoundNBT compound1 = new CompoundNBT();
-        compound1.setTag("Explosions", list);
-        compound1.setByte("Flight", (byte) this.getRandomWithPlay(this.flightTime));
+        compound1.put("Explosions", list);
+        compound1.putByte("Flight", (byte) this.getRandomWithPlay(this.flightTime));
 
         CompoundNBT compound = new CompoundNBT();
-        compound.setTag("Fireworks", compound1);
+        compound.put("Fireworks", compound1);
 
-        ItemStack firework = new ItemStack(Items.FIREWORKS);
-        firework.setTagCompound(compound);
+        ItemStack firework = new ItemStack(Items.FIREWORK_ROCKET);
+        firework.setTag(compound);
 
         return firework;
     }
@@ -181,25 +183,26 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
 
         if (this.world.rand.nextFloat() <= this.trailOrFlickerChance) {
             if (this.world.rand.nextFloat() <= this.flickerChance) {
-                compound.setBoolean("Flicker", true);
+                compound.putBoolean("Flicker", true);
             } else {
-                compound.setBoolean("Trail", true);
+                compound.putBoolean("Trail", true);
             }
         }
 
+        // TODO: [port] Validate this is the correct way to get colors
         int[] colors = new int[this.getRandomWithPlay(this.colorAmount)];
         for (int i = 0; i < colors.length; i++) {
-            colors[i] = ItemDye.DYE_COLORS[this.world.rand.nextInt(ItemDye.DYE_COLORS.length)];
+            colors[i] = DyeColor.values()[this.world.rand.nextInt(DyeColor.values().length)].getColorValue();
         }
-        compound.setIntArray("Colors", colors);
+        compound.putIntArray("Colors", colors);
 
-        compound.setByte("Type", (byte) this.getRandomType());
+        compound.putByte("Type", (byte) this.getRandomType());
 
         return compound;
     }
 
     private int getRandomWithPlay(int value) {
-        return MathHelper.clamp(MathHelper.getInt(this.world.rand, value - this.intValuePlay, value + this.intValuePlay), 1, 6);
+        return MathHelper.clamp(MathHelper.nextInt(this.world.rand, value - this.intValuePlay, value + this.intValuePlay), 1, 6);
     }
 
     private int getRandomType() {
@@ -270,8 +273,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 
     private static class WeightedFireworkType extends WeightedRandom.Item {

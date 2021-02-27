@@ -10,20 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
-import java.util.List;
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoor;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockTorch;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -34,6 +26,9 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
+
+import java.util.List;
+import java.util.Random;
 
 public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
 
@@ -54,7 +49,9 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
 
     public static VillageComponentJamHouse buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, Direction p4) {
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
-        return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentJamHouse(boundingBox, p4) : null;
+        return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null
+            ? new VillageComponentJamHouse(boundingBox, p4)
+            : null;
     }
 
     public static boolean generateCrate(World world, StructureBoundingBox box, int x, int y, int z, ResourceLocation loot) {
@@ -78,7 +75,9 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
     public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
         if (this.averageGroundLevel < 0) {
             this.averageGroundLevel = this.getAverageGroundLevel(world, sbb);
-            if (this.averageGroundLevel < 0) { return true; }
+            if (this.averageGroundLevel < 0) {
+                return true;
+            }
             this.boundingBox.offset(0, this.averageGroundLevel - this.boundingBox.maxY + Y_SIZE - 1, 0);
         }
 

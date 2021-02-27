@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -55,7 +54,7 @@ public class LensDisruption extends Lens {
                         if (!newStack.hasTagCompound()) {
                             newStack.setTagCompound(new CompoundNBT());
                         }
-                        newStack.getTagCompound().setBoolean(ActuallyAdditions.MODID + "DisruptedAlready", true);
+                        newStack.getTagCompound().putBoolean(ActuallyAdditions.MODID + "DisruptedAlready", true);
 
                         item.setDead();
 

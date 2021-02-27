@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
@@ -25,15 +26,16 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     public static final int RANGE = 5;
 
     public CustomEnergyStorage storage = new CustomEnergyStorage(300000, 400, 0);
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int oldEnergy;
 
     public TileEntityShockSuppressor() {
-        super("shockSuppressor");
+        super(ActuallyTiles.SHOCKSUPPRESSOR_TILE.get());
     }
 
     @Override
-    public void onChunkUnload() {
-        super.onChunkUnload();
+    public void onChunkUnloaded() {
+        super.onChunkUnloaded();
 
         if (!this.world.isRemote) {
             SUPPRESSORS.remove(this);
@@ -41,20 +43,21 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public void invalidate() {
-        super.invalidate();
+    public void invalidateCaps() {
+        super.invalidateCaps();
 
         if (!this.world.isRemote) {
             SUPPRESSORS.remove(this);
         }
     }
+
 
     @Override
     public void updateEntity() {
         super.updateEntity();
 
         if (!this.world.isRemote) {
-            if (!this.isInvalid() && !SUPPRESSORS.contains(this)) {
+            if (!this.isRemoved() && !SUPPRESSORS.contains(this)) {
                 SUPPRESSORS.add(this);
             }
 
@@ -87,7 +90,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

@@ -18,29 +18,29 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.WorldServer;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.List;
 
 public class TileEntityMiner extends TileEntityInventoryBase implements IButtonReactor, IEnergyDisplay {
 
     public static final int ENERGY_USE_PER_BLOCK = 650;
     public static final int DEFAULT_RANGE = 2;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 2000, 0);
-
+    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public boolean onlyMineOres;
     public int checkX;
     public int checkY = -1;
@@ -51,7 +51,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     private int oldCheckZ;
 
     public TileEntityMiner() {
-        super(9, "miner");
+        super(ActuallyTiles.MINER_TILE.get(), 9);
     }
 
     @Override
@@ -59,12 +59,12 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("CheckX", this.checkX);
-            compound.setInteger("CheckY", this.checkY);
-            compound.setInteger("CheckZ", this.checkZ);
+            compound.putInt("CheckX", this.checkX);
+            compound.putInt("CheckY", this.checkY);
+            compound.putInt("CheckZ", this.checkZ);
         }
         if (type != NBTType.SAVE_BLOCK || this.onlyMineOres) {
-            compound.setBoolean("OnlyOres", this.onlyMineOres);
+            compound.putBoolean("OnlyOres", this.onlyMineOres);
         }
     }
 
@@ -73,9 +73,9 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
-            this.checkX = compound.getInteger("CheckX");
-            this.checkY = compound.getInteger("CheckY");
-            this.checkZ = compound.getInteger("CheckZ");
+            this.checkX = compound.getInt("CheckX");
+            this.checkY = compound.getInt("CheckY");
+            this.checkZ = compound.getInt("CheckZ");
         }
         this.onlyMineOres = compound.getBoolean("OnlyOres");
     }
@@ -128,17 +128,16 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
 
             BlockState state = this.world.getBlockState(pos);
             Block block = state.getBlock();
-            ItemStack stack = block.getPickBlock(state, new RayTraceResult(Type.BLOCK, new Vec3d(0, 0, 0), Direction.DOWN, pos), this.world, pos, FakePlayerFactory.getMinecraft((WorldServer) this.world));
+            ItemStack stack = block.getPickBlock(state, new BlockRayTraceResult(new Vector3d(0, 0, 0), Direction.DOWN, pos, false), this.world, pos, FakePlayerFactory.getMinecraft((ServerWorld) this.world));
             if (!block.isAir(this.world.getBlockState(pos), this.world, pos)) {
-                if (block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof BlockLiquid) && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
-                    NonNullList<ItemStack> drops = NonNullList.create();
-                    block.getDrops(drops, this.world, pos, state, 0);
+                if (block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
+                    List<ItemStack> drops = Block.getDrops(state, (ServerWorld) this.world, pos, this.world.getTileEntity(pos));
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.world, pos);
 
                     if (chance > 0 && this.world.rand.nextFloat() <= chance) {
                         if (StackUtil.canAddAll(this.inv, drops, false)) {
                             this.world.playEvent(2001, pos, Block.getStateId(this.world.getBlockState(pos)));
-                            this.world.setBlockToAir(pos);
+                            this.world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
                             StackUtil.addAll(this.inv, drops, false);
                             this.markDirty();
@@ -163,13 +162,15 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
                     return true;
                 } else {
                     if (StackUtil.isValid(stack)) {
-                        int[] ids = OreDictionary.getOreIDs(stack);
-                        for (int id : ids) {
-                            String name = OreDictionary.getOreName(id);
-                            if (name.startsWith("ore") || name.startsWith("denseore")) {
-                                return true;
-                            }
-                        }
+                        // TODO: [port] come back and see if there is a tag for this
+                        
+                        //                        int[] ids = OreDictionary.getOreIDs(stack);
+                        //                        for (int id : ids) {
+                        //                            String name = OreDictionary.getOreName(id);
+                        //                            if (name.startsWith("ore") || name.startsWith("denseore")) {
+                        //                                return true;
+                        //                            }
+                        //                        }
 
                         String reg = block.getRegistryName().toString();
                         if (!reg.isEmpty()) {
@@ -231,7 +232,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     }
 
     @Override
-    public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+        return this.lazyEnergy;
     }
 }

@@ -13,46 +13,67 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityFluidCollector extends TileEntityBase implements ISharingFluidHandler {
 
     public boolean isPlacer;
     public final FluidTank tank = new FluidTank(8 * Util.BUCKET) {
         @Override
-        public boolean canFill() {
-            return TileEntityFluidCollector.this.isPlacer;
+        public int fill(FluidStack resource, FluidAction action) {
+            if (!TileEntityFluidCollector.this.isPlacer) {
+                return 0;
+            }
+            return super.fill(resource, action);
         }
 
+        @Nonnull
         @Override
-        public boolean canDrain() {
-            return !TileEntityFluidCollector.this.isPlacer;
+        public FluidStack drain(int maxDrain, FluidAction action) {
+            if (!TileEntityFluidCollector.this.isPlacer) {
+                return FluidStack.EMPTY;
+            }
+            return super.drain(maxDrain, action);
+        }
+
+        @Nonnull
+        @Override
+        public FluidStack drain(FluidStack resource, FluidAction action) {
+            if (!TileEntityFluidCollector.this.isPlacer) {
+                return FluidStack.EMPTY;
+            }
+            return super.drain(resource, action);
         }
     };
+    public final LazyOptional<IFluidHandler> lazyTank = LazyOptional.of(() -> this.tank);
     private int lastTankAmount;
     private int currentTime;
     private int lastCompare;
 
-    public TileEntityFluidCollector(String name) {
-        super(name);
+    public TileEntityFluidCollector(TileEntityType<?> type) {
+        super(type);
     }
 
     public TileEntityFluidCollector() {
-        this("fluidCollector");
+        this(ActuallyTiles.FLUIDCOLLECTOR_TILE.get());
         this.isPlacer = false;
     }
 
@@ -66,6 +87,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
         this.doWork();
     }
 
+    // TODO: [port] big old check on this entire functionality, I've not worked with fluids before
     private void doWork() {
         BlockState state = this.world.getBlockState(this.pos);
         Direction sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
@@ -73,39 +95,39 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
 
         BlockState stateToBreak = this.world.getBlockState(coordsBlock);
         Block blockToBreak = stateToBreak.getBlock();
-        if (!this.isPlacer && blockToBreak != null && blockToBreak.getMetaFromState(stateToBreak) == 0 && Util.BUCKET <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
+        if (!this.isPlacer && Util.BUCKET <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
             if (blockToBreak instanceof IFluidBlock && ((IFluidBlock) blockToBreak).getFluid() != null) {
-                if (this.tank.fillInternal(new FluidStack(((IFluidBlock) blockToBreak).getFluid(), Util.BUCKET), false) >= Util.BUCKET) {
-                    this.tank.fillInternal(new FluidStack(((IFluidBlock) blockToBreak).getFluid(), Util.BUCKET), true);
-                    this.world.setBlockToAir(coordsBlock);
+                if (this.tank.fill(new FluidStack(((IFluidBlock) blockToBreak).getFluid(), Util.BUCKET), IFluidHandler.FluidAction.SIMULATE) >= Util.BUCKET) {
+                    this.tank.fill(new FluidStack(((IFluidBlock) blockToBreak).getFluid(), Util.BUCKET), IFluidHandler.FluidAction.EXECUTE);
+                    this.world.setBlockState(coordsBlock, Blocks.AIR.getDefaultState());
                 }
-            } else if (blockToBreak == Blocks.LAVA || blockToBreak == Blocks.FLOWING_LAVA) {
-                if (this.tank.fillInternal(new FluidStack(FluidRegistry.LAVA, Util.BUCKET), false) >= Util.BUCKET) {
-                    this.tank.fillInternal(new FluidStack(FluidRegistry.LAVA, Util.BUCKET), true);
-                    this.world.setBlockToAir(coordsBlock);
+            } else if (blockToBreak == Blocks.LAVA) {
+                if (this.tank.fill(new FluidStack(Fluids.LAVA, Util.BUCKET), IFluidHandler.FluidAction.SIMULATE) >= Util.BUCKET) {
+                    this.tank.fill(new FluidStack(Fluids.LAVA, Util.BUCKET), IFluidHandler.FluidAction.EXECUTE);
+                    this.world.setBlockState(coordsBlock, Blocks.AIR.getDefaultState());
                 }
-            } else if (blockToBreak == Blocks.WATER || blockToBreak == Blocks.FLOWING_WATER) {
-                if (this.tank.fillInternal(new FluidStack(FluidRegistry.WATER, Util.BUCKET), false) >= Util.BUCKET) {
-                    this.tank.fillInternal(new FluidStack(FluidRegistry.WATER, Util.BUCKET), true);
-                    this.world.setBlockToAir(coordsBlock);
+            } else if (blockToBreak == Blocks.WATER) {
+                if (this.tank.fill(new FluidStack(Fluids.WATER, Util.BUCKET), IFluidHandler.FluidAction.SIMULATE) >= Util.BUCKET) {
+                    this.tank.fill(new FluidStack(Fluids.WATER, Util.BUCKET), IFluidHandler.FluidAction.EXECUTE);
+                    this.world.setBlockState(coordsBlock, Blocks.AIR.getDefaultState());
                 }
             }
-        } else if (this.isPlacer && blockToBreak.isReplaceable(this.world, coordsBlock)) {
+        } else if (this.isPlacer && blockToBreak.getDefaultState().getMaterial().isReplaceable()) {
             if (this.tank.getFluidAmount() >= Util.BUCKET) {
                 FluidStack stack = this.tank.getFluid();
-                Block fluid = stack.getFluid().getBlock();
+                Block fluid = stack.getFluid().getDefaultState().getBlockState().getBlock();
                 if (fluid != null) {
                     BlockPos offsetPos = this.pos.offset(sideToManipulate);
-                    boolean placeable = !(blockToBreak instanceof BlockLiquid) && !(blockToBreak instanceof IFluidBlock) && blockToBreak.isReplaceable(this.world, offsetPos);
+                    boolean placeable = !(blockToBreak instanceof IFluidBlock) && blockToBreak.getDefaultState().getMaterial().isReplaceable();
                     if (placeable) {
-                        this.tank.drainInternal(Util.BUCKET, true);
-
-                        if (this.world.provider.doesWaterVaporize() && stack.getFluid().doesVaporize(stack)) {
+                        this.tank.drain(Util.BUCKET, IFluidHandler.FluidAction.EXECUTE);
+                        // TODO: [port] validate this check is still valid.
+                        if (this.world.getDimensionType().isUltrawarm() && fluid.getDefaultState().getMaterial() == Material.WATER) {
                             this.world.playSound(null, offsetPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.8F);
 
-                            if (this.world instanceof WorldServer) {
+                            if (this.world instanceof ServerWorld) {
                                 for (int l = 0; l < 8; ++l) {
-                                    ((WorldServer) this.world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, offsetPos.getX() + Math.random(), offsetPos.getY() + Math.random(), offsetPos.getZ() + Math.random(), 1, 0.0D, 0.0D, 0.0D, 0);
+                                    ((ServerWorld) this.world).spawnParticle(ParticleTypes.SMOKE, offsetPos.getX() + Math.random(), offsetPos.getY() + Math.random(), offsetPos.getZ() + Math.random(), 1, 0.0D, 0.0D, 0.0D, 0);
                                 }
                             }
                         } else {
@@ -124,15 +146,15 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     }
 
     @Override
-    public IFluidHandler getFluidHandler(Direction facing) {
-        return this.tank;
+    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
+        return this.lazyTank;
     }
 
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("CurrentTime", this.currentTime);
+            compound.putInt("CurrentTime", this.currentTime);
         }
         this.tank.writeToNBT(compound);
     }
@@ -141,7 +163,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            this.currentTime = compound.getInteger("CurrentTime");
+            this.currentTime = compound.getInt("CurrentTime");
         }
         this.tank.readFromNBT(compound);
     }

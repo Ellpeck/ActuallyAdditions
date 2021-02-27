@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.SoundEvents;
@@ -128,7 +127,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
             world.playEvent(2001, theCoord, Block.getStateId(theState));
 
             //Deletes the Block
-            world.setBlockToAir(theCoord);
+            world.setBlockState(theCoord, Blocks.AIR.getDefaultState());
 
             return true;
         }

@@ -16,13 +16,19 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile {
 
@@ -35,15 +41,15 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     private Block boundBlockBefore;
     private int lastStrength;
 
-    public TileEntityPhantomface(String name) {
-        super(0, name);
+    public TileEntityPhantomface(TileEntityType<?> type) {
+        super(type, 0);
     }
 
     public static int upgradeRange(int defaultRange, World world, BlockPos pos) {
         int newRange = defaultRange;
         for (int i = 0; i < 3; i++) {
             Block block = world.getBlockState(pos.up(1 + i)).getBlock();
-            if (block == InitBlocks.blockPhantomBooster) {
+            if (block == InitBlocks.blockPhantomBooster.get()) {
                 newRange = newRange * 2;
             } else {
                 break;
@@ -56,11 +62,11 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            compound.setInteger("Range", this.range);
+            compound.putInt("Range", this.range);
             if (this.boundPosition != null) {
-                compound.setInteger("xOfTileStored", this.boundPosition.getX());
-                compound.setInteger("yOfTileStored", this.boundPosition.getY());
-                compound.setInteger("zOfTileStored", this.boundPosition.getZ());
+                compound.putInt("xOfTileStored", this.boundPosition.getX());
+                compound.putInt("yOfTileStored", this.boundPosition.getY());
+                compound.putInt("zOfTileStored", this.boundPosition.getZ());
             }
         }
     }
@@ -69,10 +75,10 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
-            int x = compound.getInteger("xOfTileStored");
-            int y = compound.getInteger("yOfTileStored");
-            int z = compound.getInteger("zOfTileStored");
-            this.range = compound.getInteger("Range");
+            int x = compound.getInt("xOfTileStored");
+            int y = compound.getInt("yOfTileStored");
+            int z = compound.getInt("zOfTileStored");
+            this.range = compound.getInt("Range");
             if (!(x == 0 && y == 0 && z == 0)) {
                 this.boundPosition = new BlockPos(x, y, z);
                 this.markDirty();
@@ -119,7 +125,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
             : this.world.getBlockState(this.boundPosition).getBlock();
 
         if (this.boundPosition != null) {
-            this.world.notifyNeighborsOfStateChange(this.pos, this.world.getBlockState(this.boundPosition).getBlock(), false);
+            this.world.notifyNeighborsOfStateChange(this.pos, this.world.getBlockState(this.boundPosition).getBlock());
         }
 
         this.sendUpdate();
@@ -149,7 +155,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
             double d5 = this.world.rand.nextFloat() * 1.0F * j1;
             double d0 = this.boundPosition.getX() + 0.5D + 0.25D * i1;
             double d3 = this.world.rand.nextFloat() * 1.0F * i1;
-            this.world.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
+            this.world.addParticle(ParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
     }
 
@@ -180,26 +186,17 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
 
     protected abstract boolean isCapabilitySupported(Capability<?> capability);
 
+    @Nonnull
     @Override
-    public boolean hasCapability(Capability<?> capability, Direction facing) {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
         if (this.isBoundThingInRange() && this.isCapabilitySupported(capability)) {
             TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
             if (tile != null) {
-                return tile.hasCapability(capability, facing);
+                return tile.getCapability(capability, side);
             }
         }
-        return super.hasCapability(capability, facing);
-    }
 
-    @Override
-    public <T> T getCapability(Capability<T> capability, Direction facing) {
-        if (this.isBoundThingInRange() && this.isCapabilitySupported(capability)) {
-            TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
-            if (tile != null) {
-                return tile.getCapability(capability, facing);
-            }
-        }
-        return super.getCapability(capability, facing);
+        return LazyOptional.empty();
     }
 
     @Override

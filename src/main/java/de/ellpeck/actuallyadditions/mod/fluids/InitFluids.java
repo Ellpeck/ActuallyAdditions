@@ -10,14 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.fluids;
 
-import java.util.Locale;
-
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockFluidFlowing;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.EnumRarity;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraft.fluid.Fluid;
+
+import java.util.Locale;
 
 public final class InitFluids {
 

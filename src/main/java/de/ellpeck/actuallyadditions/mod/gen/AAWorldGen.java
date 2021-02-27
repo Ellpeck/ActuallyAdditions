@@ -10,11 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockMisc;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockWildPlant;
@@ -28,7 +23,6 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Direction;
@@ -46,6 +40,10 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class AAWorldGen implements IWorldGenerator {
 
@@ -62,7 +60,7 @@ public class AAWorldGen implements IWorldGenerator {
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         int dimension = world.provider.getDimension();
         if (dimension != -1 && dimension != 1) {
-            if (world.getWorldType() != WorldType.FLAT && canGen(world.provider.getDimension())) {
+            if (world.getWorldType() != WorldType.FLAT && this.canGen(world.provider.getDimension())) {
                 this.generateDefault(world, random, chunkX, chunkZ);
             }
         }

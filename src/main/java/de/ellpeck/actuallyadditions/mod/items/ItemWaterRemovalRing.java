@@ -30,7 +30,9 @@ public class ItemWaterRemovalRing extends ItemEnergy {
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
-        if (!(entity instanceof PlayerEntity) || world.isRemote || entity.isSneaking()) { return; }
+        if (!(entity instanceof PlayerEntity) || world.isRemote || entity.isSneaking()) {
+            return;
+        }
 
         PlayerEntity player = (PlayerEntity) entity;
         ItemStack equipped = player.getHeldItemMainhand();
@@ -51,7 +53,7 @@ public class ItemWaterRemovalRing extends ItemEnergy {
                         BlockPos pos = new BlockPos(theX, theY, theZ);
                         Block block = world.getBlockState(pos).getBlock();
                         if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && this.getEnergyStored(stack) >= energyUse) {
-                            world.setBlockToAir(pos);
+                            world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
                             if (!player.capabilities.isCreativeMode) {
                                 this.extractEnergyInternal(stack, energyUse, false);
@@ -59,7 +61,7 @@ public class ItemWaterRemovalRing extends ItemEnergy {
                         }
                         //Remove Lava
                         else if ((block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) && this.getEnergyStored(stack) >= energyUse * 2) {
-                            world.setBlockToAir(pos);
+                            world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
                             if (!player.capabilities.isCreativeMode) {
                                 this.extractEnergyInternal(stack, energyUse * 2, false);

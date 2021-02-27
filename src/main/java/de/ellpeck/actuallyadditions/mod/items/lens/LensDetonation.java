@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
@@ -34,7 +33,7 @@ public class LensDetonation extends Lens {
 
     @Override
     public float[] getColor() {
-        return new float[] { 158F / 255F, 43F / 255F, 39F / 255F };
+        return new float[]{158F / 255F, 43F / 255F, 39F / 255F};
     }
 
     @Override
