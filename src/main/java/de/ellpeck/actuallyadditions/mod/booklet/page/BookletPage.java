@@ -10,25 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.util.*;
 
 public class BookletPage implements IBookletPage {
 
@@ -72,7 +68,9 @@ public class BookletPage implements IBookletPage {
     @Override
     @OnlyIn(Dist.CLIENT)
     public String getInfoText() {
-        if (this.hasNoText) { return null; }
+        if (this.hasNoText) {
+            return null;
+        }
 
         String base = StringUtil.localize(this.getLocalizationKey());
         base = base.replaceAll("<imp>", TextFormatting.DARK_GREEN + "");
@@ -113,7 +111,7 @@ public class BookletPage implements IBookletPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void actionPerformed(GuiBookletBase gui, GuiButton button) {
+    public void actionPerformed(GuiBookletBase gui, Button button) {
 
     }
 

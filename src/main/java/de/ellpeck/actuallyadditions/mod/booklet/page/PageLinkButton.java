@@ -10,15 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-import java.awt.Desktop;
-import java.net.URI;
-
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.awt.*;
+import java.net.URI;
 
 public class PageLinkButton extends BookletPage {
 
@@ -40,7 +40,7 @@ public class PageLinkButton extends BookletPage {
     public void initGui(GuiBookletBase gui, int startX, int startY) {
         super.initGui(gui, startX, startY);
 
-        gui.getButtonList().add(new GuiButton(this.buttonId, startX + 125 / 2 - 50, startY + 130, 100, 20, StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".chapter." + this.chapter.getIdentifier() + ".button." + this.localizationKey)));
+        gui.getButtonList().add(new Button(this.buttonId, startX + 125 / 2 - 50, startY + 130, 100, 20, StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".chapter." + this.chapter.getIdentifier() + ".button." + this.localizationKey)));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class PageLinkButton extends BookletPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void actionPerformed(GuiBookletBase gui, GuiButton button) {
+    public void actionPerformed(GuiBookletBase gui, Button button) {
         if (button.id == this.buttonId) {
             if (Desktop.isDesktopSupported()) {
                 try {

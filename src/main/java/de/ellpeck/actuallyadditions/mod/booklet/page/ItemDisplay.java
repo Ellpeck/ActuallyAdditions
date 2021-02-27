@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
@@ -20,14 +18,15 @@ import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.util.ITooltipFlag.TooltipFlags;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
+
+import java.util.List;
 
 public class ItemDisplay {
 
@@ -44,7 +43,9 @@ public class ItemDisplay {
         this.y = y;
         this.scale = scale;
         this.stack = stack;
-        this.page = shouldTryTransfer ? BookletUtils.findFirstPageForStack(stack) : null;
+        this.page = shouldTryTransfer
+            ? BookletUtils.findFirstPageForStack(stack)
+            : null;
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -59,7 +60,9 @@ public class ItemDisplay {
             boolean flagBefore = mc.fontRenderer.getUnicodeFlag();
             mc.fontRenderer.setUnicodeFlag(false);
 
-            List<String> list = this.stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? TooltipFlags.ADVANCED : TooltipFlags.NORMAL);
+            List<String> list = this.stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips
+                ? TooltipFlags.ADVANCED
+                : TooltipFlags.NORMAL);
 
             for (int k = 0; k < list.size(); ++k) {
                 if (k == 0) {

@@ -18,8 +18,8 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BookletChapter implements IBookletChapter {
 
@@ -39,7 +39,9 @@ public class BookletChapter implements IBookletChapter {
         this.identifier = identifier;
         this.entry = entry;
         this.displayStack = displayStack;
-        if (displayStack.getItem() instanceof IDisableableItem && ((IDisableableItem) displayStack.getItem()).isDisabled()) displayStack = ItemStack.EMPTY;
+        if (displayStack.getItem() instanceof IDisableableItem && ((IDisableableItem) displayStack.getItem()).isDisabled()) {
+            displayStack = ItemStack.EMPTY;
+        }
         this.priority = priority;
         this.color = TextFormatting.RESET;
 
@@ -84,7 +86,9 @@ public class BookletChapter implements IBookletChapter {
     @Override
     public int getPageIndex(IBookletPage page) {
         for (int i = 0; i < this.pages.length; i++) {
-            if (this.pages[i] == page) { return i; }
+            if (this.pages[i] == page) {
+                return i;
+            }
         }
         return -1;
     }

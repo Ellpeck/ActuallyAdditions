@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 public class PagePicture extends BookletPage {
 
@@ -44,15 +44,15 @@ public class PagePicture extends BookletPage {
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
-        gui.mc.getTextureManager().bindTexture(this.resLoc);
+        gui.getMinecraft().getTextureManager().bindTexture(this.resLoc);
 
-        GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
-        GlStateManager.disableAlpha();
+        RenderSystem.pushMatrix();
+        RenderSystem.enableBlend();
+        RenderSystem.disableAlphaTest();
         GuiUtils.drawTexturedModalRect(startX - 6, startY - 7, 0, 0, 256, 256, 0);
-        GlStateManager.disableBlend();
-        GlStateManager.enableAlpha();
-        GlStateManager.popMatrix();
+        RenderSystem.disableBlend();
+        RenderSystem.enableAlphaTest();
+        RenderSystem.popMatrix();
 
         PageTextOnly.renderTextToPage(gui, this, startX + 6, startY - 7 + this.yTextOffset);
     }

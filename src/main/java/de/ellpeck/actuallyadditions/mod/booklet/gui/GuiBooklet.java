@@ -10,14 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.lang3.ArrayUtils;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -30,14 +23,20 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.renderer.GlStateManager;
+import net.java.games.input.Keyboard;
+import net.java.games.input.Mouse;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public abstract class GuiBooklet extends GuiBookletBase {
@@ -46,24 +45,24 @@ public abstract class GuiBooklet extends GuiBookletBase {
     public static final ResourceLocation RES_LOC_GUI = AssetUtil.getBookletGuiLocation("gui_booklet");
     public static final ResourceLocation RES_LOC_GADGETS = AssetUtil.getBookletGuiLocation("gui_booklet_gadgets");
     protected final BookmarkButton[] bookmarkButtons = new BookmarkButton[12];
-    public GuiScreen previousScreen;
+    public Screen previousScreen;
     public GuiBookletBase parentPage;
-    public GuiTextField searchField;
+    public TextFieldWidget searchField;
     protected int xSize;
     protected int ySize;
     protected int guiLeft;
     protected int guiTop;
-    private GuiButton buttonLeft;
-    private GuiButton buttonRight;
-    private GuiButton buttonBack;
+    private Button buttonLeft;
+    private Button buttonRight;
+    private Button buttonBack;
 
-    private GuiButton buttonTrials;
+    private Button buttonTrials;
 
     private float smallFontSize;
     private float mediumFontSize;
     private float largeFontSize;
 
-    public GuiBooklet(GuiScreen previousScreen, GuiBookletBase parentPage) {
+    public GuiBooklet(Screen previousScreen, GuiBookletBase parentPage) {
         this.previousScreen = previousScreen;
         this.parentPage = parentPage;
 
@@ -85,8 +84,8 @@ public abstract class GuiBooklet extends GuiBookletBase {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
         this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
@@ -98,23 +97,23 @@ public abstract class GuiBooklet extends GuiBookletBase {
         if (this.hasPageLeftButton()) {
             List<String> hoverText = Arrays.asList(TextFormatting.GOLD + "Previous Page", TextFormatting.ITALIC + "Or scroll up");
             this.buttonLeft = new TexturedButton(RES_LOC_GADGETS, -2000, this.guiLeft - 12, this.guiTop + this.ySize - 8, 18, 54, 18, 10, hoverText);
-            this.buttonList.add(this.buttonLeft);
+            this.addButton(this.buttonLeft);
         }
 
         if (this.hasPageRightButton()) {
             List<String> hoverText = Arrays.asList(TextFormatting.GOLD + "Next Page", TextFormatting.ITALIC + "Or scroll down");
             this.buttonRight = new TexturedButton(RES_LOC_GADGETS, -2001, this.guiLeft + this.xSize - 6, this.guiTop + this.ySize - 8, 0, 54, 18, 10, hoverText);
-            this.buttonList.add(this.buttonRight);
+            this.addButton(this.buttonRight);
         }
 
         if (this.hasBackButton()) {
             List<String> hoverText = Arrays.asList(TextFormatting.GOLD + "Go Back", TextFormatting.ITALIC + "Or right-click", TextFormatting.ITALIC.toString() + TextFormatting.GRAY + "Hold Shift for Main Page");
             this.buttonBack = new TexturedButton(RES_LOC_GADGETS, -2002, this.guiLeft - 15, this.guiTop - 3, 36, 54, 18, 10, hoverText);
-            this.buttonList.add(this.buttonBack);
+            this.addButton(this.buttonBack);
         }
 
         if (this.hasSearchBar()) {
-            this.searchField = new GuiTextField(-420, this.fontRenderer, this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 64, 12);
+            this.searchField = new TextFieldWidget(-420, this.fontRenderer, this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 64, 12);
             this.searchField.setMaxStringLength(50);
             this.searchField.setEnableBackgroundDrawing(false);
         }
@@ -144,7 +143,9 @@ public abstract class GuiBooklet extends GuiBookletBase {
         //Don't cache the parent GUI, otherwise it opens again when you close the cached book!
         this.previousScreen = null;
 
-        if (this.mc.player == null) return;
+        if (this.mc.player == null) {
+            return;
+        }
         PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
         data.lastOpenBooklet = this;
 
@@ -296,7 +297,9 @@ public abstract class GuiBooklet extends GuiBookletBase {
     }
 
     public void onSearchBarChanged(String searchBarText) {
-        GuiBookletBase parent = !(this instanceof GuiEntry) ? this : this.parentPage;
+        GuiBookletBase parent = !(this instanceof GuiEntry)
+            ? this
+            : this.parentPage;
         this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, parent, ActuallyAdditionsAPI.entryAllAndSearch, 0, searchBarText, true));
     }
 

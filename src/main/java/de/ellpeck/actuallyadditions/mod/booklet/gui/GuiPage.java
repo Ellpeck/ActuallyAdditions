@@ -10,13 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
@@ -25,13 +19,19 @@ import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.booklet.page.ItemDisplay;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiPage extends GuiBooklet {
@@ -40,9 +40,9 @@ public class GuiPage extends GuiBooklet {
     private final List<ItemDisplay> itemDisplays = new ArrayList<>();
     private int pageTimer;
 
-    private GuiButton buttonViewOnline;
+    private Button buttonViewOnline;
 
-    public GuiPage(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletPage page1, IBookletPage page2) {
+    public GuiPage(Screen previousScreen, GuiBookletBase parentPage, IBookletPage page1, IBookletPage page2) {
         super(previousScreen, parentPage);
 
         this.pages[0] = page1;
@@ -217,7 +217,9 @@ public class GuiPage extends GuiBooklet {
         IBookletPage page = this.pages[0];
         if (page != null) {
             IBookletChapter chapter = page.getChapter();
-            if (chapter != null) { return chapter.getPageIndex(page) > 0; }
+            if (chapter != null) {
+                return chapter.getPageIndex(page) > 0;
+            }
         }
         return false;
     }

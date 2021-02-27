@@ -10,19 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-import java.util.List;
-import java.util.Map;
-
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.util.datafix.fixes.FurnaceRecipes;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
+
+import java.util.List;
+import java.util.Map;
 
 public class PageFurnace extends BookletPage {
 
@@ -43,7 +43,9 @@ public class PageFurnace extends BookletPage {
         for (Map.Entry<ItemStack, ItemStack> entry : FurnaceRecipes.instance().getSmeltingList().entrySet()) {
             ItemStack stack = entry.getValue();
             if (StackUtil.isValid(stack)) {
-                if (stack.isItemEqual(output)) { return entry.getKey(); }
+                if (stack.isItemEqual(output)) {
+                    return entry.getKey();
+                }
             }
         }
         return ItemStack.EMPTY;
@@ -54,7 +56,7 @@ public class PageFurnace extends BookletPage {
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
-        gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
+        gui.getMinecraft().getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX + 23, startY + 10, 0, 146, 80, 26, 0);
 
         gui.renderScaledAsciiString("(" + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".furnaceRecipe") + ")", startX + 32, startY + 42, 0, false, gui.getMediumFontSize());

@@ -17,16 +17,17 @@ import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class PageTrials extends BookletPage {
 
     private final int buttonId;
     @OnlyIn(Dist.CLIENT)
-    private GuiButton button;
+    private Button button;
 
     public PageTrials(int localizationKey, boolean button, boolean text) {
         super(localizationKey);
@@ -49,7 +50,7 @@ public class PageTrials extends BookletPage {
         super.initGui(gui, startX, startY);
 
         if (this.buttonId >= 0) {
-            this.button = new GuiButton(this.buttonId, startX + 125 / 2 - 50, startY + 120, 100, 20, "");
+            this.button = new Button(this.buttonId, startX + 125 / 2 - 50, startY + 120, 100, 20, "");
             gui.getButtonList().add(this.button);
             this.updateButton();
         }
@@ -70,7 +71,7 @@ public class PageTrials extends BookletPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void actionPerformed(GuiBookletBase gui, GuiButton button) {
+    public void actionPerformed(GuiBookletBase gui, Button button) {
         if (this.buttonId >= 0 && button.id == this.buttonId) {
             PlayerEntity player = Minecraft.getInstance().player;
             PlayerSave data = PlayerData.getDataFromPlayer(player);

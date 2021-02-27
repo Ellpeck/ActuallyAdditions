@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.misc;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
@@ -20,11 +18,13 @@ import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiEntry;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiMainPage;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiPage;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.List;
 
 public final class BookletUtils {
 
@@ -34,7 +34,9 @@ public final class BookletUtils {
             page.getItemStacksForPage(stacks);
             if (stacks != null && !stacks.isEmpty()) {
                 for (ItemStack pageStack : stacks) {
-                    if (ItemUtil.areItemsEqual(pageStack, stack, true)) { return page; }
+                    if (ItemUtil.areItemsEqual(pageStack, stack, true)) {
+                        return page;
+                    }
                 }
             }
         }
@@ -42,7 +44,7 @@ public final class BookletUtils {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static GuiPage createBookletGuiFromPage(GuiScreen previousScreen, IBookletPage page) {
+    public static GuiPage createBookletGuiFromPage(Screen previousScreen, IBookletPage page) {
         GuiMainPage mainPage = new GuiMainPage(previousScreen);
 
         IBookletChapter chapter = page.getChapter();
@@ -52,7 +54,7 @@ public final class BookletUtils {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static GuiPage createPageGui(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletPage page) {
+    public static GuiPage createPageGui(Screen previousScreen, GuiBookletBase parentPage, IBookletPage page) {
         IBookletChapter chapter = page.getChapter();
 
         IBookletPage[] allPages = chapter.getAllPages();
@@ -62,9 +64,13 @@ public final class BookletUtils {
 
         if (page.shouldBeOnLeftSide()) {
             page1 = page;
-            page2 = pageIndex >= allPages.length - 1 ? null : allPages[pageIndex + 1];
+            page2 = pageIndex >= allPages.length - 1
+                ? null
+                : allPages[pageIndex + 1];
         } else {
-            page1 = pageIndex <= 0 ? null : allPages[pageIndex - 1];
+            page1 = pageIndex <= 0
+                ? null
+                : allPages[pageIndex - 1];
             page2 = page;
         }
 
@@ -75,7 +81,9 @@ public final class BookletUtils {
         if (id != null) {
             for (IBookletChapter chapter : ActuallyAdditionsAPI.ALL_CHAPTERS) {
                 for (IBookletPage page : chapter.getAllPages()) {
-                    if (id.equals(page.getIdentifier())) { return page; }
+                    if (id.equals(page.getIdentifier())) {
+                        return page;
+                    }
                 }
             }
         }

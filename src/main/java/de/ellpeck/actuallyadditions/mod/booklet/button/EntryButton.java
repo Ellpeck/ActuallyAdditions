@@ -10,19 +10,20 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 
 @OnlyIn(Dist.CLIENT)
-public class EntryButton extends GuiButton {
+public class EntryButton extends Button {
 
     private final GuiBookletBase gui;
     private final ItemStack stackToRender;

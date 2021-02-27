@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -19,9 +17,11 @@ import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
+
+import java.util.List;
 
 public class PageReconstructor extends BookletPage {
 
@@ -34,7 +34,9 @@ public class PageReconstructor extends BookletPage {
     public PageReconstructor(int localizationKey, LensConversionRecipe recipe) {
         super(localizationKey);
         this.recipe = recipe;
-        if (recipe != null) this.stacks = recipe.getInput().getMatchingStacks();
+        if (recipe != null) {
+            this.stacks = recipe.getInput().getMatchingStacks();
+        }
     }
 
     @Override
@@ -42,14 +44,16 @@ public class PageReconstructor extends BookletPage {
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
-        gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
+        gui.getMinecraft().getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX + 30, startY + 10, 80, 146, 68, 48, 0);
 
         gui.renderScaledAsciiString("(" + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".reconstructorRecipe") + ")", startX + 6, startY + 63, 0, false, gui.getMediumFontSize());
 
         PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 88);
         if (this.recipe != null) {
-            if (this.counter++ % 50 == 0) gui.addOrModifyItemRenderer(this.stacks[this.rotate++ % this.stacks.length], startX + 30 + 1, startY + 10 + 13, 1F, true);
+            if (this.counter++ % 50 == 0) {
+                gui.addOrModifyItemRenderer(this.stacks[this.rotate++ % this.stacks.length], startX + 30 + 1, startY + 10 + 13, 1F, true);
+            }
         }
     }
 
@@ -71,7 +75,7 @@ public class PageReconstructor extends BookletPage {
         if (this.recipe != null) {
             ItemStack copy = this.recipe.getOutput().copy();
             if (this.isWildcard) {
-                copy.setItemDamage(Util.WILDCARD);
+                copy.setDamage(Util.WILDCARD);
             }
             list.add(copy);
         }

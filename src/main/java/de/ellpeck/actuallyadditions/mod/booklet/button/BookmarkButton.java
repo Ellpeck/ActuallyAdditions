@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -20,19 +21,19 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class BookmarkButton extends GuiButton {
+public class BookmarkButton extends Button {
 
     private final GuiBooklet booklet;
     public IBookletPage assignedPage;
@@ -44,7 +45,7 @@ public class BookmarkButton extends GuiButton {
 
     public void onPressed() {
         if (this.assignedPage != null) {
-            if (GuiScreen.isShiftKeyDown()) {
+            if (Screen.hasShiftDown()) {
                 this.assignedPage = null;
             } else if (!(this.booklet instanceof GuiPage) || ((GuiPage) this.booklet).pages[0] != this.assignedPage) {
                 GuiPage gui = BookletUtils.createPageGui(this.booklet.previousScreen, this.booklet, this.assignedPage);
@@ -61,8 +62,8 @@ public class BookmarkButton extends GuiButton {
     public void drawButton(Minecraft minecraft, int x, int y, float f) {
         if (this.visible) {
             minecraft.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            this.hovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
+            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            this.isHovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
             int k = this.getHoverState(this.hovered);
             if (k == 0) {
                 k = 1;

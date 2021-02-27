@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
-import java.util.Arrays;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
@@ -24,13 +21,12 @@ import de.ellpeck.actuallyadditions.mod.util.crafting.BlankRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class PageCrafting extends BookletPage {
 
@@ -69,7 +65,9 @@ public class PageCrafting extends BookletPage {
         gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX + 5, startY + 6, 20, 0, 116, 54, 0);
 
-        if (recipeTypeLocKey != null) gui.renderScaledAsciiString("(" + StringUtil.localize(this.recipeTypeLocKey) + ")", startX + 6, startY + 65, 0, false, gui.getMediumFontSize());
+        if (this.recipeTypeLocKey != null) {
+            gui.renderScaledAsciiString("(" + StringUtil.localize(this.recipeTypeLocKey) + ")", startX + 6, startY + 65, 0, false, gui.getMediumFontSize());
+        }
 
         PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 80);
     }

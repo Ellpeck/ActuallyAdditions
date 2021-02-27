@@ -10,10 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
@@ -26,24 +22,28 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 //TODO Fix achievement button
 @OnlyIn(Dist.CLIENT)
 public class GuiMainPage extends GuiBooklet {
 
-    private static final String[] QUOTES = new String[] { "Actually Additions, to me, is quite magical in a way.@Saphrym", "Actually quite cool. Lots of nice little additions.@Direwolf20", "Mod Dev quite rude and arrogant@Bubb1e0seven", "A whimsical breath of fresh air in a stuffy tech-mod world.@mezz", "User-friendly :3@TheMeeep", "A lot of stuff, some of it really good.@Narubion", "I like the bookmarks.@Vazkii", "It's got some stuff I guess.@Ellpeck", "Actually Additions should be included in every new modpack that includes any form of tech.@YasminEndusa", "A mod that basically lets you do what ever the heck you want.@Ristelle", "TINY TORCHES!! BABY TORCHES!! Somebody actually finally did it!!@Soaryn", "Balanced mod wich makes things different - in a good way.@garantiertnicht", "The mod everyone needs, but not everyone knows@Brewpl", "The in-game documentation is the best I’ve seen. I especially love the JEI integration. Even a derp like me can figure it out.@dannydjdk", "The second best mod I've ever used.@mmaas44", "The Fermenting Barrel is one of my favorite textures.@amadornes", "Smiley Clouds is the reason for fascism in 2016.@raoulvdberge", "The worms are an awesome idea!@greenking", "Can I use that mod in my pack?@Ibraheem", "Hello, love the mod.@SuntannedDuck2", "Quick! Have all the fun before they nerf it!@JuddMan03", "I have a feeling Actually Additions is also like Extra Utilities with Random things smashed together why is it...@lesslighter", "Leaf eater... munchdew... hummm@EiOs", "There is no such thing as canola seeds.@AlBoVa", "This mod is cancer, BRUTAL EXPENSIVE POWER usage..Just, cancer.@KoJo", "Spaghetti is spaghetti, and noodles are noodles.@robsonld04", "The Actually Additions name is actually true. It's actually great!@asiekierka", "Such a great mod@jsdeveloper", "That mod is kind of funny.@Anonymous", "Actually Additions is a lot of fun.@Anonymous", "Is Actually Additions still fugly?@Anonymous", "I like it, but it's so small.@Anonymous", "It has a couple of blocks I like, but overall it's just a mess.@Anonymous", "Direwolf's 1.10 playthrough is just him shilling Actually Additions@Anonymous", "We thought about sending the author a bunch of pizzas to his adress@Anonymous", "It's op as heck.@billofbong0", "Actually AdditionsってマイクラMODすごく良いのに日本人で遊んでる人あんまいないっぽい@stay_uk", "Actually Additions is OP. Not like my favorite combination of mods, Project E + Magic Crops + Draconic Evolution.@Anonymous", "To be perfectly honest, I never actually realized how much content Actually Additions has before.@Ellpeck", "I don't blame you, I actually downgraded to Actually Additions.@PvtSeaCow", "It is lonely because there is no device to fly items with the laser in the 1.7.10 version.@Google Translate", "始めまして。日本人です。このMODは本当に素晴らしい！ただ、1.7.10ヴァージョンだと、レーザーでアイテムを飛ばす装置がないので寂しいです。@Anonymous", "Some verses found in older translations, such as the KJV were actually additions made by later copyists.@Pat_Joel", "I can't place filters into Laser Relays, but the mod is very cool.@LP_Jakob", "Am I good enough to be an Actually Additions tool?@deanwhufc" };
+    private static final String[] QUOTES = new String[]{"Actually Additions, to me, is quite magical in a way.@Saphrym", "Actually quite cool. Lots of nice little additions.@Direwolf20", "Mod Dev quite rude and arrogant@Bubb1e0seven", "A whimsical breath of fresh air in a stuffy tech-mod world.@mezz", "User-friendly :3@TheMeeep", "A lot of stuff, some of it really good.@Narubion", "I like the bookmarks.@Vazkii", "It's got some stuff I guess.@Ellpeck", "Actually Additions should be included in every new modpack that includes any form of tech.@YasminEndusa", "A mod that basically lets you do what ever the heck you want.@Ristelle", "TINY TORCHES!! BABY TORCHES!! Somebody actually finally did it!!@Soaryn", "Balanced mod wich makes things different - in a good way.@garantiertnicht", "The mod everyone needs, but not everyone knows@Brewpl", "The in-game documentation is the best I’ve seen. I especially love the JEI integration. Even a derp like me can figure it out.@dannydjdk", "The second best mod I've ever used.@mmaas44", "The Fermenting Barrel is one of my favorite textures.@amadornes", "Smiley Clouds is the reason for fascism in 2016.@raoulvdberge", "The worms are an awesome idea!@greenking", "Can I use that mod in my pack?@Ibraheem", "Hello, love the mod.@SuntannedDuck2", "Quick! Have all the fun before they nerf it!@JuddMan03", "I have a feeling Actually Additions is also like Extra Utilities with Random things smashed together why is it...@lesslighter", "Leaf eater... munchdew... hummm@EiOs", "There is no such thing as canola seeds.@AlBoVa", "This mod is cancer, BRUTAL EXPENSIVE POWER usage..Just, cancer.@KoJo", "Spaghetti is spaghetti, and noodles are noodles.@robsonld04", "The Actually Additions name is actually true. It's actually great!@asiekierka", "Such a great mod@jsdeveloper", "That mod is kind of funny.@Anonymous", "Actually Additions is a lot of fun.@Anonymous", "Is Actually Additions still fugly?@Anonymous", "I like it, but it's so small.@Anonymous", "It has a couple of blocks I like, but overall it's just a mess.@Anonymous", "Direwolf's 1.10 playthrough is just him shilling Actually Additions@Anonymous", "We thought about sending the author a bunch of pizzas to his adress@Anonymous", "It's op as heck.@billofbong0", "Actually AdditionsってマイクラMODすごく良いのに日本人で遊んでる人あんまいないっぽい@stay_uk", "Actually Additions is OP. Not like my favorite combination of mods, Project E + Magic Crops + Draconic Evolution.@Anonymous", "To be perfectly honest, I never actually realized how much content Actually Additions has before.@Ellpeck", "I don't blame you, I actually downgraded to Actually Additions.@PvtSeaCow", "It is lonely because there is no device to fly items with the laser in the 1.7.10 version.@Google Translate", "始めまして。日本人です。このMODは本当に素晴らしい！ただ、1.7.10ヴァージョンだと、レーザーでアイテムを飛ばす装置がないので寂しいです。@Anonymous", "Some verses found in older translations, such as the KJV were actually additions made by later copyists.@Pat_Joel", "I can't place filters into Laser Relays, but the mod is very cool.@LP_Jakob", "Am I good enough to be an Actually Additions tool?@deanwhufc"};
 
     //private TexturedButton achievementButton;
     private TexturedButton configButton;
 
-    private GuiButton tutorialButton;
+    private Button tutorialButton;
     private boolean showTutorial;
 
     private String bookletName;
@@ -52,7 +52,7 @@ public class GuiMainPage extends GuiBooklet {
     private List<String> quote;
     private String quoteGuy;
 
-    public GuiMainPage(GuiScreen previousScreen) {
+    public GuiMainPage(Screen previousScreen) {
         super(previousScreen, null);
     }
 
@@ -69,23 +69,23 @@ public class GuiMainPage extends GuiBooklet {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
         int flavor = 1;
-        if (this.mc.world.rand.nextFloat() <= 0.1) {
-            flavor = MathHelper.getInt(this.mc.world.rand, 2, 7);
+        if (this.getMinecraft().world.rand.nextFloat() <= 0.1) {
+            flavor = MathHelper.nextInt(this.getMinecraft().world.rand, 2, 7);
         }
         this.bookletName = "info." + ActuallyAdditions.MODID + ".booklet.manualName.1." + flavor;
 
-        String usedQuote = QUOTES[this.mc.world.rand.nextInt(QUOTES.length)];
+        String usedQuote = QUOTES[this.getMinecraft().world.rand.nextInt(QUOTES.length)];
         String[] quoteSplit = usedQuote.split("@");
         if (quoteSplit.length == 2) {
-            this.quote = this.fontRenderer.listFormattedStringToWidth(quoteSplit[0], 120);
+            this.quote = this.font.listFormattedStringToWidth(quoteSplit[0], 120);
             this.quoteGuy = quoteSplit[1];
         }
 
-        String playerName = this.mc.player.getName();
+        String playerName = this.getMinecraft().player.getName().getString();
         if (playerName.equalsIgnoreCase("dqmhose")) {
             this.bookletEdition = "Pants Edition";
         } else if (playerName.equalsIgnoreCase("TwoOfEight") || playerName.equalsIgnoreCase("BootyToast")) {
@@ -107,7 +107,7 @@ public class GuiMainPage extends GuiBooklet {
         } else if (playerName.equalsIgnoreCase("ellpeck") || playerName.equalsIgnoreCase("profprospector")) {
             String[] colors = new String[15];
             for (int i = 0; i < colors.length; i++) {
-                colors[i] = TextFormatting.fromColorIndex(this.mc.world.rand.nextInt(15)).toString() + TextFormatting.ITALIC;
+                colors[i] = TextFormatting.fromColorIndex(this.getMinecraft().world.rand.nextInt(15)).toString() + TextFormatting.ITALIC;
             }
             this.bookletEdition = String.format("%sC%so%sl%so%sr%sf%su%sl %sE%sd%si%st%si%so%sn", (Object[]) colors);
         } else if (playerName.equalsIgnoreCase("oitsjustjose")) {
@@ -134,17 +134,17 @@ public class GuiMainPage extends GuiBooklet {
 
         List<String> configText = new ArrayList<>();
         configText.add(TextFormatting.GOLD + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".configButton.name"));
-        configText.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet." + ActuallyAdditions.MODID + ".configButton.desc", ActuallyAdditions.NAME).replaceAll("\\\\n", "\n"), 200));
+        configText.addAll(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet." + ActuallyAdditions.MODID + ".configButton.desc", ActuallyAdditions.NAME).replaceAll("\\\\n", "\n"), 200));
         this.configButton = new TexturedButton(RES_LOC_GADGETS, -388, this.guiLeft + 16, this.guiTop + this.ySize - 30, 188, 14, 16, 16, configText);
         this.buttonList.add(this.configButton);
 
         List<String> achievementText = new ArrayList<>();
         achievementText.add(TextFormatting.GOLD + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".achievementButton.name"));
-        achievementText.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet." + ActuallyAdditions.MODID + ".achievementButton.desc", ActuallyAdditions.NAME), 200));
+        achievementText.addAll(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet." + ActuallyAdditions.MODID + ".achievementButton.desc", ActuallyAdditions.NAME), 200));
         //this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
         //this.buttonList.add(this.achievementButton);
 
-        PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
+        PlayerSave data = PlayerData.getDataFromPlayer(this.getMinecraft().player);
         if (!data.didBookTutorial) {
             this.showTutorial = true;
 
@@ -173,17 +173,17 @@ public class GuiMainPage extends GuiBooklet {
             if (displayed.size() > button.id) {
                 IBookletEntry entry = displayed.get(button.id);
                 if (entry != null) {
-                    this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this, entry, 0, "", false));
+                    this.getMinecraft().displayGuiScreen(new GuiEntry(this.previousScreen, this, entry, 0, "", false));
                 }
             }
         }
         /*else if(button == this.achievementButton){
-           GuiScreen achievements = new GuiAAAchievements(this, this.mc.player.getStatFileWriter());
-            this.mc.displayGuiScreen(achievements);
+           GuiScreen achievements = new GuiAAAchievements(this, this.getMinecraft().player.getStatFileWriter());
+            this.getMinecraft().displayGuiScreen(achievements);
         }*/
         else if (button == this.configButton) {
             GuiScreen config = new GuiConfiguration(this);
-            this.mc.displayGuiScreen(config);
+            this.getMinecraft().displayGuiScreen(config);
         } else if (this.showTutorial && button == this.tutorialButton) {
             if (this.hasBookmarkButtons()) {
                 if (!isShiftKeyDown()) {
@@ -197,7 +197,7 @@ public class GuiMainPage extends GuiBooklet {
                 this.configButton.visible = true;
                 //this.achievementButton.visible = true;
 
-                PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
+                PlayerSave data = PlayerData.getDataFromPlayer(this.getMinecraft().player);
                 data.didBookTutorial = true;
                 PacketHandlerHelper.sendPlayerDataToServer(false, 1);
             }
@@ -211,12 +211,12 @@ public class GuiMainPage extends GuiBooklet {
         super.drawScreenPre(mouseX, mouseY, partialTicks);
 
         String strg = TextFormatting.DARK_GREEN + StringUtil.localize(this.bookletName);
-        this.fontRenderer.drawString(strg, this.guiLeft + 72 - this.fontRenderer.getStringWidth(strg) / 2 - 3, this.guiTop + 19, 0);
+        this.font.drawString(strg, this.guiLeft + 72 - this.font.getStringWidth(strg) / 2 - 3, this.guiTop + 19, 0);
         strg = TextFormatting.DARK_GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.manualName.2");
-        this.fontRenderer.drawString(strg, this.guiLeft + 72 - this.fontRenderer.getStringWidth(strg) / 2 - 3, this.guiTop + 19 + this.fontRenderer.FONT_HEIGHT, 0);
+        this.font.drawString(strg, this.guiLeft + 72 - this.font.getStringWidth(strg) / 2 - 3, this.guiTop + 19 + this.font.FONT_HEIGHT, 0);
 
         strg = TextFormatting.GOLD + TextFormatting.ITALIC.toString() + this.bookletEdition;
-        this.fontRenderer.drawString(strg, this.guiLeft + 72 - this.fontRenderer.getStringWidth(strg) / 2 - 3, this.guiTop + 40, 0);
+        this.font.drawString(strg, this.guiLeft + 72 - this.font.getStringWidth(strg) / 2 - 3, this.guiTop + 40, 0);
 
         if (this.showTutorial) {
             String text = TextFormatting.BLUE + "It looks like this is the first time you are using this manual. \nIf you click the button below, some useful bookmarks will be stored at the bottom of the GUI. You should definitely check them out to get started with " + ActuallyAdditions.NAME + "! \nIf you don't want this, shift-click the button.";

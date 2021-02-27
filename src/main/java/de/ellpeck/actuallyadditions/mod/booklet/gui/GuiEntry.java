@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
-import java.io.IOException;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
@@ -21,10 +18,13 @@ import de.ellpeck.actuallyadditions.mod.booklet.button.EntryButton;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryTrials;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.io.IOException;
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiEntry extends GuiBooklet {
@@ -37,7 +37,7 @@ public class GuiEntry extends GuiBooklet {
     private final String searchText;
     private final boolean focusSearch;
 
-    public GuiEntry(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletEntry entry, int entryPage, String search, boolean focusSearch) {
+    public GuiEntry(Screen previousScreen, GuiBookletBase parentPage, IBookletEntry entry, int entryPage, String search, boolean focusSearch) {
         super(previousScreen, parentPage);
         this.entryPage = entryPage;
         this.entry = entry;
@@ -47,13 +47,15 @@ public class GuiEntry extends GuiBooklet {
 
         if (!this.chapters.isEmpty()) {
             IBookletChapter lastChap = this.chapters.get(this.chapters.size() - 1);
-            this.pageAmount = lastChap == null ? 1 : calcEntryPage(this.entry, lastChap, this.searchText) + 1;
+            this.pageAmount = lastChap == null
+                ? 1
+                : calcEntryPage(this.entry, lastChap, this.searchText) + 1;
         } else {
             this.pageAmount = 1;
         }
     }
 
-    public GuiEntry(GuiScreen previousScreen, GuiBookletBase parentPage, IBookletEntry entry, IBookletChapter chapterForPageCalc, String search, boolean focusSearch) {
+    public GuiEntry(Screen previousScreen, GuiBookletBase parentPage, IBookletEntry entry, IBookletChapter chapterForPageCalc, String search, boolean focusSearch) {
         this(previousScreen, parentPage, entry, calcEntryPage(entry, chapterForPageCalc, search), search, focusSearch);
     }
 
