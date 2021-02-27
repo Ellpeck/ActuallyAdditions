@@ -16,8 +16,9 @@ import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.NBTTagString;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.nbt.StringNBT;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,8 +91,8 @@ public final class PlayerData {
             compound.putBoolean("HasBatWings", this.hasBatWings);
             compound.putInt("BatWingsFlyTime", this.batWingsFlyTime);
 
-            compound.setTag("Bookmarks", this.saveBookmarks());
-            compound.setTag("Trials", this.saveTrials());
+            compound.put("Bookmarks", this.saveBookmarks());
+            compound.put("Trials", this.saveTrials());
 
             if (!savingToFile) {
                 compound.putBoolean("ShouldDisableWings", this.shouldDisableBatWings);
@@ -101,7 +102,7 @@ public final class PlayerData {
         public ListNBT saveBookmarks() {
             ListNBT bookmarks = new ListNBT();
             for (IBookletPage bookmark : this.bookmarks) {
-                bookmarks.appendTag(new NBTTagString(bookmark == null
+                bookmarks.add(StringNBT.valueOf(bookmark == null
                     ? ""
                     : bookmark.getIdentifier()));
             }
@@ -110,8 +111,8 @@ public final class PlayerData {
 
         public void loadBookmarks(ListNBT bookmarks) {
             for (int i = 0; i < bookmarks.size(); i++) {
-                String strg = bookmarks.getStringTagAt(i);
-                if (strg != null && !strg.isEmpty()) {
+                String strg = bookmarks.getString(i);
+                if (!strg.isEmpty()) {
                     IBookletPage page = BookletUtils.getBookletPageById(strg);
                     this.bookmarks[i] = page;
                 } else {
@@ -123,7 +124,7 @@ public final class PlayerData {
         public ListNBT saveTrials() {
             ListNBT trials = new ListNBT();
             for (String trial : this.completedTrials) {
-                trials.appendTag(new NBTTagString(trial));
+                trials.add(StringNBT.valueOf(trial));
             }
             return trials;
         }
@@ -132,8 +133,8 @@ public final class PlayerData {
             this.completedTrials.clear();
 
             for (int i = 0; i < trials.size(); i++) {
-                String strg = trials.getStringTagAt(i);
-                if (strg != null && !strg.isEmpty()) {
+                String strg = trials.getString(i);
+                if (!strg.isEmpty()) {
                     this.completedTrials.add(strg);
                 }
             }

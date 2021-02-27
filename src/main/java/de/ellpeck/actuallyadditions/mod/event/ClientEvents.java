@@ -14,27 +14,18 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.EnergyDisplay;
-import de.ellpeck.actuallyadditions.mod.items.ItemWingsOfTheBats;
 import de.ellpeck.actuallyadditions.mod.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.mod.util.Help;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -47,8 +38,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import java.util.Locale;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientEvents {
@@ -76,101 +65,103 @@ public class ClientEvents {
 
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event) {
-        ItemStack stack = event.getItemStack();
-        if (StackUtil.isValid(stack)) {
-            //Be da bland
-            if (ConfigBoolValues.MOST_BLAND_PERSON_EVER.isEnabled()) {
-                ResourceLocation regName = stack.getItem().getRegistryName();
-                if (regName != null) {
-                    if (regName.toString().toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)) {
-                        if (event.getToolTip().size() > 0) {
-                            event.getToolTip().set(0, TextFormatting.RESET + TextFormatting.WHITE.toString() + event.getToolTip().get(0));
-                        }
-                    }
-                }
-            }
+        // TODO: [port] ADD BACK AS NEEDED
 
-            if (ItemWingsOfTheBats.THE_BAT_BAT.equalsIgnoreCase(stack.getDisplayName()) && stack.getItem() instanceof SwordItem) {
-                event.getToolTip().set(0, TextFormatting.GOLD + event.getToolTip().get(0));
-                event.getToolTip().add(1, TextFormatting.RED.toString() + TextFormatting.ITALIC + "That's a really bat pun");
-            }
-        }
-
-        //Advanced Item Info
-        if (event.getFlags().isAdvanced() && StackUtil.isValid(event.getItemStack())) {
-            if (ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()) {
-                if (Screen.hasControlDown()) {
-                    event.getToolTip().add(Help.Trans("tooltip.", ".extraInfo.desc").mergeStyle(TextFormatting.DARK_GRAY).mergeStyle(TextFormatting.ITALIC).append(new StringTextComponent(":")));
-
-                    // TODO: [port] come back to this and see if we can re-add it
-                    //OreDict Names
-                    //                    int[] oreIDs = OreDictionary.getOreIDs(event.getItemStack());
-                    //                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".oredictName.desc") + ":");
-                    //                    if (oreIDs.length > 0) {
-                    //                        for (int oreID : oreIDs) {
-                    //                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + OreDictionary.getOreName(oreID));
-                    //                        }
-                    //                    } else {
-                    //                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".noOredictNameAvail.desc"));
-                    //                    }
-
-                    //Code Name
-                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".codeName.desc") + ":");
-                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + Item.REGISTRY.getNameForObject(event.getItemStack().getItem()));
-
-                    //Base Item's Unlocalized Name
-                    String baseName = event.getItemStack().getItem().getTranslationKey();
-                    if (baseName != null) {
-                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".baseUnlocName.desc") + ":");
-                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + baseName);
-                    }
-
-                    //Metadata
-                    int meta = event.getItemStack().getItemDamage();
-                    int max = event.getItemStack().getMaxDamage();
-                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".meta.desc") + ":");
-                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + meta + (max > 0
-                        ? "/" + max
-                        : ""));
-
-                    //Unlocalized Name
-                    String metaName = event.getItemStack().getItem().getTranslationKey(event.getItemStack());
-                    if (metaName != null && baseName != null && !metaName.equals(baseName)) {
-                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".unlocName.desc") + ":");
-                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + metaName);
-                    }
-
-                    //NBT
-                    CompoundNBT compound = event.getItemStack().getTagCompound();
-                    if (compound != null && !compound.isEmpty()) {
-                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".nbt.desc") + ":");
-                        if (Screen.hasShiftDown()) {
-                            int limit = ConfigIntValues.CTRL_INFO_NBT_CHAR_LIMIT.getValue();
-                            String compoundStrg = compound.toString();
-                            int compoundStrgLength = compoundStrg.length();
-
-                            String compoundDisplay;
-                            if (limit > 0 && compoundStrgLength > limit) {
-                                compoundDisplay = compoundStrg.substring(0, limit) + TextFormatting.GRAY + " (" + (compoundStrgLength - limit) + " more characters...)";
-                            } else {
-                                compoundDisplay = compoundStrg;
-                            }
-                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + compoundDisplay);
-                        } else {
-                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + TextFormatting.ITALIC + "[" + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".pressShift.desc") + "]");
-                        }
-                    }
-
-                    //Disabling Info
-                    event.getToolTip().add(TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".disablingInfo.desc"));
-
-                } else {
-                    if (ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()) {
-                        event.getToolTip().add(TextFormatting.DARK_GRAY + "" + TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".ctrlForMoreInfo.desc"));
-                    }
-                }
-            }
-        }
+        //        ItemStack stack = event.getItemStack();
+        //        if (StackUtil.isValid(stack)) {
+        //            //Be da bland
+        //            if (ConfigBoolValues.MOST_BLAND_PERSON_EVER.isEnabled()) {
+        //                ResourceLocation regName = stack.getItem().getRegistryName();
+        //                if (regName != null) {
+        //                    if (regName.toString().toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)) {
+        //                        if (event.getToolTip().size() > 0) {
+        //                            event.getToolTip().set(0, TextFormatting.RESET + TextFormatting.WHITE.toString() + event.getToolTip().get(0));
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //
+        //            if (ItemWingsOfTheBats.THE_BAT_BAT.equalsIgnoreCase(stack.getDisplayName()) && stack.getItem() instanceof SwordItem) {
+        //                event.getToolTip().set(0, TextFormatting.GOLD + event.getToolTip().get(0));
+        //                event.getToolTip().add(1, TextFormatting.RED.toString() + TextFormatting.ITALIC + "That's a really bat pun");
+        //            }
+        //        }
+        //
+        //        //Advanced Item Info
+        //        if (event.getFlags().isAdvanced() && StackUtil.isValid(event.getItemStack())) {
+        //            if (ConfigBoolValues.CTRL_EXTRA_INFO.isEnabled()) {
+        //                if (Screen.hasControlDown()) {
+        //                    event.getToolTip().add(Help.Trans("tooltip.", ".extraInfo.desc").mergeStyle(TextFormatting.DARK_GRAY).mergeStyle(TextFormatting.ITALIC).append(new StringTextComponent(":")));
+        //
+        //                    // TODO: [port] come back to this and see if we can re-add it
+        //                    //OreDict Names
+        //                    //                    int[] oreIDs = OreDictionary.getOreIDs(event.getItemStack());
+        //                    //                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".oredictName.desc") + ":");
+        //                    //                    if (oreIDs.length > 0) {
+        //                    //                        for (int oreID : oreIDs) {
+        //                    //                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + OreDictionary.getOreName(oreID));
+        //                    //                        }
+        //                    //                    } else {
+        //                    //                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".noOredictNameAvail.desc"));
+        //                    //                    }
+        //
+        //                    //Code Name
+        //                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".codeName.desc") + ":");
+        //                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + Item.REGISTRY.getNameForObject(event.getItemStack().getItem()));
+        //
+        //                    //Base Item's Unlocalized Name
+        //                    String baseName = event.getItemStack().getItem().getTranslationKey();
+        //                    if (baseName != null) {
+        //                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".baseUnlocName.desc") + ":");
+        //                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + baseName);
+        //                    }
+        //
+        //                    //Metadata
+        //                    int meta = event.getItemStack().getItemDamage();
+        //                    int max = event.getItemStack().getMaxDamage();
+        //                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".meta.desc") + ":");
+        //                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + meta + (max > 0
+        //                        ? "/" + max
+        //                        : ""));
+        //
+        //                    //Unlocalized Name
+        //                    String metaName = event.getItemStack().getItem().getTranslationKey(event.getItemStack());
+        //                    if (metaName != null && baseName != null && !metaName.equals(baseName)) {
+        //                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".unlocName.desc") + ":");
+        //                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + metaName);
+        //                    }
+        //
+        //                    //NBT
+        //                    CompoundNBT compound = event.getItemStack().getTagCompound();
+        //                    if (compound != null && !compound.isEmpty()) {
+        //                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".nbt.desc") + ":");
+        //                        if (Screen.hasShiftDown()) {
+        //                            int limit = ConfigIntValues.CTRL_INFO_NBT_CHAR_LIMIT.getValue();
+        //                            String compoundStrg = compound.toString();
+        //                            int compoundStrgLength = compoundStrg.length();
+        //
+        //                            String compoundDisplay;
+        //                            if (limit > 0 && compoundStrgLength > limit) {
+        //                                compoundDisplay = compoundStrg.substring(0, limit) + TextFormatting.GRAY + " (" + (compoundStrgLength - limit) + " more characters...)";
+        //                            } else {
+        //                                compoundDisplay = compoundStrg;
+        //                            }
+        //                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + compoundDisplay);
+        //                        } else {
+        //                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + TextFormatting.ITALIC + "[" + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".pressShift.desc") + "]");
+        //                        }
+        //                    }
+        //
+        //                    //Disabling Info
+        //                    event.getToolTip().add(TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".disablingInfo.desc"));
+        //
+        //                } else {
+        //                    if (ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()) {
+        //                        event.getToolTip().add(TextFormatting.DARK_GRAY + "" + TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".ctrlForMoreInfo.desc"));
+        //                    }
+        //                }
+        //            }
+        //        }
     }
 
     @SubscribeEvent
