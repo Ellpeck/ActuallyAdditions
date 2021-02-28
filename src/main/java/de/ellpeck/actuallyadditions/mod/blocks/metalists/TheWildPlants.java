@@ -11,17 +11,18 @@
 package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 
 import com.google.common.base.Preconditions;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.IStringSerializable;
 
+@Deprecated
 public enum TheWildPlants implements IStringSerializable {
 
-    CANOLA("canola", Rarity.RARE, InitBlocks.blockCanola),
-    FLAX("flax", Rarity.RARE, InitBlocks.blockFlax),
-    RICE("rice", Rarity.RARE, InitBlocks.blockRice),
-    COFFEE("coffee", Rarity.RARE, InitBlocks.blockCoffee);
+    CANOLA("canola", Rarity.RARE, ActuallyBlocks.blockCanola),
+    FLAX("flax", Rarity.RARE, ActuallyBlocks.blockFlax),
+    RICE("rice", Rarity.RARE, ActuallyBlocks.blockRice),
+    COFFEE("coffee", Rarity.RARE, ActuallyBlocks.blockCoffee);
 
     final String name;
     final Rarity rarity;

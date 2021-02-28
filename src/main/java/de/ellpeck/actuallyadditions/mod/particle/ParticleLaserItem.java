@@ -70,7 +70,7 @@ public class ParticleLaserItem extends Particle {
         RenderSystem.translated(this.posX - cam.getX(), this.posY - cam.getY(), this.posZ - cam.getZ());
         RenderSystem.scalef(0.3F, 0.3F, 0.3F);
 
-        double boop = Util.milliTime();
+        double boop = Util.milliTime() / 600D;
         RenderSystem.rotatef((float) (boop * 40D % 360), 0, 1, 0);
 
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);

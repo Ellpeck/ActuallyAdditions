@@ -11,54 +11,47 @@
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.vector.Quaternion;
 
 public class RenderDisplayStand extends TileEntityRenderer<TileEntityDisplayStand> {
-
     public RenderDisplayStand(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
     }
 
     @Override
-    public void render(TileEntityDisplayStand tile, double x, double y, double z, float par5, int par6, float f) {
-        if (!(tile instanceof TileEntityDisplayStand)) {
+    public void render(TileEntityDisplayStand tile, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
+        ItemStack stack = tile.inv.getStackInSlot(0);
+        if (!StackUtil.isValid(stack)) {
             return;
         }
 
-        ItemStack stack = tile.inv.getStackInSlot(0);
-        if (StackUtil.isValid(stack)) {
-            GlStateManager.pushMatrix();
-            GlStateManager.translate((float) x + 0.5F, (float) y + 1F, (float) z + 0.5F);
+        matrices.push();
+        matrices.translate(0.5F, 1F, 0.5F);
 
-            double boop = Minecraft.getSystemTime() / 800D;
-            GlStateManager.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
-            GlStateManager.rotate((float) (boop * 40D % 360), 0, 1, 0);
+        double boop = Util.milliTime() / 800D;
+        matrices.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
+        matrices.rotate(new Quaternion((float) (boop * 40D % 360), 0, 1, 0));
 
-            float scale = stack.getItem() instanceof ItemBlock
-                ? 0.85F
-                : 0.65F;
-            GlStateManager.scale(scale, scale, scale);
-            try {
-                AssetUtil.renderItemInWorld(stack);
-            } catch (Exception e) {
-                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is " + stack.getItem().getRegistryName() + "!", e);
-            }
-
-            GlStateManager.popMatrix();
+        float scale = stack.getItem() instanceof BlockItem
+            ? 0.85F
+            : 0.65F;
+        matrices.scale(scale, scale, scale);
+        try {
+            AssetUtil.renderItemInWorld(stack, combinedLightIn, combinedOverlayIn, matrices, buffer);
+        } catch (Exception e) {
+            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is " + stack.getItem().getRegistryName() + "!", e);
         }
-    }
 
-    @Override
-    public void render(TileEntityDisplayStand tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-
+        matrices.pop();
     }
 }

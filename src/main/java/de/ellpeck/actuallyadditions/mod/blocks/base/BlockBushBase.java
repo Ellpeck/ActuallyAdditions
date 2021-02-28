@@ -10,29 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.SoundType;
-import net.minecraft.item.Item;
 
 public class BlockBushBase extends BushBlock {
-
-    private final String name;
-
-    public BlockBushBase(Properties properties, String name) {
+    public BlockBushBase(Properties properties) {
         super(properties.sound(SoundType.PLANT));
-        this.name = name;
-    }
-
-    protected String getBaseName() {
-        return this.name;
-    }
-
-    protected ItemBlockBase getItemBlock() {
-        return new ItemBlockBase(this, new Item.Properties().group(ActuallyAdditions.GROUP));
-    }
-
-    public boolean shouldAddCreative() {
-        return true;
     }
 }

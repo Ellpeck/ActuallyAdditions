@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 
 import net.minecraft.util.IStringSerializable;
 
+@Deprecated
 public enum TheColoredLampColors implements IStringSerializable {
 
     WHITE("White", "white"),

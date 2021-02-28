@@ -12,23 +12,20 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
+import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import net.minecraft.block.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public final class InitBlocks {
+public final class ActuallyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MODID);
 
-    public static final RegistryObject<Block> blockCompost = BLOCKS.register("block_compost", BlockCompost::new);
     public static final RegistryObject<Block> blockMisc = BLOCKS.register("block_misc", BlockMisc::new);
     public static final RegistryObject<Block> blockLavaCasing = BLOCKS.register("block_misc", BlockMisc::new);
     public static final RegistryObject<Block> blockWildPlant = BLOCKS.register("block_wild", BlockWildPlant::new);
     public static final RegistryObject<Block> blockFeeder = BLOCKS.register("block_feeder", BlockFeeder::new);
-    //    public static final RegistryObject<Block> blockGiantChest = BLOCKS.register("", );
-    //    public static final RegistryObject<Block> blockGiantChestMedium = BLOCKS.register("", );
-    //    public static final RegistryObject<Block> blockGiantChestLarge = BLOCKS.register("", );
     public static final RegistryObject<Block> blockGrinder = BLOCKS.register("block_grinder", () -> new BlockGrinder(false));
     public static final RegistryObject<Block> blockGrinderDouble = BLOCKS.register("block_grinder_double", () -> new BlockGrinder(true));
 
@@ -53,7 +50,6 @@ public final class InitBlocks {
     public static final RegistryObject<Block> blockAtomicReconstructor = BLOCKS.register("block_atomic_reconstructor", BlockAtomicReconstructor::new);
     public static final RegistryObject<Block> blockCrystal = BLOCKS.register("block_crystal", () -> new BlockCrystal(false));
     public static final RegistryObject<Block> blockCrystalEmpowered = BLOCKS.register("block_crystal_empowered", () -> new BlockCrystal(true));
-    public static final RegistryObject<Block> blockBlackLotus = BLOCKS.register("block_black_lotus", BlockBlackLotus::new);
     public static final RegistryObject<Block> blockLaserRelay = BLOCKS.register("block_laser_relay", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_BASIC));
     public static final RegistryObject<Block> blockLaserRelayAdvanced = BLOCKS.register("block_laser_relay_advanced", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_ADVANCED));
     public static final RegistryObject<Block> blockLaserRelayExtreme = BLOCKS.register("block_laser_relay_extreme", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_EXTREME));
@@ -90,17 +86,15 @@ public final class InitBlocks {
     public static final RegistryObject<Block> blockCoalGenerator = BLOCKS.register("block_coal_generator", BlockCoalGenerator::new);
     public static final RegistryObject<Block> blockOilGenerator = BLOCKS.register("block_oil_generator", BlockOilGenerator::new);
     public static final RegistryObject<Block> blockFermentingBarrel = BLOCKS.register("block_fermenting_barrel", BlockFermentingBarrel::new);
-    public static final RegistryObject<Block> blockRice = BLOCKS.register("block_rice", () -> new BlockPlant(1, 2));
-    public static final RegistryObject<Block> blockCanola = BLOCKS.register("block_canola", () -> new BlockPlant(2, 3));
-    public static final RegistryObject<Block> blockFlax = BLOCKS.register("block_flax", () -> new BlockPlant(2, 4));
-    public static final RegistryObject<Block> blockCoffee = BLOCKS.register("block_coffee", () -> new BlockPlant(2, 2));
+    public static final RegistryObject<Block> blockRice = BLOCKS.register("block_rice", () -> new BlockPlant(InitItems.itemRiceSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(1, 2));
+    public static final RegistryObject<Block> blockCanola = BLOCKS.register("block_canola", () -> new BlockPlant(InitItems.itemCanolaSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 3));
+    public static final RegistryObject<Block> blockFlax = BLOCKS.register("block_flax", () -> new BlockPlant(InitItems.itemFlaxSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 4));
+    public static final RegistryObject<Block> blockCoffee = BLOCKS.register("block_coffee", () -> new BlockPlant(InitItems.itemCoffeeSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 2));
     public static final RegistryObject<Block> blockFurnaceDouble = BLOCKS.register("block_furnace_double", BlockFurnaceDouble::new);
     public static final RegistryObject<Block> blockInputter = BLOCKS.register("block_inputter", () -> new BlockInputter(false));
     public static final RegistryObject<Block> blockInputterAdvanced = BLOCKS.register("block_inputter_advanced", () -> new BlockInputter(true));
-    public static final RegistryObject<Block> blockFishingNet = BLOCKS.register("block_fishing_net", BlockFishingNet::new);
     public static final RegistryObject<Block> blockFurnaceSolar = BLOCKS.register("block_furnace_solar", BlockFurnaceSolar::new);
     public static final RegistryObject<Block> blockHeatCollector = BLOCKS.register("block_heat_collector", BlockHeatCollector::new);
-    public static final RegistryObject<Block> blockItemRepairer = BLOCKS.register("block_item_repairer", BlockItemRepairer::new);
     public static final RegistryObject<Block> blockGreenhouseGlass = BLOCKS.register("block_greenhouse_glass", BlockGreenhouseGlass::new);
     public static final RegistryObject<Block> blockBreaker = BLOCKS.register("block_breaker", () -> new BlockBreaker(false));
     public static final RegistryObject<Block> blockPlacer = BLOCKS.register("block_placer", () -> new BlockBreaker(true));
@@ -118,9 +112,4 @@ public final class InitBlocks {
     public static final RegistryObject<Block> blockQuartzSlab = BLOCKS.register("block_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.from(blockMisc.get())));
     public static final RegistryObject<Block> blockChiseledQuartzSlab = BLOCKS.register("block_chiseled_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.from(blockMisc.get())));
     public static final RegistryObject<Block> blockPillarQuartzSlab = BLOCKS.register("block_pillar_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.from(blockMisc.get())));
-
-    public static void init() {
-        ActuallyAdditions.LOGGER.info("Initializing Blocks...");
-
-    }
 }

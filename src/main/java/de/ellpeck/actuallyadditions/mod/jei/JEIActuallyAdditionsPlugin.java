@@ -12,8 +12,11 @@ package de.ellpeck.actuallyadditions.mod.jei;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.api.recipe.*;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiGrinder;
@@ -23,8 +26,6 @@ import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.booklet.BookletRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineRecipeWrapper;
-import de.ellpeck.actuallyadditions.mod.jei.compost.CompostRecipeCategory;
-import de.ellpeck.actuallyadditions.mod.jei.compost.CompostRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherRecipeWrapper;
 import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeCategory;
@@ -71,22 +72,22 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
         registry.addRecipeClickArea(GuiFurnaceDouble.class, 51, 40, 74, 22, VanillaRecipeCategoryUid.SMELTING);
 
         IIngredientBlacklist blacklist = helpers.getIngredientBlacklist();
-        blacklist.addIngredientToBlacklist(new ItemStack(InitBlocks.blockRice.get()));
-        blacklist.addIngredientToBlacklist(new ItemStack(InitBlocks.blockCanola.get()));
-        blacklist.addIngredientToBlacklist(new ItemStack(InitBlocks.blockFlax.get()));
-        blacklist.addIngredientToBlacklist(new ItemStack(InitBlocks.blockCoffee.get()));
-        blacklist.addIngredientToBlacklist(new ItemStack(InitBlocks.blockWildPlant.get(), 1, Util.WILDCARD));
-        blacklist.addIngredientToBlacklist(new ItemStack(InitBlocks.blockColoredLampOn.get(), 1, Util.WILDCARD));
+        blacklist.addIngredientToBlacklist(new ItemStack(ActuallyBlocks.blockRice.get()));
+        blacklist.addIngredientToBlacklist(new ItemStack(ActuallyBlocks.blockCanola.get()));
+        blacklist.addIngredientToBlacklist(new ItemStack(ActuallyBlocks.blockFlax.get()));
+        blacklist.addIngredientToBlacklist(new ItemStack(ActuallyBlocks.blockCoffee.get()));
+        blacklist.addIngredientToBlacklist(new ItemStack(ActuallyBlocks.blockWildPlant.get(), 1, Util.WILDCARD));
+        blacklist.addIngredientToBlacklist(new ItemStack(ActuallyBlocks.blockColoredLampOn.get(), 1, Util.WILDCARD));
         blacklist.addIngredientToBlacklist(new ItemStack(InitItems.itemMisc.get(), 1, TheMiscItems.YOUTUBE_ICON.ordinal()));
 
         registry.addRecipeCatalyst(new ItemStack(InitItems.itemCrafterOnAStick.get()), VanillaRecipeCategoryUid.CRAFTING);
-        registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockFurnaceDouble.get()), VanillaRecipeCategoryUid.SMELTING);
-        registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockGrinder.get()), CrusherRecipeCategory.NAME);
-        registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockGrinderDouble.get()), CrusherRecipeCategory.NAME);
-        registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockCoffeeMachine.get()), CoffeeMachineRecipeCategory.NAME);
-        registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockAtomicReconstructor.get()), ReconstructorRecipeCategory.NAME);
-        registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockEmpowerer.get()), EmpowererRecipeCategory.NAME);
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockFurnaceDouble.get()), VanillaRecipeCategoryUid.SMELTING);
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockGrinder.get()), CrusherRecipeCategory.NAME);
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockGrinderDouble.get()), CrusherRecipeCategory.NAME);
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockCoffeeMachine.get()), CoffeeMachineRecipeCategory.NAME);
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockAtomicReconstructor.get()), ReconstructorRecipeCategory.NAME);
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockEmpowerer.get()), EmpowererRecipeCategory.NAME);
         registry.addRecipeCatalyst(new ItemStack(InitItems.itemBooklet.get()), BookletRecipeCategory.NAME);
-        registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockCompost.get()), CompostRecipeCategory.NAME);
+        //        registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockCompost.get()), CompostRecipeCategory.NAME);
     }
 }

@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import mezz.jei.api.IGuiHelper;
@@ -27,7 +27,7 @@ public class ReconstructorRecipeCategory implements IRecipeCategory<Reconstructo
 
     public static final String NAME = "actuallyadditions.reconstructor";
 
-    private static final ItemStack RECONSTRUCTOR = new ItemStack(InitBlocks.blockAtomicReconstructor);
+    private static final ItemStack RECONSTRUCTOR = new ItemStack(ActuallyBlocks.blockAtomicReconstructor);
     private final IDrawable background;
 
     public ReconstructorRecipeCategory(IGuiHelper helper) {

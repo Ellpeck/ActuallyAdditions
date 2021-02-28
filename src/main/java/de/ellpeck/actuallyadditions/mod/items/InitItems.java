@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.base.*;
 import de.ellpeck.actuallyadditions.mod.items.lens.ItemLens;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
@@ -120,10 +120,10 @@ public final class InitItems {
     public static final RegistryObject<Item> itemPotionRingAdvanced = ITEMS.register("", new ItemPotionRing(true, "item_potion_ring_advanced"));
     public static final RegistryObject<Item> itemHairyBall = ITEMS.register("item_hairy_ball", ItemHairyBall::new);
     public static final RegistryObject<Item> itemCoffeeBean = ITEMS.register("item_coffee_beans", ItemCoffeeBean::new);
-    public static final RegistryObject<Item> itemRiceSeed = ITEMS.register("", new ItemSeed("item_rice_seed", "seedRice", InitBlocks.blockRice, itemFoods, TheFoods.RICE.ordinal()));
-    public static final RegistryObject<Item> itemCanolaSeed = ITEMS.register("", new ItemFoodSeed("item_canola_seed", "seedCanola", InitBlocks.blockCanola, itemMisc, TheMiscItems.CANOLA.ordinal(), 1, 0.01F, 10).setPotionEffect(new PotionEffect(MobEffects.NAUSEA, 1000, 0), 0.2F));
-    public static final RegistryObject<Item> itemFlaxSeed = ITEMS.register("", new ItemSeed("item_flax_seed", "seedFlax", InitBlocks.blockFlax, Items.STRING, 0));
-    public static final RegistryObject<Item> itemCoffeeSeed = ITEMS.register("", new ItemSeed("item_coffee_seed", "seedCoffeeBeans", InitBlocks.blockCoffee, itemCoffeeBean, 0));
+    public static final RegistryObject<Item> itemRiceSeed = ITEMS.register("", new ItemSeed("item_rice_seed", "seedRice", ActuallyBlocks.blockRice, itemFoods, TheFoods.RICE.ordinal()));
+    public static final RegistryObject<Item> itemCanolaSeed = ITEMS.register("", new ItemFoodSeed("item_canola_seed", "seedCanola", ActuallyBlocks.blockCanola, itemMisc, TheMiscItems.CANOLA.ordinal(), 1, 0.01F, 10).setPotionEffect(new PotionEffect(MobEffects.NAUSEA, 1000, 0), 0.2F));
+    public static final RegistryObject<Item> itemFlaxSeed = ITEMS.register("", new ItemSeed("item_flax_seed", "seedFlax", ActuallyBlocks.blockFlax, Items.STRING, 0));
+    public static final RegistryObject<Item> itemCoffeeSeed = ITEMS.register("", new ItemSeed("item_coffee_seed", "seedCoffeeBeans", ActuallyBlocks.blockCoffee, itemCoffeeBean, 0));
 
     // TOOLS & ARMOR
     public static final RegistryObject<Item> itemHelmQuartz = ITEMS.register("item_helm_quartz", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, 0));

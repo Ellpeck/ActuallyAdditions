@@ -10,13 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.crusher;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -25,6 +21,10 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CrusherRecipeWrapper extends RecipeWrapperWithButton {
 
@@ -67,6 +67,6 @@ public class CrusherRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public IBookletPage getPage() {
-        return BookletUtils.findFirstPageForStack(new ItemStack(InitBlocks.blockGrinder));
+        return BookletUtils.findFirstPageForStack(new ItemStack(ActuallyBlocks.blockGrinder));
     }
 }

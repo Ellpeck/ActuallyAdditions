@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerRepairer;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemRepairer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;

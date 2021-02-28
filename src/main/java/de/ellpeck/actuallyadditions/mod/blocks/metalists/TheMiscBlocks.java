@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.IStringSerializable;
 
+@Deprecated
 public enum TheMiscBlocks implements IStringSerializable {
 
     QUARTZ_PILLAR("black_quartz_pillar", Rarity.RARE),

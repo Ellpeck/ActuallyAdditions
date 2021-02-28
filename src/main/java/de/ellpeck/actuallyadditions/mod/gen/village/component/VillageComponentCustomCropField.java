@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.init.Blocks;
@@ -104,13 +104,13 @@ public class VillageComponentCustomCropField extends StructureVillagePieces.Hous
         int randomMeta = MathHelper.getInt(rand, 1, 7);
         switch (rand.nextInt(4)) {
             case 0:
-                return InitBlocks.blockFlax.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+                return ActuallyBlocks.blockFlax.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
             case 1:
-                return InitBlocks.blockCoffee.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+                return ActuallyBlocks.blockCoffee.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
             case 2:
-                return InitBlocks.blockRice.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+                return ActuallyBlocks.blockRice.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
             default:
-                return InitBlocks.blockCanola.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
+                return ActuallyBlocks.blockCanola.getDefaultState().withProperty(BlockCrops.AGE, randomMeta);
         }
     }
 }

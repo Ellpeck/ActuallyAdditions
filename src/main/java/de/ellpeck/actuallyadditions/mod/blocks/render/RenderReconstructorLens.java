@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -21,6 +20,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.vector.Quaternion;
 
 public class RenderReconstructorLens extends TileEntityRenderer<TileEntityAtomicReconstructor> {
 
@@ -29,56 +29,49 @@ public class RenderReconstructorLens extends TileEntityRenderer<TileEntityAtomic
     }
 
     @Override
-    public void render(TileEntityAtomicReconstructor tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        
-    }
+    public void render(TileEntityAtomicReconstructor tile, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+        ItemStack stack = tile.inv.getStackInSlot(0);
 
-    @Override
-    public void render(TileEntityAtomicReconstructor tile, double x, double y, double z, float par5, int par6, float f) {
-        if (tile == null) {
+        if (!StackUtil.isValid(stack) || !(stack.getItem() instanceof ILensItem)) {
             return;
         }
 
-        ItemStack stack = tile.inv.getStackInSlot(0);
+        matrices.push();
+        matrices.translate(0.5F, 0.5F, 0.5F);
+        matrices.rotate(new Quaternion(180F, 0.0F, 0.0F, 1.0F));
 
-        if (StackUtil.isValid(stack) && stack.getItem() instanceof ILensItem) {
-            GlStateManager.pushMatrix();
-            GlStateManager.translate((float) x + 0.5F, (float) y - 0.5F, (float) z + 0.5F);
-            GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
-
-            BlockState state = tile.getWorld().getBlockState(tile.getPos());
-            int meta = state.getBlock().getMetaFromState(state);
-            if (meta == 0) {
-                GlStateManager.translate(0F, -0.5F, 0F);
-                GlStateManager.rotate(90F, 1F, 0F, 0F);
-            }
-            if (meta == 1) {
-                GlStateManager.translate(0F, -1.5F - 0.5F / 16F, 0F);
-                GlStateManager.rotate(90F, 1F, 0F, 0F);
-            }
-            if (meta == 2) {
-                GlStateManager.translate(0F, -1F, 0F);
-                GlStateManager.translate(0F, 0F, -0.5F);
-            }
-            if (meta == 3) {
-                GlStateManager.translate(0F, -1F, 0F);
-                GlStateManager.translate(0F, 0F, 0.5F + 0.5F / 16F);
-            }
-            if (meta == 4) {
-                GlStateManager.translate(0F, -1F, 0F);
-                GlStateManager.translate(0.5F + 0.5F / 16F, 0F, 0F);
-                GlStateManager.rotate(90F, 0F, 1F, 0F);
-            }
-            if (meta == 5) {
-                GlStateManager.translate(0F, -1F, 0F);
-                GlStateManager.translate(-0.5F, 0F, 0F);
-                GlStateManager.rotate(90F, 0F, 1F, 0F);
-            }
-
-            GlStateManager.scale(0.5F, 0.5F, 0.5F);
-            AssetUtil.renderItemInWorld(stack);
-
-            GlStateManager.popMatrix();
+        BlockState state = tile.getWorld().getBlockState(tile.getPos());
+        int meta = 0; //state.getBlock().getMetaFromState(state); // TODO: [port][fix] this needs to be checking direction not meta
+        if (meta == 0) {
+            matrices.translate(0F, -0.5F, 0F);
+            matrices.rotate(new Quaternion(90F, 1F, 0F, 0F));
         }
+        if (meta == 1) {
+            matrices.translate(0F, -1.5F - 0.5F / 16F, 0F);
+            matrices.rotate(new Quaternion(90F, 1F, 0F, 0F));
+        }
+        if (meta == 2) {
+            matrices.translate(0F, -1F, 0F);
+            matrices.translate(0F, 0F, -0.5F);
+        }
+        if (meta == 3) {
+            matrices.translate(0F, -1F, 0F);
+            matrices.translate(0F, 0F, 0.5F + 0.5F / 16F);
+        }
+        if (meta == 4) {
+            matrices.translate(0F, -1F, 0F);
+            matrices.translate(0.5F + 0.5F / 16F, 0F, 0F);
+            matrices.rotate(new Quaternion(90F, 0F, 1F, 0F));
+        }
+        if (meta == 5) {
+            matrices.translate(0F, -1F, 0F);
+            matrices.translate(-0.5F, 0F, 0F);
+            matrices.rotate(new Quaternion(90F, 0F, 1F, 0F));
+        }
+
+        matrices.scale(0.5F, 0.5F, 0.5F);
+        AssetUtil.renderItemInWorld(stack, combinedLight, combinedOverlay, matrices, buffer);
+
+        matrices.pop();
     }
 }

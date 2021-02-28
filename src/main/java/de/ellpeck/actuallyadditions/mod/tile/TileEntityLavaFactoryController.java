@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -80,7 +80,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
         BlockPos thisPos = this.pos;
         BlockPos[] positions = new BlockPos[]{thisPos.add(1, 1, 0), thisPos.add(-1, 1, 0), thisPos.add(0, 1, 1), thisPos.add(0, 1, -1)};
 
-        if (this.world != null && WorldUtil.hasBlocksInPlacesGiven(positions, InitBlocks.blockLavaCasing.get(), this.world)) {
+        if (this.world != null && WorldUtil.hasBlocksInPlacesGiven(positions, ActuallyBlocks.blockLavaCasing.get(), this.world)) {
             BlockPos pos = thisPos.up();
             BlockState state = this.world.getBlockState(pos);
             Block block = state.getBlock();

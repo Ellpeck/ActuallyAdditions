@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.Help;
+import de.ellpeck.actuallyadditions.mod.util.Lang;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
@@ -67,7 +67,7 @@ public abstract class ItemEnergy extends ItemBase {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         stack.getCapability(CapabilityEnergy.ENERGY, null).ifPresent(storage -> {
             NumberFormat format = NumberFormat.getInstance();
-            tooltip.add(Help.Trans("misc", "power_long", format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored())));
+            tooltip.add(Lang.trans("misc", "power_long", format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored())));
         });
     }
 

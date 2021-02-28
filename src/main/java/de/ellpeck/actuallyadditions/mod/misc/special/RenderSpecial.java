@@ -72,7 +72,7 @@ public class RenderSpecial {
                 GlStateManager.translate(0D, 0.5D, 0D);
             }
             GlStateManager.rotate(180F, 1F, 0F, 0F);
-            AssetUtil.renderItemInWorld(this.theThingToRender);
+            AssetUtil.renderItemInWorld(this.theThingToRender, combinedLightIn, combinedOverlayIn, matrices, buffer);
             GlStateManager.popMatrix();
 
             GlStateManager.enableLighting();

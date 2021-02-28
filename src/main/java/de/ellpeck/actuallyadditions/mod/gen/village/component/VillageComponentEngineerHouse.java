@@ -10,14 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
-import java.util.List;
-import java.util.Random;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockColoredLamp;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheColoredLampColors;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
@@ -26,14 +23,7 @@ import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCompost;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -56,6 +46,9 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
+import java.util.List;
+import java.util.Random;
+
 public class VillageComponentEngineerHouse extends StructureVillagePieces.House1 {
 
     private static final ResourceLocation STRUCTURE_RES_LOC = new ResourceLocation(ActuallyAdditions.MODID, "andrew_period_house");
@@ -77,14 +70,18 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
 
     public static VillageComponentEngineerHouse buildComponent(List<StructureComponent> pieces, int p1, int p2, int p3, Direction p4) {
         StructureBoundingBox boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, X_SIZE, Y_SIZE, Z_SIZE, p4);
-        return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null ? new VillageComponentEngineerHouse(boundingBox, p4) : null;
+        return canVillageGoDeeper(boundingBox) && StructureComponent.findIntersecting(pieces, boundingBox) == null
+            ? new VillageComponentEngineerHouse(boundingBox, p4)
+            : null;
     }
 
     @Override
     public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
         if (this.averageGroundLevel < 0) {
             this.averageGroundLevel = this.getAverageGroundLevel(world, sbb);
-            if (this.averageGroundLevel < 0) { return true; }
+            if (this.averageGroundLevel < 0) {
+                return true;
+            }
             this.boundingBox.offset(0, this.averageGroundLevel - this.boundingBox.maxY + Y_SIZE - 2, 0);
         }
 
@@ -149,7 +146,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
                 tile.stopFromDropping = true;
                 tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored() / 2));
                 if (world.rand.nextFloat() >= 0.25F) {
-                    tile.inv.setStackInSlot(TileEntityGrinder.SLOT_INPUT_1, new ItemStack(InitBlocks.blockMisc, world.rand.nextInt(10) + 1, TheMiscBlocks.ORE_QUARTZ.ordinal()));
+                    tile.inv.setStackInSlot(TileEntityGrinder.SLOT_INPUT_1, new ItemStack(ActuallyBlocks.blockMisc, world.rand.nextInt(10) + 1, TheMiscBlocks.ORE_QUARTZ.ordinal()));
                 }
             }
 
@@ -177,7 +174,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
         }
 
         int meta = world.rand.nextInt(TheColoredLampColors.values().length);
-        this.setBlockState(world, InitBlocks.blockColoredLampOn.getDefaultState().withProperty(BlockColoredLamp.TYPE, BlockColoredLamp.ALL_LAMP_TYPES[meta]), 8, 1, 6, sbb);
+        this.setBlockState(world, ActuallyBlocks.blockColoredLampOn.getDefaultState().withProperty(BlockColoredLamp.TYPE, BlockColoredLamp.ALL_LAMP_TYPES[meta]), 8, 1, 6, sbb);
     }
 
     private void spawnActualHouse(World world, StructureBoundingBox sbb) {

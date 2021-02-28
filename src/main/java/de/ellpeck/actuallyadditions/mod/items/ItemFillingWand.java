@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.Help;
+import de.ellpeck.actuallyadditions.mod.util.Lang;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -224,9 +224,9 @@ public class ItemFillingWand extends ItemEnergy {
 
         IFormattableTextComponent display = loadData(stack)
             .map(state -> state.getBlock().getTranslatedName())
-            .orElse(Help.Trans("tooltip", "item_filling_wand.selectedBlock.none"));
+            .orElse(Lang.trans("tooltip", "item_filling_wand.selectedBlock.none"));
 
-        tooltip.add(Help.Trans("tooltip", "item_filling_wand.selectedBlock", display.getString()));
+        tooltip.add(Lang.trans("tooltip", "item_filling_wand.selectedBlock", display.getString()));
     }
 
     @Override

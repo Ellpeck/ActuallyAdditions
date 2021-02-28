@@ -11,8 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -49,7 +49,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
         int newRange = defaultRange;
         for (int i = 0; i < 3; i++) {
             Block block = world.getBlockState(pos.up(1 + i)).getBlock();
-            if (block == InitBlocks.blockPhantomBooster.get()) {
+            if (block == ActuallyBlocks.blockPhantomBooster.get()) {
                 newRange = newRange * 2;
             } else {
                 break;

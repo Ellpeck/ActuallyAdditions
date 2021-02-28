@@ -10,22 +10,27 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -37,6 +42,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.OnlyIn;
@@ -69,21 +75,15 @@ public final class AssetUtil {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderBlockInWorld(Block block, int meta) {
-        renderItemInWorld(new ItemStack(block, 1, meta));
+        renderItemInWorld(new ItemStack(block, 1, meta), combinedLightIn, combinedOverlayIn, matrices, buffer);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderItemInWorld(ItemStack stack) {
+    public static void renderItemInWorld(ItemStack stack, int combinedLight, int combinedOverlay, MatrixStack matrices, IRenderTypeBuffer buffer) {
         if (StackUtil.isValid(stack)) {
-            GlStateManager.pushMatrix();
-            GlStateManager.disableLighting();
-            GlStateManager.pushAttrib();
-            RenderHelper.enableStandardItemLighting();
-            Minecraft.getInstance().getRenderItem().renderItem(stack, TransformType.FIXED);
-            RenderHelper.disableStandardItemLighting();
-            GlStateManager.popAttrib();
-            GlStateManager.enableLighting();
-            GlStateManager.popMatrix();
+            Minecraft.getInstance().getItemRenderer().renderItem(
+                stack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrices, buffer
+            );
         }
     }
 

@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
@@ -87,7 +87,7 @@ public class ActuallyAdditions {
     public ActuallyAdditions() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        InitBlocks.BLOCKS.register(eventBus);
+        ActuallyBlocks.BLOCKS.register(eventBus);
         ActuallyTiles.TILES.register(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
 

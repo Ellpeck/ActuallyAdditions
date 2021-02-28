@@ -10,16 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.coffee;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.base.Strings;
-
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -30,6 +26,9 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton {
 
@@ -47,11 +46,13 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton {
     @Override
     public void getIngredients(IIngredients ingredients) {
         List<ItemStack> list = new ArrayList<>();
-        for (ItemStack s : this.ingredient.getInput().getMatchingStacks())
+        for (ItemStack s : this.ingredient.getInput().getMatchingStacks()) {
             list.add(s);
+        }
         list.add(this.cup);
-        for (ItemStack s : TileEntityCoffeeMachine.COFFEE.getMatchingStacks())
+        for (ItemStack s : TileEntityCoffeeMachine.COFFEE.getMatchingStacks()) {
             list.add(s);
+        }
         ingredients.setInputs(VanillaTypes.ITEM, list);
 
         ingredients.setOutput(VanillaTypes.ITEM, this.theOutput);
@@ -83,6 +84,6 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public IBookletPage getPage() {
-        return BookletUtils.findFirstPageForStack(new ItemStack(InitBlocks.blockCoffeeMachine));
+        return BookletUtils.findFirstPageForStack(new ItemStack(ActuallyBlocks.blockCoffeeMachine));
     }
 }

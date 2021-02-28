@@ -10,9 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -45,10 +43,9 @@ public class BlockBioReactor extends BlockContainerBase {
         if (!world.isRemote) {
             TileEntity tileEntity = world.getTileEntity(pos);
             if (tileEntity instanceof TileEntityBioReactor) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, tileEntity, pos);
-                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.BIO_REACTOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+                NetworkHooks.openGui((ServerPlayerEntity) player, (TileEntityBioReactor) tileEntity, pos);
             }
         }
-        return true;
+        return ActionResultType.PASS;
     }
 }

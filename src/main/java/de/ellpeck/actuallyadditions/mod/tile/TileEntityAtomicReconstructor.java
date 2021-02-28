@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -96,7 +96,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
             if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
                 this.oldEnergy = this.storage.getEnergyStored();
-                this.world.updateComparatorOutputLevel(this.pos, InitBlocks.blockAtomicReconstructor.get());
+                this.world.updateComparatorOutputLevel(this.pos, ActuallyBlocks.blockAtomicReconstructor.get());
             }
         }
 

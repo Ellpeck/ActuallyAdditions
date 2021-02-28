@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.ore;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheDusts;
@@ -41,7 +41,7 @@ public final class InitOreDict {
         addOre(InitItems.itemDust, TheDusts.QUARTZ.ordinal(), "dustNetherQuartz");
         addOre(InitItems.itemDust, TheDusts.COAL.ordinal(), "dustCoal");
         addOre(InitItems.itemDust, TheDusts.QUARTZ_BLACK.ordinal(), "dustQuartzBlack");
-        addOre(InitBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), "oreQuartzBlack");
+        addOre(ActuallyBlocks.blockMisc, TheMiscBlocks.ORE_QUARTZ.ordinal(), "oreQuartzBlack");
         addOre(InitItems.itemMisc, TheMiscItems.QUARTZ.ordinal(), "gemQuartzBlack");
 
         //For Thermal Expansion Machine that "grows crops"
@@ -56,8 +56,8 @@ public final class InitOreDict {
 
         //For Crafting
         addOre(InitItems.itemMisc, TheMiscItems.RICE_SLIME.ordinal(), "slimeball");
-        addOre(InitBlocks.blockMisc, TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), "blockCharcoal");
-        addOre(InitBlocks.blockMisc, TheMiscBlocks.QUARTZ.ordinal(), "blockQuartzBlack");
+        addOre(ActuallyBlocks.blockMisc, TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), "blockCharcoal");
+        addOre(ActuallyBlocks.blockMisc, TheMiscBlocks.QUARTZ.ordinal(), "blockQuartzBlack");
         addOre(InitItems.itemMisc, TheMiscItems.BLACK_DYE.ordinal(), "dyeBlack");
         addOre(InitItems.itemMisc, TheMiscItems.BLACK_DYE.ordinal(), "dye");
     }

@@ -54,7 +54,7 @@ public class BlockColoredLamp extends BlockBase {
 
     @Override
     public Item getItemDropped(BlockState state, Random rand, int par3) {
-        return Item.getItemFromBlock(InitBlocks.blockColoredLamp);
+        return Item.getItemFromBlock(ActuallyBlocks.blockColoredLamp);
     }
 
     @Override
@@ -68,8 +68,8 @@ public class BlockColoredLamp extends BlockBase {
         //Turning On
         if (hand == Hand.MAIN_HAND && stack.isEmpty()) {
             world.setBlockState(pos, (this.isOn
-                ? InitBlocks.blockColoredLamp
-                : InitBlocks.blockColoredLampOn).getDefaultState().withProperty(TYPE, state.getValue(TYPE)), 2);
+                ? ActuallyBlocks.blockColoredLamp
+                : ActuallyBlocks.blockColoredLampOn).getDefaultState().withProperty(TYPE, state.getValue(TYPE)), 2);
             world.notifyLightSet(pos);
             return true;
         }
@@ -169,7 +169,7 @@ public class BlockColoredLamp extends BlockBase {
 
         @Override
         public String getTranslationKey(ItemStack stack) {
-            return InitBlocks.blockColoredLamp.getTranslationKey() + "_" + ALL_LAMP_TYPES[stack.getItemDamage()].regName;
+            return ActuallyBlocks.blockColoredLamp.getTranslationKey() + "_" + ALL_LAMP_TYPES[stack.getItemDamage()].regName;
         }
     }
 }

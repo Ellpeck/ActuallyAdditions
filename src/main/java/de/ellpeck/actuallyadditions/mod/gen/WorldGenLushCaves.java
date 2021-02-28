@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.gen;
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
@@ -36,7 +36,7 @@ import java.util.Random;
 
 public class WorldGenLushCaves {
 
-    public static final Block[] CRYSTAL_CLUSTERS = new Block[]{InitBlocks.blockCrystalClusterRedstone, InitBlocks.blockCrystalClusterLapis, InitBlocks.blockCrystalClusterDiamond, InitBlocks.blockCrystalClusterCoal, InitBlocks.blockCrystalClusterEmerald, InitBlocks.blockCrystalClusterIron};
+    public static final Block[] CRYSTAL_CLUSTERS = new Block[]{ActuallyBlocks.blockCrystalClusterRedstone, ActuallyBlocks.blockCrystalClusterLapis, ActuallyBlocks.blockCrystalClusterDiamond, ActuallyBlocks.blockCrystalClusterCoal, ActuallyBlocks.blockCrystalClusterEmerald, ActuallyBlocks.blockCrystalClusterIron};
 
     public boolean generate(World world, Random rand, BlockPos position, StructureBoundingBox blockRegion) {
         this.generateCave(world, position, rand, blockRegion);
@@ -119,7 +119,7 @@ public class WorldGenLushCaves {
 
                         BlockState state = world.getBlockState(cratePos);
                         if (state != null && state.getBlock().isLeaves(state, world, cratePos)) {
-                            world.setBlockState(cratePos, InitBlocks.blockGiantChest.getDefaultState(), 2);
+                            world.setBlockState(cratePos, ActuallyBlocks.blockGiantChest.getDefaultState(), 2);
 
                             TileEntity tile = world.getTileEntity(cratePos);
                             if (tile instanceof TileEntityGiantChest) {

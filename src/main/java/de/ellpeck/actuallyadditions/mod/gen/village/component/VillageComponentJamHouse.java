@@ -10,13 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.gen.village.component;
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGiantChest;
-import net.minecraft.block.*;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -58,7 +59,7 @@ public class VillageComponentJamHouse extends StructureVillagePieces.House1 {
         BlockPos pos = new BlockPos(x, y, z);
 
         if (box.isVecInside(pos)) {
-            world.setBlockState(pos, InitBlocks.blockGiantChest.getDefaultState(), 2);
+            world.setBlockState(pos, ActuallyBlocks.blockGiantChest.getDefaultState(), 2);
 
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileEntityGiantChest) {

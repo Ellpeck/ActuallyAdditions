@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
@@ -101,7 +101,7 @@ public class ContainerDropper extends Container {
     public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
         if (!this.player.isSpectator()) {
-            this.dropper.getWorld().notifyNeighborsOfStateChange(this.dropper.getPos(), InitBlocks.blockDropper, false);
+            this.dropper.getWorld().notifyNeighborsOfStateChange(this.dropper.getPos(), ActuallyBlocks.blockDropper, false);
         }
     }
 }

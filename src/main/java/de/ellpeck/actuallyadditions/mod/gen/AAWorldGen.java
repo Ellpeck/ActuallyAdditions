@@ -11,9 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.gen;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockMisc;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockWildPlant;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
@@ -22,6 +22,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
@@ -73,7 +74,7 @@ public class AAWorldGen implements IWorldGenerator {
 
     private void generateDefault(World world, Random random, int x, int z) {
         if (ConfigBoolValues.GENERATE_QUARTZ.isEnabled()) {
-            this.addOreSpawn(InitBlocks.blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.ORE_QUARTZ), Blocks.STONE, world, random, x * 16, z * 16, MathHelper.getInt(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
+            this.addOreSpawn(ActuallyBlocks.blockMisc.getDefaultState().withProperty(BlockMisc.TYPE, TheMiscBlocks.ORE_QUARTZ), Blocks.STONE, world, random, x * 16, z * 16, MathHelper.getInt(random, 5, 8), 10, QUARTZ_MIN, QUARTZ_MAX);
         }
 
         if (ConfigBoolValues.GEN_LUSH_CAVES.isEnabled()) {
@@ -106,11 +107,11 @@ public class AAWorldGen implements IWorldGenerator {
             if (event.getType() == EventType.FLOWERS) {
                 if (!ArrayUtils.contains(ConfigIntListValues.PLANT_DIMENSION_BLACKLIST.getValue(), event.getWorld().provider.getDimension())) {
                     this.generateRice(event);
-                    BlockState plantDefault = InitBlocks.blockWildPlant.getDefaultState();
+                    BlockState plantDefault = ActuallyBlocks.blockWildPlant.getDefaultState();
                     this.genPlantNormally(plantDefault.withProperty(BlockWildPlant.TYPE, TheWildPlants.CANOLA), ConfigIntValues.CANOLA_AMOUNT.getValue(), ConfigBoolValues.DO_CANOLA_GEN.isEnabled(), Material.GRASS, event);
                     this.genPlantNormally(plantDefault.withProperty(BlockWildPlant.TYPE, TheWildPlants.FLAX), ConfigIntValues.FLAX_AMOUNT.getValue(), ConfigBoolValues.DO_FLAX_GEN.isEnabled(), Material.GRASS, event);
                     this.genPlantNormally(plantDefault.withProperty(BlockWildPlant.TYPE, TheWildPlants.COFFEE), ConfigIntValues.COFFEE_AMOUNT.getValue(), ConfigBoolValues.DO_COFFEE_GEN.isEnabled(), Material.GRASS, event);
-                    this.genPlantNormally(InitBlocks.blockBlackLotus.getDefaultState(), ConfigIntValues.BLACK_LOTUS_AMOUNT.getValue(), ConfigBoolValues.DO_LOTUS_GEN.isEnabled(), Material.GRASS, event);
+                    //                    this.genPlantNormally(InitBlocks.blockBlackLotus.getDefaultState(), ConfigIntValues.BLACK_LOTUS_AMOUNT.getValue(), ConfigBoolValues.DO_LOTUS_GEN.isEnabled(), Material.GRASS, event);
                 }
             }
 
@@ -125,7 +126,7 @@ public class AAWorldGen implements IWorldGenerator {
                             if (randomPos.getY() >= 25 && randomPos.getY() <= 45) {
                                 if (event.getWorld().getBlockState(randomPos).getMaterial() == Material.WATER) {
                                     if (event.getWorld().getBlockState(randomPos.down()).getMaterial().isSolid()) {
-                                        event.getWorld().setBlockState(randomPos, InitBlocks.blockTreasureChest.getDefaultState().withProperty(BlockHorizontal.FACING, Direction.byHorizontalIndex(event.getRand().nextInt(4))), 2);
+                                        event.getWorld().setBlockState(randomPos, ActuallyBlocks.blockTreasureChest.getDefaultState().withProperty(BlockHorizontal.FACING, Direction.byHorizontalIndex(event.getRand().nextInt(4))), 2);
                                     }
                                 }
                             }
@@ -148,7 +149,7 @@ public class AAWorldGen implements IWorldGenerator {
                         ArrayList<Material> blocksAroundTop = WorldUtil.getMaterialsAround(event.getWorld(), posToGenAt);
                         if (blocksAroundBottom.contains(Material.GRASS) || blocksAroundBottom.contains(Material.GROUND) || blocksAroundBottom.contains(Material.ROCK) || blocksAroundBottom.contains(Material.SAND)) {
                             if (!blocksAroundTop.contains(Material.WATER) && event.getWorld().getBlockState(posToGenAt).getMaterial() == Material.AIR) {
-                                event.getWorld().setBlockState(posToGenAt, InitBlocks.blockWildPlant.getDefaultState().withProperty(BlockWildPlant.TYPE, TheWildPlants.RICE), 2);
+                                event.getWorld().setBlockState(posToGenAt, ActuallyBlocks.blockWildPlant.getDefaultState().withProperty(BlockWildPlant.TYPE, TheWildPlants.RICE), 2);
                             }
                         }
                     }

@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.jei.reconstructor;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.mod.recipe.EnchBookConversion;
@@ -68,7 +68,7 @@ public class ReconstructorRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public IBookletPage getPage() {
-        return BookletUtils.findFirstPageForStack(new ItemStack(InitBlocks.blockAtomicReconstructor));
+        return BookletUtils.findFirstPageForStack(new ItemStack(ActuallyBlocks.blockAtomicReconstructor));
     }
 
     public static class EnchBookWrapper extends ReconstructorRecipeWrapper {

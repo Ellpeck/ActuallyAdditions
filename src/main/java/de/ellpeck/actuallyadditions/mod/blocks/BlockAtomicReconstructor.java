@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.Help;
+import de.ellpeck.actuallyadditions.mod.util.Lang;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
@@ -122,13 +122,13 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         if (!(rayCast instanceof BlockRayTraceResult) || minecraft.world == null) {
             return;
         }
-        
+
         TileEntity tile = minecraft.world.getTileEntity(((BlockRayTraceResult) rayCast).getPos());
         if (tile instanceof TileEntityAtomicReconstructor) {
             ItemStack slot = ((TileEntityAtomicReconstructor) tile).inv.getStackInSlot(0);
             ITextComponent strg;
             if (!StackUtil.isValid(slot)) {
-                strg = Help.Trans("info", "nolens");
+                strg = Lang.trans("info", "nolens");
             } else {
                 strg = slot.getItem().getDisplayName(slot);
 

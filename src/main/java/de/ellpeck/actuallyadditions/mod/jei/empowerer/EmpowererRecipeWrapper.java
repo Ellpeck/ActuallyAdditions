@@ -10,17 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.jei.empowerer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
-import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmpowererRecipeWrapper extends RecipeWrapperWithButton {
 
@@ -33,16 +33,21 @@ public class EmpowererRecipeWrapper extends RecipeWrapperWithButton {
     @Override
     public void getIngredients(IIngredients ingredients) {
         List<ItemStack> inputs = new ArrayList<>();
-        for (ItemStack s : this.theRecipe.getInput().getMatchingStacks())
+        for (ItemStack s : this.theRecipe.getInput().getMatchingStacks()) {
             inputs.add(s);
-        for (ItemStack s : this.theRecipe.getStandOne().getMatchingStacks())
+        }
+        for (ItemStack s : this.theRecipe.getStandOne().getMatchingStacks()) {
             inputs.add(s);
-        for (ItemStack s : this.theRecipe.getStandTwo().getMatchingStacks())
+        }
+        for (ItemStack s : this.theRecipe.getStandTwo().getMatchingStacks()) {
             inputs.add(s);
-        for (ItemStack s : this.theRecipe.getStandThree().getMatchingStacks())
+        }
+        for (ItemStack s : this.theRecipe.getStandThree().getMatchingStacks()) {
             inputs.add(s);
-        for (ItemStack s : this.theRecipe.getStandFour().getMatchingStacks())
+        }
+        for (ItemStack s : this.theRecipe.getStandFour().getMatchingStacks()) {
             inputs.add(s);
+        }
 
         ingredients.setInputs(VanillaTypes.ITEM, inputs);
         ingredients.setOutput(VanillaTypes.ITEM, this.theRecipe.getOutput());
@@ -60,6 +65,6 @@ public class EmpowererRecipeWrapper extends RecipeWrapperWithButton {
 
     @Override
     public IBookletPage getPage() {
-        return BookletUtils.findFirstPageForStack(new ItemStack(InitBlocks.blockEmpowerer));
+        return BookletUtils.findFirstPageForStack(new ItemStack(ActuallyBlocks.blockEmpowerer));
     }
 }

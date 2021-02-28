@@ -50,7 +50,7 @@ public class RenderWorm extends Render<EntityWorm> {
         GlStateManager.translate(0, 0, 0.4);
 
         stack.setStackDisplayName(entity.getName());
-        AssetUtil.renderItemInWorld(stack);
+        AssetUtil.renderItemInWorld(stack, combinedLightIn, combinedOverlayIn, matrices, buffer);
 
         GlStateManager.popMatrix();
     }
