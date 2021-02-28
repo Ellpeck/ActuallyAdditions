@@ -106,7 +106,7 @@ public class ItemDrill extends ItemEnergy {
                     try {
                         //Places the Block into the World
                         if (toPlaceStack.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ) != EnumActionResult.FAIL) {
-                            if (!player.capabilities.isCreativeMode) {
+                            if (!player.isCreative()) {
                                 WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack.copy());
                             }
                         }
@@ -169,7 +169,7 @@ public class ItemDrill extends ItemEnergy {
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase entity1, EntityLivingBase entity2) {
         int use = this.getEnergyUsePerBlock(stack);
-        if (!(entity2 instanceof PlayerEntity) || !((PlayerEntity) entity2).capabilities.isCreativeMode) {
+        if (!(entity2 instanceof PlayerEntity) || !((PlayerEntity) entity2).isCreative()) {
             if (this.getEnergyStored(stack) >= use) {
                 this.extractEnergyInternal(stack, use, false);
             }
@@ -478,7 +478,7 @@ public class ItemDrill extends ItemEnergy {
         float hardness = state.getBlockHardness(world, pos);
         boolean canHarvest = (ForgeHooks.canHarvestBlock(block, player, world, pos) || this.canHarvestBlock(state, stack)) && (!isExtra || this.getDestroySpeed(stack, world.getBlockState(pos)) > 1.0F);
         if (hardness >= 0.0F && (!isExtra || canHarvest && !block.hasTileEntity(world.getBlockState(pos)))) {
-            if (!player.capabilities.isCreativeMode) {
+            if (!player.isCreative()) {
                 this.extractEnergyInternal(stack, use, false);
             }
             //Break the Block

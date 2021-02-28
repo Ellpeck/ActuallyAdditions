@@ -21,10 +21,13 @@ import net.minecraft.block.ContainerBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -34,6 +37,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -41,6 +45,18 @@ import java.util.Random;
 public abstract class BlockContainerBase extends ContainerBlock {
     public BlockContainerBase(Properties properties) {
         super(properties);
+    }
+
+    public ActionResultType openGui(World world, PlayerEntity player, BlockPos pos, Class<? extends INamedContainerProvider> expectedInstance) {
+        if (!world.isRemote) {
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile != null && tile.getClass().isInstance(expectedInstance)) {
+                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
+            }
+            return ActionResultType.SUCCESS;
+        }
+
+        return ActionResultType.PASS;
     }
 
     private void dropInventory(World world, BlockPos position) {

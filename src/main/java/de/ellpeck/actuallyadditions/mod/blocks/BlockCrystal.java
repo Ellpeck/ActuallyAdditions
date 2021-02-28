@@ -10,103 +10,34 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.IRarity;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public class BlockCrystal extends BlockBase {
-
-    public static final TheCrystals[] ALL_CRYSTALS = TheCrystals.values();
-    private static final PropertyEnum<TheCrystals> TYPE = PropertyEnum.create("type", TheCrystals.class);
-
     private final boolean isEmpowered;
 
     public BlockCrystal(boolean isEmpowered) {
-        super(Material.ROCK, name);
+        super(ActuallyBlocks.defaultPickProps(1));
         this.isEmpowered = isEmpowered;
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setHarvestLevel("pickaxe", 1);
     }
 
-    @Override
-    public int damageDropped(BlockState state) {
-        return this.getMetaFromState(state);
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-        for (int j = 0; j < ALL_CRYSTALS.length; j++) {
-            list.add(new ItemStack(this, 1, j));
-        }
-    }
-
-    @Override
-    protected ItemBlockBase getItemBlock() {
-        return new TheItemBlock(this);
-    }
-
-    @Override
-    public void registerRendering() {
-        for (int i = 0; i < ALL_CRYSTALS.length; i++) {
-            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName() + "=" + ALL_CRYSTALS[i].name);
-        }
-    }
-
-    @Override
-    public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(TYPE, TheCrystals.values()[meta]);
-    }
-
-    @Override
-    public int getMetaFromState(BlockState state) {
-        return state.getValue(TYPE).ordinal();
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, TYPE);
-    }
-
-    @Override
-    public IRarity getRarity(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_CRYSTALS.length
-            ? EnumRarity.COMMON
-            : ALL_CRYSTALS[stack.getItemDamage()].rarity;
-    }
-
-    public static class TheItemBlock extends ItemBlockBase {
-
-        public TheItemBlock(Block block) {
-            super(block);
-            this.setHasSubtypes(true);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getTranslationKey(ItemStack stack) {
-            return stack.getItemDamage() >= ALL_CRYSTALS.length
-                ? StringUtil.BUGGED_ITEM_NAME
-                : this.getTranslationKey() + "_" + ALL_CRYSTALS[stack.getItemDamage()].name;
-        }
-
-        @Override
-        public boolean hasEffect(ItemStack stack) {
-            return this.block instanceof BlockCrystal && ((BlockCrystal) this.block).isEmpowered;
-        }
-    }
+    //    public static class TheItemBlock extends ItemBlockBase {
+    //
+    //        public TheItemBlock(Block block) {
+    //            super(block);
+    //            this.setHasSubtypes(true);
+    //            this.setMaxDamage(0);
+    //        }
+    //
+    //        @Override
+    //        public String getTranslationKey(ItemStack stack) {
+    //            return stack.getItemDamage() >= ALL_CRYSTALS.length
+    //                ? StringUtil.BUGGED_ITEM_NAME
+    //                : this.getTranslationKey() + "_" + ALL_CRYSTALS[stack.getItemDamage()].name;
+    //        }
+    //
+    //        @Override
+    //        public boolean hasEffect(ItemStack stack) {
+    //            return this.block instanceof BlockCrystal && ((BlockCrystal) this.block).isEmpowered;
+    //        }
+    //    }
 }

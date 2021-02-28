@@ -66,7 +66,7 @@ public class ItemChestToCrateUpgrade extends ItemBase {
 
                         world.removeTileEntity(pos);
                         world.setBlockState(pos, this.end, 2);
-                        if (!player.capabilities.isCreativeMode) {
+                        if (!player.isCreative()) {
                             heldStack.shrink(1);
                         }
 

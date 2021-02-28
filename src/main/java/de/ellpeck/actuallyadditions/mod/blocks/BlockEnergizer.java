@@ -10,32 +10,27 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnergizer;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BlockEnergizer extends BlockContainerBase {
-
     private final boolean isEnergizer;
 
     public BlockEnergizer(boolean isEnergizer) {
-        super(Material.ROCK, this.name);
+        super(ActuallyBlocks.defaultPickProps(0, 2.0F, 10.0F));
         this.isEnergizer = isEnergizer;
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(2.0F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
     }
 
     @Override
@@ -46,26 +41,16 @@ public class BlockEnergizer extends BlockContainerBase {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!world.isRemote) {
-            if (this.isEnergizer) {
-                TileEntityEnergizer energizer = (TileEntityEnergizer) world.getTileEntity(pos);
-                if (energizer != null) {
-                    player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.ENERGIZER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
-                }
-            } else {
-                TileEntityEnervator energizer = (TileEntityEnervator) world.getTileEntity(pos);
-                if (energizer != null) {
-                    player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.ENERVATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
-                }
-            }
-            return true;
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        if (this.isEnergizer) {
+            return this.openGui(world, player, pos, TileEntityEnergizer.class);
+        } else {
+            return this.openGui(world, player, pos, TileEntityEnervator.class);
         }
-        return true;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return Shapes.ENERGIZER_SHAPE;
     }
 }

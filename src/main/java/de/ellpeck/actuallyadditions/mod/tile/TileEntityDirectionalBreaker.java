@@ -10,23 +10,31 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerDirectionalBreaker;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
+public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements INamedContainerProvider {
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
@@ -127,5 +135,16 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase {
     @Override
     public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
         return this.lazyEnergy;
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return StringTextComponent.EMPTY;
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        return new ContainerDirectionalBreaker(windowId, playerInventory, this);
     }
 }

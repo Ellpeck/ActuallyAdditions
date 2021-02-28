@@ -12,21 +12,23 @@ import net.minecraft.util.Direction;
  * Wrapper for Fully Direction block states extending from our base blocks. It's not super nice but it'll do.
  */
 public abstract class FullyDirectionalBlock extends BlockBase {
-    //    public static final DirectionProperty FACING = BlockStateProperties.FACING;
-    //
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+
     public FullyDirectionalBlock(Properties properties) {
         super(properties);
+        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
-    //
-    //    @Override
-    //    public BlockState getStateForPlacement(BlockItemUseContext context) {
-    //        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
-    //    }
-    //
-    //    @Override
-    //    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    //        builder.add(FACING);
-    //    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
+
+    }
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
 
     public abstract static class Container extends BlockContainerBase {
         public static final DirectionProperty FACING = BlockStateProperties.FACING;

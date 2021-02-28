@@ -10,17 +10,26 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnervator;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider {
+import javax.annotation.Nullable;
+
+public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider, INamedContainerProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, 1000);
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
@@ -108,5 +117,16 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     @Override
     public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
         return this.lazyEnergy;
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return StringTextComponent.EMPTY;
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        return new ContainerEnervator(windowId, playerInventory, this);
     }
 }

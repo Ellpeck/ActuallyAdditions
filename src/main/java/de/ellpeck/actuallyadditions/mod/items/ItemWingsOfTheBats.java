@@ -120,7 +120,7 @@ public class ItemWingsOfTheBats extends ItemBase {
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 
-            if (!player.capabilities.isCreativeMode && !player.isSpectator()) {
+            if (!player.isCreative() && !player.isSpectator()) {
                 PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
 
                 if (!player.world.isRemote) {

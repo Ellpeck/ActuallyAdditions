@@ -27,4 +27,16 @@ public class ActuallyContainers {
 
     public static final RegistryObject<ContainerType<ContainerCoffeeMachine>> COFFEE_MACHINE_CONTAINER
         = CONTAINERS.register("coffee_machine_container", () -> IForgeContainerType.create(ContainerCoffeeMachine::fromNetwork));
+
+    public static final RegistryObject<ContainerType<ContainerDirectionalBreaker>> DIRECTIONAL_BREAKER_CONTAINER
+        = CONTAINERS.register("directional_breaker_container", () -> IForgeContainerType.create(ContainerDirectionalBreaker::fromNetwork));
+
+    public static final RegistryObject<ContainerType<ContainerDropper>> DROPPER_CONTAINER
+        = CONTAINERS.register("dropper_container", () -> IForgeContainerType.create(ContainerDropper::fromNetwork));
+
+    public static final RegistryObject<ContainerType<ContainerEnervator>> ENERVATOR_CONTAINER
+        = CONTAINERS.register("enervator_container", () -> IForgeContainerType.create(ContainerEnervator::fromNetwork));
+
+    public static final RegistryObject<ContainerType<ContainerEnergizer>> ENERGIZER_CONTAINER
+        = CONTAINERS.register("energizer_container", () -> IForgeContainerType.create(ContainerEnergizer::fromNetwork));
 }

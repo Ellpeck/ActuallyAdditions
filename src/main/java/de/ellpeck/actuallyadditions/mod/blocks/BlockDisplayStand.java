@@ -14,43 +14,35 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class BlockDisplayStand extends BlockContainerBase {
 
     public BlockDisplayStand() {
-        super(Material.ROCK, this.name);
-
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+        super(ActuallyBlocks.defaultPickProps(0));
     }
 
+    @Nullable
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return new TileEntityDisplayStand();
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
-        return BlockSlabs.AABB_BOTTOM_HALF;
-    }
-
-    @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         ItemStack heldItem = player.getHeldItem(hand);
         if (!world.isRemote) {
             TileEntityDisplayStand stand = (TileEntityDisplayStand) world.getTileEntity(pos);
@@ -61,10 +53,10 @@ public class BlockDisplayStand extends BlockContainerBase {
                         ItemStack toPut = heldItem.copy();
                         toPut.setCount(1);
                         stand.inv.setStackInSlot(0, toPut);
-                        if (!player.capabilities.isCreativeMode) {
+                        if (!player.isCreative()) {
                             heldItem.shrink(1);
                         }
-                        return true;
+                        return ActionResultType.PASS;
                     } else if (ItemUtil.canBeStacked(heldItem, display)) {
                         int maxTransfer = Math.min(display.getCount(), heldItem.getMaxStackSize() - heldItem.getCount());
                         if (maxTransfer > 0) {
@@ -72,43 +64,25 @@ public class BlockDisplayStand extends BlockContainerBase {
                             ItemStack newDisplay = display.copy();
                             newDisplay.shrink(maxTransfer);
                             stand.inv.setStackInSlot(0, newDisplay);
-                            return true;
+                            return ActionResultType.PASS;
                         }
                     }
                 } else {
                     if (StackUtil.isValid(display)) {
                         player.setHeldItem(hand, display.copy());
                         stand.inv.setStackInSlot(0, StackUtil.getEmpty());
-                        return true;
+                        return ActionResultType.PASS;
                     }
                 }
             }
-            return false;
-        } else {
-            return true;
+            return ActionResultType.FAIL;
         }
+
+        return ActionResultType.PASS;
     }
 
     @Override
-    public boolean isOpaqueCube(BlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean isFullCube(BlockState state) {
-        return false;
-    }
-
-    @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess world, BlockState state, BlockPos pos, Direction face) {
-        if (face == Direction.DOWN) {
-            return BlockFaceShape.SOLID;
-        }
-        return BlockFaceShape.UNDEFINED;
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return Shapes.DISPLAY_STAND_SHAPE;
     }
 }

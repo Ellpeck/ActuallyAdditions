@@ -12,51 +12,54 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnergizer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.util.Objects;
 
 public class ContainerEnergizer extends Container {
 
     public static final EquipmentSlotType[] VALID_EQUIPMENT_SLOTS = new EquipmentSlotType[]{EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET};
     private final TileEntityEnergizer energizer;
 
-    public ContainerEnergizer(PlayerEntity player, TileEntityBase tile) {
-        this.energizer = (TileEntityEnergizer) tile;
-        PlayerInventory inventory = player.inventory;
+    public static ContainerEnergizer fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerEnergizer(windowId, inv, (TileEntityEnergizer) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+    }
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.energizer.inv, 0, 76, 73) {
+    public ContainerEnergizer(int windowId, PlayerInventory inventory, TileEntityEnergizer tile) {
+        super(ActuallyContainers.ENERGIZER_CONTAINER.get(), windowId);
+        this.energizer = tile;
+
+        this.addSlot(new SlotItemHandlerUnconditioned(this.energizer.inv, 0, 76, 73) {
             @Override
             public boolean isItemValid(ItemStack stack) {
-                return super.isItemValid(stack) && stack.hasCapability(CapabilityEnergy.ENERGY, null);
+                return super.isItemValid(stack) && stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
             }
         });
-        this.addSlotToContainer(new SlotOutput(this.energizer.inv, 1, 76, 42));
+        this.addSlot(new SlotOutput(this.energizer.inv, 1, 76, 42));
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
             }
         }
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
+            this.addSlot(new Slot(inventory, i, 8 + i * 18, 155));
         }
 
         for (int k = 0; k < 4; ++k) {
-            EntityEquipmentSlot slot = VALID_EQUIPMENT_SLOTS[k];
-            this.addSlotToContainer(new Slot(player.inventory, 36 + 3 - k, 102, 19 + k * 18) {
+            EquipmentSlotType slot = VALID_EQUIPMENT_SLOTS[k];
+            this.addSlot(new Slot(inventory, 36 + 3 - k, 102, 19 + k * 18) {
                 @Override
                 public int getSlotStackLimit() {
                     return 1;
@@ -64,22 +67,22 @@ public class ContainerEnergizer extends Container {
 
                 @Override
                 public boolean isItemValid(ItemStack stack) {
-                    return StackUtil.isValid(stack) && stack.getItem().isValidArmor(stack, slot, player);
+                    return StackUtil.isValid(stack) && stack.getItem() instanceof ArmorItem;
                 }
 
                 @Override
                 public boolean canTakeStack(PlayerEntity player) {
                     ItemStack itemstack = this.getStack();
-                    return !itemstack.isEmpty() && !player.isCreative() && EnchantmentHelper.hasBindingCurse(itemstack)
-                        ? false
-                        : super.canTakeStack(player);
+                    return (itemstack.isEmpty() || player.isCreative() || !EnchantmentHelper.hasBindingCurse(itemstack)) && super.canTakeStack(player);
                 }
 
-                @Override
-                @OnlyIn(Dist.CLIENT)
-                public String getSlotTexture() {
-                    return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
-                }
+                // TODO: [port] add back
+
+                //                @Override
+                //                @OnlyIn(Dist.CLIENT)
+                //                public String getSlotTexture() {
+                //                    return Armor.EMPTY_SLOT_NAMES[slot.getIndex()];
+                //                }
             });
         }
     }
@@ -107,7 +110,7 @@ public class ContainerEnergizer extends Container {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.hasCapability(CapabilityEnergy.ENERGY, null)) {
+                if (newStack.getCapability(CapabilityEnergy.ENERGY, null).isPresent()) {
                     if (!this.mergeItemStack(newStack, 0, 1, false)) {
                         return StackUtil.getEmpty();
                     }

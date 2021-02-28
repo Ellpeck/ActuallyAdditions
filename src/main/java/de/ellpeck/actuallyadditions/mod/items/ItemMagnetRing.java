@@ -60,7 +60,7 @@ public class ItemMagnetRing extends ItemEnergy {
 
                                 item.onCollideWithPlayer(player);
 
-                                if (!player.capabilities.isCreativeMode) {
+                                if (!player.isCreative()) {
                                     if (item.isDead || !ItemStack.areItemStacksEqual(item.getItem(), oldItem)) {
                                         this.extractEnergyInternal(stack, energyForItem, false);
                                     }

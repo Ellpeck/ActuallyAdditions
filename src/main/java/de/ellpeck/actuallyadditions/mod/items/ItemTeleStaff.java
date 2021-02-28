@@ -60,7 +60,7 @@ public class ItemTeleStaff extends ItemEnergy {
                         ((ServerPlayerEntity) player).connection.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
                         player.dismountRidingEntity();
                         world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                        if (!player.capabilities.isCreativeMode) {
+                        if (!player.isCreative()) {
                             this.extractEnergyInternal(stack, use, false);
                             player.getCooldownTracker().setCooldown(this, 50);
                         }

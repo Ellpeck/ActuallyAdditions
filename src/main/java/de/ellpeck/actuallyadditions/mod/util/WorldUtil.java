@@ -315,7 +315,7 @@ public final class WorldUtil {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        if (player.capabilities.isCreativeMode) {
+        if (player.isCreative()) {
             if (block.removedByPlayer(state, world, pos, player, false)) {
                 block.onPlayerDestroy(world, pos, state);
             }

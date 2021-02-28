@@ -13,10 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -28,14 +25,12 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Random;
 
 public class BlockCoalGenerator extends DirectionalBlock.Container {
     public BlockCoalGenerator() {
-        super(Properties.create(Material.ROCK).harvestTool(ToolType.PICKAXE).harvestLevel(0).hardnessAndResistance(1.5F, 10.0F).sound(SoundType.STONE).tickRandomly());
+        super(ActuallyBlocks.defaultPickProps(0).tickRandomly());
     }
 
     @Override
@@ -57,15 +52,7 @@ public class BlockCoalGenerator extends DirectionalBlock.Container {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (!world.isRemote) {
-            TileEntityCoalGenerator tile = (TileEntityCoalGenerator) world.getTileEntity(pos);
-            if (tile != null) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, tile, pos);
-            }
-            return ActionResultType.PASS;
-        }
-
-        return super.onBlockActivated(state, world, pos, player, hand, hit);
+        return this.openGui(world, player, pos, TileEntityCoalGenerator.class);
     }
 
     @Override

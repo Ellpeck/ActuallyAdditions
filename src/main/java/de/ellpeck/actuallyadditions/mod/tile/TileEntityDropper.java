@@ -10,13 +10,22 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerDropper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
-public class TileEntityDropper extends TileEntityInventoryBase {
+import javax.annotation.Nullable;
+
+public class TileEntityDropper extends TileEntityInventoryBase implements INamedContainerProvider {
 
     private int currentTime;
 
@@ -90,5 +99,16 @@ public class TileEntityDropper extends TileEntityInventoryBase {
     @Override
     public void activateOnPulse() {
         this.doWork();
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return StringTextComponent.EMPTY;
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+        return new ContainerDropper(windowId, playerInventory, this);
     }
 }

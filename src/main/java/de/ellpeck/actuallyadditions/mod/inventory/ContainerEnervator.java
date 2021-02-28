@@ -12,57 +12,65 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
+import java.util.Objects;
 
 public class ContainerEnervator extends Container {
 
     private final TileEntityEnervator enervator;
 
-    public ContainerEnervator(PlayerEntity player, TileEntityBase tile) {
-        this.enervator = (TileEntityEnervator) tile;
-        PlayerInventory inventory = player.inventory;
+    public static ContainerEnervator fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerEnervator(windowId, inv, (TileEntityEnervator) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+    }
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.enervator.inv, 0, 76, 73));
-        this.addSlotToContainer(new SlotOutput(this.enervator.inv, 1, 76, 42));
+    public ContainerEnervator(int windowId, PlayerInventory inventory, TileEntityEnervator tile) {
+        super(ActuallyContainers.ENERGIZER_CONTAINER.get(), windowId);
+        this.enervator = tile;
+
+        this.addSlot(new SlotItemHandlerUnconditioned(this.enervator.inv, 0, 76, 73));
+        this.addSlot(new SlotOutput(this.enervator.inv, 1, 76, 42));
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
             }
         }
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
+            this.addSlot(new Slot(inventory, i, 8 + i * 18, 155));
         }
 
         for (int k = 0; k < 4; ++k) {
-            EntityEquipmentSlot slot = ContainerEnergizer.VALID_EQUIPMENT_SLOTS[k];
-            this.addSlotToContainer(new Slot(player.inventory, 36 + 3 - k, 102, 19 + k * 18) {
+            EquipmentSlotType slot = ContainerEnergizer.VALID_EQUIPMENT_SLOTS[k];
+            this.addSlot(new Slot(inventory, 36 + 3 - k, 102, 19 + k * 18) {
                 @Override
                 public int getSlotStackLimit() {
                     return 1;
                 }
 
+                // TODO: [port] validate that this is correct
                 @Override
                 public boolean isItemValid(ItemStack stack) {
-                    return StackUtil.isValid(stack) && stack.getItem().isValidArmor(stack, slot, player);
+                    return StackUtil.isValid(stack) && stack.getItem() instanceof ArmorItem;
                 }
 
-                @Override
-                @OnlyIn(Dist.CLIENT)
-                public String getSlotTexture() {
-                    return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
-                }
+                // TODO: [port] add this back
+
+                //                @Override
+                //                @OnlyIn(Dist.CLIENT)
+                //                public String getSlotTexture() {
+                //                    return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
+                //                }
             });
         }
     }
@@ -90,7 +98,7 @@ public class ContainerEnervator extends Container {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.hasCapability(CapabilityEnergy.ENERGY, null)) {
+                if (newStack.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
                     if (!this.mergeItemStack(newStack, 0, 1, false)) {
                         return StackUtil.getEmpty();
                     }

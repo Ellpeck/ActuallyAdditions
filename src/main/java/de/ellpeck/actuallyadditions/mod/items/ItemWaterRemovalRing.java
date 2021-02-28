@@ -55,7 +55,7 @@ public class ItemWaterRemovalRing extends ItemEnergy {
                         if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && this.getEnergyStored(stack) >= energyUse) {
                             world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
-                            if (!player.capabilities.isCreativeMode) {
+                            if (!player.isCreative()) {
                                 this.extractEnergyInternal(stack, energyUse, false);
                             }
                         }
@@ -63,7 +63,7 @@ public class ItemWaterRemovalRing extends ItemEnergy {
                         else if ((block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) && this.getEnergyStored(stack) >= energyUse * 2) {
                             world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
-                            if (!player.capabilities.isCreativeMode) {
+                            if (!player.isCreative()) {
                                 this.extractEnergyInternal(stack, energyUse * 2, false);
                             }
                         }

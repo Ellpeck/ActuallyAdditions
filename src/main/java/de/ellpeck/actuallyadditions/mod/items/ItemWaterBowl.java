@@ -108,7 +108,7 @@ public class ItemWaterBowl extends ItemBase {
                 if (!player.canPlayerEdit(pos1, trace.sideHit, stack)) {
                     return new ActionResult<>(EnumActionResult.FAIL, stack);
                 } else if (this.tryPlaceContainedLiquid(player, world, pos1, false)) {
-                    return !player.capabilities.isCreativeMode
+                    return !player.isCreative()
                         ? new ActionResult<>(EnumActionResult.SUCCESS, new ItemStack(Items.BOWL))
                         : new ActionResult<>(EnumActionResult.SUCCESS, stack);
                 } else {

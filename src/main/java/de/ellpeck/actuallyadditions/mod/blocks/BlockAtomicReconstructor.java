@@ -20,8 +20,6 @@ import de.ellpeck.actuallyadditions.mod.util.Lang;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -43,7 +41,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
 
@@ -54,7 +51,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     public static final int NAME_FLAVOR_AMOUNTS_2 = 14;
 
     public BlockAtomicReconstructor() {
-        super(Properties.create(Material.ROCK).harvestTool(ToolType.PICKAXE).hardnessAndResistance(10F, 80F).sound(SoundType.STONE));
+        super(ActuallyBlocks.defaultPickProps(0, 10.0F, 80F));
     }
 
     @Override
@@ -100,7 +97,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     //    public BlockState getBaseConstructorState() {
     //        return this.stateContainer.getBaseState().with(FACING, Direction.NORTH);
     //    }
-    
+
     @Override
     @OnlyIn(Dist.CLIENT)
     public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {

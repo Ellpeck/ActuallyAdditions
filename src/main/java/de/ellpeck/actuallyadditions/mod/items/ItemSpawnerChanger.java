@@ -69,7 +69,7 @@ public class ItemSpawnerChanger extends ItemBase {
 
                         ItemPhantomConnector.clearStorage(stack, "Entity");
 
-                        if (!player.capabilities.isCreativeMode) {
+                        if (!player.isCreative()) {
                             player.setHeldItem(hand, StackUtil.shrink(stack, 1));
                         }
 
