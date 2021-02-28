@@ -19,7 +19,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 
 public class BlockFishingNet extends BlockContainerBase {
 
@@ -39,7 +38,7 @@ public class BlockFishingNet extends BlockContainerBase {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return new TileEntityFishingNet();
     }
 

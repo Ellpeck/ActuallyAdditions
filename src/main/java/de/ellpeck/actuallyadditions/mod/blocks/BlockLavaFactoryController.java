@@ -24,7 +24,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.relauncher.OnlyIn;
 
@@ -39,7 +38,7 @@ public class BlockLavaFactoryController extends BlockContainerBase implements IH
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return new TileEntityLavaFactoryController();
     }
 

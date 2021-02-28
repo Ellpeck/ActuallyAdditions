@@ -15,40 +15,46 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditio
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+
+import java.util.Objects;
 
 public class ContainerCoffeeMachine extends Container {
 
-    private final TileEntityCoffeeMachine machine;
+    public final TileEntityCoffeeMachine machine;
 
-    public ContainerCoffeeMachine(PlayerInventory inventory, TileEntityBase tile) {
-        this.machine = (TileEntityCoffeeMachine) tile;
+    public static ContainerCoffeeMachine fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerCoffeeMachine(windowId, inv, (TileEntityCoffeeMachine) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+    }
 
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.inv, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, 37, 6));
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.inv, TileEntityCoffeeMachine.SLOT_INPUT, 80, 42));
-        this.addSlotToContainer(new SlotOutput(this.machine.inv, TileEntityCoffeeMachine.SLOT_OUTPUT, 80, 73));
+    public ContainerCoffeeMachine(int windowId, PlayerInventory inventory, TileEntityCoffeeMachine tile) {
+        super(ActuallyContainers.COFFEE_MACHINE_CONTAINER.get(), windowId);
+        this.machine = tile;
+
+        this.addSlot(new SlotItemHandlerUnconditioned(this.machine.inv, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, 37, 6));
+        this.addSlot(new SlotItemHandlerUnconditioned(this.machine.inv, TileEntityCoffeeMachine.SLOT_INPUT, 80, 42));
+        this.addSlot(new SlotOutput(this.machine.inv, TileEntityCoffeeMachine.SLOT_OUTPUT, 80, 73));
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 2; j++) {
-                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.machine.inv, j + i * 2 + 3, 125 + j * 18, 6 + i * 18));
+                this.addSlot(new SlotItemHandlerUnconditioned(this.machine.inv, j + i * 2 + 3, 125 + j * 18, 6 + i * 18));
             }
         }
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
             }
         }
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
+            this.addSlot(new Slot(inventory, i, 8 + i * 18, 155));
         }
     }
 
@@ -75,7 +81,7 @@ public class ContainerCoffeeMachine extends Container {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getItem() == InitItems.itemMisc && newStack.getItemDamage() == TheMiscItems.CUP.ordinal()) {
+                if (newStack.getItem() == InitItems.itemCoffeeCup.get()) {
                     if (!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT + 1, false)) {
                         return StackUtil.getEmpty();
                     }

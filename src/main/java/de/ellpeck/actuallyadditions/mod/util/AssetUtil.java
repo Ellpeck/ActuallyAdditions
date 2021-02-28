@@ -17,35 +17,26 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
+import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.fml.network.NetworkRegistry;
 import org.lwjgl.opengl.GL11;
 
 public final class AssetUtil {
@@ -64,19 +55,18 @@ public final class AssetUtil {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, String text) {
-        font.drawString(text, xSize / 2 - font.getStringWidth(text) / 2, yPositionOfMachineText, StringUtil.DECIMAL_COLOR_WHITE);
+    public static void displayNameString(MatrixStack matrices, FontRenderer font, int xSize, int yPositionOfMachineText, String text) {
+        font.drawString(matrices, text, xSize / 2f - font.getStringWidth(text) / 2f, yPositionOfMachineText, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void displayNameString(FontRenderer font, int xSize, int yPositionOfMachineText, TileEntityBase tile) {
-        displayNameString(font, xSize, yPositionOfMachineText, StringUtil.localize(tile.getNameForTranslation()));
+    public static void displayNameString(MatrixStack matrices, FontRenderer font, int xSize, int yPositionOfMachineText, TileEntityBase tile) {
+        displayNameString(matrices, font, xSize, yPositionOfMachineText, StringUtil.localize(tile.getNameForTranslation()));
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static void renderBlockInWorld(Block block, int meta) {
-        renderItemInWorld(new ItemStack(block, 1, meta), combinedLightIn, combinedOverlayIn, matrices, buffer);
-    }
+    //    public static void renderBlockInWorld(Block block, int meta) {
+    //        renderItemInWorld(new ItemStack(block, 1, meta), combinedLightIn, combinedOverlayIn, matrices, buffer);
+    //    }
 
     @OnlyIn(Dist.CLIENT)
     public static void renderItemInWorld(ItemStack stack, int combinedLight, int combinedOverlay, MatrixStack matrices, IRenderTypeBuffer buffer) {
@@ -87,19 +77,19 @@ public final class AssetUtil {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static void renderStateInWorld(BlockState state, IBlockAccess world, BlockPos pos, float brightness) {
-        Minecraft.getInstance().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        IBakedModel model = Minecraft.getInstance().getBlockRendererDispatcher().getModelForState(state);
-        GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
-        int i = Minecraft.getInstance().getBlockColors().colorMultiplier(state, world, pos, 0);
-
-        float r = (i >> 16 & 255) / 255F;
-        float g = (i >> 8 & 255) / 255F;
-        float b = (i & 255) / 255F;
-
-        Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(state, model, brightness, r, g, b);
-    }
+    //    @OnlyIn(Dist.CLIENT)
+    //    public static void renderStateInWorld(BlockState state, IWorldReader world, BlockPos pos, float brightness) {
+    //        Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
+    //        IBakedModel model = Minecraft.getInstance().getBlockRendererDispatcher().getModelForState(state);
+    //        GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
+    //        int i = Minecraft.getInstance().getBlockColors().colorMultiplier(state, world, pos, 0);
+    //
+    //        float r = (i >> 16 & 255) / 255F;
+    //        float g = (i >> 8 & 255) / 255F;
+    //        float b = (i & 255) / 255F;
+    //
+    //        Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(state, model, brightness, r, g, b);
+    //    }
 
     @OnlyIn(Dist.CLIENT)
     public static void renderItemWithoutScrewingWithColors(ItemStack stack) {

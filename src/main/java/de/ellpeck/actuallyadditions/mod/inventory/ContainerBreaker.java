@@ -11,35 +11,43 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+
+import java.util.Objects;
 
 public class ContainerBreaker extends Container {
 
-    private final TileEntityBreaker breaker;
+    public final TileEntityBreaker breaker;
 
-    public ContainerBreaker(PlayerInventory inventory, TileEntityBase tile) {
-        this.breaker = (TileEntityBreaker) tile;
+    public static ContainerBreaker fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerBreaker(windowId, inv, (TileEntityBreaker) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+    }
+
+    public ContainerBreaker(int windowId, PlayerInventory inventory, TileEntityBreaker tile) {
+        super(ActuallyContainers.BREAKER_CONTAINER.get(), windowId);
+
+        this.breaker = tile;
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.breaker.inv, j + i * 3, 62 + j * 18, 21 + i * 18));
+                this.addSlot(new SlotItemHandlerUnconditioned(this.breaker.inv, j + i * 3, 62 + j * 18, 21 + i * 18));
             }
         }
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
             }
         }
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
+            this.addSlot(new Slot(inventory, i, 8 + i * 18, 155));
         }
     }
 

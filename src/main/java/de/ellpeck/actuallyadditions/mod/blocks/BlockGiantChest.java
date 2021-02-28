@@ -33,7 +33,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -60,7 +59,7 @@ public class BlockGiantChest extends BlockContainerBase {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         switch (this.type) {
             case 1:
                 return new TileEntityGiantChestMedium();
@@ -82,7 +81,7 @@ public class BlockGiantChest extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!world.isRemote) {
             TileEntityGiantChest chest = (TileEntityGiantChest) world.getTileEntity(pos);
             if (chest != null) {

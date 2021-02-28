@@ -41,12 +41,12 @@ public class BlockFarmer extends BlockContainerBase {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return new TileEntityFarmer();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!world.isRemote) {
             TileEntityFarmer farmer = (TileEntityFarmer) world.getTileEntity(pos);
             if (farmer != null) {

@@ -12,30 +12,26 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.Lang;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -51,7 +47,7 @@ import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
 
-public class BlockAtomicReconstructor extends BlockContainerBase implements IHudDisplay {
+public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container implements IHudDisplay {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public static final int NAME_FLAVOR_AMOUNTS_1 = 12;
@@ -59,7 +55,6 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
 
     public BlockAtomicReconstructor() {
         super(Properties.create(Material.ROCK).harvestTool(ToolType.PICKAXE).hardnessAndResistance(10F, 80F).sound(SoundType.STONE));
-        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
 
     @Override
@@ -102,20 +97,10 @@ public class BlockAtomicReconstructor extends BlockContainerBase implements IHud
         return new TileEntityAtomicReconstructor();
     }
 
-    public BlockState getBaseConstructorState() {
-        return this.stateContainer.getBaseState().with(FACING, Direction.NORTH);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
-    }
-
-    @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
+    //    public BlockState getBaseConstructorState() {
+    //        return this.stateContainer.getBaseState().with(FACING, Direction.NORTH);
+    //    }
+    
     @Override
     @OnlyIn(Dist.CLIENT)
     public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {

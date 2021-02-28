@@ -20,7 +20,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 
 public class BlockFurnaceSolar extends BlockContainerBase {
 
@@ -40,7 +39,7 @@ public class BlockFurnaceSolar extends BlockContainerBase {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return new TileEntityFurnaceSolar();
     }
 

@@ -84,7 +84,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         switch (this.type) {
             case PLACER:
                 return new TileEntityPhantomPlacer();

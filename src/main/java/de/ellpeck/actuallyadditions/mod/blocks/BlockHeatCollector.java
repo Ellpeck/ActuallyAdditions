@@ -17,7 +17,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public class BlockHeatCollector extends BlockContainerBase {
 
@@ -30,7 +29,7 @@ public class BlockHeatCollector extends BlockContainerBase {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return new TileEntityHeatCollector();
     }
 

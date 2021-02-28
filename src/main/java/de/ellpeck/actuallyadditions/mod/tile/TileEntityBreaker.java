@@ -10,23 +10,31 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerBreaker;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fluids.IFluidBlock;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityBreaker extends TileEntityInventoryBase {
+public class TileEntityBreaker extends TileEntityInventoryBase implements INamedContainerProvider {
 
     public boolean isPlacer;
     private int currentTime;
@@ -114,4 +122,14 @@ public class TileEntityBreaker extends TileEntityInventoryBase {
         this.doWork();
     }
 
+    @Override
+    public ITextComponent getDisplayName() {
+        return StringTextComponent.EMPTY;
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        return new ContainerBreaker(windowId, playerInventory, this);
+    }
 }

@@ -50,7 +50,7 @@ public class BlockDisplayStand extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         ItemStack heldItem = player.getHeldItem(hand);
         if (!world.isRemote) {
             TileEntityDisplayStand stand = (TileEntityDisplayStand) world.getTileEntity(pos);

@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
@@ -22,11 +23,16 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
@@ -36,8 +42,9 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements IButtonReactor, ISharingFluidHandler {
+public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements INamedContainerProvider, IButtonReactor, ISharingFluidHandler {
 
     public static final int SLOT_COFFEE_BEANS = 0;
     public static final int SLOT_INPUT = 1;
@@ -63,7 +70,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         public FluidStack drain(FluidStack resource, FluidAction action) {
             return FluidStack.EMPTY;
         }
-        
+
         @Override
         public boolean isFluidValid(FluidStack fluid) {
             return fluid.getFluid() == Fluids.WATER;
@@ -231,5 +238,16 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     @Override
     public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
         return this.lazyEnergy;
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return StringTextComponent.EMPTY;
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+        return new ContainerCoffeeMachine(windowId, playerInventory, this);
     }
 }

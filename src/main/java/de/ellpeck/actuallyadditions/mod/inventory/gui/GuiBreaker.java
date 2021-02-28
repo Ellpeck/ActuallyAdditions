@@ -10,41 +10,43 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBreaker;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiBreaker extends GuiWtfMojang {
+public class GuiBreaker extends GuiWtfMojang<ContainerBreaker> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityBreaker breaker;
 
-    public GuiBreaker(PlayerInventory inventory, TileEntityBase tile) {
-        super(new ContainerBreaker(inventory, tile));
-        this.breaker = (TileEntityBreaker) tile;
+    public GuiBreaker(ContainerBreaker container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.breaker = container.breaker;
         this.xSize = 176;
         this.ySize = 93 + 86;
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.breaker);
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.breaker);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrices, float partialTicks, int x, int y) {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
     }
 }

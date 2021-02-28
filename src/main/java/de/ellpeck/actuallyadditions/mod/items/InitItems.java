@@ -31,6 +31,7 @@ public final class InitItems {
     // REMOVE ME
     @Deprecated
     public static final RegistryObject<Item> itemMisc = ITEMS.register("item_misc", ItemBase::new);
+    public static final RegistryObject<Item> itemCanola = ITEMS.register("canola", ItemBase::new);
     public static final RegistryObject<Item> itemCoffeeCup = ITEMS.register("coffee_cup", ItemBase::new);
 
     // SHARDS

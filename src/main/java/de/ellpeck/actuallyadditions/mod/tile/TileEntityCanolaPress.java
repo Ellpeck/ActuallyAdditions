@@ -11,14 +11,21 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerCanolaPress;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
@@ -27,7 +34,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
-public class TileEntityCanolaPress extends TileEntityInventoryBase implements ISharingFluidHandler {
+import javax.annotation.Nullable;
+
+public class TileEntityCanolaPress extends TileEntityInventoryBase implements INamedContainerProvider, ISharingFluidHandler {
 
     public static final int PRODUCE = 80;
     public static final int ENERGY_USE = 35;
@@ -101,7 +110,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
 
                         this.inv.setStackInSlot(0, StackUtil.shrink(this.inv.getStackInSlot(0), 1));
 
-                        this.tank.fill(new FluidStack(InitFluids.fluidCanolaOil, PRODUCE), IFluidHandler.FluidAction.EXECUTE);
+                        this.tank.fill(new FluidStack(InitFluids.fluidCanolaOil.get(), PRODUCE), IFluidHandler.FluidAction.EXECUTE);
                         this.markDirty();
                     }
                 }
@@ -123,7 +132,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     }
 
     public static boolean isCanola(ItemStack stack) {
-        return stack.getItem() == InitItems.itemCanola;
+        return stack.getItem() == InitItems.itemCanola.get();
     }
 
     @Override
@@ -154,5 +163,16 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IS
     @Override
     public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
         return this.lazyEnergy;
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return StringTextComponent.EMPTY;
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        return new ContainerCanolaPress(windowId, playerInventory, this);
     }
 }

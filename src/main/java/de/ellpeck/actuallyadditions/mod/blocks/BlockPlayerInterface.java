@@ -41,7 +41,7 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return new TileEntityPlayerInterface();
     }
 

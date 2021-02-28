@@ -11,20 +11,29 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityCoalGenerator extends TileEntityInventoryBase implements ISharingEnergyProvider {
+import javax.annotation.Nullable;
+
+public class TileEntityCoalGenerator extends TileEntityInventoryBase implements INamedContainerProvider, ISharingEnergyProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 0, 80);
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
@@ -157,5 +166,16 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
         return this.lazyEnergy;
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return StringTextComponent.EMPTY;
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+        return new ContainerCoalGenerator(windowId, playerInventory, this);
     }
 }

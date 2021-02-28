@@ -10,115 +10,75 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
+import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
-import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Random;
 
-public class BlockCoalGenerator extends BlockContainerBase {
-
+public class BlockCoalGenerator extends DirectionalBlock.Container {
     public BlockCoalGenerator() {
-        super(Material.ROCK, this.name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
-        this.setTickRandomly(true);
+        super(Properties.create(Material.ROCK).harvestTool(ToolType.PICKAXE).harvestLevel(0).hardnessAndResistance(1.5F, 10.0F).sound(SoundType.STONE).tickRandomly());
     }
 
     @Override
-    public boolean isFullCube(BlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean isOpaqueCube(BlockState state) {
-        return false;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World world, int par2) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return new TileEntityCoalGenerator();
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileEntityCoalGenerator) {
             if (((TileEntityCoalGenerator) tile).currentBurnTime > 0) {
                 for (int i = 0; i < 5; i++) {
-                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) pos.getX() + 0.5F, (double) pos.getY() + 1.0F, (double) pos.getZ() + 0.5F, 0.0D, 0.0D, 0.0D);
+                    world.addParticle(ParticleTypes.SMOKE, (double) pos.getX() + 0.5F, (double) pos.getY() + 1.0F, (double) pos.getZ() + 0.5F, 0.0D, 0.0D, 0.0D);
                 }
             }
         }
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction par6, float par7, float par8, float par9) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (!world.isRemote) {
-            TileEntityCoalGenerator press = (TileEntityCoalGenerator) world.getTileEntity(pos);
-            if (press != null) {
-                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.COAL_GENERATOR.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+            TileEntityCoalGenerator tile = (TileEntityCoalGenerator) world.getTileEntity(pos);
+            if (tile != null) {
+                NetworkHooks.openGui((ServerPlayerEntity) player, tile, pos);
             }
-            return true;
+            return ActionResultType.PASS;
         }
-        return true;
+
+        return super.onBlockActivated(state, world, pos, player, hand, hit);
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, EntityLivingBase player, ItemStack stack) {
-        world.setBlockState(pos, state.withProperty(BlockHorizontal.FACING, player.getHorizontalFacing().getOpposite()), 2);
-
-        super.onBlockPlacedBy(world, pos, state, player, stack);
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
-    }
-
-    @Override
-    public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockHorizontal.FACING, Direction.byHorizontalIndex(meta));
-    }
-
-    @Override
-    public int getMetaFromState(BlockState state) {
-        return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, BlockHorizontal.FACING);
-    }
-
-    @Override
-    public BlockState withRotation(BlockState state, Rotation rot) {
-        return state.withProperty(BlockHorizontal.FACING, rot.rotate(state.getValue(BlockHorizontal.FACING)));
-    }
-
-    @Override
-    public BlockState withMirror(BlockState state, Mirror mirror) {
-        return this.withRotation(state, mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        switch (state.get(FACING)) {
+            case EAST:
+                return Shapes.CoalGeneratorShapes.EAST;
+            case SOUTH:
+                return Shapes.CoalGeneratorShapes.SOUTH;
+            case WEST:
+                return Shapes.CoalGeneratorShapes.WEST;
+            default:
+                return Shapes.CoalGeneratorShapes.NORTH;
+        }
     }
 }
