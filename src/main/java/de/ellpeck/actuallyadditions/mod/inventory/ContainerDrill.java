@@ -18,10 +18,11 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 
 public class ContainerDrill extends Container {
 
@@ -30,11 +31,16 @@ public class ContainerDrill extends Container {
     private final ItemStackHandlerAA drillInventory = new ItemStackHandlerAA(SLOT_AMOUNT);
     private final PlayerInventory inventory;
 
-    public ContainerDrill(PlayerInventory inventory) {
+    public static ContainerDrill fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerDrill(windowId, inv);
+    }
+
+    public ContainerDrill(int windowId, PlayerInventory inventory) {
+        super(ActuallyContainers.DRILL_CONTAINER.get(), windowId);
         this.inventory = inventory;
 
         for (int i = 0; i < SLOT_AMOUNT; i++) {
-            this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.drillInventory, i, 44 + i * 18, 19) {
+            this.addSlot(new SlotItemHandlerUnconditioned(this.drillInventory, i, 44 + i * 18, 19) {
                 @Override
                 public boolean isItemValid(ItemStack stack) {
                     return stack.getItem() instanceof ItemDrillUpgrade;
@@ -44,14 +50,14 @@ public class ContainerDrill extends Container {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 58 + i * 18));
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 58 + i * 18));
             }
         }
         for (int i = 0; i < 9; i++) {
             if (i == inventory.currentItem) {
-                this.addSlotToContainer(new SlotImmovable(inventory, i, 8 + i * 18, 116));
+                this.addSlot(new SlotImmovable(inventory, i, 8 + i * 18, 116));
             } else {
-                this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 116));
+                this.addSlot(new Slot(inventory, i, 8 + i * 18, 116));
             }
         }
 

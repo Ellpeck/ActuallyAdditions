@@ -11,30 +11,37 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+
+import java.util.Objects;
 
 public class ContainerFeeder extends Container {
 
-    private final TileEntityFeeder tileFeeder;
+    public final TileEntityFeeder feeder;
 
-    public ContainerFeeder(PlayerInventory inventory, TileEntityBase tile) {
-        this.tileFeeder = (TileEntityFeeder) tile;
-        this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.tileFeeder.inv, 0, 80, 45));
+    public static ContainerFeeder fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerFeeder(windowId, inv, (TileEntityFeeder) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+    }
+
+    public ContainerFeeder(int windowId, PlayerInventory inventory, TileEntityFeeder tile) {
+        super(ActuallyContainers.FEEDER_CONTAINER.get(), windowId);
+        this.feeder = tile;
+        this.addSlot(new SlotItemHandlerUnconditioned(this.feeder.inv, 0, 80, 45));
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 74 + i * 18));
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 74 + i * 18));
             }
         }
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 132));
+            this.addSlot(new Slot(inventory, i, 8 + i * 18, 132));
         }
     }
 
@@ -86,6 +93,6 @@ public class ContainerFeeder extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity player) {
-        return this.tileFeeder.canPlayerUse(player);
+        return this.feeder.canPlayerUse(player);
     }
 }

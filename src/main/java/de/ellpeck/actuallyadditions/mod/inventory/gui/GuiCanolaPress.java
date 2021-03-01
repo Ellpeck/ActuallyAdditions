@@ -10,26 +10,27 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCanolaPress;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiCanolaPress extends GuiWtfMojang {
+public class GuiCanolaPress extends GuiWtfMojang<ContainerCanolaPress> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_canola_press");
     private final TileEntityCanolaPress press;
     private EnergyDisplay energy;
     private FluidDisplay fluid;
 
-    public GuiCanolaPress(PlayerInventory inventory, TileEntityBase tile) {
-        super(new ContainerCanolaPress(inventory, tile));
-        this.press = (TileEntityCanolaPress) tile;
+    public GuiCanolaPress(ContainerCanolaPress container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.press = container.press;
         this.xSize = 176;
         this.ySize = 93 + 86;
     }
@@ -58,15 +59,15 @@ public class GuiCanolaPress extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if (this.press.currentProcessTime > 0) {
             int i = this.press.getProcessScaled(29);
-            this.drawTexturedModalRect(this.guiLeft + 83, this.guiTop + 32, 176, 0, 12, i);
+            this.blit(matrices, this.guiLeft + 83, this.guiTop + 32, 176, 0, 12, i);
         }
 
         this.energy.draw();

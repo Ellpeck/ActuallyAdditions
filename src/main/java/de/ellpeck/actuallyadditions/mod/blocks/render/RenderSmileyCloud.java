@@ -20,10 +20,10 @@
 //import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 //import net.minecraft.block.BlockHorizontal;
 //import net.minecraft.client.Minecraft;
-//import net.minecraft.client.renderer.GlStateManager;
+//
 //import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 //import net.minecraftforge.api.distmarker.Dist;
-//import net.minecraftforge.fml.relauncher.OnlyIn;
+//
 //
 //import java.util.Locale;
 //

@@ -10,9 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
-
 public interface IEnergyDisplay {
 
     @OnlyIn(Dist.CLIENT)

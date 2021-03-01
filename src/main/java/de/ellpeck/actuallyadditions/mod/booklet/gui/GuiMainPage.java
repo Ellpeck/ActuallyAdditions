@@ -136,20 +136,20 @@ public class GuiMainPage extends GuiBooklet {
         configText.add(TextFormatting.GOLD + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".configButton.name"));
         configText.addAll(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet." + ActuallyAdditions.MODID + ".configButton.desc", ActuallyAdditions.NAME).replaceAll("\\\\n", "\n"), 200));
         this.configButton = new TexturedButton(RES_LOC_GADGETS, -388, this.guiLeft + 16, this.guiTop + this.ySize - 30, 188, 14, 16, 16, configText);
-        this.buttonList.add(this.configButton);
+        this.addButton(this.configButton);
 
         List<String> achievementText = new ArrayList<>();
         achievementText.add(TextFormatting.GOLD + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".achievementButton.name"));
         achievementText.addAll(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet." + ActuallyAdditions.MODID + ".achievementButton.desc", ActuallyAdditions.NAME), 200));
         //this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
-        //this.buttonList.add(this.achievementButton);
+        //this.addButton(this.achievementButton);
 
         PlayerSave data = PlayerData.getDataFromPlayer(this.getMinecraft().player);
         if (!data.didBookTutorial) {
             this.showTutorial = true;
 
             this.tutorialButton = new GuiButton(666666, this.guiLeft + 140 / 2 - 50, this.guiTop + 146, 100, 20, "Please click me <3");
-            this.buttonList.add(this.tutorialButton);
+            this.addButton(this.tutorialButton);
 
             this.configButton.visible = false;
             //this.achievementButton.visible = false;
@@ -159,7 +159,7 @@ public class GuiMainPage extends GuiBooklet {
             List<IBookletEntry> displayed = getDisplayedEntries();
             if (displayed.size() > i) {
                 IBookletEntry entry = displayed.get(i);
-                this.buttonList.add(new EntryButton(this, i, this.guiLeft + 156, this.guiTop + 11 + i * 13, 115, 10, "- " + entry.getLocalizedNameWithFormatting(), ItemStack.EMPTY));
+                this.addButton(new EntryButton(this, i, this.guiLeft + 156, this.guiTop + 11 + i * 13, 115, 10, "- " + entry.getLocalizedNameWithFormatting(), ItemStack.EMPTY));
             } else {
                 return;
             }

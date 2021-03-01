@@ -23,7 +23,7 @@ import net.minecraft.network.PacketBuffer;
 import java.util.Objects;
 
 public class ContainerBioReactor extends Container {
-    private final TileEntityBioReactor tile;
+    public final TileEntityBioReactor tile;
 
     public static ContainerBioReactor fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
         return new ContainerBioReactor(windowId, inv, (TileEntityBioReactor) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));

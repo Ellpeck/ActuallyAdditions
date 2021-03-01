@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class ContainerCanolaPress extends Container {
 
-    private final TileEntityCanolaPress press;
+    public final TileEntityCanolaPress press;
 
     public static ContainerCanolaPress fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
         return new ContainerCanolaPress(windowId, inv, (TileEntityCanolaPress) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));

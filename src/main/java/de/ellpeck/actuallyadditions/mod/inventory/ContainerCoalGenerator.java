@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class ContainerCoalGenerator extends Container {
 
-    private final TileEntityCoalGenerator generator;
+    public final TileEntityCoalGenerator generator;
 
     public static ContainerCoalGenerator fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
         return new ContainerCoalGenerator(windowId, inv, (TileEntityCoalGenerator) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));

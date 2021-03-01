@@ -11,27 +11,34 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+
+import java.util.Objects;
 
 public class ContainerLaserRelayItemWhitelist extends Container {
 
-    private final TileEntityLaserRelayItemWhitelist tile;
+    public final TileEntityLaserRelayItemWhitelist tile;
 
-    public ContainerLaserRelayItemWhitelist(PlayerInventory inventory, TileEntityBase tile) {
-        this.tile = (TileEntityLaserRelayItemWhitelist) tile;
+    public static ContainerLaserRelayItemWhitelist fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerLaserRelayItemWhitelist(windowId, inv, (TileEntityLaserRelayItemWhitelist) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+    }
+
+    public ContainerLaserRelayItemWhitelist(int windowId, PlayerInventory inventory, TileEntityLaserRelayItemWhitelist tile) {
+        super(ActuallyContainers.LASER_RELAY_ITEM_WHITELIST_CONTAINER.get(), windowId);
+        this.tile = tile;
 
         for (int i = 0; i < 2; i++) {
             for (int x = 0; x < 3; x++) {
                 for (int y = 0; y < 4; y++) {
-                    this.addSlotToContainer(new SlotFilter(i == 0
+                    this.addSlot(new SlotFilter(i == 0
                         ? this.tile.leftFilter
                         : this.tile.rightFilter, y + x * 4, 20 + i * 84 + x * 18, 6 + y * 18));
                 }
@@ -40,11 +47,11 @@ public class ContainerLaserRelayItemWhitelist extends Container {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
             }
         }
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
+            this.addSlot(new Slot(inventory, i, 8 + i * 18, 155));
         }
     }
 

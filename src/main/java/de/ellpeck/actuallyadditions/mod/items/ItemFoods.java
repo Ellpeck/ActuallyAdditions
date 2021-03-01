@@ -25,8 +25,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
 
 public class ItemFoods extends ItemFoodBase {
 
@@ -42,7 +41,9 @@ public class ItemFoods extends ItemFoodBase {
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player) {
         ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
-        ItemStack returnItem = stack.getItemDamage() >= ALL_FOODS.length ? null : ALL_FOODS[stack.getItemDamage()].returnItem;
+        ItemStack returnItem = stack.getItemDamage() >= ALL_FOODS.length
+            ? null
+            : ALL_FOODS[stack.getItemDamage()].returnItem;
         if (StackUtil.isValid(returnItem) && player instanceof PlayerEntity) {
             if (!((PlayerEntity) player).inventory.addItemStackToInventory(returnItem.copy())) {
                 if (!world.isRemote) {
@@ -57,22 +58,32 @@ public class ItemFoods extends ItemFoodBase {
 
     @Override
     public int getMaxItemUseDuration(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_FOODS.length ? 0 : ALL_FOODS[stack.getItemDamage()].useDuration;
+        return stack.getItemDamage() >= ALL_FOODS.length
+            ? 0
+            : ALL_FOODS[stack.getItemDamage()].useDuration;
     }
 
     @Override
     public EnumAction getItemUseAction(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_FOODS.length ? EnumAction.EAT : ALL_FOODS[stack.getItemDamage()].getsDrunken ? EnumAction.DRINK : EnumAction.EAT;
+        return stack.getItemDamage() >= ALL_FOODS.length
+            ? EnumAction.EAT
+            : ALL_FOODS[stack.getItemDamage()].getsDrunken
+                ? EnumAction.DRINK
+                : EnumAction.EAT;
     }
 
     @Override
     public int getHealAmount(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_FOODS.length ? 0 : ALL_FOODS[stack.getItemDamage()].healAmount;
+        return stack.getItemDamage() >= ALL_FOODS.length
+            ? 0
+            : ALL_FOODS[stack.getItemDamage()].healAmount;
     }
 
     @Override
     public float getSaturationModifier(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_FOODS.length ? 0 : ALL_FOODS[stack.getItemDamage()].saturation;
+        return stack.getItemDamage() >= ALL_FOODS.length
+            ? 0
+            : ALL_FOODS[stack.getItemDamage()].saturation;
     }
 
     @Override
@@ -82,12 +93,16 @@ public class ItemFoods extends ItemFoodBase {
 
     @Override
     public String getTranslationKey(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_FOODS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + "_" + ALL_FOODS[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_FOODS.length
+            ? StringUtil.BUGGED_ITEM_NAME
+            : this.getTranslationKey() + "_" + ALL_FOODS[stack.getItemDamage()].name;
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_FOODS.length ? EnumRarity.COMMON : ALL_FOODS[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_FOODS.length
+            ? EnumRarity.COMMON
+            : ALL_FOODS[stack.getItemDamage()].rarity;
     }
 
     @Override

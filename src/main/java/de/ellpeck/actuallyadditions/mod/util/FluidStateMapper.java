@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
 
 /**
  * (Excerpted from Tinkers' Construct with permission, thanks guys!)

@@ -30,7 +30,7 @@ import java.util.Objects;
 public class ContainerEnergizer extends Container {
 
     public static final EquipmentSlotType[] VALID_EQUIPMENT_SLOTS = new EquipmentSlotType[]{EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET};
-    private final TileEntityEnergizer energizer;
+    public final TileEntityEnergizer energizer;
 
     public static ContainerEnergizer fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
         return new ContainerEnergizer(windowId, inv, (TileEntityEnergizer) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));

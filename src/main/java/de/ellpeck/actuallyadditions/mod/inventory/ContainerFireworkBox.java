@@ -11,10 +11,20 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 
 public class ContainerFireworkBox extends Container {
+
+    public static ContainerFireworkBox fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerFireworkBox(windowId, inv);
+    }
+
+    public ContainerFireworkBox(int windowId, PlayerInventory inventory) {
+        super(ActuallyContainers.FIREWORK_BOX_CONTAINER.get(), windowId);
+    }
 
     @Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {

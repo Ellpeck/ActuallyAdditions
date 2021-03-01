@@ -14,8 +14,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
 
 public final class InitEntities {
 

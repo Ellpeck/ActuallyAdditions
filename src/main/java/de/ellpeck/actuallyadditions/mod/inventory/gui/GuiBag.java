@@ -56,7 +56,7 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
         this.buttonAutoInsert = new GuiButton(0, this.guiLeft - 21, this.guiTop + 8, 20, 20, (this.container.autoInsert
             ? TextFormatting.DARK_GREEN
             : TextFormatting.RED) + "I");
-        this.buttonList.add(this.buttonAutoInsert);
+        this.addButton(this.buttonAutoInsert);
     }
 
     @Override

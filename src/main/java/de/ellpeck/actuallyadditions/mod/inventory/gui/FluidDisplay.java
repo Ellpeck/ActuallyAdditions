@@ -14,13 +14,11 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.text.NumberFormat;
 import java.util.Collections;
@@ -63,12 +61,12 @@ public class FluidDisplay extends Gui {
         int barY = this.y;
 
         if (this.outline) {
-            this.drawTexturedModalRect(this.x, this.y, 52, 163, 26, 93);
+            this.blit(matrices, this.x, this.y, 52, 163, 26, 93);
 
             barX += 4;
             barY += 4;
         }
-        this.drawTexturedModalRect(barX, barY, 0, 171, 18, 85);
+        this.blit(matrices, barX, barY, 0, 171, 18, 85);
 
         FluidStack stack = this.fluidReference.getFluid();
         Fluid fluid = stack == null

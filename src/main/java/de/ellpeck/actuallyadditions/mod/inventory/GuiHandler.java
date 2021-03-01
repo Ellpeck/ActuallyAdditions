@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiMainPage;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
@@ -22,99 +21,92 @@ import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-public class GuiHandler implements IGuiHandler {
+public class GuiHandler {
 
-    public static void init() {
-        ActuallyAdditions.LOGGER.info("Initializing GuiHandler...");
-        NetworkRegistry.INSTANCE.registerGuiHandler(ActuallyAdditions.INSTANCE, new GuiHandler());
-    }
-
-    @Override
+    @Deprecated
     public Object getServerGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
         TileEntityBase tile = null;
         if (GuiTypes.values()[id].checkTileEntity) {
             tile = (TileEntityBase) world.getTileEntity(new BlockPos(x, y, z));
         }
         switch (GuiTypes.values()[id]) {
-            case FEEDER:
-                return new ContainerFeeder(player.inventory, tile);
-            case GIANT_CHEST:
-                return new ContainerGiantChest(player.inventory, tile, 0);
-            case GIANT_CHEST_PAGE_2:
-                return new ContainerGiantChest(player.inventory, tile, 1);
-            case GIANT_CHEST_PAGE_3:
-                return new ContainerGiantChest(player.inventory, tile, 2);
-            case CRAFTER:
-                return CompatUtil.getCrafterContainerElement(player, world, x, y, z);
-            case GRINDER:
-                return new ContainerGrinder(player.inventory, tile, false);
-            case GRINDER_DOUBLE:
-                return new ContainerGrinder(player.inventory, tile, true);
-            case FURNACE_DOUBLE:
-                return new ContainerFurnaceDouble(player.inventory, tile);
-            case INPUTTER:
-                return new ContainerInputter(player.inventory, tile, false);
-            case INPUTTER_ADVANCED:
-                return new ContainerInputter(player.inventory, tile, true);
-            case REPAIRER:
-                return new ContainerRepairer(player.inventory, tile);
-            case BREAKER:
-                return new ContainerBreaker(player.inventory, tile);
-            case DROPPER:
-                return new ContainerDropper(player, tile);
-            case CANOLA_PRESS:
-                return new ContainerCanolaPress(player.inventory, tile);
-            case FERMENTING_BARREL:
-                return new ContainerFermentingBarrel(player.inventory, tile);
-            case COAL_GENERATOR:
-                return new ContainerCoalGenerator(player.inventory, tile);
-            case OIL_GENERATOR:
-                return new ContainerOilGenerator(player.inventory, tile);
-            case PHANTOM_PLACER:
-                return new ContainerPhantomPlacer(player.inventory, tile);
-            case FLUID_COLLECTOR:
-                return new ContainerFluidCollector(player.inventory, tile);
-            case COFFEE_MACHINE:
-                return new ContainerCoffeeMachine(player.inventory, tile);
-            case DRILL:
-                return new ContainerDrill(player.inventory);
-            case FILTER:
-                return new ContainerFilter(player.inventory);
-            case ENERGIZER:
-                return new ContainerEnergizer(player, tile);
-            case ENERVATOR:
-                return new ContainerEnervator(player, tile);
-            case XP_SOLIDIFIER:
-                return new ContainerXPSolidifier(player.inventory, tile);
-            case CLOUD:
-                return new ContainerSmileyCloud();
-            case DIRECTIONAL_BREAKER:
-                return new ContainerDirectionalBreaker(player.inventory, tile);
-            case RANGED_COLLECTOR:
-                return new ContainerRangedCollector(player.inventory, tile);
-            case MINER:
-                return new ContainerMiner(player.inventory, tile);
-            case LASER_RELAY_ITEM_WHITELIST:
-                return new ContainerLaserRelayItemWhitelist(player.inventory, tile);
-            case BAG:
-                return new ContainerBag(player.getHeldItemMainhand(), player.inventory, false);
-            case VOID_BAG:
-                return new ContainerBag(player.getHeldItemMainhand(), player.inventory, true);
-            case BIO_REACTOR:
-                return new ContainerBioReactor(player.inventory, tile);
-            case FARMER:
-                return new ContainerFarmer(player.inventory, tile);
-            case FIREWORK_BOX:
-                return new ContainerFireworkBox();
+            //            case FEEDER:
+            //                return new ContainerFeeder(player.inventory, tile);
+            //            case GIANT_CHEST:
+            //                return new ContainerGiantChest(player.inventory, tile, 0);
+            //            case GIANT_CHEST_PAGE_2:
+            //                return new ContainerGiantChest(player.inventory, tile, 1);
+            //            case GIANT_CHEST_PAGE_3:
+            //                return new ContainerGiantChest(player.inventory, tile, 2);
+            //            case CRAFTER:
+            //                return CompatUtil.getCrafterContainerElement(player, world, x, y, z);
+            //            case GRINDER:
+            //                return new ContainerGrinder(player.inventory, tile, false);
+            //            case GRINDER_DOUBLE:
+            //                return new ContainerGrinder(player.inventory, tile, true);
+            //            case FURNACE_DOUBLE:
+            //                return new ContainerFurnaceDouble(player.inventory, tile);
+            //            case INPUTTER:
+            //                return new ContainerInputter(player.inventory, tile, false);
+            //            case INPUTTER_ADVANCED:
+            //                return new ContainerInputter(player.inventory, tile, true);
+            //            case REPAIRER:
+            //                return new ContainerRepairer(player.inventory, tile);
+            //            case BREAKER:
+            //                return new ContainerBreaker(player.inventory, tile);
+            //            case DROPPER:
+            //                return new ContainerDropper(player, tile);
+            //            case CANOLA_PRESS:
+            //                return new ContainerCanolaPress(player.inventory, tile);
+            //            case FERMENTING_BARREL:
+            //                return new ContainerFermentingBarrel(player.inventory, tile);
+            //            case COAL_GENERATOR:
+            //                return new ContainerCoalGenerator(player.inventory, tile);
+            //            case OIL_GENERATOR:
+            //                return new ContainerOilGenerator(player.inventory, tile);
+            //            case PHANTOM_PLACER:
+            //                return new ContainerPhantomPlacer(player.inventory, tile);
+            //            case FLUID_COLLECTOR:
+            //                return new ContainerFluidCollector(player.inventory, tile);
+            //            case COFFEE_MACHINE:
+            //                return new ContainerCoffeeMachine(player.inventory, tile);
+            //            case DRILL:
+            //                return new ContainerDrill(player.inventory);
+            //            case FILTER:
+            //                return new ContainerFilter(player.inventory);
+            //            case ENERGIZER:
+            //                return new ContainerEnergizer(player, tile);
+            //            case ENERVATOR:
+            //                return new ContainerEnervator(player, tile);
+            //            case XP_SOLIDIFIER:
+            //                return new ContainerXPSolidifier(player.inventory, tile);
+            //            case CLOUD:
+            //                return new ContainerSmileyCloud();
+            //            case DIRECTIONAL_BREAKER:
+            //                return new ContainerDirectionalBreaker(player.inventory, tile);
+            //            case RANGED_COLLECTOR:
+            //                return new ContainerRangedCollector(player.inventory, tile);
+            //            case MINER:
+            //                return new ContainerMiner(player.inventory, tile);
+            //            case LASER_RELAY_ITEM_WHITELIST:
+            //                return new ContainerLaserRelayItemWhitelist(player.inventory, tile);
+            //            case BAG:
+            //                return new ContainerBag(player.getHeldItemMainhand(), player.inventory, false);
+            //            case VOID_BAG:
+            //                return new ContainerBag(player.getHeldItemMainhand(), player.inventory, true);
+            //            case BIO_REACTOR:
+            //                return new ContainerBioReactor(player.inventory, tile);
+            //            case FARMER:
+            //                return new ContainerFarmer(player.inventory, tile);
+            //            case FIREWORK_BOX:
+            //                return new ContainerFireworkBox();
             default:
                 return null;
         }
     }
 
-    @Override
+    @Deprecated
     public Object getClientGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
         TileEntityBase tile = null;
         if (GuiTypes.values()[id].checkTileEntity) {
@@ -143,8 +135,8 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiInputter(player.inventory, tile, true);
             case REPAIRER:
                 return new GuiRepairer(player.inventory, tile);
-            case BREAKER:
-                return new GuiBreaker(player.inventory, tile);
+            //            case BREAKER:
+            //                return new GuiBreaker(player.inventory, tile);
             case DROPPER:
                 return new GuiDropper(player, tile);
             case CANOLA_PRESS:
@@ -209,6 +201,7 @@ public class GuiHandler implements IGuiHandler {
         }
     }
 
+    @Deprecated
     public enum GuiTypes {
         FEEDER,
         GIANT_CHEST,

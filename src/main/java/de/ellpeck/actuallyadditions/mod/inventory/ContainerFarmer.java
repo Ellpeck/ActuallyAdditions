@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,13 +18,21 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+
+import java.util.Objects;
 
 public class ContainerFarmer extends Container {
 
-    private final TileEntityFarmer farmer;
+    public final TileEntityFarmer farmer;
 
-    public ContainerFarmer(PlayerInventory inventory, TileEntityBase tile) {
-        this.farmer = (TileEntityFarmer) tile;
+    public static ContainerFarmer fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerFarmer(windowId, inv, (TileEntityFarmer) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+    }
+
+    public ContainerFarmer(int windowId, PlayerInventory inventory, TileEntityFarmer tile) {
+        super(ActuallyContainers.FARMER_CONTAINER.get(), windowId);
+        this.farmer = tile;
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 2; j++) {

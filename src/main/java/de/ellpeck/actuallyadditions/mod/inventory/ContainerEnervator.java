@@ -28,14 +28,14 @@ import java.util.Objects;
 
 public class ContainerEnervator extends Container {
 
-    private final TileEntityEnervator enervator;
+    public final TileEntityEnervator enervator;
 
     public static ContainerEnervator fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
         return new ContainerEnervator(windowId, inv, (TileEntityEnervator) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
     }
 
     public ContainerEnervator(int windowId, PlayerInventory inventory, TileEntityEnervator tile) {
-        super(ActuallyContainers.ENERGIZER_CONTAINER.get(), windowId);
+        super(ActuallyContainers.ENERVATOR_CONTAINER.get(), windowId);
         this.enervator = tile;
 
         this.addSlot(new SlotItemHandlerUnconditioned(this.enervator.inv, 0, 76, 73));

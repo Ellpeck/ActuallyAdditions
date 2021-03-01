@@ -10,25 +10,25 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.io.IOException;
 import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiFurnaceDouble extends GuiWtfMojang {
+public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_furnace_double");
     private final TileEntityFurnaceDouble tileFurnace;
@@ -36,9 +36,9 @@ public class GuiFurnaceDouble extends GuiWtfMojang {
 
     private GuiButton buttonAutoSplit;
 
-    public GuiFurnaceDouble(PlayerInventory inventory, TileEntityBase tile) {
-        super(new ContainerFurnaceDouble(inventory, tile));
-        this.tileFurnace = (TileEntityFurnaceDouble) tile;
+    public GuiFurnaceDouble(ContainerFurnaceDouble container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.tileFurnace = container.furnace;
         this.xSize = 176;
         this.ySize = 93 + 86;
     }
@@ -61,7 +61,7 @@ public class GuiFurnaceDouble extends GuiWtfMojang {
         this.energy = new EnergyDisplay(this.guiLeft + 27, this.guiTop + 5, this.tileFurnace.storage);
 
         this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.guiLeft, this.guiTop, "S");
-        this.buttonList.add(this.buttonAutoSplit);
+        this.addButton(this.buttonAutoSplit);
     }
 
     @Override
@@ -89,19 +89,19 @@ public class GuiFurnaceDouble extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if (this.tileFurnace.firstSmeltTime > 0) {
             int i = this.tileFurnace.getFirstTimeToScale(23);
-            this.drawTexturedModalRect(this.guiLeft + 51, this.guiTop + 40, 176, 0, 24, i);
+            this.blit(matrices, this.guiLeft + 51, this.guiTop + 40, 176, 0, 24, i);
         }
         if (this.tileFurnace.secondSmeltTime > 0) {
             int i = this.tileFurnace.getSecondTimeToScale(23);
-            this.drawTexturedModalRect(this.guiLeft + 101, this.guiTop + 40, 176, 22, 24, i);
+            this.blit(matrices, this.guiLeft + 101, this.guiTop + 40, 176, 22, 24, i);
         }
 
         this.energy.draw();

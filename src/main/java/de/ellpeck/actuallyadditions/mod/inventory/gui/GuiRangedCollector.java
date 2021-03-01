@@ -10,28 +10,29 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerRangedCollector;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiRangedCollector extends GuiWtfMojang {
+public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_ranged_collector");
     private final TileEntityRangedCollector collector;
 
     private FilterSettingsGui filter;
 
-    public GuiRangedCollector(PlayerInventory inventory, TileEntityBase tile) {
-        super(new ContainerRangedCollector(inventory, tile));
-        this.collector = (TileEntityRangedCollector) tile;
+    public GuiRangedCollector(ContainerRangedCollector container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.collector = container.collector;
         this.xSize = 176;
         this.ySize = 86 + 86;
     }
@@ -66,11 +67,11 @@ public class GuiRangedCollector extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 86, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 86, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 86);
     }
 
     @Override

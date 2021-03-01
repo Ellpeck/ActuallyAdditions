@@ -8,18 +8,19 @@
  * © 2015-2017 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.inventory;
+package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerFireworkBox;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFireworkBox;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList.GuiResponder;
 import net.minecraft.client.gui.GuiSlider;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 
 @OnlyIn(Dist.CLIENT)
 public class GuiFireworkBox extends GuiContainer implements GuiResponder {
@@ -37,20 +38,20 @@ public class GuiFireworkBox extends GuiContainer implements GuiResponder {
     public void initGui() {
         super.initGui();
 
-        this.buttonList.add(new CustomSlider(this, 0, this.guiLeft, this.guiTop, "Value Play", 0F, 5F, this.tile.intValuePlay, IntFormatter.INSTANCE));
-        this.buttonList.add(new CustomSlider(this, 1, this.guiLeft, this.guiTop + 20, "Average Charge Amount", 1F, 4F, this.tile.chargeAmount, IntFormatter.INSTANCE));
-        this.buttonList.add(new CustomSlider(this, 2, this.guiLeft, this.guiTop + 40, "Average Flight Time", 1F, 3F, this.tile.flightTime, IntFormatter.INSTANCE));
-        this.buttonList.add(new CustomSlider(this, 3, this.guiLeft, this.guiTop + 60, "Effect Chance", 0F, 1F, this.tile.trailOrFlickerChance, null));
-        this.buttonList.add(new CustomSlider(this, 4, this.guiLeft, this.guiTop + 80, "Flicker/Trail Ratio", 0F, 1F, this.tile.flickerChance, null));
-        this.buttonList.add(new CustomSlider(this, 5, this.guiLeft, this.guiTop + 100, "Color Amount", 1, 6, this.tile.colorAmount, IntFormatter.INSTANCE));
+        this.addButton(new CustomSlider(this, 0, this.guiLeft, this.guiTop, "Value Play", 0F, 5F, this.tile.intValuePlay, IntFormatter.INSTANCE));
+        this.addButton(new CustomSlider(this, 1, this.guiLeft, this.guiTop + 20, "Average Charge Amount", 1F, 4F, this.tile.chargeAmount, IntFormatter.INSTANCE));
+        this.addButton(new CustomSlider(this, 2, this.guiLeft, this.guiTop + 40, "Average Flight Time", 1F, 3F, this.tile.flightTime, IntFormatter.INSTANCE));
+        this.addButton(new CustomSlider(this, 3, this.guiLeft, this.guiTop + 60, "Effect Chance", 0F, 1F, this.tile.trailOrFlickerChance, null));
+        this.addButton(new CustomSlider(this, 4, this.guiLeft, this.guiTop + 80, "Flicker/Trail Ratio", 0F, 1F, this.tile.flickerChance, null));
+        this.addButton(new CustomSlider(this, 5, this.guiLeft, this.guiTop + 100, "Color Amount", 1, 6, this.tile.colorAmount, IntFormatter.INSTANCE));
 
-        this.buttonList.add(new CustomSlider(this, 6, this.guiLeft + 150, this.guiTop, "Small Ball", 0F, 1F, this.tile.typeChance0, null));
-        this.buttonList.add(new CustomSlider(this, 7, this.guiLeft + 150, this.guiTop + 20, "Large Ball", 0F, 1F, this.tile.typeChance1, null));
-        this.buttonList.add(new CustomSlider(this, 8, this.guiLeft + 150, this.guiTop + 40, "Star Shape", 0F, 1F, this.tile.typeChance2, null));
-        this.buttonList.add(new CustomSlider(this, 9, this.guiLeft + 150, this.guiTop + 60, "Creeper Shape", 0F, 1F, this.tile.typeChance3, null));
-        this.buttonList.add(new CustomSlider(this, 10, this.guiLeft + 150, this.guiTop + 80, "Burst", 0F, 1F, this.tile.typeChance4, null));
+        this.addButton(new CustomSlider(this, 6, this.guiLeft + 150, this.guiTop, "Small Ball", 0F, 1F, this.tile.typeChance0, null));
+        this.addButton(new CustomSlider(this, 7, this.guiLeft + 150, this.guiTop + 20, "Large Ball", 0F, 1F, this.tile.typeChance1, null));
+        this.addButton(new CustomSlider(this, 8, this.guiLeft + 150, this.guiTop + 40, "Star Shape", 0F, 1F, this.tile.typeChance2, null));
+        this.addButton(new CustomSlider(this, 9, this.guiLeft + 150, this.guiTop + 60, "Creeper Shape", 0F, 1F, this.tile.typeChance3, null));
+        this.addButton(new CustomSlider(this, 10, this.guiLeft + 150, this.guiTop + 80, "Burst", 0F, 1F, this.tile.typeChance4, null));
 
-        this.buttonList.add(new CustomSlider(this, 11, this.guiLeft + 150, this.guiTop + 100, "Area of Effect", 0, 4, this.tile.areaOfEffect, IntFormatter.INSTANCE));
+        this.addButton(new CustomSlider(this, 11, this.guiLeft + 150, this.guiTop + 100, "Area of Effect", 0, 4, this.tile.areaOfEffect, IntFormatter.INSTANCE));
     }
 
     @Override

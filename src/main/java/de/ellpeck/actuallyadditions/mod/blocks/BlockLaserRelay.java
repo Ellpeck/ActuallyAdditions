@@ -50,7 +50,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
 
 public class BlockLaserRelay extends BlockContainerBase implements IHudDisplay {
 

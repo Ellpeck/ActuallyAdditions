@@ -12,41 +12,48 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+
+import java.util.Objects;
 
 public class ContainerRangedCollector extends Container {
 
-    private final TileEntityRangedCollector collector;
+    public final TileEntityRangedCollector collector;
 
-    public ContainerRangedCollector(PlayerInventory inventory, TileEntityBase tile) {
-        this.collector = (TileEntityRangedCollector) tile;
+    public static ContainerRangedCollector fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerRangedCollector(windowId, inv, (TileEntityRangedCollector) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+    }
+
+    public ContainerRangedCollector(int windowId, PlayerInventory inventory, TileEntityRangedCollector tile) {
+        super(ActuallyContainers.RANGED_COLLECTOR_CONTAINER.get(), windowId);
+        this.collector = tile;
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 3; j++) {
-                this.addSlotToContainer(new SlotItemHandlerUnconditioned(this.collector.inv, j + i * 3, 96 + j * 18, 24 + i * 18));
+                this.addSlot(new SlotItemHandlerUnconditioned(this.collector.inv, j + i * 3, 96 + j * 18, 24 + i * 18));
             }
         }
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
-                this.addSlotToContainer(new SlotFilter(this.collector.filter, j + i * 3, 20 + j * 18, 6 + i * 18));
+                this.addSlot(new SlotFilter(this.collector.filter, j + i * 3, 20 + j * 18, 6 + i * 18));
             }
         }
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 90 + i * 18));
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 90 + i * 18));
             }
         }
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 148));
+            this.addSlot(new Slot(inventory, i, 8 + i * 18, 148));
         }
     }
 

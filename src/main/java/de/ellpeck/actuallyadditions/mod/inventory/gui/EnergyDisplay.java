@@ -15,10 +15,8 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -57,19 +55,19 @@ public class EnergyDisplay extends Gui {
         int barY = this.y;
 
         if (this.outline) {
-            this.drawTexturedModalRect(this.x, this.y, 52, 163, 26, 93);
+            this.blit(matrices, this.x, this.y, 52, 163, 26, 93);
 
             barX += 4;
             barY += 4;
         }
-        this.drawTexturedModalRect(barX, barY, 18, 171, 18, 85);
+        this.blit(matrices, barX, barY, 18, 171, 18, 85);
 
         if (this.rfReference.getEnergyStored() > 0) {
             int i = this.rfReference.getEnergyStored() * 83 / this.rfReference.getMaxEnergyStored();
 
             float[] color = AssetUtil.getWheelColor(mc.world.getTotalWorldTime() % 256);
             GlStateManager.color(color[0] / 255F, color[1] / 255F, color[2] / 255F);
-            this.drawTexturedModalRect(barX + 1, barY + 84 - i, 36, 172, 16, i);
+            this.blit(matrices, barX + 1, barY + 84 - i, 36, 172, 16, i);
             GlStateManager.color(1F, 1F, 1F);
         }
 

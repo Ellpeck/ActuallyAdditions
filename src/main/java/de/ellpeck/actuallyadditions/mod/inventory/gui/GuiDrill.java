@@ -10,22 +10,25 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiDrill extends GuiWtfMojang {
+public class GuiDrill extends GuiWtfMojang<ContainerDrill> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_drill");
 
-    public GuiDrill(PlayerInventory inventory) {
-        super(new ContainerDrill(inventory));
+    public GuiDrill(ContainerDrill container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
         this.xSize = 176;
         this.ySize = 54 + 86;
     }
@@ -39,10 +42,10 @@ public class GuiDrill extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 54, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 54, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 54);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 54);
     }
 }

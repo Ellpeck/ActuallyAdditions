@@ -28,7 +28,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
 
 public class BlockPlayerInterface extends BlockContainerBase implements IHudDisplay {
 

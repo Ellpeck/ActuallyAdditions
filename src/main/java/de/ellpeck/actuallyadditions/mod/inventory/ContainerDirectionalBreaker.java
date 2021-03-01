@@ -24,7 +24,7 @@ import java.util.Objects;
 
 public class ContainerDirectionalBreaker extends Container {
 
-    private final TileEntityDirectionalBreaker breaker;
+    public final TileEntityDirectionalBreaker breaker;
 
     public static ContainerDirectionalBreaker fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
         return new ContainerDirectionalBreaker(windowId, inv, (TileEntityDirectionalBreaker) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));

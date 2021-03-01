@@ -10,26 +10,27 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnervator;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiEnervator extends GuiWtfMojang {
+public class GuiEnervator extends GuiWtfMojang<ContainerEnervator> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_energizer");
     private final TileEntityEnervator enervator;
     private EnergyDisplay energy;
 
-    public GuiEnervator(PlayerEntity inventory, TileEntityBase tile) {
-        super(new ContainerEnervator(inventory, tile));
-        this.enervator = (TileEntityEnervator) tile;
+    public GuiEnervator(ContainerEnervator container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.enervator = container.enervator;
         this.xSize = 176;
         this.ySize = 93 + 86;
     }
@@ -55,11 +56,11 @@ public class GuiEnervator extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         this.energy.draw();
     }

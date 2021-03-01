@@ -73,7 +73,7 @@ public class BookmarkButton extends Button {
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GlStateManager.blendFunc(770, 771);
             int renderHeight = 25;
-            this.drawTexturedModalRect(this.x, this.y, 224 + (this.assignedPage == null
+            this.blit(matrices, this.x, this.y, 224 + (this.assignedPage == null
                 ? 0
                 : 16), 14 - renderHeight + k * renderHeight, this.width, renderHeight);
             this.mouseDragged(minecraft, x, y);

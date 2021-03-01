@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
@@ -17,18 +18,19 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.io.IOException;
 import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiGrinder extends GuiWtfMojang {
+public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_grinder");
     private static final ResourceLocation RES_LOC_DOUBLE = AssetUtil.getGuiLocation("gui_grinder_double");
@@ -36,16 +38,16 @@ public class GuiGrinder extends GuiWtfMojang {
     private final boolean isDouble;
     private EnergyDisplay energy;
 
-    private GuiButton buttonAutoSplit;
+    private Button buttonAutoSplit;
 
     public GuiGrinder(PlayerInventory inventoryPlayer, TileEntityBase tile) {
         this(inventoryPlayer, tile, false);
     }
 
-    private GuiGrinder(PlayerInventory inventory, TileEntityBase tile, boolean isDouble) {
-        super(new ContainerGrinder(inventory, tile, isDouble));
-        this.tileGrinder = (TileEntityGrinder) tile;
-        this.isDouble = isDouble;
+    private GuiGrinder(ContainerGrinder container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.tileGrinder = container.tileGrinder;
+        this.isDouble = container.isDouble;
         this.xSize = 176;
         this.ySize = 93 + 86;
     }
@@ -59,7 +61,7 @@ public class GuiGrinder extends GuiWtfMojang {
 
         if (this.isDouble) {
             this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.guiLeft - 10, this.guiTop, "S");
-            this.buttonList.add(this.buttonAutoSplit);
+            this.addButton(this.buttonAutoSplit);
         }
     }
 
@@ -103,24 +105,24 @@ public class GuiGrinder extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(this.isDouble
+        this.getMinecraft().getTextureManager().bindTexture(this.isDouble
             ? RES_LOC_DOUBLE
             : RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if (this.tileGrinder.firstCrushTime > 0) {
             int i = this.tileGrinder.getFirstTimeToScale(23);
-            this.drawTexturedModalRect(this.guiLeft + (this.isDouble
+            this.blit(matrices, this.guiLeft + (this.isDouble
                 ? 51
                 : 80), this.guiTop + 40, 176, 0, 24, i);
         }
         if (this.isDouble) {
             if (this.tileGrinder.secondCrushTime > 0) {
                 int i = this.tileGrinder.getSecondTimeToScale(23);
-                this.drawTexturedModalRect(this.guiLeft + 101, this.guiTop + 40, 176, 22, 24, i);
+                this.blit(matrices, this.guiLeft + 101, this.guiTop + 40, 176, 22, 24, i);
             }
         }
 

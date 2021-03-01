@@ -27,8 +27,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
 
 public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
 
@@ -48,12 +47,16 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
 
     @Override
     public String getTranslationKey(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_JAMS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + "_" + ALL_JAMS[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_JAMS.length
+            ? StringUtil.BUGGED_ITEM_NAME
+            : this.getTranslationKey() + "_" + ALL_JAMS[stack.getItemDamage()].name;
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_JAMS.length ? EnumRarity.COMMON : ALL_JAMS[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_JAMS.length
+            ? EnumRarity.COMMON
+            : ALL_JAMS[stack.getItemDamage()].rarity;
     }
 
     @Override
@@ -89,12 +92,16 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
 
     @Override
     public int getHealAmount(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_JAMS.length ? 0 : ALL_JAMS[stack.getItemDamage()].healAmount;
+        return stack.getItemDamage() >= ALL_JAMS.length
+            ? 0
+            : ALL_JAMS[stack.getItemDamage()].healAmount;
     }
 
     @Override
     public float getSaturationModifier(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_JAMS.length ? 0 : ALL_JAMS[stack.getItemDamage()].saturation;
+        return stack.getItemDamage() >= ALL_JAMS.length
+            ? 0
+            : ALL_JAMS[stack.getItemDamage()].saturation;
     }
 
     @Override
@@ -107,6 +114,10 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
     @Override
     @OnlyIn(Dist.CLIENT)
     public IItemColor getItemColor() {
-        return (stack, pass) -> pass > 0 ? stack.getItemDamage() >= ALL_JAMS.length ? 0xFFFFFF : ALL_JAMS[stack.getItemDamage()].color : 0xFFFFFF;
+        return (stack, pass) -> pass > 0
+            ? stack.getItemDamage() >= ALL_JAMS.length
+            ? 0xFFFFFF
+            : ALL_JAMS[stack.getItemDamage()].color
+            : 0xFFFFFF;
     }
 }

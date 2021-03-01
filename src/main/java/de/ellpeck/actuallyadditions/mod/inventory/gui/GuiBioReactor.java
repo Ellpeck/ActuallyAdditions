@@ -11,30 +11,29 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBioReactor;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GuiBioReactor extends GuiWtfMojang {
+public class GuiBioReactor extends GuiWtfMojang<ContainerBioReactor> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_bio_reactor");
     private final TileEntityBioReactor tile;
     private EnergyDisplay energy;
 
-    public GuiBioReactor(PlayerInventory inventory, TileEntityBase tile) {
-        super(new ContainerBioReactor(inventory, tile));
-        this.tile = (TileEntityBioReactor) tile;
+    public GuiBioReactor(ContainerBioReactor container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.tile = container.tile;
         this.xSize = 176;
         this.ySize = 93 + 86;
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
         this.energy = new EnergyDisplay(this.guiLeft + 116, this.guiTop + 5, this.tile.storage);
     }
 
@@ -53,15 +52,15 @@ public class GuiBioReactor extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if (this.tile.burnTime > 0) {
             int i = this.tile.burnTime * 13 / this.tile.maxBurnTime;
-            this.drawTexturedModalRect(this.guiLeft + 87, this.guiTop + 51 + 12 - i, 176, 96 - i, 14, i);
+            this.blit(matrices, this.guiLeft + 87, this.guiTop + 51 + 12 - i, 176, 96 - i, 14, i);
         }
 
         if (this.tile.producePerTick > 0) {

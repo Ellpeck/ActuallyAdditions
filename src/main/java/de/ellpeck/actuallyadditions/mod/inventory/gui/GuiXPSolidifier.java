@@ -10,77 +10,80 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiXPSolidifier extends GuiWtfMojang {
+public class GuiXPSolidifier extends GuiWtfMojang<ContainerXPSolidifier> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_xp_solidifier");
     private final TileEntityXPSolidifier solidifier;
 
-    public GuiXPSolidifier(PlayerInventory inventory, TileEntityBase tile) {
-        super(new ContainerXPSolidifier(inventory, tile));
-        this.solidifier = (TileEntityXPSolidifier) tile;
+    public GuiXPSolidifier(ContainerXPSolidifier container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.solidifier = container.solidifier;
         this.xSize = 176;
         this.ySize = 93 + 86;
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
-        GuiButton buttonOne = new GuiInputter.SmallerButton(0, this.guiLeft + 62, this.guiTop + 44, "1");
-        GuiButton buttonFive = new GuiInputter.SmallerButton(1, this.guiLeft + 80, this.guiTop + 44, "5");
-        GuiButton buttonTen = new GuiInputter.SmallerButton(2, this.guiLeft + 99, this.guiTop + 44, "10");
-        GuiButton buttonTwenty = new GuiInputter.SmallerButton(3, this.guiLeft + 62, this.guiTop + 61, "20");
-        GuiButton buttonThirty = new GuiInputter.SmallerButton(4, this.guiLeft + 80, this.guiTop + 61, "30");
-        GuiButton buttonForty = new GuiInputter.SmallerButton(5, this.guiLeft + 99, this.guiTop + 61, "40");
-        GuiButton buttonFifty = new GuiInputter.SmallerButton(6, this.guiLeft + 62, this.guiTop + 78, "50");
-        GuiButton buttonSixtyFour = new GuiInputter.SmallerButton(7, this.guiLeft + 80, this.guiTop + 78, "64");
-        GuiButton buttonAll = new GuiInputter.SmallerButton(8, this.guiLeft + 99, this.guiTop + 78, "All");
+        Button buttonOne = new GuiInputter.SmallerButton(0, this.guiLeft + 62, this.guiTop + 44, "1");
+        Button buttonFive = new GuiInputter.SmallerButton(1, this.guiLeft + 80, this.guiTop + 44, "5");
+        Button buttonTen = new GuiInputter.SmallerButton(2, this.guiLeft + 99, this.guiTop + 44, "10");
+        Button buttonTwenty = new GuiInputter.SmallerButton(3, this.guiLeft + 62, this.guiTop + 61, "20");
+        Button buttonThirty = new GuiInputter.SmallerButton(4, this.guiLeft + 80, this.guiTop + 61, "30");
+        Button buttonForty = new GuiInputter.SmallerButton(5, this.guiLeft + 99, this.guiTop + 61, "40");
+        Button buttonFifty = new GuiInputter.SmallerButton(6, this.guiLeft + 62, this.guiTop + 78, "50");
+        Button buttonSixtyFour = new GuiInputter.SmallerButton(7, this.guiLeft + 80, this.guiTop + 78, "64");
+        Button buttonAll = new GuiInputter.SmallerButton(8, this.guiLeft + 99, this.guiTop + 78, "All");
 
-        this.buttonList.add(buttonOne);
-        this.buttonList.add(buttonFive);
-        this.buttonList.add(buttonTen);
-        this.buttonList.add(buttonTwenty);
-        this.buttonList.add(buttonThirty);
-        this.buttonList.add(buttonForty);
-        this.buttonList.add(buttonFifty);
-        this.buttonList.add(buttonSixtyFour);
-        this.buttonList.add(buttonAll);
+        this.addButton(buttonOne);
+        this.addButton(buttonFive);
+        this.addButton(buttonTen);
+        this.addButton(buttonTwenty);
+        this.addButton(buttonThirty);
+        this.addButton(buttonForty);
+        this.addButton(buttonFifty);
+        this.addButton(buttonSixtyFour);
+        this.addButton(buttonAll);
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.solidifier);
+    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.solidifier);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        this.drawCenteredString(this.fontRenderer, Integer.toString(this.solidifier.amount), this.guiLeft + 88, this.guiTop + 30, StringUtil.DECIMAL_COLOR_WHITE);
+        drawCenteredString(matrices, this.font, Integer.toString(this.solidifier.amount), this.guiLeft + 88, this.guiTop + 30, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
     @Override
-    public void actionPerformed(GuiButton button) {
+    public void actionPerformed(Button button) {
         PacketHandlerHelper.sendButtonPacket(this.solidifier, button.id);
 
         this.solidifier.onButtonPressed(button.id, Minecraft.getInstance().player);

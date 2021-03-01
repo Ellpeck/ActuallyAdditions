@@ -2,11 +2,9 @@ package de.ellpeck.actuallyadditions.mod.util.compat;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 import shadows.fastbench.gui.ContainerFastBench;
 import shadows.fastbench.gui.GuiFastBench;
 

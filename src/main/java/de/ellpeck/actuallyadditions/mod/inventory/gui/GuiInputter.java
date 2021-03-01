@@ -10,26 +10,27 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerInputter;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputter;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiInputter extends GuiWtfMojang {
+public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
 
     public static final int OFFSET_ADVANCED = 12 + 36;
     public static final String[] SIDES = new String[]{StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.disabled"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.up"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.down"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.north"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.east"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.south"), StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.west")};
@@ -45,14 +46,14 @@ public class GuiInputter extends GuiWtfMojang {
     private FilterSettingsGui leftFilter;
     private FilterSettingsGui rightFilter;
 
-    public GuiInputter(PlayerInventory inventory, TileEntityBase tile, boolean isAdvanced) {
-        super(new ContainerInputter(inventory, tile, isAdvanced));
-        this.tileInputter = (TileEntityInputter) tile;
+    public GuiInputter(ContainerInputter container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.tileInputter = container.tileInputter;
         this.xSize = 176;
-        this.ySize = 97 + 86 + (isAdvanced
+        this.ySize = 97 + 86 + (container.isAdvanced
             ? OFFSET_ADVANCED
             : 0);
-        this.isAdvanced = isAdvanced;
+        this.isAdvanced = container.isAdvanced;
     }
 
     @Override
@@ -100,12 +101,12 @@ public class GuiInputter extends GuiWtfMojang {
             ? OFFSET_ADVANCED
             : 0), "<");
 
-        this.buttonList.add(buttonSidePutP);
-        this.buttonList.add(buttonSidePullP);
-        this.buttonList.add(buttonSidePutM);
-        this.buttonList.add(buttonSidePullM);
+        this.addButton(buttonSidePutP);
+        this.addButton(buttonSidePullP);
+        this.addButton(buttonSidePutM);
+        this.addButton(buttonSidePullM);
 
-        this.buttonList.add(new TinyButton(TileEntityInputter.OKAY_BUTTON_ID, this.guiLeft + 84, this.guiTop + 91 + (this.isAdvanced
+        this.addButton(new TinyButton(TileEntityInputter.OKAY_BUTTON_ID, this.guiLeft + 84, this.guiTop + 91 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0)));
     }
@@ -146,15 +147,15 @@ public class GuiInputter extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 97 + (this.isAdvanced
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 97 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(this.isAdvanced
+        this.getMinecraft().getTextureManager().bindTexture(this.isAdvanced
             ? RES_LOC_ADVANCED
             : RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 97 + (this.isAdvanced
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 97 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0));
 
@@ -273,7 +274,7 @@ public class GuiInputter extends GuiWtfMojang {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class SmallerButton extends GuiButton {
+    public static class SmallerButton extends Button {
 
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("gui_inputter");
         private final boolean smaller;
@@ -299,7 +300,7 @@ public class GuiInputter extends GuiWtfMojang {
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 GlStateManager.blendFunc(770, 771);
-                this.drawTexturedModalRect(this.x, this.y, this.smaller
+                this.blit(matrices, this.x, this.y, this.smaller
                     ? 200
                     : 176, k * this.height, this.width, this.height);
                 this.mouseDragged(mc, x, y);
@@ -337,7 +338,7 @@ public class GuiInputter extends GuiWtfMojang {
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 GlStateManager.blendFunc(770, 771);
-                this.drawTexturedModalRect(this.x, this.y, 192, k * 8, 8, 8);
+                this.blit(matrices, this.x, this.y, 192, k * 8, 8, 8);
                 this.mouseDragged(mc, x, y);
             }
         }

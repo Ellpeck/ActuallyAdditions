@@ -10,29 +10,36 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+
+import java.util.Objects;
 
 public class ContainerOilGenerator extends Container {
 
-    private final TileEntityOilGenerator generator;
+    public final TileEntityOilGenerator generator;
 
-    public ContainerOilGenerator(PlayerInventory inventory, TileEntityBase tile) {
-        this.generator = (TileEntityOilGenerator) tile;
+    public static ContainerOilGenerator fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerOilGenerator(windowId, inv, (TileEntityOilGenerator) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+    }
+
+    public ContainerOilGenerator(int windowId, PlayerInventory inventory, TileEntityOilGenerator tile) {
+        super(ActuallyContainers.OIL_GENERATOR_CONTAINER.get(), windowId);
+        this.generator = tile;
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 97 + i * 18));
             }
         }
         for (int i = 0; i < 9; i++) {
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 155));
+            this.addSlot(new Slot(inventory, i, 8 + i * 18, 155));
         }
     }
 

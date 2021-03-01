@@ -20,7 +20,6 @@ import de.ellpeck.actuallyadditions.mod.event.CommonEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.AAWorldGen;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
-import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
@@ -113,7 +112,6 @@ public class ActuallyAdditions {
         InitFluids.init();
         new UpdateChecker();
         BannerHelper.init();
-        GuiHandler.init();
         InitEntities.init(); // todo: [port] replace
         AAWorldGen gen = new AAWorldGen();
         ItemCoffee.initIngredients();

@@ -17,11 +17,9 @@ import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.mod.booklet.button.EntryButton;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryTrials;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
 import java.io.IOException;
 import java.util.List;
@@ -94,7 +92,7 @@ public class GuiEntry extends GuiBooklet {
                 int id = y + x * BUTTONS_PER_PAGE;
                 if (this.chapters.size() > id + idOffset) {
                     IBookletChapter chapter = this.chapters.get(id + idOffset);
-                    this.buttonList.add(new EntryButton(this, id, this.guiLeft + 14 + x * 142, this.guiTop + 11 + y * 13, 115, 10, chapter.getLocalizedNameWithFormatting(), chapter.getDisplayItemStack()));
+                    this.addButton(new EntryButton(this, id, this.guiLeft + 14 + x * 142, this.guiTop + 11 + y * 13, 115, 10, chapter.getLocalizedNameWithFormatting(), chapter.getDisplayItemStack()));
                 } else {
                     return;
                 }

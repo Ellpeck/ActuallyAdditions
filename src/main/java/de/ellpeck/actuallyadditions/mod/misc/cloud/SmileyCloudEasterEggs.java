@@ -20,7 +20,7 @@
 //import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 //import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 //import net.minecraft.block.Block;
-//import net.minecraft.client.renderer.GlStateManager;
+//
 //import net.minecraft.init.Blocks;
 //import net.minecraft.init.Items;
 //import net.minecraft.item.ItemStack;

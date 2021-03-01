@@ -10,26 +10,27 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiLaserRelayItemWhitelist extends GuiWtfMojang {
+public class GuiLaserRelayItemWhitelist extends GuiWtfMojang<ContainerLaserRelayItemWhitelist> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_laser_relay_item_whitelist");
     private final TileEntityLaserRelayItemWhitelist tile;
@@ -37,12 +38,12 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang {
     private FilterSettingsGui leftFilter;
     private FilterSettingsGui rightFilter;
 
-    private GuiButton buttonSmartWhitelistLeft;
-    private GuiButton buttonSmartWhitelistRight;
+    private Button buttonSmartWhitelistLeft;
+    private Button buttonSmartWhitelistRight;
 
-    public GuiLaserRelayItemWhitelist(PlayerInventory inventory, TileEntityBase tile) {
-        super(new ContainerLaserRelayItemWhitelist(inventory, tile));
-        this.tile = (TileEntityLaserRelayItemWhitelist) tile;
+    public GuiLaserRelayItemWhitelist(ContainerLaserRelayItemWhitelist container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.tile = container.tile;
         this.xSize = 176;
         this.ySize = 93 + 86;
     }
@@ -64,12 +65,12 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang {
 
         this.buttonSmartWhitelistLeft = new SmallerButton(2, this.guiLeft + 3, this.guiTop + 79, "S");
         this.buttonSmartWhitelistRight = new SmallerButton(3, this.guiLeft + 157, this.guiTop + 79, "S");
-        this.buttonList.add(this.buttonSmartWhitelistLeft);
-        this.buttonList.add(this.buttonSmartWhitelistRight);
+        this.addButton(this.buttonSmartWhitelistLeft);
+        this.addButton(this.buttonSmartWhitelistRight);
     }
 
     @Override
-    public void actionPerformed(GuiButton button) {
+    public void actionPerformed(Button button) {
         PacketHandlerHelper.sendButtonPacket(this.tile, button.id);
     }
 
@@ -102,11 +103,11 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
     }
 }

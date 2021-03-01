@@ -19,7 +19,7 @@ import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.stats.StatisticsManager;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;

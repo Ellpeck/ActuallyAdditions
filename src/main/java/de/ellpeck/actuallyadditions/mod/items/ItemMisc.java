@@ -26,7 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
 
 public class ItemMisc extends ItemBase {
 

@@ -21,8 +21,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.IRarity;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
 
 public class ItemCrystalShard extends ItemBase implements IColorProvidingItem {
 
@@ -39,12 +38,16 @@ public class ItemCrystalShard extends ItemBase implements IColorProvidingItem {
 
     @Override
     public String getTranslationKey(ItemStack stack) {
-        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + "_" + BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length
+            ? StringUtil.BUGGED_ITEM_NAME
+            : this.getTranslationKey() + "_" + BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].name;
     }
 
     @Override
     public IRarity getForgeRarity(ItemStack stack) {
-        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length ? EnumRarity.COMMON : BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length
+            ? EnumRarity.COMMON
+            : BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].rarity;
     }
 
     @Override

@@ -10,26 +10,28 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFermentingBarrel;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiFermentingBarrel extends GuiWtfMojang {
+public class GuiFermentingBarrel extends GuiWtfMojang<ContainerFermentingBarrel> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_fermenting_barrel");
     private final TileEntityFermentingBarrel press;
     private FluidDisplay input;
     private FluidDisplay output;
 
-    public GuiFermentingBarrel(PlayerInventory inventory, TileEntityBase tile) {
-        super(new ContainerFermentingBarrel(inventory, tile));
-        this.press = (TileEntityFermentingBarrel) tile;
+    public GuiFermentingBarrel(ContainerFermentingBarrel container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.press = container.barrel;
         this.xSize = 176;
         this.ySize = 93 + 86;
     }
@@ -57,15 +59,15 @@ public class GuiFermentingBarrel extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         if (this.press.currentProcessTime > 0) {
             int i = this.press.getProcessScaled(29);
-            this.drawTexturedModalRect(this.guiLeft + 82, this.guiTop + 34, 176, 0, 12, i);
+            this.blit(matrices, this.guiLeft + 82, this.guiTop + 34, 176, 0, 12, i);
         }
 
         this.input.draw();

@@ -10,33 +10,33 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiPhantomPlacer extends GuiWtfMojang {
+public class GuiPhantomPlacer extends GuiWtfMojang<ContainerPhantomPlacer> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityPhantomPlacer placer;
 
-    public GuiPhantomPlacer(PlayerInventory inventory, TileEntityBase tile) {
-        super(new ContainerPhantomPlacer(inventory, tile));
-        this.placer = (TileEntityPhantomPlacer) tile;
+    public GuiPhantomPlacer(ContainerPhantomPlacer container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.placer = container.placer;
         this.xSize = 176;
         this.ySize = 93 + 86;
     }
@@ -46,7 +46,7 @@ public class GuiPhantomPlacer extends GuiWtfMojang {
         super.initGui();
 
         if (!this.placer.isBreaker) {
-            this.buttonList.add(new GuiButton(0, this.guiLeft + 63, this.guiTop + 75, 50, 20, this.getSide()));
+            this.addButton(new GuiButton(0, this.guiLeft + 63, this.guiTop + 75, 50, 20, this.getSide()));
         }
     }
 
@@ -93,10 +93,10 @@ public class GuiPhantomPlacer extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
     }
 }

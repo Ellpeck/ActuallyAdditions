@@ -20,8 +20,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+
 
 public class ItemDust extends ItemBase implements IColorProvidingItem {
 
@@ -39,12 +38,16 @@ public class ItemDust extends ItemBase implements IColorProvidingItem {
 
     @Override
     public String getTranslationKey(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_DUSTS.length ? StringUtil.BUGGED_ITEM_NAME : this.getTranslationKey() + "_" + ALL_DUSTS[stack.getItemDamage()].name;
+        return stack.getItemDamage() >= ALL_DUSTS.length
+            ? StringUtil.BUGGED_ITEM_NAME
+            : this.getTranslationKey() + "_" + ALL_DUSTS[stack.getItemDamage()].name;
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_DUSTS.length ? EnumRarity.COMMON : ALL_DUSTS[stack.getItemDamage()].rarity;
+        return stack.getItemDamage() >= ALL_DUSTS.length
+            ? EnumRarity.COMMON
+            : ALL_DUSTS[stack.getItemDamage()].rarity;
     }
 
     @Override
@@ -67,12 +70,16 @@ public class ItemDust extends ItemBase implements IColorProvidingItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public IItemColor getItemColor() {
-        return (stack, pass) -> stack.getItemDamage() >= ALL_DUSTS.length ? 0xFFFFFF : ALL_DUSTS[stack.getItemDamage()].color;
+        return (stack, pass) -> stack.getItemDamage() >= ALL_DUSTS.length
+            ? 0xFFFFFF
+            : ALL_DUSTS[stack.getItemDamage()].color;
     }
 
     @Override
     public int getItemBurnTime(ItemStack stack) {
-        if (stack.getMetadata() == 6) return 1200;
+        if (stack.getMetadata() == 6) {
+            return 1200;
+        }
         return super.getItemBurnTime(stack);
     }
 }

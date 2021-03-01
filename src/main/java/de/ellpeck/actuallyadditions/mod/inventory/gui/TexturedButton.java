@@ -55,7 +55,7 @@ public class TexturedButton extends Button {
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GlStateManager.blendFunc(770, 771);
-            this.drawTexturedModalRect(this.x, this.y, this.texturePosX, this.texturePosY - this.height + k * this.height, this.width, this.height);
+            this.blit(matrices, this.x, this.y, this.texturePosX, this.texturePosY - this.height + k * this.height, this.width, this.height);
             this.mouseDragged(minecraft, x, y);
         }
     }

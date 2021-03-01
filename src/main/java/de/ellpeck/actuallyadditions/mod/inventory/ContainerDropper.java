@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class ContainerDropper extends Container {
 
-    private final TileEntityDropper dropper;
+    public final TileEntityDropper dropper;
     PlayerEntity player;
 
     public static ContainerDropper fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {

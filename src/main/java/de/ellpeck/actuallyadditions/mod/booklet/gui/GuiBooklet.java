@@ -124,7 +124,7 @@ public abstract class GuiBooklet extends GuiBookletBase {
             int xStart = this.guiLeft + this.xSize / 2 - 16 * this.bookmarkButtons.length / 2;
             for (int i = 0; i < this.bookmarkButtons.length; i++) {
                 this.bookmarkButtons[i] = new BookmarkButton(1337 + i, xStart + i * 16, this.guiTop + this.ySize, this);
-                this.buttonList.add(this.bookmarkButtons[i]);
+                this.addButton(this.bookmarkButtons[i]);
 
                 if (data.bookmarks[i] != null) {
                     this.bookmarkButtons[i].assignedPage = data.bookmarks[i];
@@ -133,7 +133,7 @@ public abstract class GuiBooklet extends GuiBookletBase {
         }
 
         this.buttonTrials = new TrialsButton(this);
-        this.buttonList.add(this.buttonTrials);
+        this.addButton(this.buttonTrials);
     }
 
     @Override
@@ -171,12 +171,12 @@ public abstract class GuiBooklet extends GuiBookletBase {
 
     public void drawScreenPre(int mouseX, int mouseY, float partialTicks) {
         GlStateManager.color(1F, 1F, 1F);
-        this.mc.getTextureManager().bindTexture(RES_LOC_GUI);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC_GUI);
         drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 
         if (this.hasSearchBar()) {
-            this.mc.getTextureManager().bindTexture(RES_LOC_GADGETS);
-            this.drawTexturedModalRect(this.guiLeft + this.xSize, this.guiTop + this.ySize - 40, 188, 0, 68, 14);
+            this.getMinecraft().getTextureManager().bindTexture(RES_LOC_GADGETS);
+            this.blit(matrices, this.guiLeft + this.xSize, this.guiTop + this.ySize - 40, 188, 0, 68, 14);
 
             boolean unicodeBefore = this.fontRenderer.getUnicodeFlag();
             this.fontRenderer.setUnicodeFlag(true);

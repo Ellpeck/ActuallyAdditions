@@ -10,27 +10,28 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerMiner;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.OnlyIn;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiMiner extends GuiWtfMojang {
+public class GuiMiner extends GuiWtfMojang<ContainerMiner> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityMiner miner;
 
-    public GuiMiner(PlayerInventory inventory, TileEntityBase tile) {
-        super(new ContainerMiner(inventory, tile));
-        this.miner = (TileEntityMiner) tile;
+    public GuiMiner(ContainerMiner container, PlayerInventory inventory, ITextComponent title) {
+        super(container, inventory);
+        this.miner = container.miner;
         this.xSize = 176;
         this.ySize = 93 + 86;
     }
@@ -40,10 +41,10 @@ public class GuiMiner extends GuiWtfMojang {
         super.initGui();
 
         GuiButton buttonMode = new GuiButton(0, this.guiLeft + this.xSize / 2 - 51, this.guiTop + 75, 50, 20, "Mode");
-        this.buttonList.add(buttonMode);
+        this.addButton(buttonMode);
 
         GuiButton buttonReset = new GuiButton(1, this.guiLeft + this.xSize / 2 + 1, this.guiTop + 75, 50, 20, "Reset");
-        this.buttonList.add(buttonReset);
+        this.addButton(buttonReset);
     }
 
     @Override
@@ -55,11 +56,11 @@ public class GuiMiner extends GuiWtfMojang {
     public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 
-        this.mc.getTextureManager().bindTexture(RES_LOC);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
+        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
         String mining = this.miner.onlyMineOres
             ? "Only Mining Ores"
