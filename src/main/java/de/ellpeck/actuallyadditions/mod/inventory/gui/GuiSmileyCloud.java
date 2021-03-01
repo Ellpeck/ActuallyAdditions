@@ -20,7 +20,7 @@
 //import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 //import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 //import net.minecraft.client.Minecraft;
-//import net.minecraft.client.gui.GuiTextField;
+//import net.minecraft.client.gui.widget.TextFieldWidget;
 //import net.minecraft.nbt.CompoundNBT;
 //import net.minecraft.util.ResourceLocation;
 //import net.minecraft.util.text.TextFormatting;
@@ -41,7 +41,7 @@
 //    private final int z;
 //    private final World world;
 //    private final TileEntitySmileyCloud cloud;
-//    private GuiTextField nameField;
+//    private TextFieldWidget nameField;
 //
 //    public GuiSmileyCloud(TileEntityBase tile, int x, int y, int z, World world) {
 //        super(new ContainerSmileyCloud());
@@ -55,10 +55,10 @@
 //    }
 //
 //    @Override
-//    public void initGui() {
-//        super.initGui();
+//    public void init() {
+//        super.init();
 //
-//        this.nameField = new GuiTextField(4000, this.fontRenderer, this.guiLeft + 5, this.guiTop + 6, 114, 8);
+//        this.nameField = new TextFieldWidget(4000, this.font, this.guiLeft + 5, this.guiTop + 6, 114, 8);
 //        this.nameField.setMaxStringLength(20);
 //        this.nameField.setEnableBackgroundDrawing(false);
 //        this.nameField.setFocused(true);
@@ -70,7 +70,7 @@
 //            ? ""
 //            : TextFormatting.GOLD + this.cloud.name + TextFormatting.RESET + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.the") + " ";
 //        String localizedName = name + StringUtil.localize("container." + ActuallyAdditions.MODID + ".cloud.name");
-//        this.fontRenderer.drawString(localizedName, this.xSize / 2 - this.fontRenderer.getStringWidth(localizedName) / 2, -10, StringUtil.DECIMAL_COLOR_WHITE);
+//        this.font.drawString(localizedName, this.xSize / 2 - this.font.getStringWidth(localizedName) / 2, -10, StringUtil.DECIMAL_COLOR_WHITE);
 //    }
 //
 //    @Override
@@ -108,7 +108,7 @@
 //        this.nameField.updateCursorCounter();
 //    }
 //
-//    public void setVariable(GuiTextField field) {
+//    public void setVariable(TextFieldWidget field) {
 //        this.sendPacket(field.getText(), 0);
 //        field.setText("");
 //    }

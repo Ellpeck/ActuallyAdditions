@@ -10,125 +10,107 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBushBase;
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
-import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheWildPlants;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockCrops;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 
 public class BlockWildPlant extends BlockBushBase {
 
-    public static final TheWildPlants[] ALL_WILD_PLANTS = TheWildPlants.values();
-    public static final PropertyEnum<TheWildPlants> TYPE = PropertyEnum.create("type", TheWildPlants.class);
+    //    public static final TheWildPlants[] ALL_WILD_PLANTS = TheWildPlants.values();
+    //    public static final PropertyEnum<TheWildPlants> TYPE = PropertyEnum.create("type", TheWildPlants.class);
 
     public BlockWildPlant() {
-        super(this.name);
-        this.setSoundType(SoundType.PLANT);
+        super(Properties.create(Material.PLANTS).sound(SoundType.PLANT).harvestLevel(0).hardnessAndResistance(0, 0));
+        //        this.setSoundType(SoundType.PLANT);
     }
 
-    @Override
-    public boolean canBlockStay(World world, BlockPos pos, BlockState state) {
-        BlockPos offset = pos.down();
-        BlockState offsetState = world.getBlockState(offset);
-        Block offsetBlock = offsetState.getBlock();
-        return state.getValue(TYPE) == TheWildPlants.RICE
-            ? offsetState.getMaterial() == Material.WATER
-            : offsetBlock.canSustainPlant(offsetState, world, offset, Direction.UP, this);
-    }
-
-    @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
-        BlockPlant normal = (BlockPlant) state.getValue(TYPE).getNormalVersion();
-        return new ItemStack(normal.seedItem);
-    }
-
-    @Override
-    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-        for (int j = 0; j < ALL_WILD_PLANTS.length; j++) {
-            list.add(new ItemStack(this, 1, j));
-        }
-    }
-
-    @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
-        Block normal = state.getValue(TYPE).getNormalVersion();
-        normal.getDrops(drops, world, pos, normal.getDefaultState().withProperty(BlockCrops.AGE, 7), fortune);
-    }
-
-    @Override
-    public boolean canSilkHarvest(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        return false;
-    }
-
-    @Override
-    protected ItemBlockBase getItemBlock() {
-        return new TheItemBlock(this);
-    }
-
-    @Override
-    public boolean shouldAddCreative() {
-        return false;
-    }
-
-    @Override
-    public void registerRendering() {
-        for (int i = 0; i < ALL_WILD_PLANTS.length; i++) {
-            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName() + "=" + ALL_WILD_PLANTS[i].getName());
-        }
-    }
-
-    @Override
-    public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(TYPE, TheWildPlants.values()[meta]);
-    }
-
-    @Override
-    public int getMetaFromState(BlockState state) {
-        return state.getValue(TYPE).ordinal();
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, TYPE);
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_WILD_PLANTS.length
-            ? EnumRarity.COMMON
-            : ALL_WILD_PLANTS[stack.getItemDamage()].getRarity();
-    }
-
-    public static class TheItemBlock extends ItemBlockBase {
-
-        public TheItemBlock(Block block) {
-            super(block);
-            this.setHasSubtypes(true);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getTranslationKey(ItemStack stack) {
-            return stack.getItemDamage() >= ALL_WILD_PLANTS.length
-                ? StringUtil.BUGGED_ITEM_NAME
-                : this.getTranslationKey() + "_" + ALL_WILD_PLANTS[stack.getItemDamage()].getName();
-        }
-    }
+    //    TODO: [port] ADD BACK
+    //    @Override
+    //    public boolean canBlockStay(World world, BlockPos pos, BlockState state) {
+    //        BlockPos offset = pos.down();
+    //        BlockState offsetState = world.getBlockState(offset);
+    //        Block offsetBlock = offsetState.getBlock();
+    //        return state.getValue(TYPE) == TheWildPlants.RICE
+    //            ? offsetState.getMaterial() == Material.WATER
+    //            : offsetBlock.canSustainPlant(offsetState, world, offset, Direction.UP, this);
+    //    }
+    //
+    //    @Override
+    //    public ItemStack getPickBlock(BlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player) {
+    //        BlockPlant normal = (BlockPlant) state.getValue(TYPE).getNormalVersion();
+    //        return new ItemStack(normal.seedItem);
+    //    }
+    //
+    //    @Override
+    //    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
+    //        for (int j = 0; j < ALL_WILD_PLANTS.length; j++) {
+    //            list.add(new ItemStack(this, 1, j));
+    //        }
+    //    }
+    //
+    //    @Override
+    //    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
+    //        Block normal = state.getValue(TYPE).getNormalVersion();
+    //        normal.getDrops(drops, world, pos, normal.getDefaultState().withProperty(BlockCrops.AGE, 7), fortune);
+    //    }
+    //
+    //    @Override
+    //    public boolean canSilkHarvest(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    //        return false;
+    //    }
+    //
+    //    @Override
+    //    protected ItemBlockBase getItemBlock() {
+    //        return new TheItemBlock(this);
+    //    }
+    //
+    //    @Override
+    //    public boolean shouldAddCreative() {
+    //        return false;
+    //    }
+    //
+    //    @Override
+    //    public void registerRendering() {
+    //        for (int i = 0; i < ALL_WILD_PLANTS.length; i++) {
+    //            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), TYPE.getName() + "=" + ALL_WILD_PLANTS[i].getName());
+    //        }
+    //    }
+    //
+    //    @Override
+    //    public BlockState getStateFromMeta(int meta) {
+    //        return this.getDefaultState().withProperty(TYPE, TheWildPlants.values()[meta]);
+    //    }
+    //
+    //    @Override
+    //    public int getMetaFromState(BlockState state) {
+    //        return state.getValue(TYPE).ordinal();
+    //    }
+    //
+    //    @Override
+    //    protected BlockStateContainer createBlockState() {
+    //        return new BlockStateContainer(this, TYPE);
+    //    }
+    //
+    //    @Override
+    //    public EnumRarity getRarity(ItemStack stack) {
+    //        return stack.getItemDamage() >= ALL_WILD_PLANTS.length
+    //            ? EnumRarity.COMMON
+    //            : ALL_WILD_PLANTS[stack.getItemDamage()].getRarity();
+    //    }
+    //
+    //    public static class TheItemBlock extends ItemBlockBase {
+    //
+    //        public TheItemBlock(Block block) {
+    //            super(block);
+    //            this.setHasSubtypes(true);
+    //            this.setMaxDamage(0);
+    //        }
+    //
+    //        @Override
+    //        public String getTranslationKey(ItemStack stack) {
+    //            return stack.getItemDamage() >= ALL_WILD_PLANTS.length
+    //                ? StringUtil.BUGGED_ITEM_NAME
+    //                : this.getTranslationKey() + "_" + ALL_WILD_PLANTS[stack.getItemDamage()].getName();
+    //        }
+    //    }
 }

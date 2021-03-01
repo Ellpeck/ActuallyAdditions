@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.blocks.BlockFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
@@ -26,6 +25,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.datafix.fixes.FurnaceRecipes;
 import net.minecraft.util.text.ITextComponent;
@@ -150,7 +150,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             }
 
             BlockState currState = this.world.getBlockState(this.pos);
-            boolean current = currState.get(BlockFurnaceDouble.IS_ON);
+            boolean current = currState.get(BlockStateProperties.LIT);
             boolean changeTo = current;
             if (this.lastSmelted != smelted) {
                 changeTo = smelted;
@@ -163,7 +163,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             }
 
             if (changeTo != current) {
-                this.world.setBlockState(this.pos, currState.with(BlockFurnaceDouble.IS_ON, changeTo));
+                this.world.setBlockState(this.pos, currState.with(BlockStateProperties.LIT, changeTo));
             }
 
             this.lastSmelted = smelted;

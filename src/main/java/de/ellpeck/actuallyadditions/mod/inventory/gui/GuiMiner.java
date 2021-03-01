@@ -37,19 +37,19 @@ public class GuiMiner extends GuiWtfMojang<ContainerMiner> {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
-        GuiButton buttonMode = new GuiButton(0, this.guiLeft + this.xSize / 2 - 51, this.guiTop + 75, 50, 20, "Mode");
+        Button buttonMode = new Button(0, this.guiLeft + this.xSize / 2 - 51, this.guiTop + 75, 50, 20, "Mode");
         this.addButton(buttonMode);
 
-        GuiButton buttonReset = new GuiButton(1, this.guiLeft + this.xSize / 2 + 1, this.guiTop + 75, 50, 20, "Reset");
+        Button buttonReset = new Button(1, this.guiLeft + this.xSize / 2 + 1, this.guiTop + 75, 50, 20, "Reset");
         this.addButton(buttonReset);
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.miner);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.miner);
     }
 
     @Override
@@ -65,11 +65,11 @@ public class GuiMiner extends GuiWtfMojang<ContainerMiner> {
         String mining = this.miner.onlyMineOres
             ? "Only Mining Ores"
             : "Mining Everything";
-        this.fontRenderer.drawString(mining, this.guiLeft + this.xSize / 2 - this.fontRenderer.getStringWidth(mining) / 2, this.guiTop + 8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.font.drawString(mining, this.guiLeft + this.xSize / 2 - this.font.getStringWidth(mining) / 2, this.guiTop + 8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
     }
 
     @Override
-    public void actionPerformed(GuiButton button) {
+    public void actionPerformed(Button button) {
         PacketHandlerHelper.sendButtonPacket(this.miner, button.id);
     }
 }

@@ -46,8 +46,8 @@ public class PageTrials extends BookletPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initGui(GuiBookletBase gui, int startX, int startY) {
-        super.initGui(gui, startX, startY);
+    public void init(GuiBookletBase gui, int startX, int startY) {
+        super.init(gui, startX, startY);
 
         if (this.buttonId >= 0) {
             this.button = new Button(this.buttonId, startX + 125 / 2 - 50, startY + 120, 100, 20, "");

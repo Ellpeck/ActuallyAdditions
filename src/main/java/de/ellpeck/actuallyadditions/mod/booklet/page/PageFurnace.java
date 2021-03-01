@@ -66,8 +66,8 @@ public class PageFurnace extends BookletPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initGui(GuiBookletBase gui, int startX, int startY) {
-        super.initGui(gui, startX, startY);
+    public void init(GuiBookletBase gui, int startX, int startY) {
+        super.init(gui, startX, startY);
 
         gui.addOrModifyItemRenderer(this.input, startX + 23 + 1, startY + 10 + 5, 1F, true);
         gui.addOrModifyItemRenderer(this.output, startX + 23 + 59, startY + 10 + 5, 1F, false);

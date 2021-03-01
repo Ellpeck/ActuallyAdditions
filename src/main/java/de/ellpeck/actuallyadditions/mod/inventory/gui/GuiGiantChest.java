@@ -44,20 +44,20 @@
 //    }
 //
 //    @Override
-//    public void initGui() {
-//        super.initGui();
+//    public void init() {
+//        super.init();
 //
 //        if (this.page > 0) {
-//            this.addButton(new GuiButton(this.page - 1, this.guiLeft + 13, this.guiTop + 172, 20, 20, "<"));
+//            this.addButton(new Button(this.page - 1, this.guiLeft + 13, this.guiTop + 172, 20, 20, "<"));
 //        }
 //
 //        if (this.page == 0 && this.chest instanceof TileEntityGiantChestMedium || this.page <= 1 && this.chest instanceof TileEntityGiantChestLarge) {
-//            this.addButton(new GuiButton(this.page + 1, this.guiLeft + 209, this.guiTop + 172, 20, 20, ">"));
+//            this.addButton(new Button(this.page + 1, this.guiLeft + 209, this.guiTop + 172, 20, 20, ">"));
 //        }
 //    }
 //
 //    @Override
-//    protected void actionPerformed(GuiButton button) throws IOException {
+//    protected void actionPerformed(Button button) throws IOException {
 //        if (button.id >= 0 && button.id < 3) {
 //            PacketHandlerHelper.sendButtonPacket(this.chest, button.id);
 //        }
@@ -65,7 +65,7 @@
 //
 //    @Override
 //    public void drawGuiContainerForegroundLayer(int x, int y) {
-//        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.chest);
+//        AssetUtil.displayNameString(this.font, this.xSize, -10, this.chest);
 //    }
 //
 //    @Override

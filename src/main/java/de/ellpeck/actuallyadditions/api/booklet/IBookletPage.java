@@ -45,7 +45,7 @@ public interface IBookletPage {
     void actionPerformed(GuiBookletBase gui, Button button);
 
     @OnlyIn(Dist.CLIENT)
-    void initGui(GuiBookletBase gui, int startX, int startY);
+    void init(GuiBookletBase gui, int startX, int startY);
 
     @OnlyIn(Dist.CLIENT)
     void updateScreen(GuiBookletBase gui, int startX, int startY, int pageTimer);

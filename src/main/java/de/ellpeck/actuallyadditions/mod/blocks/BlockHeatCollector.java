@@ -12,20 +12,16 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityHeatCollector;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 
 public class BlockHeatCollector extends BlockContainerBase {
-
     public BlockHeatCollector() {
-        super(Material.ROCK, this.name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(2.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+        super(ActuallyBlocks.defaultPickProps(0, 2.5F, 10.0F));
     }
 
     @Override
@@ -34,7 +30,7 @@ public class BlockHeatCollector extends BlockContainerBase {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.UNCOMMON;
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return Shapes.HEAT_COLLECTOR_SHAPE;
     }
 }

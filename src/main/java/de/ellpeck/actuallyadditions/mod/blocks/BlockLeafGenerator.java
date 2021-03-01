@@ -10,22 +10,22 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLeafGenerator;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
+import net.minecraftforge.common.ToolType;
 
-public class BlockLeafGenerator extends BlockContainerBase {
+public class BlockLeafGenerator extends DirectionalBlock.Container {
 
     public BlockLeafGenerator() {
-        super(Material.IRON, this.name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(5.0F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.METAL);
+        super(Properties.create(Material.IRON).hardnessAndResistance(5.0F, 10.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0).hardnessAndResistance(5.0F, 10.0F).sound(SoundType.METAL));
     }
 
     @Override
@@ -34,7 +34,16 @@ public class BlockLeafGenerator extends BlockContainerBase {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        switch (state.get(FACING)) {
+            case EAST:
+                return Shapes.LeafGeneratorShapes.SHAPE_E;
+            case SOUTH:
+                return Shapes.LeafGeneratorShapes.SHAPE_S;
+            case WEST:
+                return Shapes.LeafGeneratorShapes.SHAPE_W;
+            default:
+                return Shapes.LeafGeneratorShapes.SHAPE_N;
+        }
     }
 }

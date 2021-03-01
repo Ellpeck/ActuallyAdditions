@@ -117,7 +117,7 @@ public class BookletPage implements IBookletPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initGui(GuiBookletBase gui, int startX, int startY) {
+    public void init(GuiBookletBase gui, int startX, int startY) {
 
     }
 

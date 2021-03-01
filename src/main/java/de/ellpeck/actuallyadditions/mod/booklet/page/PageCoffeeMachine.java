@@ -59,8 +59,8 @@ public class PageCoffeeMachine extends BookletPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initGui(GuiBookletBase gui, int startX, int startY) {
-        super.initGui(gui, startX, startY);
+    public void init(GuiBookletBase gui, int startX, int startY) {
+        super.init(gui, startX, startY);
 
         gui.addOrModifyItemRenderer(this.stacks[0], startX + 5 + 82, startY + 10 + 1, 1F, true);
         gui.addOrModifyItemRenderer(this.outcome, startX + 5 + 36, startY + 10 + 42, 1F, false);

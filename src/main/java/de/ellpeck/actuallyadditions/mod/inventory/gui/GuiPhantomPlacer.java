@@ -42,11 +42,11 @@ public class GuiPhantomPlacer extends GuiWtfMojang<ContainerPhantomPlacer> {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
         if (!this.placer.isBreaker) {
-            this.addButton(new GuiButton(0, this.guiLeft + 63, this.guiTop + 75, 50, 20, this.getSide()));
+            this.addButton(new Button(0, this.guiLeft + 63, this.guiTop + 75, 50, 20, this.getSide()));
         }
     }
 
@@ -68,13 +68,13 @@ public class GuiPhantomPlacer extends GuiWtfMojang<ContainerPhantomPlacer> {
 
             List<String> textList = new ArrayList<>();
             textList.add(TextFormatting.GOLD + StringUtil.localize(loc + ".1"));
-            textList.addAll(this.fontRenderer.listFormattedStringToWidth(StringUtil.localize(loc + ".2"), 200));
+            textList.addAll(this.font.listFormattedStringToWidth(StringUtil.localize(loc + ".2"), 200));
             this.drawHoveringText(textList, mouseX, mouseY);
         }
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(Button button) throws IOException {
         if (!this.placer.isBreaker) {
             PacketHandlerHelper.sendButtonPacket(this.placer, button.id);
         }
@@ -86,7 +86,7 @@ public class GuiPhantomPlacer extends GuiWtfMojang<ContainerPhantomPlacer> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.placer);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.placer);
     }
 
     @Override

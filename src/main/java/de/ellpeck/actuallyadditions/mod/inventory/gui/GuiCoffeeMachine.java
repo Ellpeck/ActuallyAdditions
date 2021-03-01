@@ -40,10 +40,10 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
-        GuiButton buttonOkay = new GuiButton(0, this.guiLeft + 60, this.guiTop + 11, 58, 20, StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ok"));
+        Button buttonOkay = new Button(0, this.guiLeft + 60, this.guiTop + 11, 58, 20, StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ok"));
         this.addButton(buttonOkay);
 
         this.energy = new EnergyDisplay(this.guiLeft + 16, this.guiTop + 5, this.machine.storage);
@@ -65,7 +65,7 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.machine);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.machine);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
     }
 
     @Override
-    public void actionPerformed(GuiButton button) {
+    public void actionPerformed(Button button) {
         PacketHandlerHelper.sendButtonPacket(this.machine, button.id);
     }
 }

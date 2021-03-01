@@ -37,8 +37,8 @@ public class PageLinkButton extends BookletPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initGui(GuiBookletBase gui, int startX, int startY) {
-        super.initGui(gui, startX, startY);
+    public void init(GuiBookletBase gui, int startX, int startY) {
+        super.init(gui, startX, startY);
 
         gui.getButtonList().add(new Button(this.buttonId, startX + 125 / 2 - 50, startY + 130, 100, 20, StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".chapter." + this.chapter.getIdentifier() + ".button." + this.localizationKey)));
     }

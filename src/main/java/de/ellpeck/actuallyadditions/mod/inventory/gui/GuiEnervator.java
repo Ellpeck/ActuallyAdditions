@@ -36,8 +36,8 @@ public class GuiEnervator extends GuiWtfMojang<ContainerEnervator> {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
         this.energy = new EnergyDisplay(this.guiLeft + 56, this.guiTop + 5, this.enervator.storage);
     }
 
@@ -49,7 +49,7 @@ public class GuiEnervator extends GuiWtfMojang<ContainerEnervator> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.enervator);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.enervator);
     }
 
     @Override

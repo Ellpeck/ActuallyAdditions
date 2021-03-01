@@ -45,7 +45,7 @@ public class GuiBioReactor extends GuiWtfMojang<ContainerBioReactor> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.tile);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tile);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class GuiBioReactor extends GuiWtfMojang<ContainerBioReactor> {
         }
 
         if (this.tile.producePerTick > 0) {
-            this.drawCenteredString(this.fontRenderer, this.tile.producePerTick + " " + I18n.format("actuallyadditions.cft"), this.guiLeft + 87, this.guiTop + 86, 0xFFFFFF);
+            this.drawCenteredString(this.font, this.tile.producePerTick + " " + I18n.format("actuallyadditions.cft"), this.guiLeft + 87, this.guiTop + 86, 0xFFFFFF);
         }
 
         this.energy.draw();

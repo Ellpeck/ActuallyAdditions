@@ -10,26 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
-import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputter;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputterAdvanced;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 public class BlockInputter extends BlockContainerBase {
 
@@ -38,12 +30,7 @@ public class BlockInputter extends BlockContainerBase {
     public final boolean isAdvanced;
 
     public BlockInputter(boolean isAdvanced) {
-        super(Material.ROCK, this.name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
-        this.setTickRandomly(true);
+        super(ActuallyBlocks.defaultPickProps(0).tickRandomly());
         this.isAdvanced = isAdvanced;
     }
 
@@ -55,65 +42,52 @@ public class BlockInputter extends BlockContainerBase {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!world.isRemote) {
-            TileEntityInputter inputter = (TileEntityInputter) world.getTileEntity(pos);
-            if (inputter != null) {
-                player.openGui(ActuallyAdditions.INSTANCE, this.isAdvanced
-                    ? GuiHandler.GuiTypes.INPUTTER_ADVANCED.ordinal()
-                    : GuiHandler.GuiTypes.INPUTTER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
-            }
-            return true;
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (this.isAdvanced) {
+            return this.openGui(world, player, pos, TileEntityInputterAdvanced.class);
         }
-        return true;
+
+        return this.openGui(world, player, pos, TileEntityInputter.class);
     }
 
-    @Override
-    protected ItemBlockBase getItemBlock() {
-        return new TheItemBlock(this);
-    }
+    // TODO: [port] ADD BACK
 
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
-    }
-
-    public static class TheItemBlock extends ItemBlockBase {
-
-        private final Random rand = new Random();
-        private long lastSysTime;
-        private int toPick;
-
-        public TheItemBlock(Block block) {
-            super(block);
-            this.setHasSubtypes(false);
-            this.setMaxDamage(0);
-        }
-
-        @Override
-        public String getTranslationKey(ItemStack stack) {
-            return this.getTranslationKey();
-        }
-
-        @Override
-        public int getMetadata(int damage) {
-            return damage;
-        }
-
-        @Override
-        public String getItemStackDisplayName(ItemStack stack) {
-            if (Util.isClient()) {
-                long sysTime = System.currentTimeMillis();
-
-                if (this.lastSysTime + 5000 < sysTime) {
-                    this.lastSysTime = sysTime;
-                    this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS) + 1;
-                }
-
-                return StringUtil.localize(this.getTranslationKey() + ".name") + " (" + StringUtil.localize("tile." + ActuallyAdditions.MODID + ".block_inputter.add." + this.toPick + ".name") + ")";
-            } else {
-                return super.getItemStackDisplayName(stack);
-            }
-        }
-    }
+    //    public static class TheItemBlock extends ItemBlockBase {
+    //
+    //        private final Random rand = new Random();
+    //        private long lastSysTime;
+    //        private int toPick;
+    //
+    //        public TheItemBlock(Block block) {
+    //            super(block);
+    //            this.setHasSubtypes(false);
+    //            this.setMaxDamage(0);
+    //        }
+    //
+    //        @Override
+    //        public String getTranslationKey(ItemStack stack) {
+    //            return this.getTranslationKey();
+    //        }
+    //
+    //        @Override
+    //        public int getMetadata(int damage) {
+    //            return damage;
+    //        }
+    //
+    //        @Override
+    //        public String getItemStackDisplayName(ItemStack stack) {
+    //            if (Util.isClient()) {
+    //                long sysTime = System.currentTimeMillis();
+    //
+    //                if (this.lastSysTime + 5000 < sysTime) {
+    //                    this.lastSysTime = sysTime;
+    //                    this.toPick = this.rand.nextInt(NAME_FLAVOR_AMOUNTS) + 1;
+    //                }
+    //
+    //                return StringUtil.localize(this.getTranslationKey() + ".name") + " (" + StringUtil.localize("tile." + ActuallyAdditions.MODID + ".block_inputter.add." + this.toPick + ".name") + ")";
+    //            } else {
+    //                return super.getItemStackDisplayName(stack);
+    //            }
+    //        }
+    //    }
 }

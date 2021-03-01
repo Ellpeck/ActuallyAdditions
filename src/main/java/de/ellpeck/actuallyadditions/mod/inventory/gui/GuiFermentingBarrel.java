@@ -44,15 +44,15 @@ public class GuiFermentingBarrel extends GuiWtfMojang<ContainerFermentingBarrel>
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
         this.input = new FluidDisplay(this.guiLeft + 60, this.guiTop + 5, this.press.canolaTank);
         this.output = new FluidDisplay(this.guiLeft + 98, this.guiTop + 5, this.press.oilTank);
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.press);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.press);
     }
 
     @Override

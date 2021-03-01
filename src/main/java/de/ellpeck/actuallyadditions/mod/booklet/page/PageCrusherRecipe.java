@@ -55,8 +55,8 @@ public class PageCrusherRecipe extends BookletPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initGui(GuiBookletBase gui, int startX, int startY) {
-        super.initGui(gui, startX, startY);
+    public void init(GuiBookletBase gui, int startX, int startY) {
+        super.init(gui, startX, startY);
 
         if (this.recipe != null) {
             gui.addOrModifyItemRenderer(this.stacks[this.rotate++ % this.stacks.length], startX + 38 + 18, startY + 6 + 1, 1F, true);

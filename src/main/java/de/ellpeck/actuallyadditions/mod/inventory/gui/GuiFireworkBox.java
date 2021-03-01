@@ -35,8 +35,8 @@ public class GuiFireworkBox extends GuiContainer implements GuiResponder {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
         this.addButton(new CustomSlider(this, 0, this.guiLeft, this.guiTop, "Value Play", 0F, 5F, this.tile.intValuePlay, IntFormatter.INSTANCE));
         this.addButton(new CustomSlider(this, 1, this.guiLeft, this.guiTop + 20, "Average Charge Amount", 1F, 4F, this.tile.chargeAmount, IntFormatter.INSTANCE));
@@ -56,7 +56,7 @@ public class GuiFireworkBox extends GuiContainer implements GuiResponder {
 
     @Override
     public void setEntryValue(int id, float value) {
-        GuiButton button = this.buttonList.get(id);
+        Button button = this.buttonList.get(id);
         if (button instanceof GuiSlider) {
             if (!((GuiSlider) button).isMouseDown) {
                 System.out.println("SETTING VALUE FOR " + id + "!!");
@@ -72,7 +72,7 @@ public class GuiFireworkBox extends GuiContainer implements GuiResponder {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.tile);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tile);
     }
 
     @Override

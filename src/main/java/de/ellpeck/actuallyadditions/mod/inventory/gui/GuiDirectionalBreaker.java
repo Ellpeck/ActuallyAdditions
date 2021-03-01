@@ -36,8 +36,8 @@ public class GuiDirectionalBreaker extends GuiWtfMojang<ContainerDirectionalBrea
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
         this.energy = new EnergyDisplay(this.guiLeft + 42, this.guiTop + 5, this.breaker.storage);
     }
 
@@ -50,7 +50,7 @@ public class GuiDirectionalBreaker extends GuiWtfMojang<ContainerDirectionalBrea
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.breaker);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.breaker);
     }
 
     @Override

@@ -53,8 +53,8 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
         this.energy = new EnergyDisplay(this.guiLeft + (this.isDouble
             ? 13
             : 42), this.guiTop + 5, this.tileGrinder.storage);
@@ -66,7 +66,7 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(Button button) throws IOException {
         if (this.isDouble && button.id == 0) {
             PacketHandlerHelper.sendButtonPacket(this.tileGrinder, button.id);
         }
@@ -98,7 +98,7 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.tileGrinder);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tileGrinder);
     }
 
     @Override

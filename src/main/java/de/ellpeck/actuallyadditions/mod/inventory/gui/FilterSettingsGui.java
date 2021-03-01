@@ -15,9 +15,11 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +36,7 @@ public class FilterSettingsGui extends Gui {
     public SmallerButton modButton;
     public SmallerButton oredictButton;
 
-    public FilterSettingsGui(FilterSettings settings, int x, int y, List<GuiButton> buttonList) {
+    public FilterSettingsGui(FilterSettings settings, int x, int y, List<Button> buttonList) {
         this.theSettings = settings;
 
         this.whitelistButton = new SmallerButton(this.theSettings.whitelistButtonId, x, y, "", true);

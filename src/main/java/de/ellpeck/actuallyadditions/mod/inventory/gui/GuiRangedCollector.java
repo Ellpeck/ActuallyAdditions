@@ -38,8 +38,8 @@ public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
         this.filter = new FilterSettingsGui(this.collector.filter, this.guiLeft + 3, this.guiTop + 6, this.buttonList);
     }
@@ -60,7 +60,7 @@ public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.collector);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.collector);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
     }
 
     @Override
-    public void actionPerformed(GuiButton button) {
+    public void actionPerformed(Button button) {
         PacketHandlerHelper.sendButtonPacket(this.collector, button.id);
     }
 }

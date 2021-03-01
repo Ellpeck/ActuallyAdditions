@@ -12,17 +12,17 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityShockSuppressor;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.ExplosionEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,12 +31,7 @@ import java.util.List;
 public class BlockShockSuppressor extends BlockContainerBase {
 
     public BlockShockSuppressor() {
-        super(Material.ROCK, this.name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(20.0F);
-        this.setResistance(2000.0F);
-        this.setSoundType(SoundType.STONE);
-
+        super(ActuallyBlocks.defaultPickProps(0, 20F, 2000.0F));
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -63,7 +58,7 @@ public class BlockShockSuppressor extends BlockContainerBase {
                         }
                     }
                     for (Entity entity : affectedEntities) {
-                        if (entity.getPositionVector().squareDistanceTo(supPos.getX(), supPos.getY(), supPos.getZ()) <= rangeSq) {
+                        if (entity.getPositionVec().squareDistanceTo(supPos.getX(), supPos.getY(), supPos.getZ()) <= rangeSq) {
                             entitiesToRemove.add(entity);
                         }
                     }
@@ -93,12 +88,12 @@ public class BlockShockSuppressor extends BlockContainerBase {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+        return new TileEntityShockSuppressor();
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityShockSuppressor();
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return Shapes.SUPPRESSOR_SHAPE;
     }
 }

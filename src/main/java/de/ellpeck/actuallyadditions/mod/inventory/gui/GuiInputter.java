@@ -17,15 +17,15 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputter;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.java.games.input.Keyboard;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
 
@@ -38,10 +38,10 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
     private static final ResourceLocation RES_LOC_ADVANCED = AssetUtil.getGuiLocation("gui_inputter_advanced");
     public final TileEntityInputter tileInputter;
     private final boolean isAdvanced;
-    private GuiTextField fieldPutStart;
-    private GuiTextField fieldPutEnd;
-    private GuiTextField fieldPullStart;
-    private GuiTextField fieldPullEnd;
+    private TextFieldWidget fieldPutStart;
+    private TextFieldWidget fieldPutEnd;
+    private TextFieldWidget fieldPullStart;
+    private TextFieldWidget fieldPullEnd;
 
     private FilterSettingsGui leftFilter;
     private FilterSettingsGui rightFilter;
@@ -57,31 +57,31 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
         if (this.isAdvanced) {
             this.leftFilter = new FilterSettingsGui(this.tileInputter.leftFilter, this.guiLeft + 3, this.guiTop + 6, this.buttonList);
             this.rightFilter = new FilterSettingsGui(this.tileInputter.rightFilter, this.guiLeft + 157, this.guiTop + 6, this.buttonList);
         }
 
-        this.fieldPullStart = new GuiTextField(3000, this.fontRenderer, this.guiLeft + 6, this.guiTop + 80 + (this.isAdvanced
+        this.fieldPullStart = new TextFieldWidget(3000, this.font, this.guiLeft + 6, this.guiTop + 80 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), 34, 8);
         this.fieldPullStart.setMaxStringLength(5);
         this.fieldPullStart.setEnableBackgroundDrawing(false);
-        this.fieldPullEnd = new GuiTextField(3001, this.fontRenderer, this.guiLeft + 50, this.guiTop + 80 + (this.isAdvanced
+        this.fieldPullEnd = new TextFieldWidget(3001, this.font, this.guiLeft + 50, this.guiTop + 80 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), 34, 8);
         this.fieldPullEnd.setMaxStringLength(5);
         this.fieldPullEnd.setEnableBackgroundDrawing(false);
 
-        this.fieldPutStart = new GuiTextField(3002, this.fontRenderer, this.guiLeft + 91, this.guiTop + 80 + (this.isAdvanced
+        this.fieldPutStart = new TextFieldWidget(3002, this.font, this.guiLeft + 91, this.guiTop + 80 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), 34, 8);
         this.fieldPutStart.setMaxStringLength(5);
         this.fieldPutStart.setEnableBackgroundDrawing(false);
-        this.fieldPutEnd = new GuiTextField(3004, this.fontRenderer, this.guiLeft + 135, this.guiTop + 80 + (this.isAdvanced
+        this.fieldPutEnd = new TextFieldWidget(3004, this.font, this.guiLeft + 135, this.guiTop + 80 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), 34, 8);
         this.fieldPutEnd.setMaxStringLength(5);
@@ -120,16 +120,16 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
             : 0);
         //Info Mode on!
         if (x >= this.guiLeft + 4 && y >= newTopOffset + 65 && x <= this.guiLeft + 4 + 38 && y <= newTopOffset + 65 + 12) {
-            this.drawHoveringText(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".inputter.info.1").replace("<p>", StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.pull")), 200), x, y);
+            this.drawHoveringText(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".inputter.info.1").replace("<p>", StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.pull")), 200), x, y);
         }
         if (x >= this.guiLeft + 89 && y >= newTopOffset + 65 && x <= this.guiLeft + 89 + 38 && y <= newTopOffset + 65 + 12) {
-            this.drawHoveringText(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".inputter.info.1").replace("<p>", StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.put")), 200), x, y);
+            this.drawHoveringText(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".inputter.info.1").replace("<p>", StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.put")), 200), x, y);
         }
         if (x >= this.guiLeft + 48 && y >= newTopOffset + 65 && x <= this.guiLeft + 48 + 38 && y <= newTopOffset + 65 + 12) {
-            this.drawHoveringText(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".inputter.info.2").replace("<p>", StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.pull")), 200), x, y);
+            this.drawHoveringText(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".inputter.info.2").replace("<p>", StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.pull")), 200), x, y);
         }
         if (x >= this.guiLeft + 133 && y >= newTopOffset + 65 && x <= this.guiLeft + 133 + 38 && y <= newTopOffset + 65 + 12) {
-            this.drawHoveringText(this.fontRenderer.listFormattedStringToWidth(StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".inputter.info.2").replace("<p>", StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.put")), 200), x, y);
+            this.drawHoveringText(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".inputter.info.2").replace("<p>", StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.put")), 200), x, y);
         }
 
         if (this.isAdvanced) {
@@ -140,7 +140,7 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.tileInputter);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tileInputter);
     }
 
     @Override
@@ -159,30 +159,30 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
             ? OFFSET_ADVANCED
             : 0));
 
-        this.fontRenderer.drawString(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.inbound"), this.guiLeft + 23 + 3, this.guiTop + 32 + (this.isAdvanced
+        this.font.drawString(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.inbound"), this.guiLeft + 23 + 3, this.guiTop + 32 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRenderer.drawString(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.outbound"), this.guiLeft + 104 + 3, this.guiTop + 32 + (this.isAdvanced
-            ? OFFSET_ADVANCED
-            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-
-        this.fontRenderer.drawString(SIDES[this.tileInputter.sideToPull + 1], this.guiLeft + 24 + 1, this.guiTop + 45 + 3 + (this.isAdvanced
-            ? OFFSET_ADVANCED
-            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.fontRenderer.drawString(SIDES[this.tileInputter.sideToPut + 1], this.guiLeft + 109 + 1, this.guiTop + 45 + 3 + (this.isAdvanced
+        this.font.drawString(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.outbound"), this.guiLeft + 104 + 3, this.guiTop + 32 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
-        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPutStart), this.guiLeft + 92, this.guiTop + 67 + (this.isAdvanced
+        this.font.drawString(SIDES[this.tileInputter.sideToPull + 1], this.guiLeft + 24 + 1, this.guiTop + 45 + 3 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.font.drawString(SIDES[this.tileInputter.sideToPut + 1], this.guiLeft + 109 + 1, this.guiTop + 45 + 3 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+
+        this.font.drawString(Integer.toString(this.tileInputter.slotToPutStart), this.guiLeft + 92, this.guiTop + 67 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPutEnd), this.guiLeft + 136, this.guiTop + 67 + (this.isAdvanced
+        this.font.drawString(Integer.toString(this.tileInputter.slotToPutEnd), this.guiLeft + 136, this.guiTop + 67 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPullStart), this.guiLeft + 7, this.guiTop + 67 + (this.isAdvanced
+        this.font.drawString(Integer.toString(this.tileInputter.slotToPullStart), this.guiLeft + 7, this.guiTop + 67 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.fontRenderer.drawString(Integer.toString(this.tileInputter.slotToPullEnd), this.guiLeft + 51, this.guiTop + 67 + (this.isAdvanced
+        this.font.drawString(Integer.toString(this.tileInputter.slotToPullEnd), this.guiLeft + 51, this.guiTop + 67 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), StringUtil.DECIMAL_COLOR_WHITE);
 
@@ -242,7 +242,7 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
         }
     }
 
-    public void setVariable(GuiTextField field, int sendInt) {
+    public void setVariable(TextFieldWidget field, int sendInt) {
         if (!field.getText().isEmpty()) {
             this.sendPacket(this.parse(field.getText()), sendInt);
             field.setText("");
@@ -262,7 +262,7 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
     }
 
     @Override
-    public void actionPerformed(GuiButton button) {
+    public void actionPerformed(Button button) {
         if (button.id == TileEntityInputter.OKAY_BUTTON_ID) {
             this.setVariable(this.fieldPutStart, 0);
             this.setVariable(this.fieldPutEnd, 1);
@@ -320,7 +320,7 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class TinyButton extends GuiButton {
+    public static class TinyButton extends Button {
 
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("gui_inputter");
 

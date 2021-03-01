@@ -10,58 +10,42 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirectional;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.block.BlockState;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockLampPowerer extends BlockBase {
+public class BlockLampPowerer extends FullyDirectionalBlock {
 
     public BlockLampPowerer() {
-        super(Material.ROCK, name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(1.5F);
-        this.setResistance(10.0F);
-        this.setSoundType(SoundType.STONE);
+        super(ActuallyBlocks.defaultPickProps(0));
     }
 
     @Override
-    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos otherPos) {
+    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         this.updateLamp(worldIn, pos);
     }
 
     @Override
-    public void onBlockAdded(World world, BlockPos pos, BlockState state) {
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
         this.updateLamp(world, pos);
-    }
-
-    @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, EntityLivingBase player, ItemStack stack) {
-        int rotation = Direction.getDirectionFromEntityLiving(pos, player).ordinal();
-        world.setBlockState(pos, this.getStateFromMeta(rotation), 2);
-
-        super.onBlockPlacedBy(world, pos, state, player, stack);
     }
 
     private void updateLamp(World world, BlockPos pos) {
         if (!world.isRemote) {
             BlockState state = world.getBlockState(pos);
             BlockPos coords = pos.offset(WorldUtil.getDirectionByPistonRotation(state));
-            this.updateLampsAtPos(world, coords, world.getRedstonePowerFromNeighbors(pos) > 0, new ArrayList<BlockPos>());
+            this.updateLampsAtPos(world, coords, world.getRedstonePowerFromNeighbors(pos) > 0, new ArrayList<>());
         }
     }
 
@@ -69,15 +53,12 @@ public class BlockLampPowerer extends BlockBase {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         if (block instanceof BlockColoredLamp) {
-            boolean isOn = ((BlockColoredLamp) block).isOn;
-            if (powered) {
-                if (!isOn) {
-                    world.setBlockState(pos, ActuallyBlocks.blockColoredLampOn.getDefaultState().withProperty(BlockColoredLamp.TYPE, state.getValue(BlockColoredLamp.TYPE)), 2);
-                }
-            } else {
-                if (isOn) {
-                    world.setBlockState(pos, ActuallyBlocks.blockColoredLamp.getDefaultState().withProperty(BlockColoredLamp.TYPE, state.getValue(BlockColoredLamp.TYPE)), 2);
-                }
+            if (state.get(BlockStateProperties.LIT) && !powered) {
+                world.setBlockState(pos, state.with(BlockStateProperties.LIT, false));
+            }
+
+            if (!state.get(BlockStateProperties.LIT) && powered) {
+                world.setBlockState(pos, state.with(BlockStateProperties.LIT, true));
             }
 
             this.updateSurrounding(world, pos, powered, updatedAlready);
@@ -95,32 +76,16 @@ public class BlockLampPowerer extends BlockBase {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
-    }
-
-    @Override
-    public BlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockDirectional.FACING, Direction.byIndex(meta));
-    }
-
-    @Override
-    public int getMetaFromState(BlockState state) {
-        return state.getValue(BlockDirectional.FACING).getIndex();
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, BlockDirectional.FACING);
-    }
-
-    @Override
-    public BlockState withRotation(BlockState state, Rotation rot) {
-        return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING)));
-    }
-
-    @Override
-    public BlockState withMirror(BlockState state, Mirror mirror) {
-        return this.withRotation(state, mirror.toRotation(state.getValue(BlockDirectional.FACING)));
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        switch (state.get(FACING)) {
+            case EAST:
+                return Shapes.LampPowererShapes.SHAPE_E;
+            case SOUTH:
+                return Shapes.LampPowererShapes.SHAPE_S;
+            case WEST:
+                return Shapes.LampPowererShapes.SHAPE_W;
+            default:
+                return Shapes.LampPowererShapes.SHAPE_N;
+        }
     }
 }

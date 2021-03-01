@@ -111,9 +111,9 @@ public class GuiPage extends GuiBooklet {
     }
 
     @Override
-    public void initGui() {
+    public void init() {
         this.itemDisplays.clear();
-        super.initGui();
+        super.init();
 
         List<String> links = this.getWebLinks();
         if (links != null && !links.isEmpty()) {
@@ -124,7 +124,7 @@ public class GuiPage extends GuiBooklet {
         for (int i = 0; i < this.pages.length; i++) {
             IBookletPage page = this.pages[i];
             if (page != null) {
-                page.initGui(this, this.guiLeft + 6 + i * 142, this.guiTop + 7);
+                page.init(this, this.guiLeft + 6 + i * 142, this.guiTop + 7);
             }
         }
     }

@@ -59,8 +59,8 @@ public class PageReconstructor extends BookletPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initGui(GuiBookletBase gui, int startX, int startY) {
-        super.initGui(gui, startX, startY);
+    public void init(GuiBookletBase gui, int startX, int startY) {
+        super.init(gui, startX, startY);
 
         if (this.recipe != null) {
             gui.addOrModifyItemRenderer(this.stacks[0], startX + 30 + 1, startY + 10 + 13, 1F, true);

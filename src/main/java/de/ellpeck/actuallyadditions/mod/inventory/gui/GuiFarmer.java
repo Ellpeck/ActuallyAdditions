@@ -37,15 +37,15 @@ public class GuiFarmer extends GuiWtfMojang<ContainerFarmer> {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
         this.energy = new EnergyDisplay(this.guiLeft + 33, this.guiTop + 6, this.farmer.storage);
     }
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.farmer);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.farmer);
     }
 
     @Override

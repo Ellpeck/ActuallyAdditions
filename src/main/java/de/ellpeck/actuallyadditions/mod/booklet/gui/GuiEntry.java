@@ -76,8 +76,8 @@ public class GuiEntry extends GuiBooklet {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
         if (this.hasSearchBar() && this.searchText != null) {
             this.searchField.setText(this.searchText);

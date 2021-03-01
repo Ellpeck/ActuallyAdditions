@@ -52,7 +52,7 @@ public class GuiFeeder extends GuiWtfMojang<ContainerFeeder> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.tileFeeder);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tileFeeder);
     }
 
     @Override

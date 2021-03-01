@@ -41,8 +41,8 @@ public class GuiAAAchievements extends GuiAchievements{
     }
 
     @Override
-    public void initGui(){
-        super.initGui();
+    public void init(){
+        super.init();
 
         try{
             this.buttonList.remove(1);

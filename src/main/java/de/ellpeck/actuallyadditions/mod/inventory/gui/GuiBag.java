@@ -48,19 +48,19 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
         this.filter = new FilterSettingsGui(this.container.filter, this.guiLeft + 138, this.guiTop + 10, this.buttonList);
 
-        this.buttonAutoInsert = new GuiButton(0, this.guiLeft - 21, this.guiTop + 8, 20, 20, (this.container.autoInsert
+        this.buttonAutoInsert = new Button(0, this.guiLeft - 21, this.guiTop + 8, 20, 20, (this.container.autoInsert
             ? TextFormatting.DARK_GREEN
             : TextFormatting.RED) + "I");
         this.addButton(this.buttonAutoInsert);
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(Button button) throws IOException {
         CompoundNBT data = new CompoundNBT();
         data.setInteger("ButtonID", button.id);
         data.setInteger("PlayerID", Minecraft.getInstance().player.getEntityId());

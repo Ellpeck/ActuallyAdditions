@@ -63,8 +63,8 @@ public class PageEmpowerer extends BookletPage {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initGui(GuiBookletBase gui, int startX, int startY) {
-        super.initGui(gui, startX, startY);
+    public void init(GuiBookletBase gui, int startX, int startY) {
+        super.init(gui, startX, startY);
 
         if (this.recipe != null) {
             gui.addOrModifyItemRenderer(this.stand1[0], startX + 5 + 26, startY + 10 + 1, 1F, true);

@@ -34,7 +34,7 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
     private final TileEntityFurnaceDouble tileFurnace;
     private EnergyDisplay energy;
 
-    private GuiButton buttonAutoSplit;
+    private Button buttonAutoSplit;
 
     public GuiFurnaceDouble(ContainerFurnaceDouble container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
@@ -56,8 +56,8 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
         this.energy = new EnergyDisplay(this.guiLeft + 27, this.guiTop + 5, this.tileFurnace.storage);
 
         this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.guiLeft, this.guiTop, "S");
@@ -74,7 +74,7 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(Button button) throws IOException {
         if (button.id == 0) {
             PacketHandlerHelper.sendButtonPacket(this.tileFurnace, button.id);
         }
@@ -82,7 +82,7 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.tileFurnace);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tileFurnace);
     }
 
     @Override

@@ -97,8 +97,8 @@ public class PageCrafting extends BookletPage {
     }
 
     @Override
-    public void initGui(GuiBookletBase gui, int startX, int startY) {
-        super.initGui(gui, startX, startY);
+    public void init(GuiBookletBase gui, int startX, int startY) {
+        super.init(gui, startX, startY);
         this.findRecipe(gui, startX, startY);
     }
 

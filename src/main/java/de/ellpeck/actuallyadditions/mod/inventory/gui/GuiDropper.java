@@ -36,7 +36,7 @@ public class GuiDropper extends GuiWtfMojang<ContainerDropper> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.dropper);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.dropper);
     }
 
     @Override

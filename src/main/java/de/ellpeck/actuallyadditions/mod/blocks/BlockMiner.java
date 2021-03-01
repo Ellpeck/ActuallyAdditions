@@ -11,66 +11,51 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
+import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 
-public class BlockMiner extends BlockContainerBase implements IHudDisplay {
+public class BlockMiner extends DirectionalBlock.Container implements IHudDisplay {
 
     public BlockMiner() {
-        super(Material.ROCK, this.name);
-        this.setHarvestLevel("pickaxe", 0);
-        this.setHardness(8F);
-        this.setResistance(30F);
-        this.setSoundType(SoundType.STONE);
-    }
-
-    @Override
-    public boolean isOpaqueCube(BlockState state) {
-        return false;
+        super(ActuallyBlocks.defaultPickProps(0, 8F, 30F));
     }
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!world.isRemote) {
-            TileEntity tile = world.getTileEntity(pos);
-            if (tile instanceof TileEntityMiner) {
-                player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.MINER.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
-            }
-        }
-        return true;
+        return this.openGui(worldIn, player, pos, TileEntityMiner.class);
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World world, int i) {
+    public TileEntity createNewTileEntity(IBlockReader world) {
         return new TileEntityMiner();
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
-        TileEntity tile = minecraft.world.getTileEntity(rayCast.getBlockPos());
+        if (!(rayCast instanceof BlockRayTraceResult)) {
+            return;
+        }
+        TileEntity tile = minecraft.world.getTileEntity(((BlockRayTraceResult) rayCast).getPos());
         if (tile instanceof TileEntityMiner) {
             TileEntityMiner miner = (TileEntityMiner) tile;
             String info = miner.checkY == 0
@@ -78,7 +63,23 @@ public class BlockMiner extends BlockContainerBase implements IHudDisplay {
                 : miner.checkY == -1
                     ? "Calculating positions..."
                     : "Mining at " + (miner.getPos().getX() + miner.checkX) + ", " + miner.checkY + ", " + (miner.getPos().getZ() + miner.checkZ) + ".";
-            minecraft.fontRenderer.drawStringWithShadow(info, resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 - 20, StringUtil.DECIMAL_COLOR_WHITE);
+            minecraft.fontRenderer.drawStringWithShadow(matrices, info, resolution.getScaledWidth() / 2f + 5, resolution.getScaledHeight() / 2f - 20, StringUtil.DECIMAL_COLOR_WHITE);
+        }
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        switch (state.get(FACING)) {
+            case NORTH:
+                return Shapes.MinerShapes.SHAPE_N;
+            case EAST:
+                return Shapes.MinerShapes.SHAPE_E;
+            case SOUTH:
+                return Shapes.MinerShapes.SHAPE_S;
+            case WEST:
+                return Shapes.MinerShapes.SHAPE_W;
+            default:
+                return Shapes.MinerShapes.SHAPE_N;
         }
     }
 }

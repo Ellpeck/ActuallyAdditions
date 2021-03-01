@@ -40,8 +40,8 @@ public class GuiOilGenerator extends GuiWtfMojang<ContainerOilGenerator> {
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
         this.energy = new EnergyDisplay(this.guiLeft + 42, this.guiTop + 5, this.generator.storage);
         this.fluid = new FluidDisplay(this.guiLeft + 116, this.guiTop + 5, this.generator.tank);
     }
@@ -55,7 +55,7 @@ public class GuiOilGenerator extends GuiWtfMojang<ContainerOilGenerator> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, this.generator);
+        AssetUtil.displayNameString(this.font, this.xSize, -10, this.generator);
     }
 
     @Override
@@ -74,12 +74,12 @@ public class GuiOilGenerator extends GuiWtfMojang<ContainerOilGenerator> {
         }
 
         if (this.generator.maxBurnTime > 0 && this.generator.currentEnergyProduce > 0) {
-            this.drawCenteredString(this.fontRenderer, this.generator.currentEnergyProduce + " " + I18n.format("actuallyadditions.cft"), this.guiLeft + 87, this.guiTop + 65, 0xFFFFFF);
-            this.drawCenteredString(this.fontRenderer, "for " + this.generator.maxBurnTime + " t", this.guiLeft + 87, this.guiTop + 75, 0xFFFFFF);
+            this.drawCenteredString(this.font, this.generator.currentEnergyProduce + " " + I18n.format("actuallyadditions.cft"), this.guiLeft + 87, this.guiTop + 65, 0xFFFFFF);
+            this.drawCenteredString(this.font, "for " + this.generator.maxBurnTime + " t", this.guiLeft + 87, this.guiTop + 75, 0xFFFFFF);
             GlStateManager.pushMatrix();
             GlStateManager.scale(0.75, 0.75, 1);
-            float xS = (this.guiLeft + 87) * 1.365F - this.fontRenderer.getStringWidth("(per 50 mB)") / 2F;
-            StringUtil.renderScaledAsciiString(this.fontRenderer, "(per 50 mB)", xS, (this.guiTop + 85) * 1.345F, 0xFFFFFF, true, 0.75F);
+            float xS = (this.guiLeft + 87) * 1.365F - this.font.getStringWidth("(per 50 mB)") / 2F;
+            StringUtil.renderScaledAsciiString(this.font, "(per 50 mB)", xS, (this.guiTop + 85) * 1.345F, 0xFFFFFF, true, 0.75F);
             GlStateManager.popMatrix();
         }
 

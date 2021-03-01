@@ -124,7 +124,7 @@ public final class ActuallyBlocks {
     public static final RegistryObject<Block> blockFurnaceDouble = BLOCKS.register("block_furnace_double", BlockFurnaceDouble::new);
     public static final RegistryObject<Block> blockInputter = BLOCKS.register("block_inputter", () -> new BlockInputter(false));
     public static final RegistryObject<Block> blockInputterAdvanced = BLOCKS.register("block_inputter_advanced", () -> new BlockInputter(true));
-    public static final RegistryObject<Block> blockFurnaceSolar = BLOCKS.register("block_furnace_solar", BlockFurnaceSolar::new);
+    //    public static final RegistryObject<Block> blockFurnaceSolar = BLOCKS.register("block_furnace_solar", BlockFurnaceSolar::new);
     public static final RegistryObject<Block> blockHeatCollector = BLOCKS.register("block_heat_collector", BlockHeatCollector::new);
     public static final RegistryObject<Block> blockGreenhouseGlass = BLOCKS.register("block_greenhouse_glass", BlockGreenhouseGlass::new);
     public static final RegistryObject<Block> blockBreaker = BLOCKS.register("block_breaker", () -> new BlockBreaker(false));

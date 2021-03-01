@@ -35,7 +35,7 @@ public class GuiFilter extends GuiWtfMojang<ContainerFilter> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.fontRenderer, this.xSize, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + ".filter.name"));
+        AssetUtil.displayNameString(this.font, this.xSize, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + ".filter.name"));
     }
 
     @Override
