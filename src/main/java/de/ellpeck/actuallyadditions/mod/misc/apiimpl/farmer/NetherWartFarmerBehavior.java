@@ -14,10 +14,12 @@ import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockNetherWart;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.NetherWartBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -47,8 +49,8 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior {
         int use = 500;
         if (farmer.getEnergy() >= use) {
             BlockState state = world.getBlockState(pos);
-            if (state.getBlock() instanceof BlockNetherWart) {
-                if (state.getValue(BlockNetherWart.AGE) >= 3) {
+            if (state.getBlock() instanceof NetherWartBlock) {
+                if (state.get(BlockStateProperties.AGE_0_3) >= 3) {
                     NonNullList<ItemStack> drops = NonNullList.create();
                     state.getBlock().getDrops(drops, world, pos, state, 0);
                     if (!drops.isEmpty()) {

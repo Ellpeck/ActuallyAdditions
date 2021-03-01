@@ -21,18 +21,15 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockNetherrack;
-import net.minecraft.block.BlockStone;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.NetherrackBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
@@ -130,7 +127,7 @@ public class LensMining extends Lens {
                 Block hitBlock = hitState.getBlock();
                 if (hitBlock instanceof BlockStone) {
                     ores = ActuallyAdditionsAPI.STONE_ORES;
-                } else if (hitBlock instanceof BlockNetherrack) {
+                } else if (hitBlock instanceof NetherrackBlock) {
                     ores = ActuallyAdditionsAPI.NETHERRACK_ORES;
                     adaptedUse += 10000;
                 }

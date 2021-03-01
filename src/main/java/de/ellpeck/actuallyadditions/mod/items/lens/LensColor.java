@@ -16,15 +16,16 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.List;
@@ -56,25 +57,25 @@ public class LensColor extends Lens {
             if (tile.getEnergy() >= ENERGY_USE) {
                 BlockState state = tile.getWorldObject().getBlockState(hitBlock);
                 Block block = state.getBlock();
-                int meta = block.getMetaFromState(state);
-                ItemStack returnStack = this.tryConvert(new ItemStack(block, 1, meta), hitState, hitBlock, tile);
-                if (returnStack != null && returnStack.getItem() instanceof ItemBlock) {
+                //                int meta = block.getMetaFromState(state);
+                ItemStack returnStack = this.tryConvert(new ItemStack(block), hitState, hitBlock, tile);
+                if (returnStack != null && returnStack.getItem() instanceof BlockItem) {
                     Block toPlace = Block.getBlockFromItem(returnStack.getItem());
-                    BlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, Direction.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
+                    BlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, Direction.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((ServerWorld) tile.getWorldObject()), Hand.MAIN_HAND);
                     tile.getWorldObject().setBlockState(hitBlock, state2Place, 2);
                     tile.extractEnergy(ENERGY_USE);
                 }
             }
 
-            List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
-            for (EntityItem item : items) {
-                if (!item.isDead && StackUtil.isValid(item.getItem()) && tile.getEnergy() >= ENERGY_USE) {
+            List<ItemEntity> items = tile.getWorldObject().getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
+            for (ItemEntity item : items) {
+                if (item.isAlive() && StackUtil.isValid(item.getItem()) && tile.getEnergy() >= ENERGY_USE) {
                     ItemStack newStack = this.tryConvert(item.getItem(), hitState, hitBlock, tile);
                     if (StackUtil.isValid(newStack)) {
-                        item.setDead();
+                        item.remove();
 
-                        EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, newStack);
-                        tile.getWorldObject().spawnEntity(newItem);
+                        ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getPosX(), item.getPosY(), item.getPosZ(), newStack);
+                        tile.getWorldObject().addEntity(newItem);
 
                         tile.extractEnergy(ENERGY_USE);
                     }

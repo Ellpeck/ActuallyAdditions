@@ -10,17 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.LanguageMap;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.List;
-
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.text.translation.LanguageMap;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.OnlyIn;
 
 public final class StringUtil {
 
@@ -45,7 +45,8 @@ public final class StringUtil {
         return I18n.format(text, replace);
     }
 
-    @SuppressWarnings("deprecation") //TODO: delete this shit and move ItemPotionRing's getItemStackDisplayName into getUnlocalizedName
+    @SuppressWarnings("deprecation")
+    //TODO: delete this shit and move ItemPotionRing's getItemStackDisplayName into getUnlocalizedName
     public static String localizeIllegallyOnTheServerDontUseMePls(String langKey) {
         return net.minecraft.util.text.translation.I18n.translateToLocal(langKey);
     }

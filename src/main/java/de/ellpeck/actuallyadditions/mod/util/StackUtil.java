@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapp
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.IItemHandler;
-import org.cyclops.commoncapabilities.api.capability.itemhandler.ISlotlessItemHandler;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,6 +28,7 @@ public final class StackUtil {
      *
      * @return If the stack is not empty, or if it's an IDisableableItem, if its enabled.
      */
+    @Deprecated
     public static boolean isValid(ItemStack stack) {
         return stack != null && !stack.isEmpty();
         //        if (stack == null) AwfulUtil.callTheFuckinPolice("Null ItemStack detected", stack);
@@ -40,19 +40,9 @@ public final class StackUtil {
     /**
      * @return The empty itemstack instance.
      */
+    @Deprecated
     public static ItemStack getEmpty() {
         return ItemStack.EMPTY;
-    }
-
-    /**
-     * A helper method to make NonNullLists with empty fill.
-     *
-     * @param size How big the list will be.
-     *
-     * @return A {@link NonNullList} with the same size as provided.
-     */
-    public static NonNullList<ItemStack> makeList(int size) {
-        return NonNullList.withSize(size, getEmpty());
     }
 
     /**
@@ -62,6 +52,7 @@ public final class StackUtil {
      *
      * @return If all stacks in the collection return true for {@link ItemStack#isEmpty()}
      */
+    @Deprecated
     public static boolean isEmpty(Collection<ItemStack> stacks) {
         if (stacks.isEmpty()) {
             return true;
@@ -230,12 +221,12 @@ public final class StackUtil {
 
         if (ActuallyAdditions.commonCapsLoaded) {
             Object handler = wrapper.getSlotlessHandler();
-            if (handler instanceof ISlotlessItemHandler) {
-                remain = ((ISlotlessItemHandler) handler).insertItem(remain, simulate);
-                if (!ItemStack.areItemStacksEqual(remain, stack)) {
-                    return remain;
-                }
-            }
+            //            if (handler instanceof ISlotlessItemHandler) {
+            //                remain = ((ISlotlessItemHandler) handler).insertItem(remain, simulate);
+            //                if (!ItemStack.areItemStacksEqual(remain, stack)) {
+            //                    return remain;
+            //                }
+            //            }
         }
 
         IItemHandler handler = wrapper.getNormalHandler();

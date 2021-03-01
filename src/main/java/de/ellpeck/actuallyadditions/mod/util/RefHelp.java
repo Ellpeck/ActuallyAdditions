@@ -1,19 +1,16 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
+import net.minecraftforge.fml.loading.FMLLoader;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.StringJoiner;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Preconditions;
-
-import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 
 public class RefHelp {
 
@@ -62,7 +59,7 @@ public class RefHelp {
     }
 
     public static class UnknownConstructorException extends RuntimeException {
-        public UnknownConstructorException(final String message) {
+        public UnknownConstructorException(String message) {
             super(message);
         }
     }
@@ -86,7 +83,9 @@ public class RefHelp {
         Preconditions.checkNotNull(clazz);
         Preconditions.checkArgument(StringUtils.isNotEmpty(fieldName), "Field name cannot be empty");
 
-        String nameToFind = FMLLaunchHandler.isDeobfuscatedEnvironment() ? fieldName : MoreObjects.firstNonNull(fieldObfName, fieldName);
+        String nameToFind = !FMLLoader.isProduction()
+            ? fieldName
+            : MoreObjects.firstNonNull(fieldObfName, fieldName);
 
         try {
             Field f = clazz.getDeclaredField(nameToFind);
@@ -177,6 +176,7 @@ public class RefHelp {
      * @param methodObfName  The obfuscated name of the method to find (used in obfuscated environments, i.e. "getWorldTime").
      *                       If the name you are looking for is on a class that is never obfuscated, this should be null.
      * @param parameterTypes The parameter types of the method to find.
+     *
      * @return The method with the specified name and parameters in the given class.
      */
     @Nonnull
@@ -184,7 +184,10 @@ public class RefHelp {
         Preconditions.checkNotNull(clazz);
         Preconditions.checkArgument(StringUtils.isNotEmpty(methodName), "Method name cannot be empty");
 
-        String nameToFind = FMLLaunchHandler.isDeobfuscatedEnvironment() ? methodName : MoreObjects.firstNonNull(methodObfName, methodName);
+        // TODO: [port][note] this might be wrong.
+        String nameToFind = !FMLLoader.isProduction()
+            ? methodName
+            : MoreObjects.firstNonNull(methodObfName, methodName);
 
         try {
             Method m = clazz.getDeclaredMethod(nameToFind, parameterTypes);
@@ -198,16 +201,18 @@ public class RefHelp {
     /**
      * Finds a constructor in the specified class that has matching parameter types.
      *
-     * @param klass The class to find the constructor in
+     * @param klass          The class to find the constructor in
      * @param parameterTypes The parameter types of the constructor.
-     * @param <T> The type
+     * @param <T>            The type
+     *
      * @return The constructor
-     * @throws NullPointerException if {@code klass} is null
-     * @throws NullPointerException if {@code parameterTypes} is null
+     *
+     * @throws NullPointerException        if {@code klass} is null
+     * @throws NullPointerException        if {@code parameterTypes} is null
      * @throws UnknownConstructorException if the constructor could not be found
      */
     @Nonnull
-    public static <T> Constructor<T> findConstructor(@Nonnull final Class<T> klass, @Nonnull final Class<?>... parameterTypes) {
+    public static <T> Constructor<T> findConstructor(@Nonnull Class<T> klass, @Nonnull Class<?>... parameterTypes) {
         Preconditions.checkNotNull(klass, "class");
         Preconditions.checkNotNull(parameterTypes, "parameter types");
 
@@ -215,8 +220,8 @@ public class RefHelp {
             Constructor<T> constructor = klass.getDeclaredConstructor(parameterTypes);
             constructor.setAccessible(true);
             return constructor;
-        } catch (final NoSuchMethodException e) {
-            final StringBuilder desc = new StringBuilder();
+        } catch (NoSuchMethodException e) {
+            StringBuilder desc = new StringBuilder();
             desc.append(klass.getSimpleName());
 
             StringJoiner joiner = new StringJoiner(", ", "(", ")");

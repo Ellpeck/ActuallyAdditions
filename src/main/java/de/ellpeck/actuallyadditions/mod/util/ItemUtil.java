@@ -10,24 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.RegistryHandler;
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
-import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
-import de.ellpeck.actuallyadditions.mod.util.compat.IMCHandler;
-import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 
 public final class ItemUtil {
 
@@ -35,105 +27,51 @@ public final class ItemUtil {
         return ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
     }
 
-    public static void registerBlock(Block block, ItemBlockBase itemBlock, String name, boolean addTab) {
-        block.setTranslationKey(ActuallyAdditions.MODID + "." + name);
+    //    public static boolean contains(ItemStack[] array, ItemStack stack, boolean checkWildcard) {
+    //        return getPlaceAt(array, stack, checkWildcard) != -1;
+    //    }
+    //
+    //    public static int getPlaceAt(ItemStack[] array, ItemStack stack, boolean checkWildcard) {
+    //        return getPlaceAt(Arrays.asList(array), stack, checkWildcard);
+    //    }
+    //
+    //    public static int getPlaceAt(List<ItemStack> list, ItemStack stack, boolean checkWildcard) {
+    //        if (list != null && list.size() > 0) {
+    //            for (int i = 0; i < list.size(); i++) {
+    //                if (!StackUtil.isValid(stack) && !StackUtil.isValid(list.get(i)) || areItemsEqual(stack, list.get(i), checkWildcard)) {
+    //                    return i;
+    //                }
+    //            }
+    //        }
+    //        return -1;
+    //    }
 
-        block.setRegistryName(ActuallyAdditions.MODID, name);
-        RegistryHandler.BLOCKS_TO_REGISTER.add(block);
-
-        itemBlock.setRegistryName(block.getRegistryName());
-        RegistryHandler.ITEMS_TO_REGISTER.add(itemBlock);
-
-        block.setCreativeTab(addTab
-            ? CreativeTab.INSTANCE
-            : null);
-
-        IMCHandler.doBlockIMC(block);
-
-        if (block instanceof IColorProvidingBlock) {
-            ActuallyAdditions.PROXY.addColoredBlock(block);
-        }
-    }
-
-    public static void registerItem(Item item, String name, boolean addTab) {
-        item.setTranslationKey(ActuallyAdditions.MODID + "." + name);
-
-        item.setRegistryName(ActuallyAdditions.MODID, name);
-        RegistryHandler.ITEMS_TO_REGISTER.add(item);
-
-        item.setCreativeTab(addTab
-            ? CreativeTab.INSTANCE
-            : null);
-
-        IMCHandler.doItemIMC(item);
-
-        if (item instanceof IColorProvidingItem) {
-            ActuallyAdditions.PROXY.addColoredItem(item);
-        }
-    }
-
-    public static boolean contains(ItemStack[] array, ItemStack stack, boolean checkWildcard) {
-        return getPlaceAt(array, stack, checkWildcard) != -1;
-    }
-
-    public static int getPlaceAt(ItemStack[] array, ItemStack stack, boolean checkWildcard) {
-        return getPlaceAt(Arrays.asList(array), stack, checkWildcard);
-    }
-
-    public static int getPlaceAt(List<ItemStack> list, ItemStack stack, boolean checkWildcard) {
-        if (list != null && list.size() > 0) {
-            for (int i = 0; i < list.size(); i++) {
-                if (!StackUtil.isValid(stack) && !StackUtil.isValid(list.get(i)) || areItemsEqual(stack, list.get(i), checkWildcard)) {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-
+    @Deprecated
     public static boolean areItemsEqual(ItemStack stack1, ItemStack stack2, boolean checkWildcard) {
-        return StackUtil.isValid(stack1) && StackUtil.isValid(stack2) && (stack1.isItemEqual(stack2) || checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD));
+        return stack1.isItemEqual(stack2);
+        //return StackUtil.isValid(stack1) && StackUtil.isValid(stack2) && (stack1.isItemEqual(stack2) || checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD));
     }
 
-    /**
-     * Returns true if list contains stack or if both contain null
-     */
-    public static boolean contains(List<ItemStack> list, ItemStack stack, boolean checkWildcard) {
-        return !(list == null || list.isEmpty()) && getPlaceAt(list, stack, checkWildcard) != -1;
-    }
+    //    /**
+    //     * Returns true if list contains stack or if both contain null
+    //     */
+    //    public static boolean contains(List<ItemStack> list, ItemStack stack, boolean checkWildcard) {
+    //        return !(list == null || list.isEmpty()) && getPlaceAt(list, stack, checkWildcard) != -1;
+    //    }
 
+    @Deprecated
     public static void addEnchantment(ItemStack stack, Enchantment e, int level) {
-        if (!hasEnchantment(stack, e)) {
+        if (!EnchantmentHelper.getEnchantments(stack).containsKey(e)) {
             stack.addEnchantment(e, level);
         }
     }
 
-    public static boolean hasEnchantment(ItemStack stack, Enchantment e) {
-        ListNBT ench = stack.getEnchantmentTagList();
-        if (ench != null) {
-            for (int i = 0; i < ench.size(); i++) {
-                short id = ench.getCompound(i).getShort("id");
-                if (id == Enchantment.getEnchantmentID(e)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
+    // TODO: [port] ensure this still works :D
     public static void removeEnchantment(ItemStack stack, Enchantment e) {
-        ListNBT ench = stack.getEnchantmentTagList();
-        if (ench != null) {
-            for (int i = 0; i < ench.size(); i++) {
-                short id = ench.getCompound(i).getShort("id");
-                if (id == Enchantment.getEnchantmentID(e)) {
-                    ench.removeTag(i);
-                }
-            }
-            if (ench.isEmpty() && stack.hasTagCompound()) {
-                stack.getTagCompound().removeTag("ench");
-            }
-        }
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+        enchantments.remove(e);
+
+        EnchantmentHelper.setEnchantments(enchantments, stack);
     }
 
     public static boolean canBeStacked(ItemStack stack1, ItemStack stack2) {
@@ -141,7 +79,7 @@ public final class ItemUtil {
     }
 
     public static boolean isEnabled(ItemStack stack) {
-        return stack.hasTagCompound() && stack.getTagCompound().getBoolean("IsEnabled");
+        return stack.getOrCreateTag().getBoolean("IsEnabled");
     }
 
     public static void changeEnabled(PlayerEntity player, Hand hand) {
@@ -149,11 +87,7 @@ public final class ItemUtil {
     }
 
     public static void changeEnabled(ItemStack stack) {
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new CompoundNBT());
-        }
-
         boolean isEnabled = isEnabled(stack);
-        stack.getTagCompound().putBoolean("IsEnabled", !isEnabled);
+        stack.getOrCreateTag().putBoolean("IsEnabled", !isEnabled);
     }
 }

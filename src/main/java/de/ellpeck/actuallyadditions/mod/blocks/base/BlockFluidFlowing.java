@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -20,30 +19,9 @@ import net.minecraftforge.fluids.Fluid;
 
 public class BlockFluidFlowing extends BlockFluidClassic implements ItemBlockBase.ICustomRarity {
 
-    private final String name;
-
-    public BlockFluidFlowing(Fluid fluid, Material material, String unlocalizedName) {
+    public BlockFluidFlowing(Fluid fluid, Material material) {
         super(fluid, material);
-        this.name = unlocalizedName;
         this.displacements.put(this, false);
-
-        this.register();
-    }
-
-    private void register() {
-        ItemUtil.registerBlock(this, this.getItemBlock(), this.getBaseName(), this.shouldAddCreative());
-    }
-
-    protected String getBaseName() {
-        return this.name;
-    }
-
-    protected ItemBlockBase getItemBlock() {
-        return new ItemBlockBase(this);
-    }
-
-    public boolean shouldAddCreative() {
-        return false;
     }
 
     @Override

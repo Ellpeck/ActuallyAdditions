@@ -10,22 +10,23 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
-import net.minecraft.block.BlockDispenser;
-import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.item.ItemDye;
+import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
-public class DispenserHandlerFertilize extends BehaviorDefaultDispenseItem {
+// TODO: [port][note] might not be needed anymore
+public class DispenserHandlerFertilize extends DefaultDispenseItemBehavior {
 
     @Override
     public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-        Direction facing = source.getBlockState().getValue(BlockDispenser.FACING);
+        Direction facing = source.getBlockState().get(BlockStateProperties.FACING);
         BlockPos pos = source.getBlockPos().offset(facing);
 
-        if (ItemDye.applyBonemeal(stack, source.getWorld(), pos)) {
+        if (BoneMealItem.applyBonemeal(stack, source.getWorld(), pos)) {
             source.getWorld().playEvent(2005, pos, 0);
         }
 

@@ -5,19 +5,21 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Map;
 
+// TODO: [port][test] check that this works
 public class EnchBookConversion extends LensConversionRecipe {
 
     public EnchBookConversion() {
-        super(Ingredient.fromItem(Items.ENCHANTED_BOOK), ItemStack.EMPTY, 155000, ActuallyAdditionsAPI.lensDefaultConversion);
+        super(Ingredient.fromItems(Items.ENCHANTED_BOOK), ItemStack.EMPTY, 155000, ActuallyAdditionsAPI.lensDefaultConversion);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class CactusFarmerBehavior implements IFarmerBehavior {
             if (item instanceof BlockItem) {
                 Block block = Block.getBlockFromItem(item);
                 if (block == Blocks.CACTUS) {
-                    if (block.canPlaceBlockAt(world, pos)) {
+                    if (block.getDefaultState().isValidPosition(world, pos)) {
                         BlockState state = block.getDefaultState();
                         world.setBlockState(pos, state, 2);
                         world.playEvent(2001, pos, Block.getStateId(state));

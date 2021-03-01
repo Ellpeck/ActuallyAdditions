@@ -32,20 +32,20 @@ import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.WorldServer;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.ArrayList;
@@ -57,10 +57,10 @@ public class MethodHandler implements IMethodHandler {
     public boolean addEffectToStack(ItemStack stack, CoffeeIngredient ingredient) {
         boolean worked = false;
         if (ingredient != null) {
-            PotionEffect[] effects = ingredient.getEffects();
+            EffectInstance[] effects = ingredient.getEffects();
             if (effects != null && effects.length > 0) {
-                for (PotionEffect effect : effects) {
-                    PotionEffect effectHas = this.getSameEffectFromStack(stack, effect);
+                for (EffectInstance effect : effects) {
+                    EffectInstance effectHas = this.getSameEffectFromStack(stack, effect);
                     if (effectHas != null) {
                         if (effectHas.getAmplifier() < ingredient.getMaxAmplifier() - 1) {
                             this.addEffectProperties(stack, effect, false, true);
@@ -77,10 +77,10 @@ public class MethodHandler implements IMethodHandler {
     }
 
     @Override
-    public PotionEffect getSameEffectFromStack(ItemStack stack, PotionEffect effect) {
-        PotionEffect[] effectsStack = this.getEffectsFromStack(stack);
+    public EffectInstance getSameEffectFromStack(ItemStack stack, EffectInstance effect) {
+        EffectInstance[] effectsStack = this.getEffectsFromStack(stack);
         if (effectsStack != null && effectsStack.length > 0) {
-            for (PotionEffect effectStack : effectsStack) {
+            for (EffectInstance effectStack : effectsStack) {
                 if (effect.getPotion() == effectStack.getPotion()) {
                     return effectStack;
                 }
@@ -90,12 +90,12 @@ public class MethodHandler implements IMethodHandler {
     }
 
     @Override
-    public void addEffectProperties(ItemStack stack, PotionEffect effect, boolean addDur, boolean addAmp) {
-        PotionEffect[] effects = this.getEffectsFromStack(stack);
-        stack.setTagCompound(new CompoundNBT());
+    public void addEffectProperties(ItemStack stack, EffectInstance effect, boolean addDur, boolean addAmp) {
+        EffectInstance[] effects = this.getEffectsFromStack(stack);
+        stack.setTag(new CompoundNBT());
         for (int i = 0; i < effects.length; i++) {
             if (effects[i].getPotion() == effect.getPotion()) {
-                effects[i] = new PotionEffect(effects[i].getPotion(), effects[i].getDuration() + (addDur
+                effects[i] = new EffectInstance(effects[i].getPotion(), effects[i].getDuration() + (addDur
                     ? effect.getDuration()
                     : 0), effects[i].getAmplifier() + (addAmp
                     ? effect.getAmplifier() > 0
@@ -108,40 +108,35 @@ public class MethodHandler implements IMethodHandler {
     }
 
     @Override
-    public void addEffectToStack(ItemStack stack, PotionEffect effect) {
-        CompoundNBT tag = stack.getTagCompound();
-        if (tag == null) {
-            tag = new CompoundNBT();
-        }
+    public void addEffectToStack(ItemStack stack, EffectInstance effect) {
+        CompoundNBT tag = stack.getOrCreateTag();
 
-        int prevCounter = tag.getInteger("Counter");
+        int prevCounter = tag.putInt("Counter");
         CompoundNBT compound = new CompoundNBT();
         compound.putInt("ID", Potion.getIdFromPotion(effect.getPotion()));
         compound.putInt("Duration", effect.getDuration());
         compound.putInt("Amplifier", effect.getAmplifier());
 
         int counter = prevCounter + 1;
-        tag.setTag(counter + "", compound);
-        tag.setInteger("Counter", counter);
+        tag.put(counter + "", compound);
+        tag.putInt("Counter", counter);
 
-        stack.setTagCompound(tag);
+        stack.setTag(tag);
     }
 
     @Override
-    public PotionEffect[] getEffectsFromStack(ItemStack stack) {
-        ArrayList<PotionEffect> effects = new ArrayList<>();
-        CompoundNBT tag = stack.getTagCompound();
-        if (tag != null) {
-            int counter = tag.getInteger("Counter");
-            while (counter > 0) {
-                CompoundNBT compound = (CompoundNBT) tag.getTag(counter + "");
-                PotionEffect effect = new PotionEffect(Potion.getPotionById(compound.getInt("ID")), compound.getInt("Duration"), compound.getByte("Amplifier"));
-                effects.add(effect);
-                counter--;
-            }
+    public EffectInstance[] getEffectsFromStack(ItemStack stack) {
+        ArrayList<EffectInstance> effects = new ArrayList<>();
+        CompoundNBT tag = stack.getOrCreateTag();
+        int counter = tag.getInt("Counter");
+        while (counter > 0) {
+            CompoundNBT compound = (CompoundNBT) tag.get(counter + "");
+            EffectInstance effect = new EffectInstance(Potion.getPotionById(compound.getInt("ID")), compound.getInt("Duration"), compound.getByte("Amplifier"));
+            effects.add(effect);
+            counter--;
         }
         return effects.size() > 0
-            ? effects.toArray(new PotionEffect[effects.size()])
+            ? effects.toArray(new EffectInstance[effects.size()])
             : null;
     }
 
@@ -188,8 +183,8 @@ public class MethodHandler implements IMethodHandler {
                                         BlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
                                         tile.getWorldObject().setBlockState(pos, state2Place, 2);
                                     } else {
-                                        EntityItem item = new EntityItem(tile.getWorldObject(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output.copy());
-                                        tile.getWorldObject().spawnEntity(item);
+                                        ItemEntity item = new ItemEntity(tile.getWorldObject(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output.copy());
+                                        tile.getWorldObject().addEntity(item);
                                         tile.getWorldObject().setBlockState(pos, Blocks.AIR.getDefaultState());
                                     }
 
@@ -204,34 +199,34 @@ public class MethodHandler implements IMethodHandler {
 
             //Converting the Items
             AxisAlignedBB aabb = new AxisAlignedBB(tile.getPosition().getX(), tile.getPosition().getY(), tile.getPosition().getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1);
-            Vec3i dir = tile.getOrientation().getDirectionVec();
+            Vector3i dir = tile.getOrientation().getDirectionVec();
             aabb = aabb.grow(0.02, 0.02, 0.02).expand(dir.getX(), dir.getY(), dir.getZ());
-            List<EntityItem> items = tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, aabb);
-            for (EntityItem item : items) {
+            List<ItemEntity> items = tile.getWorldObject().getEntitiesWithinAABB(ItemEntity.class, aabb);
+            for (ItemEntity item : items) {
                 ItemStack stack = item.getItem();
-                if (!item.isDead && StackUtil.isValid(stack) && !item.getEntityData().getBoolean("aa_cnv")) {
+                if (item.isAlive() && StackUtil.isValid(stack) && !item.getEntityData().getBoolean("aa_cnv")) {
                     LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(stack, tile.getLens());
                     if (recipe != null) {
                         int itemsPossible = Math.min(tile.getEnergy() / recipe.getEnergyUsed(), stack.getCount());
 
                         if (itemsPossible > 0) {
                             recipe.transformHook(item.getItem(), null, item.getPosition(), tile);
-                            item.setDead();
+                            item.remove();
 
                             if (stack.getCount() - itemsPossible > 0) {
                                 ItemStack stackCopy = stack.copy();
                                 stackCopy.shrink(itemsPossible);
 
-                                EntityItem inputLeft = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, stackCopy);
-                                tile.getWorldObject().spawnEntity(inputLeft);
+                                ItemEntity inputLeft = new ItemEntity(tile.getWorldObject(), item.getPosX(), item.getPosY(), item.getPosZ(), stackCopy);
+                                tile.getWorldObject().addEntity(inputLeft);
                             }
 
                             ItemStack outputCopy = recipe.getOutput().copy();
                             outputCopy.setCount(itemsPossible);
 
-                            EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, outputCopy);
+                            ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getPosX(), item.getPosY(), item.getPosZ(), outputCopy);
                             newItem.getEntityData().putBoolean("aa_cnv", true);
-                            tile.getWorldObject().spawnEntity(newItem);
+                            tile.getWorldObject().addEntity(newItem);
 
                             tile.extractEnergy(recipe.getEnergyUsed() * itemsPossible);
                             break;

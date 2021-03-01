@@ -10,27 +10,28 @@
 
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
-import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Rarity;
 
+@Deprecated
 public enum TheJams {
 
-    CU_BA_RA("cu_ba_ra", 6, 0.1F, EnumRarity.RARE, 5, 12, 12595273),
-    GRA_KI_BA("gra_ki_ba", 6, 0.1F, EnumRarity.RARE, 16, 13, 5492820),
-    PL_AP_LE("pl_ap_le", 6, 0.1F, EnumRarity.RARE, 15, 3, 13226009),
-    CH_AP_CI("ch_ap_ci", 6, 0.1F, EnumRarity.RARE, 10, 1, 13189222),
-    HO_ME_KI("ho_me_ki", 6, 0.1F, EnumRarity.RARE, 10, 14, 2031360),
-    PI_CO("pi_co", 6, 0.1F, EnumRarity.RARE, 9, 1, 16056203),
-    HO_ME_CO("ho_me_co", 6, 0.1F, EnumRarity.RARE, 10, 13, 10462208);
+    CU_BA_RA("cu_ba_ra", 6, 0.1F, Rarity.RARE, 5, 12, 12595273),
+    GRA_KI_BA("gra_ki_ba", 6, 0.1F, Rarity.RARE, 16, 13, 5492820),
+    PL_AP_LE("pl_ap_le", 6, 0.1F, Rarity.RARE, 15, 3, 13226009),
+    CH_AP_CI("ch_ap_ci", 6, 0.1F, Rarity.RARE, 10, 1, 13189222),
+    HO_ME_KI("ho_me_ki", 6, 0.1F, Rarity.RARE, 10, 14, 2031360),
+    PI_CO("pi_co", 6, 0.1F, Rarity.RARE, 9, 1, 16056203),
+    HO_ME_CO("ho_me_co", 6, 0.1F, Rarity.RARE, 10, 13, 10462208);
 
     public final String name;
     public final int healAmount;
     public final float saturation;
-    public final EnumRarity rarity;
+    public final Rarity rarity;
     public final int firstEffectToGet;
     public final int secondEffectToGet;
     public final int color;
 
-    TheJams(String name, int healAmount, float saturation, EnumRarity rarity, int firstEffectID, int secondEffectID, int color) {
+    TheJams(String name, int healAmount, float saturation, Rarity rarity, int firstEffectID, int secondEffectID, int color) {
         this.name = name;
         this.healAmount = healAmount;
         this.saturation = saturation;

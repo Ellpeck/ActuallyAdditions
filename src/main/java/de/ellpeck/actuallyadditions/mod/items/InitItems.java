@@ -33,6 +33,7 @@ public final class InitItems {
     public static final RegistryObject<Item> itemMisc = ITEMS.register("item_misc", ItemBase::new);
     public static final RegistryObject<Item> itemCanola = ITEMS.register("canola", ItemBase::new);
     public static final RegistryObject<Item> itemCoffeeCup = ITEMS.register("coffee_cup", ItemBase::new);
+    public static final RegistryObject<Item> itemPaperCone = ITEMS.register("paper_cone", ItemBase::new);
 
     // SHARDS
     public static final RegistryObject<Item> RESTONIA_CRYSTAL_SHARD = ITEMS.register("item_restonia_crystal_shard", ItemBase::new);
@@ -59,8 +60,7 @@ public final class InitItems {
 
     // BLACK QUARTZ
     public static final RegistryObject<Item> BLACK_QUARTZ = ITEMS.register("black_quartz", ItemBase::new);
-
-
+    
     public static final RegistryObject<Item> itemEngineerGogglesAdvanced = ITEMS.register("item_engineer_goggles_advanced", () -> new ItemEngineerGoggles(true));
     public static final RegistryObject<Item> itemEngineerGoggles = ITEMS.register("item_engineer_goggles", () -> new ItemEngineerGoggles(false));
     public static final RegistryObject<Item> itemLaserUpgradeRange = ITEMS.register("item_laser_upgrade_range", ItemBase::new);
@@ -91,20 +91,20 @@ public final class InitItems {
     public static final RegistryObject<Item> itemTeleStaff = ITEMS.register("item_tele_staff", ItemTeleStaff::new);
     public static final RegistryObject<Item> itemWingsOfTheBats = ITEMS.register("item_wings_of_the_bats", ItemWingsOfTheBats::new);
     public static final RegistryObject<Item> itemDrill = ITEMS.register("item_drill", ItemDrill::new);
-    public static final RegistryObject<Item> itemBattery = ITEMS.register("", new ItemBattery("item_battery", 200000, 1000));
-    public static final RegistryObject<Item> itemBatteryDouble = ITEMS.register("", new ItemBattery("item_battery_double", 350000, 5000));
-    public static final RegistryObject<Item> itemBatteryTriple = ITEMS.register("", new ItemBattery("item_battery_triple", 600000, 10000));
-    public static final RegistryObject<Item> itemBatteryQuadruple = ITEMS.register("", new ItemBattery("item_battery_quadruple", 1000000, 30000));
-    public static final RegistryObject<Item> itemBatteryQuintuple = ITEMS.register("", new ItemBattery("item_battery_quintuple", 2000000, 100000));
-    public static final RegistryObject<Item> itemDrillUpgradeSpeed = ITEMS.register("", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED, "item_drill_upgrade_speed"));
-    public static final RegistryObject<Item> itemDrillUpgradeSpeedII = ITEMS.register("", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_II, "item_drill_upgrade_speed_ii"));
-    public static final RegistryObject<Item> itemDrillUpgradeSpeedIII = ITEMS.register("", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_III, "item_drill_upgrade_speed_iii"));
-    public static final RegistryObject<Item> itemDrillUpgradeSilkTouch = ITEMS.register("", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SILK_TOUCH, "item_drill_upgrade_silk_touch"));
-    public static final RegistryObject<Item> itemDrillUpgradeFortune = ITEMS.register("", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FORTUNE, "item_drill_upgrade_fortune"));
-    public static final RegistryObject<Item> itemDrillUpgradeFortuneII = ITEMS.register("", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FORTUNE_II, "item_drill_upgrade_fortune_ii"));
-    public static final RegistryObject<Item> itemDrillUpgradeThreeByThree = ITEMS.register("", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.THREE_BY_THREE, "item_drill_upgrade_three_by_three"));
-    public static final RegistryObject<Item> itemDrillUpgradeFiveByFive = ITEMS.register("", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE, "item_drill_upgrade_five_by_five"));
-    public static final RegistryObject<Item> itemDrillUpgradeBlockPlacing = ITEMS.register("", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.PLACER, "item_drill_upgrade_block_placing"));
+    public static final RegistryObject<Item> itemBattery = ITEMS.register("item_battery", new ItemBattery(200000, 1000));
+    public static final RegistryObject<Item> itemBatteryDouble = ITEMS.register("item_battery_double", new ItemBattery(350000, 5000));
+    public static final RegistryObject<Item> itemBatteryTriple = ITEMS.register("item_battery_triple", new ItemBattery(600000, 10000));
+    public static final RegistryObject<Item> itemBatteryQuadruple = ITEMS.register("item_battery_quadruple", new ItemBattery(1000000, 30000));
+    public static final RegistryObject<Item> itemBatteryQuintuple = ITEMS.register("item_battery_quintuple", new ItemBattery(2000000, 100000));
+    public static final RegistryObject<Item> itemDrillUpgradeSpeed = ITEMS.register("item_drill_upgrade_speed", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED));
+    public static final RegistryObject<Item> itemDrillUpgradeSpeedII = ITEMS.register("item_drill_upgrade_speed_ii", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_II));
+    public static final RegistryObject<Item> itemDrillUpgradeSpeedIII = ITEMS.register("item_drill_upgrade_speed_iii", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SPEED_III));
+    public static final RegistryObject<Item> itemDrillUpgradeSilkTouch = ITEMS.register("item_drill_upgrade_silk_touch", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.SILK_TOUCH));
+    public static final RegistryObject<Item> itemDrillUpgradeFortune = ITEMS.register("item_drill_upgrade_fortune", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FORTUNE));
+    public static final RegistryObject<Item> itemDrillUpgradeFortuneII = ITEMS.register("item_drill_upgrade_fortune_ii", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FORTUNE_II));
+    public static final RegistryObject<Item> itemDrillUpgradeThreeByThree = ITEMS.register("item_drill_upgrade_three_by_three", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.THREE_BY_THREE));
+    public static final RegistryObject<Item> itemDrillUpgradeFiveByFive = ITEMS.register("item_drill_upgrade_five_by_five", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE));
+    public static final RegistryObject<Item> itemDrillUpgradeBlockPlacing = ITEMS.register("item_drill_upgrade_block_placing", new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.PLACER));
     public static final RegistryObject<Item> itemFertilizer = ITEMS.register("item_fertilizer", ItemFertilizer::new);
     public static final RegistryObject<Item> itemCoffee = ITEMS.register("item_coffee", ItemCoffee::new);
     public static final RegistryObject<Item> itemPhantomConnector = ITEMS.register("item_phantom_connector", ItemPhantomConnector::new);
@@ -115,10 +115,10 @@ public final class InitItems {
     public static final RegistryObject<Item> itemCrafterOnAStick = ITEMS.register("item_crafter_on_a_stick", ItemCrafterOnAStick::new);
     public static final RegistryObject<Item> itemDust = ITEMS.register("item_dust", ItemDust::new);
     public static final RegistryObject<Item> itemSolidifiedExperience = ITEMS.register("item_solidified_experience", ItemSolidifiedExperience::new);
-    public static final RegistryObject<Item> itemLeafBlower = ITEMS.register("", new ItemLeafBlower(false, "item_leaf_blower"));
-    public static final RegistryObject<Item> itemLeafBlowerAdvanced = ITEMS.register("", new ItemLeafBlower(true, "item_leaf_blower_advanced"));
-    public static final RegistryObject<Item> itemPotionRing = ITEMS.register("", new ItemPotionRing(false, "item_potion_ring"));
-    public static final RegistryObject<Item> itemPotionRingAdvanced = ITEMS.register("", new ItemPotionRing(true, "item_potion_ring_advanced"));
+    public static final RegistryObject<Item> itemLeafBlower = ITEMS.register("item_leaf_blower", new ItemLeafBlower(false));
+    public static final RegistryObject<Item> itemLeafBlowerAdvanced = ITEMS.register("item_leaf_blower_advanced", new ItemLeafBlower(true));
+    public static final RegistryObject<Item> itemPotionRing = ITEMS.register("item_potion_ring", new ItemPotionRing(false));
+    public static final RegistryObject<Item> itemPotionRingAdvanced = ITEMS.register("item_potion_ring_advanced", new ItemPotionRing(true));
     public static final RegistryObject<Item> itemHairyBall = ITEMS.register("item_hairy_ball", ItemHairyBall::new);
     public static final RegistryObject<Item> itemCoffeeBean = ITEMS.register("item_coffee_beans", ItemCoffeeBean::new);
     public static final RegistryObject<Item> itemRiceSeed = ITEMS.register("", new ItemSeed("item_rice_seed", "seedRice", ActuallyBlocks.blockRice, itemFoods, TheFoods.RICE.ordinal()));

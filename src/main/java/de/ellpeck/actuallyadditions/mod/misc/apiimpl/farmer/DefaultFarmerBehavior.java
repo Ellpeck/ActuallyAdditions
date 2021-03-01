@@ -14,24 +14,18 @@ import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IGrowable;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.item.Items;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.ArrayList;
@@ -43,7 +37,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         if (toPlant != null) {
             BlockPos farmland = pos.down();
             Block farmlandBlock = world.getBlockState(farmland).getBlock();
-            if (farmlandBlock instanceof BlockDirt || farmlandBlock instanceof BlockGrass) {
+            if (Tags.Blocks.DIRT.contains(farmlandBlock) || farmlandBlock == Blocks.GRASS) {
                 world.setBlockState(pos, Blocks.AIR.getDefaultState());
                 useHoeAt(world, farmland);
                 world.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -59,7 +53,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     }
 
     private static boolean tryPlant(BlockState toPlant, World world, BlockPos pos) {
-        if (toPlant.getBlock().canPlaceBlockAt(world, pos)) {
+        if (toPlant.isValidPosition(world, pos)) {
             world.setBlockState(pos, toPlant);
             return true;
         }
@@ -84,15 +78,17 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             BlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
 
-            if (block instanceof BlockCrops) {
-                if (((BlockCrops) block).isMaxAge(state)) {
-                    return this.doFarmerStuff(state, world, pos, farmer);
-                }
-            } else if (BlockCrops.AGE.equals(block.getBlockState().getProperty("age"))) {
-                if (state.getValue(BlockCrops.AGE) >= 7 && !(block instanceof BlockStem)) {
+            if (block instanceof CropsBlock) {
+                if (((CropsBlock) block).isMaxAge(state)) {
                     return this.doFarmerStuff(state, world, pos, farmer);
                 }
             }
+            // TODO: [port] come back and see what this is actually doing
+            //            else if (CropsBlock.AGE.equals(block.getBlockState().getProperty("age"))) {
+            //                if (state.get(BlockStateProperties.AGE_0_7) >= 7 && !(block instanceof StemBlock)) {
+            //                    return this.doFarmerStuff(state, world, pos, farmer);
+            //                }
+            //            }
         }
         return FarmerResult.FAIL;
     }
@@ -154,7 +150,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         Item item = stack.getItem();
         if (item instanceof IPlantable) {
             return (IPlantable) item;
-        } else if (item instanceof ItemBlock) {
+        } else if (item instanceof BlockItem) {
             Block block = Block.getBlockFromItem(item);
             if (block instanceof IPlantable) {
                 return (IPlantable) block;
@@ -172,20 +168,20 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return hoe;
     }
 
-    public static EnumActionResult useHoeAt(World world, BlockPos pos) {
+    public static ActionResultType useHoeAt(World world, BlockPos pos) {
 
-        PlayerEntity player = FakePlayerFactory.getMinecraft((WorldServer) world);
+        PlayerEntity player = FakePlayerFactory.getMinecraft((ServerWorld) world);
 
         ItemStack itemstack = getHoeStack();
 
         if (!player.canPlayerEdit(pos.offset(Direction.UP), Direction.UP, itemstack)) {
-            return EnumActionResult.FAIL;
+            return ActionResultType.FAIL;
         } else {
             int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);
             if (hook != 0) {
                 return hook > 0
-                    ? EnumActionResult.SUCCESS
-                    : EnumActionResult.FAIL;
+                    ? ActionResultType.SUCCESS
+                    : ActionResultType.FAIL;
             }
 
             BlockState iblockstate = world.getBlockState(pos);
@@ -194,23 +190,23 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             if (world.isAirBlock(pos.up())) {
                 if (block == Blocks.GRASS || block == Blocks.GRASS_PATH) {
                     world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
-                    return EnumActionResult.SUCCESS;
+                    return ActionResultType.SUCCESS;
                 }
 
                 if (block == Blocks.DIRT) {
-                    switch (iblockstate.getValue(BlockDirt.VARIANT)) {
+                    switch (iblockstate.get(BlockDirt.VARIANT)) {
                         case DIRT:
                             world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
-                            return EnumActionResult.SUCCESS;
+                            return ActionResultType.SUCCESS;
                         case COARSE_DIRT:
                             world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT));
-                            return EnumActionResult.SUCCESS;
+                            return ActionResultType.SUCCESS;
                         default:
                     }
                 }
             }
 
-            return EnumActionResult.PASS;
+            return ActionResultType.PASS;
         }
     }
 }

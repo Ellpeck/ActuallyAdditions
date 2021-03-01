@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -27,7 +26,6 @@ import java.util.Set;
 public class ItemToolAA extends ToolItem implements IDisableableItem {
 
     private final String name;
-    private final IRarity rarity;
     private final ItemStack repairItem;
     private String repairOredict;
     private final boolean disabled;
@@ -50,26 +48,6 @@ public class ItemToolAA extends ToolItem implements IDisableableItem {
     }
 
     private void register() {
-        ItemUtil.registerItem(this, this.getBaseName(), this.shouldAddCreative());
-
-        this.registerRendering();
-    }
-
-    protected String getBaseName() {
-        return this.name;
-    }
-
-    public boolean shouldAddCreative() {
-        return true;
-    }
-
-    protected void registerRendering() {
-        ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
-    }
-
-    @Override
-    public IRarity getForgeRarity(ItemStack stack) {
-        return this.rarity;
     }
 
     @Override

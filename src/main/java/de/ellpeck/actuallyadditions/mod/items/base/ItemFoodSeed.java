@@ -10,12 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemStack;
@@ -39,36 +37,11 @@ public class ItemFoodSeed extends ItemSeedFood {
         if (plant instanceof BlockPlant) {
             ((BlockPlant) plant).doStuff(this, returnItem, returnMeta);
         }
-
-        this.register();
-    }
-
-    private void register() {
-        ItemUtil.registerItem(this, this.getBaseName(), this.shouldAddCreative());
-
-        this.registerRendering();
     }
 
     @Override
     public int getMaxItemUseDuration(ItemStack stack) {
         return this.maxUseDuration;
-    }
-
-    protected String getBaseName() {
-        return this.name;
-    }
-
-    public boolean shouldAddCreative() {
-        return true;
-    }
-
-    protected void registerRendering() {
-        ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this), this.getRegistryName(), "inventory");
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
     }
 
     @Override

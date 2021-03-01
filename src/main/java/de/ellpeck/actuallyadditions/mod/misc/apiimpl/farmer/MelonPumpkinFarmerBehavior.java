@@ -15,10 +15,11 @@ import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -55,7 +56,7 @@ public class MelonPumpkinFarmerBehavior implements IFarmerBehavior {
         if (farmer.getEnergy() >= use) {
             BlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
-            if (block == Blocks.PUMPKIN || block == Blocks.MELON_BLOCK) {
+            if (block == Blocks.PUMPKIN || block == Blocks.MELON) {
                 NonNullList<ItemStack> drops = NonNullList.create();
                 block.getDrops(drops, world, pos, state, 0);
                 if (!drops.isEmpty()) {

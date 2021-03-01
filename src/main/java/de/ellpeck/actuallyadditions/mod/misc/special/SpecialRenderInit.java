@@ -16,8 +16,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -31,6 +32,7 @@ public class SpecialRenderInit {
         new ThreadSpecialFetcher();
     }
 
+    // TODO: [port][note] ensure that this still works with the special people stuff
     public static void parse(Properties properties) {
         for (String key : properties.stringPropertyNames()) {
             String[] values = properties.getProperty(key).split("@");
@@ -45,7 +47,7 @@ public class SpecialRenderInit {
                 }
 
                 ResourceLocation resLoc = new ResourceLocation(itemName);
-                ItemStack stack = findItem(resLoc, meta);
+                ItemStack stack = findItem(resLoc);
 
                 //TODO Remove this block once the transition to 1.11 is done and the special people stuff file has been converted to snake_case
                 if (!StackUtil.isValid(stack)) {
@@ -58,7 +60,7 @@ public class SpecialRenderInit {
                             convertedItemName += c;
                         }
                     }
-                    stack = findItem(new ResourceLocation(convertedItemName), meta);
+                    stack = findItem(new ResourceLocation(convertedItemName));
                 }
 
                 if (StackUtil.isValid(stack)) {
@@ -68,16 +70,16 @@ public class SpecialRenderInit {
         }
     }
 
-    private static ItemStack findItem(ResourceLocation resLoc, int meta) {
-        if (Item.REGISTRY.containsKey(resLoc)) {
-            Item item = Item.REGISTRY.getObject(resLoc);
+    private static ItemStack findItem(ResourceLocation resLoc) {
+        if (ForgeRegistries.ITEMS.containsKey(resLoc)) {
+            Item item = ForgeRegistries.ITEMS.getValue(resLoc);
             if (item != null) {
-                return new ItemStack(item, 1, meta);
+                return new ItemStack(item);
             }
-        } else if (Block.REGISTRY.containsKey(resLoc)) {
-            Block block = Block.REGISTRY.getObject(resLoc);
+        } else if (ForgeRegistries.BLOCKS.containsKey(resLoc)) {
+            Block block = ForgeRegistries.BLOCKS.getValue(resLoc);
             if (block != null) {
-                return new ItemStack(block, 1, meta);
+                return new ItemStack(block);
             }
         }
         return StackUtil.getEmpty();
@@ -85,15 +87,13 @@ public class SpecialRenderInit {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerRender(RenderPlayerEvent.Pre event) {
-        if (event.getEntityPlayer() != null) {
-            String name = event.getEntityPlayer().getName();
-            if (name != null) {
-                String lower = name.toLowerCase(Locale.ROOT);
-                if (SPECIAL_LIST.containsKey(lower)) {
-                    RenderSpecial render = SPECIAL_LIST.get(lower);
-                    if (render != null) {
-                        render.render(event.getEntityPlayer(), event.getPartialRenderTick());
-                    }
+        if (event.getPlayer() != null) {
+            String name = event.getPlayer().getName().getString();
+            String lower = name.toLowerCase(Locale.ROOT);
+            if (SPECIAL_LIST.containsKey(lower)) {
+                RenderSpecial render = SPECIAL_LIST.get(lower);
+                if (render != null) {
+                    render.render(event.getMatrixStack(), event.getBuffers(), event.getLight(), event.getPlayer(), event.getPartialRenderTick());
                 }
             }
         }

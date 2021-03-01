@@ -14,10 +14,11 @@ import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockReed;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.SugarCaneBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -28,9 +29,9 @@ public class ReedFarmerBehavior implements IFarmerBehavior {
     public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer) {
         int use = 250;
         if (farmer.getEnergy() >= use) {
-            if (seed.getItem() == Items.REEDS) {
-                if (Blocks.REEDS.canPlaceBlockAt(world, pos)) {
-                    world.setBlockState(pos, Blocks.REEDS.getDefaultState(), 2);
+            if (seed.getItem() == Items.SUGAR_CANE) {
+                if (Blocks.SUGAR_CANE.getDefaultState().isValidPosition(world, pos)) {
+                    world.setBlockState(pos, Blocks.SUGAR_CANE.getDefaultState(), 2);
                     farmer.extractEnergy(use);
                     return FarmerResult.SUCCESS;
                 }
@@ -45,14 +46,14 @@ public class ReedFarmerBehavior implements IFarmerBehavior {
         int use = 250;
         if (farmer.getEnergy() >= use) {
             BlockState state = world.getBlockState(pos);
-            if (state.getBlock() instanceof BlockReed) {
+            if (state.getBlock() instanceof SugarCaneBlock) {
                 FarmerResult result = FarmerResult.STOP_PROCESSING;
 
                 for (int i = 2; i >= 1; --i) {
                     if (farmer.getEnergy() >= use) {
                         BlockPos up = pos.up(i);
                         BlockState upState = world.getBlockState(up);
-                        if (upState.getBlock() instanceof BlockReed) {
+                        if (upState.getBlock() instanceof SugarCaneBlock) {
                             NonNullList<ItemStack> drops = NonNullList.create();
                             upState.getBlock().getDrops(drops, world, pos, state, 0);
 

@@ -16,15 +16,18 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 
 public class LensDisruption extends Lens {
 
@@ -34,32 +37,28 @@ public class LensDisruption extends Lens {
     public boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
         if (ConfigIntValues.ELEVEN.getValue() == 11 && tile.getEnergy() >= ENERGY_USE && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)) {
             int range = 2;
-            ArrayList<EntityItem> items = (ArrayList<EntityItem>) tile.getWorldObject().getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitBlock.getX() - range, hitBlock.getY() - range, hitBlock.getZ() - range, hitBlock.getX() + range, hitBlock.getY() + range, hitBlock.getZ() + range));
-            for (EntityItem item : items) {
+            ArrayList<ItemEntity> items = (ArrayList<ItemEntity>) tile.getWorldObject().getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(hitBlock.getX() - range, hitBlock.getY() - range, hitBlock.getZ() - range, hitBlock.getX() + range, hitBlock.getY() + range, hitBlock.getZ() + range));
+            for (ItemEntity item : items) {
                 ItemStack stack = item.getItem();
-                if (!item.isDead && StackUtil.isValid(stack)) {
-                    if (!stack.hasTagCompound() || !stack.getTagCompound().getBoolean(ActuallyAdditions.MODID + "DisruptedAlready")) {
+                if (item.isAlive() && StackUtil.isValid(stack)) {
+                    if (!stack.hasTag() || !stack.getOrCreateTag().getBoolean(ActuallyAdditions.MODID + "DisruptedAlready")) {
 
                         ItemStack newStack;
                         do {
                             if (tile.getWorldObject().rand.nextBoolean()) {
-                                newStack = new ItemStack(Item.REGISTRY.getRandomObject(tile.getWorldObject().rand));
+                                newStack = this.getRandomItemFromRegistry(tile.getWorldObject().rand);//new ItemStack(Item.REGISTRY.getRandomObject(tile.getWorldObject().rand));
                             } else {
-                                newStack = new ItemStack(Block.REGISTRY.getRandomObject(tile.getWorldObject().rand));
+                                newStack = this.getRandomBlockFromRegistry(tile.getWorldObject().rand);//new ItemStack(Block.REGISTRY.getRandomObject(tile.getWorldObject().rand));
                             }
                         } while (!StackUtil.isValid(newStack));
 
                         newStack.setCount(stack.getCount());
+                        newStack.getOrCreateTag().putBoolean(ActuallyAdditions.MODID + "DisruptedAlready", true);
 
-                        if (!newStack.hasTagCompound()) {
-                            newStack.setTagCompound(new CompoundNBT());
-                        }
-                        newStack.getTagCompound().putBoolean(ActuallyAdditions.MODID + "DisruptedAlready", true);
+                        item.remove();
 
-                        item.setDead();
-
-                        EntityItem newItem = new EntityItem(tile.getWorldObject(), item.posX, item.posY, item.posZ, newStack);
-                        tile.getWorldObject().spawnEntity(newItem);
+                        ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getPosX(), item.getPosY(), item.getPosZ(), newStack);
+                        tile.getWorldObject().addEntity(newItem);
 
                         tile.extractEnergy(ENERGY_USE);
                     }
@@ -83,5 +82,13 @@ public class LensDisruption extends Lens {
     @Override
     public boolean canInvoke(IAtomicReconstructor tile, Direction sideToShootTo, int energyUsePerShot) {
         return tile.getEnergy() - energyUsePerShot >= ENERGY_USE;
+    }
+
+    private ItemStack getRandomItemFromRegistry(Random random) {
+        return new ItemStack((Item) ForgeRegistries.ITEMS.getValues().toArray()[random.nextInt(ForgeRegistries.ITEMS.getValues().size())]);
+    }
+
+    private ItemStack getRandomBlockFromRegistry(Random random) {
+        return new ItemStack((Block) ForgeRegistries.BLOCKS.getValues().toArray()[random.nextInt(ForgeRegistries.BLOCKS.getValues().size())]);
     }
 }
