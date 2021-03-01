@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFeeder;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
@@ -38,8 +38,8 @@ public class GuiFeeder extends GuiWtfMojang<ContainerFeeder> {
     }
 
     @Override
-    public void drawScreen(int x, int y, float f) {
-        super.drawScreen(x, y, f);
+    public void render(MatrixStack matrices, int x, int y, float f) {
+        super.render(matrices, x, y, f);
         if (x >= this.guiLeft + 69 && y >= this.guiTop + 30 && x <= this.guiLeft + 69 + 10 && y <= this.guiTop + 30 + 10) {
             String[] array = new String[]{this.tileFeeder.currentAnimalAmount + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.animals"), this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD
                 ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.enoughToBreed")
@@ -51,13 +51,13 @@ public class GuiFeeder extends GuiWtfMojang<ContainerFeeder> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tileFeeder);
+    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.tileFeeder);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.guiLeft, this.guiTop + 70, 0, 0, 176, 86);
         this.getMinecraft().getTextureManager().bindTexture(RES_LOC);

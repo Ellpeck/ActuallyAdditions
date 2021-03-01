@@ -10,14 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerInputter;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInputter;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.java.games.input.Keyboard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
@@ -26,8 +27,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.io.IOException;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
@@ -65,27 +64,33 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
             this.rightFilter = new FilterSettingsGui(this.tileInputter.rightFilter, this.guiLeft + 157, this.guiTop + 6, this.buttonList);
         }
 
-        this.fieldPullStart = new TextFieldWidget(3000, this.font, this.guiLeft + 6, this.guiTop + 80 + (this.isAdvanced
+        this.fieldPullStart = new TextFieldWidget(this.font, this.guiLeft + 6, this.guiTop + 80 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), 34, 8);
         this.fieldPullStart.setMaxStringLength(5);
         this.fieldPullStart.setEnableBackgroundDrawing(false);
-        this.fieldPullEnd = new TextFieldWidget(3001, this.font, this.guiLeft + 50, this.guiTop + 80 + (this.isAdvanced
+        this.children.add(this.fieldPullStart);
+
+        this.fieldPullEnd = new TextFieldWidget(this.font, this.guiLeft + 50, this.guiTop + 80 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), 34, 8);
         this.fieldPullEnd.setMaxStringLength(5);
         this.fieldPullEnd.setEnableBackgroundDrawing(false);
+        this.children.add(this.fieldPullEnd);
 
-        this.fieldPutStart = new TextFieldWidget(3002, this.font, this.guiLeft + 91, this.guiTop + 80 + (this.isAdvanced
+        this.fieldPutStart = new TextFieldWidget(this.font, this.guiLeft + 91, this.guiTop + 80 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), 34, 8);
         this.fieldPutStart.setMaxStringLength(5);
         this.fieldPutStart.setEnableBackgroundDrawing(false);
-        this.fieldPutEnd = new TextFieldWidget(3004, this.font, this.guiLeft + 135, this.guiTop + 80 + (this.isAdvanced
+        this.children.add(this.fieldPutStart);
+
+        this.fieldPutEnd = new TextFieldWidget(this.font, this.guiLeft + 135, this.guiTop + 80 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), 34, 8);
         this.fieldPutEnd.setMaxStringLength(5);
         this.fieldPutEnd.setEnableBackgroundDrawing(false);
+        this.children.add(this.fieldPutEnd);
 
         SmallerButton buttonSidePutP = new SmallerButton(0, this.guiLeft + 155, this.guiTop + 43 + (this.isAdvanced
             ? OFFSET_ADVANCED
@@ -112,8 +117,8 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
     }
 
     @Override
-    public void drawScreen(int x, int y, float f) {
-        super.drawScreen(x, y, f);
+    public void render(MatrixStack matrices, int x, int y, float f) {
+        super.render(matrices, x, y, f);
 
         int newTopOffset = this.guiTop + (this.isAdvanced
             ? OFFSET_ADVANCED
@@ -139,13 +144,13 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tileInputter);
+    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.tileInputter);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.guiLeft, this.guiTop + 97 + (this.isAdvanced
@@ -159,86 +164,81 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
             ? OFFSET_ADVANCED
             : 0));
 
-        this.font.drawString(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.inbound"), this.guiLeft + 23 + 3, this.guiTop + 32 + (this.isAdvanced
+        this.font.drawString(matrices, StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.inbound"), this.guiLeft + 23 + 3, this.guiTop + 32 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.font.drawString(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.outbound"), this.guiLeft + 104 + 3, this.guiTop + 32 + (this.isAdvanced
-            ? OFFSET_ADVANCED
-            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-
-        this.font.drawString(SIDES[this.tileInputter.sideToPull + 1], this.guiLeft + 24 + 1, this.guiTop + 45 + 3 + (this.isAdvanced
-            ? OFFSET_ADVANCED
-            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.font.drawString(SIDES[this.tileInputter.sideToPut + 1], this.guiLeft + 109 + 1, this.guiTop + 45 + 3 + (this.isAdvanced
+        this.font.drawString(matrices, StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.outbound"), this.guiLeft + 104 + 3, this.guiTop + 32 + (this.isAdvanced
             ? OFFSET_ADVANCED
             : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
-        this.font.drawString(Integer.toString(this.tileInputter.slotToPutStart), this.guiLeft + 92, this.guiTop + 67 + (this.isAdvanced
+        this.font.drawString(matrices, SIDES[this.tileInputter.sideToPull + 1], this.guiLeft + 24 + 1, this.guiTop + 45 + 3 + (this.isAdvanced
             ? OFFSET_ADVANCED
-            : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.font.drawString(Integer.toString(this.tileInputter.slotToPutEnd), this.guiLeft + 136, this.guiTop + 67 + (this.isAdvanced
+            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.font.drawString(matrices, SIDES[this.tileInputter.sideToPut + 1], this.guiLeft + 109 + 1, this.guiTop + 45 + 3 + (this.isAdvanced
             ? OFFSET_ADVANCED
-            : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.font.drawString(Integer.toString(this.tileInputter.slotToPullStart), this.guiLeft + 7, this.guiTop + 67 + (this.isAdvanced
-            ? OFFSET_ADVANCED
-            : 0), StringUtil.DECIMAL_COLOR_WHITE);
-        this.font.drawString(Integer.toString(this.tileInputter.slotToPullEnd), this.guiLeft + 51, this.guiTop + 67 + (this.isAdvanced
-            ? OFFSET_ADVANCED
-            : 0), StringUtil.DECIMAL_COLOR_WHITE);
+            : 0), StringUtil.DECIMAL_COLOR_GRAY_TEXT);
 
-        this.fieldPutStart.drawTextBox();
-        this.fieldPutEnd.drawTextBox();
-        this.fieldPullStart.drawTextBox();
-        this.fieldPullEnd.drawTextBox();
+        this.font.drawString(matrices, Integer.toString(this.tileInputter.slotToPutStart), this.guiLeft + 92, this.guiTop + 67 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.font.drawString(matrices, Integer.toString(this.tileInputter.slotToPutEnd), this.guiLeft + 136, this.guiTop + 67 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.font.drawString(matrices, Integer.toString(this.tileInputter.slotToPullStart), this.guiLeft + 7, this.guiTop + 67 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_WHITE);
+        this.font.drawString(matrices, Integer.toString(this.tileInputter.slotToPullEnd), this.guiLeft + 51, this.guiTop + 67 + (this.isAdvanced
+            ? OFFSET_ADVANCED
+            : 0), StringUtil.DECIMAL_COLOR_WHITE);
     }
 
+    //    @Override
+    //    protected void mouseClicked(int par1, int par2, int par3) throws IOException {
+    //        this.fieldPutStart.mouseClicked(par1, par2, par3);
+    //        this.fieldPutEnd.mouseClicked(par1, par2, par3);
+    //        this.fieldPullStart.mouseClicked(par1, par2, par3);
+    //        this.fieldPullEnd.mouseClicked(par1, par2, par3);
+    //
+    //        super.mouseClicked(par1, par2, par3);
+    //    }
+
+    //    @Override
+    //    public void keyTyped(char theChar, int key) throws IOException {
+    //        if (key == Keyboard.KEY_RETURN || key == Keyboard.KEY_NUMPADENTER) {
+    //            if (this.fieldPutStart.isFocused()) {
+    //                this.setVariable(this.fieldPutStart, 0);
+    //            }
+    //            if (this.fieldPutEnd.isFocused()) {
+    //                this.setVariable(this.fieldPutEnd, 1);
+    //            }
+    //            if (this.fieldPullStart.isFocused()) {
+    //                this.setVariable(this.fieldPullStart, 2);
+    //            }
+    //            if (this.fieldPullEnd.isFocused()) {
+    //                this.setVariable(this.fieldPullEnd, 3);
+    //            }
+    //        } else if (Character.isDigit(theChar) || key == Keyboard.KEY_BACK || key == Keyboard.KEY_DELETE || key == Keyboard.KEY_LEFT || key == Keyboard.KEY_RIGHT) {
+    //            this.fieldPutStart.textboxKeyTyped(theChar, key);
+    //            this.fieldPutEnd.textboxKeyTyped(theChar, key);
+    //            this.fieldPullStart.textboxKeyTyped(theChar, key);
+    //            this.fieldPullEnd.textboxKeyTyped(theChar, key);
+    //        } else {
+    //            super.keyTyped(theChar, key);
+    //        }
+    //    }
+
     @Override
-    protected void mouseClicked(int par1, int par2, int par3) throws IOException {
-        this.fieldPutStart.mouseClicked(par1, par2, par3);
-        this.fieldPutEnd.mouseClicked(par1, par2, par3);
-        this.fieldPullStart.mouseClicked(par1, par2, par3);
-        this.fieldPullEnd.mouseClicked(par1, par2, par3);
-
-        super.mouseClicked(par1, par2, par3);
-    }
-
-    @Override
-    public void keyTyped(char theChar, int key) throws IOException {
-        if (key == Keyboard.KEY_RETURN || key == Keyboard.KEY_NUMPADENTER) {
-            if (this.fieldPutStart.isFocused()) {
-                this.setVariable(this.fieldPutStart, 0);
-            }
-            if (this.fieldPutEnd.isFocused()) {
-                this.setVariable(this.fieldPutEnd, 1);
-            }
-            if (this.fieldPullStart.isFocused()) {
-                this.setVariable(this.fieldPullStart, 2);
-            }
-            if (this.fieldPullEnd.isFocused()) {
-                this.setVariable(this.fieldPullEnd, 3);
-            }
-        } else if (Character.isDigit(theChar) || key == Keyboard.KEY_BACK || key == Keyboard.KEY_DELETE || key == Keyboard.KEY_LEFT || key == Keyboard.KEY_RIGHT) {
-            this.fieldPutStart.textboxKeyTyped(theChar, key);
-            this.fieldPutEnd.textboxKeyTyped(theChar, key);
-            this.fieldPullStart.textboxKeyTyped(theChar, key);
-            this.fieldPullEnd.textboxKeyTyped(theChar, key);
-        } else {
-            super.keyTyped(theChar, key);
-        }
-    }
-
-    @Override
-    public void updateScreen() {
-        super.updateScreen();
-
-        this.fieldPutStart.updateCursorCounter();
-        this.fieldPutEnd.updateCursorCounter();
-        this.fieldPullStart.updateCursorCounter();
-        this.fieldPullEnd.updateCursorCounter();
+    public void tick() {
+        super.tick();
+        //
+        //        this.fieldPutStart.updateCursorCounter();
+        //        this.fieldPutEnd.updateCursorCounter();
+        //        this.fieldPullStart.updateCursorCounter();
+        //        this.fieldPullEnd.updateCursorCounter();
 
         if (this.isAdvanced) {
-            this.leftFilter.update();
-            this.rightFilter.update();
+            this.leftFilter.tick();
+            this.rightFilter.tick();
         }
     }
 
@@ -279,23 +279,23 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("gui_inputter");
         private final boolean smaller;
 
-        public SmallerButton(int id, int x, int y, String display) {
-            this(id, x, y, display, false);
+        public SmallerButton(int x, int y, ITextComponent display, IPressable pressable) {
+            this(x, y, display, false, pressable);
         }
 
-        public SmallerButton(int id, int x, int y, String display, boolean smaller) {
-            super(id, x, y, 16, smaller
+        public SmallerButton(int x, int y, ITextComponent display, boolean smaller, IPressable pressable) {
+            super(x, y, 16, smaller
                 ? 12
-                : 16, display);
+                : 16, display, pressable);
             this.smaller = smaller;
         }
 
         @Override
-        public void drawButton(Minecraft mc, int x, int y, float f) {
+        public void render(MatrixStack matrices, int x, int y, float f) {
             if (this.visible) {
-                mc.getTextureManager().bindTexture(this.resLoc);
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                this.hovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
+                Minecraft.getInstance().getTextureManager().bindTexture(this.resLoc);
+                RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+                this.isHovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
                 int k = this.getHoverState(this.hovered);
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -332,7 +332,7 @@ public class GuiInputter extends GuiWtfMojang<ContainerInputter> {
         public void drawButton(Minecraft mc, int x, int y, float f) {
             if (this.visible) {
                 mc.getTextureManager().bindTexture(this.resLoc);
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                 this.hovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
                 int k = this.getHoverState(this.hovered);
                 GlStateManager.enableBlend();

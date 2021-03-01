@@ -10,7 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFluidCollector;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidCollector;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -36,10 +37,10 @@ public class GuiFluidCollector extends GuiWtfMojang<ContainerFluidCollector> {
     }
 
     @Override
-    public void drawScreen(int x, int y, float f) {
-        super.drawScreen(x, y, f);
+    public void render(MatrixStack matrices, int x, int y, float f) {
+        super.render(matrices, x, y, f);
 
-        this.fluid.drawOverlay(x, y);
+        this.fluid.render(matrices, x, y);
     }
 
     @Override
@@ -49,13 +50,13 @@ public class GuiFluidCollector extends GuiWtfMojang<ContainerFluidCollector> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.font, this.xSize, -10, this.collector);
+    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.collector);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
@@ -63,6 +64,6 @@ public class GuiFluidCollector extends GuiWtfMojang<ContainerFluidCollector> {
         this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
         this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
 
-        this.fluid.draw();
+        this.fluid.draw(matrices);
     }
 }

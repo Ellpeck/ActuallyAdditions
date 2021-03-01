@@ -10,21 +10,25 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.text.NumberFormat;
 import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
-public class FluidDisplay extends Gui {
+public class FluidDisplay extends AbstractGui {
 
     private FluidTank fluidReference;
     private Fluid oldFluid;
@@ -53,7 +57,7 @@ public class FluidDisplay extends Gui {
         this.drawTextNextTo = drawTextNextTo;
     }
 
-    public void draw() {
+    public void draw(MatrixStack matrices) {
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
 
@@ -100,7 +104,7 @@ public class FluidDisplay extends Gui {
         }
     }
 
-    public void drawOverlay(int mouseX, int mouseY) {
+    public void render(MatrixStack matrices, int mouseX, int mouseY) {
         if (mouseX >= this.x && mouseY >= this.y && mouseX < this.x + (this.outline
             ? 26
             : 18) && mouseY < this.y + (this.outline

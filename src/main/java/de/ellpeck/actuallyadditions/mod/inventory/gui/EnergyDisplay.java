@@ -10,20 +10,24 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class EnergyDisplay extends Gui {
+public class EnergyDisplay extends AbstractGui {
 
     private CustomEnergyStorage rfReference;
     private int x;
@@ -47,7 +51,7 @@ public class EnergyDisplay extends Gui {
         this.drawTextNextTo = drawTextNextTo;
     }
 
-    public void draw() {
+    public void draw(MatrixStack matrices) {
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
 
@@ -66,9 +70,9 @@ public class EnergyDisplay extends Gui {
             int i = this.rfReference.getEnergyStored() * 83 / this.rfReference.getMaxEnergyStored();
 
             float[] color = AssetUtil.getWheelColor(mc.world.getTotalWorldTime() % 256);
-            GlStateManager.color(color[0] / 255F, color[1] / 255F, color[2] / 255F);
+            RenderSystem.color4f(color[0] / 255F, color[1] / 255F, color[2] / 255F);
             this.blit(matrices, barX + 1, barY + 84 - i, 36, 172, 16, i);
-            GlStateManager.color(1F, 1F, 1F);
+            RenderSystem.color4f(1F, 1F, 1F);
         }
 
         if (this.drawTextNextTo) {
@@ -76,7 +80,7 @@ public class EnergyDisplay extends Gui {
         }
     }
 
-    public void drawOverlay(int mouseX, int mouseY) {
+    public void render(MatrixStack matrices, int mouseX, int mouseY) {
         if (this.isMouseOver(mouseX, mouseY)) {
             Minecraft mc = Minecraft.getInstance();
 

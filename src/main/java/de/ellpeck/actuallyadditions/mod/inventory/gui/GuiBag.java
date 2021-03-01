@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
@@ -71,7 +70,7 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
     @Override
     public void updateScreen() {
         super.updateScreen();
-        this.filter.update();
+        this.filter.tick();
 
         this.buttonAutoInsert.displayString = (this.container.autoInsert
             ? TextFormatting.DARK_GREEN
@@ -103,7 +102,7 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrixStack, this.guiLeft, this.guiTop + 90, 0, 0, 176, 86);

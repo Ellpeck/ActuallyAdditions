@@ -10,16 +10,20 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Collections;
 
@@ -43,7 +47,7 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
     public void init() {
         super.init();
 
-        Button buttonOkay = new Button(0, this.guiLeft + 60, this.guiTop + 11, 58, 20, StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ok"));
+        Button buttonOkay = new Button(this.guiLeft + 60, this.guiTop + 11, 58, 20, StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ok"));
         this.addButton(buttonOkay);
 
         this.energy = new EnergyDisplay(this.guiLeft + 16, this.guiTop + 5, this.machine.storage);
@@ -51,26 +55,26 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
     }
 
     @Override
-    public void drawScreen(int x, int y, float f) {
-        super.drawScreen(x, y, f);
+    public void render(MatrixStack matrices, int x, int y, float f) {
+        super.render(matrices, x, y, f);
 
         String text2 = this.machine.coffeeCacheAmount + "/" + TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.coffee");
         if (x >= this.guiLeft + 40 && y >= this.guiTop + 25 && x <= this.guiLeft + 49 && y <= this.guiTop + 56) {
             this.drawHoveringText(Collections.singletonList(text2), x, y);
         }
 
-        this.energy.drawOverlay(x, y);
-        this.fluid.drawOverlay(x, y);
+        this.energy.render(matrices, x, y);
+        this.fluid.render(matrices, x, y);
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.font, this.xSize, -10, this.machine);
+    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.machine);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
@@ -91,8 +95,8 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
             this.blit(matrices, this.guiLeft + 99 + 25 - j, this.guiTop + 44, 192 + 25 - j, 46, j, 12);
         }
 
-        this.energy.draw();
-        this.fluid.draw();
+        this.energy.draw(matrices);
+        this.fluid.draw(matrices);
     }
 
     @Override

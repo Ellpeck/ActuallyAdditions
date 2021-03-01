@@ -75,7 +75,7 @@
 //
 //    @Override
 //    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-//        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+//        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 //
 //        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
 //        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);

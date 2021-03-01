@@ -10,7 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
@@ -49,11 +50,11 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang<ContainerLaserRelay
     }
 
     @Override
-    public void updateScreen() {
-        super.updateScreen();
+    public void tick() {
+        super.tick();
 
-        this.leftFilter.update();
-        this.rightFilter.update();
+        this.leftFilter.tick();
+        this.rightFilter.tick();
     }
 
     @Override
@@ -75,8 +76,8 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang<ContainerLaserRelay
     }
 
     @Override
-    public void drawScreen(int x, int y, float f) {
-        super.drawScreen(x, y, f);
+    public void render(MatrixStack matrices, int x, int y, float f) {
+        super.render(matrices, x, y, f);
 
         if (this.buttonSmartWhitelistLeft.isMouseOver() || this.buttonSmartWhitelistRight.isMouseOver()) {
             List<String> list = new ArrayList<>();
@@ -90,18 +91,18 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang<ContainerLaserRelay
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tile);
+    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.tile);
 
         String s1 = StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.inbound");
         String s2 = StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.outbound");
-        this.font.drawString(s1, 46 - this.font.getStringWidth(s1) / 2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.font.drawString(s2, 131 - this.font.getStringWidth(s2) / 2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.font.drawString(matrices, s1, 46 - this.font.getStringWidth(s1) / 2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.font.drawString(matrices, s2, 131 - this.font.getStringWidth(s2) / 2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);

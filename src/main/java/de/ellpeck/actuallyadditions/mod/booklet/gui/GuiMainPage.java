@@ -135,7 +135,7 @@ public class GuiMainPage extends GuiBooklet {
         List<String> configText = new ArrayList<>();
         configText.add(TextFormatting.GOLD + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".configButton.name"));
         configText.addAll(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet." + ActuallyAdditions.MODID + ".configButton.desc", ActuallyAdditions.NAME).replaceAll("\\\\n", "\n"), 200));
-        this.configButton = new TexturedButton(RES_LOC_GADGETS, -388, this.guiLeft + 16, this.guiTop + this.ySize - 30, 188, 14, 16, 16, configText);
+        this.configButton = new TexturedButton(RES_LOC_GADGETS, this.guiLeft + 16, this.guiTop + this.ySize - 30, 188, 14, 16, 16, configText, );
         this.addButton(this.configButton);
 
         List<String> achievementText = new ArrayList<>();

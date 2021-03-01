@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBioReactor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -38,19 +39,19 @@ public class GuiBioReactor extends GuiWtfMojang<ContainerBioReactor> {
     }
 
     @Override
-    public void drawScreen(int x, int y, float f) {
-        super.drawScreen(x, y, f);
-        this.energy.drawOverlay(x, y);
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
+        super.render(matrices, mouseX, mouseY, partialTicks);
+        this.energy.render(mouseX, mouseY);
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tile);
+    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.tile);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float partialTicks, int x, int y) {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
@@ -64,7 +65,7 @@ public class GuiBioReactor extends GuiWtfMojang<ContainerBioReactor> {
         }
 
         if (this.tile.producePerTick > 0) {
-            this.drawCenteredString(this.font, this.tile.producePerTick + " " + I18n.format("actuallyadditions.cft"), this.guiLeft + 87, this.guiTop + 86, 0xFFFFFF);
+            drawCenteredString(matrices, this.font, this.tile.producePerTick + " " + I18n.format("actuallyadditions.cft"), this.guiLeft + 87, this.guiTop + 86, 0xFFFFFF);
         }
 
         this.energy.draw();

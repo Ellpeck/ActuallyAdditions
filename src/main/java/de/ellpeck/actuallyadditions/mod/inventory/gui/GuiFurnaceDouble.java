@@ -10,16 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -44,11 +47,11 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
     }
 
     @Override
-    public void drawScreen(int x, int y, float f) {
-        super.drawScreen(x, y, f);
-        this.energy.drawOverlay(x, y);
+    public void render(MatrixStack matrices, int x, int y, float f) {
+        super.render(matrices, x, y, f);
+        this.energy.render(matrices, x, y);
 
-        if (this.buttonAutoSplit.isMouseOver()) {
+        if (this.buttonAutoSplit.isMouseOver(x, y)) {
             this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.tileFurnace.isAutoSplit
                 ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on")
                 : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off"))), x, y);
@@ -64,13 +67,14 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
         this.addButton(this.buttonAutoSplit);
     }
 
-    @Override
-    public void updateScreen() {
-        super.updateScreen();
 
-        this.buttonAutoSplit.displayString = (this.tileFurnace.isAutoSplit
+    @Override
+    public void tick() {
+        super.tick();
+
+        this.buttonAutoSplit.setMessage(new StringTextComponent("S").mergeStyle(this.tileFurnace.isAutoSplit
             ? TextFormatting.DARK_GREEN
-            : TextFormatting.RED) + "S";
+            : TextFormatting.RED));
     }
 
     @Override
@@ -81,13 +85,13 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tileFurnace);
+    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.tileFurnace);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
@@ -104,6 +108,6 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
             this.blit(matrices, this.guiLeft + 101, this.guiTop + 40, 176, 22, 24, i);
         }
 
-        this.energy.draw();
+        this.energy.draw(matrices);
     }
 }

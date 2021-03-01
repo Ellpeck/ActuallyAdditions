@@ -21,7 +21,7 @@ public class TrialsButton extends TexturedButton {
     private final boolean isTrials;
 
     public TrialsButton(GuiBooklet gui) {
-        super(GuiBooklet.RES_LOC_GADGETS, -152000, gui.getGuiLeft() + gui.getSizeX(), gui.getGuiTop() + 10, 0, 204, 52, 16);
+        super(GuiBooklet.RES_LOC_GADGETS, gui.getGuiLeft() + gui.getSizeX(), gui.getGuiTop() + 10, 0, 204, 52, 16, );
         this.isTrials = gui.areTrialsOpened();
         this.active = !this.isTrials;
     }

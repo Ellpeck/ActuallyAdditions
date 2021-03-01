@@ -42,8 +42,8 @@
 //    }
 //
 //    @Override
-//    public void drawScreen(int x, int y, float f) {
-//        super.drawScreen(x, y, f);
+//    public void render(int x, int y, float f) {
+//        super.render(x, y, f);
 //        this.energy.drawOverlay(x, y);
 //    }
 //
@@ -54,7 +54,7 @@
 //
 //    @Override
 //    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-//        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+//        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 //
 //        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
 //        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);

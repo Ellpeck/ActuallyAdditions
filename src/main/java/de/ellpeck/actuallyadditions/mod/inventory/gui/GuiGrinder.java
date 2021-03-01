@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -22,6 +22,7 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -39,10 +40,6 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
     private EnergyDisplay energy;
 
     private Button buttonAutoSplit;
-
-    public GuiGrinder(PlayerInventory inventoryPlayer, TileEntityBase tile) {
-        this(inventoryPlayer, tile, false);
-    }
 
     private GuiGrinder(ContainerGrinder container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
@@ -73,20 +70,20 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
     }
 
     @Override
-    public void updateScreen() {
-        super.updateScreen();
+    public void tick() {
+        super.tick();
 
         if (this.isDouble) {
-            this.buttonAutoSplit.displayString = (this.tileGrinder.isAutoSplit
+            this.buttonAutoSplit.setMessage(new StringTextComponent("S").mergeStyle(this.tileGrinder.isAutoSplit
                 ? TextFormatting.DARK_GREEN
-                : TextFormatting.RED) + "S";
+                : TextFormatting.RED);
         }
     }
 
     @Override
-    public void drawScreen(int x, int y, float f) {
-        super.drawScreen(x, y, f);
-        this.energy.drawOverlay(x, y);
+    public void render(MatrixStack matrices, int x, int y, float f) {
+        super.render(matrices, x, y, f);
+        this.energy.render(matrices, x, y);
 
         if (this.isDouble && this.buttonAutoSplit.isMouseOver()) {
 
@@ -97,13 +94,13 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tileGrinder);
+    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.tileGrinder);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
@@ -126,13 +123,13 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
             }
         }
 
-        this.energy.draw();
+        this.energy.draw(matrices);
     }
 
     public static class GuiGrinderDouble extends GuiGrinder {
 
-        public GuiGrinderDouble(PlayerInventory inventory, TileEntityBase tile) {
-            super(inventory, tile, true);
+        public GuiGrinderDouble(ContainerGrinder containerGrinder, PlayerInventory inventory, ITextComponent tile) {
+            super(containerGrinder, inventory, tile);
         }
     }
 }

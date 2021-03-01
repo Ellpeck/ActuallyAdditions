@@ -11,9 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
@@ -29,12 +31,12 @@ public class TexturedButton extends Button {
     public int texturePosX;
     public int texturePosY;
 
-    public TexturedButton(ResourceLocation resLoc, int id, int x, int y, int texturePosX, int texturePosY, int width, int height) {
-        this(resLoc, id, x, y, texturePosX, texturePosY, width, height, new ArrayList<String>());
+    public TexturedButton(ResourceLocation resLoc, int x, int y, int texturePosX, int texturePosY, int width, int height, IPressable pressable) {
+        this(resLoc, x, y, texturePosX, texturePosY, width, height, new ArrayList<>());
     }
 
-    public TexturedButton(ResourceLocation resLoc, int id, int x, int y, int texturePosX, int texturePosY, int width, int height, List<String> hoverTextList) {
-        super(id, x, y, width, height, "");
+    public TexturedButton(ResourceLocation resLoc, int x, int y, int texturePosX, int texturePosY, int width, int height, List<String> hoverTextList, IPressable pressable) {
+        super(x, y, width, height, StringTextComponent.EMPTY, pressable);
         this.texturePosX = texturePosX;
         this.texturePosY = texturePosY;
         this.resLoc = resLoc;
@@ -45,7 +47,7 @@ public class TexturedButton extends Button {
     public void drawButton(Minecraft minecraft, int x, int y, float f) {
         if (this.visible) {
             minecraft.getTextureManager().bindTexture(this.resLoc);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
             int k = this.getHoverState(this.hovered);
             if (k == 0) {

@@ -14,16 +14,14 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerFireworkBox;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFireworkBox;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.gui.GuiPageButtonList.GuiResponder;
-import net.minecraft.client.gui.GuiSlider;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 
 @OnlyIn(Dist.CLIENT)
-public class GuiFireworkBox extends GuiContainer implements GuiResponder {
+public class GuiFireworkBox extends ContainerScreen<ContainerFireworkBox> implements GuiResponder {
 
     private final TileEntityFireworkBox tile;
 

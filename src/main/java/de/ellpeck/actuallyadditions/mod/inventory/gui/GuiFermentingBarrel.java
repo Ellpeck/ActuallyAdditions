@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -37,10 +37,10 @@ public class GuiFermentingBarrel extends GuiWtfMojang<ContainerFermentingBarrel>
     }
 
     @Override
-    public void drawScreen(int x, int y, float f) {
-        super.drawScreen(x, y, f);
-        this.input.drawOverlay(x, y);
-        this.output.drawOverlay(x, y);
+    public void render(MatrixStack matrices, int x, int y, float f) {
+        super.render(matrices, x, y, f);
+        this.input.render(matrices, x, y);
+        this.output.render(matrices, x, y);
     }
 
     @Override
@@ -51,13 +51,13 @@ public class GuiFermentingBarrel extends GuiWtfMojang<ContainerFermentingBarrel>
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.font, this.xSize, -10, this.press);
+    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.press);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
@@ -70,7 +70,7 @@ public class GuiFermentingBarrel extends GuiWtfMojang<ContainerFermentingBarrel>
             this.blit(matrices, this.guiLeft + 82, this.guiTop + 34, 176, 0, 12, i);
         }
 
-        this.input.draw();
-        this.output.draw();
+        this.input.draw(matrices);
+        this.output.draw(matrices);
     }
 }

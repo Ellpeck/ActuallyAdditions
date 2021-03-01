@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
@@ -22,6 +22,7 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -43,15 +44,24 @@ public class GuiXPSolidifier extends GuiWtfMojang<ContainerXPSolidifier> {
     public void init() {
         super.init();
 
-        Button buttonOne = new GuiInputter.SmallerButton(0, this.guiLeft + 62, this.guiTop + 44, "1");
-        Button buttonFive = new GuiInputter.SmallerButton(1, this.guiLeft + 80, this.guiTop + 44, "5");
-        Button buttonTen = new GuiInputter.SmallerButton(2, this.guiLeft + 99, this.guiTop + 44, "10");
-        Button buttonTwenty = new GuiInputter.SmallerButton(3, this.guiLeft + 62, this.guiTop + 61, "20");
-        Button buttonThirty = new GuiInputter.SmallerButton(4, this.guiLeft + 80, this.guiTop + 61, "30");
-        Button buttonForty = new GuiInputter.SmallerButton(5, this.guiLeft + 99, this.guiTop + 61, "40");
-        Button buttonFifty = new GuiInputter.SmallerButton(6, this.guiLeft + 62, this.guiTop + 78, "50");
-        Button buttonSixtyFour = new GuiInputter.SmallerButton(7, this.guiLeft + 80, this.guiTop + 78, "64");
-        Button buttonAll = new GuiInputter.SmallerButton(8, this.guiLeft + 99, this.guiTop + 78, "All");
+        Button buttonOne = new GuiInputter.SmallerButton(this.guiLeft + 62, this.guiTop + 44, new StringTextComponent("1"), btn -> {
+        });
+        Button buttonFive = new GuiInputter.SmallerButton(this.guiLeft + 80, this.guiTop + 44, new StringTextComponent("5"), btn -> {
+        });
+        Button buttonTen = new GuiInputter.SmallerButton(this.guiLeft + 99, this.guiTop + 44, new StringTextComponent("10"), btn -> {
+        });
+        Button buttonTwenty = new GuiInputter.SmallerButton(this.guiLeft + 62, this.guiTop + 61, new StringTextComponent("20"), btn -> {
+        });
+        Button buttonThirty = new GuiInputter.SmallerButton(this.guiLeft + 80, this.guiTop + 61, new StringTextComponent("30"), btn -> {
+        });
+        Button buttonForty = new GuiInputter.SmallerButton(this.guiLeft + 99, this.guiTop + 61, new StringTextComponent("40"), btn -> {
+        });
+        Button buttonFifty = new GuiInputter.SmallerButton(this.guiLeft + 62, this.guiTop + 78, new StringTextComponent("50"), btn -> {
+        });
+        Button buttonSixtyFour = new GuiInputter.SmallerButton(this.guiLeft + 80, this.guiTop + 78, new StringTextComponent("64"), btn -> {
+        });
+        Button buttonAll = new GuiInputter.SmallerButton(this.guiLeft + 99, this.guiTop + 78, new StringTextComponent("All"), btn -> {
+        });
 
         this.addButton(buttonOne);
         this.addButton(buttonFive);
@@ -71,7 +81,7 @@ public class GuiXPSolidifier extends GuiWtfMojang<ContainerXPSolidifier> {
 
     @Override
     public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
