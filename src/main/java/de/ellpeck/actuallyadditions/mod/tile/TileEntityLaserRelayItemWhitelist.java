@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -18,11 +19,17 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.items.IItemHandler;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
-public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor {
+import javax.annotation.Nullable;
+
+public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor, INamedContainerProvider {
 
     public FilterSettings leftFilter = new FilterSettings(12, true, true, false, false, 0, -1000);
     public FilterSettings rightFilter = new FilterSettings(12, true, true, false, false, 0, -2000);
@@ -72,15 +79,14 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
 
     private void addWhitelistSmart(boolean output) {
         for (SlotlessableItemHandlerWrapper handler : this.handlersAround.values()) {
-            IItemHandler itemHandler = handler.getNormalHandler();
-            if (itemHandler != null) {
+            handler.getNormalHandler().ifPresent(itemHandler -> {
                 for (int i = 0; i < itemHandler.getSlots(); i++) {
                     ItemStack stack = itemHandler.getStackInSlot(i);
                     if (StackUtil.isValid(stack)) {
                         this.addWhitelistSmart(output, stack);
                     }
                 }
-            }
+            });
         }
     }
 
@@ -131,5 +137,16 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
                 this.rightFilter.updateLasts();
             }
         }
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return StringTextComponent.EMPTY;
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+        return new ContainerLaserRelayItemWhitelist(windowId, playerInventory, this);
     }
 }

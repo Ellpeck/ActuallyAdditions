@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerMiner;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -21,21 +22,27 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.IFluidBlock;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityMiner extends TileEntityInventoryBase implements IButtonReactor, IEnergyDisplay {
+public class TileEntityMiner extends TileEntityInventoryBase implements IButtonReactor, IEnergyDisplay, INamedContainerProvider {
 
     public static final int ENERGY_USE_PER_BLOCK = 650;
     public static final int DEFAULT_RANGE = 2;
@@ -163,7 +170,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
                 } else {
                     if (StackUtil.isValid(stack)) {
                         // TODO: [port] come back and see if there is a tag for this
-                        
+
                         //                        int[] ids = OreDictionary.getOreIDs(stack);
                         //                        for (int id : ids) {
                         //                            String name = OreDictionary.getOreName(id);
@@ -234,5 +241,16 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     @Override
     public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
         return this.lazyEnergy;
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return StringTextComponent.EMPTY;
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+        return new ContainerMiner(windowId, playerInventory, this);
     }
 }

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.inventory.ContainerXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -18,14 +19,20 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor {
+public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
 
     private static final int[] XP_MAP = new int[256];
 
@@ -124,10 +131,8 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
             if (this.amount > 0) {
                 ItemStack stack = this.inv.getStackInSlot(0);
                 if (stack.isEmpty()) {
-                    int toSet = this.amount > 64
-                        ? 64
-                        : this.amount;
-                    this.inv.setStackInSlot(0, new ItemStack(InitItems.itemSolidifiedExperience, toSet));
+                    int toSet = Math.min(this.amount, 64);
+                    this.inv.setStackInSlot(0, new ItemStack(InitItems.itemSolidifiedExperience.get(), toSet));
                     this.amount -= toSet;
                     this.markDirty();
                 } else if (stack.getCount() < 64) {
@@ -177,7 +182,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> slot == 1 && stack.getItem() == InitItems.itemSolidifiedExperience;
+        return (slot, stack, automation) -> slot == 1 && stack.getItem() == InitItems.itemSolidifiedExperience.get();
     }
 
     @Override
@@ -204,5 +209,16 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 }
             }
         }
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return StringTextComponent.EMPTY;
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+        return new ContainerXPSolidifier(windowId, playerInventory, this);
     }
 }

@@ -30,19 +30,19 @@ public class ContainerInputter extends Container {
     public final boolean isAdvanced;
 
     public static ContainerInputter fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerInputter(windowId, inv, data.readBoolean(), (TileEntityInputter) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+        return new ContainerInputter(windowId, inv, (TileEntityInputter) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
     }
 
-    public ContainerInputter(int windowId, PlayerInventory inventory, boolean isAdvanced, TileEntityInputter tile) {
+    public ContainerInputter(int windowId, PlayerInventory inventory, TileEntityInputter tile) {
         super(ActuallyContainers.INPUTTER_CONTAINER.get(), windowId);
         this.tileInputter = tile;
-        this.isAdvanced = isAdvanced;
+        this.isAdvanced = tile.isAdvanced;
 
-        this.addSlot(new SlotItemHandlerUnconditioned(this.tileInputter.inv, 0, 80, 21 + (isAdvanced
+        this.addSlot(new SlotItemHandlerUnconditioned(this.tileInputter.inv, 0, 80, 21 + (this.isAdvanced
             ? 12
             : 0)));
 
-        if (isAdvanced) {
+        if (this.isAdvanced) {
             for (int i = 0; i < 2; i++) {
                 for (int x = 0; x < 3; x++) {
                     for (int y = 0; y < 4; y++) {
@@ -56,13 +56,13 @@ public class ContainerInputter extends Container {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 101 + i * 18 + (isAdvanced
+                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 101 + i * 18 + (this.isAdvanced
                     ? GuiInputter.OFFSET_ADVANCED
                     : 0)));
             }
         }
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new Slot(inventory, i, 8 + i * 18, 159 + (isAdvanced
+            this.addSlot(new Slot(inventory, i, 8 + i * 18, 159 + (this.isAdvanced
                 ? GuiInputter.OFFSET_ADVANCED
                 : 0)));
         }

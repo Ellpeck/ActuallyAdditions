@@ -29,13 +29,13 @@ public class ContainerGrinder extends Container {
     public final boolean isDouble;
 
     public static ContainerGrinder fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerGrinder(windowId, inv, data.readBoolean(), (TileEntityGrinder) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+        return new ContainerGrinder(windowId, inv, (TileEntityGrinder) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
     }
 
-    public ContainerGrinder(int windowId, PlayerInventory inventory, boolean isDouble, TileEntityGrinder tile) {
+    public ContainerGrinder(int windowId, PlayerInventory inventory, TileEntityGrinder tile) {
         super(ActuallyContainers.GRINDER_CONTAINER.get(), windowId);
         this.tileGrinder = tile;
-        this.isDouble = isDouble;
+        this.isDouble = tile.isDouble;
 
         this.addSlot(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityGrinder.SLOT_INPUT_1, this.isDouble
             ? 51
