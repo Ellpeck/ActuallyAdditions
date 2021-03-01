@@ -32,7 +32,6 @@ import de.ellpeck.actuallyadditions.mod.misc.apiimpl.MethodHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
-import de.ellpeck.actuallyadditions.mod.recipe.TreasureChestHandler;
 import de.ellpeck.actuallyadditions.mod.tile.ActuallyTiles;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
@@ -117,7 +116,6 @@ public class ActuallyAdditions {
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
         HairyBallHandler.init();
-        TreasureChestHandler.init();
         LensRecipeHandler.init();
         EmpowererHandler.init();
         LensMining.init();

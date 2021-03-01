@@ -41,7 +41,7 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
 
     private Button buttonAutoSplit;
 
-    private GuiGrinder(ContainerGrinder container, PlayerInventory inventory, ITextComponent title) {
+    public GuiGrinder(ContainerGrinder container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
         this.tileGrinder = container.tileGrinder;
         this.isDouble = container.isDouble;
