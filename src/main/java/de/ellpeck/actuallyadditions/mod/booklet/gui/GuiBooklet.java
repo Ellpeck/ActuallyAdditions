@@ -96,19 +96,22 @@ public abstract class GuiBooklet extends GuiBookletBase {
 
         if (this.hasPageLeftButton()) {
             List<String> hoverText = Arrays.asList(TextFormatting.GOLD + "Previous Page", TextFormatting.ITALIC + "Or scroll up");
-            this.buttonLeft = new TexturedButton(RES_LOC_GADGETS, this.guiLeft - 12, this.guiTop + this.ySize - 8, 18, 54, 18, 10, hoverText, );
+            this.buttonLeft = new TexturedButton(RES_LOC_GADGETS, this.guiLeft - 12, this.guiTop + this.ySize - 8, 18, 54, 18, 10, hoverText, btn -> {
+            });
             this.addButton(this.buttonLeft);
         }
 
         if (this.hasPageRightButton()) {
             List<String> hoverText = Arrays.asList(TextFormatting.GOLD + "Next Page", TextFormatting.ITALIC + "Or scroll down");
-            this.buttonRight = new TexturedButton(RES_LOC_GADGETS, this.guiLeft + this.xSize - 6, this.guiTop + this.ySize - 8, 0, 54, 18, 10, hoverText, );
+            this.buttonRight = new TexturedButton(RES_LOC_GADGETS, this.guiLeft + this.xSize - 6, this.guiTop + this.ySize - 8, 0, 54, 18, 10, hoverText, btn -> {
+            });
             this.addButton(this.buttonRight);
         }
 
         if (this.hasBackButton()) {
             List<String> hoverText = Arrays.asList(TextFormatting.GOLD + "Go Back", TextFormatting.ITALIC + "Or right-click", TextFormatting.ITALIC.toString() + TextFormatting.GRAY + "Hold Shift for Main Page");
-            this.buttonBack = new TexturedButton(RES_LOC_GADGETS, this.guiLeft - 15, this.guiTop - 3, 36, 54, 18, 10, hoverText, );
+            this.buttonBack = new TexturedButton(RES_LOC_GADGETS, this.guiLeft - 15, this.guiTop - 3, 36, 54, 18, 10, hoverText, btn -> {
+            });
             this.addButton(this.buttonBack);
         }
 

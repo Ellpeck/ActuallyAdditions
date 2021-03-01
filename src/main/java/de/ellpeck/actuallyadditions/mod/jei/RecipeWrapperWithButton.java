@@ -27,7 +27,8 @@ public abstract class RecipeWrapperWithButton implements IRecipeWr {
     protected final TexturedButton theButton;
 
     public RecipeWrapperWithButton() {
-        this.theButton = new TexturedButton(GuiBooklet.RES_LOC_GADGETS, this.getButtonX(), this.getButtonY(), 0, 0, 20, 20, );
+        this.theButton = new TexturedButton(GuiBooklet.RES_LOC_GADGETS, this.getButtonX(), this.getButtonY(), 0, 0, 20, 20, btn -> {
+        });
     }
 
     public abstract int getButtonX();

@@ -76,7 +76,7 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
         if (this.isDouble) {
             this.buttonAutoSplit.setMessage(new StringTextComponent("S").mergeStyle(this.tileGrinder.isAutoSplit
                 ? TextFormatting.DARK_GREEN
-                : TextFormatting.RED);
+                : TextFormatting.RED));
         }
     }
 
