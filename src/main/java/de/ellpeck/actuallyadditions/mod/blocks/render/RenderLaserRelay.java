@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
@@ -54,7 +54,7 @@ public class RenderLaserRelay extends TileEntityRenderer<TileEntityLaserRelay> {
 
         ItemStack upgrade = relay.inv.getStackInSlot(0);
         if (StackUtil.isValid(upgrade)) {
-            if (upgrade.getItem() == InitItems.itemLaserUpgradeInvisibility.get()) {
+            if (upgrade.getItem() == ActuallyItems.itemLaserUpgradeInvisibility.get()) {
                 hasInvis = true;
             }
 
@@ -85,7 +85,7 @@ public class RenderLaserRelay extends TileEntityRenderer<TileEntityLaserRelay> {
                     TileEntity secondTile = tile.getWorld().getTileEntity(second);
                     if (secondTile instanceof TileEntityLaserRelay) {
                         ItemStack secondUpgrade = ((TileEntityLaserRelay) secondTile).inv.getStackInSlot(0);
-                        boolean otherInvis = StackUtil.isValid(secondUpgrade) && secondUpgrade.getItem() == InitItems.itemLaserUpgradeInvisibility.get();
+                        boolean otherInvis = StackUtil.isValid(secondUpgrade) && secondUpgrade.getItem() == ActuallyItems.itemLaserUpgradeInvisibility.get();
 
                         if (hasGoggles || !hasInvis || !otherInvis) {
                             float[] color = hasInvis && otherInvis

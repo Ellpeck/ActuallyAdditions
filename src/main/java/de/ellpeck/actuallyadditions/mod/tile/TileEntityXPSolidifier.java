@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerXPSolidifier;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -132,7 +132,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 ItemStack stack = this.inv.getStackInSlot(0);
                 if (stack.isEmpty()) {
                     int toSet = Math.min(this.amount, 64);
-                    this.inv.setStackInSlot(0, new ItemStack(InitItems.itemSolidifiedExperience.get(), toSet));
+                    this.inv.setStackInSlot(0, new ItemStack(ActuallyItems.itemSolidifiedExperience.get(), toSet));
                     this.amount -= toSet;
                     this.markDirty();
                 } else if (stack.getCount() < 64) {
@@ -182,7 +182,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> slot == 1 && stack.getItem() == InitItems.itemSolidifiedExperience.get();
+        return (slot, stack, automation) -> slot == 1 && stack.getItem() == ActuallyItems.itemSolidifiedExperience.get();
     }
 
     @Override

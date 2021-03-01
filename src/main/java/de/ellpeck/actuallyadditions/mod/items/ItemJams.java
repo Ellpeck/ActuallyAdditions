@@ -33,7 +33,7 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
 
     public static final TheJams[] ALL_JAMS = TheJams.values();
 
-    public ItemJams(String name) {
+    public ItemJams() {
         super(0, 0.0F, false, name);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);

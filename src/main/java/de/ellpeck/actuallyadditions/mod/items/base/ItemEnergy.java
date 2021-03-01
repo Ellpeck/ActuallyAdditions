@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -44,7 +44,7 @@ public abstract class ItemEnergy extends ItemBase {
     private final int transfer;
 
     public ItemEnergy(int maxPower, int transfer) {
-        super(InitItems.defaultProps().maxStackSize(1));
+        super(ActuallyItems.defaultProps().maxStackSize(1));
         this.maxPower = maxPower;
         this.transfer = transfer;
     }

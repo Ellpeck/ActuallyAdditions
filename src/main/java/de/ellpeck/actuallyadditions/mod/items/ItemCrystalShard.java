@@ -25,7 +25,7 @@ import net.minecraftforge.common.IRarity;
 
 public class ItemCrystalShard extends ItemBase implements IColorProvidingItem {
 
-    public ItemCrystalShard(String name) {
+    public ItemCrystalShard() {
         super(name);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);

@@ -23,10 +23,9 @@ public class ItemDrillUpgrade extends ItemBase {
 
     public final UpgradeType type;
 
-    public ItemDrillUpgrade(UpgradeType type, String unlocName) {
-        super(unlocName);
+    public ItemDrillUpgrade(UpgradeType type) {
+        super(ActuallyItems.defaultProps().maxStackSize(1));
         this.type = type;
-        this.setMaxStackSize(1);
     }
 
     public static int getSlotToPlaceFrom(ItemStack stack) {

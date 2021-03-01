@@ -10,53 +10,50 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
-import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemFilter extends ItemBase {
 
-    public ItemFilter(String name) {
-        super(name);
-        this.setMaxStackSize(1);
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.UNCOMMON;
+    public ItemFilter() {
+        super(ActuallyItems.defaultProps().maxStackSize(1));
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         if (!world.isRemote && hand == Hand.MAIN_HAND) {
-            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FILTER.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
+            NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((windowId, inv, playerEnt) -> new ContainerFilter(windowId, inv), StringTextComponent.EMPTY));
+            //            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FILTER.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
-        return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
+        return ActionResult.resultPass(player.getHeldItem(hand));
     }
 
     @Override
-    public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
-        super.addInformation(stack, playerIn, tooltip, advanced);
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
 
         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
         ItemDrill.loadSlotsFromNBT(inv, stack);
         for (int i = 0; i < inv.getSlots(); i++) {
             ItemStack slot = inv.getStackInSlot(i);
             if (StackUtil.isValid(slot)) {
-                tooltip.add(slot.getItem().getItemStackDisplayName(slot));
+                tooltip.add(slot.getItem().getDisplayName(slot));
             }
         }
     }

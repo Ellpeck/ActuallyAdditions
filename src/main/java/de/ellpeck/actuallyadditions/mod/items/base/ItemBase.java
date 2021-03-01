@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.item.Item;
 
 public class ItemBase extends Item {
@@ -19,6 +19,6 @@ public class ItemBase extends Item {
     }
 
     public ItemBase() {
-        super(InitItems.defaultProps());
+        super(ActuallyItems.defaultProps());
     }
 }

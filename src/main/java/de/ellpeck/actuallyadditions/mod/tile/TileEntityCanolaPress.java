@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCanolaPress;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -132,7 +132,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     }
 
     public static boolean isCanola(ItemStack stack) {
-        return stack.getItem() == InitItems.itemCanola.get();
+        return stack.getItem() == ActuallyItems.itemCanola.get();
     }
 
     @Override

@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
@@ -63,7 +63,7 @@ public class ContainerCanolaPress extends Container {
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getItem() == InitItems.itemCanola.get()) {
+                if (newStack.getItem() == ActuallyItems.itemCanola.get()) {
                     if (!this.mergeItemStack(newStack, 0, 1, false)) {
                         return StackUtil.getEmpty();
                     }

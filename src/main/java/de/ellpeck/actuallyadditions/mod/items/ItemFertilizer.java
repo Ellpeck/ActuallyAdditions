@@ -17,15 +17,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Direction;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemFertilizer extends ItemBase {
 
-    public ItemFertilizer(String name) {
+    public ItemFertilizer() {
         super(name);
 
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, new DispenserHandlerFertilize());

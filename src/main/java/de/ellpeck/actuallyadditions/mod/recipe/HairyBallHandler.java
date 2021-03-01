@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.recipe;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -42,7 +42,7 @@ public final class HairyBallHandler {
         ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.SAND), 50);
         ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.VINE), 30);
         ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.WEB), 4);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(InitItems.itemSolidifiedExperience), 20);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(ActuallyItems.itemSolidifiedExperience), 20);
     }
 
 }

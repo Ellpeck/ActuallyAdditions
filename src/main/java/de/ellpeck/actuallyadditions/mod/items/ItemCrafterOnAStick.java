@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 
 public class ItemCrafterOnAStick extends ItemBase {
 
-    public ItemCrafterOnAStick(String name) {
+    public ItemCrafterOnAStick() {
         super(name);
         this.setMaxStackSize(1);
     }

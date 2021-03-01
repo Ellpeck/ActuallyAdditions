@@ -17,8 +17,7 @@ import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.jei.RecipeWrapperWithButton;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -34,12 +33,12 @@ public class CoffeeMachineRecipeWrapper extends RecipeWrapperWithButton {
 
     public final CoffeeIngredient ingredient;
     public final ItemStack theOutput;
-    public final ItemStack cup = new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal());
+    public final ItemStack cup = new ItemStack(ActuallyItems.itemCoffeeCup.get());
 
     public CoffeeMachineRecipeWrapper(CoffeeIngredient ingredient) {
         this.ingredient = ingredient;
 
-        this.theOutput = new ItemStack(InitItems.itemCoffee);
+        this.theOutput = new ItemStack(ActuallyItems.itemCoffee);
         ActuallyAdditionsAPI.methodHandler.addEffectToStack(this.theOutput, this.ingredient);
     }
 

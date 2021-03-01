@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack;
 
 public class ItemCoffeeBean extends ItemFoodBase {
 
-    public ItemCoffeeBean(String name) {
+    public ItemCoffeeBean() {
         super(1, 1F, false, name);
         this.setMaxDamage(0);
     }

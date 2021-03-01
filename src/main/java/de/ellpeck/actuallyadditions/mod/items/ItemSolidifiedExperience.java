@@ -32,7 +32,7 @@ public class ItemSolidifiedExperience extends ItemBase {
 
     public static final int SOLID_XP_AMOUNT = 8;
 
-    public ItemSolidifiedExperience(String name) {
+    public ItemSolidifiedExperience() {
         super(name);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -45,7 +45,7 @@ public class ItemSolidifiedExperience extends ItemBase {
                 //Drop Solidified XP
                 if (event.getEntityLiving() instanceof EntityCreature) {
                     if (event.getEntityLiving().world.rand.nextInt(10) <= event.getLootingLevel() * 2) {
-                        event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(InitItems.itemSolidifiedExperience, event.getEntityLiving().world.rand.nextInt(2 + event.getLootingLevel()) + 1)));
+                        event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(ActuallyItems.itemSolidifiedExperience, event.getEntityLiving().world.rand.nextInt(2 + event.getLootingLevel()) + 1)));
                     }
                 }
             }

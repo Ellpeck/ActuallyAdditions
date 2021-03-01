@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 
 public class ItemResonantRice extends ItemBase {
 
-    public ItemResonantRice(String name) {
+    public ItemResonantRice() {
         super(name);
     }
 

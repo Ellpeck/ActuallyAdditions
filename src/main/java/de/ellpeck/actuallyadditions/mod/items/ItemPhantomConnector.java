@@ -21,8 +21,8 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Direction;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -35,7 +35,7 @@ import java.util.List;
 
 public class ItemPhantomConnector extends ItemBase {
 
-    public ItemPhantomConnector(String name) {
+    public ItemPhantomConnector() {
         super(name);
         this.setMaxStackSize(1);
     }

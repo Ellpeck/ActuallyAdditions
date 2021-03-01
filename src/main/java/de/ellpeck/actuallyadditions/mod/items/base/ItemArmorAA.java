@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
@@ -20,7 +20,7 @@ public class ItemArmorAA extends ArmorItem implements IDisableableItem {
     private final boolean disabled;
 
     public ItemArmorAA(IArmorMaterial material, EquipmentSlotType type) {
-        this(material, type, InitItems.defaultProps());
+        this(material, type, ActuallyItems.defaultProps());
     }
 
     public ItemArmorAA(IArmorMaterial material, EquipmentSlotType type, Properties properties) {

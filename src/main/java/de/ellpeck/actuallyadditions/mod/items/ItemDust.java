@@ -26,7 +26,7 @@ public class ItemDust extends ItemBase implements IColorProvidingItem {
 
     public static final TheDusts[] ALL_DUSTS = TheDusts.values();
 
-    public ItemDust(String name) {
+    public ItemDust() {
         super(name);
         this.setHasSubtypes(true);
     }

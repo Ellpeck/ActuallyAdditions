@@ -22,8 +22,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Direction;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -35,9 +35,8 @@ import java.util.UUID;
 
 public class ItemPlayerProbe extends ItemBase {
 
-    public ItemPlayerProbe(String name) {
-        super(name);
-        this.setMaxStackSize(1);
+    public ItemPlayerProbe() {
+        super(ActuallyItems.defaultProps().maxStackSize(1));
     }
 
     @Override

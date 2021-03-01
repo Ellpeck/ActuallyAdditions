@@ -14,6 +14,8 @@ import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.SoundEvents;
@@ -37,10 +39,9 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
 
     private final boolean isAdvanced;
 
-    public ItemLeafBlower(boolean isAdvanced, String name) {
-        super(name);
+    public ItemLeafBlower(boolean isAdvanced) {
+        super(ActuallyItems.defaultProps().maxStackSize(1));
         this.isAdvanced = isAdvanced;
-        this.setMaxStackSize(1);
     }
 
     @Override

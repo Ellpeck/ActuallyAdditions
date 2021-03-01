@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemBag;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
@@ -163,7 +163,7 @@ public class CommonEvents {
         //checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
         if (ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()) {
-            if (!event.getPlayer().world.isRemote && StackUtil.isValid(event.getCrafting()) && event.getCrafting().getItem() != InitItems.itemBooklet.get()) {
+            if (!event.getPlayer().world.isRemote && StackUtil.isValid(event.getCrafting()) && event.getCrafting().getItem() != ActuallyItems.itemBooklet.get()) {
 
                 String name = event.getCrafting().getItem().getRegistryName().toString();
                 if (name != null && name.toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)) {
@@ -172,7 +172,7 @@ public class CommonEvents {
                         save.bookGottenAlready = true;
                         WorldData.get(event.getPlayer().getEntityWorld()).markDirty();
 
-                        ItemEntity entityItem = new ItemEntity(event.getPlayer().world, event.getPlayer().getPosX(), event.getPlayer().getPosY(), event.getPlayer().getPosZ(), new ItemStack(InitItems.itemBooklet.get()));
+                        ItemEntity entityItem = new ItemEntity(event.getPlayer().world, event.getPlayer().getPosX(), event.getPlayer().getPosY(), event.getPlayer().getPosZ(), new ItemStack(ActuallyItems.itemBooklet.get()));
                         entityItem.setPickupDelay(0);
                         event.getPlayer().world.addEntity(entityItem);
                     }

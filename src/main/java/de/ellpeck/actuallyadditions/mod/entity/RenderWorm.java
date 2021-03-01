@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.entity;
 
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
@@ -27,7 +27,7 @@ public class RenderWorm extends Render<EntityWorm> {
     private static ItemStack stack = ItemStack.EMPTY;
 
     public static void fixItemStack() {
-        stack = new ItemStack(InitItems.itemWorm.get());
+        stack = new ItemStack(ActuallyItems.itemWorm.get());
     }
 
     protected RenderWorm(RenderManager renderManager) {

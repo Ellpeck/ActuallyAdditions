@@ -14,9 +14,9 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityBat;
@@ -37,7 +37,7 @@ public class ItemWingsOfTheBats extends ItemBase {
     public static final String THE_BAT_BAT = "the bat bat";
     public static final int MAX_FLY_TIME = 800;
 
-    public ItemWingsOfTheBats(String name) {
+    public ItemWingsOfTheBats() {
         super(name);
         this.setMaxStackSize(1);
 
@@ -109,7 +109,7 @@ public class ItemWingsOfTheBats extends ItemBase {
                 }
 
                 if (event.getEntityLiving().world.rand.nextInt(15) <= looting * 2) {
-                    event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(InitItems.itemMisc, event.getEntityLiving().world.rand.nextInt(2 + looting) + 1, TheMiscItems.BAT_WING.ordinal())));
+                    event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(ActuallyItems.itemBatWing.get(), event.getEntityLiving().world.rand.nextInt(2 + looting) + 1)));
                 }
             }
         }

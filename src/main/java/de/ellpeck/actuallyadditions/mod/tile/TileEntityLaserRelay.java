@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.ConnectionPair;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
@@ -168,7 +168,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
 
     public int getMaxRange() {
         ItemStack upgrade = this.inv.getStackInSlot(0);
-        if (StackUtil.isValid(upgrade) && upgrade.getItem() == InitItems.itemLaserUpgradeRange.get()) {
+        if (StackUtil.isValid(upgrade) && upgrade.getItem() == ActuallyItems.itemLaserUpgradeRange.get()) {
             return MAX_DISTANCE_RANGED;
         } else {
             return MAX_DISTANCE;

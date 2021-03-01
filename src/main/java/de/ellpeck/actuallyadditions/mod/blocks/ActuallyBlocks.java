@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -117,10 +117,10 @@ public final class ActuallyBlocks {
     public static final RegistryObject<Block> blockCoalGenerator = BLOCKS.register("block_coal_generator", BlockCoalGenerator::new);
     public static final RegistryObject<Block> blockOilGenerator = BLOCKS.register("block_oil_generator", BlockOilGenerator::new);
     public static final RegistryObject<Block> blockFermentingBarrel = BLOCKS.register("block_fermenting_barrel", BlockFermentingBarrel::new);
-    public static final RegistryObject<Block> blockRice = BLOCKS.register("block_rice", () -> new BlockPlant(InitItems.itemRiceSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(1, 2));
-    public static final RegistryObject<Block> blockCanola = BLOCKS.register("block_canola", () -> new BlockPlant(InitItems.itemCanolaSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 3));
-    public static final RegistryObject<Block> blockFlax = BLOCKS.register("block_flax", () -> new BlockPlant(InitItems.itemFlaxSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 4));
-    public static final RegistryObject<Block> blockCoffee = BLOCKS.register("block_coffee", () -> new BlockPlant(InitItems.itemCoffeeSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 2));
+    public static final RegistryObject<Block> blockRice = BLOCKS.register("block_rice", () -> new BlockPlant(ActuallyItems.itemRiceSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(1, 2));
+    public static final RegistryObject<Block> blockCanola = BLOCKS.register("block_canola", () -> new BlockPlant(ActuallyItems.itemCanolaSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 3));
+    public static final RegistryObject<Block> blockFlax = BLOCKS.register("block_flax", () -> new BlockPlant(ActuallyItems.itemFlaxSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 4));
+    public static final RegistryObject<Block> blockCoffee = BLOCKS.register("block_coffee", () -> new BlockPlant(ActuallyItems.itemCoffeeSeed.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 2));
     public static final RegistryObject<Block> blockFurnaceDouble = BLOCKS.register("block_furnace_double", BlockFurnaceDouble::new);
     public static final RegistryObject<Block> blockInputter = BLOCKS.register("block_inputter", () -> new BlockInputter(false));
     public static final RegistryObject<Block> blockInputterAdvanced = BLOCKS.register("block_inputter_advanced", () -> new BlockInputter(true));

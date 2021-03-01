@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -35,7 +35,7 @@ public class PageCoffeeMachine extends BookletPage {
         this.ingredient = ingredient;
         this.stacks = ingredient.getInput().getMatchingStacks();
 
-        this.outcome = new ItemStack(InitItems.itemCoffee.get());
+        this.outcome = new ItemStack(ActuallyItems.itemCoffee.get());
         ActuallyAdditionsAPI.methodHandler.addEffectToStack(this.outcome, this.ingredient);
     }
 
@@ -65,8 +65,8 @@ public class PageCoffeeMachine extends BookletPage {
         gui.addOrModifyItemRenderer(this.stacks[0], startX + 5 + 82, startY + 10 + 1, 1F, true);
         gui.addOrModifyItemRenderer(this.outcome, startX + 5 + 36, startY + 10 + 42, 1F, false);
 
-        gui.addOrModifyItemRenderer(new ItemStack(InitItems.itemCoffeeCup.get()), startX + 5 + 37, startY + 10 + 1, 1F, true);
-        gui.addOrModifyItemRenderer(new ItemStack(InitItems.itemCoffee.get()), startX + 5 + 1, startY + 10 + 1, 1F, true);
+        gui.addOrModifyItemRenderer(new ItemStack(ActuallyItems.itemCoffeeCup.get()), startX + 5 + 37, startY + 10 + 1, 1F, true);
+        gui.addOrModifyItemRenderer(new ItemStack(ActuallyItems.itemCoffee.get()), startX + 5 + 1, startY + 10 + 1, 1F, true);
     }
 
     @Override

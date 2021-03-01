@@ -53,7 +53,7 @@ public class ItemDrill extends ItemEnergy {
     public static final int HARVEST_LEVEL = 4;
     private static final int ENERGY_USE = 100;
 
-    public ItemDrill(String name) {
+    public ItemDrill() {
         super(250000, 1000, name);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);

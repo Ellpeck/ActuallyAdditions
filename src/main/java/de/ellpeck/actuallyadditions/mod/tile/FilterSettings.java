@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class FilterSettings {

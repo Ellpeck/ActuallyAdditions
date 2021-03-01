@@ -2,7 +2,7 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
@@ -17,7 +17,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
     @Override
     protected void registerTags() {
-        this.getOrCreateBuilder(ActuallyTags.Items.COFFEE_BEANS).add(InitItems.itemCoffeeBean);
+        this.getOrCreateBuilder(ActuallyTags.Items.COFFEE_BEANS).add(ActuallyItems.itemCoffeeBean);
         //        getOrCreateBuilder(ActuallyTags.Items.DRILLS).add(
         //            ActuallyItems.DRILL_MAIN.get(),
         //            ActuallyItems.DRILL_BLACK.get(), ActuallyItems.DRILL_BLACK.get(), ActuallyItems.DRILL_BLUE.get(), ActuallyItems.DRILL_BROWN.get(),

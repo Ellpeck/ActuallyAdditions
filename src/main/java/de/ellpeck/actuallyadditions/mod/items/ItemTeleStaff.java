@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 
 public class ItemTeleStaff extends ItemEnergy {
 
-    public ItemTeleStaff(String name) {
+    public ItemTeleStaff() {
         super(250000, 1000, name);
     }
 

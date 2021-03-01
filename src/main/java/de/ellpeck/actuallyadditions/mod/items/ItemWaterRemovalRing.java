@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 
 public class ItemWaterRemovalRing extends ItemEnergy {
 
-    public ItemWaterRemovalRing(String name) {
+    public ItemWaterRemovalRing() {
         super(800000, 1000, name);
     }
 

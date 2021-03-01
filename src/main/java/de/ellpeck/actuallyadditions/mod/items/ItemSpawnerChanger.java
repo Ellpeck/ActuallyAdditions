@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -36,7 +37,7 @@ import java.util.List;
 
 public class ItemSpawnerChanger extends ItemBase {
 
-    public ItemSpawnerChanger(String name) {
+    public ItemSpawnerChanger() {
         super(name);
         this.setMaxStackSize(1);
     }

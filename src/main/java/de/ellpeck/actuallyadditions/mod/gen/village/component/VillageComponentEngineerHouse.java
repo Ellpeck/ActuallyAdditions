@@ -20,14 +20,14 @@ import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -36,15 +36,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.structure.StructureBoundingBox;
-import net.minecraft.world.gen.structure.StructureComponent;
-import net.minecraft.world.gen.structure.StructureVillagePieces;
-import net.minecraft.world.gen.structure.template.PlacementSettings;
-import net.minecraft.world.gen.structure.template.Template;
-import net.minecraft.world.gen.structure.template.TemplateManager;
-import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
 import java.util.List;
 import java.util.Random;
@@ -112,7 +107,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
                 if (compost instanceof TileEntityCompost) {
                     TileEntityCompost tile = (TileEntityCompost) compost;
                     tile.stopFromDropping = true;
-                    tile.inv.setStackInSlot(0, new ItemStack(InitItems.itemFertilizer, 10));
+                    tile.inv.setStackInSlot(0, new ItemStack(ActuallyItems.itemFertilizer, 10));
                 }
             }
 
@@ -137,7 +132,7 @@ public class VillageComponentEngineerHouse extends StructureVillagePieces.House1
                 TileEntityCanolaPress tile = (TileEntityCanolaPress) press;
                 tile.stopFromDropping = true;
                 tile.storage.setEnergyStored(world.rand.nextInt(tile.storage.getMaxEnergyStored() / 3));
-                tile.inv.setStackInSlot(0, new ItemStack(InitItems.itemMisc, world.rand.nextInt(60) + 1, TheMiscItems.CANOLA.ordinal()));
+                tile.inv.setStackInSlot(0, new ItemStack(ActuallyItems.itemCanola.get(), world.rand.nextInt(60) + 1));
             }
 
             TileEntity crusher = this.getTileAtPos(world, 2, 1, 6, sbb);

@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -39,7 +38,7 @@ import java.util.List;
 
 public class ItemCoffee extends ItemFoodBase {
 
-    public ItemCoffee(String name) {
+    public ItemCoffee() {
         super(8, 5.0F, false, name);
         this.setMaxDamage(3);
         this.setAlwaysEdible();
@@ -92,7 +91,7 @@ public class ItemCoffee extends ItemFoodBase {
         applyPotionEffectsFromStack(stack, player);
         theStack.setItemDamage(theStack.getItemDamage() + 1);
         if (theStack.getMaxDamage() - theStack.getItemDamage() < 0) {
-            return new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal());
+            return new ItemStack(ActuallyItems.itemCoffeeCup.get());
         } else {
             return theStack;
         }

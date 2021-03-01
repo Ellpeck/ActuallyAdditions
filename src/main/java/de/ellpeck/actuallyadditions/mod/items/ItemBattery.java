@@ -31,8 +31,8 @@ import java.util.List;
 
 public class ItemBattery extends ItemEnergy {
 
-    public ItemBattery(String name, int capacity, int transfer) {
-        super(capacity, transfer, name);
+    public ItemBattery(int capacity, int transfer) {
+        super(capacity, transfer);
         this.setMaxStackSize(1);
     }
 

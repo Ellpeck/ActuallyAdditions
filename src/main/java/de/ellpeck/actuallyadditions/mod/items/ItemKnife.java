@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import com.google.common.collect.Multimap;
-
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -21,7 +20,7 @@ import net.minecraft.item.ItemStack;
 
 public class ItemKnife extends ItemBase {
 
-    public ItemKnife(String name) {
+    public ItemKnife() {
         super(name);
         this.setMaxDamage(100);
         this.setMaxStackSize(1);

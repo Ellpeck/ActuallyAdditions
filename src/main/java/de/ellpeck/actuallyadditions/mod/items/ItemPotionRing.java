@@ -34,6 +34,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -46,10 +48,8 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     public static final int MAX_BLAZE = 800;
     private final boolean isAdvanced;
 
-    public ItemPotionRing(boolean isAdvanced, String name) {
-        super(name);
-        this.setHasSubtypes(true);
-        this.setMaxStackSize(1);
+    public ItemPotionRing(boolean isAdvanced) {
+        super(ActuallyItems.defaultProps().maxStackSize(1));
         this.isAdvanced = isAdvanced;
     }
 

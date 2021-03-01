@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -62,7 +62,7 @@ public enum TheFoods {
         SPAGHETTI.returnItem = new ItemStack(Items.BOWL);
         PUMPKIN_STEW.returnItem = new ItemStack(Items.BOWL);
         CARROT_JUICE.returnItem = new ItemStack(Items.GLASS_BOTTLE);
-        FRENCH_FRIES.returnItem = new ItemStack(InitItems.itemPaperCone.get());
-        FISH_N_CHIPS.returnItem = new ItemStack(InitItems.itemPaperCone.get());
+        FRENCH_FRIES.returnItem = new ItemStack(ActuallyItems.itemPaperCone.get());
+        FISH_N_CHIPS.returnItem = new ItemStack(ActuallyItems.itemPaperCone.get());
     }
 }

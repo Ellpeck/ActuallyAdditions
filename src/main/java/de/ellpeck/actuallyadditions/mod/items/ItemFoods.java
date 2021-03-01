@@ -31,7 +31,7 @@ public class ItemFoods extends ItemFoodBase {
 
     public static final TheFoods[] ALL_FOODS = TheFoods.values();
 
-    public ItemFoods(String name) {
+    public ItemFoods() {
         super(0, 0.0F, false, name);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);

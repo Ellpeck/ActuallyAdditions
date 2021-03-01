@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ItemMagnetRing extends ItemEnergy {
 
-    public ItemMagnetRing(String name) {
+    public ItemMagnetRing() {
         super(200000, 1000, name);
     }
 

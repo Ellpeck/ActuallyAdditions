@@ -15,14 +15,13 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -34,14 +33,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ItemWaterBowl extends ItemBase {
 
-    public ItemWaterBowl(String name) {
-        super(name);
-        this.setMaxStackSize(1);
-
+    public ItemWaterBowl() {
+        super(ActuallyItems.defaultProps().maxStackSize(1));
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -50,25 +47,25 @@ public class ItemWaterBowl extends ItemBase {
         if (event.getWorld() != null) {
             if (ConfigBoolValues.WATER_BOWL.isEnabled()) {
                 if (StackUtil.isValid(event.getItemStack()) && event.getItemStack().getItem() == Items.BOWL) {
-                    RayTraceResult trace = WorldUtil.getNearestBlockWithDefaultReachDistance(event.getWorld(), event.getEntityPlayer(), true, false, false);
-                    ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(event.getEntityPlayer(), event.getWorld(), event.getItemStack(), trace);
+                    RayTraceResult trace = WorldUtil.getNearestBlockWithDefaultReachDistance(event.getWorld(), event.getPlayer(), true, false, false);
+                    ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(event.getPlayer(), event.getWorld(), event.getItemStack(), trace);
                     if (result == null && trace != null && trace.getBlockPos() != null) {
-                        if (event.getEntityPlayer().canPlayerEdit(trace.getBlockPos().offset(trace.sideHit), trace.sideHit, event.getItemStack())) {
+                        if (event.getPlayer().canPlayerEdit(trace.getBlockPos().offset(trace.sideHit), trace.sideHit, event.getItemStack())) {
                             BlockState state = event.getWorld().getBlockState(trace.getBlockPos());
                             Block block = state.getBlock();
 
                             if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && state.getValue(BlockLiquid.LEVEL) == 0) {
-                                event.getEntityPlayer().playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+                                event.getPlayer().playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
 
                                 if (!event.getWorld().isRemote) {
                                     event.getWorld().setBlockState(trace.getBlockPos(), Blocks.AIR.getDefaultState(), 11);
                                     ItemStack reduced = StackUtil.shrink(event.getItemStack(), 1);
 
-                                    ItemStack bowl = new ItemStack(InitItems.itemWaterBowl);
+                                    ItemStack bowl = new ItemStack(ActuallyItems.itemWaterBowl);
                                     if (!StackUtil.isValid(reduced)) {
-                                        event.getEntityPlayer().setHeldItem(event.getHand(), bowl);
-                                    } else if (!event.getEntityPlayer().inventory.addItemStackToInventory(bowl.copy())) {
-                                        EntityItem entityItem = new EntityItem(event.getWorld(), event.getEntityPlayer().posX, event.getEntityPlayer().posY, event.getEntityPlayer().posZ, bowl.copy());
+                                        event.getPlayer().setHeldItem(event.getHand(), bowl);
+                                    } else if (!event.getPlayer().inventory.addItemStackToInventory(bowl.copy())) {
+                                        EntityItem entityItem = new EntityItem(event.getWorld(), event.getPlayer().posX, event.getPlayer().posY, event.getPlayer().posZ, bowl.copy());
                                         entityItem.setPickupDelay(0);
                                         event.getWorld().spawnEntity(entityItem);
                                     }

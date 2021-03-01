@@ -20,7 +20,7 @@ import de.ellpeck.actuallyadditions.mod.event.CommonEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.AAWorldGen;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
@@ -67,7 +67,7 @@ public class ActuallyAdditions {
     public static final ItemGroup GROUP = new ItemGroup(MODID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(InitItems.itemBooklet.get());
+            return new ItemStack(ActuallyItems.itemBooklet.get());
         }
     };
 

@@ -37,7 +37,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
     private final boolean displayMobs;
 
     public ItemEngineerGoggles(boolean displayMobs) {
-        super(ArmorMaterials.GOGGLES, EquipmentSlotType.HEAD, InitItems.defaultProps().setNoRepair().maxDamage(0));
+        super(ArmorMaterials.GOGGLES, EquipmentSlotType.HEAD, ActuallyItems.defaultProps().setNoRepair().maxDamage(0));
         this.displayMobs = displayMobs;
 
         MinecraftForge.EVENT_BUS.register(this);

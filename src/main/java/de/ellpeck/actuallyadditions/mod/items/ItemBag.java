@@ -35,7 +35,7 @@ public class ItemBag extends ItemBase {
     public final boolean isVoid;
 
     public ItemBag(boolean isVoid) {
-        super(InitItems.defaultProps().maxStackSize(1));
+        super(ActuallyItems.defaultProps().maxStackSize(1));
         this.isVoid = isVoid;
     }
 

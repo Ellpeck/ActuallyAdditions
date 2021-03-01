@@ -11,12 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.ore;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.blocks.metalists.TheMiscBlocks;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheDusts;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheMiscItems;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -33,34 +27,34 @@ public final class InitOreDict {
         addOre(Items.COAL, "coal");
 
         //Ores for Pulverizers etc.
-        addOre(InitItems.itemDust.get(), TheDusts.IRON.ordinal(), "dustIron");
-        addOre(InitItems.itemDust.get(), TheDusts.GOLD.ordinal(), "dustGold");
-        addOre(InitItems.itemDust.get(), TheDusts.DIAMOND.ordinal(), "dustDiamond");
-        addOre(InitItems.itemDust.get(), TheDusts.EMERALD.ordinal(), "dustEmerald");
-        addOre(InitItems.itemDust.get(), TheDusts.LAPIS.ordinal(), "dustLapis");
-        addOre(InitItems.itemDust.get(), TheDusts.QUARTZ.ordinal(), "dustQuartz");
-        addOre(InitItems.itemDust.get(), TheDusts.QUARTZ.ordinal(), "dustNetherQuartz");
-        addOre(InitItems.itemDust.get(), TheDusts.COAL.ordinal(), "dustCoal");
-        addOre(InitItems.itemDust.get(), TheDusts.QUARTZ_BLACK.ordinal(), "dustQuartzBlack");
-        addOre(ActuallyBlocks.blockMisc.get(), TheMiscBlocks.ORE_QUARTZ.ordinal(), "oreQuartzBlack");
-        addOre(InitItems.itemMisc.get(), TheMiscItems.QUARTZ.ordinal(), "gemQuartzBlack");
-
-        //For Thermal Expansion Machine that "grows crops"
-        addOre(InitItems.itemCanolaSeed.get(), "seedCanola");
-        addOre(InitItems.itemMisc.get(), TheMiscItems.CANOLA.ordinal(), "cropCanola");
-        addOre(InitItems.itemRiceSeed.get(), "seedRice");
-        addOre(InitItems.itemFoods.get(), TheFoods.RICE.ordinal(), "cropRice");
-        addOre(InitItems.itemFlaxSeed.get(), "seedFlax");
-        addOre(Items.STRING, "cropFlax");
-        addOre(InitItems.itemCoffeeSeed.get(), "seedCoffee");
-        addOre(InitItems.itemCoffeeBean.get(), "cropCoffee");
-
-        //For Crafting
-        addOre(InitItems.itemMisc.get(), TheMiscItems.RICE_SLIME.ordinal(), "slimeball");
-        addOre(ActuallyBlocks.blockMisc.get(), TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), "blockCharcoal");
-        addOre(ActuallyBlocks.blockMisc.get(), TheMiscBlocks.QUARTZ.ordinal(), "blockQuartzBlack");
-        addOre(InitItems.itemMisc.get(), TheMiscItems.BLACK_DYE.ordinal(), "dyeBlack");
-        addOre(InitItems.itemMisc.get(), TheMiscItems.BLACK_DYE.ordinal(), "dye");
+        //        addOre(InitItems.itemDust.get(), TheDusts.IRON.ordinal(), "dustIron");
+        //        addOre(InitItems.itemDust.get(), TheDusts.GOLD.ordinal(), "dustGold");
+        //        addOre(InitItems.itemDust.get(), TheDusts.DIAMOND.ordinal(), "dustDiamond");
+        //        addOre(InitItems.itemDust.get(), TheDusts.EMERALD.ordinal(), "dustEmerald");
+        //        addOre(InitItems.itemDust.get(), TheDusts.LAPIS.ordinal(), "dustLapis");
+        //        addOre(InitItems.itemDust.get(), TheDusts.QUARTZ.ordinal(), "dustQuartz");
+        //        addOre(InitItems.itemDust.get(), TheDusts.QUARTZ.ordinal(), "dustNetherQuartz");
+        //        addOre(InitItems.itemDust.get(), TheDusts.COAL.ordinal(), "dustCoal");
+        //        addOre(InitItems.itemDust.get(), TheDusts.QUARTZ_BLACK.ordinal(), "dustQuartzBlack");
+        //        addOre(ActuallyBlocks.blockMisc.get(), TheMiscBlocks.ORE_QUARTZ.ordinal(), "oreQuartzBlack");
+        //        addOre(InitItems.itemMisc.get(), TheMiscItems.QUARTZ.ordinal(), "gemQuartzBlack");
+        //
+        //        //For Thermal Expansion Machine that "grows crops"
+        //        addOre(InitItems.itemCanolaSeed.get(), "seedCanola");
+        //        addOre(InitItems.itemMisc.get(), TheMiscItems.CANOLA.ordinal(), "cropCanola");
+        //        addOre(InitItems.itemRiceSeed.get(), "seedRice");
+        //        addOre(InitItems.itemFoods.get(), TheFoods.RICE.ordinal(), "cropRice");
+        //        addOre(InitItems.itemFlaxSeed.get(), "seedFlax");
+        //        addOre(Items.STRING, "cropFlax");
+        //        addOre(InitItems.itemCoffeeSeed.get(), "seedCoffee");
+        //        addOre(InitItems.itemCoffeeBean.get(), "cropCoffee");
+        //
+        //        //For Crafting
+        //        addOre(InitItems.itemMisc.get(), TheMiscItems.RICE_SLIME.ordinal(), "slimeball");
+        //        addOre(ActuallyBlocks.blockMisc.get(), TheMiscBlocks.CHARCOAL_BLOCK.ordinal(), "blockCharcoal");
+        //        addOre(ActuallyBlocks.blockMisc.get(), TheMiscBlocks.QUARTZ.ordinal(), "blockQuartzBlack");
+        //        addOre(InitItems.itemMisc.get(), TheMiscItems.BLACK_DYE.ordinal(), "dyeBlack");
+        //        addOre(InitItems.itemMisc.get(), TheMiscItems.BLACK_DYE.ordinal(), "dye");
     }
 
     private static void addOre(Item item, int meta, String name) {

@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -81,7 +81,7 @@ public class ContainerCoffeeMachine extends Container {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getItem() == InitItems.itemCoffeeCup.get()) {
+                if (newStack.getItem() == ActuallyItems.itemCoffeeCup.get()) {
                     if (!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT + 1, false)) {
                         return StackUtil.getEmpty();
                     }

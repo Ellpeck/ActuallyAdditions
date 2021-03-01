@@ -1,6 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.material;
 
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
@@ -13,13 +13,13 @@ import java.util.function.Supplier;
  * todo: review to ensure all values act as intended
  */
 public enum ToolMaterials implements IItemTier {
-    QUARTZ(2, 280, 6.5f, 2.0f, 10, () -> Ingredient.fromItems(InitItems.BLACK_QUARTZ.get())),
-    RESTONIA(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.fromItems(InitItems.RESTONIA_CRYSTAL.get())),
-    PALIS(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.fromItems(InitItems.PALIS_CRYSTAL.get())),
-    DIAMATINE(3, 1600, 9.0f, 4.0f, 14, () -> Ingredient.fromItems(InitItems.DIAMATINE_CRYSTAL.get())),
-    VOID(2, 280, 6.0f, 2.0f, 8, () -> Ingredient.fromItems(InitItems.VOID_CRYSTAL.get())),
-    EMERADIC(4, 2200, 9.5f, 5.55f, 18, () -> Ingredient.fromItems(InitItems.EMERADIC_CRYSTAL.get())),
-    ENORI(2, 280, 6.25f, 6.25f, 15, () -> Ingredient.fromItems(InitItems.ENORI_CRYSTAL.get()));
+    QUARTZ(2, 280, 6.5f, 2.0f, 10, () -> Ingredient.fromItems(ActuallyItems.BLACK_QUARTZ.get())),
+    RESTONIA(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.fromItems(ActuallyItems.RESTONIA_CRYSTAL.get())),
+    PALIS(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.fromItems(ActuallyItems.PALIS_CRYSTAL.get())),
+    DIAMATINE(3, 1600, 9.0f, 4.0f, 14, () -> Ingredient.fromItems(ActuallyItems.DIAMATINE_CRYSTAL.get())),
+    VOID(2, 280, 6.0f, 2.0f, 8, () -> Ingredient.fromItems(ActuallyItems.VOID_CRYSTAL.get())),
+    EMERADIC(4, 2200, 9.5f, 5.55f, 18, () -> Ingredient.fromItems(ActuallyItems.EMERADIC_CRYSTAL.get())),
+    ENORI(2, 280, 6.25f, 6.25f, 15, () -> Ingredient.fromItems(ActuallyItems.ENORI_CRYSTAL.get()));
 
     private final int harvestLevel;
     private final int maxUses;

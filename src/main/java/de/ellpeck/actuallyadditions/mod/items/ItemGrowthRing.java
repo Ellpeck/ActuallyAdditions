@@ -29,7 +29,7 @@ import java.util.List;
 
 public class ItemGrowthRing extends ItemEnergy {
 
-    public ItemGrowthRing(String name) {
+    public ItemGrowthRing() {
         super(1000000, 2000, name);
     }
 
