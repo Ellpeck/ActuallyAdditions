@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -46,9 +46,9 @@ public class ItemMagnetRing extends ItemEnergy {
             if (!entity.isSneaking()) {
                 //Get all the Items in the area
                 int range = 5;
-                List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(entity.posX - range, entity.posY - range, entity.posZ - range, entity.posX + range, entity.posY + range, entity.posZ + range));
+                List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(entity.posX - range, entity.posY - range, entity.posZ - range, entity.posX + range, entity.posY + range, entity.posZ + range));
                 if (!items.isEmpty()) {
-                    for (EntityItem item : items) {
+                    for (ItemEntity item : items) {
                         if (item.getEntityData().getBoolean("PreventRemoteMovement")) {
                             continue;
                         }

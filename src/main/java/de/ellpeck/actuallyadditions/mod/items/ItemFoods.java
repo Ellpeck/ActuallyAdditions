@@ -18,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
@@ -47,9 +47,9 @@ public class ItemFoods extends ItemFoodBase {
         if (StackUtil.isValid(returnItem) && player instanceof PlayerEntity) {
             if (!((PlayerEntity) player).inventory.addItemStackToInventory(returnItem.copy())) {
                 if (!world.isRemote) {
-                    EntityItem entityItem = new EntityItem(player.world, player.posX, player.posY, player.posZ, returnItem.copy());
+                    ItemEntity entityItem = new ItemEntity(player.world, player.posX, player.posY, player.posZ, returnItem.copy());
                     entityItem.setPickupDelay(0);
-                    player.world.spawnEntity(entityItem);
+                    player.world.addEntity(entityItem);
                 }
             }
         }

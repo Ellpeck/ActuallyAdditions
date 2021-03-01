@@ -65,7 +65,7 @@ public class ItemWaterBowl extends ItemBase {
                                     if (!StackUtil.isValid(reduced)) {
                                         event.getPlayer().setHeldItem(event.getHand(), bowl);
                                     } else if (!event.getPlayer().inventory.addItemStackToInventory(bowl.copy())) {
-                                        EntityItem entityItem = new EntityItem(event.getWorld(), event.getPlayer().posX, event.getPlayer().posY, event.getPlayer().posZ, bowl.copy());
+                                        ItemEntity entityItem = new ItemEntity(event.getWorld(), event.getPlayer().posX, event.getPlayer().posY, event.getPlayer().posZ, bowl.copy());
                                         entityItem.setPickupDelay(0);
                                         event.getWorld().spawnEntity(entityItem);
                                     }

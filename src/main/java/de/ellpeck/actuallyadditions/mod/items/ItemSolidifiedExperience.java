@@ -14,8 +14,8 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -45,7 +45,7 @@ public class ItemSolidifiedExperience extends ItemBase {
                 //Drop Solidified XP
                 if (event.getEntityLiving() instanceof EntityCreature) {
                     if (event.getEntityLiving().world.rand.nextInt(10) <= event.getLootingLevel() * 2) {
-                        event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(ActuallyItems.itemSolidifiedExperience, event.getEntityLiving().world.rand.nextInt(2 + event.getLootingLevel()) + 1)));
+                        event.getDrops().add(new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(ActuallyItems.itemSolidifiedExperience, event.getEntityLiving().world.rand.nextInt(2 + event.getLootingLevel()) + 1)));
                     }
                 }
             }
@@ -72,7 +72,7 @@ public class ItemSolidifiedExperience extends ItemBase {
             if (ConfigBoolValues.SOLID_XP_ALWAYS_ORBS.currentValue || player instanceof FakePlayer) {
                 EntityXPOrb orb = new EntityXPOrb(world, player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, amount);
                 orb.getEntityData().putBoolean(ActuallyAdditions.MODID + "FromSolidified", true);
-                world.spawnEntity(orb);
+                world.addEntity(orb);
             } else {
                 player.addExperience(amount);
             }

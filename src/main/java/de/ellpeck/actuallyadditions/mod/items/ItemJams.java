@@ -18,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
@@ -82,9 +82,9 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
 
             ItemStack returnItem = new ItemStack(Items.GLASS_BOTTLE);
             if (!((PlayerEntity) player).inventory.addItemStackToInventory(returnItem.copy())) {
-                EntityItem entityItem = new EntityItem(player.world, player.posX, player.posY, player.posZ, returnItem.copy());
+                ItemEntity entityItem = new ItemEntity(player.world, player.posX, player.posY, player.posZ, returnItem.copy());
                 entityItem.setPickupDelay(0);
-                player.world.spawnEntity(entityItem);
+                player.world.addEntity(entityItem);
             }
         }
         return stackToReturn;

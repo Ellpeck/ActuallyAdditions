@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.misc;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.RegistryHandler;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
+// TODO: [port] port over to deferred register
 public final class SoundHandler {
 
     public static SoundEvent duhDuhDuhDuuuh;
@@ -34,7 +34,7 @@ public final class SoundHandler {
 
         SoundEvent event = new SoundEvent(resLoc);
         event.setRegistryName(resLoc);
-        RegistryHandler.SOUNDS_TO_REGISTER.add(event);
+        //        RegistryHandler.SOUNDS_TO_REGISTER.add(event);
         return event;
     }
 }

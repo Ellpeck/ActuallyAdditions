@@ -18,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
@@ -109,7 +109,7 @@ public class ItemWingsOfTheBats extends ItemBase {
                 }
 
                 if (event.getEntityLiving().world.rand.nextInt(15) <= looting * 2) {
-                    event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(ActuallyItems.itemBatWing.get(), event.getEntityLiving().world.rand.nextInt(2 + looting) + 1)));
+                    event.getDrops().add(new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(ActuallyItems.itemBatWing.get(), event.getEntityLiving().world.rand.nextInt(2 + looting) + 1)));
                 }
             }
         }

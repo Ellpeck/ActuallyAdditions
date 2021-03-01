@@ -14,10 +14,9 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
@@ -33,8 +32,7 @@ public class ItemHairyBall extends ItemBase {
     private final UUID KittyVanCatUUID = UUID.fromString("681d4e20-10ef-40c9-a0a5-ba2f1995ef44");
 
     public ItemHairyBall() {
-        super(name);
-
+        super();
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -44,8 +42,8 @@ public class ItemHairyBall extends ItemBase {
         if (ConfigBoolValues.DO_CAT_DROPS.isEnabled() && event.getEntityLiving() != null && event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote) {
             if (event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot) event.getEntityLiving()).isTamed() || event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().getUniqueID().equals(this.KittyVanCatUUID)) {
                 if (event.getEntityLiving().world.rand.nextInt(ConfigIntValues.FUR_CHANCE.getValue()) == 0) {
-                    EntityItem item = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX + 0.5, event.getEntityLiving().posY + 0.5, event.getEntityLiving().posZ + 0.5, new ItemStack(ActuallyItems.itemHairyBall));
-                    event.getEntityLiving().world.spawnEntity(item);
+                    ItemEntity item = new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().posX + 0.5, event.getEntityLiving().posY + 0.5, event.getEntityLiving().posZ + 0.5, new ItemStack(ActuallyItems.itemHairyBall));
+                    event.getEntityLiving().world.addEntity(item);
                 }
             }
         }
@@ -57,9 +55,9 @@ public class ItemHairyBall extends ItemBase {
         if (!world.isRemote) {
             ItemStack returnItem = this.getRandomReturnItem(world.rand);
             if (!player.inventory.addItemStackToInventory(returnItem)) {
-                EntityItem entityItem = new EntityItem(player.world, player.posX, player.posY, player.posZ, returnItem);
+                ItemEntity entityItem = new ItemEntity(player.world, player.posX, player.posY, player.posZ, returnItem);
                 entityItem.setPickupDelay(0);
-                player.world.spawnEntity(entityItem);
+                player.world.addEntity(entityItem);
             }
             stack.shrink(1);
 
@@ -70,10 +68,5 @@ public class ItemHairyBall extends ItemBase {
 
     public ItemStack getRandomReturnItem(Random rand) {
         return WeightedRandom.getRandomItem(rand, ActuallyAdditionsAPI.BALL_OF_FUR_RETURN_ITEMS).returnItem.copy();
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
     }
 }

@@ -2,10 +2,10 @@ package de.ellpeck.actuallyadditions.mod.recipe;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.recipe.IColorLensChanger;
-import net.minecraft.item.EnumDyeColor;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +13,12 @@ import java.util.Map;
 
 public class ColorLensRotator implements IColorLensChanger {
 
-    public static final Map<String, EnumDyeColor> STRING_TO_ENUM = new HashMap<>();
+    public static final Map<String, DyeColor> STRING_TO_ENUM = new HashMap<>();
 
     static {
         String[] dyes = {"White", "Orange", "Magenta", "LightBlue", "Yellow", "Lime", "Pink", "Gray", "LightGray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black"};
         for (int i = 0; i < dyes.length; i++) {
-            STRING_TO_ENUM.put("dye" + dyes[i], EnumDyeColor.byMetadata(i));
+            STRING_TO_ENUM.put("dye" + dyes[i], DyeColor.byMetadata(i));
         }
     }
 
@@ -36,7 +36,7 @@ public class ColorLensRotator implements IColorLensChanger {
         for (int i : OreDictionary.getOreIDs(stack)) {
             String s = OreDictionary.getOreName(i);
             if (s.startsWith("dye")) {
-                EnumDyeColor color = STRING_TO_ENUM.get(s);
+                DyeColor color = STRING_TO_ENUM.get(s);
                 if (color != null) {
                     idx = color.getMetadata();
                     break;

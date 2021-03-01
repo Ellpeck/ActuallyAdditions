@@ -62,7 +62,7 @@ public class ItemMisc extends ItemBase {
     //    }
     //
     //    @Override
-    //    public boolean onEntityItemUpdate(EntityItem entity) {
+    //    public boolean onEntityItemUpdate(ItemEntity entity) {
     //        if (!entity.world.isRemote) {
     //            ItemStack stack = entity.getItem();
     //            if (stack != null) {
