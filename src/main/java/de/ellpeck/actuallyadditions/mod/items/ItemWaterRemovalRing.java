@@ -13,10 +13,9 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -25,17 +24,16 @@ import net.minecraft.world.World;
 public class ItemWaterRemovalRing extends ItemEnergy {
 
     public ItemWaterRemovalRing() {
-        super(800000, 1000, name);
+        super(800000, 1000);
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
-        if (!(entity instanceof PlayerEntity) || world.isRemote || entity.isSneaking()) {
+    public void inventoryTick(ItemStack stack, World world, Entity player, int itemSlot, boolean isSelected) {
+        if (!(player instanceof PlayerEntity) || player.world.isRemote || player.isSneaking()) {
             return;
         }
 
-        PlayerEntity player = (PlayerEntity) entity;
-        ItemStack equipped = player.getHeldItemMainhand();
+        ItemStack equipped = ((PlayerEntity) player).getHeldItemMainhand();
 
         int energyUse = 150;
         if (StackUtil.isValid(equipped) && equipped == stack && this.getEnergyStored(stack) >= energyUse) {
@@ -45,25 +43,27 @@ public class ItemWaterRemovalRing extends ItemEnergy {
             for (int x = -range; x < range + 1; x++) {
                 for (int z = -range; z < range + 1; z++) {
                     for (int y = -range; y < range + 1; y++) {
-                        int theX = MathHelper.floor(player.posX + x);
-                        int theY = MathHelper.floor(player.posY + y);
-                        int theZ = MathHelper.floor(player.posZ + z);
+                        int theX = MathHelper.floor(player.getPosX() + x);
+                        int theY = MathHelper.floor(player.getPosY() + y);
+                        int theZ = MathHelper.floor(player.getPosZ() + z);
 
                         //Remove Water
                         BlockPos pos = new BlockPos(theX, theY, theZ);
                         Block block = world.getBlockState(pos).getBlock();
-                        if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && this.getEnergyStored(stack) >= energyUse) {
+                        // TODO: Ensure water check is correct
+                        if ((block == Blocks.WATER) && this.getEnergyStored(stack) >= energyUse) {
                             world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
-                            if (!player.isCreative()) {
+                            if (!((PlayerEntity) player).isCreative()) {
                                 this.extractEnergyInternal(stack, energyUse, false);
                             }
                         }
                         //Remove Lava
-                        else if ((block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) && this.getEnergyStored(stack) >= energyUse * 2) {
+                        // TODO: Ensure lava check is correct
+                        else if ((block == Blocks.LAVA) && this.getEnergyStored(stack) >= energyUse * 2) {
                             world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
-                            if (!player.isCreative()) {
+                            if (!((PlayerEntity) player).isCreative()) {
                                 this.extractEnergyInternal(stack, energyUse * 2, false);
                             }
                         }
@@ -71,10 +71,5 @@ public class ItemWaterRemovalRing extends ItemEnergy {
                 }
             }
         }
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
     }
 }

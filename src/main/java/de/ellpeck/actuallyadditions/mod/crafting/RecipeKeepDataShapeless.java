@@ -10,11 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-
 // TODO: [port] MOVE TO DATA_GENERATOR
 @Deprecated
-public class RecipeKeepDataShapeless extends ShapelessOreRecipe {
+public class RecipeKeepDataShapeless {// extends ShapelessOreRecipe {
     //
     //    private final ItemStack nbtCopyStack;
     //

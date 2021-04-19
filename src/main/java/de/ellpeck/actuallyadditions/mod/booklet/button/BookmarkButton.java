@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.button;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
@@ -24,6 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -31,6 +33,7 @@ import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
 public class BookmarkButton extends Button {
@@ -38,45 +41,45 @@ public class BookmarkButton extends Button {
     private final GuiBooklet booklet;
     public IBookletPage assignedPage;
 
-    public BookmarkButton(int id, int x, int y, GuiBooklet booklet) {
-        super(id, x, y, 16, 16, "");
+    public BookmarkButton(int x, int y, GuiBooklet booklet) {
+        super(x, y, 16, 16, StringTextComponent.EMPTY, btn -> {
+            BookmarkButton button = (BookmarkButton) btn;
+            if (button.assignedPage != null) {
+                if (Screen.hasShiftDown()) {
+                    button.assignedPage = null;
+                } else if (!(button.booklet instanceof GuiPage) || ((GuiPage) button.booklet).pages[0] != button.assignedPage) {
+                    GuiPage gui = BookletUtils.createPageGui(button.booklet.previousScreen, button.booklet, button.assignedPage);
+                    Minecraft.getInstance().displayGuiScreen(gui);
+                }
+            } else {
+                if (button.booklet instanceof GuiPage) {
+                    button.assignedPage = ((GuiPage) button.booklet).pages[0];
+                }
+            }
+        });
         this.booklet = booklet;
     }
 
-    public void onPressed() {
-        if (this.assignedPage != null) {
-            if (Screen.hasShiftDown()) {
-                this.assignedPage = null;
-            } else if (!(this.booklet instanceof GuiPage) || ((GuiPage) this.booklet).pages[0] != this.assignedPage) {
-                GuiPage gui = BookletUtils.createPageGui(this.booklet.previousScreen, this.booklet, this.assignedPage);
-                Minecraft.getInstance().displayGuiScreen(gui);
-            }
-        } else {
-            if (this.booklet instanceof GuiPage) {
-                this.assignedPage = ((GuiPage) this.booklet).pages[0];
-            }
-        }
-    }
-
     @Override
-    public void drawButton(Minecraft minecraft, int x, int y, float f) {
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
         if (this.visible) {
-            minecraft.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
+            Minecraft.getInstance().getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.isHovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
-            int k = this.getHoverState(this.hovered);
-            if (k == 0) {
-                k = 1;
-            }
+            this.isHovered = mouseX >= this.x && mouseY >= this.y && this.x < this.x + this.width && this.y < this.y + this.height;
+            int offset = this.isHovered
+                ? 1
+                : 0;
 
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.blendFuncSeparate(770, 771, 1, 0);
             GlStateManager.blendFunc(770, 771);
             int renderHeight = 25;
             this.blit(matrices, this.x, this.y, 224 + (this.assignedPage == null
                 ? 0
-                : 16), 14 - renderHeight + k * renderHeight, this.width, renderHeight);
-            this.mouseDragged(minecraft, x, y);
+                : 16), 14 - renderHeight + offset * renderHeight, this.width, renderHeight);
+
+            // TODO: FIX THIS
+            //            this.mouseDragged(minecraft, mouseX, mouseY);
 
             if (this.assignedPage != null) {
                 ItemStack display = this.assignedPage.getChapter().getDisplayItemStack();
@@ -89,8 +92,8 @@ public class BookmarkButton extends Button {
         }
     }
 
-    public void drawHover(int mouseX, int mouseY) {
-        if (this.isMouseOver()) {
+    public void drawHover(MatrixStack stack, int mouseX, int mouseY) {
+        if (this.isMouseOver(mouseX, mouseY)) {
             List<String> list = new ArrayList<>();
 
             if (this.assignedPage != null) {
@@ -110,7 +113,7 @@ public class BookmarkButton extends Button {
             }
 
             Minecraft mc = Minecraft.getInstance();
-            GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
+            GuiUtils.drawHoveringText(stack, list.stream().map(StringTextComponent::new).collect(Collectors.toList()), mouseX, mouseY, mc.currentScreen.width, mc.currentScreen.height, -1, mc.fontRenderer);
         }
     }
 }

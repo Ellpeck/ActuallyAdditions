@@ -10,12 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.registries.IForgeRegistryEntry;
-
 // TODO: [port] MOVE TO DATA_GENERATOR
 @Deprecated
-public class RecipePotionRingCharging extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+public class RecipePotionRingCharging { //extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
     //
     //    public RecipePotionRingCharging(ResourceLocation location) {
     //        RecipeHelper.addRecipe(location.getPath(), this);

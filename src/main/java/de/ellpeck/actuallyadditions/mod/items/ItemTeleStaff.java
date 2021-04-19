@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -28,7 +27,7 @@ import net.minecraft.world.World;
 public class ItemTeleStaff extends ItemEnergy {
 
     public ItemTeleStaff() {
-        super(250000, 1000, name);
+        super(250000, 1000);
     }
 
     @Override
@@ -71,10 +70,5 @@ public class ItemTeleStaff extends ItemEnergy {
         }
         player.swingArm(hand);
         return ActionResult.newResult(EnumActionResult.FAIL, stack);
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
     }
 }

@@ -22,7 +22,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -102,14 +101,10 @@ public class ItemCoffee extends ItemFoodBase {
         return EnumAction.DRINK;
     }
 
+    @Nullable
     @Override
-    public int getMetadata(int damage) {
-        return damage;
-    }
-
-    @Override
-    public boolean getShareTag() {
-        return true;
+    public CompoundNBT getShareTag(ItemStack stack) {
+        return super.getShareTag(stack);
     }
 
     @Override
@@ -132,11 +127,6 @@ public class ItemCoffee extends ItemFoodBase {
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         return false;
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
     }
 
     public static class MilkIngredient extends CoffeeIngredient {

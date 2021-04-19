@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,7 @@ import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
 public class TexturedButton extends Button {
@@ -32,7 +34,7 @@ public class TexturedButton extends Button {
     public int texturePosY;
 
     public TexturedButton(ResourceLocation resLoc, int x, int y, int texturePosX, int texturePosY, int width, int height, IPressable pressable) {
-        this(resLoc, x, y, texturePosX, texturePosY, width, height, new ArrayList<>());
+        this(resLoc, x, y, texturePosX, texturePosY, width, height, new ArrayList<>(), pressable);
     }
 
     public TexturedButton(ResourceLocation resLoc, int x, int y, int texturePosX, int texturePosY, int width, int height, List<String> hoverTextList, IPressable pressable) {
@@ -44,28 +46,27 @@ public class TexturedButton extends Button {
     }
 
     @Override
-    public void drawButton(Minecraft minecraft, int x, int y, float f) {
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
         if (this.visible) {
-            minecraft.getTextureManager().bindTexture(this.resLoc);
+            Minecraft.getInstance().getTextureManager().bindTexture(this.resLoc);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.hovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
-            int k = this.getHoverState(this.hovered);
-            if (k == 0) {
-                k = 1;
-            }
+            this.isHovered = mouseX >= this.x && mouseY >= this.y && this.x < this.x + this.width && this.y < this.y + this.height;
+            int k = this.isHovered
+                ? 1
+                : 0;
 
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.blendFuncSeparate(770, 771, 1, 0);
             GlStateManager.blendFunc(770, 771);
             this.blit(matrices, this.x, this.y, this.texturePosX, this.texturePosY - this.height + k * this.height, this.width, this.height);
-            this.mouseDragged(minecraft, x, y);
+            //            this.mouseDragged(minecraft, x, y);
         }
     }
 
-    public void drawHover(int x, int y) {
-        if (this.isMouseOver()) {
+    public void drawHover(MatrixStack matrices, int x, int y) {
+        if (this.isMouseOver(x, y)) {
             Minecraft mc = Minecraft.getInstance();
-            GuiUtils.drawHoveringText(this.textList, x, y, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
+            GuiUtils.drawHoveringText(matrices, this.textList.stream().map(StringTextComponent::new).collect(Collectors.toList()), x, y, mc.currentScreen.width, mc.currentScreen.height, -1, mc.fontRenderer);
         }
     }
 }

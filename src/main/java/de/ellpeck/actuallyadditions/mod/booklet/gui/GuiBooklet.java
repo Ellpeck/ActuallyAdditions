@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
@@ -23,20 +24,19 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.java.games.input.Keyboard;
-import net.java.games.input.Mouse;
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
 public abstract class GuiBooklet extends GuiBookletBase {
@@ -63,6 +63,8 @@ public abstract class GuiBooklet extends GuiBookletBase {
     private float largeFontSize;
 
     public GuiBooklet(Screen previousScreen, GuiBookletBase parentPage) {
+        super(StringTextComponent.EMPTY);
+
         this.previousScreen = previousScreen;
         this.parentPage = parentPage;
 
@@ -96,37 +98,35 @@ public abstract class GuiBooklet extends GuiBookletBase {
 
         if (this.hasPageLeftButton()) {
             List<String> hoverText = Arrays.asList(TextFormatting.GOLD + "Previous Page", TextFormatting.ITALIC + "Or scroll up");
-            this.buttonLeft = new TexturedButton(RES_LOC_GADGETS, this.guiLeft - 12, this.guiTop + this.ySize - 8, 18, 54, 18, 10, hoverText, btn -> {
-            });
+            this.buttonLeft = new TexturedButton(RES_LOC_GADGETS, this.guiLeft - 12, this.guiTop + this.ySize - 8, 18, 54, 18, 10, hoverText, btn -> this.onPageLeftButtonPressed());
             this.addButton(this.buttonLeft);
         }
 
         if (this.hasPageRightButton()) {
             List<String> hoverText = Arrays.asList(TextFormatting.GOLD + "Next Page", TextFormatting.ITALIC + "Or scroll down");
-            this.buttonRight = new TexturedButton(RES_LOC_GADGETS, this.guiLeft + this.xSize - 6, this.guiTop + this.ySize - 8, 0, 54, 18, 10, hoverText, btn -> {
-            });
+            this.buttonRight = new TexturedButton(RES_LOC_GADGETS, this.guiLeft + this.xSize - 6, this.guiTop + this.ySize - 8, 0, 54, 18, 10, hoverText, btn -> this.onPageRightButtonPressed());
             this.addButton(this.buttonRight);
         }
 
         if (this.hasBackButton()) {
             List<String> hoverText = Arrays.asList(TextFormatting.GOLD + "Go Back", TextFormatting.ITALIC + "Or right-click", TextFormatting.ITALIC.toString() + TextFormatting.GRAY + "Hold Shift for Main Page");
-            this.buttonBack = new TexturedButton(RES_LOC_GADGETS, this.guiLeft - 15, this.guiTop - 3, 36, 54, 18, 10, hoverText, btn -> {
-            });
+            this.buttonBack = new TexturedButton(RES_LOC_GADGETS, this.guiLeft - 15, this.guiTop - 3, 36, 54, 18, 10, hoverText, btn -> this.onBackButtonPressed());
             this.addButton(this.buttonBack);
         }
 
         if (this.hasSearchBar()) {
-            this.searchField = new TextFieldWidget(-420, this.fontRenderer, this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 64, 12);
+            this.searchField = new TextFieldWidget(this.font, this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 64, 12, StringTextComponent.EMPTY);
             this.searchField.setMaxStringLength(50);
             this.searchField.setEnableBackgroundDrawing(false);
+            this.children.add(this.searchField);
         }
 
         if (this.hasBookmarkButtons()) {
-            PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
+            PlayerSave data = PlayerData.getDataFromPlayer(this.getMinecraft().player);
 
             int xStart = this.guiLeft + this.xSize / 2 - 16 * this.bookmarkButtons.length / 2;
             for (int i = 0; i < this.bookmarkButtons.length; i++) {
-                this.bookmarkButtons[i] = new BookmarkButton(1337 + i, xStart + i * 16, this.guiTop + this.ySize, this);
+                this.bookmarkButtons[i] = new BookmarkButton(xStart + i * 16, this.guiTop + this.ySize, this);
                 this.addButton(this.bookmarkButtons[i]);
 
                 if (data.bookmarks[i] != null) {
@@ -135,21 +135,21 @@ public abstract class GuiBooklet extends GuiBookletBase {
             }
         }
 
-        this.buttonTrials = new TrialsButton(this);
+        this.buttonTrials = new TrialsButton(this, btn -> this.getMinecraft().displayGuiScreen(new GuiEntry(this.previousScreen, this, ActuallyAdditionsAPI.entryTrials, 0, "", false)));
         this.addButton(this.buttonTrials);
     }
 
     @Override
-    public void onGuiClosed() {
-        super.onGuiClosed();
+    public void onClose() {
+        super.onClose();
 
         //Don't cache the parent GUI, otherwise it opens again when you close the cached book!
         this.previousScreen = null;
 
-        if (this.mc.player == null) {
+        if (this.getMinecraft().player == null) {
             return;
         }
-        PlayerSave data = PlayerData.getDataFromPlayer(this.mc.player);
+        PlayerSave data = PlayerData.getDataFromPlayer(this.getMinecraft().player);
         data.lastOpenBooklet = this;
 
         boolean change = false;
@@ -166,85 +166,91 @@ public abstract class GuiBooklet extends GuiBookletBase {
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.drawScreenPre(mouseX, mouseY, partialTicks);
-        super.drawScreen(mouseX, mouseY, partialTicks);
-        this.drawScreenPost(mouseX, mouseY, partialTicks);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.drawScreenPre(matrixStack, mouseX, mouseY, partialTicks);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.drawScreenPost(matrixStack, mouseX, mouseY, partialTicks);
     }
 
-    public void drawScreenPre(int mouseX, int mouseY, float partialTicks) {
-        GlStateManager.color(1F, 1F, 1F);
+    public void drawScreenPre(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
+        GlStateManager.color4f(1F, 1F, 1F, 1F);
         this.getMinecraft().getTextureManager().bindTexture(RES_LOC_GUI);
-        drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
+        blit(matrices, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 
         if (this.hasSearchBar()) {
             this.getMinecraft().getTextureManager().bindTexture(RES_LOC_GADGETS);
             this.blit(matrices, this.guiLeft + this.xSize, this.guiTop + this.ySize - 40, 188, 0, 68, 14);
 
-            boolean unicodeBefore = this.fontRenderer.getUnicodeFlag();
-            this.fontRenderer.setUnicodeFlag(true);
+            //            boolean unicodeBefore = this.font.getUnicodeFlag();
+            //            this.font.setUnicodeFlag(true);
 
             if (!this.searchField.isFocused() && (this.searchField.getText() == null || this.searchField.getText().isEmpty())) {
-                this.fontRenderer.drawString(TextFormatting.ITALIC + StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.searchField"), this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 0xFFFFFF, false);
+                this.font.drawString(matrices, TextFormatting.ITALIC + StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.searchField"), this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 0xFFFFFF);
             }
 
-            this.searchField.drawTextBox();
+            this.searchField.render(matrices, mouseX, mouseY, partialTicks);
 
-            this.fontRenderer.setUnicodeFlag(unicodeBefore);
+            //            this.font.setUnicodeFlag(unicodeBefore);
         }
     }
 
-    public void drawScreenPost(int mouseX, int mouseY, float partialTicks) {
-        for (GuiButton button : this.buttonList) {
+    public void drawScreenPost(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        for (IGuiEventListener button : this.children) {
             if (button instanceof BookmarkButton) {
-                ((BookmarkButton) button).drawHover(mouseX, mouseY);
+                ((BookmarkButton) button).drawHover(matrixStack, mouseX, mouseY);
             } else if (button instanceof TexturedButton) {
-                ((TexturedButton) button).drawHover(mouseX, mouseY);
+                ((TexturedButton) button).drawHover(matrixStack, mouseX, mouseY);
             }
         }
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-        super.mouseClicked(mouseX, mouseY, mouseButton);
-
-        if (this.hasSearchBar()) {
-            this.searchField.mouseClicked(mouseX, mouseY, mouseButton);
-        }
-
-        if (mouseButton == 1 && this.hasBackButton()) {
-            this.onBackButtonPressed();
-        }
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
+    // TODO: Ensure replacement works
     @Override
-    public void handleMouseInput() throws IOException {
-        int wheel = Mouse.getEventDWheel();
-        if (wheel != 0) {
-            if (wheel < 0) {
-                if (this.hasPageRightButton()) {
-                    this.onPageRightButtonPressed();
-                }
-            } else if (wheel > 0) {
-                if (this.hasPageLeftButton()) {
-                    this.onPageLeftButtonPressed();
-                }
+    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        if (delta < 0) {
+            if (this.hasPageRightButton()) {
+                this.onPageRightButtonPressed();
+            }
+        } else if (delta > 0) {
+            if (this.hasPageLeftButton()) {
+                this.onPageLeftButtonPressed();
             }
         }
-        super.handleMouseInput();
+        return super.mouseScrolled(mouseX, mouseY, delta);
     }
 
-    @Override
-    public void updateScreen() {
-        super.updateScreen();
+    //    @Override
+    //    public void handleMouseInput() throws IOException {
+    //        int wheel = Mouse.getEventDWheel();
+    //        if (wheel != 0) {
+    //            if (wheel < 0) {
+    //                if (this.hasPageRightButton()) {
+    //                    this.onPageRightButtonPressed();
+    //                }
+    //            } else if (wheel > 0) {
+    //                if (this.hasPageLeftButton()) {
+    //                    this.onPageLeftButtonPressed();
+    //                }
+    //            }
+    //        }
+    //        super.handleMouseInput();
+    //    }
 
+
+    @Override
+    public void tick() {
         if (this.hasSearchBar()) {
-            this.searchField.updateCursorCounter();
+            this.searchField.tick();
         }
     }
 
     @Override
-    public boolean doesGuiPauseGame() {
+    public boolean isPauseScreen() {
         return false;
     }
 
@@ -273,7 +279,7 @@ public abstract class GuiBooklet extends GuiBookletBase {
     }
 
     public void onBackButtonPressed() {
-        this.mc.displayGuiScreen(new GuiMainPage(this.previousScreen));
+        this.getMinecraft().displayGuiScreen(new GuiMainPage(this.previousScreen));
     }
 
     public boolean hasSearchBar() {
@@ -299,64 +305,46 @@ public abstract class GuiBooklet extends GuiBookletBase {
         return this.largeFontSize;
     }
 
+    // TODO: Check if not being used
     public void onSearchBarChanged(String searchBarText) {
         GuiBookletBase parent = !(this instanceof GuiEntry)
             ? this
             : this.parentPage;
-        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, parent, ActuallyAdditionsAPI.entryAllAndSearch, 0, searchBarText, true));
+        this.getMinecraft().displayGuiScreen(new GuiEntry(this.previousScreen, parent, ActuallyAdditionsAPI.entryAllAndSearch, 0, searchBarText, true));
     }
 
-    @Override
-    protected void actionPerformed(GuiButton button) throws IOException {
-        if (this.hasPageLeftButton() && button == this.buttonLeft) {
-            this.onPageLeftButtonPressed();
-        } else if (this.hasPageRightButton() && button == this.buttonRight) {
-            this.onPageRightButtonPressed();
-        } else if (this.hasBackButton() && button == this.buttonBack) {
-            this.onBackButtonPressed();
-        }
-        if (button == this.buttonTrials) {
-            this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this, ActuallyAdditionsAPI.entryTrials, 0, "", false));
-        } else if (this.hasBookmarkButtons() && button instanceof BookmarkButton) {
-            int index = ArrayUtils.indexOf(this.bookmarkButtons, button);
-            if (index >= 0) {
-                this.bookmarkButtons[index].onPressed();
-            }
-        } else {
-            super.actionPerformed(button);
-        }
-    }
+    // TODO: ensure typing still works
 
-    @Override
-    protected void keyTyped(char typedChar, int key) throws IOException {
-        if (key == Keyboard.KEY_ESCAPE || key == this.mc.gameSettings.keyBindInventory.getKeyCode() && (!this.hasSearchBar() || !this.searchField.isFocused())) {
-            this.mc.displayGuiScreen(this.previousScreen);
-        } else if (this.hasSearchBar() & this.searchField.isFocused()) {
-            String lastText = this.searchField.getText();
-
-            this.searchField.textboxKeyTyped(typedChar, key);
-
-            if (!lastText.equals(this.searchField.getText())) {
-                this.onSearchBarChanged(this.searchField.getText());
-            }
-        } else {
-            super.keyTyped(typedChar, key);
-        }
-    }
+    //    @Override
+    //    protected void keyTyped(char typedChar, int key) throws IOException {
+    //        if (key == Keyboard.KEY_ESCAPE || key == this.mc.gameSettings.keyBindInventory.getKeyCode() && (!this.hasSearchBar() || !this.searchField.isFocused())) {
+    //            this.mc.displayGuiScreen(this.previousScreen);
+    //        } else if (this.hasSearchBar() & this.searchField.isFocused()) {
+    //            String lastText = this.searchField.getText();
+    //
+    //            this.searchField.textboxKeyTyped(typedChar, key);
+    //
+    //            if (!lastText.equals(this.searchField.getText())) {
+    //                this.onSearchBarChanged(this.searchField.getText());
+    //            }
+    //        } else {
+    //            super.keyTyped(typedChar, key);
+    //        }
+    //    }
 
     @Override
     public void renderScaledAsciiString(String text, int x, int y, int color, boolean shadow, float scale) {
-        StringUtil.renderScaledAsciiString(this.fontRenderer, text, x, y, color, shadow, scale);
+        StringUtil.renderScaledAsciiString(this.font, text, x, y, color, shadow, scale);
     }
 
     @Override
     public void renderSplitScaledAsciiString(String text, int x, int y, int color, boolean shadow, float scale, int length) {
-        StringUtil.renderSplitScaledAsciiString(this.fontRenderer, text, x, y, color, shadow, scale, length);
+        StringUtil.renderSplitScaledAsciiString(this.font, text, x, y, color, shadow, scale, length);
     }
 
     @Override
-    public List<GuiButton> getButtonList() {
-        return this.buttonList;
+    public List<IGuiEventListener> getButtonList() {
+        return this.children.stream().filter(e -> e instanceof Button).collect(Collectors.toList());
     }
 
     @Override

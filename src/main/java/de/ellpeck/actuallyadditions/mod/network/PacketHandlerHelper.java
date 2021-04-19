@@ -21,7 +21,8 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public final class PacketHandlerHelper {
 
@@ -44,7 +45,7 @@ public final class PacketHandlerHelper {
 
         CompoundNBT data = new CompoundNBT();
         PlayerData.getDataFromPlayer(player).writeToNBT(data, false);
-        compound.setTag("Data", data);
+        compound.put("Data", data);
 
         if (player instanceof ServerPlayerEntity) {
             PacketHandler.THE_NETWORK.sendTo(new PacketServerToClient(compound, PacketHandler.SYNC_PLAYER_DATA), (ServerPlayerEntity) player);
@@ -65,11 +66,11 @@ public final class PacketHandlerHelper {
             PlayerSave data = PlayerData.getDataFromPlayer(player);
 
             if (type == 0) {
-                compound.setTag("Bookmarks", data.saveBookmarks());
+                compound.put("Bookmarks", data.saveBookmarks());
             } else if (type == 1) {
                 compound.putBoolean("DidBookTutorial", data.didBookTutorial);
             } else if (type == 2) {
-                compound.setTag("Trials", data.saveTrials());
+                compound.put("Trials", data.saveTrials());
 
                 int total = 0;
                 for (IBookletChapter chapter : ActuallyAdditionsAPI.entryTrials.getAllChapters()) {
@@ -96,7 +97,7 @@ public final class PacketHandlerHelper {
         compound.putInt("WorldID", tile.getWorld().provider.getDimension());
         compound.putInt("PlayerID", Minecraft.getInstance().player.getEntityId());
         compound.putInt("NumberID", id);
-        compound.setDouble("Number", number);
+        compound.putDouble("Number", number);
         PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));
     }
 }

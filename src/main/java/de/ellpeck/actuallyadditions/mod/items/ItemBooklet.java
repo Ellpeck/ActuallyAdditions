@@ -32,7 +32,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -75,18 +77,20 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
             //TheAchievements.OPEN_BOOKLET.get(player);
             //TheAchievements.OPEN_BOOKLET_MILESTONE.get(player);
         }
-        return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        return ActionResult.resultSuccess(player.getHeldItem(hand));
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
-        tooltip.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + "." + this.getBaseName() + ".desc"));
+    public void addInformation(ItemStack stack, @Nullable World playerIn, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+        tooltip.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + "." + this.getName().getString() + ".desc"));
 
+        // TODO: this is bad
         for (int i = 1; i <= 4; i++) {
-            String format = i == 4
-                ? TextFormatting.GOLD.toString() + TextFormatting.ITALIC
-                : TextFormatting.RESET.toString();
-            tooltip.add(format + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + "." + this.getBaseName() + ".sub." + i));
+            tooltip.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + "." + this.getName().getString() + ".sub." + i).mergeStyle(i == 4
+                ? TextFormatting.GOLD
+                : TextFormatting.RESET).mergeStyle(i == 4
+                ? TextFormatting.ITALIC
+                : TextFormatting.RESET));
         }
     }
 

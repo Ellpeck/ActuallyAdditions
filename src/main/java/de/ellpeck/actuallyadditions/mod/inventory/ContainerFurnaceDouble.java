@@ -16,10 +16,12 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
 
 import java.util.Objects;
@@ -73,8 +75,16 @@ public class ContainerFurnaceDouble extends Container {
             }
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
+                // TODO: VALIDATE
+                IRecipe<?> irecipe = this.furnace.getWorld().getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(newStack), this.furnace.getWorld()).orElse(null);
+                if (irecipe == null) {
+                    return StackUtil.getEmpty();
+                }
+                
+                ItemStack recipeOutput = irecipe.getRecipeOutput();
+
                 //Shift from Inventory
-                if (StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(newStack))) {
+                if (StackUtil.isValid(recipeOutput)) {
                     if (!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1 + 1, false)) {
                         if (!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2 + 1, false)) {
                             return StackUtil.getEmpty();
