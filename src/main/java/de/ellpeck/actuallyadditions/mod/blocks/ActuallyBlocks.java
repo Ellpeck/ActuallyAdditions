@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheCrystals;
@@ -25,11 +26,15 @@ public final class ActuallyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MODID);
 
     public static final RegistryObject<Block> blockMisc = BLOCKS.register("block_misc", BlockMisc::new);
-    public static final RegistryObject<Block> blockLavaCasing = BLOCKS.register("block_misc", BlockMisc::new);
+    public static final RegistryObject<Block> blockWoodCasing = BLOCKS.register("block_wood_casing", BlockMisc::new); //TODO
+    public static final RegistryObject<Block> blockIronCasing = BLOCKS.register("block_iron_casing", BlockMisc::new); //TODO
+    public static final RegistryObject<Block> blockEnderCasing = BLOCKS.register("block_ender_casing", BlockMisc::new); //TODO
+    public static final RegistryObject<Block> blockLavaCasing = BLOCKS.register("block_lava_casing", BlockMisc::new);
     public static final RegistryObject<Block> blockWildPlant = BLOCKS.register("block_wild", BlockWildPlant::new);
     public static final RegistryObject<Block> blockFeeder = BLOCKS.register("block_feeder", BlockFeeder::new);
     public static final RegistryObject<Block> blockGrinder = BLOCKS.register("block_grinder", () -> new BlockGrinder(false));
     public static final RegistryObject<Block> blockGrinderDouble = BLOCKS.register("block_grinder_double", () -> new BlockGrinder(true));
+
 
     public static final RegistryObject<Block> blockCrystalClusterRedstone = BLOCKS.register("block_crystal_cluster_redstone", () -> new BlockCrystalCluster(TheCrystals.REDSTONE));
     public static final RegistryObject<Block> blockCrystalClusterLapis = BLOCKS.register("block_crystal_cluster_lapis", () -> new BlockCrystalCluster(TheCrystals.LAPIS));

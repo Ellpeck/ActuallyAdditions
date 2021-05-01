@@ -25,7 +25,8 @@ public class ActuallyAdditionsData {
             BlockTagsGenerator generatorBlockTags = new BlockTagsGenerator(generator, helper);
 
             //            generator.addProvider(new GeneratorLoot(generator));
-            //            generator.addProvider(new GeneratorRecipes(generator));
+            generator.addProvider(new BlockRecipeGenerator(generator));
+            generator.addProvider(new ItemRecipeGenerator(generator));
             generator.addProvider(generatorBlockTags);
             generator.addProvider(new ItemTagsGenerator(generator, generatorBlockTags, helper));
         }
