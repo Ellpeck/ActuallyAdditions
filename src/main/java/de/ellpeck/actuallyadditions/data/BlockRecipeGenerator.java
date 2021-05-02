@@ -19,26 +19,37 @@ public class BlockRecipeGenerator extends RecipeProvider {
 
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-        //        //Battery Box
-        //        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitBlocks.blockBatteryBox), new ItemStack(InitBlocks.blockEnergizer), new ItemStack(InitBlocks.blockEnervator), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()));
-        ShapelessRecipeBuilder.shapelessRecipe(ActuallyBlocks.blockBatteryBox.get())
-                .addIngredient(ActuallyBlocks.blockEnergizer.get())
-                .addIngredient(ActuallyBlocks.blockEnervator.get())
+        //Battery Box
+       ShapelessRecipeBuilder.shapelessRecipe(ActuallyBlocks.BATTERY_BOX.get())
+                .addIngredient(ActuallyBlocks.ENERGIZER.get())
+                .addIngredient(ActuallyBlocks.ENERVATOR.get())
                 .addIngredient(ActuallyItems.itemCoil.get())
                 .addCriterion("", hasItem(Items.AIR))
                 .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "battery_box"));
 
-        //        //Farmer
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockFarmer), "ISI", "SCS", "ISI", 'I', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()), 'S', new ItemStack(Items.WHEAT_SEEDS));
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.blockFarmer.get())
+        //Farmer
+       ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.FARMER.get())
                 .patternLine("ISI")
                 .patternLine("SCS")
                 .patternLine("ISI")
                 .key('I', ActuallyBlocks.CRYSTAL_ENORI.get())
-                .key('C', ActuallyBlocks.blockIronCasing.get())
+                .key('C', ActuallyBlocks.IRON_CASING.get())
                 .key('S', Tags.Items.SEEDS)
                 .addCriterion("", hasItem(Items.AIR))
                 .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "farmer"));
+
+       //Empowerer
+       ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.EMPOWERER.get())
+               .patternLine(" R ")
+               .patternLine(" B ")
+               .patternLine("CDC")
+               .key('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+               .key('B', ActuallyItems.itemBatteryDouble.get())
+               .key('C', ActuallyBlocks.IRON_CASING.get())
+               .key('D', ActuallyBlocks.DISPLAY_STAND.get())
+               .addCriterion("", hasItem(Items.AIR))
+               .build(consumer,new ResourceLocation(ActuallyAdditions.MODID, "empowerer"));
+
 
     }
 

@@ -150,10 +150,10 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> itemHairyBall = ITEMS.register("item_hairy_ball", ItemHairyBall::new);
     public static final RegistryObject<Item> itemCoffeeBean = ITEMS.register("item_coffee_beans", ItemCoffeeBean::new);
 
-    public static final RegistryObject<Item> itemRiceSeed = ITEMS.register("item_rice_seed", () -> new ItemSeed("seedRice", ActuallyBlocks.blockRice.get(), itemFoods.get(), TheFoods.RICE.ordinal()));
-    public static final RegistryObject<Item> itemCanolaSeed = ITEMS.register("item_canola_seed", () -> new ItemFoodSeed("seedCanola", ActuallyBlocks.blockCanola, itemMisc, 0, 1, 0.01F, 10).setPotionEffect(new PotionEffect(MobEffects.NAUSEA, 1000, 0), 0.2F));
-    public static final RegistryObject<Item> itemFlaxSeed = ITEMS.register("item_flax_seed", () -> new ItemSeed("seedFlax", ActuallyBlocks.blockFlax, Items.STRING, 0));
-    public static final RegistryObject<Item> itemCoffeeSeed = ITEMS.register("item_coffee_seed", () -> new ItemSeed("seedCoffeeBeans", ActuallyBlocks.blockCoffee, itemCoffeeBean, 0));
+    public static final RegistryObject<Item> itemRiceSeed = ITEMS.register("item_rice_seed", () -> new ItemSeed("seedRice", ActuallyBlocks.RICE.get(), itemFoods.get(), TheFoods.RICE.ordinal()));
+    public static final RegistryObject<Item> itemCanolaSeed = ITEMS.register("item_canola_seed", () -> new ItemFoodSeed("seedCanola", ActuallyBlocks.CANOLA, itemMisc, 0, 1, 0.01F, 10).setPotionEffect(new PotionEffect(MobEffects.NAUSEA, 1000, 0), 0.2F));
+    public static final RegistryObject<Item> itemFlaxSeed = ITEMS.register("item_flax_seed", () -> new ItemSeed("seedFlax", ActuallyBlocks.FLAX, Items.STRING, 0));
+    public static final RegistryObject<Item> itemCoffeeSeed = ITEMS.register("item_coffee_seed", () -> new ItemSeed("seedCoffeeBeans", ActuallyBlocks.COFFEE, itemCoffeeBean, 0));
 
     // TOOLS & ARMOR
     public static final RegistryObject<Item> itemHelmQuartz = ITEMS.register("item_helm_quartz", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.HEAD));

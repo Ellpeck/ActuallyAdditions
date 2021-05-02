@@ -49,7 +49,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
         int newRange = defaultRange;
         for (int i = 0; i < 3; i++) {
             Block block = world.getBlockState(pos.up(1 + i)).getBlock();
-            if (block == ActuallyBlocks.blockPhantomBooster.get()) {
+            if (block == ActuallyBlocks.PHANTOM_BOOSTER.get()) {
                 newRange = newRange * 2;
             } else {
                 break;

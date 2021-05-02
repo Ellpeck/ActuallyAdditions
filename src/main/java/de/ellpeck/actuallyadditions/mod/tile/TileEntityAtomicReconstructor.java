@@ -96,7 +96,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
             if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
                 this.oldEnergy = this.storage.getEnergyStored();
-                this.world.updateComparatorOutputLevel(this.pos, ActuallyBlocks.blockAtomicReconstructor.get());
+                this.world.updateComparatorOutputLevel(this.pos, ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get());
             }
         }
 

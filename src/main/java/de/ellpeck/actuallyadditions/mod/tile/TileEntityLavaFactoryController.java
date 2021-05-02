@@ -80,7 +80,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
         BlockPos thisPos = this.pos;
         BlockPos[] positions = new BlockPos[]{thisPos.add(1, 1, 0), thisPos.add(-1, 1, 0), thisPos.add(0, 1, 1), thisPos.add(0, 1, -1)};
 
-        if (this.world != null && WorldUtil.hasBlocksInPlacesGiven(positions, ActuallyBlocks.blockLavaCasing.get(), this.world)) {
+        if (this.world != null && WorldUtil.hasBlocksInPlacesGiven(positions, ActuallyBlocks.LAVA_CASING.get(), this.world)) {
             BlockPos pos = thisPos.up();
             BlockState state = this.world.getBlockState(pos);
             Block block = state.getBlock();

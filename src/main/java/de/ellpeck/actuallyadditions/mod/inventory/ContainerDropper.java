@@ -108,7 +108,7 @@ public class ContainerDropper extends Container {
     public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
         if (!this.player.isSpectator()) {
-            this.dropper.getWorld().notifyNeighborsOfStateChange(this.dropper.getPos(), ActuallyBlocks.blockDropper.get());
+            this.dropper.getWorld().notifyNeighborsOfStateChange(this.dropper.getPos(), ActuallyBlocks.DROPPER.get());
         }
     }
 }
