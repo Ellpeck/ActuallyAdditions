@@ -18,7 +18,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
     @Override
     protected void registerTags() {
         this.getOrCreateBuilder(ActuallyTags.Items.COFFEE_BEANS)
-            .add(ActuallyItems.itemCoffeeBean.get());
+            .add(ActuallyItems.COFFEE_BEANS.get());
         //        getOrCreateBuilder(ActuallyTags.Items.DRILLS).add(
         //            ActuallyItems.DRILL_MAIN.get(),
         //            ActuallyItems.DRILL_BLACK.get(), ActuallyItems.DRILL_BLACK.get(), ActuallyItems.DRILL_BLUE.get(), ActuallyItems.DRILL_BROWN.get(),

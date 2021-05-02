@@ -112,7 +112,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
 
                         AssetUtil.renderStackToGui(StackUtil.isValid(page.getChapter().getDisplayItemStack())
                             ? page.getChapter().getDisplayItemStack()
-                            : new ItemStack(ActuallyItems.itemBooklet.get()), resolution.getScaledWidth() / 2 - 10, height + 41, 1F);
+                            : new ItemStack(ActuallyItems.ITEM_BOOKLET.get()), resolution.getScaledWidth() / 2 - 10, height + 41, 1F);
                         minecraft.fontRenderer.drawStringWithShadow(TextFormatting.YELLOW + "" + TextFormatting.ITALIC + strg1, resolution.getScaledWidth() / 2 - minecraft.fontRenderer.getStringWidth(strg1) / 2, height + 20, StringUtil.DECIMAL_COLOR_WHITE);
                         minecraft.fontRenderer.drawStringWithShadow(TextFormatting.YELLOW + "" + TextFormatting.ITALIC + strg2, resolution.getScaledWidth() / 2 - minecraft.fontRenderer.getStringWidth(strg2) / 2, height + 30, StringUtil.DECIMAL_COLOR_WHITE);
                         minecraft.fontRenderer.drawStringWithShadow(TextFormatting.GOLD + strg3, resolution.getScaledWidth() / 2 - minecraft.fontRenderer.getStringWidth(strg3) / 2, height + 60, StringUtil.DECIMAL_COLOR_WHITE);

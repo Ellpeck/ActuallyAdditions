@@ -27,7 +27,7 @@ public class RenderWorm extends Render<EntityWorm> {
     private static ItemStack stack = ItemStack.EMPTY;
 
     public static void fixItemStack() {
-        stack = new ItemStack(ActuallyItems.itemWorm.get());
+        stack = new ItemStack(ActuallyItems.WORM.get());
     }
 
     protected RenderWorm(RenderManager renderManager) {

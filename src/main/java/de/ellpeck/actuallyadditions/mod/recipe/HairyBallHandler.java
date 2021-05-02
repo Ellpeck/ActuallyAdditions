@@ -42,7 +42,7 @@ public final class HairyBallHandler {
         ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.SAND), 50);
         ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.VINE), 30);
         ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(Blocks.COBWEB), 4);
-        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(ActuallyItems.itemSolidifiedExperience.get()), 20);
+        ActuallyAdditionsAPI.addBallOfFurReturnItem(new ItemStack(ActuallyItems.SOLIDIFIED_EXPERIENCE.get()), 20);
     }
 
 }

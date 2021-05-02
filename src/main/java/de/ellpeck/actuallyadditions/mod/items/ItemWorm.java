@@ -74,7 +74,7 @@ public class ItemWorm extends ItemBase {
                 if (world.isAirBlock(pos.up())) {
                     BlockState state = world.getBlockState(pos);
                     if (state.getBlock() == Blocks.GRASS && world.rand.nextFloat() >= 0.95F) {
-                        ItemStack stack = new ItemStack(ActuallyItems.itemWorm.get(), world.rand.nextInt(2) + 1);
+                        ItemStack stack = new ItemStack(ActuallyItems.WORM.get(), world.rand.nextInt(2) + 1);
                         ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
                         world.addEntity(item);
                     }

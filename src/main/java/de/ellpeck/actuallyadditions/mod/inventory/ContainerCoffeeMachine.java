@@ -81,7 +81,7 @@ public class ContainerCoffeeMachine extends Container {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getItem() == ActuallyItems.itemCoffeeCup.get()) {
+                if (newStack.getItem() == ActuallyItems.COFFEE_CUP.get()) {
                     if (!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT + 1, false)) {
                         return StackUtil.getEmpty();
                     }

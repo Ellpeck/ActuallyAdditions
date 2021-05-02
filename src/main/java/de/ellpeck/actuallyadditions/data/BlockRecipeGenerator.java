@@ -23,7 +23,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
        ShapelessRecipeBuilder.shapelessRecipe(ActuallyBlocks.BATTERY_BOX.get())
                 .addIngredient(ActuallyBlocks.ENERGIZER.get())
                 .addIngredient(ActuallyBlocks.ENERVATOR.get())
-                .addIngredient(ActuallyItems.itemCoil.get())
+                .addIngredient(ActuallyItems.COIL.get())
                 .addCriterion("", hasItem(Items.AIR))
                 .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "battery_box"));
 
@@ -44,7 +44,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
                .patternLine(" B ")
                .patternLine("CDC")
                .key('R', ActuallyItems.RESTONIA_CRYSTAL.get())
-               .key('B', ActuallyItems.itemBatteryDouble.get())
+               .key('B', ActuallyItems.BATTERY_DOUBLE.get())
                .key('C', ActuallyBlocks.IRON_CASING.get())
                .key('D', ActuallyBlocks.DISPLAY_STAND.get())
                .addCriterion("", hasItem(Items.AIR))

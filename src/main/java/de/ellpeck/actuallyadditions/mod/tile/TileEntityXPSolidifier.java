@@ -132,7 +132,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 ItemStack stack = this.inv.getStackInSlot(0);
                 if (stack.isEmpty()) {
                     int toSet = Math.min(this.amount, 64);
-                    this.inv.setStackInSlot(0, new ItemStack(ActuallyItems.itemSolidifiedExperience.get(), toSet));
+                    this.inv.setStackInSlot(0, new ItemStack(ActuallyItems.SOLIDIFIED_EXPERIENCE.get(), toSet));
                     this.amount -= toSet;
                     this.markDirty();
                 } else if (stack.getCount() < 64) {
@@ -182,7 +182,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> slot == 1 && stack.getItem() == ActuallyItems.itemSolidifiedExperience.get();
+        return (slot, stack, automation) -> slot == 1 && stack.getItem() == ActuallyItems.SOLIDIFIED_EXPERIENCE.get();
     }
 
     @Override

@@ -63,7 +63,7 @@ public class ContainerCanolaPress extends Container {
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getItem() == ActuallyItems.itemCanola.get()) {
+                if (newStack.getItem() == ActuallyItems.CANOLA.get()) {
                     if (!this.mergeItemStack(newStack, 0, 1, false)) {
                         return StackUtil.getEmpty();
                     }

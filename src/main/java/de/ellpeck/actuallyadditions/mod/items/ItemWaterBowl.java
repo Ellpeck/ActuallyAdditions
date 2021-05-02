@@ -68,7 +68,7 @@ public class ItemWaterBowl extends ItemBase {
                                     event.getWorld().setBlockState(trace.getPos(), Blocks.AIR.getDefaultState(), 11);
                                     ItemStack reduced = StackUtil.shrink(event.getItemStack(), 1);
 
-                                    ItemStack bowl = new ItemStack(ActuallyItems.itemWaterBowl.get());
+                                    ItemStack bowl = new ItemStack(ActuallyItems.WATER_BOWL.get());
                                     if (!StackUtil.isValid(reduced)) {
                                         event.getPlayer().setHeldItem(event.getHand(), bowl);
                                     } else if (!event.getPlayer().inventory.addItemStackToInventory(bowl.copy())) {

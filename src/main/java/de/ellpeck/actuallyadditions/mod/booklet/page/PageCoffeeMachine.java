@@ -35,7 +35,7 @@ public class PageCoffeeMachine extends BookletPage {
         this.ingredient = ingredient;
         this.stacks = ingredient.getInput().getMatchingStacks();
 
-        this.outcome = new ItemStack(ActuallyItems.itemCoffee.get());
+        this.outcome = new ItemStack(ActuallyItems.COFFEE.get());
         ActuallyAdditionsAPI.methodHandler.addEffectToStack(this.outcome, this.ingredient);
     }
 
@@ -65,8 +65,8 @@ public class PageCoffeeMachine extends BookletPage {
         gui.addOrModifyItemRenderer(this.stacks[0], startX + 5 + 82, startY + 10 + 1, 1F, true);
         gui.addOrModifyItemRenderer(this.outcome, startX + 5 + 36, startY + 10 + 42, 1F, false);
 
-        gui.addOrModifyItemRenderer(new ItemStack(ActuallyItems.itemCoffeeCup.get()), startX + 5 + 37, startY + 10 + 1, 1F, true);
-        gui.addOrModifyItemRenderer(new ItemStack(ActuallyItems.itemCoffee.get()), startX + 5 + 1, startY + 10 + 1, 1F, true);
+        gui.addOrModifyItemRenderer(new ItemStack(ActuallyItems.COFFEE_CUP.get()), startX + 5 + 37, startY + 10 + 1, 1F, true);
+        gui.addOrModifyItemRenderer(new ItemStack(ActuallyItems.COFFEE.get()), startX + 5 + 1, startY + 10 + 1, 1F, true);
     }
 
     @Override

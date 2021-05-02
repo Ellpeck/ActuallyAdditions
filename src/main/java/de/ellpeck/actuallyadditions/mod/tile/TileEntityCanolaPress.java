@@ -132,7 +132,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     }
 
     public static boolean isCanola(ItemStack stack) {
-        return stack.getItem() == ActuallyItems.itemCanola.get();
+        return stack.getItem() == ActuallyItems.CANOLA.get();
     }
 
     @Override

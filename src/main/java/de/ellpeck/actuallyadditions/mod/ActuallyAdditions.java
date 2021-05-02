@@ -66,7 +66,7 @@ public class ActuallyAdditions {
     public static final ItemGroup GROUP = new ItemGroup(MODID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ActuallyItems.itemBooklet.get());
+            return new ItemStack(ActuallyItems.ITEM_BOOKLET.get());
         }
     };
 

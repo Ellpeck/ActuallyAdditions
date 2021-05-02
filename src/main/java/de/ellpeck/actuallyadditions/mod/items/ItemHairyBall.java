@@ -42,7 +42,7 @@ public class ItemHairyBall extends ItemBase {
         if (ConfigBoolValues.DO_CAT_DROPS.isEnabled() && event.getEntityLiving() != null && event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote) {
             if (event.getEntityLiving() instanceof EntityOcelot && ((EntityOcelot) event.getEntityLiving()).isTamed() || event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().getUniqueID().equals(this.KittyVanCatUUID)) {
                 if (event.getEntityLiving().world.rand.nextInt(ConfigIntValues.FUR_CHANCE.getValue()) == 0) {
-                    ItemEntity item = new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().posX + 0.5, event.getEntityLiving().posY + 0.5, event.getEntityLiving().posZ + 0.5, new ItemStack(ActuallyItems.itemHairyBall));
+                    ItemEntity item = new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().posX + 0.5, event.getEntityLiving().posY + 0.5, event.getEntityLiving().posZ + 0.5, new ItemStack(ActuallyItems.HAIRY_BALL));
                     event.getEntityLiving().world.addEntity(item);
                 }
             }

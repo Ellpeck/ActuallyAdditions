@@ -90,7 +90,7 @@ public class ItemCoffee extends ItemFoodBase {
         applyPotionEffectsFromStack(stack, player);
         theStack.setItemDamage(theStack.getItemDamage() + 1);
         if (theStack.getMaxDamage() - theStack.getItemDamage() < 0) {
-            return new ItemStack(ActuallyItems.itemCoffeeCup.get());
+            return new ItemStack(ActuallyItems.COFFEE_CUP.get());
         } else {
             return theStack;
         }

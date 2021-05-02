@@ -151,7 +151,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null || slot == SLOT_COFFEE_BEANS && ActuallyTags.Items.COFFEE_BEANS.contains(stack.getItem()) || slot == SLOT_INPUT && stack.getItem() == ActuallyItems.itemCoffeeCup.get();
+        return (slot, stack, automation) -> !automation || slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null || slot == SLOT_COFFEE_BEANS && ActuallyTags.Items.COFFEE_BEANS.contains(stack.getItem()) || slot == SLOT_INPUT && stack.getItem() == ActuallyItems.COFFEE_CUP.get();
     }
 
     @Override
@@ -175,7 +175,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         }
 
         ItemStack input = this.inv.getStackInSlot(SLOT_INPUT);
-        if (StackUtil.isValid(input) && input.getItem() == ActuallyItems.itemCoffeeCup.get() && !StackUtil.isValid(this.inv.getStackInSlot(SLOT_OUTPUT)) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid().getFluid() == Fluids.WATER && this.tank.getFluidAmount() >= WATER_USE) {
+        if (StackUtil.isValid(input) && input.getItem() == ActuallyItems.COFFEE_CUP.get() && !StackUtil.isValid(this.inv.getStackInSlot(SLOT_OUTPUT)) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid().getFluid() == Fluids.WATER && this.tank.getFluidAmount() >= WATER_USE) {
             if (this.storage.getEnergyStored() >= ENERGY_USED) {
                 if (this.brewTime % 30 == 0) {
                     this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.1F, 1.0F);
@@ -185,7 +185,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                 this.storage.extractEnergyInternal(ENERGY_USED, false);
                 if (this.brewTime >= TIME_USED) {
                     this.brewTime = 0;
-                    ItemStack output = new ItemStack(ActuallyItems.itemCoffee.get());
+                    ItemStack output = new ItemStack(ActuallyItems.COFFEE.get());
                     for (int i = 3; i < this.inv.getSlots(); i++) {
                         if (StackUtil.isValid(this.inv.getStackInSlot(i))) {
                             CoffeeIngredient ingredient = ItemCoffee.getIngredientFromStack(this.inv.getStackInSlot(i));
