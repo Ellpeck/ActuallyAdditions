@@ -25,11 +25,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class ActuallyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MODID);
 
-    public static final RegistryObject<Block> blockMisc = BLOCKS.register("block_misc", BlockMisc::new);
-    public static final RegistryObject<Block> blockWoodCasing = BLOCKS.register("block_wood_casing", BlockMisc::new); //TODO
-    public static final RegistryObject<Block> blockIronCasing = BLOCKS.register("block_iron_casing", BlockMisc::new); //TODO
-    public static final RegistryObject<Block> blockEnderCasing = BLOCKS.register("block_ender_casing", BlockMisc::new); //TODO
-    public static final RegistryObject<Block> blockLavaCasing = BLOCKS.register("block_lava_casing", BlockMisc::new);
+    public static final AbstractBlock.Properties miscBlockProperties = AbstractBlock.Properties.create(Material.ROCK).harvestLevel(1).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5f,10f);
+    public static final RegistryObject<Block> blockMisc = BLOCKS.register("block_misc", () -> new Block(miscBlockProperties));
+    public static final RegistryObject<Block> blockWoodCasing = BLOCKS.register("block_wood_casing", () -> new Block(miscBlockProperties));
+    public static final RegistryObject<Block> blockIronCasing = BLOCKS.register("block_iron_casing", () -> new Block(miscBlockProperties));
+    public static final RegistryObject<Block> blockEnderCasing = BLOCKS.register("block_ender_casing", () -> new Block(miscBlockProperties));
+    public static final RegistryObject<Block> blockLavaCasing = BLOCKS.register("block_lava_casing", () -> new Block(miscBlockProperties));
     public static final RegistryObject<Block> blockWildPlant = BLOCKS.register("block_wild", BlockWildPlant::new);
     public static final RegistryObject<Block> blockFeeder = BLOCKS.register("block_feeder", BlockFeeder::new);
     public static final RegistryObject<Block> blockGrinder = BLOCKS.register("block_grinder", () -> new BlockGrinder(false));
