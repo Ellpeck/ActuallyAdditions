@@ -12,25 +12,20 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.block.*;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.UseAction;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IShearable;
+import net.minecraftforge.common.IForgeShearable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,35 +42,27 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         player.setActiveHand(hand);
-        return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        return ActionResult.resultSuccess(player.getHeldItem(hand));
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
-        return EnumAction.BOW;
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.BOW;
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack stack) {
-        //Cuz you won't hold it for that long right-clicking anyways
+    public int getUseDuration(ItemStack stack) {
         return Integer.MAX_VALUE;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return this.isAdvanced
-            ? EnumRarity.EPIC
-            : EnumRarity.RARE;
-    }
-
-    @Override
-    public void onUsingTick(ItemStack stack, EntityLivingBase player, int time) {
-        this.doUpdate(player.world, MathHelper.floor(player.posX), MathHelper.floor(player.posY), MathHelper.floor(player.posZ), time, stack);
+    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+        this.doUpdate(player.world, MathHelper.floor(player.getPosX()), MathHelper.floor(player.getPosY()), MathHelper.floor(player.getPosZ()), count, stack);
     }
 
     private boolean doUpdate(World world, int x, int y, int z, int time, ItemStack stack) {
         if (!world.isRemote) {
-            if (time <= this.getMaxItemUseDuration(stack) && (this.isAdvanced || time % 3 == 0)) {
+            if (time <= this.getUseDuration(stack) && (this.isAdvanced || time % 3 == 0)) {
                 //Breaks the Blocks
                 boolean broke = this.breakStuff(world, x, y, z);
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
@@ -110,7 +97,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
                     BlockPos pos = new BlockPos(x + reachX, y + reachY, z + reachZ);
                     Block block = world.getBlockState(pos).getBlock();
 
-                    if (block != null && (block instanceof BlockBush || block instanceof IShearable) && (this.isAdvanced || !block.isLeaves(world.getBlockState(pos), world, pos))) {
+                    if ((block instanceof BushBlock || block instanceof IForgeShearable) && (this.isAdvanced || block instanceof LeavesBlock)) {
                         breakPositions.add(pos);
                     }
                 }
@@ -123,7 +110,8 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
             BlockPos theCoord = breakPositions.get(0);
             BlockState theState = world.getBlockState(theCoord);
 
-            theState.getBlock().dropBlockAsItem(world, theCoord, theState, 0);
+            world.destroyBlock(theCoord, true);
+            //            theState.getBlock().dropBlockAsItem(world, theCoord, theState, 0);
             //Plays the Breaking Sound
             world.playEvent(2001, theCoord, Block.getStateId(theState));
 

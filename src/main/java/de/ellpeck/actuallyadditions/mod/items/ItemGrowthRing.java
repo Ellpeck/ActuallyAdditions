@@ -13,15 +13,16 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockGrass;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.GrassBlock;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
@@ -30,11 +31,11 @@ import java.util.List;
 public class ItemGrowthRing extends ItemEnergy {
 
     public ItemGrowthRing() {
-        super(1000000, 2000, name);
+        super(1000000, 2000);
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
         if (!(entity instanceof PlayerEntity) || world.isRemote || entity.isSneaking()) {
             return;
         }
@@ -47,17 +48,17 @@ public class ItemGrowthRing extends ItemEnergy {
             List<BlockPos> blocks = new ArrayList<>();
 
             //Adding all possible Blocks
-            if (player.world.getTotalWorldTime() % 30 == 0) {
+            if (player.world.getGameTime() % 30 == 0) {
                 int range = 3;
                 for (int x = -range; x < range + 1; x++) {
                     for (int z = -range; z < range + 1; z++) {
                         for (int y = -range; y < range + 1; y++) {
-                            int theX = MathHelper.floor(player.posX + x);
-                            int theY = MathHelper.floor(player.posY + y);
-                            int theZ = MathHelper.floor(player.posZ + z);
+                            int theX = MathHelper.floor(player.getPosX() + x);
+                            int theY = MathHelper.floor(player.getPosY() + y);
+                            int theZ = MathHelper.floor(player.getPosZ() + z);
                             BlockPos posInQuestion = new BlockPos(theX, theY, theZ);
                             Block theBlock = world.getBlockState(posInQuestion).getBlock();
-                            if ((theBlock instanceof IGrowable || theBlock instanceof IPlantable) && !(theBlock instanceof BlockGrass)) {
+                            if ((theBlock instanceof IGrowable || theBlock instanceof IPlantable) && !(theBlock instanceof GrassBlock)) {
                                 blocks.add(posInQuestion);
                             }
                         }
@@ -72,12 +73,11 @@ public class ItemGrowthRing extends ItemEnergy {
 
                             BlockState state = world.getBlockState(pos);
                             Block block = state.getBlock();
-                            int metaBefore = block.getMetaFromState(state);
-                            block.updateTick(world, pos, world.getBlockState(pos), world.rand);
+                            block.tick(world.getBlockState(pos), (ServerWorld) world, pos, world.rand);
 
                             //Show Particles if Metadata changed
                             BlockState newState = world.getBlockState(pos);
-                            if (newState.getBlock().getMetaFromState(newState) != metaBefore) {
+                            if (newState != state) {
                                 world.playEvent(2005, pos, 0);
                             }
 
@@ -91,10 +91,5 @@ public class ItemGrowthRing extends ItemEnergy {
                 }
             }
         }
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
     }
 }

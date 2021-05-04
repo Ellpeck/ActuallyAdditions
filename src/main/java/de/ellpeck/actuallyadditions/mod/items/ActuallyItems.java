@@ -147,7 +147,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> POTION_RING = ITEMS.register("potion_ring", () -> new ItemPotionRing(false));
     public static final RegistryObject<Item> POTION_RING_ADVANCED = ITEMS.register("potion_ring_advanced", () -> new ItemPotionRing(true));
 
-    public static final RegistryObject<Item> HAIRY_BALL = ITEMS.register("hairy_ball", ItemHairyBall::new);
+    public static final RegistryObject<Item> HAIRY_BALL = ITEMS.register("hairy_ball", ItemHairBall::new);
     public static final RegistryObject<Item> COFFEE_BEANS = ITEMS.register("coffee_beans", ItemCoffeeBean::new);
 
     public static final RegistryObject<Item> RICE_SEED = ITEMS.register("rice_seed", () -> new ItemSeed("seedRice", ActuallyBlocks.RICE.get(), FOOD.get(), TheFoods.RICE.ordinal()));

@@ -12,37 +12,31 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.EnumRarity;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 
 public class ItemKnife extends ItemBase {
 
     public ItemKnife() {
-        super(name);
-        this.setMaxDamage(100);
-        this.setMaxStackSize(1);
-        this.setContainerItem(this);
-        this.setNoRepair();
+        super(ActuallyItems.defaultNonStacking().defaultMaxDamage(100).setNoRepair());
     }
 
-    @Override
-    public boolean getShareTag() {
-        return true;
-    }
+
+    //    @Override
+    //    public boolean getShareTag() {
+    //        return true;
+    //    }
+
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
-    }
-
-    @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
-        Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
-        if (slot == EntityEquipmentSlot.MAINHAND) {
-            map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Knife Modifier", 3, 0));
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+        Multimap<Attribute, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
+        if (slot == EquipmentSlotType.MAINHAND) {
+            // TODO: [port] validate
+            map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier("Knife Modifier", 3, AttributeModifier.Operation.ADDITION));
         }
         return map;
     }
@@ -50,7 +44,7 @@ public class ItemKnife extends ItemBase {
     @Override
     public ItemStack getContainerItem(ItemStack stack) {
         ItemStack theStack = stack.copy();
-        theStack.setItemDamage(theStack.getItemDamage() + 1);
+        theStack.setDamage(theStack.getDamage() + 1);
         return theStack;
     }
 }

@@ -14,16 +14,15 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.Hand;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -33,13 +32,16 @@ import java.util.List;
 public class ItemLaserWrench extends ItemBase {
 
     public ItemLaserWrench() {
-        super(name);
-        this.setMaxStackSize(1);
+        super(ActuallyItems.defaultNonStacking());
     }
 
     @Override
-    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction par7, float par8, float par9, float par10) {
-        ItemStack stack = player.getHeldItem(hand);
+    public ActionResultType onItemUse(ItemUseContext context) {
+        BlockPos pos = context.getPos();
+        World world = context.getWorld();
+        PlayerEntity player = context.getPlayer();
+
+        ItemStack stack = player.getHeldItem(context.getHand());
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof TileEntityLaserRelay) {
             TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
@@ -65,39 +67,36 @@ public class ItemLaserWrench extends ItemBase {
 
                                 player.sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.connected.desc"), true);
 
-                                return EnumActionResult.SUCCESS;
+                                return ActionResultType.SUCCESS;
                             }
                         }
 
-                        player.sendMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.cantConnect.desc"));
+                        player.sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.cantConnect.desc"), false);
                         ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
                     }
                 }
             }
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
-        return EnumActionResult.FAIL;
+        return ActionResultType.FAIL;
     }
 
-    @Override
-    public boolean getShareTag() {
-        return true;
-    }
+    //    // TODO: [port] ensure this is correct
+    //    @Nullable
+    //    @Override
+    //    public CompoundNBT getShareTag(ItemStack stack) {
+    //        return new CompoundNBT();
+    //    }
 
     @Override
-    public void addInformation(ItemStack stack, World playerIn, List<String> list, ITooltipFlag advanced) {
+    public void addInformation(ItemStack stack, World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
         BlockPos coords = ItemPhantomConnector.getStoredPosition(stack);
         if (coords != null) {
-            list.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc") + ":");
-            list.add("X: " + coords.getX());
-            list.add("Y: " + coords.getY());
-            list.add("Z: " + coords.getZ());
-            list.add(TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc"));
+            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").appendString(":"));
+            list.add(new StringTextComponent("X: " + coords.getX()));
+            list.add(new StringTextComponent("Y: " + coords.getY()));
+            list.add(new StringTextComponent("Z: " + coords.getZ()));
+            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").mergeStyle(TextFormatting.ITALIC));
         }
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
     }
 }

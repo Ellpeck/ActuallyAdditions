@@ -15,10 +15,8 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -28,7 +26,7 @@ import java.util.List;
 public class ItemMagnetRing extends ItemEnergy {
 
     public ItemMagnetRing() {
-        super(200000, 1000, name);
+        super(200000, 1000);
     }
 
     @Override
@@ -37,7 +35,7 @@ public class ItemMagnetRing extends ItemEnergy {
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
         if (entity instanceof PlayerEntity && !world.isRemote && !ItemUtil.isEnabled(stack)) {
             PlayerEntity player = (PlayerEntity) entity;
             if (player.isCreative() || player.isSpectator()) {
@@ -46,13 +44,14 @@ public class ItemMagnetRing extends ItemEnergy {
             if (!entity.isSneaking()) {
                 //Get all the Items in the area
                 int range = 5;
-                List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(entity.posX - range, entity.posY - range, entity.posZ - range, entity.posX + range, entity.posY + range, entity.posZ + range));
+                List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(entity.getPosX() - range, entity.getPosY() - range, entity.getPosZ() - range, entity.getPosX() + range, entity.getPosY() + range, entity.getPosZ() + range));
                 if (!items.isEmpty()) {
                     for (ItemEntity item : items) {
-                        if (item.getEntityData().getBoolean("PreventRemoteMovement")) {
+                        // TODO: [port] check this data is being saved on the time
+                        if (item.getPersistentData().getBoolean("PreventRemoteMovement")) {
                             continue;
                         }
-                        if (!item.isDead && !item.cannotPickup()) {
+                        if (item.isAlive() && !item.cannotPickup()) {
                             int energyForItem = 50 * item.getItem().getCount();
 
                             if (this.getEnergyStored(stack) >= energyForItem) {
@@ -61,7 +60,7 @@ public class ItemMagnetRing extends ItemEnergy {
                                 item.onCollideWithPlayer(player);
 
                                 if (!player.isCreative()) {
-                                    if (item.isDead || !ItemStack.areItemStacksEqual(item.getItem(), oldItem)) {
+                                    if (!item.isAlive() || !ItemStack.areItemStacksEqual(item.getItem(), oldItem)) {
                                         this.extractEnergyInternal(stack, energyForItem, false);
                                     }
                                 }
@@ -77,13 +76,9 @@ public class ItemMagnetRing extends ItemEnergy {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
         if (!worldIn.isRemote && player.isSneaking()) {
             ItemUtil.changeEnabled(player, hand);
-            return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+            return ActionResult.resultSuccess(player.getHeldItem(hand));
         }
-        return super.onItemRightClick(worldIn, player, hand);
-    }
 
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
+        return super.onItemRightClick(worldIn, player, hand);
     }
 }
