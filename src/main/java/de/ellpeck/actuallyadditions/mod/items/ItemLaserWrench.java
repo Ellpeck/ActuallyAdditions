@@ -24,8 +24,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class ItemLaserWrench extends ItemBase {
             if (!world.isRemote) {
                 if (ItemPhantomConnector.getStoredPosition(stack) == null) {
                     ItemPhantomConnector.storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-                    player.sendStatusMessage(new TextComponentTranslation("tooltip." + ActuallyAdditions.MODID + ".laser.stored.desc"), true);
+                    player.sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.stored.desc"), true);
                 } else {
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
                     if (savedPos != null) {
@@ -57,19 +57,19 @@ public class ItemLaserWrench extends ItemBase {
 
                             int lowestRange = Math.min(relay.getMaxRange(), savedRelay.getMaxRange());
                             int range = lowestRange * lowestRange;
-                            if (ItemPhantomConnector.getStoredWorld(stack) == world && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world, false, true)) {
+                            if (ItemPhantomConnector.getStoredWorld(stack) == world.getDimensionKey() && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world, false, true)) {
                                 ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
 
                                 ((TileEntityLaserRelay) savedTile).sendUpdate();
                                 relay.sendUpdate();
 
-                                player.sendStatusMessage(new TextComponentTranslation("tooltip." + ActuallyAdditions.MODID + ".laser.connected.desc"), true);
+                                player.sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.connected.desc"), true);
 
                                 return EnumActionResult.SUCCESS;
                             }
                         }
 
-                        player.sendMessage(new TextComponentTranslation("tooltip." + ActuallyAdditions.MODID + ".laser.cantConnect.desc"));
+                        player.sendMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.cantConnect.desc"));
                         ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
                     }
                 }

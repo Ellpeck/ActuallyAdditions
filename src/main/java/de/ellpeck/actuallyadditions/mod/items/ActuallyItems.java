@@ -242,4 +242,8 @@ public final class ActuallyItems {
     public static Item.Properties defaultProps() {
         return new Item.Properties().group(ActuallyAdditions.GROUP);
     }
+
+    public static Item.Properties defaultNonStacking() {
+        return defaultProps().maxStackSize(1);
+    }
 }

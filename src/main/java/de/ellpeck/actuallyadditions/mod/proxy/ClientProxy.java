@@ -81,7 +81,6 @@ public class ClientProxy {
     //        COLOR_PRODIVIDING_BLOCKS_FOR_REGISTERING.add(block);
     //    }
 
-    @Deprecated
     public static ClientPlayerEntity getCurrentPlayer() {
         return Minecraft.getInstance().player;
     }

@@ -13,39 +13,39 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ItemSolidifiedExperience extends ItemBase {
 
     public static final int SOLID_XP_AMOUNT = 8;
 
     public ItemSolidifiedExperience() {
-        super(name);
+        super();
 
+        // TODO: [port] move this to another place
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event) {
         if (ConfigBoolValues.DO_XP_DROPS.isEnabled()) {
-            if (event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof PlayerEntity && event.getEntityLiving().world.getGameRules().getBoolean("doMobLoot")) {
+            if (event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof PlayerEntity && event.getEntityLiving().world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
                 //Drop Solidified XP
-                if (event.getEntityLiving() instanceof EntityCreature) {
+                if (event.getEntityLiving() instanceof CreatureEntity) {
                     if (event.getEntityLiving().world.rand.nextInt(10) <= event.getLootingLevel() * 2) {
-                        event.getDrops().add(new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, new ItemStack(ActuallyItems.SOLIDIFIED_EXPERIENCE, event.getEntityLiving().world.rand.nextInt(2 + event.getLootingLevel()) + 1)));
+                        event.getDrops().add(new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY(), event.getEntityLiving().getPosZ(), new ItemStack(ActuallyItems.SOLIDIFIED_EXPERIENCE.get(), event.getEntityLiving().world.rand.nextInt(2 + event.getLootingLevel()) + 1)));
                     }
                 }
             }
@@ -70,18 +70,13 @@ public class ItemSolidifiedExperience extends ItemBase {
             }
 
             if (ConfigBoolValues.SOLID_XP_ALWAYS_ORBS.currentValue || player instanceof FakePlayer) {
-                EntityXPOrb orb = new EntityXPOrb(world, player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, amount);
-                orb.getEntityData().putBoolean(ActuallyAdditions.MODID + "FromSolidified", true);
+                ExperienceOrbEntity orb = new ExperienceOrbEntity(world, player.getPosX() + 0.5, player.getPosY() + 0.5, player.getPosZ() + 0.5, amount);
+                orb.getPersistentData().putBoolean(ActuallyAdditions.MODID + "FromSolidified", true);
                 world.addEntity(orb);
             } else {
-                player.addExperience(amount);
+                player.addExperienceLevel(amount);
             }
         }
-        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.UNCOMMON;
+        return ActionResult.resultSuccess(stack);
     }
 }

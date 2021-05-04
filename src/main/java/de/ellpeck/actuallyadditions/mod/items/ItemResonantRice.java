@@ -12,17 +12,16 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class ItemResonantRice extends ItemBase {
 
     public ItemResonantRice() {
-        super(name);
+        super();
     }
 
     @Override
@@ -30,13 +29,8 @@ public class ItemResonantRice extends ItemBase {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote) {
             stack.shrink(1);
-            world.createExplosion(null, player.posX, player.posY, player.posZ, 0.5F, true);
+            world.createExplosion(null, player.getPosX(), player.getPosY(), player.getPosZ(), 0.5F, Explosion.Mode.DESTROY);
         }
-        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
+        return ActionResult.resultSuccess(stack);
     }
 }
