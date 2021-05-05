@@ -33,200 +33,109 @@ public class BlockRecipeGenerator extends RecipeProvider {
             .key('S', Tags.Items.SEEDS)
             .build(consumer);
 
-       //Empowerer
-       ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.EMPOWERER.get())
-               .patternLine(" R ")
-               .patternLine(" B ")
-               .patternLine("CDC")
-               .key('R', ActuallyItems.RESTONIA_CRYSTAL.get())
-               .key('B', ActuallyItems.BATTERY_DOUBLE.get())
-               .key('C', ActuallyBlocks.IRON_CASING.get())
-               .key('D', ActuallyBlocks.DISPLAY_STAND.get())
-               .addCriterion("", hasItem(Items.AIR))
-               .build(consumer);
+        //Empowerer
+        Recipe.shaped(ActuallyBlocks.EMPOWERER.get())
+            .pattern(" R ", " B ", "CDC")
+            .key('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+            .key('B', ActuallyItems.BATTERY_DOUBLE.get())
+            .key('C', ActuallyBlocks.IRON_CASING.get())
+            .key('D', ActuallyBlocks.DISPLAY_STAND.get())
+            .build(consumer);
 
-       //Tiny Torch
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.TINY_TORCH.get(), 2)
-                .patternLine("C")
-                .patternLine("S")
-                .key('C', ActuallyTags.Items.TINY_COALS)
-                .key('S', Tags.Items.RODS_WOODEN)
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_torch"));
+        //Tiny Torch
+        Recipe.shaped(ActuallyBlocks.TINY_TORCH.get(), 2)
+            .pattern("C", "S")
+            .key('C', ActuallyTags.Items.TINY_COALS)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_torch"));
 
         //Fireworks Box
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.FIREWORK_BOX.get())
-                .patternLine("GFG")
-                .patternLine("SAS")
-                .patternLine("CCC")
-                .key('G', Tags.Items.GUNPOWDER)
-                .key('S', Tags.Items.RODS_WOODEN)
-                .key('A', ActuallyBlocks.IRON_CASING.get())
-                .key('F', Items.FIREWORK_ROCKET)
-                .key('C', ActuallyItems.ENORI_CRYSTAL.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.shaped(ActuallyBlocks.FIREWORK_BOX.get())
+            .pattern("GFG", "SAS", "CCC")
+            .key('G', Tags.Items.GUNPOWDER)
+            .key('S', Tags.Items.RODS_WOODEN)
+            .key('A', ActuallyBlocks.IRON_CASING.get())
+            .key('F', Items.FIREWORK_ROCKET)
+            .key('C', ActuallyItems.ENORI_CRYSTAL.get())
+            .build(consumer);
 
         //Shock Suppressor
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.SHOCK_SUPPRESSOR.get())
-                .patternLine("OAO")
-                .patternLine("ACA")
-                .patternLine("OAO")
-                .key('A', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
-                .key('O', Tags.Items.OBSIDIAN)
-                .key('C', ActuallyItems.COIL_ADVANCED.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.shaped(ActuallyBlocks.SHOCK_SUPPRESSOR.get())
+            .pattern("OAO", "ACA", "OAO")
+            .key('A', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
+            .key('O', Tags.Items.OBSIDIAN)
+            .key('C', ActuallyItems.COIL_ADVANCED.get())
+            .build(consumer);
 
         //Display Stand
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.DISPLAY_STAND.get())
-                .patternLine(" R ")
-                .patternLine("EEE")
-                .patternLine("GGG")
-                .key('R', ActuallyItems.COIL_ADVANCED.get())
-                .key('E', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
-                .key('G', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.shaped(ActuallyBlocks.DISPLAY_STAND.get())
+            .pattern(" R ", "EEE", "GGG")
+            .key('R', ActuallyItems.COIL_ADVANCED.get())
+            .key('E', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
+            .key('G', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
+            .build(consumer);
 
         //Vertical Digger
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.MINER.get())
-                .patternLine("IRI")
-                .patternLine("RCR")
-                .patternLine("IDI")
-                .key('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-                .key('I', ActuallyBlocks.IRON_CASING.get())
-                .key('C', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
-                .key('D', ActuallyItems.DRILL.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.shaped(ActuallyBlocks.MINER.get())
+            .pattern("IRI", "RCR", "IDI")
+            .key('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+            .key('I', ActuallyBlocks.IRON_CASING.get())
+            .key('C', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
+            .key('D', ActuallyItems.DRILL.get())
+            .build(consumer);
 
         //Black Quartz Wall
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.BLACK_QUARTZ_WALL.get())
-                .patternLine("QQQ")
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_WALL.get(), ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get(), consumer);
 
         //Black Quartz Slab
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.BLACK_QUARTZ_SLAB.get())
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.slab(ActuallyBlocks.BLACK_QUARTZ_SLAB.get(), ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get(), consumer);
 
         //Black Quartz Stairs
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.BLACK_QUARTZ_STAIR.get())
-                .patternLine("Q  ")
-                .patternLine("QQ ")
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get())
-                .build(consumer);
+        Recipe.stairs(ActuallyBlocks.BLACK_QUARTZ_STAIR.get(), ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get(), consumer);
 
         //Pillar Black Quartz Wall
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.BLACK_QUARTZ_PILLAR_WALL.get())
-                .patternLine("QQQ")
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_PILLAR_WALL.get(), ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get(), consumer);
 
         //Pillar Black Quartz Slab
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.BLACK_QUARTZ_PILLAR_SLAB.get())
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.slab(ActuallyBlocks.BLACK_QUARTZ_PILLAR_SLAB.get(), ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get(), consumer);
 
         //Pillar Black Quartz Stairs
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.BLACK_QUARTZ_PILLAR_STAIR.get())
-                .patternLine("Q  ")
-                .patternLine("QQ ")
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get())
-                .build(consumer);
+        Recipe.stairs(ActuallyBlocks.BLACK_QUARTZ_PILLAR_STAIR.get(), ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get(), consumer);
 
         //Chiseled Black Quartz Wall
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.CHISELED_BLACK_QUARTZ_WALL.get())
-                .patternLine("QQQ")
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.CHISELED_BLACK_QUARTZ_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.wall(ActuallyBlocks.CHISELED_BLACK_QUARTZ_WALL.get(), ActuallyBlocks.CHISELED_BLACK_QUARTZ_BLOCK.get(), consumer);
 
         //Chiseled Black Quartz Slab
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.CHISELED_BLACK_QUARTZ_SLAB.get())
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.CHISELED_BLACK_QUARTZ_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.slab(ActuallyBlocks.CHISELED_BLACK_QUARTZ_SLAB.get(), ActuallyBlocks.CHISELED_BLACK_QUARTZ_BLOCK.get(), consumer);
 
         //Chiseled Black Quartz Stairs
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.CHISELED_BLACK_QUARTZ_STAIR.get())
-                .patternLine("Q  ")
-                .patternLine("QQ ")
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.CHISELED_BLACK_QUARTZ_BLOCK.get())
-                .build(consumer);
+        Recipe.stairs(ActuallyBlocks.CHISELED_BLACK_QUARTZ_STAIR.get(), ActuallyBlocks.CHISELED_BLACK_QUARTZ_BLOCK.get(), consumer);
 
         //Ethetic White Wall
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.ETHETIC_WHITE_WALL.get())
-                .patternLine("QQQ")
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.wall(ActuallyBlocks.ETHETIC_WHITE_WALL.get(), ActuallyBlocks.ETHETIC_WHITE_BLOCK.get(), consumer);
 
         //Ethetic White Slab
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.ETHETIC_WHITE_SLAB.get())
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        Recipe.slab(ActuallyBlocks.ETHETIC_WHITE_SLAB.get(), ActuallyBlocks.ETHETIC_WHITE_BLOCK.get(), consumer);
 
         //Ethetic White Stairs
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.ETHETIC_WHITE_STAIRS.get())
-                .patternLine("Q  ")
-                .patternLine("QQ ")
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
-                .build(consumer);
+        Recipe.stairs(ActuallyBlocks.ETHETIC_WHITE_STAIRS.get(), ActuallyBlocks.ETHETIC_WHITE_BLOCK.get(), consumer);
 
-        //Ethetic Green Wall
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.ETHETIC_GREEN_WALL.get())
-                .patternLine("QQQ")
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        // Ethetic Green Wall
+        Recipe.wall(ActuallyBlocks.ETHETIC_GREEN_WALL.get(), ActuallyBlocks.ETHETIC_GREEN_BLOCK.get(), consumer);
 
-        //Ethetic Green Slab
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.ETHETIC_GREEN_SLAB.get())
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        // Ethetic Green Slab
+        Recipe.slab(ActuallyBlocks.ETHETIC_GREEN_SLAB.get(), ActuallyBlocks.ETHETIC_GREEN_BLOCK.get(), consumer);
 
-        //Ethetic Green Stairs
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.ETHETIC_GREEN_STAIRS.get())
-                .patternLine("Q  ")
-                .patternLine("QQ ")
-                .patternLine("QQQ")
-                .key('Q', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        // Ethetic Green Stairs
+        Recipe.stairs(ActuallyBlocks.ETHETIC_GREEN_STAIRS.get(), ActuallyBlocks.ETHETIC_GREEN_BLOCK.get(), consumer);
 
-        //Atomic Reconstructor
-        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get())
-                .patternLine("IRI")
-                .patternLine("RCR")
-                .patternLine("IRI")
-                .key('R', Tags.Items.DUSTS_REDSTONE)
-                .key('I', Tags.Items.INGOTS_IRON)
-                .key('C', ActuallyBlocks.IRON_CASING.get())
-                .addCriterion("", hasItem(Items.AIR))
-                .build(consumer);
+        // Atomic Reconstructor
+        Recipe.shaped(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get())
+            .pattern("IRI", "RCR", "IRI")
+            .key('R', Tags.Items.DUSTS_REDSTONE)
+            .key('I', Tags.Items.INGOTS_IRON)
+            .key('C', ActuallyBlocks.IRON_CASING.get())
+            .build(consumer);
     }
 
     @Override
@@ -239,8 +148,28 @@ public class BlockRecipeGenerator extends RecipeProvider {
             return new Shapeless(result);
         }
 
+        public static Shapeless shapeless(IItemProvider result, int count) {
+            return new Shapeless(result, count);
+        }
+
         public static Shaped shaped(IItemProvider result) {
             return new Shaped(result);
+        }
+
+        public static Shaped shaped(IItemProvider result, int count) {
+            return new Shaped(result, count);
+        }
+
+        public static void stairs(IItemProvider result, IItemProvider resource, Consumer<IFinishedRecipe> consumer) {
+            Recipe.shaped(result).patternSingleKey('Q', resource, "Q  ", "QQ ", "QQQ").build(consumer);
+        }
+
+        public static void wall(IItemProvider result, IItemProvider resource, Consumer<IFinishedRecipe> consumer) {
+            Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ", "QQQ").build(consumer);
+        }
+
+        public static void slab(IItemProvider result, IItemProvider resource, Consumer<IFinishedRecipe> consumer) {
+            Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ").build(consumer);
         }
 
         private static class Shapeless extends ShapelessRecipeBuilder {
@@ -289,6 +218,15 @@ public class BlockRecipeGenerator extends RecipeProvider {
             public Shaped pattern(String line1, String line2) {
                 this.patternLine(line1);
                 this.patternLine(line2);
+                return this;
+            }
+
+            public Shaped patternSingleKey(char key, IItemProvider resource, String... lines) {
+                this.key(key, resource);
+                for (String line : lines) {
+                    this.patternLine(line);
+                }
+
                 return this;
             }
 
