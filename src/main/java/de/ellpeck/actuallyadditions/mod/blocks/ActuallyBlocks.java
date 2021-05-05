@@ -141,15 +141,17 @@ public final class ActuallyBlocks {
     public static final RegistryObject<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine", BlockCoffeeMachine::new);
     public static final RegistryObject<Block> PHANTOM_BOOSTER = BLOCKS.register("phantom_booster", BlockPhantomBooster::new);
     public static final RegistryObject<Block> BLACK_QUARTZ_BLOCK = BLOCKS.register("black_quartz_block", BlockGeneric::new);
+    public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR_BLOCK = BLOCKS.register("black_quartz_pillar_block", BlockGeneric::new);
+    public static final RegistryObject<Block> CHISELED_BLACK_QUARTZ_BLOCK = BLOCKS.register("chiseled_black_quartz_block", BlockGeneric::new);
     public static final RegistryObject<Block> BLACK_QUARTZ_WALL = BLOCKS.register("black_quartz_wall", () -> new WallBlock(AbstractBlock.Properties.from(blockMisc.get())));
     public static final RegistryObject<Block> CHISELED_BLACK_QUARTZ_WALL = BLOCKS.register("chiseled_black_quartz_wall", () -> new WallBlock(AbstractBlock.Properties.from(blockMisc.get())));
-    public static final RegistryObject<Block> PILLAR_BLACK_QUARTZ_WALL = BLOCKS.register("pillar_black_quartz_wall", () -> new WallBlock(AbstractBlock.Properties.from(blockMisc.get())));
+    public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR_WALL = BLOCKS.register("black_quartz_pillar_wall", () -> new WallBlock(AbstractBlock.Properties.from(blockMisc.get())));
     public static final RegistryObject<Block> BLACK_QUARTZ_STAIR = BLOCKS.register("black_quartz_stair", () -> new StairsBlock(() -> blockMisc.get().getDefaultState(), AbstractBlock.Properties.from(blockMisc.get())));
     public static final RegistryObject<Block> CHISELED_BLACK_QUARTZ_STAIR = BLOCKS.register("chiseled_black_quartz_stair", () -> new StairsBlock(() -> blockMisc.get().getDefaultState(), AbstractBlock.Properties.from(blockMisc.get())));
-    public static final RegistryObject<Block> PILLAR_BLACK_QUARTZ_STAIR = BLOCKS.register("pillar_black_quartz_stair", () -> new StairsBlock(() -> blockMisc.get().getDefaultState(), AbstractBlock.Properties.from(blockMisc.get())));
+    public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR_STAIR = BLOCKS.register("black_quartz_pillar_stair", () -> new StairsBlock(() -> blockMisc.get().getDefaultState(), AbstractBlock.Properties.from(blockMisc.get())));
     public static final RegistryObject<Block> BLACK_QUARTZ_SLAB = BLOCKS.register("black_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.from(blockMisc.get())));
     public static final RegistryObject<Block> CHISELED_BLACK_QUARTZ_SLAB = BLOCKS.register("chiseled_black_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.from(blockMisc.get())));
-    public static final RegistryObject<Block> PILLAR_BLACK_QUARTZ_SLAB = BLOCKS.register("pillar_black_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.from(blockMisc.get())));
+    public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR_SLAB = BLOCKS.register("black_quartz_pillar_slab", () -> new SlabBlock(AbstractBlock.Properties.from(blockMisc.get())));
 
     public static AbstractBlock.Properties defaultPickProps(int harvestLevel, float hardness, float resistance) {
         return AbstractBlock.Properties.create(Material.ROCK).harvestLevel(harvestLevel).harvestTool(ToolType.PICKAXE).hardnessAndResistance(hardness, resistance).sound(SoundType.STONE);
