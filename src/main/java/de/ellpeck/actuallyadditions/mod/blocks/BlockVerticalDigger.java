@@ -33,9 +33,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 
-public class BlockMiner extends DirectionalBlock.Container implements IHudDisplay {
+public class BlockVerticalDigger extends DirectionalBlock.Container implements IHudDisplay {
 
-    public BlockMiner() {
+    public BlockVerticalDigger() {
         super(ActuallyBlocks.defaultPickProps(0, 8F, 30F));
     }
 
