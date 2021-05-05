@@ -19,6 +19,9 @@ public class ItemTagsGenerator extends ItemTagsProvider {
     protected void registerTags() {
         this.getOrCreateBuilder(ActuallyTags.Items.COFFEE_BEANS)
             .add(ActuallyItems.COFFEE_BEANS.get());
+        this.getOrCreateBuilder(ActuallyTags.Items.TINY_COALS)
+                .add(ActuallyItems.TINY_COAL.get())
+                .add(ActuallyItems.TINY_CHARCOAL.get());
         //        getOrCreateBuilder(ActuallyTags.Items.DRILLS).add(
         //            ActuallyItems.DRILL_MAIN.get(),
         //            ActuallyItems.DRILL_BLACK.get(), ActuallyItems.DRILL_BLACK.get(), ActuallyItems.DRILL_BLUE.get(), ActuallyItems.DRILL_BROWN.get(),
