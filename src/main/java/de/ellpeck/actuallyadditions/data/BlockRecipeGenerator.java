@@ -48,9 +48,60 @@ public class BlockRecipeGenerator extends RecipeProvider {
                .key('C', ActuallyBlocks.IRON_CASING.get())
                .key('D', ActuallyBlocks.DISPLAY_STAND.get())
                .addCriterion("", hasItem(Items.AIR))
-               .build(consumer,new ResourceLocation(ActuallyAdditions.MODID, "empowerer"));
+               .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "empowerer"));
 
+       //Tiny Torch coal
+        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.TINY_TORCH.get(), 2)
+                .patternLine("C")
+                .patternLine("S")
+                .key('C', ActuallyItems.TINY_COAL.get())
+                .key('S', Tags.Items.RODS_WOODEN)
+                .addCriterion("", hasItem(Items.AIR))
+                .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_torch_coal"));
 
+        //Tiny Torch charcoal
+        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.TINY_TORCH.get(), 2)
+                .patternLine("C")
+                .patternLine("S")
+                .key('C', ActuallyItems.TINY_CHARCOAL.get())
+                .key('S', Tags.Items.RODS_WOODEN)
+                .addCriterion("", hasItem(Items.AIR))
+                .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_torch_charcoal"));
+
+        //Fireworks Box
+        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.FIREWORK_BOX.get())
+                .patternLine("GFG")
+                .patternLine("SAS")
+                .patternLine("CCC")
+                .key('G', Tags.Items.GUNPOWDER)
+                .key('S', Tags.Items.RODS_WOODEN)
+                .key('A', ActuallyBlocks.IRON_CASING.get())
+                .key('F', Items.FIREWORK_ROCKET)
+                .key('C', ActuallyItems.ENORI_CRYSTAL.get())
+                .addCriterion("", hasItem(Items.AIR))
+                .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "firework_box"));
+
+        //Shock Suppressor
+        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.SHOCK_SUPPRESSOR.get())
+                .patternLine("OAO")
+                .patternLine("ACA")
+                .patternLine("OAO")
+                .key('A', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
+                .key('O', Tags.Items.OBSIDIAN)
+                .key('C', ActuallyItems.COIL_ADVANCED.get())
+                .addCriterion("", hasItem(Items.AIR))
+                .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "shock_suppressor"));
+
+        //Display Stand
+        ShapedRecipeBuilder.shapedRecipe(ActuallyBlocks.DISPLAY_STAND.get())
+                .patternLine(" R ")
+                .patternLine("EEE")
+                .patternLine("GGG")
+                .key('R', ActuallyItems.COIL_ADVANCED.get())
+                .key('E', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
+                .key('G', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
+                .addCriterion("", hasItem(Items.AIR))
+                .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "display_stand"));
     }
 
     @Override

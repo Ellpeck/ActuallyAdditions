@@ -66,14 +66,14 @@ public final class ActuallyBlocks {
     public static final RegistryObject<Block> DIRECTIONAL_BREAKER = BLOCKS.register("directional_breaker", BlockDirectionalBreaker::new);
     public static final RegistryObject<Block> LEAF_GENERATOR = BLOCKS.register("leaf_generator", BlockLeafGenerator::new);
     public static final RegistryObject<Block> XP_SOLIDIFIER = BLOCKS.register("xp_solidifier", BlockXPSolidifier::new);
-    public static final RegistryObject<Block> TESTIFI_BUCKS_GREEN_WALL = BLOCKS.register("testifi_bucks_green_wall", BlockGeneric::new);
-    public static final RegistryObject<Block> TESTIFI_BUCKS_WHITE_WALL = BLOCKS.register("testifi_bucks_white_wall", BlockGeneric::new);
-    public static final RegistryObject<Block> TESTIFI_BUCKS_GREEN_STAIRS = BLOCKS.register("testifi_bucks_green_stairs", () -> new StairsBlock(() -> TESTIFI_BUCKS_GREEN_WALL.get().getDefaultState(), AbstractBlock.Properties.from(TESTIFI_BUCKS_GREEN_WALL.get())));
-    public static final RegistryObject<Block> TESTIFI_BUCKS_WHITE_STAIRS = BLOCKS.register("testifi_bucks_white_stairs", () -> new StairsBlock(() -> TESTIFI_BUCKS_WHITE_WALL.get().getDefaultState(), AbstractBlock.Properties.from(TESTIFI_BUCKS_WHITE_WALL.get())));
-    public static final RegistryObject<Block> TESTIFI_BUCKS_GREEN_SLAB = BLOCKS.register("testifi_bucks_green_slab", () -> new SlabBlock(AbstractBlock.Properties.from(TESTIFI_BUCKS_GREEN_WALL.get())));
-    public static final RegistryObject<Block> TESTIFI_BUCKS_WHITE_SLAB = BLOCKS.register("testifi_bucks_white_slab", () -> new SlabBlock(AbstractBlock.Properties.from(TESTIFI_BUCKS_WHITE_WALL.get())));
-    public static final RegistryObject<Block> TESTIFI_BUCKS_GREEN_FENCE = BLOCKS.register("testifi_bucks_green_fence", () -> new WallBlock(AbstractBlock.Properties.from(TESTIFI_BUCKS_GREEN_WALL.get())));
-    public static final RegistryObject<Block> TESTIFI_BUCKS_WHITE_FENCE = BLOCKS.register("testifi_bucks_white_fence", () -> new WallBlock(AbstractBlock.Properties.from(TESTIFI_BUCKS_WHITE_WALL.get())));
+    public static final RegistryObject<Block> ETHETIC_GREEN_BLOCK = BLOCKS.register("ethetic_green_block", BlockGeneric::new);
+    public static final RegistryObject<Block> ETHETIC_WHITE_BLOCK = BLOCKS.register("ethetic_white_block", BlockGeneric::new);
+    public static final RegistryObject<Block> ETHETIC_GREEN_STAIRS = BLOCKS.register("ethetic_green_stairs", () -> new StairsBlock(() -> ETHETIC_GREEN_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(ETHETIC_GREEN_BLOCK.get())));
+    public static final RegistryObject<Block> ETHETIC_WHITE_STAIRS = BLOCKS.register("ethetic_white_stairs", () -> new StairsBlock(() -> ETHETIC_WHITE_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(ETHETIC_WHITE_BLOCK.get())));
+    public static final RegistryObject<Block> ETHETIC_GREEN_SLAB = BLOCKS.register("ethetic_green_slab", () -> new SlabBlock(AbstractBlock.Properties.from(ETHETIC_GREEN_BLOCK.get())));
+    public static final RegistryObject<Block> ETHETIC_WHITE_SLAB = BLOCKS.register("ethetic_white_slab", () -> new SlabBlock(AbstractBlock.Properties.from(ETHETIC_WHITE_BLOCK.get())));
+    public static final RegistryObject<Block> ETHETIC_GREEN_FENCE = BLOCKS.register("ethetic_green_fence", () -> new WallBlock(AbstractBlock.Properties.from(ETHETIC_GREEN_BLOCK.get())));
+    public static final RegistryObject<Block> ETHETIC_WHITE_FENCE = BLOCKS.register("ethetic_white_fence", () -> new WallBlock(AbstractBlock.Properties.from(ETHETIC_WHITE_BLOCK.get())));
 
     public static final RegistryObject<Block> CRYSTAL_ENORI = BLOCKS.register("crystal_enori_block", () -> new BlockCrystal(false));
     public static final RegistryObject<Block> CRYSTAL_RESTONIA = BLOCKS.register("crystal_restonia_block", () -> new BlockCrystal(false));
