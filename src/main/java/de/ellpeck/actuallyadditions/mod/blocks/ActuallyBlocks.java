@@ -24,7 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class ActuallyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MODID);
 
-    public static final AbstractBlock.Properties miscBlockProperties = AbstractBlock.Properties.create(Material.ROCK).harvestLevel(1).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5f,10f);
+    public static final AbstractBlock.Properties miscBlockProperties = AbstractBlock.Properties.create(Material.ROCK).harvestLevel(1).harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.5f, 10f);
     @Deprecated
     public static final RegistryObject<Block> blockMisc = BLOCKS.register("misc", () -> new Block(miscBlockProperties)); // TODO this isnt a real block?
     public static final RegistryObject<Block> WOOD_CASING = BLOCKS.register("wood_casing", () -> new Block(miscBlockProperties));
@@ -35,8 +35,7 @@ public final class ActuallyBlocks {
     public static final RegistryObject<Block> FEEDER = BLOCKS.register("feeder", BlockFeeder::new);
     public static final RegistryObject<Block> GRINDER = BLOCKS.register("grinder", () -> new BlockGrinder(false));
     public static final RegistryObject<Block> GRINDER_DOUBLE = BLOCKS.register("grinder_double", () -> new BlockGrinder(true));
-
-
+    
     public static final RegistryObject<Block> CRYSTAL_CLUSTER_REDSTONE = BLOCKS.register("crystal_cluster_redstone", () -> new BlockCrystalCluster(TheCrystals.REDSTONE));
     public static final RegistryObject<Block> CRYSTAL_CLUSTER_LAPIS = BLOCKS.register("crystal_cluster_lapis", () -> new BlockCrystalCluster(TheCrystals.LAPIS));
     public static final RegistryObject<Block> CRYSTAL_CLUSTER_DIAMOND = BLOCKS.register("crystal_cluster_diamond", () -> new BlockCrystalCluster(TheCrystals.DIAMOND));
