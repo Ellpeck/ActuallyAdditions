@@ -136,11 +136,36 @@ public class BlockRecipeGenerator extends RecipeProvider {
             .key('I', Tags.Items.INGOTS_IRON)
             .key('C', ActuallyBlocks.IRON_CASING.get())
             .build(consumer);
+
+        // Laser Relay
+        Recipe.shaped(ActuallyBlocks.LASER_RELAY.get(), 4)
+            .pattern("OBO","RCR","OBO")
+            .key('B', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+            .key('O', Tags.Items.OBSIDIAN)
+            .key('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+            .key('C', ActuallyItems.COIL_ADVANCED.get())
+            .build(consumer);
+
+        // Advanced Laser Relay
+        Recipe.shaped(ActuallyBlocks.LASER_RELAY_ADVANCED.get())
+            .pattern(" I ", "XRX", " I ")
+            .key('I', ActuallyItems.ENORI_CRYSTAL.get())
+            .key('R', ActuallyBlocks.LASER_RELAY.get())
+            .key('X', ActuallyItems.RESTONIA_CRYSTAL.get())
+            .build(consumer);
+
+        // Extreme Laser Relay
+        Recipe.shaped(ActuallyBlocks.LASER_RELAY_EXTREME.get())
+            .pattern(" I ", "XRX", " I ")
+            .key('I', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
+            .key('R', ActuallyBlocks.LASER_RELAY_ADVANCED.get())
+            .key('X', ActuallyItems.RESTONIA_CRYSTAL.get())
+            .build(consumer);
     }
 
     @Override
     protected void saveRecipeAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
-        //Nope...
+        //Nope... maybe later...
     }
 
     public static class Recipe {
