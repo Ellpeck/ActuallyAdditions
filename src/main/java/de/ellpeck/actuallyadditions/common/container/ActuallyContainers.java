@@ -15,4 +15,7 @@ public final class ActuallyContainers {
 
     public static final RegistryObject<ContainerType<FeederContainer>> FEEDER_CONTAINER
             = CONTAINERS.register("feeder_container", () -> IForgeContainerType.create(FeederContainer::fromNetwork));
+
+    public static final RegistryObject<ContainerType<VoidSackContainer>> VOID_SACK_CONTAINER
+        = CONTAINERS.register("void_sack_container", () -> IForgeContainerType.create(VoidSackContainer::fromNetwork));
 }

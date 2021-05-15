@@ -75,7 +75,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> LASER_RELAY_MODIFIER_INVISIBILITY = ITEMS.register("laser_relay_modifier_invisibility", basicItem());
     public static final RegistryObject<Item> HANDHELD_FILLER = ITEMS.register("handheld_filler", basicItem());
     public static final RegistryObject<Item> TRAVELERS_SACK = ITEMS.register("travelers_sack", basicItem());
-    public static final RegistryObject<Item> VOID_SACK = ITEMS.register("void_sack", basicItem());
+    public static final RegistryObject<Item> VOID_SACK = ITEMS.register("void_sack", VoidSack::new);
     public static final RegistryObject<Item> WORM = ITEMS.register("worm", basicItem());
     public static final RegistryObject<Item> PLAYER_PROBE = ITEMS.register("player_probe", basicItem());
     public static final RegistryObject<Item> ITEM_FILTER = ITEMS.register("item_filter", basicItem());

@@ -341,6 +341,7 @@ public class GeneratorLanguage extends LanguageProvider {
 
         // Screen names
         addPrefixed("gui.name.drill", "Drill");
+        addPrefixed("gui.name.void_sack", "Void Sack");
 
         addPrefixed("info.gui.animals","%s Animals");
         addPrefixed("info.gui.enoughToBreed","Enough to breed!");
