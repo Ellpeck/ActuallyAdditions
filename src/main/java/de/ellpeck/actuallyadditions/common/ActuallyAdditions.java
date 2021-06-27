@@ -7,6 +7,7 @@ import de.ellpeck.actuallyadditions.common.config.Config;
 import de.ellpeck.actuallyadditions.common.container.ActuallyContainers;
 import de.ellpeck.actuallyadditions.common.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.common.tiles.ActuallyTiles;
+import de.ellpeck.actuallyadditions.special.SpecialRenderInit;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.command.Commands;
@@ -53,6 +54,7 @@ public class ActuallyAdditions {
         eventBus.addListener(this::clientSetup);
 
         MinecraftForge.EVENT_BUS.addListener(this::serverLoad);
+        MinecraftForge.EVENT_BUS.addListener(SpecialRenderInit::onPlayerRender);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -70,6 +72,8 @@ public class ActuallyAdditions {
         RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_DIAMATINE.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(ActuallyBlocks.CRYSTAL_CLUSTER_EMERADIC.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(ActuallyBlocks.GREENHOUSE_GLASS.get(), RenderType.getCutout());
+
+        SpecialRenderInit.fetch();
     }
 
     private void serverLoad(FMLServerStartingEvent event) {
