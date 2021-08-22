@@ -17,7 +17,7 @@ import net.minecraftforge.common.capabilities.Capability;
 
 import java.util.Arrays;
 
-public class TileEntityPhantomRedstoneface extends TileEntityPhantomface {
+public class TileEntityPhantomRedstoneface extends TileEntityPhantomFace {
 
     public final int[] providesStrong = new int[Direction.values().length];
     public final int[] providesWeak = new int[Direction.values().length];

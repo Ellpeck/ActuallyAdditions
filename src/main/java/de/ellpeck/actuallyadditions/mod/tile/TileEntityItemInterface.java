@@ -32,7 +32,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class TileEntityItemViewer extends TileEntityBase {
+public class TileEntityItemInterface extends TileEntityBase {
 
     public final List<GenericItemHandlerInfo> genericInfos = new ArrayList<>();
     public final Map<Integer, IItemHandlerInfo> itemHandlerInfos = new HashMap<>();
@@ -43,18 +43,18 @@ public class TileEntityItemViewer extends TileEntityBase {
     private int lastNetworkChangeAmount = -1;
     private int slotCount;
 
-    public TileEntityItemViewer(TileEntityType<?> type) {
+    public TileEntityItemInterface(TileEntityType<?> type) {
         super(type);
 
         IItemHandler normalHandler = new IItemHandler() {
             @Override
             public int getSlots() {
-                return TileEntityItemViewer.this.getSlotCount();
+                return TileEntityItemInterface.this.getSlotCount();
             }
 
             @Override
             public ItemStack getStackInSlot(int slot) {
-                IItemHandlerInfo handler = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                IItemHandlerInfo handler = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
                 if (handler != null && handler.isLoaded()) {
                     return handler.handler.getStackInSlot(handler.switchedIndex);
                 }
@@ -63,12 +63,12 @@ public class TileEntityItemViewer extends TileEntityBase {
 
             @Override
             public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                IItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
-                if (info != null && info.isLoaded() && TileEntityItemViewer.this.isWhitelisted(info, stack, false)) {
+                IItemHandlerInfo info = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
+                if (info != null && info.isLoaded() && TileEntityItemInterface.this.isWhitelisted(info, stack, false)) {
                     ItemStack remain = info.handler.insertItem(info.switchedIndex, stack, simulate);
                     if (!ItemStack.areItemStacksEqual(remain, stack) && !simulate) {
-                        TileEntityItemViewer.this.markDirty();
-                        TileEntityItemViewer.this.doItemParticle(stack, info.relayInQuestion.getPos(), TileEntityItemViewer.this.connectedRelay.getPos());
+                        TileEntityItemInterface.this.markDirty();
+                        TileEntityItemInterface.this.doItemParticle(stack, info.relayInQuestion.getPos(), TileEntityItemInterface.this.connectedRelay.getPos());
                     }
                     return remain;
                 }
@@ -79,12 +79,12 @@ public class TileEntityItemViewer extends TileEntityBase {
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
                 ItemStack stackIn = this.getStackInSlot(slot);
                 if (StackUtil.isValid(stackIn)) {
-                    IItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
-                    if (info != null && info.isLoaded() && TileEntityItemViewer.this.isWhitelisted(info, stackIn, true)) {
+                    IItemHandlerInfo info = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
+                    if (info != null && info.isLoaded() && TileEntityItemInterface.this.isWhitelisted(info, stackIn, true)) {
                         ItemStack extracted = info.handler.extractItem(info.switchedIndex, amount, simulate);
                         if (StackUtil.isValid(extracted) && !simulate) {
-                            TileEntityItemViewer.this.markDirty();
-                            TileEntityItemViewer.this.doItemParticle(extracted, TileEntityItemViewer.this.connectedRelay.getPos(), info.relayInQuestion.getPos());
+                            TileEntityItemInterface.this.markDirty();
+                            TileEntityItemInterface.this.doItemParticle(extracted, TileEntityItemInterface.this.connectedRelay.getPos(), info.relayInQuestion.getPos());
                         }
                         return extracted;
                     }
@@ -94,7 +94,7 @@ public class TileEntityItemViewer extends TileEntityBase {
 
             @Override
             public int getSlotLimit(int slot) {
-                IItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                IItemHandlerInfo info = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
                 if (info != null && info.isLoaded()) {
                     return info.handler.getSlotLimit(info.switchedIndex);
                 } else {
@@ -117,7 +117,7 @@ public class TileEntityItemViewer extends TileEntityBase {
         this.itemHandler = new SlotlessableItemHandlerWrapper(this.lazyHandlers, slotlessHandler);
     }
 
-    public TileEntityItemViewer() {
+    public TileEntityItemInterface() {
         this(ActuallyTiles.ITEMVIEWER_TILE.get());
     }
 

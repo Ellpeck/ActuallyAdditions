@@ -30,7 +30,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile {
+public abstract class TileEntityPhantomFace extends TileEntityInventoryBase implements IPhantomTile {
 
     public static final int RANGE = 16;
     public BlockPos boundPosition;
@@ -41,7 +41,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     private Block boundBlockBefore;
     private int lastStrength;
 
-    public TileEntityPhantomface(TileEntityType<?> type) {
+    public TileEntityPhantomFace(TileEntityType<?> type) {
         super(type, 0);
     }
 

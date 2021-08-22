@@ -28,12 +28,12 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
 
-public class TileEntityItemViewerHopping extends TileEntityItemViewer {
+public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
 
     private SlotlessableItemHandlerWrapper handlerToPullFrom;
     private SlotlessableItemHandlerWrapper handlerToPushTo;
 
-    public TileEntityItemViewerHopping() {
+    public TileEntityItemInterfaceHopping() {
         super(ActuallyTiles.ITEMVIEWERHOPPING_TILE.get());
     }
 
@@ -97,7 +97,7 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer {
         this.handlerToPushTo = null;
 
         TileEntity from = this.world.getTileEntity(this.pos.offset(Direction.UP));
-        if (from != null && !(from instanceof TileEntityItemViewer)) {
+        if (from != null && !(from instanceof TileEntityItemInterface)) {
             LazyOptional<IItemHandler> normal = from.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN);
 
             Object slotless = null;
@@ -118,7 +118,7 @@ public class TileEntityItemViewerHopping extends TileEntityItemViewer {
         BlockPos toPos = this.pos.offset(facing);
         if (this.world.isBlockLoaded(toPos)) {
             TileEntity to = this.world.getTileEntity(toPos);
-            if (to != null && !(to instanceof TileEntityItemViewer)) {
+            if (to != null && !(to instanceof TileEntityItemInterface)) {
                 LazyOptional<IItemHandler> normal = to.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
 
                 Object slotless = null;

@@ -25,6 +25,10 @@ public abstract class FullyDirectionalBlock extends BlockBase {
 
     }
 
+    public BlockState getBaseConstructorState() {
+        return this.stateContainer.getBaseState().with(FACING, Direction.NORTH);
+    }
+
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FACING);

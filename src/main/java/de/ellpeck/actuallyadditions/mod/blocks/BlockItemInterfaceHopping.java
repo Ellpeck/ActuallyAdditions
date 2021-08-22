@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewerHopping;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemInterfaceHopping;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -18,8 +18,8 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
-public class BlockItemViewerHopping extends BlockItemViewer {
-    public BlockItemViewerHopping() {
+public class BlockItemInterfaceHopping extends BlockItemInterface {
+    public BlockItemInterfaceHopping() {
         super();
     }
 
@@ -30,6 +30,6 @@ public class BlockItemViewerHopping extends BlockItemViewer {
 
     @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new TileEntityItemViewerHopping();
+        return new TileEntityItemInterfaceHopping();
     }
 }

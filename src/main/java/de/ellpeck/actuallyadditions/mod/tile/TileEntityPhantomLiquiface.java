@@ -16,7 +16,7 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements ISharingFluidHandler {
+public class TileEntityPhantomLiquiface extends TileEntityPhantomFace implements ISharingFluidHandler {
 
     public TileEntityPhantomLiquiface() {
         super(ActuallyTiles.PHANTOMLIQUIFACE_TILE.get());

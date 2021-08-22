@@ -15,7 +15,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.widget.button.Button;
@@ -35,7 +35,7 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_grinder");
     private static final ResourceLocation RES_LOC_DOUBLE = AssetUtil.getGuiLocation("gui_grinder_double");
-    private final TileEntityGrinder tileGrinder;
+    private final TileEntityCrusher tileGrinder;
     private final boolean isDouble;
     private EnergyDisplay energy;
 

@@ -14,8 +14,8 @@ import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FAC
 import static net.minecraft.state.properties.BlockStateProperties.LIT;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinderDouble;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusherDouble;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,10 +37,10 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class BlockGrinder extends BlockContainerBase {
+public class BlockCrusher extends BlockContainerBase {
     private final boolean isDouble;
 
-    public BlockGrinder(boolean isDouble) {
+    public BlockCrusher(boolean isDouble) {
         super(ActuallyBlocks.defaultPickProps(0).tickRandomly());
         this.isDouble = isDouble;
         this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(LIT, false));
@@ -49,8 +49,8 @@ public class BlockGrinder extends BlockContainerBase {
     @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return this.isDouble
-            ? new TileEntityGrinderDouble()
-            : new TileEntityGrinder();
+            ? new TileEntityCrusherDouble()
+            : new TileEntityCrusher();
     }
 
     @Override
@@ -68,10 +68,10 @@ public class BlockGrinder extends BlockContainerBase {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.isDouble) {
-            return this.openGui(world, player, pos, TileEntityGrinderDouble.class);
+            return this.openGui(world, player, pos, TileEntityCrusherDouble.class);
         }
 
-        return this.openGui(world, player, pos, TileEntityGrinder.class);
+        return this.openGui(world, player, pos, TileEntityCrusher.class);
     }
 
     @Override

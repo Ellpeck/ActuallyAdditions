@@ -95,7 +95,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public void updateEntity() {
         super.updateEntity();
         if (!this.world.isRemote) {
-            this.range = TileEntityPhantomface.upgradeRange(RANGE, this.world, this.pos);
+            this.range = TileEntityPhantomFace.upgradeRange(RANGE, this.world, this.pos);
 
             if (!this.hasBoundPosition()) {
                 this.boundPosition = null;

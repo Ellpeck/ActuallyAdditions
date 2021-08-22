@@ -37,7 +37,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
-public class TileEntityGrinder extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
+public class TileEntityCrusher extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1_1 = 1;
@@ -58,11 +58,11 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     private boolean lastAutoSplit;
     private boolean lastCrushed;
 
-    public TileEntityGrinder(TileEntityType<?> type, int slots) {
+    public TileEntityCrusher(TileEntityType<?> type, int slots) {
         super(type, slots);
     }
 
-    public TileEntityGrinder() {
+    public TileEntityCrusher() {
         super(ActuallyTiles.GRINDER_TILE.get(), 3);
         this.isDouble = false;
     }

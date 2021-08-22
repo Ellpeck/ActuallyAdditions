@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-public class TileEntityGrinderDouble extends TileEntityGrinder {
+public class TileEntityCrusherDouble extends TileEntityCrusher {
 
-    public TileEntityGrinderDouble() {
+    public TileEntityCrusherDouble() {
         super(ActuallyTiles.GRINDER_DOUBLE_TILE.get(), 6);
         this.isDouble = true;
     }

@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,31 +25,31 @@ import net.minecraft.network.PacketBuffer;
 import java.util.Objects;
 
 public class ContainerGrinder extends Container {
-    public final TileEntityGrinder tileGrinder;
+    public final TileEntityCrusher tileGrinder;
     public final boolean isDouble;
 
     public static ContainerGrinder fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerGrinder(windowId, inv, (TileEntityGrinder) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+        return new ContainerGrinder(windowId, inv, (TileEntityCrusher) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
     }
 
-    public ContainerGrinder(int windowId, PlayerInventory inventory, TileEntityGrinder tile) {
+    public ContainerGrinder(int windowId, PlayerInventory inventory, TileEntityCrusher tile) {
         super(ActuallyContainers.GRINDER_CONTAINER.get(), windowId);
         this.tileGrinder = tile;
         this.isDouble = tile.isDouble;
 
-        this.addSlot(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityGrinder.SLOT_INPUT_1, this.isDouble
+        this.addSlot(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityCrusher.SLOT_INPUT_1, this.isDouble
             ? 51
             : 80, 21));
-        this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_1_1, this.isDouble
+        this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityCrusher.SLOT_OUTPUT_1_1, this.isDouble
             ? 37
             : 66, 69));
-        this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_1_2, this.isDouble
+        this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityCrusher.SLOT_OUTPUT_1_2, this.isDouble
             ? 64
             : 92, 69));
         if (this.isDouble) {
-            this.addSlot(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityGrinder.SLOT_INPUT_2, 109, 21));
-            this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_2_1, 96, 69));
-            this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_2_2, 121, 69));
+            this.addSlot(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityCrusher.SLOT_INPUT_2, 109, 21));
+            this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityCrusher.SLOT_OUTPUT_2_1, 96, 69));
+            this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityCrusher.SLOT_OUTPUT_2_2, 121, 69));
         }
 
         for (int i = 0; i < 3; i++) {
@@ -78,7 +78,7 @@ public class ContainerGrinder extends Container {
             ItemStack currentStack = newStack.copy();
 
             //Slots in Inventory to shift from
-            if (slot == TileEntityGrinder.SLOT_OUTPUT_1_1 || slot == TileEntityGrinder.SLOT_OUTPUT_1_2 || this.isDouble && (slot == TileEntityGrinder.SLOT_OUTPUT_2_1 || slot == TileEntityGrinder.SLOT_OUTPUT_2_2)) {
+            if (slot == TileEntityCrusher.SLOT_OUTPUT_1_1 || slot == TileEntityCrusher.SLOT_OUTPUT_1_2 || this.isDouble && (slot == TileEntityCrusher.SLOT_OUTPUT_2_1 || slot == TileEntityCrusher.SLOT_OUTPUT_2_2)) {
                 if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, true)) {
                     return StackUtil.getEmpty();
                 }
@@ -88,9 +88,9 @@ public class ContainerGrinder extends Container {
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
                 if (CrusherRecipeRegistry.getRecipeFromInput(newStack) != null) {
-                    if (!this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_1, TileEntityGrinder.SLOT_INPUT_1 + 1, false)) {
+                    if (!this.mergeItemStack(newStack, TileEntityCrusher.SLOT_INPUT_1, TileEntityCrusher.SLOT_INPUT_1 + 1, false)) {
                         if (this.isDouble) {
-                            if (!this.mergeItemStack(newStack, TileEntityGrinder.SLOT_INPUT_2, TileEntityGrinder.SLOT_INPUT_2 + 1, false)) {
+                            if (!this.mergeItemStack(newStack, TileEntityCrusher.SLOT_INPUT_2, TileEntityCrusher.SLOT_INPUT_2 + 1, false)) {
                                 return StackUtil.getEmpty();
                             }
                         } else {

@@ -10,14 +10,24 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
+import net.minecraft.item.ItemStack;
 
-public class BlockCrystal extends BlockBase {
+public class BlockCrystal extends ActuallyBlock {
     private final boolean isEmpowered;
 
     public BlockCrystal(boolean isEmpowered) {
         super(ActuallyBlocks.defaultPickProps(1));
         this.isEmpowered = isEmpowered;
+    }
+
+    @Override
+    public AABlockItem createBlockItem() {
+        return new AABlockItem(this, getItemProperties()) {
+            @Override
+            public boolean hasEffect(ItemStack stack) {
+                return isEmpowered;
+            }
+        };
     }
 
     //    public static class TheItemBlock extends ItemBlockBase {

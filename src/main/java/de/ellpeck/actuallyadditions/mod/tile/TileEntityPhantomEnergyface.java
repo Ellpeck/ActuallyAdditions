@@ -16,7 +16,7 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements ISharingEnergyProvider {
+public class TileEntityPhantomEnergyface extends TileEntityPhantomFace implements ISharingEnergyProvider {
 
     public TileEntityPhantomEnergyface() {
         super(ActuallyTiles.PHANTOMENERGYFACE_TILE.get());

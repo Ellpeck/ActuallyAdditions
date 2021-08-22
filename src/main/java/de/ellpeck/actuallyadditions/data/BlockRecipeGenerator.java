@@ -28,7 +28,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         //Farmer
         Recipe.shaped(ActuallyBlocks.FARMER.get())
             .pattern("ISI", "SCS", "ISI")
-            .key('I', ActuallyBlocks.CRYSTAL_ENORI.get())
+            .key('I', ActuallyBlocks.ENORI_CRYSTAL.getItem())
             .key('C', ActuallyBlocks.IRON_CASING.get())
             .key('S', Tags.Items.SEEDS)
             .build(consumer);
@@ -161,6 +161,25 @@ public class BlockRecipeGenerator extends RecipeProvider {
             .key('R', ActuallyBlocks.LASER_RELAY_ADVANCED.get())
             .key('X', ActuallyItems.RESTONIA_CRYSTAL.get())
             .build(consumer);
+
+        // Whitelist Item Laser Relay
+        Recipe.shapeless(ActuallyBlocks.LASER_RELAY_ITEM_WHITELIST.get())
+            .ingredients(ActuallyBlocks.LASER_RELAY_ITEM.get(), ActuallyItems.COIL_ADVANCED.get(), ActuallyItems.BLACK_QUARTZ.get())
+            .build(consumer);
+
+        // Item Interface
+        Recipe.shaped(ActuallyBlocks.ITEM_VIEWER.get())
+            .pattern("OBO", "RCR", "OBO")
+            .key('B', Tags.Items.DUSTS_REDSTONE)
+            .key('O', ActuallyItems.COIL.get())
+            .key('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+            .key('C', Tags.Items.CHESTS_WOODEN)
+            .build(consumer);
+
+        // Hopping Item Interface
+        Recipe.shapeless(ActuallyBlocks.ITEM_VIEWER_HOPPING.get()).ingredients(ActuallyBlocks.ITEM_VIEWER.get()).build(consumer);
+
+
     }
 
     @Override

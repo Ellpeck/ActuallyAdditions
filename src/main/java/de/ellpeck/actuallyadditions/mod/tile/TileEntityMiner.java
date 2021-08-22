@@ -94,7 +94,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
 
             if (!this.isRedstonePowered && this.ticksElapsed % 5 == 0) {
                 if (this.checkY != 0) {
-                    int range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.world, this.pos);
+                    int range = TileEntityPhantomFace.upgradeRange(DEFAULT_RANGE, this.world, this.pos);
                     if (this.checkY < 0) {
                         this.checkY = this.pos.getY() - 1;
                         this.checkX = -range;
