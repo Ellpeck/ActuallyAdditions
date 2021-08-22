@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.mod.blocks.BlockFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.blocks.BlockPoweredFurnace;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -37,9 +37,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
-public class TileEntityGrinder extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
+public class TileEntityCrusher extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1_1 = 1;
@@ -60,11 +58,11 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     private boolean lastAutoSplit;
     private boolean lastCrushed;
 
-    public TileEntityGrinder(TileEntityType<?> type, int slots) {
+    public TileEntityCrusher(TileEntityType<?> type, int slots) {
         super(type, slots);
     }
 
-    public TileEntityGrinder() {
+    public TileEntityCrusher() {
         super(ActuallyTiles.GRINDER_TILE.get(), 3);
         this.isDouble = false;
     }
@@ -94,9 +92,9 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.level.isClientSide) {
+        if (!this.world.isRemote) {
             if (this.isDouble && this.isAutoSplit) {
-                TileEntityFurnaceDouble.autoSplit(this.inv, SLOT_INPUT_1, SLOT_INPUT_2);
+                TileEntityPoweredFurnace.autoSplit(this.inv, SLOT_INPUT_1, SLOT_INPUT_2);
             }
 
             boolean crushed = false;
@@ -145,8 +143,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
                 }
             }
 
-            BlockState currState = this.level.getBlockState(this.worldPosition);
-            boolean current = currState.getValue(BlockFurnaceDouble.IS_ON);
+            BlockState currState = this.world.getBlockState(this.pos);
+            boolean current = currState.get(BlockPoweredFurnace.IS_ON);
             boolean changeTo = current;
             if (this.lastCrushed != crushed) {
                 changeTo = crushed;
@@ -159,7 +157,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
             }
 
             if (changeTo != current) {
-                this.level.setBlockAndUpdate(this.worldPosition, currState.setValue(BlockFurnaceDouble.IS_ON, changeTo));
+                this.world.setBlockState(this.pos, currState.with(BlockPoweredFurnace.IS_ON, changeTo));
             }
 
             this.lastCrushed = crushed;
@@ -172,7 +170,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
             }
 
             if (shouldPlaySound) {
-                this.level.playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS, 0.025F, 1.0F);
+                this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS, 0.025F, 1.0F);
             }
         }
     }
@@ -196,13 +194,13 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
             ItemStack outputOne = recipe.getOutputOne();
             ItemStack outputTwo = recipe.getOutputTwo();
             if (StackUtil.isValid(outputOne)) {
-                if (outputOne.getDamageValue() == Util.WILDCARD) {
-                    outputOne.setDamageValue(0);
+                if (outputOne.getDamage() == Util.WILDCARD) {
+                    outputOne.setDamage(0);
                 }
-                if (StackUtil.isValid(outputTwo) && outputTwo.getDamageValue() == Util.WILDCARD) {
-                    outputTwo.setDamageValue(0);
+                if (StackUtil.isValid(outputTwo) && outputTwo.getDamage() == Util.WILDCARD) {
+                    outputTwo.setDamage(0);
                 }
-                if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).sameItem(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).sameItem(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) {
+                if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).isItemEqual(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).isItemEqual(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) {
                     return true;
                 }
             }
@@ -223,8 +221,8 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
         }
         ItemStack outputOne = recipe.getOutputOne();
         if (StackUtil.isValid(outputOne)) {
-            if (outputOne.getDamageValue() == Util.WILDCARD) {
-                outputOne.setDamageValue(0);
+            if (outputOne.getDamage() == Util.WILDCARD) {
+                outputOne.setDamage(0);
             }
             if (!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput))) {
                 this.inv.setStackInSlot(theFirstOutput, outputOne.copy());
@@ -235,10 +233,10 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
 
         ItemStack outputTwo = recipe.getOutputTwo();
         if (StackUtil.isValid(outputTwo)) {
-            if (outputTwo.getDamageValue() == Util.WILDCARD) {
-                outputTwo.setDamageValue(0);
+            if (outputTwo.getDamage() == Util.WILDCARD) {
+                outputTwo.setDamage(0);
             }
-            int rand = this.level.random.nextInt(100) + 1;
+            int rand = this.world.rand.nextInt(100) + 1;
             if (rand <= recipe.getSecondChance()) {
                 if (!StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput))) {
                     this.inv.setStackInSlot(theSecondOutput, outputTwo.copy());
@@ -267,7 +265,7 @@ public class TileEntityGrinder extends TileEntityInventoryBase implements IButto
     public void onButtonPressed(int buttonID, PlayerEntity player) {
         if (buttonID == 0) {
             this.isAutoSplit = !this.isAutoSplit;
-            this.setChanged();
+            this.markDirty();
         }
     }
 

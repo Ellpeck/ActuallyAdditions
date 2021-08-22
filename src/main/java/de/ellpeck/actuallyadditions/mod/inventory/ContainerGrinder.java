@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,31 +25,31 @@ import net.minecraft.network.PacketBuffer;
 import java.util.Objects;
 
 public class ContainerGrinder extends Container {
-    public final TileEntityGrinder tileGrinder;
+    public final TileEntityCrusher tileGrinder;
     public final boolean isDouble;
 
     public static ContainerGrinder fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
         return new ContainerGrinder(windowId, inv, (TileEntityGrinder) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerGrinder(int windowId, PlayerInventory inventory, TileEntityGrinder tile) {
+    public ContainerGrinder(int windowId, PlayerInventory inventory, TileEntityCrusher tile) {
         super(ActuallyContainers.GRINDER_CONTAINER.get(), windowId);
         this.tileGrinder = tile;
         this.isDouble = tile.isDouble;
 
-        this.addSlot(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityGrinder.SLOT_INPUT_1, this.isDouble
+        this.addSlot(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityCrusher.SLOT_INPUT_1, this.isDouble
             ? 51
             : 80, 21));
-        this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_1_1, this.isDouble
+        this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityCrusher.SLOT_OUTPUT_1_1, this.isDouble
             ? 37
             : 66, 69));
-        this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_1_2, this.isDouble
+        this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityCrusher.SLOT_OUTPUT_1_2, this.isDouble
             ? 64
             : 92, 69));
         if (this.isDouble) {
-            this.addSlot(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityGrinder.SLOT_INPUT_2, 109, 21));
-            this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_2_1, 96, 69));
-            this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityGrinder.SLOT_OUTPUT_2_2, 121, 69));
+            this.addSlot(new SlotItemHandlerUnconditioned(this.tileGrinder.inv, TileEntityCrusher.SLOT_INPUT_2, 109, 21));
+            this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityCrusher.SLOT_OUTPUT_2_1, 96, 69));
+            this.addSlot(new SlotOutput(this.tileGrinder.inv, TileEntityCrusher.SLOT_OUTPUT_2_2, 121, 69));
         }
 
         for (int i = 0; i < 3; i++) {

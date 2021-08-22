@@ -152,7 +152,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     public enum Type {
-        FACE,
+        ITEMFACE,
         PLACER,
         BREAKER,
         LIQUIFACE,

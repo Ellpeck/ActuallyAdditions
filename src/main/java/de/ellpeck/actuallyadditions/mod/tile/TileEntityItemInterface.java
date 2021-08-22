@@ -32,7 +32,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class TileEntityItemViewer extends TileEntityBase {
+public class TileEntityItemInterface extends TileEntityBase {
 
     public final List<GenericItemHandlerInfo> genericInfos = new ArrayList<>();
     public final Map<Integer, IItemHandlerInfo> itemHandlerInfos = new HashMap<>();
@@ -43,18 +43,18 @@ public class TileEntityItemViewer extends TileEntityBase {
     private int lastNetworkChangeAmount = -1;
     private int slotCount;
 
-    public TileEntityItemViewer(TileEntityType<?> type) {
+    public TileEntityItemInterface(TileEntityType<?> type) {
         super(type);
 
         IItemHandler normalHandler = new IItemHandler() {
             @Override
             public int getSlots() {
-                return TileEntityItemViewer.this.getSlotCount();
+                return TileEntityItemInterface.this.getSlotCount();
             }
 
             @Override
             public ItemStack getStackInSlot(int slot) {
-                IItemHandlerInfo handler = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                IItemHandlerInfo handler = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
                 if (handler != null && handler.isLoaded()) {
                     return handler.handler.getStackInSlot(handler.switchedIndex);
                 }
@@ -63,12 +63,12 @@ public class TileEntityItemViewer extends TileEntityBase {
 
             @Override
             public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                IItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
-                if (info != null && info.isLoaded() && TileEntityItemViewer.this.isWhitelisted(info, stack, false)) {
+                IItemHandlerInfo info = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
+                if (info != null && info.isLoaded() && TileEntityItemInterface.this.isWhitelisted(info, stack, false)) {
                     ItemStack remain = info.handler.insertItem(info.switchedIndex, stack, simulate);
-                    if (!ItemStack.matches(remain, stack) && !simulate) {
-                        TileEntityItemViewer.this.setChanged();
-                        TileEntityItemViewer.this.doItemParticle(stack, info.relayInQuestion.getBlockPos(), TileEntityItemViewer.this.connectedRelay.getBlockPos());
+                    if (!ItemStack.areItemStacksEqual(remain, stack) && !simulate) {
+                        TileEntityItemInterface.this.markDirty();
+                        TileEntityItemInterface.this.doItemParticle(stack, info.relayInQuestion.getPos(), TileEntityItemInterface.this.connectedRelay.getPos());
                     }
                     return remain;
                 }
@@ -79,12 +79,12 @@ public class TileEntityItemViewer extends TileEntityBase {
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
                 ItemStack stackIn = this.getStackInSlot(slot);
                 if (StackUtil.isValid(stackIn)) {
-                    IItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
-                    if (info != null && info.isLoaded() && TileEntityItemViewer.this.isWhitelisted(info, stackIn, true)) {
+                    IItemHandlerInfo info = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
+                    if (info != null && info.isLoaded() && TileEntityItemInterface.this.isWhitelisted(info, stackIn, true)) {
                         ItemStack extracted = info.handler.extractItem(info.switchedIndex, amount, simulate);
                         if (StackUtil.isValid(extracted) && !simulate) {
-                            TileEntityItemViewer.this.setChanged();
-                            TileEntityItemViewer.this.doItemParticle(extracted, TileEntityItemViewer.this.connectedRelay.getBlockPos(), info.relayInQuestion.getBlockPos());
+                            TileEntityItemInterface.this.markDirty();
+                            TileEntityItemInterface.this.doItemParticle(extracted, TileEntityItemInterface.this.connectedRelay.getPos(), info.relayInQuestion.getPos());
                         }
                         return extracted;
                     }
@@ -94,7 +94,7 @@ public class TileEntityItemViewer extends TileEntityBase {
 
             @Override
             public int getSlotLimit(int slot) {
-                IItemHandlerInfo info = TileEntityItemViewer.this.getSwitchedIndexHandler(slot);
+                IItemHandlerInfo info = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
                 if (info != null && info.isLoaded()) {
                     return info.handler.getSlotLimit(info.switchedIndex);
                 } else {
@@ -117,7 +117,7 @@ public class TileEntityItemViewer extends TileEntityBase {
         this.itemHandler = new SlotlessableItemHandlerWrapper(this.lazyHandlers, slotlessHandler);
     }
 
-    public TileEntityItemViewer() {
+    public TileEntityItemInterface() {
         this(ActuallyTiles.ITEMVIEWER_TILE.get());
     }
 
@@ -153,9 +153,9 @@ public class TileEntityItemViewer extends TileEntityBase {
     }
 
     public void doItemParticle(ItemStack stack, BlockPos input, BlockPos output) {
-        if (!this.level.isClientSide) {
+        if (!this.world.isRemote) {
             CompoundNBT compound = new CompoundNBT();
-            stack.save(compound);
+            stack.write(compound);
 
             compound.putDouble("InX", input.getX());
             compound.putDouble("InY", input.getY());
@@ -166,9 +166,9 @@ public class TileEntityItemViewer extends TileEntityBase {
             compound.putDouble("OutZ", output.getZ());
 
             int rangeSq = 16 * 16;
-            for (PlayerEntity player : this.level.players()) {
+            for (PlayerEntity player : this.world.getPlayers()) {
                 if (player instanceof ServerPlayerEntity) {
-                    if (player.distanceToSqr(input.getX(), input.getY(), input.getZ()) <= rangeSq || player.distanceToSqr(output.getX(), output.getY(), output.getZ()) <= rangeSq) {
+                    if (player.getDistanceSq(input.getX(), input.getY(), input.getZ()) <= rangeSq || player.getDistanceSq(output.getX(), output.getY(), output.getZ()) <= rangeSq) {
                         PacketHandler.sendTo(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), (ServerPlayerEntity) player);
                     }
                 }
@@ -249,13 +249,13 @@ public class TileEntityItemViewer extends TileEntityBase {
     @Override
     public void saveDataOnChangeOrWorldStart() {
         TileEntityLaserRelayItem tileFound = null;
-        if (this.level != null) { //Why is that even possible..?
+        if (this.world != null) { //Why is that even possible..?
             for (int i = 0; i <= 5; i++) {
                 Direction side = WorldUtil.getDirectionBySidesInOrder(i);
-                BlockPos pos = this.getBlockPos().relative(side);
+                BlockPos pos = this.getPos().offset(side);
 
-                if (this.level.hasChunkAt(pos)) {
-                    TileEntity tile = this.level.getBlockEntity(pos);
+                if (this.world.isBlockLoaded(pos)) {
+                    TileEntity tile = this.world.getTileEntity(pos);
 
                     if (tile instanceof TileEntityLaserRelayItem) {
                         if (tileFound != null) {
@@ -312,7 +312,7 @@ public class TileEntityItemViewer extends TileEntityBase {
         }
 
         public boolean isLoaded() {
-            return this.relayInQuestion.hasLevel() && this.relayInQuestion.getLevel().hasChunkAt(this.relayInQuestion.getBlockPos());
+            return this.relayInQuestion.hasWorld() && this.relayInQuestion.getWorld().isBlockLoaded(this.relayInQuestion.getPos());
         }
     }
 
@@ -326,7 +326,7 @@ public class TileEntityItemViewer extends TileEntityBase {
         }
 
         public boolean isLoaded() {
-            return this.relayInQuestion.hasLevel() && this.relayInQuestion.getLevel().hasChunkAt(this.relayInQuestion.getBlockPos());
+            return this.relayInQuestion.hasWorld() && this.relayInQuestion.getWorld().isBlockLoaded(this.relayInQuestion.getPos());
         }
 
         @Override

@@ -14,7 +14,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerMiner;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityVerticalDigger;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.widget.button.Button;
@@ -29,7 +29,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class GuiMiner extends GuiWtfMojang<ContainerMiner> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
-    private final TileEntityMiner miner;
+    private final TileEntityVerticalDigger miner;
 
     public GuiMiner(ContainerMiner container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);

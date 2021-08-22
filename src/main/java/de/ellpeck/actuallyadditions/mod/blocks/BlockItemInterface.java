@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemViewer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemInterface;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -19,14 +19,14 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
-public class BlockItemViewer extends BlockContainerBase {
-    public BlockItemViewer() {
+public class BlockItemInterface extends BlockContainerBase {
+    public BlockItemInterface() {
         super(ActuallyBlocks.defaultPickProps(0));
     }
 
     @Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
-        return new TileEntityItemViewer();
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+        return new TileEntityItemInterface();
     }
 
     @Override

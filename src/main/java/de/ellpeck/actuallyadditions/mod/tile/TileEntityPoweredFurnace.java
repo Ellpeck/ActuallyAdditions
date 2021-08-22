@@ -35,9 +35,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
-public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
+public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1 = 1;
@@ -56,7 +54,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     private boolean lastAutoSplit;
     private boolean lastSmelted;
 
-    public TileEntityFurnaceDouble() {
+    public TileEntityPoweredFurnace() {
         super(ActuallyTiles.FURNACE_DOUBLE_TILE.get(), 4);
     }
 
@@ -113,7 +111,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.level.isClientSide) {
+        if (!this.world.isRemote) {
             if (this.isAutoSplit) {
                 autoSplit(this.inv, SLOT_INPUT_1, SLOT_INPUT_2);
             }
@@ -151,8 +149,8 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
                 this.secondSmeltTime = 0;
             }
 
-            BlockState currState = this.level.getBlockState(this.worldPosition);
-            boolean current = currState.getValue(BlockStateProperties.LIT);
+            BlockState currState = this.world.getBlockState(this.pos);
+            boolean current = currState.get(BlockStateProperties.LIT);
             boolean changeTo = current;
             if (this.lastSmelted != smelted) {
                 changeTo = smelted;
@@ -165,7 +163,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
             }
 
             if (changeTo != current) {
-                this.level.setBlockAndUpdate(this.worldPosition, currState.setValue(BlockStateProperties.LIT, changeTo));
+                this.world.setBlockState(this.pos, currState.with(BlockStateProperties.LIT, changeTo));
             }
 
             this.lastSmelted = smelted;
@@ -193,7 +191,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
         if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
             ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.inv.getStackInSlot(theInput));
             if (StackUtil.isValid(output)) {
-                if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || this.inv.getStackInSlot(theOutput).sameItem(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount()) {
+                if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || this.inv.getStackInSlot(theOutput).isItemEqual(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount()) {
                     return true;
                 }
             }
@@ -225,7 +223,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     public void onButtonPressed(int buttonID, PlayerEntity player) {
         if (buttonID == 0) {
             this.isAutoSplit = !this.isAutoSplit;
-            this.setChanged();
+            this.markDirty();
         }
     }
 

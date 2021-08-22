@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityVerticalDigger;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;

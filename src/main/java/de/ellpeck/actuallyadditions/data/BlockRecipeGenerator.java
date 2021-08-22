@@ -28,10 +28,10 @@ public class BlockRecipeGenerator extends RecipeProvider {
         //Farmer
         Recipe.shaped(ActuallyBlocks.FARMER.get())
             .pattern("ISI", "SCS", "ISI")
-            .define('I', ActuallyBlocks.CRYSTAL_ENORI.get())
-            .define('C', ActuallyBlocks.IRON_CASING.get())
-            .define('S', Tags.Items.SEEDS)
-            .save(consumer);
+            .key('I', ActuallyBlocks.ENORI_CRYSTAL.getItem())
+            .key('C', ActuallyBlocks.IRON_CASING.get())
+            .key('S', Tags.Items.SEEDS)
+            .build(consumer);
 
         //Empowerer
         Recipe.shaped(ActuallyBlocks.EMPOWERER.get())
@@ -76,7 +76,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
             .save(consumer);
 
         //Vertical Digger
-        Recipe.shaped(ActuallyBlocks.MINER.get())
+        Recipe.shaped(ActuallyBlocks.Vertical_DIGGER.get())
             .pattern("IRI", "RCR", "IDI")
             .define('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
             .define('I', ActuallyBlocks.IRON_CASING.get())
@@ -132,15 +132,59 @@ public class BlockRecipeGenerator extends RecipeProvider {
         // Atomic Reconstructor
         Recipe.shaped(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get())
             .pattern("IRI", "RCR", "IRI")
-            .define('R', Tags.Items.DUSTS_REDSTONE)
-            .define('I', Tags.Items.INGOTS_IRON)
-            .define('C', ActuallyBlocks.IRON_CASING.get())
-            .save(consumer);
+            .key('R', Tags.Items.DUSTS_REDSTONE)
+            .key('I', Tags.Items.INGOTS_IRON)
+            .key('C', ActuallyBlocks.IRON_CASING.get())
+            .build(consumer);
+
+        // Laser Relay
+        Recipe.shaped(ActuallyBlocks.LASER_RELAY.get(), 4)
+            .pattern("OBO","RCR","OBO")
+            .key('B', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+            .key('O', Tags.Items.OBSIDIAN)
+            .key('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+            .key('C', ActuallyItems.COIL_ADVANCED.get())
+            .build(consumer);
+
+        // Advanced Laser Relay
+        Recipe.shaped(ActuallyBlocks.LASER_RELAY_ADVANCED.get())
+            .pattern(" I ", "XRX", " I ")
+            .key('I', ActuallyItems.ENORI_CRYSTAL.get())
+            .key('R', ActuallyBlocks.LASER_RELAY.get())
+            .key('X', ActuallyItems.RESTONIA_CRYSTAL.get())
+            .build(consumer);
+
+        // Extreme Laser Relay
+        Recipe.shaped(ActuallyBlocks.LASER_RELAY_EXTREME.get())
+            .pattern(" I ", "XRX", " I ")
+            .key('I', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
+            .key('R', ActuallyBlocks.LASER_RELAY_ADVANCED.get())
+            .key('X', ActuallyItems.RESTONIA_CRYSTAL.get())
+            .build(consumer);
+
+        // Whitelist Item Laser Relay
+        Recipe.shapeless(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.get())
+            .ingredients(ActuallyBlocks.LASER_RELAY_ITEM.get(), ActuallyItems.COIL_ADVANCED.get(), ActuallyItems.BLACK_QUARTZ.get())
+            .build(consumer);
+
+        // Item Interface
+        Recipe.shaped(ActuallyBlocks.ITEM_VIEWER.get())
+            .pattern("OBO", "RCR", "OBO")
+            .key('B', Tags.Items.DUSTS_REDSTONE)
+            .key('O', ActuallyItems.COIL.get())
+            .key('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+            .key('C', Tags.Items.CHESTS_WOODEN)
+            .build(consumer);
+
+        // Hopping Item Interface
+        Recipe.shapeless(ActuallyBlocks.ITEM_VIEWER_HOPPING.get()).ingredients(ActuallyBlocks.ITEM_VIEWER.get()).build(consumer);
+
+
     }
 
     @Override
-    protected void saveAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
-        //Nope...
+    protected void saveRecipeAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
+        //Nope... maybe later...
     }
 
     public static class Recipe {

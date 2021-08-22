@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityDirectionalBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLongRangeBreaker;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -24,13 +24,13 @@ import java.util.Objects;
 
 public class ContainerDirectionalBreaker extends Container {
 
-    public final TileEntityDirectionalBreaker breaker;
+    public final TileEntityLongRangeBreaker breaker;
 
     public static ContainerDirectionalBreaker fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
         return new ContainerDirectionalBreaker(windowId, inv, (TileEntityDirectionalBreaker) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerDirectionalBreaker(int windowId, PlayerInventory inventory, TileEntityDirectionalBreaker tile) {
+    public ContainerDirectionalBreaker(int windowId, PlayerInventory inventory, TileEntityLongRangeBreaker tile) {
         super(ActuallyContainers.DIRECTIONAL_BREAKER_CONTAINER.get(), windowId);
         this.breaker = tile;
 

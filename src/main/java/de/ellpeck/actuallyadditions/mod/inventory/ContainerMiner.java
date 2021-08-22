@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityVerticalDigger;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -24,13 +24,13 @@ import java.util.Objects;
 
 public class ContainerMiner extends Container {
 
-    public final TileEntityMiner miner;
+    public final TileEntityVerticalDigger miner;
 
     public static ContainerMiner fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
         return new ContainerMiner(windowId, inv, (TileEntityMiner) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerMiner(int windowId, PlayerInventory inventory, TileEntityMiner tile) {
+    public ContainerMiner(int windowId, PlayerInventory inventory, TileEntityVerticalDigger tile) {
         super(ActuallyContainers.MINER_CONTAINER.get(), windowId);
         this.miner = tile;
 

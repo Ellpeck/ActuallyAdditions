@@ -43,7 +43,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     private Block boundBlockBefore;
     private int lastStrength;
 
-    public TileEntityPhantomface(TileEntityType<?> type) {
+    public TileEntityPhantomFace(TileEntityType<?> type) {
         super(type, 0);
     }
 

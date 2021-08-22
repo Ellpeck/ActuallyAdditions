@@ -138,8 +138,8 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                 }
             }
 
-            if (relay instanceof TileEntityLaserRelayItemWhitelist) {
-                return this.openGui(world, player, pos, TileEntityLaserRelayItemWhitelist.class);
+            if (relay instanceof TileEntityLaserRelayItemAdvanced) {
+                return this.openGui(world, player, pos, TileEntityLaserRelayItemAdvanced.class);
             }
         }
         return ActionResultType.FAIL;
@@ -151,7 +151,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
             case ITEM:
                 return new TileEntityLaserRelayItem();
             case ITEM_WHITELIST:
-                return new TileEntityLaserRelayItemWhitelist();
+                return new TileEntityLaserRelayItemAdvanced();
             case ENERGY_ADVANCED:
                 return new TileEntityLaserRelayEnergyAdvanced();
             case ENERGY_EXTREME:

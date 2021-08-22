@@ -99,7 +99,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 ? null
                 : this.leftFilter);
 
-            if (this.placeToPull instanceof TileEntityItemViewer) {
+            if (this.placeToPull instanceof TileEntityItemInterface) {
                 break;
             }
         }
@@ -111,7 +111,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             for (Direction side : this.placeToPut.keySet()) {
                 WorldUtil.doItemInteraction(this.wrapper, this.placeToPut.get(side), Integer.MAX_VALUE, 0, 1, this.slotToPutStart, this.slotToPutEnd, null);
 
-                if (this.placeToPut instanceof TileEntityItemViewer) {
+                if (this.placeToPut instanceof TileEntityItemInterface) {
                     break;
                 }
             }

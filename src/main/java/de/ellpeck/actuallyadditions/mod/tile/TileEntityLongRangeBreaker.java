@@ -34,9 +34,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
-public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements INamedContainerProvider {
+public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implements INamedContainerProvider {
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
@@ -45,7 +43,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     private int lastEnergy;
     private int currentTime;
 
-    public TileEntityDirectionalBreaker() {
+    public TileEntityLongRangeBreaker() {
         super(ActuallyTiles.DIRECTIONALBREAKER_TILE.get(), 9);
     }
 
@@ -70,7 +68,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.level.isClientSide) {
+        if (!this.world.isRemote) {
             if (!this.isRedstonePowered && !this.isPulseMode) {
                 if (this.currentTime > 0) {
                     this.currentTime--;
@@ -90,24 +88,24 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
 
     private void doWork() {
         if (this.storage.getEnergyStored() >= ENERGY_USE * RANGE) {
-            BlockState state = this.level.getBlockState(this.worldPosition);
+            BlockState state = this.world.getBlockState(this.pos);
             Direction sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
 
             for (int i = 0; i < RANGE; i++) {
-                BlockPos coordsBlock = this.worldPosition.relative(sideToManipulate, i + 1);
-                BlockState breakState = this.level.getBlockState(coordsBlock);
+                BlockPos coordsBlock = this.pos.offset(sideToManipulate, i + 1);
+                BlockState breakState = this.world.getBlockState(coordsBlock);
                 Block blockToBreak = breakState.getBlock();
-                if (blockToBreak != null && !this.level.isEmptyBlock(coordsBlock) && this.level.getBlockState(coordsBlock).getDestroySpeed(this.level, coordsBlock) > -1.0F) {
-                    List<ItemStack> drops = Block.getDrops(breakState, (ServerWorld) this.level, coordsBlock, this.level.getBlockEntity(coordsBlock));
-                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.level, coordsBlock);
+                if (blockToBreak != null && !this.world.isAirBlock(coordsBlock) && this.world.getBlockState(coordsBlock).getBlockHardness(this.world, coordsBlock) > -1.0F) {
+                    List<ItemStack> drops = Block.getDrops(breakState, (ServerWorld) this.world, coordsBlock, this.world.getTileEntity(coordsBlock));
+                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.world, coordsBlock);
 
-                    if (chance > 0 && this.level.random.nextFloat() <= chance) {
+                    if (chance > 0 && this.world.rand.nextFloat() <= chance) {
                         if (StackUtil.canAddAll(this.inv, drops, false)) {
-                            this.level.levelEvent(2001, coordsBlock, Block.getId(this.level.getBlockState(coordsBlock)));
-                            this.level.setBlockAndUpdate(coordsBlock, Blocks.AIR.defaultBlockState());
+                            this.world.playEvent(2001, coordsBlock, Block.getStateId(this.world.getBlockState(coordsBlock)));
+                            this.world.setBlockState(coordsBlock, Blocks.AIR.getDefaultState());
                             StackUtil.addAll(this.inv, drops, false);
                             this.storage.extractEnergyInternal(ENERGY_USE, false);
-                            this.setChanged();
+                            this.markDirty();
                         }
                     }
                 }

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -55,7 +56,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     public TileEntityPhantomPlacer() {
-        super(ActuallyTiles.PHANTOMPLACER_TILE.get(), 9);
+        super(ActuallyBlocks.PHANTOM_PLACER.getTileEntityType(), 9);
         this.isBreaker = false;
     }
 

@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityDirectionalBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLongRangeBreaker;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -24,29 +24,29 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class BlockDirectionalBreaker extends FullyDirectionalBlock.Container {
+public class BlockLongRangeBreaker extends FullyDirectionalBlock.Container {
 
-    public BlockDirectionalBreaker() {
+    public BlockLongRangeBreaker() {
         super(ActuallyBlocks.defaultPickProps(0));
     }
 
     @Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
-        return new TileEntityDirectionalBreaker();
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+        return new TileEntityLongRangeBreaker();
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
             return ActionResultType.PASS;
         }
 
-        return this.openGui(world, player, pos, TileEntityDirectionalBreaker.class);
+        return this.openGui(world, player, pos, TileEntityLongRangeBreaker.class);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.getValue(FACING)) {
+        switch (state.get(FACING)) {
             case UP:
                 return Shapes.DirectionalBlockBreakerShapes.SHAPE_U;
             case DOWN:

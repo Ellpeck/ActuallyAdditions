@@ -15,7 +15,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.widget.button.Button;
@@ -34,7 +34,7 @@ import java.util.Collections;
 public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_furnace_double");
-    private final TileEntityFurnaceDouble tileFurnace;
+    private final TileEntityPoweredFurnace tileFurnace;
     private EnergyDisplay energy;
 
     private Button buttonAutoSplit;

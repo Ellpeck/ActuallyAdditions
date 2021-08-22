@@ -14,8 +14,8 @@ import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FAC
 import static net.minecraft.state.properties.BlockStateProperties.LIT;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinder;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityGrinderDouble;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusherDouble;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,25 +37,25 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class BlockGrinder extends BlockContainerBase {
+public class BlockCrusher extends BlockContainerBase {
     private final boolean isDouble;
 
-    public BlockGrinder(boolean isDouble) {
-        super(ActuallyBlocks.defaultPickProps(0).randomTicks());
+    public BlockCrusher(boolean isDouble) {
+        super(ActuallyBlocks.defaultPickProps(0).tickRandomly());
         this.isDouble = isDouble;
-        this.registerDefaultState(this.stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(LIT, false));
+        this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(LIT, false));
     }
 
     @Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return this.isDouble
-            ? new TileEntityGrinderDouble()
-            : new TileEntityGrinder();
+            ? new TileEntityCrusherDouble()
+            : new TileEntityCrusher();
     }
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-        if (state.getValue(BlockStateProperties.LIT)) {
+        if (state.get(BlockStateProperties.LIT)) {
             for (int i = 0; i < 5; i++) {
                 double xRand = rand.nextDouble() / 0.75D - 0.5D;
                 double zRand = rand.nextDouble() / 0.75D - 0.5D;
@@ -66,34 +66,34 @@ public class BlockGrinder extends BlockContainerBase {
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.isDouble) {
-            return this.openGui(world, player, pos, TileEntityGrinderDouble.class);
+            return this.openGui(world, player, pos, TileEntityCrusherDouble.class);
         }
 
-        return this.openGui(world, player, pos, TileEntityGrinder.class);
+        return this.openGui(world, player, pos, TileEntityCrusher.class);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.defaultBlockState().setValue(HORIZONTAL_FACING, context.getNearestLookingDirection().getOpposite()).setValue(LIT, false);
+        return this.getDefaultState().with(HORIZONTAL_FACING, context.getNearestLookingDirection().getOpposite()).with(LIT, false);
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(LIT).add(HORIZONTAL_FACING);
     }
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        return state.getValue(LIT)
+        return state.get(LIT)
             ? 12
             : 0;
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.getValue(HORIZONTAL_FACING)) {
+        switch (state.get(HORIZONTAL_FACING)) {
             case EAST:
                 return Shapes.GrinderShapes.SHAPE_E;
             case SOUTH:

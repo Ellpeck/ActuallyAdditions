@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.CommonEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
-import de.ellpeck.actuallyadditions.mod.gen.AAWorldGen;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
@@ -82,7 +81,7 @@ public class ActuallyAdditions {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ActuallyBlocks.BLOCKS.register(eventBus);
-        ActuallyTiles.TILES.register(eventBus);
+        ActuallyBlocks.TILES.register(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
 
         MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
