@@ -189,8 +189,6 @@ public final class ActuallyBlocks {
     public static final AABlockReg<BlockHeatCollector, AABlockItem, TileEntityHeatCollector> HEAT_COLLECTOR = new AABlockReg<>("heat_collector", BlockHeatCollector::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityHeatCollector::new);
 
-
-
     // Freakin-Lasers
     public static final AABlockReg<BlockLaserRelay, AABlockItem, TileEntityLaserRelayEnergy> LASER_RELAY = new AABlockReg<>("laser_relay", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_BASIC),
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityLaserRelayEnergy::new);
@@ -206,33 +204,70 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityLaserRelayItemAdvanced::new);
 
 
-    //public static final RegistryObject<Block> WILD_PLANT = BLOCKS.register("wild", BlockWildPlant::new); //TODO: what is this?
-    public static final RegistryObject<Block> TINY_TORCH = BLOCKS.register("tiny_torch", BlockTinyTorch::new);
-    public static final RegistryObject<Block> ETHETIC_GREEN_BLOCK = BLOCKS.register("ethetic_green_block", BlockGeneric::new);
-    public static final RegistryObject<Block> ETHETIC_WHITE_BLOCK = BLOCKS.register("ethetic_white_block", BlockGeneric::new);
-    public static final RegistryObject<Block> ETHETIC_GREEN_STAIRS = BLOCKS.register("ethetic_green_stairs", () -> new StairsBlock(() -> ETHETIC_GREEN_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(ETHETIC_GREEN_BLOCK.get())));
-    public static final RegistryObject<Block> ETHETIC_WHITE_STAIRS = BLOCKS.register("ethetic_white_stairs", () -> new StairsBlock(() -> ETHETIC_WHITE_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(ETHETIC_WHITE_BLOCK.get())));
-    public static final RegistryObject<Block> ETHETIC_GREEN_SLAB = BLOCKS.register("ethetic_green_slab", () -> new SlabBlock(AbstractBlock.Properties.from(ETHETIC_GREEN_BLOCK.get())));
-    public static final RegistryObject<Block> ETHETIC_WHITE_SLAB = BLOCKS.register("ethetic_white_slab", () -> new SlabBlock(AbstractBlock.Properties.from(ETHETIC_WHITE_BLOCK.get())));
-    public static final RegistryObject<Block> ETHETIC_GREEN_WALL = BLOCKS.register("ethetic_green_wall", () -> new WallBlock(AbstractBlock.Properties.from(ETHETIC_GREEN_BLOCK.get())));
-    public static final RegistryObject<Block> ETHETIC_WHITE_WALL = BLOCKS.register("ethetic_white_wall", () -> new WallBlock(AbstractBlock.Properties.from(ETHETIC_WHITE_BLOCK.get())));
-    public static final RegistryObject<Block> RICE = BLOCKS.register("rice", () -> new BlockPlant(ActuallyItems.RICE_SEED.get()));// TODO: [port][replace] ensure values match these new BlockPlant(1, 2));
-    public static final RegistryObject<Block> CANOLA = BLOCKS.register("canola", () -> new BlockPlant(ActuallyItems.CANOLA_SEED.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 3));
-    public static final RegistryObject<Block> FLAX = BLOCKS.register("flax", () -> new BlockPlant(ActuallyItems.FLAX_SEED.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 4));
-    public static final RegistryObject<Block> COFFEE = BLOCKS.register("coffee", () -> new BlockPlant(ActuallyItems.COFFEE_SEED.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 2));
-    public static final RegistryObject<Block> GREENHOUSE_GLASS = BLOCKS.register("greenhouse_glass", BlockGreenhouseGlass::new);
-    public static final RegistryObject<Block> BLACK_QUARTZ_BLOCK = BLOCKS.register("black_quartz_block", BlockGeneric::new);
-    public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR_BLOCK = BLOCKS.register("black_quartz_pillar_block", BlockGeneric::new);
-    public static final RegistryObject<Block> CHISELED_BLACK_QUARTZ_BLOCK = BLOCKS.register("chiseled_black_quartz_block", BlockGeneric::new);
-    public static final RegistryObject<Block> BLACK_QUARTZ_WALL = BLOCKS.register("black_quartz_wall", () -> new WallBlock(AbstractBlock.Properties.from(blockMisc.get())));
-    public static final RegistryObject<Block> CHISELED_BLACK_QUARTZ_WALL = BLOCKS.register("chiseled_black_quartz_wall", () -> new WallBlock(AbstractBlock.Properties.from(blockMisc.get())));
-    public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR_WALL = BLOCKS.register("black_quartz_pillar_wall", () -> new WallBlock(AbstractBlock.Properties.from(blockMisc.get())));
-    public static final RegistryObject<Block> BLACK_QUARTZ_STAIR = BLOCKS.register("black_quartz_stair", () -> new StairsBlock(() -> blockMisc.get().getDefaultState(), AbstractBlock.Properties.from(blockMisc.get())));
-    public static final RegistryObject<Block> CHISELED_BLACK_QUARTZ_STAIR = BLOCKS.register("chiseled_black_quartz_stair", () -> new StairsBlock(() -> blockMisc.get().getDefaultState(), AbstractBlock.Properties.from(blockMisc.get())));
-    public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR_STAIR = BLOCKS.register("black_quartz_pillar_stair", () -> new StairsBlock(() -> blockMisc.get().getDefaultState(), AbstractBlock.Properties.from(blockMisc.get())));
-    public static final RegistryObject<Block> BLACK_QUARTZ_SLAB = BLOCKS.register("black_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.from(blockMisc.get())));
-    public static final RegistryObject<Block> CHISELED_BLACK_QUARTZ_SLAB = BLOCKS.register("chiseled_black_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.from(blockMisc.get())));
-    public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR_SLAB = BLOCKS.register("black_quartz_pillar_slab", () -> new SlabBlock(AbstractBlock.Properties.from(blockMisc.get())));
+
+    // Misc building blocks
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ETHETIC_GREEN_BLOCK = new AABlockReg<>("ethetic_green_block", () -> new ActuallyBlock(miscBlockProperties),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ETHETIC_WHITE_BLOCK = new AABlockReg<>("ethetic_white_block", () -> new ActuallyBlock(miscBlockProperties),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_BLOCK = new AABlockReg<>("black_quartz_block", () -> new ActuallyBlock(miscBlockProperties),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_BLOCK = new AABlockReg<>("black_quartz_pillar_block", () -> new ActuallyBlock(miscBlockProperties),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_BLOCK = new AABlockReg<>("chiseled_black_quartz_block", () -> new ActuallyBlock(miscBlockProperties),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+
+    public static final AABlockReg<StairsBlock, AABlockItem, ?> ETHETIC_GREEN_STAIRS = new AABlockReg<>("ethetic_green_stairs", () -> new StairsBlock(() -> ETHETIC_GREEN_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(ETHETIC_GREEN_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairsBlock, AABlockItem, ?> ETHETIC_WHITE_STAIRS = new AABlockReg<>("ethetic_white_stairs", () -> new StairsBlock(() -> ETHETIC_WHITE_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(ETHETIC_WHITE_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairsBlock, AABlockItem, ?> BLACK_QUARTZ_STAIR = new AABlockReg<>("black_quartz_stair", () -> new StairsBlock(() -> BLACK_QUARTZ_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(BLACK_QUARTZ_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairsBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_STAIR = new AABlockReg<>("chiseled_black_quartz_stair", () -> new StairsBlock(() -> CHISELED_BLACK_QUARTZ_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(CHISELED_BLACK_QUARTZ_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairsBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_STAIR = new AABlockReg<>("black_quartz_pillar_stair", () -> new StairsBlock(() -> BLACK_QUARTZ_PILLAR_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(BLACK_QUARTZ_PILLAR_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+
+    public static final AABlockReg<WallBlock, AABlockItem, ?> ETHETIC_GREEN_WALL = new AABlockReg<>("ethetic_green_wall", () -> new WallBlock(AbstractBlock.Properties.from(ETHETIC_GREEN_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<WallBlock, AABlockItem, ?> ETHETIC_WHITE_WALL = new AABlockReg<>("ethetic_white_wall", () -> new WallBlock(AbstractBlock.Properties.from(ETHETIC_WHITE_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<WallBlock, AABlockItem, ?> BLACK_QUARTZ_WALL = new AABlockReg<>("black_quartz_wall", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<WallBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_WALL = new AABlockReg<>("chiseled_black_quartz_wall", () -> new WallBlock(AbstractBlock.Properties.from(CHISELED_BLACK_QUARTZ_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<WallBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_WALL = new AABlockReg<>("black_quartz_pillar_wall", () -> new WallBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_PILLAR_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> ETHETIC_GREEN_SLAB = new AABlockReg<>("ethetic_green_slab", () -> new SlabBlock(AbstractBlock.Properties.from(ETHETIC_GREEN_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> ETHETIC_WHITE_SLAB = new AABlockReg<>("ethetic_white_slab", () -> new SlabBlock(AbstractBlock.Properties.from(ETHETIC_WHITE_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> BLACK_QUARTZ_SLAB = new AABlockReg<>("black_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_SLAB = new AABlockReg<>("chiseled_black_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.from(CHISELED_BLACK_QUARTZ_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_SLAB = new AABlockReg<>("black_quartz_pillar_slab", () -> new SlabBlock(AbstractBlock.Properties.from(BLACK_QUARTZ_PILLAR_BLOCK.get())),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+
+
+    // Other Misc Blocks
+    public static final AABlockReg<BlockTinyTorch, AABlockItem, ?> TINY_TORCH = new AABlockReg<>("tiny_torch", BlockTinyTorch::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+
+    //public static final AABlockReg<> WILD_PLANT = new AABlockReg<>("wild", BlockWildPlant::new); //TODO: what is this?
+
+    //TODO: Are plants normal blocks / blockitems? i have no idea... news at 11...
+   public static final AABlockReg<BlockPlant, AABlockItem, ?> RICE = new AABlockReg<>("rice", () -> new BlockPlant(ActuallyItems.RICE_SEED.get()),
+       (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<BlockPlant, AABlockItem, ?> CANOLA = new AABlockReg<>("canola", () -> new BlockPlant(ActuallyItems.CANOLA_SEED.get()),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<BlockPlant, AABlockItem, ?> FLAX = new AABlockReg<>("flax", () -> new BlockPlant(ActuallyItems.FLAX_SEED.get()),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<BlockPlant, AABlockItem, ?> COFFEE = new AABlockReg<>("coffee", () -> new BlockPlant(ActuallyItems.COFFEE_SEED.get()),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<BlockGreenhouseGlass, AABlockItem, ?> GREENHOUSE_GLASS = new AABlockReg<>("greenhouse_glass", BlockGreenhouseGlass::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     public static AbstractBlock.Properties defaultPickProps(int harvestLevel, float hardness, float resistance) {
         return AbstractBlock.Properties.create(Material.ROCK).harvestLevel(harvestLevel).harvestTool(ToolType.PICKAXE).hardnessAndResistance(hardness, resistance).sound(SoundType.STONE);

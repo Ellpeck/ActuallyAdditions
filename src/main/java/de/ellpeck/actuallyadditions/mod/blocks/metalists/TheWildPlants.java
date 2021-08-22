@@ -19,10 +19,10 @@ import net.minecraft.util.IStringSerializable;
 @Deprecated
 public enum TheWildPlants implements IStringSerializable {
 
-    CANOLA("canola", Rarity.RARE, ActuallyBlocks.CANOLA),
-    FLAX("flax", Rarity.RARE, ActuallyBlocks.FLAX),
-    RICE("rice", Rarity.RARE, ActuallyBlocks.RICE),
-    COFFEE("coffee", Rarity.RARE, ActuallyBlocks.COFFEE);
+    CANOLA("canola", Rarity.RARE, ActuallyBlocks.CANOLA.getBlock()),
+    FLAX("flax", Rarity.RARE, ActuallyBlocks.FLAX.getBlock()),
+    RICE("rice", Rarity.RARE, ActuallyBlocks.RICE.getBlock()),
+    COFFEE("coffee", Rarity.RARE, ActuallyBlocks.COFFEE.getBlock());
 
     final String name;
     final Rarity rarity;
