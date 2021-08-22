@@ -25,7 +25,6 @@ public final class StackUtil {
      * Pretty much just a check for {@link ItemStack#isEmpty()} but exists in case Mojang does some more refactoring.
      *
      * @param stack The stack
-     *
      * @return If the stack is not empty, or if it's an IDisableableItem, if its enabled.
      */
     @Deprecated
@@ -49,7 +48,6 @@ public final class StackUtil {
      * Checks if a collection of stacks are empty, as {@link Collection#isEmpty()} does not care about empty stacks.
      *
      * @param stacks Some ItemStacks
-     *
      * @return If all stacks in the collection return true for {@link ItemStack#isEmpty()}
      */
     @Deprecated
@@ -71,7 +69,6 @@ public final class StackUtil {
      * @param inv            The AA Item handler
      * @param stacks         The stacks to add
      * @param fromAutomation If these stacks are coming from a pipe or other external source, or internally, like from the TE's update() method.
-     *
      * @return If all stacks fit fully.  If even one item would not fit, the method returns false.
      */
     public static boolean canAddAll(ItemStackHandlerAA inv, List<ItemStack> stacks, boolean fromAutomation) {
@@ -118,7 +115,6 @@ public final class StackUtil {
      * @param slot           The starting slot.
      * @param endSlot        The ending slot, exclusive.
      * @param fromAutomation If these stacks are coming from a pipe or other external source, or internally, like from the TE's update() method.
-     *
      * @return If all stacks fit fully.  If even one item would not fit, the method returns false.
      */
     public static boolean canAddAll(ItemStackHandlerAA inv, List<ItemStack> stacks, int slot, int endSlot, boolean fromAutomation) {
@@ -162,7 +158,6 @@ public final class StackUtil {
      * Util method to find the first filled item in a handler.  Searches from slot 0 to the end.
      *
      * @param inv The IItemHandler to search.
-     *
      * @return The first filled slot, or -1 if all slots are empty.
      */
     public static int findFirstFilled(IItemHandler inv) {
@@ -210,17 +205,15 @@ public final class StackUtil {
      * @param simulate  If this is a simulation
      * @param slotStart Start range
      * @param slotEnd   End range
-     *
      * @return The remainder that was not inserted.
      */
     public static ItemStack insertItem(SlotlessableItemHandlerWrapper wrapper, ItemStack stack, boolean simulate, int slotStart, int slotEnd) {
         if (stack.isEmpty()) {
             return stack;
         }
-        ItemStack remain = stack.copy();
 
         if (ActuallyAdditions.commonCapsLoaded) {
-            Object handler = wrapper.getSlotlessHandler();
+//            Object handler = wrapper.getSlotlessHandler();
             //            if (handler instanceof ISlotlessItemHandler) {
             //                remain = ((ISlotlessItemHandler) handler).insertItem(remain, simulate);
             //                if (!ItemStack.areItemStacksEqual(remain, stack)) {
@@ -229,14 +222,14 @@ public final class StackUtil {
             //            }
         }
 
-        IItemHandler handler = wrapper.getNormalHandler();
-        if (handler != null) {
-            for (int i = Math.max(0, slotStart); i < Math.min(slotEnd, handler.getSlots()); i++) {
-                remain = handler.insertItem(i, remain, simulate);
+        return wrapper.getNormalHandler().map(e -> {
+            ItemStack remain = stack.copy();
+            for (int i = Math.max(0, slotStart); i < Math.min(slotEnd, e.getSlots()); i++) {
+                remain = e.insertItem(i, remain, simulate);
             }
-        }
 
-        return remain;
+            return remain;
+        }).orElse(stack);
     }
 
     /**

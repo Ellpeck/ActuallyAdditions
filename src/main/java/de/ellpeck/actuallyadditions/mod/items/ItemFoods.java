@@ -15,9 +15,7 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumAction;
@@ -25,6 +23,8 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 
 public class ItemFoods extends ItemFoodBase {

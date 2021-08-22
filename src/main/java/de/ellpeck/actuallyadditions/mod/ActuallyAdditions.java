@@ -34,7 +34,6 @@ import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
 import de.ellpeck.actuallyadditions.mod.tile.ActuallyTiles;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
-import de.ellpeck.actuallyadditions.mod.util.compat.CompatUtil;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -69,17 +68,14 @@ public class ActuallyAdditions {
             return new ItemStack(ActuallyItems.ITEM_BOOKLET.get());
         }
     };
-
+    public static final Logger LOGGER = LogManager.getLogger(NAME);
     @Deprecated
     public static ActuallyAdditions INSTANCE;
-
-    public static final Logger LOGGER = LogManager.getLogger(NAME);
 
     // TODO: [port] eval
     //    static {
     //        FluidRegistry.enableUniversalBucket();
     //    }
-
     public static boolean commonCapsLoaded;
 
     public ActuallyAdditions() {
@@ -104,7 +100,7 @@ public class ActuallyAdditions {
         ActuallyAdditionsAPI.methodHandler = new MethodHandler();
         ActuallyAdditionsAPI.connectionHandler = new LaserRelayConnectionHandler();
         Lenses.init();
-        CompatUtil.registerCraftingTweaks();
+//        CompatUtil.registerCraftingTweaks();
 
         commonCapsLoaded = false; // Loader.isModLoaded("commoncapabilities");
 

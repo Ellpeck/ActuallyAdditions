@@ -15,7 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
@@ -41,20 +41,16 @@ public class ItemDrillUpgrade extends ItemBase {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide && this.type == UpgradeType.PLACER) {
             this.setSlotToPlaceFrom(stack, player.inventory.selected);
-            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+            return new ActionResult<>(ActionResultType.SUCCESS, stack);
         }
-        return new ActionResult<>(EnumActionResult.FAIL, stack);
+        return new ActionResult<>(ActionResultType.FAIL, stack);
     }
 
     public void setSlotToPlaceFrom(ItemStack stack, int slot) {
-        CompoundNBT compound = stack.getTagCompound();
-        if (compound == null) {
-            compound = new CompoundNBT();
-        }
-
+        CompoundNBT compound = stack.getOrCreateTag();
         compound.putInt("SlotToPlaceFrom", slot + 1);
 
-        stack.setTagCompound(compound);
+        stack.setTag(compound);
     }
 
     public enum UpgradeType {

@@ -16,10 +16,10 @@ import de.ellpeck.actuallyadditions.mod.items.metalists.TheDusts;
 import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 
 public class ItemDust extends ItemBase implements IColorProvidingItem {
@@ -39,15 +39,15 @@ public class ItemDust extends ItemBase implements IColorProvidingItem {
     @Override
     public String getDescriptionId(ItemStack stack) {
         return stack.getItemDamage() >= ALL_DUSTS.length
-            ? StringUtil.BUGGED_ITEM_NAME
-            : this.getDescriptionId() + "_" + ALL_DUSTS[stack.getItemDamage()].name;
+                ? StringUtil.BUGGED_ITEM_NAME
+                : this.getDescriptionId() + "_" + ALL_DUSTS[stack.getItemDamage()].name;
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
         return stack.getItemDamage() >= ALL_DUSTS.length
-            ? EnumRarity.COMMON
-            : ALL_DUSTS[stack.getItemDamage()].rarity;
+                ? EnumRarity.COMMON
+                : ALL_DUSTS[stack.getItemDamage()].rarity;
     }
 
     @Override
@@ -71,8 +71,8 @@ public class ItemDust extends ItemBase implements IColorProvidingItem {
     @Override
     public IItemColor getItemColor() {
         return (stack, pass) -> stack.getItemDamage() >= ALL_DUSTS.length
-            ? 0xFFFFFF
-            : ALL_DUSTS[stack.getItemDamage()].color;
+                ? 0xFFFFFF
+                : ALL_DUSTS[stack.getItemDamage()].color;
     }
 
     @Override

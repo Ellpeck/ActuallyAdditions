@@ -14,18 +14,16 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 public class ItemCrafterOnAStick extends ItemBase {
 
     public ItemCrafterOnAStick() {
-        super(name);
-        this.setMaxStackSize(1);
+        super(ActuallyItems.defaultNonStacking());
     }
 
     @Override
@@ -33,11 +31,6 @@ public class ItemCrafterOnAStick extends ItemBase {
         if (!world.isClientSide) {
             player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.CRAFTER.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
-        return new ActionResult<>(EnumActionResult.SUCCESS, player.getItemInHand(hand));
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
+        return new ActionResult<>(ActionResultType.SUCCESS, player.getItemInHand(hand));
     }
 }

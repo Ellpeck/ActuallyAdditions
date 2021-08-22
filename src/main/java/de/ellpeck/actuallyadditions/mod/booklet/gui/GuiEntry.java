@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,8 +47,8 @@ public class GuiEntry extends GuiBooklet {
         if (!this.chapters.isEmpty()) {
             IBookletChapter lastChap = this.chapters.get(this.chapters.size() - 1);
             this.pageAmount = lastChap == null
-                ? 1
-                : calcEntryPage(this.entry, lastChap, this.searchText) + 1;
+                    ? 1
+                    : calcEntryPage(this.entry, lastChap, this.searchText) + 1;
         } else {
             this.pageAmount = 1;
         }

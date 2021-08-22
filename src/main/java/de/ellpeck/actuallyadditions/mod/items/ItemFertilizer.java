@@ -13,38 +13,28 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.misc.DispenserHandlerFertilize;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemDye;
+import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
 
 public class ItemFertilizer extends ItemBase {
 
     public ItemFertilizer() {
-        super(name);
+        super();
 
         DispenserBlock.registerBehavior(this, new DispenserHandlerFertilize());
     }
-
+    
     @Override
-    public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction side, float par8, float par9, float par10) {
-        ItemStack stack = player.getItemInHand(hand);
-        if (ItemDye.applyBonemeal(stack, world, pos, player, hand)) {
-            if (!world.isClientSide) {
-                world.levelEvent(2005, pos, 0);
+    public ActionResultType useOn(ItemUseContext context) {
+        ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
+        if (BoneMealItem.applyBonemeal(stack, context.getLevel(), context.getClickedPos(), context.getPlayer())) {
+            if (!context.getLevel().isClientSide) {
+                context.getLevel().levelEvent(2005, context.getClickedPos(), 0);
             }
-            return EnumActionResult.SUCCESS;
+            return ActionResultType.SUCCESS;
         }
-        return super.useOn(player, world, pos, hand, side, par8, par9, par10);
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
+        return super.useOn(context);
     }
 }

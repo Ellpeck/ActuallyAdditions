@@ -14,10 +14,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketClientToServer {
 
@@ -59,7 +56,7 @@ public class PacketClientToServer {
     public static class Handler implements IMessageHandler<PacketClientToServer, IMessage> {
 
         @Override
-        public IMessage onMessage(PacketClientToServer message, MessageContext ctx) {
+        public IMessage onMessage(PacketClientToServer message, NetworkEvent.Context ctx) {
             FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
                 if (message.data != null && message.handler != null) {
                     message.handler.handleData(message.data, ctx);

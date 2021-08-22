@@ -14,8 +14,8 @@ import com.google.common.collect.Sets;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 
@@ -35,8 +35,8 @@ public class ItemAxeAA extends ItemToolAA {
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         Material material = state.getMaterial();
         return material != Material.WOOD && material != Material.PLANT && material != Material.VINE
-            ? super.getDestroySpeed(stack, state)
-            : this.speed;
+                ? super.getDestroySpeed(stack, state)
+                : this.speed;
     }
 
     @Override

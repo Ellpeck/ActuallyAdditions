@@ -2,16 +2,20 @@ buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
+
+        maven { url = 'https://maven.parchmentmc.org' }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.parchmentmc:librarian:1.+'
     }
 }
 
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
-apply plugin: 'net.minecraftforge.gradle'
 
 version = "$mod_version"
 group = "de.ellpeck.actuallyadditions"
@@ -24,7 +28,7 @@ if (System.getenv('BUILD_NUMBER') != null) {
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
-    mappings channel: 'official', version: "${game_version}"
+    mappings channel: 'parchment', version: "${parchment_version}-${game_version}"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')

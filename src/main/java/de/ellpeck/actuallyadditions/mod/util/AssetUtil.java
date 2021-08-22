@@ -20,10 +20,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -72,7 +69,7 @@ public final class AssetUtil {
     public static void renderItemInWorld(ItemStack stack, int combinedLight, int combinedOverlay, MatrixStack matrices, IRenderTypeBuffer buffer) {
         if (StackUtil.isValid(stack)) {
             Minecraft.getInstance().getItemRenderer().renderStatic(
-                stack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrices, buffer
+                    stack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrices, buffer
             );
         }
     }
@@ -95,7 +92,7 @@ public final class AssetUtil {
     public static void renderItemWithoutScrewingWithColors(ItemStack stack) {
         if (StackUtil.isValid(stack)) {
             Minecraft mc = Minecraft.getInstance();
-            RenderItem renderer = mc.getRenderItem();
+            ItemRenderer renderer = mc.getItemRenderer();
             TextureManager manager = mc.getTextureManager();
 
             IBakedModel model = renderer.getItemModelWithOverrides(stack, null, null);
@@ -105,7 +102,7 @@ public final class AssetUtil {
             GlStateManager._enableRescaleNormal();
             GlStateManager._enableBlend();
             GlStateManager._pushMatrix();
-            model = ForgeHooksClient.handleCameraTransforms(model, TransformType.FIXED, false);
+            model = ForgeHooksClient.handleCameraTransforms(model, ItemCameraTransforms.TransformType.FIXED, false);
             renderer.renderItem(stack, model);
             GlStateManager.cullFace(GlStateManager.CullFace.BACK);
             GlStateManager._popMatrix();
@@ -253,8 +250,8 @@ public final class AssetUtil {
         Vec3d combinedVec = vec2.subtract(vec1);
 
         double rot = rotationTime > 0
-            ? 360D * (world.getTotalWorldTime() % rotationTime / rotationTime)
-            : 0;
+                ? 360D * (world.getTotalWorldTime() % rotationTime / rotationTime)
+                : 0;
         double pitch = Math.atan2(combinedVec.y, Math.sqrt(combinedVec.x * combinedVec.x + combinedVec.z * combinedVec.z));
         double yaw = Math.atan2(-combinedVec.z, combinedVec.x);
 
